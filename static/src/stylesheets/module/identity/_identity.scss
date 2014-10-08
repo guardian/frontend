@@ -1,0 +1,688 @@
+/* Identity and registration
+   ========================================================================== */
+
+.l-header--identity {
+    height: 45px;
+
+    @include mq(tablet) {
+        height: 113px;
+    }
+}
+
+.identity-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: gs-span(6);
+    padding-bottom: $gs-baseline*4;
+    padding-top: $gs-baseline*4;
+
+    @include mq(desktop) {
+        max-width: gs-span(10);
+    }
+}
+.identity-wrapper--stretched {
+    max-width: none;
+}
+
+.identity-header {
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+}
+
+.identity-section {
+    border-top: 1px solid $c-neutral7;
+    @include box-sizing(border-box);
+    margin: (($gs-baseline/3)*5) 0;
+    padding-top: (($gs-baseline/3)*5) - 1;
+
+    .identity-section__head {
+        @extend %type-5;
+    }
+
+    .identity-section__text {
+        margin-top: ($gs-baseline/3)*2;
+    }
+}
+
+.identity-title {
+    @include fs-header(4);
+
+    @include mq(desktop) {
+        @include fs-header(5, $size-only: true);
+    }
+}
+.identity-title--public-profile {
+    @include mq(rightCol) {
+        float: left;
+        white-space: nowrap;
+    }
+}
+
+.nav--registration {
+    margin-top: ($gs-baseline/3)*8;
+    font-size: 14px;
+    text-align: center;
+
+    @include mq(tablet) {
+        font-size: 16px;
+    }
+}
+
+.nav--registration .nav__item + .nav__item:before {
+    content: '\b7';
+    margin-left: 4px;
+    margin-right: 9px;
+}
+
+.social-signin {
+    @include clearfix;
+    margin: ($gs-baseline*2) 0 (($gs-baseline/3)*4);
+    text-align: center;
+
+    @include mq(desktop) {
+        margin: ($gs-baseline/3) 0;
+    }
+
+    .social-signin__item {
+        @include box-sizing(border-box);
+        display: inline-block;
+        margin-bottom: ($gs-baseline/3)*2;
+
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
+    .social-signin__action {
+        color: #ffffff;
+        display: block;
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        padding: 8px 0 9px;
+        text-indent: 24px;
+        width: 240px;
+        position: relative;
+        text-align: center;
+    }
+
+    .social-signin__action--fb {
+        background-color: #3b5998;
+
+        @include mq(tablet) {
+            margin-right: $gs-gutter/2;
+            width: gs-span(3);
+        }
+    }
+
+    .social-signin__action--gplus {
+        background-color: #dd4b39;
+
+        @include mq(tablet) {
+            margin-left: $gs-gutter/2;
+            width: gs-span(3);
+        }
+    }
+
+    .social-signin__icon {
+        position: absolute;
+    }
+
+    .social-signin__icon--fb {
+        top: 7px;
+        left: 14px;
+    }
+
+    .social-signin__icon--gplus {
+        top: 9px;
+        left: 10px;
+    }
+}
+
+.password-strength-indicator {
+    background-color: #ebebeb;
+    height: 8px;
+    margin-top: 4px;
+    position: relative;
+
+    /* Indicator bar */
+    &:after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+    }
+
+    &.score-0:after { width: 20%; background-color: #cc0a00; }
+    &.score-1:after { width: 40%; background-color: #ff4b00; }
+    &.score-2:after { width: 60%; background-color: #ff8b00; }
+    &.score-3:after { width: 80%; background-color: #00e643; }
+    &.score-4:after { width: 100%; background-color: #00b334; }
+
+    .password-strength {
+        display: inline-block;
+        height: 40px;
+        margin-top: 14px;
+    }
+}
+
+.user-avatar,
+.user-avatar__image {
+    float: left;
+    height: 60px;
+    width: 60px;
+    margin-right: $gs-gutter/2;
+}
+
+.user-profile {
+    @include mq(tablet) {
+        margin-bottom: $gs-baseline*2;
+    }
+}
+.user-profile__about {
+    clear: both;
+    margin-top: $gs-baseline;
+    @include fs-textSans(2);
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter*3.5;
+        margin-top: $gs-baseline;
+        max-width: gs-span(6);
+        clear: none;
+        margin-top: 0;
+    }
+
+    @include mq(rightCol) {
+        margin-top: $gs-baseline/2;
+        float: right;
+    }
+}
+.user-profile__name {
+    @include fs-headline(4);
+
+    @include mq(tablet) {
+        @include fs-headline(7, true);
+    }
+}
+.user-profile__last-seen,
+.user-profile__web-page {
+    display: block;
+    @include fs-textSans(1);
+    color: $c-neutral2-contrasted;
+    font-weight: normal;
+}
+.user-profile__web-page {
+    display: block;
+    margin-bottom: $gs-baseline/3;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+}
+
+
+
+/* Email Validation
+   ========================================================================== */
+
+.form-field.form-field--email-validation {
+    position: relative;
+    padding-left: 24px;
+
+    i {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .fieldset:first-of-type {
+        border-top: 0; // Included so as not to break tabs metaphor
+    }
+}
+
+
+/* Public Profile Page
+   ========================================================================== */
+
+.identity-public-profile {
+    .identity-section__text {
+        white-space: pre-line;
+    }
+}
+
+.tabs--identity {
+    .tabs__tab--selected {
+        border-top-color: $c-newsAccent;
+    }
+    .tabs__tab {
+        max-width: gs-span(3);
+        width: 25%;
+    }
+
+    @include mq($until: tablet) {
+        a {
+            padding-top: $gs-baseline/4;
+            line-height: 13px !important;
+        }
+    }
+    @include mq($until: 500px) {
+        .tabs__tab {
+            width: 50%;
+            margin-top: 5px;
+        }
+    }
+}
+
+
+/* Edit profile Membership tab
+   ========================================================================== */
+
+.identity-wrapper--with-membership {
+    @include mq($until: desktop) {
+        .tabs__tab {
+            width: auto;
+        }
+    }
+}
+
+.membership-tab {
+    padding-bottom: $gs-baseline*2;
+
+    .membership-tab__details-list {
+        padding-top: $gs-baseline*2;
+
+        li {
+            margin-bottom: $gs-baseline;
+
+            .membership-tab__card-details {
+                padding: 8px 4px 8px 12px;
+            }
+
+            .membership-tab__upgrade {
+                margin: 0;
+            }
+        }
+
+        .membership-tab__card-types {
+            display: inline-block;
+            height: 35px;
+            width: 54px;
+            vertical-align: middle;
+        }
+
+        .membership-tab__update-button {
+            display: block;
+            @include box-sizing(border-box);
+            width: 120px;
+            margin: ($gs-baseline/2) 0 0;
+
+            @include mq(tablet) {
+                float: right;
+                margin: 0;
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        .membership-payment-cost {
+            text-transform: uppercase;
+        }
+
+        .membership-tab__update-button--muted {
+            background: none;
+            color: $c-newsDefault;
+
+            &:hover,
+            &:focus {
+                background: none;
+                text-decoration: underline;
+            }
+            &:active {
+                color: $c-newsAccent;
+            }
+        }
+
+        .membership-tab__interval {
+            text-transform: lowercase;
+        }
+    }
+
+    .membership-tab__details-list--lower {
+        padding-top: 0;
+    }
+
+    .membership-tab__subscription-change {
+        position: relative;
+    }
+
+    .subscription-change__title {
+        background-color: #fff8e5;
+        @include fs-header(3);
+        padding: 15px 0 15px 4px;
+        margin: 32px 0 15px;
+        border-top: 1px solid $c-commentAccent;
+        border-bottom: 1px solid $c-commentAccent;
+    }
+
+    .change-summary__heading {
+        @include fs-header(3);
+        border-top: 1px solid $c-neutral4;
+        padding: 15px 0 20px;
+        margin-top: $gs-gutter*2;
+    }
+
+    .change-summary__arrow {
+        display: block;
+        position: absolute;
+        @include background-size(rem(18px 16px));
+        left: 50%;
+        top: 598px;
+        margin-left: -9px;
+        width: 18px;
+        height: 16px;
+
+        @include transform(rotate(90deg));
+
+        @include mq(tablet) {
+            @include transform(rotate(0deg));
+            top: 384px;
+        }
+
+        @include mq(desktop) {
+            @include transform(rotate(0deg));
+            @include background-size(rem(26px 24px));
+            top: 330px;
+            margin-left: -13px;
+            width: 26px;
+            height: 24px;
+        }
+    }
+
+    .change-summary__container {
+        padding-bottom: 80px;
+        -webkit-box-pack: justify;
+        -moz-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+
+        .change-summary__panel {
+            background-color: $c-neutral8;
+            margin-top: 30px;
+
+            @include mq(tablet) {
+                margin: 0;
+                flex-grow: 0;
+                flex-direction: column;
+                display: inline-block;
+                vertical-align: top;
+                width: 47%;
+                flex-basis: 47%;
+            }
+
+            .change-summary__panel-label {
+                display: block;
+                @include fs-textSans(4);
+                color: #ffffff;
+                height: 30px;
+                padding: 0 0 0 12px;
+                line-height: 30px;
+            }
+
+            .change-summary__panel-label--current {
+                background-color: $c-neutral2;
+            }
+            .change-summary__panel-label--target {
+                background-color: $c-newsAccent;
+            }
+        }
+
+        .change-summary__header {
+            height: 57px;
+            border-top: 1px solid $c-neutral4;
+            border-bottom: 1px solid $c-neutral4;
+
+            .change-summary__tier-icon {
+                display: inline-block;
+                vertical-align: middle;
+                height: 28px;
+                line-height: 54px;
+                padding: 0 6px 0 12px;
+            }
+
+            i {
+                display: inline-block;
+                vertical-align: middle;
+                @include background-size(rem(28px 28px));
+                height: 28px;
+                width: 28px;
+            }
+
+            .change-summary_tier {
+                @include fs-header(2);
+                display: inline-block;
+                vertical-align: top;
+                line-height: 57px;
+            }
+        }
+
+        .change-summary__meta {
+            padding: 15px 0 30px 12px;
+
+            .change-summary__label,
+            .change-summary__data {
+                display: inline-block;
+
+                @include mq(tablet, desktop) {
+                    display: block;
+                    margin-bottom: $gs-baseline;
+                }
+            }
+
+            .change-summary__label {
+                @include fs-bodyHeading(2);
+                min-width: 50%;
+            }
+
+            .change-summary__data {
+                @include fs-bodyCopy(2);
+            }
+        }
+    }
+
+    .membership-tab__change-cc-form-cont {
+        display: none;
+        overflow: hidden;
+        height: auto;
+
+        .form__error {
+            margin: 0 0 $gs-baseline;
+        }
+
+        .is-updating {
+            vertical-align: middle;
+            margin-top: 0;
+        }
+
+        &.membership-tab__change-cc-form-cont--to-open {
+            display: block;
+            @include animation(mem-tab-to-open .25s ease-in-out);
+        }
+        &.membership-tab__change-cc-form-cont--open {
+            display: block;
+
+            @include mq(tablet) {
+                max-height: 350px;
+            }
+            opacity: 1;
+        }
+
+        &.membership-tab__change-cc-form-cont--to-closed {
+            display: block;
+            max-height: 0;
+            opacity: 0;
+            @include animation(mem-tab-to-closed .25s ease-in-out forwards);
+        }
+        &.membership-tab__change-cc-form-cont--closed {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        /* Stripe credit card types
+           ========================================================================== */
+
+        $small-card: 32px;
+        $large-card: 35px;
+
+        .membership-tab__credit-card-container {
+            position: relative;
+        }
+
+        .membership-tab__card-types--in-field {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            width: 54px;
+            height: $large-card;
+        }
+
+        @include mq(tablet) {
+            .membership-tab__card-types--in-field {
+                width: 49px !important;
+                height: $small-card !important;
+                @include background-size(49px $small-card);
+            }
+        }
+    }
+}
+
+
+/* Membership Keyframe animations
+   ========================================================================== */
+
+@include keyframes('mem-tab-to-open') {
+    0% {
+        opacity: 0;
+        max-height: 0;
+    }
+    100% {
+        opacity: 1;
+        max-height: rem(424px);
+
+        @include mq(tablet) {
+            max-height: rem(350px);
+        }
+    }
+}
+
+@include keyframes('mem-tab-to-closed') {
+    0% {
+        opacity: 1;
+        max-height: rem(424px);
+
+        @include mq(tablet) {
+            max-height: rem(350px);
+        }
+    }
+    100% {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+@include keyframes('updated') {
+    0% {
+        background-color: $c-brandLightBlue;
+        color: #ffffff;
+    }
+    100% {
+        background-color: #ffffff;
+        color: inherit;
+    }
+}
+
+
+/* Email subscriptions
+   ========================================================================== */
+.email-subscriptions {
+    margin-top: $gs-baseline*2;
+}
+.email-subscription {
+    border-top: 1px solid $c-neutral5;
+    margin-bottom: $gs-baseline*2;
+    padding-top: $gs-baseline/3;
+}
+.email-subscription--subscribed {
+    opacity: .8;
+}
+.email-subscription__name {
+    @include fs-headline(3);
+    margin-bottom: $gs-baseline;
+
+    @include mq(desktop) {
+        @include box-sizing(border-box);
+        @include fs-headline(3, true);
+        float: left;
+        padding-right: $gs-gutter;
+        width: gs-span(4);
+    }
+}
+.email-subscription__description {
+    @include fs-bodyCopy(1);
+
+    @include mq(desktop) {
+        padding-left: gs-span(4);
+    }
+}
+.email-subscription__meta {
+    margin-top: $gs-baseline;
+}
+.email-subscription__frequency {
+    @include fs-textSans(1);
+    float: right;
+    margin-bottom: $gs-baseline/1.5;
+    margin-top: $gs-baseline/1.5;
+
+    .i {
+        margin-right: $gs-gutter/4;
+        vertical-align: text-top;
+    }
+
+    @include mq(desktop) {
+        float: none;
+        margin-top: $gs-baseline;
+        padding-left: gs-span(4);
+    }
+}
+.email-subscription__button {
+    @include fs-textSans(2);
+    background: $c-brandBlue;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+
+    @include mq(desktop) {
+        float: right;
+    }
+
+    .email-subscription--subscribed & {
+        background: $c-neutral2-contrasted;
+    }
+}

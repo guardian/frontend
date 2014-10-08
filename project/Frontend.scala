@@ -31,9 +31,13 @@ object Frontend extends Build with Prototypes {
       snappyJava,
       liftJson,
       playGoogleAuth,
+      flexibleContentBlockToText,
+      flexibleContentBodyParser,
       scalaCheck,
+      faciaScalaClient,
       filters,
-      ws
+      ws,
+      scalaTestPlus
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -86,7 +90,6 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      slick,
       postgres,
       paClient,
       dfpAxis,
@@ -123,39 +126,6 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
-  val endtoend = application("fronts-endtoend-tests").settings(
-    libraryDependencies ++= Seq(
-      slf4jApi,
-      logbackClassic,
-      chargebee,
-      jodaTime,
-      mezaAao,
-      mezaConfig,
-      mezaGaLib,
-      mezaHttpClientWrapper,
-      commonsCodec,
-      cucumberJava,
-      cucumberJUnit,
-      velocity,
-      cucumberPicoContainer,
-      seleniumJava,
-      seleniumServer,
-      jUnit,
-      jUnitInterface
-    ),
-    testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v"),
-    javacOptions ++= Seq("-source", "7", "-target", "1.8"),
-    autoScalaLibrary := false,
-    unmanagedSourceDirectories in Compile <+= baseDirectory(_ / "src"),
-    unmanagedSourceDirectories in Test <+= baseDirectory(_ / "src"),
-    unmanagedSourceDirectories in Runtime <+= baseDirectory(_ / "src"),
-    unmanagedResourceDirectories in Compile <+= baseDirectory(_ / "src" / "main" / "resources"),
-    unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "main" / "resources"),
-    unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "main" / "resources"),
-    unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "test" / "resources"),
-    unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
-  )
-
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -171,6 +141,10 @@ object Frontend extends Build with Prototypes {
       commercial,
       onward
     )
+
+  val faciaEndToEnd = application("facia-end-to-end")
+    .dependsOn(commonWithTests)
+    .dependsOn(facia, faciaTool, faciaPress)
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD

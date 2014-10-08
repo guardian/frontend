@@ -48,7 +48,6 @@ trait MetaData extends Tags {
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
-    ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
@@ -73,6 +72,10 @@ trait MetaData extends Tags {
   def cacheSeconds = 60
 
   def customSignPosting: Option[NavItem] = None
+
+  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
+  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
 }
 
 class Page(
@@ -206,12 +209,13 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(tags)
-  def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
-  def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
-  def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
-  def sponsor = DfpAgent.getSponsor(tags)
+  def isSponsored: Boolean
+  def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
+  def isAdvertisementFeature: Boolean
+  def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
+  def isFoundationSupported: Boolean
+  def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
+  def sponsor: Option[String] = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   /**
@@ -234,6 +238,7 @@ trait Tags {
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
+  lazy val isPodcast = types.exists(_.id == Tags.Podcast)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -244,6 +249,7 @@ trait Tags {
 
 object Tags {
   val Analysis = "tone/analysis"
+  val Podcast = "type/podcast"
 
   object VisualTone {
     val Live = "live"
@@ -258,7 +264,6 @@ object Tags {
 
   val commentMappings = Seq(
     "tone/comment",
-    "tone/letters",
     "tone/editorials"
   )
 

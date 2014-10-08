@@ -1,0 +1,16 @@
+{
+  "name": "pasteup-palette",
+  "description": "Palette component in the Pasteup collection",
+  "version": "3.3.0",
+  "main": [
+    "src/_palette.scss"
+  ],
+  "homepage": "https://github.com/guardian/pasteup-palette",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/guardian/pasteup-palette.git"
+  },
+  "dependencies": {
+    "guss-colours": "~3.0.0"
+  }
+}

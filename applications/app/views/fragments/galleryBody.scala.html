@@ -66,7 +66,7 @@
                                     <li class="gallery2__item gallery2__item--advert">
                                         @fragments.commercial.standardAd(
                                             adSlot,
-                                            Seq("gallery-inline"),
+                                            Seq("gallery-inline", "dark"),
                                             Map(
                                                 "mobile" -> Seq("300,50"),
                                                 "mobile-landscape" -> Seq("300,50", "320,50"),
@@ -79,15 +79,15 @@
                         }
                     }
                 </ul>
-                <div class="tag-wrapper">
+                <div class="submeta-container submeta-container--break-at-leftcol">
                     @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
-                            <h2 class="social__head u-h--up-to-left-col">Topics</h2>
-                            @fragments.keywordList(gallery.keywords, tone = "media")
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Topics</h2>
+                            @fragments.keywordList(gallery.keywords, tone = Some("media"))
                         </div>
                     }
-                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
-                        <h2 class="social__head u-h--up-to-left-col">Share this article</h2>
+                    <div class="submeta" data-component="share">
+                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
                         @fragments.social(gallery, iconModifier = "white")
                     </div>
                 </div>
@@ -96,7 +96,7 @@
     </article>
     </div>
 
-    <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading">
+    <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading hide-on-childrens-books-site">
         <div class="container container--popular">
             <div class="facia-container__inner">
                 <h2 class="container__title">
@@ -105,6 +105,5 @@
             </div>
         </div>
     </div>
-
     @fragments.contentFooter(gallery, related, "media")
 </div>

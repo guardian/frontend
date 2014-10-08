@@ -12,70 +12,6 @@ import scala.concurrent.future
 
 object DfpDataCacheJob extends ExecutionContexts {
 
-  private implicit val customTargetWrites = new Writes[CustomTarget] {
-    def writes(target: CustomTarget): JsValue = {
-      Json.obj(
-        "name" -> target.name,
-        "op" -> target.op,
-        "values" -> target.values
-      )
-    }
-  }
-
-  private implicit val customTargetSetWrites = new Writes[CustomTargetSet] {
-    def writes(targetSet: CustomTargetSet): JsValue = {
-      Json.obj(
-        "op" -> targetSet.op,
-        "targets" -> targetSet.targets
-      )
-    }
-  }
-
-  private implicit val geoTargetWrites = new Writes[GeoTarget] {
-    def writes(geoTarget: GeoTarget): JsValue = {
-      Json.obj(
-        "id" -> geoTarget.id,
-        "parentId" -> geoTarget.parentId,
-        "locationType" -> geoTarget.locationType,
-        "name" -> geoTarget.name
-      )
-    }
-  }
-
-  private implicit val adUnitWrites = new Writes[GuAdUnit] {
-    def writes(adUnit: GuAdUnit): JsValue = {
-      Json.obj(
-        "id" -> adUnit.id,
-        "path" -> adUnit.path
-      )
-    }
-  }
-
-  private implicit val targetingWrites = new Writes[GuTargeting] {
-    def writes(targeting: GuTargeting): JsValue = {
-      Json.obj(
-        "adUnits" -> targeting.adUnits,
-        "geoTargets" -> targeting.geoTargets,
-        "customTargetSets" -> targeting.customTargetSets
-      )
-    }
-  }
-
-  private implicit val lineItemWrites = new Writes[GuLineItem] {
-    def writes(lineItem: GuLineItem ): JsValue = {
-      val timePattern = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z")
-      Json.obj(
-        "id" -> lineItem.id,
-        "name" -> lineItem.name,
-        "startTime" -> timePattern.print(lineItem.startTime),
-        "endTime" -> lineItem.endTime.map(endTime => timePattern.print(endTime)),
-        "isPageSkin" -> lineItem.isPageSkin,
-        "sponsor" -> lineItem.sponsor,
-        "targeting" -> lineItem.targeting
-      )
-    }
-  }
-
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
       Json.obj(
@@ -119,6 +55,9 @@ object DfpDataCacheJob extends ExecutionContexts {
 
         val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
         Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
+
+        val foundationSupported = data.foundationSupported
+        Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now, foundationSupported))))
 
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))

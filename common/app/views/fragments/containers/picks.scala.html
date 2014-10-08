@@ -1,8 +1,9 @@
-@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int, dataId: String)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Collection, Config}
+@import model.Collection
 @import views.support.{GetClasses, Container, TemplateDeduping, Seq2zipWithRowInfo}
+@import dfp.DfpAgent
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -11,15 +12,15 @@
             <section
                 id="@FaciaComponentName(config, collection)"
                 class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
-                data-id="@config.id"
+                data-id="@dataId"
                 data-type="@style.containerType"
-                @config.sponsorshipKeyword.map { keyword =>
+                @DfpAgent.sponsorshipTag(config).map { keyword =>
                     data-keywords="@keyword"
                 }
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
-                    <div class="container__header">
+                    <div class="container__header js-container-header">
                         @title.map { title =>
                             <h2 class="container__title">
                                 @href.map { href =>
@@ -34,7 +35,7 @@
                                     <dl class="content-meta">
                                         <dt class="content-meta__label">Series</dt>
                                         <dd class="content-meta__item">
-                                            <a href="@LinkTo{/@link}" class="tone-colour">@config.id</a>
+                                            <a href="@LinkTo{/@link}" class="tone-colour">@dataId</a>
                                         </dd>
                                     </dl>
                                 </div>

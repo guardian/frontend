@@ -86,13 +86,12 @@
                 <h2 class="form__heading">
                     Membership Tier
                 </h2>
-                <p class="form-field__note">Your membership tier plan</p>
             </div>
 
             <div class="fieldset__fields u-cf">
                 <div class="form-field">
                     <span class="js-membership-tier"></span>
-                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button">Change tier</a>
+                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button" data-link-name="Change tier">Change tier</a>
                 </div>
             </div>
         </li>
@@ -101,7 +100,6 @@
                 <h2 class="form__heading">
                     Start date
                 </h2>
-                <p class="form-field__note">The date you joined</p>
             </div>
 
             <div class="fieldset__fields">
@@ -115,7 +113,6 @@
                 <h2 class="form__heading">
                     <span class="js-membership-plan-interval"></span> payment
                 </h2>
-                <p class="form-field__note">The <span class="membership-tab__interval js-membership-plan-interval"></span> cost of your membership</p>
             </div>
 
             <div class="fieldset__fields">
@@ -131,7 +128,6 @@
                 <h2 class="form__heading">
                     Next payment
                 </h2>
-                <p class="form-field__note">The date of your next payment</p>
             </div>
 
             <div class="fieldset__fields">
@@ -145,7 +141,6 @@
                 <h2 class="form__heading">
                     Card details
                 </h2>
-                <p class="form-field__note">The card that will be used for your next payment</p>
             </div>
 
             <div class="fieldset__fields u-cf">
@@ -154,7 +149,7 @@
                     <span class="membership-tab__card-details">
                         •••• •••• •••• <span class="js-membership-payment-card-lastfour"></span>
                     </span>
-                    <button class="submit-input js-membership-change-cc-open membership-tab__update-button">Change card</button>
+                    <button class="submit-input js-membership-change-cc-open membership-tab__update-button" data-link-name="Change card">Change card</button>
                 </div>
             </div>
         </li>
@@ -167,7 +162,6 @@
                     <h2 class="form__heading">
                         Change card details
                     </h2>
-                    <p class="form-field__note">Enter your new card details here</p>
                 </div>
                 <div class="fieldset__fields">
                     <div class="form-field">
@@ -179,34 +173,33 @@
                     </div>
 
                     <div class="form-field">
-                        <label class="label" for="cc-cvc">
-                            <span>Security code</span>
-                            <input type="tel" size="4" data-stripe="cvc" class="js-credit-card-cvc text-input text-input--small text-input--block" id="cc-cvc" placeholder="CVC" maxlength="4" autocomplete="off"/>
-                        </label>
+                        <label class="label" for="cc-cvc"></label>
+                        <span>Security code</span>
+                        <input type="tel" size="4" data-stripe="cvc" class="js-credit-card-cvc text-input text-input--small text-input--block" id="cc-cvc" placeholder="CVC" maxlength="4" autocomplete="off"/>
+
                     </div>
 
                     <div class="form-field">
-                        <label class="label" for="cc-exp-month">
-                            <span>Expiry</span>
-                            <p>
-                                <select data-stripe="exp-month" id="cc-exp-month" class="js-credit-card-exp-month">
-                                    <option selected="selected">Month</option>
-                                    @for(month <- selectDates.validCardMonths){
-                                    <option value="@month">@month</option>
-                                    }
-                                </select>
-                                <span> / </span>
-                                <select data-stripe="exp-year" id="cc-exp-year" class="js-credit-card-exp-year">
-                                    <option selected="selected">Year</option>
-                                    @for((year, formattedYear) <- selectDates.validCardYears){
-                                    <option value="@year">@formattedYear</option>
-                                    }
-                                </select>
-                            </p>
-                        </label>
+                        <label class="label" for="cc-exp-month"></label>
+                        <span>Expiry</span>
+                        <p>
+                            <select data-stripe="exp-month" id="cc-exp-month" class="js-credit-card-exp-month">
+                                <option selected="selected">Month</option>
+                                @for(month <- selectDates.validCardMonths){
+                                <option value="@month">@month</option>
+                                }
+                            </select>
+                            <span> / </span>
+                            <select data-stripe="exp-year" id="cc-exp-year" class="js-credit-card-exp-year">
+                                <option selected="selected">Year</option>
+                                @for((year, formattedYear) <- selectDates.validCardYears){
+                                <option value="@year">@formattedYear</option>
+                                }
+                            </select>
+                        </p>
                     </div>
                     <div class="form-field">
-                        <button class="submit-input js-membership-change-cc-submit" type="submit">Update</button><div class="is-updating js-updating"></div>
+                        <button class="submit-input js-membership-change-cc-submit" type="submit" data-link-name="Update card details">Update</button><div class="is-updating js-updating"></div>
                     </div>
                 </div>
             </form>

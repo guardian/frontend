@@ -1,0 +1,107 @@
+/* ==========================================================================
+   DFP bespoke component
+   ========================================================================== */
+.commercial--dfp--v2 {
+    /* Single */
+    &.commercial--dfp-single--v2 {
+        .lineitem--dfp-single {
+            width: 100%;
+            overflow: hidden;
+
+            .lineitem__image {
+                margin-right: $gs-gutter/2;
+                max-width: $gs-gutter*11;
+                float: left;
+            }
+
+            .lineitem--dfp-single__offer {
+                float: left;
+                max-width: gs-span(9);
+                width: 100%;
+            }
+
+            .lineitem--dfp-single__cta {
+                @include box-sizing(border-box);
+                margin-left: $gs-gutter/2;
+                border-left: 1px solid $c-neutral4;
+                padding-left: $gs-gutter/2;
+                float: left;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: gs-span(9) + $gs-gutter/2;
+
+                .commercial__cta {
+                    left: $gs-gutter/2;
+                    top: 0;
+                }
+                
+                &.hide-cta-link {
+                    display: none !important;
+                }
+            }
+        }
+    }
+
+    /* Multiple */
+    &.commercial--dfp-multiple--v2 {
+        .lineitem {
+            width: percentage(1/2);
+
+            &:nth-child(n+3) {
+                display: none;
+            }
+            @include mq(tablet) {
+                width: percentage(1/3);
+
+                &:nth-child(n+3) {
+                    display: block;
+                }
+
+                &:nth-child(n+4) {
+                    display: none;
+                }
+            }
+            @include mq(rightCol) {
+                width: percentage(1/4);
+                
+                &:nth-child(n+4) {
+                    display: block;
+                }
+            }
+        }
+        &.commercial--items-dfp-2 {
+            @include mq(tablet) {
+                .lineitem {
+                    width: 50%;
+
+                    &:nth-child(n+3) {
+                        display: none;
+                    }
+                }
+            }
+
+            @include mq(rightCol) {
+                .lineitem__image-crop {
+                    width: 50%;
+                    float: left;
+                    margin-right: $gs-gutter/2;
+                    padding-bottom: percentage(1/3);
+                }
+            }
+        }
+
+        &.commercial--items-dfp-3 {
+            @include mq(rightCol) {
+                .lineitem {
+                    width: percentage(1/3);
+
+                    &:nth-child(n+4) {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

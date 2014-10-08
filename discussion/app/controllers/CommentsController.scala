@@ -6,7 +6,7 @@ import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.model.{BlankComment, DiscussionKey}
 
-trait CommentsController extends DiscussionController {
+object CommentsController extends DiscussionController {
 
   def commentContextJson(id: Int) = Action.async { implicit request =>
     val params = DiscussionParams(request)
@@ -17,7 +17,8 @@ trait CommentsController extends DiscussionController {
 
   def commentJson(id: Int) = comment(id)
   def comment(id: Int) = Action.async { implicit request =>
-    val comment = discussionApi.commentFor(id)
+    val comment = discussionApi.commentFor(id, request.getQueryString("displayThreaded"))
+
     comment map {
       comment =>
         Cached(60) {
@@ -55,7 +56,7 @@ trait CommentsController extends DiscussionController {
   }
 }
 
-case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, sentiment: Option[String] = None, topComments: Boolean)
+case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, topComments: Boolean)
 object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
     DiscussionParams(
@@ -63,7 +64,6 @@ object DiscussionParams extends {
       page = request.getQueryString("page").getOrElse("1"),
       pageSize = request.getQueryString("pageSize").getOrElse("50"),
       maxResponses = request.getQueryString("maxResponses"),
-      sentiment = request.getQueryString("sentiment"),
       topComments = request.getQueryString("topComments").map(_ == "true").getOrElse(false)
     )
   }

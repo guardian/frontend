@@ -14,14 +14,19 @@
 
             @fragments.contentMeta(image)
 
-
-            <div class="content__keywords" data-link-name="article keywords">
-                @fragments.keywordList(image.keywords)
+            <div class="submeta-container submeta-container--break-at-wide">
+                @if(image.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                    <div class="submeta" data-link-name="keywords">
+                        <h2 class="submeta__head">Topics</h2>
+                        @fragments.keywordList(image.keywords)
+                    </div>
+                }
+                <div class="submeta" data-component="share">
+                    <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                    @fragments.social(image)
+                </div>
             </div>
 
-            <div class="social-wrapper" data-component="share">
-                @fragments.social(image)
-            </div>
         </div>
 
 

@@ -48,6 +48,8 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
   }
 
+
+
   def renderLatest(path: String, lastUpdate: Option[String]) = lastUpdate map { renderLatestFrom(path, _) } getOrElse { renderArticle(path) }
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {

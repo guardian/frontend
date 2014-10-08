@@ -1,0 +1,114 @@
+.fc-item__title--quoted .fc-item__link:before {
+    @include icon(quote-grey, false);
+    content: '';
+    height: .8em;
+    width: 1em;
+}
+
+.fc-item__timestamp {
+    padding-left: 0;
+
+    &:before {
+        @include icon(clock-light-grey, false);
+        content: '';
+        margin: 0;
+        top: 1px;
+        position: relative;
+        height: 11px;
+        width: 11px;
+        margin-right: 2px;
+    }
+}
+
+.fc-trail__count:before {
+    @include icon(comment-light-grey, false);
+    width: 16px;
+    height: 16px;
+    content: '';
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 1px;
+}
+
+.tone-podcast {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-black, false);
+    }
+
+    .fc-item__timestamp:before {
+        @include icon(clock-white, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-white, false);
+    }
+
+    .fc-item__title:before {
+        @include icon(volume-high-dark-blue, false);
+        content: '';
+        height: .75em;
+        width: .95em;
+    }
+}
+
+.tone-media {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-white, false);
+    }
+
+    .fc-item__timestamp:before {
+        @include icon(clock-grey, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-grey, false);
+    }
+}
+
+.fc-item--video {
+    .fc-item__title:before {
+        @include icon(video-icon, false);
+        content: '';
+        height: .75em;
+        width: 1.2em;
+        margin-right: 2px;
+    }
+}
+
+.fc-item--gallery {
+    .fc-item__title:before {
+        @include icon(camera-yellow-large, false);
+        content: '';
+        height: .75em;
+        width: 1.2em;
+    }
+}
+
+.tone-live {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-white, false);
+    }
+
+    .fc-item__timestamp:before {
+        @include icon(clock-light-pink, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-light-pink, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-white, false);
+    }
+}
+
+.tone-feature {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-light-pink, false);
+    }
+
+    .fc-item__timestamp:before {
+        @include icon(clock-light-pink, false);
+    }
+}

@@ -48,14 +48,15 @@ object Switches extends Collections {
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 9, 28)
+    sellByDate = new LocalDate(2014, 11, 30)
   )
 
-  val LiveblogCachingSwitch = Switch("Performance", "live-blog-caching",
-    "If this switch is switched on live blog cache times will be lowered",
+  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
+    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 9, 28)
+    sellByDate = new LocalDate(2014, 12, 31)
   )
+
 
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
@@ -120,6 +121,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val LiveBlogCacheTimeSwitch = Switch("Performance", "live-blog-cache-time",
+    "If this switch is on the live blog cache time will be 60s, otherwise it is 5s.",
+    safeState = On, sellByDate = never
+  )
+
   // Commercial
 
   val CommercialSwitch = Switch("Commercial", "commercial",
@@ -149,7 +155,7 @@ object Switches extends Collections {
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 27)
+    safeState = Off, sellByDate = new LocalDate(2014, 10, 11)
   )
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
@@ -208,11 +214,6 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val MagentoServiceSwitch = Switch("Commercial", "magento",
-    "If this switch is on, Guardian Bookshop components will be fed by Magento instead of Bertrams.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 1))
-
-
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -247,7 +248,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 5)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -305,18 +306,14 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
-
-  val CentreTopBannerAd = Switch("Feature", "centre-top-banner-ad",
-    "Center the top banner ad, allows more ad sizes to be used at smaller breakpoints.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 4))
 
   // A/B Tests
 
@@ -364,7 +361,7 @@ object Switches extends Collections {
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30))
+    safeState = Off, sellByDate = never)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -409,7 +406,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    MagentoServiceSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -428,8 +424,9 @@ object Switches extends Collections {
     BreakingNewsSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
-    LiveblogCachingSwitch,
-    CentreTopBannerAd
+    ForceHttpResponseCodeSwitch,
+    CircuitBreakerSwitch,
+    LiveBlogCacheTimeSwitch
   )
 
   val httpSwitches: List[Switch] = List(
@@ -437,7 +434,7 @@ object Switches extends Collections {
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 
-  def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
+  def byName(name: String): Option[Switch] = all.find(_.name == name)
 }
 
 class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)

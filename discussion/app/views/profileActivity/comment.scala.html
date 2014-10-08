@@ -3,6 +3,7 @@
     <div class="disc-comment__meta u-cf">
         <button
             class="disc-comment__recommend u-button-reset @if(canRecommend){js-disc-recommend-comment}"
+            data-link-name="Recommend comment"
             data-comment-id="@comment.id">
             <div class="disc-comment__recommend-count js-disc-recommend-count" itemprop="upvoteCount">
                 @comment.numRecommends
@@ -16,6 +17,7 @@
 
     @comment.responseTo.map{ responseTo =>
         <a data-comment-id="@comment.id"
+           data-link-name="View comment"
            class="disc-comment__view-discussion js-comment-permalink"
            href="@comment.webUrl">
             In response to @responseTo.displayName
@@ -31,6 +33,7 @@
     </div>
 
     <a data-comment-id="@comment.id"
+       data-link-name="View comment discussion"
        class="disc-comment__view-discussion js-comment-permalink"
        href="@comment.webUrl">
         View discussion

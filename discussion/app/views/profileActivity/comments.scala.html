@@ -1,6 +1,6 @@
 @(page: Page, profileComments: discussion.model.ProfileComments)(implicit request: RequestHeader)
 
-<div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments">
+<div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments" data-link-name="User activity replies">
     @if(profileComments.comments.isEmpty){
         <p class="activity-stream__empty">Nothing to see here at the moment.</p>
     } else {
@@ -8,7 +8,7 @@
             @profileComments.comments.zipWithRowInfo.map{ case(c, row) =>
                 <div class="activity-stream__item activity-item @if(row.isFirst){activity-item--first}" itemprop itemtype="http://schema.org/Comment">
                     <div class="activity-item__title">
-                        <a href="@c.discussion.webUrl">@c.discussion.title</a>
+                        <a href="@c.discussion.webUrl" data-link-name="View discussion">@c.discussion.title</a>
                     </div>
 
                     <div class="activity-item__content">
@@ -24,7 +24,7 @@
             }
         </div>
         <div class="activity-stream__pagination u-cf">
-            @fragments.pagination(page, profileComments.pagination, Some("js-activity-stream-page-change"))
+            @fragments.pagination(page, profileComments.pagination, Some("js-activity-stream-page-change"), false, false)
         </div>
     }
 </div>

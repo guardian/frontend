@@ -1,9 +1,10 @@
 package model.commercial.books
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.ConfiguredTestSuite
 import scala.xml.XML
 
-class BestsellersApiTest extends FlatSpec with Matchers {
+@DoNotDiscover class BestsellersApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val bestsellersApi = new BestsellersApi {
     protected val path = "path"

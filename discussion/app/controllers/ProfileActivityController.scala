@@ -5,7 +5,7 @@ import play.api.mvc.Action
 import model.{Page, Cached}
 import common.JsonComponent
 
-trait ProfileActivityController extends DiscussionController {
+object ProfileActivityController extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = Page(
     id = s"discussion/profile/${profile.userId}/$pageType",
     section = "Discussion",

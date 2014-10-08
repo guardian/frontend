@@ -1,0 +1,117 @@
+.brand-bar {
+    background-color: $c-brandBlue;
+    line-height: 0;
+    @include box-sizing(border-box);
+    padding-left: $gs-gutter * .25;
+    padding-right: $gs-gutter * .25;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+}
+
+.brand-bar__item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    @include fs-bodyHeading(1);
+    float: left;
+    color: $c-guardian-services-action;
+    height: $headerHeight;
+    padding-top: $gs-baseline /3;
+    padding-bottom: $gs-baseline /3;
+    margin-right: $gs-baseline * .25;
+    margin-left: $gs-baseline * .25;
+
+    @include mq(mobileLandscape) {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
+    }
+
+    @include mq(tablet) {
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
+    }
+}
+
+.brand-bar__item--action {
+    &:active,
+    &:focus,
+    &.is-active {
+        .control__icon-wrapper {
+            border-color: #ffffff;
+        }
+    }
+
+    &:hover {
+        // stops controls icons staying hightlighted
+        // after closing a popup on mobile
+        @include mq(tablet) {
+            .control__icon-wrapper {
+                border-color: #ffffff;
+            }
+        }
+    }
+}
+
+.brand-bar__item--action,
+.brand-bar__item--action:focus {
+    margin: 0;
+    cursor: pointer;
+    color: $c-guardian-services-action;
+    display: inline-block;
+    text-decoration: none;
+    line-height: $headerHeight;
+}
+
+.brand-bar__item--action {
+    &:focus,
+    &:active {
+        &,
+        .control__info {
+            text-decoration: underline;
+        }
+    }
+
+    &:hover {
+        &,
+        .control__info {
+            // stops links staying underlined
+            // after closing a popup on mobile
+            @include mq(tablet) {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.brand-bar__item--right {
+    @include box-sizing(border-box);
+    float: left;
+
+    @include mq(tablet) {
+        float: right;
+    }
+}
+
+.brand-bar__item--search {
+    padding-left: 0;
+
+    .popup__toggle:after {
+        display: none;
+    }
+}
+
+.brand-bar__item--edition {
+    cursor: pointer;
+}
+
+.brand-bar__item--subscribe i {
+    float: left;
+}
+
+.brand-bar__item--joinus .control__icon-wrapper {
+    border: 0;
+}

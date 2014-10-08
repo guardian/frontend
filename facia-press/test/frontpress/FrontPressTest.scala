@@ -1,11 +1,12 @@
 package frontpress
 
+import com.gu.facia.client.models.CollectionConfig
 import model._
-import Config.emptyConfig
-import org.scalatest.{TryValues, Matchers, FlatSpec}
-import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import org.scalatest.{DoNotDiscover, TryValues, Matchers, FlatSpec}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import test.ConfiguredTestSuite
 
-class FrontPressTest extends FlatSpec with Matchers with TryValues {
+@DoNotDiscover class FrontPressTest extends FlatSpec with Matchers with TryValues with ConfiguredTestSuite {
   val seoDataFixture = SeoData(
     "",
     "",
@@ -23,7 +24,7 @@ class FrontPressTest extends FlatSpec with Matchers with TryValues {
     None
   )
 
-  val configWithBackFill = emptyConfig.copy(contentApiQuery = Some(""))
+  val configWithBackFill = CollectionConfig.emptyConfig.copy(apiQuery = Some(""))
 
   val emptyCollection = Collection(
     Nil
@@ -54,7 +55,7 @@ class FrontPressTest extends FlatSpec with Matchers with TryValues {
 
   it should "not return an error if there are no back fills" in {
     FrontPress.generateJson("", seoDataFixture, frontPropertiesFixture, List(
-      emptyConfig -> emptyCollection
+      CollectionConfig.emptyConfig -> emptyCollection
     )) should be a 'success
   }
 

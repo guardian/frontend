@@ -3,7 +3,6 @@ package views.support
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
-import test.Fake
 import xml.XML
 import common.editions.Uk
 import conf.Configuration
@@ -27,6 +26,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "tone/foo", tagType = "tone")),
         Tag(tag(id = "type/video", tagType = "type"))
       )
+      override def isSponsored: Boolean = false
+      override def isFoundationSupported: Boolean = false
+      override def isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("type/video")
   }
@@ -37,6 +39,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "type/article", tagType = "type")),
         Tag(tag(id = "tone/foo", tagType = "tone"))
       )
+      override def isSponsored: Boolean = false
+      override def isFoundationSupported: Boolean = false
+      override def isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("tone/foo")
   }
@@ -93,7 +98,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     }
   }
 
-  "InBodyLinkCleaner" should "clean links" in Fake {
+  "InBodyLinkCleaner" should "clean links" in {
     implicit val edition = Uk
     implicit val request = FakeRequest("GET", "/")
 

@@ -1,9 +1,10 @@
 package model.commercial.money
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.ConfiguredTestSuite
 import scala.xml.XML
 
-class MortgagesApiTest extends FlatSpec with Matchers {
+@DoNotDiscover class MortgagesApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val xmlStr =
     """<NewDataSet><!--Comments: GU Products XML updated: 23/01/2014 09:00:03-->

@@ -1,4 +1,4 @@
-@(video: model.Video, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None, forcePlayable: Boolean = false)(implicit request: RequestHeader, config: model.Config)
+@(video: model.Video, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None, forcePlayable: Boolean = false)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{VideoPlayer, FaciaDisplayElement, InlineVideo}
@@ -17,7 +17,7 @@
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             @FaciaDisplayElement.fromTrail(video) match {
-                case InlineVideo(videoElement, title, endSlatePath) if video.imageAdjust == "boost" || forcePlayable => {
+                case InlineVideo(videoElement, title, endSlatePath) if video.isBoosted || forcePlayable => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="item__video-container">
                             @views.html.fragments.media.video(VideoPlayer(

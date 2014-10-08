@@ -1,6 +1,7 @@
 package model
 
 import common.Edition
+import dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
 
@@ -32,16 +33,30 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   lazy val shouldHidePublicationDate: Boolean = {
     isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
   }
+
+  override def isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
+  override def isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
 }
 
 //Facia tool values
 trait FaciaFields {
   def group: Option[String] = None
   def supporting: List[Trail] = Nil
+  def imageReplace: Boolean = false
   def imageSrc: Option[String] = None
   def imageSrcWidth: Option[String] = None
   def imageSrcHeight: Option[String] = None
-  def imageAdjust: String = "default"
+  def isBoosted: Boolean = false
+  def imageHide: Boolean = false
   def isBreaking: Boolean = false
+  def showKickerTag: Boolean = false
+  def showKickerSection: Boolean = false
+  def showKickerCustom: Boolean = false
+  def customKicker: Option[String] = None
   def showMainVideo: Boolean = false
+  def showBoostedHeadline: Boolean = false
+  def showQuotedHeadline: Boolean = false
+  def imageCutoutReplace: Boolean = false
+  def customImageCutout: Option[FaciaImageElement]
 }

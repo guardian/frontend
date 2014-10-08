@@ -4,7 +4,7 @@ module.exports = function(grunt, options) {
             src: [options.staticTargetDir + 'stylesheets/*.css.map'],
             overwrite: true,
             replacements: [{
-                from: '../../../common/app/assets/stylesheets/',
+                from: '../../../static/src/stylesheets/',
                 to: ''
             }]
         }

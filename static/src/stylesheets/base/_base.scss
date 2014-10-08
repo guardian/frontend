@@ -1,0 +1,103 @@
+html {
+    overflow-y: scroll;
+
+    &.iframed {
+        overflow-y: auto;
+    }
+
+    &.iframed--overflow-hidden {
+        overflow: hidden;
+    }
+}
+
+body {
+    background-color: #ffffff;
+}
+
+@if $old-ie == false {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
+/**
+ * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
+ */
+head {
+    font-family: 'mobile';
+
+    @include mq(mobileLandscape) {
+        font-family: 'mobileLandscape';
+    }
+    @include mq(tablet) {
+        font-family: 'tablet';
+    }
+    @include mq(rightCol) {
+        font-family: 'rightCol';
+    }
+    @include mq(desktop) {
+        font-family: 'desktop';
+    }
+    @include mq(leftCol) {
+        font-family: 'leftCol';
+    }
+    @include mq(wide) {
+        font-family: 'wide';
+    }
+}
+body:after {
+    content: 'mobile';
+    @include u-h;
+
+    @include mq(mobileLandscape) {
+        content: 'mobileLandscape';
+    }
+    @include mq(tablet) {
+        content: 'tablet';
+    }
+    @include mq(rightCol) {
+        content: 'rightCol';
+    }
+    @include mq(desktop) {
+        content: 'desktop';
+    }
+    @include mq(leftCol) {
+        content: 'leftCol';
+    }
+    @include mq(wide) {
+        content: 'wide';
+    }
+}
+
+.dateline {
+    color: $c-neutral2;
+    @include fs-textSans(2);
+
+    @include mq(tablet) {
+        @include fs-textSans(3, true);
+    }
+
+    i {
+        vertical-align: baseline;
+    }
+}
+
+.relative-timestamp {
+    display: block;
+    color: $c-neutral2;
+    margin: 0;
+}
+
+.relative-timestamp span {
+    display: inline-block;
+}
+
+.relative-timestamp__icon {
+    vertical-align: -2px;
+}
+
+ol,
+ul {
+    list-style-position: inside;
+}

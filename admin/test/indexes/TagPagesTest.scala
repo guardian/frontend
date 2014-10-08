@@ -4,14 +4,14 @@ import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
 import model.{TagDefinition, TagIndexPage}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.iteratee.Enumerator
 import TagPages._
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
 
-class TagPagesTest extends FlatSpec with Matchers with ScalaFutures {
+@DoNotDiscover class TagPagesTest extends FlatSpec with Matchers with ScalaFutures {
   "alphaIndexKey" should "return the downcased first character of an ASCII string" in {
     val words = Seq(
       "monads" -> "m",

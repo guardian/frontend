@@ -1,23 +1,22 @@
 package test
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
-import controllers.DiscussionApp
+import controllers.CommentCountController
 
-class CommentCountControllerTest extends FlatSpec with Matchers {
+@DoNotDiscover class CommentCountControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val callbackName = "foo"
 
-  "Discussion" should "return 200" in FakeDiscussion {
-    val result = DiscussionApp.commentCount("p/37v3a")(TestRequest())
+  "Discussion" should "return 200" in {
+    val result = CommentCountController.commentCount("p/37v3a")(TestRequest())
     status(result) should be(200)
   }
 
-  it should "return JSONP when callback is supplied" in FakeDiscussion {
+  it should "return JSONP when callback is supplied" in {
     val fakeRequest = FakeRequest(GET, "/discussion/comment-counts.json?shortUrls=/p/37v3a&callback=" + callbackName).withHeaders("host" -> "localhost:9000")
-    val result = DiscussionApp.commentCount("p/37v3a")(fakeRequest)
+    val result = CommentCountController.commentCount("p/37v3a")(fakeRequest)
 
     status(result) should be(200)
     contentType(result).get should be("application/javascript")

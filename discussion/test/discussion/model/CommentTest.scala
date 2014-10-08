@@ -1,9 +1,10 @@
 package discussion.model
 
-import org.scalatest.{ShouldMatchers, FreeSpec}
+import org.scalatest.{DoNotDiscover, ShouldMatchers, FreeSpec}
 import play.api.libs.json._
+import test.ConfiguredTestSuite
 
-class CommentTest extends FreeSpec with ShouldMatchers {
+@DoNotDiscover class CommentTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite {
 
 
   "A comment with Json" in {

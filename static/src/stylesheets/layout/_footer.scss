@@ -1,0 +1,113 @@
+$c-primary-footer-background: $c-brandBlue;
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
+
+/* Elements modifiers specific to the footer
+   ========================================================================== */
+
+.guardian-logo-footer {
+    margin-top: $gs-baseline * .75;
+    float: right;
+    line-height: 0;
+}
+
+
+/* Footer
+   ========================================================================== */
+
+.l-footer {
+    padding: 0;
+    background: $c-neutral6;
+
+    .hide-in-footer {
+        display: none !important;
+    }
+
+    .global-navigation__section:nth-of-type(2) .global-navigation__title {
+        border-top: 0;
+    }
+
+    .js-off & {
+        .navigation--collapsed {
+            height: auto;
+        }
+
+        .navigation__expandable {
+            display: block;
+        }
+
+        .navigation__inner {
+            display: none;
+        }
+    }
+    .control__info {
+        display: inline-block;
+    }
+}
+
+.site-message--footer {
+    position: relative;
+    z-index: 1;
+    background-color: $c-primary-footer-background-side-bar;
+    border-bottom: 1px solid #ffffff;
+
+    .site-message__inner {
+        background-color: $c-brandBlue;
+    }
+}
+
+.l-footer__primary {
+    position: relative;
+    overflow: hidden;
+    background: $c-primary-footer-background-side-bar;
+}
+
+.l-footer__secondary {
+    @include box-sizing(border-box);
+    @include fs-textSans(1);
+    padding-right: $gs-gutter * .5;
+    padding-left: $gs-gutter * .5;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+        padding-left: $gs-gutter;
+    }
+
+    &,
+    a {
+        color: $c-neutral1;
+    }
+}
+.colophon {
+    @include fs-bodyHeading(1);
+    list-style: none;
+    margin: 0;
+    padding-top: $gs-baseline * 2;
+    padding-bottom: $gs-baseline * .5;
+    @include columns(2);
+
+    @include mq(tablet) {
+        @include columns(3);
+    }
+
+    @include mq(wide) {
+        @include columns(4);
+    }
+
+    a {
+        display: inline-block;
+        padding-bottom: $gs-baseline;
+    }
+}
+.colophon__item {
+    @include box-sizing(border-box);
+}
+
+.l-footer__misc {
+    padding-top: $gs-baseline * .5;
+    padding-bottom: $gs-baseline * 1.5;
+    border-top: 1px solid $c-neutral4;
+}
+
+.really-serious-copyright {
+    margin-bottom: $gs-baseline/3;
+}

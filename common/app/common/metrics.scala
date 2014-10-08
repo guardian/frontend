@@ -141,6 +141,11 @@ object ContentApiMetrics {
     "content-api-circuit-breaker-requests",
     "Number of requests immediately rejected due to the circuit breaker being tripped"
   )
+
+  object ContentApiCircuitBreakerOnOpen extends CountMetric(
+    "content-api-circuit-breaker-on-open-changes",
+    "Number of times circuit breaker is put into the onOpen state"
+  )
 }
 
 object PaMetrics {

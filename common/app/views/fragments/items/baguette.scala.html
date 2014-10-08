@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
@@ -46,5 +46,5 @@
         @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
     </div>
 
-    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+    <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>

@@ -1,11 +1,13 @@
 package config
 
-import frontsapi.model.{Front, Collection, Config}
+import com.gu.facia.client.models.{Config, Front, Collection, CollectionConfig}
+import org.joda.time.DateTime
 import org.scalatest._
 import controllers.CreateFront
+import test.ConfiguredTestSuite
 
-class TransformationsSpec extends FlatSpec with ShouldMatchers {
-  val collectionFixture = Collection(
+@DoNotDiscover class TransformationsSpec extends FlatSpec with ShouldMatchers with ConfiguredTestSuite {
+  val collectionFixture = CollectionConfig.withDefaults(
     displayName = Some("New collection"),
     apiQuery = Some("backfill"),
     `type` = Some("???"),
@@ -14,7 +16,9 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     uneditable = Some(false),
     showTags = Some(true),
     showSections = Some(false),
-    showMainVideo = None
+    hideKickers = Some(false),
+    showLatestUpdate = Some(false),
+    showDateHeader = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -28,11 +32,14 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     imageWidth = None,
     imageHeight = None,
     isImageDisplayed = None,
+    isHidden = None,
     priority = Some("high"),
     initialCollection = collectionFixture
   )
 
-  val emptyCollectionFixture = Collection(
+  val emptyCollectionFixture = CollectionConfig(
+    None,
+    None,
     None,
     None,
     None,
@@ -44,7 +51,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     None
   )
 
-  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None)
+  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None, None)
 
   val validConfigFixture = Config.empty.copy(
     fronts = Map("foo" -> emptyFrontFixture.copy(collections = List("bar"))),
@@ -69,6 +76,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
         imageWidth = None,
         imageHeight = None,
         isImageDisplayed = None,
+        isHidden = None,
         priority = Some("high")
       ))
   }
