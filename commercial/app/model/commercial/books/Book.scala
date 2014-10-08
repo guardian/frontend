@@ -21,10 +21,7 @@ case class Book(title: String,
                 position: Option[Int] = None,
                 category: Option[String] = None,
                 keywordIds: Seq[String] = Nil
-               ) {
-
-  def isTargetedAt(segment: Segment): Boolean = intersects(lastPart(keywordIds), segment.context.keywords)
-}
+                 )
 
 object Book {
 
@@ -77,7 +74,7 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
   def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
-    val targetedBestsellers = available filter (_.isTargetedAt(segment))
+    val targetedBestsellers = available filter (book => keywordsMatch(segment, book.keywordIds))
     lazy val defaultBestsellers = available filter (_.category.exists(_ == "General"))
     val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
     bestsellers.sortBy(_.position).take(10)
