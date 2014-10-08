@@ -104,10 +104,6 @@ $header-image-size-desktop: 120px;
     @include fs-headline(2);
 }
 
-.fc-today__dayofweek {
-    font-weight: 500;
-}
-
 @include mq(wide) {
     .fc-today__sub {
         display: block;
