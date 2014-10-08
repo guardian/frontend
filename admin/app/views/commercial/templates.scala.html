@@ -1,11 +1,16 @@
 @(env: String, templates: Seq[dfp.GuCreativeTemplate])
 @import tools.DfpLink
 
-@admin_main("Commercial Templates", env, isAuthed = true) {
+@admin_main("Creative Templates", env, isAuthed = true) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Creative Templates</h1>
+
+    <p>This dashboard is to help debug DFP creative templates.<br />
+        All unarchived creative templates are shown.</p>
+    <p>The creatives listed under each template are only those owned by the Guardian Merchandising account.<br />
+        So a template might appear to be unused when in fact other creatives have been built from it.</p>
 
     <ol>
     @for(template <- templates) {
