@@ -82,8 +82,8 @@ object ItemMeta {
     //TODO: showKickerCustom/showCustomKicker?
     ("showKickerCustom", content.apiContent.metaData.flatMap(_.showCustomKicker).map(JsBoolean)),
     ("customKicker", content.apiContent.metaData.flatMap(_.customKicker).map(JsString)),
-    //("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline)),
-    //("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline)),
+    ("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline).map(JsBoolean)),
+    ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
     ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean))
   )
 }
