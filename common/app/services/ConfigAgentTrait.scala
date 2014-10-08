@@ -18,14 +18,25 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
-  def refresh() = FrontsApi.amazonClient.config.map(Option.apply).map(configAgent.send)
+  def refresh() = {
+    val futureConfig = FrontsApi.amazonClient.config
+    futureConfig.onComplete { case config => log.info(s"Successfully got config $config")}
+    futureConfig.onFailure { case t: Throwable => log.info(s"Getting config failed with $t")}
+    futureConfig.map(Option.apply).map(configAgent.send)
+  }
 
-  def refreshWith(config: Config): Unit = configAgent.send(Option(config))
+  def refreshWith(config: Config): Unit = {
+    log.info(s"Refreshing ConfigAgent with $config")
+    configAgent.send(Option(config))
+  }
 
   def refreshAndReturn(): Future[Option[Config]] =
     FrontsApi.amazonClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
-      .fallbackTo(Future.successful(configAgent.get()))
+      .fallbackTo{
+      log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
+      Future.successful(configAgent.get())
+    }
 
   def getPathIds: List[String] = {
     val config = configAgent.get()
