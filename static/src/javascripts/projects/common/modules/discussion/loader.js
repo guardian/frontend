@@ -178,48 +178,19 @@ Loader.prototype.initShowAll = function() {
         userPrefs.set('discussion.expand', expand);
         this.comments.fetchComments();
     });
-
 };
 
 Loader.prototype.initUnthreaded = function() {
-    var self = this;
-    // Non threaded view
-    var $discussionContainer = $('.js-discussion-container', this.elem),
-        $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
-        $state = $('.discussion__show-threaded-state', this.elem);
+    if (userPrefs.get('discussion.unthreaded')) {
+        this.setState('unthreaded');
+    }
 
-    this.on('click', '.js-show-threaded', function(e) {
-        var $el = bonzo(e.currentTarget);
-
-        $state.toggleClass('u-h');
-        $nonThreadedContainer.toggleClass('u-h');
-        $discussionContainer.toggleClass('u-h');
-
-        this.toggleState('threaded');
-
-        if (!$el.data('loaded')) {
-            var activityStream = new ActivityStream();
-
-            $el.data('loaded', true);
-            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
-            activityStream.fetch($nonThreadedContainer[0]);
-        }
-    });
-
-    this.on('click', '.js-comment-permalink', function(e) {
-        var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
-        e.preventDefault();
-        $nonThreadedContainer.addClass('u-h');
-        $state.removeClass('u-h');
-        self.comments.showHiddenComments();
-
-        if (promise) {
-            promise.then(function() {
-                $discussionContainer.removeClass('u-h');
-            });
-        } else {
-            $discussionContainer.removeClass('u-h');
-        }
+    this.on('click', '.js-show-threaded', function() {
+        this.toggleState('unthreaded');
+        var unthreaded = this.hasState('unthreaded');
+        this.comments.options.unthreaded = unthreaded;
+        userPrefs.set('discussion.unthreaded', unthreaded);
+        this.comments.fetchComments();
     });
 };
 
