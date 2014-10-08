@@ -42,7 +42,7 @@
                             <img src="@url" alt="@title" />
                         </div>
                     }
-                    @frontProperties.onPageDescription
+                    @frontProperties.onPageDescription.map(Html(_))
                 </div>
             }
         }
