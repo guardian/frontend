@@ -90,10 +90,7 @@ define([
         this.provisionalImageUrl.subscribe(function(src) {
             var self = this;
 
-            var isEmpty = src === '' || src === undefined;
-            window.console.log("isEmpty: " + isEmpty);
-            window.console.log("src " + src);
-            if(isEmpty){
+            if(!src){
                 self.props.imageUrl(undefined);
                 self.props.imageWidth(undefined);
                 self.props.imageHeight(undefined);
