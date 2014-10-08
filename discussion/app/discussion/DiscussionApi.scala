@@ -42,11 +42,12 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[DiscussionComments] = {
+    // displayThreaded=true can return an error on old discussions.
     val url = s"$apiRoot/discussion/$key" + (if(params.topComments) "/topcomments" else "")+
                     s"""|?pageSize=${params.pageSize}
                     |&page=${params.page}
                     |&orderBy=${params.orderBy}
-                    |&displayThreaded=${params.displayThreaded}
+                    |${if(params.displayThreaded) "" else "&displayThreaded=false"}
                     |&showSwitches=true""".stripMargin.replace("\n", "")+
                     params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
 
