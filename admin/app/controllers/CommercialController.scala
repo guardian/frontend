@@ -46,5 +46,5 @@ object CommercialController extends Controller with Logging with AuthLogging {
   def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
     val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
     NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates)))
-  } 
+  }
 }
