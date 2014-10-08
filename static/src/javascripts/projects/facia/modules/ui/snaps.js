@@ -19,7 +19,7 @@ define([
 ) {
 
     function init() {
-        var snaps = toArray($('.facia-snap'))
+        var snaps = toArray($('.facia-snap.js-snappable'))
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); })
                 .filter(function (el) { return el.getAttribute('data-snap-type'); });
 
@@ -67,10 +67,10 @@ define([
     function injectIframe(el) {
         // Wrapping iframe to fix iOS height-setting bug
         bonzo(el).html(template(
-            '<div style="height:{{height}}px; overflow:hidden;">' +
+            '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
                 '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
             '</div>',
-            {src: el.getAttribute('data-snap-uri'), height: 200}
+            {src: el.getAttribute('data-snap-uri'), height: 250}
         ));
     }
 
