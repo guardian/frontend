@@ -225,19 +225,32 @@ object DfpDataHydrator extends Logging {
     val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
 
     dfpCreativeTemplates map { template =>
+      val templateCreatives = creatives getOrElse(template.getId, Nil)
       GuCreativeTemplate(
         id = template.getId,
         name = template.getName,
         description = template.getDescription,
         parameters = template.getVariables map { param =>
-          CreativeTemplateParameter(
+          GuCreativeTemplateParameter(
             param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
             param.getLabel,
             param.getIsRequired,
-            param.getDescription)
+            param.getDescription
+          )
         },
         snippet = template.getSnippet,
-        creativeIds = creatives.get(template.getId).map(_.map(_.getId.longValue())).getOrElse(Nil)
+        creatives = templateCreatives map { creative =>
+          val args = creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) { case (soFar, arg) =>
+            val argValue = arg.getBaseCreativeTemplateVariableValueType match {
+              case "StringCreativeTemplateVariableValue" => Option(arg.asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
+              case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+              case "UrlCreativeTemplateVariableValue" => Option(arg.asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+              case other => "???"
+            }
+            soFar + (arg.getUniqueName -> argValue)
+          }
+          GuCreative(creative.getId.longValue(), creative.getName, args)
+        }
       )
     }
   }

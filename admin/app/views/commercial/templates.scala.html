@@ -12,10 +12,10 @@
         <li style="margin-top:60px;margin-bottom:60px">
             <p style="font-size:large;font-weight:bold">@template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)</p>
             <p>@{template.description}</p>
-            @if(template.creativeIds.isEmpty){<p><b>This template is not in use.</b></p>}
-            @if(template.creativeIds.nonEmpty){
-                <p>Creatives built from this template:<ul>@for(creativeId <- template.creativeIds){
-                    <li><a href="@DfpLink.creative(creativeId)">@creativeId</a></li>
+            @if(template.creatives.isEmpty){<p><b>This template is not in use.</b></p>}
+            @if(template.creatives.nonEmpty){
+                <p>Creatives built from this template:<ul>@for(creative <- template.creatives){
+                    <li>@{creative.name} (<a href="@DfpLink.creative(creative.id)">@{creative.id}</a>)</li>
                 }</ul></p>
             }
             <div>
@@ -33,6 +33,10 @@
             </div>
             <p style="font-weight:bold">Snippet</p>
             <p>@{template.snippet}</p>
+            @for(example <- template.example) {
+                <p style="font-weight : bold">Example</p>
+                <p>@Html(example)</p>
+            }
         </li>
     }
     </ol>
