@@ -22,4 +22,11 @@
             color: $c-analysisAccent;
         }
     }
+
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-neutral2;
+        }
+    }
 }
