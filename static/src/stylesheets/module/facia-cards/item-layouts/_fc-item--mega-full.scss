@@ -72,7 +72,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     .fc-item__avatar__media {
-        right: -5%;
+        right: -15%;
+
+        @include mq(desktop) {
+            right: -5%;
+        }
     }
 
     &:not(.fc-item--has-cutout) {
