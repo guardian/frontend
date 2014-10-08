@@ -181,6 +181,10 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     float: left;
     margin-right: .2em;
+
+    &:after {
+        content: ' /';
+    }
 }
 
 .fc-item__byline {
