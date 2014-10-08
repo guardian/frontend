@@ -166,7 +166,7 @@ $header-image-size-desktop: 120px;
 
     @include mq(wide) {
         .has-page-skin & {
-            display: inline;
+            display: none;
         }
     }
 }
