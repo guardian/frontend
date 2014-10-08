@@ -14,9 +14,12 @@
 
 .fc-sublinks__item-title {
     @include fs-headline(1);
-    font-weight: 500;
     padding-top: 0;
     margin: 0;
+
+    .fc-item__kicker {
+        font-weight: 500;
+    }
 
     &:before {
         display: block;
