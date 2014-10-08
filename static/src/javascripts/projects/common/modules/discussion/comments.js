@@ -45,6 +45,7 @@ var Comments = function(options) {
     this.setOptions(options);
     this.options.order = userPrefs.get('discussion.order') || 'newest';
     this.options.expand = userPrefs.get('discussion.expand') || false;
+    this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
 };
 
 Component.define(Comments);
@@ -228,7 +229,8 @@ Comments.prototype.fetchComments = function(options) {
 
     var queryParams = {
         orderBy: options.order || this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        displayThreaded: !this.options.unthreaded
     };
 
     if (!this.options.expand) {
