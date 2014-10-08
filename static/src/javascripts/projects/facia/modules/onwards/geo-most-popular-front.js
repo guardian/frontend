@@ -6,12 +6,14 @@ define([
     'qwery',
     'lodash/objects/assign',
     'common/modules/component',
-    'common/modules/analytics/register'
+    'common/modules/analytics/register',
+    'common/utils/mediator'
 ], function (
     qwery,
     extend,
     Component,
-    register
+    register,
+    mediator
     ) {
 
     function GeoMostPopularFront(mediator, config) {
@@ -35,6 +37,7 @@ define([
 
     GeoMostPopularFront.prototype.ready = function () {
         register.end('most-popular');
+        mediator.emit('modules:geomostpopular:ready');
     };
 
     return GeoMostPopularFront;

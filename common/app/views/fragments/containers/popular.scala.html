@@ -12,6 +12,7 @@
             class="@RenderClasses(Map(
                 ("container", true),
                 (s"container--${style.containerType}", true),
+                ("js-container--toggle", true),
                 ("container--first" -> (containerIndex == 0))))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@config.id"
