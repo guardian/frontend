@@ -23,10 +23,6 @@
         color: $c-mediaDefault;
     }
 
-    &.fc-item--has-image:before {
-        background-color: fade-out(#000000, .75);
-    }
-
     .fc-item__meta {
         &,
         & a {

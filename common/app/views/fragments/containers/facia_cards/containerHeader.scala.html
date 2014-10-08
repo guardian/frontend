@@ -20,11 +20,11 @@
                         <span class="u-text-hyphenate">@Html(title)</span>
                     }
 
-                    @if(config.showDateHeader) {
+                    @if(config.showDateHeader.exists(identity)) {
                         @date(org.joda.time.DateTime.now())
                     }
 
-                    @if(config.showLatestUpdate) {
+                    @if(config.showLatestUpdate.exists(identity)) {
                         @LatestUpdate(collection, collection.items).map { updateTime =>
                             @latestUpdate(updateTime)
                         }
