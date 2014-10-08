@@ -21,8 +21,7 @@ case class Book(title: String,
                 position: Option[Int] = None,
                 category: Option[String] = None,
                 keywordIds: Seq[String] = Nil
-               )
-  extends Ad {
+               ) {
 
   def isTargetedAt(segment: Segment): Boolean = intersects(lastPart(keywordIds), segment.context.keywords)
 }

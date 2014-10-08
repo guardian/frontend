@@ -1,7 +1,6 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
-import scala.xml.{Node, Elem}
+import scala.xml.{Elem, Node}
 
 object CreditCards {
 
@@ -29,10 +28,7 @@ case class CreditCard(name: String,
                       cashbackNotes: String,
                       representativeApr: Double,
                       purchaseRate: Double,
-                      purchaseRateDuration: Int) extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
+                      purchaseRateDuration: Int)
 
 
 case class CreditExample(amount: Double,

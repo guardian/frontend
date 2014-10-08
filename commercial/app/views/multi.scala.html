@@ -1,4 +1,4 @@
-@(ads: Seq[model.commercial.Ad])(implicit request: RequestHeader)
+@(ads: Seq[AnyRef])(implicit request: RequestHeader)
 @import model.commercial
 
 @defining(("1_0", "2014-08-07")) { case (version, date) =>

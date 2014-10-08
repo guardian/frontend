@@ -1,8 +1,8 @@
 package model.commercial.soulmates
 
-import model.commercial.{Ad, Segment}
+import model.commercial.Segment
 
-case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) extends Ad {
+case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) {
 
   val profileId: Option[String] = profilePhoto match {
     case Member.IdPattern(id) => Some(id)

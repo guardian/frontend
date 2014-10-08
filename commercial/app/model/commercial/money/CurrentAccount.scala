@@ -1,7 +1,6 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
-import scala.xml.{Node, Elem}
+import scala.xml.{Elem, Node}
 
 object CurrentAccounts {
 
@@ -29,10 +28,6 @@ case class CurrentAccount(provider: String,
                           benefitAmount: String,
                           serviceCharge: String,
                           access: Map[String, Boolean])
-  extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
 
 
 trait CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {

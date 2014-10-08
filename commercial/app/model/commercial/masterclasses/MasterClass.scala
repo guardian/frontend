@@ -1,7 +1,7 @@
 package model.commercial.masterclasses
 
 import model.ImageContainer
-import model.commercial.{Ad, Segment, lastPart}
+import model.commercial.{Segment, lastPart}
 import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
@@ -9,10 +9,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import play.api.libs.json.JsValue
 
-case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer]) extends Ad {
 
-  def isTargetedAt(segment: Segment) = eventBriteEvent.isTargetedAt(segment)
-}
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer])
+
 
 object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
@@ -81,7 +80,7 @@ case class EventbriteMasterClass(
                                   firstParagraph: String = "",
                                   tags: Seq[String],
                                   keywordIds: Seq[String] = Nil
-                                  ) extends Ad {
+                                  ) {
 
   def isOpen = {status == "Live"}
 

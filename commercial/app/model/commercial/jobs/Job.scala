@@ -15,8 +15,7 @@ case class Job(id: Int,
                recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                salaryDescription: String,
-               keywordIds: Seq[String] = Nil)
-  extends Ad {
+               keywordIds: Seq[String] = Nil) {
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
@@ -66,7 +65,7 @@ object Industries extends ExecutionContexts {
     (350, "Social Enterprise")
   )
 
-  def refresh() = Future.sequence {
+  def refresh(): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
     sectorIdIndustryMap map {
       case (id, name) =>
         Lookup.keyword(name) flatMap {

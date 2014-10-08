@@ -11,7 +11,7 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
 
     lazy val defaultClasses = available take 4
 
-    val targeted = available filter (_.isTargetedAt(segment))
+    val targeted = available filter (_.eventBriteEvent.isTargetedAt(segment))
     val toShow = (targeted ++ defaultClasses) take 4
     toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }
