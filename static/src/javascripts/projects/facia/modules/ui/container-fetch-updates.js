@@ -30,8 +30,7 @@ define([
     function itemInfo(item) {
         var $item = bonzo(item);
         return {
-            id: $item.attr('data-id'),
-            lastUpdated: $item.attr('data-updated')
+            id: $item.attr('data-id')
         };
     }
 
@@ -58,7 +57,7 @@ define([
         var oldById = indexBy(oldItems, 'id');
 
         return filter(newItems, function (item) {
-            return !has(oldById, item.id) || oldById[item.id].lastUpdated < item.lastUpdated;
+            return !has(oldById, item.id);
         }).length;
     }
 
@@ -103,7 +102,8 @@ define([
                         event.preventDefault();
 
                         ajax({
-                            url: window.location.pathname + '/collections/' + containerId,
+                            url: window.location.pathname + '/collections/' + containerId +
+                                '/' + containerIndex.versionId,
                             type: 'html',
                             method: 'get',
                             crossOrigin: 'true',

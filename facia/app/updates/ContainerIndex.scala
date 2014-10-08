@@ -12,14 +12,12 @@ object ContainerIndexItem {
   def fromCard(card: Card) = card.item match {
     case content: Content => ContainerIndexItem(
       content.id,
-      content.lastModified,
       !card.hideUpTo.exists(_ == Mobile))
   }
 }
 
 case class ContainerIndexItem(
   id: String,
-  lastUpdated: DateTime,
   visibleOnMobile: Boolean
 )
 
@@ -27,17 +25,19 @@ object ContainerIndex {
   implicit val jsonWrites = Json.writes[ContainerIndex]
 
   def fromContainerLayout(containerLayout: ContainerLayout, latestUpdate: DateTime) = {
-    ContainerIndex(latestUpdate, for {
+    val items = for {
       slice <- containerLayout.slices
       column <- slice.columns
       card <- column.cards
-    } yield ContainerIndexItem.fromCard(card))
+    } yield ContainerIndexItem.fromCard(card)
+
+    ContainerIndex(items, (items, latestUpdate).hashCode())
   }
 }
 
 case class ContainerIndex(
-  updated: DateTime,
-  items: Seq[ContainerIndexItem]
+  items: Seq[ContainerIndexItem],
+  versionId: Int
 )
 
 object FrontIndex {

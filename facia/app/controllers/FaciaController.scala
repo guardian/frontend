@@ -124,7 +124,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
   }
 
-  def renderFrontCollection(frontId: String, collectionId: String) = MemcachedAction { implicit request =>
+  def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection $collectionId on front $frontId")
 
     withFaciaPage(frontId) { faciaPage =>

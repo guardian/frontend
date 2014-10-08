@@ -25,7 +25,6 @@
             @trail match {
                 case content: Content => {
                     data-id="@content.id"
-                    data-updated="@content.lastModified.getMillis"
                 }
                 case _ => {}
             }
