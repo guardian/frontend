@@ -223,6 +223,8 @@ define([
 
     Comments.prototype.fetchComments = function(options) {
         options = options || {};
+
+        console.log("+++ Fetch doggie!");
         if (this.options.commentId) {
             console.log("+++CommentID");
         }
