@@ -126,6 +126,7 @@ $fc-item-gutter: $gs-gutter / 4;
 // Wraps all non-media content
 .fc-item__content {
     @include box-sizing(border-box);
+    @include box-shadow(inset 0 1px $c-neutral5);
 }
 
 .fc-item__image-container {

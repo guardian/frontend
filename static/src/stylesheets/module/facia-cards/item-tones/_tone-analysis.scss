@@ -5,6 +5,10 @@
         background-color: $c-analysisBackground;
     }
 
+    .fc-item__content {
+        @include box-shadow(inset 0 1px $c-analysisAccent);
+    }
+
     .fc-item__kicker,
     .fc-item__byline {
         &,

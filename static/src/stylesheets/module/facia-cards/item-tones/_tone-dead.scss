@@ -1,5 +1,6 @@
 .tone-dead {
-    @extend %tone-not-background;
+    @extend %tone-has-background;
+    background-color: $c-neutral7;
 
     .fc-item__kicker,
     .fc-item__byline {
@@ -9,20 +10,7 @@
         }
     }
 
-    &.fc-item--list-mobile .fc-item__container {
-        @include mq($until: tablet) {
-            @include box-shadow(inset 0 1px $c-liveDefault);
-        }
-    }
-
-    &.fc-item--list-tablet,
-    &.fc-item--list-media-tablet,
-    &.fc-item--list-desktop,
-    &.fc-item--list-compact-tablet {
-        .fc-item__container {
-            @include mq(tablet) {
-                @include box-shadow(inset 0 1px $c-liveDefault);
-            }
-        }
+    .fc-item__content {
+        @include box-shadow(inset 0 1px $c-liveDefault);
     }
 }
