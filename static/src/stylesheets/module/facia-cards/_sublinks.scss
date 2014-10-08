@@ -17,10 +17,6 @@
     padding-top: 0;
     margin: 0;
 
-    .fc-item__kicker {
-        font-weight: 500;
-    }
-
     &:before {
         display: block;
         position: absolute;
@@ -29,6 +25,10 @@
         content: '';
         width: 40%;
         border-top: 1px dotted $c-neutral3;
+    }
+
+    .fc-item__kicker {
+        font-weight: 500;
     }
 }
 
