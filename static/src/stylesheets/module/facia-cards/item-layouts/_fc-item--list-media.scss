@@ -16,7 +16,7 @@ Media list item. Looks a bit like this:
     // calculate image width
     $media-ratio: 5 / 3;
     $item-vertical-padding: $gs-baseline / 4;
-    $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
+    $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object) + (get-line-height(headline, $headline-size) / 4);
     $image-width: $item-min-height * $media-ratio;
 
     min-height: $item-min-height;
