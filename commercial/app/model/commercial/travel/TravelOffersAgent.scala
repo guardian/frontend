@@ -1,7 +1,7 @@
 package model.commercial.travel
 
 import common.ExecutionContexts
-import model.commercial.{MerchandiseAgent, Segment}
+import model.commercial.{MerchandiseAgent, Segment, keywordsMatch}
 
 import scala.concurrent.Future
 
@@ -9,9 +9,7 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
 
   def offersTargetedAt(segment: Segment): Seq[TravelOffer] = {
     val defaultOffers = available.sortBy(_.position).take(4)
-    getTargetedMerchandise(segment, defaultOffers) {
-      _.isTargetedAt(segment)
-    }
+    getTargetedMerchandise(segment, defaultOffers)(offer => keywordsMatch(segment, offer.keywordIds))
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {

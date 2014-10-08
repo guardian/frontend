@@ -9,15 +9,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
-                 tags: List[String], duration: String, position: Int) {
+                       earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
+                       tags: List[String], duration: String, position: Int) {
 
-  def isTargetedAt(segment: Segment): Boolean = {
-    val someKeywordsMatch = intersects(lastPart(keywordIds), segment.context.keywords)
-    segment.context.isInSection("travel") && someKeywordsMatch
-  }
-
-  def durationInWords: String = duration match {
+  val durationInWords: String = duration match {
     case "1" => "1 night"
     case x => s"$x nights"
   }
