@@ -117,8 +117,6 @@ Comments.prototype.ready = function() {
         60000
     );
 
-    this.addMoreRepliesButtons();
-
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
@@ -233,7 +231,8 @@ Comments.prototype.fetchComments = function(options) {
         orderBy: options.order || this.options.order,
         pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
     };
-    if (this.options.expand) {
+
+    if (!this.options.expand) {
         queryParams.maxResponses = 3;
     }
 

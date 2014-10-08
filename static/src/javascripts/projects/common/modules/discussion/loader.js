@@ -17,7 +17,8 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
     bean,
     bonzo,
@@ -35,7 +36,8 @@ define([
     CommentBox,
     Comments,
     TopComments,
-    Id
+    Id,
+    userPrefs
 ) {
 
 /**
@@ -161,12 +163,17 @@ Loader.prototype.ready = function() {
 };
 
 Loader.prototype.initShowAll = function() {
+    var $showAllBtn = $('.js-show-all'),
+        offClass = 'discussion__show-all--off';
+
+    if (userPrefs.get('discussion.expand')) {
+        $showAllBtn.removeClass(offClass);
+    }
+
     this.on('click', '.js-show-all', function(e) {
-        var offClass = 'discussion__show-all--off',
-            turnOn = bonzo(e.currentTarget).toggleClass(offClass).hasClass(offClass);
-
-        this.comments.options.expand = turnOn;
-
+        var expand = !bonzo(e.currentTarget).toggleClass(offClass).hasClass(offClass);
+        this.comments.options.expand = expand;
+        userPrefs.set('discussion.expand', expand);
         this.comments.fetchComments();
     });
 
