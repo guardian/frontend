@@ -1,19 +1,6 @@
 $header-image-size-mobile: 80px;
 $header-image-size-desktop: 120px;
 
-@mixin left-col {
-    @include mq($from: leftCol, $to: wide) {
-        @content
-    }
-
-    /** When there is a page skin, there is no left column on wide */
-    body:not(.has-page-skin) {
-        @include mq(wide) {
-            @content
-        }
-    }
-}
-
 .fc-container {
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
@@ -111,15 +98,28 @@ $header-image-size-desktop: 120px;
     padding-top: $gs-baseline/3;
     @include fs-headline(2);
 
-    @include left-col {
+    @include mq(leftCol) {
         border-top: 1px solid $c-neutral5;
         margin-top: $gs-baseline/2;
     }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            border-top: 0;
+            margin-top: 0;
+        }
+    }
 }
 
-@include left-col {
-    .fc-today__sub {
+.fc-today__sub {
+    @include mq(leftCol) {
         display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
     }
 }
 
@@ -160,8 +160,14 @@ $header-image-size-desktop: 120px;
 
     @include fs-headline(1);
 
-    @include left-col {
+    @include mq(leftCol) {
         display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
     }
 }
 
