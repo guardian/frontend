@@ -68,12 +68,6 @@
                         }
                     </div>
 
-                    @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
-                        <div class="fc-item__avatar">
-                            <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
-                        </div>
-                    }
-
                     @trail.trailText.map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
@@ -84,6 +78,12 @@
                         @sublinks(trail.supporting)
                     </div>
                 </div>
+
+                @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                <div class="fc-item__avatar">
+                    <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
+                </div>
+                }
 
                 <footer class="fc-item__footer--horizontal">
                     @sublinks(trail.supporting)
