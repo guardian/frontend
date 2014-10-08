@@ -36,14 +36,14 @@ package object money {
   }
 
 
-  trait MoneyAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
+  trait MoneyAgent[T <: Ad] extends MerchandiseAgent[T] with ExecutionContexts {
 
     protected def loadProducts(): Future[Seq[T]]
 
     def refresh() {
       for {
         products <- loadProducts()
-      } updateCurrentAds(products)
+      } updateAvailableMerchandise(products)
     }
   }
 
