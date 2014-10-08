@@ -57,13 +57,37 @@ $avatarPadding: $gs-gutter / 2;
     margin-bottom: $gs-baseline * 3.5;
 }
 
-.discussion__show-threaded {
+.discussion__show-threaded,
+.discussion__show-all {
     width: auto;
     @include fs-textSans(2);
     z-index: 1;
     padding: $gs-baseline / 2 0;
     position: relative;
+    margin-left: $gs-gutter;
     float: right;
+}
+
+.discussion__show-all {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+    .discussion--threaded & {
+        display: none;
+    }
+}
+
+.discussion__show-all__off-text {
+    display: none;
+}
+
+.discussion__show-all--off {
+    .discussion__show-all__on-text {
+        display: none;
+    }
+    .discussion__show-all__off-text {
+        display: block;
+    }
 }
 
 .discussion--lowered {

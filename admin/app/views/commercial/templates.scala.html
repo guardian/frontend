@@ -1,32 +1,47 @@
-@(env: String, templates: Seq[com.google.api.ads.dfp.axis.v201403.CreativeTemplate])
+@(env: String, templates: Seq[dfp.GuCreativeTemplate])
 @import tools.DfpLink
 
-@admin_main("Commercial Templates", env, isAuthed = true) {
+@admin_main("Creative Templates", env, isAuthed = true) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Creative Templates</h1>
 
+    <p>This dashboard is to help debug DFP creative templates.<br />
+        All unarchived creative templates are shown.</p>
+    <p>The creatives listed under each template are only those owned by the Guardian Merchandising account.<br />
+        So a template might appear to be unused when in fact other creatives have been built from it.</p>
+
     <ol>
     @for(template <- templates) {
         <li style="margin-top:60px;margin-bottom:60px">
-            <p style="font-size:large;font-weight:bold">@template.getName (<a href="@DfpLink.creativeTemplate(template.getId)">@template.getId</a>)</p>
-            <p>@{template.getDescription}</p>
+            <p style="font-size:large;font-weight:bold">@template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)</p>
+            <p>@{template.description}</p>
+            @if(template.creatives.isEmpty){<p><b>This template is not in use.</b></p>}
+            @if(template.creatives.nonEmpty){
+                <p>Creatives built from this template:<ul>@for(creative <- template.creatives){
+                    <li>@{creative.name} (<a href="@DfpLink.creative(creative.id)">@{creative.id}</a>)</li>
+                }</ul></p>
+            }
             <div>
                 <p style="font-weight:bold">Parameters:</p>
                 <table style="margin-bottom:20px">
-                    @for(param <- template.getVariables) {
+                    @for(param <- template.parameters) {
                         <tr>
-                            <td style="padding-right:10px;word-break:normal">@{param.getLabel}</td>
-                            <td style="padding-right:10px">@{param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable")}</td>
-                            <td style="padding-right:10px"><span style="font-size:small">@if(param.getIsRequired){Required}else{Optional}</span></td>
-                            <td style="padding-right:10px">@{param.getDescription}</td>
+                            <td style="padding-right:10px;word-break:normal">@{param.label}</td>
+                            <td style="padding-right:10px">@{param.parameterType}</td>
+                            <td style="padding-right:10px"><span style="font-size:small">@if(param.isRequired){Required}else{Optional}</span></td>
+                            <td style="padding-right:10px">@{param.description}</td>
                         </tr>
                     }
                 </table>
             </div>
             <p style="font-weight:bold">Snippet</p>
-            <p>@{template.getSnippet}</p>
+            <p>@{template.snippet}</p>
+            @for(example <- template.example) {
+                <p style="font-weight : bold">Example</p>
+                <p>@Html(example)</p>
+            }
         </li>
     }
     </ol>
