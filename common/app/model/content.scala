@@ -189,7 +189,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val isBoosted: Boolean = apiContent.metaData.flatMap(_.isBoosted).getOrElse(false)
   override lazy val imageHide: Boolean = apiContent.metaData.flatMap(_.imageHide).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.flatMap(_.isBreaking).getOrElse(false)
-  override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showCustomKicker).getOrElse(false)
+  override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
   override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
   override lazy val showQuotedHeadline: Boolean = apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(false)

@@ -79,8 +79,7 @@ object ItemMeta {
     ("snapUri", content.apiContent.metaData.flatMap(_.snapUri).map(JsString)),
     ("showKickerTag", content.apiContent.metaData.flatMap(_.showKickerTag).map(JsBoolean)),
     ("showKickerSection", content.apiContent.metaData.flatMap(_.showKickerSection).map(JsBoolean)),
-    //TODO: showKickerCustom/showCustomKicker?
-    ("showKickerCustom", content.apiContent.metaData.flatMap(_.showCustomKicker).map(JsBoolean)),
+    ("showKickerCustom", content.apiContent.metaData.flatMap(_.showKickerCustom).map(JsBoolean)),
     ("customKicker", content.apiContent.metaData.flatMap(_.customKicker).map(JsString)),
     ("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline).map(JsBoolean)),
     ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
