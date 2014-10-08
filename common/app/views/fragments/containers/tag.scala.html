@@ -4,6 +4,7 @@
 @import views.html.fragments.keywordList
 @import views.support.GetClasses
 @import views.support.MostPopularTags.topTags
+@import views.support.FootballTagPage
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
@@ -19,11 +20,14 @@
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
-                <div class="container__header">
-                    @title.map { title =>
-                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title, page.isContributorPage)
+                <div class="container__header js-container-header">
+                    @FootballTagPage(page).asOpt.map{ footballTagPage =>
+                        @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
+                    }.getOrElse{
+                        @title.map { title =>
+                            @fragments.containers.elements.tagMeta(None, collection.href, page.description, title, page.isContributorPage)
+                        }
                     }
-
                     @fragments.contributor(page)
                 </div>
                 <div class="container__body container--rolled-up-hide">

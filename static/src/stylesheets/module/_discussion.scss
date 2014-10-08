@@ -57,13 +57,37 @@ $avatarPadding: $gs-gutter / 2;
     margin-bottom: $gs-baseline * 3.5;
 }
 
-.discussion__show-threaded {
+.discussion__show-threaded,
+.discussion__show-all {
     width: auto;
     @include fs-textSans(2);
     z-index: 1;
     padding: $gs-baseline / 2 0;
     position: relative;
+    margin-left: $gs-gutter;
     float: right;
+}
+
+.discussion__show-all {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+    .discussion--threaded & {
+        display: none;
+    }
+}
+
+.discussion__show-all__off-text {
+    display: none;
+}
+
+.discussion__show-all--off {
+    .discussion__show-all__on-text {
+        display: none;
+    }
+    .discussion__show-all__off-text {
+        display: block;
+    }
 }
 
 .discussion--lowered {
@@ -185,6 +209,16 @@ $avatarPadding: $gs-gutter / 2;
     margin: 2px $gs-gutter / 4 0;
 }
 
+.discussion__meta {
+    display: none;
+
+    .id--signed-out .discussion--open &.discussion__meta--open-signed-out,
+    .discussion--closed &.discussion__meta--closed,
+    .discussion--banned &.discussion__meta--banned,
+    .discussion--readonly &.discussion__meta--readonly {
+        display: block;
+    }
+}
 
 /* All comments (top level and reply)
    ========================================================================== */
@@ -770,11 +804,13 @@ $avatarPadding: $gs-gutter / 2;
         padding-top: $gs-baseline / 2;
     }
     @include mq(leftCol) {
-        float: left;
+        position: absolute;
         margin-left: -1 * ($left-column + $gs-gutter);
+        width: gs-span(2);
     }
     @include mq(wide) {
         margin-left: -1 * ($left-column-wide + $gs-gutter);
+        width: gs-span(3);
     }
 }
 .discussion__comments--top-comments {

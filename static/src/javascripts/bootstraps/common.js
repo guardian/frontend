@@ -195,7 +195,7 @@ define([
 
                 omniture.go(config);
 
-                if (config.switches.ophan && !config.page.isSSL) {
+                if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
                         ophan.record({ab: ab.getParticipations()});
 

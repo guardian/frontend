@@ -54,7 +54,7 @@ define([
 
         searchPageSize:        50,
 
-        capiBatchSize:         20,
+        capiBatchSize:         10,
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,
@@ -71,7 +71,8 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',
+        apiSearchParams:       'show-elements=video&show-tags=tone,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail',
+
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',

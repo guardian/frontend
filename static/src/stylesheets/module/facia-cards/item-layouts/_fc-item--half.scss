@@ -29,10 +29,20 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--half {
     .fc-item__header {
         @include fs-headline(4, true);
+        @include headline-boost(5);
 
         @include mq(tablet, desktop) {
             @include fs-headline(3, true);
+            @include headline-boost(4);
         }
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 60%;
+    }
+
+    .fc-item__avatar {
+        top: 30%;
     }
 
     &[class*="fc-item--has-sublinks"] {
@@ -41,7 +51,11 @@ x x x x x x x x x x x x x x x x x x
         }
     }
 
-    @include fc-sublinks-horizontal;
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     .fc-sublinks__item:nth-child(n+3) {
         display: none;

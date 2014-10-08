@@ -32,21 +32,39 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         @include fs-headline(4, true);
+        @include headline-boost(5);
 
         @include mq(desktop) {
             @include fs-headline(6, true);
+            @include headline-boost(7);
         }
     }
 
     &.fc-item--has-cutout {
-        min-height: gs-height(8);
+        padding-bottom: 40%;
 
-        .fc-item__title {
-            max-width: gs-span(8);
+        .fc-item__content {
+            max-width: gs-span(6);
+
+            @include mq(desktop) {
+                max-width: gs-span(8);
+            }
         }
     }
 
-    @include fc-sublinks-horizontal;
+    .fc-item__avatar {
+        top: 0%;
+    }
+
+    .fc-item__avatar__media {
+        left: 40%;
+    }
+
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     &.fc-item--has-sublinks-1 .fc-sublinks {
         display: none;

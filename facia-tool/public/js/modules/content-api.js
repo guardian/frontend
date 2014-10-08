@@ -17,8 +17,6 @@ function (
     urlAbsPath,
     snap
 ){
-    var standardQueryParams = 'page-size=50&format=json&show-fields=all&show-elements=video';
-
     function validateItem (item) {
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
@@ -126,7 +124,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.meta.isSnap(); })
+            .filter(function(article) { return !article.state.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
@@ -144,14 +142,14 @@ function (
             .value();
 
         if (capiIds.length) {
-            return fetchContent('search?ids=' + capiIds.join(',') + '&' + standardQueryParams);
+            return fetchContent('search?ids=' + capiIds.join(',') + '&' + vars.CONST.apiSearchParams);
         } else {
             return $.Deferred().resolve([]);
         }
     }
 
     function fetchContentById(id) {
-        return fetchContent(id + '?' + standardQueryParams);
+        return fetchContent(id + '?' + vars.CONST.apiSearchParams);
     }
 
     function fetchContent(apiUrl) {

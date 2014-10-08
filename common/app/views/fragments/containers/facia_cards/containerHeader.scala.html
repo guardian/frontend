@@ -5,7 +5,7 @@
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
-    <div class="fc-container__header">
+    <div class="fc-container__header js-container-header">
         @title.map { title =>
             @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(
@@ -21,7 +21,7 @@
                     }
 
                     @if(config.showDateHeader) {
-                        @date()
+                        @date(org.joda.time.DateTime.now())
                     }
 
                     @if(config.showLatestUpdate) {
@@ -32,16 +32,18 @@
                 </div>
             }
         }
-        @if(containerIndex == 0){
-            @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
-                <div class="fc-container__header__image media__img">
-                    <img src="@url" alt="@title" />
-                </div>
-            }
-            @frontProperties.onPageDescription.map { desc =>
+        @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
+            @if(containerIndex == 0 && hasDescription){
                 <div class="@RenderClasses(Map(
                     "fc-container__header__description" -> !frontProperties.isImageDisplayed,
-                    "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">@Html(desc)</div>
+                    "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
+                    @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                        <div class="fc-container__header__image media__img">
+                            <img src="@url" alt="@title" />
+                        </div>
+                    }
+                    @frontProperties.onPageDescription
+                </div>
             }
         }
     </div>

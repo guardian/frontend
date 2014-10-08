@@ -1,5 +1,5 @@
 .tone-comment {
-    @extend %tone-background;
+    @extend %tone-has-background;
 
     &.fc-item {
         background-color: $c-commentBackground;

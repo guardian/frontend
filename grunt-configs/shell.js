@@ -1,14 +1,11 @@
 module.exports = function(grunt, options) {
     return {
         spriteGeneration: {
-            command: [
-                'cd tools/sprites/',
-                'find . -name \'*.json\' -exec node spricon.js {} \\;'
-            ].join('&&'),
+            command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
             options: {
-                stdout: true,
-                stderr: true,
-                failOnError: true
+                execOptions: {
+                    cwd: 'tools/sprites'
+                }
             }
         },
         /**
@@ -17,8 +14,6 @@ module.exports = function(grunt, options) {
         copyHooks: {
             command: 'ln -s ../git-hooks .git/hooks',
             options: {
-                stdout: true,
-                stderr: true,
                 failOnError: false
             }
         },
@@ -26,12 +21,7 @@ module.exports = function(grunt, options) {
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
                      'static/src/javascripts/modules/experiments/tests ' +
-                     'static/abtests.json',
-            options: {
-                stdout: true,
-                stderr: true,
-                failOnError: true
-            }
+                     'static/abtests.json'
         }
     };
 };

@@ -1,5 +1,5 @@
 .tone-feature {
-    @extend %tone-background;
+    @extend %tone-has-background;
 
     &.fc-item {
         background-color: $c-featureDefault;
@@ -15,12 +15,9 @@
         font-weight: 400;
     }
 
-    .fc-item__kicker,
-    .fc-item__byline {
-        &,
-        & a {
-            color: $c-featureMute !important;
-        }
+    a.fc-item__kicker,
+    .fc-item__byline a {
+        color: $c-featureMute;
     }
 
     .fc-item__title .i {

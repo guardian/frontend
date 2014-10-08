@@ -4,12 +4,85 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+@mixin fc-item--horizontal($media-width, $media-align: right) {
+    .fc-item__image-container {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter * .25;
+    }
+
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content > * {
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter * .75;
+    }
+
+    .has-flex-wrap & {
+        .fc-item__container {
+            @include flex-wrap(wrap);
+            @if $media-align == right {
+                @include flex-direction(row-reverse);
+            } @else {
+                @include flex-direction(row);
+            }
+        }
+
+        .fc-item__media-wrapper {
+            @include flex-basis($media-width);
+        }
+
+        .fc-item__content {
+            @include flex-basis(100% - $media-width);
+        }
+    }
+
+    .has-no-flex-wrap & {
+        .fc-item__media-wrapper {
+            width: $media-width;
+            float: $media-align;
+        }
+
+        .fc-item__content {
+            width: 100% - $media-width;
+        }
+    }
+}
+
+.has-flex-wrap {
+    .fc-item {
+        @include flex-display;
+    }
+
+    .fc-item__container {
+        @include flex-direction(column);
+        @include flex-display;
+        @include flex(1);
+        width: 100%;
+    }
+
+    .fc-item__content {
+        @include flex-display;
+        @include flex-direction(column);
+        @include flex-grow(1);
+    }
+
+    .fc-item__meta {
+        @include flex-grow(1);
+        @include flex-display;
+        @include align-items--end;
+    }
+}
+
+.has-no-flex-wrap {
+    .fc-item {
+        display: block;
+        @include clearfix;
+    }
+}
+
 .fc-item {
-    display: block;
     @include flex(1);
-    @include clearfix;
     background-color: #ffffff;
-    position: relative;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
 
@@ -38,20 +111,17 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+
+
 // Wraps all media elements
 .fc-item__media-wrapper {
+    @include box-sizing(border-box);
     position: relative;
 }
 
 // Wraps all non-media content
 .fc-item__content {
     @include box-sizing(border-box);
-}
-
-.fc-item__image-container {
-    .js-off & {
-        display: none;
-    }
 }
 
 .fc-item__image-container {
@@ -71,17 +141,23 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__live-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
     font: inherit;
     line-height: 1;
-    padding: .1em .2em .05em;
+}
+
+.fc-item__breaking-indicator {
+    color: $c-liveDefault;
 }
 
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .75em;
+
+    .fc-item--has-boosted-title & {
+        @include fs-headline(4, true);
+    }
 }
 
 .fc-item__title,
@@ -96,6 +172,12 @@ $fc-item-gutter: $gs-gutter / 4;
     word-wrap: break-word;
 }
 
+.fc-item__kicker {
+    float: left;
+    margin-right: .2em;
+    line-height: inherit;
+}
+
 .fc-item__byline {
     margin-bottom: 0;
 }
@@ -104,11 +186,19 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
     display: none;
+
+    .fc-item--has-boosted-title & {
+        display: none !important;
+    }
 }
 
 .fc-item__meta {
     @include fs-textSans(1);
-    padding-bottom: $gs-baseline;
+    &:after {
+        clear: left;
+        content: '';
+        display: table;
+    }
 
     &,
     & a {
@@ -131,23 +221,41 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none;
 }
 
-.fc-item--has-cutout {
+.fc-item--has-cutout .fc-item__media-wrapper {
+    display: none;
+}
 
-    .fc-item__media-wrapper {
-        display: none;
+.fc-item__footer--vertical {
+    clear: left;
+}
+
+.fc-item__footer--horizontal {
+    display: none;
+    @include clearfix;
+}
+
+.fc-item__avatar {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+}
+
+.fc-item__avatar__media {
+    position: absolute;
+    height: 100%;
+    bottom: 0;
+    left: 20%;
+
+    @include mq(desktop) {
+        left: 30%;
     }
 
-    .fc-item__avatar {
-        position: absolute;
-        overflow: hidden;
+    &.image--portrait {
+        bottom: auto;
+        top: 0;
+        height: auto;
         width: 80%;
-        bottom: 0 - $gs-baseline / 2;
-        right: 0;
-    }
-
-    .fc-item__avatar__media {
-        position: relative;
-        width: 100%;
-        right: 0 - $gs-gutter * 2;
     }
 }

@@ -169,6 +169,16 @@ CommentBox.prototype.ready = function() {
     }
 };
 
+CommentBox.prototype.urlify = function(str) {
+    var reOutsideTags = '(?![^<]*>|[^<>]*</)',
+        reUrl = '\\b((https?://|www.)\\S+)\\b',
+        regexp = new RegExp(reUrl + reOutsideTags, 'g');
+    return str.replace(regexp, function(match, url, protocol) {
+        var fullUrl = protocol === 'www.' ? 'http://' + url : url;
+        return '<a href="' + fullUrl +'">' + url + '</a>';
+    });
+};
+
 /**
  * @param {Event}
  */
@@ -196,6 +206,7 @@ CommentBox.prototype.postComment = function(e) {
         }
 
         if (self.errors.length === 0) {
+            comment.body = self.urlify(comment.body);
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)

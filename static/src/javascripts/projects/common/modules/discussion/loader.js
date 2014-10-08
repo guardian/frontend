@@ -17,7 +17,8 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
     bean,
     bonzo,
@@ -35,7 +36,8 @@ define([
     CommentBox,
     Comments,
     TopComments,
-    Id
+    Id,
+    userPrefs
 ) {
 
 /**
@@ -115,17 +117,22 @@ Loader.prototype.ready = function() {
 
     this.topComments.fetch(topCommentsElem);
 
-    this.comments.fetch(commentsElem).then(function() {
+    this.comments.attachTo(commentsElem);
+
+    this.comments.fetchComments({comment: commentId}).then(function() {
         $('.discussion .preload-msg').addClass('u-h');
 
         if (commentId || window.location.hash === '#comments') {
             self.comments.removeState('shut');
+            self.comments.removeState('partial');
         }
 
         bonzo(commentsContainer).removeClass('modern-hidden');
         self.initUnthreaded();
+        self.initShowAll();
 
         self.on('user:loaded', function() {
+            self.initState();
             self.renderCommentBar();
             if (self.user) {
                 self.comments.addUser(self.user);
@@ -155,12 +162,30 @@ Loader.prototype.ready = function() {
     register.end('discussion');
 };
 
+Loader.prototype.initShowAll = function() {
+    var $showAllBtn = $('.js-show-all'),
+        offClass = 'discussion__show-all--off';
+
+    if (userPrefs.get('discussion.expand')) {
+        $showAllBtn.removeClass(offClass);
+    }
+
+    this.on('click', '.js-show-all', function(e) {
+        var $btn = bonzo(e.currentTarget).toggleClass(offClass),
+            expand = !$btn.hasClass(offClass);
+        
+        this.comments.options.expand = expand;
+        userPrefs.set('discussion.expand', expand);
+        this.comments.fetchComments();
+    });
+
+};
+
 Loader.prototype.initUnthreaded = function() {
     var self = this;
     // Non threaded view
     var $discussionContainer = $('.js-discussion-container', this.elem),
         $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
-        $loader = $('.d-discussion__loader--comments', this.elem),
         $state = $('.discussion__show-threaded-state', this.elem);
 
     this.on('click', '.js-show-threaded', function(e) {
@@ -170,17 +195,14 @@ Loader.prototype.initUnthreaded = function() {
         $nonThreadedContainer.toggleClass('u-h');
         $discussionContainer.toggleClass('u-h');
 
+        this.toggleState('threaded');
+
         if (!$el.data('loaded')) {
             var activityStream = new ActivityStream();
 
             $el.data('loaded', true);
-            $loader.removeClass('u-h');
             activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
-            activityStream
-                .fetch($nonThreadedContainer[0])
-                .then(function() {
-                    $loader.addClass('u-h');
-                });
+            activityStream.fetch($nonThreadedContainer[0]);
         }
     });
 
@@ -192,9 +214,7 @@ Loader.prototype.initUnthreaded = function() {
         self.comments.showHiddenComments();
 
         if (promise) {
-            $loader.removeClass('u-h');
             promise.then(function() {
-                $loader.addClass('u-h');
                 $discussionContainer.removeClass('u-h');
             });
         } else {
@@ -217,28 +237,25 @@ Loader.prototype.getUser = function() {
     }
 };
 
-Loader.prototype.renderReadOnly = function() {
-    this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--closed">'+
-            '<b>We’re doing some maintenance right now.</b>'+
-            ' You can still read comments, but please come back later to add your own.'+
-        '</div>';
+Loader.prototype.isCommentable = function() {
+    // not readonly, not closed and user is signed in
+    return !this.comments.isReadOnly() && !this.getDiscussionClosed() && Id.getUserFromCookie();
 };
 
-/** TODO: This logic will be moved to the Play app renderer */
-Loader.prototype.renderDiscussionClosedMessage = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
-};
-
-/** TODO: This logic will be moved to the Play app renderer */
-Loader.prototype.renderSignin = function() {
-    var url = Id.getUrl() +'/{1}?returnUrl='+ window.location.href;
-    this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--signin">Open for comments. <a class="u-underline" href="'+
-            url.replace('{1}', 'signin') +'">Sign in</a> or '+
-            '<a class="u-underline" href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
-            'to join the discussion.'+
-        '</div>';
+Loader.prototype.initState = function() {
+    if (this.getDiscussionClosed()) {
+        this.setState('closed');
+    } else if (this.comments.isReadOnly()) {
+        this.setState('readonly');
+    } else if (Id.getUserFromCookie()) {
+        if (this.user.privateFields && !this.user.privateFields.canPostComment) {
+            this.setState('banned');
+        } else {
+            this.setState('open');
+        }
+    } else {
+        this.setState('open');
+    }
 };
 
 /**
@@ -247,39 +264,20 @@ Loader.prototype.renderSignin = function() {
  * Else render comment box
  */
 Loader.prototype.renderCommentBar = function() {
-    if (this.comments.isReadOnly()) {
-        this.renderReadOnly();
-    } else if (this.getDiscussionClosed()) {
-        this.renderDiscussionClosedMessage();
-    } else if (!Id.getUserFromCookie()) {
-        this.renderSignin();
-    } else {
+    if (this.isCommentable()) {
         this.renderCommentBox();
         this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
         this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
     }
 };
 
-/**
- * TODO: This logic will be moved to the Play app renderer
- */
 Loader.prototype.renderCommentBox = function() {
-    // If this privateFields aren't there,
-    // they're not the right person
-    // More a sanity check than anything
-    if (!this.user.privateFields) { // not signed in
-        this.renderSignin();
-    } else if (!this.user.privateFields.canPostComment) { // signed in but can't post
-        this.renderUserBanned();
-    } else { // signed in and can post
-        this.commentBox = new CommentBox({
-            discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated
-        });
-        this.commentBox.render(this.getElem('commentBox'));
-
-        this.commentBox.on('post:success', this.commentPosted.bind(this));
-    }
+    this.commentBox = new CommentBox({
+        discussionId: this.getDiscussionId(),
+        premod: this.user.privateFields.isPremoderated
+    });
+    this.commentBox.render(this.getElem('commentBox'));
+    this.commentBox.on('post:success', this.commentPosted.bind(this));
 };
 
 /* Logic determining if extra comments should be shown along with the posted comment to ensure context */
@@ -298,10 +296,6 @@ Loader.prototype.commentPosted = function () {
 /* Configure DOM for viewing of comments once some have been shown */
 Loader.prototype.cleanUpOnShowComments = function () {
     bonzo(this.comments.getElem('header')).removeClass('u-h');
-};
-
-Loader.prototype.renderUserBanned = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-discussion__error d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
 };
 
 /**

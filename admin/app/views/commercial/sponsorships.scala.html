@@ -2,7 +2,8 @@
 @import tools.DfpLink
 
 @listItem(sponsorship: dfp.Sponsorship) = {
-    <li style="padding-bottom:12px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+    <li style="padding-bottom:15px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+        @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
         @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
         @if(sponsorship.countries.nonEmpty){<br /><small>Geotargeted to @{sponsorship.countries.mkString(", ")}</small>}
     </li>

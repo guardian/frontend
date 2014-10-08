@@ -163,7 +163,7 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <span class="editor--boolean  selected">
+        <span class="editor--boolean--display">
             <span class="editor--boolean__label" data-bind="text: $data"></span>
             <span class="editor--boolean__state">✔</span>
         </span>
@@ -264,16 +264,18 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag
+                underDrag: state.underDrag,
+                imageHidden: meta.imageHide
             }">
 
-            <a class="thumb" target="article" data-bind="attr: {href: id}">
-                <img draggable="false" data-bind="
-                    attr: {
-                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
-                        title: id
-                    }"/>
-            </a>
+            <a class="thumb" data-bind="
+                style: { 'background-image': 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')' },
+                attr: {href: id}"></a>
+
+            <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
+                <a class="thumb--cutout" data-bind="
+                    style: { 'background-image': 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+            <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"
@@ -333,8 +335,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
+                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -342,12 +344,6 @@
                                 <span class="time__publication" data-bind="text: webPublicationTime"></span>
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
-
-                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span class="has-sublinks">
-                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
-                                </span>
-                            <!-- /ko -->
 
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
@@ -358,11 +354,21 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: meta.isSnap -->
+                            <!-- ko if: state.isSnap -->
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
+                            <!-- /ko -->
+
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+
+                            <!-- ko if: state.tone -->
+                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- /ko -->
 
                             <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>

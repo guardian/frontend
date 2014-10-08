@@ -1,4 +1,6 @@
 .tone-dead {
+    @extend %tone-not-background;
+
     .fc-item__kicker,
     .fc-item__byline {
         &,

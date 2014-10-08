@@ -371,12 +371,24 @@ h1 {
     height: 45px;
     border-radius: 2px;
     background-color: #dddddd;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position-x: right;
 }
 
-.article .thumb img {
-    width: 75px;
-    height: 45px;
+.article.imageHidden .thumb {
+    opacity: 0.15
+}
+
+.article .thumb--cutout {
+    position: absolute;
+    top: 23px;
+    left: 60px;
+    height: 28px;
+    width: 25px;
     border-radius: 2px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
 }
 
 .article__content {
@@ -425,24 +437,29 @@ h1 {
 }
 
 .article__ammends .label {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     text-transform: uppercase;
-    font-weight: bold;
+    padding-right: 3px;
 }
 
 .article__ammends .label--draft {
+    font-weight: bold;
     color: #ffc107;
 }
 
 .article__ammends .label--takedown {
+    font-weight: bold;
     color: #DD4B39;
 }
 
 .article__ammends .label--snap {
+    font-weight: bold;
     color: #999999;
 }
 
 .article__ammends .has-sublinks {
-    color: #DD4B39;
+    color: #72b9e4;
     font-weight: bold;
     margin-right: 5px;
 }
@@ -480,6 +497,8 @@ h1 {
 
 .article__overrides {
     margin: 0 0 10px 85px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .article__overrides .tools {
@@ -518,10 +537,6 @@ h1 {
 }
 
 .supporting .trailText,
-.supporting .editor--boolean,
-.supporting .element__trailText,
-.supporting .element__byline,
-.supporting .element__imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
@@ -616,6 +631,7 @@ select {
 .editor--boolean {
     display: inline-block;
     padding: 2px 0;
+    min-width: 100px;
 }
 
 .editor--boolean,
@@ -626,7 +642,11 @@ select {
 .editor--boolean.selected,
 .editor--boolean.selected a,
 .editor--boolean a:hover {
-    color: #DD4B39;
+    color: #148ad2;
+}
+
+.editor--boolean--display {
+    color: #72b9e4;
 }
 
 .editor--boolean__state {
@@ -1229,6 +1249,7 @@ button {
     .front-selector__age
     .preview,
     .article .thumb,
+    .article .thumb--cutout,
     .image__overrides,
     .log-in-out,
     .article__spark {

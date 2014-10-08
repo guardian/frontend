@@ -111,7 +111,18 @@ $gs-max-columns: 16 !default;
 @mixin gs-container {
     position: relative;
     margin: 0 auto;
-    max-width: gs-span(14) + $gs-gutter * 2;
+
+    @include mq(tablet) {
+        max-width: gs-span(9) + $gs-gutter * 2;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
 
     @include mq(wide) {
         max-width: gs-span($gs-max-columns) + $gs-gutter * 2;

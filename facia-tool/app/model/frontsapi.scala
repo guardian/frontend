@@ -171,10 +171,18 @@ trait UpdateActions extends Logging {
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
+    "imageCutoutReplace",
+    "imageCutoutSrc",
+    "imageCutoutSrcWidth",
+    "imageCutoutSrcHeight",
     "isBreaking",
     "showKickerTag",
     "showKickerSection",
+    "showKickerCustom",
+    "customKicker",
     "hideKickers",
+    "showBoostedHeadline",
+    "showQuotedHeadline",
     "showMainVideo"
   )
 
