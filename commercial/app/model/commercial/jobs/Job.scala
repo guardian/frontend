@@ -21,11 +21,6 @@ case class Job(id: Int,
 
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 
-  def isTargetedAt(segment: Segment): Boolean = {
-    val adKeywords = lastPart(keywordIds)
-    intersects(segment.context.keywords, adKeywords)
-  }
-
   val industries: Seq[String] =
     Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
 

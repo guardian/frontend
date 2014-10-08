@@ -1,17 +1,13 @@
 package model.commercial.jobs
 
 import common.ExecutionContexts
-import model.commercial.{MerchandiseAgent, Segment}
+import model.commercial._
 
 object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
 
   def jobsTargetedAt(segment: Segment): Seq[Job] = {
-
     def defaultJobs = available filter (_.industries.contains("Media"))
-
-    getTargetedMerchandise(segment, defaultJobs) {
-      _.isTargetedAt(segment)
-    }
+    getTargetedMerchandise(segment, defaultJobs)(job => keywordsMatch(segment, job.keywordIds))
   }
   
   def specificJobs(jobIdStrings: Seq[String]): Seq[Job] = {
