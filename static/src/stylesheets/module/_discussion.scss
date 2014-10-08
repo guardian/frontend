@@ -331,7 +331,7 @@ $avatarPadding: $gs-gutter / 2;
     }
     .i-comment-anchor {
         display: none;
-        vertical-align: middle
+        vertical-align: middle;
     }
     .d-comment__inner:hover & .i-comment-anchor {
         display: inline-block;
