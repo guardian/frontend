@@ -1,6 +1,6 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-@import common.Edition
+
 @import model.{Collection, Config}
 @import views.support.RenderClasses
 
@@ -15,10 +15,6 @@
             data-sponsor="@sponsor"
         }
         role="main">
-
-        @if(index.page.hasPageSkin(Edition(request))) {
-            @fragments.commercial.pageSkin()
-        }
 
         @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(slices.TagContainers.keywordPage, model.Collection(index.trails), Some(templateDeduping)), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 

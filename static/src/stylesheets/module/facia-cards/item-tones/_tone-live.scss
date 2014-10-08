@@ -24,4 +24,10 @@
             color: $c-liveMute;
         }
     }
+
+    .fc-item__live-indicator,
+    .fc-item__breaking-indicator {
+        background-color: #ffffff;
+        padding: .1em .2em .05em;
+    }
 }

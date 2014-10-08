@@ -440,7 +440,6 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-transform: uppercase;
-    color: #cccccc;
     padding-right: 3px;
 }
 
@@ -460,7 +459,7 @@ h1 {
 }
 
 .article__ammends .has-sublinks {
-    color: #DD4B39;
+    color: #72b9e4;
     font-weight: bold;
     margin-right: 5px;
 }
@@ -498,6 +497,8 @@ h1 {
 
 .article__overrides {
     margin: 0 0 10px 85px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .article__overrides .tools {
@@ -536,10 +537,6 @@ h1 {
 }
 
 .supporting .trailText,
-.supporting .editor--boolean,
-.supporting .element__trailText,
-.supporting .element__byline,
-.supporting .element__imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
@@ -634,6 +631,7 @@ select {
 .editor--boolean {
     display: inline-block;
     padding: 2px 0;
+    min-width: 100px;
 }
 
 .editor--boolean,
@@ -644,7 +642,11 @@ select {
 .editor--boolean.selected,
 .editor--boolean.selected a,
 .editor--boolean a:hover {
-    color: #DD4B39;
+    color: #148ad2;
+}
+
+.editor--boolean--display {
+    color: #72b9e4;
 }
 
 .editor--boolean__state {

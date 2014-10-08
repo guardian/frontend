@@ -16,7 +16,7 @@ object ItemKicker {
 
     trail.customKicker match {
       case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
-      case None => if (trail.showKickerTag && maybeTag.isDefined) {
+      case _ => if (trail.showKickerTag && maybeTag.isDefined) {
         tagKicker
       } else if (trail.showKickerSection) {
         sectionKicker

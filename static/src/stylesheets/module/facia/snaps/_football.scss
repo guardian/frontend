@@ -226,6 +226,24 @@
     }
 }
 
+.container__header {
+    $footballBadgeSizeMobile: 80px;
+    $footballBadgeSizeDesktop: 120px;
+
+    .football-badge {
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        width: $footballBadgeSizeMobile;
+        height: $footballBadgeSizeMobile;
+
+        @include mq(desktop) {
+            width: $footballBadgeSizeDesktop;
+            height: $footballBadgeSizeDesktop;
+        }
+    }
+}
+
 .after-article .football-extras {
     margin-top: $gs-baseline*2;
 }

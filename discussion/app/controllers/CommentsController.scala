@@ -6,7 +6,7 @@ import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.model.{BlankComment, DiscussionKey}
 
-trait CommentsController extends DiscussionController {
+object CommentsController extends DiscussionController {
 
   def commentContextJson(id: Int) = Action.async { implicit request =>
     val params = DiscussionParams(request)
