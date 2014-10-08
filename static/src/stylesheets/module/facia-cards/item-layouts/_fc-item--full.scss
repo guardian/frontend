@@ -55,12 +55,13 @@ Full item. A 100% width version of the Three quarter item.
         @include fc-sublinks--horizontal;
     }
 
-   &.fc-item--has-cutout {
+    &.fc-item--has-cutout {
         .fc-item__container {
+            min-height: gs-height(6);
+
             .has-flex-wrap & {
                 @include flex-direction(row);
             }
-            min-height: gs-height(6);
 
             @include mq(desktop) {
                 min-height: gs-height(7);

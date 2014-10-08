@@ -59,10 +59,11 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     &.fc-item--has-cutout {
         .fc-item__container {
+            min-height: gs-height(6);
+
             .has-flex-wrap & {
                 @include flex-direction(row);
             }
-            min-height: gs-height(6);
 
             @include mq(desktop) {
                 min-height: gs-height(7);
