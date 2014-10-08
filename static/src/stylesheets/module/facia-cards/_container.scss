@@ -51,6 +51,7 @@ $header-image-size-desktop: 120px;
     display: table-cell;
     margin: 0 $gs-gutter 0 0;
     overflow: hidden;
+    float: left;
 
     @include mq(leftCol) {
         float: none;
@@ -59,6 +60,7 @@ $header-image-size-desktop: 120px;
     }
 
     img {
+        display: block;
         width: $header-image-size-mobile;
 
         @include mq(desktop) {

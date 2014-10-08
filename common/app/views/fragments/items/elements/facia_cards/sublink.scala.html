@@ -1,7 +1,6 @@
-@(trail: model.Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import views.support._
 
 <h3 class="fc-sublinks__item-title">
   @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {

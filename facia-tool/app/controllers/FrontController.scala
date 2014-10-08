@@ -1,6 +1,6 @@
 package controllers
 
-import frontsapi.model.{Collection, Front}
+import com.gu.facia.client.models.{Front, CollectionConfig}
 import play.api.mvc.Controller
 import services.PressAndNotify
 import util.Requests._
@@ -26,7 +26,7 @@ case class CreateFront(
   onPageDescription: Option[String],
   priority: Option[String],
   isHidden: Option[Boolean],
-  initialCollection: Collection
+  initialCollection: CollectionConfig
 )
 
 object FrontController extends Controller {

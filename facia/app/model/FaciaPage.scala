@@ -1,13 +1,15 @@
 package model
 
 import common.{NavItem, Edition}
+import conf.Configuration
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
+import services.CollectionConfigWithId
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
-                     collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+                     collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
@@ -38,8 +40,8 @@ case class FaciaPage(id: String,
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct
 
-  override def openGraph: Map[String, String] = super.openGraph ++Map(
-    "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
+    "og:image" -> Configuration.facebook.imageFallback) ++
     optionalMapEntry("og:description", description)  ++
     optionalMapEntry("og:image", frontProperties.imageUrl)
 

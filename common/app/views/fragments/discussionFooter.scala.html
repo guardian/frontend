@@ -27,7 +27,7 @@
 
             <div class="preload-msg">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
 
-            <div class="discussion__comments__container modern-hidden" data-test-id="comments-container">
+            <div class="discussion__comments__container modern-hidden">
 
                 <div class="discussion__heading">
 
@@ -53,8 +53,13 @@
 
                 </div>
 
-                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded" data-test-id="comment-view-type">
+                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded">
                     View <span class="discussion__show-threaded-state">un</span>threaded
+                </button>
+
+                <button class="u-button-reset u-fauxlink modern-visible discussion__show-all discussion__show-all--off js-show-all">
+                    <span class="discussion__show-all__off-text">Expand comment threads</span>
+                    <span class="discussion__show-all__on-text">Collapse comment threads</span>
                 </button>
 
                 <div class="discussion-container js-discussion-container">

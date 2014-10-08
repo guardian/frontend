@@ -12,6 +12,10 @@ object DfpLink {
   def creativeTemplate(templateId: Long) = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/CreateCreativeTemplate/creativeTemplateId=$templateId"
   }
+
+  def creative(creativeId: Long) = {
+    s"https://www.google.com/dfp/$dfpAccountId#delivery/CreativeDetail/creativeId=$creativeId"
+  }
 }
 
 object SiteLink {

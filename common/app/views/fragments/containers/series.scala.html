@@ -1,7 +1,8 @@
-@(collection: Collection, style: Container, containerIndex: Int, description: Option[String])(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int, description: Option[String], dataId: String)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
-@import model.{Collection, Config, FaciaComponentName}
+@import model.{Collection, FaciaComponentName}
 @import views.support.{Container, RenderClasses, TemplateDeduping}
+@import dfp.DfpAgent
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (displayName, href) =>
 
@@ -16,27 +17,27 @@
                     Seq("facia-container--default-heading")
                 )"
                 data-link-name="@FaciaComponentName(config, collection)"
-                data-id="@config.id"
+                data-id="@dataId"
                 data-type="@style.containerType"
-                @config.sponsorshipKeyword.map { keyword =>
+                @DfpAgent.sponsorshipTag(config).map { keyword =>
                     data-keywords="@keyword"
                 }
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
-                    <div class="container__header">
-                        @if(config.isSponsored || config.isAdvertisementFeature) {
+                    <div class="container__header js-container-header">
+                        @if(DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config)) {
                             <h2 class="container__title">
                                 @href.map { href =>
                                     <a class="container__title__label u-text-hyphenate"
                                         data-link-name="section heading"
-                                        href="@LinkTo{/@href}">@Html(config.id)</a>
+                                        href="@LinkTo{/@href}">@Html(dataId)</a>
                                 }.getOrElse{
-                                    <span class="container__title__label u-text-hyphenate">@Html(config.id)</span>
+                                    <span class="container__title__label u-text-hyphenate">@Html(dataId)</span>
                                 }
                             </h2>
                         } else {
-                            @fragments.containers.elements.tagMeta(displayName, href, description, config.id)
+                            @fragments.containers.elements.tagMeta(displayName, href, description, dataId)
                         }
                     </div>
                     <div class="container__body container--rolled-up-hide">
