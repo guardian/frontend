@@ -1,17 +1,15 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.commercial.{Lookup, MerchandiseAgent, Segment}
+import model.commercial.{Lookup, MerchandiseAgent, Segment, keywordsMatch}
 
 import scala.concurrent.Future
 
 object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionContexts with Logging {
 
   def masterclassesTargetedAt(segment: Segment) = {
-
     lazy val defaultClasses = available take 4
-
-    val targeted = available filter (_.eventBriteEvent.isTargetedAt(segment))
+    val targeted = available filter (masterclass => keywordsMatch(segment, masterclass.eventBriteEvent.keywordIds))
     val toShow = (targeted ++ defaultClasses) take 4
     toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }

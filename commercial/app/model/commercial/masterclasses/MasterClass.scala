@@ -1,7 +1,6 @@
 package model.commercial.masterclasses
 
 import model.ImageContainer
-import model.commercial.{Segment, lastPart}
 import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
@@ -49,19 +48,19 @@ object EventbriteMasterClass {
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
     elements.headOption.map { element =>
-        new EventbriteMasterClass(id.toString,
-          title,
-          startDate,
-          url,
-          description,
-          status,
-          Venue(block \ "venue"),
-          tickets.toList,
-          capacity,
-          element.attr("href"),
-          paragraphs.headOption.fold("")(_.text),
-          tags
-        )
+      new EventbriteMasterClass(id.toString,
+        title,
+        startDate,
+        url,
+        description,
+        status,
+        Venue(block \ "venue"),
+        tickets.toList,
+        capacity,
+        element.attr("href"),
+        paragraphs.headOption.fold("")(_.text),
+        tags
+      )
     }
   }
 }
@@ -82,7 +81,7 @@ case class EventbriteMasterClass(
                                   keywordIds: Seq[String] = Nil
                                   ) {
 
-  def isOpen = {status == "Live"}
+  def isOpen = { status == "Live" }
 
   lazy val displayPrice = {
     val priceList = tickets.map(_.price).sorted.distinct
@@ -91,8 +90,6 @@ case class EventbriteMasterClass(
       f"£$low%,.2f to £$high%,.2f"
     } else f"£${priceList.head}%,.2f"
   }
-
-  def isTargetedAt(segment: Segment) = (segment.context.keywords intersect lastPart(keywordIds)).nonEmpty
 
   lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 
