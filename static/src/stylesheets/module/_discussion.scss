@@ -320,11 +320,21 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__timestamp {
     margin-bottom: $gs-baseline;
-    display: inline;
     @include fs-textSans(1);
+
+    @include mq(tablet) {
+        display: inline;
+    }
 
     a {
         color: $c-neutral2;
+    }
+    .i-comment-anchor {
+        display: none;
+        vertical-align: middle
+    }
+    .d-comment__inner:hover & .i-comment-anchor {
+        display: inline-block;
     }
 }
 
