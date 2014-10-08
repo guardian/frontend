@@ -267,7 +267,9 @@ GET         /commercial/capi                                                    
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
+GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
 GET         /commercial/magento/resource                                                                             controllers.commercial.magento.ApiSandbox.getResource(t: String)
