@@ -171,7 +171,9 @@ Loader.prototype.initShowAll = function() {
     }
 
     this.on('click', '.js-show-all', function(e) {
-        var expand = !bonzo(e.currentTarget).toggleClass(offClass).hasClass(offClass);
+        var $btn = bonzo(e.currentTarget).toggleClass(offClass),
+            expand = !$btn.hasClass(offClass);
+        
         this.comments.options.expand = expand;
         userPrefs.set('discussion.expand', expand);
         this.comments.fetchComments();
