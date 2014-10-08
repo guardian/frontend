@@ -90,6 +90,14 @@ define([
         this.provisionalImageUrl.subscribe(function(src) {
             var self = this;
 
+            if(!src){
+                self.props.imageUrl(undefined);
+                self.props.imageWidth(undefined);
+                self.props.imageHeight(undefined);
+                self.props.isImageDisplayed(undefined);
+                return;
+            }
+
             if (src === this.props.imageUrl()) { return; }
 
             validateImageSrc(src, {minWidth: 120})
