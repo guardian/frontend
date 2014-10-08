@@ -81,7 +81,9 @@ Full item. A 100% width version of the Three quarter item.
             }
         }
 
-        .fc-item__standfirst {
+        .fc-item__standfirst,
+        .fc-item__meta,
+        .fc-item__footer--vertical {
             width: gs-span(5);
 
             @include mq(desktop) {

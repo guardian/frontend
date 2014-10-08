@@ -11,7 +11,6 @@ import scala.language.postfixOps
 
 @DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite {
 
-
   "Should do GET request on correct URL for topComments " in {
     val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
 

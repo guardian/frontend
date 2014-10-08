@@ -7,8 +7,8 @@ var $$FSR = {
     'sessionreplay': true,
     'auto': true,
     'encode': true,
-    'files': '/assets/javascripts/vendor/foresee/8192014/',
-	'html_files': '/surveys/foresee/8192014/',
+    'files': '/assets/javascripts/vendor/foresee/20141007/',
+	'html_files': '/surveys/foresee/20141007/',
     // needs to be set when foresee-transport.swf is not located at 'files'
     //'swf_files': '__swf_files_'
     'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',
@@ -32,13 +32,13 @@ var $$FSR = {
     'sites': [{
         path: 'www.theguardian.com',
         domain: 'theguardian.com',
-        files: '//assets.guim.co.uk/javascripts/vendor/foresee/8192014/',
-        html_files: '//www.theguardian.com/surveys/foresee/8192014/'
+        files: '//assets.guim.co.uk/javascripts/vendor/foresee/20141007/',
+        html_files: '//www.theguardian.com/surveys/foresee/20141007/'
     }, {
         path: 'm.code.dev-theguardian.com',
         domain: 'dev-theguardian.com',
-        files: '//aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/javascripts/vendor/foresee/8192014/',
-        html_files: '//m.code.dev-theguardian.com/surveys/foresee/8192014/'
+        files: '//aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/javascripts/vendor/foresee/20141007/',
+        html_files: '//m.code.dev-theguardian.com/surveys/foresee/20141007/'
     }, {
         path: /\w+-?\w+\.(com|org|edu|gov|net|co\.uk)/
     }, {

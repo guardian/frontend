@@ -141,11 +141,13 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__live-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
     font: inherit;
     line-height: 1;
-    padding: .1em .2em .05em;
+}
+
+.fc-item__breaking-indicator {
+    color: $c-liveDefault;
 }
 
 .fc-item__header {
@@ -168,6 +170,12 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-top: $gs-baseline / 3;
     padding-bottom: 0;
     word-wrap: break-word;
+}
+
+.fc-item__kicker {
+    float: left;
+    margin-right: .2em;
+    line-height: inherit;
 }
 
 .fc-item__byline {
@@ -205,7 +213,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    // display: none;
+    display: none;
     margin-right: 1em;
 }
 
