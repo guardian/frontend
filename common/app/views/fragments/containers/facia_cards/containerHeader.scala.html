@@ -1,11 +1,11 @@
-@(collection: model.Collection, frontProperties: model.FrontProperties, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(collection: model.Collection, frontProperties: model.FrontProperties, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import views.support.{ImgSrc, Item140, LatestUpdate, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
-    <div class="fc-container__header">
+    <div class="fc-container__header js-container-header">
         @title.map { title =>
             @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(

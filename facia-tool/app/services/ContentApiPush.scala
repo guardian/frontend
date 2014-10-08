@@ -10,7 +10,7 @@ object ContentApiPush extends Logging with ExecutionContexts {
       Future.traverse(ids) { id =>
         ConfigAgent.getConfigAfterUpdates(id).flatMap { configOption =>
           configOption.map { config =>
-            ContentApiWrite.writeToContentapi(config)
+            ContentApiWrite.writeToContentapi(id, config)
           } getOrElse {
             Future.failed(
               new RuntimeException(s"Asked to notify content API about collection $id but did not have config " +

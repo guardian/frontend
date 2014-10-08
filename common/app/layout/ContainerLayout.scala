@@ -39,7 +39,14 @@ object ContainerLayout extends implicits.Collections {
       (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
     } getOrElse items
 
-    apply(containerDefinition.slices, trails, containerDefinition.mobileShowMore)
+    val layout = apply(containerDefinition.slices, trails, containerDefinition.mobileShowMore)
+
+    //Cap the remaining card size to 9 only on automated collections
+    if (collection.curated.isEmpty) {
+      layout.copy(remainingCards = layout.remainingCards.take(9))
+    } else {
+      layout
+    }
   }
 }
 

@@ -1,9 +1,10 @@
-@(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import model.FaciaComponentName
 @import views.html.fragments.keywordList
 @import views.support.GetClasses
 @import views.support.MostPopularTags.topTags
+@import dfp.DfpAgent
 @import views.support.FootballTagPage
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
@@ -12,15 +13,15 @@
         <section
             class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("u-cf"))"
             data-link-name="@FaciaComponentName(config, collection)"
-            data-id="@config.id"
+            data-id="@dataId"
             data-type="@style.containerType"
-            @config.sponsorshipKeyword.map { keyword =>
+            @DfpAgent.sponsorshipTag(config).map { keyword =>
                 data-keywords="@keyword"
             }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
-                <div class="container__header">
+                <div class="container__header js-container-header">
                     @FootballTagPage(page).asOpt.map{ footballTagPage =>
                         @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
                     }.getOrElse{

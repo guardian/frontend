@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import model._
 import views.support.{TemplateDeduping, ForceGroupsCollection, MultimediaContainer}
@@ -9,7 +10,8 @@ import feed.MostViewedGalleryAgent
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
   private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
-  private val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
+  private val dataId: String = "multimedia/gallery"
+  private val config = CollectionConfig.withDefaults(displayName = Some("more galleries"), groups = Some(List("multimedia/gallery")))
 
   val featuredSeries = Seq(
     ("Photographs of the day", "/news/series/ten-best-photographs-of-the-day"),
@@ -40,7 +42,8 @@ object MostViewedGalleryController extends Controller with Logging with Executio
       ForceGroupsCollection.firstTwoBig(collection),
       MultimediaContainer(),
       1,
-      featuredSeries = featuredSeries
+      featuredSeries = featuredSeries,
+      dataId = dataId
     )(request, templateDeduping, config)
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)

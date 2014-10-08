@@ -1,10 +1,10 @@
-@(footballTagPage: model.Tag, collection: model.Collection)(implicit request: RequestHeader, config: model.Config)
+@(footballTagPage: model.Tag, collection: model.Collection)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import views.support.RenderClasses
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
-    <div class="fc-container__header">
+    <div class="fc-container__header js-container-header">
         <div class="fc-container__header__title">
             @collection.href.map { href =>
                 <a class="u-text-hyphenate" href="@LinkTo {/@href}" data-link-name="tag heading">@title</a>
