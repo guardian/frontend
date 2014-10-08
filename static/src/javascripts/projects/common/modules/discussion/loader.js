@@ -17,7 +17,8 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
     bean,
     bonzo,
@@ -35,7 +36,8 @@ define([
     CommentBox,
     Comments,
     TopComments,
-    Id
+    Id,
+    userPrefs
 ) {
 
 /**
@@ -115,7 +117,9 @@ Loader.prototype.ready = function() {
 
     this.topComments.fetch(topCommentsElem);
 
-    this.comments.fetch(commentsElem).then(function() {
+    this.comments.attachTo(commentsElem);
+
+    this.comments.fetchComments({comment: commentId}).then(function() {
         $('.discussion .preload-msg').addClass('u-h');
 
         if (commentId || window.location.hash === '#comments') {
@@ -125,6 +129,7 @@ Loader.prototype.ready = function() {
 
         bonzo(commentsContainer).removeClass('modern-hidden');
         self.initUnthreaded();
+        self.initShowAll();
 
         self.on('user:loaded', function() {
             self.initState();
@@ -157,6 +162,25 @@ Loader.prototype.ready = function() {
     register.end('discussion');
 };
 
+Loader.prototype.initShowAll = function() {
+    var $showAllBtn = $('.js-show-all'),
+        offClass = 'discussion__show-all--off';
+
+    if (userPrefs.get('discussion.expand')) {
+        $showAllBtn.removeClass(offClass);
+    }
+
+    this.on('click', '.js-show-all', function(e) {
+        var $btn = bonzo(e.currentTarget).toggleClass(offClass),
+            expand = !$btn.hasClass(offClass);
+        
+        this.comments.options.expand = expand;
+        userPrefs.set('discussion.expand', expand);
+        this.comments.fetchComments();
+    });
+
+};
+
 Loader.prototype.initUnthreaded = function() {
     var self = this;
     // Non threaded view
@@ -170,6 +194,8 @@ Loader.prototype.initUnthreaded = function() {
         $state.toggleClass('u-h');
         $nonThreadedContainer.toggleClass('u-h');
         $discussionContainer.toggleClass('u-h');
+
+        this.toggleState('threaded');
 
         if (!$el.data('loaded')) {
             var activityStream = new ActivityStream();
