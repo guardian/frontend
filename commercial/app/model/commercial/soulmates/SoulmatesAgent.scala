@@ -32,7 +32,7 @@ object SoulmatesAggregatingAgent {
 trait SoulmatesAgent extends MerchandiseAgent[Member] with ExecutionContexts {
 
   def matchingMembers(segment: Segment): Seq[Member] = {
-    getTargetedMerchandise(segment, default = Nil)(_.isTargetedAt(segment))
+    getTargetedMerchandise(segment, default = Nil)(_ => true)
   }
     
   protected def membersLoaded: Future[Seq[Member]]
