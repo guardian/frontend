@@ -51,8 +51,11 @@ define([
         userPrefs.remove('front-trailblocks');
 
         this.addToggle =  function () {
+            //TODO: Remove/refactor when we remove fc-container
+            var headerCls = _$container.hasClass('fc-container') ? '.fc-container__header' : '.container__header';
+
             // append toggle button
-            $('.container__header', _$container[0]).append(_$button);
+            $(headerCls, _$container[0]).append(_$button);
             _$container
                 .removeClass('js-container--toggle')
                 .addClass('container--has-toggle');

@@ -72,6 +72,21 @@ define([
             expect(qwery('.container__header .container__toggle', container).length).toBe(1);
         });
 
+        //TODO: Remove/refactor when we remove fc-container
+        it('should add button to the container\'s header', function() {
+            container = bonzo.create(
+                    '<section class="container fc-container js-container--toggle" data-id="' + containerId + '">' +
+                    '<div class="fc-container__header">' +
+                    '<h2>A container</h2>' +
+                    '</div>' +
+                    '<div class="ad-slot--paid-for-badge"></div>' +
+                    '</section>'
+            )[0];
+            $container = bonzo(container);
+            new ContainerDisplayToggle(container).addToggle();
+            expect(qwery('.fc-container__header .container__toggle', container).length).toBe(1);
+        });
+
         it('initial state should be open', function() {
             new ContainerDisplayToggle(container).addToggle();
             assertState($container, 'open');
