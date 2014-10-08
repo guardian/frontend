@@ -115,7 +115,9 @@ Loader.prototype.ready = function() {
 
     this.topComments.fetch(topCommentsElem);
 
-    this.comments.fetch(commentsElem).then(function() {
+    this.comments.attachTo(commentsElem);
+
+    this.comments.fetchComments({comment: commentId}).then(function() {
         $('.discussion .preload-msg').addClass('u-h');
 
         if (commentId || window.location.hash === '#comments') {
@@ -125,6 +127,7 @@ Loader.prototype.ready = function() {
 
         bonzo(commentsContainer).removeClass('modern-hidden');
         self.initUnthreaded();
+        self.initShowAll();
 
         self.on('user:loaded', function() {
             self.initState();
@@ -155,6 +158,18 @@ Loader.prototype.ready = function() {
     }
 
     register.end('discussion');
+};
+
+Loader.prototype.initShowAll = function() {
+    this.on('click', '.js-show-all', function(e) {
+        var offClass = 'discussion__show-all--off',
+            turnOn = bonzo(e.currentTarget).toggleClass(offClass).hasClass(offClass);
+
+        this.comments.options.expand = turnOn;
+
+        this.comments.fetchComments();
+    });
+
 };
 
 Loader.prototype.initUnthreaded = function() {
