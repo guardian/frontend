@@ -1,8 +1,9 @@
-@(page: model.MetaData, collection: model.Collection, style: views.support.FeaturesVolumesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(page: model.MetaData, collection: model.Collection, style: views.support.FeaturesVolumesContainer, containerIndex: Int, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.{Edition, LinkTo}
 @import model.FaciaComponentName
 @import views.support.GetClasses
+@import dfp.DfpAgent
 
 @defining(config.displayName.orElse(collection.displayName), config.href.orElse(collection.href)) { case (title, href) =>
     @defining(templateDeduping(10, collection.items)) { items =>
@@ -12,9 +13,9 @@
                     id="@FaciaComponentName(config, collection)"
                     class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty, if (!isEdition) Seq("container--tag") else Nil)"
                     data-link-name="@FaciaComponentName(config, collection)"
-                    data-id="@config.id"
+                    data-id="@dataId"
                     data-type="@style.containerType"
-                    @config.sponsorshipKeyword.map { keyword =>
+                    @DfpAgent.sponsorshipTag(config).map { keyword =>
                         data-keywords="@keyword"
                     }
                     data-component="@FaciaComponentName(config, collection)">
