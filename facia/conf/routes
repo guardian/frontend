@@ -23,6 +23,7 @@ GET        /container/*id.json                                             contr
 # Editionalised pages
 GET        /*path/rss                                                      controllers.FaciaController.renderFrontRss(path)
 GET        /*path/front-index.json                                         controllers.FaciaController.renderFrontIndex(path)
+GET        /*path/collections/*id                                          controllers.FaciaController.renderFrontCollection(path, id)
 GET        /*path/lite.json                                                controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path.json                                                     controllers.FaciaController.renderFrontJson(path)
 GET        /*path                                                          controllers.FaciaController.renderFront(path)

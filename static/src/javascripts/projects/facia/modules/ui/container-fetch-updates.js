@@ -19,7 +19,9 @@ define([
     indexBy,
     map
 ) {
-    var containers = $('.js-container--fetch-updates');
+    function getContainers() {
+        return $('.js-container--fetch-updates');
+    }
 
     function getItems(container) {
         return $('.js-fc-item', container);
@@ -70,7 +72,7 @@ define([
     }
 
     function updateFromIndex(index) {
-        containers.each(function (container) {
+        getContainers().each(function (container) {
             var $container = bonzo(container),
                 element = $('.js-container--insert-updates', container),
                 containerId = $container.attr('data-id'),
@@ -101,7 +103,7 @@ define([
                         event.preventDefault();
 
                         ajax({
-                            url: '/collections/' + containerId,
+                            url: window.location.pathname + '/collections/' + containerId,
                             type: 'html',
                             method: 'get',
                             crossOrigin: 'true',
@@ -142,9 +144,9 @@ define([
         /** THIS IS FOR TESTING, REMOVE BEFORE RELEASE */
         triggerUpdate();
 
-        if (containers.length > 0) {
+        if (getContainers().length > 0) {
             /** Start AJAX cycle */
-            setInterval(triggerUpdate, 30000);
+            setInterval(triggerUpdate, 10000);
         }
     };
 });
