@@ -41,7 +41,6 @@ $header-image-size-desktop: 120px;
     @include fs-header(3);
 
     @include mq($until: tablet) {
-        padding: $gs-baseline/4 0 $gs-baseline/3;
         @include fs-header(5);
     }
     a {
