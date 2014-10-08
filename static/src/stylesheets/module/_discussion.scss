@@ -235,11 +235,6 @@ $avatarPadding: $gs-gutter / 2;
     background-color: $c-neutral7;
 }
 
-.d-comment__meta,
-.d-comment-box__meta {
-    white-space: nowrap;
-}
-
 .d-comment-box__meta {
     position: relative;
 
@@ -275,12 +270,8 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    padding-right: 50px;
+    padding-right: $gs-gutter * 2.5;
     @include box-sizing(border-box);
-
-    @include mq(desktop) {
-        padding-right: 0;
-    }
 
     .i-reply-grey {
         margin-bottom: -4px;
@@ -295,7 +286,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment__author,
 .d-comment-box__author {
     overflow: hidden;
-    padding-right: $gs-gutter / 2;
+    padding-right: $gs-gutter / 4;
     @include fs-textSans(4);
     font-weight: bold;
     text-overflow: ellipsis;
@@ -303,6 +294,10 @@ $avatarPadding: $gs-gutter / 2;
     @include mq(tablet) {
         display: block;
     }
+}
+
+.d-comment__author {
+    display: inline;
 }
 
 .d-comment-box__author-label {
@@ -325,6 +320,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__timestamp {
     margin-bottom: $gs-baseline;
+    display: inline;
     @include fs-textSans(1);
 
     a {
@@ -334,6 +330,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
+    padding-right: $gs-gutter / 4;
     display: none;
     @include fs-textSans(4);
 }
@@ -349,6 +346,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__content {
+    margin-top: $gs-baseline / 2;
     @include mq($until: tablet) {
         clear: both;
     }
@@ -617,6 +615,9 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment__actions {
     position: absolute;
     bottom: $gs-baseline;
+    .discussion--closed & {
+        display: none;
+    }
 }
 
 .d-comment__action {
