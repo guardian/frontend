@@ -41,7 +41,11 @@
         @if(page.orderBy == "newest"){<div class="js-new-comments"></div>}
         <ul class="d-thread d-thread--top-level">
             @page.comments.map{ comment =>
-                @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
+                @if(isTopComments) {
+                    @fragments.topComment(comment, page.isClosedForRecommendation, false)
+                } else {
+                    @fragments.comment(comment, page.isClosedForRecommendation, false)
+                }
             }
             <li class="d-image-fade u-h"></li>
         </ul>

@@ -1,4 +1,4 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isTopComment: Boolean = false)(implicit request: RequestHeader)
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
@@ -10,7 +10,7 @@
                 "d-comment--has-replies" -> comment.responses.nonEmpty,
                 "d-comment-staff" -> comment.profile.isStaff
             ))"
-           id="@if(isTopComment){top-}comment-@comment.id"
+           id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
            data-comment-replies="@comment.responseCount"
@@ -62,8 +62,8 @@
                 }else { @if(comment.profile.isContributor) {
                     <span class="d-comment__author-label">Contributor</span>}
                 }
-                @if(!isTopComment && !isResponse) {
-                    <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
+                @if(!isResponse && (!comment.isHighlighted || comment.isBlocked)) {
+                    <div class="d-comment__pick" title="Guardian pick">
                         <i class="i i-gupickasterisk"></i>Guardian Pick
                     </div>
                 }
