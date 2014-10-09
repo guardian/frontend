@@ -1,8 +1,11 @@
-.fc-item__title--quoted .fc-item__link:before {
-    @include icon(quote-grey, false);
-    content: '';
-    height: .8em;
-    width: 1em;
+.fc-item__title--quoted,
+.tone-comment {
+    .fc-item__link:before {
+        @include icon(quote-grey, false);
+        content: '';
+        height: .8em;
+        width: 1em;
+    }
 }
 
 .fc-item__timestamp {
