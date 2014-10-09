@@ -534,10 +534,13 @@ $avatarPadding: $gs-gutter / 2;
 /* Recommend
    ======================================================= */
 
+$comment-recommend-button-size: 25px;
+
 .d-comment__recommend {
     position: absolute;
     right: 0;
     top: $gs-baseline / 2;
+    height: $comment-recommend-button-size;
     z-index: 1;
 
     @include mq(rightCol) {
@@ -545,32 +548,35 @@ $avatarPadding: $gs-gutter / 2;
         text-align: center;
     }
 }
+
 .d-comment__recommend-button {
-    @include icon-button(recommend, 18px);
+    @include icon-button(up-arrow, $comment-recommend-button-size);
     display: inline-block;
-    background-color: $c-neutral4;
-    margin-right: 2px;
-    margin-bottom: -5px;
+    background-color: colour(neutral-6);
 }
 .d-comment__recommend-pulse {
     position: absolute;
     top: 0;
     left: 0;
-    width: 18px;
-    height: 18px;
+    width: $comment-recommend-button-size;
+    height: $comment-recommend-button-size;
     @include border-radius(18px);
-    background-color: colour(neutral-3);
+    background-color: colour(neutral-6);
 }
 .d-comment__recommend-count {
     display: inline-block;
     overflow: hidden;
-    height: 16px;
     min-width: 12px;
-    margin-bottom: -4px;
-    @include fs-textSans(1);
+    @include fs-textSans(3);
     color: colour(neutral-2);
-    font-weight: bold;
     text-align: right;
+    line-height: $comment-recommend-button-size;
+    height: $comment-recommend-button-size;
+    margin-right: $gs-gutter / 4;
+}
+
+.d-comment__recommend-count--old {
+    margin-top: 2px;
 }
 
 .d-comment__recommend-count--new,
@@ -621,7 +627,7 @@ $avatarPadding: $gs-gutter / 2;
     }
     .d-comment__recommend-count--old,
     .d-comment__recommend-count--new {
-        top: -1.6rem;
+        top: -1 * $comment-recommend-button-size;
         @include transition(top .15s .15s ease-in-out);
     }
 }

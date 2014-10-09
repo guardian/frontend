@@ -48,11 +48,6 @@
                         <span class="d-comment__reply-to-author">@r.displayName</span>
                     </a>
                 }
-                @if(comment.profile.isStaff){
-                    <span class="d-comment__author-label">Staff</span>
-                }else { @if(comment.profile.isContributor) {
-                    <span class="d-comment__author-label">Contributor</span>}
-                }
                 <div class="d-comment__timestamp">
                     <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
                         <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
@@ -62,6 +57,16 @@
                         <i class="i i-comment-anchor"></i>
                     </a>
                 </div>
+                @if(comment.profile.isStaff){
+                    <span class="d-comment__author-label">Staff</span>
+                }else { @if(comment.profile.isContributor) {
+                    <span class="d-comment__author-label">Contributor</span>}
+                }
+                @if(!isTopComment && !isResponse) {
+                    <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
+                        <i class="i i-gupickasterisk"></i>Guardian Pick
+                    </div>
+                }
             </div>
         </div>
 
@@ -74,23 +79,18 @@
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
-                    <span class="d-comment__recommend-button">
-                        <span class="d-comment__recommend-pulse"></span>
-                        <i></i>
-                    </span>
                     <span class="d-comment__recommend-count js-recommend-count">
                         <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
                         <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
+                    </span>
+                    <span class="d-comment__recommend-button">
+                        <span class="d-comment__recommend-pulse"></span>
+                        <i></i>
                     </span>
                 </div>
             }
 
             <div class="d-comment__main @if(comment.isBlocked){d-comment__main-removed}">
-                @if(!isResponse) {
-                    <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
-                        <i class="i i-gupickasterisk"></i>Guardian Pick
-                    </div>
-                }
 
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){
