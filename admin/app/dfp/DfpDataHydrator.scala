@@ -6,6 +6,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import conf.{AdminConfiguration, Configuration}
 import dfp.DfpApiWrapper.DfpSessionException
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
@@ -95,18 +96,22 @@ object DfpDataHydrator extends Logging {
 
         val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
 
-        val geoTargets = Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-          Option(geoTargeting.getTargetedLocations) map { locations =>
-            locations.map { location =>
-              GeoTarget(
-                location.getId,
-                optJavaInt(location.getCanonicalParentId),
-                location.getType,
-                location.getDisplayName
-              )
-            }.toSeq
-          }
-        } getOrElse Nil
+        def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+          Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+            Option(locations(geoTargeting)) map { locations =>
+              locations.map { location =>
+                GeoTarget(
+                  location.getId,
+                  optJavaInt(location.getCanonicalParentId),
+                  location.getType,
+                  location.getDisplayName
+                )
+              }.toSeq
+            }
+          } getOrElse Nil
+        }
+        val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+        val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
         val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
           buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
@@ -119,7 +124,7 @@ object DfpDataHydrator extends Logging {
           endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
           isPageSkin = isPageSkin(dfpLineItem),
           sponsor = sponsor,
-          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
+          targeting = GuTargeting(adUnits, geoTargetsIncluded, geoTargetsExcluded, customTargetSets)
         )
       }
 
@@ -201,15 +206,52 @@ object DfpDataHydrator extends Logging {
     }.toMap
   }
 
-  def loadActiveUserDefinedCreativeTemplates(): Seq[CreativeTemplate] = dfpSession.fold(Seq.empty[CreativeTemplate]) { session =>
-    val statementBuilder = new StatementBuilder()
+  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] = dfpSession.fold(Seq.empty[GuCreativeTemplate]) { session =>
+    val templatesQuery = new StatementBuilder()
       .where("status = :active and type = :type")
       .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
       .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
       .orderBy("name ASC")
-    DfpApiWrapper.fetchCreativeTemplates(session, statementBuilder) filterNot { template =>
+
+    val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(session, templatesQuery) filterNot { template =>
       val name = template.getName.toUpperCase
       name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
+    }
+
+    val creativesQuery = new StatementBuilder()
+      .where("advertiserId = :advertiserId")
+      .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
+
+    val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
+
+    dfpCreativeTemplates map { template =>
+      val templateCreatives = creatives getOrElse(template.getId, Nil)
+      GuCreativeTemplate(
+        id = template.getId,
+        name = template.getName,
+        description = template.getDescription,
+        parameters = template.getVariables map { param =>
+          GuCreativeTemplateParameter(
+            param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+            param.getLabel,
+            param.getIsRequired,
+            param.getDescription
+          )
+        },
+        snippet = template.getSnippet,
+        creatives = templateCreatives map { creative =>
+          val args = creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) { case (soFar, arg) =>
+            val argValue = arg.getBaseCreativeTemplateVariableValueType match {
+              case "StringCreativeTemplateVariableValue" => Option(arg.asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
+              case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+              case "UrlCreativeTemplateVariableValue" => Option(arg.asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+              case other => "???"
+            }
+            soFar + (arg.getUniqueName -> argValue)
+          }
+          GuCreative(creative.getId.longValue(), creative.getName, args)
+        }
+      )
     }
   }
 

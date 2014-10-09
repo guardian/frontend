@@ -1,4 +1,4 @@
-@(items: Seq[model.Trail], style: views.support.NewsContainer, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(items: Seq[model.Trail], style: views.support.NewsContainer, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @defining(items.filter(_.group == Option("3"))) { baguetteItems =>
 
@@ -17,7 +17,7 @@
                     @if(!trail.group.isEmpty){ @* Means this is a curated container *@
                         @fragments.items.fromage(trail, baguetteCount)
                     }else{ @* Not a curated container: we fake hierarchy *@
-                        @fragments.items.fromage(trail, baguetteCount, Some("boost"))
+                        @fragments.items.fromage(trail, baguetteCount, Some(true))
                     }
                 </div>
             }

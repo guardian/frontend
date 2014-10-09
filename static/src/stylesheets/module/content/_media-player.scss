@@ -1,0 +1,658 @@
+@import '../../icons/video-icons-sprite';
+@import '../../icons/video-icons-svg';
+
+// parameterising these as they're used in a few places
+$vjs-control-colour: rgba(25, 25, 25, .8);
+$vjs-control-height: $gs-baseline*4;
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
+
+.player {
+    margin-bottom: $gs-row-height;
+    background: #000000;
+    text-align: center; // prevents poster from loading to left then centering
+}
+
+.gu-media-wrapper {
+    background: #000000;
+    -webkit-transform: translateZ(0); // fixes iOS hover bug
+    margin-bottom: $gs-baseline * 1.5;
+}
+.gu-media-wrapper--audio {
+    background-color: $vjs-control-colour;
+    padding-top: $vjs-progress-visual-height-resting;
+
+    // naughty videojs removes classes, so have to select by element
+    audio {
+        width: 100%;
+        height: 40px;
+        @include box-sizing(border-box);
+        border-left: $gs-gutter/2 solid transparent;
+        border-right: $gs-gutter/2 solid transparent;
+    }
+}
+
+.element-video {
+    position: relative;
+}
+
+/* VJS
+   ========================================================================== */
+.vjs-tech {
+    cursor: pointer;
+
+    .vjs-fullscreen & {
+        cursor: none;
+    }
+
+    .vjs-fullscreen.vjs-mousemoved & {
+        cursor: pointer;
+    }
+}
+
+.vjs {
+    &.gu-media {
+        width: auto !important;
+    }
+    &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
+        height: auto !important;
+        cursor: pointer;
+    }
+    &.gu-media--audio {
+        position: relative;
+        height: 100% !important;
+    }
+}
+
+.vjs-big-play-button {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include box-sizing(border-box);
+    text-align: center;
+
+    .gu-media--audio & {
+        display: none;
+    }
+    .vjs-has-started & {
+        padding-bottom: $vjs-control-height;
+    }
+
+    .vjs-has-ended & {
+        display: none;
+    }
+
+    &:after {
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        content: '';
+    }
+
+    > span {
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        @include border-radius(50%);
+        @include video-play-button-size($vjs-small-button-size);
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        background-color: rgba(51, 51, 51, .8);
+
+        .gu-media-wrapper:hover & {
+            background-color: $c-mediaDefault;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $c-neutral7;
+            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+            top: 50%;
+            left: 0;
+            margin-top: -.9em;
+            margin-left: 2.2em;
+
+            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+                @include border-radius(.2em);
+            }
+
+            .gu-media-wrapper:hover & {
+                border-left-color: #333333;
+            }
+        }
+    }
+
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
+        display: none !important;
+    }
+}
+
+.vjs-fullscreen-clickbox {
+    @include box-sizing(border-box);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding-bottom: $vjs-control-height;
+    position: absolute;
+    z-index: 2;
+
+    .vjs-using-native-controls & {
+        display: none;
+    }
+}
+
+.vjs-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -23px;
+    margin-top: -15px;
+    display: none;
+
+    .vjs-waiting &,
+    .vjs-seeking &,
+    .vjs-ad-loading & {
+        display: block !important;
+    }
+
+    .vjs-using-native-controls &,
+    .vjs-paused & {
+        display: none !important;
+    }
+}
+
+/* VJS: CONTROL BAR
+   ========================================================================== */
+
+.vjs-control-bar {
+    cursor: default;
+    width: 100%;
+    z-index: 4;
+    left: 0;
+    background-color: $vjs-control-colour;
+    color: #ffffff;
+    @include fs-textSans(1);
+    font-weight: bold;
+    height: $vjs-control-height;
+    @include transition(bottom .8s);
+    transition-delay: 1s;
+
+    .gu-media--video & {
+        position: absolute;
+        bottom: $gs-baseline*-5;
+    }
+    .vjs-fullscreen & {
+        transition-delay: .5s;
+    }
+
+    .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
+    .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .vjs-paused.vjs-has-started &,
+    .gu-media--show-controls-at-start.vjs-paused & {
+        bottom: 0;
+        @include transition(bottom 0s);
+        transition-delay: 0s;
+    }
+
+    .vjs-using-native-controls & {
+        display: none;
+    }
+
+    * {
+        outline: none; // hide focus outlines on controls
+    }
+}
+
+.vjs-control-text,
+.vjs-live-controls,
+.vjs-remaining-time,
+.vjs-playback-rate,
+.vjs-subtitles-button,
+.vjs-captions-button,
+.vjs-chapters-button {
+    display: none;
+}
+
+.vjs-poster {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    top: 0;
+    left: 0;
+}
+
+.vjs-play-control {
+    float: left;
+    cursor: pointer;
+    margin: 7px;
+
+    .vjs-paused & {
+        @include icon(play-32-yellow);
+    }
+
+    .vjs-playing & {
+        @include icon(pause-32-yellow);
+    }
+}
+
+.vjs-current-time,
+.vjs-time-divider,
+.vjs-duration {
+    float: left;
+    line-height: $gs-baseline*4;
+}
+
+.vjs-time-divider {
+    padding: 0 $gs-gutter/4;
+}
+
+.vjs-duration {
+    color: $c-neutral3;
+}
+
+.vjs-fullscreen-control {
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    height: $vjs-control-height;
+    width: $vjs-control-height;
+    position: relative;
+
+    & .vjs-control-content {
+        width: 20px !important;
+        height: 20px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon(expand-white);
+    }
+    &:hover .vjs-control-content {
+        @include icon(expand-yellow);
+    }
+
+    .gu-media--audio & {
+        display: none;
+    }
+}
+
+/* VJS: PROGRESS BAR
+   ========================================================================== */
+
+.vjs-progress-control {
+    width: 100%;
+    position: absolute;
+    top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height;
+    .vjs-ad-playing & {
+        display: none;
+    }
+}
+
+.vjs-progress-holder {
+    height: $vjs-progress-hitbox-height;
+    cursor: pointer;
+    position: relative;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 100%;
+        background-color: #000000;
+    }
+}
+
+.vjs-load-progress,
+.vjs-play-progress,
+.vjs-progress-holder:before,
+.vjs-seek-handle {
+    position: absolute;
+    bottom: $vjs-progress-inset-bottom;
+    height: $vjs-progress-visual-height-resting;
+}
+
+.vjs-load-progress {
+    background-color: #999999;
+    z-index: 1;
+}
+
+.vjs-play-progress {
+    background-color: $c-mediaDefault;
+    z-index: 2;
+}
+
+
+/* VJS: VOLUME BAR
+   ========================================================================== */
+
+.vjs-volume-control {
+    float: right;
+    width: $gs-gutter*5;
+    margin-top: $gs-baseline * 1.5;
+    margin-right: 8px;
+    position: relative;
+    height: 100%;
+}
+
+.vjs-volume-bar {
+    height: $gs-baseline;
+    width: 100%;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 100%;
+        background-color: $c-neutral7;
+    }
+}
+
+.vjs-volume-bar:before,
+.vjs-volume-level {
+    height: $gs-baseline/6;
+    top: $gs-baseline/3;
+    position: absolute;
+}
+
+.vjs-volume-level {
+    background-color: $c-mediaDefault;
+}
+
+.vjs-volume-handle {
+    position: absolute;
+    background-color: $c-mediaDefault;
+    height: 11px;
+    width: 2px;
+}
+
+.vjs-mute-control {
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    width: $gs-gutter;
+    margin-right: $gs-gutter/4;
+    margin-top: $gs-baseline * (4/3);
+    text-align: left;
+
+    > div {
+        @include icon(volume-low-white);
+    }
+    &:hover > div {
+        @include icon(volume-low-yellow);
+    }
+
+    &.vjs-vol-0 > div {
+        @include icon(volume-mute-white);
+    }
+    &.vjs-vol-0:hover > div {
+        @include icon(volume-mute-yellow);
+    }
+
+    &.vjs-vol-3 > div {
+        @include icon(volume-high-white);
+    }
+    &.vjs-vol-3:hover > div {
+        @include icon(volume-high-yellow);
+    }
+}
+
+/* VJS: OVERLAYS
+   ========================================================================== */
+
+.vjs-error-display {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    display: none;
+
+    .gu-media--video.vjs-error &,
+    .gu-media__flash-fallback & {
+        display: block;
+    }
+    .gu-media__flash-fallback & {
+        background-color: #000000;
+    }
+    > div {
+        color: #ffffff;
+        @include fs-headline(3);
+        text-align: left;
+        @include box-sizing(border-box);
+        padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2);
+        min-height: $gs-baseline*5;
+        background-color: $vjs-control-colour;
+        width: 100%;
+        margin: auto;
+        &:before {
+            @include icon(error-exclamation);
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: $gs-gutter;
+            margin-top: -22px // half icon height for centering;
+        }
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+}
+
+.vjs-overlay {
+    position: absolute;
+    width: 100%;
+    color: #ffffff;
+    background-color: $vjs-control-colour;
+}
+
+.vjs-overlay--big-title {
+
+    .vjs-overlay__title {
+        text-align: left;
+        padding: $gs-gutter/2;
+        @include fs-headline(4);
+        @include mq(tablet) {
+            @include fs-headline(5);
+        }
+        @include mq(desktop) {
+            @include fs-headline(6);
+        }
+        &:before {
+            content: '';
+            margin-right: $gs-gutter/2;
+            @include icon(video-camera-yellow);
+        }
+    }
+
+    .vjs-overlay__duration {
+        text-align: left;
+        color: $c-mediaDefault;
+        @include fs-headline(3);
+        padding: 0 $gs-gutter/2 $gs-baseline*2;
+    }
+}
+
+.vjs-overlay--small-title {
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @include fs-headline(2);
+    position: absolute;
+    $height: get-line-height(headline, 2);
+    height: $height;
+    padding: $gs-baseline/2;
+    top: ($height + $gs-baseline) * -1;
+    left: 0;
+    @include transition(top .8s);
+    transition-delay: .2s;
+
+    .gu-media-wrapper:hover &,
+    .vjs-paused & {
+        top: 0;
+        @include transition(top 0s);
+        transition-delay: 0s;
+    }
+}
+
+.vast-blocker {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    z-index: 3;
+
+    .vjs-playing & {
+        display: block;
+    }
+}
+
+.vast-skip-button {
+    display: none;
+}
+
+/* VJS: AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $gs-baseline*2;
+    padding: $gs-baseline/3 0 0 $gs-gutter/4;
+    background-color: rgba($c-neutral1, .8);
+    border-top: 1px solid $c-neutral2;
+    color: #ffffff;
+    text-align: left;
+    @include fs-textSans(1);
+
+    @include mq(tablet) {
+        @include fs-textSans(2, true);
+    }
+}
+
+.vjs-ads-overlay__label {
+    position: absolute;
+    top: $gs-baseline/3;
+    right: $gs-gutter/2;
+}
+
+/* End slate
+   ========================================================================== */
+.end-slate-container {
+    display: none;
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    @include box-sizing(border-box);
+    background-color: rgba(25, 25, 25, .8);
+    color: $c-neutral7;
+    top: $gs-baseline*4;
+    padding-left: $gs-gutter/4;
+    padding-right: $gs-gutter/4;
+    padding-top: $gs-gutter/4;
+    max-width: gs-span(7);
+
+    .vjs-has-ended & {
+        display: block;
+    }
+    .vjs-fullscreen & {
+        height: 100%;
+        margin: auto;
+        bottom: 0;
+        top: -1 * (gs-height(1) + $gs-baseline);
+        height: gs-height(6) + $gs-baseline*1;
+        max-width: gs-span(12) + $gs-gutter*2;
+        padding-bottom: $gs-baseline;
+    }
+    @include mq($until: tablet) {
+        .vjs-has-ended & {
+            display: none;
+        }
+    }
+    @include mq(leftCol, wide) {
+        top: $gs-baseline*3.5;
+    }
+    @include mq(wide) {
+        max-width: gs-span(8);
+    }
+}
+.end-slate-container__header {
+    height: gs-height(1);
+    padding-left: $gs-gutter/2;
+    margin-bottom: $gs-baseline;
+}
+.end-slate-container__heading {
+    padding-top: $gs-baseline/3;
+    @include fs-header(1);
+    font-weight: bold;
+    text-align: left;
+}
+.end-slate {
+    margin-bottom: $gs-baseline*2;
+
+    &.items--media {
+        .item {
+            width: 25%;
+            margin-bottom: 0;
+
+            &:nth-child(-n+3) {
+                border-right: 1px solid $c-neutral2;
+            }
+        }
+        .item__headline {
+            .vjs-fullscreen & {
+                @include mq(desktop) {
+                    @include fs-headline(2);
+                    @include text-clamp(4, get-line-height(headline, 2));
+                    height: get-line-height(headline, 2) * 4;
+                }
+            }
+        }
+    }
+}
+
+.podcast-meta {
+    text-align: left;
+    border-top: 1px solid lighten($c-neutral1, 16%);
+    margin-top: $gs-baseline/2;
+    padding: $gs-baseline/2 $gs-gutter/2;
+}
+.podcast-meta__item {
+    margin-right: $gs-gutter;
+
+    @include mq(phablet) {
+        display: inline-block;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.podcast-meta__item__link {
+    color: $c-neutral7;
+    @include fs-textSans(1);
+}

@@ -37,7 +37,7 @@ object SentryReportJob extends ExecutionContexts with Logging with SentryDb {
              """
                select datetime::DATE, count(datetime::DATE) from sentry_message where group_id in (
                   select id from sentry_groupedmessage where id in (
-                    select group_id from sentry_messagefiltervalue where value = 'Gallery' order by group_id
+                    select group_id from sentry_messagefiltervalue where value = 'gallery' order by group_id
                   )
                ) and datetime > NOW() - INTERVAL '14 days' group by datetime::DATE order by datetime
              """

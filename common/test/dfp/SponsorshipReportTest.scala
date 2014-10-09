@@ -6,11 +6,11 @@ class SponsorshipReportTest extends FlatSpec with Matchers {
   val jsonString =
     """{"updatedTimeStamp":"Sun 20:14 22 June 2014",
       |"sponsorships":[
-      |{"sponsor":"Unilever","tags":["live-better"],"lineItemId":1},
-      |{"sponsor":null,"tags":["secure-protect"],"lineItemId":2},
-      |{"sponsor":null,"tags":["world-cup-football","world-cup-2014"],"lineItemId":3},
-      |{"sponsor":null,"tags":["cricket"],"lineItemId":4},
-      |{"sponsor":null,"tags":["world-cup-show-2014"],"lineItemId":5}
+      |{"tags":["live-better"],"sections":[],"sponsor":"Unilever","countries":[],"lineItemId":1},
+      |{"tags":["secure-protect"],"sections":[],"sponsor":null,"countries":[],"lineItemId":2},
+      |{"tags":["world-cup-football","world-cup-2014"],"sections":[],"sponsor":null,"countries":[],"lineItemId":3},
+      |{"tags":["cricket"],"sections":[],"sponsor":null,"countries":[],"lineItemId":4},
+      |{"tags":["world-cup-show-2014"],"sections":[],"sponsor":null,"countries":[],"lineItemId":5}
       |]
     }""".stripMargin
 

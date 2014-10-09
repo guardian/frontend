@@ -1,0 +1,49 @@
+{
+  "name": "frontend-common-js",
+  "version": "0.1.0 ",
+  "dependencies": {
+    "bean": "~1.0.4",
+    "eventEmitter": "~4.2.6",
+    "imager.js": "oncletom/Imager.js#feature-separation",
+    "lodash-amd": "~2.4.1",
+    "fence": "~0.2.11",
+    "bonzo": "~2.0.0",
+    "curl": "~0.8.9",
+    "qwery": "3.4.2",
+    "reqwest": "guardian/reqwest#master",
+    "enhancer": "0.1.1",
+    "videojs": "4.8.3",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#e477f283d4cdf5f720f95e458451a027143d52bf",
+    "videojs-vast": "0.1.8",
+    "videojs-persistvolume": "~0.1.0",
+    "socket.io-client": "~1.1.0",
+    "raven-js": "~1.1.16",
+    "videojs-playlist-audio": "*",
+    "fastclick": "guardian/fastclick#master"
+  },
+  "resolutions": {
+    "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf",
+    "videojs": "4.8.3"
+  },
+  "install": {
+    "path": "components",
+    "sources": {
+      "curl": [
+        "bower_components/curl/dist/curl/curl.js",
+        {
+          "bower_components/curl/dist/curl-with-js-and-domReady/curl.js": "curl-domReady.js"
+        }
+      ],
+      "lodash-amd": "bower_components/lodash-amd/modern/**",
+      "imager.js": [
+        "bower_components/imager.js/src/imager.js",
+        "bower_components/imager.js/src/strategies/**"
+      ],
+      "socket.io-client": "bower_components/socket.io-client/socket.io.js",
+      "videojs": "bower_components/videojs/dist/video-js/video.js",
+      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
+      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
+      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js"
+    }
+  }
+}

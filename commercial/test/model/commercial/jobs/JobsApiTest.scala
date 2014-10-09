@@ -1,11 +1,11 @@
 package model.commercial.jobs
 
 import common.ExecutionContexts
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.ConfiguredTestSuite
 import scala.xml.XML
 
-class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
+@DoNotDiscover class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
   "parse" should "parse all jobs in XML feed" in {
     val jobs = JobsApi.parse(XML.loadString(Fixtures.xml))

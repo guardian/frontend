@@ -15,11 +15,10 @@
     data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"></style>
 <style class="initial"
-    data-cache-name="GuardianAgateSans1Web"
-    data-min-width="980"
-    data-cache-file-woff2="@Static("fonts/GuardianAgateSans1Web.woff2.json")"
-    data-cache-file-woff="@Static("fonts/GuardianAgateSans1Web.woff.json")"
-    data-cache-file-ttf="@Static("fonts/GuardianAgateSans1Web.ttf.json")"></style>
+    data-cache-name="GuardianTextEgyptianWeb"
+    data-cache-file-woff2="@Static("fonts/GuardianTextEgyptianWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianTextEgyptianWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianTextEgyptianWeb.ttf.json")"></style>
 <style class="initial"
     data-cache-name="GuardianTextSansWeb"
     data-min-width="980"
@@ -141,6 +140,8 @@
             }
             if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
                 document.documentElement.className += ' has-flex-wrap';
+            } else {
+                document.documentElement.className += ' has-no-flex-wrap';
             }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }

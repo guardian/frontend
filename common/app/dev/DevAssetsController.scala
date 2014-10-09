@@ -21,4 +21,8 @@ object DevAssetsController extends Controller with ExecutionContexts {
       Enumerator.fromStream(resolved.openStream())
     )
   }
+
+  def atFonts(path: String) = at(s"fonts/$path")
+  def atJavascripts(file: String) = at(s"javascripts/$file")
+  def atStylesheets(file: String) = at(s"stylesheets/$file")
 }

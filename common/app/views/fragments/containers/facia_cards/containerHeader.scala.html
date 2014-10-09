@@ -1,0 +1,50 @@
+@(collection: model.Collection, frontProperties: model.FrontProperties, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+
+@import common.LinkTo
+@import views.support.{ImgSrc, Item140, LatestUpdate, RenderClasses}
+@import views.html.fragments.containers.facia_cards.{date, latestUpdate}
+
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+    <div class="fc-container__header js-container-header">
+        @title.map { title =>
+            @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                <div class="@RenderClasses(Map(
+                    "fc-container__header__title" -> true,
+                    "tone-comment" -> isContributor,
+                    "tone-colour" -> isContributor))">
+                    @href.map { href =>
+                        <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
+                          @Html(title)
+                        </a>
+                    }.getOrElse {
+                        <span class="u-text-hyphenate">@Html(title)</span>
+                    }
+
+                    @if(config.showDateHeader.exists(identity)) {
+                        @date(org.joda.time.DateTime.now())
+                    }
+
+                    @if(config.showLatestUpdate.exists(identity)) {
+                        @LatestUpdate(collection, collection.items).map { updateTime =>
+                            @latestUpdate(updateTime)
+                        }
+                    }
+                </div>
+            }
+        }
+        @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
+            @if(containerIndex == 0 && hasDescription){
+                <div class="@RenderClasses(Map(
+                    "fc-container__header__description" -> !frontProperties.isImageDisplayed,
+                    "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
+                    @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                        <div class="fc-container__header__image media__img">
+                            <img src="@url" alt="@title" />
+                        </div>
+                    }
+                    @frontProperties.onPageDescription
+                </div>
+            }
+        }
+    </div>
+}

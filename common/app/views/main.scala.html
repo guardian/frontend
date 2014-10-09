@@ -19,13 +19,14 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("childrens-books-site", metaData.section == "childrens-books-site")))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
 
         @if(showAdverts) {
-            @fragments.commercial.topBanner(metaData)
+            @fragments.commercial.topBanner()
         }
 
         @fragments.header(metaData)
@@ -43,6 +44,9 @@
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
+
+        @fragments.commercial.pageSkin()
+
     </body>
     </html>
 }

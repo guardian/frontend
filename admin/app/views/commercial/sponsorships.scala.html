@@ -1,9 +1,11 @@
-@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, foundationSupportedTags: dfp.SponsorshipReport)
 @import tools.DfpLink
 
 @listItem(sponsorship: dfp.Sponsorship) = {
-    <li style="padding-bottom:12px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-        @{sponsorship.sponsor.map(sponsor => <br /> <small>[sponsored by <b>{sponsor}</b>]</small>)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <li style="padding-bottom:15px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+        @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
+        @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
+        @if(sponsorship.countries.nonEmpty){<br /><small>Geotargeted to @{sponsorship.countries.mkString(", ")}</small>}
     </li>
 }
 
@@ -22,9 +24,14 @@
 
 <h3>Advertisement Feature Tags</h3>
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
-
 <ol>
     @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship)}
+</ol>
+
+<h3>Foundation Supported Tags</h3>
+<p>Last updated: @foundationSupportedTags.updatedTimeStamp</p>
+<ol>
+    @for(sponsorship <- foundationSupportedTags.sponsorships) {@listItem(sponsorship)}
 </ol>
 
 <h3><a name="criteria">Criteria:</a></h3>

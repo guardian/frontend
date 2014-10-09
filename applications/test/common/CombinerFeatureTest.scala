@@ -1,11 +1,10 @@
 package common
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
-import test.HtmlUnit
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import test.ConfiguredTestSuite
 import collection.JavaConversions._
 
-class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("Combiner pages") {
 
@@ -13,7 +12,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit a combiner page")
 
-      HtmlUnit("/world/iraq+tone/comment") { browser =>
+      goTo("/world/iraq+tone/comment") { browser =>
         import browser._
         val trails = $(".facia-slice__item")
         Then("I should see content tagged with both tags")
@@ -25,7 +24,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit a combiner page")
 
-      HtmlUnit("/science+technology/apple") { browser =>
+      goTo("/science+technology/apple") { browser =>
         import browser._
         val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
@@ -38,7 +37,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit a combiner page with tags in the same section")
 
-      HtmlUnit("/books/jkrowling+harrypotter") { browser =>
+      goTo("/books/jkrowling+harrypotter") { browser =>
         import browser._
         val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
@@ -50,7 +49,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit a combiner page with a series tag in the same seciton")
 
-      HtmlUnit("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
+      goTo("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
         import browser._
         val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")

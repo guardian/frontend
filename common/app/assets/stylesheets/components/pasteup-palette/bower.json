@@ -1,7 +1,0 @@
-{
-  "name": "pasteup-palette",
-  "main": [
-    "_palette.scss"
-  ],
-  "dependencies": {}
-}

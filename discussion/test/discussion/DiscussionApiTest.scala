@@ -1,15 +1,14 @@
 package discussion
 
-import controllers.DiscussionParams
 import discussion.model.DiscussionKey
-import org.scalatest.FreeSpec
+import org.scalatest.{DoNotDiscover, FreeSpec}
 import play.api.libs.ws.WSResponse
+import test.ConfiguredTestSuite
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class DiscussionApiTest extends FreeSpec {
-
+@DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite {
 
   "Should do GET request on correct URL for topComments " in {
     val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
@@ -28,12 +27,14 @@ class DiscussionApiTest extends FreeSpec {
       page = "1",
       pageSize = "50",
       maxResponses = None,
-      topComments = true
+      topComments = true,
+      displayThreaded = true
     )), 2 seconds)
   }
 
   "Should do GET request on correct URL for comments " in {
     val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&showSwitches=true"
+
 
     val discussionApi = new DiscussionApi {
       override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
@@ -49,7 +50,8 @@ class DiscussionApiTest extends FreeSpec {
       page = "1",
       pageSize = "50",
       maxResponses = None,
-      topComments = false
+      topComments = false,
+      displayThreaded = true
     )), 2 seconds)
   }
 

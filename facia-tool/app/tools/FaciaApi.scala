@@ -1,6 +1,7 @@
 package tools
 
-import frontsapi.model.{Config, Block}
+import com.gu.facia.client.models.Config
+import frontsapi.model.Block
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi

@@ -1,38 +1,9 @@
 package model
 
+import com.gu.facia.client.models.CollectionConfig
 import common.{Edition, ExecutionContexts, Logging}
-import dfp.DfpAgent
 import org.joda.time.DateTime
 import play.api.libs.json.Json
-
-case class Config(
-                   id: String,
-                   contentApiQuery: Option[String] = None,
-                   displayName: Option[String] = None,
-                   href: Option[String] = None,
-                   groups: Seq[String],
-                   collectionType: Option[String],
-                   showTags: Boolean = false,
-                   showSections: Boolean = false
-                   ) {
-
-  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
-  lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
-
-  lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipTag(this)
-}
-
-object Config {
-  def apply(id: String): Config = Config(id, None, None, None, Nil, None)
-  def apply(id: String, contentApiQuery: Option[String], displayName: Option[String], `type`: Option[String]): Config
-    = Config(id, contentApiQuery, displayName, `type`, Nil, None)
-  def apply (id: String, displayName: Option[String]): Config
-    = Config(id, None, displayName, None, Nil, None)
-  def apply (id: String, displayName: Option[String], href: Option[String]): Config
-    = Config(id, None, displayName, href, Nil, None)
-
-  val emptyConfig = Config("")
-}
 
 trait CollectionItems {
   def items: Seq[Content] = List()
@@ -72,7 +43,6 @@ case class SeoData(
   description: Option[String])
 
 object SeoData extends ExecutionContexts with Logging {
-
   implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
@@ -111,10 +81,12 @@ case class FrontProperties(
 
 object FrontProperties{
   implicit val propsFormatter = Json.format[FrontProperties]
+
+  val empty = FrontProperties(None, None, None, None, false, None)
 }
 
 object FaciaComponentName {
-  def apply(config: Config, collection: Collection): String = {
+  def apply(config: CollectionConfig, collection: Collection): String = {
     config.displayName.orElse(collection.displayName).map { title =>
       title.toLowerCase.replace(" ", "-")
     }.getOrElse("no-name")

@@ -1,13 +1,10 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
-import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConversions._
 import tools.MatchListFeatureTools
 
-
-class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
+@DoNotDiscover class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite  {
 
   feature("Football Fixtures") {
 
@@ -15,7 +12,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
       Given("I visit the fixtures page")
 
-      HtmlUnit("/football/fixtures") { browser =>
+      goTo("/football/fixtures") { browser =>
         import browser._
 
         val matches = $(".football-teams")
@@ -34,7 +31,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
     scenario("Next fixtures") {
       Given("I am on the fixtures page")
-      HtmlUnit("/football/fixtures") { browser =>
+      goTo("/football/fixtures") { browser =>
         import browser._
 
         When("I click the 'Next' fixtures link")
@@ -49,7 +46,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
     scenario("Link tracking") {
       Given("I visit the fixtures page")
-      HtmlUnit("/football/fixtures/2012/oct/20") { browser =>
+      goTo("/football/fixtures/2012/oct/20") { browser =>
         import browser._
         Then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>

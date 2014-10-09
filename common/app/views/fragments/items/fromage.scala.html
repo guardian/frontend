@@ -1,12 +1,12 @@
-@(trail: model.Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, boostOverride: Option[Boolean] = None)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo}
 @import views.support.{GetClasses, ImgSrc, Item220, Item300, Item620, SnapData}
 
-@defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
+@defining((trail.visualTone, boostOverride.getOrElse(trail.isBoosted), trail.imageHide )) { case (tone, isBoosted, imageHide) =>
     <div
-        class="@GetClasses.forFromage(trail, imageAdjust)"
+        class="@GetClasses.forFromage(trail, isBoosted, imageHide)"
         @if(trail.isCommentable) {
             @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -18,16 +18,16 @@
 
         <div class="fromage__container">
             @FaciaDisplayElement.fromTrail(trail) match {
-                case InlineVideo(videoElement, title, endSlatePath) if imageAdjust == "boost" => {
+                case InlineVideo(videoElement, title, endSlatePath) if isBoosted => {
                     @fromageVideo(videoElement, title, true, endSlatePath)
                 }
                 case _ => {
-                    @if(imageAdjust != "hide") {
+                    @if(!imageHide) {
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                                 <div class="fromage__media-wrapper fromage__media-wrapper--first">
-                                    <div class="fromage__image-container u-responsive-ratio@if(imageAdjust == "boost"){ js-image-upgrade inlined-image" data-src="@imgSrc}">
-                                    @if(imageAdjust == "boost") {
+                                    <div class="fromage__image-container u-responsive-ratio@if(isBoosted){ js-image-upgrade inlined-image" data-src="@imgSrc}">
+                                    @if(isBoosted) {
                                         @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                     } else {
                                         @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
@@ -51,7 +51,7 @@
                 }
             }
 
-            @if(imageAdjust == "default") {
+            @if(!isBoosted && !imageHide) {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a @LinkTo(trail).map{url=>href="@url"} data-link-name="article">
@@ -79,6 +79,6 @@
                 @fragments.items.elements.meta(trail)
             }
         </div>
-        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+        <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }

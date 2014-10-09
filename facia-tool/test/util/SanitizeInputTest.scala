@@ -1,16 +1,17 @@
 package util
 
-import frontsapi.model.{Front, Config}
-import org.scalatest.{FlatSpec, Matchers}
+import com.gu.facia.client.models.{Front, Config}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import test.ConfiguredTestSuite
 
-class SanitizeInputTest extends FlatSpec with Matchers {
+@DoNotDiscover class SanitizeInputTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private def createConfigWithFront(section: Option[String] = None,
                                     title: Option[String] = None,
                                     webTitle: Option[String] = None,
                                     description: Option[String] = None,
                                     onPageDescription: Option[String] = None) = Config(
-    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None)),
+    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)),
     Map.empty)
 
   "StripTags" should "strip tag from title" in {
@@ -26,11 +27,6 @@ class SanitizeInputTest extends FlatSpec with Matchers {
   it should "strip tag from description" in {
     val config = createConfigWithFront(description = Option("<strip><me>"))
     SanitizeInput.fromConfigSeo(config).fronts("uk").description.get should be("")
-  }
-
-  it should "strip tag from on-page description" in {
-    val config = createConfigWithFront(onPageDescription = Option("<strip><me>"))
-    SanitizeInput.fromConfigSeo(config).fronts("uk").onPageDescription.get should be("")
   }
 
   it should "strip tag from section" in {

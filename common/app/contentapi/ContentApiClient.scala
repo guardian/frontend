@@ -2,6 +2,7 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.openplatform.contentapi.Api
+import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.Switches
 import scala.concurrent.Future
 import common._
@@ -11,7 +12,7 @@ import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 
-import scala.concurrent.duration.{Duration, SECONDS}
+import scala.concurrent.duration.{Duration, SECONDS, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
@@ -132,12 +133,13 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = circuitBreakerActorSystem.scheduler,
     maxFailures = 5,
-    callTimeout = Duration(2, SECONDS),
+    callTimeout = Duration(contentApi.timeout, MILLISECONDS),
     resetTimeout = Duration(20, SECONDS)
   )
 
   circuitBreaker.onOpen({
     log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
+    ContentApiCircuitBreakerOnOpen.increment()
   })
 
   circuitBreaker.onHalfOpen({

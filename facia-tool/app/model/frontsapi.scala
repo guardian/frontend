@@ -1,5 +1,6 @@
 package frontsapi.model
 
+import com.gu.facia.client.models.{Config, Trail, TrailMetaData}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
@@ -9,65 +10,6 @@ import play.api.libs.json.{Format, JsValue, Json}
 import tools.FaciaApi
 
 import scala.util.{Failure, Success, Try}
-
-
-object Front {
-  implicit val jsonFormat = Json.format[Front]
-}
-
-case class Front(
-  collections: List[String],
-  navSection: Option[String],
-  webTitle: Option[String],
-  title: Option[String],
-  description: Option[String],
-  onPageDescription: Option[String],
-  imageUrl: Option[String],
-  imageWidth: Option[Int],
-  imageHeight: Option[Int],
-  isImageDisplayed: Option[Boolean],
-  priority: Option[String]
-)
-
-object Collection {
-  implicit val jsonFormat = Json.format[Collection]
-
-  /** TODO emulate the current IDs as generated in the JavaScript */
-  def nextId = java.util.UUID.randomUUID().toString
-}
-
-case class Collection(
-  displayName: Option[String],
-  apiQuery: Option[String],
-  `type`: Option[String],
-  href: Option[String],
-  groups: Option[List[String]],
-  uneditable: Option[Boolean],
-  showTags: Option[Boolean],
-  showSections: Option[Boolean],
-  showMainVideo: Option[Boolean]
-)
-
-object Config {
-  implicit val jsonFormat = Json.format[Config]
-
-  def empty = Config(Map.empty, Map.empty)
-}
-
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
-
-object Trail {
-  implicit val jsonFormat = Json.format[Trail]
-}
-
-case class Trail(
-  id: String,
-  frontPublicationDate: Option[DateTime],
-  meta: Option[Map[String, JsValue]]
-)
 
 object Block {
   implicit val jsonFormat = Json.format[Block]
@@ -92,7 +34,7 @@ case class Block(
   )
 
   private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
-    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
+    val trailGroups = trails.groupBy(_.meta.flatMap(_.group).map(_.toInt).getOrElse(0))
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
@@ -121,7 +63,7 @@ case class UpdateList(
   item: String,
   position: Option[String],
   after: Option[Boolean],
-  itemMeta: Option[Map[String, JsValue]],
+  itemMeta: Option[TrailMetaData],
   live: Boolean,
   draft: Boolean
 ) extends FaciaToolUpdate
@@ -150,23 +92,6 @@ object StreamUpdate {
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
-  val itemMetaWhitelistFields: Seq[String] = Seq(
-    "headline",
-    "href",
-    "snapType",
-    "snapCss",
-    "snapUri",
-    "trailText",
-    "group",
-    "supporting",
-    "imageAdjust",
-    "imageSrc",
-    "imageSrcWidth",
-    "imageSrcHeight",
-    "isBreaking",
-    "showMainVideo"
-  )
-
   implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
@@ -261,10 +186,10 @@ trait UpdateActions extends Logging {
     val trail: Trail = blocks
       .find(_.id == update.item)
       .map { currentTrail =>
-        val newMeta = for (updateMeta <- update.itemMeta.map(itemMetaWhiteList)) yield updateMeta
+        val newMeta = for (updateMeta <- update.itemMeta) yield updateMeta
         currentTrail.copy(meta = newMeta)
       }
-      .getOrElse(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))
+      .getOrElse(Trail(update.item, DateTime.now.getMillis, update.itemMeta))
 
     val listWithoutItem = blocks.filterNot(_.id == update.item)
 
@@ -286,13 +211,11 @@ trait UpdateActions extends Logging {
     splitList._1 ::: (trail +: splitList._2)
   }
 
-  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
-
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
   }
 
   def capCollection(block: Block): Block =

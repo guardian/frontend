@@ -1,8 +1,9 @@
-@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int, dataId: String)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Collection, Config, FaciaComponentName}
+@import model.{Collection, FaciaComponentName}
 @import views.support.{Container, RenderClasses}
+@import dfp.DfpAgent
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
     @if(collection.items.nonEmpty) {
@@ -13,15 +14,15 @@
                 (s"container--${style.containerType}", true),
                 ("container--first" -> (containerIndex == 0))))"
             data-link-name="@FaciaComponentName(config, collection)"
-            data-id="@config.id"
+            data-id="@dataId"
             data-type="@style.containerType"
             data-component="@FaciaComponentName(config, collection)"
-            @config.sponsorshipKeyword.map { keyword =>
+            @DfpAgent.sponsorshipTag(config).map { keyword =>
                 data-keywords="@keyword"
             }>
             <div class="facia-container__inner">
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
-                <div class="container__header">
+                <div class="container__header js-container-header">
                     @title.map { title =>
                         <h2 class="container__title">
                         @href.map { href =>

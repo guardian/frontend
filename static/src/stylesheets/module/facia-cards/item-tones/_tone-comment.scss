@@ -1,0 +1,19 @@
+.tone-comment {
+    @extend %tone-has-background;
+
+    &.fc-item {
+        background-color: $c-commentBackground;
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-commentDefault;
+        }
+    }
+
+    .fc-item__meta {
+        background-color: fade-out($c-commentBackground, .5);
+    }
+}

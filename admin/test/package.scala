@@ -1,7 +1,12 @@
 package test
+import org.scalatest.Suites
 
-import controllers.HealthCheck
+class AdminTestSuite extends Suites (
+  new football.PlayerControllerTest,
+  new football.SiteControllerTest,
+  new football.TablesControllerTest,
+  new indexes.TagPagesTest,
+  new services.AdminHealthCheckTest ) with SingleServerSuite {
 
-object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
+  override lazy val port: Int = controllers.HealthCheck.testPort
 }

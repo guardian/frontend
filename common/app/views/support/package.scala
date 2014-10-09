@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -19,7 +21,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.Pattern
+import java.util.regex.{Matcher, Pattern}
 
 /**
  * New 'collection' templates
@@ -216,6 +218,11 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       })
     }
+
+    document.getElementsByClass("element-witness--main").foreach { element: Element =>
+      element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
+    }
+
     document
   }
 
@@ -319,6 +326,30 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val blockid = el.id()
+        val url = s"http://${request.domain}${request.path}#$blockid"
+        val shortUrl = s"${article.shortUrl}#$blockid"
+
+        val icons = List(
+          // (cssClassName, Url)
+          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+        )
+
+        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+
+        el.append(html.toString())
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -407,9 +438,10 @@ object TweetCleaner extends HtmlCleaner {
         val date = el.child(1).attr("class", "tweet-date")
         val user = el.ownText()
         val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body)
+        element.empty().attr("class", "js-tweet tweet")
+        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
       }
     }
     document
@@ -427,7 +459,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
   private val question = Pattern.quote("?")
 
   private def keywordRegex(tag: Tag) = {
-    val tagName = Pattern.quote(tag.name)
+    val tagName = Pattern.quote(Matcher.quoteReplacement(tag.name))
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
@@ -607,6 +639,20 @@ object OmnitureAnalyticsData {
   }
 }
 
+object ArticleLayout {
+  implicit class ArticleLayout(a: Article) {
+    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
+      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+    lazy val hasSupportingAtBottom: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
+        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+
+    lazy val tooSmallForBottomSocialButtons: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+  }
+}
+
 object `package` extends Formats {
 
   private object inflector extends Inflector
@@ -687,11 +733,9 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-
   def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
-
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
 
 object GetClasses {
@@ -718,20 +762,64 @@ object GetClasses {
   }
 
   def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
+      Seq("fc-item--has-cutout")
+    } else {
+      Seq.empty
+    }
+
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +: commonItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+      TrailCssClasses.toneClass(trail) +:
+        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
+        cutOutClass): _*
     )
   }
 
-  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
     val itemClass = trail match {
-      case _: Gallery => Some("item--gallery")
-      case _: Video => Some("item--video")
-      case _: Audio => Some("item--audio")
+      case _: Gallery => Some("fc-item--gallery")
+      case _: Video => Some("fc-item--video")
+      case _: Audio => Some("fc-item--audio")
       case _ => None
     }
 
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
+      "fc-item--has-no-image"
+    } else {
+      "fc-item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "fc-item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
+      if (trail.isLive) Some("fc-item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
+
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
+
+  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => "item--gallery"
+      case _: Video => "item--video"
+      case _: Audio => "item--audio"
+      case _ => ""
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "item--has-no-image"
     } else {
       "item--has-image"
@@ -745,49 +833,81 @@ object GetClasses {
       discussionClass
     ) ++ Seq(
       itemClass,
-      if (isFirstContainer) Some("item--force-image-upgrade") else None,
-      if (trail.isLive) Some("item--live") else None,
-      if (trail.isComment && trail.hasLargeContributorImage) Some("item--has-cutout") else None,
+      if (isFirstContainer) "item--force-image-upgrade" else "",
+      if (trail.isLive) "item--live" else "",
+      if (trail.isComment && trail.hasLargeContributorImage) "item--has-cutout" else "",
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        Some(s"item--imageadjust-${trail.imageAdjust}")
+        if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
       else
-        None
-    ).flatten ++ makeSnapClasses(trail)
+        ""
+    ) ++ makeSnapClasses(trail)
   }
 
-  def forItem(
-    trail: Trail,
-    firstContainer: Boolean,
-    forceHasImage: Boolean = false,
-    forceTone: Option[String] = None
-  ): String = {
-    RenderClasses(
-      s"tone-${forceTone.getOrElse(trail.visualTone)}" +: commonItemClasses(trail, firstContainer, forceHasImage): _*
+  def forItem(trail: Trail,
+              firstContainer: Boolean,
+              forceHasImage: Boolean = false,
+              forceTone: Option[String] = None): String = {
+    val tone = forceTone.getOrElse(trail.visualTone)
+    val baseClasses: Seq[String] = Seq(
+      "item",
+      s"tone-${tone}"
     )
+    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
+        case _: Gallery => "item--gallery"
+        case _: Video => "item--video"
+        case _: Audio => "item--audio"
+        case _ => ""
+      },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (firstContainer) "item--force-image-upgrade" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
+          "item--has-no-image"
+        }else{
+          "item--has-image"
+        },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
+          if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
+        } else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
+    RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: String): String = {
+  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
       "u-faux-block-link",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, String) => String] = Seq(
-      (trail: Trail, imageAdjust: String) =>
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, imageAdjust: String) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (trail.trailPicture(5,3).isEmpty || imageHide){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
-      (trail: Trail, imageAdjust: String) =>
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
+          s"fromage--imageadjust-boost"
+        }
+        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
+          s"fromage--imageadjust-hide"
+        }
+        else "item--imageadjust-default",
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -811,27 +931,27 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> config.isSponsored,
-      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "container--facia-cards" +:
+      "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
         extraClasses): _*
     )
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten

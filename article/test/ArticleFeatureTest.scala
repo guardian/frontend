@@ -1,16 +1,12 @@
 package test
 
-import conf.{Switches, Configuration}
+import conf.Configuration
 import conf.Switches._
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import collection.JavaConversions._
-import play.api.libs.ws.WS
-import scala.concurrent.duration._
-import scala.concurrent.Await
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
+import collection.JavaConversions._
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   implicit val config = Configuration
 
@@ -32,7 +28,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Display a headline", ArticleComponents) {
 
       Given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
-      HtmlUnit("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
+      goTo("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
         import browser._
 
         Then("I should see the headline of the article")
@@ -48,7 +44,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Include organisation metadata", ArticleComponents) {
 
       Given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
-      HtmlUnit("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
+      goTo("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
         import browser._
 
         Then("there should be organisation metadata")
@@ -63,7 +59,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Display a short description of the article", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
-      HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
+      goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
         Then("I should see a short description of the article")
@@ -73,16 +69,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
 
     scenario("Have a meta description") {
-      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
-        findFirst("meta[name=description]").getAttribute("content") should be ("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
-     }
+        findFirst("meta[name=description]").getAttribute("content") should be("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+      }
     }
 
     scenario("Display the article author", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
-      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+      goTo("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
         import browser._
 
         Then("I should see the names of the authors")
@@ -90,14 +86,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(HtmlUnit.withHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(HtmlUnit.withHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
       }
     }
 
     scenario("Display the byline image of the article author", ArticleComponents) {
       Given("I am on an article entitled 'This generational smugness about paedophilia is wrong'")
-      HtmlUnit("/commentisfree/2014/feb/28/paedophilia-generation-mail-nccl") { browser =>
+      goTo("/commentisfree/2014/feb/28/paedophilia-generation-mail-nccl") { browser =>
         import browser._
 
         Then("I should see a large byline image")
@@ -108,7 +104,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Keyword metadata", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
-      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+      goTo("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
         import browser._
 
         Then("Keywords should be exposed")
@@ -122,7 +118,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Author metadata", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
-      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+      goTo("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
         import browser._
 
         Then("the authors should be exposed as meta data")
@@ -138,7 +134,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Display the article image", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
-      HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
+      goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
         ImageServerSwitch.switchOn()
@@ -154,16 +150,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
 
     scenario("Poster image on embedded video", ArticleComponents) {
-      HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
+      goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg")
+        findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
       }
     }
 
     scenario("Display the article publication date", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
-      HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
+      goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
         Then("I should see the publication date of the article")
@@ -176,7 +172,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I am on an article published on '2012-11-10'")
       And("I am on the 'UK' edition")
-      HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
+      goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
         findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
@@ -184,7 +180,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I am on an article published on '2012-11-10'")
       And("I am on the 'US' edition")
-      HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
+      US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
         findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
@@ -192,7 +188,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I am on an article published on '2012-08-19'")
       And("I am on the 'UK' edition")
-      HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+      goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
         findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
@@ -200,7 +196,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I am on an article published on '2012-08-19'")
       And("I am on the 'US' edition")
-      HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+      US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
         findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
@@ -211,7 +207,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Article body", ArticleComponents) {
 
       Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-      HtmlUnit("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
+      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
         import browser._
 
         Then("I should see the body of the article")
@@ -222,7 +218,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("In body pictures", ArticleComponents) {
 
       Given("I am on an article entitled 'A food revolution in Charleston, US'")
-      HtmlUnit("/travel/2012/oct/11/charleston-food-gourmet-hotspot-barbecue") { browser =>
+      goTo("/travel/2012/oct/11/charleston-food-gourmet-hotspot-barbecue") { browser =>
         import browser._
 
         Then("I should see pictures in the body of the article")
@@ -238,14 +234,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
-          be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
+          be( """Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
 
     scenario("Review stars", ArticleComponents) {
 
       Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      HtmlUnit("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
         import browser._
 
         Then("I should see the star rating of the festival")
@@ -260,36 +256,36 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles that are also a different content type") {
 
       Given("An article that is also a video")
-      HtmlUnit("/science/grrlscientist/2013/nov/02/british-birds-look-around-you-bbc-video") { browser =>
+      goTo("/science/grrlscientist/2013/nov/02/british-birds-look-around-you-bbc-video") { browser =>
         import browser._
 
         Then("It should be rendered as an article")
-        findFirst("[itemprop=headline]").getText should be ("Birds of Britain | video")
+        findFirst("[itemprop=headline]").getText should be("Birds of Britain | video")
       }
     }
 
     scenario("Articles should auto link to keywords") {
 
       Given("An article that has no in body links")
-      HtmlUnit("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
+      goTo("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
         import browser._
 
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.length should be (2)
+        taglinks.length should be(2)
 
-        taglinks(0).getText should be ("GCHQ")
-        taglinks(0).getAttribute("href") should endWith ("/uk/gchq")
+        taglinks(0).getText should be("GCHQ")
+        taglinks(0).getAttribute("href") should endWith("/uk/gchq")
 
-        taglinks(1).getText should be ("Pakistan")
+        taglinks(1).getText should be("Pakistan")
       }
     }
 
     scenario("Articles should link section tags") {
 
       Given("An article that has no in body links")
-      HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
+      goTo("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
         import browser._
 
         Then("It should automatically link to tags")
@@ -303,16 +299,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       // so you don't overlap similar tags
 
       Given("An article that has no in body links")
-      HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
+      goTo("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
         import browser._
 
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.length should be (1)
+        taglinks.length should be(1)
 
-        taglinks(0).getText should be ("Northern Ireland")
-        taglinks(0).getAttribute("href") should endWith ("/uk/northernireland")
+        taglinks(0).getText should be("Northern Ireland")
+        taglinks(0).getAttribute("href") should endWith("/uk/northernireland")
       }
     }
 
@@ -323,7 +319,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       // Nb, The schema.org markup for a review body is different to an article body
 
       Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      HtmlUnit("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
         import browser._
 
         Then("I should see the star body")
@@ -337,7 +333,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       StandardAdvertsSwitch.switchOn()
 
-      HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+      goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
         When("the page is rendered")
@@ -350,8 +346,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-mobile") should be("88,70|728,90")
-        adPlaceholder.getAttribute("data-right-col") should be("88,70|728,90|940,230|900,250")
-        adPlaceholder.getAttribute("data-wide") should be("88,70|728,90|940,230|900,250|970,250")
+        adPlaceholder.getAttribute("data-desktop") should be("88,70|728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
@@ -367,23 +362,23 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the UK edition")
-      HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+      goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
         Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
     scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the US edition")
-      HtmlUnit.US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
+      US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
         Then("I should see a link to the corresponding classic article")
         findFirst(".js-main-site-link").getAttribute("href") should
-          be(HtmlUnit.classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+          be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -391,7 +386,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
 
-      HtmlUnit("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
+      goTo("/business/2012/may/17/eurozone-crisis-cameron-greece-euro-exit#block-16") { browser =>
         import browser._
 
         Then("I should see paragraph 16")
@@ -401,7 +396,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Video as main element should act as main media") {
       Given("I am on an article with a main video")
-      HtmlUnit("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
+      goTo("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
         import browser._
         Then("the main media should contain a video")
         $(".media-primary video") should have size 1
@@ -410,7 +405,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Hide main picture if video is at start of article") {
       Given("I am on an article with a video at the start of the body")
-      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+      goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
         import browser._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
@@ -420,7 +415,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
 
     scenario("SEO Thumbnail") {
-      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+      goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
         import browser._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
@@ -431,7 +426,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Show main picture if video is further down article") {
       Given("I am on an article with a video further down inside the body")
-      HtmlUnit("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
+      goTo("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
         import browser._
 
         Then("the main picture should be shown")
@@ -442,46 +437,45 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Show embedded video in live blogs"){
+    scenario("Show embedded video in live blogs") {
       Given("I am on a live blog with an embedded video")
-      HtmlUnit("/world/2013/jun/24/kevin-rudd-labour-politics-live"){ browser =>
+      goTo("/world/2013/jun/24/kevin-rudd-labour-politics-live") { browser =>
         import browser._
         Then("I should see the embedded video")
-        $(".element-video").size should be (4)
+        $(".element-video").size should be(4)
       }
     }
 
-    scenario("Do not show 'classic' link on Football live blogs"){
-      HtmlUnit("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live"){ browser =>
-        import browser._
-        withClue("There should be no 'classic version' link"){
-          find(".js-main-site-link") should be (empty)
+    scenario("Do not show 'classic' link on Football live blogs") {
+      goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
+        withClue("There should be no 'classic version' link") {
+          browser.find(".js-main-site-link") should be(empty)
         }
       }
     }
 
-    scenario("Show 'classic' link on non-Football live blogs"){
-      HtmlUnit("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live"){ browser =>
+    scenario("Show 'classic' link on non-Football live blogs") {
+      goTo("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live") { browser =>
         import browser._
         withClue("There should be a 'classic version' link") {
-          find(".js-main-site-link") should not be empty
+          browser.find(".js-main-site-link") should not be empty
         }
       }
     }
 
-    scenario("Show embedded tweets in live blogs"){
+    scenario("Show embedded tweets in live blogs") {
       Given("I am on a live blog with an embedded tweet")
-      HtmlUnit("/world/2013/jun/24/kevin-rudd-labour-politics-live"){ browser =>
+      goTo("/world/2013/jun/24/kevin-rudd-labour-politics-live") { browser =>
         import browser._
 
         Then("I should see the embedded video")
-        $(".element-tweet").size should be (12)
+        $(".element-tweet").size should be(12)
       }
     }
 
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
-      HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
+      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
         import broswer._
         Then("The main picture should be show")
         $("[itemprop='contentURL representativeOfPage']") should have size 1
@@ -492,13 +486,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I read an article and want to share it with my friends")
 
-      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+      goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = s"mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = s"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
+        val mailShareUrl = s"mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
+        val fbShareUrl = s"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Ftw"
-        val gplusShareUrl = s"https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
+        val gplusShareUrl = s"https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
         findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
@@ -509,7 +503,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I want to track the responsive share buttons using Facebook Insights")
 
-      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+      goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
 
         val fbShareTrackingToken = "ref=responsive"
 
@@ -525,7 +519,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       SearchSwitch.switchOn()
 
-      HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
+      goTo("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
 
         Then("I should see the main ARIA roles described")
@@ -535,8 +529,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should not be empty
-        find("nav", 1).getAttribute("role") should be("navigation")
-        find("nav", 1).getAttribute("aria-label") should not be empty
+        browser.find("nav", 1).getAttribute("role") should be("navigation")
+        browser.find("nav", 1).getAttribute("aria-label") should not be empty
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
@@ -546,19 +540,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
-      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+      goTo("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
         import browser._
 
         Then("I should see a fancy gallery trail")
         $(".item--gallery") should have size 1
       }
 
-
     }
 
     scenario("Link to most popular") {
       Given("I'm on an article and JavaScript turned off")
-      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+      goTo("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
         import browser._
 
         Then("I should see link to most popular in the article section")
@@ -566,117 +559,115 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Show keywords in an article"){
+    scenario("Show keywords in an article") {
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
 
-      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
+      goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
 
         Then("I should see links to keywords")
-        $(".keyword-list a").size should be (18)
+        $(".keyword-list a").size should be(18)
       }
     }
 
-    scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
+    scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords") {
       Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
 
-      HtmlUnit("/info/2013/aug/26/2"){ browser =>
+      goTo("/info/2013/aug/26/2") { browser =>
         import browser._
 
         Then("I should not see a keywords list")
-        $(".content__keywords *").size should be (0)
+        $(".content__keywords *").size should be(0)
       }
     }
 
-    scenario("Twitter cards"){
+    scenario("Twitter cards") {
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
-      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
+      goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[name='twitter:site']").getAttributes("content").head  should be ("@guardian")
-        $("meta[name='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
-        $("meta[name='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg")
+        $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
+        $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
       }
     }
 
-    scenario("Canonical url"){
+    scenario("Canonical url") {
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
-      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
+      goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        findFirst("link[rel='canonical']").getAttribute("href")  should endWith ("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
+        findFirst("link[rel='canonical']").getAttribute("href") should endWith("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
       }
     }
 
-    scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone"){
+    scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone") {
       Given("I am on an article entitled 'Who would you like to see honoured by a blue plaque?'")
 
-      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage"){ browser =>
+      goTo("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".content").getAttribute("class") should include ("tone-comment")
+        $(".content").getAttribute("class") should include("tone-comment")
       }
     }
 
 
     scenario("'Classic' link") {
       Given("I am on a piece of content that has an R2 version")
-      HtmlUnit("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
+      goTo("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
         import browser._
         Then("I should see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be (false)
+        $(".js-main-site-link").isEmpty should be(false)
       }
     }
 
     scenario("Remove 'Classic' link") {
       Given("I am on a piece of content that is only Next Gen")
-      HtmlUnit("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
+      goTo("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
         import browser._
         Then("I should not see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be (true)
+        $(".js-main-site-link").isEmpty should be(true)
       }
     }
 
     scenario("Display breadcrumbs correctly") {
       Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
-      HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
+      goTo("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
         import browser._
         Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be (3)
+        $(".breadcrumb .signposting__item").size() should be(3)
 
-        val link = find(".breadcrumb .signposting__item a", withText().contains("Culture"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Culture"))
         link.length should be > 0
-        val link2 = find(".breadcrumb .signposting__item a", withText().contains("Books"))
+        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Books"))
         link2.length should be > 0
-        val link3 = find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
+        val link3 = browser.find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
         link3.length should be > 0
       }
 
       Given("I am on a piece of content with a primary nav and a key woro")
-      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
+      goTo("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
         import browser._
         Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be (2)
+        $(".breadcrumb .signposting__item").size() should be(2)
 
-        val link = find(".breadcrumb .signposting__item a", withText().contains("Comment"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Comment"))
         link.length should be > 0
-        val link2 = find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
+        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
         link2.length should be > 0
       }
 
       Given("I am on a piece of content with no primary nav and a no key words")
-      HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
+      goTo("/observer-ethical-awards/shortlist-2014") { browser =>
         import browser._
         Then("I should see one breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be (1)
+        $(".breadcrumb .signposting__item").size() should be(1)
 
-        val link = find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
         link.length should be > 0
       }
     }
 
   }
-
 }

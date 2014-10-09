@@ -1,0 +1,15 @@
+.tone-analysis {
+    @extend %tone-has-background;
+
+    &.fc-item {
+        background-color: $c-analysisBackground;
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-analysisAccent;
+        }
+    }
+}
