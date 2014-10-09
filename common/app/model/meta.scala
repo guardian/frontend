@@ -233,7 +233,7 @@ trait Tags {
     else Tags.VisualTone.News
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
-  lazy val isComment = tones.exists(_.id == Tags.Analysis)
+  lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
@@ -264,7 +264,9 @@ object Tags {
     "tone/minutebyminute"
   )
 
-  val commentMappings = "tone/comment"
+  val commentMappings = Seq (
+    "tone/comment"
+  )
 
   val mediaTypes = Seq(
     "type/video",
