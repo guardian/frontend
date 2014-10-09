@@ -42,9 +42,12 @@
                     </div>
                 }
             </div>
+        </div>
+        <div class="facia-container__inner">
             @defining(topTags(collection.items).filterNot(_.id == page.id).take(20)) { tags =>
                 @if(tags.nonEmpty) {
-                    <div class="related-keywords">
+                    <div class="submeta" data-link-name="keywords">
+                        <h2 class="submeta__head">Trending topics</h2>
                         @keywordList(tags, 5, "See also")
                     </div>
                 }
