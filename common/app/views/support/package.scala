@@ -667,6 +667,8 @@ object `package` extends Formats {
   def getTagType(page: MetaData) = {
     if (page.isContributorPage) {
       slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
     } else {
       slices.TagContainers.tagPage
     }

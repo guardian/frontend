@@ -13,9 +13,22 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       Given("I visit a tag page")
 
-      goTo("/technology/askjack") { browser =>
+      goTo("/politics/labour") { browser =>
         val trails = browser.$(".fc-item__container")
         trails.length should be(20)
+      }
+    }
+  }
+
+  feature("Tag Series, Blogs and Contributors Pages trail size") {
+
+    scenario("Tag Series, Blogs and Contributors pages should show at least 19 trails (includes leadContent if present)") {
+
+      Given("I visit a tag page")
+
+      goTo("/technology/askjack") { browser =>
+        val trails = browser.$(".fc-item__container")
+        trails.length should be(19)
       }
     }
   }
