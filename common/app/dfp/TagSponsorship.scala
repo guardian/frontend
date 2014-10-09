@@ -28,7 +28,8 @@ case class Sponsorship(tags: Seq[String],
                        sponsor: Option[String],
                        countries: Seq[String],
                        lineItemId: Long) {
-  def hasTag(tagId: String): Boolean = tags contains tagId.split('/').last
+
+  def hasTag(tagId: String): Boolean = tags exists tagId.endsWith
 }
 
 
