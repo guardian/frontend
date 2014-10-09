@@ -1,5 +1,6 @@
 package controllers
 
+import actions.AuthenticatedActions
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{IdRequestParser, ReturnUrlVerifier}
@@ -16,10 +17,11 @@ class ExactTargetController @Inject()(
                                        conf: IdentityConfiguration,
                                        returnUrlVerifier: ReturnUrlVerifier,
                                        idRequestParser: IdRequestParser,
-                                       authAction: actions.AuthenticatedAction)
+                                       authenticatedActions: AuthenticatedActions)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import play.api.Play.current
+  import authenticatedActions.authAction
 
   def cloudWatchCount(id: String) { CloudWatch.put("ExactTarget", Map(id -> 1d)) }
 

@@ -13,7 +13,7 @@
 
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes"
+        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes @if(!isList){js-snappable}"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
