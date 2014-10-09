@@ -664,6 +664,16 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
+    } else {
+      slices.TagContainers.tagPage
+    }
+  }
+
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
@@ -927,7 +937,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
