@@ -3,6 +3,14 @@
         padding-bottom: $gs-baseline * .25;
     }
 
+    .fc-item__footer--vertical {
+        padding-bottom: $gs-baseline * .25;
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 0;
+    }
+
     .fc-item__content,
     .fc-item__footer--horizontal {
         padding-left: $fc-item-gutter;

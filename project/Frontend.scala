@@ -34,6 +34,7 @@ object Frontend extends Build with Prototypes {
       flexibleContentBlockToText,
       flexibleContentBodyParser,
       scalaCheck,
+      faciaScalaClient,
       filters,
       ws,
       scalaTestPlus

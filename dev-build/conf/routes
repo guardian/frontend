@@ -42,9 +42,6 @@ GET         /discussion/comment-context/*commentId.json                         
 GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>.json                                                    controllers.NonThreadedController.commentsListJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>                                                         controllers.NonThreadedController.commentsList(discussionKey: discussion.model.DiscussionKey)
-
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.ProfileActivityController.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.ProfileActivityController.profileReplies(id: String)
@@ -267,7 +264,9 @@ GET         /commercial/capi                                                    
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
+GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
 GET         /commercial/magento/resource                                                                             controllers.commercial.magento.ApiSandbox.getResource(t: String)

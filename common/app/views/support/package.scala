@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -929,19 +931,19 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> config.isSponsored,
-      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
@@ -949,7 +951,7 @@ object GetClasses {
     )
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten

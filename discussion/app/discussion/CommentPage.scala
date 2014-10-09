@@ -2,15 +2,9 @@ package discussion
 
 import _root_.model.Page
 import discussion.model.DiscussionComments
-import common.Pagination
 
-case class CommentPage(discussionComments: DiscussionComments)
-  extends Page(
-    id = discussionComments.discussion.key,
-    section = "Global",
-    webTitle = discussionComments.discussion.title,
-    analyticsName = s"GFE:Article:Comment discussion page ${discussionComments.pagination.currentPage}"
-  ) {
+trait CommentPage extends Page {
+  val discussionComments: DiscussionComments
 
   override lazy val url = s"/discussion/$orderBy$id"
   override val pagination = Some(discussionComments.pagination)
@@ -25,3 +19,20 @@ case class CommentPage(discussionComments: DiscussionComments)
   lazy val isClosedForRecommendation = discussion.isClosedForRecommendation
   lazy val switches = discussionComments.switches
 }
+
+case class ThreadedCommentPage(val discussionComments: DiscussionComments)
+  extends Page(
+    id = discussionComments.discussion.key,
+    section = "Global",
+    webTitle = discussionComments.discussion.title,
+    analyticsName = s"GFE:Article:Comment discussion threaded page ${discussionComments.pagination.currentPage}"
+  ) with CommentPage
+
+case class UnthreadedCommentPage(val discussionComments: DiscussionComments)
+  extends Page(
+    id = discussionComments.discussion.key,
+    section = "Discussion",
+    webTitle = discussionComments.discussion.title,
+    analyticsName = s"GFE:Article:Comment discussion unthreaded page ${discussionComments.pagination.currentPage}"
+  ) with CommentPage
+

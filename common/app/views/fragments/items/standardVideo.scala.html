@@ -1,4 +1,4 @@
-@(video: model.Video, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None, forcePlayable: Boolean = false)(implicit request: RequestHeader, config: model.Config)
+@(video: model.Video, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None, forcePlayable: Boolean = false)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{VideoPlayer, FaciaDisplayElement, InlineVideo}

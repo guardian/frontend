@@ -1,8 +1,8 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-
-@import model.{Collection, Config}
+@import model.Collection
 @import views.support.RenderClasses
+@import com.gu.facia.client.models.CollectionConfig
 
 <div class="l-side-margins l-side-margins--layout-front">
     <div class="@RenderClasses(Map(
@@ -16,7 +16,7 @@
         }
         role="main">
 
-        @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(slices.TagContainers.keywordPage, model.Collection(index.trails), Some(templateDeduping)), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
+        @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(slices.TagContainers.keywordPage, model.Collection(index.trails), Some(templateDeduping)), pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
 
         @fragments.footballNav(index.page)
 

@@ -14,7 +14,6 @@
 
 .fc-sublinks__item-title {
     @include fs-headline(1);
-    font-weight: 500;
     padding-top: 0;
     margin: 0;
 
@@ -27,6 +26,10 @@
         width: 40%;
         border-top: 1px dotted $c-neutral3;
     }
+
+    .fc-item__kicker {
+        font-weight: 500;
+    }
 }
 
 @mixin fc-sublinks--horizontal {
@@ -37,7 +40,6 @@
     .fc-item__footer--horizontal {
         display: block;
         clear: both;
-        @include flex-basis(100%);
     }
 
     .has-flex-wrap & {
