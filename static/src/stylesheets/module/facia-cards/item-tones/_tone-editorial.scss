@@ -1,0 +1,34 @@
+.tone-editorial {
+    @extend %tone-has-background;
+
+    &.fc-item {
+        background-color: $c-editorialDefault;
+
+        &,
+        & a {
+            color: #ffffff;
+        }
+    }
+
+    .fc-item__standfirst {
+        color: $c-neutral3;
+    }
+
+    .fc-item__content,
+    &.fc-item--has-cutout .fc-item__container {
+        @include box-shadow(inset 0 1px $c-editorialAccent);
+    }
+
+    .fc-item__kicker,
+    a.fc-item__kicker,
+    .fc-item__byline a {
+        color: $c-editorialAccent;
+    }
+
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-neutral3;
+        }
+    }
+}
