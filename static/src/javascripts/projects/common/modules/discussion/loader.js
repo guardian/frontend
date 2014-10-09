@@ -94,8 +94,7 @@ Loader.prototype.user = null;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var self = this,
-        topCommentsElem = this.getElem('topComments'),
+    var topCommentsElem = this.getElem('topComments'),
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         commentId = this.getCommentIdFromHash();
@@ -123,23 +122,23 @@ Loader.prototype.ready = function() {
         $('.discussion .preload-msg').addClass('u-h');
 
         if (commentId || window.location.hash === '#comments') {
-            self.comments.removeState('shut');
-            self.comments.removeState('partial');
+            this.comments.removeState('shut');
+            this.comments.removeState('partial');
         }
 
         bonzo(commentsContainer).removeClass('modern-hidden');
-        self.initUnthreaded();
-        self.initShowAll();
+        this.initUnthreaded();
+        this.initShowAll();
 
-        self.on('user:loaded', function() {
-            self.initState();
-            self.renderCommentBar();
-            if (self.user) {
-                self.comments.addUser(self.user);
+        this.on('user:loaded', function() {
+            this.initState();
+            this.renderCommentBar();
+            if (this.user) {
+                this.comments.addUser(this.user);
             }
         });
-        self.getUser();
-    });
+        this.getUser();
+    }.bind(this));
 
     this.checkCommentsLoaded();
 
@@ -148,11 +147,11 @@ Loader.prototype.ready = function() {
     DiscussionAnalytics.init();
 
     bean.on(window, 'hashchange', function() {
-        var commentId = self.getCommentIdFromHash();
+        var commentId = this.getCommentIdFromHash();
         if (commentId) {
-            self.comments.gotoComment(commentId);
+            this.comments.gotoComment(commentId);
         }
-    });
+    }.bind(this));
 
     // More for analytics than anything
     if (window.location.hash === '#comments') {
@@ -196,13 +195,11 @@ Loader.prototype.initUnthreaded = function() {
 
 /** @return {Reqwest|null} */
 Loader.prototype.getUser = function() {
-    var self = this;
-
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
-            self.user = resp.userProfile;
-            self.emit('user:loaded');
-        });
+            this.user = resp.userProfile;
+            this.emit('user:loaded');
+        }.bind(this));
     } else {
         self.emit('user:loaded');
     }
@@ -219,7 +216,7 @@ Loader.prototype.initState = function() {
     } else if (this.comments.isReadOnly()) {
         this.setState('readonly');
     } else if (Id.getUserFromCookie()) {
-        if (this.user.privateFields && !this.user.privateFields.canPostComment) {
+        if (this.user && this.user.privateFields && !this.user.privateFields.canPostComment) {
             this.setState('banned');
         } else {
             this.setState('open');
