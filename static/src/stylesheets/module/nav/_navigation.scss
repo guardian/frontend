@@ -89,9 +89,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .signposting {
     @include fs-headline(2);
     line-height: $navigation-height;
-    // Make fonts look a bit bolder (instead of loading a new webfont)
-    -moz-osx-font-smoothing: auto;
-    -webkit-font-smoothing: subpixel-antialiased;
+    font-weight: 500;
 
     // Restore opentype kerning settings in WebKit / Blink
     -webkit-font-feature-settings: "kern" 1;

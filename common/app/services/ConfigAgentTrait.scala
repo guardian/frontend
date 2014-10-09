@@ -11,6 +11,7 @@ import play.api.{Application, GlobalSettings}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
@@ -20,13 +21,14 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def refresh() = {
     val futureConfig = FrontsApi.amazonClient.config
-    futureConfig.onComplete { case config => log.info(s"Successfully got config $config")}
-    futureConfig.onFailure { case t: Throwable => log.info(s"Getting config failed with $t")}
+    futureConfig.onComplete {
+      case Success(config) => log.info(s"Successfully got config")
+      case Failure(t) => log.error(s"Getting config failed with $t", t)
+    }
     futureConfig.map(Option.apply).map(configAgent.send)
   }
 
   def refreshWith(config: Config): Unit = {
-    log.info(s"Refreshing ConfigAgent with $config")
     configAgent.send(Option(config))
   }
 
