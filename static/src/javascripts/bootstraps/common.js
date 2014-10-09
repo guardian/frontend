@@ -47,7 +47,8 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+    'common/modules/preview/freshness-check'
 ], function (
     bean,
     bonzo,
@@ -95,7 +96,8 @@ define([
     smartAppBanner,
     Tabs,
     Toggles,
-    userPrefs
+    userPrefs,
+    FreshnessCheck
     ) {
 
     var modules = {
@@ -419,6 +421,10 @@ define([
                         }, 1);
                     }
                 });
+            },
+
+            checkFreshness: function () {
+                new FreshnessCheck(config);
             }
         },
         ready = function () {
@@ -455,6 +461,7 @@ define([
             modules.initRightHandComponent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.checkFreshness();
 
             mediator.emit('page:common:ready');
         };

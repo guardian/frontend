@@ -1,0 +1,20 @@
+.preview-refresh {
+  height: 80px;
+  background-color: #FF6666;
+  color: #FFFFFF;
+  font-size: 26px;
+  padding: 5px;
+
+  .pamplemousse {
+    float: right;
+    .pamplemousse__pip{
+      i {
+        background-color: #FFFFFF;
+      }
+    }
+  }
+}
+
+.preview-refresh--explainer {
+  font-size: 12px;
+}
