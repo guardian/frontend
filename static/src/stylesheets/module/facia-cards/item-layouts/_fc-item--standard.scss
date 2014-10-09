@@ -37,12 +37,14 @@ x x x x x x x x
 
     &.fc-item--has-cutout {
         .fc-item__container {
-            padding-bottom: gs-height(1);
+            padding-bottom: 18%;
         }
 
         .fc-item__header,
         .fc-sublinks {
-            padding-right: 33%;
+            @include mq($until: tablet) {
+                padding-right: 33%;
+            }
         }
     }
 
@@ -51,7 +53,7 @@ x x x x x x x x
     }
 
     .fc-item__avatar__media {
-        right: -18%;
+        right: - gs-span(1);
     }
 
     @include mq(tablet) {

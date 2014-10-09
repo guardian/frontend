@@ -80,6 +80,29 @@ Media list item. Looks a bit like this:
         display: none;
     }
 
+    &.fc-item--has-cutout {
+        .fc-item__container {
+            padding-bottom: 10%;
+
+            @include mq(tablet) {
+                padding-bottom: $gs-baseline * 2;
+            }
+        }
+
+        .fc-item__content {
+            padding-right: gs-span(1);
+        }
+
+        .fc-item__avatar {
+            display: block !important;
+            height: gs-span(1) + $gs-baseline * 3;
+
+            .fc-item__avatar__media {
+                right: - $gs-gutter;
+            }
+        }
+    }
+
     .fc-item__video-container { display: none; }
     .fc-item__video-fallback { display: block; }
 }
