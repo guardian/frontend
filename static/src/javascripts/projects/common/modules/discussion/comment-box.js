@@ -418,13 +418,13 @@ CommentBox.prototype.formatComment = function(formatStyle) {
         var linkURL;
         if (/^https?:\/\//i.test(selectedText)) {
             href = selectedText;
-        } else if(selectedText) {
-            linkURL = window.prompt('Your URL:', 'http://www.');
-            href = linkURL;
         } else {
             linkURL = window.prompt('Your URL:', 'http://www.');
             href = linkURL;
-            selectedText = linkURL;
+
+            if(!selectedText) {
+                selectedText = linkURL;
+            }
         }
         var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
