@@ -17,7 +17,7 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
   def renderMulti() = MemcachedAction { implicit request =>
 
     Future.successful {
-      val ads: Seq[AnyRef] = request.queryString("c").flatMap {
+      val merchandise = request.queryString("c").flatMap {
         case "jobs" => JobsAgent.jobsTargetedAt(segment).headOption
         case "books" => BestsellersAgent.bestsellersTargetedAt(segment).headOption
         case "travel" => TravelOffersAgent.offersTargetedAt(segment).headOption
@@ -25,7 +25,7 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
         case "soulmates" => SoulmatesAggregatingAgent.sampleMembers(segment).headOption
       }
 
-      ads match {
+      merchandise match {
         case Nil => NoCache(jsonFormat.nilResult)
         case as => Cached(componentMaxAge) {
           jsonFormat.result(views.html.multi(as))
