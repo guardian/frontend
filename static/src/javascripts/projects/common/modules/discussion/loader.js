@@ -338,6 +338,7 @@ Loader.prototype.getDiscussionClosed = function() {
  * TODO (jamesgorrie): Needs a refactor, good ol' copy and paste.
  */
 Loader.prototype.renderCommentCount = function() {
+    var self = this;
     ajax({
         url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
         type: 'json',
@@ -357,6 +358,8 @@ Loader.prototype.renderCommentCount = function() {
                                '</a>';
 
                     bonzo(qwery('.js-comment-count')).html(html);
+                } else {
+                    self.setState('empty');
                 }
             }
         }
