@@ -88,9 +88,12 @@
             border-bottom-color: rgba($textColour, .3);
         }
 
-        .content__section-label .tone-colour,
-        .byline .tone-colour {
+        .content__section-label__link {
             color: $textAccentColour;
+        }
+
+        .content__series-label__link {
+            color: $textColour;
         }
 
         .content__standfirst .bullet:before {
