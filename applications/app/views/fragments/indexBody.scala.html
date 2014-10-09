@@ -17,7 +17,7 @@
         role="main">
 
         @defining(getTagType(index.page)) { tagPage =>
-            @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(slices.TagContainers.keywordPage, model.Collection(index.trails), Some(templateDeduping)), pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
+            @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(tagPage, model.Collection(index.trails), Some(templateDeduping)), pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
         }
 
         @fragments.footballNav(index.page)
