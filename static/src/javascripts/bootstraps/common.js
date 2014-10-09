@@ -141,6 +141,10 @@ define([
             transcludeOnwardContent: function () {
                 if ('seriesId' in config.page) {
                     new Onward(config, qwery('.js-onward'));
+                } else if (config.page.tones !== '') {
+                    $('.js-onward').each(function (c) {
+                        new TonalComponent(config, c).fetch(c, 'html');
+                    });
                 }
             },
 
