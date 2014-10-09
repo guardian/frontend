@@ -10,19 +10,24 @@
         }
     }
 
+    .fc-item__standfirst {
+        color: $c-neutral3;
+    }
+
+    .fc-item__content,
+    &.fc-item--has-cutout .fc-item__container {
+        @include box-shadow(inset 0 1px $c-mediaDefault);
+    }
+
     a.fc-item__kicker,
     .fc-item__byline a {
         color: $c-mediaDefault;
     }
 
-    &.fc-item--has-image:before {
-        background-color: fade-out(#000000, .75);
-    }
-
     .fc-item__meta {
         &,
         & a {
-            color: $c-neutral2;
+            color: $c-neutral3;
         }
     }
 }

@@ -17,10 +17,10 @@ define([
                 fixtures: [
                     '<div class="facia-container">\
                         <div class="container">\
-                            <div class="container__header"></div>\
+                            <div class="js-container__header"></div>\
                         </div>\
                         <div class="container">\
-                            <div class="container__header"></div>\
+                            <div class="js-container__header"></div>\
                         </div>\
                     </div>'
                 ]

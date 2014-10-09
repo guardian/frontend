@@ -106,7 +106,7 @@ $c-analysisAccent: guss-colour(news-main-2, $pasteup-palette);
 $c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
 $c-analysisBackground: guss-colour(neutral-7, $pasteup-palette);
 
-$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);;
+$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);
 $c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
 $c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 
@@ -119,8 +119,8 @@ $c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
 $c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
 $c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
 
-$c-reviewBackground: $c-commentBackground;
-$c-reviewAccent: $c-featureAccent2;
+$c-reviewBackground: guss-colour(comment-support-1, $pasteup-palette);
+$c-reviewAccent: guss-colour(comment-support-3, $pasteup-palette);
 
 $c-podcastBackground: guss-colour(news-main-2, $pasteup-palette);
 $c-podcastAccent: guss-colour(guardian-brand-dark, $pasteup-palette);
