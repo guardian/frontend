@@ -23,7 +23,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     val futureConfig = FrontsApi.amazonClient.config
     futureConfig.onComplete {
       case Success(config) => log.info(s"Successfully got config")
-      case Failure(t) => log.error(s"Getting config failed with $t")
+      case Failure(t) => log.error(s"Getting config failed with $t", t)
     }
     futureConfig.map(Option.apply).map(configAgent.send)
   }

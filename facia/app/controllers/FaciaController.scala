@@ -82,7 +82,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Ok(views.html.front(faciaPage))
       }
     }.getOrElse(Cached(60)(NotFound)))
-    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t")}
+    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
   }
 
