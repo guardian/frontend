@@ -491,9 +491,14 @@ $avatarPadding: $gs-gutter / 2;
         }
     }
 }
+
 .d-comment--response,
 .d-comment-box--response {
     border-top: 1px solid colour(neutral-4);
+}
+
+.d-comment-box .i-reply-grey {
+    display: none;
 }
 
 .d-comment-box--response {
