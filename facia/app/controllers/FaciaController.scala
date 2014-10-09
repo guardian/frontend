@@ -71,7 +71,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
-    frontJson.get(path).map(_.map{ faciaPage =>
+    val futureResult: Future[Result] = frontJson.get(path).map(_.map{ faciaPage =>
       Cached(faciaPage) {
         if (request.isRss)
           Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
@@ -82,6 +82,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Ok(views.html.front(faciaPage))
       }
     }.getOrElse(Cached(60)(NotFound)))
+    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t")}
+    futureResult
   }
 
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
