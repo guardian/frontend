@@ -7,19 +7,6 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
 @DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Tag Pages trail size") {
-
-    scenario("Tag pages should show at least 20 trails (includes  leadContent if present)") {
-
-      Given("I visit a tag page")
-
-      goTo("/politics/labour") { browser =>
-        val trails = browser.$(".fc-item__container")
-        trails.length should be(20)
-      }
-    }
-  }
-
   feature("Tag Series, Blogs and Contributors Pages trail size") {
 
     scenario("Tag Series, Blogs and Contributors pages should show at least 19 trails (includes leadContent if present)") {
