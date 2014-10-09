@@ -54,9 +54,7 @@
     }
 }
 
-// TODO: Remove media-large-mobile
-.fc-item--list-media-mobile,
-.fc-item--list-media-large-mobile {
+.fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(4, 1);
     }
