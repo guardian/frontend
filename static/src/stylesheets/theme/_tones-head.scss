@@ -9,11 +9,11 @@
 
 @mixin tones-content {
     // Tonal article styles
-    // @mixin article-header-tone($tone,   $backgroundColour,     $backgroundAccentColour, $textColour,     $textAccentColour,  $commentIcon)
-    @include article-header-tone(feature,  $c-featureDefault,     $c-featureAccent2,       #ffffff,         $c-featureAccent,   'white');
-    @include article-header-tone(comment,  $c-commentBackground,  $c-commentDefault,       $c-neutral1,     $c-commentDefault,  'black');
-    @include article-header-tone(live,     $c-liveDefault,        $c-liveAccent,           #ffffff,         #ffffff,            'white');
-    @include article-header-tone(dead,     #ffffff,               $c-neutral6,             $c-neutral1,     $c-liveDefault,     'black');
+    // @mixin article-header-tone($tone, $backgroundColour, $backgroundAccentColour, $textColour, $textAccentColour, $commentIcon)
+    @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, $c-featureAccent, 'white');
+    @include article-header-tone(comment, $c-commentBackground, $c-commentDefault, $c-neutral1, $c-commentDefault, 'black');
+    @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
+    @include article-header-tone(dead, #ffffff, $c-neutral6, $c-neutral1, $c-liveDefault, 'black');
 
     .content__head--tonal {
         background-color: #ffffff;
