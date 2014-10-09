@@ -8,6 +8,8 @@
 }
 
 .l-list__item {
+    float: left;
+
     &:last-child {
         margin-bottom: 0;
     }
