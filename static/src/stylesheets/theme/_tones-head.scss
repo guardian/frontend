@@ -119,6 +119,9 @@
     }
 
     .tone-dead .content__head--tonal {
+        .content__series-label__link {
+            color: $c-neutral2;
+        }
         .blog__meta-container {
             color: $c-neutral2;
             border-top-color: $c-neutral3;
