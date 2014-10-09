@@ -52,7 +52,7 @@ define([
 
         this.addToggle =  function () {
             // append toggle button
-            $('.js-container-header', _$container[0]).append(_$button);
+            $('.js-container__header', _$container[0]).append(_$button);
             _$container
                 .removeClass('js-container--toggle')
                 .addClass('container--has-toggle');

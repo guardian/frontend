@@ -15,6 +15,7 @@
             class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@dataId"
+            data-type="@style.containerType"
             @DfpAgent.sponsorshipTag(config).map { keyword =>
                 data-keywords="@keyword"
             }
