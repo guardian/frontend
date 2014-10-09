@@ -14,7 +14,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       Given("I visit a tag page")
 
       goTo("/technology/askjack") { browser =>
-        val trails = browser.$(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = browser.$(".fc-item__container")
         trails.length should be(20)
       }
     }
