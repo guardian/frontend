@@ -4,13 +4,7 @@
 
     @include fs-textSans(2);
 
-    @include mq(leftCol) {
-        float: right;
-        width: gs-span(12);
-    }
     @include mq(wide) {
-        width: gs-span(13);
-
         .has-page-skin & {
             width: 100%;
         }

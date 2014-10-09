@@ -34,6 +34,10 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__content {
             @include flex-basis(100% - $media-width);
         }
+
+        .fc-item__footer--horizontal {
+            @include flex-basis(100%);
+        }
     }
 
     .has-no-flex-wrap & {

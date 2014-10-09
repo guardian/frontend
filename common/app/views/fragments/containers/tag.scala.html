@@ -1,4 +1,4 @@
-@(page: model.MetaData, collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, pagination: Option[common.Pagination] = None, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
+@(page: model.MetaData, collection: model.Collection, containerLayout: layout.ContainerLayout, pagination: Option[common.Pagination] = None, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import model.FaciaComponentName
 @import views.html.fragments.containers.facia_cards.slice
@@ -12,7 +12,7 @@
 
     @if(collection.items.nonEmpty) {
         <section
-        class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
+            class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@dataId"
             @DfpAgent.sponsorshipTag(config).map { keyword =>
@@ -32,15 +32,20 @@
                 </div>
                 <div class="container__body container--rolled-up-hide">
                     @for(sliceWithCards <- containerLayout.slices) {
-                        @slice(sliceWithCards, containerIndex)
+                        @slice(sliceWithCards, 0)
                     }
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}
 
+            </div>
+            <div class="facia-container__inner">
                 @defining(topTags(collection.items).filterNot(_.id == page.id)) { tags =>
                     @if(tags.nonEmpty) {
                         <div class="related-keywords">
-                        @keywordList(tags, 5, "See also")
+                            <div class="submeta" data-link-name="keywords">
+                                <h2 class="submeta__head">Trending topics</h2>
+                                @keywordList(tags, 5, "See also")
+                            </div>
                         </div>
                     }
                 }

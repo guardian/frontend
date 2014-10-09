@@ -29,6 +29,13 @@ object TagContainers {
     TlTlTl,
     TlTlMpu
   )
+
+  val keywordPage = slices(
+    TTT,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
 }
 
 object FixedContainers {
