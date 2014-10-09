@@ -19,7 +19,7 @@ define([
 ) {
 
     function init() {
-        var snaps = toArray($('.facia-snap.js-snappable'))
+        var snaps = toArray($('.js-snappable.js-snap'))
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); })
                 .filter(function (el) { return el.getAttribute('data-snap-type'); });
 
