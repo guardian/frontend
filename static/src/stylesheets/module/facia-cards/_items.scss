@@ -10,7 +10,6 @@
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
-@import 'item-layouts/fc-item--list-media-large';
 @import 'item-layouts/fc-item--full';
 @import 'item-layouts/fc-item--mega-full';
 
@@ -54,9 +53,7 @@
     }
 }
 
-// TODO: Remove media-large-mobile
-.fc-item--list-media-mobile,
-.fc-item--list-media-large-mobile {
+.fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(4, 1);
     }
