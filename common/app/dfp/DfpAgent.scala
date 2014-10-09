@@ -236,11 +236,14 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
 trait DfpAgentLifecycle extends GlobalSettings {
 
+  private val jobName = "DfpDataRefreshJob"
+  private val every2Mins = "0 0/2 * * * ?"
+
   override def onStart(app: Application) {
     super.onStart(app)
 
-    Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 6/5 * * * ?") {
+    Jobs.deschedule(jobName)
+    Jobs.schedule(jobName, every2Mins) {
       DfpAgent.refresh()
     }
 
@@ -250,7 +253,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
   }
 
   override def onStop(app: Application) {
-    Jobs.deschedule("DfpDataRefreshJob")
+    Jobs.deschedule(jobName)
     super.onStop(app)
   }
 }
