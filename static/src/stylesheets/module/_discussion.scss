@@ -358,6 +358,9 @@ $avatarPadding: $gs-gutter / 2;
     margin-bottom: -4px;
     display: inline-block;
 }
+.d-comment-box--top-level .i-reply-grey {
+    display: none;
+}
 
 .d-comment--new {
     .d-comment__reply-wrapper {
@@ -497,10 +500,6 @@ $avatarPadding: $gs-gutter / 2;
 
     .d-comment-box__author-label {
         display: none;
-    }
-
-    .i-reply-grey {
-        display: inline-block;
     }
 
     .d-comment-box__author {
