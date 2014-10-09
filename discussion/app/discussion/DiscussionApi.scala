@@ -3,10 +3,9 @@ package discussion
 import java.net.URLEncoder
 
 import common.{ExecutionContexts, Logging}
-import controllers.DiscussionParams
 import scala.concurrent.Future
 import discussion.model._
-import play.api.mvc.Headers
+import play.api.mvc.{RequestHeader, Headers}
 import discussion.util.Http
 import play.api.libs.ws.WSResponse
 import play.api.libs.json.JsNumber
@@ -42,11 +41,13 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getCommentJsonForId(id, url)
   }
 
-  def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[CommentPage] = {
+  def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[DiscussionComments] = {
+    // displayThreaded=true can return an error on old discussions.
     val url = s"$apiRoot/discussion/$key" + (if(params.topComments) "/topcomments" else "")+
                     s"""|?pageSize=${params.pageSize}
                     |&page=${params.page}
                     |&orderBy=${params.orderBy}
+                    |${if(params.displayThreaded) "" else "&displayThreaded=false"}
                     |&showSwitches=true""".stripMargin.replace("\n", "")+
                     params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
 
@@ -119,16 +120,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def discussion(key: DiscussionKey, page: String): Future[DiscussionComments] = {
-    def onError(r: WSResponse) =
-      s"Discussion API: Error loading discussion: $key. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&page=$page&orderBy=newest&showSwitches=true"
-
-    getJsonOrError(apiUrl, onError) map {
-      json => DiscussionComments(json)
-    }
-  }
-
   def comment(id: Int): Future[Comment] = {
     def onError(r: WSResponse) =
       s"Get back in the past"
@@ -139,12 +130,12 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  private def getJsonForUri(key: DiscussionKey, apiUrl: String): Future[CommentPage] = {
+  private def getJsonForUri(key: DiscussionKey, apiUrl: String): Future[DiscussionComments] = {
     def onError(r: WSResponse) =
-      s"Discussion API: Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
+      s"Discussion API: Error loading comments id: $key status: ${r.status} message: ${r.statusText} url: $apiUrl"
 
     getJsonOrError(apiUrl, onError) map {
-      json => CommentPage(DiscussionComments(json))}
+      json => DiscussionComments(json)}
   }
 
   private def getCommentJsonForId(id: Int, apiUrl: String): Future[Comment] = {
@@ -169,5 +160,26 @@ object AuthHeaders {
 
   def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys {
     all.contains
+  }
+}
+
+case class DiscussionParams(
+  orderBy: String,
+  page: String,
+  pageSize: String,
+  topComments: Boolean,
+  maxResponses: Option[String],
+  displayThreaded: Boolean)
+
+object DiscussionParams extends {
+  def apply(request: RequestHeader): DiscussionParams = {
+    DiscussionParams(
+      orderBy = request.getQueryString("orderBy").getOrElse("newest"),
+      page = request.getQueryString("page").getOrElse("1"),
+      pageSize = request.getQueryString("pageSize").getOrElse("50"),
+      maxResponses = request.getQueryString("maxResponses"),
+      topComments = request.getQueryString("topComments").exists(_ == "true"),
+      displayThreaded = request.getQueryString("displayThreaded").exists(_ == "true")
+    )
   }
 }

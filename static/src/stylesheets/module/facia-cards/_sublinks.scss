@@ -40,7 +40,6 @@
     .fc-item__footer--horizontal {
         display: block;
         clear: both;
-        @include flex-basis(100%);
     }
 
     .has-flex-wrap & {

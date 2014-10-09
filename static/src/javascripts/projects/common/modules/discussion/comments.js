@@ -45,6 +45,7 @@ define([
         this.setOptions(options);
         this.options.order = userPrefs.get('discussion.order') || 'newest';
         this.options.expand = userPrefs.get('discussion.expand') || false;
+        this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
     };
 
     Component.define(Comments);
@@ -120,12 +121,10 @@ define([
             var comment = $('#comment-'+ this.options.commentId);
             this.showHiddenComments();
             $('.d-discussion__show-all-comments').addClass('u-h');
-            var o = bonzo(comment).parent();
-            if (o.hasClass('d-thread--responses-invisible')) {
-                var $visibleComments = bonzo(o).previous();
-                bonzo(qwery("d-show-more-replies", $visibleComments[0])).remove();
-                o.removeClass('d-thread--responses-invisible');
+            if (comment.attr('hidden')) {
+                bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
             }
+
             window.location.replace('#comment-'+ this.options.commentId);
         }
 
@@ -224,18 +223,14 @@ define([
     Comments.prototype.fetchComments = function(options) {
         options = options || {};
 
-        console.log("+++ Fetch doggie!");
-        if (this.options.commentId) {
-            console.log("+++CommentID");
-        }
-
         var url = '/discussion/'+
             (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
             '.json?'+ (options.page ? '&page=' + options.page : '');
 
         var queryParams = {
             orderBy: options.order || this.options.order,
-            pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+            pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+            displayThreaded: !this.options.unthreaded
         };
 
         if (!this.options.expand) {

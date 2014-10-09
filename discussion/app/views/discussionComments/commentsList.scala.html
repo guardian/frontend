@@ -7,7 +7,7 @@
     <div class="d-discussion__comment-count">
         <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
             @if(page.commentCount > 0){
-                @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
+                @page.commentCount comment@if(page.commentCount != 1){s} <span class="discussion__show-threaded-state">in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}. </span>
             }
         </div>
 

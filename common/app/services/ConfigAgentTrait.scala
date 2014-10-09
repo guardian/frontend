@@ -11,6 +11,7 @@ import play.api.{Application, GlobalSettings}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
@@ -18,14 +19,26 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
-  def refresh() = FrontsApi.amazonClient.config.map(Option.apply).map(configAgent.send)
+  def refresh() = {
+    val futureConfig = FrontsApi.amazonClient.config
+    futureConfig.onComplete {
+      case Success(config) => log.info(s"Successfully got config")
+      case Failure(t) => log.error(s"Getting config failed with $t", t)
+    }
+    futureConfig.map(Option.apply).map(configAgent.send)
+  }
 
-  def refreshWith(config: Config): Unit = configAgent.send(Option(config))
+  def refreshWith(config: Config): Unit = {
+    configAgent.send(Option(config))
+  }
 
   def refreshAndReturn(): Future[Option[Config]] =
     FrontsApi.amazonClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
-      .fallbackTo(Future.successful(configAgent.get()))
+      .fallbackTo{
+      log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
+      Future.successful(configAgent.get())
+    }
 
   def getPathIds: List[String] = {
     val config = configAgent.get()

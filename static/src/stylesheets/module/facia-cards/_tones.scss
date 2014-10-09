@@ -1,6 +1,10 @@
 %tone-has-background {
-    &.fc-item {
+    .fc-item__footer--vertical {
         padding-bottom: $gs-baseline * .25;
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 0;
     }
 
     .fc-item__content,
