@@ -1074,9 +1074,7 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 .d-comment-box__submit {
-    display: inline-block;
-    @include fs-textSans(4);
-    font-weight: bold;
+    vertical-align: middle;
 }
 .d-comment-box__cancel {
     margin-left: $gs-gutter;
