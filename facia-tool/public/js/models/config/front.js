@@ -41,6 +41,7 @@ define([
             'imageWidth',
             'imageHeight',
             'isImageDisplayed',
+            'isHidden',
             'priority']);
 
         populateObservables(this.props, opts);
@@ -88,6 +89,14 @@ define([
 
         this.provisionalImageUrl.subscribe(function(src) {
             var self = this;
+
+            if(!src){
+                self.props.imageUrl(undefined);
+                self.props.imageWidth(undefined);
+                self.props.imageHeight(undefined);
+                self.props.isImageDisplayed(undefined);
+                return;
+            }
 
             if (src === this.props.imageUrl()) { return; }
 

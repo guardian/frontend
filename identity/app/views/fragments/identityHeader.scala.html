@@ -5,9 +5,9 @@
     <div class="l-header-pre gs-container u-cf">
         <div class="brand-bar">
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="brand-bar__item brand-bar__item--profile has-nav-popup brand-bar__item--has-control js-profile-nav">
-                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                       class="brand-bar__item--action nav-popup__toggle">
+                <div class="brand-bar__item brand-bar__item--profile has-popup brand-bar__item--has-control js-profile-nav">
+                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
+                       class="brand-bar__item--action popup__toggle">
                         <span class="control__icon-wrapper">
                             <span class="control__icon">
                                 <i class="i i-profile-white-36"></i>
@@ -15,7 +15,7 @@
                         </span>
                             <span class="js-profile-info control__info" data-test-id="sign-in-name">Sign in</span>
                     </a>
-                    <div class="js-profile-nav-popup"></div>
+                    <div class="js-profile-popup"></div>
                 </div>
             }
         </div>

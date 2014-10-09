@@ -214,11 +214,6 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val MagentoServiceSwitch = Switch("Commercial", "magento",
-    "If this switch is on, Guardian Bookshop components will be fed by Magento instead of Bertrams.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 1))
-
-
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -411,7 +406,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    MagentoServiceSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -440,7 +434,7 @@ object Switches extends Collections {
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 
-  def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
+  def byName(name: String): Option[Switch] = all.find(_.name == name)
 }
 
 class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)

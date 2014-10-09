@@ -3,14 +3,18 @@
 
 @defining(page.interactive) { interactive =>
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--interactive">
-    <article class="content content--interactive tone-@interactive.visualTone"
-    itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+    <article class="content content--interactive tone-@interactive.visualTone @interactive match {
+            case a if a.isAdvertisementFeature => {content--advertisement-feature}
+            case s if s.isSponsored => {content--sponsored}
+            case _ => { }
+        }"
+        itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
-        @fragments.headDefault(interactive)
+        @fragments.headDefault(interactive, showBadge = true)
 
         <div class="gs-container u-cf">
             <div class="content__main-column">
-                @fragments.contentMeta(interactive)
+                @fragments.contentMeta(interactive, showBadge = false)
             </div>
         </div>
 

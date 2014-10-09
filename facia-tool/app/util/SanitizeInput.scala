@@ -1,6 +1,6 @@
 package util
 
-import frontsapi.model.{Front, Config}
+import com.gu.facia.client.models.{Config, Front}
 import scala.util.matching.Regex
 
 
@@ -14,12 +14,9 @@ object SanitizeInput {
     config.copy(fronts = config.fronts.mapValues(sanitizeSeoInputFromFront))
   }
 
-  private def sanitizeSeoInputFromFront(front: Front): Front =
-    front.copy(
+  private def sanitizeSeoInputFromFront(front: Front): Front = front.copy(
       title = front.title.map(fromString),
       webTitle = front.webTitle.map(fromString),
       navSection = front.navSection.map(fromString),
-      description = front.description.map(fromString),
-      onPageDescription = front.onPageDescription.map(fromString)
-    )
+      description = front.description.map(fromString))
 }

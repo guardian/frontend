@@ -1,6 +1,6 @@
 package controllers
 
-import frontsapi.model.Collection
+import com.gu.facia.client.models.CollectionConfig
 import services.PressAndNotify
 import util.Requests._
 import play.api.mvc.Controller
@@ -14,7 +14,7 @@ object CollectionRequest {
 
 case class CollectionRequest(
   frontIds: List[String],
-  collection: Collection
+  collection: CollectionConfig
 )
 
 object CreateCollectionResponse {

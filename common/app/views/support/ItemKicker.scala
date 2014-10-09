@@ -1,20 +1,40 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import model.{Trail, Tag}
 
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
+  def fromTrail(trail: Trail, config: Option[CollectionConfig]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
-    if ((trail.showKickerTag || config.showTags) && maybeTag.isDefined) {
-      maybeTag map { tag =>
-        TagKicker(tag.name, tag.webUrl)
+    def tagKicker = maybeTag map { tag =>
+      TagKicker(tag.name, tag.webUrl)
+    }
+
+    def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
+
+    trail.customKicker match {
+      case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
+      case _ => if (trail.showKickerTag && maybeTag.isDefined) {
+        tagKicker
+      } else if (trail.showKickerSection) {
+        sectionKicker
+      } else if (config.exists(_.showTags.exists(identity)) && maybeTag.isDefined) {
+        tagKicker
+      } else if (config.exists(_.showSections.exists(identity))) {
+        sectionKicker
+      } else if (!config.exists(_.hideKickers.exists(identity))) {
+        tonalKicker(trail)
+      } else {
+        None
       }
-    } else if (config.showSections || trail.showKickerSection) {
-      Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
-    } else if (trail.isBreaking) {
+    }
+  }
+
+  private def tonalKicker(trail: Trail): Option[ItemKicker] = {
+    if (trail.isBreaking) {
       Some(BreakingNewsKicker)
     } else if (trail.isLive) {
       Some(LiveKicker)

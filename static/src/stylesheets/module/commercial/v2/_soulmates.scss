@@ -1,0 +1,232 @@
+/* ==========================================================================
+   Soulmates components
+   ========================================================================== */
+$c-soulmatesBackground: #f5f3e7;
+$c-soulmatesBorder: #e6e1c3;
+
+.commercial--soulmates-v2 {
+    background-color: $c-soulmatesBackground;
+
+    @mixin c-soulmates-branding-small {
+        .container__title__wrapper {
+            height: 100%;
+            padding: $gs-baseline*2 0 $gs-baseline/2;
+            background-repeat: no-repeat;
+            width: gs-span(2);
+
+            .svg & {
+                background-size: cover;
+            }
+        }
+        .container__title {
+            padding-bottom: 0;
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+
+            @include mq(mobileLandscape) {
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+            }
+
+            @include mq(phablet) {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+        .commercial__title {
+            text-align: center;
+            min-height: 0;
+        }
+        .commercial__explainer {
+            @include fs-header(1);
+            color: $c-soulmates-high;
+            position: absolute;
+            top: 20px;
+            bottom: 0;
+            left: $gs-gutter * 8;
+            width: auto;
+            padding: 0;
+            margin: $gs-baseline 0 0;
+
+            @include mq(phablet) {
+                left: $gs-gutter * 7;
+            }
+
+            @include mq(leftCol) {
+                left: 0;
+            }
+        }
+        .i-soulmates-logo {
+            width: 86px;
+            height: 18px;
+
+            .svg & {
+                background-size: contain;
+            }
+        }
+    }
+
+    @include c-soulmates-branding-small;
+
+    .lineitems {
+        @include mq(tablet) {
+            float: left;
+            width: gs-span(6) + $gs-gutter/2;
+        }
+        @include mq(desktop) {
+            width: gs-span(9) + $gs-gutter/2;
+        }
+    }
+    .lineitem {
+        text-align: center;
+        width: 50%;
+        min-width: 96px;
+        border-color: $c-soulmatesBorder;
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+        @include mq(mobileLandscape) {
+            width: 25%;
+
+            &:nth-child(-n+4) {
+                display: block;
+            }
+        }
+        @include mq(desktop) {
+            width: percentage(1/6);
+
+            &:nth-child(5),
+            &:nth-child(6) {
+                display: block;
+            }
+        }
+    }
+    .lineitem__title {
+        @include fs-header(1);
+        font-size: 14px;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
+        margin-bottom: 0;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .lineitem__meta {
+        font-size: 11px;
+        line-height: 11px;
+    }
+    .commercial__search {
+        position: static;
+        @include box-sizing(border-box);
+        width: auto;
+        float: none;
+        margin-top: $gs-baseline;
+        
+        @include mq(tablet) {
+            margin-top: 0;
+            float: right;
+            width: gs-span(3) - $gs-gutter/2;
+        }
+    }
+    .search__dropdown {
+        display: block;
+        border-top: 1px solid $c-soulmatesBorder;
+        overflow: hidden;
+        @include fs-textSans(2);
+        padding-top: $gs-baseline/2;
+        margin-top: $gs-baseline/2;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    .search__dropdown__options {
+        float: right;
+        min-width: 50%;
+    }
+    .search__submit {
+        float: right;
+        margin-top: $gs-baseline;
+        margin-right: 0;
+    }
+    .commercial__cta {
+        display: none;
+    }
+    @include mq(leftCol) {
+        .container__body {
+            padding-left: 0;
+        }
+        .container__title {
+            width: gs-span(2) + $gs-gutter*2.5 !important;
+            margin-right: 0;
+            float: left;
+        }
+        .container__title__wrapper {
+            width: gs-span(2) + $gs-gutter*1.5;
+            margin-bottom: 0;
+            padding-top: $gs-baseline*3;
+            padding-bottom: 0;
+        }
+        .commercial__explainer {
+            position: static;
+            color: #ffffff;
+            width: gs-span(2)-$gs-gutter;
+            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5;
+            margin-top: $gs-baseline;
+        }
+        .i-soulmates-logo {
+            .svg & {
+                width: 100px;
+                height: 21px;
+                background-size: contain;
+            }
+        }
+        .commercial__buy-now-button {
+            display: inline-block;
+            padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5;
+            position: relative;
+        }
+        .commercial__cta {
+            position: static;
+            margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
+            @include button-colour(transparent, #ffffff, transparent, #ffffff, $c-neutral2);
+            width: gs-span(2) - $gs-gutter;
+            display: block;
+        }
+    }
+    @include mq(wide) {
+        .container__title {
+            width: gs-span(3) + $gs-gutter !important;
+        }
+        .container__title__wrapper {
+            width: gs-span(3);
+
+            .svg & {
+                background-size: cover;
+            }
+        }
+        .commercial__cta {
+            width: gs-span(2) + $gs-gutter;
+        }
+        .has-page-skin & {
+            padding-left: $gs-gutter;
+            @include c-soulmates-branding-small;
+
+            .commercial__explainer {
+                left: $gs-gutter * 7.5;
+            }
+
+            .commercial__head {
+                position: relative;
+                width: auto;
+                float: none;
+            }
+            .commercial__cta {
+                display: none;
+            }
+        }
+    }
+}

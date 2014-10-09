@@ -1,0 +1,39 @@
+/*
+
+List item. Looks a bit like this:
+
+***********************************************
+x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x
+
+***********************************************
+
+ */
+
+@mixin fc-item--list {
+    $item-vertical-padding: $gs-baseline * .25;
+
+    .fc-item__header {
+        @include fs-headline(1, true);
+        @include headline-boost(2);
+
+        @include mq(desktop) {
+            @include fs-headline(2, true);
+            @include headline-boost(3);
+        }
+    }
+
+    .fc-item__media-wrapper {
+        display: none;
+    }
+
+    &.fc-item--has-cutout {
+        .fc-item__avatar {
+            display: none !important;
+        }
+    }
+
+    .fc-sublinks {
+        display: none;
+    }
+}

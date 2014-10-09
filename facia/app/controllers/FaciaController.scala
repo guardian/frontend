@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import front._
 import model._
@@ -49,7 +50,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
   log.info(s"Serving RSS Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path))
+    if (!ConfigAgent.shouldServeFront(path))
       applicationsRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
@@ -57,7 +58,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path) || request.getQueryString("page").isDefined)
+    if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
@@ -90,8 +91,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1)
+            val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
+            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1, id)
             if (request.isJson)
               JsonCollection(html, collection)
             else
@@ -127,11 +128,15 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
               Cached(60) {
-                val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
                   Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
               }
           }.getOrElse(ServiceUnavailable)
       }
+  }
+
+  def renderAgentContents = Action {
+    Ok(ConfigAgent.contentsAsJsonString)
   }
 }
 

@@ -1,5 +1,7 @@
 package dfp
 
+import java.net.URLEncoder
+
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.{JsValue, Json, Writes}
@@ -17,7 +19,9 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSponsoredSlot = isSlot("spbadge")
 
   val isAdvertisementFeatureSlot = isSlot("adbadge")
-  
+
+  val isFoundationSupportedSlot = isSlot("fobadge")
+
   val isInlineMerchandisingSlot = isSlot("im")
 
   val targetsAdTest = isPositive("at")
@@ -55,6 +59,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val sponsoredTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isSponsoredSlot)
 
   val advertisementFeatureTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isAdvertisementFeatureSlot)
+
+  val foundationSupportedTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isFoundationSupportedSlot)
 
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
@@ -150,6 +156,8 @@ case class GuLineItem(id: Long,
 
   val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
 
+  val foundationSupportedTags: Seq[String] = targeting.customTargetSets.flatMap(_.foundationSupportedTags).distinct
+
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
@@ -170,6 +178,34 @@ object GuLineItem {
         "targeting" -> lineItem.targeting
       )
     }
+  }
+
+}
+
+
+case class GuCreativeTemplateParameter(parameterType: String, label: String, isRequired: Boolean, description: String)
+
+case class GuCreative(id: Long, name: String, args: Map[String, String])
+
+case class GuCreativeTemplate(id: Long,
+                              name: String,
+                              description: String,
+                              parameters: Seq[GuCreativeTemplateParameter],
+                              snippet: String,
+                              creatives: Seq[GuCreative]) {
+
+  val example: Option[String] = creatives.headOption map { creative =>
+
+    def replaceParameters(html: String, args: Seq[(String, String)]): String = {
+      if (args.isEmpty) html
+      else {
+        val (key, value) = args.head
+        val encodedValue = URLEncoder.encode(value, "utf-8")
+        replaceParameters(html.replace(s"[%$key%]", value).replace(s"[%URI_ENCODE:$key%]", encodedValue), args.tail)
+      }
+    }
+
+    replaceParameters(snippet, creative.args.toSeq)
   }
 
 }

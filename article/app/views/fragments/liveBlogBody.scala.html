@@ -1,6 +1,7 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 @import views.support.TrailCssClasses.articleToneClass
+@import com.gu.facia.client.models.CollectionConfig
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -53,6 +54,8 @@
 
                 @fragments.mainMedia(article)
 
+                @fragments.witnessCallToAction(article)
+
                 <div class="blog__left-col">
 
                     @fragments.commercial.badge(article)
@@ -83,7 +86,7 @@
 
                     <div class="submeta-container">
                         <div class="submeta" data-link-name="keywords">
-                            @fragments.keywordList(article.keywords, tone = article.visualTone)
+                            @fragments.keywordList(article.keywords, tone = Some(article.visualTone))
                         </div>
                         <div class="submeta" data-component="share">
                             @fragments.social(article)
@@ -103,7 +106,7 @@
                         <h3 class="blog__related__head">More on this story</h3>
                         <ul class="u-unstyled">
                             @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                                @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
+                                @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, CollectionConfig.emptyConfig)
                             }
                         </ul>
                     </aside>

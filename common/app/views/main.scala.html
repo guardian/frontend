@@ -26,7 +26,7 @@
         @fragments.message(metaData)
 
         @if(showAdverts) {
-            @fragments.commercial.topBanner(metaData)
+            @fragments.commercial.topBanner()
         }
 
         @fragments.header(metaData)
@@ -44,6 +44,9 @@
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
+
+        @fragments.commercial.pageSkin()
+
     </body>
     </html>
 }

@@ -180,9 +180,9 @@ define([
     };
 
     Collection.prototype.hasOpenArticles = function() {
-        return _.reduce(this.groups, function(hasOpen, group) {
-            return hasOpen || _.some(group.items(), function(article) { return article.state.isOpen(); });
-        }, false);
+        return _.some(this.groups, function(group) {
+            return _.some(group.items(), function(article) { return article.state.isOpen(); });
+        });
     };
 
     Collection.prototype.populate = function(raw) {
@@ -198,7 +198,7 @@ define([
             if (this.hasOpenArticles()) {
                 this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
 
-            } else {
+            } else if (raw.lastUpdated !== this.state.lastUpdated()) {
                 list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
 
                 _.each(this.groups, function(group) {

@@ -2,10 +2,27 @@ package slices
 
 import model.Content
 
+object TagContainers {
+  import ContainerDefinition.{ofSlices => slices}
+
+  val allTagPage = slices(
+    QuarterQuarterQuarterQuarter,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
+}
+
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
   val all: Map[String, ContainerDefinition] = Map(
+    ("fixed/small/slow-I", slices(Full)),
+    ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", slices(QuarterQuarterQuarterQuarter)),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
     ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),

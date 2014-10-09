@@ -1,0 +1,114 @@
+.content--interactive {
+    // Ensure margins don't overlay interactives
+    position: relative;
+    z-index: 2;
+
+    .content__main-column {
+        @include mq(desktop) {
+            max-width: none;
+            margin: 0;
+        }
+    }
+    .content__labels {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: $gs-baseline/2;
+        border-bottom: 1px dotted $c-neutral5;
+    }
+    .content__section-label,
+    .content__series-label {
+        @include mq(desktop) {
+            float: left;
+        }
+    }
+    .content__headline,
+    .content__standfirst {
+        @include box-sizing(border-box);
+
+        @include mq(desktop) {
+            float: left;
+            width: 50%;
+            padding-top: $gs-baseline / 6;
+            padding-bottom: 0;
+            margin-bottom: $gs-baseline * 2;
+        }
+    }
+    .content__headline {
+        @include mq(desktop) {
+            padding-right: $gs-gutter / 2;
+        }
+    }
+    .content__standfirst {
+        @include mq(desktop) {
+            padding-left: $gs-gutter / 2;
+        }
+    }
+    &.content--sponsored,
+    &.content--advertisement-feature {
+        .content__headline {
+            @include mq(desktop) {
+                width: gs-span(5) + ($gs-gutter / 2);
+            }
+            @include mq(leftCol) {
+                width: gs-span(6) + ($gs-gutter / 2);
+            }
+            @include mq(wide) {
+                width: gs-span(6) + ($gs-gutter / 2);
+            }
+        }
+        .content__standfirst {
+            @include mq(tablet) {
+                float: left;
+                padding-right: $gs-gutter / 2;
+                width: gs-span(7);
+            }
+            @include mq(desktop) {
+                width: gs-span(5) + ($gs-gutter / 2);
+            }
+            @include mq(leftCol) {
+                width: gs-span(6) + ($gs-gutter / 2);
+            }
+            @include mq(wide) {
+                width: gs-span(8) + ($gs-gutter / 2);
+            }
+        }
+    }
+    .content__meta-container {
+        margin-left: 0;
+        width: 100%;
+
+        @include mq(leftCol) {
+            position: relative;
+            border-top: 1px dotted $c-neutral5;
+        }
+        .commentcount {
+            @include mq(desktop) {
+                display: block;
+                position: static;
+                padding-top: $gs-baseline / 3;
+                margin-bottom: $gs-baseline;
+                border-top: 1px dotted $c-neutral5;
+            }
+        }
+    }
+    .byline {
+        @include mq(leftCol) {
+            border-top: 0;
+            padding-bottom: 0;
+            min-height: $gs-baseline * 2;
+        }
+    }
+    .content__dateline {
+        border-top: 0;
+
+        @include mq(desktop) {
+            height: $gs-row-height;
+            padding-top: $gs-baseline / 3;
+            padding-bottom: $gs-baseline;
+        }
+    }
+    // Ensure margins don't overlay full-page take over interactives
+    .element-interactive {
+        background-color: #ffffff;
+    }
+}

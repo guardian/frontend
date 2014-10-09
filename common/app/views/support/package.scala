@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -436,9 +438,10 @@ object TweetCleaner extends HtmlCleaner {
         val date = el.child(1).attr("class", "tweet-date")
         val user = el.ownText()
         val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body)
+        element.empty().attr("class", "js-tweet tweet")
+        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
       }
     }
     document
@@ -642,7 +645,7 @@ object ArticleLayout {
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
     lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *:nth-last-child(-n+5)")
+      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
         .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
@@ -730,11 +733,9 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-
   def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
-
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
 
 object GetClasses {
@@ -761,8 +762,16 @@ object GetClasses {
   }
 
   def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
+      Seq("fc-item--has-cutout")
+    } else {
+      Seq.empty
+    }
+
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +: commonFcItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+      TrailCssClasses.toneClass(trail) +:
+        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
+        cutOutClass): _*
     )
   }
 
@@ -791,6 +800,9 @@ object GetClasses {
       if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
+
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
       else
@@ -919,19 +931,19 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> config.isSponsored,
-      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
@@ -939,7 +951,7 @@ object GetClasses {
     )
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten

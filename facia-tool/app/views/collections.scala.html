@@ -129,7 +129,8 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...'
+                            placeholder: field() || label + '...',
+                            title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
@@ -162,12 +163,10 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <!-- ko if: type === 'boolean' && meta() && displayValue() -->
-            <span class="editor--boolean  selected">
-                <span class="editor--boolean__label" data-bind="text: label"></span>
-                <span class="editor--boolean__state">&#10004;</span>
-            </span>
-        <!-- /ko -->
+        <span class="editor--boolean--display">
+            <span class="editor--boolean__label" data-bind="text: $data"></span>
+            <span class="editor--boolean__state">✔</span>
+        </span>
     </script>
 
     <script type="text/html" id="template_collection">
@@ -265,16 +264,18 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag
+                underDrag: state.underDrag,
+                imageHidden: meta.imageHide
             }">
 
-            <a class="thumb" target="article" data-bind="attr: {href: id}">
-                <img draggable="false" data-bind="
-                    attr: {
-                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
-                        title: id
-                    }"/>
-            </a>
+            <a class="thumb" data-bind="
+                style: { 'background-image': 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')' },
+                attr: {href: id}"></a>
+
+            <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
+                <a class="thumb--cutout" data-bind="
+                    style: { 'background-image': 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+            <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"
@@ -298,31 +299,30 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.isOpen()">
-
+            <div class="closed" data-bind="ifnot: state.isOpen">
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
+                    <a class="tool tool--small tool--small--paste" data-bind="
+                        clickBubble: false,
+                        click: paste">paste</a>
+
                     <a class="tool tool--small tool--small--copy" data-bind="
                         clickBubble: false,
                         click: copy">copy</a>
 
-                    <a class="tool tool--small tool--small--paste" data-bind="
+                    <a class="tool tool--small tool--small--remove" data-bind="
                         clickBubble: false,
-                        click: paste">paste</a>
+                        click: $parent.omitItem">
+                        <i class="icon-trash"></i></a>
 
                     <a class="tool tool--small tool--small--href" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
                         attr: {href: viewUrl}">
                         <i class="icon-share-alt"></i></a>
-
-                    <a class="tool tool--small tool--small--remove" data-bind="
-                        clickBubble: false,
-                        click: $parent.omitItem">
-                        <i class="icon-trash"></i></a>
                 </div>
 
                 <a class="article__content" data-bind="attr: {href: id}">
@@ -335,8 +335,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
+                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -344,12 +344,6 @@
                                 <span class="time__publication" data-bind="text: webPublicationTime"></span>
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
-
-                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span class="has-sublinks">
-                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
-                                </span>
-                            <!-- /ko -->
 
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
@@ -360,13 +354,23 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: meta.isSnap -->
+                            <!-- ko if: state.isSnap -->
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
+                            <!-- /ko -->
 
-                            <span data-bind="
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+
+                            <!-- ko if: state.tone -->
+                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- /ko -->
+
+                            <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->

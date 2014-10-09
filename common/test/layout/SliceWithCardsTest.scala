@@ -1,6 +1,6 @@
 package layout
 
-import model.Trail
+import model.{FaciaImageElement, Trail}
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{Matchers, FlatSpec}
@@ -9,7 +9,10 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
   val NumberOfFixtures = 40
 
   val cardFixtures = (1 to NumberOfFixtures) map { n => Card(n, new Trail {
-      override def webPublicationDate: Imports.DateTime = ???
+
+    override def customImageCutout: Option[FaciaImageElement] = None
+
+    override def webPublicationDate: Imports.DateTime = ???
 
       override def url: String = ???
 
@@ -33,7 +36,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
   "a slice" should "consume as many items as the columns it aggregates consume" in {
     forAll { (layout: SliceLayout) =>
       SliceWithCards.fromItems(cardFixtures, layout)._2.length shouldEqual
-        NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum
+        (0 max (NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum))
     }
   }
 

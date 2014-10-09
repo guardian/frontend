@@ -1,0 +1,12 @@
+.related-keywords {
+    padding-top: 0;
+    margin: $gs-baseline 0;
+
+    @include fs-textSans(2);
+
+    @include mq(wide) {
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
+}

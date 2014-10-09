@@ -1,12 +1,11 @@
 package controllers
 
-import play.api.mvc.{AnyContent, Result, Action}
+import play.api.mvc.{AnyContent, Action}
 import common.JsonComponent
 import model.Cached
-import discussion.model.{Profile, PrivateProfileFields}
+import discussion.model.PrivateProfileFields
 
-import scala.concurrent.Future
-
+object CommentBoxController extends CommentBoxController
 trait CommentBoxController extends DiscussionController {
 
   def commentBox(): Action[AnyContent] = Action.async {
