@@ -679,7 +679,6 @@ $timeline-width: 14px;
         line-height: $timeline-width;
     }
 }
-
 .timeline__title {
     display: table-cell;
     @include fs-textSans(3);
@@ -738,7 +737,6 @@ $timeline-width: 14px;
 /* Football components
    ========================================================================== */
 .blog {
-
     .tabs__container--multiple {
         margin-bottom: 0;
     }
@@ -976,7 +974,6 @@ $timeline-width: 14px;
     }
 
     &:hover {
-
         .block-share__item--facebook {
             border-color: darken(#3b5998, 15%);
             .i { @include icon(share-facebook--blue-dark); }
