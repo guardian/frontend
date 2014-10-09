@@ -201,7 +201,7 @@ Loader.prototype.getUser = function() {
             this.emit('user:loaded');
         }.bind(this));
     } else {
-        self.emit('user:loaded');
+        this.emit('user:loaded');
     }
 };
 
