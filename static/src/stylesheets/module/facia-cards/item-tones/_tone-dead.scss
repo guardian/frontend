@@ -1,6 +1,9 @@
 .tone-dead {
     @extend %tone-has-background;
-    background-color: $c-neutral7;
+
+    &.fc-item {
+        background-color: $c-neutral7;
+    }
 
     .fc-item__kicker,
     .fc-item__byline {
