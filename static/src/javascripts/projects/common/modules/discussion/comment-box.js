@@ -418,15 +418,18 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
         if (/^https?:\/\//i.test(selectedText)) {
             href = selectedText;
+        } else if(selectedText) {
+            var linkURL = prompt("Your URL:", "http://www.");
+            href = linkURL;
         } else {
-            href = 'http://';
+            var linkURL = prompt("Your URL:", "http://www.");
+            href = linkURL;
+            selectedText = linkURL;
         }
         var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
-
-        selectNewText(newText);
     };
 
     var selectNewText = function(newText) {
