@@ -9,22 +9,22 @@ define([
 ) {
     return function (config, hash) {
 
-        var rawLastModified = hash || document.location.hash;
-
-        var page = ((config || {}).page || {});
+        var rawLastModified = hash || document.location.hash,
+            page = ((config || {}).page || {}),
+            lastModifiedMatch;
 
         function call(lastModified, block) {
             ajax({
                 url: '/last-modified/' + page.pageId + '.json?last-modified=' + lastModified,
                 type: 'json',
                 crossOrigin: true
-            }).then(function(json){
+            }).then(function (json) {
                 block(json);
             });
         }
 
         function initialFreshnessCheck(lastModified) {
-            call(lastModified, function(json){
+            call(lastModified, function (json) {
                 if (json.status === 'stale') {
                     mediator.emit('modules:freshness-check:stale', lastModified);
                 }
@@ -35,7 +35,7 @@ define([
         }
 
         function pollForFreshContent(lastModified) {
-            call(lastModified, function(json){
+            call(lastModified, function (json) {
                 if (json && json.status === 'fresh') {
                     mediator.emit('modules:freshness-check:poll:fresh');
                 }
@@ -50,9 +50,9 @@ define([
             }
         }
 
-        mediator.on('modules:freshness-check:poll:fresh', function(){ location.reload(); });
+        mediator.on('modules:freshness-check:poll:fresh', function () { location.reload(); });
 
-        mediator.on('modules:freshness-check:stale', function(lastModified){
+        mediator.on('modules:freshness-check:stale', function (lastModified) {
             $('body').prepend(
                 '<div class="preview-refresh">Waiting for update...' +
                     '<p class="preview-refresh--explainer">' +
@@ -66,14 +66,14 @@ define([
                     '</div>' +
                 '</div>'
             );
-            var interval = setInterval(function(){ pollForFreshContent(lastModified); }, 2000);
+            var interval = setInterval(function () { pollForFreshContent(lastModified); }, 2000);
 
             //stop polling after a minute if it has not updated yet
-            setTimeout(function(){ clearInterval(interval); }, 60000);
+            setTimeout(function () { clearInterval(interval); }, 60000);
         });
 
-        if (page.isPreview && page.isContent  && config.switches.pollPreviewForFreshContent ) {
-            var lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
+        if (page.isPreview && page.isContent  && config.switches.pollPreviewForFreshContent) {
+            lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
             if (lastModifiedMatch) {
                 initialFreshnessCheck(lastModifiedMatch[1]);
                 clearHash();
