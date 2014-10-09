@@ -155,7 +155,7 @@ object Switches extends Collections {
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 11)
+    safeState = Off, sellByDate = never
   )
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",

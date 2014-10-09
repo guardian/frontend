@@ -20,13 +20,7 @@
 }
 
 .facia-container__related-keywords__body {
-    @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
-    }
-
     @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
-
         .has-page-skin & {
             margin-left: $gs-gutter;
         }

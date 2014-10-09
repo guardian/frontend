@@ -240,7 +240,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 6/5 * * * ?") {
+    Jobs.schedule("DfpDataRefreshJob", "0 0/2 * * * ?") {
       DfpAgent.refresh()
     }
 
