@@ -33,6 +33,16 @@ $header-image-size-desktop: 120px;
     @include mq($until: tablet) {
         @include fs-header(5);
     }
+
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+
     a {
         color: inherit;
     }
