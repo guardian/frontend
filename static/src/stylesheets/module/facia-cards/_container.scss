@@ -102,9 +102,6 @@ $header-image-size-desktop: 120px;
         margin-top: $gs-baseline/2;
     }
 
-    padding-top: $gs-baseline/3;
-    @include fs-headline(2);
-
     .fc-today__sub {
         @include mq(wide) {
             .has-page-skin & {
