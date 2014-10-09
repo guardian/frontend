@@ -94,22 +94,31 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-today {
+    padding-top: $gs-baseline/3;
+    @include fs-headline(2);
+
     @include mq(leftCol) {
         border-top: 1px solid $c-neutral5;
         margin-top: $gs-baseline/2;
     }
 
-    padding-top: $gs-baseline/3;
-    @include fs-headline(2);
+    @include mq(wide) {
+        .has-page-skin & {
+            border-top: 0;
+            margin-top: 0;
+        }
+    }
 }
 
-.fc-today__dayofweek {
-    font-weight: 500;
-}
-
-@include mq(wide) {
-    .fc-today__sub {
+.fc-today__sub {
+    @include mq(leftCol) {
         display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
     }
 }
 
@@ -143,14 +152,21 @@ $header-image-size-desktop: 120px;
 
 .fc-container__updated {
     color: $c-neutral2;
-    display: block;
-    @include fs-headline(1);
+    display: none;
     margin-top: ($gs-baseline/3)*5;
     padding-bottom: $gs-baseline/3;
     border-bottom: 1px dotted $c-neutral5;
 
-    @include mq($until: leftCol) {
-        display: none;
+    @include fs-headline(1);
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
     }
 }
 
