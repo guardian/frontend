@@ -232,18 +232,17 @@ Comments.prototype.fetchComments = function(options) {
         method: 'get',
         crossOrigin: true,
         data: queryParams
-    }).then(this.renderComments.bind(this)).then(this.goToComment.bind(this));
+    }).then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this));
 };
 
-Comments.prototype.goToComment = function() {
-
+Comments.prototype.goToPermalink = function() {
 
     if (this.options.commentId) {
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
         window.location.replace('#comment-'+ this.options.commentId);
     }
-}
+};
 
 Comments.prototype.renderComments = function(resp) {
 
@@ -258,6 +257,7 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.relativeDates();
+    this.emit.loaded('loaded');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
