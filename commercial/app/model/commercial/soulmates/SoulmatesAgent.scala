@@ -1,9 +1,10 @@
 package model.commercial.soulmates
 
-import model.commercial.{Segment, AdAgent}
-import scala.util.Random
 import common.ExecutionContexts
+import model.commercial.{MerchandiseAgent, Segment}
+
 import scala.concurrent.Future
+import scala.util.Random
 
 object SoulmatesAggregatingAgent {
 
@@ -14,12 +15,12 @@ object SoulmatesAggregatingAgent {
   }
 
   def sampleMembers(segment: Segment): Seq[Member] = {
-    val women = Random.shuffle(SoulmatesWomenAgent.adsTargetedAt(segment))
-    val men = Random.shuffle(SoulmatesMenAgent.adsTargetedAt(segment))
+    val women = Random.shuffle(SoulmatesWomenAgent.matchingMembers(segment))
+    val men = Random.shuffle(SoulmatesMenAgent.matchingMembers(segment))
     if (women.isEmpty || men.isEmpty) {
       Nil
     } else {
-      // we are looking for 5 random people, either
+      // we are looking for 6 random people, either
       // woman/man/woman/man/woman
       // man/woman/man/woman/man or
       val people = Random.shuffle(Seq(Random.shuffle(men), Random.shuffle(women)))
@@ -28,14 +29,16 @@ object SoulmatesAggregatingAgent {
   }
 }
 
-trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
+trait SoulmatesAgent extends MerchandiseAgent[Member] with ExecutionContexts {
 
+  def matchingMembers(segment: Segment): Seq[Member] = {
+    getTargetedMerchandise(segment, default = Nil)(_ => true)
+  }
+    
   protected def membersLoaded: Future[Seq[Member]]
 
   def refresh() {
-    for {
-      members <- membersLoaded
-    } updateCurrentAds(members)
+    for (members <- membersLoaded) updateAvailableMerchandise(members)
   }
 }
 

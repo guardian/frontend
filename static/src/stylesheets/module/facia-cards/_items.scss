@@ -1,3 +1,9 @@
+@mixin headline-boost($size) {
+    .fc-item--has-boosted-title & {
+        @include fs-headline($size, true);
+    }
+}
+
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
@@ -50,7 +56,7 @@
 
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
-        @include fc-item--list-media;
+        @include fc-item--list-media(4, 1);
     }
 }
 
@@ -61,12 +67,6 @@
 
     @include mq(desktop) {
         @include fc-item--list-media;
-    }
-}
-
-.fc-item--list-media-large-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--list-media-large;
     }
 }
 
@@ -95,6 +95,13 @@
 .fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
+
+        &[class*="fc-item--has-sublinks"] {
+            .fc-item__standfirst,
+            .fc-item__media-wrapper {
+                display: none;
+            }
+        }
     }
 }
 

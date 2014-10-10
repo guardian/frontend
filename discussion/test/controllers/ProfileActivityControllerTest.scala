@@ -10,7 +10,7 @@ import test.ConfiguredTestSuite
   val userId = "10000001"
 
   "CommenterActivity" should "return profile discussions component" in {
-    val action = DiscussionApp.profileDiscussions(userId)
+    val action = ProfileActivityController.profileDiscussions(userId)
     val fakeRequest = FakeRequest(GET, "/discussion/profile/"+ userId +"/discussions.json").withHeaders("host" -> "localhost:9000")
     val result = action(fakeRequest)
 

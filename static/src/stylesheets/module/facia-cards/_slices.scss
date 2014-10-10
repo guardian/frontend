@@ -46,11 +46,14 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--q-q-q-q {
-    .fc-item--standard-tablet {
-        .fc-item__header {
-            @include mq(tablet) {
-                @include fs-headline(2, true);
+// reduce type size on q-q-q-q slice if it follows another slice in the same container
+.facia-slice-wrapper + .facia-slice-wrapper {
+    .facia-slice--q-q-q-q {
+        .fc-item--standard-tablet {
+            .fc-item__header {
+                @include mq(tablet) {
+                    @include fs-headline(2, true);
+                }
             }
         }
     }
@@ -59,6 +62,14 @@ Hence why a greater depth of selector specificity is needed.
 .facia-slice--h14-q-q {
     @if $browser-supports-flexbox {
         @include flex-direction(row-reverse);
+    }
+
+    .fc-item--standard-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
     }
 }
 

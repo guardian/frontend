@@ -1,5 +1,6 @@
 package test
 
+import com.gu.facia.client.models.{Front, Config}
 import play.api.libs.json.{JsNull, Json}
 import play.api.test._
 import play.api.test.Helpers._
@@ -15,7 +16,13 @@ import services.ConfigAgent
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  override def beforeAll() { ConfigAgent.refreshWith(Json.obj("fronts" -> Json.obj("technology" -> JsNull)))}
+  override def beforeAll() {
+    ConfigAgent.refreshWith(
+      Config(
+        fronts = Map("technology" -> Front(Nil, None, None, None, None, None, None, None, None, None, None, None)),
+        collections = Map.empty)
+    )
+  }
 
   "FaciaController" should "200 when content type is front" in {
     val result = FaciaController.renderFront("uk")(TestRequest())

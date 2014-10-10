@@ -11,4 +11,9 @@ package object commercial {
   def lastPart(keywordId: String): String = keywordId.split('/').takeRight(1)(0)
 
   def lastPart(keywordIds: Seq[String]): Seq[String] = (keywordIds map lastPart).distinct
+
+  def keywordsMatch(segment: Segment, keywordIds: Seq[String]): Boolean = {
+    intersects(segment.context.keywords, lastPart(keywordIds))
+  }
+
 }

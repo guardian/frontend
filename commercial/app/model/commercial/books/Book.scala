@@ -1,7 +1,7 @@
 package model.commercial.books
 
 import common.ExecutionContexts
-import model.commercial.{Ad, AdAgent, Segment, intersects, lastPart}
+import model.commercial._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.{JsPath, Reads}
@@ -20,11 +20,7 @@ case class Book(title: String,
                 position: Option[Int] = None,
                 category: Option[String] = None,
                 keywordIds: Seq[String] = Nil
-               )
-  extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = intersects(lastPart(keywordIds), segment.context.keywords)
-}
+                 )
 
 object Book {
 
@@ -55,30 +51,34 @@ object Book {
 }
 
 
-object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
+object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
 
   private lazy val feeds = Seq(MagentoBestsellersFeed)
 
-  def getSpecificBook(isbn: String) = currentAds find(_.isbn == isbn)
-  def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
+  def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
+  def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
 
-  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(10)
-
-  override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
+  def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
+    val targetedBestsellers = available filter (book => keywordsMatch(segment, book.keywordIds))
+    lazy val defaultBestsellers = available filter (_.category.exists(_ == "General"))
+    val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
+    bestsellers.sortBy(_.position).take(10)
+  }
 
   def refresh() {
 
     val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
-          soFar :+ feed.loadAds().recover {
+          soFar :+ feed.loadBestsellers().recover {
             case _ => Nil
           }
       }
     }
 
     for (books <- bookListsLoading) {
-      updateCurrentAds(books.flatten.distinct)
+      updateAvailableMerchandise(books.flatten.distinct)
     }
   }
+
 }

@@ -135,6 +135,13 @@ define([
                 bootstrapContext('crosswords', crosswords);
             }
 
+            if (config.page.isPreview) {
+                // lazy load this only if on the preview server
+                require('bootstraps/preview', function (preview) {
+                    bootstrapContext('preview', preview);
+                });
+            }
+
             // Mark the end of synchronous execution.
             userTiming.mark('App End');
         };

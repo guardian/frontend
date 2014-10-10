@@ -3,10 +3,12 @@ package dfp
 import java.net.URLDecoder
 
 import akka.agent.Agent
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Configuration
+import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpInlineMerchandisingTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
+import model.Tag
 import conf.Configuration.commercial._
-import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
 
@@ -22,23 +24,38 @@ trait DfpAgent {
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
-    config.contentApiQuery.flatMap { encodedQuery =>
+  private def containerSponsoredTag(config: CollectionConfig, p: String => Boolean): Option[String] = {
+    config.apiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
       tokens find p
     }
   }
 
-  private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
+  private def isSponsoredContainer(config: CollectionConfig, p: String => Boolean): Boolean = {
     containerSponsoredTag(config, p).isDefined
   }
 
-  private def getKeywordOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags.filter(t => t.isSeries || t.isKeyword)
+  private def isPaidFor(tags: Seq[Tag], section: Option[String])(p: (String, Option[String]) => Boolean): Boolean = {
+    val keywordOrSeriesTags = tags.filter(t => t.isSeries || t.isKeyword)
+    keywordOrSeriesTags exists (tag => p(tag.id, section))
+  }
 
-  def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
-  def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
-  def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
+  private def isPaidFor(available: Seq[Sponsorship], tagId: String, section: Option[String]): Boolean = {
+
+    def sectionMatches(sponsorshipSections: Seq[String]): Boolean = {
+      section.isEmpty || sponsorshipSections.isEmpty || sponsorshipSections.contains(section.get)
+    }
+
+    available exists { sponsorship =>
+      sponsorship.hasTag(tagId) && sectionMatches(sponsorship.sections)
+    }
+  }
+
+  def isSponsored(tags: Seq[Tag], section: Option[String]): Boolean = isPaidFor(tags, section)(isSponsored)
+  def isSponsored(tagId: String): Boolean = isSponsored(tagId, None)
+  def isSponsored(tagId: String, section: Option[String]): Boolean = isPaidFor(sponsorships, tagId, section)
+  def isSponsored(config: CollectionConfig): Boolean = isSponsoredContainer(config, isSponsored)
 
   def hasMultipleSponsors(tags: Seq[Tag]): Boolean = {
     tags.map { tag =>
@@ -62,13 +79,15 @@ trait DfpAgent {
       (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
   }
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isAdvertisementFeature(tag.id))
-  def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
-  def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
+  def isAdvertisementFeature(tags: Seq[Tag], section: Option[String]): Boolean = isPaidFor(tags, section)(isAdvertisementFeature)
+  def isAdvertisementFeature(tagId: String): Boolean = isAdvertisementFeature(tagId, None)
+  def isAdvertisementFeature(tagId: String, section: Option[String]): Boolean = isPaidFor(advertisementFeatureSponsorships, tagId, section)
+  def isAdvertisementFeature(config: CollectionConfig): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isFoundationSupported(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isFoundationSupported(tag.id))
-  def isFoundationSupported(tagId: String): Boolean = foundationSupported exists (_.hasTag(tagId))
-  def isFoundationSupported(config: Config): Boolean = isSponsoredContainer(config, isFoundationSupported)
+  def isFoundationSupported(tags: Seq[Tag], section: Option[String]): Boolean = isPaidFor(tags, section)(isFoundationSupported)
+  def isFoundationSupported(tagId: String): Boolean = isFoundationSupported(tagId, None)
+  def isFoundationSupported(tagId: String, section: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, section)
+  def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, isFoundationSupported)
 
   def isProd = !Configuration.environment.isNonProd
 
@@ -99,7 +118,7 @@ trait DfpAgent {
     }
   }
 
-  def sponsorshipTag(config: Config): Option[String] = {
+  def sponsorshipTag(config: CollectionConfig): Option[String] = {
     containerSponsoredTag(config, isSponsored) orElse containerSponsoredTag(config, isAdvertisementFeature)
   }
 
@@ -110,7 +129,7 @@ trait DfpAgent {
     sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships) orElse sponsorOf(foundationSupported)
   }
 
-  def getSponsor(config: Config): Option[String] = {
+  def getSponsor(config: CollectionConfig): Option[String] = {
     for {
       tagId <- sponsorshipTag(config)
       sponsor <- getSponsor(tagId)
@@ -207,7 +226,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     updateMap(tagToAdvertisementFeatureSponsorsMapAgent, generateTagToSponsorsMap(advertisementFeatures))
 
     val foundationSupportedTags: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpFoundationSupportedTagsDataKey)
-    update(foundationSupportedTagsAgent, foundationSupported)
+    update(foundationSupportedTagsAgent, foundationSupportedTags)
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
@@ -221,7 +240,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 6/5 * * * ?") {
+    Jobs.schedule("DfpDataRefreshJob", "0 0/2 * * * ?") {
       DfpAgent.refresh()
     }
 

@@ -1,17 +1,16 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
-import scala.xml.{Node, Elem}
+import scala.xml.{Elem, Node}
 
 object CurrentAccounts {
 
   def currentAds: Map[String, Seq[CurrentAccount]] = Map(
-    "reward-incentive" -> currentAccountsAgent.Rewards.currentAds,
-    "high-interest" -> currentAccountsAgent.HighInterest.currentAds,
-    "overdraft" -> currentAccountsAgent.BestOverdraft.currentAds,
-    "with-benefits" -> currentAccountsAgent.WithBenefits.currentAds,
-    "basic-accounts" -> currentAccountsAgent.BasicAccounts.currentAds,
-    "standard-accounts" -> currentAccountsAgent.StandardAccounts.currentAds
+    "reward-incentive" -> currentAccountsAgent.Rewards.available,
+    "high-interest" -> currentAccountsAgent.HighInterest.available,
+    "overdraft" -> currentAccountsAgent.BestOverdraft.available,
+    "with-benefits" -> currentAccountsAgent.WithBenefits.available,
+    "basic-accounts" -> currentAccountsAgent.BasicAccounts.available,
+    "standard-accounts" -> currentAccountsAgent.StandardAccounts.available
   )
 
 }
@@ -29,10 +28,6 @@ case class CurrentAccount(provider: String,
                           benefitAmount: String,
                           serviceCharge: String,
                           access: Map[String, Boolean])
-  extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
 
 
 trait CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {

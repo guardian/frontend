@@ -25,17 +25,6 @@ module.exports = function(grunt, options) {
                     '!modules/asyncCallMerger.js',
                     '!modules/charts/doughnut.js',
                     '!modules/charts/table-doughnut.js',
-                    '!modules/commercial/article-aside-adverts.js',
-                    '!modules/commercial/article-body-adverts.js',
-                    '!modules/commercial/front-commercial-components.js',
-                    '!modules/commercial/keywords.js',
-                    '!modules/commercial/liveblog-adverts.js',
-                    '!modules/commercial/loader.js',
-                    '!modules/commercial/outbrain.js',
-                    '!modules/commercial/tags/amaa.js',
-                    '!modules/commercial/tags/audience-science-gateway.js',
-                    '!modules/commercial/tags/audience-science.js',
-                    '!modules/commercial/tags/remarketing.js',
                     '!modules/component.js',
                     '!modules/discussion/activity-stream.js',
                     '!modules/discussion/api.js',
@@ -135,7 +124,7 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/bootstraps',
                 src: [
-                    '**/*.js',
+                    '**/*.js'
                 ]
             }]
         }

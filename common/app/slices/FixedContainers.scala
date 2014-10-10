@@ -15,12 +15,35 @@ object TagContainers {
     TlTlTl,
     TlTlMpu
   )
+
+  val tagPage = slices(
+    HalfQQ,
+    QuarterQuarterQuarterQuarter,
+    TlTlTl,
+    TlTlMpu
+  )
+
+  val contributorTagPage =  slices(
+    HalfQl4Ql4,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
+
+  val keywordPage = slices(
+    TTT,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
 }
 
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
   val all: Map[String, ContainerDefinition] = Map(
+    ("fixed/small/slow-I", slices(Full)),
+    ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", slices(QuarterQuarterQuarterQuarter)),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
     ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
