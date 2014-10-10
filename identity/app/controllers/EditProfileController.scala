@@ -30,7 +30,7 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   with ExecutionContexts
   with SafeLogging{
 
-  import authenticatedActions.authActionWithUser
+  import authenticatedActions._
 
   type OmniPage = IdentityPage with Omniture
 
@@ -45,7 +45,7 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   def displayMembershipForm = displayForm(membershipPage)
 
   protected def displayForm(page: OmniPage) = CSRFAddToken {
-    authActionWithUser.async { implicit request =>
+    recentlyAuthenticated.async { implicit request =>
       profileFormsView(page.tracking, ProfileForms(request.user, false))
     }
   }

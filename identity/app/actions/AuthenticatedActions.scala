@@ -11,6 +11,7 @@ import play.api.mvc.{ActionRefiner, RequestHeader, Results}
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
@@ -40,5 +41,13 @@ class AuthenticatedActions @Inject()(authService: AuthenticationService, identit
     }
   }
 
+  def recentlyAuthenticatedRefiner() = new ActionRefiner[AuthRequest, AuthRequest] {
+    def refine[A](request: AuthRequest[A]) = Future.successful {
+      if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToSignin(request))
+    }
+  }
+
   def authActionWithUser = authAction andThen apiVerifiedUserRefiner()
+
+  def recentlyAuthenticated = authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner()
 }
