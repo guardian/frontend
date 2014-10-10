@@ -35,6 +35,10 @@ x x x x x x x x
         }
     }
 
+    .fc-item__image-container {
+        display: block;
+    }
+
     &.fc-item--has-cutout .fc-item__container {
         padding-bottom: $gs-baseline * 16;
     }

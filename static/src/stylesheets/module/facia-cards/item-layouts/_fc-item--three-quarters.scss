@@ -32,6 +32,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
+    .fc-item__image-container {
+        display: block;
+    }
+
     .fc-item__standfirst {
         @include mq(desktop) {
             display: block;

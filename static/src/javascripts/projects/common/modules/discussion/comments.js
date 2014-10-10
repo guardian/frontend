@@ -22,7 +22,7 @@ define([
     bean,
     bonzo,
     qwery,
-    
+
     _map,
 
     $,
