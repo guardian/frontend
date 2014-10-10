@@ -219,7 +219,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     &:before {
         // Example placeholder until rob sorts it out
-        content: "7m ago ";
+        content: '7m ago ';
         @include fs-textSans(4);
         font-weight: bold;
         line-height: inherit;
