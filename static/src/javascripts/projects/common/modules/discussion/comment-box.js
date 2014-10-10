@@ -422,9 +422,7 @@ CommentBox.prototype.formatComment = function(formatStyle) {
             linkURL = window.prompt('Your URL:', 'http://www.');
             href = linkURL;
 
-            if(!selectedText) {
-                selectedText = linkURL;
-            }
+            selectedText = selectedText || linkURL;
         }
         var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
