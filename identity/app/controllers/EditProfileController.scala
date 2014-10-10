@@ -1,8 +1,9 @@
 package controllers
 
+import actions.AuthenticatedActions.AuthRequest
 import com.google.inject.{Singleton, Inject}
 import services._
-import actions.AuthActionWithUser
+import actions.{AuthenticatedActions}
 import idapiclient.IdApiClient
 import play.api.mvc.{AnyContent, Request, Controller}
 import common.ExecutionContexts
@@ -16,19 +17,20 @@ import com.gu.identity.model.User
 import tracking.{TrackingParams, Omniture}
 import conf.Switches._
 import play.api.libs.ws.WS
-import actions.AuthRequest
 import services.IdentityRequest
 import conf.Configuration
 import common.JsonComponent
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
-                                      authActionWithUser: AuthActionWithUser,
+                                      authenticatedActions: AuthenticatedActions,
                                       identityApiClient: IdApiClient,
                                       idRequestParser: IdRequestParser)
   extends Controller
   with ExecutionContexts
   with SafeLogging{
+
+  import authenticatedActions._
 
   type OmniPage = IdentityPage with Omniture
 
@@ -43,7 +45,7 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   def displayMembershipForm = displayForm(membershipPage)
 
   protected def displayForm(page: OmniPage) = CSRFAddToken {
-    authActionWithUser.async { implicit request =>
+    recentlyAuthenticated.async { implicit request =>
       profileFormsView(page.tracking, ProfileForms(request.user, false))
     }
   }
@@ -55,10 +57,11 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     authActionWithUser.async {
       implicit request =>
         val idRequest = idRequestParser(request)
-        val forms = ProfileForms(request.user, page == publicPage).bindFromRequest(request)
+        val user = request.user
+        val forms = ProfileForms(user, page == publicPage).bindFromRequest(request)
         val futureFormOpt = forms.activeForm.value map {
           data: UserFormData =>
-            identityApiClient.saveUser(request.user.id, data.toUserUpdate(request.user), request.auth) map {
+            identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
               case Left(errors) =>
                 forms.withErrors(errors)
 

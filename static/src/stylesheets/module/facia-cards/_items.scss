@@ -54,9 +54,7 @@
     }
 }
 
-// TODO: Remove media-large-mobile
-.fc-item--list-media-mobile,
-.fc-item--list-media-large-mobile {
+.fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(4, 1);
     }
@@ -97,6 +95,13 @@
 .fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
+
+        &[class*="fc-item--has-sublinks"] {
+            .fc-item__standfirst,
+            .fc-item__media-wrapper {
+                display: none;
+            }
+        }
     }
 }
 
