@@ -1,8 +1,11 @@
-.fc-item__title--quoted .fc-item__link:before {
-    @include icon(quote-grey, false);
-    content: '';
-    height: .8em;
-    width: 1em;
+.fc-item__title--quoted,
+.tone-comment {
+    .fc-item__link:before {
+        @include icon(quote-grey, false);
+        content: '';
+        height: .8em;
+        width: 1em;
+    }
 }
 
 .fc-item__timestamp {
@@ -97,10 +100,6 @@
     .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
-
-    .fc-trail__count:before {
-        @include icon(comment-white, false);
-    }
 }
 
 .tone-feature {
@@ -110,5 +109,9 @@
 
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-light-pink, false);
     }
 }

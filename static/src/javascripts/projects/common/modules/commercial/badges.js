@@ -41,7 +41,7 @@ define([
                     name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
                 ));
             addPreBadge($adSlot, isSponsored, opts.sponsor);
-            $('.container__header', container)
+            $('.js-container__header', container)
                 .after($adSlot);
             return $adSlot;
         },

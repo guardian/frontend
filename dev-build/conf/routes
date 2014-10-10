@@ -42,9 +42,6 @@ GET         /discussion/comment-context/*commentId.json                         
 GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>.json                                                    controllers.NonThreadedController.commentsListJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>                                                         controllers.NonThreadedController.commentsList(discussionKey: discussion.model.DiscussionKey)
-
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.ProfileActivityController.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.ProfileActivityController.profileReplies(id: String)

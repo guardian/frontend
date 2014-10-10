@@ -10,7 +10,7 @@
     <section id="@FaciaComponentName(config, collection)"
              class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
              data-link-name="@FaciaComponentName(config, collection)"
-             data-id="@dataId"
+             data-id="@FaciaComponentName(config, collection)"
              @DfpAgent.sponsorshipTag(config).map { keyword =>
                  data-keywords="@keyword"
              }

@@ -63,6 +63,14 @@ Hence why a greater depth of selector specificity is needed.
     @if $browser-supports-flexbox {
         @include flex-direction(row-reverse);
     }
+
+    .fc-item--standard-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
 }
 
 /**
