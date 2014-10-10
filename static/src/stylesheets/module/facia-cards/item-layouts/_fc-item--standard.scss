@@ -68,7 +68,7 @@ x x x x x x x x
 
     @include mq(desktop) {
         &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline * 2
+            padding-bottom: gs-height(3) + $gs-baseline * 2;
         }
 
         .fc-item__avatar {
