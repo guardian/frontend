@@ -107,27 +107,31 @@
 
     /* Tone specific rules/overrides
        ========================================================================== */
-    .tone-live .content__head--tonal {
-        .blog__meta-container {
-            color: #ffffff;
-            border-top-color: $c-featureMute;
-        }
-        .blog__last-updated-container,
-        .content__series-label a {
-            color: #ffffff;
+    .tone-live {
+        .content__head--tonal {
+            .blog__meta-container {
+                color: #ffffff;
+                border-top-color: $c-featureMute;
+            }
+            .blog__last-updated-container,
+            .content__series-label a {
+                color: #ffffff;
+            }
         }
     }
 
-    .tone-dead .content__head--tonal {
-        .content__series-label__link {
-            color: $c-neutral2;
-        }
-        .blog__meta-container {
-            color: $c-neutral2;
-            border-top-color: $c-neutral3;
-        }
-        .blog__last-updated-container {
-            color: $c-neutral2;
+    .tone-dead {
+        .content__head--tonal {
+            .content__series-label__link {
+                color: $c-neutral2;
+            }
+            .blog__meta-container {
+                color: $c-neutral2;
+                border-top-color: $c-neutral3;
+            }
+            .blog__last-updated-container {
+                color: $c-neutral2;
+            }
         }
     }
 
