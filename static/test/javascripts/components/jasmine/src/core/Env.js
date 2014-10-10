@@ -11,7 +11,7 @@ getJasmineRequireObj().Env = function(j$) {
 
     var realSetTimeout = j$.getGlobal().setTimeout;
     var realClearTimeout = j$.getGlobal().clearTimeout;
-    this.clock = new j$.Clock(global, new j$.DelayedFunctionScheduler());
+    this.clock = new j$.Clock(global, new j$.DelayedFunctionScheduler(), new j$.MockDate(global));
 
     var runnableLookupTable = {};
 
@@ -21,12 +21,12 @@ getJasmineRequireObj().Env = function(j$) {
     var currentSuite = null;
 
     var reporter = new j$.ReportDispatcher([
-      "jasmineStarted",
-      "jasmineDone",
-      "suiteStarted",
-      "suiteDone",
-      "specStarted",
-      "specDone"
+      'jasmineStarted',
+      'jasmineDone',
+      'suiteStarted',
+      'suiteDone',
+      'specStarted',
+      'specDone'
     ]);
 
     this.specFilter = function() {
@@ -136,6 +136,7 @@ getJasmineRequireObj().Env = function(j$) {
     var queueRunnerFactory = function(options) {
       options.catchException = catchException;
       options.clearStack = options.clearStack || clearStack;
+      options.timer = {setTimeout: realSetTimeout, clearTimeout: realClearTimeout};
 
       new j$.QueueRunner(options).execute();
     };
@@ -180,7 +181,7 @@ getJasmineRequireObj().Env = function(j$) {
 
     this.spyOn = function(obj, methodName) {
       if (j$.util.isUndefined(obj)) {
-        throw new Error("spyOn could not find an object to spy upon for " + methodName + "()");
+        throw new Error('spyOn could not find an object to spy upon for ' + methodName + '()');
       }
 
       if (j$.util.isUndefined(obj[methodName])) {
@@ -238,7 +239,7 @@ getJasmineRequireObj().Env = function(j$) {
       }
 
       if (declarationError) {
-        this.it("encountered a declaration exception", function() {
+        this.it('encountered a declaration exception', function() {
           throw declarationError;
         });
       }
@@ -271,8 +272,7 @@ getJasmineRequireObj().Env = function(j$) {
         description: description,
         expectationResultFactory: expectationResultFactory,
         queueRunnerFactory: queueRunnerFactory,
-        fn: fn,
-        timer: {setTimeout: realSetTimeout, clearTimeout: realClearTimeout}
+        fn: fn
       });
 
       runnableLookupTable[spec.id] = spec;
@@ -317,6 +317,10 @@ getJasmineRequireObj().Env = function(j$) {
     };
 
     this.expect = function(actual) {
+      if (!currentSpec) {
+        throw new Error('\'expect\' was used when there was no current spec, this could be because an asynchronous test timed out');
+      }
+
       return currentSpec.expect(actual);
     };
 

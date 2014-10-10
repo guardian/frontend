@@ -60,36 +60,26 @@ define([
             element.dispatchEvent(event);
         }
 
-        beforeEach(function () {
+        beforeEach(function (done) {
 
-            var ajaxFlag = false;
-
-            runs(function () {
-                ajax({
-                    url: '/base/static/test/javascripts/fixtures/membership/paymentForm.fixture.html',
-                    method: 'get',
-                    success: function (resp) {
-                        paymentFormFixtureElement = $.create(resp)[0];
-                    }
-                });
-            });
-
-            waitsFor(function () {
-                return paymentFormFixtureElement !== null;
-            }, 'Fixture should be loaded', 1000);
-
-            runs(function () {
-                paymentForm = new PaymentForm(guConfig);
-                paymentForm.init(paymentFormFixtureElement);
-                errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
-                creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
-                creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
-                submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-submit-input')[0];
-                errorMessageDisplayElement = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
-                creditCardImageElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-image')[0];
-                expiryMonthElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-month')[0];
-                expiryYearElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-year')[0];
-                now = new Date();
+            ajax({
+                url: '/base/static/test/javascripts/fixtures/membership/paymentForm.fixture.html',
+                method: 'get',
+                success: function (resp) {
+                    paymentFormFixtureElement = $.create(resp)[0];
+                    paymentForm = new PaymentForm(guConfig);
+                    paymentForm.init(paymentFormFixtureElement);
+                    errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
+                    creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
+                    creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
+                    submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-submit-input')[0];
+                    errorMessageDisplayElement = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
+                    creditCardImageElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-image')[0];
+                    expiryMonthElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-month')[0];
+                    expiryYearElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-year')[0];
+                    now = new Date();
+                    done();
+                }
             });
 
         });
@@ -259,8 +249,8 @@ define([
             triggerEvent(paymentFormFixtureElement, 'submit');
 
             expect(stripe.card.createToken).toHaveBeenCalled();
-            expect(stripe.card.createToken.callCount).toEqual(1);
-            expect(stripe.card.createToken.mostRecentCall.args[0]).toEqual(paymentDetails);
+            expect(stripe.card.createToken.calls.count()).toEqual(1);
+            expect(stripe.card.createToken.calls.argsFor(0)[0]).toEqual(paymentDetails);
         });
 
     });
