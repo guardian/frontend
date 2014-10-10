@@ -271,14 +271,12 @@
             }">
 
             <a class="thumb" data-bind="
-                attr: {
-                    style: 'background-image: url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')',
-                    href: id
-                }"></a>
+                style: {backgroundImage: 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')'},
+                attr: {href: id}"></a>
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="
-                    attr { style: 'background-image: url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+                    style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
             <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
