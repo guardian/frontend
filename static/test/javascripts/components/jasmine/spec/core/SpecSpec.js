@@ -20,6 +20,10 @@ describe("Spec", function() {
     expect(j$.Spec.isPendingSpecException(e)).toBe(false);
   });
 
+  it("#isPendingSpecException returns false for thrown values that don't have toString", function() {
+    expect(j$.Spec.isPendingSpecException(void 0)).toBe(false);
+  });
+
   it("delegates execution to a QueueRunner", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
       spec = new j$.Spec({
@@ -171,7 +175,8 @@ describe("Spec", function() {
       status: 'pending',
       description: 'with a spec',
       fullName: 'a suite with a spec',
-      failedExpectations: []
+      failedExpectations: [],
+      passedExpectations: []
     });
   });
 
@@ -189,9 +194,9 @@ describe("Spec", function() {
     expect(done).toHaveBeenCalled();
   });
 
-  it("#status returns passing by default", function() {
-    var spec = new j$.Spec({fn: jasmine.createSpy("spec body")});
-    expect(spec.status()).toEqual('passed');
+  it("#status returns passing by default", function(){
+    var spec = new j$.Spec({ fn: function () {} });
+    expect(spec.status()).toBe("passed");
   });
 
   it("#status returns passed if all expectations in the spec have passed", function() {
@@ -207,6 +212,23 @@ describe("Spec", function() {
     expect(spec.status()).toBe('failed');
   });
 
+  it("keeps track of passed and failed expectations", function() {
+    var resultCallback = jasmine.createSpy('resultCallback'),
+      spec = new j$.Spec({
+        fn: jasmine.createSpy("spec body"),
+        expectationResultFactory: function (data) { return data; },
+        queueRunnerFactory: function(attrs) { attrs.onComplete(); },
+        resultCallback: resultCallback
+      });
+    spec.addExpectationResult(true, 'expectation1');
+    spec.addExpectationResult(false, 'expectation2');
+
+    spec.execute();
+
+    expect(resultCallback.calls.first().args[0].passedExpectations).toEqual(['expectation1']);
+    expect(resultCallback.calls.first().args[0].failedExpectations).toEqual(['expectation2']);
+  });
+
   it("can return its full name", function() {
     var specNameSpy = jasmine.createSpy('specNameSpy').and.returnValue('expected val');
 
@@ -218,90 +240,7 @@ describe("Spec", function() {
     expect(specNameSpy.calls.mostRecent().args[0].id).toEqual(spec.id);
   });
 
-  it("sets a timeout for async functions to keep them from running forever", function() {
-    var queueRunnerSpy = jasmine.createSpy('queue runner'),
-      setTimeoutSpy = jasmine.createSpy('setTimeout'),
-      spec = new j$.Spec({
-        beforeFns: function() { return [function(done) { }]; },
-        fn: function(done) { },
-        afterFns: function() { return [function(done) { }]; },
-        timer: {
-          setTimeout: setTimeoutSpy,
-          clearTimeout: function() {}
-        },
-        queueRunnerFactory: queueRunnerSpy
-      });
-
-    spec.execute();
-    var fns = queueRunnerSpy.calls.mostRecent().args[0].fns;
-
-    for (var i = 0; i < fns.length; i++) {
-      fns[i]();
-    }
-
-    expect(setTimeoutSpy.calls.count()).toEqual(3);
-    expect(setTimeoutSpy).toHaveBeenCalledWith(jasmine.any(Function), j$.DEFAULT_TIMEOUT_INTERVAL);
-  });
-
-  it("resets the timeout timer when an async before throws an exception", function() {
-    var queueRunnerSpy = jasmine.createSpy('queueRunner'),
-      clearTimeoutSpy = jasmine.createSpy('clear timeout'),
-      spec = new j$.Spec({
-        beforeFns: function() { return [function(done) {}]; },
-        fn: function() { },
-        timer: {
-          setTimeout: function () { return 920; },
-          clearTimeout: clearTimeoutSpy
-        },
-        queueRunnerFactory: queueRunnerSpy
-      });
-
-    spec.execute();
-    queueRunnerSpy.calls.mostRecent().args[0].fns[0]();
-    queueRunnerSpy.calls.mostRecent().args[0].onException(new Error());
-
-    expect(clearTimeoutSpy).toHaveBeenCalledWith(920);
-  });
-
-  it("resets the timeout timer when an async spec throws an exception", function() {
-    var queueRunnerSpy = jasmine.createSpy('queueRunner'),
-      clearTimeoutSpy = jasmine.createSpy('clear timeout'),
-      spec = new j$.Spec({
-        fn: function(done) { },
-        timer: {
-          setTimeout: function () { return 920; },
-          clearTimeout: clearTimeoutSpy
-        },
-        queueRunnerFactory: queueRunnerSpy
-      });
-
-    spec.execute();
-    queueRunnerSpy.calls.mostRecent().args[0].fns[0]();
-    queueRunnerSpy.calls.mostRecent().args[0].onException(new Error());
-
-    expect(clearTimeoutSpy).toHaveBeenCalledWith(920);
-  });
-
-  it("resets the timeout timer when an async after spec throws an exception", function() {
-    var queueRunnerSpy = jasmine.createSpy('queueRunner'),
-      clearTimeoutSpy = jasmine.createSpy('clear timeout'),
-      spec = new j$.Spec({
-        fn: function() { },
-        afterFns: function() { return [function(done) {}]; },
-        timer: {
-          setTimeout: function () { return 920; },
-          clearTimeout: clearTimeoutSpy
-        },
-        queueRunnerFactory: queueRunnerSpy
-      });
-
-    spec.execute();
-    queueRunnerSpy.calls.mostRecent().args[0].fns[1]();
-    queueRunnerSpy.calls.mostRecent().args[0].onException(new Error());
-
-    expect(clearTimeoutSpy).toHaveBeenCalledWith(920);
-  });
-  describe("when a spec is marked pending during execution", function() {
+   describe("when a spec is marked pending during execution", function() {
     it("should mark the spec as pending", function() {
       var fakeQueueRunner = function(opts) {
           opts.onException(new Error(j$.Spec.pendingSpecExceptionMessage));
