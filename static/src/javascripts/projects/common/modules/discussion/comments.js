@@ -254,6 +254,11 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.relativeDates();
+    if (this.options.commentId) {
+        this.showHiddenComments();
+        $('.d-discussion__show-all-comments').addClass('u-h');
+        window.location.replace('#comment-'+ this.options.commentId);
+    }
     this.emit('loaded');
 };
 
