@@ -227,21 +227,19 @@
     }
 }
 
-.container__header {
-    $footballBadgeSizeMobile: 80px;
-    $footballBadgeSizeDesktop: 120px;
+$footballBadgeSizeMobile: 80px;
+$footballBadgeSizeDesktop: 120px;
 
-    .football-badge {
-        background-size: contain;
-        background-repeat: no-repeat;
+.football-badge {
+    background-size: contain;
+    background-repeat: no-repeat;
 
-        width: $footballBadgeSizeMobile;
-        height: $footballBadgeSizeMobile;
+    width: $footballBadgeSizeMobile;
+    height: $footballBadgeSizeMobile;
 
-        @include mq(desktop) {
-            width: $footballBadgeSizeDesktop;
-            height: $footballBadgeSizeDesktop;
-        }
+    @include mq(desktop) {
+        width: $footballBadgeSizeDesktop;
+        height: $footballBadgeSizeDesktop;
     }
 }
 

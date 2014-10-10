@@ -121,9 +121,9 @@
 }
 
 .container__toggle {
-    position: absolute;
     min-height: gs-height(1);
     min-width: gs-span(1);
+    position: absolute;
     top: 2px;
     right: 0;
     border: 0;
@@ -166,6 +166,11 @@
             display: block;
         }
     }
+
+    @include mq(leftCol) {
+        left: gs-span(13) + $gs-gutter;
+    }
+
     @include mq(wide) {
         left: gs-span(15) + $gs-gutter;
     }
