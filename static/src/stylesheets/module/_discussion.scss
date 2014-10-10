@@ -855,18 +855,26 @@ $comment-recommend-button-size: 25px;
     }
 }
 
-.discussion--show-top-comments-only {
-    .discussion__toolbar,
-    .discussion__main-comments {
-        display: none;
-    }
-
+.discussion--truncated {
     .discussion__show-button {
         display: block;
     }
-}
 
-.discussion--first-two-comments-only {
+    &.discussion--has-top-comments {
+        .discussion__toolbar,
+        .discussion__main-comments {
+            display: none;
+        }
+    }
+
+    .d-top-comment {
+        display: none;
+        &:first-child,
+        .discussion--expanded & {
+            display: block;
+        }
+    }
+
     .d-comment:nth-child(n+3) {
         // all except first 2 children
         display: none;
@@ -874,6 +882,7 @@ $comment-recommend-button-size: 25px;
     .discussion__pagination--bottom {
         display: none;
     }
+
 }
 
 .discussion__pagination .pagination {
@@ -910,14 +919,6 @@ $comment-recommend-button-size: 25px;
     margin: 0;
     float: left;
     @include box-sizing(border-box);
-}
-
-.d-top-comment {
-    display: none;
-    &:first-child,
-    .discussion--expanded & {
-        display: block;
-    }
 }
 
 .d-top-comment-container--left {
@@ -1017,7 +1018,7 @@ $comment-recommend-button-size: 25px;
         max-width: $right-column;
         position: relative;
         width: 100%;
-        
+
         &:before,
         &:after {
             content: ' ';

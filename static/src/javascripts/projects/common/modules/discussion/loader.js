@@ -103,10 +103,7 @@ Loader.prototype.loadTopComments = function() {
             this.$topCommentsContainer.html(resp.html);
             this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
             if (this.topCommentCount !== 0) {
-                this.setState('show-top-comments-only');
                 this.setState('has-top-comments');
-            } else {
-                this.setState('first-two-comments-only');
             }
         }.bind(this),
         function () {
@@ -121,7 +118,7 @@ Loader.prototype.ready = function() {
     this.toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
 
     this.on('click', '.js-discussion-show-button', function() {
-        this.removeState('show-top-comments-only');
+        this.removeState('truncated');
     }.bind(this));
 
     var commentId = this.getCommentIdFromHash();
@@ -149,9 +146,8 @@ Loader.prototype.ready = function() {
     this.comments.fetchComments({comment: commentId}).then(function() {
         $('.discussion .preload-msg').addClass('u-h');
 
-        if (commentId || window.location.hash === '#comments') {
-            this.comments.removeState('shut');
-            this.comments.removeState('partial');
+        if (!commentId && window.location.hash !== '#comments') {
+            this.setState('truncated');
         }
 
         this.initUnthreaded();
