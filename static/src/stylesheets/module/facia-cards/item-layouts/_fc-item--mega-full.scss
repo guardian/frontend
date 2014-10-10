@@ -46,6 +46,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
             min-height: gs-height(5) + $gs-baseline * 3;
         }
 
+        .responsive-img {
+            top: auto;
+            height: 100%;
+        }
+
         .fc-item__content {
             width: auto;
             max-width: gs-span(6);
