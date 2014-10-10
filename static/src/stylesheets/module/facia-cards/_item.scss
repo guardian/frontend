@@ -205,20 +205,16 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__latest-block-wrapper {
-    margin-left: $fc-item-gutter;
-    margin-right: $fc-item-gutter;
     padding-top: $gs-baseline;
     overflow: hidden;
 }
 
 .fc-item__latest-block {
     @include fs-textSans(1);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     @include transform(translateX(0));
     @include transition(transform, 250ms, linear);
     display: block;
+    @include text-clamp(4, 1.6em);
 }
 
 .fc-item__latest-block--unloading {
@@ -253,7 +249,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    display: none;
+    // display: none;
     margin-right: 1em;
 }
 
