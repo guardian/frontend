@@ -8,8 +8,7 @@ describe("toBeGreaterThan", function() {
   });
 
   it("fails when actual <= expected", function() {
-    var matcher = j$.matchers.toBeGreaterThan(),
-      result;
+    var matcher = j$.matchers.toBeGreaterThan();
 
     result = matcher.compare(1, 1);
     expect(result.pass).toBe(false);

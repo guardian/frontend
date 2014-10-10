@@ -12,7 +12,7 @@ define([
 
     describe("Commercial component loader", function() {
 
-        var adSlot, appendTo, server,
+        var adSlot, callback, appendTo, server,
             options = {
                 config: {
                     page: {
@@ -32,6 +32,10 @@ define([
                 ajaxUrl: "",
                 edition: "UK"
             }});
+
+            // stub the success callback
+            callback = sinon.stub();
+            mediator.on('modules:commercial/loader:loaded', callback);
 
             // set up fake server
             server = sinon.fakeServer.create();
@@ -67,36 +71,48 @@ define([
         });
 
 
-        it("Passes section and keyword to a travel component from the commercial server", function (done) {
+        it("Passes section and keyword to a travel component from the commercial server", function() {
             server.respondWith("/commercial/travel/offers.json?s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
-            new CommercialComponent(options).init('travel', adSlot);
-
-            mediator.once('modules:commercial/loader:loaded', function () {
+            runs(function() {
+                new CommercialComponent(options).init('travel', adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
                 expect(adSlot.innerHTML).toBe('<b>advert</b>');
-                done();
             });
         });
 
         // OAS can inject a url in to the advert code to track clicks on the component
-        it("Injects an OAS tracker URL in to the response", function (done) {
+        it("Injects an OAS tracker URL in to the response", function() {
             server.respondWith("/commercial/jobs.json?&k=a&k=b&k=c", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
-            options.oastoken = '123';
-            new CommercialComponent(options).init('jobs', adSlot);
-
-            mediator.once('modules:commercial/loader:loaded', function () {
+            runs(function() {
+                options.oastoken = '123';
+                new CommercialComponent(options).init('jobs', adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
                 expect(adSlot.innerHTML).toBe('<b>123 - 123</b>');
-                done();
             });
         });
 
-        it("Injects jobIds if specified", function (done) {
+        it("Injects jobIds if specified", function() {
             server.respondWith("/commercial/jobs.json?t=1234&t=5678&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
-            options.jobIds="1234,5678";
-            new CommercialComponent(options).init('jobs', adSlot);
-
-            mediator.once('modules:commercial/loader:loaded', function () {
+            runs(function() {
+                options.jobIds="1234,5678";
+                new CommercialComponent(options).init('jobs', adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
                 expect(adSlot.innerHTML).toBe('<b>advert</b>');
-                done();
             });
         });
     });

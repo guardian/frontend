@@ -1,12 +1,12 @@
 {
   "name": "seedrandom",
   "_cacheHeaders": {
-    "ETag": "\"335e-4f958a3c6ddc0\"",
-    "Last-Modified": "Wed, 14 May 2014 09:16:47 GMT",
-    "Content-Length": "13150",
+    "ETag": "\"2d16-4df33d4a8c8c0\"",
+    "Last-Modified": "Sat, 15 Jun 2013 16:26:51 GMT",
+    "Content-Length": "11542",
     "Content-Type": "text/javascript; charset=utf-8"
   },
-  "_release": "e-tag:335e-4f95",
+  "_release": "e-tag:2d16-4df3",
   "main": "index.js",
   "_source": "http://davidbau.com/encode/seedrandom.js",
   "_target": "*",

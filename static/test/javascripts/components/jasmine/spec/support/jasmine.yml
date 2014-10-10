@@ -15,9 +15,11 @@ src_files:
   - 'html/**.js'
   - '**/*.js'
 stylesheets:
+boot_dir: 'spec/support'
+boot_files:
+  - 'dev_boot.js'
 helpers:
-  - 'helpers/BrowserFlags.js'
-  - 'helpers/defineJasmineUnderTest.js'
+  - 'helpers/**/*.js'
 spec_files:
   - '**/*[Ss]pec.js'
 spec_dir: spec

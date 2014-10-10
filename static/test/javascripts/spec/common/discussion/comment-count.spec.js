@@ -1,11 +1,9 @@
 define([
-    'qwery',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'], function(
-    qwery,
     $,
     mediator,
     ajax,
@@ -31,6 +29,7 @@ define([
 
             $('body').append(fixtureTrails);
 
+            sinon.spy(mediator, 'emit');
             sinon.spy(commentCount, 'getCommentCounts');
 
             server = sinon.fakeServer.create();
@@ -39,36 +38,42 @@ define([
                 { "Content-Type": "application/json" },
                 testData
             ]);
-            server.autoRespond = true;
-            server.autoRespondAfter = 20;
+
+            server.respond();
         });
 
         afterEach(function() {
             $('.comment-trails').remove();
             commentCount.getCommentCounts.restore();
+            mediator.emit.restore();
             server.restore();
         });
 
         it("should get discussion id's from the DOM", function(){
             var data = '/p/3ghv5,/p/3ghx3,/p/3gh4n';
-            expect(commentCount.getContentIds()).toEqual(data);
+            expect(commentCount.getContentIds(document)).toEqual(data);
         });
 
-        it("should get comment counts from ajax end-point", function (done) {
-            mediator.once('modules:commentcount:loaded', function () {
-                done();
+        it("should get comment counts from ajax end-point", function(){
+            commentCount.init(document);
+            waits(function() {
+                expect(mediator.emit).toHaveBeenCalledWith('modules:commentcount:loaded');
             });
-
-            commentCount.init();
         });
 
-        it("should append comment counts to DOM", function (done) {
-            mediator.once('modules:commentcount:loaded', function () {
-                expect(qwery('.trail__count--commentcount').length).toBe(3);
-                done();
+        it("should append comment counts to DOM", function(){
+            commentCount.init(document);
+            waits(function() {
+                expect(query.selectorAll('.trail__count--commentcount').length).toBe(3)
             });
+        });
 
-            commentCount.init();
+        it("re run when new trail appear in DOM", function(){
+            commentCount.init(document);
+            waits(function() {
+                //mediator.emit('module:trailblock-show-more:render');
+                expect(commentCount.getCommentCounts.calledTwice).toBe(true)
+            });
         });
 
     });

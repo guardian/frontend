@@ -154,16 +154,11 @@ describe('spy matchers', function() {
 
   describe('calledOn/toHaveBeenCalledOn', function() {
     it('should match when spy called on expected object', function() {
-      var obj = {
-        toString: function() {
-          return 'my object'
-        }
-      };
-      expect(this.spy.calledOn(obj)).toBeFalsy();
-      expect(this.spy).not.toHaveBeenCalledOn(obj);
-      this.spy.call(obj);
-      expect(this.spy.calledOn(obj)).toBeTruthy();
-      expect(this.spy).toHaveBeenCalledOn(obj);
+      expect(this.spy.calledOn(this)).toBeFalsy();
+      expect(this.spy).not.toHaveBeenCalledOn(this);
+      this.spy.call(this);
+      expect(this.spy.calledOn(this)).toBeTruthy();
+      expect(this.spy).toHaveBeenCalledOn(this);
     });
   });
 
@@ -181,9 +176,11 @@ describe('spy matchers', function() {
       expect(this.spy.alwaysCalledOn(this)).toBeFalsy();
       expect(this.spy).not.toHaveBeenAlwaysCalledOn(this);
     });
+
   });
 
   describe('calledWith/toHaveBeenCalledWith', function() {
+
     it('should match when spy called with argument', function() {
       this.spy('arg1');
       expect(this.spy.calledWith('arg1')).toBeTruthy();
@@ -195,9 +192,11 @@ describe('spy matchers', function() {
       expect(this.spy.calledWith('arg2')).toBeFalsy();
       expect(this.spy).not.toHaveBeenCalledWith('arg2');
     });
+
   });
 
   describe('alwaysCalledWith/toHaveBeenAlwaysCalledWith', function() {
+
     it('should match when spy always called with argument', function() {
       this.spy('arg1');
       this.spy('arg1', 'arg2');
@@ -211,9 +210,11 @@ describe('spy matchers', function() {
       expect(this.spy.alwaysCalledWith('arg1')).toBeFalsy();
       expect(this.spy).not.toHaveBeenAlwaysCalledWith('arg');
     });
+
   });
 
   describe('calledWithExactly/toHaveBeenCalledWithExactly', function() {
+
     it('should match when spy called with exact argument set', function() {
       this.spy('arg1', 'arg2');
       expect(this.spy.calledWithExactly('arg1', 'arg2')).toBeTruthy();
@@ -225,9 +226,11 @@ describe('spy matchers', function() {
       expect(this.spy.calledWithExactly('arg1', 'arg2')).toBeFalsy();
       expect(this.spy).not.toHaveBeenCalledWithExactly('arg1', 'arg2');
     });
+
   });
 
   describe('alwaysCalledWithExactly/toHaveBeenAlwaysCalledWithExactly', function() {
+
     it('should match when spy always called with exact argument set', function() {
       this.spy('arg1', 'arg2');
       this.spy('arg1', 'arg2');
@@ -241,9 +244,11 @@ describe('spy matchers', function() {
       expect(this.spy.alwaysCalledWithExactly('arg1','arg2')).toBeFalsy();
       expect(this.spy).not.toHaveBeenAlwaysCalledWithExactly('arg1','arg2');
     });
+
   });
 
   describe('calledWithMatch/toHaveBeenCalledWithMatch', function() {
+
     it('should match when spy called with arguments that match', function() {
       this.spy({arg1:'one', arg2:'two'});
       expect(this.spy.calledWithMatch({arg1:'one'})).toBeTruthy();
@@ -259,9 +264,12 @@ describe('spy matchers', function() {
       expect(this.spy.calledWithMatch({arg1:'two', arg2:'two'})).toBeFalsy();
       expect(this.spy).not.toHaveBeenCalledWithMatch({arg1:'two', arg2:'two'});
     });
+
   });
 
+
   describe('alwaysCalledWithMatch/toHaveBeenAlwaysCalledWithMatch', function() {
+
     it('should match when spy always called with matching arguments set', function() {
       this.spy({arg1:'one', arg2:'two'});
       this.spy({arg1:'one', arg2:'two'});
@@ -283,56 +291,11 @@ describe('spy matchers', function() {
       expect(this.spy.alwaysCalledWithMatch({arg2:'two'})).toBeFalsy();
       expect(this.spy).not.toHaveBeenAlwaysCalledWithMatch({arg2:'two'});
     });
-  });
 
-  describe('calledWithNew', function() {
-    it('should match when spy called with new operator', function() {
-      var newSpy = new this.spy();
-      expect(this.spy.calledWithNew()).toBeTruthy();
-      expect(this.spy).toHaveBeenCalledWithNew();
-    });
-
-    it('should not match when spy not called with new', function() {
-      this.spy();
-      expect(this.spy.calledWithNew()).toBeFalsy();
-      expect(this.spy).not.toHaveBeenCalledWithNew();
-    })
-  });
-
-  describe('neverCalledWith', function() {
-    it('should match when the spy was never called with the argument', function() {
-      this.spy('foo');
-      this.spy('bar');
-      expect(this.spy.neverCalledWith('baz')).toBeTruthy();
-      expect(this.spy).toHaveBeenNeverCalledWith('baz');
-    });
-
-    it('should not match when the spy was called with the argument', function() {
-      this.spy('foo');
-      this.spy('bar');
-      this.spy('baz');
-      expect(this.spy.neverCalledWith('baz')).toBeFalsy();
-      expect(this.spy).not.toHaveBeenNeverCalledWith('baz'); // OMG YUCK
-    });
-  });
-
-  describe('neverCalledWithMatch', function() {
-    it('should match when the spy was never called with matching arguments', function() {
-      var obj = {foo: '1', bar: '2'};
-      this.spy(obj);
-      expect(this.spy.neverCalledWithMatch({baz: '1'})).toBeTruthy();
-      expect(this.spy).toHaveBeenNeverCalledWithMatch({baz: '1'});
-    });
-
-    it('should not match when the spy was called with matching arguments', function() {
-      var obj = {foo: '1', bar: '2'};
-      this.spy(obj);
-      expect(this.spy.neverCalledWithMatch({foo: '1'})).toBeFalsy();
-      expect(this.spy).not.toHaveBeenNeverCalledWithMatch({foo:'1'});
-    });
   });
 
   describe('threw/toHaveThrown', function() {
+
     beforeEach(function() {
       this.spy = sinon.spy.create();
 

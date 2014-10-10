@@ -1,7 +1,8 @@
 define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/onward/popular'], function(mediator, bonzo, ajax, popular) {
 
     describe("Popular", function() {
-        var server,
+        var popularLoadedCallback,
+            server,
             $popularContainer;
 
         beforeEach(function() {
@@ -9,6 +10,8 @@ define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/o
                 ajaxUrl: "",
                 edition: "UK"
             }});
+            popularLoadedCallback = sinon.stub();
+            mediator.on('modules:popular:loaded', popularLoadedCallback);
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
@@ -22,19 +25,43 @@ define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/o
         });
 
         // json test needs to be run asynchronously
-        it("should request the most popular feed and graft it on to the dom", function (done) {
+        it("should request the most popular feed and graft it on to the dom", function(){
 
             var section = 'culture';
             server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "<b>popular</b>" }']);
 
             appendTo = document.querySelector('.js-popular');
 
-            mediator.once('modules:popular:loaded', function () {
-                expect(appendTo.innerHTML).toBe('<b>popular</b>');
-                done();
+            runs(function() {
+                popular({page: {section: section}});
             });
 
-            popular({page: {section: section}});
+            waitsFor(function () {
+                return popularLoadedCallback.calledOnce === true;
+            }, 'popular callback never called', 500);
+
+            runs(function(){
+                expect(appendTo.innerHTML).toBe('<b>popular</b>');
+            });
+        });
+
+        it('should not pass section if section is "global"', function(){
+
+            server.respondWith('/most-read.json', [200, {}, '{ "html": "<b>popular</b>" }']);
+
+            appendTo = document.querySelector('.js-popular');
+
+            runs(function() {
+                popular({page: {section: 'global'}});
+            });
+
+            waitsFor(function () {
+                return popularLoadedCallback.calledOnce === true;
+            }, 'popular callback never called', 500);
+
+            runs(function(){
+                expect(appendTo.innerHTML).toBe('<b>popular</b>');
+            });
         });
 
     });

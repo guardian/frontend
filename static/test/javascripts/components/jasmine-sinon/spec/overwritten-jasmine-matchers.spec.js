@@ -11,7 +11,7 @@ describe('jasmine matchers gracefully overridden', function() {
         this.methodVal = val;
       }
     };
-    spyOn(this.api, 'myMethod').and.callThrough();
+    spyOn(this.api, 'myMethod').andCallThrough();
   });
 
   describe('toHaveBeenCalled', function() {

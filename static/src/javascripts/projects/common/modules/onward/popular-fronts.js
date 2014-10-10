@@ -27,18 +27,17 @@ define([
             }).then(
                 function(resp) {
                     var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
-                    if (container) {
-                        bonzo(container)
-                            .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
-
-                        commentCount.init(container);
-                        // relativise timestamps
-                        relativeDates.init(container);
-                        // upgrade image
-                        images.upgrade(container);
+                    if (!container) {
+                        return false;
                     }
+                    bonzo(container)
+                        .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
 
-                    opts.then && opts.then();
+                    commentCount.init(container);
+                    // relativise timestamps
+                    relativeDates.init(container);
+                    // upgrade image
+                    images.upgrade(container);
                 }
             );
         }

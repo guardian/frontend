@@ -20,11 +20,7 @@ Instead of:
 
 you get:
 
-    Expected spy "mySpy" to have been called with "foo".
-
-## Jasmine 1.x / 2.x compatibility
-
-If you are using Jasmine 1.x, use the latest 0.3.x release. For Jasmine 2, use 0.4 or above.
+    Expected Function to have been called.
 
 ## Installation
 
@@ -64,94 +60,82 @@ In general, you should be able to translate a Sinon spy/stub/mock API method to 
         <th>jasmine-sinon matcher</th>
     </tr>
     <tr>
-        <td>`called`</td>
-        <td>`toHaveBeenCalled()`</td>
+        <td>called</td>
+        <td>toHaveBeenCalled</td>
     </tr>
     <tr>
-        <td>`calledOnce`</td>
-        <td>`toHaveBeenCalledOnce()`</td>
+        <td>calledOnce</td>
+        <td>toHaveBeenCalledOnce</td>
     </tr>
     <tr>
-        <td>`calledTwice`</td>
-        <td>`toHaveBeenCalledTwice()`</td>
+        <td>calledTwice</td>
+        <td>toHaveBeenCalledTwice</td>
     </tr>
     <tr>
-        <td>`calledThrice`</td>
-        <td>`toHaveBeenCalledThrice()`</td>
+        <td>calledThrice</td>
+        <td>toHaveBeenCalledThrice</td>
     </tr>
     <tr>
-        <td>`calledBefore()`</td>
-        <td>`toHaveBeenCalledBefore()`</td>
+        <td>calledBefore()</td>
+        <td>toHaveBeenCalledBefore()</td>
     </tr>
     <tr>
-        <td>`calledAfter()`</td>
-        <td>`toHaveBeenCalledAfter()`</td>
+        <td>calledAfter()</td>
+        <td>toHaveBeenCalledAfter()</td>
     </tr>
     <tr>
-        <td>`calledOn()`</td>
-        <td>`toHaveBeenCalledOn()`</td>
+        <td>calledOn()</td>
+        <td>toHaveBeenCalledOn()</td>
     </tr>
     <tr>
-        <td>`alwaysCalledOn()`</td>
-        <td>`toHaveBeenAlwaysCalledOn()`</td>
+        <td>alwaysCalledOn()</td>
+        <td>toHaveBeenAlwaysCalledOn()</td>
     </tr>
     <tr>
-        <td>`calledWith()`</td>
-        <td>`toHaveBeenCalledWith()`</td>
+        <td>calledWith()</td>
+        <td>toHaveBeenCalledWith()</td>
     </tr>
     <tr>
-        <td>`alwaysCalledWith()`</td>
-        <td>`toHaveBeenAlwaysCalledWith()`</td>
+        <td>alwaysCalledWith()</td>
+        <td>toHaveBeenAlwaysCalledWith()</td>
     </tr>
     <tr>
-        <td>`calledWithExactly()`</td>
-        <td>`toHaveBeenCalledWithExactly()`</td>
+        <td>calledWithExactly()</td>
+        <td>toHaveBeenCalledWithExactly()</td>
     </tr>
     <tr>
-        <td>`alwaysCalledWithExactly()`</td>
-        <td>`toHaveBeenAlwaysCalledWithExactly()`</td>
+        <td>alwaysCalledWithExactly()</td>
+        <td>toHaveBeenAlwaysCalledWithExactly()</td>
     </tr>
     <tr>
-        <td>`calledWithMatch()`</td>
-        <td>`toHaveBeenCalledWithMatch()`</td>
+        <td>calledWithMatch()</td>
+        <td>toHaveBeenCalledWithMatch()</td>
     </tr>
     <tr>
-        <td>`alwaysCalledWithMatch()`</td>
-        <td>`toHaveBeenAlwaysCalledWithMatch()`</td>
+        <td>alwaysCalledWithMatch()</td>
+        <td>toHaveBeenAlwaysCalledWithMatch()</td>
     </tr>
     <tr>
-        <td>`calledWithNew`</td>
-        <td>`toHaveBeenCalledWithNew()` `>=v0.4`</td>
+        <td>returned()</td>
+        <td>toHaveReturned()</td>
     </tr>
     <tr>
-        <td>`neverCalledWith`</td>
-        <td>`toHaveBeenNeverCalledWith()` `>=v0.4`</td>
+        <td>alwaysReturned()</td>
+        <td>toHaveAlwaysReturned()</td>
     </tr>
     <tr>
-        <td>`neverCalledWithMatch()`</td>
-        <td>`toHaveBeenNeverCalledWithMatch()` `>=v0.4`</td>
+        <td>threw()</td>
+        <td>toHaveThrown()</td>
     </tr>
     <tr>
-        <td>`threw()`</td>
-        <td>`toHaveThrown()`</td>
-    </tr>
-    <tr>
-        <td>`alwaysThrew()`</td>
-        <td>`toHaveAlwaysThrown()`</td>
-    </tr>
-    <tr>
-        <td>`returned()`</td>
-        <td>`toHaveReturned()`</td>
-    </tr>
-    <tr>
-        <td>`alwaysReturned()`</td>
-        <td>`toHaveAlwaysReturned()`</td>
+        <td>alwaysThrew()</td>
+        <td>toHaveAlwaysThrown()</td>
     </tr>
 </table>
 
 These matchers will work on spies, individual spy calls, stubs and mocks.
 
-You can use Jasmine spies alongside your Sinon spies. _jasmine-sinon_ will detect which you're using and use the appropriate matcher.
+You can also use Jasmine spies alongside your Sinon spies. _jasmine-sinon_ will detect which you're using and use the appropriate matcher.
 
 You can also use Jasmine's fuzzy matchers `any()` and `objectContaining()` in expectations, e.g.
 
@@ -168,4 +152,3 @@ Thanks to:
 * @theinterned for, er, match matchers
 * @milichev for graceful spy matchers
 * @reinseth for Jasmine fuzzy matcher support
-* @stoodder for initial Jasmine 2.0 support work
