@@ -15,7 +15,8 @@ define([
 ) {
 
     function init(c) {
-        var config = defaults(
+        var $adSlot, $containers,
+            config = defaults(
             c || {},
             globalConfig,
             {
@@ -24,12 +25,12 @@ define([
             }
         );
 
-        if (!config.switches.commercialComponents || !config.page.isFront || config.page.hasPageSkin ) {
+        if (!config.switches.commercialComponents || !config.page.isFront || config.page.hasPageSkin) {
             return false;
         }
 
-        var $adSlot = bonzo(dfp.createAdSlot('merchandising-high', 'commercial-component-high')),
-            $containers = $('.container');
+        $adSlot     = bonzo(dfp.createAdSlot('merchandising-high', 'commercial-component-high'));
+        $containers = $('.container');
         if ($containers.length >= 4) {
             return $adSlot.insertAfter($containers[1]);
         } else if ($containers.length >= 2) {
@@ -42,7 +43,7 @@ define([
         init: once(init),
 
         // for testing
-        reset: function() {
+        reset: function () {
             this.init = once(init);
         }
 

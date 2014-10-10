@@ -19,6 +19,7 @@ define([
     function load() {
         if (config.switches.audienceScience) {
             // Audience Science calls these functions on window.
+            /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
             window.DM_prepClient = function (csid, client) {
                 client.DM_addEncToLoc('siteName', '');
                 client.DM_addEncToLoc('comFolder', '');
