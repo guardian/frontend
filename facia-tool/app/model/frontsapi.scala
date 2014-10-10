@@ -226,13 +226,10 @@ trait UpdateActions extends Logging {
 
   def removeGroupIfNoLongerGrouped(collectionId: String, block: Block): Block = {
     ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
-      case Some(groups) if groups.nonEmpty =>
-        block.copy(
-          live = block.live.map(removeGroupsFromTrail),
-          draft = block.draft.map(_.map(removeGroupsFromTrail))
-        )
-      case Some(groups) => block
-      case None         => block
+      case Some(groups) if groups.nonEmpty => block
+      case _ => block.copy(
+                  live = block.live.map(removeGroupsFromTrail),
+                  draft = block.draft.map(_.map(removeGroupsFromTrail)))
     }
   }
 
