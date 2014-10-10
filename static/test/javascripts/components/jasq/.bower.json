@@ -33,6 +33,5 @@
   },
   "_source": "git://github.com/biril/jasq.git",
   "_target": "~0.4.1",
-  "_originalSource": "jasq",
-  "_direct": true
+  "_originalSource": "jasq"
 }
