@@ -43,8 +43,6 @@ define([
                 this.setCellValue(cell.x, cell.y, value)
                 this.focusNext();
             }
-
-            console.log(cell.x + ", " + cell.y + " now set to " + value);
         },
 
         focusNext: function () {
@@ -134,28 +132,29 @@ define([
 
 
             return React.DOM.div(null,
-                Grid({
-                    rows: this.rows,
-                    columns: this.columns,
-                    cells: this.state.grid,
-                    setCellValue: this.setCellValue,
-                    onSelect: this.onSelect,
-                    isHighlighted: isHighlighted
-                }),
                 React.DOM.div({
-                    css: {
-                        overflow: 'hidden',
-                        width: 0
-                    }
+                    className: 'crossword__grid-wrapper'
                 },
-                    React.DOM.input({
-                        type: 'text',
-                        className: 'crossword__hidden-input',
-                        ref: "hiddenInput",
-                        onChange: this.onChange,
-                        value: ""
-                    }
-                )),
+                    Grid({
+                        rows: this.rows,
+                        columns: this.columns,
+                        cells: this.state.grid,
+                        setCellValue: this.setCellValue,
+                        onSelect: this.onSelect,
+                        isHighlighted: isHighlighted
+                    }),
+                    React.DOM.div({
+                            className: 'crossword__hidden-input-wrapper'
+                        },
+                        React.DOM.input({
+                                type: 'text',
+                                className: 'crossword__hidden-input',
+                                ref: "hiddenInput",
+                                onChange: this.onChange,
+                                value: ""
+                            }
+                        ))
+                ),
                 Clues({
                     clues: this.props.data.entries
                 })
