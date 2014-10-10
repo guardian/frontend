@@ -105,9 +105,6 @@ $breakpoints: (
                 .container--tag .container__title {
                     display: block;
                 }
-                .container__toggle {
-                    left: auto;
-                }
             }
         }
         @include container__meta(leftCol, desktop);
