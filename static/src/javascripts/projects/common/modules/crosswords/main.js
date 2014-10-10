@@ -4,18 +4,18 @@ define([
     'bean',
     'react',
     'common/modules/crosswords/clues',
-    'common/modules/crosswords/floatingInput',
     'common/modules/crosswords/grid',
-    'common/modules/crosswords/helpers'
+    'common/modules/crosswords/helpers',
+    'common/modules/crosswords/hiddenInput'
 ], function (
     $,
     _,
     bean,
     React,
     Clues,
-    FloatingInput,
     Grid,
-    helpers
+    helpers,
+    HiddenInput
 ) {
     var Crossword = React.createClass({
         getInitialState: function () {
@@ -110,7 +110,7 @@ define([
                     onSelect: this.onSelect,
                     isHighlighted: isHighlighted
                 }),
-                FloatingInput({
+                HiddenInput({
                     isVisible: this.state.hasFocus
                 }),
                 Clues({
