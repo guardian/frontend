@@ -5,6 +5,7 @@
     "jasmine-sinon": "~0.4.0",
     "seedrandom": "http://davidbau.com/encode/seedrandom.js",
     "squire": "~0.2.0",
-    "sinonjs": "~1.10.2"
+    "sinonjs": "~1.10.2",
+    "jasq": "~0.4.1"
   }
 }
