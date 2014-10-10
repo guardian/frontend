@@ -176,7 +176,7 @@ define([
             });
     };
 
-    Comments.prototype.gotoComment = function() {
+    Comments.prototype.gotoComment = function(id) {
         this.showHiddenComments();
         var comment = $('#comment-'+ this.options.commentId);
         $('.d-discussion__show-all-comments').addClass('u-h');
@@ -246,6 +246,7 @@ define([
         }
 
         this.relativeDates();
+
         if (this.options.commentId) {
             this.gotoComment()
         }
