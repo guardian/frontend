@@ -26,7 +26,11 @@ define([
             return {
                 grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries),
                 cellInFocus: null,
-                directionOfEntry: null
+                directionOfEntry: null,
+                inputPosition: {
+                    x: 0,
+                    y: 0
+                }
             };
         },
 
@@ -65,7 +69,7 @@ define([
             }
         },
 
-        onSelect: function (x, y) {
+        onSelect: function (x, y, pageX, pageY) {
             var cellInFocus = this.state.cellInFocus,
                 clue = this.cluesFor(x, y),
                 newDirection,
@@ -99,6 +103,12 @@ define([
                     this.state.directionOfEntry = 'down';
                 }
             }
+
+            /** So that focusing on the input doesn't move the viewport */
+            this.state.inputPosition = {
+                x: pageX,
+                y: pageY
+            };
 
             this.setState(this.state);
         },
@@ -144,7 +154,11 @@ define([
                         isHighlighted: isHighlighted
                     }),
                     React.DOM.div({
-                            className: 'crossword__hidden-input-wrapper'
+                            className: 'crossword__hidden-input-wrapper',
+                            style: {
+                                left: this.state.inputPosition.x + "px",
+                                top: this.state.inputPosition.y + "px"
+                            }
                         },
                         React.DOM.input({
                                 type: 'text',

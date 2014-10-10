@@ -57,14 +57,8 @@
     margin-top: 1rem;
 }
 
-.crossword__grid-wrapper {
-    position: relative;
-}
-
 .crossword__hidden-input-wrapper {
     position: absolute;
-    left: 0;
-    top: 0;
     overflow: hidden;
     width: 0;
 }
