@@ -43,7 +43,6 @@ define([
 
 var Comments = function(options) {
     this.setOptions(options);
-    this.options.order = userPrefs.get('discussion.order') || 'newest';
     this.options.expand = userPrefs.get('discussion.expand') || false;
     this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
 };
@@ -67,7 +66,6 @@ Comments.prototype.classes = {
     showRepliesButton: 'd-show-more-replies__button',
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
-    orderControl: 'd-discussion__order-control',
     loader: 'd-discussion__loader',
 
     comment: 'd-comment',
@@ -105,7 +103,6 @@ Comments.prototype.ready = function() {
 
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('commentReport'), this.reportComment);
-    this.on('change', this.getClass('orderControl'), this.setOrder);
 
     window.setInterval(
         function () {
@@ -455,26 +452,6 @@ Comments.prototype.loaded = function() {
         height: 'auto'
     });
     $content.removeClass('u-h');
-};
-
-Comments.prototype.setOrder = function(e) {
-    var elem = e.currentTarget,
-        newWorldOrder = elem.options[elem.selectedIndex].value,
-        $newComments = $(this.getElem('newComments'));
-
-    this.options.order = newWorldOrder;
-    this.showDiscussion();
-    this.loading();
-
-    $newComments.empty();
-    userPrefs.set('discussion.order', newWorldOrder);
-
-    return this.fetchComments({
-        page: 1
-    }).then(function() {
-        this.loaded();
-        this.relativeDates();
-    }.bind(this));
 };
 
 Comments.prototype.reportComment = function(e) {

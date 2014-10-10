@@ -885,6 +885,30 @@ $comment-recommend-button-size: 25px;
 
 }
 
+.discussion__toolbar {
+    border-top: 2px solid colour(neutral-6);
+    border-bottom: 2px solid colour(neutral-6);
+    padding: $gs-baseline 0;
+}
+
+.discussion__toolbar-dropdown {
+    position: relative;
+    @include fs-textSans(3);
+    color: colour(neutral-2);
+    display: inline-block;
+    .popup__toggle {
+        display: inline-block;
+        width: auto;
+    }
+    .popup {
+        top: $gs-baseline*2.5;
+    }
+    span {
+        font-weight: bold;
+        margin-left: $gs-gutter / 2;
+    }
+}
+
 .discussion__pagination .pagination {
     width: 100%;
 }

@@ -24,6 +24,40 @@
 
 @toolbar = {
     <div class="discussion__toolbar js-discussion-toolbar">
+
+        <div class="discussion__toolbar-dropdown">
+
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span class="js-comment-order"></span></button>
+
+            <ul class="popup popup__group popup--comments-order is-off">
+                <li class="popup__item">
+                    <button class="u-button-reset popup__action js-comments-newest" data-link-name="comments-newest">Newest</button>
+                </li>
+                <li class="popup__item">
+                    <button class="u-button-reset popup__action js-comments-oldest" data-link-name="comments-oldest">Oldest</button>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="discussion__toolbar-dropdown">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span class="js-thread-option"></span></button>
+
+            <ul class="popup popup__group popup--comments-threading is-off">
+                <li class="popup__item">
+                    <button class="u-button-reset popup__action js-comments-threading-collapsed" data-link-name="comments-threading-collapsed">Collapsed</button>
+                </li>
+                <li class="popup__item">
+                    <button class="u-button-reset popup__action js-comments-threading-expanded" data-link-name="comments-threading-expanded">Expanded</button>
+                </li>
+                <li class="popup__item">
+                    <button class="u-button-reset popup__action js-comments-threading-unthreaded" data-link-name="comments-threading-unthreaded">Unthreaded</button>
+                </li>
+            </ul>
+        </div>
+
+
         <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded">
             View <span class="discussion__show-threaded-state">un</span>threaded
         </button>
@@ -32,15 +66,6 @@
             <span class="discussion__show-all__off-text">Expand comment threads</span>
             <span class="discussion__show-all__on-text">Collapse comment threads</span>
         </button>
-
-        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item modern-visible">
-            View
-            <select class="d-discussion__order-control">
-                <option value="oldest">oldest</option>
-                <option value="newest">newest</option>
-            </select>
-            first
-        </div>
 
         <div class="discussion__pagination discussion__pagination--top js-discussion-pagination"></div>
 
