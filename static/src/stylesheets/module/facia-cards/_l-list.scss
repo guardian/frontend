@@ -21,7 +21,7 @@
 }
 
 // We only need this functionality for 2 & 4 column rows.
-@for $column from 2 through 5 {
+@for $column from 2 through 4 {
     @for $span from 1 through 5 {
         .l-row--cols-#{$column} {
             .l-row__item--span-#{$span} {
@@ -34,8 +34,7 @@
     }
 }
 
-@for $column from 1 through 5 {
-
+@for $column from 1 through 4 {
     .l-list--columns-#{$column} {
         .l-list__item {
             @include mq(tablet) {
