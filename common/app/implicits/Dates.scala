@@ -1,5 +1,6 @@
 package implicits
 
+import common.Edition
 import org.joda.time.{Duration => JodaDuration, DateTime, LocalDate, Days}
 import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
@@ -43,6 +44,15 @@ trait Dates {
     lazy val toISODateTimeString: String = date.toString(ISODateTimeFormat.dateTime)
     lazy val toISODateTimeNoMillisString: String = date.toString(ISODateTimeFormat.dateTimeNoMillis)
     lazy val toHttpDateTimeString: String = date.toString(HTTPDateFormat)
+  }
+
+  private lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)[Z|\+].*""".r
+
+  implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
+    lazy val parseISODateTime = s match {
+      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
+      case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
+    }
   }
 
   implicit class String2Date(s: String) {
