@@ -712,7 +712,7 @@ case object TTlMpu extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "third"
+          tablet = "standard"
         )
       ),
       Rows(

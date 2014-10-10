@@ -1,12 +1,11 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
-@import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog" data-test-id="live-blog"
-        class="content content--liveblog blog @articleToneClass(article) @articleToneClass(article)--article section-@article.sectionName.toLowerCase"
+        class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="content__head content__head--tonal">
@@ -17,7 +16,7 @@
 
                         <div class="content__labels">
                             <div class="content__section-label">
-                                <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
                             </div>
 
                             @fragments.meta.metaInline(article)

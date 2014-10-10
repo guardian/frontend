@@ -3,6 +3,9 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
+GET         /reauthenticate                         @controllers.ReauthenticationController.renderForm(returnUrl : Option[String])
+POST        /reauthenticate                         @controllers.ReauthenticationController.processForm
+
 GET         /signin                                 @controllers.SigninController.renderForm(returnUrl : Option[String])
 POST        /signin                                 @controllers.SigninController.processForm
 GET         /signout                                @controllers.SignoutController.signout
