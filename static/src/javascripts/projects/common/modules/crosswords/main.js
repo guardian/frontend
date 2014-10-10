@@ -68,8 +68,8 @@ define([
         focusHiddenInput: function (x, y) {
             var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
 
-            wrapper.style.left = (x * 32) + "px";
-            wrapper.style.top = (y * 32) + "px";
+            wrapper.style.left = (x * 31) + "px";
+            wrapper.style.top = (y * 31) + "px";
             this.refs.hiddenInput.getDOMNode().focus();
         },
 
