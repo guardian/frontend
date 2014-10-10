@@ -17,8 +17,7 @@ define([
 ) {
 
     function init(c) {
-        var $mainCol, adType,
-            config = defaults(
+        var config = defaults(
                 c || {},
                 globalConfig,
                 {
@@ -36,8 +35,8 @@ define([
             return false;
         }
 
-        $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        adType   = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
+        var $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false,
+            adType = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
 
         return $(config.adSlotContainerSelector)
             .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
@@ -48,7 +47,7 @@ define([
         init: once(init),
 
         // for testing
-        reset: function () {
+        reset: function() {
             this.init = once(init);
         }
 

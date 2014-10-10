@@ -1,6 +1,6 @@
 define([
     'lodash/collections/map'
-], function (
+], function(
     map
 ) {
 
@@ -9,7 +9,7 @@ define([
     }
 
     function get(config) {
-        return map(config.keywords.split(','), function (keyword) {
+        return map(config.keywords.split(','), function(keyword){
             return 'k=' + encodeURIComponent(format(keyword));
         }).join('&');
     }
