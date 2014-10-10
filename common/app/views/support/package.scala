@@ -785,11 +785,11 @@ object GetClasses {
     )
   }
 
-  def forSubLink(trail: Trail) = Seq(
+  def forSubLink(trail: Trail) = RenderClasses(Seq(
     Some("fc-sublinks__item"),
     Some(TrailCssClasses.toneClass(trail)),
     mediaTypeClass(trail)
-  ).flatten
+  ).flatten: _*)
 
   def mediaTypeClass(trail: Trail) = trail match {
     case _: Gallery => Some("fc-item--gallery")
