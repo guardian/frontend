@@ -35,7 +35,6 @@ class SportTestSuite extends Suites (
   new LeagueTablesFeatureTest,
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
-  new NavFeatureTest,
   new ResultsFeatureTest ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
