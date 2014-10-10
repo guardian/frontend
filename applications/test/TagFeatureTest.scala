@@ -48,34 +48,6 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
   feature("Tag Pages Football Nav") {
 
-    scenario("Tags that are football competitions that have teams, link to that place on the teams page") {
-
-      Given("I visit the 'Premier League' tag page")
-
-      goTo("/football/premierleague") { browser =>
-        val teamsPageLink = browser.findFirst("ul.nav a[data-link-name='teams']")
-        teamsPageLink.getAttribute("href") should endWith("/football/teams#premierleague")
-      }
-    }
-
-    scenario("Tags that are football compeitions but don't have teams don't link to the teams page") {
-
-      Given("I visit the 'Capital One Cup' tag page")
-
-      goTo("/football/capital-one-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-      Given("I visit the 'Scottish League Cup' tag page")
-
-      goTo("/football/cis-insurance-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-    }
-
     scenario("Pagination") {
 
       Given("I visit the 'Cycling' tag page")
