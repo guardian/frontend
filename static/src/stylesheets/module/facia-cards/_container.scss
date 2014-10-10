@@ -32,9 +32,15 @@ $header-image-size-desktop: 120px;
     @include mq(leftCol) {
         float: left;
         width: $left-column;
+
+        .container--has-toggle & {
+            float: none;
+            width: auto;
+        }
     }
 
     @include mq(wide) {
+        float: left;
         width: $left-column-wide;
     }
 }
