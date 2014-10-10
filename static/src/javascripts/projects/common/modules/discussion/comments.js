@@ -257,7 +257,7 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.relativeDates();
-    this.emit.loaded('loaded');
+    this.emit('loaded');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
