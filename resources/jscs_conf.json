@@ -1,4 +1,3 @@
 {
-    "preset": "crockford",
-    "disallowQuotedKeysInObjects": "allButReserved"
+    "preset": "crockford"
 }
