@@ -1,6 +1,18 @@
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
 
+@body(edition: Edition, words: Seq[String]) = {
+    @if(words.length > 75) {
+        @withJsoup(BulletCleaner(words.take(75).mkString(" ").stripSuffix(".") + "…"))(
+            InBodyLinkCleaner("in body link")
+        )
+    } else {
+        @withJsoup(BulletCleaner(comment.body))(
+            InBodyLinkCleaner("in body link")
+        )
+    }
+}
+
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-top-comment"
 id="top-comment-@comment.id"
@@ -14,11 +26,12 @@ itemscope itemtype="http://schema.org/Comment">
 
     <div class="d-top-comment__body" itemprop="text">
         <div class="d-top-comment__pick" title="Guardian pick">Guardian Pick</div>
-        @defining(Edition(request)) { edition =>
-            @withJsoup(BulletCleaner(comment.body))(
-                InBodyLinkCleaner("in body link")
-            )
-        }
+
+        @body(Edition(request), comment.body.split(" "))
+
+        <a class="d-top-comment__link" href="@Configuration.discussion.url/comment-permalink/@comment.id">
+            View comment
+        </a>
     </div>
 
 
