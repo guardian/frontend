@@ -1,4 +1,4 @@
-@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: model.Config)
+@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
@@ -13,7 +13,7 @@
 
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes u-cf"
+        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes @if(!isList){js-snappable}"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -68,22 +68,27 @@
                         }
                     </div>
 
-                    @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
-                        <div class="fc-item__avatar">
-                            <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
-                        </div>
-                    }
-
                     @trail.trailText.map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
                     @meta(trail)
 
-                    <footer class="fc-item__footer">
+                    <div class="fc-item__footer--vertical" aria-hidden="true">
                         @sublinks(trail.supporting)
-                    </footer>
+                    </div>
                 </div>
+
+                @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                <div class="fc-item__avatar">
+                    <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
+                </div>
+                }
+
+                <footer class="fc-item__footer--horizontal">
+                    @sublinks(trail.supporting)
+                </footer>
+
                 <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>
         </div>

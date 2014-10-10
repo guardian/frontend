@@ -64,12 +64,14 @@ define([
                 {
                     key: 'trailText',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'trail text',
                     type: 'text'
                 },
                 {
                     key: 'byline',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
                 },
@@ -83,6 +85,7 @@ define([
                 {
                     key: 'href',
                     editable: true,
+                    omitForSupporting: true,
                     requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
@@ -90,6 +93,7 @@ define([
                 {
                     key: 'imageSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
@@ -110,6 +114,7 @@ define([
                 {
                     key: 'imageCutoutSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
@@ -137,19 +142,36 @@ define([
                 {
                     key: 'isBoosted',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'boost',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showBoostedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'large headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showQuotedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'quote headline',
                     type: 'boolean'
                 },
                 {
                     key: 'showByline',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'show byline',
-                    irreleventForTones: ['comment'],
+                    omitForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
                     editable: true,
+                    omitForSupporting: true,
                     requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
@@ -158,6 +180,7 @@ define([
                 {
                     key: 'imageCutoutReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'cutout image',
                     type: 'boolean'
@@ -165,14 +188,16 @@ define([
                 {
                     key: 'imageReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'replace image',
-                    irreleventIfNo: 'imageSrc',
+                    omitIfNo: 'imageSrc',
                     type: 'boolean'
                 },
                 {
                     key: 'imageHide',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'hide image',
                     type: 'boolean'
@@ -325,10 +350,11 @@ define([
             if (opts.type === 'boolean') {
                 display = opts.editable;
                 display = display && (this.meta[opts.key] || function() {})();
-                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true);
-                display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
-                return display ? opts.label : false;
+                display = display && (opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true);
+                display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
+                display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
+                return display ? opts.label : false;
             } else {
                 return false;
             }
@@ -370,10 +396,11 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true;
+                    var display = opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true;
 
                     display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
                     display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+                    display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
                     return display;
                 }, self),
@@ -473,12 +500,16 @@ define([
 
             this.state.tone(getTone(opts));
 
-            if (!this.uneditable) {
-                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
-            }
+            this.updateEditorsDisplay();
 
             this.setRelativeTimes();
         };
+
+        Article.prototype.updateEditorsDisplay = function() {
+            if (!this.uneditable) {
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
+            }
+        }
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
@@ -596,7 +627,10 @@ define([
         };
 
         Article.prototype.close = function() {
-            this.state.isOpen(false);
+            if (this.state.isOpen()) {
+                this.state.isOpen(false);
+                this.updateEditorsDisplay();
+            }
         };
 
         Article.prototype.closeAndSave = function() {

@@ -19,6 +19,7 @@ object DfpApiWrapper extends Logging {
   private def suggestedAdUnitService(session: DfpSession) = dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
   private def placementService(session: DfpSession) = dfpServices.get(session, classOf[PlacementServiceInterface])
   private def creativeTemplateService(session: DfpSession) = dfpServices.get(session, classOf[CreativeTemplateServiceInterface])
+  private def creativeService(session: DfpSession) = dfpServices.get(session, classOf[CreativeServiceInterface])
 
   sealed case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
@@ -123,6 +124,15 @@ object DfpApiWrapper extends Logging {
       val page = service.getCreativeTemplatesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
+  }
+
+  def fetchTemplateCreatives(session: DfpSession, statementBuilder: StatementBuilder): Map[Long, Seq[TemplateCreative]] = {
+    val service = creativeService(session)
+    val creatives = fetch(statementBuilder) { statement =>
+      val page = service.getCreativesByStatement(statement)
+      Page(page.getResults, page.getTotalResultSetSize)
+    }
+    creatives collect { case creative: TemplateCreative => creative} groupBy (_.getCreativeTemplateId)
   }
 
   class DfpApprovalException(message: String) extends RuntimeException

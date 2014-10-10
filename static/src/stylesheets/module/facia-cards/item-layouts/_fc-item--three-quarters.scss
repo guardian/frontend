@@ -23,29 +23,12 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
 @mixin fc-item--three-quarters {
 
-    .fc-item__media-wrapper {
-        @include box-sizing(border-box);
-        width: (100% / 3 * 2);
-        float: right;
-        padding-left: $gs-gutter * .25;
-    }
-
-    .fc-item__avatar {
-        top: 0;
-        width: gs-span(3) + $gs-gutter;
-
-        @include mq(desktop) {
-            width: gs-span(4) + $gs-gutter;
-        }
-    }
-
-    .fc-item__avatar__media {
-        left: 10%;
-    }
+    @include fc-item--horizontal(100% / 3 * 2);
 
     .fc-item__header {
         @include mq(desktop) {
             @include fs-headline(4, true);
+            @include headline-boost(5);
         }
     }
 
@@ -61,38 +44,42 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
-    &.fc-item--has-cutout,
-    &.fc-item--has-no-image {
-        min-height: gs-height(4);
+    &.fc-item--has-cutout {
+        .fc-item__container {
+            min-height: gs-height(6);
 
-        .fc-item__content {
-            width: gs-span(5) + $gs-gutter * 2;
+            .has-flex-wrap & {
+                @include flex-direction(row);
+            }
 
             @include mq(desktop) {
-                width: gs-span(6) + $gs-gutter;
+                min-height: gs-height(7);
             }
         }
 
-        .fc-item__header {
-            @include fs-headline(5, true);
-        }
-
-        .fc-item__standfirst {
-            display: block;
-            width: gs-span(4);
+        .fc-item__content {
+            width: auto;
+            max-width: gs-span(5);
 
             @include mq(desktop) {
-                width: gs-span(5);
-                @include fs-headline(2, true);
+                max-width: gs-span(6);
             }
         }
     }
 
-    &.fc-item--has-cutout {
-        min-height: gs-height(4) + $gs-baseline * 3;
+    .fc-item__avatar {
+        height: gs-height(6);
 
         @include mq(desktop) {
-            min-height: gs-height(5) + $gs-baseline * 3;
+            height: gs-height(7);
+        }
+    }
+
+    .fc-item__avatar__media {
+        right: -12%;
+
+        @include mq(desktop) {
+            right: -12%;
         }
     }
 

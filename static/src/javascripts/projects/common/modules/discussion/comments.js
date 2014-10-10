@@ -16,6 +16,7 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
     'common/modules/identity/api',
+    'common/modules/ui/relativedates',
     'common/modules/userPrefs'
 ], function(
     bean,
@@ -35,51 +36,22 @@ define([
     CommentBox,
     RecommendComments,
     Id,
+    relativedates,
     userPrefs
 ) {
 'use strict';
-/**
- * TODO (jamesgorrie):
- * * Move recommending into this, it has no need for it's own module.
- * * Get the selectors up to date with BEM
- * * Move over to $ instead of qwery & bonzo
- * @constructor
- * @extends Component
- * @param {Object=} options
- */
+
 var Comments = function(options) {
     this.setOptions(options);
-
-    if (userPrefs.get('discussion.order')) {
-        this.options.order = userPrefs.get('discussion.order');
-    }
-
-    this.fetchData = {
-        orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        maxResponses: 3
-    };
-
-    this.fetchCommentData = {
-        displayThreaded: true
-    };
-
-    this.endpoint = this.options.commentId ?
-        '/discussion/comment-context/'+ this.options.commentId + '.json' :
-        '/discussion/'+ this.options.discussionId + '.json';
+    this.options.order = userPrefs.get('discussion.order') || 'newest';
+    this.options.expand = userPrefs.get('discussion.expand') || false;
+    this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
 };
+
 Component.define(Comments);
 
-/**
- * @override
- * @type {string}
- */
 Comments.prototype.componentClass = 'd-discussion';
 
-/**
- * @type {Object.<string.*>}
- * @override
- */
 Comments.prototype.classes = {
     jsContent: 'js-discussion-content',
     container: 'discussion__comments__container',
@@ -111,7 +83,6 @@ Comments.prototype.classes = {
     commentReport: 'js-report-comment'
 };
 
-/** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
     discussionId: null,
     showRepliesCount: 3,
@@ -120,42 +91,31 @@ Comments.prototype.defaultOptions = {
     state: null
 };
 
-/**
- * @type {string}
- * @override
- */
-Comments.prototype.endpoint = '/discussion:discussionId.json';
-
-/** @type {NodeList=} */
 Comments.prototype.comments = null;
-
-/** @type {NodeList=} */
 Comments.prototype.topLevelComments = null;
-
-/** @type {Object=} */
 Comments.prototype.user = null;
 
-/** @override */
-Comments.prototype.prerender = function() {
+Comments.prototype.ready = function() {
 
-    // Ease of use
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
     if (this.options.state) {
         this.setState(this.options.state);
     }
-};
 
-/** @override */
-Comments.prototype.ready = function() {
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('changePage'), this.changePage);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
 
-    this.addMoreRepliesButtons();
+    window.setInterval(
+        function () {
+            this.relativeDates();
+        }.bind(this),
+        60000
+    );
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
@@ -169,6 +129,7 @@ Comments.prototype.ready = function() {
     }
 
     this.emit('ready');
+    this.relativeDates();
 
     $('.js-report-comment-close', this.elem).each(function(close) {
         bean.on(close, 'click', function() {
@@ -185,9 +146,6 @@ Comments.prototype.handleBodyClick = function(clickspec) {
     }
 };
 
-/**
- * @param {Event} e
- */
 Comments.prototype.handlePickClick = function(e) {
     e.preventDefault();
     var commentId = e.target.getAttribute('data-comment-id'),
@@ -201,11 +159,6 @@ Comments.prototype.handlePickClick = function(e) {
         });
 };
 
-/**
- * @param {Element} commentId
- * @param {Bonzo} $thisButton
- * @return {Reqwest} AJAX Promise
- */
 Comments.prototype.pickComment = function(commentId, $thisButton) {
     var self = this,
         comment = qwery('#comment-'+ commentId, this.elem);
@@ -220,11 +173,6 @@ Comments.prototype.pickComment = function(commentId, $thisButton) {
         });
 };
 
-/**
- * @param {Element} comment
- * @param {Bonzo} $thisButton
- * @return {Reqwest} AJAX Promise
- */
 Comments.prototype.unPickComment = function(commentId, $thisButton) {
     var self = this,
         comment = qwery('#comment-'+ commentId);
@@ -239,10 +187,6 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         });
 };
 
-/**
- * @param {number} id
- * @return {Reqwest|null}
- */
 Comments.prototype.gotoComment = function(id) {
     var comment = $('#comment-'+ id, this.elem);
 
@@ -258,13 +202,10 @@ Comments.prototype.gotoComment = function(id) {
     }.bind(this));
 };
 
-/**
- * @param {number} page
- */
 Comments.prototype.gotoPage = function(page) {
     this.loading();
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
-
+    this.relativeDates();
     return this.fetchComments({
         page: page
     }).then(function() {
@@ -272,76 +213,63 @@ Comments.prototype.gotoPage = function(page) {
     }.bind(this));
 };
 
-/**
- * @param {Event} e
- */
 Comments.prototype.changePage = function(e) {
     e.preventDefault();
     var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+    this.relativeDates();
     return this.gotoPage(page);
 };
 
-/**
- * @param {Object.<string.*>}
- * options {
- *   page: {number},
- *   comment: {number}
- * }
- */
 Comments.prototype.fetchComments = function(options) {
+    options = options || {};
+
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
         '.json?'+ (options.page ? '&page=' + options.page : '');
+
+    var queryParams = {
+        orderBy: options.order || this.options.order,
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        displayThreaded: !this.options.unthreaded
+    };
+
+    if (!this.options.expand) {
+        queryParams.maxResponses = 3;
+    }
 
     return ajax({
         url: url,
         type: 'json',
         method: 'get',
         crossOrigin: true,
-        data: this.fetchData
+        data: queryParams
     }).then(this.renderComments.bind(this));
 };
 
-/**
- * @param {Object} resp
- */
 Comments.prototype.renderComments = function(resp) {
-    var html = bonzo.create(resp.html),
-        content = qwery(this.getClass('jsContent'), html);
 
-    // Stop duplication in new comments section
-    qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
-        var $comment = $('#'+ comment.id, html);
-        if ($comment.length === 1) {
-            $(comment).remove();
-        }
-    });
+    var contentEl = bonzo.create(resp.html),
+        comments = qwery(this.getClass('comment'), contentEl);
 
-    $(this.getClass('jsContent'), this.elem).replaceWith(content);
-    this.addMoreRepliesButtons(qwery(
-        this.getClass('comment'), content
-    ));
+    bonzo(this.elem).empty().append(contentEl);
+    this.addMoreRepliesButtons(comments);
 
     if (!this.isReadOnly()) {
         RecommendComments.initButtons($(this.getClass('commentRecommend'), this.elem));
     }
 
+    this.relativeDates();
     this.emit('loaded');
 };
 
-/**
- * @param {Event} e (optional)
- */
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.removeState('shut');
     this.removeState('partial');
     this.emit('first-load');
+    this.relativeDates();
 };
 
-/**
- * @param {NodeList} comments
- */
 Comments.prototype.addMoreRepliesButtons = function (comments) {
 
     comments = comments || this.topLevelComments;
@@ -369,9 +297,6 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
     }.bind(this));
 };
 
-/**
- * @param {Event}
- */
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
 
@@ -385,7 +310,7 @@ Comments.prototype.getMoreReplies = function(event) {
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
-        data: this.fetchCommentData,
+        data: {displayThreaded: true},
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
@@ -401,12 +326,10 @@ Comments.prototype.getMoreReplies = function(event) {
             });
             RecommendComments.initButtons(btns);
         }
+        self.relativeDates();
     });
 };
 
-/**
- * @return {Boolean}
- */
 Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
 };
@@ -474,7 +397,6 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     window.location.replace('#comment-'+ comment.id);
 };
 
-/** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
     e.preventDefault(); // stop the anchor link firing
 
@@ -539,6 +461,7 @@ Comments.prototype.showDiscussion = function() {
         bean.fire(showDiscussionElem, 'click');
         showDiscussionElem.addClass('u-h');
     }
+    this.relativeDates();
 };
 
 Comments.prototype.loading = function() {
@@ -557,16 +480,12 @@ Comments.prototype.loaded = function() {
     $content.removeClass('u-h');
 };
 
-/**
- * @param {Event} e
- */
 Comments.prototype.setOrder = function(e) {
     var elem = e.currentTarget,
         newWorldOrder = elem.options[elem.selectedIndex].value,
         $newComments = $(this.getElem('newComments'));
 
     this.options.order = newWorldOrder;
-    this.fetchData.orderBy = newWorldOrder;
     this.showDiscussion();
     this.loading();
 
@@ -578,12 +497,10 @@ Comments.prototype.setOrder = function(e) {
     }).then(function() {
         this.showHiddenComments();
         this.loaded();
+        this.relativeDates();
     }.bind(this));
 };
 
-/**
- * @param {Event} e
- */
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
 
@@ -637,6 +554,10 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
+};
+
+Comments.prototype.relativeDates = function() {
+    relativedates.init();
 };
 
 return Comments;

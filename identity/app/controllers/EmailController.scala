@@ -1,5 +1,6 @@
 package controllers
 
+import actions.AuthenticatedActions
 import com.google.inject.{Inject, Singleton}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import conf.IdentityConfiguration
@@ -22,9 +23,10 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                 api: IdApiClient,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                authAction: actions.AuthenticatedAction)
+                                authenticatedActions: AuthenticatedActions)
   extends Controller with ExecutionContexts with SafeLogging {
   import EmailPrefsData._
+  import authenticatedActions.authAction
 
   val page = IdentityPage("/email-prefs", "Email preferences", "email-prefs")
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
@@ -33,7 +35,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
-      val userFuture = api.user(userId, request.auth)
+      val userFuture = api.user(userId, request.user.auth)
       val subscriberFuture = api.userEmails(userId, idRequest.trackingData)
 
       (for {
@@ -71,7 +73,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
-      val auth = request.auth
+      val auth = request.user.auth
       val trackingParameters = idRequest.trackingData
 
       emailPrefsForm.bindFromRequest.fold({

@@ -24,12 +24,26 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     @include fc-item--three-quarters;
 
-    .fc-item__media-wrapper {
-        float: left;
+    .fc-item__container {
+        @include flex-direction(row);
     }
 
-    .fc-item__content {
-        float: right;
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content > * {
+        @include box-sizing(border-box);
+        padding-right: 0;
+        padding-left: $gs-gutter * .75;
+    }
+
+    .has-no-flex-wrap & {
+        .fc-item__media-wrapper {
+            float: left;
+        }
+
+        .fc-item__content {
+            float: right;
+        }
     }
 
     &.fc-item--has-cutout {

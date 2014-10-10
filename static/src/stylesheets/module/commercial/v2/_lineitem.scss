@@ -109,7 +109,7 @@
             padding: 0 $gs-gutter/2;
 
             &:first-child {
-                border-left: 1px solid $c-neutral3;
+                border-left: 1px solid $c-neutral4;
             }
         }
     }
@@ -134,6 +134,8 @@
         }
         .lineitem.lineitem--high {
             padding-left: 0;
+            padding-bottom: $gs-baseline/2;
+
             @include mq(tablet) {
                 padding-left: $gs-gutter*.5;
             }
