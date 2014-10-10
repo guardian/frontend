@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2008-2013 Pivotal Labs
+Copyright (c) 2008-2014 Pivotal Labs
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -49,20 +49,21 @@ jasmineRequire.HtmlReporter = function(j$) {
       symbols;
 
     this.initialize = function() {
-      htmlReporterMain = createDom("div", {className: "html-reporter"},
-        createDom("div", {className: "banner"},
-          createDom("span", {className: "title"}, "Jasmine"),
-          createDom("span", {className: "version"}, j$.version)
+      clearPrior();
+      htmlReporterMain = createDom('div', {className: 'jasmine_html-reporter'},
+        createDom('div', {className: 'banner'},
+          createDom('a', {className: 'title', href: 'http://jasmine.github.io/', target: '_blank'}),
+          createDom('span', {className: 'version'}, j$.version)
         ),
-        createDom("ul", {className: "symbol-summary"}),
-        createDom("div", {className: "alert"}),
-        createDom("div", {className: "results"},
-          createDom("div", {className: "failures"})
+        createDom('ul', {className: 'symbol-summary'}),
+        createDom('div', {className: 'alert'}),
+        createDom('div', {className: 'results'},
+          createDom('div', {className: 'failures'})
         )
       );
       getContainer().appendChild(htmlReporterMain);
 
-      symbols = find(".symbol-summary");
+      symbols = find('.symbol-summary');
     };
 
     var totalSpecsDefined;
@@ -71,13 +72,13 @@ jasmineRequire.HtmlReporter = function(j$) {
       timer.start();
     };
 
-    var summary = createDom("div", {className: "summary"});
+    var summary = createDom('div', {className: 'summary'});
 
-    var topResults = new j$.ResultsNode({}, "", null),
+    var topResults = new j$.ResultsNode({}, '', null),
       currentParent = topResults;
 
     this.suiteStarted = function(result) {
-      currentParent.addChild(result, "suite");
+      currentParent.addChild(result, 'suite');
       currentParent = currentParent.last();
     };
 
@@ -90,82 +91,94 @@ jasmineRequire.HtmlReporter = function(j$) {
     };
 
     this.specStarted = function(result) {
-      currentParent.addChild(result, "spec");
+      currentParent.addChild(result, 'spec');
     };
 
     var failures = [];
     this.specDone = function(result) {
-      if (result.status != "disabled") {
+      if(noExpectations(result) && console && console.error) {
+        console.error('Spec \'' + result.fullName + '\' has no expectations.');
+      }
+
+      if (result.status != 'disabled') {
         specsExecuted++;
       }
 
-      symbols.appendChild(createDom("li", {
-          className: result.status,
-          id: "spec_" + result.id,
+      symbols.appendChild(createDom('li', {
+          className: noExpectations(result) ? 'empty' : result.status,
+          id: 'spec_' + result.id,
           title: result.fullName
         }
       ));
 
-      if (result.status == "failed") {
+      if (result.status == 'failed') {
         failureCount++;
 
         var failure =
-          createDom("div", {className: "spec-detail failed"},
-            createDom("div", {className: "description"},
-              createDom("a", {title: result.fullName, href: specHref(result)}, result.fullName)
+          createDom('div', {className: 'spec-detail failed'},
+            createDom('div', {className: 'description'},
+              createDom('a', {title: result.fullName, href: specHref(result)}, result.fullName)
             ),
-            createDom("div", {className: "messages"})
+            createDom('div', {className: 'messages'})
           );
         var messages = failure.childNodes[1];
 
         for (var i = 0; i < result.failedExpectations.length; i++) {
           var expectation = result.failedExpectations[i];
-          messages.appendChild(createDom("div", {className: "result-message"}, expectation.message));
-          messages.appendChild(createDom("div", {className: "stack-trace"}, expectation.stack));
+          messages.appendChild(createDom('div', {className: 'result-message'}, expectation.message));
+          messages.appendChild(createDom('div', {className: 'stack-trace'}, expectation.stack));
         }
 
         failures.push(failure);
       }
 
-      if (result.status == "pending") {
+      if (result.status == 'pending') {
         pendingSpecCount++;
       }
     };
 
     this.jasmineDone = function() {
-      var banner = find(".banner");
-      banner.appendChild(createDom("span", {className: "duration"}, "finished in " + timer.elapsed() / 1000 + "s"));
+      var banner = find('.banner');
+      banner.appendChild(createDom('span', {className: 'duration'}, 'finished in ' + timer.elapsed() / 1000 + 's'));
 
-      var alert = find(".alert");
+      var alert = find('.alert');
 
-      alert.appendChild(createDom("span", { className: "exceptions" },
-        createDom("label", { className: "label", 'for': "raise-exceptions" }, "raise exceptions"),
-        createDom("input", {
-          className: "raise",
-          id: "raise-exceptions",
-          type: "checkbox"
+      alert.appendChild(createDom('span', { className: 'exceptions' },
+        createDom('label', { className: 'label', 'for': 'raise-exceptions' }, 'raise exceptions'),
+        createDom('input', {
+          className: 'raise',
+          id: 'raise-exceptions',
+          type: 'checkbox'
         })
       ));
-      var checkbox = find("input");
+      var checkbox = find('#raise-exceptions');
 
       checkbox.checked = !env.catchingExceptions();
       checkbox.onclick = onRaiseExceptionsClick;
 
       if (specsExecuted < totalSpecsDefined) {
-        var skippedMessage = "Ran " + specsExecuted + " of " + totalSpecsDefined + " specs - run all";
+        var skippedMessage = 'Ran ' + specsExecuted + ' of ' + totalSpecsDefined + ' specs - run all';
         alert.appendChild(
-          createDom("span", {className: "bar skipped"},
-            createDom("a", {href: "?", title: "Run all specs"}, skippedMessage)
+          createDom('span', {className: 'bar skipped'},
+            createDom('a', {href: '?', title: 'Run all specs'}, skippedMessage)
           )
         );
       }
-      var statusBarMessage = "" + pluralize("spec", specsExecuted) + ", " + pluralize("failure", failureCount);
-      if (pendingSpecCount) { statusBarMessage += ", " + pluralize("pending spec", pendingSpecCount); }
+      var statusBarMessage = '';
+      var statusBarClassName = 'bar ';
 
-      var statusBarClassName = "bar " + ((failureCount > 0) ? "failed" : "passed");
-      alert.appendChild(createDom("span", {className: statusBarClassName}, statusBarMessage));
+      if (totalSpecsDefined > 0) {
+        statusBarMessage += pluralize('spec', specsExecuted) + ', ' + pluralize('failure', failureCount);
+        if (pendingSpecCount) { statusBarMessage += ', ' + pluralize('pending spec', pendingSpecCount); }
+        statusBarClassName += (failureCount > 0) ? 'failed' : 'passed';
+      } else {
+        statusBarClassName += 'skipped';
+        statusBarMessage += 'No specs found';
+      }
 
-      var results = find(".results");
+      alert.appendChild(createDom('span', {className: statusBarClassName}, statusBarMessage));
+
+      var results = find('.results');
       results.appendChild(summary);
 
       summaryList(topResults, summary);
@@ -174,27 +187,31 @@ jasmineRequire.HtmlReporter = function(j$) {
         var specListNode;
         for (var i = 0; i < resultsTree.children.length; i++) {
           var resultNode = resultsTree.children[i];
-          if (resultNode.type == "suite") {
-            var suiteListNode = createDom("ul", {className: "suite", id: "suite-" + resultNode.result.id},
-              createDom("li", {className: "suite-detail"},
-                createDom("a", {href: specHref(resultNode.result)}, resultNode.result.description)
+          if (resultNode.type == 'suite') {
+            var suiteListNode = createDom('ul', {className: 'suite', id: 'suite-' + resultNode.result.id},
+              createDom('li', {className: 'suite-detail'},
+                createDom('a', {href: specHref(resultNode.result)}, resultNode.result.description)
               )
             );
 
             summaryList(resultNode, suiteListNode);
             domParent.appendChild(suiteListNode);
           }
-          if (resultNode.type == "spec") {
-            if (domParent.getAttribute("class") != "specs") {
-              specListNode = createDom("ul", {className: "specs"});
+          if (resultNode.type == 'spec') {
+            if (domParent.getAttribute('class') != 'specs') {
+              specListNode = createDom('ul', {className: 'specs'});
               domParent.appendChild(specListNode);
             }
+            var specDescription = resultNode.result.description;
+            if(noExpectations(resultNode.result)) {
+              specDescription = 'SPEC HAS NO EXPECTATIONS ' + specDescription;
+            }
             specListNode.appendChild(
-              createDom("li", {
+              createDom('li', {
                   className: resultNode.result.status,
-                  id: "spec-" + resultNode.result.id
+                  id: 'spec-' + resultNode.result.id
                 },
-                createDom("a", {href: specHref(resultNode.result)}, resultNode.result.description)
+                createDom('a', {href: specHref(resultNode.result)}, specDescription)
               )
             );
           }
@@ -203,24 +220,24 @@ jasmineRequire.HtmlReporter = function(j$) {
 
       if (failures.length) {
         alert.appendChild(
-          createDom('span', {className: "menu bar spec-list"},
-            createDom("span", {}, "Spec List | "),
-            createDom('a', {className: "failures-menu", href: "#"}, "Failures")));
+          createDom('span', {className: 'menu bar spec-list'},
+            createDom('span', {}, 'Spec List | '),
+            createDom('a', {className: 'failures-menu', href: '#'}, 'Failures')));
         alert.appendChild(
-          createDom('span', {className: "menu bar failure-list"},
-            createDom('a', {className: "spec-list-menu", href: "#"}, "Spec List"),
-            createDom("span", {}, " | Failures ")));
+          createDom('span', {className: 'menu bar failure-list'},
+            createDom('a', {className: 'spec-list-menu', href: '#'}, 'Spec List'),
+            createDom('span', {}, ' | Failures ')));
 
-        find(".failures-menu").onclick = function() {
+        find('.failures-menu').onclick = function() {
           setMenuModeTo('failure-list');
         };
-        find(".spec-list-menu").onclick = function() {
+        find('.spec-list-menu').onclick = function() {
           setMenuModeTo('spec-list');
         };
 
         setMenuModeTo('failure-list');
 
-        var failureNode = find(".failures");
+        var failureNode = find('.failures');
         for (var i = 0; i < failures.length; i++) {
           failureNode.appendChild(failures[i]);
         }
@@ -230,7 +247,16 @@ jasmineRequire.HtmlReporter = function(j$) {
     return this;
 
     function find(selector) {
-      return getContainer().querySelector(selector);
+      return getContainer().querySelector('.jasmine_html-reporter ' + selector);
+    }
+
+    function clearPrior() {
+      // return the reporter
+      var oldReporter = find('');
+      
+      if(oldReporter) {
+        getContainer().removeChild(oldReporter);
+      }
     }
 
     function createDom(type, attrs, childrenVarArgs) {
@@ -249,7 +275,7 @@ jasmineRequire.HtmlReporter = function(j$) {
       }
 
       for (var attr in attrs) {
-        if (attr == "className") {
+        if (attr == 'className') {
           el[attr] = attrs[attr];
         } else {
           el.setAttribute(attr, attrs[attr]);
@@ -260,17 +286,22 @@ jasmineRequire.HtmlReporter = function(j$) {
     }
 
     function pluralize(singular, count) {
-      var word = (count == 1 ? singular : singular + "s");
+      var word = (count == 1 ? singular : singular + 's');
 
-      return "" + count + " " + word;
+      return '' + count + ' ' + word;
     }
 
     function specHref(result) {
-      return "?spec=" + encodeURIComponent(result.fullName);
+      return '?spec=' + encodeURIComponent(result.fullName);
     }
 
     function setMenuModeTo(mode) {
-      htmlReporterMain.setAttribute("class", "html-reporter " + mode);
+      htmlReporterMain.setAttribute('class', 'jasmine_html-reporter ' + mode);
+    }
+
+    function noExpectations(result) {
+      return (result.failedExpectations.length + result.passedExpectations.length) === 0 &&
+        result.status === 'passed';
     }
   }
 
@@ -279,7 +310,7 @@ jasmineRequire.HtmlReporter = function(j$) {
 
 jasmineRequire.HtmlSpecFilter = function() {
   function HtmlSpecFilter(options) {
-    var filterString = options && options.filterString() && options.filterString().replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+    var filterString = options && options.filterString() && options.filterString().replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
     var filterPattern = new RegExp(filterString);
 
     this.matches = function(specName) {
@@ -328,9 +359,9 @@ jasmineRequire.QueryString = function() {
     function toQueryString(paramMap) {
       var qStrPairs = [];
       for (var prop in paramMap) {
-        qStrPairs.push(encodeURIComponent(prop) + "=" + encodeURIComponent(paramMap[prop]));
+        qStrPairs.push(encodeURIComponent(prop) + '=' + encodeURIComponent(paramMap[prop]));
       }
-      return "?" + qStrPairs.join('&');
+      return '?' + qStrPairs.join('&');
     }
 
     function queryStringToParamMap() {
@@ -343,7 +374,7 @@ jasmineRequire.QueryString = function() {
         for (var i = 0; i < params.length; i++) {
           var p = params[i].split('=');
           var value = decodeURIComponent(p[1]);
-          if (value === "true" || value === "false") {
+          if (value === 'true' || value === 'false') {
             value = JSON.parse(value);
           }
           paramMap[decodeURIComponent(p[0])] = value;
