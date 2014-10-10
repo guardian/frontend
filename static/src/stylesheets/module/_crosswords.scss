@@ -10,6 +10,10 @@
 }
 
 .crossword__grid__cell--highlighted {
+    background-color: $c-crosswordAccent2;
+}
+
+.crossword__grid__cell--focussed {
     background-color: $c-crosswordAccent1;
 }
 
@@ -65,7 +69,6 @@
     position: absolute;
     overflow: hidden;
     width: 0;
-    border: 2px solid red;
 }
 
 .crossword__hidden-input {

@@ -153,7 +153,8 @@ define([
                         cells: this.state.grid,
                         setCellValue: this.setCellValue,
                         onSelect: this.onSelect,
-                        isHighlighted: isHighlighted
+                        isHighlighted: isHighlighted,
+                        focussedCell: this.state.cellInFocus
                     }),
                     React.DOM.div({
                             className: 'crossword__hidden-input-wrapper',

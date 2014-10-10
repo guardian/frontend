@@ -12,6 +12,7 @@ define([
                     props = {
                         className: classSet({
                             'crossword__grid__cell': true,
+                            'crossword__grid__cell--focussed': this.props.isFocussed,
                             'crossword__grid__cell--highlighted': this.props.isHighlighted,
                             'crossword__grid__cell--editable': this.props.isEditable,
                             'crossword__grid__cell--non-editable': !this.props.isEditable
@@ -55,6 +56,8 @@ define([
                         cellProps.handleSelect = that.handleSelect.bind(that, x, y);
                         cellProps.key = 'cell_' + x + '_' + y;
                         cellProps.isHighlighted = that.props.isHighlighted(x, y);
+                        cellProps.isFocussed = that.props.focussedCell && x === that.props.focussedCell.x &&
+                            y === that.props.focussedCell.y;
                         return Cell(cellProps);
                     });
 
