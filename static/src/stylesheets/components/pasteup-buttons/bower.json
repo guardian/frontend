@@ -1,7 +1,7 @@
 {
   "name": "pasteup-buttons",
   "description": "Button component in the Pasteup collection",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "main": [
     "build/buttons.min.css",
     "src/_buttons.scss"
