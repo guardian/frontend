@@ -228,8 +228,8 @@ trait UpdateActions extends Logging {
     ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
       case Some(groups) if groups.nonEmpty => block
       case _ => block.copy(
-                  live = block.live.map(removeGroupsFromTrail),
-                  draft = block.draft.map(_.map(removeGroupsFromTrail)))
+        live = block.live.map(removeGroupsFromTrail),
+        draft = block.draft.map(_.map(removeGroupsFromTrail)))
     }
   }
 
