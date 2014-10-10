@@ -238,6 +238,11 @@ object Switches extends Collections {
 
   // Features
 
+
+  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
+    "If switched on then the preview server will poll until the latest content is indexed.",
+    safeState = On, sellByDate = new LocalDate(2015, 1, 15))
+
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
     safeState = Off, sellByDate = never)
@@ -426,7 +431,8 @@ object Switches extends Collections {
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    LiveBlogCacheTimeSwitch
+    LiveBlogCacheTimeSwitch,
+    PollPreviewForFreshContentSwitch
   )
 
   val httpSwitches: List[Switch] = List(

@@ -1,8 +1,8 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
-import scala.xml.{Node, Elem}
 import java.math.BigDecimal
+
+import scala.xml.{Elem, Node}
 
 case class Loan(name: String,
                 comments: String,
@@ -15,10 +15,7 @@ case class Loan(name: String,
                 detailsUrl: String,
                 applyUrl: String,
                 categoryName: String
-                 ) extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
+                 )
 
 
 case class LoanExample(amount: Double,

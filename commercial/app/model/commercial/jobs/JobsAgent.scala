@@ -1,26 +1,28 @@
 package model.commercial.jobs
 
-import common.{Logging, ExecutionContexts}
-import model.commercial.AdAgent
+import common.ExecutionContexts
+import model.commercial._
 
-object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
+object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
 
-  override def defaultAds = currentAds filter (_.industries.contains("Media"))
-
+  def jobsTargetedAt(segment: Segment): Seq[Job] = {
+    def defaultJobs = available filter (_.industries.contains("Media"))
+    getTargetedMerchandise(segment, defaultJobs)(job => keywordsMatch(segment, job.keywordIds))
+  }
+  
   def specificJobs(jobIdStrings: Seq[String]): Seq[Job] = {
     val jobIds = jobIdStrings map (_.toInt)
-    currentAds filter (job => jobIds contains job.id)
+    available filter (job => jobIds contains job.id)
   }
 
   def refresh() {
-    for {jobs <- JobsApi.loadAds()} {
-      updateCurrentAds(populateKeywords(jobs))
-    }
-  }
 
-  private def populateKeywords(jobs: Seq[Job]) = jobs.map {
-    job =>
+    def populateKeywords(jobs: Seq[Job]) = jobs.map { job =>
       val jobKeywordIds = job.sectorIds.flatMap(Industries.forIndustry).distinct
       job.copy(keywordIds = jobKeywordIds)
+    }
+
+    for {freshJobs <- JobsApi.loadAds()} updateAvailableMerchandise(populateKeywords(freshJobs))
   }
+
 }

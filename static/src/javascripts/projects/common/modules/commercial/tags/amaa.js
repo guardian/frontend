@@ -1,6 +1,6 @@
 define([
     'common/utils/config'
-], function(
+], function (
     config
 ) {
 

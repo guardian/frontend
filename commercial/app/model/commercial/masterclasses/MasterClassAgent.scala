@@ -1,24 +1,22 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.commercial.{AdAgent, Lookup, Segment}
+import model.commercial.{Lookup, MerchandiseAgent, Segment, keywordsMatch}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
-object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
+object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionContexts with Logging {
 
-  override def defaultAds = currentAds take 4
-
-  override def adsTargetedAt(segment: Segment) = {
-    val targetedAds = currentAds filter (_.isTargetedAt(segment))
-    val adsToShow = (targetedAds ++ defaultAds) take 4
-    adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
+  def masterclassesTargetedAt(segment: Segment) = {
+    lazy val defaultClasses = available take 4
+    val targeted = available filter (masterclass => keywordsMatch(segment, masterclass.eventBriteEvent.keywordIds))
+    val toShow = (targeted ++ defaultClasses) take 4
+    toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }
 
   def specificClasses(eventBriteIds: Seq[String]): Seq[MasterClass] = {
     for {
-      masterclass <- currentAds
+      masterclass <- available
       eventId <- eventBriteIds
       if masterclass.eventBriteEvent.id == eventId
     } yield {
@@ -71,11 +69,15 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
       populated
     }
 
+    def updateCurrentMasterclasses(freshData: Seq[MasterClass]): Unit = {
+      updateAvailableMerchandise(freshData)
+    }
+
     for {
       eventBrite <- EventbriteApi.loadAds()
       masterclasses <- wrapEventbriteWithContentApi(populateKeywordIds(eventBrite.filter(_.isOpen)))
     } {
-      updateCurrentAds(masterclasses)
+      updateCurrentMasterclasses(masterclasses)
     }
   }
 }
@@ -94,12 +96,12 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[Seq[Future[Map[String, Seq[String]]]]] = {
     val tags = {
-      val currentAds = MasterClassAgent.currentAds
-      if (currentAds.isEmpty) {
+      val current = MasterClassAgent.available
+      if (current.isEmpty) {
         defaultTags
       } else {
         // use event title instead of tags because it's more informative
-        currentAds.map(_.eventBriteEvent.name).distinct
+        current.map(_.eventBriteEvent.name).distinct
       }
     }
     Future.sequence {

@@ -46,6 +46,7 @@
     }
 
     .container__header__inner {
+        @include box-sizing(border-box);
         padding: $gs-baseline/2 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
@@ -54,9 +55,6 @@
         }
 
         @include mq(leftCol) {
-            @include box-sizing(border-box);
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
             height: 100%;
         }
     }
@@ -149,7 +147,7 @@
         left: 0;
         width: $gs-baseline*3;
         height: $gs-baseline*3;
-        padding: $gs-baseline*.75;
+        padding: $gs-baseline*.75 $gs-baseline;
 
         &:hover,
         &:focus,
@@ -186,10 +184,16 @@
         }
 
         .i-right {
-            @include mq($until: mobile) {
-                margin: -1px -13px 0;
+            @include mq($until: mobileLandscape) {
+                margin: -1px -13px;
                 float: none;
             }
+        }
+    }
+
+    .commercial__cta__label {
+        @include mq($until: mobileLandscape) {
+            display: none;
         }
     }
 
