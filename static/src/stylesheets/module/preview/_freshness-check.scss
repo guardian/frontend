@@ -1,20 +1,20 @@
 .preview-refresh {
-  height: 80px;
-  background-color: #FF6666;
-  color: #FFFFFF;
-  font-size: 26px;
-  padding: 5px;
+    @include fs-headline(5);
+    height: gs-height(2);
+    background-color: #ff6666;
+    color: #ffffff;
+    padding: 5px;
 
-  .pamplemousse {
-    float: right;
-    .pamplemousse__pip{
-      i {
-        background-color: #FFFFFF;
-      }
+    .pamplemousse {
+        float: right;
+        .pamplemousse__pip {
+            i {
+                background-color: #ffffff;
+            }
+        }
     }
-  }
 }
 
 .preview-refresh--explainer {
-  font-size: 12px;
+    @include fs-headline(1, true);
 }
