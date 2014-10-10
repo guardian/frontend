@@ -46,9 +46,5 @@
     .fc-item__breaking-indicator {
         color: #ffffff;
         font-weight: 400;
-
-        &:after {
-            content: ' /';
-        }
     }
 }
