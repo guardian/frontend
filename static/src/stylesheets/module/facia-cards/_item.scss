@@ -210,11 +210,20 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__latest-block {
-    @include fs-textSans(1);
+    @include fs-headline(1);
     @include transform(translateX(0));
     @include transition(transform, 250ms, linear);
     display: block;
     @include text-clamp(4, 1.6em);
+    margin-bottom: get-line-height(headline, 1);
+
+    &:before {
+        // Example placeholder until rob sorts it out
+        content: "7m ago ";
+        @include fs-textSans(4);
+        font-weight: bold;
+        line-height: inherit;
+    }
 }
 
 .fc-item__latest-block--unloading {
@@ -249,7 +258,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    // display: none;
+    display: none;
     margin-right: 1em;
 }
 
