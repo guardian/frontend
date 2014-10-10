@@ -7,12 +7,6 @@ define([
 ) {
     var classSet = React.addons.classSet,
         Cell = React.createClass({
-            handleSelect: function (event) {
-                console.log(event.pageX, event.pageY);
-
-                this.props.handleSelect(event.pageX, event.pageY);
-            },
-
             render: function () {
                 var innerNodes = [],
                     props = {
@@ -41,7 +35,7 @@ define([
                 }
 
                 if (this.props.isEditable) {
-                    props.onClick = this.handleSelect;
+                    props.onClick = this.props.handleSelect;
                 }
 
                 return React.DOM.td(props, innerNodes);

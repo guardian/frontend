@@ -26,11 +26,7 @@ define([
             return {
                 grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries),
                 cellInFocus: null,
-                directionOfEntry: null,
-                inputPosition: {
-                    x: 0,
-                    y: 0
-                }
+                directionOfEntry: null
             };
         },
 
@@ -44,7 +40,7 @@ define([
                 cell = this.state.cellInFocus;
 
             if (/[A-Z]/.test(value)) {
-                this.setCellValue(cell.x, cell.y, value)
+                this.setCellValue(cell.x, cell.y, value);
                 this.focusNext();
             }
         },
@@ -69,13 +65,21 @@ define([
             }
         },
 
-        onSelect: function (x, y, pageX, pageY) {
+        focusHiddenInput: function (x, y) {
+            var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
+
+            wrapper.style.left = (x * 32) + "px";
+            wrapper.style.top = (y * 32) + "px";
+            this.refs.hiddenInput.getDOMNode().focus();
+        },
+
+        onSelect: function (x, y) {
             var cellInFocus = this.state.cellInFocus,
                 clue = this.cluesFor(x, y),
                 newDirection,
                 isStartOfClue;
 
-            this.refs.hiddenInput.getDOMNode().focus();
+            this.focusHiddenInput(x, y);
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
                 newDirection = helpers.otherDirection(this.state.directionOfEntry);
@@ -103,12 +107,6 @@ define([
                     this.state.directionOfEntry = 'down';
                 }
             }
-
-            /** So that focusing on the input doesn't move the viewport */
-            this.state.inputPosition = {
-                x: pageX,
-                y: pageY
-            };
 
             this.setState(this.state);
         },
@@ -140,7 +138,6 @@ define([
                     }
                 };
 
-
             return React.DOM.div(null,
                 React.DOM.div({
                     className: 'crossword__grid-wrapper'
@@ -155,10 +152,7 @@ define([
                     }),
                     React.DOM.div({
                             className: 'crossword__hidden-input-wrapper',
-                            style: {
-                                left: this.state.inputPosition.x + "px",
-                                top: this.state.inputPosition.y + "px"
-                            }
+                            ref: "hiddenInputWrapper"
                         },
                         React.DOM.input({
                                 type: 'text',
