@@ -166,6 +166,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
     .map(removeGroupIfNoLongerGrouped(id, _))
+    .map(pruneBlock)
     .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
@@ -180,6 +181,7 @@ trait UpdateActions extends Logging {
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(removeGroupIfNoLongerGrouped(id, _))
+      .map(pruneBlock)
       .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
@@ -232,6 +234,26 @@ trait UpdateActions extends Logging {
         draft = block.draft.map(_.map(removeGroupsFromTrail)))
     }
   }
+
+  private def pruneBlock(block: Block): Block =
+    block.copy(
+      live = block.live
+        .map(pruneGroupOfZero)
+        .map(pruneMetaDataIfEmpty),
+      draft = block.draft.map(
+        _.map(pruneGroupOfZero)
+         .map(pruneMetaDataIfEmpty)
+      )
+    )
+
+  private def pruneGroupOfZero(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(
+      metaData => metaData.copy(json = metaData.json.filter{
+        case (k, v) if k == "group" => v.asOpt[Int].exists(_!=0)
+        case _ => true})))
+
+  private def pruneMetaDataIfEmpty(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.filter(_.json.nonEmpty))
 
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
