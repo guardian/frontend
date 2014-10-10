@@ -48,7 +48,21 @@
     }
 }
 .container__header {
+    padding-top: $gs-baseline / 2;
     position: relative;
+
+    @include mq($until: tablet) {
+        @include fs-header(5);
+    }
+
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
 }
 .container__title,
 .container__toggle__text {
@@ -79,11 +93,6 @@
     @include mq(tablet) {
         min-height: 0;
         padding-right: 0;
-        padding-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline;
-    }
-    @include mq(desktop) {
-        padding-top: $gs-baseline/1.5;
     }
 }
 
