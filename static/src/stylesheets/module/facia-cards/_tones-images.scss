@@ -70,8 +70,9 @@
     }
 }
 
-.fc-item--video {
-    .fc-item__title:before {
+.fc-item--video .fc-item__title,
+.fc-sublinks__item--video .fc-item__link {
+    &:before {
         @include icon(video-icon, false);
         content: '';
         height: .75em;
@@ -80,8 +81,9 @@
     }
 }
 
-.fc-item--gallery {
-    .fc-item__title:before {
+.fc-item--gallery .fc-item__title,
+.fc-sublinks__item--gallery .fc-item__link {
+    &:before {
         @include icon(camera-yellow-large, false);
         content: '';
         height: .75em;
