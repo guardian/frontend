@@ -22,7 +22,7 @@ define([
     bean,
     bonzo,
     qwery,
-    
+
     _map,
 
     $,
@@ -118,7 +118,6 @@ Comments.prototype.ready = function() {
     );
 
     if (this.options.commentId) {
-        var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
         window.location.replace('#comment-'+ this.options.commentId);
