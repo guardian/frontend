@@ -9,6 +9,7 @@ import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 
@@ -17,18 +18,34 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
   def renderMulti() = MemcachedAction { implicit request =>
 
     Future.successful {
-      val merchandise = request.queryString("c").flatMap {
-        case "jobs" => JobsAgent.jobsTargetedAt(segment).headOption
-        case "books" => BestsellersAgent.bestsellersTargetedAt(segment).headOption
-        case "travel" => TravelOffersAgent.offersTargetedAt(segment).headOption
-        case "masterclasses" => MasterClassAgent.masterclassesTargetedAt(segment).headOption
-        case "soulmates" => SoulmatesAggregatingAgent.sampleMembers(segment).headOption
+      val componentParts: Seq[Html] = request.queryString("c").flatMap {
+        case "jobs" =>
+          JobsAgent.jobsTargetedAt(segment).headOption map { job =>
+            views.html.jobFragments.job(job)
+          }
+        case "books" =>
+          BestsellersAgent.bestsellersTargetedAt(segment).headOption map { book =>
+            views.html.books.book(book)
+          }
+        case "travel" =>
+          TravelOffersAgent.offersTargetedAt(segment).headOption map { travelOffer =>
+            views.html.travelOfferFragments.travelOffer(travelOffer)
+          }
+        case "masterclasses" =>
+          MasterClassAgent.masterclassesTargetedAt(segment).headOption map { masterclass =>
+            views.html.masterClasses.masterClass(masterclass)
+          }
+        case "soulmates" =>
+          SoulmatesAggregatingAgent.sampleMembers(segment).headOption map { member =>
+            views.html.soulmateFragments.soulmate(member)
+          }
+        case _ => None
       }
 
-      merchandise match {
+      componentParts match {
         case Nil => NoCache(jsonFormat.nilResult)
-        case as => Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(as))
+        case parts => Cached(componentMaxAge) {
+          jsonFormat.result(views.html.multi(parts))
         }
       }
     }
