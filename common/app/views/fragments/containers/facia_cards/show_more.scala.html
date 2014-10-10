@@ -1,6 +1,6 @@
-@(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: Config)
+@(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
-@import model.Config
+@import com.gu.facia.client.models.Config
 @import fragments.items.facia_cards.item
 @import layout.ItemClasses
 

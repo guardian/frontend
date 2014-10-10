@@ -3,7 +3,9 @@ package test
 import org.scalatest.{Suites, DoNotDiscover, FlatSpec, Matchers}
 
 class PreviewTestSuite extends Suites (
-  new PreviewServerTest ) with SingleServerSuite {
+  new PreviewServerTest,
+  new LastModifiedControllerTest
+) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 }

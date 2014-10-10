@@ -129,13 +129,6 @@ TopComments.prototype.ready = function() {
 
     heading.childNodes[0].nodeValue = self.options.sectionHeading;
 
-    if (self.topCommentsAmount === 1) {
-        heading.childNodes[0].nodeValue = heading.childNodes[0].nodeValue.replace(/s\b/, '');
-    } else {
-        // Append top comment count to section title
-       $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = '(' + self.topCommentsAmount + ')';
-    }
-
     self.emit('ready');
 };
 

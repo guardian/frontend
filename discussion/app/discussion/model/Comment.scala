@@ -1,7 +1,6 @@
 package discussion
 package model
 
-import _root_.model.ISODateTimeStringNoMillis2DateTime
 import org.joda.time.DateTime
 import play.api.libs.json._
 
@@ -58,7 +57,7 @@ trait Comment {
   val webUrl: String
 }
 
-object Comment extends {
+object Comment extends implicits.Dates {
 
   def apply(json: JsValue, profileOpt: Option[Profile], discussionOpt: Option[Discussion]): Comment = {
     val discussion = discussionOpt getOrElse {Discussion(json \ "discussion")}

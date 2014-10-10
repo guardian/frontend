@@ -44,9 +44,11 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
             }
           }
         }
-        Cached(30)(JsonComponent(html))
+        Cached(model.article)(JsonComponent(html))
     }
   }
+
+
 
   def renderLatest(path: String, lastUpdate: Option[String]) = lastUpdate map { renderLatestFrom(path, _) } getOrElse { renderArticle(path) }
 

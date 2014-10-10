@@ -1,6 +1,6 @@
 {
   "name": "jasmine-sinon",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "main": "lib/jasmine-sinon.js",
   "ignore": [
     "**/.*",
@@ -8,7 +8,7 @@
     "components"
   ],
   "dependencies": {
-    "jasmine": "~1.3.1",
-    "sinonjs": "~1.7.1"
+    "jasmine": "~2.0.0",
+    "sinonjs": ">= 1.7.1"
   }
 }

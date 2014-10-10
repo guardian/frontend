@@ -14,15 +14,7 @@
         max-width: $left-column-wide;
     }
 
-    .related-keywords & {
-        max-width: none;
-    }
-
     .content__keywords & {
-        max-width: none;
-    }
-
-    .facia-container__related-keywords__body & {
         max-width: none;
     }
 }

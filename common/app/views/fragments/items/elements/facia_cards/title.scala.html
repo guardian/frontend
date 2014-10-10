@@ -1,14 +1,14 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Config, Trail}
+@import model.Trail
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
 
-@itemHeader(containerIndex == 0 && itemIndex == 0) {
+@itemHeader(containerIndex == 0 && itemIndex == 0, trail.showQuotedHeadline) {
     @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
-            <span class="fc-item__live-indicator">Breaking news</span>
+            <span class="fc-item__breaking-indicator">Breaking news</span>
         }
 
         case LiveKicker => {
@@ -43,10 +43,8 @@
             <span class="fc-item__kicker">@Html(html)</span>
         }
     }
-
+} {
     @LinkTo(trail).map { url =>
-        <a href="@url" class="fc-item__link" data-link-name="article">
-            <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
-        </a>
+        <a href="@url" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     }
 }

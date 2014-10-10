@@ -1,12 +1,11 @@
 .fc-sublinks {
-    clear: left;
-    padding-top: $gs-baseline * .25;
+    margin-top: $gs-baseline * .5;
 }
 
 .fc-sublinks__item {
     position: relative;
     padding-top: $gs-baseline * .25;
-    margin-top: $gs-baseline * .25;
+    margin-top: $gs-baseline * .75;
 
     a {
         display: block;
@@ -15,7 +14,6 @@
 
 .fc-sublinks__item-title {
     @include fs-headline(1);
-    font-weight: 500;
     padding-top: 0;
     margin: 0;
 
@@ -26,47 +24,47 @@
         left: 0;
         content: '';
         width: 40%;
-        border-top: 1px dotted $c-neutral4;
+        border-top: 1px dotted $c-neutral3;
+    }
 
-        @include mq(tablet) {
-            width: 100%;
-        }
+    .fc-item__kicker {
+        font-weight: 500;
     }
 }
 
-@mixin fc-sublinks-horizontal {
+@mixin fc-sublinks--horizontal {
+    .fc-item__footer--vertical {
+        display: none;
+    }
 
-    .fc-item__footer {
+    .fc-item__footer--horizontal {
+        display: block;
         clear: both;
     }
 
-    .fc-item__content {
-        width: 100%;
-    }
-
-    @if $browser-supports-flexbox {
+    .has-flex-wrap & {
         .fc-sublinks {
             @include flex-display;
         }
-
         .fc-sublinks__item {
-            margin-right: $gs-gutter;
             @include flex(1, 1, 100%);
+            margin-right: $gs-gutter;
 
             &:last-child {
                 margin-right: 0;
             }
         }
-    } @else {
+    }
+
+    .has-no-flex-wrap & {
         .fc-sublinks {
             display: table;
             table-layout: fixed;
             width: 100%;
         }
-
         .fc-sublinks__item {
-            padding-right: $gs-gutter;
             display: table-cell;
+            padding-right: $gs-gutter;
 
             &:last-child {
                 padding-right: 0;

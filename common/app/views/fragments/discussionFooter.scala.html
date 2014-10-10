@@ -27,10 +27,39 @@
 
             <div class="preload-msg">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
 
-            <div class="discussion__comments__container modern-hidden" data-test-id="comments-container">
-                <h2 class="page-sub-header discussion__heading container__title modern-visible">Comments</h2>
-                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded" data-test-id="comment-view-type">
+            <div class="discussion__comments__container modern-hidden">
+
+                <div class="discussion__heading">
+
+                    <div class="container__meta">
+
+                        <h2 class="container__meta__title modern-visible">Comments</h2>
+
+                        <p class="container__meta__item discussion__meta discussion__meta--open-signed-out">Open for comments. <a class="u-underline" href="@Configuration.id.url/signin">Sign in</a>
+                            or <a class="u-underline" href="@Configuration.id.url/register">create your Guardian account</a> to join the discussion.
+                        </p>
+
+                        <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>
+
+                        <p class="container__meta__item discussion__meta discussion__meta--readonly">
+                            We’re doing some maintenance right now. You can still read comments, but please come back later to add your own.
+                        </p>
+
+                        <p class="container__meta__item d-discussion__error discussion__meta discussion__meta--banned">
+                            Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>)
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded">
                     View <span class="discussion__show-threaded-state">un</span>threaded
+                </button>
+
+                <button class="u-button-reset u-fauxlink modern-visible discussion__show-all discussion__show-all--off js-show-all">
+                    <span class="discussion__show-all__off-text">Expand comment threads</span>
+                    <span class="discussion__show-all__on-text">Collapse comment threads</span>
                 </button>
 
                 <div class="discussion-container js-discussion-container">
@@ -38,7 +67,6 @@
                     <div class="discussion__comments"></div>
                     <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
                 </div>
-                <div class="discussion__non-threaded js-discussion__non-threaded u-h"></div>
             </div>
 
         </div>

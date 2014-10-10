@@ -17,6 +17,7 @@
             .lineitem--dfp-single__offer {
                 float: left;
                 max-width: gs-span(9);
+                width: 100%;
             }
 
             .lineitem--dfp-single__cta {
@@ -34,6 +35,10 @@
                 .commercial__cta {
                     left: $gs-gutter/2;
                     top: 0;
+                }
+                
+                &.hide-cta-link {
+                    display: none !important;
                 }
             }
         }

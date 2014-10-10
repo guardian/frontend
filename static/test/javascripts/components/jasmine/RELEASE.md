@@ -20,14 +20,6 @@ The current version lives in the file `/package.json`. This file should be set t
 This version is used by both `jasmine.js` and the `jasmine-core` Ruby gem.
 
 Note that Jasmine should *not* use the "patch" version number. Let downstream projects rev their patch versions as needed, keeping their major and minor version numbers in sync with Jasmine core.
-                 
-### Update the Github Pages (as needed)
-
-___Note: This is going to change right after 2.0___
-
-Github pages have to exist in a branch called `gh-pages` in order for their app to serve them. This repo adds that branch as a submodule under the `pages` directory. This is a bit of a hack, but it allows us to work with the pages and the source at the same time and with one set of rake tasks.
-
-If you want to submit changes to this repo and aren't a Pivotal Labs employee, you can fork and work in the `gh-pages` branch. You won't be able to edit the pages in the submodule off of master.
 
 ## Release
 
@@ -36,14 +28,36 @@ When ready to release - specs are all green and the stories are done:
 1. Update the release notes in `release_notes` - use the Anchorman gem to generate the markdown file and edit accordingly
 1. Update the version in `package.json` to a release candidate
 1. Update any links or top-level landing page for the Github Pages
+
+### Build standalone distribution
+
 1. Build the standalone distribution with `grunt buildStandaloneDist`
 1. Make sure you add the new ZIP file to git
+ 1. Should we still do this? Given we want to use guthub releases...
+
+### Release the Python egg
+
+1. `python setup.py register sdist upload` You will need pypi credentials to upload the egg.
+
+### Release the Ruby gem
+
 1. Copy version to the Ruby gem with `grunt build:copyVersionToGem`
 1. __NOTE__: You will likely need to point to a local jasmine gem in order to run tests locally. _Do not_ push this version of the Gemfile.
 1. __NOTE__: You will likely need to push a new jasmine gem with a dependent version right after this release.
 1. Push these changes to GitHub and verify that this SHA is green
 1. `rake release` - tags the repo with the version, builds the `jasmine-core` gem, pushes the gem to Rubygems.org. In order to release you will have to ensure you have rubygems creds locally.
-1. Visit the [Releases page for Jasmine](https://github.com/pivotal/jasmine/releases), find the tag just pushed. Paste in a link to the correct release notes for this release. The link should reference the blob and tag correctly, and the markdown file for the notes. If it is a pre-release, mark it as such.
+
+### Release the NPM
+
+1. `npm adduser` to save your credentials locally
+1. `npm publish .` to publish what's in `package.json`
+
+### Finally
+
+1. Visit the [Releases page for Jasmine](https://github.com/pivotal/jasmine/releases), find the tag just pushed.
+ 1. Paste in a link to the correct release notes for this release. The link should reference the blob and tag correctly, and the markdown file for the notes.
+ 1. If it is a pre-release, mark it as such.
+ 1. Attach the standalone zipfile
 
 
 There should be a post to Pivotal Labs blog and a tweet to that link.

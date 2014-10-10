@@ -1,11 +1,96 @@
 $fc-item-gutter: $gs-gutter / 4;
 
-.fc-item {
-    display: block;
-    @include flex(1);
-    @include clearfix;
-    background-color: #ffffff;
+/* Items
+   ==========================================================================
+*/
+
+@mixin fc-item--horizontal($media-width, $media-align: right) {
+    .fc-item__image-container {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter * .25;
+    }
+
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content > * {
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter * .75;
+    }
+
+    .has-flex-wrap & {
+        .fc-item__container {
+            @include flex-wrap(wrap);
+            @if $media-align == right {
+                @include flex-direction(row-reverse);
+            } @else {
+                @include flex-direction(row);
+            }
+        }
+
+        .fc-item__media-wrapper {
+            @include flex-basis($media-width);
+        }
+
+        .fc-item__content {
+            @include flex-basis(100% - $media-width);
+        }
+
+        .fc-item__footer--horizontal {
+            @include flex-basis(100%);
+        }
+    }
+
+    .has-no-flex-wrap & {
+        .fc-item__media-wrapper {
+            width: $media-width;
+            float: $media-align;
+        }
+
+        .fc-item__content {
+            width: 100% - $media-width;
+        }
+    }
+}
+
+.has-flex-wrap {
+    .fc-item {
+        @include flex-display;
+    }
+
+    .fc-item__container {
+        @include flex-direction(column);
+        @include flex-display;
+        @include flex(1);
+        width: 100%;
+    }
+
+    .fc-item__content {
+        @include flex-display;
+        @include flex-direction(column);
+        @include flex-grow(1);
+    }
+
+    .fc-item__meta {
+        @include flex-grow(1);
+        @include flex-display;
+        @include align-items--end;
+    }
+}
+
+.has-no-flex-wrap {
+    .fc-item {
+        display: block;
+        @include clearfix;
+    }
+}
+
+.fc-item__container {
     position: relative;
+}
+
+.fc-item {
+    @include flex(1);
+    background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
 
@@ -35,16 +120,15 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item--has-image:before {
-    background-color: rgba($c-neutral1, .15);
-}
-
 /* Item elements
    ==========================================================================
 */
 
+
+
 // Wraps all media elements
 .fc-item__media-wrapper {
+    @include box-sizing(border-box);
     position: relative;
 }
 
@@ -53,30 +137,18 @@ $fc-item-gutter: $gs-gutter / 4;
     @include box-sizing(border-box);
 }
 
-.fc-item__image-container {
-    .js-off & {
-        display: none;
-    }
+.fc-item__content,
+.fc-item--has-cutout .fc-item__container,
+.fc-item--list-media-mobile {
+    @include box-shadow(inset 0 1px $c-neutral5);
 }
 
-.fc-item__image-container {
-    display: none;
-
-    .fc-item--has-image & {
-        display: block;
-
-        .js-off & {
-            display: none !important;
-        }
-    }
-}
-
+.fc-item__image-container,
 .fc-item__video-fallback {
     display: none;
 }
 
 .fc-item__live-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
     font: inherit;
     line-height: 1;
@@ -84,22 +156,40 @@ $fc-item-gutter: $gs-gutter / 4;
     margin-right: .1em;
 }
 
+.fc-item__breaking-indicator {
+    color: $c-liveDefault;
+}
+
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
-    padding-bottom: .75em;
+    padding-bottom: .5em;
+
+    .fc-item--has-boosted-title & {
+        @include fs-headline(4, true);
+    }
 }
 
 .fc-item__title,
-.fc-item__byline {
+.fc-item__byline,
+.fc-item__kicker {
     font: inherit;
     line-height: inherit;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline / 3;
+    padding-top: $gs-baseline / 4;
     padding-bottom: 0;
     word-wrap: break-word;
+}
+
+.fc-item__kicker {
+    float: left;
+    margin-right: .2em;
+
+    &:after {
+        content: ' /';
+    }
 }
 
 .fc-item__byline {
@@ -109,7 +199,12 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__standfirst {
     @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
+    color: $c-neutral2;
     display: none;
+
+    .fc-item--has-boosted-title & {
+        display: none !important;
+    }
 }
 
 .fc-item__latest-block-wrapper {
@@ -140,7 +235,13 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    padding-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline / 4;
+
+    &:after {
+        clear: left;
+        content: '';
+        display: table;
+    }
 
     &,
     & a {
@@ -167,6 +268,20 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none;
 }
 
+.fc-item__footer--vertical {
+    clear: left;
+}
+
+.fc-item__footer--horizontal {
+    display: none;
+    .has-flex-wrap & {
+        @include align-items--end;
+    }
+    .has-no-flex-wrap & {
+        @include clearfix;
+    }
+}
+
 .fc-item__avatar {
     position: absolute;
     overflow: hidden;
@@ -179,10 +294,13 @@ $fc-item-gutter: $gs-gutter / 4;
     position: absolute;
     height: 100%;
     bottom: 0;
-    left: 20%;
+    right: 0;
 
-    @include mq(desktop) {
-        left: 30%;
+    .responsive-img {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
     }
 
     &.image--portrait {

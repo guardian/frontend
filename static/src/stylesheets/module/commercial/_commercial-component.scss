@@ -193,12 +193,7 @@ $commercial-cta-diameter: (
     float: left;
     @include mq(leftCol) {
         @include box-sizing(border-box);
-        width: $left-column + $gs-gutter;
-        margin-left: -($left-column + $gs-gutter);
-    }
-    @include mq(wide) {
         width: $left-column-wide + $gs-gutter;
-        margin-left: -($left-column-wide + $gs-gutter);
     }
 }
 .commercial {
@@ -529,7 +524,7 @@ $commercial-cta-diameter: (
                 margin-bottom: $gs-baseline/2;
             }
         }
-        @include mq(leftCol, wide) {
+        @include mq(leftCol) {
             .highitem__img {
                 width: 100%;
                 float: none;

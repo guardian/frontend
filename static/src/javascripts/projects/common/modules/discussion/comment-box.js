@@ -169,6 +169,16 @@ CommentBox.prototype.ready = function() {
     }
 };
 
+CommentBox.prototype.urlify = function(str) {
+    var reOutsideTags = '(?![^<]*>|[^<>]*</)',
+        reUrl = '\\b((https?://|www.)\\S+)\\b',
+        regexp = new RegExp(reUrl + reOutsideTags, 'g');
+    return str.replace(regexp, function(match, url, protocol) {
+        var fullUrl = protocol === 'www.' ? 'http://' + url : url;
+        return '<a href="' + fullUrl +'">' + url + '</a>';
+    });
+};
+
 /**
  * @param {Event}
  */
@@ -196,6 +206,7 @@ CommentBox.prototype.postComment = function(e) {
         }
 
         if (self.errors.length === 0) {
+            comment.body = self.urlify(comment.body);
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
@@ -415,18 +426,19 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
     var formatSelectionLink = function() {
         var href;
-
+        var linkURL;
         if (/^https?:\/\//i.test(selectedText)) {
             href = selectedText;
         } else {
-            href = 'http://';
+            linkURL = window.prompt('Your URL:', 'http://www.');
+            href = linkURL;
+
+            selectedText = selectedText || linkURL;
         }
         var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
-
-        selectNewText(newText);
     };
 
     var selectNewText = function(newText) {

@@ -19,6 +19,7 @@ GET           /humans.txt                controllers.Assets.at(path="/public", f
 GET           /assets/javascripts/*file  dev.DevAssetsController.atJavascripts(file)
 GET           /assets/stylesheets/*file  dev.DevAssetsController.atStylesheets(file)
 GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/fonts/*path        dev.DevAssetsController.atFonts(path)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#

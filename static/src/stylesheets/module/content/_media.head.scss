@@ -3,9 +3,12 @@
     @include mq(wide) {
         width: gs-span(9);
     }
-    .content__main-column__body a {
+    .from-content-api a {
         color: $c-neutral7;
         text-decoration: underline;
+    }
+    &.content__main-column--audio .from-content-api {
+        width: gs-span(8);
     }
 }
 
@@ -35,10 +38,8 @@
         border-bottom-color: $c-neutral2;
     }
 
-    .content__section-label {
-        .tone-colour {
-            color: $c-mediaDefault;
-        }
+    .content__section-label__link {
+        color: $c-mediaDefault;
     }
 
     .content__series-label {
@@ -46,7 +47,7 @@
             color: fade-out($c-neutral3, .5);
         }
 
-        .tone-colour {
+        .content__series-label__link {
             color: $c-neutral3;
         }
     }

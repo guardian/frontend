@@ -171,6 +171,27 @@
     flex-direction: $direction;
 }
 
+@mixin align-items--start {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+@mixin align-items--end {
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+
+@mixin align-items--stretch {
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+}
+
 @mixin columns($cols: 1, $gap: 0) {
     @if $browser-supports-columns {
         -webkit-column-count: $cols;

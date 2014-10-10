@@ -1,6 +1,6 @@
 package util
 
-import frontsapi.model.{Front, Config}
+import com.gu.facia.client.models.{Front, Config}
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import test.ConfiguredTestSuite
 

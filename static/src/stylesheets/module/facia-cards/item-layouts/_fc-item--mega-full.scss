@@ -22,6 +22,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 @mixin fc-item--mega-full {
 
     .fc-item__image-container {
+        display: block;
         padding-bottom: 40%;
     }
 
@@ -32,33 +33,59 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         @include fs-headline(4, true);
+        @include headline-boost(5);
 
         @include mq(desktop) {
             @include fs-headline(6, true);
+            @include headline-boost(7);
         }
     }
 
     &.fc-item--has-cutout {
-        padding-bottom: 40%;
+        .fc-item__container {
+            min-height: gs-height(5) + $gs-baseline * 3;
+        }
+
+        .responsive-img {
+            top: auto;
+            height: 100%;
+        }
 
         .fc-item__content {
+            width: auto;
             max-width: gs-span(6);
 
             @include mq(desktop) {
                 max-width: gs-span(8);
             }
         }
+
+        .fc-item__standfirst {
+            @include fs-headline(2);
+            padding-right: gs-span(2);
+            display: block;
+        }
     }
 
     .fc-item__avatar {
-        top: 0%;
+        height: gs-height(6);
     }
 
     .fc-item__avatar__media {
-        left: 40%;
+        right: -15%;
+
+        @include mq(tablet) {
+            right: -5%;
+        }
     }
 
-    @include fc-sublinks-horizontal;
+    &:not(.fc-item--has-cutout) {
+        @include fc-sublinks--horizontal;
+    }
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     &.fc-item--has-sublinks-1 .fc-sublinks {
         display: none;

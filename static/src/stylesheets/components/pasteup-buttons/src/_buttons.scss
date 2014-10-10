@@ -133,9 +133,9 @@ They come in different sizes:
 }
 .button--tertiary {
     @include button-colour(
-        #ffffff,
+        transparent,
         guss-colour(neutral-1, $pasteup-palette),
-        #ffffff,
+        transparent,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-4, $pasteup-palette)
     );

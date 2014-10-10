@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -662,6 +664,16 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
+    } else {
+      slices.TagContainers.tagPage
+    }
+  }
+
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
@@ -799,6 +811,7 @@ object GetClasses {
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
       if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
 
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
@@ -924,23 +937,23 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> config.isSponsored,
-      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
@@ -948,7 +961,7 @@ object GetClasses {
     )
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten

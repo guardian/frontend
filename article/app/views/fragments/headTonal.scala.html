@@ -9,7 +9,7 @@
 
                 <div class="content__labels">
                     <div class="content__section-label">
-                        <a class="tone-colour" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+                        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
                     </div>
 
                     @fragments.meta.metaInline(content)

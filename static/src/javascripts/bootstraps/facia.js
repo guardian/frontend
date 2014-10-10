@@ -61,9 +61,10 @@ define([
                 };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'ui:container-toggle:add':  containerToggleAdd
+                    'ui:container-toggle:add':  containerToggleAdd,
+                    'modules:geomostpopular:ready': containerToggleAdd
                 });
-                mediator.on(/page:front:ready|ui:container-toggle:add/, function (config, context) {
+                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function (config, context) {
                     $('.js-container--toggle', context).each(function (container) {
                         new ContainerToggle(container).addToggle();
                     });

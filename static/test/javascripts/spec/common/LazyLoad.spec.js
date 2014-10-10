@@ -22,28 +22,19 @@ define(['common/modules/lazyload', 'bonzo', 'common/utils/ajax'], function(LazyL
             server.restore();
         });
 
-        it('should lazy load', function() {
+        it('should lazy load', function (done) {
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
 
-            var success = false;
-            function lazyLoadSuccess() {
-                success = true;
-            }
-            
-            waitsFor(function() {
-                new LazyLoad({
-                    url: 'fixtures/lazy-load',
-                    container: $container[0],
-                    success: lazyLoadSuccess
-                }).load();
-                return success;
-              }, 'Lazy loaded data not loaded in', 100);
-            
-            runs(function() {
-                expect($container.hasClass('lazyloaded')).toBeTruthy();
-                expect($container.html()).toBe('<span>foo</span>');
-            });
-            
+            new LazyLoad({
+                url: 'fixtures/lazy-load',
+                container: $container[0],
+                success: function () {
+                    expect($container.hasClass('lazyloaded')).toBeTruthy();
+                    expect($container.html()).toBe('<span>foo</span>');
+                    done();
+                }
+            }).load();
+
         })
 
     });
