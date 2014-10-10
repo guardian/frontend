@@ -20,8 +20,9 @@ trait Dates {
 
   implicit class DateTime2SameDay(date: DateTime) {
     def sameDay(other: DateTime): Boolean =  {
-      val thatDateSameZone = other.withZone(date.zone)
-      date.getYear == thatDateSameZone.getYear && date.getDayOfYear == thatDateSameZone.getDayOfYear
+      val dateUtc = date.withZone(DateTimeZone.UTC)
+      val otherUtc = other.withZone(DateTimeZone.UTC)
+      dateUtc.getYear == otherUtc.getYear && dateUtc.getDayOfYear == otherUtc.getDayOfYear
     }
   }
 

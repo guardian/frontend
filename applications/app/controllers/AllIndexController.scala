@@ -8,13 +8,14 @@ import model.{Cached, Tag, Content, Section}
 import services.IndexPage
 import views.support.{PreviousAndNext, TemplateDeduping}
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import implicits.{ItemResponses, Dates}
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(Edition.defaultEdition.timezone)
+  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
   def newer(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     val edition = Edition(request)
@@ -43,8 +44,13 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     implicit val dedupe = TemplateDeduping()
     val edition = Edition(request)
-    val requestedDate = dateFormat.withZone(edition.timezone).parseDateTime(s"$year/$month/$day")
-      .withTimeAtStartOfDay().plusDays(1).minusSeconds(1)
+
+    val requestedDate = dateFormat.withZoneUTC()
+      .parseDateTime(s"$year/$month/$day")
+      .withTimeAtStartOfDay()
+      .plusDays(1)
+      .minusSeconds(1)
+      .withZone(edition.timezone)
 
     loadLatest(path, requestedDate).map { _.map { index =>
 
@@ -69,7 +75,10 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
   
   private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String) = olderDate.map {
-    older => Found(s"/$path/${urlFormat(older)}/all")
+    older => {
+      val olderStartOfDay = older.withTimeAtStartOfDay().withZone(DateTimeZone.UTC)
+      Found(s"/$path/${urlFormat(olderStartOfDay)}/all")
+    }
   }.getOrElse(NotFound)
 
   private def redirectToFirstAllPage(path: String) = Found(s"/$path/all")
@@ -100,5 +109,5 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
     }
   }
   
-  private def urlFormat(date: DateTime) = date.toString(dateFormat).toLowerCase
+  private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }

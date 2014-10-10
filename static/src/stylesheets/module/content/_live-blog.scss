@@ -288,6 +288,11 @@ $block-padding-right: $gs-gutter;
     .block-title {
         margin-top: ($gs-baseline/4)*-1;
         margin-bottom: $gs-baseline;
+
+        & + .block-elements .element-image:first-child,
+        & + .block-elements .element-video:first-child {
+            margin-top: 34px; // Extra margin top to position media below block-time
+        }
     }
 
     .block-title,
@@ -311,13 +316,19 @@ $block-padding-right: $gs-gutter;
         /* Quotes
            ========================================================= */
         > blockquote,
-        > blockquote.quoted { // using !important to override inline styles from content api
-            margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important;
+        > blockquote.quoted {
+            margin: 16px $block-padding-right $gs-baseline * 1.5 $block-padding-left;
             @include mq($until: mobileLandscape) {
-                margin-left: $gs-gutter/2 !important;
-                margin-right: $gs-gutter/2 !important;
-                &:before { // remove pseudo quote at mobile
+                margin-left: $gs-gutter / 2;
+                margin-right: $gs-gutter / 2;
+                &:before {
                     display: none;
+                }
+            }
+            &:first-child {
+                margin-top: 0;
+                @include mq(tablet) {
+                    margin-top: -2px;
                 }
             }
         }
@@ -326,8 +337,13 @@ $block-padding-right: $gs-gutter;
         }
 
         > blockquote.quoted:before {
-            margin-left: -24px;
             left: auto;
+        }
+
+        > blockquote.quoted p:first-child {
+            @include mq(mobileLandscape) {
+                text-indent: $gs-gutter * 1.5;
+            }
         }
 
         /* Media
@@ -413,6 +429,14 @@ $block-padding-right: $gs-gutter;
                 margin-right: $block-padding-right;
             }
         }
+
+        > .element-image:first-child,
+        > .element-video:first-child {
+            @include mq(tablet) {
+                margin-top: 55px; // Extra margin top to position media below block-time
+            }
+        }
+
 
         > .element.element--thumbnail {
             border-bottom: 0;
