@@ -51,7 +51,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
                     |&showSwitches=true""".stripMargin.replace("\n", "")+
                     params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
 
-    println("Commments for  **%s**".format(url))
     getJsonForUri(key, url)
   }
 
@@ -59,8 +58,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     def onError(r: WSResponse) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}"
-
-    println("ApI **%s**".format(apiUrl))
 
     getJsonOrError(apiUrl, onError) map { json =>
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
