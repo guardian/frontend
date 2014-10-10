@@ -25,19 +25,14 @@
     font-family: $f-sans-serif-text;
 }
 
-.crossword__grid__cell__input {
+.crossword__grid__cell__entry {
+    display: inline-block;
     font-size: 14px;
     font-family: $f-serif-text;
     font-weight: 800;
-    background-color: transparent;
     text-align: center;
-    border: 0;
     width: 100%;
     height: 100%;
-}
-
-.crossword__grid__cell__input:focus {
-    outline-width: 0;
 }
 
 .crossword__clues__clue {

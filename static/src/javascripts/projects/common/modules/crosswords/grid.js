@@ -31,6 +31,13 @@ define([
                     );
                 }
 
+                if (this.props.value !== undefined) {
+                    innerNodes.push(React.DOM.span({
+                        key: 'entry',
+                        className: 'crossword__grid__cell__entry'
+                    }, this.props.value));
+                }
+
                 if (this.props.isEditable) {
                     props.onClick = this.props.handleSelect;
                 }

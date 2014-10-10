@@ -5,8 +5,7 @@ define([
     'react',
     'common/modules/crosswords/clues',
     'common/modules/crosswords/grid',
-    'common/modules/crosswords/helpers',
-    'common/modules/crosswords/hiddenInput'
+    'common/modules/crosswords/helpers'
 ], function (
     $,
     _,
@@ -14,8 +13,7 @@ define([
     React,
     Clues,
     Grid,
-    helpers,
-    HiddenInput
+    helpers
 ) {
     var Crossword = React.createClass({
         getInitialState: function () {
@@ -28,8 +26,7 @@ define([
             return {
                 grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries),
                 cellInFocus: null,
-                directionOfEntry: null,
-                hasFocus: false
+                directionOfEntry: null
             };
         },
 
@@ -38,11 +35,45 @@ define([
             this.setState(this.state);
         },
 
+        onChange: function (event) {
+            var value = event.target.value.toUpperCase(),
+                cell = this.state.cellInFocus;
+
+            if (/[A-Z]/.test(value)) {
+                this.setCellValue(cell.x, cell.y, value)
+                this.focusNext();
+            }
+
+            console.log(cell.x + ", " + cell.y + " now set to " + value);
+        },
+
+        focusNext: function () {
+            var cell = this.state.cellInFocus,
+                direction = this.state.directionOfEntry,
+                clue = this.clueInFocus();
+
+            if (direction === 'across' && cell.x < clue.position.x + clue.length - 1) {
+                this.state.cellInFocus = {
+                    x: cell.x + 1,
+                    y: cell.y
+                };
+                this.setState(this.state);
+            } else if (direction === 'down' && cell.y < clue.position.y + clue.length - 1) {
+                this.state.cellInFocus = {
+                    x: cell.x,
+                    y: cell.y + 1
+                };
+                this.setState(this.state);
+            }
+        },
+
         onSelect: function (x, y) {
             var cellInFocus = this.state.cellInFocus,
                 clue = this.cluesFor(x, y),
                 newDirection,
                 isStartOfClue;
+
+            this.refs.hiddenInput.getDOMNode().focus();
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
                 newDirection = helpers.otherDirection(this.state.directionOfEntry);
@@ -101,6 +132,7 @@ define([
                     }
                 };
 
+
             return React.DOM.div(null,
                 Grid({
                     rows: this.rows,
@@ -110,9 +142,20 @@ define([
                     onSelect: this.onSelect,
                     isHighlighted: isHighlighted
                 }),
-                HiddenInput({
-                    isVisible: this.state.hasFocus
-                }),
+                React.DOM.div({
+                    css: {
+                        overflow: 'hidden',
+                        width: 0
+                    }
+                },
+                    React.DOM.input({
+                        type: 'text',
+                        className: 'crossword__hidden-input',
+                        ref: "hiddenInput",
+                        onChange: this.onChange,
+                        value: ""
+                    }
+                )),
                 Clues({
                     clues: this.props.data.entries
                 })
