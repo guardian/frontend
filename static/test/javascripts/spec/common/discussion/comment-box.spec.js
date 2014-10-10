@@ -88,7 +88,7 @@ define([
                 switches: {}
             });
 
-            spyOn(commentBox, 'getUserData').andReturn({
+            spyOn(commentBox, 'getUserData').and.returnValue({
                 displayName: "testy",
                 id: 1,
                 accountCreatedDate: new Date(1392719401338)
@@ -165,30 +165,21 @@ define([
                 expect(commentBox.getElem('error')).not.toBeUndefined();
             });
 
-            it('should send a success message to the user when comment is valid', function() {
+            it('should send a success message to the user when comment is valid', function (done) {
                 var callback = jasmine.createSpy();
-                runs(function() {
-                    commentBox.on('post:success', callback);
-                    server.respondWith([200, {}, apiPostValidCommentResp]);
-                    commentBox.getElem('body').value = validCommentText;
-                    bean.fire(commentBox.elem, 'submit');
+                commentBox.on('post:success', callback);
+                server.respondWith([200, {}, apiPostValidCommentResp]);
+                commentBox.getElem('body').value = validCommentText;
+                bean.fire(commentBox.elem, 'submit');
+
+                commentBox.on('post:success', function (comment) {
+                    expect(JSON.stringify(comment.id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
+                    done();
                 });
 
-                waitsFor(function() {
-                    server.respond();
-                    return callback.calls.length > 0;
-                }, 1000);
-
-                // This id comes from api-post-comment-valid
-                runs(function() {
-                    expect(JSON.stringify(callback.calls[0].args[0].id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
-                });
+                server.respond();
             });
 
-            xdescribe('fail', function() {
-                xit('should send a failure message to the user');
-                xit('should allow the user to "try again"');
-            });
         });
 
 
