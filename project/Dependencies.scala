@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.41"
+  val identityLibVersion = "3.43"
   val seleniumVersion = "2.43.1"
   val slf4jVersion = "1.7.5"
 
