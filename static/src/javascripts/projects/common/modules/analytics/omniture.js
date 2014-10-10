@@ -228,7 +228,7 @@ define([
             }
 
             /* Omniture library version */
-            s.prop62 = "Guardian JS-1.4.1 20140914";
+            s.prop62    = "Guardian JS-1.4.1 20140914";
 
             s.prop63    = detect.getPageSpeed();
 
