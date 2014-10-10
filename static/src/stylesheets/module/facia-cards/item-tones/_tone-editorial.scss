@@ -21,9 +21,18 @@
     }
 
     .fc-item__kicker,
-    a.fc-item__kicker,
-    .fc-item__byline a {
+    a.fc-item__kicker {
         color: $c-editorialAccent;
+    }
+
+    .fc-item__byline {
+        &,
+        & a,
+        & a:hover,
+        & a:active,
+        & a:visited {
+            color: $c-editorialAccent;
+        }
     }
 
     .fc-item__meta {

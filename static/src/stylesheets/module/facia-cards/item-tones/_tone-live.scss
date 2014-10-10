@@ -21,9 +21,16 @@
     }
 
     .fc-item__kicker,
+    a.fc-item__kicker {
+        color: $c-liveMute;
+    }
+
     .fc-item__byline {
         &,
-        & a {
+        & a,
+        & a:hover,
+        & a:active,
+        & a:visited {
             color: $c-liveMute;
         }
     }

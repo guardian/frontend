@@ -6,7 +6,7 @@
 
         &,
         & a {
-            color: $c-podcastAccent2;
+            color: $c-podcastAccent;
         }
     }
 
@@ -21,13 +21,20 @@
         & a {
             color: $c-neutral1;
         }
+    }
 
-        .fc-item__kicker,
-        .fc-item__byline {
-            &,
-            & a {
-                color: $c-podcastAccent;
-            }
+    .fc-item__kicker,
+    a.fc-item__kicker {
+        color: $c-podcastAccent;
+    }
+
+    .fc-item__byline {
+        &,
+        & a,
+        & a:hover,
+        & a:active,
+        & a:visited {
+            color: $c-podcastAccent;
         }
     }
 }
