@@ -75,6 +75,7 @@ case class Remove(remove: UpdateList) extends FaciaToolUpdate
 case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
 
 case class DiscardUpdate(id: String) extends FaciaToolUpdate
+case class PublishUpdate(id: String) extends FaciaToolUpdate
 
 object UpdateList {
   implicit val format: Format[UpdateList] = Json.format[UpdateList]
