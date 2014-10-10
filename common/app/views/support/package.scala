@@ -664,6 +664,16 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
+    } else {
+      slices.TagContainers.tagPage
+    }
+  }
+
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
@@ -775,13 +785,28 @@ object GetClasses {
     )
   }
 
+  def forSubLink(trail: Trail) = RenderClasses(Seq(
+    Some("fc-sublinks__item"),
+    Some(TrailCssClasses.toneClass(trail)),
+    sublinkMediaTypeClass(trail)
+  ).flatten: _*)
+
+  def mediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-item--gallery")
+    case _: Video => Some("fc-item--video")
+    case _: Audio => Some("fc-item--audio")
+    case _ => None
+  }
+
+  def sublinkMediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-sublinks__item--gallery")
+    case _: Video => Some("fc-sublinks__item--video")
+    case _: Audio => Some("fc-sublinks__item--audio")
+    case _ => None
+  }
+
   def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
-    val itemClass = trail match {
-      case _: Gallery => Some("fc-item--gallery")
-      case _: Video => Some("fc-item--video")
-      case _: Audio => Some("fc-item--audio")
-      case _ => None
-    }
+    val itemClass = mediaTypeClass(trail)
 
     val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "fc-item--has-no-image"
@@ -927,7 +952,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

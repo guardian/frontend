@@ -1,8 +1,4 @@
 %tone-has-background {
-    &.fc-item {
-        padding-bottom: $gs-baseline * .25;
-    }
-
     .fc-item__footer--vertical {
         padding-bottom: $gs-baseline * .25;
     }
@@ -19,8 +15,7 @@
 }
 
 %tone-not-background {
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__title {
             @include mq($until: tablet) {
                 padding-top: 0;
@@ -39,8 +34,7 @@
         }
     }
 
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__header,
         .fc-item__standfirst,
         .fc-item__meta {
@@ -83,3 +77,4 @@
 @import 'item-tones/tone-review';
 @import 'item-tones/tone-dead';
 @import 'item-tones/tone-podcast';
+@import 'item-tones/tone-editorial';

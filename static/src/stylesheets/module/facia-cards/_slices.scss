@@ -19,8 +19,8 @@ Hence why a greater depth of selector specificity is needed.
 
     .fc-item--half-tablet {
         .fc-item__standfirst {
-            @include mq(tablet, desktop) {
-                display: block;
+            @include mq(tablet) {
+                display: none;
             }
         }
     }
@@ -62,6 +62,14 @@ Hence why a greater depth of selector specificity is needed.
 .facia-slice--h14-q-q {
     @if $browser-supports-flexbox {
         @include flex-direction(row-reverse);
+    }
+
+    .fc-item--standard-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
     }
 }
 

@@ -1,5 +1,4 @@
-@(ads: Seq[model.commercial.Ad])(implicit request: RequestHeader)
-@import model.commercial
+@(fragments: Seq[Html])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-07")) { case (version, date) =>
     <div class="commercial commercial--multi commercial--high">
@@ -13,27 +12,7 @@
                 </div>
             </div>
             <div class="commercial__body container__body">
-                <ul class="lineitems">
-                    @ads.map { ad =>
-                        @ad match {
-                            case job: model.commercial.jobs.Job => {
-                                @views.html.jobFragments.job(job)
-                            }
-                            case book: model.commercial.books.Book => {
-                                @views.html.books.book(book)
-                            }
-                            case travelOffer: model.commercial.travel.TravelOffer => {
-                                @views.html.travelOfferFragments.travelOffer(travelOffer)
-                            }
-                            case masterClass: model.commercial.masterclasses.MasterClass => {
-                                @views.html.masterClasses.masterClass(masterClass)
-                            }
-                            case member: model.commercial.soulmates.Member => {
-                                @views.html.soulmateFragments.soulmate(member)
-                            }
-                        }
-                    }
-                </ul>
+                <ul class="lineitems">@fragments</ul>
             </div>
         </div>
     </div>

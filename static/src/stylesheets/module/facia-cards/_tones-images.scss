@@ -1,8 +1,12 @@
-.fc-item__title--quoted .fc-item__link:before {
-    @include icon(quote-grey, false);
-    content: '';
-    height: .8em;
-    width: 1em;
+.fc-item__title--quoted,
+.tone-comment {
+    .fc-item__link:before {
+        @include icon(quote-grey, false);
+        content: '';
+        height: .8em;
+        width: 1em;
+        padding-right: .1em;
+    }
 }
 
 .fc-item__timestamp {
@@ -66,8 +70,9 @@
     }
 }
 
-.fc-item--video {
-    .fc-item__title:before {
+.fc-item--video .fc-item__title,
+.fc-sublinks__item--video .fc-item__link {
+    &:before {
         @include icon(video-icon, false);
         content: '';
         height: .75em;
@@ -76,8 +81,9 @@
     }
 }
 
-.fc-item--gallery {
-    .fc-item__title:before {
+.fc-item--gallery .fc-item__title,
+.fc-sublinks__item--gallery .fc-item__link {
+    &:before {
         @include icon(camera-yellow-large, false);
         content: '';
         height: .75em;
@@ -97,10 +103,6 @@
     .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
-
-    .fc-trail__count:before {
-        @include icon(comment-white, false);
-    }
 }
 
 .tone-feature {
@@ -110,5 +112,9 @@
 
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-light-pink, false);
     }
 }

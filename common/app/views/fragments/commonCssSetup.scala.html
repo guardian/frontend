@@ -11,6 +11,12 @@
     blockquote.quoted:before {
         background-image: url(@Static("images/global/sprite.png"));
     }
+    .svg .i,
+    .svg .caption:before,
+    .svg figcaption:before,
+    .svg blockquote.quoted:before {
+        background-image: none;
+    }
     .is-updating {
         background-image: url(@Static("images/auto-update-activity.gif"));
     }

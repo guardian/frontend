@@ -13,10 +13,6 @@ case class Mortgage(lender: String,
                     description: String,
                     overallCost: Double,
                     detailsUrl: String)
-  extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
 
 
 object MortgagesApi extends ExecutionContexts with Logging {

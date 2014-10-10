@@ -15,6 +15,10 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion--closed.discussion--empty {
+    display: none;
+}
+
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
     @include mq(desktop) {
         margin-left: gs-span(2) + $gs-gutter;

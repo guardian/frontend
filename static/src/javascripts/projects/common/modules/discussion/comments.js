@@ -22,7 +22,7 @@ define([
     bean,
     bonzo,
     qwery,
-    
+
     _map,
 
     $,
@@ -115,12 +115,7 @@ Comments.prototype.ready = function() {
     );
 
     if (this.options.commentId) {
-        var comment = $('#comment-'+ this.options.commentId);
         $('.d-discussion__show-all-comments').addClass('u-h');
-        if (comment.attr('hidden')) {
-            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
-        }
-
         window.location.replace('#comment-'+ this.options.commentId);
     }
 
@@ -215,7 +210,7 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: !this.options.unthreaded
     };
 
-    if (!this.options.expand) {
+    if (!this.options.expand && !this.options.commentId ) {
         queryParams.maxResponses = 3;
     }
 

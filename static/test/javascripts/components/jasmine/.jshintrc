@@ -1,9 +1,9 @@
 {
   "bitwise": true,
   "curly": true,
-  "freeze": true,
   "immed": true,
   "newcap": true,
   "trailing": true,
-  "loopfunc": true
+  "loopfunc": true,
+  "quotmark": "single"
 }

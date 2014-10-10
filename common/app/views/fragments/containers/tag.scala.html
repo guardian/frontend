@@ -20,7 +20,7 @@
             }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
-                <div class="container__header js-container-header">
+                <div class="fc-container__header">
                     @FootballTagPage(page).asOpt.map{ footballTagPage =>
                         @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
                     }.getOrElse{
@@ -41,11 +41,9 @@
             <div class="facia-container__inner">
                 @defining(topTags(collection.items).filterNot(_.id == page.id)) { tags =>
                     @if(tags.nonEmpty) {
-                        <div class="related-keywords">
-                            <div class="submeta" data-link-name="keywords">
-                                <h2 class="submeta__head">Trending topics</h2>
-                                @keywordList(tags, 5, "See also")
-                            </div>
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Trending topics</h2>
+                            @keywordList(tags, 5, "See also")
                         </div>
                     }
                 }

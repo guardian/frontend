@@ -151,6 +151,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
       ("isLive", JsBoolean(isLive)),
+      ("isContent", JsBoolean(true)),
       ("wordCount", JsNumber(wordCount)),
       ("shortUrl", JsString(shortUrl)),
       ("thumbnail", thumbnailPath.map(JsString.apply).getOrElse(JsBoolean(false))),
@@ -199,11 +200,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.flatMap(_.imageSrcWidth)
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.flatMap(_.imageSrcHeight)
-  lazy val imageElement: Option[ApiElement] = for {
+  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height)
+  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
   override lazy val showMainVideo: Boolean = apiContent.metaData.flatMap(_.showMainVideo).getOrElse(false)
 

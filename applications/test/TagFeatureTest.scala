@@ -7,15 +7,15 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
 @DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Tag Pages trail size") {
+  feature("Tag Series, Blogs and Contributors Pages trail size") {
 
-    scenario("Tag pages should show at least 20 trails (includes  leadContent if present)") {
+    scenario("Tag Series, Blogs and Contributors pages should show at least 19 trails (includes leadContent if present)") {
 
       Given("I visit a tag page")
 
       goTo("/technology/askjack") { browser =>
         val trails = browser.$(".fc-item__container")
-        trails.length should be(20)
+        trails.length should be(19)
       }
     }
   }
@@ -47,34 +47,6 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
   }
 
   feature("Tag Pages Football Nav") {
-
-    scenario("Tags that are football competitions that have teams, link to that place on the teams page") {
-
-      Given("I visit the 'Premier League' tag page")
-
-      goTo("/football/premierleague") { browser =>
-        val teamsPageLink = browser.findFirst("ul.nav a[data-link-name='teams']")
-        teamsPageLink.getAttribute("href") should endWith("/football/teams#premierleague")
-      }
-    }
-
-    scenario("Tags that are football compeitions but don't have teams don't link to the teams page") {
-
-      Given("I visit the 'Capital One Cup' tag page")
-
-      goTo("/football/capital-one-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-      Given("I visit the 'Scottish League Cup' tag page")
-
-      goTo("/football/cis-insurance-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-    }
 
     scenario("Pagination") {
 

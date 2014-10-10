@@ -12,12 +12,12 @@ import org.mockito.Matchers
 import play.api.test.Helpers._
 import idapiclient.TrackingData
 import client.Error
-import actions.AuthActionWithUser
+import actions.AuthenticatedActions
 
 class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
-  val authActionWithUser = mock[AuthActionWithUser]
+  val authenticatedActions = mock[AuthenticatedActions]
   val authenticationService = mock[AuthenticationService]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val idRequest = mock[IdentityRequest]
@@ -29,7 +29,7 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
   when(idRequest.trackingData) thenReturn trackingData
   when(authenticationService.requestPresentsAuthenticationCredentials(Matchers.any[Request[_]])) thenReturn true
 
-  val controller = new EmailVerificationController(api, authActionWithUser, authenticationService, idRequestParser, idUrlBuilder)
+  val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder)
 
   "Given the verify method is called" - Fake {
     val testRequest = TestRequest()
