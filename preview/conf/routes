@@ -17,6 +17,8 @@ POST          /login                                                            
 GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
 GET           /logout                                                                          controllers.OAuthLoginController.logout
 
+GET           /last-modified/*path.json                                                        controllers.LastModifiedController.render(path)
+
 # Travel offers
 GET        /commercial/travel/offers                                                           controllers.commercial.TravelOffers.travelOffersLowHtml
 GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffers.travelOffersLowJson

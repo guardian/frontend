@@ -151,6 +151,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
       ("isLive", JsBoolean(isLive)),
+      ("isContent", JsBoolean(true)),
       ("wordCount", JsNumber(wordCount)),
       ("shortUrl", JsString(shortUrl)),
       ("thumbnail", thumbnailPath.map(JsString.apply).getOrElse(JsBoolean(false))),

@@ -1,18 +1,17 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
-import scala.xml.{Node, Elem}
+import scala.xml.{Elem, Node}
 
 object CreditCards {
 
   def currentAds: Map[String, Seq[CreditCard]] = Map(
-    "balance-transfer" -> creditCardsAgent.BalanceTransferAndPurchase.currentAds,
-    "purchases" -> creditCardsAgent.Purchase.currentAds,
-    "balance-transfer-and-purchases" -> creditCardsAgent.BalanceTransfer.currentAds,
-    "cashback" -> creditCardsAgent.Cashback.currentAds,
-    "low-standard-rate" -> creditCardsAgent.LowStandardRate.currentAds,
-    "rewards" -> creditCardsAgent.Rewards.currentAds,
-    "bad-credit" -> creditCardsAgent.LowCredit.currentAds
+    "balance-transfer" -> creditCardsAgent.BalanceTransferAndPurchase.available,
+    "purchases" -> creditCardsAgent.Purchase.available,
+    "balance-transfer-and-purchases" -> creditCardsAgent.BalanceTransfer.available,
+    "cashback" -> creditCardsAgent.Cashback.available,
+    "low-standard-rate" -> creditCardsAgent.LowStandardRate.available,
+    "rewards" -> creditCardsAgent.Rewards.available,
+    "bad-credit" -> creditCardsAgent.LowCredit.available
   )
 
 }
@@ -29,10 +28,7 @@ case class CreditCard(name: String,
                       cashbackNotes: String,
                       representativeApr: Double,
                       purchaseRate: Double,
-                      purchaseRateDuration: Int) extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
+                      purchaseRateDuration: Int)
 
 
 case class CreditExample(amount: Double,

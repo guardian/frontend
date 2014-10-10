@@ -322,9 +322,11 @@ Loader.prototype.renderCommentCount = function() {
                                '</a>';
 
                     bonzo(qwery('.js-comment-count')).html(html);
+                } else {
+                    this.setState('empty');
                 }
             }
-        }
+        }.bind(this)
     });
 };
 
