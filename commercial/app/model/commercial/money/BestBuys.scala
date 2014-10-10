@@ -39,9 +39,9 @@ object BestBuysAgent {
   )
 
   def adsTargetedAt(segment: Segment): Option[BestBuys] = {
-    val mortgages = MortgagesAgent.currentAds
+    val mortgages = MortgagesAgent.available
     val creditCards = CreditCards.currentAds
-    val loans = LoansAgent.currentAds
+    val loans = LoansAgent.available
     val currentAccounts = CurrentAccounts.currentAds
     val savings = SavingsAccounts.currentAds
 
