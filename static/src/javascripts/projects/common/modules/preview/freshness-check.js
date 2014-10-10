@@ -72,12 +72,16 @@ define([
             setTimeout(function () { clearInterval(interval); }, 60000);
         });
 
-        if (page.isPreview && page.isContent  && config.switches.pollPreviewForFreshContent) {
-            lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
-            if (lastModifiedMatch) {
-                initialFreshnessCheck(lastModifiedMatch[1]);
-                clearHash();
+        return {
+            check: function () {
+                if (page.isContent  && config.switches.pollPreviewForFreshContent) {
+                    lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
+                    if (lastModifiedMatch) {
+                        initialFreshnessCheck(lastModifiedMatch[1]);
+                        clearHash();
+                    }
+                }
             }
-        }
+        };
     };
 });

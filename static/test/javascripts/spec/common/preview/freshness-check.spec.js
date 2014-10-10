@@ -21,7 +21,7 @@ define([
         beforeEach(function() {
 
             config = {
-                page: { isPreview: true, isContent: true, pageId: 'foo/bar' },
+                page: { isContent: true, pageId: 'foo/bar' },
                 switches: { pollPreviewForFreshContent: true }
             };
 
@@ -48,7 +48,7 @@ define([
             mediator.on('modules:freshness-check:fresh', callback);
 
             runs(function() {
-                freshness(config, 'last-modified=' + lastModifiedDate);
+                freshness(config, 'last-modified=' + lastModifiedDate).check();
             });
 
             waitsFor(function () {
@@ -68,7 +68,7 @@ define([
             mediator.on('modules:freshness-check:stale', callback);
 
             runs(function() {
-                freshness(config, 'last-modified=' + lastModifiedDate);
+                freshness(config, 'last-modified=' + lastModifiedDate).check();
             });
 
             waitsFor(function () {
@@ -80,19 +80,10 @@ define([
             });
         });
 
-        it("should not be called if this is not preview", function(){
-            runs(function() {
-                config.page.isPreview = false;
-                freshness(config, 'last-modified=' + lastModifiedDate);
-                expect(server.requests.length).toBe(0);
-            });
-
-        });
-
         it("should not be called if this is not content", function(){
             runs(function() {
                 config.page.isContent = false;
-                freshness(config, 'last-modified=' + lastModifiedDate);
+                freshness(config, 'last-modified=' + lastModifiedDate).check();
                 expect(server.requests.length).toBe(0);
             });
 
@@ -101,7 +92,7 @@ define([
         it("should not be called if this is not content", function(){
             runs(function() {
                 config.switches.pollPreviewForFreshContent = false;
-                freshness(config, 'last-modified=' + lastModifiedDate);
+                freshness(config, 'last-modified=' + lastModifiedDate).check();
                 expect(server.requests.length).toBe(0);
             });
 

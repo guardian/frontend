@@ -14,6 +14,9 @@
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',
             }
+            @if(Configuration.environment.isPreview) {
+                'bootstraps/preview': '@Static("javascripts/bootstraps/preview.js")',
+            }
             facebook: '//connect.facebook.net/en_US/all.js',
             zxcvbn: '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',

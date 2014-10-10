@@ -132,6 +132,16 @@ module.exports = function(grunt, options) {
                 preserveLicenseComments: false
             }
         },
+        preview: {
+            options: {
+                name: 'bootstraps/preview',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app'
+                ]
+            }
+        },
         dev: {
             options: {
                 name: 'bootstraps/dev',
