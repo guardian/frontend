@@ -46,9 +46,14 @@ x x x x x x x x x x x x x x x x x x
             padding-bottom: gs-height(7);
         }
 
+        // to show on slices where we're hiding standfirst for half cards but still need them on has-cutout
         .fc-item__standfirst {
             display: block;
         }
+    }
+
+    .fc-item__standfirst {
+        display: block;
     }
 
     .fc-item__avatar {
