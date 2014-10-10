@@ -29,8 +29,8 @@ itemscope itemtype="http://schema.org/Comment">
 
         @body(Edition(request), comment.body.split(" "))
 
-        <a class="d-top-comment__link" href="@Configuration.discussion.url/comment-permalink/@comment.id">
-            View comment
+        <a class="d-top-comment__link js-jump-to-comment" href="@Configuration.discussion.url/comment-permalink/@comment.id">
+            Jump to comment
         </a>
     </div>
 

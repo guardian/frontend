@@ -62,8 +62,7 @@ Loader.prototype.classes = {
     commentsContainer: 'discussion__comments__container',
     comments: 'discussion__comments',
     commentBox: 'discussion__comment-box',
-    commentBoxBottom: 'discussion__comment-box--bottom',
-    topComments: 'discussion__comments--top-comments'
+    commentBoxBottom: 'discussion__comment-box--bottom'
 };
 
 /**
@@ -93,9 +92,34 @@ Loader.prototype.user = null;
  * 2. fetch comments
  * 3. render comment bar
  */
+
+Loader.prototype.loadTopComments = function() {
+
+    this.on('click', '.js-jump-to-comment', function(e) {
+        e.preventDefault();
+    });
+
+    return ajax({
+        url: '/discussion/' + this.getDiscussionId() + '.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true,
+        data: { topComments: true }
+    }).then(
+        function render(resp) {
+            this.$topCommentsContainer.html(resp.html);
+        }.bind(this),
+        function () {
+        }
+    );
+};
+
+
 Loader.prototype.ready = function() {
-    var topCommentsElem = this.getElem('topComments'),
-        commentsContainer = this.getElem('commentsContainer'),
+
+    this.$topCommentsContainer = $('.js-discussion-top-comments');
+
+    var commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         commentId = this.getCommentIdFromHash();
 
@@ -103,9 +127,7 @@ Loader.prototype.ready = function() {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.topComments = new TopComments({
-        discussionId: this.getDiscussionId()
-    });
+    this.loadTopComments();
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
@@ -113,8 +135,6 @@ Loader.prototype.ready = function() {
         order: this.getDiscussionClosed() ? 'oldest' : 'newest',
         state: 'partial'
     });
-
-    this.topComments.fetch(topCommentsElem);
 
     this.comments.attachTo(commentsElem);
 
@@ -125,7 +145,6 @@ Loader.prototype.ready = function() {
             this.comments.removeState('shut');
             this.comments.removeState('partial');
         }
-
         bonzo(commentsContainer).removeClass('modern-hidden');
         this.initUnthreaded();
         this.initShowAll();
@@ -343,7 +362,7 @@ Loader.prototype.checkCommentsLoaded = function() {
     }
 
     if (this.topComments.rendered && this.comments.rendered) {
-        if (this.topComments.topCommentsAmount > 0) {
+        if (this.$topCommentsContainer.html().length > 0) {
             this.comments.removeState('partial');
             this.comments.setState('shut');
         }

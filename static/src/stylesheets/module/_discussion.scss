@@ -160,7 +160,6 @@ $avatarPadding: $gs-gutter / 2;
 .d-thread {
     list-style: none;
     margin: 0;
-    clear: both;
 }
 
 .discussion__heading {
@@ -842,8 +841,17 @@ $comment-recommend-button-size: 25px;
 
 .d-top-comment-container {
     width: 50%;
+    margin: 0;
     float: left;
     @include box-sizing(border-box);
+}
+
+.d-top-comment {
+    display: none;
+    &:first-child,
+    .discussion--expanded & {
+        display: block;
+    }
 }
 
 .d-top-comment-container--left {

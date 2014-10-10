@@ -45,27 +45,24 @@
             </div>
         }
 
-        @if(page.orderBy == "newest"){<div class="js-new-comments"></div>}
-        <ul class="d-thread d-thread--top-level">
-            @if(isTopComments) {
-                <div class="d-top-comment-container d-top-comment-container--left">
+        @if(isTopComments) {
+            <ul class="d-top-comment-container d-top-comment-container--left">
                 @page.comments.zipWithIndex.filter(_._2 % 2 == 0).map { case (comment, i) =>
-                        @fragments.topComment(comment, page.isClosedForRecommendation, false)
-                    }
-                </div>
-                <div class="d-top-comment-container d-top-comment-container--right">
+                    @fragments.topComment(comment, page.isClosedForRecommendation, false)
+                }
+            </ul>
+            <ul class="d-top-comment-container d-top-comment-container--right">
                 @page.comments.zipWithIndex.filter(_._2 % 2 == 1).map { case (comment, i) =>
-                        @fragments.topComment(comment, page.isClosedForRecommendation, false)
-                    }
-                </div>
-            }else {
+                    @fragments.topComment(comment, page.isClosedForRecommendation, false)
+                }
+            </ul>
+            } else {
+            <ul class="d-thread d-thread--top-level">
                 @page.comments.map { comment =>
                     @fragments.comment(comment, page.isClosedForRecommendation, false)
                 }
-            }
-            <li class="d-image-fade u-h"></li>
-        </ul>
-        @if(page.orderBy == "oldest"){<div class="js-new-comments"></div>}
+            </ul>
+        }
 
         @if(!isTopComments){
             <div class="d-discussion__pagination u-cf">
