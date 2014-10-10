@@ -78,6 +78,33 @@
         }
     }
 
+    &.commercial--v-high {
+        padding: 0 $gs-gutter/4 $gs-baseline/2;
+        
+        .container__header {
+            position: static;
+            top: auto;
+            bottom: auto;
+            width: auto;
+            margin: 0 (-1*$gs-gutter/4) $gs-baseline/2;
+            padding: $gs-baseline/2 $gs-gutter/2;
+        }
+        .lineitem__image {
+            width: 100%;
+            float: none;
+            margin: 0 -$gs-gutter/2 $gs-baseline/2;
+            width: calc(100% + ($gs-gutter/2));
+        }
+        /*
+        @include mq($from: mobileLandscape, $until: leftCol) {
+            .lineitem__image {
+                width: 100%;
+                float: none;
+            }
+        }
+        */
+    }
+
     .container__body {
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
@@ -267,6 +294,15 @@
     }
 }
 
+.ad-slot--im {
+    padding-right: $gs-gutter;
+    width: 50%;
+    float: left;
+    @include mq(leftCol) {
+        @include box-sizing(border-box);
+        width: $left-column-wide + $gs-gutter;
+    }
+}
 
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
