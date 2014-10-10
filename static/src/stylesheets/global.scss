@@ -60,6 +60,8 @@
 @import 'module/_clamp';
 @import 'module/_submeta';
 
+@import 'module/preview/_freshness-check';
+
 
 /* ==========================================================================
    External modules
@@ -122,6 +124,15 @@
 // card additions
 @import 'module/facia-cards/_tones-images';
 
+// new FACIA CARDS code
+@import 'module/facia-cards/_l-list';
+@import 'module/facia-cards/_container';
+@import 'module/facia-cards/_slices';
+@import 'module/facia-cards/_sublinks';
+@import 'module/facia-cards/_item';
+@import 'module/facia-cards/_items';
+@import 'module/facia-cards/_linkslist';
+@import 'module/facia-cards/_tones';
 
 /* ==========================================================================
    Experiments

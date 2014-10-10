@@ -15,8 +15,7 @@
 }
 
 %tone-not-background {
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__title {
             @include mq($until: tablet) {
                 padding-top: 0;
@@ -35,8 +34,7 @@
         }
     }
 
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__header,
         .fc-item__standfirst,
         .fc-item__meta {

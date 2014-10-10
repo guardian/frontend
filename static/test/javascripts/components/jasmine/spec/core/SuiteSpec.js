@@ -67,12 +67,17 @@ describe("Suite", function() {
     expect(suite.afterFns).toEqual([innerAfter, outerAfter]);
   });
 
-  it("can be disabled", function() {
+  it("can be disabled, but still calls callbacks", function() {
     var env = new j$.Env(),
       fakeQueueRunner = jasmine.createSpy('fake queue runner'),
+      onStart = jasmine.createSpy('onStart'),
+      resultCallback = jasmine.createSpy('resultCallback'),
+      onComplete = jasmine.createSpy('onComplete'),
       suite = new j$.Suite({
         env: env,
         description: "with a child suite",
+        onStart: onStart,
+        resultCallback: resultCallback,
         queueRunner: fakeQueueRunner
       });
 
@@ -80,9 +85,12 @@ describe("Suite", function() {
 
     expect(suite.disabled).toBe(true);
 
-    suite.execute();
+    suite.execute(onComplete);
 
     expect(fakeQueueRunner).not.toHaveBeenCalled();
+    expect(onStart).toHaveBeenCalled();
+    expect(resultCallback).toHaveBeenCalled();
+    expect(onComplete).toHaveBeenCalled();
   });
 
   it("delegates execution of its specs and suites", function() {
@@ -175,6 +183,32 @@ describe("Suite", function() {
     expect(suiteResultsCallback).toHaveBeenCalledWith({
       id: suite.id,
       status: '',
+      description: "with a child suite",
+      fullName: "with a child suite"
+    });
+  });
+
+  it("calls a provided result callback with status being disabled when disabled and done", function() {
+    var env = new j$.Env(),
+      suiteResultsCallback = jasmine.createSpy('suite result callback'),
+      fakeQueueRunner = function(attrs) { attrs.onComplete(); },
+      suite = new j$.Suite({
+        env: env,
+        description: "with a child suite",
+        queueRunner: fakeQueueRunner,
+        resultCallback: suiteResultsCallback
+      }),
+      fakeSpec1 = {
+        execute: jasmine.createSpy('fakeSpec1')
+      };
+
+    suite.disable();
+
+    suite.execute();
+
+    expect(suiteResultsCallback).toHaveBeenCalledWith({
+      id: suite.id,
+      status: 'disabled',
       description: "with a child suite",
       fullName: "with a child suite"
     });

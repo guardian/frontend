@@ -24,8 +24,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     @include fc-item--three-quarters;
 
-    .fc-item__container {
-        @include flex-direction(row);
+    .has-flex-wrap & {
+        .fc-item__container {
+            @include flex-direction(row);
+        }
     }
 
     // IE10/11 ignore boxsizing on flex-basis'd element.

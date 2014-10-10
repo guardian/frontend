@@ -83,8 +83,6 @@ $block-padding-right: $gs-gutter;
     }
 
     .byline {
-        @include fs-bodyHeading(1);
-        font-weight: normal;
         padding: 0;
         min-height: initial;
         margin: $gs-baseline/3 0 $gs-baseline/2;
@@ -109,7 +107,7 @@ $block-padding-right: $gs-gutter;
 
 .blog__last-updated-container {
     @include box-sizing(border-box);
-    padding-top: $gs-baseline/6;
+    padding-top: $gs-baseline/3;
     color: #ffffff;
     @include fs-textSans(1);
 
@@ -288,6 +286,11 @@ $block-padding-right: $gs-gutter;
     .block-title {
         margin-top: ($gs-baseline/4)*-1;
         margin-bottom: $gs-baseline;
+
+        & + .block-elements .element-image:first-child,
+        & + .block-elements .element-video:first-child {
+            margin-top: 34px; // Extra margin top to position media below block-time
+        }
     }
 
     .block-title,
@@ -311,13 +314,19 @@ $block-padding-right: $gs-gutter;
         /* Quotes
            ========================================================= */
         > blockquote,
-        > blockquote.quoted { // using !important to override inline styles from content api
-            margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important;
+        > blockquote.quoted {
+            margin: 16px $block-padding-right $gs-baseline * 1.5 $block-padding-left;
             @include mq($until: mobileLandscape) {
-                margin-left: $gs-gutter/2 !important;
-                margin-right: $gs-gutter/2 !important;
-                &:before { // remove pseudo quote at mobile
+                margin-left: $gs-gutter / 2;
+                margin-right: $gs-gutter / 2;
+                &:before {
                     display: none;
+                }
+            }
+            &:first-child {
+                margin-top: 0;
+                @include mq(tablet) {
+                    margin-top: -2px;
                 }
             }
         }
@@ -326,8 +335,13 @@ $block-padding-right: $gs-gutter;
         }
 
         > blockquote.quoted:before {
-            margin-left: -24px;
             left: auto;
+        }
+
+        > blockquote.quoted p:first-child {
+            @include mq(mobileLandscape) {
+                text-indent: $gs-gutter * 1.5;
+            }
         }
 
         /* Media
@@ -413,6 +427,14 @@ $block-padding-right: $gs-gutter;
                 margin-right: $block-padding-right;
             }
         }
+
+        > .element-image:first-child,
+        > .element-video:first-child {
+            @include mq(tablet) {
+                margin-top: 55px; // Extra margin top to position media below block-time
+            }
+        }
+
 
         > .element.element--thumbnail {
             border-bottom: 0;
@@ -681,7 +703,6 @@ $timeline-width: 14px;
         line-height: $timeline-width;
     }
 }
-
 .timeline__title {
     display: table-cell;
     @include fs-textSans(3);
@@ -740,7 +761,6 @@ $timeline-width: 14px;
 /* Football components
    ========================================================================== */
 .blog {
-
     .tabs__container--multiple {
         margin-bottom: 0;
     }
@@ -809,28 +829,26 @@ $timeline-width: 14px;
         }
     }
 
-    &.tone-live .content__head--tonal {
-        .content__labels {
-            @include mq(desktop) {
-                float: left;
-                width: gs-span(3);
-                margin-left: (gs-span(4) + $gs-gutter) * -1;
-                border-bottom: 0;
-            }
+    .content__labels {
+        @include mq(desktop) {
+            float: left;
+            width: gs-span(3);
+            margin-left: (gs-span(4) + $gs-gutter) * -1;
+            border-bottom: 0;
         }
+    }
 
-        .content__section-label {
-            @include mq(desktop) {
-                @include fs-header(3);
-                float: none;
-            }
+    .content__section-label {
+        @include mq(desktop) {
+            @include fs-header(3);
+            float: none;
         }
+    }
 
-        .content__series-label {
-            @include mq(desktop) {
-                @include fs-headline(3);
-                float: none;
-            }
+    .content__series-label {
+        @include mq(desktop) {
+            @include fs-headline(3);
+            float: none;
         }
     }
 
@@ -867,7 +885,6 @@ $timeline-width: 14px;
 }
 
 .content--liveblog {
-
     .content__standfirst,
     .blog__timeline,
     .content__secondary-column {
@@ -885,10 +902,10 @@ $timeline-width: 14px;
     .content__labels {
         border-bottom-color: $c-neutral5;
     }
-    .content__section-label .tone-colour {
+    .content__section-label__link {
         color: $c-liveDefault;
     }
-    .content__series-label .tone-colour {
+    .content__series-label__link {
         color: $c-neutral2;
     }
     .content__headline {
@@ -981,7 +998,6 @@ $timeline-width: 14px;
     }
 
     &:hover {
-
         .block-share__item--facebook {
             border-color: darken(#3b5998, 15%);
             .i { @include icon(share-facebook--blue-dark); }

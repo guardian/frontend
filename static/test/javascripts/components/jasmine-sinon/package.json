@@ -1,6 +1,6 @@
 {
   "name": "jasmine-sinon",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Jasmine BDD matchers for Sinon.JS",
   "main": "lib/jasmine-sinon.js",
   "scripts": {
@@ -28,12 +28,17 @@
     "node": ">=0.1.103"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.7.1",
-    "grunt-karma": "~0.6.2",
-    "grunt-jasmine-node": "~0.1.0"
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-karma": "~0.8.3",
+    "grunt-jasmine-node": "~0.2.1",
+    "karma-jasmine": "~0.2.0",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-firefox-launcher": "~0.1.3",
+    "jasmine-node": "~2.0.0-beta4",
+    "grunt-shell": "~0.7.0"
   },
   "dependencies": {
-    "sinon": "~1.7.3"
+    "sinon": ">= 1.7.1"
   }
 }

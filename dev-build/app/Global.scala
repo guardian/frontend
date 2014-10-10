@@ -1,7 +1,7 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
+import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
@@ -61,6 +61,7 @@ with DiagnosticsLifecycle
 with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
+with DfpDataCacheLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
