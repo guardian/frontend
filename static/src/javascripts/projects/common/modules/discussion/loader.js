@@ -12,11 +12,9 @@ define([
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
-    'common/modules/discussion/activity-stream',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
-    'common/modules/discussion/top-comments',
     'common/modules/identity/api',
     'common/modules/userPrefs'
 ], function(
@@ -31,11 +29,9 @@ define([
     DiscussionAnalytics,
     register,
     Component,
-    ActivityStream,
     DiscussionApi,
     CommentBox,
     Comments,
-    TopComments,
     Id,
     userPrefs
 ) {
@@ -59,10 +55,7 @@ Component.define(Loader);
  * @override
  */
 Loader.prototype.classes = {
-    commentsContainer: 'discussion__comments__container',
-    comments: 'discussion__comments',
-    commentBox: 'discussion__comment-box',
-    commentBoxBottom: 'discussion__comment-box--bottom'
+    comments: 'discussion__comments'
 };
 
 /**
@@ -108,6 +101,13 @@ Loader.prototype.loadTopComments = function() {
     }).then(
         function render(resp) {
             this.$topCommentsContainer.html(resp.html);
+            this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
+            if (this.topCommentCount !== 0) {
+                this.setState('show-top-comments-only');
+                this.setState('has-top-comments');
+            } else {
+                this.setState('first-two-comments-only');
+            }
         }.bind(this),
         function () {
         }
@@ -118,10 +118,13 @@ Loader.prototype.loadTopComments = function() {
 Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
+    this.toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
 
-    var commentsContainer = this.getElem('commentsContainer'),
-        commentsElem = this.getElem('comments'),
-        commentId = this.getCommentIdFromHash();
+    this.on('click', '.js-discussion-show-button', function() {
+        this.removeState('show-top-comments-only');
+    }.bind(this));
+
+    var commentId = this.getCommentIdFromHash();
 
     if (commentId) {
         mediator.emit('discussion:seen:comment-permalink');
@@ -136,7 +139,12 @@ Loader.prototype.ready = function() {
         state: 'partial'
     });
 
-    this.comments.attachTo(commentsElem);
+    this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
+
+    this.comments.on('rendered', function(e) {
+        var newPagination = $('.js-discussion-pagination', this.comments.elem).html();
+        $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
+    }.bind(this));
 
     this.comments.fetchComments({comment: commentId}).then(function() {
         $('.discussion .preload-msg').addClass('u-h');
@@ -145,7 +153,7 @@ Loader.prototype.ready = function() {
             this.comments.removeState('shut');
             this.comments.removeState('partial');
         }
-        bonzo(commentsContainer).removeClass('modern-hidden');
+
         this.initUnthreaded();
         this.initShowAll();
 
@@ -163,6 +171,8 @@ Loader.prototype.ready = function() {
 
     this.renderCommentCount();
 
+    this.initPagination();
+
     DiscussionAnalytics.init();
 
     bean.on(window, 'hashchange', function() {
@@ -177,7 +187,16 @@ Loader.prototype.ready = function() {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
+    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
+
     register.end('discussion');
+};
+
+Loader.prototype.handleBodyClick = function(clickspec) {
+    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        this.removeState('first-two-comments-only');
+        this.removeState('show-top-comments-only');
+    }
 };
 
 Loader.prototype.initShowAll = function() {
@@ -187,6 +206,10 @@ Loader.prototype.initShowAll = function() {
     if (userPrefs.get('discussion.expand')) {
         $showAllBtn.removeClass(offClass);
     }
+
+    this.on('click', '.js-untruncate-main-comments', function(e) {
+        this.removeState('first-two-comments-only');
+    });
 
     this.on('click', '.js-show-all', function(e) {
         var $btn = bonzo(e.currentTarget).toggleClass(offClass),
@@ -212,7 +235,6 @@ Loader.prototype.initUnthreaded = function() {
     });
 };
 
-/** @return {Reqwest|null} */
 Loader.prototype.getUser = function() {
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
@@ -245,26 +267,11 @@ Loader.prototype.initState = function() {
     }
 };
 
-/**
- * If discussion is closed -> render closed
- * If not signed in -> render signin,
- * Else render comment box
- */
 Loader.prototype.renderCommentBar = function() {
     if (this.isCommentable()) {
-        this.renderCommentBox();
-        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
-        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
+        this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
+        this.comments.on('first-load', this.renderCommentBox.bind(this, qwery('.js-discussion-comment-box--bottom')[0]));
     }
-};
-
-Loader.prototype.renderCommentBox = function() {
-    this.commentBox = new CommentBox({
-        discussionId: this.getDiscussionId(),
-        premod: this.user.privateFields.isPremoderated
-    });
-    this.commentBox.render(this.getElem('commentBox'));
-    this.commentBox.on('post:success', this.commentPosted.bind(this));
 };
 
 /* Logic determining if extra comments should be shown along with the posted comment to ensure context */
@@ -280,44 +287,21 @@ Loader.prototype.commentPosted = function () {
 
 };
 
-/* Configure DOM for viewing of comments once some have been shown */
-Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo(this.comments.getElem('header')).removeClass('u-h');
-};
-
-/**
- * This comment box is only rendered
- * When you load more comments
- */
-Loader.prototype.renderBottomCommentBox = function() {
-    if (this.bottomCommentBox) { return; }
-    this.bottomCommentBox = new CommentBox({
+Loader.prototype.renderCommentBox = function(elem) {
+    return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
-    });
-    this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
-    this.bottomCommentBox.on('post:success', function(comment) {
-        this.comments.addComment(comment, true);
-    }.bind(this));
+    }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
-/**
- * @return {string}
- */
 Loader.prototype.getDiscussionId = function() {
     return this.elem.getAttribute('data-discussion-key');
 };
 
-/**
- * @return {boolean}
- */
 Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-/**
- * TODO (jamesgorrie): Needs a refactor, good ol' copy and paste.
- */
 Loader.prototype.renderCommentCount = function() {
     ajax({
         url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
@@ -344,15 +328,20 @@ Loader.prototype.renderCommentCount = function() {
     });
 };
 
-/**
- * @return {number}
- */
 Loader.prototype.getCommentIdFromHash = function() {
     var reg = (/#comment-(\d+)/);
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
 Loader.prototype.checkCount = 0;
+
+Loader.prototype.initPagination = function() {
+    this.on('click', '.js-discussion-change-page', function(e) {
+        e.preventDefault();
+        var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+        return this.comments.gotoPage(page);
+    });
+};
 
 Loader.prototype.checkCommentsLoaded = function() {
 
@@ -361,7 +350,7 @@ Loader.prototype.checkCommentsLoaded = function() {
         return;
     }
 
-    if (this.topComments.rendered && this.comments.rendered) {
+    if (this.topCommentCount !== undefined && this.comments.rendered) {
         if (this.$topCommentsContainer.html().length > 0) {
             this.comments.removeState('partial');
             this.comments.setState('shut');

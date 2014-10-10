@@ -57,7 +57,6 @@ Comments.prototype.classes = {
     container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    changePage: 'js-discussion-change-page',
     showMoreHiddenContainer: 'show-more__container--hidden',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
@@ -105,8 +104,6 @@ Comments.prototype.ready = function() {
     }
 
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
-    this.on('click', this.getClass('changePage'), this.changePage);
-    this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
 
@@ -119,7 +116,6 @@ Comments.prototype.ready = function() {
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
-        this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
@@ -137,13 +133,6 @@ Comments.prototype.ready = function() {
         });
     });
 
-    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
-};
-
-Comments.prototype.handleBodyClick = function(clickspec) {
-    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-        this.showHiddenComments();
-    }
 };
 
 Comments.prototype.handlePickClick = function(e) {
@@ -204,20 +193,13 @@ Comments.prototype.gotoComment = function(id) {
 
 Comments.prototype.gotoPage = function(page) {
     this.loading();
-    scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
+    scroller.scrollToElement(qwery('.js-discussion-main-comments'), 100);
     this.relativeDates();
     return this.fetchComments({
         page: page
     }).then(function() {
         this.loaded();
     }.bind(this));
-};
-
-Comments.prototype.changePage = function(e) {
-    e.preventDefault();
-    var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-    this.relativeDates();
-    return this.gotoPage(page);
 };
 
 Comments.prototype.fetchComments = function(options) {
@@ -259,7 +241,7 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.relativeDates();
-    this.emit('loaded');
+    this.emit('rendered');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
@@ -465,7 +447,7 @@ Comments.prototype.showDiscussion = function() {
 };
 
 Comments.prototype.loading = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
+    var $content = $('.d-thread', this.elem);
     $(this.getClass('loader'), this.elem).removeClass('u-h').css({
         height: $content.offset().height
     });
@@ -495,7 +477,6 @@ Comments.prototype.setOrder = function(e) {
     return this.fetchComments({
         page: 1
     }).then(function() {
-        this.showHiddenComments();
         this.loaded();
         this.relativeDates();
     }.bind(this));
