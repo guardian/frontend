@@ -6,7 +6,7 @@ import common.Logging
 import conf.Configuration
 import julienrf.variants.Variants
 import org.joda.time.DateTime
-import play.api.libs.json.{Format, JsValue, Json}
+import play.api.libs.json.{JsString, Format, JsValue, Json}
 import services.ConfigAgent
 import tools.FaciaApi
 
@@ -249,7 +249,7 @@ trait UpdateActions extends Logging {
   private def pruneGroupOfZero(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(
       metaData => metaData.copy(json = metaData.json.filter{
-        case (k, v) if k == "group" => v.asOpt[Int].exists(_!=0)
+        case ("group", JsString("0")) => false
         case _ => true})))
 
   private def pruneMetaDataIfEmpty(trail: Trail): Trail =
