@@ -7,6 +7,7 @@ import conf.Configuration
 import julienrf.variants.Variants
 import org.joda.time.DateTime
 import play.api.libs.json.{Format, JsValue, Json}
+import services.ConfigAgent
 import tools.FaciaApi
 
 import scala.util.{Failure, Success, Try}
@@ -221,6 +222,20 @@ trait UpdateActions extends Logging {
   def capCollection(block: Block): Block =
     block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
+  def removeGroupIfNoLongerGrouped(collectionId: String, block: Block): Block = {
+    ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
+      case Some(groups) if groups.nonEmpty =>
+        block.copy(
+          live = block.live.map(removeGroupsFromTrail),
+          draft = block.draft.map(_.map(removeGroupsFromTrail))
+        )
+      case Some(groups) => block
+      case None         => block
+    }
+  }
+
+  private def removeGroupsFromTrail(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 }
 
 object UpdateActions extends UpdateActions
