@@ -22,7 +22,7 @@ define([
     bean,
     bonzo,
     qwery,
-    
+
     _map,
 
     $,
@@ -117,17 +117,6 @@ Comments.prototype.ready = function() {
         60000
     );
 
-    if (this.options.commentId) {
-        var comment = $('#comment-'+ this.options.commentId);
-        this.showHiddenComments();
-        $('.d-discussion__show-all-comments').addClass('u-h');
-        if (comment.attr('hidden')) {
-            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
-        }
-
-        window.location.replace('#comment-'+ this.options.commentId);
-    }
-
     this.emit('ready');
     this.relativeDates();
 
@@ -188,18 +177,16 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
 };
 
 Comments.prototype.gotoComment = function(id) {
-    var comment = $('#comment-'+ id, this.elem);
-
-    if (comment.length > 0) {
-        window.location.replace('#comment-'+ id);
-        return;
+    this.showHiddenComments();
+    var comment = $('#comment-'+ this.options.commentId);
+    $('.d-discussion__show-all-comments').addClass('u-h');
+    var o = bonzo(comment).parent();
+    if (o.hasClass('d-thread--responses-invisible')) {
+        var $visibleComments = bonzo(o).previous();
+        bonzo(qwery('.d-show-more-replies', $visibleComments[0])).remove();
+        o.removeClass('d-thread--responses-invisible');
     }
-
-    return this.fetchComments({
-        comment: id
-    }).then(function() {
-        window.location.replace('#comment-'+ id);
-    }.bind(this));
+    window.location.replace('#comment-'+ this.options.commentId);
 };
 
 Comments.prototype.gotoPage = function(page) {
@@ -233,7 +220,7 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: !this.options.unthreaded
     };
 
-    if (!this.options.expand) {
+    if (!this.options.expand && !this.options.commentId) {
         queryParams.maxResponses = 3;
     }
 
@@ -259,6 +246,11 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.relativeDates();
+
+    if (this.options.commentId) {
+        this.gotoComment()
+    }
+
     this.emit('loaded');
 };
 
@@ -273,12 +265,16 @@ Comments.prototype.showHiddenComments = function(e) {
 Comments.prototype.addMoreRepliesButtons = function (comments) {
 
     comments = comments || this.topLevelComments;
+
     comments.forEach(function(elem) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
-            renderedReplies = qwery(this.getClass('reply'), elem);
+            renderedReplies = qwery(this.getClass('reply'), elem),
+            hiddenReplies = qwery('.d-thread--responses-invisible', elem)[0]; //When potentially  trying to render a permalink
 
-        if (renderedReplies.length < replies) {
-            var numHiddenReplies = replies - renderedReplies.length,
+        if (renderedReplies.length < replies || hiddenReplies) {
+            var numHiddenReplies = hiddenReplies ?
+                    (qwery(this.getClass('reply'), hiddenReplies)).length
+                    : replies - renderedReplies.length,
 
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
@@ -300,11 +296,17 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
 
-    var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
-    li.innerHTML = 'Loading…';
-
     var self = this,
         source = bonzo(event.target).data('source-comment');
+
+    if (this.options.commentId) {           //Initial request was a permalink - so hidden comments are already rendered
+        bonzo(qwery(this.getClass('showReplies'), source)).remove();
+        bonzo(qwery('.d-thread--responses-more', source)).removeClass('d-thread--responses-invisible');
+        return;
+    }
+
+    var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
+    li.innerHTML = 'Loading…';
 
     ajax({
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
