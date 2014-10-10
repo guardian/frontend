@@ -9,19 +9,14 @@ define([
         Cell = React.createClass({
             render: function () {
                 var innerNodes = [],
-                    props = {
-                        className: classSet({
-                            'crossword__grid__cell': true,
-                            'crossword__grid__cell--focussed': this.props.isFocussed,
-                            'crossword__grid__cell--highlighted': this.props.isHighlighted,
-                            'crossword__grid__cell--editable': this.props.isEditable,
-                            'crossword__grid__cell--non-editable': !this.props.isEditable
-                        })
-                    };
+                    top = this.props.y * 32 + 1,
+                    left = this.props.x * 32 + 1;
 
                 if (this.props.number !== undefined) {
                     innerNodes.push(
-                        React.DOM.span({
+                        React.DOM.text({
+                            x: left + 1,
+                            y: top + 1,
                             key: 'number',
                             className: 'crossword__grid__cell__number'
                         }, this.props.number)
@@ -29,47 +24,72 @@ define([
                 }
 
                 if (this.props.value !== undefined) {
-                    innerNodes.push(React.DOM.span({
+                    innerNodes.push(React.DOM.text({
+                        x: left + 31 / 2,
+                        y: top + 31 / 2,
                         key: 'entry',
                         className: 'crossword__grid__cell__entry'
                     }, this.props.value));
                 }
 
-                if (this.props.isEditable) {
-                    props.onClick = this.props.handleSelect;
-                }
-
-                return React.DOM.td(props, innerNodes);
+                return React.DOM.g({
+                        onClick: this.props.handleSelect
+                    },
+                    React.DOM.rect({
+                        x: left,
+                        y: top,
+                        width: 31,
+                        height: 31,
+                        className: classSet({
+                            'crossword__grid__cell': true,
+                            'crossword__grid__cell--focussed': this.props.isFocussed,
+                            'crossword__grid__cell--highlighted': this.props.isHighlighted
+                        })
+                    }),
+                    innerNodes
+                );
             }
         });
 
     return React.createClass({
-        handleSelect: function (x, y, pageX, pageY) {
-            this.props.onSelect(x, y, pageX, pageY);
+        handleSelect: function (x, y) {
+            this.props.onSelect(x, y);
         },
 
         render: function () {
             var that = this,
-                rows = _.map(_.range(this.props.rows), function (y) {
-                    var innerNodes = _.map(_.range(that.props.columns), function (x) {
-                        var cellProps = that.props.cells[x][y];
+                width = this.props.columns * 32 + 1,
+                height = this.props.rows * 32 + 1,
+                cells = [];
+
+            _.forEach(_.range(this.props.rows), function (y) {
+                _.map(_.range(that.props.columns), function (x) {
+                    var cellProps = that.props.cells[x][y];
+
+                    if (cellProps.isEditable) {
                         cellProps.handleSelect = that.handleSelect.bind(that, x, y);
+                        cellProps.x = x;
+                        cellProps.y = y;
                         cellProps.key = 'cell_' + x + '_' + y;
                         cellProps.isHighlighted = that.props.isHighlighted(x, y);
                         cellProps.isFocussed = that.props.focussedCell && x === that.props.focussedCell.x &&
                             y === that.props.focussedCell.y;
-                        return Cell(cellProps);
-                    });
-
-                    return React.DOM.tr({
-                        key: 'row_' + y,
-                        className: 'crossword__grid__row'
-                    }, innerNodes);
+                        cells.push(Cell(cellProps));
+                    }
                 });
+            });
 
-            return React.DOM.table({
+            return React.DOM.svg({
+                width: width,
+                height: height,
                 className: 'crossword__grid'
-            }, rows);
+            }, React.DOM.rect({
+                x: 0,
+                y: 0,
+                width: width,
+                height: height
+            }),
+            cells);
         }
     });
 });
