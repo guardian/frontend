@@ -138,7 +138,7 @@ Loader.prototype.ready = function() {
 
     this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
 
-    this.comments.on('rendered', function(e) {
+    this.comments.on('rendered', function() {
         var newPagination = $('.js-discussion-pagination', this.comments.elem).html();
         $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
     }.bind(this));
@@ -203,7 +203,7 @@ Loader.prototype.initShowAll = function() {
         $showAllBtn.removeClass(offClass);
     }
 
-    this.on('click', '.js-untruncate-main-comments', function(e) {
+    this.on('click', '.js-untruncate-main-comments', function() {
         this.removeState('first-two-comments-only');
     });
 
