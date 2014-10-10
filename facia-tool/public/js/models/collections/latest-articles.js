@@ -153,8 +153,10 @@ define([
                         self.articles.push(new Article(article));
                     });
                 })
-                .fail(function() {
-                    vars.model.alert('Sorry, the Content API is currently unavailable')
+                .fail(function(xhr) {
+                    if (xhr.status === 500) {
+                        vars.model.alert('Sorry, the Content API is currently unavailable');
+                    }
                 })
                 ;
             }, 300);
