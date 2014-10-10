@@ -48,18 +48,23 @@ define([
         focusNext: function () {
             var cell = this.state.cellInFocus,
                 direction = this.state.directionOfEntry,
-                clue = this.clueInFocus();
+                clue = this.clueInFocus(),
+                x,
+                y;
 
             if (direction === 'across' && cell.x < clue.position.x + clue.length - 1) {
-                this.state.cellInFocus = {
-                    x: cell.x + 1,
-                    y: cell.y
-                };
-                this.setState(this.state);
+                x = cell.x + 1;
+                y = cell.y;
             } else if (direction === 'down' && cell.y < clue.position.y + clue.length - 1) {
+                x = cell.x;
+                y = cell.y + 1;
+            }
+
+            if (x !== undefined) {
+                this.focusHiddenInput(x, y);
                 this.state.cellInFocus = {
-                    x: cell.x,
-                    y: cell.y + 1
+                    x: x,
+                    y: y
                 };
                 this.setState(this.state);
             }
