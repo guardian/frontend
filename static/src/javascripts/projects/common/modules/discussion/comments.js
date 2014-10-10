@@ -237,7 +237,7 @@ Comments.prototype.fetchComments = function(options) {
 
 Comments.prototype.goToPermalink = function(commentId) {
 
-    if (comment) {
+    if (commentId) {
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
         window.location.replace('#comment-'+ commentId);
