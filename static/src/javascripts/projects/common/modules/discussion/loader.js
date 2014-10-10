@@ -90,6 +90,8 @@ Loader.prototype.loadTopComments = function() {
 
     this.on('click', '.js-jump-to-comment', function(e) {
         e.preventDefault();
+        var commentId = bonzo(e.currentTarget).data('comment-id');
+        this.comments.fetchComments({comment: commentId});
     });
 
     return ajax({
