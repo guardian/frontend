@@ -110,7 +110,6 @@ Loader.prototype.ready = function() {
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
-        commentId: commentId ? commentId : null,
         order: this.getDiscussionClosed() ? 'oldest' : 'newest',
         state: 'partial'
     });
