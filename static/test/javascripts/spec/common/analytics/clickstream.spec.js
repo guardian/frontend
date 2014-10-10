@@ -78,7 +78,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(el, 'click');
 
-            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            runs(function(){
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            });
 
         });
 
@@ -92,7 +94,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(document.getElementById('not-inside-a-link'), 'click');
 
-            expect(spy.callCount).toBe(0);
+            runs(function(){
+                expect(spy.callCount).toBe(0);
+            });
 
         });
 
@@ -113,7 +117,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(el, 'click');
 
-            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            runs(function(){
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            });
         });
 
         it("should indicate if a click emanates from a same-host link", function(){
@@ -133,7 +139,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(el, 'click');
 
-            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            runs(function(){
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            });
         });
 
         it("should indicate if a click emanates from an other-host link", function(){
@@ -153,7 +161,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(el, 'click');
 
-            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            runs(function(){
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            });
         });
 
         it("should not fire clicks when instantiated without the listener", function(){
@@ -166,7 +176,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(document.getElementById('click-me'), 'click');
 
-            expect(spy.callCount).toBe(0);
+            runs(function(){
+                expect(spy.callCount).toBe(0);
+            });
 
         });
 
@@ -189,7 +201,9 @@ define(['common/modules/analytics/clickstream', 'bean', 'common/utils/mediator',
 
             bean.fire(el, 'click');
 
-            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            runs(function(){
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            });
 
         });
 

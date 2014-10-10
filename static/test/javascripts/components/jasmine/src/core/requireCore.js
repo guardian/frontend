@@ -1,5 +1,5 @@
 function getJasmineRequireObj() {
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     return exports;
   } else {
     window.jasmineRequire = window.jasmineRequire || {};
@@ -14,7 +14,6 @@ getJasmineRequireObj().core = function(jRequire) {
   j$.util = jRequire.util();
   j$.Any = jRequire.Any();
   j$.CallTracker = jRequire.CallTracker();
-  j$.MockDate = jRequire.MockDate();
   j$.Clock = jRequire.Clock();
   j$.DelayedFunctionScheduler = jRequire.DelayedFunctionScheduler();
   j$.Env = jRequire.Env(j$);
@@ -25,7 +24,7 @@ getJasmineRequireObj().core = function(jRequire) {
   j$.matchersUtil = jRequire.matchersUtil(j$);
   j$.ObjectContaining = jRequire.ObjectContaining(j$);
   j$.pp = jRequire.pp(j$);
-  j$.QueueRunner = jRequire.QueueRunner(j$);
+  j$.QueueRunner = jRequire.QueueRunner();
   j$.ReportDispatcher = jRequire.ReportDispatcher();
   j$.Spec = jRequire.Spec(j$);
   j$.SpyStrategy = jRequire.SpyStrategy();

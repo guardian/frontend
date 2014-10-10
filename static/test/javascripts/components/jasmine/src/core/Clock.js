@@ -1,5 +1,5 @@
 getJasmineRequireObj().Clock = function() {
-  function Clock(global, delayedFunctionScheduler, mockDate) {
+  function Clock(global, delayedFunctionScheduler) {
     var self = this,
       realTimingFunctions = {
         setTimeout: global.setTimeout,
@@ -16,32 +16,23 @@ getJasmineRequireObj().Clock = function() {
       installed = false,
       timer;
 
-
     self.install = function() {
       replace(global, fakeTimingFunctions);
       timer = fakeTimingFunctions;
       installed = true;
-
-      return self;
     };
 
     self.uninstall = function() {
       delayedFunctionScheduler.reset();
-      mockDate.uninstall();
       replace(global, realTimingFunctions);
-
       timer = realTimingFunctions;
       installed = false;
-    };
-
-    self.mockDate = function(initialDate) {
-      mockDate.install(initialDate);
     };
 
     self.setTimeout = function(fn, delay, params) {
       if (legacyIE()) {
         if (arguments.length > 2) {
-          throw new Error('IE < 9 cannot support extra params to setTimeout without a polyfill');
+          throw new Error("IE < 9 cannot support extra params to setTimeout without a polyfill");
         }
         return timer.setTimeout(fn, delay);
       }
@@ -51,7 +42,7 @@ getJasmineRequireObj().Clock = function() {
     self.setInterval = function(fn, delay, params) {
       if (legacyIE()) {
         if (arguments.length > 2) {
-          throw new Error('IE < 9 cannot support extra params to setInterval without a polyfill');
+          throw new Error("IE < 9 cannot support extra params to setInterval without a polyfill");
         }
         return timer.setInterval(fn, delay);
       }
@@ -68,10 +59,9 @@ getJasmineRequireObj().Clock = function() {
 
     self.tick = function(millis) {
       if (installed) {
-        mockDate.tick(millis);
         delayedFunctionScheduler.tick(millis);
       } else {
-        throw new Error('Mock clock is not installed, use jasmine.clock().install()');
+        throw new Error("Mock clock is not installed, use jasmine.clock().install()");
       }
     };
 
@@ -105,7 +95,7 @@ getJasmineRequireObj().Clock = function() {
     }
 
     function argSlice(argsObj, n) {
-      return Array.prototype.slice.call(argsObj, n);
+      return Array.prototype.slice.call(argsObj, 2);
     }
   }
 

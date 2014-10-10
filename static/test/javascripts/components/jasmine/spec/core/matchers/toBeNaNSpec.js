@@ -9,8 +9,7 @@ describe("toBeNaN", function() {
   });
 
   it("fails for anything not a NaN", function() {
-    var matcher = j$.matchers.toBeNaN(),
-      result;
+    var matcher = j$.matchers.toBeNaN();
 
     result = matcher.compare(1);
     expect(result.pass).toBe(false);
@@ -32,6 +31,6 @@ describe("toBeNaN", function() {
     var matcher = j$.matchers.toBeNaN(),
       result = matcher.compare(0);
 
-    expect(result.message()).toEqual("Expected 0 to be NaN.");
+    expect(result.message).toEqual("Expected 0 to be NaN.");
   });
 });

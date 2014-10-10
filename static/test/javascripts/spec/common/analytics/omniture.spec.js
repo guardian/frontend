@@ -113,7 +113,10 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
 
         it("should log a page view event", function() {
             var o = new Omniture(s).go(config);
-            expect(s.t).toHaveBeenCalledOnce();
+            waits(100);
+            runs(function() {
+                expect(s.t).toHaveBeenCalledOnce();
+            });
         });
         
         it("should send event46 when a page has comments", function(){
@@ -136,8 +139,11 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
                 };
 
             o.go(config);
-            mediator.emit('module:clickstream:click', clickSpec);
-            expect(s.tl).toHaveBeenCalledOnce();
+            waits(100);
+            runs(function() {
+                mediator.emit('module:clickstream:click', clickSpec);
+                expect(s.tl).toHaveBeenCalledOnce();
+            });
         });
 
         it("should send event16 when social button has been clicked", function(){
@@ -150,9 +156,12 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
                 }
                 ;
             o.go(config);
-            mediator.emit('module:clickstream:click', clickSpec);
-            expect(s.apl).toHaveBeenCalled();
-            expect(s.apl.args[0][1]).toBe('event16');
+            waits(100);
+            runs(function() {
+                mediator.emit('module:clickstream:click', clickSpec);
+                expect(s.apl).toHaveBeenCalled();
+                expect(s.apl.args[0][1]).toBe('event16');
+            });
         });
 
         it("should make a non-delayed s.tl call for same-page links", function(){
@@ -167,8 +176,10 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
                 };
 
             o.go(config);
-            mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
-            expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
+            runs(function() {
+                mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
+                expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
+            });
 
         });
 
@@ -184,8 +195,10 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
                 };
 
             o.go(config);
-            mediator.emit('module:clickstream:click', clickSpec);
-            expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+            runs(function() {
+                mediator.emit('module:clickstream:click', clickSpec);
+                expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+            });
 
         });
 
@@ -201,8 +214,10 @@ define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(
                 };
 
             o.go(config);
-            mediator.emit('module:clickstream:click', clickSpec);
-            expect(s.tl.withArgs(el,   'o', 'tag')).toHaveBeenCalledOnce();
+            runs(function() {
+                mediator.emit('module:clickstream:click', clickSpec);
+                expect(s.tl.withArgs(el,   'o', 'tag')).toHaveBeenCalledOnce();
+            });
 
         });
 

@@ -3,8 +3,8 @@ if (typeof require === 'function' && typeof module === 'object') {
   var jasmineSinon = require('../lib/jasmine-sinon.js');
 }
 
-describe('jasmine matcher', function() {
-  it('jasmine.any() is supported', function () {
+describe('sinon matchers should support jasmine matchers', function() {
+  it('jasmine.any()', function () {
     var spy = sinon.spy();
     spy('abc');
     spy(new Date());

@@ -35,7 +35,6 @@ getJasmineRequireObj().Suite = function() {
 
   Suite.prototype.disable = function() {
     this.disabled = true;
-    this.result.status = 'disabled';
   };
 
   Suite.prototype.beforeEach = function(fn) {
@@ -52,9 +51,6 @@ getJasmineRequireObj().Suite = function() {
 
   Suite.prototype.execute = function(onComplete) {
     var self = this;
-
-    this.onStart(this);
-
     if (this.disabled) {
       complete();
       return;
@@ -65,6 +61,8 @@ getJasmineRequireObj().Suite = function() {
     for (var i = 0; i < this.children.length; i++) {
       allFns.push(wrapChildAsAsync(this.children[i]));
     }
+
+    this.onStart(this);
 
     this.queueRunner({
       fns: allFns,
@@ -87,6 +85,6 @@ getJasmineRequireObj().Suite = function() {
   return Suite;
 };
 
-if (typeof window == void 0 && typeof exports == 'object') {
+if (typeof window == void 0 && typeof exports == "object") {
   exports.Suite = jasmineRequire.Suite;
 }

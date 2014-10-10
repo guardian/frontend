@@ -25,7 +25,7 @@ getJasmineRequireObj().ConsoleReporter = function() {
       specCount = 0;
       failureCount = 0;
       pendingCount = 0;
-      print('Started');
+      print("Started");
       printNewline();
       timer.start();
     };
@@ -36,24 +36,19 @@ getJasmineRequireObj().ConsoleReporter = function() {
         specFailureDetails(failedSpecs[i]);
       }
 
-      if(specCount > 0) {
-        printNewline();
+      printNewline();
+      var specCounts = specCount + " " + plural("spec", specCount) + ", " +
+        failureCount + " " + plural("failure", failureCount);
 
-        var specCounts = specCount + ' ' + plural('spec', specCount) + ', ' +
-          failureCount + ' ' + plural('failure', failureCount);
-
-        if (pendingCount) {
-          specCounts += ', ' + pendingCount + ' pending ' + plural('spec', pendingCount);
-        }
-
-        print(specCounts);
-      } else {
-        print('No specs found');
+      if (pendingCount) {
+        specCounts += ", " + pendingCount + " pending " + plural("spec", pendingCount);
       }
+
+      print(specCounts);
 
       printNewline();
       var seconds = timer.elapsed() / 1000;
-      print('Finished in ' + seconds + ' ' + plural('second', seconds));
+      print("Finished in " + seconds + " " + plural("second", seconds));
 
       printNewline();
 
@@ -63,28 +58,28 @@ getJasmineRequireObj().ConsoleReporter = function() {
     this.specDone = function(result) {
       specCount++;
 
-      if (result.status == 'pending') {
+      if (result.status == "pending") {
         pendingCount++;
-        print(colored('yellow', '*'));
+        print(colored("yellow", "*"));
         return;
       }
 
-      if (result.status == 'passed') {
-        print(colored('green', '.'));
+      if (result.status == "passed") {
+        print(colored("green", '.'));
         return;
       }
 
-      if (result.status == 'failed') {
+      if (result.status == "failed") {
         failureCount++;
         failedSpecs.push(result);
-        print(colored('red', 'F'));
+        print(colored("red", 'F'));
       }
     };
 
     return this;
 
     function printNewline() {
-      print('\n');
+      print("\n");
     }
 
     function colored(color, str) {
@@ -92,7 +87,7 @@ getJasmineRequireObj().ConsoleReporter = function() {
     }
 
     function plural(str, count) {
-      return count == 1 ? str : str + 's';
+      return count == 1 ? str : str + "s";
     }
 
     function repeat(thing, times) {
@@ -104,12 +99,12 @@ getJasmineRequireObj().ConsoleReporter = function() {
     }
 
     function indent(str, spaces) {
-      var lines = (str || '').split('\n');
+      var lines = (str || '').split("\n");
       var newArr = [];
       for (var i = 0; i < lines.length; i++) {
-        newArr.push(repeat(' ', spaces).join('') + lines[i]);
+        newArr.push(repeat(" ", spaces).join("") + lines[i]);
       }
-      return newArr.join('\n');
+      return newArr.join("\n");
     }
 
     function specFailureDetails(result) {
@@ -119,7 +114,6 @@ getJasmineRequireObj().ConsoleReporter = function() {
       for (var i = 0; i < result.failedExpectations.length; i++) {
         var failedExpectation = result.failedExpectations[i];
         printNewline();
-        print(indent(failedExpectation.message, 2));
         print(indent(failedExpectation.stack, 2));
       }
 

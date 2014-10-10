@@ -216,22 +216,19 @@ define([
                 });
         });
 
-        it('should refresh on breakpoint changed', function (done) {
+        it('should refresh on breakpoint changed', function() {
             dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             // change breakpoint
             $style.html('body:after { content: "mobile"; }');
             // 'resize'
             mediator.emit('window:resize');
-            waitsForAndRuns(
-                function () {
-                    return googletag.pubads().refresh.called;
-                },
-                function() {
-                    expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(2);
-                    done();
-                }
-            );
+            waitsFor(function() {
+                return googletag.pubads().refresh.called;
+            });
+            runs(function() {
+                expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(2);
+            })
         });
 
         it('should display ads', function() {
