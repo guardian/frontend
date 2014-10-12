@@ -5,7 +5,8 @@ define([
     'react',
     'common/modules/crosswords/clues',
     'common/modules/crosswords/grid',
-    'common/modules/crosswords/helpers'
+    'common/modules/crosswords/helpers',
+    'common/modules/crosswords/keycodes'
 ], function (
     $,
     _,
@@ -13,16 +14,10 @@ define([
     React,
     Clues,
     Grid,
-    helpers
+    helpers,
+    keycodes
 ) {
-    var KEYCODE_BACKSPACE = 8,
-        KEYCODE_LEFT = 37,
-        KEYCODE_UP = 38,
-        KEYCODE_RIGHT = 39,
-        KEYCODE_DOWN = 40,
-        KEYCODE_A = 65,
-        KEYCODE_Z = 90,
-        Crossword = React.createClass({
+    var Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
 
@@ -42,27 +37,39 @@ define([
             this.setState(this.state);
         },
 
+        onBlur: function (event) {
+            /*
+
+            Can't do this yet, because it breaks the behaviour when you click on the same cell again to change
+            direction ... :-(
+
+            this.state.cellInFocus = null;
+            this.state.directionOfEntry = null;
+            this.setState(this.state);
+            */
+        },
+
         onKeyDown: function (event) {
             var cell = this.state.cellInFocus;
 
-            if (event.keyCode == KEYCODE_BACKSPACE) {
+            if (event.keyCode == keycodes.backspace) {
                 this.setCellValue(cell.x, cell.y, null);
                 this.focusPrevious();
-            } else if (event.keyCode == KEYCODE_LEFT) {
-                this._moveFocus(-1, 0);
-            } else if (event.keyCode == KEYCODE_UP) {
-                this._moveFocus(0, -1);
-            } else if (event.keyCode == KEYCODE_RIGHT) {
-                this._moveFocus(1, 0);
-            } else if (event.keyCode == KEYCODE_DOWN) {
-                this._moveFocus(0, 1);
-            } else if (event.keyCode >= KEYCODE_A && event.keyCode <= KEYCODE_Z) {
+            } else if (event.keyCode == keycodes.left) {
+                this.moveFocus(-1, 0);
+            } else if (event.keyCode == keycodes.up) {
+                this.moveFocus(0, -1);
+            } else if (event.keyCode == keycodes.right) {
+                this.moveFocus(1, 0);
+            } else if (event.keyCode == keycodes.down) {
+                this.moveFocus(0, 1);
+            } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
                 this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
                 this.focusNext();
             }
         },
 
-        _moveFocus: function (deltaX, deltaY) {
+        moveFocus: function (deltaX, deltaY) {
             var cell = this.state.cellInFocus,
                 direction = this.state.directionOfEntry,
                 x = cell.x + deltaX,
@@ -98,7 +105,7 @@ define([
                 deltaX = 0; deltaY = -1;
             }
 
-            this._moveFocus(deltaX, deltaY);
+            this.moveFocus(deltaX, deltaY);
         },
 
         focusNext: function () {
@@ -110,14 +117,14 @@ define([
                 deltaX = 0; deltaY = 1;
             }
 
-            this._moveFocus(deltaX, deltaY);
+            this.moveFocus(deltaX, deltaY);
         },
 
         focusHiddenInput: function (x, y) {
             var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
 
-            wrapper.style.left = (x * 31) + "px";
-            wrapper.style.top = (y * 31) + "px";
+            wrapper.style.left = (x * 31) + 'px';
+            wrapper.style.top = (y * 31) + 'px';
             this.refs.hiddenInput.getDOMNode().focus();
         },
 
@@ -200,17 +207,18 @@ define([
                         focussedCell: this.state.cellInFocus
                     }),
                     React.DOM.div({
-                            className: 'crossword__hidden-input-wrapper',
-                            ref: "hiddenInputWrapper"
-                        },
+                        className: 'crossword__hidden-input-wrapper',
+                        ref: 'hiddenInputWrapper'
+                    },
                         React.DOM.input({
-                                type: 'text',
-                                className: 'crossword__hidden-input',
-                                ref: "hiddenInput",
-                                onKeyDown: this.onKeyDown,
-                                value: ""
-                            }
-                        ))
+                            type: 'text',
+                            className: 'crossword__hidden-input',
+                            ref: 'hiddenInput',
+                            onKeyDown: this.onKeyDown,
+                            onBlur: this.onBlur,
+                            value: ''
+                        }
+                    ))
                 ),
                 Clues({
                     clues: this.props.data.entries

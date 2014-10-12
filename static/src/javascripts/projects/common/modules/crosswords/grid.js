@@ -33,8 +33,8 @@ define([
                 }
 
                 return React.DOM.g({
-                        onClick: this.props.handleSelect
-                    },
+                    onClick: this.props.handleSelect
+                },
                     React.DOM.rect({
                         x: left,
                         y: top,
