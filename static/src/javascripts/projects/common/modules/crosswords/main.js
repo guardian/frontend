@@ -20,6 +20,8 @@ define([
         KEYCODE_UP = 38,
         KEYCODE_RIGHT = 39,
         KEYCODE_DOWN = 40,
+        KEYCODE_A = 65,
+        KEYCODE_Z = 90,
         Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
@@ -54,15 +56,8 @@ define([
                 this._moveFocus(1, 0);
             } else if (event.keyCode == KEYCODE_DOWN) {
                 this._moveFocus(0, 1);
-            }
-        },
-
-        onKeyPress: function (event) {
-            var value = event.key.toUpperCase(),
-                cell = this.state.cellInFocus;
-
-            if (/^[A-Z]$/.test(value)) {
-                this.setCellValue(cell.x, cell.y, value);
+            } else if (event.keyCode >= KEYCODE_A && event.keyCode <= KEYCODE_Z) {
+                this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
                 this.focusNext();
             }
         },
@@ -213,7 +208,6 @@ define([
                                 className: 'crossword__hidden-input',
                                 ref: "hiddenInput",
                                 onKeyDown: this.onKeyDown,
-                                onKeyPress: this.onKeyPress,
                                 value: ""
                             }
                         ))
