@@ -2,6 +2,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'bean',
+    'bonzo',
     'react',
     'common/modules/crosswords/clues',
     'common/modules/crosswords/grid',
@@ -11,6 +12,7 @@ define([
     $,
     _,
     bean,
+    bonzo,
     React,
     Clues,
     Grid,
@@ -35,18 +37,6 @@ define([
         setCellValue: function (x, y, value) {
             this.state.grid[x][y].value = value;
             this.setState(this.state);
-        },
-
-        onBlur: function (event) {
-            /*
-
-            Can't do this yet, because it breaks the behaviour when you click on the same cell again to change
-            direction ... :-(
-
-            this.state.cellInFocus = null;
-            this.state.directionOfEntry = null;
-            this.setState(this.state);
-            */
         },
 
         onKeyDown: function (event) {
@@ -204,7 +194,8 @@ define([
                         setCellValue: this.setCellValue,
                         onSelect: this.onSelect,
                         isHighlighted: isHighlighted,
-                        focussedCell: this.state.cellInFocus
+                        focussedCell: this.state.cellInFocus,
+                        ref: 'grid'
                     }),
                     React.DOM.div({
                         className: 'crossword__hidden-input-wrapper',
@@ -215,7 +206,6 @@ define([
                             className: 'crossword__hidden-input',
                             ref: 'hiddenInput',
                             onKeyDown: this.onKeyDown,
-                            onBlur: this.onBlur,
                             value: ''
                         }
                     ))
