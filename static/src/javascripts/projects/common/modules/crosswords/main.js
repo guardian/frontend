@@ -15,7 +15,11 @@ define([
     Grid,
     helpers
 ) {
-    var BACKSPACE_KEYCODE = 8,
+    var KEYCODE_BACKSPACE = 8,
+        KEYCODE_LEFT = 37,
+        KEYCODE_UP = 38,
+        KEYCODE_RIGHT = 39,
+        KEYCODE_DOWN = 40,
         Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
@@ -39,9 +43,17 @@ define([
         onKeyDown: function (event) {
             var cell = this.state.cellInFocus;
 
-            if (event.keyCode == BACKSPACE_KEYCODE) {
+            if (event.keyCode == KEYCODE_BACKSPACE) {
                 this.setCellValue(cell.x, cell.y, null);
                 this.focusPrevious();
+            } else if (event.keyCode == KEYCODE_LEFT) {
+                this._moveFocus(-1, 0);
+            } else if (event.keyCode == KEYCODE_UP) {
+                this._moveFocus(0, -1);
+            } else if (event.keyCode == KEYCODE_RIGHT) {
+                this._moveFocus(1, 0);
+            } else if (event.keyCode == KEYCODE_DOWN) {
+                this._moveFocus(0, 1);
             }
         },
 
@@ -55,38 +67,55 @@ define([
             }
         },
 
-        _moveFocus: function (delta) {
+        _moveFocus: function (deltaX, deltaY) {
             var cell = this.state.cellInFocus,
                 direction = this.state.directionOfEntry,
-                clue = this.clueInFocus(),
-                isWithinClue = function (n, cluePos) { return n >= cluePos && n < cluePos + clue.length; },
-                x,
-                y;
+                x = cell.x + deltaX,
+                y = cell.y + deltaY;
 
-            if (direction === 'across' && isWithinClue(cell.x + delta, clue.position.x)) {
-                x = cell.x + delta;
-                y = cell.y;
-            } else if (direction === 'down' && isWithinClue(cell.y + delta, cell.position.y)) {
-                x = cell.x;
-                y = cell.y + delta;
-            }
-
-            if (x !== undefined) {
+            if (this.state.grid[x] && this.state.grid[x][y] && this.state.grid[x][y].isEditable) {
                 this.focusHiddenInput(x, y);
                 this.state.cellInFocus = {
                     x: x,
                     y: y
                 };
+
+                if (deltaY != 0) {
+                    this.state.directionOfEntry = 'down';
+                } else if (deltaX != 0) {
+                    this.state.directionOfEntry = 'across';
+                }
+
                 this.setState(this.state);
             }
         },
 
+        isAcross: function () {
+            return this.state.directionOfEntry === 'across';
+        },
+
         focusPrevious: function () {
-            this._moveFocus(-1);
+            var deltaX, deltaY;
+
+            if (this.isAcross()) {
+                deltaX = -1; deltaY = 0;
+            } else {
+                deltaX = 0; deltaY = -1;
+            }
+
+            this._moveFocus(deltaX, deltaY);
         },
 
         focusNext: function () {
-            this._moveFocus(1);
+            var deltaX, deltaY;
+
+            if (this.isAcross()) {
+                deltaX = 1; deltaY = 0;
+            } else {
+                deltaX = 0; deltaY = 1;
+            }
+
+            this._moveFocus(deltaX, deltaY);
         },
 
         focusHiddenInput: function (x, y) {
