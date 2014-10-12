@@ -13,8 +13,7 @@
 .crossword__grid__cell__number {
     font-size: 8px;
     font-family: $f-sans-serif-text;
-    text-anchor: top;
-    dominant-baseline: left;
+    alignment-baseline: before-edge;
 }
 
 .crossword__grid__cell__entry {
@@ -23,7 +22,7 @@
     font-family: $f-serif-text;
     font-weight: 800;
     text-anchor: middle;
-    dominant-baseline: center;
+    alignment-baseline: central;
 }
 
 .crossword__clues__clue {
