@@ -15,7 +15,8 @@ define([
     Grid,
     helpers
 ) {
-    var Crossword = React.createClass({
+    var BACKSPACE_KEYCODE = 8,
+        Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
 
@@ -35,29 +36,39 @@ define([
             this.setState(this.state);
         },
 
-        onChange: function (event) {
-            var value = event.target.value.toUpperCase(),
+        onKeyDown: function (event) {
+            var cell = this.state.cellInFocus;
+
+            if (event.keyCode == BACKSPACE_KEYCODE) {
+                this.setCellValue(cell.x, cell.y, null);
+                this.focusPrevious();
+            }
+        },
+
+        onKeyPress: function (event) {
+            var value = event.key.toUpperCase(),
                 cell = this.state.cellInFocus;
 
-            if (/[A-Z]/.test(value)) {
+            if (/^[A-Z]$/.test(value)) {
                 this.setCellValue(cell.x, cell.y, value);
                 this.focusNext();
             }
         },
 
-        focusNext: function () {
+        _moveFocus: function (delta) {
             var cell = this.state.cellInFocus,
                 direction = this.state.directionOfEntry,
                 clue = this.clueInFocus(),
+                isWithinClue = function (n, cluePos) { return n >= cluePos && n < cluePos + clue.length; },
                 x,
                 y;
 
-            if (direction === 'across' && cell.x < clue.position.x + clue.length - 1) {
-                x = cell.x + 1;
+            if (direction === 'across' && isWithinClue(cell.x + delta, clue.position.x)) {
+                x = cell.x + delta;
                 y = cell.y;
-            } else if (direction === 'down' && cell.y < clue.position.y + clue.length - 1) {
+            } else if (direction === 'down' && isWithinClue(cell.y + delta, cell.position.y)) {
                 x = cell.x;
-                y = cell.y + 1;
+                y = cell.y + delta;
             }
 
             if (x !== undefined) {
@@ -68,6 +79,14 @@ define([
                 };
                 this.setState(this.state);
             }
+        },
+
+        focusPrevious: function () {
+            this._moveFocus(-1);
+        },
+
+        focusNext: function () {
+            this._moveFocus(1);
         },
 
         focusHiddenInput: function (x, y) {
@@ -164,7 +183,8 @@ define([
                                 type: 'text',
                                 className: 'crossword__hidden-input',
                                 ref: "hiddenInput",
-                                onChange: this.onChange,
+                                onKeyDown: this.onKeyDown,
+                                onKeyPress: this.onKeyPress,
                                 value: ""
                             }
                         ))
