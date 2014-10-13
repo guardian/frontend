@@ -13,28 +13,9 @@
     @include article-header-tone(comment, $c-commentBackground, $c-commentDefault, $c-commentDefault, $c-neutral1, 'black');
     @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
 
-    .content__head--tonal {
-        background-color: #ffffff;
-
-        .tone-background--accent {
-            padding: $gs-baseline/2 0 $gs-baseline;
-        }
-
-        .content__standfirst {
-            margin-bottom: 0;
-        }
-
-        .tone-background .content__main-column:after {
-            // not including clearfix here because we only want to clear at :after
-            content: '';
-            display: table;
-            clear: both;
-        }
-    }
-
     /* Tonal byline / contributor image
        ========================================================================== */
-    .content__head--tonal {
+    .tonal {
         .content__headline--byline {
             padding-bottom: $gs-baseline*2;
             min-height: 0;
@@ -100,71 +81,6 @@
         .content__head__comment-count {
             position: absolute;
             bottom: 0;
-        }
-    }
-
-    /* Tone specific rules/overrides
-       ========================================================================== */
-    .tone-live .content__head--tonal {
-        .content__headline {
-            font-weight: normal;
-        }
-    }
-
-    .tone-feature--article,
-    .tone-comment--article {
-        .content__headline {
-            font-weight: 200;
-        }
-
-        @include mq(phablet) {
-            .content__main-column--article {
-                margin-top: $gs-baseline;
-            }
-        }
-    }
-
-    .content.tone-feature {
-        .content__head--tonal {
-            .content__standfirst {
-                color: #ffffff;
-            }
-        }
-    }
-
-    .content.tone-comment {
-        .content__head--tonal {
-            .bullet:before,
-            ul > li:before {
-                background-color: $c-commentAccent;
-            }
-
-            .tone-background--accent {
-                padding-bottom: $gs-baseline * 2;
-
-                .content__standfirst {
-                    color: #ffffff;
-                }
-            }
-
-            .content__headline--byline .tone-colour:hover {
-                text-decoration: none;
-                border-bottom: 2px solid;
-            }
-
-            .u-underline {
-                border-bottom-color: $c-commentBackground;
-                color: $c-commentBackground;
-
-                &:hover {
-                    border-bottom-color: $c-commentAccent;
-                    color: $c-commentAccent;
-                }
-            }
-        }
-
-        .drop-cap {
-            color: #333333;
         }
     }
 }

@@ -118,3 +118,117 @@
         color: $colour;
     }
 }
+
+@mixin tonal-article(
+    $tone,
+    $tonal__header-background,
+    $tonal__header-text,
+    $tonal__header-link,
+    $tonal__standfirst-background,
+    $tonal__standfirst-text,
+    $tonal__standfirst-link,
+    $tonal__article-background,
+    $tonal__article-link,
+    $tonal__headline-weight,
+    $tonal__headline-colour,
+    $tonal__headline-accent
+    ) {
+    .tonal--#{$tone} {
+        .tonal__header {
+            background-color: $tonal__header-background;
+
+            .content__main-column {
+                padding-bottom: $gs-baseline * 2.5;
+            }
+
+            .content__section-label__link {
+                color: $tonal__header-link;
+            }
+
+            .content__headline,
+            .content__headline--byline {
+                font-weight: $tonal__headline-weight;
+            }
+
+            .content__headline {
+                color: $tonal__headline-colour;
+            }
+
+            .content__headline--byline .tone-colour,
+            .content__headline--kicker {
+                color: $tonal__headline-accent;
+            }
+        }
+
+        .tonal__headline__accent {
+            color: $tonal__headline-accent;
+        }
+
+        .tonal__standfirst {
+            background-color: $tonal__standfirst-background;
+            padding-top: $gs-baseline / 2;
+            padding-bottom: $gs-baseline * 2;
+
+            .content__standfirst {
+                color: $tonal__standfirst-text;
+                margin: 0;
+            }
+
+            .bullet:before,
+            ul > li:before {
+                background-color: rgba($tonal__standfirst-text, 0.7);
+            }
+
+            .u-underline {
+                color: $tonal__standfirst-link;
+                border-bottom-color: gba($tonal__standfirst-text, 0.7);
+
+                &:hover {}
+            }
+        }
+
+        .tonal__article {
+            background-color: $tonal__article-background;
+
+            .drop-cap {
+                color: $tonal__header-background;
+            }
+
+            .tone-colour {
+                color: $tonal__article-link;
+            }
+        }
+    }
+}
+
+// Comment
+@include tonal-article(
+    comment, // $tone
+    $c-commentBackground, // $tonal__header-background
+    $c-neutral1, // $tonal__header-text
+    $c-commentDefault, // $tonal__header-link
+    $c-commentDefault, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-commentDefault, // $tonal__article-link
+    200, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-commentDefault // $tonal__headline-accent
+);
+
+// Feature
+@include tonal-article(
+    feature, // $tone
+    $c-featureDefault, // $tonal__header-background
+    #ffffff, // $tonal__header-text
+    $c-featureAccent, // $tonal__header-link
+    $c-featureAccent2, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-featureDefault, // $tonal__article-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-featureDefault // $tonal__headline-accent
+);

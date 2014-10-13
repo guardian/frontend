@@ -1,23 +1,15 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<header class="content__head content__head--tonal
-@if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
+<header class="content__head
+    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="tone-background">
+    <div class="tonal__header">
         <div class="gs-container">
             <div class="content__main-column">
 
-                <div class="content__labels">
-                    <div class="content__section-label">
-                        <a class="tone-colour" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
-                    </div>
+                @fragments.meta.metaInline(content)
 
-                    @fragments.meta.metaInline(content)
-                </div>
-
-                <h1 itemprop="headline" class="content__headline js-score">
-                    @Html(content.headline)
-                </h1>
+                <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 
                 @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                     @fragments.meta.bylineImage(content)
@@ -25,7 +17,7 @@
 
                 @if(content.hasTonalHeaderByline) {
                     @content.byline.map { text =>
-                        <span class="content__headline content__headline--byline">@ContributorLinks(text, content.contributors)</span>
+                        <span class="content__headline content__headline--byline tonal__headline__accent">@ContributorLinks(text, content.contributors)</span>
                     }
                 }
 
@@ -37,12 +29,11 @@
         </div>
     </div>
 
-    <div class="tone-background--accent">
+    <div class="tonal__standfirst">
         <div class="gs-container">
             <div class="content__main-column">
                 @fragments.standfirst(content)
             </div>
         </div>
     </div>
-
 </header>

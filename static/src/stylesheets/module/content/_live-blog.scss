@@ -58,8 +58,6 @@ $block-padding-right: $gs-gutter;
 
 .blog__meta-container {
     position: relative;
-    color: #ffffff;
-    border-top: 1px dotted #e6a1ab;
     padding-bottom: $gs-baseline;
 
     @include mq(rightCol) {
@@ -110,7 +108,6 @@ $block-padding-right: $gs-gutter;
 .blog__last-updated-container {
     @include box-sizing(border-box);
     padding-top: $gs-baseline/6;
-    color: #ffffff;
     @include fs-textSans(1);
 
     @include mq($until: rightCol) {
@@ -274,7 +271,6 @@ $block-padding-right: $gs-gutter;
 /* Above/Below content
    ========================================================= */
 .blog {
-
     .content__keywords {
         border-top: 1px dotted $c-neutral3;
         line-height: 20px;
@@ -818,8 +814,6 @@ $timeline-width: 14px;
 }
 
 .blog {
-    background-color: $c-neutral8;
-
     .content__headline {
         color: $c-neutral1;
         @include fs-headline(5);
@@ -833,28 +827,26 @@ $timeline-width: 14px;
         }
     }
 
-    &.tone-live .content__head--tonal {
-        .content__labels {
-            @include mq(desktop) {
-                float: left;
-                width: gs-span(3);
-                margin-left: (gs-span(4) + $gs-gutter) * -1;
-                border-bottom: 0;
-            }
+    .content__labels {
+        @include mq(desktop) {
+            float: left;
+            width: gs-span(3);
+            margin-left: (gs-span(4) + $gs-gutter) * -1;
+            border-bottom: 0;
         }
+    }
 
-        .content__section-label {
-            @include mq(desktop) {
-                @include fs-header(3);
-                float: none;
-            }
+    .content__section-label {
+        @include mq(desktop) {
+            @include fs-header(3);
+            float: none;
         }
+    }
 
-        .content__series-label {
-            @include mq(desktop) {
-                @include fs-headline(3);
-                float: none;
-            }
+    .content__series-label {
+        @include mq(desktop) {
+            @include fs-headline(3);
+            float: none;
         }
     }
 
