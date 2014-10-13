@@ -110,7 +110,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     configAgent.get()
       .map(_.fronts
         .filter{ case (path, front) => front.collections.headOption == Option(collectionId)}
-        .keys.toSeq)
+        .keys.toSeq).filter(_.nonEmpty)
 }
 
 object ConfigAgent extends ConfigAgentTrait
