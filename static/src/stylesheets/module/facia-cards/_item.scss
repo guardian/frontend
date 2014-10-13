@@ -70,8 +70,11 @@ $fc-item-gutter: $gs-gutter / 4;
         @include flex-grow(1);
     }
 
-    .fc-item__meta {
+    .fc-item__footer--vertical {
         @include flex-grow(1);
+    }
+
+    .fc-item__meta {
         @include flex-display;
         @include align-items--end;
     }
@@ -184,7 +187,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     float: left;
     margin-right: .2em;
-    
+
     &:after {
         content: ' /';
         color: fade-out($c-neutral1, .8);
@@ -210,11 +213,12 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-textSans(1);
     margin-bottom: $gs-baseline / 4;
     color: $c-neutral2;
+}
 
-    &:after {
-        clear: left;
-        content: '';
-        display: table;
+.fc-item--has-cutout {
+    .fc-item__meta {
+        position: absolute;
+        bottom: 0;
     }
 }
 
