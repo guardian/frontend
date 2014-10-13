@@ -46,7 +46,6 @@
     }
 
     .container__header__inner {
-        @include box-sizing(border-box);
         padding: $gs-baseline/2 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
@@ -55,6 +54,7 @@
         }
 
         @include mq(leftCol) {
+            @include box-sizing(border-box);
             height: 100%;
         }
     }
