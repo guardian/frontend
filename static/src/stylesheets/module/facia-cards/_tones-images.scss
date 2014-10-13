@@ -1,6 +1,5 @@
 .fc-item__title--quoted .fc-item__link,
-.tone-comment--item .fc-item__link,
-.tone-comment--sublink .fc-sublink__link {
+.tone-comment--item .fc-item__link {
     &:before {
         @include icon(quote-grey, false);
         content: '';
@@ -37,29 +36,31 @@
 }
 
 .fc-item__title--quoted {
-    .tone-podcast--item & .fc-item__link,
-    .tone-podcast--sublink & .fc-sublink__link {
+    .tone-podcast--item & .fc-item__link {
         &:before {
             @include icon(quote-black, false);
         }
     }
 
-    .tone-feature--item & .fc-item__link,
-    .tone-feature--sublink & .fc-sublink__link {
+    .tone-feature--item & .fc-item__link {
         &:before {
             @include icon(quote-light-pink, false);
         }
     }
 
-    .tone-live--item & .fc-item__link,
-    .tone-live--sublink & .fc-sublink__link {
+    .tone-live--item & .fc-item__link {
         &:before {
             @include icon(quote-white, false);
         }
     }
 
-    .tone-media--item & .fc-item__link,
-    .tone-media--sublink & .fc-sublink__link {
+    .tone-media--item & .fc-item__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
+    }
+
+    .tone-editorial--item & .fc-item__link {
         &:before {
             @include icon(quote-white, false);
         }
@@ -82,6 +83,14 @@
         height: .75em;
         width: .95em;
     }
+
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-white, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-white-large, false);
+    }
 }
 
 .tone-media--item,
@@ -96,7 +105,7 @@
 }
 
 .fc-item--video .fc-item__title,
-.fc-sublink--video .fc-item__link {
+.fc-sublink--video .fc-sublink__link {
     &:before {
         @include icon(video-icon, false);
         content: '';
@@ -107,7 +116,7 @@
 }
 
 .fc-item--gallery .fc-item__title,
-.fc-sublink--gallery .fc-item__link {
+.fc-sublink--gallery .fc-sublink__link {
     &:before {
         @include icon(camera-yellow-large, false);
         content: '';

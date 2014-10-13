@@ -26,3 +26,12 @@
         color: $c-commentDefault;
     }
 }
+
+.tone-live--item,
+.tone-review--item {
+    .tone-comment--sublink {
+        .fc-sublink__kicker {
+            color: $c-commentBackground;
+        }
+    }
+}

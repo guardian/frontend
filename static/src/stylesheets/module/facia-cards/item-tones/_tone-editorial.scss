@@ -26,6 +26,18 @@
 
 .tone-editorial--sublink {
     .fc-sublink__kicker {
-        color: $c-editorialAccent;
+        color: $c-editorialDefault;
+    }
+}
+
+.tone-editorial--item,
+.tone-feature--item,
+.tone-live--item,
+.tone-media--item,
+.tone-review--item {
+    .tone-editorial--sublink {
+        .fc-sublink__kicker {
+            color: $c-editorialAccent;
+        }
     }
 }

@@ -27,3 +27,11 @@
         color: $c-analysisAccent;
     }
 }
+
+.tone-podcast--item {
+    .tone-analysis--sublink {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}

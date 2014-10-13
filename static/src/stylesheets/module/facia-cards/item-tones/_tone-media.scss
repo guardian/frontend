@@ -29,3 +29,11 @@
         color: $c-mediaDefault;
     }
 }
+
+.tone-podcast--item {
+    .tone-media--sublink {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}

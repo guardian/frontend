@@ -28,3 +28,14 @@
         color: $c-podcastAccent;
     }
 }
+
+.tone-editorial--item,
+.tone-feature--item,
+.tone-live--item,
+.tone-media--item {
+    .tone-podcast--sublink {
+        .fc-sublink__kicker {
+            color: $c-podcastBackground;
+        }
+    }
+}

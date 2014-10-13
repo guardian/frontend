@@ -25,6 +25,26 @@
 
 .tone-review--sublink {
     .fc-sublink__kicker {
-        color: $c-reviewAccent;
+        color: $c-reviewBackground;
+    }
+}
+
+.tone-editorial--item,
+.tone-feature--item,
+.tone-live--item,
+.tone-media--item,
+.tone-review--item {
+    .tone-review--sublink {
+        .fc-sublink__kicker {
+            color: $c-reviewAccent;
+        }
+    }
+}
+
+.tone-podcast--item {
+    .tone-review--sublink {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

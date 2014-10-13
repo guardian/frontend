@@ -23,3 +23,14 @@
         color: $c-newsDefault;
     }
 }
+
+.tone-editorial--item,
+.tone-feature--item,
+.tone-live--item,
+.tone-media--item {
+    .tone-news--sublink {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}

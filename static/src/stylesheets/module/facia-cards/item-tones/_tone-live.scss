@@ -32,12 +32,22 @@
 
 .tone-live--sublink {
     .fc-sublink__kicker {
-        color: $c-liveDefault;
+        color: $c-liveAccent;
     }
 
     .fc-sublink__live-indicator,
     .fc-sublink__breaking-indicator {
         color: $c-liveDefault;
         font-weight: 400;
+    }
+}
+
+.tone-editorial--item,
+.tone-feature--item,
+.tone-live--item {
+    .tone-live--sublink {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }
