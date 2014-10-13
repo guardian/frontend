@@ -1,8 +1,9 @@
 .tone-podcast--item {
     @extend %tone-has-background;
+    background-color: $c-podcastBackground;
 
-    &.fc-item {
-        background-color: $c-podcastBackground;
+    &,
+    .fc-sublink__title {
         color: $c-neutral1;
     }
 

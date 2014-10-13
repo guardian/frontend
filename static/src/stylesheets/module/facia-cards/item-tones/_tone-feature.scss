@@ -1,8 +1,9 @@
 .tone-feature--item {
     @extend %tone-has-background;
+    background-color: $c-featureDefault;
 
-    &.fc-item {
-        background-color: $c-featureDefault;
+    &,
+    .fc-sublink__title {
         color: #ffffff;
     }
 
