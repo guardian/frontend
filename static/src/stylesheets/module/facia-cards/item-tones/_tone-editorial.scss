@@ -13,11 +13,11 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .fc-item__standfirst {
         color: $c-editorialAccent;
     }
 
-    .fc-item__standfirst,
     .fc-item__meta {
         color: $c-neutral3;
     }
