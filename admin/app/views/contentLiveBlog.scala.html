@@ -1,19 +1,19 @@
-@(env: String, googleReferrerChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
+@(env: String, socialInteractionsChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
 
-@admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("LiveBlog Dashboard", env, isAuthed = true, hasCharts = true) {
 
     <h3>@title</h3>
     <hr />
 
     <div class="row">
-        <div class="col-md-4">
-            @topLine(googleReferrerChart)
+        <div class="col-md-3">
+            @topLine(socialInteractionsChart)
         </div>
     </div>
 
     <hr />
 
-    @trendedChart(googleReferrerChart)
+    @trendedChart(socialInteractionsChart)
 
     @reportTimestamp.map { timestamp =>
         <em>Omniture reports generated at @timestamp</em>
