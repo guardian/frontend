@@ -134,18 +134,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include box-shadow(inset 0 1px $c-neutral5);
 }
 
-.fc-item__image-container {
-    display: none;
-
-    .fc-item--has-image & {
-        display: block;
-
-        .js-off & {
-            display: none !important;
-        }
-    }
-}
-
+.fc-item__image-container,
 .fc-item__video-fallback {
     display: none;
 }
@@ -269,6 +258,13 @@ $fc-item-gutter: $gs-gutter / 4;
     height: 100%;
     bottom: 0;
     right: 0;
+
+    .responsive-img {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+    }
 
     &.image--portrait {
         bottom: auto;

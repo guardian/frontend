@@ -58,7 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(id), identity.email))
     }
     ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)

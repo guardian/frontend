@@ -275,7 +275,7 @@ case object HalfQuarterQl2Ql4 extends Slice {
       Rows(
         colSpan = 1,
         columns = 1,
-        rows = 4,
+        rows = 5,
         itemClasses = ItemClasses(
           mobile = "list",
           tablet = "list"
@@ -712,7 +712,7 @@ case object TTlMpu extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "third"
+          tablet = "standard"
         )
       ),
       Rows(

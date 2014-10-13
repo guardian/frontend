@@ -14,6 +14,8 @@ object CardStyle {
       Podcast
     } else if (trail.isMedia) {
       Media
+    } else if (trail.isEditorial) {
+      Editorial
     } else if (trail.isComment) {
       Comment
     } else if (trail.isAnalysis) {
@@ -33,6 +35,7 @@ sealed trait CardStyle
 case object LiveBlog extends CardStyle
 case object DeadBlog extends CardStyle
 case object Feature extends CardStyle
+case object Editorial extends CardStyle
 case object Comment extends CardStyle
 case object Podcast extends CardStyle
 case object Media extends CardStyle

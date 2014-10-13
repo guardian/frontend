@@ -9,6 +9,7 @@ object TrailCssClasses {
       case Comment => "comment"
       case LiveBlog => "live"
       case DeadBlog => "dead"
+      case Editorial => "editorial"
       case Feature => "feature"
       case Analysis => "analysis"
       case Review => "review"

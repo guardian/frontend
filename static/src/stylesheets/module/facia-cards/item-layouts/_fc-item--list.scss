@@ -28,8 +28,8 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar {
-            display: none !important;
+        .fc-item__avatar__media {
+            display: none;
         }
     }
 

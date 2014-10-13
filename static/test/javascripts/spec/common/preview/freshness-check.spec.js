@@ -40,62 +40,40 @@ define([
             server.restore();
         });
 
-        it("should check that this is the latest version of the content", function(){
+        it("should check that this is the latest version of the content", function (done) {
 
             server.respondWith('/last-modified/foo/bar.json?last-modified=2014-09-14T18%3A30%3A13.647%2B01%3A00' , [200, {}, '{ "status": "fresh" }']);
 
-            callback = sinon.stub();
-            mediator.on('modules:freshness-check:fresh', callback);
-
-            runs(function() {
-                freshness(config, 'last-modified=' + lastModifiedDate).check();
-            });
-
-            waitsFor(function () {
-                return callback.calledOnce === true;
-            }, 'last-modified never called back', 500);
-
-            runs(function(){
+            mediator.on('modules:freshness-check:fresh', function () {
                 expect($('.preview-refresh').length).toBe(0);
+                done();
             });
+
+            freshness(config, 'last-modified=' + lastModifiedDate).check();
         });
 
-        it("should display a message if the content is stale", function(){
+        it("should display a message if the content is stale", function (done) {
 
             server.respondWith('/last-modified/foo/bar.json?last-modified=2014-09-14T18%3A30%3A13.647%2B01%3A00' , [200, {}, '{ "status": "stale" }']);
 
-            callback = sinon.stub();
-            mediator.on('modules:freshness-check:stale', callback);
-
-            runs(function() {
-                freshness(config, 'last-modified=' + lastModifiedDate).check();
-            });
-
-            waitsFor(function () {
-                return callback.calledOnce === true;
-            }, 'last-modified never called back', 500);
-
-            runs(function(){
+            mediator.on('modules:freshness-check:stale', function () {
                 expect($('.preview-refresh').length).toBeGreaterThan(0);
+                done();
             });
+
+            freshness(config, 'last-modified=' + lastModifiedDate).check();
         });
 
         it("should not be called if this is not content", function(){
-            runs(function() {
-                config.page.isContent = false;
-                freshness(config, 'last-modified=' + lastModifiedDate).check();
-                expect(server.requests.length).toBe(0);
-            });
-
+            config.page.isContent = false;
+            freshness(config, 'last-modified=' + lastModifiedDate).check();
+            expect(server.requests.length).toBe(0);
         });
 
         it("should not be called if this is not content", function(){
-            runs(function() {
-                config.switches.pollPreviewForFreshContent = false;
-                freshness(config, 'last-modified=' + lastModifiedDate).check();
-                expect(server.requests.length).toBe(0);
-            });
-
+            config.switches.pollPreviewForFreshContent = false;
+            freshness(config, 'last-modified=' + lastModifiedDate).check();
+            expect(server.requests.length).toBe(0);
         });
     });
 });
