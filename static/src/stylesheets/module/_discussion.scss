@@ -599,7 +599,7 @@ $comment-recommend-button-size: 25px;
 }
 
 .d-comment__recommend-button {
-    @include icon-button(up-arrow, $comment-recommend-button-size);
+    @include icon-button(up-arrow-grey, $comment-recommend-button-size);
     display: inline-block;
     background-color: colour(neutral-6);
     cursor: default;
@@ -674,13 +674,13 @@ $comment-recommend-button-size: 25px;
     .d-comment__recommend-button,
     .d-comment__recommend-pulse {
         @include transition(background-color .25s ease-in-out);
-        background-color: $c-commentDefault;
+        background-color: colour(news-main-2);
     }
     .d-comment__recommend-pulse {
         @include animation(pulse .5s ease-in-out 1);
     }
-    .d-comment__recommend-count {
-        color: $c-commentDefault;
+    .d-comment__recommend-button i {
+        @include icon(up-arrow-white);
     }
 }
 
@@ -1086,6 +1086,9 @@ $comment-recommend-button-size: 25px;
     width: 100%;
     resize: vertical;
     word-break: break-word;
+    @include mq(leftCol) {
+        margin-top: $gs-baseline * 2;
+    }
 }
 .d-comment-box__content {
     position: relative;
