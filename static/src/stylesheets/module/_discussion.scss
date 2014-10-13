@@ -9,6 +9,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion {
     margin-bottom: $gs-baseline * 2;
+    min-height: $gs-baseline * 2;
 
     .pagination_legend {
         display: none !important; // overriding .hide-on-mobile-inline
@@ -158,7 +159,7 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
-.discussion--loading .discussion__loader {
+.js-on .discussion--loading .discussion__loader {
     display: block;
 }
 
@@ -169,6 +170,12 @@ $avatarPadding: $gs-gutter / 2;
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
     }
+
+    .id--signed-in .discussion--open &,
+    .discussion--has-top-comments & {
+        border-top: 1px solid colour(neutral-4);
+        padding-top: $gs-baseline;
+    }
 }
 
 .discussion__toolbar-dropdown {
@@ -177,10 +184,17 @@ $avatarPadding: $gs-gutter / 2;
     @include fs-textSans(2);
     color: colour(neutral-2);
     display: inline-block;
-    line-height: $gs-baseline * 3;
-    @include mq(tablet) {
-        line-height: $gs-baseline * 2;
+    line-height: $gs-baseline * 2;
+
+    @include mq($until: tablet) {
+        margin: $gs-baseline / 2 0;
     }
+
+    .popup,
+    .popup__toggle.is-active:before {
+        margin-top: -1 * $gs-baseline;
+    }
+
     .popup__action {
         text-transform: capitalize;
     }
@@ -209,7 +223,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__pagination .pagination {
     width: auto;
-    line-height: $gs-baseline * 2;
+    line-height: $gs-baseline * 3;
     margin: 0;
     padding: 0;
     border: 0;
@@ -218,6 +232,9 @@ $avatarPadding: $gs-gutter / 2;
         display: block;
         clear: both;
         border-top: 1px solid colour(neutral-4);
+    }
+    @include mq(tablet) {
+        line-height: $gs-baseline * 2;
     }
     .pagination__links {
         @include mq(desktop) {
