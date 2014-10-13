@@ -14,7 +14,6 @@ define([
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/discussion/recommend-comments',
     'common/modules/identity/api',
     'common/modules/ui/relativedates',
     'common/modules/userPrefs'
@@ -34,7 +33,6 @@ define([
     Component,
     DiscussionApi,
     CommentBox,
-    RecommendComments,
     Id,
     relativedates,
     userPrefs
@@ -43,8 +41,6 @@ define([
 
 var Comments = function(options) {
     this.setOptions(options);
-    this.options.expand = userPrefs.get('discussion.expand') || false;
-    this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
 };
 
 Component.define(Comments);
@@ -85,7 +81,7 @@ Comments.prototype.defaultOptions = {
     showRepliesCount: 3,
     commentId: null,
     order: 'newest',
-    state: null
+    threading: 'collapsed'
 };
 
 Comments.prototype.comments = null;
@@ -96,10 +92,6 @@ Comments.prototype.ready = function() {
 
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
-
-    if (this.options.state) {
-        this.setState(this.options.state);
-    }
 
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('commentReport'), this.reportComment);
@@ -143,7 +135,6 @@ Comments.prototype.pickComment = function(commentId, $thisButton) {
         .pickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), comment).addClass('d-comment__recommend--left');
             $thisButton.text('Unpick');
             comment.setAttribute('data-comment-highlighted', true);
         });
@@ -157,7 +148,6 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         .unPickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).addClass('u-h');
-            $(self.getClass('commentRecommend'), comment).removeClass('d-comment__recommend--left');
             $thisButton.text('Pick');
             comment.setAttribute('data-comment-highlighted', false);
         });
@@ -199,10 +189,10 @@ Comments.prototype.fetchComments = function(options) {
     var queryParams = {
         orderBy: options.order || this.options.order,
         pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        displayThreaded: !this.options.unthreaded
+        displayThreaded: this.options.threading !== "unthreaded"
     };
 
-    if (!this.options.expand && !options.comment ) {
+    if (this.options.threading == 'collapsed') {
         queryParams.maxResponses = 3;
     }
 
@@ -231,18 +221,12 @@ Comments.prototype.renderComments = function(resp) {
     bonzo(this.elem).empty().append(contentEl);
     this.addMoreRepliesButtons(comments);
 
-    if (!this.isReadOnly()) {
-        RecommendComments.initButtons($(this.getClass('commentRecommend'), this.elem));
-    }
-
     this.relativeDates();
     this.emit('rendered');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
-    this.removeState('shut');
-    this.removeState('partial');
     this.emit('first-load');
     this.relativeDates();
 };
@@ -297,12 +281,6 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(qwery('.d-thread--responses', source)).append(replies);
         bonzo(li).addClass('u-h');
 
-        if (!self.isReadOnly()) {
-            var btns = _map(replies, function(reply) {
-                return qwery(self.getClass('commentRecommend'), reply)[0];
-            });
-            RecommendComments.initButtons(btns);
-        }
         self.relativeDates();
     });
 };
@@ -432,15 +410,6 @@ Comments.prototype.replyToComment = function(e) {
     });
 };
 
-Comments.prototype.showDiscussion = function() {
-    var showDiscussionElem = $('.d-discussion__show-all-comments');
-    if (!showDiscussionElem.hasClass('u-h')) {
-        bean.fire(showDiscussionElem, 'click');
-        showDiscussionElem.addClass('u-h');
-    }
-    this.relativeDates();
-};
-
 Comments.prototype.loading = function() {
     var $content = $('.d-thread', this.elem);
     $(this.getClass('loader'), this.elem).removeClass('u-h').css({
@@ -500,7 +469,6 @@ Comments.prototype.addUser = function(user) {
     }
 
     if (!this.isReadOnly()) {
-        RecommendComments.init();
 
         if (this.user && this.user.privateFields.canPostComment) {
 

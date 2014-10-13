@@ -23,49 +23,34 @@
 }
 
 @toolbar = {
-    <div class="discussion__toolbar js-discussion-toolbar">
+    <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
-        <div class="discussion__toolbar-dropdown">
+        <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
 
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span class="js-comment-order"></span></button>
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span></span></button>
 
             <ul class="popup popup__group popup--comments-order is-off">
-                <li class="popup__item">
-                    <button class="u-button-reset popup__action js-comments-newest" data-link-name="comments-newest">Newest</button>
-                </li>
-                <li class="popup__item">
-                    <button class="u-button-reset popup__action js-comments-oldest" data-link-name="comments-oldest">Oldest</button>
-                </li>
+                @List("newest", "oldest").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
+                    </li>
+                }
             </ul>
 
         </div>
 
 
-        <div class="discussion__toolbar-dropdown">
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span class="js-thread-option"></span></button>
+        <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span></span></button>
 
             <ul class="popup popup__group popup--comments-threading is-off">
-                <li class="popup__item">
-                    <button class="u-button-reset popup__action js-comments-threading-collapsed" data-link-name="comments-threading-collapsed">Collapsed</button>
-                </li>
-                <li class="popup__item">
-                    <button class="u-button-reset popup__action js-comments-threading-expanded" data-link-name="comments-threading-expanded">Expanded</button>
-                </li>
-                <li class="popup__item">
-                    <button class="u-button-reset popup__action js-comments-threading-unthreaded" data-link-name="comments-threading-unthreaded">Unthreaded</button>
-                </li>
+                @List("collapsed", "expanded", "unthreaded").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-threading="@value" data-link-name="comments-threading-@value">@value</button>
+                    </li>
+                }
             </ul>
         </div>
-
-
-        <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded">
-            View <span class="discussion__show-threaded-state">un</span>threaded
-        </button>
-
-        <button class="u-button-reset u-fauxlink modern-visible discussion__show-all discussion__show-all--off js-show-all">
-            <span class="discussion__show-all__off-text">Expand comment threads</span>
-            <span class="discussion__show-all__on-text">Collapse comment threads</span>
-        </button>
 
         <div class="discussion__pagination discussion__pagination--top js-discussion-pagination"></div>
 
@@ -107,7 +92,7 @@
 
             <div class="discussion__comment-box js-discussion-comment-box--bottom"></div>
 
-            <button class="discussion__show-button button button--large button--primary js-discussion-show-button">Show comments</button>
+            <button class="discussion__show-button button button--large button--primary js-discussion-show-button">View more comments</button>
 
             <script id="tmpl-comment-box">
                 @fragments.commentBox()

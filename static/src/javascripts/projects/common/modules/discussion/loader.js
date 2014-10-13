@@ -116,13 +116,27 @@ Loader.prototype.loadTopComments = function() {
 
 
 Loader.prototype.initToolbar = function() {
-    console.log('order', this.comments.options.order);
-    $('.js-comment-order').text(this.comments.options.order);
-    this.on('click', '.js-comment-order', function(e) {
+    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span'),
+        $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
+
+    $orderLabel.text(this.comments.options.order);
+    this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
         this.comments.options.order = bonzo(e.currentTarget).data('order');
+        $orderLabel.text(this.comments.options.order);
         this.comments.fetchComments({page: 1});
     });
 
+    $threadingLabel.text(this.comments.options.threading);
+    this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.threading = bonzo(e.currentTarget).data('threading');
+        $threadingLabel.text(this.comments.options.threading);
+        userPrefs.set('discussion.threading', this.comments.options.threading);
+        this.comments.fetchComments();
+    });
 
 };
 
@@ -135,10 +149,12 @@ Loader.prototype.initMainComments = function() {
     }
 
     var order = userPrefs.get('discussion.order') || this.getDiscussionClosed() ? 'oldest' : 'newest';
+    var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
+        threading: threading,
         state: 'partial'
     });
 
@@ -156,7 +172,6 @@ Loader.prototype.initMainComments = function() {
             this.setState('truncated');
         }
 
-        this.initUnthreaded();
         this.initShowAll();
 
         this.on('user:loaded', function() {
@@ -177,9 +192,9 @@ Loader.prototype.ready = function() {
     this.$topCommentsContainer = $('.js-discussion-top-comments');
     this.toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
 
-    this.on('click', '.js-discussion-show-button', function() {
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function() {
         this.removeState('truncated');
-    }.bind(this));
+    });
 
     this.loadTopComments();
     this.initMainComments();
@@ -221,30 +236,12 @@ Loader.prototype.initShowAll = function() {
         $showAllBtn.removeClass(offClass);
     }
 
-    this.on('click', '.js-untruncate-main-comments', function() {
-        this.removeState('first-two-comments-only');
-    });
-
     this.on('click', '.js-show-all', function(e) {
         var $btn = bonzo(e.currentTarget).toggleClass(offClass),
             expand = !$btn.hasClass(offClass);
         
         this.comments.options.expand = expand;
         userPrefs.set('discussion.expand', expand);
-        this.comments.fetchComments();
-    });
-};
-
-Loader.prototype.initUnthreaded = function() {
-    if (userPrefs.get('discussion.unthreaded')) {
-        this.setState('unthreaded');
-    }
-
-    this.on('click', '.js-show-threaded', function() {
-        this.toggleState('unthreaded');
-        var unthreaded = this.hasState('unthreaded');
-        this.comments.options.unthreaded = unthreaded;
-        userPrefs.set('discussion.unthreaded', unthreaded);
         this.comments.fetchComments();
     });
 };

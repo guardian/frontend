@@ -483,7 +483,7 @@ $avatarPadding: $gs-gutter / 2;
    ======================================================= */
 
 .d-comment--top-level {
-    border-top: 1px solid colour(neutral-3);
+    border-top: 1px solid colour(neutral-4);
 }
 
 .d-comment__inner--top-level {
@@ -529,11 +529,11 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment--response,
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 2px solid colour(neutral-6);
 }
 
 .d-comment-box--response {
-    border-top: 1px solid colour(neutral-4);
+    border-top: 1px solid colour(neutral-5);
 
     .d-comment-box__author-label {
         display: none;
@@ -886,31 +886,64 @@ $comment-recommend-button-size: 25px;
 }
 
 .discussion__toolbar {
-    border-top: 2px solid colour(neutral-6);
-    border-bottom: 2px solid colour(neutral-6);
-    padding: $gs-baseline 0;
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .discussion__toolbar-dropdown {
     position: relative;
-    @include fs-textSans(3);
+    float: left;
+    @include fs-textSans(2);
     color: colour(neutral-2);
     display: inline-block;
+    line-height: $gs-baseline * 3;
+    @include mq(tablet) {
+        line-height: $gs-baseline * 2;
+    }
+    .popup__action {
+        text-transform: capitalize;
+    }
     .popup__toggle {
         display: inline-block;
         width: auto;
-    }
-    .popup {
-        top: $gs-baseline*2.5;
+        &:after {
+            border-top-color: colour(neutral-2);
+        }
+        &.is-active:after {
+            border-bottom-color: colour(neutral-2);
+        }
     }
     span {
         font-weight: bold;
-        margin-left: $gs-gutter / 2;
+        text-transform: capitalize;
+        margin: 0 $gs-gutter / 4 0 $gs-gutter / 2;
+    }
+
+    &:first-child {
+        padding-right: $gs-gutter;
+        margin-right: $gs-gutter;
+        border-right: 1px solid colour(neutral-4);
     }
 }
 
 .discussion__pagination .pagination {
-    width: 100%;
+    width: auto;
+    line-height: $gs-baseline * 2;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    @include mq($until: tablet) {
+        float: none;
+        display: block;
+        clear: both;
+        border-top: 1px solid colour(neutral-4);
+    }
+    .pagination__links {
+        @include mq(desktop) {
+            width: gs-span(4) - $gs-gutter;
+        }
+    }
 }
 
 .d-discussion__meta {
