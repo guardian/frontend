@@ -1,10 +1,7 @@
-var pngquant = require('imagemin-pngquant');
-
 module.exports = function(grunt, options) {
     return {
         options: {
-            optimizationLevel: 2,
-            use: [pngquant()]
+            optimizationLevel: 2
         },
         files: {
             expand: true,
