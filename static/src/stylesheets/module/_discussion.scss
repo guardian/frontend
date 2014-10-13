@@ -19,7 +19,9 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
+
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
+    // align comments with main column on liveblogs
     @include mq(desktop) {
         margin-left: gs-span(2) + $gs-gutter;
         margin-right: 0;
@@ -37,65 +39,9 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.discussion .container__border:nth-child(2) {
-    margin-top: -1px;
-}
-
 .discussion__top-border {
     border-top: 1px solid colour(neutral-4);
     margin-top: -1px;
-}
-
-.discussion__non-threaded {
-    margin-top: $gs-baseline;
-    clear: both;
-    @include mq(desktop) {
-        .activity-item__content-body {
-            clear: both;
-            margin-left: $avatarSize-small + ($gs-gutter / 2);
-        }
-    }
-}
-.discussion__comments__container {
-    position: relative;
-    margin-bottom: $gs-baseline * 3.5;
-}
-
-.discussion__show-threaded,
-.discussion__show-all {
-    width: auto;
-    @include fs-textSans(2);
-    z-index: 1;
-    padding: $gs-baseline / 2 0;
-    position: relative;
-    margin-left: $gs-gutter;
-    float: right;
-}
-
-.discussion--unthreaded .discussion__show-threaded-state {
-    display: none;
-}
-
-.discussion__show-all {
-    @include mq($until: mobileLandscape) {
-        display: none;
-    }
-    .discussion--unthreaded & {
-        display: none;
-    }
-}
-
-.discussion__show-all__off-text {
-    display: none;
-}
-
-.discussion__show-all--off {
-    .discussion__show-all__on-text {
-        display: none;
-    }
-    .discussion__show-all__off-text {
-        display: block;
-    }
 }
 
 .discussion--lowered {
@@ -118,49 +64,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-discussion {
     font-size: 14px;
 }
-.d-discussion--shut {
-    .discussion-content {
-        display: none;
-    }
-}
-.show-more__container--hidden {
-    display: none;
-}
-.d-discussion--partial {
-    .d-comment--top-level:nth-of-type(n+3),
-    .d-discussion__pagination {
-        display: none;
-    }
-}
 
-.d-discussion--partial,
-.d-discussion--shut {
-    .d-discussion__show-all-comments {
-        display: block;
-    }
-}
-
-.d-discussion__comment-count {
-    border-top: 1px solid $c-neutral4;
-    min-height: $gs-baseline * 2;
-    padding-bottom: $gs-baseline;
-    @include fs-textSans(4);
-    color: $c-neutral2;
-}
-
-.d-dicussion__meta--counts {
-    display: none;
-
-    @include mq(tablet) {
-        display: block;
-        float: left;
-    }
-}
-.d-dicussion__meta--sorting {
-    @include mq(tablet) {
-        float: right;
-    }
-}
 .d-thread {
     list-style: none;
     margin: 0;
@@ -184,50 +88,8 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.show-more__container {
-    display: block;
-    margin-bottom: ($gs-baseline / 3) * 2;
-    padding-top: ($gs-baseline / 3) * 2;
-    text-align: center;
-
-    &.show-more__container--older,
-    &.show-more__container--hidden,
-    &.show-more__container--featured {
-        border-top: 1px dotted $c-neutral3;
-    }
-}
-.d-discussion__show-more {
-    @include fs-textSans(4);
-    position: relative;
-    padding-top: ($gs-baseline / 3) * 2;
-    line-height: $gs-baseline * 2;
-
-    &:hover span {
-        text-decoration: underline;
-    }
-}
-.d-discussion__show-more-button {
-    @include icon-button(plus-white-med, 24px);
-    position: absolute;
-    left: 0;
-    background-color: $c-newsDefault;
-}
-.d-discussion__show-more-text {
-    padding-left: $gs-gutter * 2 - $gs-gutter / 5;
-    display: inline-block;
-}
-
-.d-discussion__show-all-comments {
-    margin-top: $gs-baseline;
-    display: none;
-}
-
 .d-discussion--not-staff .d-staff-required {
     display: none !important;
-}
-.d-discussion__order-control {
-    font-size: 16px;
-    margin: 2px $gs-gutter / 4 0;
 }
 
 .discussion__meta {
@@ -1028,7 +890,7 @@ $comment-recommend-button-size: 25px;
         height: 0;
         border-style: solid;
         border-width: 25px 15px 0 0;
-        border-color: colour(neutral-3) transparent transparent transparent;
+        border-color: colour(neutral-3) transparent transparent;
         position: absolute;
         top: 100%;
         left: 28px;
@@ -1039,7 +901,7 @@ $comment-recommend-button-size: 25px;
         height: 0;
         border-style: solid;
         border-width: 23px 13px 0 0;
-        border-color: #ffffff transparent transparent transparent;
+        border-color: #ffffff transparent transparent;
         position: absolute;
         top: 100%;
         margin-top: -1px;

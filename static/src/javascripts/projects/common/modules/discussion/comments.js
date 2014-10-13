@@ -47,13 +47,8 @@ Comments.prototype.componentClass = 'd-discussion';
 
 Comments.prototype.classes = {
     jsContent: 'js-discussion-content',
-    container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    showMoreHiddenContainer: 'show-more__container--hidden',
-    showMoreNewer: 'd-discussion__show-more--newer',
-    showMoreOlder: 'd-discussion__show-more--older',
-    showMoreLoading: 'd-discussion__show-more-loading',
     showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
@@ -92,9 +87,7 @@ Comments.prototype.isOpenForRecommendations = function() {
 };
 
 Comments.prototype.initRecommend = function() {
-    console.log('initRecommend');
     this.on('click', '.js-recommend-comment', function(e) {
-        console.log('recommendClick', e);
         if (this.isOpenForRecommendations()) {
             var elem = e.currentTarget,
                 $el = bonzo(elem);
@@ -216,10 +209,10 @@ Comments.prototype.fetchComments = function(options) {
     var queryParams = {
         orderBy: options.order || this.options.order,
         pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        displayThreaded: this.options.threading !== "unthreaded"
+        displayThreaded: this.options.threading !== 'unthreaded'
     };
 
-    if (this.options.threading == 'collapsed') {
+    if (this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
     }
 
