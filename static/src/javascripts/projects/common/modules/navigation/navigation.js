@@ -8,18 +8,18 @@ define([
     $
 ) {
     var Navigation = {
-        init: function(){
+        init: function () {
             this.addMegaNavMenu();
             this.enableMegaNavToggle();
         },
 
-        addMegaNavMenu: function(){
-            var megaNav = $('.js-transfuse');
-            var placeholder = $('.'+megaNav.attr('data-transfuse-target'));
+        addMegaNavMenu: function () {
+            var megaNav     = $('.js-transfuse'),
+                placeholder = $('.' + megaNav.attr('data-transfuse-target'));
             placeholder.html(megaNav.html());
         },
 
-        enableMegaNavToggle: function(){
+        enableMegaNavToggle: function () {
             bean.on(document, 'click', '.js-navigation-toggle', function (e) {
                 e.preventDefault();
                 $('.' + e.currentTarget.getAttribute('data-target-nav')).toggleClass('navigation--expanded navigation--collapsed');
