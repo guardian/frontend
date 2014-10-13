@@ -64,7 +64,7 @@
     }
 }
 
-@mixin article-header-tone($tone, $backgroundColour, $backgroundAccentColour, $textColour, $textAccentColour, $commentIcon) {
+@mixin article-header-tone($tone, $colour, $accentColour, $textAccentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
         .content__headline,
         .content__standfirst,
@@ -72,12 +72,16 @@
             color: $textColour;
         }
 
+        .content__headline {
+            color: $textColour;
+        }
+
         .tone-background {
-            background-color: $backgroundColour;
+            background-color: $colour;
         }
 
         .tone-background--accent {
-            background-color: $backgroundAccentColour;
+            background-color: $accentColour;
         }
 
         .content__head__comment-count .commentcount {
@@ -88,20 +92,20 @@
             border-bottom-color: rgba($textColour, .3);
         }
 
-        .content__section-label__link {
-            color: $textAccentColour;
-        }
-
-        .content__series-label__link {
+        .content__section-label .tone-colour {
             color: $textColour;
         }
 
+        .content__series-label .tone-colour {
+            color: $textAccentColour;
+        }
+
         .content__standfirst .bullet:before {
-            background-color: lighten($backgroundAccentColour, 25);
+            background-color: lighten($accentColour, 25);
         }
 
         .u-underline {
-            border-bottom-color: lighten($backgroundAccentColour, 25);
+            border-bottom-color: lighten($accentColour, 25);
             &:focus,
             &:active,
             &:hover {
@@ -111,6 +115,6 @@
     }
 
     .content.tone-#{$tone} .drop-cap {
-        color: $backgroundColour;
+        color: $colour;
     }
 }

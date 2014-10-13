@@ -83,8 +83,6 @@ define([
             soulmatesHighV2:    this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            travelV2:           this.host + 'travel/offers-v2.json?'            + 's=' + this.section + '&' + this.getKeywords(),
-            travelHighV2:       this.host + 'travel/offers-high-v2.json?'       + 's=' + this.section + '&' + this.getKeywords(),
             capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords(),
             multi:              this.host + 'multi.json?'                       + this.multiComponents
         };
