@@ -172,7 +172,7 @@ define([
                 dropdown.addClass('dropdown--active');
                 dropdowns.updateAria(dropdown);
 
-                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.section != 'football') {
+                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.section !== 'football') {
                     topMarker = qwery('.js-top-marker')[0];
                     affix = new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
