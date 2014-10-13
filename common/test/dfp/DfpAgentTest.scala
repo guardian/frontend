@@ -45,7 +45,9 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("ad-feature"), sections = Nil, Some("spon2"), Nil, 4),
-      Sponsorship(Seq("film"), sections = Nil, None, Nil, 5)
+      Sponsorship(Seq("film"), sections = Nil, None, Nil, 5),
+      Sponsorship(Seq("grundfos-partner-zone", "sustainable-business-grundfos-partner-zone"),
+        sections = Seq("sustainable-business"), None, Nil, 8)
     )
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
@@ -175,6 +177,17 @@ class DfpAgentTest extends FlatSpec with Matchers {
     forEvery(apiQueries) { q =>
       testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(false)
     }
+  }
+
+  it should "be true for front of an ad feature section with a multi-part section name" in {
+    testDfpAgent.isAdvertisementFeature("sustainable-business/grundfos-partner-zone",
+      Some("sustainable-business/grundfos-partner-zone")) should be(true)
+  }
+
+  it should "be true for an article in an ad feature section with a multi-part section name" in {
+    testDfpAgent.isAdvertisementFeature(
+      "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
+      Some("sustainable-business/grundfos-partner-zone")) should be(true)
   }
 
   "hasInlineMerchandise" should "be true if tag id has inline merchandising" in {
