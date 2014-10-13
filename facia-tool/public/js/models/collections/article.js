@@ -328,7 +328,7 @@ define([
             }
 
             if (withCapiData) {
-                this.populate(opts)
+                this.addCapiData(opts)
             }
         }
 
@@ -472,7 +472,7 @@ define([
             )
         };
 
-        Article.prototype.populate = function(opts) {
+        Article.prototype.addCapiData = function(opts) {
             var missingProps;
 
             populateObservables(this.props,  opts);
