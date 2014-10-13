@@ -50,43 +50,13 @@ var Loader = function() {
 };
 Component.define(Loader);
 
-/**
- * @type {Object.<string.string>}
- * @override
- */
-Loader.prototype.classes = {
-    comments: 'discussion__comments'
-};
+Loader.prototype.classes = { };
 
-/**
- * @type {string}
- * @override
- */
 Loader.prototype.componentClass = 'discussion';
-
-/** @type {Comments} */
 Loader.prototype.comments = null;
-
-/** @type {CommentBox} */
-Loader.prototype.commentBox = null;
-
-/** @type {CommentBox} */
-Loader.prototype.bottomCommentBox = null;
-
-/** @type {Object.<string.*>} */
 Loader.prototype.user = null;
 
-/**
- * @override
- * We need the user for comments
- * We also need them for the comment bar
- * So the flow is essentially:
- * 1. fetch user
- * 2. fetch comments
- * 3. render comment bar
- */
-
-Loader.prototype.loadTopComments = function() {
+Loader.prototype.initTopComments = function() {
 
     this.on('click', '.js-jump-to-comment', function(e) {
         e.preventDefault();
@@ -111,33 +81,6 @@ Loader.prototype.loadTopComments = function() {
         function () {
         }
     );
-};
-
-
-
-Loader.prototype.initToolbar = function() {
-    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span'),
-        $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
-
-    $orderLabel.text(this.comments.options.order);
-    this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
-        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
-        this.comments.options.order = bonzo(e.currentTarget).data('order');
-        $orderLabel.text(this.comments.options.order);
-        this.comments.fetchComments({page: 1});
-    });
-
-    $threadingLabel.text(this.comments.options.threading);
-    this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
-        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
-        this.comments.options.threading = bonzo(e.currentTarget).data('threading');
-        $threadingLabel.text(this.comments.options.threading);
-        userPrefs.set('discussion.threading', this.comments.options.threading);
-        this.comments.fetchComments();
-    });
-
 };
 
 Loader.prototype.initMainComments = function() {
@@ -172,8 +115,6 @@ Loader.prototype.initMainComments = function() {
             this.setState('truncated');
         }
 
-        this.initShowAll();
-
         this.on('user:loaded', function() {
             this.initState();
             this.renderCommentBar();
@@ -187,6 +128,30 @@ Loader.prototype.initMainComments = function() {
     this.checkCommentsLoaded();
 };
 
+Loader.prototype.initToolbar = function() {
+
+    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span');
+    $orderLabel.text(this.comments.options.order);
+    this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.order = bonzo(e.currentTarget).data('order');
+        $orderLabel.text(this.comments.options.order);
+        this.comments.fetchComments({page: 1});
+    });
+
+    var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
+    $threadingLabel.text(this.comments.options.threading);
+    this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.threading = bonzo(e.currentTarget).data('threading');
+        $threadingLabel.text(this.comments.options.threading);
+        userPrefs.set('discussion.threading', this.comments.options.threading);
+        this.comments.fetchComments();
+    });
+};
+
 Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
@@ -196,7 +161,7 @@ Loader.prototype.ready = function() {
         this.removeState('truncated');
     });
 
-    this.loadTopComments();
+    this.initTopComments();
     this.initMainComments();
     this.initToolbar();
     this.renderCommentCount();
@@ -216,34 +181,13 @@ Loader.prototype.ready = function() {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
-    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
+    mediator.on('module:clickstream:click', function() {
+        if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+            this.removeState('truncated');
+        }
+    }.bind(this));
 
     register.end('discussion');
-};
-
-Loader.prototype.handleBodyClick = function(clickspec) {
-    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-        this.removeState('first-two-comments-only');
-        this.removeState('show-top-comments-only');
-    }
-};
-
-Loader.prototype.initShowAll = function() {
-    var $showAllBtn = $('.js-show-all'),
-        offClass = 'discussion__show-all--off';
-
-    if (userPrefs.get('discussion.expand')) {
-        $showAllBtn.removeClass(offClass);
-    }
-
-    this.on('click', '.js-show-all', function(e) {
-        var $btn = bonzo(e.currentTarget).toggleClass(offClass),
-            expand = !$btn.hasClass(offClass);
-        
-        this.comments.options.expand = expand;
-        userPrefs.set('discussion.expand', expand);
-        this.comments.fetchComments();
-    });
 };
 
 Loader.prototype.getUser = function() {
