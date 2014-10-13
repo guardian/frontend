@@ -118,7 +118,7 @@ Comments.prototype.ready = function() {
     this.emit('ready');
     this.relativeDates();
 
-    this.on('click', '.js-report-comment-close', function(close) {
+    this.on('click', '.js-report-comment-close', function() {
         $('.js-report-comment-form').addClass('u-h');
     });
 };
