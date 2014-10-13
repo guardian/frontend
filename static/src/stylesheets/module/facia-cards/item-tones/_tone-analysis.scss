@@ -3,11 +3,7 @@
 
     &.fc-item {
         background-color: $c-analysisBackground;
-
-        &,
-        & a {
-            color: $c-newsDefault;
-        }
+        color: $c-newsDefault;
     }
 
     .fc-item__content,
@@ -18,16 +14,10 @@
 
     .fc-item__kicker,
     .fc-item__byline {
-        &,
-        & a {
-            color: $c-analysisAccent;
-        }
+        color: $c-analysisAccent;
     }
 
     .fc-item__meta {
-        &,
-        & a {
-            color: $c-neutral2;
-        }
+        color: $c-neutral2;
     }
 }

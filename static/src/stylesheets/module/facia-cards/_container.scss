@@ -25,10 +25,6 @@ $header-image-size-desktop: 120px;
     padding-top: $gs-baseline / 2;
     position: relative;
 
-    @include mq($until: tablet) {
-        @include fs-header(5);
-    }
-
     @include mq(leftCol) {
         float: left;
         width: $left-column;
@@ -41,7 +37,8 @@ $header-image-size-desktop: 120px;
 .fc-container__header__title {
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
-    @include fs-header(3);
+    @include fs-header(5);
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);
 
     a {
         color: inherit;
