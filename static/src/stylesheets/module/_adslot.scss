@@ -185,6 +185,9 @@
     }
 }
 .ad-slot--sponsored {
+    min-height: 250px;
+    @include box-sizing(border-box);
+    background-color: $c-neutral8;
     overflow: hidden;
     border-top: 1px solid $c-neutral5;
     padding-top: $gs-baseline/2;
