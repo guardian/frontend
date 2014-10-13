@@ -58,7 +58,6 @@ Comments.prototype.classes = {
     loader: 'd-discussion__loader',
 
     comment: 'd-comment',
-    commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
     commentRecommend: 'd-comment__recommend',
