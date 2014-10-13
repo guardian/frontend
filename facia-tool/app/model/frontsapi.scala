@@ -6,7 +6,8 @@ import common.Logging
 import conf.Configuration
 import julienrf.variants.Variants
 import org.joda.time.DateTime
-import play.api.libs.json.{Format, JsValue, Json}
+import play.api.libs.json.{JsString, Format, JsValue, Json}
+import services.ConfigAgent
 import tools.FaciaApi
 
 import scala.util.{Failure, Success, Try}
@@ -74,6 +75,7 @@ case class Remove(remove: UpdateList) extends FaciaToolUpdate
 case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
 
 case class DiscardUpdate(id: String) extends FaciaToolUpdate
+case class PublishUpdate(id: String) extends FaciaToolUpdate
 
 object UpdateList {
   implicit val format: Format[UpdateList] = Json.format[UpdateList]
@@ -164,6 +166,8 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(removeGroupIfNoLongerGrouped(id, _))
+    .map(pruneBlock)
     .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
@@ -177,6 +181,8 @@ trait UpdateActions extends Logging {
       .map(_.updatePreviously(update))
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .map(removeGroupIfNoLongerGrouped(id, _))
+      .map(pruneBlock)
       .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
@@ -221,6 +227,37 @@ trait UpdateActions extends Logging {
   def capCollection(block: Block): Block =
     block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
+  def removeGroupIfNoLongerGrouped(collectionId: String, block: Block): Block = {
+    ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
+      case Some(groups) if groups.nonEmpty => block
+      case _ => block.copy(
+        live = block.live.map(removeGroupsFromTrail),
+        draft = block.draft.map(_.map(removeGroupsFromTrail)))
+    }
+  }
+
+  private def pruneBlock(block: Block): Block =
+    block.copy(
+      live = block.live
+        .map(pruneGroupOfZero)
+        .map(pruneMetaDataIfEmpty),
+      draft = block.draft.map(
+        _.map(pruneGroupOfZero)
+         .map(pruneMetaDataIfEmpty)
+      )
+    )
+
+  private def pruneGroupOfZero(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(
+      metaData => metaData.copy(json = metaData.json.filter{
+        case ("group", JsString("0")) => false
+        case _ => true})))
+
+  private def pruneMetaDataIfEmpty(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.filter(_.json.nonEmpty))
+
+  private def removeGroupsFromTrail(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 }
 
 object UpdateActions extends UpdateActions

@@ -9,11 +9,9 @@
 
 @mixin tones-content {
     // Tonal article styles
-    // @mixin article-header-tone($tone, $backgroundColour, $backgroundAccentColour, $textColour, $textAccentColour, $commentIcon)
-    @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, $c-featureAccent, 'white');
-    @include article-header-tone(comment, $c-commentBackground, $c-commentDefault, $c-neutral1, $c-commentDefault, 'black');
+    @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, $c-featureAccent, #ffffff, 'white');
+    @include article-header-tone(comment, $c-commentBackground, $c-commentDefault, $c-commentDefault, $c-neutral1, 'black');
     @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
-    @include article-header-tone(dead, #ffffff, $c-neutral6, $c-neutral1, $c-liveDefault, 'black');
 
     .content__head--tonal {
         background-color: #ffffff;
@@ -107,31 +105,9 @@
 
     /* Tone specific rules/overrides
        ========================================================================== */
-    .tone-live {
-        .content__head--tonal {
-            .blog__meta-container {
-                color: #ffffff;
-                border-top-color: $c-featureMute;
-            }
-            .blog__last-updated-container,
-            .content__series-label a {
-                color: #ffffff;
-            }
-        }
-    }
-
-    .tone-dead {
-        .content__head--tonal {
-            .content__series-label__link {
-                color: $c-neutral2;
-            }
-            .blog__meta-container {
-                color: $c-neutral2;
-                border-top-color: $c-neutral3;
-            }
-            .blog__last-updated-container {
-                color: $c-neutral2;
-            }
+    .tone-live .content__head--tonal {
+        .content__headline {
+            font-weight: normal;
         }
     }
 

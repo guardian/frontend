@@ -6,13 +6,13 @@
 
             <div class="content__labels">
                 <div class="content__section-label">
-                    <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName)</a>
+                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName)</a>
                 </div>
 
                 @fragments.meta.metaInline(content)
             </div>
 
-            <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
+            <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)

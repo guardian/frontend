@@ -91,10 +91,10 @@ Media list item. Looks a bit like this:
         }
 
         .fc-item__avatar {
-            display: block !important;
             height: gs-span(1) + $gs-baseline * 3;
 
             .fc-item__avatar__media {
+                display: block;
                 right: - $gs-gutter;
             }
         }

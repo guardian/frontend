@@ -111,11 +111,6 @@ Comments.prototype.ready = function() {
         60000
     );
 
-    if (this.options.commentId) {
-        $('.d-discussion__show-all-comments').addClass('u-h');
-        window.location.replace('#comment-'+ this.options.commentId);
-    }
-
     this.emit('ready');
     this.relativeDates();
 
@@ -207,7 +202,7 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: !this.options.unthreaded
     };
 
-    if (!this.options.expand && !this.options.commentId ) {
+    if (!this.options.expand && !options.comment ) {
         queryParams.maxResponses = 3;
     }
 
@@ -217,7 +212,15 @@ Comments.prototype.fetchComments = function(options) {
         method: 'get',
         crossOrigin: true,
         data: queryParams
-    }).then(this.renderComments.bind(this));
+    }).then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
+};
+
+Comments.prototype.goToPermalink = function(commentId) {
+    if (commentId) {
+        this.showHiddenComments();
+        $('.d-discussion__show-all-comments').addClass('u-h');
+        window.location.replace('#comment-'+ commentId);
+    }
 };
 
 Comments.prototype.renderComments = function(resp) {

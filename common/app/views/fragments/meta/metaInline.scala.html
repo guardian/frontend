@@ -3,13 +3,13 @@
 @if(content.isSeries) {
     @content.series.headOption.map { series =>
         <div class="content__series-label">
-            <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
+            <a href="@LinkTo{/@series.id}" class="tone-colour">@series.name</a>
         </div>
     }
 } else {
     @if(content.isFromTheObserver ) {
         <div class="content__series-label">
-            <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
+            <a href="http://observer.theguardian.com" class="tone-colour">The Observer</a>
         </div>
     }
 }

@@ -138,7 +138,6 @@ Loader.prototype.initMainComments = function() {
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
-        commentId: commentId ? commentId : null,
         order: order,
         state: 'partial'
     });

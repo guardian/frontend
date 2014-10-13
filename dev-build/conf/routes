@@ -205,8 +205,6 @@ GET         /commercial/travel/offers                                           
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.travelOffersLowJson
 GET         /commercial/travel/offers-high                                                                           controllers.commercial.TravelOffers.travelOffersHighHtml
 GET         /commercial/travel/offers-high.json                                                                      controllers.commercial.TravelOffers.travelOffersHighJson
-GET         /commercial/travel/offers-v2.json                                                                        controllers.commercial.TravelOffers.travelOffersLowJsonV2
-GET         /commercial/travel/offers-high-v2.json                                                                   controllers.commercial.TravelOffers.travelOffersHighJsonV2
 
 GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.jobsLowHtml
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobsLowJson
