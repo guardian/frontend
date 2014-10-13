@@ -56,16 +56,12 @@
 
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
-        @include fc-item--list-media(4, 1);
+        @include fc-item--list-media(3.5, 2);
     }
 }
 
 .fc-item--list-media-tablet {
     @include mq(tablet) {
-        @include fc-item--list-media(4, 1);
-    }
-
-    @include mq(desktop) {
         @include fc-item--list-media;
     }
 }

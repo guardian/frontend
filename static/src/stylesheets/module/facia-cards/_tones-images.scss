@@ -101,8 +101,8 @@
         @include icon(video-icon, false);
         content: '';
         height: .75em;
-        width: 1.2em;
-        margin-right: .2em;
+        width: 1.1em;
+        margin-right: .3em;
     }
 }
 
@@ -111,7 +111,7 @@
     &:before {
         @include icon(camera-yellow-large, false);
         content: '';
-        height: .75em;
+        height: .72em;
         width: 1.2em;
         margin-right: .1em;
     }

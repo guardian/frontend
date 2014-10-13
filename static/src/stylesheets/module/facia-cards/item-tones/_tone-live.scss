@@ -4,15 +4,7 @@
 
     &.fc-item {
         background-color: $c-liveDefault;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__standfirst {
-        color: fade_out(#ffffff, .2);
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -22,27 +14,18 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
-        &,
-        & a {
-            color: $c-liveMute;
-        }
+    .fc-item__byline,
+    .fc-item__meta {
+        color: $c-liveMute;
     }
 
-    .fc-item__meta {
-        &,
-        & a {
-            color: $c-liveMute;
-        }
+    .fc-item__standfirst {
+        color: fade_out(#ffffff, .2);
     }
 
     .fc-item__live-indicator,
     .fc-item__breaking-indicator {
         color: #ffffff;
         font-weight: 400;
-
-        &:after {
-            content: ' /';
-        }
     }
 }

@@ -6,17 +6,14 @@
         background-color: $c-neutral8;
     }
 
-    .fc-item__kicker,
-    .fc-item__byline {
-        &,
-        & a {
-            color: $c-newsDefault;
-        }
-    }
-
     .fc-item__content,
     &.fc-item--has-cutout .fc-item__container,
     &.fc-item--list-media-mobile {
         @include box-shadow(inset 0 1px $c-newsAccent);
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        color: $c-newsDefault;
     }
 }

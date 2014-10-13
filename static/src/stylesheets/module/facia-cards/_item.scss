@@ -96,6 +96,15 @@ $fc-item-gutter: $gs-gutter / 4;
 
     a {
         color: $c-neutral1;
+        color: inherit;
+    }
+
+    // This is a temp fix until we completely remove tone-colour from fc-item
+    .tone-colour,
+    .tone-colour:hover,
+    .tone-colour:active,
+    .tone-colour:visited {
+        color: inherit;
     }
 
     .stars {
@@ -175,10 +184,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     float: left;
     margin-right: .2em;
-
-    &:after {
-        content: ' /';
-    }
 }
 
 .fc-item__byline {

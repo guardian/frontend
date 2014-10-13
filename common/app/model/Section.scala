@@ -27,11 +27,11 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "content-type" -> JsString("Section")
   )
 
-  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(this.id)
-  override lazy val hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(this.id)
-  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this.id)
-  override lazy val hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(this.id)
-  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(id)
-  override lazy val sponsor: Option[String] = DfpAgent.getSponsor(this.id)
+  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(id, Some(id))
+  override lazy val hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(id)
+  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(id, Some(id))
+  override lazy val hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(id)
+  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(id, Some(id))
+  override lazy val sponsor: Option[String] = DfpAgent.getSponsor(id)
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }
