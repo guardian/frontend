@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Super-high component styling
+   ========================================================================== */
+.commercial--v2.commercial--v-high {
+    .commercial--v-high__header {
+        padding: $gs-baseline/4 $gs-gutter/4;
+
+        .commercial__title {
+            .i-marque-36 {
+                display: block;
+            }
+        }
+    }
+
+    .commercial--v-high__body {
+        padding: $gs-baseline/2 $gs-gutter/4 $gs-baseline;
+    }
+
+    .lineitem__image {
+        float: none;
+        margin: (-$gs-baseline/2) (-$gs-gutter/4) 0;
+        width: calc(100% + #{$gs-gutter/2});
+    }
+}

@@ -3,28 +3,32 @@
    ========================================================================== */
 .commercial--books--v2 {
     /* Line items */
-    .lineitem {
-        width: percentage(1/2);
-
-        &:nth-child(n+3) {
-            display: none;
-        }
-        @include mq(mobileLandscape) {
-            width: percentage(1/3);
+    .container__body {
+        .lineitem {
+            width: percentage(1/2);
 
             &:nth-child(n+3) {
-                display: block;
-            }
-            &:nth-child(n+4) {
                 display: none;
             }
-        }
-        @include mq(desktop) {
-            width: percentage(1/5);
-            min-height: $gs-baseline*20;
-            
-            &:nth-child(n+4) {
-                display: block;
+
+            @include mq(mobileLandscape) {
+                width: percentage(1/3);
+
+                &:nth-child(n+3) {
+                    display: block;
+                }
+                &:nth-child(n+4) {
+                    display: none;
+                }
+            }
+
+            @include mq(desktop) {
+                width: percentage(1/5);
+                min-height: $gs-baseline*20;
+
+                &:nth-child(n+4) {
+                    display: block;
+                }
             }
         }
     }
@@ -89,6 +93,13 @@
                 left: 0;
                 top: $gs-baseline/2;
             }
+        }
+    }
+
+    &.commercial--v-high {
+        .lineitem__image {
+            max-width: 50%;
+            margin: 0;
         }
     }
 }

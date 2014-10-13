@@ -16,8 +16,12 @@
         float: left;
 
         &:first-child {
+            padding: 0;
             border-left: 0;
         }
+    }
+    .lineitem--v-high {
+        float: none;
     }
     .lineitem__link {
         &:hover {
@@ -27,6 +31,9 @@
                 text-decoration: underline;
             }
         }
+    }
+    .lineitem__image {
+        display: block;
     }
     .lineitem__image-crop {
         position: relative;
@@ -43,7 +50,7 @@
     }
     .lineitem__title {
         color: $c-neutral1;
-        @include fs-headline(2);
+        @include fs-header(1);
         padding-top: 2px;
         margin-bottom: $gs-baseline;
     }
