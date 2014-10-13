@@ -86,13 +86,13 @@
             top: auto;
             bottom: auto;
             width: auto;
-            margin: 0 (-1*$gs-gutter/4) $gs-baseline/2;
+            margin: 0 (-1*$gs-gutter/4);
             padding: $gs-baseline/2 $gs-gutter/2;
         }
         .lineitem__image {
             width: 100%;
             float: none;
-            margin: 0 -$gs-gutter/2 $gs-baseline/2;
+            margin: 0 (-$gs-gutter/2) $gs-baseline/2;
             width: calc(100% + ($gs-gutter/2));
         }
         /*
