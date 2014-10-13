@@ -165,7 +165,6 @@ define([
                     editable: true,
                     omitForSupporting: true,
                     label: 'show byline',
-                    omitForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
@@ -250,7 +249,7 @@ define([
 
             rxScriptStriper = new RegExp(/<script.*/gi);
 ;
-        function Article(opts) {
+        function Article(opts, withCapiData) {
             var self = this;
 
             opts = opts || {};
@@ -263,7 +262,10 @@ define([
 
             this.fields = asObservableProps(capiFields);
 
+            this.metaDefaults = {};
+
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
+            populateObservables(this.meta, opts.meta);
 
             this.state = asObservableProps([
                 'underDrag',
@@ -276,6 +278,8 @@ define([
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl']);
+
+            this.state.isSnap(!!snap.validateId(opts.id));
 
             this.uneditable = opts.uneditable;
 
@@ -306,8 +310,6 @@ define([
                     this.meta.href() || this.props.webUrl();
             }, this);
 
-            this.populate(opts);
-
             // Populate supporting
             if (this.group && this.group.parentType !== 'Article') {
                 this.meta.supporting = new Group({
@@ -323,6 +325,10 @@ define([
                 }));
 
                 contentApi.decorateItems(this.meta.supporting.items());
+            }
+
+            if (withCapiData) {
+                this.populate(opts)
             }
         }
 
@@ -350,7 +356,6 @@ define([
             if (opts.type === 'boolean') {
                 display = opts.editable;
                 display = display && (this.meta[opts.key] || function() {})();
-                display = display && (opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true);
                 display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
                 display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
@@ -396,9 +401,8 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true;
+                    var display = opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
 
-                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
                     display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
@@ -468,37 +472,46 @@ define([
             )
         };
 
-        Article.prototype.populate = function(opts, validate) {
+        Article.prototype.populate = function(opts) {
             var missingProps;
 
             populateObservables(this.props,  opts);
-            populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
-            populateObservables(this.state,  opts.state);
 
-            if (validate || opts.webUrl) {
-                 missingProps = [
-                    'webUrl',
-                    'fields',
-                    'fields.headline'
-                 ].filter(function(prop) {return !deepGet(opts, prop);});
+             missingProps = [
+                'webUrl',
+                'fields',
+                'fields.headline'
+             ].filter(function(prop) {return !deepGet(opts, prop);});
 
-                if (missingProps.length) {
-                    vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
-                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
-                } else {
-                    this.state.isLoaded(true);
-                    this.sparkline();
-                }
+            if (missingProps.length) {
+                vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
+                window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
+            } else {
+                this.state.isLoaded(true);
+                this.sparkline();
             }
 
             this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
 
-            this.state.isSnap(!!snap.validateId(this.id()));
-
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
 
             this.state.tone(getTone(opts));
+
+            // Test stuff - will come from opts (CAPI)
+            _.extend(this.metaDefaults, getTone(opts) === 'comment' || getTone(opts) === 'blog' ?
+                {
+                    showQuotedHeadline: true,
+                    showByline: true,
+                    imageCutoutReplace: true
+                }:
+                {
+                    showQuotedHeadline: false,
+                    showByline: false,
+                    imageCutoutReplace: false
+                });
+
+            populateObservables(this.meta, this.metaDefaults);
 
             this.updateEditorsDisplay();
 
@@ -551,14 +564,14 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
-                // reject false properties:
-                .filter(function(p){ return p[1] !== false; })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // reject vals that are equivalent to their defaults (if any):
+                .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : true; })
                 // convert numbers to strings:
                 .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // recurse into supporting links

@@ -132,7 +132,7 @@ function (
     }
 
     function populate(article, contentApiArticle) {
-        article.populate(contentApiArticle, true);
+        article.populate(contentApiArticle);
     }
 
     function fetchContentByIds(ids) {
