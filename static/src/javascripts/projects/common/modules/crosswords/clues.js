@@ -40,7 +40,7 @@ define([
                         return Clue({
                             number: clue.number + '.',
                             clue: clue.clue,
-                            hasAnswered: false,
+                            hasAnswered: clue.hasAnswered,
                             focusClue: function () {
                                 that.props.focusClue(clue.position.x, clue.position.y, direction)
                             }

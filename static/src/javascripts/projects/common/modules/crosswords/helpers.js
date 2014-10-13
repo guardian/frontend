@@ -98,12 +98,38 @@ define([
         return map;
     }
 
+    function cellsForEntry(entry) {
+        if (isAcross(entry)) {
+            return _.map(_.range(entry.position.x, entry.position.x + entry.length), function (x) {
+                return {
+                    x: x,
+                    y: entry.position.y
+                };
+            });
+        } else {
+            return _.map(_.range(entry.position.y, entry.position.y + entry.length), function (y) {
+                return {
+                    x: entry.position.x,
+                    y: y
+                };
+            });
+        }
+    }
+
+    function entryHasCell(entry, x, y) {
+        return _.any(cellsForEntry(entry), function (cell) {
+            return cell.x === x && cell.y === y;
+        });
+    }
+
     return {
         isAcross: isAcross,
         otherDirection: otherDirection,
         buildGrid: buildGrid,
         cellsApplicable: cellsApplicable,
         clueMapKey: clueMapKey,
-        buildClueMap: buildClueMap
+        buildClueMap: buildClueMap,
+        cellsForEntry: cellsForEntry,
+        entryHasCell: entryHasCell
     };
 });

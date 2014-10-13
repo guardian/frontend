@@ -116,14 +116,8 @@ define([
                 newDirection,
                 isStartOfClue,
                 isInsideFocussedClue = function () {
-                    var p, lx, ly;
-
                     if (focussedClue) {
-                        p = focussedClue.position;
-                        lx = focussedClue.direction === 'across' ? focussedClue.length : 1;
-                        ly = focussedClue.direction === 'down' ? focussedClue.length : 1;
-
-                        return x >= p.x && x < p.x + lx && y >= p.y && y < p.y + ly;
+                        return helpers.entryHasCell(focussedClue, x, y);
                     } else {
                         return false;
                     }
@@ -193,15 +187,23 @@ define([
             }
         },
 
+        cluesData: function () {
+            var that = this;
+
+            return _.map(this.props.data.entries, function (entry) {
+                entry.hasAnswered = _.every(helpers.cellsForEntry(entry), function (position) {
+                    return /^[A-Z]$/.test(that.state.grid[position.x][position.y].value);
+                });
+
+                return entry;
+            });
+        },
+
         render: function () {
             var focussed = this.clueInFocus(),
                 isHighlighted = function (x, y) {
                     if (focussed) {
-                        var xMin = focussed.position.x,
-                            yMin = focussed.position.y,
-                            xMax = xMin + ((focussed.direction === 'across') ? focussed.length : 0),
-                            yMax = yMin + ((focussed.direction === 'down') ? focussed.length : 0);
-                        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
+                        return helpers.entryHasCell(focussed, x, y);
                     } else {
                         return false;
                     }
@@ -235,7 +237,7 @@ define([
                     ))
                 ),
                 Clues({
-                    clues: this.props.data.entries,
+                    clues: this.cluesData(),
                     focusClue: this.focusClue
                 })
             );
