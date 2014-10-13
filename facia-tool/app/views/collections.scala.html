@@ -89,11 +89,11 @@
                     </div>
                 </div>
 
-                <div data-bind="template: {name: 'template_search_controls'}"></div>
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
 
-                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}"></div>
 
-                <div data-bind="template: {name: 'template_search_controls'}"></div>
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
             </div>
         </div>
     </div>

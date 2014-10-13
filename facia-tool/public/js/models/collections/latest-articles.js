@@ -130,10 +130,12 @@ define([
                     url: url
                 })
                 .done(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
+                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [],
+                        errMsg = 'Sorry, the Content API is not currently returning content';
 
                     if (!term && !rawArticles.length) {
-                        vars.model.alert('Sorry, the Content API is not currently returning content');
+                        vars.model.alert(errMsg);
+                        self.flush(errMsg);
                         return;
                     }
 
@@ -154,9 +156,10 @@ define([
                     });
                 })
                 .fail(function(xhr) {
-                    if (xhr.status === 500) {
-                        vars.model.alert('Sorry, the Content API is currently unavailable');
-                    }
+                    var errMsg = 'Content API error (' + xhr.status + '). Content is currently unavailable';
+
+                    vars.model.alert(errMsg);
+                    self.flush(errMsg);
                 })
                 ;
             }, 300);
@@ -167,7 +170,7 @@ define([
         this.flush = function(message) {
             self.articles.removeAll();
             // clean up any dragged-in articles
-            container.innerHTML = message || '';
+            container.innerHTML = message ? '<div class="search-message">' + message + '</div>' : '';
         };
 
         this.refresh = function() {
