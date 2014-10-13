@@ -227,6 +227,9 @@ define([
                 s.prop64 = config.page.productionOffice;
             }
 
+            /* Omniture library version */
+            s.prop62    = 'Guardian JS-1.4.1 20140914';
+
             s.prop63    = detect.getPageSpeed();
 
             s.prop65    = config.page.headline || '';
