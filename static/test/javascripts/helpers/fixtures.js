@@ -25,7 +25,7 @@ define([
     return {
         render: function(conf) {
             clean(conf.id);
-            add(conf.id, conf.fixtures);
+            return add(conf.id, conf.fixtures);
         },
         clean: clean
     }
