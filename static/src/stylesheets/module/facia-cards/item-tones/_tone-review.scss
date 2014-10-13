@@ -17,6 +17,10 @@
         color: $c-reviewAccent;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
     .fc-item__meta {
         color: $c-neutral4;
     }
