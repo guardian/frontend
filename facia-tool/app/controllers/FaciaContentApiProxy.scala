@@ -3,11 +3,13 @@ package controllers
 import conf.Configuration
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import implicits.Strings
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
 import implicits.WSRequests.WsWithAuth
 import auth.ExpiringActions
+import util.ContentUpgrade.rewriteBody
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
@@ -27,7 +29,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
 
     WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
-        Ok(response.body).as("application/javascript")
+        Ok(rewriteBody(response.body)).as("application/javascript")
       }
     }
   }
@@ -38,7 +40,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
 
     WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
-        Ok(response.body).as("application/json")
+        Ok(rewriteBody(response.body)).as("application/json")
       }
     }
   }
