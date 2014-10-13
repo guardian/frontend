@@ -7,12 +7,18 @@ define([
 ) {
     var classSet = React.addons.classSet,
         Clue = React.createClass({
+            onClick: function (event) {
+                event.preventDefault();
+                this.props.focusClue();
+            },
+
             render: function () {
                 return React.DOM.li({
                     className: classSet({
                         'crossword__clues__clue': true,
                         'crossword__clues__clue--answered': this.props.hasAnswered
-                    })
+                    }),
+                    onClick: this.onClick
                 },
                     React.DOM.span({className: 'crossword__clues__clue__number'}, this.props.number),
                     React.DOM.span({className: 'crossword__clues__clue__text'}, this.props.clue)
@@ -34,7 +40,10 @@ define([
                         return Clue({
                             number: clue.number + '.',
                             clue: clue.clue,
-                            hasAnswered: false
+                            hasAnswered: false,
+                            focusClue: function () {
+                                that.props.focusClue(clue.position.x, clue.position.y, direction)
+                            }
                         });
                     });
             }

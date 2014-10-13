@@ -169,6 +169,17 @@ define([
             this.forceUpdate();
         },
 
+        focusClue: function (x, y, direction) {
+            var clues = this.cluesFor(x, y);
+
+            if (clues && clues[direction]) {
+                this.focusHiddenInput(x, y);
+                this.state.cellInFocus = {x: x, y: y};
+                this.state.directionOfEntry = direction;
+                this.forceUpdate();
+            }
+        },
+
         cluesFor: function (x, y) {
             return this.clueMap[helpers.clueMapKey(x, y)];
         },
@@ -224,7 +235,8 @@ define([
                     ))
                 ),
                 Clues({
-                    clues: this.props.data.entries
+                    clues: this.props.data.entries,
+                    focusClue: this.focusClue
                 })
             );
         }
