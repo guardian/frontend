@@ -3,15 +3,7 @@
 
     &.fc-item {
         background-color: $c-editorialDefault;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__standfirst {
-        color: $c-neutral3;
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -21,24 +13,12 @@
     }
 
     .fc-item__kicker,
-    a.fc-item__kicker {
+    .fc-item__byline {
         color: $c-editorialAccent;
     }
 
-    .fc-item__byline {
-        &,
-        & a,
-        & a:hover,
-        & a:active,
-        & a:visited {
-            color: $c-editorialAccent;
-        }
-    }
-
+    .fc-item__standfirst,
     .fc-item__meta {
-        &,
-        & a {
-            color: $c-neutral3;
-        }
+        color: $c-neutral3;
     }
 }

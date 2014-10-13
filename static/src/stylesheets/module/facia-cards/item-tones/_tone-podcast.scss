@@ -3,11 +3,7 @@
 
     &.fc-item {
         background-color: $c-podcastBackground;
-
-        &,
-        & a {
-            color: $c-podcastAccent;
-        }
+        color: $c-neutral1;
     }
 
     .fc-item__content,
@@ -16,25 +12,12 @@
         @include box-shadow(inset 0 1px $c-podcastAccent);
     }
 
-    .fc-item__title {
-        &,
-        & a {
-            color: $c-neutral1;
-        }
-    }
-
     .fc-item__kicker,
-    a.fc-item__kicker {
+    .fc-item__byline {
         color: $c-podcastAccent;
     }
 
-    .fc-item__byline {
-        &,
-        & a,
-        & a:hover,
-        & a:active,
-        & a:visited {
-            color: $c-podcastAccent;
-        }
+    .fc-item__meta {
+        color: #ffffff;
     }
 }

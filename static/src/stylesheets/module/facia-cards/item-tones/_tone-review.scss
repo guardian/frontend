@@ -3,11 +3,7 @@
 
     &.fc-item {
         background-color: $c-reviewBackground;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -17,17 +13,7 @@
     }
 
     .fc-item__kicker,
-    a.fc-item__kicker {
-        color: $c-reviewAccent;
-    }
-
     .fc-item__byline {
-        &,
-        & a,
-        & a:hover,
-        & a:active,
-        & a:visited {
-            color: $c-reviewAccent;
-        }
+        color: $c-reviewAccent;
     }
 }

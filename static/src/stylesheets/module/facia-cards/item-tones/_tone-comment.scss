@@ -13,10 +13,7 @@
 
     .fc-item__kicker,
     .fc-item__byline {
-        &,
-        & a {
-            color: $c-commentDefault;
-        }
+        color: $c-commentDefault;
     }
 
     .fc-item__meta {

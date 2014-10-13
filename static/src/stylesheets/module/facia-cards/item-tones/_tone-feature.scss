@@ -3,15 +3,7 @@
 
     &.fc-item {
         background-color: $c-featureDefault;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__standfirst {
-        color: fade_out(#ffffff, .2);
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -21,18 +13,13 @@
     }
 
     .fc-item__kicker,
-    a.fc-item__kicker {
+    .fc-item__byline,
+    .fc-item__meta {
         color: $c-featureMute;
     }
 
-    .fc-item__byline {
-        &,
-        & a,
-        & a:hover,
-        & a:active,
-        & a:visited {
-            color: $c-featureMute;
-        }
+    .fc-item__standfirst {
+        color: fade_out(#ffffff, .2);
     }
 
     .fc-item__title .i {
@@ -40,12 +27,5 @@
         height: .9em;
         width: 1em;
         background-position: center;
-    }
-
-    .fc-item__meta {
-        &,
-        & a {
-            color: $c-featureMute;
-        }
     }
 }
