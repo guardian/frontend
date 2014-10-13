@@ -1,6 +1,6 @@
 .fc-item__title--quoted .fc-item__link,
 .tone-comment--item .fc-item__link,
-.tone-comment--sublink .fc-sublinks__item__link  {
+.tone-comment--sublink .fc-sublink__link  {
     &:before {
         @include icon(quote-grey, false);
         content: '';
@@ -36,12 +36,38 @@
     margin-right: 1px;
 }
 
-.tone-podcast--item,
-.tone-podcast--sublink {
-    .fc-item__title--quoted .fc-item__link:before {
-        @include icon(quote-black, false);
+.fc-item__title--quoted {
+    .tone-podcast--item & .fc-item__link,
+    .tone-podcast--sublink & .fc-sublink__link {
+        &:before {
+            @include icon(quote-black, false);
+        }
     }
 
+    .tone-feature--item & .fc-item__link,
+    .tone-feature--sublink & .fc-sublink__link {
+        &:before {
+            @include icon(quote-light-pink, false);
+        }
+    }
+
+    .tone-live--item & .fc-item__link,
+    .tone-live--sublink & .fc-sublink__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
+    }
+
+    .tone-media--item & .fc-item__link,
+    .tone-media--sublink & .fc-sublink__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
+    }
+}
+
+.tone-podcast--item,
+.tone-podcast--sublink {
     .fc-item__timestamp:before {
         @include icon(clock-white, false);
     }
@@ -60,10 +86,6 @@
 
 .tone-media--item,
 .tone-media--sublink {
-    .fc-item__title--quoted .fc-item__link:before {
-        @include icon(quote-white, false);
-    }
-
     .fc-item__timestamp:before {
         @include icon(clock-grey, false);
     }
@@ -74,7 +96,7 @@
 }
 
 .fc-item--video .fc-item__title,
-.fc-sublinks__item--video .fc-item__link {
+.fc-sublink--video .fc-item__link {
     &:before {
         @include icon(video-icon, false);
         content: '';
@@ -85,7 +107,7 @@
 }
 
 .fc-item--gallery .fc-item__title,
-.fc-sublinks__item--gallery .fc-item__link {
+.fc-sublink--gallery .fc-item__link {
     &:before {
         @include icon(camera-yellow-large, false);
         content: '';
@@ -97,10 +119,6 @@
 
 .tone-live--item,
 .tone-live--sublink {
-    .fc-item__title--quoted .fc-item__link:before {
-        @include icon(quote-white, false);
-    }
-
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
@@ -112,10 +130,6 @@
 
 .tone-feature--item,
 .tone-feature--sublink {
-    .fc-item__title--quoted .fc-item__link:before {
-        @include icon(quote-light-pink, false);
-    }
-
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }

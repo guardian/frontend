@@ -105,7 +105,7 @@ x x x x x x x x x x x x x x x x x x
         @include flex-basis(auto);
     }
 
-    .fc-sublinks__item:nth-child(n+3) {
+    .fc-sublink:nth-child(n+3) {
         display: none;
     }
 

@@ -133,7 +133,7 @@
     @include mq(tablet) {
         @include fc-item--full;
 
-        .fc-sublinks__item:nth-child(n+5) {
+        .fc-sublink:nth-child(n+5) {
             display: none;
         }
     }
