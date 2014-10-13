@@ -29,6 +29,10 @@
         width: 1em;
         background-position: center;
     }
+
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
 }
 
 .tone-feature--sublink {
@@ -40,7 +44,8 @@
 .tone-editorial--item,
 .tone-feature--item,
 .tone-live--item,
-.tone-media--item {
+.tone-media--item,
+.tone-review--item {
     .tone-feature--sublink {
         .fc-sublink__kicker {
             color: $c-featureMute;

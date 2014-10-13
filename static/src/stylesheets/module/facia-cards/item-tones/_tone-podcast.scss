@@ -25,6 +25,10 @@
     .fc-item__meta {
         color: #ffffff;
     }
+
+    .fc-sublink__title:before {
+        border-color: $c-neutral1;
+    }
 }
 
 .tone-podcast--sublink {

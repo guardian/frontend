@@ -5,7 +5,7 @@
 .fc-sublink {
     position: relative;
     padding-top: $gs-baseline * .25;
-    margin-top: $gs-baseline * .75;
+    margin: $gs-baseline * .75 0;
 
     a {
         display: block;

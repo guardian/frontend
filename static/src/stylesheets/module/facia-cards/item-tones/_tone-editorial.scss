@@ -22,6 +22,10 @@
     .fc-item__meta {
         color: $c-neutral3;
     }
+
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
 }
 
 .tone-editorial--sublink {

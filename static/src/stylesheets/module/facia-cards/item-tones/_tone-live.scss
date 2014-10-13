@@ -28,6 +28,10 @@
         color: #ffffff;
         font-weight: 400;
     }
+
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
 }
 
 .tone-live--sublink {
@@ -44,7 +48,8 @@
 
 .tone-editorial--item,
 .tone-feature--item,
-.tone-live--item {
+.tone-live--item,
+.tone-review--item {
     .tone-live--sublink {
         .fc-sublink__kicker {
             color: #ffffff;
