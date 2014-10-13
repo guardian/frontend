@@ -44,7 +44,8 @@ trait DfpAgent {
   private def isPaidFor(available: Seq[Sponsorship], tagId: String, section: Option[String]): Boolean = {
 
     def sectionMatches(sponsorshipSections: Seq[String]): Boolean = {
-      section.isEmpty || sponsorshipSections.isEmpty || sponsorshipSections.contains(section.get)
+      section.isEmpty || sponsorshipSections.isEmpty ||
+        sponsorshipSections.exists(section.get.startsWith)
     }
 
     available exists { sponsorship =>

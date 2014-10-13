@@ -209,16 +209,12 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__meta {
     @include fs-textSans(1);
     margin-bottom: $gs-baseline / 4;
+    color: $c-neutral2;
 
     &:after {
         clear: left;
         content: '';
         display: table;
-    }
-
-    &,
-    & a {
-        color: $c-neutral2;
     }
 }
 
