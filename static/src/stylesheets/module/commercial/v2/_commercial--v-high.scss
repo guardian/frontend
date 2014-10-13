@@ -3,11 +3,14 @@
    ========================================================================== */
 .commercial--v2.commercial--v-high {
     .commercial--v-high__header {
-        padding: $gs-baseline/4 $gs-gutter/4;
+        padding: $gs-baseline/6 $gs-gutter/4;
 
         .commercial__title {
             .i-marque-36 {
                 display: block;
+            }
+            .i-commercial-brand {
+                height: $gs-baseline*1.3333;
             }
         }
     }
