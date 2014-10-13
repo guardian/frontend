@@ -187,7 +187,7 @@ $fc-item-gutter: $gs-gutter / 4;
     
     &:after {
         content: ' /';
-        color: fade-out($c-neutral1, 0.8);
+        color: fade-out($c-neutral1, .8);
     }
 }
 
