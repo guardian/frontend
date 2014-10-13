@@ -61,7 +61,6 @@ define([
 
         moveFocus: function (deltaX, deltaY) {
             var cell = this.state.cellInFocus,
-                direction = this.state.directionOfEntry,
                 x = cell.x + deltaX,
                 y = cell.y + deltaY;
 
@@ -87,27 +86,19 @@ define([
         },
 
         focusPrevious: function () {
-            var deltaX, deltaY;
-
             if (this.isAcross()) {
-                deltaX = -1; deltaY = 0;
+                this.moveFocus(-1, 0);
             } else {
-                deltaX = 0; deltaY = -1;
+                this.moveFocus(0, -1);
             }
-
-            this.moveFocus(deltaX, deltaY);
         },
 
         focusNext: function () {
-            var deltaX, deltaY;
-
             if (this.isAcross()) {
-                deltaX = 1; deltaY = 0;
+                this.moveFocus(1, 0);
             } else {
-                deltaX = 0; deltaY = 1;
+                this.moveFocus(0, 1);
             }
-
-            this.moveFocus(deltaX, deltaY);
         },
 
         focusHiddenInput: function (x, y) {
@@ -121,17 +112,39 @@ define([
         onSelect: function (x, y) {
             var cellInFocus = this.state.cellInFocus,
                 clue = this.cluesFor(x, y),
+                focussedClue = this.clueInFocus(),
                 newDirection,
-                isStartOfClue;
+                isStartOfClue,
+                isInsideFocussedClue = function () {
+                    var p, lx, ly;
+
+                    if (focussedClue) {
+                        p = focussedClue.position;
+                        lx = focussedClue.direction === 'across' ? focussedClue.length : 1;
+                        ly = focussedClue.direction === 'down' ? focussedClue.length : 1;
+
+                        return x >= p.x && x < p.x + lx && y >= p.y && y < p.y + ly;
+                    } else {
+                        return false;
+                    }
+                };
 
             this.focusHiddenInput(x, y);
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
+                /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
                 newDirection = helpers.otherDirection(this.state.directionOfEntry);
 
                 if (clue[newDirection]) {
                     this.state.directionOfEntry = newDirection;
                 }
+            } else if (isInsideFocussedClue()) {
+                /**
+                 * If we've clicked inside the currently highlighted clue, then we ought to just shift the cursor
+                 * to the new cell, not change direction or anything funny.
+                 */
+
+                this.state.cellInFocus = {x: x, y: y};
             } else {
                 this.state.cellInFocus = {x: x, y: y};
 
@@ -153,7 +166,7 @@ define([
                 }
             }
 
-            this.setState(this.state);
+            this.forceUpdate();
         },
 
         cluesFor: function (x, y) {
