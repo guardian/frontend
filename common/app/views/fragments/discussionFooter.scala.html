@@ -58,7 +58,7 @@
 
 }
 
-<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open} u-cf"
+<div id="comments" class="discussion discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -78,8 +78,6 @@
     <div class="discussion__top-border gs-container ">
         <div class="content__main-column">
 
-            <div class="preload-msg">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
-
             @sectionHeading
 
             <div class="discussion__comment-box js-discussion-comment-box--top"></div>
@@ -87,6 +85,8 @@
             <div class="discussion__top-comments js-discussion-top-comments"></div>
 
             @toolbar
+
+            <div class="preload-msg discussion__loader">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
 
             <div class="discussion__main-comments js-discussion-main-comments"></div>
 

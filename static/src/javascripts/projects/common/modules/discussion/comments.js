@@ -43,26 +43,20 @@ var Comments = function(options) {
 
 Component.define(Comments);
 
-Comments.prototype.componentClass = 'd-discussion';
+Comments.prototype.componentClass = 'd-comments';
 
 Comments.prototype.classes = {
-    jsContent: 'js-discussion-content',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     showRepliesButton: 'd-show-more-replies__button',
-    heading: 'discussion__heading',
     newComments: 'js-new-comments',
-    loader: 'd-discussion__loader',
 
     comment: 'd-comment',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
-    commentRecommend: 'd-comment__recommend',
     commentStaff: 'd-comment--staff',
-    commentBlocked: 'd-comment--blocked',
     commentBody: 'd-comment__body',
     commentTimestampJs: 'js-timestamp',
     commentReport: 'js-report-comment'
@@ -188,14 +182,11 @@ Comments.prototype.gotoComment = function(id) {
 };
 
 Comments.prototype.gotoPage = function(page) {
-    this.loading();
-    scroller.scrollToElement(qwery('.js-discussion-main-comments'), 100);
+    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
     this.relativeDates();
     return this.fetchComments({
         page: page
-    }).then(function() {
-        this.loaded();
-    }.bind(this));
+    });
 };
 
 Comments.prototype.fetchComments = function(options) {
@@ -427,22 +418,6 @@ Comments.prototype.replyToComment = function(e) {
         this.destroy();
         self.addComment(comment, false, responses);
     });
-};
-
-Comments.prototype.loading = function() {
-    var $content = $('.d-thread', this.elem);
-    $(this.getClass('loader'), this.elem).removeClass('u-h').css({
-        height: $content.offset().height
-    });
-    $content.addClass('u-h');
-};
-
-Comments.prototype.loaded = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
-    $(this.getClass('loader'), this.elem).addClass('u-h').css({
-        height: 'auto'
-    });
-    $content.removeClass('u-h');
 };
 
 Comments.prototype.reportComment = function(e) {

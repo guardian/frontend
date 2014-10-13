@@ -5,9 +5,6 @@
         data-@switch.name="@switch.state"
     }>
 
-    <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
-
-
     @if(isTopComments) {
         <ul class="d-top-comment-container d-top-comment-container--left">
             @page.comments.zipWithIndex.filter(_._2 % 2 == 0).map { case (comment, i) =>

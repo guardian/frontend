@@ -19,6 +19,9 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
+.discussion--loaded .discussion__loader {
+    display: none;
+}
 
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
     // align comments with main column on liveblogs
@@ -148,6 +151,15 @@ $avatarPadding: $gs-gutter / 2;
         max-width: none;
         margin-right: 25%;
     }
+}
+
+.discussion__loader,
+.discussion--loading .d-thread {
+    display: none;
+}
+
+.discussion--loading .discussion__loader {
+    display: block;
 }
 
 /* Toolbar

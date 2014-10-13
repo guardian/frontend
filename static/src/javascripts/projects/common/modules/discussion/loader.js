@@ -100,8 +100,9 @@ Loader.prototype.initMainComments = function() {
         $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
     }.bind(this));
 
+    this.setState('loading');
     this.comments.fetchComments({comment: commentId}).then(function() {
-        $('.discussion .preload-msg').addClass('u-h');
+        this.removeState('loading');
 
         if (!commentId && window.location.hash !== '#comments') {
             this.setState('truncated');
@@ -116,9 +117,8 @@ Loader.prototype.initMainComments = function() {
         });
         this.getUser();
     }.bind(this));
-
-    this.checkCommentsLoaded();
 };
+
 
 Loader.prototype.initToolbar = function() {
 
@@ -130,7 +130,8 @@ Loader.prototype.initToolbar = function() {
         this.comments.options.order = bonzo(e.currentTarget).data('order');
         $orderLabel.text(this.comments.options.order);
         userPrefs.set('discussion.order', this.comments.options.order);
-        this.comments.fetchComments({page: 1});
+        this.setState('loading');
+        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
 
     var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
@@ -141,7 +142,8 @@ Loader.prototype.initToolbar = function() {
         this.comments.options.threading = bonzo(e.currentTarget).data('threading');
         $threadingLabel.text(this.comments.options.threading);
         userPrefs.set('discussion.threading', this.comments.options.threading);
-        this.comments.fetchComments();
+        this.setState('loading');
+        this.comments.fetchComments().then(this.removeState.bind(this, 'loading'));
     });
 };
 
@@ -276,32 +278,16 @@ Loader.prototype.getCommentIdFromHash = function() {
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
-Loader.prototype.checkCount = 0;
-
 Loader.prototype.initPagination = function() {
     this.on('click', '.js-discussion-change-page', function(e) {
         e.preventDefault();
         var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-        return this.comments.gotoPage(page);
+        this.setState('loading');
+        return this.comments.gotoPage(page).then(this.removeState.bind(this, 'loading'));
     });
 };
 
-Loader.prototype.checkCommentsLoaded = function() {
 
-    // Limit the number of tries.
-    if (++this.checkCount > 10 ) {
-        return;
-    }
-
-    if (this.topCommentCount !== undefined && this.comments.rendered) {
-        if (this.$topCommentsContainer.html().length > 0) {
-            this.comments.removeState('partial');
-            this.comments.setState('shut');
-        }
-    } else {
-        _.delay(this.checkCommentsLoaded.bind(this), 1000);
-    }
-};
 
 return Loader;
 
