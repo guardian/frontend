@@ -1,6 +1,7 @@
-.fc-item__title--quoted,
-.tone-comment {
-    .fc-item__link:before {
+.fc-item__title--quoted .fc-item__link,
+.tone-comment--item .fc-item__link,
+.tone-comment--sublink .fc-sublinks__item__link  {
+    &:before {
         @include icon(quote-grey, false);
         content: '';
         height: .8em;
@@ -35,7 +36,8 @@
     margin-right: 1px;
 }
 
-.tone-podcast {
+.tone-podcast--item,
+.tone-podcast--sublink {
     .fc-item__title--quoted .fc-item__link:before {
         @include icon(quote-black, false);
     }
@@ -56,7 +58,8 @@
     }
 }
 
-.tone-media {
+.tone-media--item,
+.tone-media--sublink {
     .fc-item__title--quoted .fc-item__link:before {
         @include icon(quote-white, false);
     }
@@ -92,7 +95,8 @@
     }
 }
 
-.tone-live {
+.tone-live--item,
+.tone-live--sublink {
     .fc-item__title--quoted .fc-item__link:before {
         @include icon(quote-white, false);
     }
@@ -106,7 +110,8 @@
     }
 }
 
-.tone-feature {
+.tone-feature--item,
+.tone-feature--sublink {
     .fc-item__title--quoted .fc-item__link:before {
         @include icon(quote-light-pink, false);
     }
