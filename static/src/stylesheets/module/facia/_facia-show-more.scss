@@ -4,14 +4,6 @@ $icon-collection-size: 20px;
     margin-top: 0;
     background: transparent;
 
-    @include mq(tablet) {
-        margin-top: $gs-baseline;
-    }
-
-    @include mq(leftCol) {
-        margin-bottom: 0;
-    }
-
     i {
         width: $icon-collection-size;
         height: $icon-collection-size;

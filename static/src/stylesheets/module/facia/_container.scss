@@ -1,11 +1,6 @@
 .container {
     position: relative;
     overflow: hidden;
-    margin-bottom: $gs-baseline;
-
-    @include mq(tablet) {
-        margin-bottom: $gs-baseline*2;
-    }
 }
 .container--dark-background {
     background-color: $c-neutral1;
