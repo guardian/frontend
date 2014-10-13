@@ -26,7 +26,7 @@ Add the following to your ```/etc/hosts```:
 
 ## Setup Nginx
 
-You will have to make sure the ```sites-enabled``` folder is included in your ```nginx.conf``` (usualy in ```/usr/local/etc/nginx/nginx.conf```):
+You will have to make sure the ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
 
     # ...
     http {
