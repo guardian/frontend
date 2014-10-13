@@ -71,9 +71,9 @@ define([
             },
 
             upgradeMostPopularToGeo: function (config) {
-                if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
-                    new GeoMostPopularFront(mediator, config).go();
-                }
+//                if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
+//                    new GeoMostPopularFront(mediator, config).go();
+//                }
             }
         },
 

@@ -1,5 +1,6 @@
 @(collection: model.Collection, style: views.support.Container, containerIndex: Int, dataId: String)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
+@import views.support.GetClasses
 @import common.LinkTo
 @import model.{FaciaComponentName, MostPopular}
 @import views.support.RenderClasses
@@ -10,23 +11,18 @@
     @if(collection.items.nonEmpty) {
         <section
             id="@FaciaComponentName(config, collection)"
-            class="@RenderClasses(Map(
-                ("container", true),
-                (s"container--${style.containerType}", true),
-                ("js-container--toggle", true),
-                ("container--first" -> (containerIndex == 0))))"
+            class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
             data-link-name="@FaciaComponentName(config, collection)"
-            data-id="@dataId"
+            data-id="@FaciaComponentName(config, collection)"
             data-type="@style.containerType"
             @DfpAgent.sponsorshipTag(config).map { keyword =>
                 data-keywords="@keyword"
             }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
-                <div class="container__border tone-@style.tone tone-accent-border"></div>
-                <div class="container__header js-container__header">
+                <div class="fc-container__header js-container__header">
                     @title.map { title =>
-                        <h2 class="container__title">
+                        <h2 class="fc-container__header__title">
                             @href.map { href =>
                                 <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                             }.getOrElse{
@@ -36,7 +32,7 @@
                     }
                 </div>
                 <div class="container__body container--rolled-up-hide js-popular-trails">
-                    @defining(Seq(MostPopular("Popular", "popular", collection.items.slice(0, 10)))){ popular =>
+                    @defining(Seq(MostPopular(title.getOrElse("Popular"), "popular", collection.items.slice(0, 10)), MostPopular("the guardian", "popular", Nil))){ popular =>
                         @fragments.collections.popular(popular)
                     }
                 </div>

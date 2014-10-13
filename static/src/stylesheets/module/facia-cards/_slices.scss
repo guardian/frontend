@@ -114,3 +114,17 @@ Hence why a greater depth of selector specificity is needed.
         }
     }
 }
+
+.facia-slice--popular {
+    .facia-slice__item:before {
+        display: none;
+    }
+
+    @include mq(tablet, desktop) {
+        &.l-row ,
+        .facia-slice__item {
+            display: block;
+            width: 100%;
+        }
+    }
+}
