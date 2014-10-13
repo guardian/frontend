@@ -779,7 +779,7 @@ object GetClasses {
     }
 
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +:
+      TrailCssClasses.toneClass(trail, "--item") +:
         (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
         cutOutClass): _*
     )
@@ -787,7 +787,7 @@ object GetClasses {
 
   def forSubLink(trail: Trail) = RenderClasses(Seq(
     Some("fc-sublinks__item"),
-    Some(TrailCssClasses.toneClass(trail)),
+    Some(TrailCssClasses.toneClass(trail, "--sublink")),
     sublinkMediaTypeClass(trail)
   ).flatten: _*)
 

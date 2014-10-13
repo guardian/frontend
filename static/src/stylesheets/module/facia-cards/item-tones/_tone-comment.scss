@@ -1,4 +1,5 @@
-.tone-comment {
+.tone-comment--item,
+.tone-comment--sublink {
     @extend %tone-has-background;
 
     &.fc-item {
