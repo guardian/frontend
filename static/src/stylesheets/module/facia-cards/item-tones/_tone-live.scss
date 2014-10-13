@@ -19,8 +19,12 @@
         color: $c-liveMute;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
     .fc-item__standfirst {
-        color: fade_out(#ffffff, .2);
+        color: fade-out(#ffffff, .2);
     }
 
     .fc-item__live-indicator,

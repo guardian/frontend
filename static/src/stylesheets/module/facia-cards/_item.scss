@@ -181,6 +181,11 @@ $fc-item-gutter: $gs-gutter / 4;
     word-wrap: break-word;
 }
 
+.fc-item__kicker:after {
+    content: ' /';
+    color: fade-out($c-neutral1, .8);
+}
+
 .fc-item__byline {
     margin-bottom: 0;
 }
