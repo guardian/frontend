@@ -26,15 +26,15 @@ define([
                 ]
             },
             adPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                    '<h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>' +
-                    '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +
+                    '    <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>\n' +
+                    '    <p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>\n' +
                 '</div>';
             },
             spPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                    '<h3 class="ad-slot--paid-for-badge__header">Sponsored by:</h3>' +
-                    '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +
+                    '    <h3 class="ad-slot--paid-for-badge__header">Sponsored by:</h3>\n' +
+                    '    <p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>\n' +
                 '</div>';
             },
             fixture,

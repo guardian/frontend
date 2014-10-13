@@ -6,7 +6,8 @@ define([
     'common/utils/$',
     'common/utils/template',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'text!common/views/badge.html'
 ], function (
     qwery,
     bonzo,
@@ -15,7 +16,8 @@ define([
     $,
     template,
     globalConfig,
-    dfp
+    dfp,
+    badgeTpl
 ) {
 
     var adBadgeCount = 0,
@@ -23,10 +25,7 @@ define([
         addPreBadge = function ($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
-                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                        '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
-                        '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
-                    '</div>',
+                    badgeTpl,
                     {
                         header: isSponsored ? 'Sponsored by:' : 'Brought to you by:',
                         sponsor: sponsor

@@ -28,7 +28,9 @@ requirejs.config({
         stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
         Squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
-        helpers:      '/base/static/test/javascripts/helpers'
+        helpers:      '/base/static/test/javascripts/helpers',
+        // plugins
+        text:         'components/requirejs-text/text'
     },
     map: {
         '*': {
