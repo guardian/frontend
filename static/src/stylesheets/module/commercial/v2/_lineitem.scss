@@ -16,7 +16,6 @@
         float: left;
 
         &:first-child {
-            padding: 0;
             border-left: 0;
         }
     }
@@ -141,7 +140,10 @@
         }
         .lineitem.lineitem--high {
             padding-left: 0;
-            padding-bottom: $gs-baseline/2;
+
+            @include mq($until: tablet) {
+                padding-bottom: $gs-baseline/2;
+            }
 
             @include mq(tablet) {
                 padding-left: $gs-gutter*.5;

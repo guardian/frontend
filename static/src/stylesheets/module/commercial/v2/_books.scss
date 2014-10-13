@@ -3,32 +3,30 @@
    ========================================================================== */
 .commercial--books--v2 {
     /* Line items */
-    .container__body {
-        .lineitem {
-            width: percentage(1/2);
+    .lineitem {
+        width: percentage(1/2);
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+
+        @include mq(mobileLandscape) {
+            width: percentage(1/3);
 
             &:nth-child(n+3) {
+                display: block;
+            }
+            &:nth-child(n+4) {
                 display: none;
             }
+        }
 
-            @include mq(mobileLandscape) {
-                width: percentage(1/3);
+        @include mq(desktop) {
+            width: percentage(1/5);
+            min-height: $gs-baseline*20;
 
-                &:nth-child(n+3) {
-                    display: block;
-                }
-                &:nth-child(n+4) {
-                    display: none;
-                }
-            }
-
-            @include mq(desktop) {
-                width: percentage(1/5);
-                min-height: $gs-baseline*20;
-
-                &:nth-child(n+4) {
-                    display: block;
-                }
+            &:nth-child(n+4) {
+                display: block;
             }
         }
     }
