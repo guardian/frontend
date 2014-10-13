@@ -3,11 +3,7 @@
 
     &.fc-item {
         background-color: $c-reviewBackground;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -16,8 +12,12 @@
         @include box-shadow(inset 0 1px $c-reviewAccent);
     }
 
-    a.fc-item__kicker,
-    .fc-item__byline a {
+    .fc-item__kicker,
+    .fc-item__byline {
         color: $c-reviewAccent;
+    }
+
+    .fc-item__meta {
+        color: $c-neutral4;
     }
 }
