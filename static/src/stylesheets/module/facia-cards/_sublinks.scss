@@ -27,8 +27,10 @@
         border-top: 1px dotted $c-neutral3;
     }
 
-    .fc-item__kicker {
+    .fc-sublink__kicker {
         font-weight: 500;
+        float: left;
+        margin-right: .2em;
     }
 }
 
