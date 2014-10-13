@@ -118,13 +118,9 @@ Comments.prototype.ready = function() {
     this.emit('ready');
     this.relativeDates();
 
-    $('.js-report-comment-close', this.elem).each(function(close) {
-        bean.on(close, 'click', function() {
-            $('.js-report-comment-form').addClass('u-h');
-        });
+    this.on('click', '.js-report-comment-close', function(close) {
+        $('.js-report-comment-form').addClass('u-h');
     });
-
-
 };
 
 Comments.prototype.handlePickClick = function(e) {

@@ -30,6 +30,7 @@
     <div class="discussion__pagination discussion__pagination--bottom js-discussion-pagination">
         @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
     </div>
+    @fragments.reportComment()
     }
 
 </div>

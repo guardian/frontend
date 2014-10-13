@@ -8,6 +8,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/mediator',
+    'common/utils/scroller',
 
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
@@ -26,6 +27,7 @@ define([
     ajax,
     config,
     mediator,
+    scroller,
     DiscussionAnalytics,
     register,
     Component,
@@ -51,8 +53,11 @@ Loader.prototype.initTopComments = function() {
 
     this.on('click', '.js-jump-to-comment', function(e) {
         e.preventDefault();
+        this.removeState('truncated');
+        this.setState('loading');
+        scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
         var commentId = bonzo(e.currentTarget).data('comment-id');
-        this.comments.fetchComments({comment: commentId});
+        this.comments.fetchComments({comment: commentId}).then(this.removeState.bind(this, 'loading'));
     });
 
     return ajax({

@@ -830,19 +830,26 @@ $comment-recommend-button-size: 25px;
 }
 
 .d-top-comment-container {
-    width: 50%;
     margin: 0;
-    float: left;
+    list-style: none;
     @include box-sizing(border-box);
 }
 
-.d-top-comment-container--left {
-    padding-right: $gs-gutter / 2;
+@include mq(tablet) {
+    .d-top-comment-container {
+        width: 50%;
+        float: left;
+    }
+
+    .d-top-comment-container--left {
+        padding-right: $gs-gutter / 2;
+    }
+
+    .d-top-comment-container--right {
+        padding-left: $gs-gutter / 2;
+    }
 }
 
-.d-top-comment-container--right {
-    padding-left: $gs-gutter / 2;
-}
 
 .d-top-comment {
     margin-bottom: $gs-baseline;
@@ -856,7 +863,7 @@ $comment-recommend-button-size: 25px;
 .d-top-comment__pick {
     @include fs-textSans(2);
     font-weight: bold;
-    margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline / 2;
 }
 
 
