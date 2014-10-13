@@ -19,6 +19,7 @@ object OmnitureVariables {
   val segmentGalleryHits = Some("5400793ee4b0230c643d3a96")
   val segmentGalleryLightboxHits = Some("5400a89fe4b0230c643d3b46")
   val segmentGoogleReferrerVisits = Some("54242f34e4b0e1cfa16a4530")
+  val segmentLiveBlogVisits = Some("543bf12de4b0e1cfa16a7376")
 }
 
 object OmnitureReports {
@@ -28,6 +29,7 @@ object OmnitureReports {
   val gallerySocialShare = "gallery-social-share"
   val googleReferrerVisits = "google-referrer-visits"
   val networkTotalVisits = "network-total-visits"
+  val liveBlogVisitsAndSocial = "liveblog-visits-and-social"
 }
 
 object OmnitureReportJob extends ExecutionContexts with Logging {
@@ -107,6 +109,16 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         metrics = List(OmnitureMetric(visits)),
         reportSuiteID = OmnitureReportDescription.reportSuiteNetwork
       ), QUEUE_OVERTIME, networkTotalVisits)
+    })
+
+    akka.pattern.after(30.seconds, actorSystem.scheduler) ( future {
+      generateReport(OmnitureReportDescription(
+        dateGranularity = Some("day"),
+        dateTo = dateTo.toString("yyyy-MM-dd"),
+        dateFrom = dateFrom.toString("yyyy-MM-dd"),
+        metrics = List(OmnitureMetric(visits), OmnitureMetric(socialInteractionEvent)),
+        segment_id = segmentLiveBlogVisits
+      ), QUEUE_OVERTIME, liveBlogVisitsAndSocial)
     })
   }
 
