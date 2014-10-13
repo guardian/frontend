@@ -5,39 +5,39 @@
 <h3 class="fc-sublink__title">
   @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
     case BreakingNewsKicker => {
-      <span class="fc-item__kicker fc-item__live-indicator">Breaking News</span>
+      <span class="fc-sublink__kicker fc-sublink__live-indicator">Breaking News</span>
     }
 
     case LiveKicker => {
-      <span class="fc-item__kicker fc-item__live-indicator">Live</span>
+      <span class="fc-sublink__kicker fc-sublink__live-indicator">Live</span>
     }
 
     case AnalysisKicker => {
-      <span class="fc-item__kicker">Analysis</span>
+      <span class="fc-sublink__kicker">Analysis</span>
     }
 
     case PodcastKicker(Some(series)) => {
-      <a href="@LinkTo(series.url)" class="fc-item__kicker">@Html(series.name)</a>
+      <a href="@LinkTo(series.url)" class="fc-sublink__kicker">@Html(series.name)</a>
     }
 
     case PodcastKicker(None) => {
-      <span class="fc-item__kicker">Podcast</span>
+      <span class="fc-sublink__kicker">Podcast</span>
     }
 
     case ReviewKicker => {
-      <span class="fc-item__kicker">Review</span>
+      <span class="fc-sublink__kicker">Review</span>
     }
 
     case TagKicker(tagName, tagLink) => {
-      <a href="@LinkTo(tagLink)" class="fc-item__kicker">@Html(tagName)</a>
+      <a href="@LinkTo(tagLink)" class="fc-sublink__kicker">@Html(tagName)</a>
     }
 
     case SectionKicker(sectionName, sectionLink) => {
-      <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@Html(sectionName)</a>
+      <a href="@LinkTo(sectionLink)" class="fc-sublink__kicker">@Html(sectionName)</a>
     }
 
     case FreeHtmlKicker(html) => {
-      <span class="fc-item__kicker">@Html(html)</span>
+      <span class="fc-sublink__kicker">@Html(html)</span>
     }
   }
 

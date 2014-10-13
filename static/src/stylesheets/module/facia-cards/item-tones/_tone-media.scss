@@ -1,5 +1,4 @@
-.tone-media--item,
-.tone-media--sublink {
+.tone-media--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -21,5 +20,11 @@
     .fc-item__standfirst,
     .fc-item__meta {
         color: $c-neutral3;
+    }
+}
+
+.tone-media--sublink {
+    .fc-sublink__kicker {
+        color: $c-mediaDefault;
     }
 }

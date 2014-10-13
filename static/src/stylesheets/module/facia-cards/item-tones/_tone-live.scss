@@ -1,5 +1,4 @@
-.tone-live--item,
-.tone-live--sublink {
+.tone-live--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -26,6 +25,18 @@
     .fc-item__live-indicator,
     .fc-item__breaking-indicator {
         color: #ffffff;
+        font-weight: 400;
+    }
+}
+
+.tone-live--sublink {
+    .fc-sublink__kicker {
+        color: $c-liveDefault;
+    }
+
+    .fc-sublink__live-indicator,
+    .fc-sublink__breaking-indicator {
+        color: $c-liveDefault;
         font-weight: 400;
     }
 }

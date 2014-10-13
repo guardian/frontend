@@ -1,5 +1,4 @@
-.tone-review--item,
-.tone-review--sublink {
+.tone-review--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -20,5 +19,11 @@
 
     .fc-item__meta {
         color: $c-neutral4;
+    }
+}
+
+.tone-review--sublink {
+    .fc-sublink__kicker {
+        color: $c-reviewAccent;
     }
 }

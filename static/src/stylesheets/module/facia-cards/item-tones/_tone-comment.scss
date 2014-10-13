@@ -1,5 +1,4 @@
-.tone-comment--item,
-.tone-comment--sublink {
+.tone-comment--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -19,5 +18,11 @@
 
     .fc-item__meta {
         background-color: fade-out($c-commentBackground, .5);
+    }
+}
+
+.tone-comment--sublink {
+    .fc-sublink__kicker {
+        color: $c-commentDefault;
     }
 }

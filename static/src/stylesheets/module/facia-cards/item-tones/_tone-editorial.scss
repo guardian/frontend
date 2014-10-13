@@ -1,5 +1,4 @@
-.tone-editorial--item,
-.tone-editorial--sublink {
+.tone-editorial--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -21,5 +20,11 @@
     .fc-item__standfirst,
     .fc-item__meta {
         color: $c-neutral3;
+    }
+}
+
+.tone-editorial--sublink {
+    .fc-sublink__kicker {
+        color: $c-editorialAccent;
     }
 }

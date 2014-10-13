@@ -1,5 +1,4 @@
-.tone-news--item,
-.tone-news--sublink {
+.tone-news--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -14,6 +13,13 @@
 
     .fc-item__kicker,
     .fc-item__byline {
+        color: $c-newsDefault;
+    }
+}
+
+.tone-news--sublink {
+    .fc-sublink__kicker,
+    .fc-sublink__byline {
         color: $c-newsDefault;
     }
 }

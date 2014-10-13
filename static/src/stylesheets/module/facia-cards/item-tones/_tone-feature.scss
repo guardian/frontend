@@ -1,5 +1,4 @@
-.tone-feature--item,
-.tone-feature--sublink {
+.tone-feature--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -28,5 +27,11 @@
         height: .9em;
         width: 1em;
         background-position: center;
+    }
+}
+
+.tone-feature--sublink {
+    .fc-sublink__kicker {
+        color: $c-featureMute;
     }
 }

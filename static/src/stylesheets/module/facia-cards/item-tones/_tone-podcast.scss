@@ -1,5 +1,4 @@
-.tone-podcast--item,
-.tone-podcast--sublink {
+.tone-podcast--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -20,5 +19,11 @@
 
     .fc-item__meta {
         color: #ffffff;
+    }
+}
+
+.tone-podcast--sublink {
+    .fc-sublink__kicker {
+        color: $c-podcastAccent;
     }
 }

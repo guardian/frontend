@@ -1,5 +1,4 @@
-.tone-analysis--item,
-.tone-analysis--sublink {
+.tone-analysis--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -20,5 +19,11 @@
 
     .fc-item__meta {
         color: $c-neutral2;
+    }
+}
+
+.tone-analysis--sublink {
+    .fc-sublink__kicker {
+        color: $c-analysisAccent;
     }
 }

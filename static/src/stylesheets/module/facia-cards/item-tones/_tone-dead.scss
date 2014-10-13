@@ -1,5 +1,4 @@
-.tone-dead--item,
-.tone-dead--sublink {
+.tone-dead--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -14,6 +13,12 @@
 
     .fc-item__kicker,
     .fc-item__byline {
+        color: $c-liveAccent;
+    }
+}
+
+.tone-dead--sublink {
+    .fc-sublink__kicker {
         color: $c-liveAccent;
     }
 }
