@@ -2,7 +2,7 @@ package controllers.admin
 
 import common.{ExecutionContexts, Edition, Logging}
 import conf.{LiveContentApi, Configuration}
-import controllers.{AuthLogging}
+import controllers.AuthLogging
 import dfp.DfpDataHydrator
 import model.{Content, NoCache}
 import ophan.SurgingContentAgent
