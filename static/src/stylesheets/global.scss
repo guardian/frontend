@@ -36,6 +36,7 @@
 
 @import 'module/_popup';
 @import 'module/_search';
+@import 'module/_buttons';
 
 @import 'module/content/_content.global';
 @import 'module/content/_media-player';
@@ -98,7 +99,7 @@
 @include facia-container--default-heading;
 
 @import 'module/facia/_icons';
-@import 'module/facia/_show-more';
+@import 'module/facia/facia-show-more';
 @import 'module/facia/_pagination';
 
 @import 'module/containers/_features';

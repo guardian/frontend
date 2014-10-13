@@ -1,0 +1,19 @@
+$icon-collection-size: 20px;
+
+.button.collection__show-more {
+    margin-top: 0;
+    background: transparent;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        margin-bottom: 0;
+    }
+
+    i {
+        width: $icon-collection-size;
+        height: $icon-collection-size;
+    }
+}
