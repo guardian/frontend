@@ -1,6 +1,6 @@
 .fc-item__title--quoted .fc-item__link,
 .tone-comment--item .fc-item__link,
-.tone-comment--sublink .fc-sublink__link  {
+.tone-comment--sublink .fc-sublink__link {
     &:before {
         @include icon(quote-grey, false);
         content: '';
