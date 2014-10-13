@@ -36,15 +36,6 @@ define([
     userPrefs
 ) {
 
-/**
- * We have a few rendering hacks in here
- * We'll move the rendering to the play app once we
- * have the discussion stack up that can read cookies
- * This is true for the comment-box / signin / closed discussion
- * And also the premod / banned state of the user
- * @constructor
- * @extends Component
- */
 var Loader = function() {
     register.begin('discussion');
 };
@@ -98,7 +89,8 @@ Loader.prototype.initMainComments = function() {
         discussionId: this.getDiscussionId(),
         order: order,
         threading: threading,
-        state: 'partial'
+        state: 'partial',
+        recommendations: this.hasState('recommendations-open')
     });
 
     this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
@@ -137,6 +129,7 @@ Loader.prototype.initToolbar = function() {
         bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
         this.comments.options.order = bonzo(e.currentTarget).data('order');
         $orderLabel.text(this.comments.options.order);
+        userPrefs.set('discussion.order', this.comments.options.order);
         this.comments.fetchComments({page: 1});
     });
 
@@ -181,7 +174,7 @@ Loader.prototype.ready = function() {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
-    mediator.on('module:clickstream:click', function() {
+    mediator.on('module:clickstream:click', function(clickspec) {
         if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
             this.removeState('truncated');
         }
@@ -203,7 +196,8 @@ Loader.prototype.getUser = function() {
 
 Loader.prototype.isCommentable = function() {
     // not readonly, not closed and user is signed in
-    return !this.comments.isReadOnly() && !this.getDiscussionClosed() && Id.getUserFromCookie();
+    var userCanPost = this.user && this.user.privateFields && this.user.privateFields.canPostComment;
+    return userCanPost && !this.comments.isReadOnly() && !this.getDiscussionClosed();
 };
 
 Loader.prototype.initState = function() {
@@ -229,17 +223,9 @@ Loader.prototype.renderCommentBar = function() {
     }
 };
 
-/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
 Loader.prototype.commentPosted = function () {
+    this.removeState('truncated');
     this.comments.addComment.apply(this.comments, arguments);
-
-    // Should more comments be shown?
-    if (!this.firstComment) {
-        this.firstComment = true;
-        this.comments.showHiddenComments();
-        this.cleanUpOnShowComments();
-    }
-
 };
 
 Loader.prototype.renderCommentBox = function(elem) {

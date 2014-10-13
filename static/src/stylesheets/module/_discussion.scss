@@ -585,7 +585,17 @@ $comment-recommend-button-size: 25px;
     @include icon-button(up-arrow, $comment-recommend-button-size);
     display: inline-block;
     background-color: colour(neutral-6);
+    cursor: default;
+
+    .id--signed-in .d-discussion--recommendations-open & {
+        cursor: pointer;
+    }
+    .d-comment__recommend--clicked &,
+    .d-comment__recommend--recommended & {
+        cursor: default;
+    }
 }
+
 .d-comment__recommend-pulse {
     position: absolute;
     top: 0;
@@ -616,9 +626,6 @@ $comment-recommend-button-size: 25px;
     display: block;
     position: relative;
 }
-.d-comment__recommend--active {
-    cursor: pointer;
-}
 
 @-webkit-keyframes pulse {
     0% {
@@ -645,7 +652,8 @@ $comment-recommend-button-size: 25px;
     }
 }
 
-.d-comment__recommend--user-recommended {
+.d-comment__recommend--clicked,
+.d-comment__recommend--recommended {
     .d-comment__recommend-button,
     .d-comment__recommend-pulse {
         @include transition(background-color .25s ease-in-out);
@@ -657,6 +665,9 @@ $comment-recommend-button-size: 25px;
     .d-comment__recommend-count {
         color: $c-commentDefault;
     }
+}
+
+.d-comment__recommend--recommended {
     .d-comment__recommend-count--old,
     .d-comment__recommend-count--new {
         top: -1 * $comment-recommend-button-size;
