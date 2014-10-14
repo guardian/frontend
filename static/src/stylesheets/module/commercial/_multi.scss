@@ -3,8 +3,13 @@ Multi component (AKA Frankenponent)
 ========================================================================== */
 
 .commercial--v2.commercial--multi {
+    .commercial__multi-wrapper {
+        background: $c-neutral4;
+        padding: 0 $gs-gutter/4 $gs-baseline/2;
+    }
     .commercial__multi-header {
         padding: $gs-baseline/6 $gs-gutter/4;
+        margin: 0 (-$gs-gutter/4);
 
         .commercial__title {
             .i-marque-36 {
@@ -15,12 +20,30 @@ Multi component (AKA Frankenponent)
             }
         }
     }
+    
     .lineitem {
         width: 25%;
     }
-    
-    .lineitem__image {
-        max-width: 100%;
+    .lineitem__image-crop {
+        margin: 0 (-$gs-gutter/4);
+        width: 100%;
+        width: calc(100% + #{$gs-gutter/2});
+        .lineitem__image {
+            left: -7.5%;
+            right: -7.5%;
+            width: 116.6667%
+        }
+
+        .lineitem__image-portrait {
+            left: 0;
+            right: auto;
+            width: auto;
+            height: 100%;
+        }
+    }
+    .lineitem__title,
+    .lineitem__offer {
+        min-height: $gs-baseline*5;
     }
 }
 
