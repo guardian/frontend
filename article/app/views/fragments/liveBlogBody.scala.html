@@ -14,9 +14,7 @@
             <div class="tonal__header">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-
                         @fragments.meta.metaInline(article)
-
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                     </div>
                 </div>
@@ -26,8 +24,10 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="blog__last-updated-container">
-                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
+
+                        @fragments.standfirst(article)
 
                         <div class="blog__meta-container">
                             @fragments.meta.byline(article.byline, article)
@@ -42,9 +42,6 @@
         <div class="tonal__article">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
-
-                    @fragments.standfirst(article)
-
                     <div class="js-cricket-score js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
 
                     @fragments.mainMedia(article)

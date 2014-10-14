@@ -62,12 +62,13 @@
     }
 }
 
-@mixin stars($width: 14px, $margin-top: 0, $margin-right: 0) {
+@mixin stars($width: 14px, $margin-top: 0, $margin-bottom: 0, $margin-right: 0) {
     .stars {
         display: block;
         white-space: nowrap;
         overflow: hidden;
         margin-top: $margin-top;
+        margin-bottom: $margin-bottom;
         width: ($width * 5) + ($margin-right * 5);
         line-height: 1;
 
