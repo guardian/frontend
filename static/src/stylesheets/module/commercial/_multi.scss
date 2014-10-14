@@ -2,116 +2,25 @@
 Multi component (AKA Frankenponent)
 ========================================================================== */
 
-.facia-container--layout-front,
-.facia-container--layout-content {
-    .commercial.commercial--multi {
-        .commercial__head {
-            border-top: 0;
-            margin-top: $gs-baseline;
-            height: auto;
-            float: none;
-            position: relative;
-        }
+.commercial--v2.commercial--multi {
+    .commercial__multi-header {
+        padding: $gs-baseline/6 $gs-gutter/4;
+
         .commercial__title {
-            margin-bottom: 0;
-            float: none;
-
-            &.i-soulmates-title-background {
-                height: auto;
-                background-size: cover;
-                width: gs-span(2) - $gs-gutter;
-                padding: ($gs-baseline * 2) 0 0 ($gs-gutter * 1.25);
-                margin-bottom: $gs-baseline;
+            .i-marque-36 {
+                display: block;
             }
-        }
-        .commercial__explainer {
-            margin: $gs-baseline 0 0;
-            padding-right: $gs-gutter/2;
-            color: $c-neutral1;
-            @include fs-headline(2);
-        }
-        .commercial__body {
-            padding: 0 0 $gs-baseline;
-            .commercial__title {
-                float: none;
-            }
-        }
-        .lineitem {
-            padding: 0 0 $gs-baseline;
-            float: none;
-            clear: both;
-
-            &:nth-child(n+3) {
-                display: none;
-            }
-            
-            .commercial__title {
-                padding-top: ($gs-baseline * 2);
-                margin-bottom: $gs-baseline;
-                height: auto;
-            }
-        }
-        .lineitem__image {
-            width: 100%;
-
-            .lineitem__soulmates & {
-                width: 50%;
-            }
-        }
-        .lineitem__soulmates .lineitem__image {
-            width: initial;
-        }
-        .lineitem__book .lineitem__img {
-            display: block;
-        }
-        .commercial__home-link {
-            position: relative;
-            padding-left: 0;
-        }
-        @include mq(tablet) {
-            .lineitems {
-                margin: 0 (-$gs-gutter/2);
-            }
-            .lineitem {
-                width: percentage(1/3);
-                padding: 0 $gs-gutter/2;
-                float: left;
-                clear: none;
-
-                &:nth-child(n) {
-                    display: block;
-                    padding-left: $gs-gutter/2;
-                }
-            }
-        }
-        @include mq(leftCol) {
-            .commercial__body {
-                padding: $gs-baseline 0;
-            }
-            .commercial__head {
-                float: left;
+            .i-commercial-brand {
+                height: $gs-baseline*1.3333;
             }
         }
     }
-}
-
-/* Fronts */
-
-.facia-container--layout-front .commercial.commercial--multi {
-    @include mq(leftCol) {
-        .commercial__head {
-            width: gs-span(2) + $gs-gutter;
-            float: left;
-        }
+    .lineitem {
+        width: 25%;
+    }
+    
+    .lineitem__image {
+        max-width: 100%;
     }
 }
 
-/* Articles */
-
-.facia-container--layout-content .commercial.commercial--multi {
-    @include mq(leftCol) {
-        .commercial__head {
-            float: left;
-        }
-    }
-}
