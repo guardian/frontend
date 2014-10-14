@@ -41,19 +41,12 @@ object ContentUpgrade {
   }
 
   def upgradeItem(json: JValue): JValue = {
-    json.extractOpt[ApiContent] match {
-      case Some(content) =>
+    (json, json.extractOpt[ApiContent]) match {
+      case (jsObj: JObject, Some(content)) =>
         val tone = TrailCssClasses.toneClass(Content(content))
+        jsObj update JObject("tone" -> JString(tone))
 
-        json match {
-          case jsObj: JObject =>
-            jsObj update JObject("tone" -> JString(tone))
-
-          case _ =>
-            json
-        }
-
-      case None =>
+      case _ =>
         json
     }
   }
