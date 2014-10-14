@@ -61,7 +61,7 @@ define([
             return extra.ready === false;
         }).length === 0;
 
-        if (ready) {
+        if (ready && config.page.keywordIds.indexOf('football/football') > 0) {
             page.belowArticleVisible(function () {
                 var b;
                 $('.js-after-article').append(
