@@ -55,6 +55,16 @@ define([
             'count',
             'timeAgo']);
 
+        this.itemMetaDefaults = _.reduce({
+            showTags: 'showKickerTag',
+            showSections: 'showKickerSection'
+        }, function(defaults, val, key) {
+            if(_.has(opts, key)) {
+                defaults[val] = opts[key];
+            }
+            return defaults;
+        }, {});
+
         this.setPending(true);
         this.load();
     }

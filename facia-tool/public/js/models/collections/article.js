@@ -263,10 +263,17 @@ define([
 
             this.fields = asObservableProps(capiFields);
 
-            this.metaDefaults = {};
-
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
             populateObservables(this.meta, opts.meta);
+
+            this.metaDefaults = {};
+
+            if (opts.uneditable) {
+                this.uneditable = true;
+            } else {
+                _.extend(this.metaDefaults, deepGet(opts, '.group.parent.itemMetaDefaults'));
+                console.log(this.metaDefaults)
+            };
 
             this.state = asObservableProps([
                 'underDrag',
@@ -281,8 +288,6 @@ define([
                 'sparkUrl']);
 
             this.state.isSnap(!!snap.validateId(opts.id));
-
-            this.uneditable = opts.uneditable;
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
@@ -479,11 +484,13 @@ define([
             populateObservables(this.props,  opts);
             populateObservables(this.fields, opts.fields);
 
-             missingProps = [
+            this.setRelativeTimes();
+
+            missingProps = [
                 'webUrl',
                 'fields',
                 'fields.headline'
-             ].filter(function(prop) {return !deepGet(opts, prop);});
+            ].filter(function(prop) {return !deepGet(opts, prop);});
 
             if (missingProps.length) {
                 vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
@@ -499,13 +506,15 @@ define([
 
             this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
 
-            this.metaDefaults = (opts.frontsMeta && opts.frontsMeta.defaults) || {};
+            if (!this.uneditable) {
+                _.defaults(this.metaDefaults, opts.frontsMeta && opts.frontsMeta.defaults);
 
-            populateObservables(this.meta, this.metaDefaults);
+                console.log(this.metaDefaults);
 
-            this.updateEditorsDisplay();
+                populateObservables(this.meta, this.metaDefaults);
 
-            this.setRelativeTimes();
+                this.updateEditorsDisplay();
+            }
         };
 
         Article.prototype.updateEditorsDisplay = function() {
