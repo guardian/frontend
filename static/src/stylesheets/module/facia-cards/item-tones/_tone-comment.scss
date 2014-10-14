@@ -1,4 +1,4 @@
-.tone-comment {
+.tone-comment--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -18,5 +18,23 @@
 
     .fc-item__meta {
         background-color: fade-out($c-commentBackground, .5);
+    }
+}
+
+.tone-comment--sublink {
+    .fc-sublink__kicker {
+        color: $c-commentDefault;
+    }
+
+    @include sublink-style(live, review) {
+        .fc-sublink__kicker {
+            color: $c-commentBackground;
+        }
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

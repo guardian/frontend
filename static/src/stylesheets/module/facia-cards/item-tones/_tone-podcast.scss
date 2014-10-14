@@ -1,8 +1,9 @@
-.tone-podcast {
+.tone-podcast--item {
     @extend %tone-has-background;
+    background-color: $c-podcastBackground;
 
-    &.fc-item {
-        background-color: $c-podcastBackground;
+    &,
+    .fc-sublink__title {
         color: $c-neutral1;
     }
 
@@ -23,5 +24,21 @@
 
     .fc-item__meta {
         color: #ffffff;
+    }
+
+    .fc-sublink__title:before {
+        border-color: $c-neutral1;
+    }
+}
+
+.tone-podcast--sublink {
+    .fc-sublink__kicker {
+        color: $c-podcastAccent;
+    }
+
+    @include sublink-style(editorial, feature, live, media) {
+        .fc-sublink__kicker {
+            color: $c-podcastBackground;
+        }
     }
 }

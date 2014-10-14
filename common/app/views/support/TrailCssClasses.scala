@@ -3,7 +3,7 @@ package views.support
 import model.Trail
 
 object TrailCssClasses {
-  def toneClass(trail: Trail) = {
+  def toneClass(trail: Trail, suffix: String) = {
     val tone = CardStyle(trail) match {
       case Media => "media"
       case Comment => "comment"
@@ -17,7 +17,7 @@ object TrailCssClasses {
       case _ => "news"
     }
 
-    s"tone-$tone"
+    s"tone-$tone$suffix"
   }
 
   /** Article will soon support all tone classes so we'll be able to remove this silliness */
