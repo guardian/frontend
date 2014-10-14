@@ -153,26 +153,32 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def batchGetContentApiItems(collectionItems: Seq[TrailId],
-                                      edition: Edition): Future[Map[TrailId, ApiContent]] = {
-    Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
-      getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
-        maybeItem.map(collectionItem -> _)
+                                      edition: Edition): Future[Map[TrailId, ApiContent]] =
+    Futures.batchedTraverse(collectionItems.grouped(10).toSeq, Configuration.faciatool.frontPressItemBatchSize)({ collectionItems =>
+      getContentApiItemFromCollectionItem(collectionItems, edition) map { maybeItem =>
+        maybeItem.map(_.map {content =>
+          val internalContentCode: String = content.fields.getOrElse(Map.empty).get("internalContentCode").get
+          val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
+          TrailId(internalContentCodeFormatted) -> content
+        }).getOrElse(Nil)
       }
     }).map(_.flatten.toMap)
-  }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: TrailId,
-                                                  edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = client.item(collectionItem.get, edition).showFields(showFieldsWithBodyQuery)
+  private def getContentApiItemFromCollectionItem(collectionItems: Seq[TrailId],
+                                                  edition: Edition): Future[Option[Seq[ApiContent]]] = {
+    lazy val collectionIdsQuery: String = collectionItems.map(_.get).mkString(",")
+    lazy val response = client.search(edition)
+      .ids(collectionIdsQuery)
+      .showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-        log.warn(s"Content API Error: 404 for $collectionItem")
+        log.warn(s"Content API Error: 404 for collectionIds $collectionIdsQuery")
         None
       }
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-        log.warn(s"Content API Error: 410 for $collectionItem")
+        log.warn(s"Content API Error: 410 for collectionIds $collectionIdsQuery")
         None
       }
       case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
@@ -184,13 +190,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         throw mappingException
       }
       case t: Throwable => {
-        log.warn("%s: %s".format(collectionItem, t.toString))
+        log.warn("%s: %s".format(collectionIdsQuery, t.toString))
         throw t
       }
-    }.map(_.flatMap(_.content))
+    }.map(_.map(_.results))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem.get, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(collectionIdsQuery, cacheDuration)(response)
     }
     else {
       response
