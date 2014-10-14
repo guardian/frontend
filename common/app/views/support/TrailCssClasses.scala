@@ -22,6 +22,7 @@ object TrailCssClasses {
 
   /** Article will soon support all tone classes so we'll be able to remove this silliness */
   val SupportedArticleTones: Set[CardStyle] = Set(
+    Analysis,
     Comment,
     Feature,
     Review,

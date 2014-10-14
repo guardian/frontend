@@ -58,7 +58,6 @@ $block-padding-right: $gs-gutter;
 
 .blog__meta-container {
     position: relative;
-    padding-bottom: $gs-baseline;
 
     @include mq(rightCol) {
         border-top: 0;
@@ -98,7 +97,6 @@ $block-padding-right: $gs-gutter;
 
         .tone-colour {
             color: inherit;
-            font-weight: bold;
         }
     }
 }
@@ -229,9 +227,6 @@ $block-padding-right: $gs-gutter;
     display: none;
 }
 
-.blog .ad-slot--mpu-banner-ad {
-    padding-top: $gs-baseline;
-}
 
 /* Autoupdate
    ========================================================================== */
@@ -605,7 +600,7 @@ $timeline-width: 14px;
     @include mq(rightCol) {
         @include transform(translateZ(0)); //To force on GPU
         width: $right-column;
-        top: $gs-baseline*2;
+        top: $gs-baseline;
     }
 }
 
@@ -811,15 +806,10 @@ $timeline-width: 14px;
 
 .blog {
     .content__headline {
-        color: $c-neutral1;
         @include fs-headline(5);
 
         @include mq(tablet) {
-            @include fs-headline(6, true);
-        }
-
-        @include mq(desktop) {
-            padding-bottom: $gs-row-height + ($gs-baseline * 2);
+            @include fs-headline(7, true);
         }
     }
 
@@ -846,9 +836,7 @@ $timeline-width: 14px;
         }
     }
 
-    .content__head__lower {
-        padding-top: $gs-baseline/4;
-        padding-bottom: 0;
+    .tonal__standfirst {
         min-height: 54px;
     }
 
@@ -878,32 +866,22 @@ $timeline-width: 14px;
     }
 }
 
-.content--liveblog {
-    .content__standfirst,
-    .blog__timeline,
-    .content__secondary-column {
-        padding-top: $gs-baseline;
-        @include mq(rightCol) {
-            padding-top: $gs-baseline*2;
-        }
-    }
-}
-
-.content--liveblog.section-football .content__head--tonal { // Football overrides
-    .tone-background {
+.content--liveblog.section-football { // Football overrides
+    .tonal__header {
         background-color: #ffffff;
-    }
-    .content__labels {
-        border-bottom-color: $c-neutral5;
-    }
-    .content__section-label__link {
-        color: $c-liveDefault;
-    }
-    .content__series-label__link {
-        color: $c-neutral2;
-    }
-    .content__headline {
-        color: $c-neutral1;
+
+        .content__labels {
+            border-bottom-color: $c-neutral5;
+        }
+        .content__section-label__link {
+            color: $c-liveDefault;
+        }
+        .content__series-label__link {
+            color: $c-neutral2;
+        }
+        .content__headline {
+            color: $c-neutral1;
+        }
     }
 }
 

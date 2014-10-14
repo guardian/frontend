@@ -64,58 +64,7 @@
     }
 }
 
-@mixin article-header-tone($tone, $backgroundColour, $backgroundAccentColour, $textColour, $textAccentColour, $commentIcon) {
-    .tone-#{$tone} .content__head--tonal {
-        .content__headline,
-        .content__standfirst,
-        .content__standfirst a {
-            color: $textColour;
-        }
-
-        .tone-background {
-            background-color: $backgroundColour;
-        }
-
-        .tone-background--accent {
-            background-color: $backgroundAccentColour;
-        }
-
-        .content__head__comment-count .commentcount {
-            color: $textColour;
-        }
-
-        .content__labels {
-            border-bottom-color: rgba($textColour, .3);
-        }
-
-        .content__section-label__link {
-            color: $textAccentColour;
-        }
-
-        .content__series-label__link {
-            color: $textColour;
-        }
-
-        .content__standfirst .bullet:before {
-            background-color: lighten($backgroundAccentColour, 25);
-        }
-
-        .u-underline {
-            border-bottom-color: lighten($backgroundAccentColour, 25);
-            &:focus,
-            &:active,
-            &:hover {
-                border-bottom-color: #ffffff;
-            }
-        }
-    }
-
-    .content.tone-#{$tone} .drop-cap {
-        color: $backgroundColour;
-    }
-}
-
-@mixin tonal-article(
+@mixin tone-article(
     $tone,
     $tonal__header-background,
     $tonal__header-text,
@@ -132,10 +81,9 @@
     .tonal--tone-#{$tone} {
         .tonal__header {
             background-color: $tonal__header-background;
-            
 
             .content__main-column {
-                padding-bottom: $gs-baseline * 2.5;
+                padding-bottom: $gs-baseline * 1.5;
             }
 
             .content__section-label__link {
@@ -143,7 +91,7 @@
             }
 
             .content__series-label__link {
-                color: rgba($tonal__header-text, 0.8);
+                color: $tonal__header-text;
             }
 
             .content__headline,
@@ -168,6 +116,7 @@
         }
 
         .tonal__standfirst {
+            color: $tonal__standfirst-text;
             background-color: $tonal__standfirst-background;
             padding-top: $gs-baseline / 2;
             padding-bottom: $gs-baseline * 2;
@@ -192,7 +141,7 @@
 
         .tonal__article {
             background-color: $tonal__article-background;
-            margin-top: $gs-baseline;
+            padding-top: $gs-baseline;
 
             .drop-cap {
                 color: $tonal__header-background;
@@ -204,51 +153,3 @@
         }
     }
 }
-
-// Comment
-@include tonal-article(
-    comment, // $tone
-    $c-commentBackground, // $tonal__header-background
-    $c-neutral1, // $tonal__header-text
-    $c-commentDefault, // $tonal__header-link
-    $c-commentDefault, // $tonal__standfirst-background
-    #ffffff, // $tonal__standfirst-text
-    #ffffff, // $tonal__standfirst-link
-    #ffffff, // $tonal__article-background
-    $c-commentDefault, // $tonal__article-link
-    200, // $tonal__headline-weight
-    $c-neutral1, // $tonal__headline-colour
-    $c-commentDefault // $tonal__headline-accent
-);
-
-// Feature
-@include tonal-article(
-    feature, // $tone
-    $c-featureDefault, // $tonal__header-background
-    #ffffff, // $tonal__header-text
-    $c-featureAccent, // $tonal__header-link
-    $c-featureAccent2, // $tonal__standfirst-background
-    #ffffff, // $tonal__standfirst-text
-    #ffffff, // $tonal__standfirst-link
-    #ffffff, // $tonal__article-background
-    $c-featureDefault, // $tonal__article-link
-    200, // $tonal__headline-weight
-    #ffffff, // $tonal__headline-colour
-    $c-featureDefault // $tonal__headline-accent
-);
-
-// Review
-@include tonal-article(
-    review, // $tone
-    darken($c-reviewBackground, 10%), // $tonal__header-background
-    #ffffff, // $tonal__header-text
-    $c-reviewAccent, // $tonal__header-link
-    $c-reviewBackground, // $tonal__standfirst-background
-    #ffffff, // $tonal__standfirst-text
-    #ffffff, // $tonal__standfirst-link
-    #ffffff, // $tonal__article-background
-    darken($c-reviewBackground, 10%), // $tonal__article-link
-    200, // $tonal__headline-weight
-    #ffffff, // $tonal__headline-colour
-    $c-reviewBackground // $tonal__headline-accent
-);
