@@ -44,6 +44,7 @@ Hence why a greater depth of selector specificity is needed.
             }
         }
     }
+
     .fc-item--standard-tablet {
         .fc-item__standfirst {
             @include mq(desktop) {
