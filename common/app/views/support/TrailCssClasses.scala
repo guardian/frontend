@@ -22,11 +22,12 @@ object TrailCssClasses {
 
   /** Article will soon support all tone classes so we'll be able to remove this silliness */
   val SupportedArticleTones: Set[CardStyle] = Set(
-    Media,
     Comment,
+    Feature,
+    Review,
     LiveBlog,
     DeadBlog,
-    Feature
+    Media
   )
 
   def articleToneClass(trail: Trail) = {

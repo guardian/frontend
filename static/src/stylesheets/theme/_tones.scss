@@ -133,9 +133,10 @@
     $tonal__headline-colour,
     $tonal__headline-accent
     ) {
-    .tonal--#{$tone} {
+    .tonal--tone-#{$tone} {
         .tonal__header {
             background-color: $tonal__header-background;
+            
 
             .content__main-column {
                 padding-bottom: $gs-baseline * 2.5;
@@ -143,6 +144,10 @@
 
             .content__section-label__link {
                 color: $tonal__header-link;
+            }
+
+            .content__series-label__link {
+                color: rgba($tonal__header-text, 0.8);
             }
 
             .content__headline,
@@ -158,6 +163,8 @@
             .content__headline--kicker {
                 color: $tonal__headline-accent;
             }
+
+            @include stars($width: 18px, $margin-top: -($gs-baseline * 2.5), $margin-right: 2px);
         }
 
         .tonal__headline__accent {
@@ -189,6 +196,7 @@
 
         .tonal__article {
             background-color: $tonal__article-background;
+            margin-top: $gs-baseline;
 
             .drop-cap {
                 color: $tonal__header-background;
@@ -231,4 +239,20 @@
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
     $c-featureDefault // $tonal__headline-accent
+);
+
+// Review
+@include tonal-article(
+    review, // $tone
+    darken($c-reviewBackground, 10%), // $tonal__header-background
+    #ffffff, // $tonal__header-text
+    $c-reviewAccent, // $tonal__header-link
+    $c-reviewBackground, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    darken($c-reviewBackground, 10%), // $tonal__article-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-reviewBackground // $tonal__headline-accent
 );

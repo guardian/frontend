@@ -62,6 +62,23 @@
     }
 }
 
+@mixin stars($width: 14px, $margin-top: 0, $margin-right: 0) {
+    .stars {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-top: $margin-top;
+        width: ($width * 5) + ($margin-right * 5);
+        line-height: 1;
+
+        .star__item {
+            margin-right: $margin-right;
+            width: $width;
+            height: $width;
+        }
+    }
+}
+
 // Hide content visually, still readable by screen readers
 @mixin u-h {
     border: 0 !important;

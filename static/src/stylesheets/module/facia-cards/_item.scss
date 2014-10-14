@@ -166,6 +166,8 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
     }
+
+    @include stars($margin-top: 4px);
 }
 
 .fc-item__title,

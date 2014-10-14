@@ -1,16 +1,17 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog" data-test-id="live-blog"
-        class="content content--liveblog tonal tonal--@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
+        class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="content__head">
             @* UPPER HEADER *@
-            <div class="tonal__header--background">
+            <div class="tonal__header">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
 
@@ -21,7 +22,7 @@
                 </div>
             </div>
             @* LOWER HEADER *@
-            <div class="content__head__lower tonal__standfirst-background">
+            <div class="content__head__lower tonal__standfirst">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="blog__last-updated-container">
@@ -38,7 +39,7 @@
             </div>
         </header>
 
-        <div class="tonal__article-background">
+        <div class="tonal__article">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
 
