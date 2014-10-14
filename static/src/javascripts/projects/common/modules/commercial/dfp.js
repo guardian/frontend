@@ -27,7 +27,8 @@ define([
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'text!common/views/commercial/ad-slot.html'
 ], function (
     bean,
     bonzo,
@@ -56,7 +57,8 @@ define([
     audienceScienceGateway,
     criteo,
     userAdTargeting,
-    ab
+    ab,
+    adSlotTpl
 ) {
 
     /**
@@ -277,19 +279,15 @@ define([
                     label: definition.label !== undefined ? definition.label : true
                 },
                 $adSlot = $.create(template(
-                        '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{normalisedName}} {{types}}" ' +
-                        'data-link-name="ad slot {{name}}" ' +
-                        'data-test-id="ad-slot-{{name}}" ' +
-                        'data-name="{{name}}"' +
-                        '{{sizeMappings}}></div>',
+                    adSlotTpl,
                     {
                         name: definition.name || name,
                         // badges now append their index to the name
                         normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
                         types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
-                    }));
+                    })
+                );
             for (attrName in dataAttrs) {
                 if (dataAttrs[attrName] === false) {
                     $adSlot.attr('data-' + attrName, 'false');

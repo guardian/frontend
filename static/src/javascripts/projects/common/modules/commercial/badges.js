@@ -7,7 +7,7 @@ define([
     'common/utils/template',
     'common/utils/config',
     'common/modules/commercial/dfp',
-    'text!common/views/badge.html'
+    'text!common/views/commercial/badge.html'
 ], function (
     qwery,
     bonzo,
