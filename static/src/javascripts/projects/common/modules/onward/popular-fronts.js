@@ -16,7 +16,7 @@ define([
     relativeDates
 ) {
 
-    return  {
+    return {
         render:  function (config, options) {
             var opts = options || {},
                 hasSection = config.page && config.page.section && config.page.section !== 'global';
@@ -25,7 +25,7 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(
-                function(resp) {
+                function (resp) {
                     var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
                     if (container) {
                         bonzo(container)

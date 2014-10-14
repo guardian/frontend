@@ -17,6 +17,10 @@
         color: $c-mediaDefault;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
     .fc-item__standfirst,
     .fc-item__meta {
         color: $c-neutral3;

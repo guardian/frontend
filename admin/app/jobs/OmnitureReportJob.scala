@@ -18,7 +18,8 @@ object OmnitureVariables {
   val segmentGalleryVisits = Some("53fddc4fe4b08891cec2831a")
   val segmentGalleryHits = Some("5400793ee4b0230c643d3a96")
   val segmentGalleryLightboxHits = Some("5400a89fe4b0230c643d3b46")
-  val segmentGoogleReferrerHits = Some("54242f34e4b0e1cfa16a4530")
+  val segmentGoogleReferrerVisits = Some("54242f34e4b0e1cfa16a4530")
+  val segmentLiveBlogVisits = Some("543bf12de4b0e1cfa16a7376")
 }
 
 object OmnitureReports {
@@ -26,8 +27,9 @@ object OmnitureReports {
   val galleryPageViews = "gallery-page-views"
   val galleryLightBox = "gallery-launch-lightbox"
   val gallerySocialShare = "gallery-social-share"
-  val googleReferrerViews = "google-referrer-views"
-  val networkTotalViews = "network-total-views"
+  val googleReferrerVisits = "google-referrer-visits"
+  val networkTotalVisits = "network-total-visits"
+  val liveBlogVisitsAndSocial = "liveblog-visits-and-social"
 }
 
 object OmnitureReportJob extends ExecutionContexts with Logging {
@@ -93,20 +95,30 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
         dateFrom = dateTo.minusWeeks(4).toString("yyyy-MM-dd"),
-        metrics = List(OmnitureMetric(pageViews)),
-        segment_id = segmentGoogleReferrerHits,
+        metrics = List(OmnitureMetric(visits)),
+        segment_id = segmentGoogleReferrerVisits,
         reportSuiteID = OmnitureReportDescription.reportSuiteNetwork
-      ), QUEUE_OVERTIME, googleReferrerViews)
+      ), QUEUE_OVERTIME, googleReferrerVisits)
+    })
+
+    akka.pattern.after(25.seconds, actorSystem.scheduler) ( future {
+      generateReport(OmnitureReportDescription(
+        dateGranularity = Some("day"),
+        dateTo = dateTo.toString("yyyy-MM-dd"),
+        dateFrom = dateTo.minusWeeks(4).toString("yyyy-MM-dd"),
+        metrics = List(OmnitureMetric(visits)),
+        reportSuiteID = OmnitureReportDescription.reportSuiteNetwork
+      ), QUEUE_OVERTIME, networkTotalVisits)
     })
 
     akka.pattern.after(30.seconds, actorSystem.scheduler) ( future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
-        dateFrom = dateTo.minusWeeks(4).toString("yyyy-MM-dd"),
-        metrics = List(OmnitureMetric(pageViews)),
-        reportSuiteID = OmnitureReportDescription.reportSuiteNetwork
-      ), QUEUE_OVERTIME, networkTotalViews)
+        dateFrom = dateFrom.toString("yyyy-MM-dd"),
+        metrics = List(OmnitureMetric(visits), OmnitureMetric(socialInteractionEvent)),
+        segment_id = segmentLiveBlogVisits
+      ), QUEUE_OVERTIME, liveBlogVisitsAndSocial)
     })
   }
 

@@ -8,7 +8,7 @@ define([
     bonzo
 ) {
 
-    var LazyLoad = function(options) {
+    var LazyLoad = function (options) {
 
         /*
             Accepts these options:
@@ -24,34 +24,34 @@ define([
 
         var into,
             defaultOpts = {
-                success: function() {},
-                error:   function() {},
-                always:  function() {},
-                beforeInsert: function(html) { return html; },
+                success: function () {},
+                error:   function () {},
+                always:  function () {},
+                beforeInsert: function (html) { return html; },
                 force: false
             },
             opts = assign(defaultOpts, options || {});
 
-        this.load = function() {
+        this.load = function () {
 
             if (opts.url && opts.container) {
                 into = bonzo(opts.container);
-                if (opts.force || ! into.hasClass('lazyloaded')) {
+                if (opts.force || !into.hasClass('lazyloaded')) {
                     return ajax({
                         url: opts.url,
                         type: 'json',
                         crossOrigin: true
                     }).then(
-                        function(resp) {
+                        function (resp) {
                             into.html(opts.beforeInsert(resp.html));
                             into.addClass('lazyloaded');
                             opts.success(resp);
                         },
-                        function(req) {
+                        function (req) {
                             opts.error(req);
                         }
                     ).always(
-                        function(resp) {
+                        function (resp) {
                             opts.always(resp);
                         }
                     );
