@@ -3,7 +3,6 @@ package controllers
 import conf.Configuration
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import implicits.Strings
-import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
