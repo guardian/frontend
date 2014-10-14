@@ -47,7 +47,7 @@ object Result {
 case class TrailId(get: String) extends AnyVal
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
+  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[List[ApiContent]]]
 
   implicit def resultCodec = JsonCodecs.snappyCodec[Result]
 
@@ -153,26 +153,33 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def batchGetContentApiItems(collectionItems: Seq[TrailId],
-                                      edition: Edition): Future[Map[TrailId, ApiContent]] = {
-    Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
-      getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
-        maybeItem.map(collectionItem -> _)
-      }
+                                      edition: Edition): Future[Map[TrailId, ApiContent]] =
+    Futures.batchedTraverse(collectionItems.grouped(Configuration.faciatool.frontPressItemSearchBatchSize).toSeq, Configuration.faciatool.frontPressItemBatchSize)({ collectionItems =>
+      getContentApiItemFromCollectionItem(collectionItems, edition) map { maybeItem =>
+        maybeItem.map { items =>
+          items.map { item =>
+            item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
+              val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
+              TrailId(internalContentCodeFormatted) -> item}
+          }.flatten
+        }.getOrElse(Nil)}
     }).map(_.flatten.toMap)
-  }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: TrailId,
-                                                  edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = client.item(collectionItem.get, edition).showFields(showFieldsWithBodyQuery)
+  private def getContentApiItemFromCollectionItem(collectionItems: Seq[TrailId],
+                                                  edition: Edition): Future[Option[Seq[ApiContent]]] = {
+    lazy val collectionIdsQuery: String = collectionItems.map(_.get).mkString(",")
+    lazy val response = client.search(edition)
+      .ids(collectionIdsQuery)
+      .showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-        log.warn(s"Content API Error: 404 for $collectionItem")
+        log.warn(s"Content API Error: 404 for collectionIds $collectionIdsQuery")
         None
       }
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-        log.warn(s"Content API Error: 410 for $collectionItem")
+        log.warn(s"Content API Error: 410 for collectionIds $collectionIdsQuery")
         None
       }
       case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
@@ -184,13 +191,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         throw mappingException
       }
       case t: Throwable => {
-        log.warn("%s: %s".format(collectionItem, t.toString))
+        log.warn("%s: %s".format(collectionIdsQuery, t.toString))
         throw t
       }
-    }.map(_.flatMap(_.content))
+    }.map(_.map(_.results))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem.get, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(collectionIdsQuery, cacheDuration)(response)
     }
     else {
       response
