@@ -64,6 +64,14 @@
     }
 }
 
+@mixin sublink-style($tones...) {
+    @each $tone in $tones {
+        .tone-#{$tone}--item & {
+            @content;
+        }
+    }
+}
+
 @import 'item-tones/tone-news';
 @import 'item-tones/tone-live';
 @import 'item-tones/tone-comment';

@@ -32,12 +32,16 @@
     .fc-sublink__kicker {
         color: $c-mediaDefault;
     }
-}
 
-.tone-podcast--item {
-    .tone-media--sublink {
+    @include sublink-style(podcast) {
         .fc-sublink__kicker {
             color: #ffffff;
+        }
+    }
+
+    @include sublink-style(analysis, comment, dead, news) {
+        .fc-sublink__kicker {
+            color: $c-neutral1;
         }
     }
 }

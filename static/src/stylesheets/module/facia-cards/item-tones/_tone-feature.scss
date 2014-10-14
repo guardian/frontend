@@ -43,14 +43,8 @@
     .fc-sublink__kicker {
         color: $c-featureDefault;
     }
-}
 
-.tone-editorial--item,
-.tone-feature--item,
-.tone-live--item,
-.tone-media--item,
-.tone-review--item {
-    .tone-feature--sublink {
+    @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
             color: $c-featureMute;
         }

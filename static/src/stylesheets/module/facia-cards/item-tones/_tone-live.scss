@@ -48,13 +48,8 @@
         color: $c-liveDefault;
         font-weight: 400;
     }
-}
 
-.tone-editorial--item,
-.tone-feature--item,
-.tone-live--item,
-.tone-review--item {
-    .tone-live--sublink {
+    @include sublink-style(editorial, feature, live, review) {
         .fc-sublink__kicker {
             color: #ffffff;
         }

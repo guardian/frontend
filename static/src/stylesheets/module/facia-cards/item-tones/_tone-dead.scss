@@ -21,13 +21,8 @@
     .fc-sublink__kicker {
         color: $c-liveAccent;
     }
-}
 
-.tone-editorial--item,
-.tone-feature--item,
-.tone-live--item,
-.tone-review--item {
-    .tone-dead--sublink {
+    @include sublink-style(editorial, feature, live, review) {
         .fc-sublink__kicker {
             color: #ffffff;
         }

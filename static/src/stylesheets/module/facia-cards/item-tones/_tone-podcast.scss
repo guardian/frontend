@@ -35,13 +35,8 @@
     .fc-sublink__kicker {
         color: $c-podcastAccent;
     }
-}
 
-.tone-editorial--item,
-.tone-feature--item,
-.tone-live--item,
-.tone-media--item {
-    .tone-podcast--sublink {
+    @include sublink-style(editorial, feature, live, media) {
         .fc-sublink__kicker {
             color: $c-podcastBackground;
         }

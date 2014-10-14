@@ -25,13 +25,16 @@
     .fc-sublink__kicker {
         color: $c-commentDefault;
     }
-}
 
-.tone-live--item,
-.tone-review--item {
-    .tone-comment--sublink {
+    @include sublink-style(live, review) {
         .fc-sublink__kicker {
             color: $c-commentBackground;
+        }
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
         }
     }
 }

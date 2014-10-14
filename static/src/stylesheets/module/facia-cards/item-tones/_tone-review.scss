@@ -35,22 +35,14 @@
     .fc-sublink__kicker {
         color: $c-reviewBackground;
     }
-}
 
-.tone-editorial--item,
-.tone-feature--item,
-.tone-live--item,
-.tone-media--item,
-.tone-review--item {
-    .tone-review--sublink {
+    @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
             color: $c-reviewAccent;
         }
     }
-}
 
-.tone-podcast--item {
-    .tone-review--sublink {
+    @include sublink-style(podcast) {
         .fc-sublink__kicker {
             color: #ffffff;
         }
