@@ -11,11 +11,11 @@ define([
 ) {
 
     function MoreTags() {
-        this.init = function() {
+        this.init = function () {
             var $more = $('.js-more-tags');
             if ($more.length !== 0) {
                 $more.removeClass('modern-hidden');
-                bean.on(document.querySelector('.js-more-tags__link'), 'click', function(){
+                bean.on(document.querySelector('.js-more-tags__link'), 'click', function () {
                     $('.modern-hidden-tag').removeClass('modern-hidden');
                     $more.addClass('modern-hidden');
                 });

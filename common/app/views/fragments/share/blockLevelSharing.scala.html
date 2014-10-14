@@ -3,7 +3,7 @@
 <div class="block-share block-share--liveblog" data-link-name="block share">
 
     @shareItems.map{ case (text, css, url) =>
-        <a class="block-share__link js-blockshare-link" href="@url" target="_blank" data-link-name="@css">
+        <a class="block-share__link js-blockshare-link" href="@url" target="_blank" data-link-name="social @css">
             <div class="block-share__item block-share__item--@css">
                 <i class="i"></i>
                 <span class="u-h">@text</span>
@@ -29,7 +29,7 @@
     <div class="share-modal__content" data-link-name="mobile block share">
         <h2 class="share-modal__title">Share this post</h2>
         @shareItems.map { case (text, css, url) =>
-        <a class="share-modal__link" href="@url" target="_blank" data-link-name="@css">
+        <a class="share-modal__link" href="@url" target="_blank" data-link-name="social @css">
             <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@css">
                 <i class="i"></i>
                 @text

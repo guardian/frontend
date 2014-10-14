@@ -19,7 +19,6 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       (n * w).toLong.toDouble / w
     }
   }
-
   case class ReportResult(
     name: String,
     year: Int,
@@ -30,31 +29,36 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
   object ReportResult {
     implicit val reads = Json.reads[ReportResult]
   }
+  trait TimestampDataPoint {
+    val date: DateTime
+    lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
+    lazy val simpleDate = date.toString("yyyy-MM-dd")
+  }
   case class GalleryPerformance(
-    date: DateTime,
+    override val date: DateTime,
     views: Double,
     pageViewsPerVisit: Double,
     lightboxLaunchesPerVisit: Double,
     percentageOfViewsShared: Double
-  ) {
-    lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
-    lazy val simpleDate = date.toString("yyyy-MM-dd")
-  }
+  ) extends TimestampDataPoint
+
+  case class LiveBlogPerformance(
+    override val date: DateTime,
+    socialInteractionsPerVisit: Double
+  ) extends TimestampDataPoint
 
   case class SentryErrorData(
-    date: DateTime,
+    override val date: DateTime,
     errorCount: Long
-  ) {
-    lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
-  }
+  ) extends TimestampDataPoint
 
   def renderGalleryDashboard() = AuthActions.AuthActionTest { request =>
 
     val reportTimestamp = jobs.OmnitureReportJob.getReport(galleryVisits).map {_.timeReceived.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")}
 
-    val reportsObject = getOmnitureReports
+    val reportsObject = getGalleryOmnitureReports()
 
-    val sentryData = getSentryData
+    val sentryData = getSentryData()
 
     (reportsObject.isEmpty, sentryData.isEmpty) match {
       case (true, true) => NoCache(Ok("Reports not generated yet"))
@@ -104,7 +108,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     }
   }
 
-  private def getSentryData: Seq[SentryErrorData] = {
+  private def getSentryData(): Seq[SentryErrorData] = {
     val sentryData = jobs.SentryReportJob.getReport("Gallery")
 
     val sentryObject = for {
@@ -115,7 +119,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     sentryObject.toSeq
   }
 
-  private def getOmnitureReports: Seq[GalleryPerformance] = {
+  private def getGalleryOmnitureReports(): Seq[GalleryPerformance] = {
     val reportCounts: Seq[(String, Map[String, Seq[ReportResult]])] = for {
       reportName <- List(galleryPageViews, galleryVisits, galleryLightBox, gallerySocialShare)
       report <- jobs.OmnitureReportJob.getReport(reportName)
@@ -144,5 +148,50 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         GalleryPerformance(date, views, (views / visits), lightboxes / views, (shares / views) * 100)
     }
     reportsObject.toSeq.sortBy(_.simpleDate)
+  }
+
+  private def getLiveBlogOmnitureReports(): Seq[LiveBlogPerformance] = {
+    val reportCounts: Seq[(String, Map[String, Seq[ReportResult]])] = for {
+      reportName <- List(liveBlogVisitsAndSocial)
+      report <- jobs.OmnitureReportJob.getReport(reportName)
+    } yield {
+      val results = (report.data \ "report" \ "data").validate[Seq[ReportResult]].getOrElse(Nil)
+      (reportName, results.groupBy(_.name))
+    }
+
+    val resultsMap = reportCounts.toMap
+    val reportsObject = for {
+      liveBlogSocialReport <- List(resultsMap.get(liveBlogVisitsAndSocial)).flatten
+      name <- liveBlogSocialReport.keys
+      reportResult: ReportResult <- liveBlogSocialReport.get(name).flatMap(_.headOption)
+      visits <- reportResult.counts.lift(0).map(_.toDouble) // The first count is the visits
+      shares <- reportResult.counts.lift(1).map(_.toDouble) // The second count is the shares
+    } yield {
+        val date = new DateTime(reportResult.year, reportResult.month, reportResult.day, 0, 0)
+        LiveBlogPerformance(date, (shares / visits) * 100)
+    }
+    reportsObject.toSeq.sortBy(_.simpleDate)
+  }
+
+  def renderLiveBlogDashboard() = AuthActions.AuthActionTest { request =>
+
+    val reportTimestamp = jobs.OmnitureReportJob.getReport(liveBlogVisitsAndSocial).map {_.timeReceived.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")}
+
+    val reportsObject = getLiveBlogOmnitureReports()
+
+    if (reportsObject.isEmpty) {
+      NoCache(Ok("Omniture report not generated yet"))
+    } else {
+        val socialSharesColumns = List(Column("time", "Time", "date"), Column("Shares", "Social Share rate", "number"))
+        val socialSharesRows = reportsObject.map { row =>
+          val dateCell = Cell(row.jsonDate)
+          val roundedCount = row.socialInteractionsPerVisit.rounded(3).toString
+          val socialCount = Cell(roundedCount)
+          Row(List(dateCell, socialCount))
+        }
+        val socialInteractionsChart = FormattedChart("Social shares per Live Blog Visit", socialSharesColumns, socialSharesRows, ChartFormat(Colour.`tone-features-3`))
+
+        NoCache(Ok(views.html.contentLiveBlog("PROD", socialInteractionsChart, "Live Blog Performance", reportTimestamp)))
+    }
   }
 }

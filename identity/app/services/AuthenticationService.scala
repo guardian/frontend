@@ -26,7 +26,7 @@ class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecod
     minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
     guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
     fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
-  } yield AuthenticatedUser(fullUser, new ScGuU(scGuU.value))
+  } yield AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData))
 
   def recentlyAuthenticated(request: RequestHeader): Boolean = (for {
     authedUser <- authenticatedUserFor(request)

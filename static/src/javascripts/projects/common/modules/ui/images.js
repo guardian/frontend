@@ -17,9 +17,9 @@ function (
 
     var images = {
 
-        availableWidths: [ 140, 220, 300, 460, 620, 700, 860, 940, 1430, 1920 ],
+        availableWidths: [140, 220, 300, 460, 620, 700, 860, 940, 1430, 1920],
 
-        upgrade: function(context) {
+        upgrade: function (context) {
             context = context || document;
             var options = {
                     availableWidths: images.availableWidths,
@@ -27,18 +27,18 @@ function (
                     replacementDelay: 0
                 },
                 containers = $('.js-image-upgrade', context).map(
-                    function(container) {
+                    function (container) {
                         return container;
                     },
                     // this is an optional filter function
-                    function(container) {
+                    function (container) {
                         return $css(bonzo(container), 'display') !== 'none';
                     }
                 );
             imager.init(containers, options);
             // add empty alts if none exist
-            forEach(containers, function(container) {
-                $('img', container).each(function(img) {
+            forEach(containers, function (container) {
+                $('img', container).each(function (img) {
                     var $img = bonzo(img);
                     if ($img.attr('alt') === null) {
                         $img.attr('alt', '');
@@ -47,15 +47,15 @@ function (
             });
         },
 
-        listen: function() {
+        listen: function () {
             mediator.addListeners({
-                'window:resize': function() {
+                'window:resize': function () {
                     images.upgrade();
                 },
-                'window:orientationchange': function() {
+                'window:orientationchange': function () {
                     images.upgrade();
                 },
-                'ui:images:upgrade': function(context) {
+                'ui:images:upgrade': function (context) {
                     images.upgrade(context);
                 }
             });

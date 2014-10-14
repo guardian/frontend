@@ -39,7 +39,7 @@ jQuery(function($) {
     });
 
     $("#dfp-palette").on('change', function() {
-        $('.commercial--dfp-single--v2, .commercial--dfp-multiple--v2').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone--masterclasses commercial--tone--travel commercial--tone--shop commercial--tone--money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
+        $('.commercial--dfp-single--v2, .commercial--dfp-multiple--v2, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
         return false;
     });
 });
@@ -170,6 +170,36 @@ jQuery(function($) {
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
+
+                    <div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,89" data-refresh="false" data-label="false" data-node-uid="3">
+                        <div class="commercial--v2 commercial--tone-books commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book">
+                            <div class="commercial--v-high__header">
+                                <h3 class="commercial__title">
+                                    <a href="http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v{version}_{date}-superHigh-visit-shop">
+                                        <i class="i i-marque-36"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
+                                        <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="commercial--v-high__body">
+                                <a class="lineitem__link" href="http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v{version}_{date}-superHigh-{book.isbn}-{book.author}-{book.title}">
+                                    <img class="lineitem__image" itemprop="image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj" alt=""/>
+                                    <h4 class="lineitem__title" itemprop="name">book.title</h4>
+                                    <meta itemprop="isbn" content="{book.isbn}" />
+                                    <p class="lineitem__meta lineitem__author" itemprop="author">book.author</p>
+                                    <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        RRP &pound;25.99<br/>
+                                        <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;22.99</span></strong>
+                                        <meta itemprop="priceCurrency" content="GBP"/>
+                                    </p>
+                                </a>
+                                <a href="http://www.guardianbookshop.co.uk/" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-v{version}_{date}-superHigh-visit-shop">
+                                    Buy now <i class="i i-arrow-white-right i-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,89" data-refresh="false" data-label="false" data-node-uid="3">
                         <div class="commercial commercial--v-high commercial--dfp-123456789" role="complementary">
                             <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBtdlPTiPSU9vAFsqZigb12YGYA_fhkJMFAAAAEAEg75TfITgAWJeKiNqiAWC7vq6D0AqyAQlsb2NhbGhvc3S6AQlnZnBfaW1hZ2XIAQnaAXZodHRwOi8vbG9jYWxob3N0OjkwMDAvYm9va3MvYm9va3NibG9nLzIwMTQvanVsLzI0L2Jvb2stZm9yLXRoZS1iZWFjaC10d2VudHktdGhvdXNhbmQtbGVhZ3Vlcy11bmRlci10aGUtc2VhLWp1bGVzLXZlcm5lqQKY-ncJR3q8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vYm9va3MvYm9va3NibG9n-AL50R6AAwGQA4wGmAOMBqgDAeAEAaAGHw%2526num%253D0%2526sig%253DAOD64_04uVjvjKcSOt1Pw_sspwn5MRBdHg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-123456789-title">
@@ -691,7 +721,7 @@ jQuery(function($) {
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Travel</h2>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers.json", function( json ) {
@@ -700,16 +730,8 @@ jQuery(function($) {
             </script>
         </div>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/travel/offers-v2.json", function( json ) {
-                    $('.dfp-ad--merchandising-travel-low-v2').html(json.html);
-                });
-            </script>
-        </div>
 
-        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">High relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
@@ -718,14 +740,6 @@ jQuery(function($) {
             </script>
         </div>
 
-        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/travel/offers-high-v2.json", function( json ) {
-                    $('.dfp-ad--merchandising-travel-high-v2').html(json.html);
-                });
-            </script>
-        </div>
     </div>
 
     <hr/>
@@ -955,5 +969,181 @@ jQuery(function($) {
             </script>
         </div>
     </div>
+    
+    <hr/>
+    
+    <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
+    <div class="facia-container facia-container--layout-content">
+        <section class="container container--special container--merchandising container--advertisement-feature">
+            <div class="facia-container__inner">
+                <div class="container__border tone-news tone-accent-border"></div>
+                <div class="container__header">
+                    <h2 class="container__title tone-news">
+                        <span class="container__title__label u-text-hyphenate">[%ContainerHeader%]</span>
+                    </h2>
+                </div>
+                <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                    <div class="ad-slot--paid-for-badge__inner">
+                        <h3 class="ad-slot--paid-for-badge__header"><strong>Brought to you by:</strong></h3>
+                        <a href="%%CLICK_URL_UNESC%%[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
+                            <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
+                        </a>
+                        <a href="%%CLICK_URL_UNESC%%[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+                    </div>
+                </div>
+                <div class="container__body">
+                    <div class="facia-slice-wrapper">
+                        <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="%%CLICK_URL_UNESC%%[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail1Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail1Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="%%CLICK_URL_UNESC%%[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail2Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail2Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="%%CLICK_URL_UNESC%%[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail3Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail3Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="%%CLICK_URL_UNESC%%[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail4Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail4Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <h2 class="facia-container__inner test-page-head">Merchandising Sponsored Content</h2>
+    <div class="facia-container facia-container--layout-content">
+        <section class="container container--special container--merchandising container--sponsored">
+            <div class="facia-container__inner">
+                <div class="container__border tone-news tone-accent-border"></div>
+                <div class="container__header">
+                    <h2 class="container__title tone-news">
+                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading">[%ContainerHeader%]</a>
+                    </h2>
+                </div>
+                <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                    <div class="ad-slot--paid-for-badge__inner">
+                        <h3 class="ad-slot--paid-for-badge__header"><strong>Sponsored by:</strong></h3>
+                        <a href="[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
+                            <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
+                        </a>
+                        <a href="[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+                    </div>
+                </div>
+                <div class="container__body">
+                    <div class="facia-slice-wrapper">
+                        <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail1Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail1Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail2Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail2Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail3Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail3Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news" data-link-name="trail | 1">
+                                    <div class="item__container">
+                                        <a href="[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                                    <img src="[%Trail4Image%]" alt="">
+                                                </div>
+                                            </div>
+                                            <h2 class="item__title">[%Trail4Text%]</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+    
+    
 </div>
 }

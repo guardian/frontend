@@ -11,15 +11,15 @@ define([
 
     }
 
-    NotificationCounter.prototype.init = function() {
+    NotificationCounter.prototype.init = function () {
         var self = this;
 
-        mediator.on('modules:autoupdate:unread', function(count) {
+        mediator.on('modules:autoupdate:unread', function (count) {
             self.setCount(count);
         });
     };
 
-    NotificationCounter.prototype.setCount = function(count) {
+    NotificationCounter.prototype.setCount = function (count) {
         if (count > 0) {
             document.title = '(' + count + ') ' + originalPageTitle;
         } else {
@@ -27,7 +27,7 @@ define([
         }
     };
 
-    NotificationCounter.prototype.restorePageTitle = function() {
+    NotificationCounter.prototype.restorePageTitle = function () {
         document.title = originalPageTitle;
     };
 

@@ -5,6 +5,9 @@ blockquote.quoted:before {
     display: inline-block;
     background-repeat: no-repeat;
 }
+.svg .i {
+    @include background-size(contain);
+}
 .i-date {
     @if ($svg-support) {
         .svg & {

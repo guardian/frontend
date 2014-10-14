@@ -47,7 +47,8 @@ header {
     width: 100%;
     background: #999999;
     color: #000000;
-    padding: 15px 40px;
+    padding: 17px 40px;
+    min-height: 51px;
     z-index: 10;
     text-align: center;
     background: #ffff00;
@@ -737,6 +738,11 @@ button {
 
 .search-term input {
     width: 100%;
+}
+
+.search-message {
+    margin: 5px;
+    color: #999999;
 }
 
 .autocompleter {

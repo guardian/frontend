@@ -1,8 +1,4 @@
 %tone-has-background {
-    .fc-item__footer--vertical {
-        padding-bottom: $gs-baseline * .25;
-    }
-
     &.fc-item--has-cutout {
         padding-bottom: 0;
     }
@@ -68,6 +64,14 @@
     }
 }
 
+@mixin sublink-style($tones...) {
+    @each $tone in $tones {
+        .tone-#{$tone}--item & {
+            @content;
+        }
+    }
+}
+
 @import 'item-tones/tone-news';
 @import 'item-tones/tone-live';
 @import 'item-tones/tone-comment';
@@ -77,3 +81,4 @@
 @import 'item-tones/tone-review';
 @import 'item-tones/tone-dead';
 @import 'item-tones/tone-podcast';
+@import 'item-tones/tone-editorial';
