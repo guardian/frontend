@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Super-high component styling
+   ========================================================================== */
+.commercial--v2.commercial--v-high {
+    .commercial--v-high__header {
+        padding: $gs-baseline/6 $gs-gutter/4;
+
+        .commercial__title {
+            .i-marque-36 {
+                display: block;
+            }
+            .i-commercial-brand {
+                height: $gs-baseline*1.3333;
+            }
+        }
+    }
+
+    .commercial--v-high__body {
+        padding: $gs-baseline/2 $gs-gutter/4 $gs-baseline;
+    }
+
+    .lineitem__image {
+        float: none;
+        margin-top: (-$gs-baseline/2);
+        margin-left: 0;
+        margin-left: calc(-1 * #{$gs-gutter/4});
+        margin-right: 0;
+        margin-right: calc(-1 * #{$gs-gutter/4});
+        width: 100%;
+        width: calc(100% + #{$gs-gutter/2});
+    }
+}
