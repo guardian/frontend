@@ -316,9 +316,9 @@ define([
             windowEventListeners: function () {
                 var event,
                     events = {
-                        resize: 'window:resize',
-                        orientationchange: 'window:orientationchange',
-                        scroll: 'window:scroll'
+                        resize:            'window:resize',
+                        scroll:            'window:scroll',
+                        orientationchange: 'window:orientationchange'
                     },
                     emitEvent = function (eventName) {
                         return function (e) {
@@ -328,6 +328,9 @@ define([
                 for (event in events) {
                     bean.on(window, event, debounce(emitEvent(events[event]), 200));
                 }
+
+                // also adding an (non-debounced, non-throttled) event for scroll - this often needs to be immediate
+                bean.on(window, 'scroll', mediator.emit.bind(mediator, 'window:scroll-immediate'));
             },
 
             checkIframe: function () {

@@ -28,6 +28,7 @@ define([
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
+    'common/modules/ui/sticky',
     'text!common/views/commercial/ad-slot.html'
 ], function (
     bean,
@@ -58,6 +59,7 @@ define([
     criteo,
     userAdTargeting,
     ab,
+    Sticky,
     adSlotTpl
 ) {
 
@@ -147,6 +149,22 @@ define([
                 sizeMappings: {
                     mobile: '140,90'
                 }
+            }
+        },
+        callbacks = {
+            '300,250': function (e, $adSlot) {
+                console.log('1');
+                var $col   = $('.content__secondary-column'),
+                    bottom = $col.dim().height + $col[0].getBoundingClientRect().top + window.scrollY,
+                    sticky = new Sticky($adSlot[0], 12, { bottom: bottom });
+                console.log('2');
+            },
+            '300,600': function (e, $adSlot) {
+                console.log('3');
+                var $col   = $('.content__secondary-column'),
+                    bottom = $col.dim().height + $col[0].getBoundingClientRect().top + window.scrollY,
+                    sticky = new Sticky($adSlot[0], 12, { bottom: bottom });
+                console.log('4');
             }
         },
 
@@ -388,10 +406,11 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId());
+            var $slot = $('#' + event.slot.getSlotId().getDomId()),
+                size  = event.size.join(',');
 
             // remove any placeholder ad content
-            $('.ad-slot__content--placeholder', $slot[0]).remove();
+            $('.ad-slot__content--placeholder', $slot).remove();
 
             if (event.isEmpty) {
                 removeLabel($slot);
@@ -399,6 +418,9 @@ define([
                 checkForBreakout($slot);
                 addLabel($slot);
             }
+
+            // is there a callback for this size
+            callbacks[size] && callbacks[size](event, $slot);
         },
         addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
