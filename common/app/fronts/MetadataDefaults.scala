@@ -1,7 +1,7 @@
-package util
+package fronts
 
 import model.Content
-import views.support.{Podcast, Comment, CardStyle}
+import views.support.{CardStyle, Comment, Podcast}
 
 /** TODO this needs to be moved to Facia scala client & be integrated with Facia */
 object MetadataDefaults {

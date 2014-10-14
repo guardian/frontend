@@ -38,7 +38,7 @@ object ItemKicker {
       Some(BreakingNewsKicker)
     } else if (trail.isLive) {
       Some(LiveKicker)
-    } else if (trail.isPodcast) {
+    } else if (trail.isPodcast && trail.showKickerTag) {
       val series = trail.tags.find(_.tagType == "series") map { seriesTag =>
         Series(seriesTag.webTitle, seriesTag.webUrl)
       }
