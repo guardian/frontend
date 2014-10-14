@@ -67,6 +67,19 @@
     }
 }
 
+.tone-analysis--item,
+.tone-comment--item,
+.tone-dead--item,
+.tone-news--item {
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-black, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-black-large, false);
+    }
+}
+
 .tone-podcast--item,
 .tone-podcast--sublink {
     .fc-item__timestamp:before {
