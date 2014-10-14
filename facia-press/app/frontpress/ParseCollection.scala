@@ -47,7 +47,7 @@ object Result {
 case class TrailId(get: String) extends AnyVal
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
+  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[List[ApiContent]]]
 
   implicit def resultCodec = JsonCodecs.snappyCodec[Result]
 
