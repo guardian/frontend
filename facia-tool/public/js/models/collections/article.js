@@ -268,12 +268,9 @@ define([
 
             this.metaDefaults = {};
 
-            if (opts.uneditable) {
-                this.uneditable = true;
-            } else {
-                _.extend(this.metaDefaults, deepGet(opts, '.group.parent.itemMetaDefaults'));
-                console.log(this.metaDefaults)
-            };
+            this.collectionMetaDefaults = deepGet(opts, '.group.parent.itemDefaults');
+
+            this.uneditable = opts.uneditable;
 
             this.state = asObservableProps([
                 'underDrag',
@@ -506,13 +503,11 @@ define([
 
             this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
 
-            if (!this.uneditable) {
-                _.defaults(this.metaDefaults, opts.frontsMeta && opts.frontsMeta.defaults);
+            this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
-                populateObservables(this.meta, this.metaDefaults);
+            populateObservables(this.meta, this.metaDefaults);
 
-                this.updateEditorsDisplay();
-            }
+            this.updateEditorsDisplay();
         };
 
         Article.prototype.updateEditorsDisplay = function() {
