@@ -1,0 +1,13 @@
+.most-viewed-no-js {
+    display: block;
+
+    &:after {
+        display: block;
+        float: right;
+        font-weight: normal;
+        font-size: 1.5em;
+        line-height: .75;
+        color: $c-neutral3;
+        content: '›';
+    }
+}

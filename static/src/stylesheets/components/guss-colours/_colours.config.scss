@@ -1,0 +1,18 @@
+/**
+ * An example of a colour palette to be used with guss-colours
+ *
+ * If you're looking for the guardian colour palette: https://github.com/guardian/pasteup-palette
+ * 
+ * @type Map
+ *
+ * @group colours
+ */
+$guss-colours: (
+    rainbow-red:            #ed1c24,
+    rainbow-orange:         #f26522,
+    rainbow-yellow:         #fff200,
+    rainbow-green:          #00a651,
+    rainbow-blue:           #0054a6,
+    rainbow-indigo:         #2e3192,
+    rainbow-violet:         #92278f,
+) !default;

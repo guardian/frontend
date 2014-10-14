@@ -1,9 +1,11 @@
-@(storyPackage: Seq[Trail])(implicit request: RequestHeader)
+@(related: model.RelatedContent)(implicit request: RequestHeader)
 
-@if(storyPackage.nonEmpty) {
-    <aside role="complementary" class="related more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">
-    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
+@if(related.hasStoryPackage) {
+    <aside role="complementary" class="related more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}">
+    @fragments.relatedTrails(related.storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
     </aside>
 } else {
-    <aside class="related js-related" role="complementary" data-test-id="related-content"></aside>
+    <aside class="related js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
+    @fragments.relatedTrails(related.related, heading = "Related content", visibleTrails = 5, dataComponent = "related-content")
+    </aside>
 }

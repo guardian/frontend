@@ -1,0 +1,13 @@
+{
+  "name": "guss-layout",
+  "main": [
+    "_row.scss",
+    "_columns.scss"
+  ],
+  "dependencies": {
+    "guss-rem": "~1",
+    "guss-css3": "~2",
+    "guss-grid-system": "~1",
+    "sass-mq": "~2"
+  }
+}

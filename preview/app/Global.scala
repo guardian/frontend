@@ -1,6 +1,7 @@
 import com.gu.googleauth.{FilterExemption, GoogleAuthFilters}
 import common.ExecutionContexts
 import conf.Filters
+import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.api.mvc._
 import scala.concurrent.Future
@@ -18,6 +19,7 @@ object FilterExemptions {
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
+    FilterExemption("/favicon.ico"),
     FilterExemption("/_healthcheck"),
     FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
   )
@@ -26,6 +28,7 @@ object FilterExemptions {
 object Global extends WithFilters(
   new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions) :: Filters.common: _*) with CommercialLifecycle
+    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
                                                         with OnwardJourneyLifecycle
                                                         with ConfigAgentLifecycle
+                                                        with DfpAgentLifecycle

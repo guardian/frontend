@@ -1,16 +1,16 @@
 import common._
-import conf.Filters
-import conf.Management
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.{Industries, JobsAgent}
-import model.commercial.masterclasses.{MasterClassTagsAgent, MasterClassAgent}
+import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
 import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import play.api.mvc.WithFilters
-import play.api.{Application => PlayApp, GlobalSettings}
-import scala.util.{Failure, Success, Random}
+import play.api.{GlobalSettings, Application => PlayApp}
+
+import scala.util.{Failure, Random, Success}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
@@ -72,7 +72,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
 object Global extends WithFilters(Filters.common: _*) with CommercialLifecycle with DevParametersLifecycle
                                                                                     with CloudWatchApplicationMetrics {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-commercial"
 }
 
 trait RefreshJob extends Logging {

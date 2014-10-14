@@ -1,0 +1,29 @@
+/*doc
+---
+title: Stars
+name: stars
+category: Common
+---
+
+```html_example
+<div class="stars" role="presentation">
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-gray i"></i>
+    <i class="star__item i-star-gray i"></i>
+</div>
+```
+*/
+
+$starIcon-width: 14px;
+$starIcon-height: 13px;
+
+.stars {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 4px;
+    width: $starIcon-width * 5;
+    line-height: $starIcon-height;
+}

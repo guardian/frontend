@@ -1,21 +1,24 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
-@defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
+@import conf.Static
+@import common.LinkTo
+@import views.support.{GetClasses, ImgSrc, Item300, Item620, RemoveOuterParaHtml}
+
+@defining((
+    trail.visualTone,
+    containerIndex == 0,
+    containerIndex == 0 && index < 4,
+    if (containerIndex == 0 && index == 0) { "1" } else { "2" })
+) { case (tone, isFirstContainer, inlineImages, headingLevel) =>
     <@element
-        class="@GetClasses.forItem(trail, isFirstContainer)"
+        class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
+            <div class="item__tonal-border tone-accent-border"></div>
+            <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="gallery" data-is-ajax>
+                    <div class="item__media-wrapper">
 
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="gallery" data-is-ajax>
-                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@trail.url">
-                    <div class="item__cta item__cta--gallery">
-                        <p>Expand</p>
-                        <span class="item__cta__icon">
-                            <span class="i i-camera-black-large"></span>
-                            <span class="i i-camera-yellow-large"></span>
-                        </span>
-                    </div>
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
@@ -31,22 +34,22 @@
                     }
                 </div>
             </a>
-            <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
-                <div class="item__header">
-                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
-                        <span class="i i-gallery-yellow-small"></span>
-                        @RemoveOuterParaHtml(trail.headline)
-                    </h@if(isFirstContainer && index == 0){1}else{2}>
-                </div>
-            </a>
+            <div class="item__header">
+                <h@headingLevel class="item__title item__title--gallery-icon">
 
-            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+                    @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+                    <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
+                        <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
+                    </a>
+                </h@headingLevel>
+            </div>
+
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
             }
 
         </div>
-
+        <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }

@@ -5,6 +5,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller }
 import services._
 import performance.MemcachedAction
+import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
 
@@ -17,7 +18,7 @@ object RelatedController extends Controller with Related with Logging with Execu
     }
   }
 
-  private def renderRelated(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(900) {
+  private def renderRelated(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(30.minutes) {
     val html = views.html.fragments.relatedTrails(trails, "Related content", 5)
 
     if (request.isJson) {

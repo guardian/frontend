@@ -1,36 +1,68 @@
-@(items: Seq[model.Trail], containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(items: Seq[model.Trail], containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
-@defining(items.filter(item => item.group == Option("0") || item.group == None), items.filter(_.group == Option("1"))) { case (standardItems, bigItems) =>
-    @defining(8 - bigItems.length * 2) { standardItemCount =>
+@defining(
+    items.filter(item => item.group == Some("0") || item.group == None),
+    items.filter(_.group == Some("1")),
+    items.filter(_.group == Some("2"))
+) { case (standardItems, bigItems, veryBigItems) =>
+
+    @if(veryBigItems.nonEmpty){
+        <div class="headline-item headline-item--very-big u-faux-block-link">
+            @fragments.items.standard(veryBigItems.head, 1, containerIndex, "div")
+        </div>
+
+        <div class="story-list-columns story-list-columns--standard-2-col">
+            @bigItems.lift(0).zipWithIndex.map { case (trail, index) =>
+                <div class="story-list-columns__item headline-item headline-item--big u-faux-block-link">
+                    @fragments.items.standard(trail, index, containerIndex, "div")
+                </div>
+                <div class="story-list-columns__item">
+                    @standardItems.slice(0, 3).zipWithIndex.map{ case(trail, i) =>
+                        <div class="headline-item headline-item--standard" data-link-name="trail | @{index + 1}">
+                            <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
+                                <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+            @bigItems.lift(1).zipWithIndex.map{ case (trail, index) =>
+                <div class="story-list-columns__item headline-item headline-item--big headline-item--no-image u-faux-block-link">
+                    @fragments.items.standard(trail, index, containerIndex, "div")
+                </div>
+            }
+            @defining(standardItems.drop(if(bigItems.nonEmpty) 3 else 0).slice(0, if(bigItems.nonEmpty) 4 else 10)) { items =>
+                @items.zipWithIndex.map{ case (trail, index) =>
+                    <div class="story-list-columns__item headline-item @if(trail.group == Some("1")){headline-item--big}else{headline-item--standard}" data-link-name="trail | @{index + 1}">
+                        <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
+                            <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+
+    }else{
         <div class="headline-list-container">
-            <ul class="headline-list headline-list--@bigItems.length-big headline-list--big">
-                @bigItems.zipWithIndex.map { case (trail, index) =>
-                    <li class="headline-list__item headline-item" data-link-name="trail | @{index + 1}">
-                        <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
-                            @trail.trailPicture(5,3).map{ imageContainer =>
-                                @ImgSrc.imager(imageContainer, 620).map { imgSrc =>
-                                    <div class="item__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
-                                        @Item220.bestFor(imageContainer).map{ url =>
-                                            <img src="@url" class="responsive-img" alt="" />
-                                        }
-                                    </div>
-                                }
-                            }
-                            <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
-                        </a>
-                    </li>
-                }
-            </ul>
+            @defining(16 - bigItems.length * 4) { standardItemCount =>
+                <ul class="story-list-columns story-list-columns--big story-list-columns--@bigItems.length-big">
+                    @bigItems.zipWithIndex.map { case (trail, index) =>
+                        <li class="story-list-columns__item headline-item headline-item--big u-faux-block-link">
+                            @fragments.items.standard(trail, index, containerIndex, "div")
+                        </li>
+                    }
+                </ul>
 
-            <ul class="headline-list headline-list--standard">
-                @standardItems.slice(0, standardItemCount).zipWithIndex.map{ case (trail, index) =>
-                    <li class="headline-list__item headline-item" data-link-name="trail | @{index + 1}">
-                        <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
-                            <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
-                        </a>
-                    </li>
-                }
-            </ul>
+                <ul class="story-list-columns story-list-columns--standard story-list-columns--standard-@{standardItemCount/4}-col">
+                    @standardItems.slice(0, standardItemCount).zipWithIndex.map{ case (trail, index) =>
+                        <li class="story-list-columns__item headline-item headline-item--standard" data-link-name="trail | @{index + 1}">
+                            <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
+                                <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     }
 }

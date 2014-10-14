@@ -1,13 +1,14 @@
-@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = Some(conf.Configuration.environment.projectName))(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: model.MetaData, switches: Seq[common.Switchable], projectName: Option[String] = Some(conf.Configuration.environment.projectName))(head: Html)(body: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html class="js-off id--signed-out" lang="en-GB">
+<html class="js-off is-not-modern id--signed-out" lang="en-GB">
 <head>
     @fragments.head(metaData, projectName, head, Map("bootstraps/membership" -> "javascripts/bootstraps/membership.js"))
 </head>
 <body id="top">
 
     @fragments.message(metaData)
+
     @fragments.identityHeader(metaData)
 
     <div id="js-context">
@@ -16,7 +17,7 @@
         </div>
     </div>
 
-    @fragments.footer(metaData)
+    @fragments.footer(metaData, false)
 
     @fragments.loadCss()
 

@@ -1,46 +1,39 @@
 # Frontend Nginx Dev Config
 
-## Setup Mac
+## Setup
 
-[Install Homebrew:](http://brew.sh/#install)
+__Mac:__ [Install Homebrew:](http://brew.sh/#install)
 
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-Install nginx:
+__Nginx:__
 
+    # Mac
     brew install nginx
+    
+    # Linux
+    sudo apt-get install nginx
 
 Add the following to your ```/etc/hosts```:
 
     127.0.0.1   profile.thegulocal.com
     127.0.0.1   m.thegulocal.com
 
-## Setup Linux
 
-Install nginx:
+## Now run the setup script (nginx/setup.sh):
 
-    sudo apt-get install nginx
-
-
-Add the following to your ```/etc/hosts```:
-
-    127.0.1.1   profile.thegulocal.com
-    127.0.1.1   m.thegulocal.com
-
-## Now run the setup script:
-
-    nginx/setup.sh
+    sh setup.sh
 
 ## Setup Nginx
 
-You will have to make sure the ```sites-enabled``` folder in included in your ```nginx.conf```:
-    
+You will have to make sure the ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
+
     # ...
     http {
         include       mime.types;
         default_type  application/octet-stream;
         # THIS IS WHAT YOU MUST ADD
-        include sites-enabled/*; 
+        include sites-enabled/*;
     #...
 
 ## Note

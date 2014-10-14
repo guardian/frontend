@@ -1,6 +1,8 @@
-@(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
-<div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--gallery tone-@gallery.visualTone"
+@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+<div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+
+    <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+        <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headDefault(gallery)
@@ -8,59 +10,100 @@
         <div class="gs-container">
             <div class="content__main-column content__main-column--gallery">
 
+                @fragments.standfirst(gallery)
+
                 @fragments.contentMeta(gallery)
 
-                <!-- Lightbox JS Gallery -->
-                @fragments.galleryThumbs(gallery, showCta=true)
-
-                <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="js-hidden">
-                    <p class="gallery-nav">
-
-                        @if(index > 1) {
-                            <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
-                        }
-
-                        Image @index of @gallery.size
-
-                        @if(index < gallery.size) {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
-                        } else {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
-                        }
-                    </p>
-
-                    <div class="gallery-container">
+                <ul class="gallery2">
+                    @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
                         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            @if(row.rowNum == index) {
-                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                    src="@image.path"
-                                    alt="@image.altText.getOrElse("")"
-                                />
+                            <li class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
+                                <figure itemscope itemtype="http://schema.org/ImageObject">
 
-                                <div class="gallery-caption">
-                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit">@image.credit</p>
-                                </div>
+                                    @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
+
+                                        @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
+
+                                            <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
+                                                href="@LinkTo{@gallery.url?index=@row.rowNum}"
+                                                data-src="@imgSrc"
+                                                data-link-name="Launch Gallery Lightbox" data-is-ajax>
+
+                                                <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                    src="@url"
+                                                    alt="@image.altText.getOrElse("")"
+                                                    itemprop="contentUrl" />
+
+                                                <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                    alt="@image.altText.getOrElse("")"
+                                                    itemprop="contentUrl" />
+
+                                                <span class="gallery2__fullscreen">
+                                                    <i class="i i-expand-white"></i>
+                                                    <i class="i i-expand-black"></i>
+                                                </span>
+
+                                            </a>
+                                        }
+                                    }
+
+                                    <div class="gallery2__figcaption">
+                                        @image.caption.map { caption =>
+                                            <p class="gallery2__caption" itemprop="caption">@Html(caption)</p>
+                                        }
+                                        @if(image.displayCredit) {
+                                            @image.credit.map { credit =>
+                                                <p class="gallery2__credit" itemprop="author">@credit</p>
+                                            }
+                                        }
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                            @if(row.rowNum % adInterval == 0) {
+                                @adSlots.lift((row.rowNum / adInterval) - 1).map { adSlot =>
+                                    <li class="gallery2__item gallery2__item--advert">
+                                        @fragments.commercial.standardAd(
+                                            adSlot,
+                                            Seq("gallery-inline", "dark"),
+                                            Map(
+                                                "mobile" -> Seq("300,50"),
+                                                "mobile-landscape" -> Seq("300,50", "320,50"),
+                                                "tablet" -> Seq("300,250")
+                                            )
+                                        )
+                                    </li>
+                                }
                             }
                         }
+                    }
+                </ul>
+                <div class="submeta-container submeta-container--break-at-leftcol">
+                    @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Topics</h2>
+                            @fragments.keywordList(gallery.keywords, tone = Some("media"))
+                        </div>
+                    }
+                    <div class="submeta" data-component="share">
+                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                        @fragments.social(gallery, iconModifier = "white")
                     </div>
-                </div>
-
-                <div data-component="body">
-                    @fragments.standfirst(gallery)
-
-                    <div class="content__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
-                </div>
-
-                <div class="social-wrapper" data-component="share">
-                    @fragments.social(gallery)
                 </div>
             </div>
         </div>
     </article>
+    </div>
 
-    @fragments.contentFooter(gallery, storyPackage)
+    <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading hide-on-childrens-books-site">
+        <div class="container container--popular">
+            <div class="facia-container__inner">
+                <h2 class="container__title">
+                    <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+    @fragments.contentFooter(gallery, related, "media")
 </div>

@@ -1,0 +1,184 @@
+$header-image-size-mobile: 80px;
+$header-image-size-desktop: 120px;
+
+.fc-container {
+    padding-bottom: $gs-baseline;
+    margin-bottom: 0;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline * 2;
+    }
+
+    .facia-container__inner {
+        border-top: 1px solid $c-newsAccent;
+    }
+
+    &.container--first .facia-container__inner {
+        border: 0;
+    }
+
+    .facia-slice-wrapper + .facia-slice-wrapper {
+        margin-top: 0;
+    }
+}
+.fc-container__header {
+    padding-top: $gs-baseline / 2;
+    position: relative;
+
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+.fc-container__header__title {
+    padding-bottom: $gs-baseline/3;
+    line-height: get-line-height(header, 2);
+    @include fs-header(5);
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+
+    a {
+        color: inherit;
+    }
+}
+.fc-container__header__image {
+    display: table-cell;
+    margin: 0 $gs-gutter 0 0;
+    overflow: hidden;
+    float: left;
+
+    @include mq(leftCol) {
+        float: none;
+        display: block;
+        margin: $gs-baseline * 2 0 $gs-baseline;
+    }
+
+    img {
+        display: block;
+        width: $header-image-size-mobile;
+
+        @include mq(desktop) {
+            width: $header-image-size-desktop;
+        }
+    }
+}
+.fc-container__header__description {
+    @include fs-headline(2);
+    padding-bottom: $gs-baseline / 2;
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        clear: left;
+        float: left;
+        margin-top: 0;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+.fc-container__header__description--image {
+    vertical-align: middle;
+    display: table-cell;
+
+    @include mq(desktop) {
+        max-width: gs-span(7);
+    }
+
+    @include mq(leftCol) {
+        display: block;
+        height: auto;
+        clear: both;
+    }
+}
+
+.fc-today {
+    padding-top: $gs-baseline/3;
+    @include fs-headline(2);
+
+    @include mq(leftCol) {
+        border-top: 1px solid $c-neutral5;
+        margin-top: $gs-baseline/2;
+    }
+
+    .fc-today__sub {
+        @include mq(wide) {
+            .has-page-skin & {
+                border-top: 0;
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+.fc-today__sub {
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
+    }
+}
+
+/**
+ * This for adding padding-top. On old layout container--first is taking care of this.
+ * When we move to new layout container--news should be deprecated and this class should be
+ * reviewed.
+ */
+.fc-container--first {
+    margin-top: 0;
+    padding-top: 0;
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 2;
+    }
+
+    .facia-container__inner {
+        border: 0;
+    }
+}
+
+.js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+}
+
+.js-on .fc-show-more--hidden .fc-show-more--hide {
+    display: none !important;
+}
+
+.fc-container__updated {
+    color: $c-neutral2;
+    display: none;
+    margin-top: ($gs-baseline/3)*5;
+    padding-bottom: $gs-baseline/3;
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include fs-headline(1);
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
+    }
+}
+
+.fc-timestamp {
+    display: inline-block;
+}

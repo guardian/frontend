@@ -1,6 +1,6 @@
 # Default application configuration that all configurations inherit from.
 # Documentation: https://github.com/causes/scss-lint/blob/master/lib/scss_lint/linter/README.md
-exclude: 'common/app/assets/stylesheets/components/*'
+exclude: 'static/src/stylesheets/components/*'
 
 linters:
   BorderZero:
@@ -8,7 +8,7 @@ linters:
 
   CapitalizationInSelector:
     enabled: true
-    exclude: common/app/assets/stylesheets/module/_search.scss
+    exclude: static/src/stylesheets/module/_search.scss
 
   ColorKeyword:
     enabled: true
@@ -25,8 +25,8 @@ linters:
   DuplicateProperty:
     enabled: true
     exclude:
-      - common/app/assets/stylesheets/base/_type.scss # We need to declare font-size twice
-      - common/app/assets/stylesheets/_mixins.scss
+      - static/src/stylesheets/base/_type.scss # We need to declare font-size twice
+      - static/src/stylesheets/_mixins.scss
 
   MergeableSelector:
     enabled: false
@@ -86,8 +86,9 @@ linters:
     enabled: true
     max_depth: 4
     exclude: # Exclude if forced to break the inception rule to style third party components
-      - common/app/assets/stylesheets/module/content/_live-blog.scss
-      - common/app/assets/stylesheets/module/commercial/_travel.scss
+      - static/src/stylesheets/module/content/_live-blog.scss
+      - static/src/stylesheets/module/_discussion.scss
+      - static/src/stylesheets/module/commercial/_travel.scss
 
   Shorthand:
     enabled: true
@@ -98,7 +99,7 @@ linters:
   SpaceAfterComma:
     enabled: true
     exclude:
-      - common/app/assets/stylesheets/webfonts.scss
+      - static/src/stylesheets/webfonts.scss
 
   SpaceAfterPropertyColon:
     enabled: true
@@ -123,6 +124,9 @@ linters:
 
   UnnecessaryMantissa:
     enabled: true
+
+  UnnecessaryParentReference:
+    enabled: false
 
   UrlFormat:
     enabled: false

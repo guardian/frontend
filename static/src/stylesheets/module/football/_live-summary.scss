@@ -1,0 +1,23 @@
+.score__loading {
+    min-height: 32px;
+}
+
+.score__loading--live {
+    min-height: 165px;
+    text-align: center;
+
+    .is-updating {
+        display: inline-block;
+        margin-bottom: $gs-baseline*2;
+    }
+}
+
+.score-summary {
+    margin: $gs-baseline 0 (-$gs-baseline/2);
+    @include fs-headline(3, true);
+
+    @include mq(tablet) {
+        margin: $gs-baseline/2 0 0;
+        @include fs-headline(5, true);
+    }
+}

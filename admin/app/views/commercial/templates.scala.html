@@ -1,0 +1,65 @@
+@(env: String, templates: Seq[dfp.GuCreativeTemplate], trails: Seq[model.Content])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
+@import tools.DfpLink
+@import com.gu.facia.client.models.CollectionConfig
+
+@main(
+    Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates"),
+    projectName = Option("facia")
+) { } {
+
+
+    @** Example container
+    @fragments.containers.special(
+        Collection(trails),
+        new SpecialContainer,
+        containerIndex = 1,
+        dataId = template.name.replace(" ", "-")
+    )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(template.name)))
+    **@
+
+    <div class="l-side-margins l-side-margins--layout-front">
+        <div class="facia-container facia-container--layout-front">
+
+            <div class="facia-container__inner">
+                <h1>Creative Templates</h1>
+                <p>This dashboard is to help debug DFP creative templates.<br />
+                    All unarchived creative templates are shown.</p>
+                <p>The creatives listed under each template are only those owned by the Guardian Merchandising account.<br />
+                    So a template might appear to be unused when in fact other creatives have been built from it.</p>
+            </div>
+
+            <ul class="u-unstyled">
+                @for(template <- templates) {
+                    <li class="container__border">
+                        <div class="facia-container__inner">
+                            <h2>
+                                @template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)
+                            </h2>
+                            <p>@{template.description}</p>
+                            @if(template.creatives.isEmpty){
+                                <p><b>This template is not in use.</b></p>
+                            }
+                            @if(template.creatives.nonEmpty){
+                                <p>Creatives built from this template:
+                                    <ul>
+                                        @for(creative <- template.creatives){
+                                            <li>@{creative.name} (<a href="@DfpLink.creative(creative.id)">@{creative.id}</a>)</li>
+                                        }
+                                    </ul>
+                                </p>
+                            }
+                        </div>
+                        <h3 class="facia-container__inner">Template</h3>
+                        @Html(template.snippet)
+                        @for(example <- template.example) {
+                            <h3 class="facia-container__inner">Example</h3>
+                            @Html(example)
+                        }
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+}

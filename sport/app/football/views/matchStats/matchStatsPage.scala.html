@@ -10,8 +10,8 @@
             @player.name
             @player.events.map{ event =>
                 @{ event.eventType match {
-                    case "booking" => <i class="i i-yellow-card"></i>
-                    case "dismissal" => <i class="i i-red-card"></i>
+                    case "booking" => <i class="i i-card-yellow"></i>
+                    case "dismissal" => <i class="i i-card-red"></i>
                     case "substitution" => "(s " + event.eventTime + "')"
                     case _ =>  ""
                 }}
@@ -103,9 +103,6 @@
                     }
                 </div>
             </div>
-
-            @fragments.footballNav(page)
-
         </div>
     </div>
 </article>

@@ -1,4 +1,7 @@
 {
+    // http://www.jshint.com/docs/options/
+
+    // Enforcing options
     "bitwise"  : true,
     "curly"    : true,
     "eqeqeq"   : true,
@@ -16,16 +19,18 @@
     "undef"    : true,
     "trailing" : true,
 
+    // Relaxing options
+    "expr"     : true,
     "laxbreak" : true,
     "maxerr"   : 100,
 
+    // Environments
     "browser"  : true,
     "jquery"   : true,
 
     "globals"   : {
         "require": false,
         "define" : false,
-        "s"      : false,
-        "Swipe"  : false
+        "s"      : false
     }
 }

@@ -1,31 +1,3 @@
 package conf
 
-import common.Metrics
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementPage, PlainTextResponse }
-import com.gu.management.play.{ Management => GuManagement }
-import com.gu.management.logback.LogbackLevelPage
-import com.gu.management.HttpRequest
-import play.api.{Mode, Play}
-import services.ConfigAgent
-
 object HealthCheck extends AllGoodHealthcheckController(9008, "/uk")
-
-object Management extends GuManagement {
-  val applicationName = "frontend-facia"
-  val metrics = Metrics.facia ++ Metrics.contentApi ++ Metrics.common
-
-  lazy val pages = List(
-    new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("/uk"),
-    StatusPage(applicationName, metrics),
-    new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage(applicationName),
-    new ConfigAgentStatus
-  )
-}
-
-class ConfigAgentStatus extends ManagementPage {
-  val path: String = "/management/configagentstatus"
-  override lazy val linktext = "/management/configagentstatus - ONLY use for debugging"
-  def get(request: HttpRequest) = PlainTextResponse(ConfigAgent.contentsAsJsonString)
-}

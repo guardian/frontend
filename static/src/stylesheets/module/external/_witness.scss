@@ -1,0 +1,122 @@
+// Module: witness
+// Desc: This file contains all styles for Guardian Witness
+// Note: the naming convention is a mix between BEM and SMACSS
+// block--element instead of block__element
+//
+// Testing:
+// - images: /music/musicblog/2013/jun/27/glastonbury-2013-festival-liveblog-thursday1
+// - text: /technology/guardianwitness-blog/2014/apr/14/the-10-tech-commandments-to-avoid-digital-shame
+// - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
+
+.element-witness {
+    border: 1px solid $c-neutral5;
+    margin-bottom: ($gs-baseline/3)*5;
+}
+.element-witness--title {
+    margin-bottom: ($gs-baseline/3)*2;
+}
+.element-witness--main {
+    padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4;
+}
+.element-witness figcaption {
+    margin: ($gs-baseline/3)*4 0 0;
+    // Make it look like the body copy
+    @include fs-bodyCopy(2);
+    color: $c-neutral1;
+
+    &:before {
+        display: none; // Hide the "camera" icon
+    }
+}
+.element-witness-video iframe {
+    max-width: 100%;
+}
+.element-witness--main img {
+    width: 100%;
+    max-width: 100%;
+}
+.element-witness--metadata {
+    border-top: 1px solid $c-neutral5;
+    padding: $gs-baseline $gs-gutter/2;
+    background: $c-neutral7;
+    @include fs-textSans(3);
+    color: $c-neutral2-contrasted !important;
+
+    img {
+        margin-bottom: 0;
+    }
+}
+.element-witness--source {
+    padding-left: $gs-gutter/2;
+    @include fs-textSans(3);
+    color: $c-neutral2;
+}
+.element-witness--author-name {
+    font-weight: bold;
+}
+.element-witness--date {
+    @include fs-textSans(1, true);
+}
+.element-witness--author time {
+    display: block;
+}
+.witness-avatar {
+    float: left;
+    padding: 0 $gs-gutter/2 0 0;
+}
+.element-witness--author,
+.element-witness--date {
+    margin-bottom: 0;
+}
+
+.witness-cta-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 47px;
+    margin-bottom: ($gs-baseline/3)*4;
+}
+.witness-cta__body {
+    @include fs-textSans(3);
+    float: left;
+    line-height: 15px;
+    padding: $gs-baseline/2 $gs-gutter/2 0;
+    margin-left: 50px;
+
+    .witness-cta__logo {
+        display: block;
+    }
+}
+.witness-logo {
+    display: inline-block;
+    color: #247eb3;
+    @include font($f-serif-text, 700, 16, 16);
+    letter-spacing: -.04em;
+    text-transform: lowercase;
+}
+.witness-logo__witness {
+    color: $c-neutral2;
+    margin-left: -3px;
+}
+.witness-cta {
+    border: 1px solid $c-neutral5;
+    overflow: hidden;
+    max-height: 42px;
+    margin: 1px 0 0;
+    position: relative;
+}
+.witness-cta__sponsor {
+    float: right;
+    border-left: 1px solid $c-neutral5;
+    padding-left: $gs-gutter/2;
+    margin: $gs-baseline/2 $gs-gutter/2;
+
+    .i {
+        display: block;
+    }
+}
+.witness-cta__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

@@ -1,0 +1,152 @@
+/**
+ * An example of a colour palette to be used with guss-colours
+ *
+ * If you're looking for the guardian colour palette: https://github.com/guardian/pasteup-palette
+ * 
+ * @type Map
+ *
+ * @group colours
+ */
+/**
+ * Get a colour from a given colour palette.
+ * 
+ * @param {String} $name                    - colour to get
+ * @param {Map}    $palette ($guss-colours) - palette
+ *
+ * @requires {variable} guss-colours
+ *
+ * @return {Color | Null}
+ *
+ * @group colours
+ */
+/**
+ * Generate helper classes for a given colour palette  
+ * Outputs rules such as: `.c-red { color: red; }`.
+ *
+ * @param {Map}    $palette  ($guss-colours) - palette
+ * @param {String} $prefix   ("c-")          - prefix
+ * @param {String} $property ("color")       - property
+ *
+ * @requires {variable} guss-colours
+ *
+ * @group colours
+ */
+html {
+  max-width: 60em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em 1em 3em;
+  background: #545454;
+  font: 200 1em/1.5 'Helvetica Neue', sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; }
+
+h1 {
+  font: 100 6em/1 'Helvetica Neue', sans-serif; }
+
+a {
+  color: #ffffff; }
+
+.clear {
+  margin: 2em; }
+
+.b-rainbow-red {
+  background-color: #ed1c24; }
+
+.b-rainbow-orange {
+  background-color: #f26522; }
+
+.b-rainbow-yellow {
+  background-color: #fff200; }
+
+.b-rainbow-green {
+  background-color: #00a651; }
+
+.b-rainbow-blue {
+  background-color: #0054a6; }
+
+.b-rainbow-indigo {
+  background-color: #2e3192; }
+
+.b-rainbow-violet {
+  background-color: #92278f; }
+
+[class^=b-] {
+  display: inline-block;
+  width: 12em;
+  height: 12em;
+  margin: 0 1em 1em 0;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 8px solid #fff;
+  text-align: center;
+  text-shadow: #ffffff 0 0 2px;
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.3);
+  color: #333333; }
+
+.colour-name,
+.colour-value {
+  font-size: 1.125em;
+  width: 90%;
+  display: inline-block; }
+
+.colour-name {
+  margin-top: calc(50% - 2.75em); }
+
+.b-rainbow-red {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-red:before {
+    visibility: hidden;
+    content: "rainbow-red"; }
+
+.b-rainbow-orange {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-orange:before {
+    visibility: hidden;
+    content: "rainbow-orange"; }
+
+.b-rainbow-yellow {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-yellow:before {
+    visibility: hidden;
+    content: "rainbow-yellow"; }
+
+.b-rainbow-green {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-green:before {
+    visibility: hidden;
+    content: "rainbow-green"; }
+
+.b-rainbow-blue {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-blue:before {
+    visibility: hidden;
+    content: "rainbow-blue"; }
+
+.b-rainbow-indigo {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-indigo:before {
+    visibility: hidden;
+    content: "rainbow-indigo"; }
+
+.b-rainbow-violet {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-rainbow-violet:before {
+    visibility: hidden;
+    content: "rainbow-violet"; }

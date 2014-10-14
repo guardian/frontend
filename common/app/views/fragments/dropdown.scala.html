@@ -1,28 +1,27 @@
-@(name: String = "", modifier: String = "", isActive: Boolean = false)(content: Html)
+@(name: String, modifier: Option[String] = None, isActive: Boolean = false)(content: Html)
 
 @defining("dropdown-"+content.hashCode){ hash =>
-<div class="dropdown dropdown-styled @if(modifier != ""){dropdown--@modifier} @if(isActive){dropdown--active}">
+<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active}">
     <button class="dropdown__button u-button-reset js-dropdown-button"
+            type="button"
             data-link-name="Show dropdown: @name"
-            aria-haspopup="true"
-            aria-controls="@hash">
+            aria-controls="@hash"
+            aria-expanded="@{isActive.toString}">
         <span class="dropdown__label">@name</span>
-        <span class="control js-visible">
+        <span class="control modern-visible">
             <i class="i i-arrow-down-white-mask tone-background"></i>
         </span>
     </button>
 
-    <label class="dropdown__toggle-label js-hidden"
-           aria-haspopup="true"
+    <label class="dropdown__toggle-label modern-hidden"
            aria-controls="@hash"
            for="@{hash}__label">Show</label>
-    <input class="dropdown__toggle js-hidden"
-            aria-haspopup="true"
+    <input class="dropdown__toggle modern-hidden"
             aria-controls="@hash"
             type="checkbox"
             id="@{hash}__label" />
 
-    <div id="@hash" class="dropdown__content" aria-hidden="true" aria-expanded="false">
+    <div id="@hash" class="dropdown__content" aria-hidden="@{!isActive.toString}" aria-expanded="@{isActive.toString}">
         @content
     </div>
 </div>

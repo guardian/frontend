@@ -6,18 +6,31 @@ import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
 
+import scala.concurrent.Future
+
 object ContentApiOffers extends Controller with ExecutionContexts {
 
-  private def renderItem(contentId: String, format: Format) = MemcachedAction { implicit request =>
-    Lookup.content(contentId) map {
-      case Some(content) => Cached(componentMaxAge) {
-        format.result(views.html.contentapi.item(content))
+  private def renderItems(format: Format) = MemcachedAction { implicit request =>
+    val optKeyword = request.queryString get "k" map (_.head)
+
+    val futureLatestByKeyword = optKeyword.map { keyword =>
+      Lookup.latestContentByKeyword(keyword, 4)
+    }.getOrElse(Future.successful(Nil))
+
+    val futureContents = for {
+      specific <- Lookup.contentByShortUrls(specificIds)
+      latestByKeyword <- futureLatestByKeyword
+    } yield (specific ++ latestByKeyword).distinct take 4
+
+    futureContents map {
+      case Nil => NoCache(format.nilResult)
+      case contents => Cached(componentMaxAge) {
+        format.result(views.html.contentapi.items(contents))
       }
-      case None => NoCache(format.nilResult)
     }
   }
 
-  def itemHtml(contentId: String) = renderItem(contentId, htmlFormat)
+  def itemsHtml = renderItems(htmlFormat)
 
-  def itemJson(contentId: String) = renderItem(contentId, jsonFormat)
+  def itemsJson = renderItems(jsonFormat)
 }

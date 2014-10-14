@@ -7,7 +7,7 @@ import controllers.AuthLogging
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
-import services.{ Notification, Audit }
+import services.Notification
 import tools.Store
 import model.NoCache
 
@@ -66,20 +66,20 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
 
     Store.putSwitches(updates mkString "\n")
-    SwitchesUpdateCounter.recordCount(1)
+    SwitchesUpdateCounter.increment()
 
     log.info("switches successfully updated")
 
     val changes = updates filterNot { current contains _ }
     Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
-      Audit(s"Switch change by ${requester}: ${change}")
+      log.info(s"Switch change by ${requester}: ${change}")
     }
 
     Redirect(routes.SwitchboardController.renderSwitchboard())
   } catch { case e: Throwable =>
     log.error("exception saving switches", e)
-    SwitchesUpdateErrorCounter.recordCount(1)
+    SwitchesUpdateErrorCounter.increment()
 
     Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
       "error" -> ("Error saving switches '%s'" format e.getMessage)

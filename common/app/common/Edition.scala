@@ -8,7 +8,8 @@ import model.MetaData
 abstract class Edition(
     val id: String,
     val displayName: String,
-    val timezone: DateTimeZone
+    val timezone: DateTimeZone,
+    val lang: String
   ) extends Navigation {
   def navigation: Seq[NavItem]
   def briefNav: Seq[NavItem]
@@ -55,8 +56,12 @@ object Edition {
 
   def others(implicit request: RequestHeader): Seq[Edition] = Region(request).map(r =>  all).getOrElse {
     val currentEdition = Edition(request)
-    all.filter(_ != currentEdition)
+    others(currentEdition)
   }
+
+  def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
+
+  def others(id: String): Seq[Edition] = byId(id).map(others(_)).getOrElse(Nil)
 
   def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
 }

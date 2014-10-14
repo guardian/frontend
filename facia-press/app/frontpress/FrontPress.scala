@@ -1,74 +1,126 @@
 package frontpress
 
-import common.Logging
+import com.gu.facia.client.models.CollectionConfig
+import com.gu.openplatform.contentapi.model.ItemResponse
+import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.{Edition, Logging}
 import common.editions.Uk
-import conf.Switches._
+import conf.LiveContentApi
+import model.SeoData._
 import model._
+import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import services._
+
 import scala.concurrent.Future
-import play.api.Play.current
+import scala.util.{Failure, Success, Try}
 
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => LiveCollections.getCollection(config.id, config, Uk).map((config, _)))
+  def pressDraftByPathId(id: String): Future[JsObject] = generateJson(id, DraftCollections).map { json =>
+    (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
+    json
+  }
+
+  def pressLiveByPathId(id: String): Future[JsObject] = generateJson(id, LiveCollections).map { json =>
+    (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
+    json
+  }
+
+  def generateJson(id: String,
+                   seoData: SeoData,
+                   frontProperties: FrontProperties,
+                   collections: Seq[(CollectionConfigWithId, Collection)]): Try[JsObject] = {
+    val collectionsWithBackFills = collections.toList collect {
+      case (configWithId, collection) if configWithId.config.apiQuery.isDefined => collection
+    }
+
+    if (collectionsWithBackFills.nonEmpty && collectionsWithBackFills.forall(_.isBackFillEmpty)) {
+      val errorMessage = s"Tried to generate pressed JSON for front $id but all back fills were empty - aborting!"
+      log.error(errorMessage)
+      Failure(new RuntimeException(errorMessage))
+    } else {
+      val collectionsJson = collections.map { case (configWithId, collection) =>
+        Json.obj(configWithId.id -> Json.toJson(CollectionJson.fromCollection(configWithId.config, collection)))
+      }.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject}
+
+      Success(Json.obj(
+        "id" -> id,
+        "seoData" -> seoData,
+        "frontProperties" -> frontProperties,
+        "collections" -> collectionsJson))
+    }
+  }
+
+  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(CollectionConfigWithId, Collection)]] = {
+    val collectionIds: List[CollectionConfigWithId] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config.config, Uk).map((config, _)))
     Future.sequence(collections)
   }
 
-  private def retrieveDraftFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => DraftCollections.getCollection(config.id, config, Uk).map((config, _)))
-    Future.sequence(collections)
+  private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] =
+    for {
+      (seoData, frontProperties) <- getFrontSeoAndProperties(id)
+      collections <- retrieveCollectionsById(id, parseCollection)
+    } yield generateJson(id, seoData, frontProperties, collections).get
+
+  private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
+    for {
+      itemResp <- getCapiItemResponseForPath(path)
+    } yield {
+      val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
+      val seoFromPath = SeoData.fromPath(path)
+
+      val navSection: String = seoFromConfig.navSection
+        .orElse(itemResp.flatMap(getNavSectionFromItemResponse))
+        .getOrElse(seoFromPath.navSection)
+      val webTitle: String = seoFromConfig.webTitle
+        .orElse(itemResp.flatMap(getWebTitleFromItemResponse))
+        .getOrElse(seoFromPath.webTitle)
+      val title: Option[String] = seoFromConfig.title
+      val description: Option[String] = seoFromConfig.description
+        .orElse(SeoData.descriptionFromWebTitle(webTitle))
+
+      val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
+        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`))
+
+      val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
+      (seoData, frontProperties)
+    }
+
+  private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.flatMap(_.sectionId)
+      .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
+
+  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.map(_.webTitle)
+      .orElse(itemResponse.section.map(_.webTitle))
+
+  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
+  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
+    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
+    case _ => sectionId
   }
 
-  def pressDraftByPathId(path: String): Future[JsObject] =
-    generateDraftJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
-      json
+  private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
+    val contentApiResponse:Future[ItemResponse] = LiveContentApi
+      .item(id, Edition.defaultEdition)
+      .showEditorsPicks(false)
+      .pageSize(0)
+      .response
+
+    contentApiResponse.onSuccess { case _ =>
+      ContentApiSeoRequestSuccess.increment()
+      log.info(s"Getting SEO data from content API for $id")}
+
+    contentApiResponse.onFailure { case e: Exception =>
+      log.warn(s"Error getting SEO data from content API for $id: $e")
+      ContentApiSeoRequestFailure.increment()
     }
 
-  def pressLiveByPathId(path: String): Future[JsObject] =
-    generateLiveJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
-      json
-    }
-
-  def generateLiveJson(id: String): Future[JsObject] = {
-    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
-    futureSeoData.flatMap { seoData =>
-      retrieveFrontByPath(id)
-        .map(_.map { case (config, collection) =>
-        Json.obj(
-          config.id -> Json.toJson(CollectionJson.fromCollection(config, collection))
-        )})
-        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
-        .map(c =>
-        Json.obj("id" -> id) ++
-          Json.obj("seoData" -> seoData) ++
-          Json.obj("collections" -> c)
-        )
-    }
-  }
-
-  def generateDraftJson(id: String): Future[JsObject] = {
-    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
-    futureSeoData.flatMap { seoData =>
-      retrieveDraftFrontByPath(id)
-        .map(_.map { case (config, collection) =>
-        Json.obj(
-          config.id -> Json.toJson(CollectionJson.fromCollection(config, collection))
-        )})
-        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
-        .map(c =>
-        Json.obj("id" -> id) ++
-          Json.obj("seoData" -> seoData) ++
-          Json.obj("collections" -> c)
-        )
-    }
+    contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 }
 

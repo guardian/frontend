@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import front._
 import model._
@@ -35,32 +36,32 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Redirect(redirectPath))
   }
 
-  def applicationsRedirect(path: String) = Action { implicit request =>
+  def applicationsRedirect(path: String)(implicit request : RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
-    InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None)
+    Future.apply(InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
-  def renderFrontPressSpecial(path: String) = renderFrontPress(path)
+  def renderFrontPressSpecial(path: String) = MemcachedAction { implicit  request => renderFrontPressResult(path) }
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id)
 
-  def renderFrontRss(path: String) = {
-    log.info(s"Serving RSS Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path))
+  def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
+  log.info(s"Serving RSS Path: $path")
+    if (!ConfigAgent.shouldServeFront(path))
       applicationsRedirect(s"$path/rss")
     else
-      renderFrontPress(path)
+      renderFrontPressResult(path)
   }
 
-  def renderFront(path: String) = {
+  def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path))
+    if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
-      renderFrontPress(path)
+      renderFrontPressResult(path)
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
@@ -69,8 +70,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderFrontPress(path: String) = MemcachedAction{ implicit request =>
-    frontJson.get(path).map(_.map{ faciaPage =>
+  private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+    val futureResult: Future[Result] = frontJson.get(path).map(_.map{ faciaPage =>
       Cached(faciaPage) {
         if (request.isRss)
           Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
@@ -81,15 +82,19 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Ok(views.html.front(faciaPage))
       }
     }.getOrElse(Cached(60)(NotFound)))
+    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult
   }
+
+  def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>
       log.info(s"Serving collection ID: $id")
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1)
+            val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
+            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1, id)
             if (request.isJson)
               JsonCollection(html, collection)
             else
@@ -125,11 +130,15 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
               Cached(60) {
-                val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
                   Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
               }
           }.getOrElse(ServiceUnavailable)
       }
+  }
+
+  def renderAgentContents = Action {
+    Ok(ConfigAgent.contentsAsJsonString)
   }
 }
 

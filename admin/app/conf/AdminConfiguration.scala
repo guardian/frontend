@@ -1,6 +1,9 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
+import conf.Configuration.OAuthCredentials
+
+case class OmnitureCredentials(userName: String, secret: String)
 
 object AdminConfiguration {
 
@@ -26,5 +29,27 @@ object AdminConfiguration {
     lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
     lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
     lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
+  }
+
+  lazy val oauthCredentials: Option[OAuthCredentials] =
+      for {
+        oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
+        oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
+        oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
+      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+
+  lazy val omnitureCredentials: Option[OmnitureCredentials] =
+    for {
+      userName <- configuration.getStringProperty("admin.omniture.username")
+      secret <- configuration.getStringProperty("admin.omniture.secret")
+    } yield OmnitureCredentials(userName, secret)
+
+  object db {
+    object default {
+      lazy val driver = configuration.getStringProperty("default.driver")
+      lazy val url = configuration.getStringProperty("default.url")
+      lazy val user = configuration.getStringProperty("default.user")
+      lazy val password = configuration.getStringProperty("default.password")
+    }
   }
 }

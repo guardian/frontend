@@ -8,10 +8,7 @@ import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import views.support.RenderOtherStatus
 
-case class InteractivePage (
-  val interactive: Interactive,
-  val storyPackage: Seq[Trail]
-)
+case class InteractivePage (interactive: Interactive, related: RelatedContent)
 
 object InteractiveController extends Controller with Logging with ExecutionContexts {
 
@@ -36,7 +33,7 @@ object InteractiveController extends Controller with Logging with ExecutionConte
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }
       val interactive = response.content map { Interactive(_) }
-      val page = interactive.map(i => InteractivePage(i, storyPackage.filterNot(_.id == i.id)))
+      val page = interactive.map(i => InteractivePage(i, RelatedContent(i, response)))
 
       ModelOrResult(page, response)
     }

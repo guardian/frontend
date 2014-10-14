@@ -1,50 +1,38 @@
-@(content: model.Content, storyPackage: Seq[Trail], cssClass: String = "")(implicit request: RequestHeader)
-@import conf.Switches._
+@(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
 <div class="content-footer @if(cssClass){ content-footer--@cssClass }">
-    @if(DiscussionSwitch.isSwitchedOn && content.isCommentable) {
-        <div class="gs-container js-comments">
-            <div class="content__main-column" data-component="discussion">
+    @if(conf.Switches.DiscussionSwitch.isSwitchedOn && content.isCommentable) {
+        <div class="js-comments" data-component="discussion">
             @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
-            </div>
         </div>
     }
 
     @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
+            @fragments.commercial.commercialComponentHigh()
         </div>
     }
 
 
     @fragments.referredContentPlaceholder(content.visualTone)
-    @fragments.storyPackagePlaceholder(storyPackage)
+    @fragments.storyPackagePlaceholder(related)
     @fragments.onwardPlaceholder(content.visualTone)
 
     <div class="js-repositioned-comments content__repositioned-comments"></div>
 
-    @if(WorldCupArticleContainerSwitch.isSwitchedOn) {
-        <aside class="you-may-have-missed js-world-cup facia-container facia-container--default-heading facia-container--layout-content tone-news" role="complementary">
-        </aside>
+    @if(!content.isAdvertisementFeature) {
+        <div class="facia-container facia-container--layout-content facia-container--default-heading">
+            @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        </div>
+
+        <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
+            @fragments.outbrainPlaceholder()
+        </div>
     }
 
-    <div class="facia-container facia-container--layout-content facia-container--default-heading">
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
-    </div>
-
-    <div class="facia-container facia-container--layout-content facia-container--default-heading">
-        @fragments.outbrainPlaceholder()
-    </div>
-
-    @if(!content.shouldHideAdverts) {
+    @if(!content.shouldHideAdverts && !content.isAdvertisementFeature) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+            @fragments.commercial.commercialComponent()
         </div>
     }
-
-    <div class="gs-container">
-        <div class="content__main-column" data-link-name="content breadcrumbs">
-            @fragments.breadcrumb(content)
-        </div>
-    </div>
 </div>

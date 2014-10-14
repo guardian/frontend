@@ -22,8 +22,9 @@ object PressCommand {
 
 object FaciaPressQueue extends ExecutionContexts {
   val maybeQueue = Configuration.faciatool.frontPressToolQueue map { queueUrl =>
+    val credentials = Configuration.aws.mandatoryCredentials
     JsonMessageQueue[PressJob](
-      new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
       queueUrl
     )
   }
@@ -63,7 +64,7 @@ object FaciaPress extends Logging with ExecutionContexts {
         }
 
       lazy val draftPress =
-        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft) {
+        if (pressCommand.draft) {
           val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft)))
           fut.onComplete {
             case Failure(error) =>

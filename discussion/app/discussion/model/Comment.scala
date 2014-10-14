@@ -1,7 +1,6 @@
 package discussion
 package model
 
-import _root_.model.ISODateTimeStringNoMillis2DateTime
 import org.joda.time.DateTime
 import play.api.libs.json._
 
@@ -25,8 +24,7 @@ case class DefaultComment(
   override val responseTo: Option[ResponseTo],
   numRecommends: Int,
   responseCount: Int,
-  webUrl: String,
-  override val sentiment: Option[Int]
+  webUrl: String
 ) extends Comment
 
 case class BlankComment() extends Comment{
@@ -57,10 +55,9 @@ trait Comment {
   val numRecommends: Int
   val responseCount: Int
   val webUrl: String
-  val sentiment: Option[Int] = None
 }
 
-object Comment extends {
+object Comment extends implicits.Dates {
 
   def apply(json: JsValue, profileOpt: Option[Profile], discussionOpt: Option[Discussion]): Comment = {
     val discussion = discussionOpt getOrElse {Discussion(json \ "discussion")}
@@ -76,8 +73,7 @@ object Comment extends {
       responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
       numRecommends = (json \ "numRecommends").as[Int],
       responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0),
-      webUrl = (json \ "webUrl").as[String],
-      sentiment = (json \ "sentiment").as[Option[Int]]
+      webUrl = (json \ "webUrl").as[String]
     )
   }
 

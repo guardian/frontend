@@ -1,5 +1,6 @@
 package model
 
+import org.joda.time.Duration
 import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
 trait Element {
@@ -35,6 +36,11 @@ trait ImageContainer extends Element {
 
   // The image crop with the largest width.
   lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
+
+  // all landscape images with a width of 1024 or 2048 have been auto-cropped to 4:3. portrait images are never
+  // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
+  // distinguish crops by their intended usage
+  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || (img.width != 2048 && img.width != 1024))
 }
 
 object ImageContainer {
@@ -50,7 +56,6 @@ trait VideoContainer extends Element {
   protected implicit val ordering = EncodingOrdering
 
   lazy val videoAssets: List[VideoAsset] = {
-
     val images = delegate.assets.filter(_.assetType == "image").zipWithIndex.map{ case (asset, index) =>
       ImageAsset(asset, index)
     }
@@ -60,14 +65,22 @@ trait VideoContainer extends Element {
     delegate.assets.filter(_.assetType == "video").map( v => VideoAsset(v, container)).sortBy(-_.width)
   }
 
+  lazy val blockVideoAds = videoAssets.exists(_.blockVideoAds)
+
   lazy val encodings: Seq[Encoding] = {
     videoAssets.toList.collect {
-      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
-    }.sorted
+      case video: VideoAsset => video.encoding
+    }.flatten.sorted
   }
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val ISOduration: String = new Duration(duration*1000.toLong).toString()
+  lazy val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
+  lazy val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString
 
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
+
+  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+  lazy val caption: Option[String] = largestVideo.flatMap(_.caption)
 }
 
 trait AudioContainer extends Element {
@@ -88,5 +101,5 @@ trait EmbedContainer extends Element {
 
 class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
 class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
-class AudioElement(val delegate: ApiElement, val index: Int) extends Element with AudioContainer
+class AudioElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with AudioContainer
 class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer

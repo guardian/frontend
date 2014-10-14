@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.googleauth.UserIdentity
 import common.ExecutionContexts
 import conf.Configuration
 import play.api.libs.Comet
@@ -18,7 +19,7 @@ import auth.ExpiringActions
   */
 object ContentApiPressController extends Controller with ExecutionContexts {
   def publishAll() = ExpiringActions.ExpiringAuthAction { request =>
-    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
+    Ok(views.html.publish_all(Configuration.environment.stage, UserIdentity.fromRequest(request)))
   }
 
   def publishAllStream() = ExpiringActions.ExpiringAuthAction { request =>

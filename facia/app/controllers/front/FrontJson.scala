@@ -1,12 +1,12 @@
 package controllers.front
 
+import com.gu.facia.client.models.CollectionConfig
 import model._
 import scala.concurrent.Future
-import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsObject, JsNull, JsValue, Json}
+import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
 import common.{Logging, S3Metrics, ExecutionContexts}
 import model.FaciaPage
-import services.SecureS3Request
+import services.{CollectionConfigWithId, SecureS3Request}
 import conf.Configuration
 
 
@@ -37,13 +37,13 @@ trait FrontJsonLite extends ExecutionContexts{
 
     (curated ++ editorsPicks ++ results)
     .filterNot{ j =>
-      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+      (j \ "id").asOpt[String].exists(Snap.isSnap)
      }
-    .take(3).map{ j =>
+    .map{ j =>
       Json.obj(
-        "headline" -> (j \ "safeFields" \ "headline"),
+        "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
-        "internalContentCode" -> (j \ "safeFields" \ "internalContentCode"),
+        "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
         "id" -> (j \ "id")
       )
     }
@@ -119,26 +119,28 @@ trait FrontJson extends ExecutionContexts with Logging {
     )
   }
 
-  private def parseOutTuple(json: JsValue): List[(Config, Collection)] = {
+  private def parseOutTuple(json: JsValue): List[(CollectionConfigWithId, Collection)] = {
     (json \ "collections").as[List[Map[String, JsValue]]].flatMap { m =>
       m.map { case (id, j) =>
-        (parseConfig(id, j), parseCollection(j))
+        (CollectionConfigWithId(id, parseConfig(id, j)), parseCollection(j))
       }
     }
   }
 
-  def parseConfig(id: String, json: JsValue): Config = {
-    Config(
-      id = id,
-      contentApiQuery = (json \ "apiQuery").asOpt[String],
+  def parseConfig(id: String, json: JsValue): CollectionConfig =
+    CollectionConfig(
+      apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
-      groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
-      collectionType  = (json \ "type").asOpt[String],
-      showTags = (json \ "showTags").asOpt[Boolean] getOrElse false,
-      showSections = (json \ "showSections").asOpt[Boolean] getOrElse false
+      groups          = (json \ "groups").asOpt[List[String]],
+      `type`          = (json \ "type").asOpt[String],
+      showTags        = (json \ "showTags").asOpt[Boolean],
+      showSections    = (json \ "showSections").asOpt[Boolean],
+      uneditable      = (json \ "uneditable").asOpt[Boolean],
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean],
+      showDateHeader =  (json \ "showDateHeader").asOpt[Boolean],
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean]
     )
-  }
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
     val json = Json.parse(j)
@@ -147,6 +149,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       FaciaPage(
         id,
         seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
+        frontProperties = parseFrontProperties((json \ "frontProperties").asOpt[JsValue].getOrElse(JsNull)),
         collections = parseOutTuple(json)
       )
     )
@@ -171,6 +174,15 @@ trait FrontJson extends ExecutionContexts with Logging {
       seoDataJson.description.orElse(seoDataFromPath.description)
       )
   }
+
+  def parseFrontProperties(json: JsValue) = FrontProperties(
+    onPageDescription = (json \ "onPageDescription").asOpt[String].filter(_.nonEmpty),
+    imageUrl = (json \ "imageUrl").asOpt[String].filter(_.nonEmpty),
+    imageWidth = (json \ "imageWidth").asOpt[String].filter(_.nonEmpty),
+    imageHeight = (json \ "imageHeight").asOpt[String].filter(_.nonEmpty),
+    isImageDisplayed = (json \ "isImageDisplayed").asOpt[Boolean].getOrElse(false),
+    editorialType = (json \ "editorialType").asOpt[String].filter(_.nonEmpty)
+  )
 
 }
 

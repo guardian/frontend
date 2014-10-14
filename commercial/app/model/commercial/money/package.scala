@@ -1,14 +1,18 @@
 package model.commercial
 
-import conf.{Switches, CommercialConfiguration}
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
+import conf.Switches._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.xml.Elem
 
 package object money {
 
-  trait MoneySupermarketApi[T <: Ad] extends XmlAdsApi[T] {
+  trait MoneySupermarketApi[T] extends Logging {
 
-    protected val switch = Switches.MoneysupermarketFeedsSwitch
+    protected val adTypeName: String
 
     protected val path: String
 
@@ -22,18 +26,24 @@ package object money {
       }
     }
 
-    override protected val loadTimeout = 10000
+    protected def parse(xml: Elem): Seq[T]
+
+    protected def cleanResponseBody(body: String): String = body
+
+    def loadAds(): Future[Seq[T]] = {
+      FeedReader.readSeqFromXml[T](FeedRequest(adTypeName, MoneysupermarketFeedsSwitch, url, timeout = 10.seconds))(parse)
+    }
   }
 
 
-  trait MoneyAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
+  trait MoneyAgent[T] extends MerchandiseAgent[T] with ExecutionContexts {
 
     protected def loadProducts(): Future[Seq[T]]
 
     def refresh() {
       for {
         products <- loadProducts()
-      } updateCurrentAds(products)
+      } updateAvailableMerchandise(products)
     }
   }
 

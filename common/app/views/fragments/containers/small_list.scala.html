@@ -1,32 +1,34 @@
-@(collection: model.Collection, style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(collection: model.Collection, style: views.support.Container, containerIndex: Int, dataId: String)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.FaciaComponentName
 @import views.support.GetClasses
+@import dfp.DfpAgent
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
     @if(collection.items.nonEmpty) {
         <section
+        id="@FaciaComponentName(config, collection)"
         class="@GetClasses.forContainer(style, config, containerIndex, hasTitle = true)"
         data-link-name="@FaciaComponentName(config, collection)"
-        data-id="@config.id"
+        data-id="@dataId"
         data-type="@style.containerType"
-            @config.sponsorshipKeyword.map { keyword =>
+            @DfpAgent.sponsorshipTag(config).map { keyword =>
             data-keywords="@keyword"
             }
         data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
-                <div class="container__header">
-                @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background">
-                    @href.map { href =>
-                        <a data-link-name="section heading" href="@LinkTo {/@href}">@Html(title)</a>
-                    }.getOrElse {
-                        @Html(title)
+                <div class="container__header js-container__header">
+                    @title.map { title =>
+                        <h2 class="container__title">
+                        @href.map { href =>
+                            <a data-link-name="section heading" href="@LinkTo {/@href}">@Html(title)</a>
+                        }.getOrElse {
+                            @Html(title)
+                        }
+                        </h2>
                     }
-                    </h2>
-                }
                 </div>
                 <div class="container__body container--rolled-up-hide">
                     @fragments.collections.small_list(collection.items, style)

@@ -1,11 +1,9 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import tools.MatchListFeatureTools
 
-
-class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
+@DoNotDiscover class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
 
   feature("Live Matches") {
 
@@ -13,7 +11,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
 
       Given("I visit the live matches page")
 
-      HtmlUnit("/football/live") { browser =>
+      goTo("/football/live") { browser =>
         import browser._
 
         val matches = $(".football-match__team")
@@ -33,7 +31,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
     scenario("Competition fixtures filter") {
 
       Given("I am on the premier league live matches page")
-      HtmlUnit("/football/premierleague/live") { browser =>
+      goTo("/football/premierleague/live") { browser =>
         import browser._
 
         val matches = $(".football-match__team")
@@ -44,27 +42,6 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
 
         And("I should not see other leagues games")
         assertNotTeamWithScore(matches, "Cardiff", "2")
-      }
-    }
-
-    scenario("The 'Classic version' link points to the correct, equivalent classic page") {
-
-      Given("I visit the live page")
-      And("I am on the 'UK' edition")
-      HtmlUnit("/football/live") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/live?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/live"))
-      }
-
-      Given("I visit the live page")
-      And("I am on the 'US' edition")
-      HtmlUnit.US("/football/live") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/matches?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/live"))
       }
     }
   }

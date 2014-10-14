@@ -1,4 +1,4 @@
-@(chart: tools.LineChart)
+@(chart: tools.AwsLineChart)
 
 @* placeholder for chart *@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
@@ -14,10 +14,10 @@
             } else {
                 legend: { position: "in" },
             }
-            chartArea: {
-                width: "94%"
-            },
+            chartArea: { width: "85%" },
+            titleTextStyle: {color: '#999'},
             axisTitlesPosition: 'in',
-            fontName : 'Georgia'
+            fontName : 'Georgia',
+            smoothLine: true
     });
 </script>

@@ -4,6 +4,7 @@ import common._
 import model.TeamMap.findTeamIdByUrlName
 import model._
 import conf._
+import play.api.libs.json._
 import play.api.mvc.{ Controller, Action }
 import pa.FootballMatch
 import org.joda.time.format.DateTimeFormat
@@ -23,14 +24,16 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
 
   override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
 
-  override lazy val metaData: Map[String, Any] = super.metaData + (
-    "footballMatch" -> Map(
-      "id" -> theMatch.id,
-      "dateInMillis" -> theMatch.date.getMillis,
-      "homeTeam" -> theMatch.homeTeam.id,
-      "awayTeam" -> theMatch.awayTeam.id,
-      "isLive" -> theMatch.isLive
-    )
+  override val hasClassicVersion = false
+
+  override lazy val metaData: Map[String, JsValue] = super.metaData + (
+    "footballMatch" -> JsObject(Seq(
+      "id" -> JsString(theMatch.id),
+      "dateInMillis" -> JsNumber(theMatch.date.getMillis),
+      "homeTeam" -> JsString(theMatch.homeTeam.id),
+      "awayTeam" -> JsString(theMatch.awayTeam.id),
+      "isLive" -> JsBoolean(theMatch.isLive)
+    ))
   )
 }
 

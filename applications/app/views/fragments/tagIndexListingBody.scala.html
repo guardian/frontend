@@ -1,0 +1,25 @@
+@(id: String, title: String, listings: model.TagIndexListings)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="l-side-margins l-side-margins--layout-front">
+    <div class="facia-container facia-container--layout-front">
+        <div class="facia-container__inner">
+            <div class="container__header">
+                <h2 class="container__title">
+                    <span class="container__title__label u-text-hyphenate">@title</span>
+                </h2>
+            </div>
+
+            <div class="container__body">
+                <ul class="linkslist">
+                @for(page <- listings.pages) {
+                    <li class="linkslist__item">
+                        <a href="@LinkTo(s"/index/$id/${page.id}")" class="linkslist__action tag-index__tag-link">@page.title</a>
+                    </li>
+                }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

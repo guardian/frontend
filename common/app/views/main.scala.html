@@ -6,7 +6,7 @@
    be sure to apply any necessary changes to non-shared code there too. *@
 
 <!DOCTYPE html>
-<html id="js-context" class="js-off id--signed-out" lang="en-GB" data-page-path="@request.path">
+<html id="js-context" class="js-off is-not-modern id--signed-out" lang="en-GB" data-page-path="@request.path">
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
@@ -19,13 +19,14 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("childrens-books-site", metaData.section == "childrens-books-site")))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
 
         @if(showAdverts) {
-            @fragments.commercial.topBanner(metaData)
+            @fragments.commercial.topBanner()
         }
 
         @fragments.header(metaData)
@@ -43,6 +44,9 @@
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
+
+        @fragments.commercial.pageSkin()
+
     </body>
     </html>
 }

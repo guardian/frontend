@@ -1,18 +1,15 @@
 package controllers
 
-import java.util.concurrent.atomic.AtomicBoolean
-
 import conf.AllGoodHealthcheckController
-import play.api.{Mode, Play}
 import play.api.mvc.Action
 
 object HealthCheck extends AllGoodHealthcheckController(9001, "/login") {
 
-  private val status = new AtomicBoolean(true)
-  def isOK = status.get
-  def setUnhealthy(){ status.set(false) }
+  // Unlike other health checks, Admin is initially set to healthy, and may move into
+  // an unhealthy state, which it will remain in until terminated.
+  status.set(true)
 
-  override def healthcheck() = if (!isOK) {
+  override def healthcheck() = if (!isOk) {
     Action(InternalServerError("JAXP00010001"))
   } else {
     super.healthcheck()

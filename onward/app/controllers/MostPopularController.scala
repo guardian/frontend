@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
@@ -33,7 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.collections.popular(popular),
-            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1)(request, Config(s"$path/most-viewed/regular-stories", displayName = Option("Most popular"))),
+            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1, s"$path/most-viewed/regular-stories")(request, CollectionConfig.withDefaults(displayName = Option("Most popular"))),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -49,15 +50,14 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   def renderPopularGeo() = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
-    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
-    val hideThumb = request.getQueryString("hideThumb")
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
     val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
     Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode, hideThumb.isDefined),
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
         "country" -> countryCode
       )
     }

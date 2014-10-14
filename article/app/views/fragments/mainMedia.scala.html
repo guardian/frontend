@@ -1,7 +1,12 @@
-@(article: Article)(implicit request: RequestHeader)
-@import views.support.{Item640, SeoOptimisedContentImage}
+@(article: model.Article)(implicit request: RequestHeader)
 
-@if(article.hasMainEmbed) {
+@import model.EndSlateComponents
+@import model.{AudioPlayer, VideoPlayer}
+@import views.support.Video640
+@import views.BodyCleaner
+@import views.support.ArticleLayout.ArticleLayout
+
+@if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
         @BodyCleaner(article, article.main)
     </div>
@@ -9,26 +14,37 @@
     @if(!article.hasVideoAtTop) {
         @if(article.hasMainVideo) {
             @article.mainVideo.map { mainVideo =>
-                @defining(mainVideo.videoAssets.flatMap(_.image)) { posters =>
+                <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
+                class="media-primary media-content">
+                    @article.mainVideo.map { video =>
+                        @fragments.media.video(VideoPlayer(
+                            video,
+                            Video640,
+                            article.headline,
+                            autoPlay = false,
+                            showControlsAtStart = true,
+                            endSlatePath = EndSlateComponents.fromContent(article).toUriPath,
+                            None
+                        ))
+                    }
 
-                    <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
-                    class="media-primary media-content">
-
-                        @fragments.media.video(article.mainVideo, posters.headOption, article.headline)
-
-                        @posters.headOption.map { image =>
-                            @SeoOptimisedContentImage.captionFor(image).map { caption =>
-                                <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
-                            }
-                        }
-                    </figure>
-                }
+                    @mainVideo.caption.map { caption =>
+                        <figcaption class="caption caption--main" itemprop="description">@Html(caption)</figcaption>
+                    }
+                </figure>
             }
         } else {
             @if(article.hasMainAudio) {
                 <figure itemprop="associatedMedia audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
-                class="media-primary media-content">
-                @fragments.media.audio(article.mainAudio, article.headline)
+                    class="media-primary media-content">
+                    @article.mainAudio.map { audioElement =>
+                        @fragments.media.audio(AudioPlayer(
+                            article,
+                            audioElement,
+                            article.headline,
+                            autoPlay = false
+                        ))
+                    }
                 </figure>
             } else {
                 @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)

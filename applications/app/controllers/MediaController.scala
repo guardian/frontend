@@ -7,9 +7,10 @@ import model._
 import play.api.mvc.{ Content => _, _ }
 import scala.concurrent.Future
 import views.support.RenderOtherStatus
+import conf.Switches.RelatedContentSwitch
 
 
-case class MediaPage(media: Media, storyPackage: List[Trail])
+case class MediaPage(media: Media, related: RelatedContent)
 
 object MediaController extends Controller with Logging with ExecutionContexts {
 
@@ -27,6 +28,7 @@ object MediaController extends Controller with Logging with ExecutionContexts {
     log.info(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
       .showExpired(true)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
       .response
 
@@ -36,7 +38,7 @@ object MediaController extends Controller with Logging with ExecutionContexts {
         case a if a.isAudio => Audio(a)
         case v => Video(v)
       }
-      val model = mediaOption map { media => MediaPage(media, storyPackage.filterNot(_.id == media.id)) }
+      val model = mediaOption map { media => MediaPage(media, RelatedContent(media, response)) }
 
       ModelOrResult(model, response)
     }

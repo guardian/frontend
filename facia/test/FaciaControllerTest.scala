@@ -1,79 +1,32 @@
 package test
 
+import com.gu.facia.client.models.{Front, Config}
+import play.api.libs.json.{JsNull, Json}
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, FlatSpec}
 import common.ExecutionContexts
 import controllers.FaciaController
+import services.ConfigAgent
 
-class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll with ExecutionContexts {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  "FaciaController" should "200 when content type is front" in Fake {
+  override def beforeAll() {
+    ConfigAgent.refreshWith(
+      Config(
+        fronts = Map("technology" -> Front(Nil, None, None, None, None, None, None, None, None, None, None, None)),
+        collections = Map.empty)
+    )
+  }
+
+  "FaciaController" should "200 when content type is front" in {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
-  }
-
-  ignore should "redirect base page to edition page if on www.theguardian.com" in Fake {
-
-    val result = FaciaController.editionRedirect("")(responsiveRequest.withHeaders("X-GU-Edition" -> "US"))
-    status(result) should be(303)
-    header("Location", result) should be (Some("/us"))
-
-    val result2 = FaciaController.editionRedirect("culture")(responsiveRequest.withHeaders("X-GU-Edition" -> "AU"))
-    status(result2) should be(303)
-    header("Location", result2) should be (Some("/au/culture"))
-
-  }
-
-  ignore should "understand the editionalised network front" in Fake {
-    val result2 = FaciaController.renderFront("uk")(TestRequest())
-    status(result2) should be(200)
-  }
-
-  ignore should "understand editionalised section fronts" in Fake {
-    val result2 = FaciaController.renderFront("uk/culture")(TestRequest())
-    status(result2) should be(200)
-  }
-
-  ignore should "return JSONP when callback is supplied to front" in Fake {
-    val fakeRequest = FakeRequest(GET, s"?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = FaciaController.renderFront("uk")(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
-  }
-
-  ignore should "return JSON when .json format is supplied to front" in Fake {
-    val fakeRequest = FakeRequest("GET", ".json")
-      .withHeaders("Host" -> "localhost:9000")
-      .withHeaders("Origin" -> "http://www.theorigin.com")
-
-    val result = FaciaController.renderFrontJson("uk")(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/json")
-    contentAsString(result) should startWith("{\"html\"")
-  }
-
-  ignore should "200 when hitting the front" in Fake {
-    val result = FaciaController.renderFront("uk")(TestRequest())
-    status(result) should be(200)
-  }
-
-  ignore should "serve RSS for a path it knows" in Fake {
-    val fakeRequest = FakeRequest("GET", "/uk/rss")
-
-    val result = FaciaController.renderFront("uk")(fakeRequest)
-    status(result) should be(200)
-    contentType(result) should be(Some("text/xml"))
-    contentAsString(result) should startWith("<?xml")
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
@@ -104,5 +57,27 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
+  }
+
+  it should "not serve X-Accel for a path facia serves" in {
+    val fakeRequest = FakeRequest("GET", "/technology")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    header("X-Accel-Redirect", result) should be (None)
+  }
+
+  it should "redirect to applications when 'page' query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?page=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/technology?page=77"))
+  }
+
+  it should "not redirect to applications when any other query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?id=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    header("X-Accel-Redirect", result) should be (None)
   }
 }

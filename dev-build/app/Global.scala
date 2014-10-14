@@ -1,7 +1,7 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
+import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
@@ -20,6 +20,7 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
         if (
           header.status == 200 &&
             !header.headers.keySet.contains("Cache-Control") &&
+            path != "/favicon.ico" &&
             !path.startsWith("/assets/") // these are only used on DEV machines
         ) {
           // nice big warning to devs if they are working on something uncached
@@ -60,6 +61,7 @@ with DiagnosticsLifecycle
 with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
+with DfpDataCacheLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle

@@ -1,23 +1,23 @@
 package contentapi
 
-import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
-import scala.concurrent.Future
+import java.net.InetAddress
+import java.util.concurrent.TimeoutException
+
+import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
+import common.ContentApiMetrics.ContentApi404Metric
+import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
-import java.util.concurrent.TimeoutException
-import play.api.libs.ws.WS
-import com.gu.management.TimingMetric
-import common.ContentApiMetrics.ContentApi404Metric
-import java.net.InetAddress
+import metrics.{CountMetric, FrontendTimingMetric}
+import play.api.libs.ws.{WS, WSAuthScheme}
+
 import scala.util.Try
-import play.api.libs.ws.WSAuthScheme
 
-class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
-                                                                                              with ExecutionContexts {
+class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
+  extends Http with ExecutionContexts with Logging {
 
+  import java.lang.System.currentTimeMillis
   import play.api.Play.current
-  import System.currentTimeMillis
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
 
@@ -35,35 +35,33 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
     // record metrics
     response.onSuccess {
       case r if r.status == 404 => ContentApi404Metric.increment()
-      case r if r.status == 200 => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      case r if r.status == 200 => httpTimingMetric.recordDuration(currentTimeMillis - start)
     }
 
     response.onFailure {
-      case e: Throwable if isTimeout(e) => httpTimeoutMetric.increment()
+      case e: TimeoutException =>
+        log.warn(s"Content API TimeoutException for $url in ${currentTimeMillis - start}: $e")
+        httpTimeoutMetric.increment()
+      case e: Exception =>
+        log.warn(s"Content API client exception for $url in ${currentTimeMillis - start}: $e")
     }
 
     response
   }.map {
     r => HttpResponse(r.body, r.status, r.statusText)
   }
-
-
-  private def isTimeout(e: Throwable): Boolean = e match {
-    case t: TimeoutException => true
-    case _  => false
-  }
 }
 
 // allows us to inject a test Http
-trait DelegateHttp extends Http[Future] with ExecutionContexts {
+trait DelegateHttp extends Http with ExecutionContexts {
 
   val httpTimingMetric: FrontendTimingMetric
-  val httpTimeoutMetric: SimpleCountMetric
+  val httpTimeoutMetric: CountMetric
 
-  private var _http: Http[Future] = new WsHttp(httpTimingMetric, httpTimeoutMetric)
+  private var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
   def http = _http
-  def http_=(delegateHttp: Http[Future]) { _http = delegateHttp }
+  def http_=(delegateHttp: Http) { _http = delegateHttp }
 
   override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
 }

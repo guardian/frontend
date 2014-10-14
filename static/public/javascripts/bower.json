@@ -1,0 +1,15 @@
+{
+  "name": "frontend-common-public-js",
+  "version": "0.1.0 ",
+  "dependencies": {
+    "html5shiv": "~3.7.0",
+    "zxcvbn": "dropbox/zxcvbn",
+    "JSON-js": "*"
+  },
+  "install": {
+    "path": "components",
+    "sources": {
+      "JSON-js": "bower_components/JSON-js/json2.js"
+    }
+  }
+}

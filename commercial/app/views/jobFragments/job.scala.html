@@ -1,0 +1,25 @@
+@(job: model.commercial.jobs.Job)(implicit request: RequestHeader)
+@defining("http://jobs.theguardian.com", "1_0", "2014-08-14") { case (jobsHost, version, date) =>
+    <li class="lineitem lineitem__multi lineitem__jobs u-cf">
+    	<h4 class="commercial__title">
+            <a href="@AdLink{@jobsHost/}"
+            data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-visit-site">
+                Guardian 
+                <span class="commercial__title__last-word">jobs</span>
+            </a>
+        </h4>
+        <a href="@AdLink{@job.listingUrl}"
+        class="commercial--jobs__job__link"
+        data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-job-@job.title">
+            <h3 class="commercial--jobs__job__title">@job.title</h3>
+            <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" alt="" />
+        </a>
+        <p class="commercial--jobs__job__salary">@job.locationDescription - @job.shortSalaryDescription</p>
+        <p class="commercial--jobs__job__recruiter">
+            <a href="@AdLink{@job.recruiterPageUrl}"
+            data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-job-@job.title-@job.recruiterName">
+            @job.recruiterName
+            </a>
+        </p>
+    </li>
+}

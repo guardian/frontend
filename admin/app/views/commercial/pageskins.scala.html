@@ -7,31 +7,65 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Pageskins</h1>
-<p>Pages will squish to accommodate pageskins according to this <a href="#criteria">criteria</a></p>
-<p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
+    <p>Pages will squish to accommodate pageskins according to these criteria:
+    <ol>
+        <li>The Ad Unit must be a <em>front</em></li>
+        <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
+        <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
+    </ol>
+    </p>
+    <p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
 
-<h3>Pageskinned Ad Units</h3>
+    <h2>Pageskinned Ad Units</h2>
     <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
 
+    <h3>Deliverable to NGW</h3>
     <ol>
-        @for(sponsorship <- pageSkinnedAdUnits.sponsorships) {
-            <li style="margin: 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+    @for(sponsorship <- pageSkinnedAdUnits.deliverableSponsorships) {
+        <li style="margin: 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
             @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries){@{country.editionId}<span style="font-size:75%">&nbsp;&nbsp;&nbsp;[deduced from country: @{country.name}]</span>}}
+        <br />Ad Units:
+        <ul>
+        @for(adUnit <- sponsorship.adUnits) {
+            <li>@SiteLink.adUnit(adUnit).map{link => <a href="@link">@adUnit</a>}.getOrElse{@adUnit}</li>
+        }
+        </ul>
+        </li>
+    }
+    </ol>
+
+    <h3>Behind Test Cookie</h3>
+    @if(pageSkinnedAdUnits.testSponsorships.isEmpty) {
+        <p>None</p>
+    } else {
+        <ol>
+        @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {
+            <li style="margin : 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+                @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries) {@{country.editionId} <span style="font-size : 75 %">&nbsp;&nbsp;&nbsp;[deduced from country: @{country.name}]</span>}}
             <br />Ad Units:
             <ul>
             @for(adUnit <- sponsorship.adUnits) {
-                <li>@SiteLink.adUnit(adUnit).map{link => <a href="@link">@adUnit</a>}.getOrElse{@adUnit}</li>
+                <li>@SiteLink.adUnit(adUnit).map { link => <a href="@link">@adUnit</a>}.getOrElse {@adUnit}</li>
             }
             </ul>
             </li>
         }
-    </ol>
+        </ol>
+    }
 
-<h3><a name="criteria">Criteria:</a></h3>
-<p>All of these must be true for a page to squish itself for a pageskin:</p>
-<ol>
-    <li>The Ad Unit must be a <em>front</em></li>
-    <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
-    <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
-</ol>
+    <h3>R2 Only</h3>
+    <ol>
+    @for(sponsorship <- pageSkinnedAdUnits.legacySponsorships) {
+        <li style="margin: 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries){@{country.editionId}<span style="font-size:75%">&nbsp;&nbsp;&nbsp;[deduced from country: @{country.name}]</span>}}
+            <br />Ad Units:
+            <ul>
+                @if(sponsorship.adUnits.isEmpty) {
+                } else {
+                    @for(adUnit <- sponsorship.adUnits) {<li>@adUnit</li>}
+                }
+            </ul>
+        </li>
+    }
+    </ol>
 }

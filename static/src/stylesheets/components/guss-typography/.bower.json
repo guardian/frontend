@@ -1,0 +1,20 @@
+{
+  "name": "guss-typography",
+  "main": [
+    "_typography.config.scss",
+    "_typography.helpers.scss",
+    "_typography.mixins.scss",
+    "_typography.scss"
+  ],
+  "homepage": "https://github.com/guardian/guss-typography",
+  "version": "3.0.0",
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.0",
+    "commit": "46b89944d8ff8f06c3ba5baf834f34f0b84da058"
+  },
+  "_source": "git://github.com/guardian/guss-typography.git",
+  "_target": "~3.0.0",
+  "_originalSource": "guss-typography"
+}

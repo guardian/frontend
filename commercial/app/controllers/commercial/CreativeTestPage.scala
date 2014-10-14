@@ -1,6 +1,7 @@
 package controllers.commercial
 
 import model.{GuardianContentTypes, NoCache, Cached}
+import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 import conf.Configuration
 
@@ -16,17 +17,17 @@ object TestPage extends model.MetaData  {
 
   override lazy val isFront = true
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData
-  lazy val faciaPageMetaData: Map[String, Any] = newMetaData
+  override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
+  lazy val faciaPageMetaData: Map[String, JsValue] = newMetaData
 
-  lazy val newMetaData: Map[String, Any] = Map(
-    "keywords" -> webTitle.capitalize,
-    "content-type" -> contentType
+  lazy val newMetaData: Map[String, JsValue] = Map(
+    "keywords" -> JsString(webTitle.capitalize),
+    "contentType" -> JsString(contentType)
   )
 
   val isNetworkFront: Boolean = false
 
-  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NETWORK_FRONT else GuardianContentTypes.SECTION
+  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
 }
 

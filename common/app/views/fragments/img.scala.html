@@ -46,7 +46,11 @@
 }
 
 @caption(picture: model.ImageContainer) = {
-    @SeoOptimisedContentImage.captionFor(picture).map { caption =>
-        <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+    @SeoOptimisedContentImage.elementFor(picture).map { img =>
+        @img.caption.map { caption =>
+            <figcaption class="caption caption--main caption--img" itemprop="description">
+                @Html(caption) @if(img.displayCredit) { @img.credit.map(Html(_)) }
+            </figcaption>
+        }
     }
 }

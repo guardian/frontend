@@ -1,35 +1,42 @@
 package model.commercial.travel
 
-import common.{ExecutionContexts, Logging}
-import model.commercial.AdAgent
+import common.ExecutionContexts
+import model.commercial.{MerchandiseAgent, Segment, keywordsMatch}
 
-object TravelOffersAgent extends AdAgent[TravelOffer] with Logging with ExecutionContexts {
+import scala.concurrent.Future
 
-  // most popular Travel Offers
-  override def defaultAds = currentAds.sortBy(_.position).take(4)
+object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionContexts {
+
+  def offersTargetedAt(segment: Segment): Seq[TravelOffer] = {
+    val defaultOffers = available.sortBy(_.position).take(4)
+    getTargetedMerchandise(segment, defaultOffers)(offer => keywordsMatch(segment, offer.keywordIds))
+  }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
     val offerIds = offerIdStrings map (_.toInt)
-    currentAds filter (offer => offerIds contains offer.id)
+    available filter (offer => offerIds contains offer.id)
   }
 
-  def refresh() = {
-    for {offers <- TravelOffersApi.loadAds()}
-    yield updateCurrentAds(populateKeywords(offers))
-  }
+  def refresh(): Future[Future[Seq[TravelOffer]]] = {
 
-  private def populateKeywords(offers: Seq[TravelOffer]) = {
-    val populated = offers map {
-      offer =>
-        val offerKeywordIds = offer.countries.flatMap(Countries.forCountry).distinct
-        offer.copy(keywordIds = offerKeywordIds)
+    def populateKeywords(offers: Seq[TravelOffer]) = {
+      val populated = offers map {
+        offer =>
+          val offerKeywordIds = offer.countries.flatMap(Countries.forCountry).distinct
+          offer.copy(keywordIds = offerKeywordIds)
+      }
+
+      val unpopulated = populated.withFilter(_.keywordIds.isEmpty).map {
+        offer => offer.title + ": countries(" + offer.countries.mkString + ")"
+      }.mkString("; ")
+      log.info(s"No keywords for these offers: $unpopulated")
+
+      populated
     }
 
-    val unpopulated = populated.withFilter(_.keywordIds.isEmpty).map {
-      offer => offer.title + ": countries(" + offer.countries.mkString + ")"
-    }.mkString("; ")
-    log.info(s"No keywords for these offers: $unpopulated")
-
-    populated
+    TravelOffersApi.loadAds() map { offers =>
+      updateAvailableMerchandise(populateKeywords(offers))
+    }
   }
+
 }

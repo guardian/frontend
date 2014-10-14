@@ -13,9 +13,10 @@
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 
-@tab(i: Int, name: String, url: String, hidden: Boolean = false, optionalClass: String = "") = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.id == url)" aria-controls="tabs-account-profile-@i">
-        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url">@name</a>
+        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
+            @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
     </li>
 }
 
@@ -34,11 +35,11 @@
 
     <div class="tabs u-cf identity-section">
         <ol class="tabs__container tone-news js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-            @tab(1, "Public", "/public/edit")
+            @tab(1, "Public", "/public/edit", None)
 
-            @tab(2, "Account details", "/account/edit")
+            @tab(2, "Account details", "/account/edit", Some("edit-account-details"))
 
-            @tab(3, "Membership", "/membership/edit", hidden=true, "js-memebership-tab-button")
+            @tab(3, "Membership", "/membership/edit", None, hidden=true, "js-memebership-tab-button")
         </ol>
 
         <div class="tabs__content">

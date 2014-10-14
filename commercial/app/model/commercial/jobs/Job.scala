@@ -15,17 +15,11 @@ case class Job(id: Int,
                recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                salaryDescription: String,
-               keywordIds: Seq[String] = Nil)
-  extends Ad {
+               keywordIds: Seq[String] = Nil) {
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
-
-  def isTargetedAt(segment: Segment): Boolean = {
-    val adKeywords = lastPart(keywordIds)
-    intersects(segment.context.keywords, adKeywords)
-  }
 
   val industries: Seq[String] =
     Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
@@ -66,7 +60,7 @@ object Industries extends ExecutionContexts {
     (350, "Social Enterprise")
   )
 
-  def refresh() = Future.sequence {
+  def refresh(): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
     sectorIdIndustryMap map {
       case (id, name) =>
         Lookup.keyword(name) flatMap {

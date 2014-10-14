@@ -1,5 +1,6 @@
 package controllers
 
+import actions.AuthenticatedActions
 import play.api.mvc._
 import model.IdentityPage
 import common.ExecutionContexts
@@ -15,9 +16,11 @@ import conf.Switches
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                     idRequestParser: IdRequestParser,
                                     idUrlBuilder: IdentityUrlBuilder,
-                                    authAction: actions.AuthenticatedAction,
+                                    authenticatedActions: AuthenticatedActions,
                                     formStackApi: FormstackApi)
   extends Controller with ExecutionContexts with SafeLogging {
+
+  import authenticatedActions.authAction
 
   val page = IdentityPage("/form", "Form", "formstack")
 

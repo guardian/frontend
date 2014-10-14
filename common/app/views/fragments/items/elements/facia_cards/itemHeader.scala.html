@@ -1,0 +1,15 @@
+@(isFirstItemOnPage: Boolean, showQuote: Boolean)(kickerHtml: Html)(linkHtml: Html)
+
+@import views.support.RenderClasses
+@import views.support.KickerHtml.trimAndAppendWithSpace
+
+@defining(trimAndAppendWithSpace(kickerHtml, linkHtml), RenderClasses(Map(
+    "fc-item__title" -> true,
+    "fc-item__title--quoted" -> showQuote
+))) { case (innerHtml, classes) =>
+    @if(isFirstItemOnPage) {
+        <h1 class="@classes">@innerHtml</h1>
+    } else {
+        <h2 class="@classes">@innerHtml</h2>
+    }
+}

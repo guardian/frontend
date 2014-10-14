@@ -1,11 +1,13 @@
 package config
 
-import frontsapi.model.{Front, Collection, Config}
+import com.gu.facia.client.models.{Config, Front, Collection, CollectionConfig}
+import org.joda.time.DateTime
 import org.scalatest._
 import controllers.CreateFront
+import test.ConfiguredTestSuite
 
-class TransformationsSpec extends FlatSpec with ShouldMatchers {
-  val collectionFixture = Collection(
+@DoNotDiscover class TransformationsSpec extends FlatSpec with ShouldMatchers with ConfiguredTestSuite {
+  val collectionFixture = CollectionConfig.withDefaults(
     displayName = Some("New collection"),
     apiQuery = Some("backfill"),
     `type` = Some("???"),
@@ -13,7 +15,10 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     groups = Some(List("1", "2")),
     uneditable = Some(false),
     showTags = Some(true),
-    showSections = Some(false)
+    showSections = Some(false),
+    hideKickers = Some(false),
+    showLatestUpdate = Some(false),
+    showDateHeader = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -22,11 +27,20 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     webTitle = Some("New Front!"),
     title = Some("New front"),
     description = Some("A test front"),
+    onPageDescription = Some("A test front"),
+    imageUrl = None,
+    imageWidth = None,
+    imageHeight = None,
+    isImageDisplayed = None,
+    isHidden = None,
     priority = Some("high"),
     initialCollection = collectionFixture
   )
 
-  val emptyCollectionFixture = Collection(
+  val emptyCollectionFixture = CollectionConfig(
+    None,
+    None,
+    None,
     None,
     None,
     None,
@@ -37,7 +51,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     None
   )
 
-  val emptyFrontFixture = Front(Nil, None, None, None, None, None)
+  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None, None)
 
   val validConfigFixture = Config.empty.copy(
     fronts = Map("foo" -> emptyFrontFixture.copy(collections = List("bar"))),
@@ -52,13 +66,19 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
   it should "add the front to the config with the given front id" in {
     Transformations.createFront(createCommandFixture, "new collection id")(Config.empty)
       .fronts.get("new front id") shouldEqual Some(Front(
-      collections = List("new collection id"),
-      navSection = Some("uk"),
-      webTitle = Some("New Front!"),
-      title = Some("New front"),
-      description = Some("A test front"),
-      priority = Some("high")
-    ))
+        collections = List("new collection id"),
+        navSection = Some("uk"),
+        webTitle = Some("New Front!"),
+        title = Some("New front"),
+        description = Some("A test front"),
+        onPageDescription = Some("A test front"),
+        imageUrl = None,
+        imageWidth = None,
+        imageHeight = None,
+        isImageDisplayed = None,
+        isHidden = None,
+        priority = Some("high")
+      ))
   }
 
   "prune" should "remove collections that are not referred to by any fronts" in {

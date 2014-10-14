@@ -3,14 +3,11 @@
 <meta charset="utf-8" />
 <title>@views.support.Title(metaData)</title>
 
-@fragments.metaDataCritical(metaData)
+@fragments.metaData(metaData)
+@head
 
-@fragments.javaScriptFirstSteps(metaData, curlPaths)
+@fragments.javaScriptFirstSteps(metaData)
 
 @fragments.commonCssSetup(projectName)
 
 @fragments.javaScriptLaterSteps(metaData, curlPaths)
-
-@head
-
-@fragments.metaDataAdditional(metaData)

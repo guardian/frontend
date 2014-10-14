@@ -1,8 +1,0 @@
-@(item: model.Content)(implicit request: RequestHeader)
-
-<div>
-<p>@item.webTitle</p>
-<p>@item.webUrl</p>
-<p>@item.webPublicationDate</p>
-<p><img src="@item.mainPicture.map(_.largestImage.map(_.url))" /></p>
-</div>

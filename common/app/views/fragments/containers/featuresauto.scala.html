@@ -1,24 +1,30 @@
-@(collection: Collection, style: FeaturesAutoContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: FeaturesAutoContainer, containerIndex: Int, dataId: String)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
+
+@import common.LinkTo
+@import model.{Collection, FaciaComponentName}
+@import views.support.{FeaturesAutoContainer, GetClasses, TemplateDeduping}
+@import dfp.DfpAgent
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(11, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
+                id="@FaciaComponentName(config, collection)"
                 class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
                 data-link-name="@FaciaComponentName(config, collection)"
-                data-id="@config.id"
+                data-id="@dataId"
                 data-type="@style.containerType"
-                @config.sponsorshipKeyword.map { keyword =>
+                @DfpAgent.sponsorshipTag(config).map { keyword =>
                     data-keywords="@keyword"
                 }
                 data-component="@FaciaComponentName(config, collection)">
                 <div class="container__banding">
                     <div class="facia-container__inner">
                         <div class="container__border tone-@style.tone tone-accent-border"></div>
-                        <div class="container__header">
+                        <div class="container__header js-container__header">
                             @title.map { title =>
-                                <h2 class="container__title tone-@style.tone tone-background">
+                                <h2 class="container__title">
                                     @href.map { href =>
                                         <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                                     }.getOrElse{
@@ -63,14 +69,8 @@
                                 @if(items.nonEmpty) {
                                     <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate" data-tone="@style.tone">
                                         <ul class="l-columns linkslist">
-                                            @items.zipWithIndex.map{ case (trail, index) =>
-                                                @trail match {
-                                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 4, Some("boost")) }
-                                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 4, Some("boost")) }
-                                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 4, Some("boost")) }
-                                                    case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + 4, Some("boost")) }
-                                                    case t                               => { @fragments.items.linksList.standard(t, index + 4, Some("boost")) }
-                                                }
+                                            @items.zipWithIndex.map { case (trail, index) =>
+                                                @fragments.items.linksList.trail(trail, index + 4, Some("boost"))
                                             }
                                         </ul>
                                     </div>
@@ -86,14 +86,8 @@
                                 @if(items.nonEmpty) {
                                     <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
                                         <ul class="l-columns linkslist">
-                                            @items.zipWithIndex.map{ case (trail, index) =>
-                                                @trail match {
-                                                    case l: LiveBlog if l.isLive           => { @fragments.items.linksList.live(l, index + 10) }
-                                                    case g: Gallery                        => { @fragments.items.linksList.gallery(g, index + 10) }
-                                                    case v: Video                          => { @fragments.items.linksList.video(v, index + 10) }
-                                                    case c if c.visualTone == "comment"    => { @fragments.items.linksList.comment(c, index + 10) }
-                                                    case t                                 => { @fragments.items.linksList.standard(t, index + 10) }
-                                                }
+                                            @items.zipWithIndex.map { case (trail, index) =>
+                                                @fragments.items.linksList.trail(trail, index + 10, None)
                                             }
                                         </ul>
                                     </div>

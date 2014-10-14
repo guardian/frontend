@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-gh-pages": "^0.9.1",
+    "grunt-scss-lint": "^0.3.3",
+    "grunt-sassdoc": "^1.0.3",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-release": "^0.7.0"
+  }
+}

@@ -1,24 +1,18 @@
 package model.commercial.travel
 
+import akka.util.Timeout
+import common.{AkkaAgent, ExecutionContexts, Logging}
+import model.commercial.{Segment, _}
 import org.joda.time.DateTime
-import model.commercial._
-import common.{Logging, ExecutionContexts, AkkaAgent}
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import akka.util.Timeout
-import model.commercial.Segment
 
 case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
-                 tags: List[String], duration: String, position: Int)
-  extends Ad {
+                       earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
+                       tags: List[String], duration: String, position: Int) {
 
-  def isTargetedAt(segment: Segment): Boolean = {
-    val someKeywordsMatch = intersects(lastPart(keywordIds), segment.context.keywords)
-    segment.context.isInSection("travel") && someKeywordsMatch
-  }
-
-  def durationInWords: String = duration match {
+  val durationInWords: String = duration match {
     case "1" => "1 night"
     case x => s"$x nights"
   }
@@ -100,9 +94,9 @@ object Countries extends ExecutionContexts with Logging {
 
   private implicit val timeout: Timeout = 10.seconds
 
-  def refresh() = {
+  def refresh(): Future[Seq[Map[String, Seq[String]]]] = {
     val countries = {
-      val currentAds = TravelOffersAgent.currentAds
+      val currentAds = TravelOffersAgent.available
       if (currentAds.isEmpty) defaultCountries
       else currentAds.flatMap(_.countries).distinct
     }
@@ -116,5 +110,5 @@ object Countries extends ExecutionContexts with Logging {
     }
   }
 
-  def forCountry(name: String) = countryKeywordIds().get(name).getOrElse(Nil)
+  def forCountry(name: String) = countryKeywordIds().getOrElse(name, Nil)
 }

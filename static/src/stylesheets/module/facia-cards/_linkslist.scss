@@ -1,0 +1,80 @@
+.fc-container {
+
+    .linkslist-container {
+        margin: 0 !important;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .linkslist {
+        margin-top: 0;
+        width: 100%;
+
+        .facia-slice__item {
+            @include mq(tablet, desktop) {
+                width: 50%;
+
+                &:nth-child(2n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+
+                &:nth-child(2n+1):nth-last-child(-n+4),
+                &:nth-child(2n+2):nth-last-child(-n+3) {
+                    padding-bottom: 0;
+                }
+
+                &:nth-child(2n+1):nth-last-child(-n+2),
+                &:nth-child(2n+2):last-child {
+                    padding-top: $gs-baseline;
+                }
+            }
+
+            @include mq(desktop) {
+                width: (100% / 3);
+
+                &:nth-child(3n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+
+                &:nth-child(3n+1):nth-last-child(-n+6),
+                &:nth-child(3n+2):nth-last-child(-n+5),
+                &:nth-child(3n+3):nth-last-child(-n+4) {
+                    padding-bottom: 0;
+                }
+
+                &:nth-child(3n+1):nth-last-child(-n+3),
+                &:nth-child(3n+2):nth-last-child(-n+2),
+                &:nth-child(3n+3):last-child {
+                    padding-top: $gs-baseline;
+                }
+            }
+        }
+
+        .has-flex-wrap & {
+            .facia-slice__item {
+                @include mq(tablet) {
+                    @include flex-grow(0);
+                    @include flex-basis(50%);
+                }
+
+                @include mq(desktop) {
+                    @include flex-basis(100% / 3);
+                }
+            }
+        }
+
+        .item--has-cutout {
+            padding-bottom: $gs-baseline * 2.5;
+        }
+    }
+}

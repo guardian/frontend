@@ -1,0 +1,121 @@
+/*doc
+---
+title: Pagination
+name: pagination
+category: Facia
+---
+The user needs to view a subset of sorted data that is not easily displayed on one page.
+
+```html_example
+<div class="pagination u-cf">
+    <div class="pagination__legend hide-on-mobile-inline">
+        About 12,345 results for Tag Name
+    </div>
+    <ol class="pagination__links u-unstyled">
+        <li class="pagination__item pagination__item--next">
+            <a class="pagination__item-inner pagination__action" rel="next" href="#"><span class="u-h">N</span></a>
+        </li>
+        <li class="pagination__item pagination__item--prev">
+            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
+        </li>
+        <li class="pagination__item">
+            <a class="pagination__action" href="#">3</a>
+        </li>
+        <li class="pagination__item">
+            <a class="pagination__action" href="#">4</a>
+        </li>
+        <li class="pagination__item">
+            <span class="pagination__action pagination__action--current">5</span>
+        </li>
+        <li class="pagination__item">
+            <a class="pagination__action" href="#">6</a>
+        </li>
+        <li class="pagination__item">
+            <a class="pagination__action" href="#">7</a>
+        </li>
+    </ol>
+</div>
+```
+*/
+
+.pagination {
+    padding-top: $gs-baseline / 2;
+    margin: $gs-baseline 0;
+    text-align: center;
+    @include fs-textSans(4);
+    border-top: 1px solid $c-neutral5;
+
+    @include mq(leftCol) {
+        float: right;
+        width: gs-span(12);
+    }
+
+    @include mq(wide) {
+        width: gs-span(13);
+
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
+}
+
+.pagination__links {
+    width: 100%;
+
+    @include mq(tablet) {
+        float: right;
+        width: gs-span(4);
+    }
+}
+
+.pagination__item {
+    color: $c-neutral3;
+    display: inline-block;
+}
+
+.pagination__item--next,
+.pagination__item--last {
+    float: right;
+    text-align: right;
+}
+
+.pagination__item--prev,
+.pagination__item--first {
+    float: left;
+    text-align: left;
+}
+
+.pagination__item-inner:after {
+    @include fs-headline(5);
+    line-height: 20px;
+    .pagination__item--first & {
+        content: '«';
+    }
+    .pagination__item--last & {
+        content: '»';
+    }
+    .pagination__item--next & {
+        content: '›';
+    }
+    .pagination__item--prev & {
+        content: '‹';
+    }
+}
+.pagination__item--first {
+    margin-right: $gs-gutter/2;
+}
+.pagination__item--last {
+    margin-left: $gs-gutter/2;
+}
+
+.pagination__action {
+    padding: 0 $gs-gutter / 5;
+}
+
+.pagination__action--current {
+    color: $c-neutral2-contrasted;
+}
+
+.pagination__legend {
+    float: left;
+}

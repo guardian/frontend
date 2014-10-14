@@ -4,6 +4,7 @@ import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datap
 import java.util.concurrent.Future
 import java.util.{UUID, Date}
 import org.joda.time.DateTime
+import play.api.libs.json._
 import scala.collection.JavaConversions._
 import scala.collection.mutable.{Map => MutableMap}
 
@@ -11,7 +12,7 @@ case class ChartRow(rowKey: String, values: Seq[Double]) {
 
   def this(date: Date, values: Seq[Double]) =
   {
-    this((new DateTime(date.getTime)).toString("HH:mm"), values)
+    this(new DateTime(date.getTime).toString("HH:mm"), values)
   }
 }
 
@@ -59,11 +60,10 @@ trait Chart {
   lazy val id = UUID.randomUUID().toString
 
   def name: String
-  def yAxis: Option[String] = None
   def labels: Seq[String]
   def dataset: Seq[ChartRow]
-
-  def form: String = "LineChart"
+  def hasData = dataset.nonEmpty
+  def format: ChartFormat
 
   def asDataset = s"[[$labelString], $dataString]"
 
@@ -72,67 +72,74 @@ trait Chart {
     val data = point.values.mkString(",")
     s"['${point.rowKey}', $data]"
   }
-  private def dataString = dataset.map(datapointString).mkString(",")
+  private def dataString = dataset.map { datapointString }.mkString(",")
 }
 
-case class MaximumMetric(metric: Future[GetMetricStatisticsResult]) {
-  lazy val max: Double = metric.get().getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
-}
+case class ChartFormat(colours: Seq[String], cssClass: String = "charts")
 
-case class ChartFormat(colours: Seq[String], cssClass: String)
+object Colour {
+  val `tone-news-1` = "#005689"
+  val `tone-news-2` = "#4bc6df"
+  val `tone-features-1` = "#951c55"
+  val `tone-features-2` = "#f66980"
+  val `tone-features-3` = "#b82266"
+  val `tone-features-4` = "#7d0068"
+  val `tone-comment-1` = "#e6711b"
+  val `tone-comment-2` = "#ffbb00"
+  val `tone-comment-3` = "#ffcf4c"
+  val `tone-live-1` = "#b51800"
+  val `tone-live-2` = "#cc2b12"
+  val error = "#d61d00"
+  val success = "#4a7801"
+}
 
 object ChartFormat {
-  val SingleLineBlack = ChartFormat(colours = Seq("#000000"), cssClass = "charts")
-  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"), cssClass = "charts")
-  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"), cssClass =  "charts")
-  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"), cssClass =  "charts")
-  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"), cssClass =  "charts")
+
+  val SingleLineBlack = ChartFormat(colours = Seq("#000000"))
+  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"))
+  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"))
+  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"))
+  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
   val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
+
+  def apply(colour: String*): ChartFormat = ChartFormat(colour)
 }
 
-class LineChart(val name: String, val labels: Seq[String], val charts: Future[GetMetricStatisticsResult]*) extends Chart {
+class AwsLineChart(
+  override val name: String,
+  override val labels: Seq[String],
+  override val format: ChartFormat,
+  val charts: GetMetricStatisticsResult*) extends Chart {
 
   override def dataset: Seq[ChartRow] = {
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
     (dataColumns, charts.toList).zipped.map( (column, chart) => {
-      table.addColumn(column, ChartColumn(chart.get().getDatapoints))
+      table.addColumn(column, ChartColumn(chart.getDatapoints))
     })
 
     table.asChartRow(toLabel, toValue)
   }
-    
-  def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
+
+  protected def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
-  def toLabel(date: DateTime): String = date.toString("HH:mm")
-
-  lazy val hasData = dataset.nonEmpty
-
-  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
-
-  lazy val format = ChartFormat.SingleLineBlue
-
-  def withFormat(f: ChartFormat) = new LineChart(name, labels, charts:_*) {
-    override lazy val format = f
-  }
+  protected def toLabel(date: DateTime): String = date.toString("HH:mm")
 }
 
-class AssetChart(name: String, labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, labels, charts:_*) {
+class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
   override def toLabel(date: DateTime): String = date.toString("dd/MM")
-  override def withFormat(f: ChartFormat) = new AssetChart(name, labels, charts:_*) {
-    override lazy val format = f
-  }
+  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 
-class ABDataChart(name: String, ablabels: Seq[String], f: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, ablabels, charts:_*) {
+class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {
 
   private val dataColumns: Seq[(String, ChartColumn)] = {
 
     // Do not consider any metrics that have less than three data points.
     (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
-      (column, ChartColumn(chart.get().getDatapoints))
+      (column, ChartColumn(chart.getDatapoints))
     ).filter{ case (label, column)  => column.values.length > 3 }
   }
 
@@ -148,6 +155,35 @@ class ABDataChart(name: String, ablabels: Seq[String], f: ChartFormat, charts: F
   }
 
   override val labels: Seq[String] = Seq(ablabels.headOption.getOrElse("X axis")) ++ dataColumns.map(_._1)
+}
 
-  override lazy val format: ChartFormat = f
+object FormattedChart {
+
+  case class DataTable(cols: Seq[Column], rows: Seq[Row])
+
+  case class Column(id: String, label: String, `type`: String)
+
+  case class Row(c: Seq[Cell])
+
+  case class Cell(v: String)
+
+  implicit val cellReads   = Json.writes[Cell]
+  implicit val rowReads    = Json.writes[Row]
+  implicit val columnReads = Json.writes[Column]
+  implicit val tableReads  = Json.writes[DataTable]
+}
+
+// A variation of Chart that can be easily serialised into a Google Visualization DataTable Json object.
+// Useful for charts that need columns with type labels like Date and DateTime.
+case class FormattedChart(
+  name: String,
+  columns: Seq[FormattedChart.Column],
+  rows: Seq[FormattedChart.Row],
+  format: ChartFormat) {
+
+  lazy val id = UUID.randomUUID().toString
+  lazy val labels: Seq[String] = columns.map(_.label)
+  lazy val lastValue: Option[String] = rows.lastOption.flatMap {_.c.lastOption.map(_.v.take(6)) }
+
+  def asJson() = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

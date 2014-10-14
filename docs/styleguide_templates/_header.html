@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- Todo Checks and add these classes properly! -->
+<html class="js-on is-modern svg">
+    <head>
+        <title><%= title %> | Front-end Styleguide | The Guardian</title>
+
+        <style>
+            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(../../static/target/images/global/sprite.png); }
+            .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
+            .is-updating { background-image: url(../../static/target/images/auto-update-activity.gif); }
+            .is-updating--dark { background-image: url(../../static/target/images/auto-update-activity-dark.gif); }
+            .tweet { background-image: url(../../static/target/images/twitter/bird.png); }
+            .svg .tweet { background-image: url(../../static/target/images/twitter/bird.svg); }
+        </style>
+
+        <!-- Guardian styles -->
+        <link rel="stylesheet" href="../../static/target/stylesheets/head.default.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/global.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/webfonts.css">
+
+        <!-- Styleguide styles -->
+        <link rel="stylesheet" href="../../docs/styleguide/assets/css/styleguide.css">
+    </head>
+
+    <body id="top">
+        <header id="header" class="l-header u-cf" role="banner">
+            <div class="l-header-main">
+                <div class="gs-container">
+                    <a href="http://www.theguardian.com/uk" id="logo" class="logo-wrapper">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo-160 mobile-only"></i>
+                        <i class="i i-guardian-logo-320 hide-on-mobile"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="navigation navigation--collapsed navigation--has-signposting">
+                <div class="gs-container">
+                    <div class="navigation__inner">
+                        <div class="navigation__scroll">
+                            <nav class="navigation__container navigation__container--first" role="navigation">
+                                <ul class="signposting">
+                                <% @blocks.each do |b| %>
+                                    <li class="signposting__item signposting__item--home">
+                                        <a class="signposting__action" href="#<%= b[:name] %>"><%= b[:title] %></a>
+                                    </li>
+                                <% end %>
+                                </ul>
+                            </nav>
+
+                            <nav class="navigation__container navigation__container--second" role="navigation">
+                                <ul class="top-navigation">
+                                <% @categories.each do |category, file_name| %>
+                                    <li class="top-navigation__item">
+                                        <a class="top-navigation__action" href="<%= file_name %>"><%= category %></a>
+                                    </li>
+                                <% end %>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="l-side-margins l-side-margins--layout-content">
+            <article class="content content--article tone-news tone-news--article">
+                <header class="content__head u-cf">
+                    <div class="gs-container">
+                        <h1 itemprop="headline" class="content__headline"><%= title %></h1>
+                    </div>
+                </header>
+
+                <div class="gs-container">
+

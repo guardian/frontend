@@ -1,41 +1,18 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import conf.Configuration
-@import views.support.MetadataJson
-@import views.support.JavaScriptVariableName
+
 @import common.Edition
 @import dev.HttpSwitch
-@import org.joda.time.DateTime
+@import views.support.{JavaScriptPage, CamelCase}
+@import play.api.libs.json.Json
 
 @defining(Edition(request)) { edition =>
 {
-    "page": {
-        @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
-        @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
-            s""""${JavaScriptVariableName(key.split('.').last)}":"${value}""""}.mkString(",")
-        )},
-        "edition": "@edition.id",
-        "ajaxUrl": "@Configuration.ajax.url",
-        "isDev": @play.Play.isDev(),
-        "oasHost": "oas.theguardian.com",
-        "oasUrl": "@Configuration.oas.url",
-        "oasSiteIdHost": "www.theguardian-alpha.com",
-        "dfpHost": "pubads.g.doubleclick.net",
-        "idUrl": "@Configuration.id.url",
-        "beaconUrl": "@Configuration.debug.beaconUrl",
-        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}",
-        "isSSL": @Configuration.environment.secure,
-        "assetsPath": "@Configuration.assets.path",
-        "hasPageSkin": @item.hasPageSkin(edition),
-        "shouldHideAdverts": @item match {
-            case c: model.Content if c.shouldHideAdverts => {true}
-            case _                                       => {false}
-        }
-    },
+    "page": @Html(Json.stringify(JavaScriptPage(item).get)),
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
             if(conf.Switches.httpSwitches.contains(switch))
-                s""""${JavaScriptVariableName(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
+                s""""${CamelCase.fromHyphenated(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
             else
-                s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
+                s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""
         }.mkString(","))}
     },
     "modules": { }

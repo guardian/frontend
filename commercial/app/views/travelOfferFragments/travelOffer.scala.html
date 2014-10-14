@@ -1,0 +1,25 @@
+@(travelOffer: model.commercial.travel.TravelOffer)(implicit request: RequestHeader)
+
+<li class="lineitem lineitem__multi lineitem__travel u-cf commercial--travel">
+	<h4 class="commercial__title">
+        <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-hybrid-travel-visit-all">
+            <span>
+                Guardian 
+                <span class="commercial__title__middle-word">Holiday</span> 
+                <span class="commercial__title__last-word">Offers</span>
+            </span>
+        </a>
+    </h4>
+    <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
+        <img class="lineitem__image" src="@travelOffer.imageUrl" alt="" />
+        <div class="lineitem__offer">
+            <h4 class="lineitem__title">@travelOffer.title</h4>
+            <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
+        </div>
+    </a>
+    <p class="lineitem__description commercial--travel__item__description">
+        <a class="lineitem__link commercial--travel__description__link" href="@AdLink{@travelOffer.offerUrl}">
+            <i class="i i-arrow-white-right-18"></i>Book now
+        </a>
+    </p>
+</li>

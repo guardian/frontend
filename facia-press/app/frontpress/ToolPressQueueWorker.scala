@@ -1,20 +1,23 @@
 package frontpress
 
-import com.amazonaws.regions.{Regions, Region}
+import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import common.{Logging, Message, FaciaPressMetrics, JsonMessageQueue}
 import common.SQSQueues._
+import common._
 import conf.Configuration
+import metrics._
 import org.joda.time.DateTime
-import services.{Live, Draft, FrontPath, PressJob}
+import services.{Draft, FrontPath, Live, PressJob}
 
 import scala.concurrent.Future
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
   override val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
+    val credentials = Configuration.aws.mandatoryCredentials
+
     JsonMessageQueue[PressJob](
-      new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
       queueUrl
     )
   }) getOrElse {
@@ -23,13 +26,13 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
   /** We record separate metrics for each of the editions' network fronts */
   val metricsByPath = Map(
-    "uk" -> FaciaPressMetrics.UkFrontPressLatency,
-    "us" -> FaciaPressMetrics.UsFrontPressLatency,
-    "au" -> FaciaPressMetrics.AuFrontPressLatency
+    "uk" -> UkPressLatencyMetric,
+    "us" -> UsPressLatencyMetric,
+    "au" -> AuPressLatencyMetric
   )
 
   override def process(message: Message[PressJob]): Future[Unit] = {
-    val PressJob(FrontPath(path), pressType) = message.get
+    val PressJob(FrontPath(path), pressType, creationTime) = message.get
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
@@ -45,26 +48,19 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
           case Live => FaciaPressMetrics.FrontPressLiveSuccess.increment()
         }
 
-        val maybeElapsed = message.sentAt.map(DateTime.now.getMillis - _.getMillis)
+        val millisToPress: Long = DateTime.now.getMillis - creationTime.getMillis
 
-        maybeElapsed match {
-          case Some(millisToPress) =>
-            if (millisToPress < 0) {
-              log.error(s"Tachyons messing up our pressing! (pressed in ${millisToPress}ms)")
-            } else {
-              FaciaPressMetrics.FrontPressLatency.recordTimeSpent(millisToPress)
+        if (millisToPress < 0) {
+          log.error(s"Tachyons messing up our pressing! (pressed in ${millisToPress}ms)")
+        } else {
+          AllFrontsPressLatencyMetric.recordDuration(millisToPress)
 
-              metricsByPath.get(path) foreach { metric =>
-                metric.recordTimeSpent(millisToPress)
-              }
-            }
-
-            log.info(s"Successfully pressed $path on $pressType after ${millisToPress}ms")
-
-          case None =>
-            log.error("Asked SQS for SentTimestamp but did not receive it")
-            log.info(s"Successfully pressed $path on $pressType")
+          metricsByPath.get(path) foreach { metric =>
+            metric.recordDuration(millisToPress)
+          }
         }
+
+        log.info(s"Successfully pressed $path on $pressType after ${millisToPress}ms")
 
       case Failure(error) =>
         pressType match {

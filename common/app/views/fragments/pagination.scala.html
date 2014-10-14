@@ -1,4 +1,8 @@
-@(page: MetaData, pagination: Pagination, actionClass: Option[String] = None, showExtremes: Boolean = false)(implicit request: RequestHeader)
+@(  page: MetaData,
+    pagination: Pagination,
+    actionClass: Option[String] = None,
+    showExtremes: Boolean = false,
+    showLegend: Boolean = true)(implicit request: RequestHeader)
 @import model._
 @import common._
 
@@ -8,7 +12,7 @@
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     <li class="pagination__item pagination__item--@dir">
         @pageNo.map { p =>
-            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)">
+            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
                 <span class="u-h">@dir.capitalize(0)</span>
             </a>
         }.getOrElse{
@@ -22,7 +26,10 @@
 @* don't show pagination if this is the only page *@
 @if(pagination.lastPage > 1) {
     <div class="pagination u-cf">
-        <div class="pagination_legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
+
+        @if(showLegend){
+            <div class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
+        }
 
         <ol class="u-unstyled pagination__links">
             @if(showExtremes){
@@ -40,11 +47,10 @@
                     @if(pageNum == pagination.currentPage) {
                         <span class="pagination__action pagination__action--current">@pageNum</span>
                     } else {
-                        <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)">@pageNum</a>
+                        <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)" data-link-name="Pagination view page @pageNum">@pageNum</a>
                     }
                 </li>
             }
-
         </ol>
     </div>
 }

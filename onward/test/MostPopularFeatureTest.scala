@@ -1,10 +1,9 @@
 package test
 
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import scala.collection.JavaConversions._
 
-class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("Most popular") {
 
@@ -23,7 +22,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
     scenario("Most popular for a section") {
 
       Given("I am on a page in the 'World' section")
-      HtmlUnit("/most-read/world") { browser =>
+      goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see a list of 'world' content")
         findFirst(".zone-world").findFirst("h2").getText should be("Most popular in World news")
@@ -36,7 +35,7 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
     scenario("Viewing site-wide most popular") {
 
       Given("I am on a page in the 'World' section")
-      HtmlUnit("/most-read/world") { browser =>
+      goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see the site wide most read")
         $("main h2")(1).getText should be("Most popular in The Guardian")

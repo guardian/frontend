@@ -1,0 +1,61 @@
+/* Global header and navigation
+   ========================================================================== */
+
+$guardian-services-toggle-arrow-size: 4px;
+$c-guardian-services-active-background: #ffffff;
+$c-guardian-services-action: #ffffff;
+
+.l-header {
+    position: relative;
+    background: $c-brandBlue;
+
+    @include mq(wide) {
+        .has-page-skin & .gs-container {
+            width: gs-span(12) + ($gs-gutter*2);
+        }
+    }
+}
+
+.logo-wrapper {
+    position: relative;
+    float: right;
+    margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0;
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline * .5;
+        margin-bottom: $gs-baseline * .5;
+    }
+
+    i {
+        display: block;
+    }
+}
+
+
+/* Pre-header
+   ========================================================================== */
+
+.l-header-pre {
+    float: left;
+    min-width: gs-span(2);
+    z-index: 3;
+    position: relative;
+
+    @include mq(tablet) {
+        float: none;
+    }
+}
+
+
+/* Main header (logo, actions)
+   ========================================================================== */
+
+.l-header-main {
+    position: relative;
+    z-index: 2;
+}
+

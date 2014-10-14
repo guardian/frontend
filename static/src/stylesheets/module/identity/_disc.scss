@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Profile comment activity
+   ========================================================================== */
+
+$mq-breakpoints: mq-add-breakpoint(activityLeftCol, mq-get-breakpoint-width(rightCol));
+$disc-avatar-size: 44px;
+
+
+/* Comment
+   ========================================================================== */
+
+.disc-comment {
+    padding-bottom: $gs-baseline/2;
+    @include fs-textSans(4);
+
+    @include mq(activityLeftCol) {
+        &:first-of-type {
+            border-top: 0;
+        }
+    }
+}
+.disc-comment__meta {
+    margin-bottom: $gs-baseline*1.5;
+    @include fs-textSans(1);
+    color: $c-neutral2-contrasted;
+
+    @include mq(activityLeftCol) {
+        float: right;
+    }
+}
+.disc-comment__date-published {
+    display: block;
+    @include fs-textSans(1);
+}
+.disc-comment__permalink {
+    color: $c-neutral2;
+}
+.disc-comment__recommend {
+    position: absolute;
+    top: $gs-baseline/2;
+    right: 0;
+    width: auto;
+    cursor: default;
+}
+.disc-comment__recommend-count {
+    display: inline-block;
+    margin-right: $gs-gutter/4;
+
+    .disc-comment__recommend--active & {
+        color: $c-commentDefault;
+    }
+}
+.disc-comment__recommend-button {
+    display: inline-block;
+    vertical-align: middle;
+    @include border-radius(50%);
+    height: 19px;
+    width: 18px;
+    background-color: $c-neutral2-contrasted;
+
+    .i {
+        vertical-align: middle;
+    }
+
+    .disc-comment__recommend--open & {
+        background-color: $c-newsDefault;
+    }
+
+    .disc-comment__recommend--active & {
+        background-color: $c-commentDefault;
+    }
+}
+
+.disc-comment__body {
+    margin-bottom: $gs-baseline;
+
+    blockquote {
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
+        border-left: 3px solid transparentize($c-neutral1, .75);
+    }
+}
+.disc-comment__view-discussion {
+    display: inline-block;
+    @include fs-textSans(2);
+}
+
+
+/* Profile: user info, date
+   ========================================================================== */
+
+.disc-profile {
+    @include fs-textSans(4);
+}
+.disc-profile__avatar {
+    float: left;
+    overflow: hidden;
+    @include border-radius(50%);
+    height: $disc-avatar-size;
+    width: $disc-avatar-size;
+}
+.disc-profile__avatar-image {
+    height: 100%;
+    width: 100%;
+}
+.disc-profile__user-info {
+    padding-left: $disc-avatar-size + ($gs-gutter/2);
+}
+.disc-profile__badges {
+    @include fs-textSans(1);
+    text-transform: uppercase;
+}
+.disc-profile__date {
+    @include fs-textSans(1);
+    color: $c-neutral2-contrasted;
+}

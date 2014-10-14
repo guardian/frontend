@@ -1,14 +1,14 @@
 package football.model
 
-import org.scalatest.{OptionValues, FreeSpec}
-import org.scalatest.ShouldMatchers
+import org.scalatest.{DoNotDiscover, OptionValues, FreeSpec, ShouldMatchers}
 import pa.{Fixture, Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
 import org.scalatest.exceptions.TestFailedException
 import implicits.Collections
+import test.ConfiguredTestSuite
 
-class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValues with CompetitionTestData with Collections {
+@DoNotDiscover class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValues with CompetitionTestData with Collections with ConfiguredTestSuite {
   "stagesFromCompetition" - {
     "will generate a League" in {
       val stages = CompetitionStage.stagesFromCompetition(league)
@@ -211,47 +211,6 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
 
         qfMatches.map(_.id).toSet should equal(Set("1235", "1236", "1237", "1238"))
       }
-    }
-  }
-
-  conf.Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn  // these tests can go when the hard-coded WC 2014 data is done
-  "World Cup 2014 wallchart spider can sort based on the hard-coded match datetimes" - {
-    def m(id: String, date: DateTime, roundNumber: String) =
-      Fixture(id, date, Stage("2"), Round(roundNumber, None), "1", teams(0), teams(1), None, None)
-    def dt(month: Int, day: Int, hour: Int, minute: Int) = new DateTime(2014, month, day, hour, minute)
-    val wcMatches = List(
-      m("1", dt(6, 28, 17, 0), "1"),
-      m("2", dt(6, 28, 21, 0), "1"),
-      m("3", dt(6, 29, 17, 0), "1"),
-      m("4", dt(6, 29, 21, 0), "1"),
-      m("5", dt(6, 30, 17, 0), "1"),
-      m("6", dt(6, 30, 21, 0), "1"),
-      m("7", dt(7, 1, 17, 0), "1"),
-      m("8", dt(7, 1, 21, 0), "1"),
-      m("9", dt(7, 4, 17, 0), "2"),
-      m("10", dt(7, 4, 21, 0), "2"),
-      m("12", dt(7, 5, 17, 0), "2"),
-      m("11", dt(7, 5, 21, 0), "2"),
-      m("13", dt(7, 8, 21, 0), "3"),
-      m("14", dt(7, 9, 21, 0), "3"),
-      m("15", dt(7, 12, 21, 0), "4"),
-      m("16", dt(7, 13, 20, 0), "5")
-    )
-    val rounds = List(Round("1", None), Round("2", None), Round("3", None), Round("4", None), Round("5", None))
-    val wcWallchart = KnockoutSpider(wcMatches, rounds,
-      KnockoutSpider.orderings.get("700").getOrElse(throw new TestFailedException("No ordering available for world cup", 3))
-    )
-
-    "will return correctly sorted matches for WC2014 round of 16" in {
-      wcWallchart.roundMatches(Round("1", None)).map(_.id) should equal(List("1", "2", "5", "6", "3", "4", "7", "8"))
-    }
-
-    "will return correctly sorted matches for WC2014 quarter finals" in {
-      wcWallchart.roundMatches(Round("2", None)).map(_.id) should equal(List("10", "9", "11", "12"))
-    }
-
-    "will return correctly sorted matches for WC2014 semi-finals" in {
-      wcWallchart.roundMatches(Round("3", None)).map(_.id) should equal(List("13", "14"))
     }
   }
 

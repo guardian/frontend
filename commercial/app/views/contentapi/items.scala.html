@@ -1,0 +1,42 @@
+@(items: Seq[model.Content])(implicit request: RequestHeader)
+
+@defining(("1_0", "2014-08-14")) { case (version, date) =>
+    <div class="commercial commercial--low commercial--capi">
+        <div class="facia-container__inner">
+            <div class="container__title commercial__head">
+                <h3 class="commercial__title">
+                    The Guardian
+                </h3>
+            </div>
+            <div class="container__body commercial__body">
+                <ul class="lineitems">
+                    @for(item <- items) {
+                        <li class="lineitem">
+                            <a class="lineitem__link" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
+                                @item.mainPicture.map{ picture =>
+                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                }
+                                <div class="lineitem__offer">
+                                    <h4 class="lineitem__title">@item.webTitle</h4>
+                                    <div class="item__meta">
+                                        <time
+                                            class="item__timestamp js-item__timestamp"
+                                            datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                            data-timestamp="@item.webPublicationDate.getMillis"
+                                            data-relativeformat="short">
+                                            <i class="i i-clock-light-grey"></i>
+                                            <span class="timestamp__text">
+                                                <span class="u-h">Published: </span>
+                                                @Format(item.webPublicationDate, "d MMM y")
+                                            </span>
+                                        </time>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

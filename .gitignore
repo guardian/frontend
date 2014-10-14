@@ -51,9 +51,11 @@ developer.properties
 
 *-spec-runner.html
 
-static
+static/hash
+static/requirejs
+static/target
 
-common/app/assets/stylesheets/icons/*
+static/src/stylesheets/icons/*
 
 ivy-sbt
 
@@ -67,5 +69,12 @@ ivy-sbt
 .cache
 bower_components
 
-#Scala test framework
+# Scala test framework #
 local.conf
+
+# Generared styleguide files #
+docs/styleguide/*.html
+docs/styleguide/assets/css
+
+#Node Version Manager
+.nvmrc

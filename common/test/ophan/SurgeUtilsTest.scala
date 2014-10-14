@@ -20,6 +20,16 @@ class SurgeUtilsTest extends FlatSpec with Matchers {
     result0._1 should equal("this/is/really/hot")
   }
 
+  "surgeLevelProvider" should "return a numerical representation of the surge level" in {
+    SurgeUtils.levelProvider(Some(500)) should be (Seq(1, 2, 3, 4))
+    SurgeUtils.levelProvider(Some(401)) should be (Seq(1, 2, 3, 4))
+    SurgeUtils.levelProvider(Some(301)) should be (Seq(2, 3, 4))
+    SurgeUtils.levelProvider(Some(201)) should be (Seq(3, 4))
+    SurgeUtils.levelProvider(Some(101)) should be (Seq(4))
+    SurgeUtils.levelProvider(Some(99))  should be (Seq(0))
+    SurgeUtils.levelProvider(None) should be (Seq(0))
+  }
+
   lazy val jsonString =
     """
       |[{"path":"/this/is/really/hot","pvs-per-min":1000},{"path":"/this/is/2nd/best","pvs-per-min":999}]

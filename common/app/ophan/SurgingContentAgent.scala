@@ -1,40 +1,51 @@
 package ophan
 
-import common._
+import common.{AkkaAsync, Jobs, _}
+import org.joda.time.DateTime
 import play.api.libs.json.{JsArray, JsValue}
-import java.net.URL
+import play.api.{GlobalSettings, Application => PlayApp}
 import services.OphanApi
-import play.api.{Application => PlayApp, GlobalSettings}
-import common.{AkkaAsync, Jobs}
 
 object SurgingContentAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, Int]](Map.empty)
+  private val agent = AkkaAgent[SurgingContent](SurgingContent())
 
   def update() {
     log.info("Refreshing surging content.")
-
     val ophanQuery = OphanApi.getSurgingContent()
-
-    ophanQuery.map{ ophanResults =>
-
+    ophanQuery.map { ophanResults =>
       val surging: Seq[(String, Int)] = SurgeUtils.parse(ophanResults)
-
-      agent.send(surging.toMap)
+      agent.send(SurgingContent(surging.toMap))
     }
   }
 
-  def isSurging(id: String): Boolean = {
-    agent.get().contains(id)
-  }
+  def getSurging = agent.get()
 
-  def getSurging= {
-    agent.get()
-  }
-
+  def getSurgingLevelsFor(id: String): Seq[Int] = SurgeUtils.levelProvider(agent.get().surges.get(id))
 }
 
+
+case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: DateTime = DateTime.now()) {
+
+  lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
+}
+
+
 object SurgeUtils {
+
+  def levelProvider(surgeLevel: Option[Int]): Seq[Int] = {
+
+    val level = surgeLevel match {
+      case Some(x) if x >= 400 => 1
+      case Some(x) if x >= 300 => 2
+      case Some(x) if x >= 200 => 3
+      case Some(x) if x >= 100 => 4
+      case _ => 0
+    }
+
+    if (level == 0) Seq(0) else Seq.range(level, 5)
+  }
+
   def parse(json: JsValue) = {
     for {
       item: JsValue <- json.asOpt[JsArray].map(_.value).getOrElse(Nil)

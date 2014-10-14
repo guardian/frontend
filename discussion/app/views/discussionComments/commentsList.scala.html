@@ -4,14 +4,14 @@
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
-    <div class="d-discussion__header d-discussion__comment-count">
+    <div class="d-discussion__comment-count">
         <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
             @if(page.commentCount > 0){
-                @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
+                @page.commentCount comment@if(page.commentCount != 1){s} <span class="discussion__show-threaded-state">in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}. </span>
             }
         </div>
 
-        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item js-visible">
+        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item modern-visible">
             View
             <select class="d-discussion__order-control">
                 <option value="oldest" @if(page.orderBy == "oldest"){selected="selected"}>oldest</option>
@@ -19,10 +19,10 @@
             </select>
             first
         </div>
-        <div class="d-discussion__meta d-dicussion__meta--sorting js-hidden">
+        <div class="d-discussion__meta d-dicussion__meta--sorting modern-hidden">
             Sort comments
             @defining(if(page.orderBy == "oldest") "newest" else "oldest"){ orderTo =>
-                <span class="js-hidden">
+                <span class="modern-hidden">
                     <a href="@LinkTo{/discussion/@orderTo/@page.id}">@orderTo</a>
                 </span>
             }
@@ -30,17 +30,11 @@
         </div>
     </div>
 
-    <div class="d-discussion__sentiments">
-        <a class="js-discussion-sentiment-changer d-discussion__sentiment d-discussion__sentiment--active">All</a>
-        <a class="js-discussion-sentiment-changer d-discussion__sentiment" href="?index=0" data-sentiment="0">Yes</a>
-        <a class="js-discussion-sentiment-changer d-discussion__sentiment" href="?index=1" data-sentiment="1">No</a>
-    </div>
-
     <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
     <div class="discussion-content js-discussion-content">
         @if(!isTopComments){
             <div class="d-discussion__pagination">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true) }
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
             </div>
         }
 
@@ -55,7 +49,7 @@
 
         @if(!isTopComments){
             <div class="d-discussion__pagination u-cf">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true) }
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
             </div>
         }
     </div>
@@ -67,7 +61,7 @@
                 data-remove="true"
                 href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
                 title="Show more featured comments">
-                <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
+                <span class="d-discussion__show-more-button"><i></i></span>
                 <span class="d-discussion__show-more-text">Show more featured comments</span>
             </a>
         </div>

@@ -1,59 +1,52 @@
 package test
 
+import conf.Switches.ForceHttpResponseCodeSwitch
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
-class ArticleControllerTest extends FlatSpec with Matchers {
-  
+@DoNotDiscover class ArticleControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
   val callbackName = "aFunction"
 
-  "Article Controller" should "200 when content type is article" in Fake {
+  "Article Controller" should "200 when content type is article" in {
     val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     status(result) should be(200)
   }
 
-  it should "200 when content type is live blog" in Fake {
+  it should "200 when content type is live blog" in {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)
   }
 
-  it should "count in body links" in Fake {
+  it should "count in body links" in {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     val body = contentAsString(result)
-    body should include(""""inBodyInternalLinkCount": "38"""")
-    body should include(""""inBodyExternalLinkCount": "42"""")
+    body should include(""""inBodyInternalLinkCount":38""")
+    body should include(""""inBodyExternalLinkCount":42""")
   }
 
-  it should "200 when content type is sudoku" in Fake {
+  it should "200 when content type is sudoku" in {
     val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
     status(result) should be(200)
   }
 
-  it should "not cache 404s" in Fake {
+  it should "not cache 404s" in {
     val result = controllers.ArticleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
     header("Cache-Control", result).head should be ("no-cache")
   }
 
-  it should "redirect for short urls" in Fake {
+  it should "redirect for short urls" in {
     val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
-  // this does not work like this on V2 (yet) ...
-  ignore should "redirect for short urls with Twitter suffix" in Fake {
-    val result = controllers.ArticleController.renderArticle("p/39heg/tw")(TestRequest("/p/39heg/tw"))
-    status(result) should be (302)
-    header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
-  }
-
-  it should "return JSONP when callback is supplied" in Fake {
+  it should "return JSONP when callback is supplied" in {
     val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
 
     val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
@@ -62,23 +55,23 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
   }
 
-  it should "return JSON when .json format is supplied" in Fake {
+  it should "return JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-      
+
     val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
-  it should "redirect to classic when content type is not supported in app" in Fake {
+  it should "redirect to classic when content type is not supported in app" in {
     val result = controllers.ArticleController.renderArticle("world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide"))
     status(result) should be(303)
     header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=classic")
   }
 
-  it should "internal redirect unsupported content to classic" in Fake {
+  it should "internal redirect unsupported content to classic" in {
     val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
@@ -86,25 +79,7 @@ class ArticleControllerTest extends FlatSpec with Matchers {
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
-  // content api has stopped doing this, am finding out what is happening
-  ignore should "display an expired message for expired content" in Fake {
-    val result = controllers.ArticleController.renderArticle(expiredArticle)(TestRequest(s"/$expiredArticle"))
-    status(result) should be(410)
-    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
-  }
-
-  // content api has stopped doing this, am finding out what is happening
-  ignore should "return JSONP for expired content" in Fake {
-    val fakeRequest = FakeRequest(GET, s"/${expiredArticle}?callback=${callbackName}")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.ArticleController.renderArticle(expiredArticle)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
-  }
-
-  it should "return the latest blocks of a live blog" in Fake {
+  it should "return the latest blocks of a live blog" in {
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
@@ -118,10 +93,49 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     content should include("block-51cafaa9e4b0e2a9937599df")
 
     //this block
-    content should not include("block-51cae3aee4b02dad15c7494e")
+    content should not include "block-51cae3aee4b02dad15c7494e"
 
     //older block
-    content should not include("block-51caab7be4b08c78ea33d49d")
+    content should not include "block-51caab7be4b08c78ea33d49d"
 
   }
+
+  "ForceHttpResponseFilter" should "not error if switched off" in {
+    ForceHttpResponseCodeSwitch.switchOff()
+
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders("X-Gu-Force-Status" -> "503")
+    val Some(result) = route(request)
+    status(result) should be (200)
+  }
+
+  it should "not error if there is no header" in {
+    ForceHttpResponseCodeSwitch.switchOn()
+
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+
+    val Some(result) = route(request)
+    status(result) should be (200)
+  }
+
+  it should "error if there is an appropriate header and it is switched on" in {
+    ForceHttpResponseCodeSwitch.switchOn()
+
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders("X-Gu-Force-Status" -> "503")
+
+    val Some(result) = route(request)
+    status(result) should be (503)
+  }
+
+  it should "404 with an appropriate header" in {
+    ForceHttpResponseCodeSwitch.switchOn()
+
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders("X-Gu-Force-Status" -> "404")
+
+    val Some(result) = route(request)
+    status(result) should be (404)
+  }
+
 }

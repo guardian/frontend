@@ -10,7 +10,7 @@
         @if(autoRefresh){
             <meta http-equiv="refresh" content="60">
         }
-        
+
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/32x32.ico")" />
 
         <link rel="apple-touch-icon" sizes="144x144" href="@routes.Assets.at("images/144x144.png")" />
@@ -20,7 +20,7 @@
 
         <meta name="apple-mobile-web-app-title" content="Guardian" />
         <meta name="application-name" content="The Guardian" />
-        <meta name="msapplication-TileColor" content="#214583" />
+        <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
@@ -78,8 +78,9 @@
                 baseUrl: 'assets/javascripts',
                 apiName: 'require'
             };
+
+            @Html(Static.js.curl)
         </script>
-        <script type="text/javascript" src="@Static("javascripts/components/curl/curl-domReady.js")"></script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
         <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>

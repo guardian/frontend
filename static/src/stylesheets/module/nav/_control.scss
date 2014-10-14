@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Navigation controls
+   ========================================================================== */
+// TODO:
+// use a proper icon size variabe when the icons are redrawn at mulptile sizes
+$control-size: 36px;
+
+
+/* Label next to the icon
+   ========================================================================== */
+
+.control__info {
+    display: none;
+    height: 30px;
+    line-height: $control-size;
+    margin-left: $gs-gutter/2;
+    max-width: 140px;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    float: left;
+    text-overflow: ellipsis;
+    text-align: left;
+
+    @include mq($from: 540px) {
+        max-width: 200px;
+    }
+
+    @include mq(tablet) {
+        display: block;
+    }
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            margin: 0;
+        }
+    }
+
+    .brand-bar__item--profile & {
+        @include mq(mobileLandscape) {
+            display: block;
+        }
+    }
+}
+
+
+/* Control icon
+   ========================================================================== */
+
+.control__icon-wrapper {
+    @extend %icon-holder-circle;
+    border: 1px solid rgba(#ffffff, .3);
+    float: left;
+    height: 34px;
+    width: 34px;
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
+}
+
+.control__icon {
+    display: block;
+    text-align: center;
+    height: 32px;
+    padding-top: 7px;
+
+    .i {
+        display: none;
+        margin: 0 auto;
+
+        &:first-child {
+            display: block;
+        }
+
+        .control:active &,
+        .control:focus &,
+        .control.is-active & {
+            display: block;
+
+            &:first-child {
+                display: none;
+            }
+        }
+    }
+}

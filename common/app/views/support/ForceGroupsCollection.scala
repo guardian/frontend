@@ -1,21 +1,28 @@
 package views.support
 
+import com.gu.facia.client.models.{SupportingItemMetaData, TrailMetaData}
 import model.{CollectionItems, Collection, Content}
-import play.api.libs.json.JsString
+import play.api.libs.json.{JsBoolean, JsString}
 
 trait FirstTwoBigItems extends CollectionItems {
   override lazy val items: Seq[Content] = {
-    def setMetaFields(c: Content, fields: Map[String, String]): Content = {
-      Content(apiContent = c.apiContent.copy(metaData = c.apiContent.metaData ++ fields.map {
-        case (k, v) => k -> JsString(v)
-      }))
-    }
-
     super.items match {
       case x :: y :: tail =>
-        setMetaFields(x, Map("group" -> "1", "imageAdjust" -> "boost")) ::
-          setMetaFields(y, Map("group" -> "1")) :: tail
-      case x => x.map(setMetaFields(_, Map("group" -> "1", "imageAdjust" -> "boost")))
+        Content(x.apiContent.copy(metaData = x.apiContent.metaData.map {
+          case t: TrailMetaData => t.copy(json = t.json + ("group" -> JsString("1"), "isBoosted" -> JsBoolean(true)))
+          case t: SupportingItemMetaData => t.copy(json = t.json + ("group" -> JsString("1"), "isBoosted" -> JsBoolean(true)))
+        })) ::
+        Content(y.apiContent.copy(metaData = y.apiContent.metaData.map {
+          case t: TrailMetaData => t.copy(json = t.json + ("group" -> JsString("1")))
+          case t: SupportingItemMetaData => t.copy(json = t.json + ("group" -> JsString("1")))
+        })) ::
+        tail
+      case x => x.map{ content =>
+        Content(content.apiContent.copy(metaData = content.apiContent.metaData.map {
+          case t: TrailMetaData => t.copy(json = t.json + ("group" -> JsString("1"), "isBoosted" -> JsBoolean(true)))
+          case t: SupportingItemMetaData => t.copy(json = t.json + ("group" -> JsString("1"), "isBoosted" -> JsBoolean(true)))
+        }))
+      }
     }
   }
 }

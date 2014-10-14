@@ -1,49 +1,56 @@
-@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, foundationSupportedTags: dfp.SponsorshipReport)
+@import tools.DfpLink
+
+@listItem(sponsorship: dfp.Sponsorship) = {
+    <li style="padding-bottom:15px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+        @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
+        @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
+        @if(sponsorship.countries.nonEmpty){<br /><small>geotargeted to @{sponsorship.countries.mkString(", ")}</small>}
+    </li>
+}
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
 
 <h1>Content Sponsorships:</h1>
-<p><a href="#criteria">Criteria for sponsorship</a></p>
+
+<h4>Criteria</h4>
+<p>Pages will be sponsored if you set up a LineItem in DFP with the following parameters:</p>
+<ol>
+  <li>Targets a <em>slot</em> of either:
+    <ul>
+      <li>adbadge</li>
+      <li>spbadge</li>
+    </ul>
+  </li>
+  <li>Targets a <em>tag</em> of either:
+    <ul>
+      <li>keyword: <em>k</em></li>
+      <li>series: <em>se</em></li>
+    </ul>
+  </li>
+  <li>Optionally targets an <em>ad unit</em><br />
+    Only do this when the target tag is ambiguous, (eg there are several keywords called <em>
+      policy</em>).</li>
+</ol>
 
 <h3>Sponsored Tags</h3>
 <p>Last updated: @sponsoredTags.updatedTimeStamp</p>
 <ol>
-    @for(sponsorship <- sponsoredTags.sponsorships) {
-    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
-        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
-        )}
-    </li>
-    }
+    @for(sponsorship <- sponsoredTags.sponsorships){@listItem(sponsorship)}
 </ol>
 
 <h3>Advertisement Feature Tags</h3>
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
-
 <ol>
-    @for(sponsorship <- advertisementTags.sponsorships) {
-    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
-        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
-        )}
-    </li>
-    }
+    @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship)}
 </ol>
 
-<h3><a name="criteria">Criteria:</a></h3>
-<p>Pages will be sponsored if you set up a LineItem in DFP with the following parameters.</p>
+<h3>Foundation Supported Tags</h3>
+<p>Last updated: @foundationSupportedTags.updatedTimeStamp</p>
 <ol>
-    <li>Targets a <em>slot</em> of either:
-        <ul>
-            <li>adbadge</li>
-            <li>spbadge</li>
-        </ul>
-    </li>
-    <li>Targets a tag of either:
-        <ul>
-            <li>keyword: <em>k</em></li>
-            <li>series: <em>se</em></li>
-        </ul>
-    </li>
+    @for(sponsorship <- foundationSupportedTags.sponsorships) {@listItem(sponsorship)}
 </ol>
+
 }

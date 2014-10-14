@@ -1,14 +1,11 @@
-@(audios: Seq[model.Audio])(implicit request: RequestHeader)
+@(audios: Seq[model.Audio])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@import com.gu.facia.client.models.CollectionConfig
 
-<div class="most-viewed-container most-viewed-container--media most-viewed-container--audio" data-component="most-viewed-video">
-
-    <div class="most-viewed-container__header">
-        <h3 class="most-viewed-container__heading">Popular audio</h3>
-    </div>
-    <ul class="u-cf u-unstyled most-viewed--media most-viewed--audio items--media items--audio" data-link-name="Most viewed audio">
-        @audios.zipWithRowInfo.map{ case (audio, row) =>
-            @fragments.mediaItem(audio, row.rowNum)
-        }
-    </ul>
-
+<div class="facia-container facia-container--layout-content">
+    @fragments.containers.special(
+        Collection(audios),
+        SpecialContainer(showMore = false, hasDarkBackground = true),
+        containerIndex = 1,
+        dataId = "audio/most-viewed"
+    )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some("Popular in audio")))
 </div>

@@ -1,21 +1,21 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConversions._
-import conf.{Switches, Configuration}
+import conf.Switches
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
-class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Tag Pages trail size") {
+  feature("Tag Series, Blogs and Contributors Pages trail size") {
 
-    scenario("Tag pages should show at least 20 trails (includes  leadContent if present)") {
+    scenario("Tag Series, Blogs and Contributors pages should show at least 19 trails (includes leadContent if present)") {
 
       Given("I visit a tag page")
 
-      HtmlUnit("/technology/askjack") { browser =>
-        val trails = browser.$(".fromage, .facia-slice__item, .linkslist__item")
-        trails.length should be(20)
+      goTo("/technology/askjack") { browser =>
+        val trails = browser.$(".fc-item__container")
+        trails.length should be(19)
       }
     }
   }
@@ -27,7 +27,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Given("I visit the 'Jemima Kiss' contributor page")
       Switches.ImageServerSwitch.switchOn()
 
-      HtmlUnit("/profile/jemimakiss") { browser =>
+      goTo("/profile/jemimakiss") { browser =>
         Then("I should see her profile image")
         val profileImage = browser.findFirst(".profile__img img")
         profileImage.getAttribute("src") should endWith(s"42593747/Jemima-Kiss.jpg")
@@ -37,7 +37,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Should not not display profiles where they don't exist") {
 
       Given("I visit the 'Sam Jones' contributor page")
-      HtmlUnit("/profile/samjones") { browser =>
+      goTo("/profile/samjones") { browser =>
         Then("I should not see her profile image")
         val profileImages = browser.find(".profile__img img")
         profileImages.length should be(0)
@@ -48,39 +48,11 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Tag Pages Football Nav") {
 
-    scenario("Tags that are football competitions that have teams, link to that place on the teams page") {
-
-      Given("I visit the 'Premier League' tag page")
-
-      HtmlUnit("/football/premierleague") { browser =>
-        val teamsPageLink = browser.findFirst("ul.nav a[data-link-name='teams']")
-        teamsPageLink.getAttribute("href") should endWith("/football/teams#premierleague")
-      }
-    }
-
-    scenario("Tags that are football compeitions but don't have teams don't link to the teams page") {
-
-      Given("I visit the 'Capital One Cup' tag page")
-
-      HtmlUnit("/football/capital-one-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-      Given("I visit the 'Scottish League Cup' tag page")
-
-      HtmlUnit("/football/cis-insurance-cup") { browser =>
-        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
-        teamsPageLinks.length should be(0)
-      }
-
-    }
-
     scenario("Pagination") {
 
       Given("I visit the 'Cycling' tag page")
 
-      HtmlUnit("/sport/cycling") { browser =>
+      goTo("/sport/cycling") { browser =>
         import browser._
 
         val linksOnFirstPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))

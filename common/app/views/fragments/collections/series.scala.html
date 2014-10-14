@@ -1,4 +1,4 @@
-@(items: Seq[model.Trail], style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(items: Seq[model.Trail], style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m facia-slice">
@@ -23,7 +23,7 @@
 }
 @defining(items.drop(7)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone} container--neutral1-background" data-tone="@style.tone">
+        <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @fragments.items.linksList.trail(trail, index + 7, None)

@@ -1,22 +1,20 @@
 package controllers
 
+import actions.AuthenticatedActions
 import com.google.inject.{Inject, Singleton}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import conf.IdentityConfiguration
-import idapiclient.{TrackingData, IdApiClient}
+import idapiclient.IdApiClient
 import common.ExecutionContexts
 import utils.SafeLogging
 import play.api.mvc._
 import scala.concurrent.Future
-import model.IdentityPage
+import model.{EmailSubscriptions, IdentityPage}
 import play.api.data._
-import client.{Auth, Error}
+import client.{Error}
 import net.liftweb.json.JsonDSL._
-import com.gu.identity.model.{User, Subscriber}
+import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
-import scala.util.{Try, Failure, Success}
-import client.Response
-import actions.AuthRequest
 
 
 @Singleton
@@ -25,128 +23,129 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                 api: IdApiClient,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                authAction: actions.AuthenticatedAction)
+                                authenticatedActions: AuthenticatedActions)
   extends Controller with ExecutionContexts with SafeLogging {
   import EmailPrefsData._
+  import authenticatedActions.authAction
 
   val page = IdentityPage("/email-prefs", "Email preferences", "email-prefs")
+  protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
 
   def preferences = CSRFAddToken {
-    authAction.async {
-      implicit request =>
-        val idRequest = idRequestParser(request)
-        populateForm(request.user.getId(), request.auth, idRequest.trackingData) map {
-          form =>
-            checkForm(form)
-            val template = views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest))
-            Ok(template)
+    authAction.async { implicit request =>
+      val idRequest = idRequestParser(request)
+      val userId = request.user.getId()
+      val userFuture = api.user(userId, request.user.auth)
+      val subscriberFuture = api.userEmails(userId, idRequest.trackingData)
+
+      (for {
+        user <- userFuture
+        subscriber <- subscriberFuture
+      } yield {
+        (user, subscriber) match {
+          case (Right(user), Right(subscriber)) => {
+            val form = emailPrefsForm.fill(EmailPrefsData(
+              user.statusFields.isReceiveGnmMarketing,
+              user.statusFields.isReceive3rdPartyMarketing,
+              subscriber.htmlPreference,
+              subscriber.subscriptions.map(_.listId)
+            ))
+            form
+          }
+
+          case (user, subscriber) => {
+            val errors = user.left.getOrElse(Nil) ++ subscriber.left.getOrElse(Nil)
+            val formWithErrors = errors.foldLeft(emailPrefsForm) {
+              case (formWithErrors, Error(message, description, _, context)) =>
+                formWithErrors.withGlobalError(description)
+            }
+            formWithErrors
+          }
         }
+      }).map{ form =>
+        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form)))
+      }
     }
   }
 
   def savePreferences = CSRFCheck {
-    authAction.async {
-      implicit request =>
-        val boundForm = emailPrefsForm.bindFromRequest
-        boundForm.fold({
-          case formWithErrors: Form[EmailPrefsData] =>
-            logger.info(s"Error saving user email preference, ${formWithErrors.errors}")
-            val idRequest = idRequestParser(request)
-            Future.successful(Ok(views.html.profile.emailPrefs(page, formWithErrors, formActionUrl(idUrlBuilder, idRequest))))
-        }, {
-          case prefs: EmailPrefsData =>
-            val idRequest = idRequestParser(request)
-            updatePrefs(prefs, boundForm, idRequest.trackingData) map {
-              form =>
-                Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest)))
-            }
-        })
-    }
-  }
+    authAction.async { implicit request =>
+      
+      val idRequest = idRequestParser(request)
+      val userId = request.user.getId()
+      val auth = request.user.auth
+      val trackingParameters = idRequest.trackingData
 
-  protected def updatePrefs[A](prefs: EmailPrefsData, boundForm: Form[EmailPrefsData], tracking: TrackingData)
-                           (implicit request: AuthRequest[A]): Future[Form[EmailPrefsData]] = {
-    logger.trace("Updating user email prefs")
-    val userId = request.user.id
-    val auth= request.auth
-    val newStatusFields = ("receiveGnmMarketing" -> prefs.receiveGnmMarketing) ~ ("receive3rdPartyMarketing" -> prefs.receive3rdPartyMarketing)
-    val subscriber = Subscriber(prefs.htmlPreference, Nil)
+      emailPrefsForm.bindFromRequest.fold({
+        case formWithErrors: Form[EmailPrefsData] =>
+          Future.successful((formWithErrors, getEmailSubscriptions(formWithErrors)))
+      }, {
+        case emailPrefsData: EmailPrefsData =>
+          val form = emailPrefsForm.fill(emailPrefsData)
+          emailPrefsData.emailSubscription.map {
+            case listId if listId.startsWith("unsubscribe-") =>
+              val id = listId.replace("unsubscribe-", "")
+              api.deleteSubscription(userId, EmailList(id), auth, trackingParameters).map {
+                case Right(response) =>
+                  (form, getEmailSubscriptions(form, remove = List(id)))
 
-    val futureUser = api.updateUser(userId, auth, tracking, "statusFields", newStatusFields)
-    val futureNothing = api.updateUserEmails(userId, subscriber, auth, tracking)
-
-    futureForm(futureUser, futureNothing, boundForm){
-      case (user, _) =>
-        emailPrefsForm.fill(
-          EmailPrefsData(
-            user.statusFields.isReceiveGnmMarketing,
-            user.statusFields.isReceive3rdPartyMarketing,
-            prefs.htmlPreference
-          )
-        )
-    }
-  }
-
-  protected def checkForm(form: Form[EmailPrefsData]){
-    if(form.hasErrors) logger.error("Email prefs form has errors: " + form.errors)
-    form.value foreach { prefs =>
-      val htmlPref = prefs.htmlPreference
-      if(!isValidHtmlPreference(htmlPref))
-        logger.error("Email prefs form invalid htmlPreference: " + htmlPref)
-    }
-  }
-
-  protected def populateForm(userId: String, auth: Auth, trackingData: TrackingData): Future[Form[EmailPrefsData]] = {
-    val futureUser= api.user(userId, auth)
-    val futureSubscriber = api.userEmails(userId, trackingData)
-    futureForm(futureUser, futureSubscriber, emailPrefsForm){
-      (user, subscriber) =>
-        emailPrefsForm.fill(
-          EmailPrefsData(
-            user.statusFields.isReceiveGnmMarketing,
-            user.statusFields.isReceive3rdPartyMarketing,
-            subscriber.htmlPreference
-          )
-        )
-    }
-  }
-
-  protected def futureForm[S](f1: Future[Response[User]], f2: Future[Response[S]], form: Form[EmailPrefsData])
-                             (right: (User, S) => Form[EmailPrefsData]): Future[Form[EmailPrefsData]] = {
-    val futures = f1 zip f2
-    futures onFailure {case t: Throwable => logger.error("Exception while fetching user and email prefs", t)}
-    futures map {
-      results =>
-        logExceptions {
-          results match {
-            case (Right(user), Right(s)) => right(user, s)
-
-            case (eitherUser, eitherS) =>
-              val errors = eitherUser.left.getOrElse(Nil) ++ eitherS.left.getOrElse(Nil)
-              errors.foldLeft(form) {
-                case (errForm, Error(message, description, _, context)) =>
-                  logger.error(s"Error while fetching user and email prefs: $message")
-                  errForm.withError(context.getOrElse(""), description)
+                case Left(response) =>
+                  val formWithErrors = response.foldLeft(form) {
+                    case (formWithErrors, Error(message, description, _, context)) =>
+                      formWithErrors.withError(context.getOrElse(""), description)
+                  }
+                  (formWithErrors, getEmailSubscriptions(form, remove = List(id)))
               }
+
+            case listId =>
+              api.addSubscription(userId, EmailList(listId), auth, trackingParameters).map {
+                case Right(response) =>
+                  (form, getEmailSubscriptions(form, add = List(listId)))
+
+                case Left(response) =>
+                  val formWithErrors = response.foldLeft(form) {
+                    case (formWithErrors, Error(message, description, _, context)) =>
+                      formWithErrors.withError(context.getOrElse(""), description)
+                  }
+                  (formWithErrors, getEmailSubscriptions(form, add = List(listId)))
+              }
+          }.getOrElse {
+            val newStatusFields = ("receiveGnmMarketing" -> emailPrefsData.receiveGnmMarketing) ~ ("receive3rdPartyMarketing" -> emailPrefsData.receive3rdPartyMarketing)
+            val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
+            val userFuture = api.updateUser(userId, auth, trackingParameters, "statusFields", newStatusFields)
+            val subscriberFuture = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
+
+            for {
+              user <- userFuture
+              subscriber <- subscriberFuture
+            } yield {
+              (user, subscriber) match {
+                case (Right(user), Right(subscriber)) => {
+                  (form, getEmailSubscriptions(form))
+                }
+
+                case (user, subscriber) => {
+                  val errors = user.left.getOrElse(Nil) ++ subscriber.left.getOrElse(Nil)
+                  val formWithErrors = errors.foldLeft(form) {
+                    case (formWithErrors, Error(message, description, _, context)) =>
+                      formWithErrors.withError(context.getOrElse(""), description)
+                  }
+                  (formWithErrors, getEmailSubscriptions(formWithErrors))
+                }
+              }
+            }
           }
-        }
+      }).map{ case (form, emailSubscriptions) =>
+        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), emailSubscriptions))
+      }
     }
   }
 
-  protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
-
-  protected def logExceptions[T](f: => T): T = {
-    Try(f) match {
-      case Success(result) => result
-
-      case Failure(t) =>
-        logger.error("Exception while fetching user and email prefs", t)
-        throw t
-    }
-  }
+  protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
+    EmailSubscriptions(form.data.filter(_._1.startsWith("emailSubscription")).map(_._2).filterNot(remove.toSet) ++ add)
 }
 
-case class EmailPrefsData(receiveGnmMarketing: Boolean, receive3rdPartyMarketing: Boolean, htmlPreference: String)
+case class EmailPrefsData(receiveGnmMarketing: Boolean, receive3rdPartyMarketing: Boolean, htmlPreference: String, emailSubscriptions: List[String], emailSubscription: Option[String] = None)
 object EmailPrefsData {
   protected val validPrefs = Set("HTML", "Text")
   def isValidHtmlPreference(pref: String): Boolean =  validPrefs contains pref
@@ -155,7 +154,9 @@ object EmailPrefsData {
     Forms.mapping(
       "statusFields.receiveGnmMarketing" -> Forms.boolean,
       "statusFields.receive3rdPartyMarketing" -> Forms.boolean,
-      "htmlPreference" -> Forms.text().verifying(isValidHtmlPreference _)
+      "htmlPreference" -> Forms.text.verifying(isValidHtmlPreference _),
+      "emailSubscription" -> Forms.list(Forms.text),
+      "addEmailSubscription" -> Forms.optional(Forms.text)
     )(EmailPrefsData.apply)(EmailPrefsData.unapply)
   )
 }

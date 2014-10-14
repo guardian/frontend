@@ -1,6 +1,6 @@
 package controllers
 
-import frontsapi.model.{Collection, Front}
+import com.gu.facia.client.models.{Front, CollectionConfig}
 import play.api.mvc.Controller
 import services.PressAndNotify
 import util.Requests._
@@ -18,9 +18,15 @@ case class CreateFront(
   navSection: Option[String],
   webTitle: Option[String],
   title: Option[String],
+  imageUrl: Option[String],
+  imageWidth: Option[Int],
+  imageHeight: Option[Int],
+  isImageDisplayed: Option[Boolean],
   description: Option[String],
+  onPageDescription: Option[String],
   priority: Option[String],
-  initialCollection: Collection
+  isHidden: Option[Boolean],
+  initialCollection: CollectionConfig
 )
 
 object FrontController extends Controller {

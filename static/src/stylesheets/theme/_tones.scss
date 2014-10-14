@@ -1,0 +1,116 @@
+// Styles for elements available for painting at initial load
+@mixin tone-head($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
+        .tone-colour,
+        %tone-colour,
+        &.tone-colour {
+            &,
+            &:active,
+            &:focus,
+            &:hover {
+                color: $colour;
+            }
+        }
+
+        .tone-border,
+        &.tone-border {
+            border-color: $colour;
+        }
+
+        .tone-accent-border,
+        &.tone-accent-border {
+            border-color: $accentColour;
+        }
+
+        .tone-background,
+        %tone-background,
+        &.tone-background {
+            background-color: $colour;
+        }
+
+        .is-summary > .block-title {
+            color: $colour;
+        }
+    }
+}
+
+
+// Styles with global dependencies
+// or for elements which painting can be delayed
+@mixin tone-global($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
+        .commentcount {
+            i {
+                @extend %i-comment-#{$tone};
+
+                @if $svg-support {
+                    .svg & {
+                        @extend %svg-i-comment-#{$tone};
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin tone-head-comment-icon($tone, $commentIcon) {
+    .tone-#{$tone}.tone-#{$tone}--article .content__head__comment-count i {
+        @extend %i-comment-#{$commentIcon};
+        @if $svg-support {
+            .svg & {
+                @extend %svg-i-comment-#{$commentIcon};
+            }
+        }
+    }
+}
+
+@mixin article-header-tone($tone, $backgroundColour, $backgroundAccentColour, $textColour, $textAccentColour, $commentIcon) {
+    .tone-#{$tone} .content__head--tonal {
+        .content__headline,
+        .content__standfirst,
+        .content__standfirst a {
+            color: $textColour;
+        }
+
+        .tone-background {
+            background-color: $backgroundColour;
+        }
+
+        .tone-background--accent {
+            background-color: $backgroundAccentColour;
+        }
+
+        .content__head__comment-count .commentcount {
+            color: $textColour;
+        }
+
+        .content__labels {
+            border-bottom-color: rgba($textColour, .3);
+        }
+
+        .content__section-label__link {
+            color: $textAccentColour;
+        }
+
+        .content__series-label__link {
+            color: $textColour;
+        }
+
+        .content__standfirst .bullet:before {
+            background-color: lighten($backgroundAccentColour, 25);
+        }
+
+        .u-underline {
+            border-bottom-color: lighten($backgroundAccentColour, 25);
+            &:focus,
+            &:active,
+            &:hover {
+                border-bottom-color: #ffffff;
+            }
+        }
+    }
+
+    .content.tone-#{$tone} .drop-cap {
+        color: $backgroundColour;
+    }
+}

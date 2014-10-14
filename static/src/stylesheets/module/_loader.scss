@@ -1,0 +1,53 @@
+/**
+ * pamplemousse - CSS3 animated version of our loading gif
+ */
+
+$pamplemousse-dot-size-large: 15px;
+$pamplemousse-dot-spacing: 17px;
+$pamplemousse-dot-smallscale: .45;
+
+@-webkit-keyframes pulsate {
+    25% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale($pamplemousse-dot-smallscale); }
+}
+
+@-moz-keyframes pulsate {
+    25% { -moz-transform: scale(1); }
+    50% { -moz-transform: scale($pamplemousse-dot-smallscale); }
+}
+
+@keyframes pulsate {
+    25% { transform: scale(1); }
+    50% { transform: scale($pamplemousse-dot-smallscale); }
+}
+
+.pamplemousse {
+    position: relative;
+    width: $pamplemousse-dot-spacing*3;
+    height: $pamplemousse-dot-spacing;
+}
+
+.pamplemousse__pip {
+    float: left;
+    display: block;
+    position: relative;
+    text-align: center;
+    width: $pamplemousse-dot-spacing;
+    height: $pamplemousse-dot-spacing;
+    line-height: $pamplemousse-dot-spacing;
+
+    i {
+        width: $pamplemousse-dot-size-large;
+        height: $pamplemousse-dot-size-large;
+
+        @include transform(scale($pamplemousse-dot-smallscale));
+        @include animation(pulsate 2s ease-in-out infinite);
+        display: block;
+        background-color: $c-neutral2;
+        border-radius: 100px;
+    }
+}
+
+.pamplemousse__pip:nth-child(1) i { @include animation-delay(0s); }
+.pamplemousse__pip:nth-child(2) i { @include animation-delay(.33s); }
+.pamplemousse__pip:nth-child(3) i { @include animation-delay(.66s); }

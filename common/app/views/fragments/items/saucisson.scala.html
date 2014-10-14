@@ -1,6 +1,10 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
-@defining((trail.visualTone)) { tone =>
+@import common.LinkTo
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import views.support.{GetClasses, Video640, RemoveOuterParaHtml, SnapData}
+
+@defining(trail.visualTone) { tone =>
     <div
         class="@GetClasses.forSaucisson(trail)"
         @if(trail.isCommentable) {
@@ -13,16 +17,35 @@
         @SnapData(trail)>
 
         <div class="saucisson__container">
-            <a @LinkTo(trail).map{url=>href=@url} class="saucisson__link" data-link-name="article">
-                @fragments.items.elements.image(trail)
-                @fragments.items.elements.title(trail, index, 0)
-            </a>
+            @FaciaDisplayElement.fromTrail(trail) match {
+                case InlineVideo(video, title, endSlatePath) => {
+                    <div class="item__media-wrapper item__media-wrapper--video">
+                        @fragments.media.video(VideoPlayer(
+                            video,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            None
+                        ))
+                    </div>
+                }
 
-            @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                case _ => {
+                    @fragments.items.elements.image(trail)
+                }
+            }
+
+            @fragments.items.elements.title(trail, index, 0)
+
+            @trail match { case content: model.Content => @fragments.items.elements.starRating(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
@@ -32,12 +55,15 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }
         </div>
 
+        <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }

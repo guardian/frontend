@@ -1,4 +1,4 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
 @import conf.Switches._
 
 @byline(content: model.Content) = {
@@ -17,10 +17,11 @@
         @fragments.meta.dateline(content.webPublicationDate, secondary = true)
     }
     <div class="js-comment-count meta__comment-count--bottom"></div>
-    <div class="social-wrapper social-wrapper--aside" data-component="share">
-        <h2 class="social__head">Share this article</h2>
-        @fragments.social(content, "top", iconModifier = if(content.isVideo) "white" else "")
+    <div class="submeta submeta--top" data-component="share">
+        <h2 class="submeta__head">Share this article</h2>
+        @fragments.social(content, "top", iconModifier = if(content.isMedia) "white" else "")
     </div>
+
 
 }
 
@@ -29,9 +30,11 @@
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
-    @fragments.commercial.badge(content)
+    @if(showBadge) {
+        @fragments.commercial.badge(content)
+    }
 
-    @if(content.hasLargeContributorImage && content.contributors.length == 1 && !content.hasTonalHeaderByline) {
+    @if(content.showBylinePic) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>

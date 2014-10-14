@@ -3,9 +3,10 @@ package com.gu
 import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
-import play._
+import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import play.twirl.sbt.Import._
+import Dependencies._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -34,23 +35,26 @@ trait Prototypes {
       </dependencies>,
 
     resolvers := Seq(
+      Resolver.typesafeRepo("releases"),
+      Classpaths.typesafeReleases,
+      "Akka" at "http://repo.akka.io/releases",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
-      "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
-      "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "Akka" at "http://repo.akka.io/releases"
+      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
     ),
 
     resolvers ++= Seq(
       // where Shade lives
       "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
       // for SpyMemcached
-      "Spy" at "http://files.couchbase.com/maven2/"
+      "Spy" at "https://files.couchbase.com/maven2/"
     )
   )
 
   val frontendClientSideSettings = Seq(
+    sourceDirectory in Assets := (sourceDirectory in Compile).value / "assets.none",
+    sourceDirectory in TestAssets := (sourceDirectory in Test).value / "assets.none",
+
     TwirlKeys.templateImports ++= Seq(
       "common._",
       "model._",
@@ -73,12 +77,13 @@ trait Prototypes {
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.0" % "test",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test"
+      scalaTest,
+      mockito
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
-    javaOptions in Test += "-DAPP_SECRET=secret",
+    javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
+    javaOptions in Test += "-XX:MaxPermSize=680m",
     baseDirectory in Test := file(".")
   )
 
@@ -93,10 +98,9 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "7.0",
-        "commons-io" % "commons-io" % "2.4"
+        commonsIo
       )
     )
-      .settings(Seq(name in Universal := applicationName): _*)
+    .settings(name in Universal := applicationName)
   }
 }

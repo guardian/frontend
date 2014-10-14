@@ -25,7 +25,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderLeagueTableJson() = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
 
-    val page = new Page(
+    val page = new FootballPage(
       "football/tables",
       "football",
       "All tables",
@@ -49,7 +49,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlistJson() = renderTeamlist()
   def renderTeamlist() = Action { implicit request =>
 
-    val page = new Page(
+    val page = new FootballPage(
       "football/teams",
       "football",
       "All teams",
@@ -73,7 +73,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
     table.map { table =>
 
-      val page = new Page(
+      val page = new FootballPage(
         "football/tables",
         "football",
         s"${table.competition.fullName} table",
@@ -103,7 +103,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         group.round.name.exists(name => name.toLowerCase == groupReference.toLowerCase.replace("-", " "))
       }
     } yield {
-      val page = new Page(
+      val page = new FootballPage(
         "football/tables",
         "football",
         s"${table.competition.fullName} table",

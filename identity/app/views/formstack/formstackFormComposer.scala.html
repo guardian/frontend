@@ -1,7 +1,7 @@
 @(metaData: model.MetaData, formstackForm: _root_.formstack.FormstackForm, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html class="js-off id--signed-out" lang="en-GB">
+<html lang="en-GB">
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
@@ -476,7 +476,7 @@ a {
                 self.populateHiddenFields(user);
 
                 // Events
-                window.addEventListener('unload', self.unload, false)
+                window.addEventListener('unload', self.unload, false);
                 dom.$form.addEventListener('submit', self.submit, false);
 
                 // Display
@@ -484,7 +484,11 @@ a {
                 document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
 
                 // Update iframe height
+                // This should really use http://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js
+                // but it isn't available over SSL at the moment.
                 self.sendHeight();
+                window.addEventListener('resize', self.sendHeight, false);
+                setInterval(self.sendHeight, 500);
 
                 dom.$form.className = dom.$form.className.replace('is-hidden', '');
 

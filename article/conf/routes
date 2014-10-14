@@ -7,7 +7,7 @@ GET     /assets/*path               dev.DevAssetsController.at(path)
 
 GET     /_healthcheck               conf.HealthCheck.healthcheck()
 
-GET     /_cdn_healthcheck           controllers.ArticleHealthcheckController.healthcheck()
+GET     /_cdn_healthcheck           controllers.CdnHealthcheckController.healthcheck()
 
 GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET     /*path                      controllers.ArticleController.renderArticle(path)

@@ -1,16 +1,24 @@
 package tools
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
-import conf.{AdminHealthCheckPage, Configuration}
 import com.amazonaws.services.cloudwatch.model._
+import common.{ExecutionContexts, Logging}
+import conf.Configuration
+import conf.Configuration._
+import controllers.HealthCheck
 import org.joda.time.DateTime
-import com.amazonaws.handlers.AsyncHandler
-import common.Logging
-import Configuration._
 import services.AwsEndpoints
 
-object CloudWatch extends implicits.Futures{
+import scala.collection.JavaConversions._
+import awswrappers.cloudwatch._
 
+import scala.concurrent.Future
+
+case class MaximumMetric(metric: GetMetricStatisticsResult) {
+  lazy val max: Double = metric.getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
+}
+
+object CloudWatch extends Logging with ExecutionContexts {
   def shutdown() {
     euWestClient.shutdown()
     defaultClient.shutdown()
@@ -20,13 +28,13 @@ object CloudWatch extends implicits.Futures{
   val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   lazy val euWestClient = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 
   // some metrics are only available in the 'default' region
-  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
 
   val primaryLoadBalancers: Seq[LoadBalancer] = Seq(
     LoadBalancer("frontend-router"),
@@ -36,16 +44,32 @@ object CloudWatch extends implicits.Futures{
   ).flatten
 
   val secondaryLoadBalancers = Seq(
-    LoadBalancer( "frontend-discussion"),
-    LoadBalancer( "frontend-identity"),
-    LoadBalancer( "frontend-image"),
-    LoadBalancer( "frontend-sport"),
-    LoadBalancer( "frontend-commercial"),
-    LoadBalancer( "frontend-onward"),
-    LoadBalancer( "frontend-r2football"),
-    LoadBalancer( "frontend-diagnostics" ),
-    LoadBalancer( "frontend-archive" )
+    LoadBalancer("frontend-discussion"),
+    LoadBalancer("frontend-identity"),
+    LoadBalancer("frontend-image"),
+    LoadBalancer("frontend-sport"),
+    LoadBalancer("frontend-commercial"),
+    LoadBalancer("frontend-onward"),
+    LoadBalancer("frontend-r2football"),
+    LoadBalancer("frontend-diagnostics"),
+    LoadBalancer("frontend-archive")
   ).flatten
+
+  private val chartColours = Map(
+    ("frontend-router",       ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-article",      ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-facia",        ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-applications", ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-discussion",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-identity",     ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-image",        ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-sport",        ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-commercial",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-onward",       ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-r2football",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-diagnostics",  ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-archive",      ChartFormat(Colour.`tone-news-2`))
+  ).withDefaultValue(ChartFormat.SingleLineBlack)
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
@@ -59,189 +83,171 @@ object CloudWatch extends implicits.Futures{
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
-  private val jsErrorMetrics = List(
-    ("JavaScript errors caused by adverts", "ads"),
-    ("JavaScript errors from iOS", "js.ios"),
-    ("JavaScript errors from iOS", "js.android"),
-    ("JavaScript errors from iOS", "js.unknown"),
-    ("JavaScript errors from iOS", "js.windows")
-  )
-
   val assetsFiles = Seq(
     "app.js",
+    "commercial.js",
     "facia.js",
     "global.css",
+    "head.commercial.css",
     "head.default.css",
     "head.facia.css",
     "head.football.css",
-    "head.identity.css"
+    "head.identity.css",
+    "head.index.css"
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
-  def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
 
-  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging {
-    def onError(exception: Exception) {
-      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}")
-      exception match {
+  def fullStackLatency = for {
+    shortLatency <- shortStackLatency
+    secondaryLatency <- latency(secondaryLoadBalancers)
+  } yield shortLatency ++ secondaryLatency
+
+  def withErrorLogging[A](future: Future[A]): Future[A] = {
+    future onFailure {
+      case exception: Exception =>
+        log.info(s"CloudWatch error: ${exception.getMessage}")
+
         // temporary till JVM bug fix comes out
         // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        case e: Exception if e.getMessage.contains("JAXP00010001") => AdminHealthCheckPage.setUnhealthy()
-        case _ =>
-      }
+        if (exception.getMessage.contains("JAXP00010001")) {
+          HealthCheck.break()
+        }
     }
-    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult ) { }
-  }
 
-  object listMetricsHandler extends AsyncHandler[ListMetricsRequest, ListMetricsResult] with Logging {
-    def onError(exception: Exception) {
-      log.info(s"CloudWatch ListMetricsRequest error: ${exception.getMessage}")
-    }
-    def onSuccess(request: ListMetricsRequest, result: ListMetricsResult ) { }
+    future
   }
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
-
   private def latency(loadBalancers: Seq[LoadBalancer]) = {
-    loadBalancers.map{ loadBalancer =>
-      new LineChart(loadBalancer.name , Seq("Time", "latency (ms)"),
-        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(2).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withUnit(StandardUnit.Seconds)
-          .withStatistics("Average")
-          .withNamespace("AWS/ELB")
-          .withMetricName("Latency")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
-          asyncHandler)
-      )
-    }.toSeq
+    Future.traverse(loadBalancers) { loadBalancer =>
+      withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(2).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(60)
+        .withUnit(StandardUnit.Seconds)
+        .withStatistics("Average")
+        .withNamespace("AWS/ELB")
+        .withMetricName("Latency")
+        .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))
+      )) map { metricsResult =>
+        new AwsLineChart(loadBalancer.name, Seq("Time", "latency (ms)"), chartColours(loadBalancer.project), metricsResult)
+      }
+    }
   }
 
   def requestOkShortStack = requestOkCount(primaryLoadBalancers)
-  def requestOkFullStack = requestOkShortStack ++ requestOkCount(secondaryLoadBalancers)
+
+  def requestOkFullStack = for {
+    primary <- requestOkShortStack
+    secondary <- requestOkCount(secondaryLoadBalancers)
+  } yield primary ++ secondary
 
   private def requestOkCount(loadBalancers: Seq[LoadBalancer]) = {
-    loadBalancers.map{ loadBalancer =>
-      new LineChart(loadBalancer.name, Seq("Time", "2xx/minute"),
-        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(2).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withStatistics("Sum")
-          .withNamespace("AWS/ELB")
-          .withMetricName("HTTPCode_Backend_2XX")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
-          asyncHandler)
-      )
-    }.toSeq
-  }
-
-  def jsErrors = {
-    val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
-        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(6).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(120)
-          .withStatistics("Average")
-          .withNamespace("Diagnostics")
-          .withMetricName(metric)
-          .withDimensions(stage),
-          asyncHandler)
-        }
-    new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
-  }
-
-  def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new LineChart(graphTitle, Seq("Time", metric),
-      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(6).toDate)
+    Future.traverse(loadBalancers) { loadBalancer =>
+      withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(2).toDate)
         .withEndTime(new DateTime().toDate)
-        .withPeriod(120)
-        .withStatistics("Average")
-        .withNamespace("Fastly")
-        .withMetricName(metric)
-        .withDimensions(new Dimension().withName("region").withValue(region),
-                        new Dimension().withName("service").withValue(service)),
-        asyncHandler)
-    )
-  }.toSeq
+        .withPeriod(60)
+        .withStatistics("Sum")
+        .withNamespace("AWS/ELB")
+        .withMetricName("HTTPCode_Backend_2XX")
+        .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)))) map { metricsResult =>
+        new AwsLineChart(loadBalancer.name, Seq("Time", "2xx/minute"), ChartFormat(Colour.success), metricsResult)
+      }
+    }
+  }
 
-  def cost = new MaximumMetric(defaultClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def fastlyErrors = Future.traverse(fastlyMetrics) { case (graphTitle, metric, region, service) =>
+    withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(120)
+      .withStatistics("Average")
+      .withNamespace("Fastly")
+      .withMetricName(metric)
+      .withDimensions(new Dimension().withName("region").withValue(region),
+        new Dimension().withName("service").withValue(service)))) map { metricsResult =>
+      new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
+    }
+  }
+
+  def cost = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
     .withEndTime(new DateTime().toDate)
     .withStatistics("Maximum")
     .withPeriod(60 * 60 * 24)
-    .withDimensions(new Dimension().withName("Currency").withValue("USD")), asyncHandler))
+    .withDimensions(new Dimension().withName("Currency").withValue("USD")))).map(MaximumMetric.apply)
 
-  def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
-    new LineChart( graphTitle, Seq("Time", "Hits", "Misses"),
-
-      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def fastlyHitMissStatistics = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region, service) =>
+    for {
+      hits <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(120)
         .withStatistics("Average")
         .withNamespace("Fastly")
         .withMetricName("hits")
-        .withDimensions(new Dimension().withName("region").withValue(region),
-                        new Dimension().withName("service").withValue(service)),
-        asyncHandler),
+        .withDimensions(
+          new Dimension().withName("region").withValue(region),
+          new Dimension().withName("service").withValue(service)
+        ))
+      )
 
-      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      misses <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(120)
         .withStatistics("Average")
         .withNamespace("Fastly")
         .withMetricName("miss")
-        .withDimensions(new Dimension().withName("region").withValue(region),
-                        new Dimension().withName("service").withValue(service)),
-        asyncHandler)
-    )
-  }.toSeq
+        .withDimensions(
+          new Dimension().withName("region").withValue(region),
+          new Dimension().withName("service").withValue(service)
+        )
+      ))
+    } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
+  }
 
-  def omnitureConfidence = new LineChart("omniture-percent-conversion", Seq("Time", "%"),
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-    .withStartTime(new DateTime().minusWeeks(2).toDate)
-    .withEndTime(new DateTime().toDate)
-    .withPeriod(900)
-    .withStatistics("Average")
-    .withNamespace("Analytics")
-    .withMetricName("omniture-percent-conversion")
-    .withDimensions(stage),
-    asyncHandler))
+  def omnitureConfidence = for {
+    percentConversion <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusWeeks(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(900)
+      .withStatistics("Average")
+      .withNamespace("Analytics")
+      .withMetricName("omniture-percent-conversion")
+      .withDimensions(stage)))
+  } yield new AwsLineChart("omniture-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
 
-  def ophanConfidence = new LineChart("ophan-percent-conversion", Seq("Time", "%"),
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def ophanConfidence = for {
+    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(900)
       .withStatistics("Average")
       .withNamespace("Analytics")
       .withMetricName("ophan-percent-conversion")
-      .withDimensions(stage),
-      asyncHandler))
+      .withDimensions(stage)))
+  } yield new AwsLineChart("ophan-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
 
-  def ratioConfidence = new LineChart("omniture-ophan-correlation", Seq("Time", "%"),
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def ratioConfidence = for {
+    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(900)
       .withStatistics("Average")
       .withNamespace("Analytics")
       .withMetricName("omniture-ophan-correlation")
-      .withDimensions(stage),
-      asyncHandler))
-
+      .withDimensions(stage)))
+  } yield new AwsLineChart("omniture-ophan-correlation", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
 
   def AbMetricNames() = {
-    euWestClient.listMetricsAsync( new ListMetricsRequest()
+    withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()
       .withNamespace("AbTests")
-      .withDimensions(stageFilter),
-      listMetricsHandler).toScalaFuture
+      .withDimensions(stageFilter)
+    ))
   }
 }

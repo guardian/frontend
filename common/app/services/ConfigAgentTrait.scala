@@ -1,39 +1,53 @@
 package services
 
+import akka.util.Timeout
+import com.gu.facia.client.models.{CollectionConfig, Config, Front}
 import common._
-import play.api.libs.json.{JsNull, Json, JsValue}
-import model.Config
+import conf.Configuration
+import fronts.FrontsApi
+import model.{FrontProperties, SeoDataJson}
+import play.api.libs.json.Json
+import play.api.{Application, GlobalSettings}
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import akka.util.Timeout
-import conf.Configuration
-import play.api.{Application, GlobalSettings}
-import model.SeoDataJson
+import scala.util.{Failure, Success}
+
+case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private lazy val configAgent = AkkaAgent[JsValue](JsNull)
+  private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
-  def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
+  def refresh() = {
+    val futureConfig = FrontsApi.amazonClient.config
+    futureConfig.onComplete {
+      case Success(config) => log.info(s"Successfully got config")
+      case Failure(t) => log.error(s"Getting config failed with $t", t)
+    }
+    futureConfig.map(Option.apply).map(configAgent.send)
+  }
 
-  def refreshWith(json: JsValue): Unit = configAgent.send(json)
+  def refreshWith(config: Config): Unit = {
+    configAgent.send(Option(config))
+  }
 
-  def refreshAndReturn(): Future[JsValue] =
-    S3FrontsApi.getMasterConfig
-      .map(Json.parse)
-      .map(json => configAgent.alter{_ => json})
-      .getOrElse(Future.successful(configAgent.get()))
+  def refreshAndReturn(): Future[Option[Config]] =
+    FrontsApi.amazonClient.config
+      .flatMap(config => configAgent.alter{_ => Option(config)})
+      .fallbackTo{
+      log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
+      Future.successful(configAgent.get())
+    }
 
   def getPathIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
+    val config = configAgent.get()
+    config.map(_.fronts.keys.toList).getOrElse(Nil)
   }
 
   def getConfigCollectionMap: Map[String, Seq[String]] = {
-    val json = configAgent.get()
-    (json \ "fronts").asOpt[Map[String, JsValue]].map { m =>
-      m.mapValues{j => (j \ "collections").asOpt[Seq[String]].getOrElse(Nil)}
-    } getOrElse Map.empty
+    val config = configAgent.get()
+    config.map(_.fronts.mapValues(_.collections)).getOrElse(Map.empty)
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
@@ -42,49 +56,61 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }).toSeq
   }
 
-  def getConfigForId(id: String): Option[List[Config]] = {
-    val json = configAgent.get()
-    (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
-      configList flatMap getConfig
-    }
+  def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
+    val config = configAgent.get()
+    config.flatMap(_.fronts.get(id).map(_.collections))
+      .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig))))
   }
 
-  def getConfig(id: String): Option[Config] = {
-    val json = configAgent.get()
-    (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
-      Config(
-        id,
-        (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "href").asOpt[String],
-        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
-        (collectionJson \ "type").asOpt[String],
-        (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
-        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
-      )
-    }
+  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id))
+
+  def getConfigAfterUpdates(id: String): Future[Option[CollectionConfig]] =
+    configAgent.future().map(_.flatMap(_.collections.get(id)))
+
+    def getAllCollectionIds: List[String] = {
+    val config = configAgent.get()
+    config.map(_.collections.keys.toList).getOrElse(Nil)
   }
 
-  def getAllCollectionIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "collections").asOpt[Map[String, JsValue]] map { collectionMap =>
-      collectionMap.keys.toList
-    } getOrElse Nil
-  }
-
-  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
+  def contentsAsJsonString: String = Json.prettyPrint(Json.toJson(configAgent.get()))
 
   def getSeoDataJsonFromConfig(path: String): SeoDataJson = {
-    val json = configAgent.get()
-    val frontJson = (json \ "fronts" \ path).as[JsValue]
+    val config = configAgent.get()
+
+    val frontOption = config.flatMap(_.fronts.get(path))
     SeoDataJson(
       path,
-      navSection   = (frontJson \ "navSection").asOpt[String].filter(_.nonEmpty),
-      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
-      title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
-      description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
+      navSection   = frontOption.flatMap(_.navSection).filter(_.nonEmpty),
+      webTitle  = frontOption.flatMap(_.webTitle).filter(_.nonEmpty),
+      title  = frontOption.flatMap(_.title).filter(_.nonEmpty),
+      description  = frontOption.flatMap(_.description).filter(_.nonEmpty)
     )
   }
+
+  def fetchFrontProperties(id: String): FrontProperties = {
+    val frontOption: Option[Front] = configAgent.get().flatMap(_.fronts.get(id))
+
+    FrontProperties(
+      onPageDescription = frontOption.flatMap(_.onPageDescription),
+      imageUrl = frontOption.flatMap(_.imageUrl),
+      imageWidth = frontOption.flatMap(_.imageWidth).map(_.toString),
+      imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
+      isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
+      editorialType = None // value found in Content API
+    )
+  }
+
+  def isFrontHidden(id: String): Boolean =
+    configAgent.get().exists(_.fronts.get(id).flatMap(_.isHidden).exists(identity))
+
+  def shouldServeFront(id: String) = getPathIds.contains(id) &&
+    (Configuration.environment.isPreview || !isFrontHidden(id))
+
+  def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
+    configAgent.get()
+      .map(_.fronts
+        .filter{ case (path, front) => front.collections.headOption == Option(collectionId)}
+        .keys.toSeq).filter(_.nonEmpty)
 }
 
 object ConfigAgent extends ConfigAgentTrait

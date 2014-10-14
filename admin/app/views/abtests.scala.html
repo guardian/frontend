@@ -1,6 +1,8 @@
-@(env: String, charts: Seq[tools.LineChart])
+@(env: String, charts: Seq[tools.AwsLineChart])
 
-@chartJson(chart: tools.LineChart) = {
+@import views.support.CamelCase
+
+@chartJson(chart: tools.AwsLineChart) = {
     '@chart.name': {
         data: @Html(chart.asDataset),
         colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))]
@@ -33,7 +35,7 @@
         };
         window.abSwitches = {
             @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
-                "@JavaScriptVariableName(s.name)": @s.isSwitchedOn,
+                "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
         }
     </script>

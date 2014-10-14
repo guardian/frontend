@@ -3,7 +3,7 @@ package controllers.admin
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
-import tools.{ChartFormat, CloudWatch}
+import tools.CloudWatch
 import play.api.libs.ws.WS
 import play.api.libs.ws.WSAuthScheme
 import play.api.libs.concurrent.Execution.Implicits._
@@ -23,7 +23,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   // put it in your properties file as github.token=XXXXXXX
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
-  def switchesExpiringThisWeek() = {  
+  def switchesExpiringThisWeek() = {
     Switches.all.filter { switch =>
       switch.sellByDate.isBefore(new LocalDate().plusDays(7))
     }
@@ -37,17 +37,21 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     }
   }
 
-  def renderRadiator() = AuthActions.AuthActionTest { implicit request =>
-    val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
-    val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
-    val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
-    val switches = switchesExpiringThisWeek
-    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, switches, Configuration.environment.stage)))
+  def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+    for {
+      shortLatency <- CloudWatch.shortStackLatency
+      fastlyErrors <- CloudWatch.fastlyErrors
+      multiLineGraphs <- CloudWatch.fastlyHitMissStatistics
+      cost <- CloudWatch.cost
+    } yield {
+      val graphs = shortLatency ++ fastlyErrors
+      val switches = switchesExpiringThisWeek
+      NoCache(Ok(views.html.radiator(graphs, multiLineGraphs, cost, switches, Configuration.environment.stage)))
+    }
   }
 
   def pingdom() = AuthActions.AuthActionTest.async { implicit request =>
-  
-    val url = Configuration.pingdom.url + "/checks" 
+    val url = Configuration.pingdom.url + "/checks"
     val user = Configuration.pingdom.user
     val password = Configuration.pingdom.password
     val apiKey = Configuration.pingdom.apiKey

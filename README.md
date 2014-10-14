@@ -27,13 +27,13 @@ Coding conventions
 ------------------
 Install the EditorConfig plugin in your IDE/text editor: http://editorconfig.org/#download
 
-It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/editorconfig/.editorconfig) file and set up your editor with the
+It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/master/.editorconfig) file and set up your editor with the
 correct encoding and indentation settings for the project.
 
 
 Configuration
 -------------
-You need 2 files on your machine.
+You need 3 files on your machine.
 
 The first file is called `/etc/gu/install_vars` and has the following contents…
 ```
@@ -44,6 +44,14 @@ The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you
 can get its contents from a shared document. Ask your team mates to share it
 with you. If it has already been shared with you just search for
 "frontend.properties" in your documents.
+
+The third file called `[YOUR_HOME_DIR]/.aws/credentials` is required to render Fronts and contains:
+```
+[nextgen]
+aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
+aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
+region=eu-west-1
+```
 
 Nginx
 -----
@@ -70,13 +78,20 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 Local Install Requirements
 --------------------------
 * A Mac or Linux pc
-* Installed Open JDK `sudo apt-get install openjdk-7-jdk`
+* Installed Open JDK
+
+	Linux: `sudo apt-get install openjdk-7-jdk`
+
+	Mac:   Download and install [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
-* Installed npm (Node package manager - you quite possibly already have this)
+* Installed npm (Node package manager - you quite possibly already have this). Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
+
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) &
  [bundler](http://gembundler.com/) (You may already have this installed, but
  run `ruby -v` to check version number)
+* Xcode (if on a Mac, one of the Node modules requires it) https://itunes.apple.com/gb/app/xcode/id497799835
 * Installed Memcached `sudo apt-get install memcached` - this is optional
 (most of the time you do not want to use it as caching makes local development
 harder)
@@ -118,6 +133,15 @@ session required pam_limits.so
 Restart the machine.
 
 For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
+
+On OSX the open file limit can be even lower (256 or so).
+To find out what it is run `ulimit -n` at the command prompt, and if it's a low number, you can fix it like this;
+* Edit your `~/.bash-profile` file
+* add the following line: `ulimit -n 1024`
+* save and close the file
+* back at the command prompt enter: `source .bash_profile` and hit return.
+
+Now you should be able to compile and run. Yay.
 
 Running
 -------
@@ -222,7 +246,7 @@ Additional Documentation
 ------------------------
 Further documentation notes and useful items can be found in `docs`.
 
-
+[Integration testing documentation](integration-tests/scala-fw-tests/readme.md)
 [sbt]: http://www.scala-sbt.org
 [play2-console]: https://github.com/playframework/Play20/wiki/PlayConsole
 [play2-wiki]: https://github.com/playframework/Play20/wiki

@@ -1,0 +1,69 @@
+.l-list {
+    width: 100%;
+
+    .has-flex-wrap & {
+        @include flex-display;
+        @include flex-wrap(wrap);
+    }
+}
+
+.l-list__item {
+    float: left;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .has-flex-wrap & {
+        @include flex-grow(0);
+        @include flex-basis(100%);
+    }
+}
+
+// We only need this functionality for 2 & 4 column rows.
+@for $column from 2 through 4 {
+    @for $span from 1 through 5 {
+        .l-row--cols-#{$column} {
+            .l-row__item--span-#{$span} {
+                @include mq(tablet) {
+                    @include flex($span);
+                    width: (100% / $column) * $span;
+                }
+            }
+        }
+    }
+}
+
+@for $column from 1 through 4 {
+    .l-list--columns-#{$column} {
+        .l-list__item {
+            @include mq(tablet) {
+                width: 100% / $column;
+
+                &:nth-child(#{$column}n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+            }
+
+            .has-flex-wrap & {
+                @include mq(tablet) {
+                    @include flex-basis(100% / $column);
+                }
+            }
+        }
+
+        @for $row from 1 through 5 {
+            &.l-list--rows-#{$row} {
+                .l-list__item:nth-last-child(-n+#{$column}) {
+                    @include mq(tablet) {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

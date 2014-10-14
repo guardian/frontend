@@ -1,7 +1,0 @@
-{
-  "name": "frontend-common-css",
-  "version": "0.6.0 ",
-  "dependencies": {
-    "guss": "~2.0.0"
-  }
-}

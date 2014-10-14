@@ -13,6 +13,7 @@ object `package` {
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
     lazy val isAudio: Boolean = content.tags exists { _.id == "type/audio" }
+    lazy val isMedia: Boolean = isGallery || isVideo || isAudio
     lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
     lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
     lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
@@ -28,6 +29,7 @@ object `package` {
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
     lazy val isAudio: Boolean = content.tags exists { _.id == "type/audio" }
+    lazy val isMedia: Boolean = isGallery || isVideo || isAudio
     lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
     lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
     lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
@@ -44,14 +46,5 @@ object `package` {
   implicit class Int2RichInt(i: Int) {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i
-  }
-
-  lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)[Z|\+].*""".r
-
-  implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
-    lazy val parseISODateTime = s match {
-      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
-      case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
-    }
   }
 }

@@ -1,5 +1,7 @@
 package conf
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 import common.ExecutionContexts
 import play.api.{Mode, Play}
 import play.api.libs.ws.WS
@@ -34,14 +36,25 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 // expects ALL of the paths to return 200. If one fails the entire healthcheck fails
 class AllGoodHealthcheckController(override val testPort: Int, paths: String*) extends HealthcheckController {
 
+  // this is for an "offline" healthcheck that the CDN hits
+  protected val status = new AtomicBoolean(false)
+  def break() = status.set(false)
+  def isOk = status.get
+
   override def healthcheck() = Action.async{
 
     val healthCheckResults = fetchResults(paths:_*)
 
     Future.sequence(healthCheckResults).map(_.filterNot { case (_, status) => status == 200})
       .map {
-      case Nil => Ok("OK")
-      case errors => InternalServerError(errors.map{ case (url, status) => s"$status $url" }.mkString("\n"))
+      case Nil => {
+        status.set(true)
+        Ok("OK")
+      }
+      case errors => {
+        status.set(false)
+        InternalServerError(errors.map { case (url, status) => s"$status $url"}.mkString("\n"))
+      }
     }
   }
 }

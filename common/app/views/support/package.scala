@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -13,47 +15,13 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
-import play.api.libs.json.Writes
+import play.api.libs.json.{Json, JsValue, JsString, Writes}
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.Pattern
-
-sealed trait Style {
-  val className: String
-  val showMore: Boolean
-}
-
-object Featured extends Style {
-  val className = "featured"
-  val showMore = false
-}
-
-/**
- * trails display trailText and thumbnail (if available)
- */
-object Thumbnail extends Style {
-  val className = "with-thumbnail"
-  val showMore = false
-}
-
-/**
- * trails only display headline
- */
-object Headline extends Style {
-  val className = "headline-only"
-  val showMore = false
-}
-
-/**
- * trails for the section fronts
- */
-object SectionFront extends Style {
-  val className = "section-front"
-  val showMore = false
-}
+import java.util.regex.{Matcher, Pattern}
 
 /**
  * New 'collection' templates
@@ -62,6 +30,7 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
+  val hasDarkBackground: Boolean = false
 }
 
 case class NewsContainer(showMore: Boolean = true) extends Container {
@@ -76,6 +45,10 @@ case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone = "feature"
 }
+case class FeaturesVolumesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "featuresvolumes"
+  val tone = "feature"
+}
 case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
   val containerType = "featuresauto"
   val tone = "feature"
@@ -88,13 +61,14 @@ case class PeopleContainer(showMore: Boolean = true) extends Container {
   val containerType = "people"
   val tone = "feature"
 }
-case class SpecialContainer(showMore: Boolean = true) extends Container {
+case class SpecialContainer(showMore: Boolean = true, override val hasDarkBackground: Boolean = false) extends Container {
   val containerType = "special"
   val tone = "news"
 }
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "media"
+  override val hasDarkBackground = true
 }
 case class SeriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "series"
@@ -108,6 +82,22 @@ case class HeadlineContainer(showMore: Boolean = true) extends Container {
   val containerType = "headline"
   val tone = "news"
 }
+case class PicksContainer(showMore: Boolean = true) extends Container {
+  val containerType = "picks"
+  val tone = "news"
+}
+case class CassouletContainer(showMore: Boolean = true) extends Container {
+  val containerType = "cassoulet"
+  val tone = "feature"
+}
+case class QuicheLorraineContainer(showMore: Boolean = true) extends Container {
+  val containerType = "quichelorraine"
+  val tone = "feature"
+}
+case class RacletteContainer(showMore: Boolean = true) extends Container {
+  val containerType = "raclette"
+  val tone = "feature"
+}
 
 
 /**
@@ -115,21 +105,6 @@ case class HeadlineContainer(showMore: Boolean = true) extends Container {
  */
 case class PreviousAndNext(prev: Option[String], next: Option[String]) {
   val isDefined: Boolean = prev.isDefined || next.isDefined
-}
-
-object MetadataJson {
-
-  def apply(data: (String, Any)): String = data match {
-    // thank you erasure
-    case (key, value) if value.isInstanceOf[Map[_, _]] =>
-      val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
-      s""""$key": {$valueJson}"""
-    case (key, value) if value.isInstanceOf[Seq[_]] =>
-      val valueJson = value.asInstanceOf[Seq[(String, Any)]].map(v => s"{${MetadataJson(v)}}").mkString(",")
-      s""""$key": [${valueJson}]""".format(key, valueJson)
-    case (key, value) =>
-      s""""${JavaScriptVariableName(key)}": ${JavaScriptValue(value)}"""
-  }
 }
 
 object JSON {
@@ -152,21 +127,6 @@ object RemoveOuterParaHtml {
       Html(fragment.html.drop(3).dropRight(4))
     }
   }
-}
-
-object JavaScriptValue {
-  def apply(value: Any) = value match {
-    case b: Boolean => b
-    case s => s""""${s.toString.trim.replace(""""""", """\"""")}""""
-  }
-}
-
-object JavaScriptVariableName {
-  def apply(s: String): String = {
-    val parts = s.split("-").toList
-    (parts.headOption.toList ::: parts.tail.map(firstLetterUppercase )).mkString
-  }
-  private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
 }
 
 case class RowInfo(rowNum: Int, isLast: Boolean = false) {
@@ -224,7 +184,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video")
+        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
@@ -235,10 +195,9 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element.getElementsByTag("source").remove()
 
       val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-        (videoAsset.url, videoAsset.mimeType) match {
-          case (Some(url), Some(mimeType)) => s"""<source src="${url}" type="${mimeType}"></source>"""
-          case _ =>
-        }
+        videoAsset.encoding.map { encoding =>
+          s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+        }.getOrElse("")
       }.mkString("")
 
       element.append(sourceHTML)
@@ -259,6 +218,11 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       })
     }
+
+    document.getElementsByClass("element-witness--main").foreach { element: Element =>
+      element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
+    }
+
     document
   }
 
@@ -362,6 +326,30 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val blockid = el.id()
+        val url = s"http://${request.domain}${request.path}#$blockid"
+        val shortUrl = s"${article.shortUrl}#$blockid"
+
+        val icons = List(
+          // (cssClassName, Url)
+          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+        )
+
+        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+
+        el.append(html.toString())
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -450,9 +438,10 @@ object TweetCleaner extends HtmlCleaner {
         val date = el.child(1).attr("class", "tweet-date")
         val user = el.ownText()
         val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+        val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
-        element.empty().attr("class", "tweet")
-        element.appendChild(userEl).appendChild(date).appendChild(body)
+        element.empty().attr("class", "js-tweet tweet")
+        element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
       }
     }
     document
@@ -470,7 +459,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
   private val question = Pattern.quote("?")
 
   private def keywordRegex(tag: Tag) = {
-    val tagName = Pattern.quote(tag.name)
+    val tagName = Pattern.quote(Matcher.quoteReplacement(tag.name))
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
@@ -573,6 +562,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
   }
 }
 
+object FigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -581,7 +577,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
@@ -590,15 +586,18 @@ object ContributorLinks {
 object OmnitureAnalyticsData {
   def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
 
-    val data = page.metaData.map { case (key, value) => key -> value.toString }
-    val pageCode = data.get("page-code").getOrElse("")
-    val contentType = data.get("content-type").getOrElse("")
-    val section = data.get("section").getOrElse("")
+    val data = page.metaData map {
+      case (key, JsString(s)) => key -> s
+      case (key, jValue: JsValue) => key -> Json.stringify(jValue)
+    }
+    val pageCode = data.getOrElse("pageCode", "")
+    val contentType = data.getOrElse("contentType", "")
+    val section = data.getOrElse("section", "")
     val platform = "frontend"
-    val publication = data.get("publication").getOrElse("")
-    val omnitureEvent = data.get("omnitureEvent").getOrElse("")
-    val registrationType = data.get("registrationType").getOrElse("")
-    val omnitureErrorMessage = data.get("omnitureErrorMessage").getOrElse("")
+    val publication = data.getOrElse("publication", "")
+    val omnitureEvent = data.getOrElse("omnitureEvent", "")
+    val registrationType = data.getOrElse("registrationType", "")
+    val omnitureErrorMessage = data.getOrElse("omnitureErrorMessage", "")
 
     val isContent = page match {
       case c: Content => true
@@ -615,19 +614,19 @@ object OmnitureAnalyticsData {
       ("c3", publication),
       ("ch", section),
       ("c9", section),
-      ("c4", data.get("keywords").getOrElse("")),
-      ("c6", data.get("author").getOrElse("")),
+      ("c4", data.getOrElse("keywords", "")),
+      ("c6", data.getOrElse("author", "")),
       ("c8", pageCode),
       ("v8", pageCode),
       ("c9", contentType),
-      ("c10", data.get("tones").getOrElse("")),
+      ("c10", data.getOrElse("tones", "")),
       ("c11", section),
-      ("c13", data.get("series").getOrElse("")),
-      ("c25", data.get("blogs").getOrElse("")),
-      ("c14", data("build-number")),
+      ("c13", data.getOrElse("series", "")),
+      ("c25", data.getOrElse("blogs", "")),
+      ("c14", data("buildNumber")),
       ("c19", platform),
       ("v19", platform),
-      ("v67", "nextgen-served"),
+      ("v67", "nextgenServed"),
       ("c30", if (isContent) "content" else "non-content"),
       ("c56", jsSupport),
       ("event", omnitureEvent),
@@ -640,6 +639,20 @@ object OmnitureAnalyticsData {
   }
 }
 
+object ArticleLayout {
+  implicit class ArticleLayout(a: Article) {
+    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
+      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+    lazy val hasSupportingAtBottom: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
+        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+
+    lazy val tooSmallForBottomSocialButtons: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+  }
+}
+
 object `package` extends Formats {
 
   private object inflector extends Inflector
@@ -649,6 +662,16 @@ object `package` extends Formats {
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
     Html(cleanedHtml.body.html)
+  }
+
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
+    } else {
+      slices.TagContainers.tagPage
+    }
   }
 
   implicit class Tags2tagUtils(t: Tags) {
@@ -697,13 +720,6 @@ object StripHtmlTagsAndUnescapeEntities{
   }
 }
 
-object CricketMatch {
-  def apply(trail: Trail): Option[String] = trail match {
-    case c: Content => c.cricketMatch
-    case _ => None
-  }
-}
-
 object TableEmbedComplimentaryToP extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -727,11 +743,9 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-
   def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
-
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
 
 object GetClasses {
@@ -742,6 +756,7 @@ object GetClasses {
       (trail: Trail) => trail match {
         case _: Gallery => "facia-slice__item--content-type-gallery"
         case _: Video   => "facia-slice__item--content-type-video"
+        case _: Audio   => "facia-slice__item--content-type-audio"
         case _          => ""
       }
     )
@@ -749,65 +764,175 @@ object GetClasses {
       additionalClasses,
       "l-row__item",
       "facia-slice__item",
+      "u-faux-block-link",
       s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
+  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
+      Seq("fc-item--has-cutout")
+    } else {
+      Seq.empty
+    }
+
+    RenderClasses(
+      TrailCssClasses.toneClass(trail, "--item") +:
+        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
+        cutOutClass): _*
+    )
+  }
+
+  def forSubLink(trail: Trail) = RenderClasses(Seq(
+    Some("fc-sublink"),
+    Some(TrailCssClasses.toneClass(trail, "--sublink")),
+    sublinkMediaTypeClass(trail)
+  ).flatten: _*)
+
+  def mediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-item--gallery")
+    case _: Video => Some("fc-item--video")
+    case _: Audio => Some("fc-item--audio")
+    case _ => None
+  }
+
+  def sublinkMediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-sublink--gallery")
+    case _: Video => Some("fc-sublink--video")
+    case _: Audio => Some("fc-sublink--audio")
+    case _ => None
+  }
+
+  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = mediaTypeClass(trail)
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
+      "fc-item--has-no-image"
+    } else {
+      "fc-item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "fc-item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
+      if (trail.isLive) Some("fc-item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
+
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
+
+  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => "item--gallery"
+      case _: Video => "item--video"
+      case _: Audio => "item--audio"
+      case _ => ""
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
+      "item--has-no-image"
+    } else {
+      "item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) "item--force-image-upgrade" else "",
+      if (trail.isLive) "item--live" else "",
+      if (trail.isComment && trail.hasLargeContributorImage) "item--has-cutout" else "",
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
+      else
+        ""
+    ) ++ makeSnapClasses(trail)
+  }
+
   def forItem(trail: Trail,
               firstContainer: Boolean,
-              forceHasImage: Boolean = false): String = {
+              forceHasImage: Boolean = false,
+              forceTone: Option[String] = None): String = {
+    val tone = forceTone.getOrElse(trail.visualTone)
     val baseClasses: Seq[String] = Seq(
       "item",
-      s"tone-${trail.visualTone}"
+      s"tone-${tone}"
     )
-    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
+    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
         case _: Gallery => "item--gallery"
-        case _: Video   => "item--video"
-        case _          => ""
+        case _: Video => "item--video"
+        case _: Audio => "item--audio"
+        case _ => ""
       },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (firstContainer) "item--force-image-upgrade" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
-        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
           "item--has-no-image"
         }else{
           "item--has-image"
         },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
+          if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
+        } else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: String): String = {
+  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
+      "u-faux-block-link",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, String) => String] = Seq(
-      (trail: Trail, imageAdjust: String) =>
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, imageAdjust: String) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (trail.trailPicture(5,3).isEmpty || imageHide){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
-      (trail: Trail, imageAdjust: String) =>
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
+          s"fromage--imageadjust-boost"
+        }
+        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
+          s"fromage--imageadjust-hide"
+        }
+        else "item--imageadjust-default",
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -815,6 +940,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "saucisson",
       s"tone-${trail.visualTone}",
+      "u-faux-block-link",
       "tone-accent-border"
     )
     val f: Seq[(Trail) => String] = Seq(
@@ -826,29 +952,41 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val baseClasses = Seq(
-      "container",
-      s"container--${container.containerType}"
-    ) ++ extraClasses
-    val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isSponsored) "container--sponsored" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isAdvertisementFeature && !config.isSponsored) "container--advertisement-feature" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index == 0) "container--first" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle) "js-container--toggle" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
-    RenderClasses(classes:_*)
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+    Seq(
+      "container" -> true,
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
+      "container--first" -> isFirst,
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
+    ) collect {
+      case (kls, true) => kls
+    }
   }
 
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+    RenderClasses(
+      "fc-container" +:
+        (commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses): _*
+    )
+  }
+
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    val oldClasses = Seq(
+      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
+    ).flatten
+
+    RenderClasses(
+      s"container--${container.containerType}" +:
+        (commonContainerStyles(config, index == 0, hasTitle) ++
+        extraClasses ++ oldClasses): _*
+    )
+  }
 }
 
 object LatestUpdate {

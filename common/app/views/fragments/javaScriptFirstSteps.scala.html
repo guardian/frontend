@@ -1,4 +1,4 @@
-@(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
@@ -9,10 +9,28 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-<style class="initial" data-cache-name="GuardianEgyptianWeb" data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")" data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"></style>
-<style class="initial" data-cache-name="GuardianAgateSans1Web" data-min-width="980" data-cache-file-woff="@Static("fonts/GuardianAgateSans1Web.woff.json")" data-cache-file-ttf="@Static("fonts/GuardianAgateSans1Web.ttf.json")"></style>
-<style class="initial" data-cache-name="GuardianTextSansWeb" data-min-width="980" data-cache-file-woff="@Static("fonts/GuardianTextSansWeb.woff.json")" data-cache-file-ttf="@Static("fonts/GuardianTextSansWeb.ttf.json")"></style>
-<style class="initial" data-cache-name="GuardianSansWeb" data-min-width="980" data-advertisement-feature data-cache-file-woff="@Static("fonts/GuardianSansWeb.woff.json")" data-cache-file-ttf="@Static("fonts/GuardianSansWeb.ttf.json")"></style>
+<style class="initial"
+    data-cache-name="GuardianEgyptianWeb"
+    data-cache-file-woff2="@Static("fonts/GuardianEgyptianWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"></style>
+<style class="initial"
+    data-cache-name="GuardianTextEgyptianWeb"
+    data-cache-file-woff2="@Static("fonts/GuardianTextEgyptianWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianTextEgyptianWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianTextEgyptianWeb.ttf.json")"></style>
+<style class="initial"
+    data-cache-name="GuardianTextSansWeb"
+    data-min-width="980"
+    data-cache-file-woff2="@Static("fonts/GuardianTextSansWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianTextSansWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianTextSansWeb.ttf.json")"></style>
+<style class="initial"
+    data-cache-name="GuardianSansWeb"
+    data-min-width="980"
+    data-cache-file-woff2="@Static("fonts/GuardianSansWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianSansWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianSansWeb.ttf.json")"></style>
 
 <script id="gu">
 
@@ -40,6 +58,14 @@
             return fBound;
         };
     }
+
+    @* needed due to class manipulation in bonzo is not x-browser - https://github.com/ded/bonzo/pull/133 *@
+    if (!String.prototype.trim) {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, '');
+        };
+    }
+
     @* JSON support needed for raven *@
     if ("object" !== typeof JSON) {
         var s = document.createElement('script'),
@@ -67,25 +93,60 @@
     };
 
     (function(isModern) {
+        function cssToDOM( name ) {
+            return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
+                return m1 + m2.toUpperCase();
+            }).replace(/^-/, '');
+        }
+
+        function testCssSupport(prop, value) {
+            var valueIsDefined = value !== undefined;
+            if(valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
+                return window.CSS.supports(prop, value);
+            } else {
+                var elm = document.createElement('test');
+                prop = cssToDOM(prop);
+                if(elm.style[prop] !== undefined) {
+                    if(valueIsDefined){
+                        var before = elm.style[prop];
+                        try { elm.style[prop] = value; } catch (e) {}
+                        if(elm.style[prop] != before) {
+                            delete elm;
+                            return true;
+                        } else {
+                            delete elm;
+                            return false;
+                        }
+                    }
+                    delete elm;
+                    return true;
+                }
+                return false;
+            }
+         }
 
         // must always be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;
 
-        if (!isModern) { return false; }
-
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
-        var htmlClassNames = "";
-
-        @* http://modernizr.com/download/#-svg *@
-        function hasSvgSupport() {
-            var ns = {'svg': 'http://www.w3.org/2000/svg'};
-            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+        if (isModern) {
+            @* http://modernizr.com/download/#-svg *@
+            function hasSvgSupport() {
+                var ns = {'svg': 'http://www.w3.org/2000/svg'};
+                return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+            }
+            if (hasSvgSupport()) {
+                document.documentElement.className += ' svg';
+            }
+            if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+                document.documentElement.className += ' has-flex-wrap';
+            } else {
+                document.documentElement.className += ' has-no-flex-wrap';
+            }
+            document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
-        if (hasSvgSupport()) {
-            htmlClassNames += " svg";
-        }
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
-
     })(guardian.isModernBrowser);
+
+    document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
 
 </script>

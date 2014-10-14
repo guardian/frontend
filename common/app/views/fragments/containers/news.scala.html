@@ -1,32 +1,30 @@
-@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
-@import common.Edition
+@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, dataId: String)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
-@import org.joda.time.DateTime
+@import common.Edition
+@import model.{Collection, FaciaComponentName, MetaData}
+@import views.support.{GetClasses, NewsContainer, RenderClasses, TemplateDeduping}
+@import dfp.DfpAgent
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @defining(templateDeduping(10, collection.items)) { items =>
         @defining(Edition.editionFronts.contains(request.uri.toLowerCase)) { isEdition =>
             @if(items.nonEmpty) {
                 <section
-                    class="@RenderClasses(Map(
-                        ("container", true),
-                        (s"container--${style.containerType}", true),
-                        (s"container--tag", !isEdition),
-                        ("js-container--toggle", (containerIndex > 0 && title.nonEmpty)),
-                        ("container--sponsored", config.isSponsored),
-                        ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
-                        ("container--first", (containerIndex == 0))))"
+                    id="@FaciaComponentName(config, collection)"
+                    class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty, if (!isEdition) Seq("container--tag") else Nil)"
                     data-link-name="@FaciaComponentName(config, collection)"
-                    data-id="@config.id"
+                    data-id="@dataId"
                     data-type="@style.containerType"
-                    @config.sponsorshipKeyword.map { keyword =>
+                    @DfpAgent.sponsorshipTag(config).map { keyword =>
                         data-keywords="@keyword"
                     }
                     data-component="@FaciaComponentName(config, collection)">
                     <div class="facia-container__inner">
                         <div class="container__border tone-@style.tone tone-accent-border"></div>
-                        <div class="container__header">
-                            <h2 class="container__title tone-news tone-background">
+                        <div class="@RenderClasses(Map(
+                            ("container__header js-container__header", true),
+                            ("hide-on-mobile", (FaciaComponentName(config, collection) == "top-stories"))))">
+                            <h2 class="container__title">
                                 @fragments.containers.elements.dateOrTitle(collection, items)
                             </h2>
                         </div>

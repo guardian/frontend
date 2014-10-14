@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import conf.Switches._
 import dev.HttpSwitch
 
-case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String) {
+case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
@@ -21,15 +21,11 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
     links.exists(_.currentForIncludingAllTags(page))
 
   def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
-    lazy val oldCurrentSublink = links.find(_.currentFor(page))
+    val localHrefs = links.map(_.href)
+    val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
+    links.find(_.href == currentHref)
+      .orElse(links.find(_.currentFor(page)))
       .orElse(links.find(_.currentForIncludingAllTags(page)))
-    if (HttpSwitch(NewNavigationHighlightingSwitch).isSwitchedOn) {
-      val localHrefs = links.map(_.href)
-      val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
-      links.find(_.href == currentHref)
-        .orElse(oldCurrentSublink)
-    }
-    else oldCurrentSublink
   }
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
@@ -42,7 +38,7 @@ trait Navigation {
   val news = SectionLink("news", "news", "News", "/")
   val world = SectionLink("world", "world", "World", "/world")
   val uk = SectionLink("uk-news", "UK", "UK News", "/uk-news")
-  val us = SectionLink("world", "US", "US News", "/world/usa")
+  val us = SectionLink("us-news", "US", "US News", "/us-news")
   val politics = SectionLink("politics", "politics", "Politics", "/politics")
   val technology = SectionLink("technology", "tech", "Technology", "/technology")
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
@@ -57,23 +53,25 @@ trait Navigation {
   val inpictures = SectionLink("inpictures", "galleries", "In pictures", "/inpictures")
   val europeNews = SectionLink("world", "europe", "Europe", "/world/europe-news")
   val americas = SectionLink("world", "americas", "Americas", "/world/americas")
-  val australia = SectionLink("world", "australia", "Australia", "/world/australia")
+  val australia = SectionLink("australia-news", "australia", "Australia", "/australia-news")
   val asia = SectionLink("world", "asia", "Asia", "/world/asia")
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
+  val video = SectionLink("video", "video", "Video", "/video")
+  val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
 
   val health = SectionLink("society", "health", "Health", "/society/health")
 
   //Sport
   val sport = SectionLink("sport", "sport", "Sport", "/sport")
-  val sports = sport.copy(title = "sports", breadcumbTitle = "Sports")
+  val sports = sport.copy(title = "sports", breadcrumbTitle = "Sports")
   val usSport = SectionLink("sport", "US sports", "US sports", "/sport/us-sport")
   val australiaSport = SectionLink("australia sport", "australia sport", "Australia sport", "/sport/australia-sport")
   val afl = SectionLink("afl", "afl", "afl", "/sport/afl")
   val nrl = SectionLink("nrl", "nrl", "nfl", "/sport/nrl")
   val aLeague = SectionLink("a-league", "a-league", "A-league", "/football/a-league")
   val football = SectionLink("football", "football", "Football", "/football")
-  val soccer = football.copy(title = "soccer", breadcumbTitle = "Soccer")
+  val soccer = football.copy(title = "soccer", breadcrumbTitle = "Soccer")
   val cricket = SectionLink("sport", "cricket", "Cricket", "/sport/cricket")
   val sportblog = SectionLink("sport", "sport blog", "Sport blog", "/sport/blog")
   val cycling = SectionLink("sport", "cycling", "Cycling", "/sport/cycling")
@@ -85,7 +83,7 @@ trait Navigation {
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
   val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
-  val racing = SectionLink("sport", "racing", "Racing", "/sport/racing")
+  val racing = SectionLink("sport", "racing", "Racing", "/sport/horse-racing")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
@@ -104,10 +102,11 @@ trait Navigation {
   val artanddesign = SectionLink("culture", "art & design", "Art & design", "/artanddesign")
   val books = SectionLink("culture", "books", "Books", "/books")
   val film = SectionLink("culture", "film", "Film", "/film")
-  val movies = film.copy(title = "movies", breadcumbTitle = "Movies")
+  val movies = film.copy(title = "movies", breadcrumbTitle = "Movies")
   val music = SectionLink("culture", "music", "Music", "/music")
   val stage = SectionLink("culture", "stage", "Stage", "/stage")
   val televisionAndRadio = SectionLink("culture", "tv & radio", "TV & radio", "/tv-and-radio")
+  val classicalMusic = SectionLink("classical", "classical", "Classical", "/music/classicalmusicandopera")
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
@@ -121,7 +120,7 @@ trait Navigation {
 
   //Business
   val economy = SectionLink("business", "economy", "Economy", "/business")
-  val business = economy.copy(title = "business", breadcumbTitle = "Business")
+  val business = economy.copy(title = "business", breadcrumbTitle = "Business")
   val companies = SectionLink("business", "companies", "Companies", "/business/companies")
   val economics = SectionLink("business", "economics", "Economics", "/business/economics")
   val markets = SectionLink("business", "markets", "Markets", "/business/stock-markets")
@@ -161,7 +160,7 @@ trait Navigation {
   val uktravel = SectionLink("travel", "UK", "UK", "/travel/uk")
   val europetravel = SectionLink("travel", "europe", "europe", "/travel/europe")
   val usTravel = SectionLink("travel", "US", "US", "/travel/usa")
-  val usaTravel = usTravel.copy(title = "USA", breadcumbTitle = "USA")
+  val usaTravel = usTravel.copy(title = "USA", breadcrumbTitle = "USA")
   val hotels = SectionLink("travel", "hotels", "Hotels", "/travel/hotels")
   val resturants = SectionLink("travel", "restaurants", "Restaurants", "/travel/restaurants")
   val budget = SectionLink("travel", "budget travel", "Budget travel", "/travel/budget")
@@ -192,8 +191,8 @@ case class BreadcrumbItem(href: String, title: String)
 object Breadcrumbs {
   def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
     val primaryKeywod = page.keywordTags.headOption.map(k => BreadcrumbItem(k.url, k.webTitle))
-    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
-    val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcumbTitle)).orElse(primaryKeywod)
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcrumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
+    val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcrumbTitle)).orElse(primaryKeywod)
     Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
 }
@@ -201,9 +200,10 @@ object Breadcrumbs {
 // helper for the views
 object Navigation {
 
-  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
-    .orElse(navigation.find(_.currentFor(page))) //This includes a search on the HEAD of Tags for (page: MetaData)
-    .orElse(navigation.find(_.currentForIncludingAllTags(page))) //This is the search for ALL tags
+  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = page.customSignPosting orElse
+    navigation.find(_.exactFor(page)) orElse
+    navigation.find(_.currentFor(page)) orElse                /* This searches the top level nav for tags in the page */
+    navigation.find(_.currentForIncludingAllTags(page))       /* This searches the whole nav for tags in the page */
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 

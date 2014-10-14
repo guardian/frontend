@@ -1,36 +1,33 @@
 package controllers.admin
 
-import common.Logging
-import conf.Configuration
+import common.{ExecutionContexts, Edition, Logging}
+import conf.{LiveContentApi, Configuration}
 import controllers.AuthLogging
-import dfp.Sponsorship
-import model.NoCache
+import dfp.DfpDataHydrator
+import model.{Content, NoCache}
 import ophan.SurgingContentAgent
-import play.api.libs.json.Json
 import play.api.mvc.Controller
 import tools.Store
+import views.support.TemplateDeduping
 
-object CommercialController extends Controller with Logging with AuthLogging {
+object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  private def jsValueMaybe(json: Option[String]) = json map Json.parse
-
-  def convertJsonToStringList(json: Option[String]) = {
-    jsValueMaybe(json).fold(Seq[String]())(_.as[Seq[String]])
-  }
-
-  def convertJsonToSponsorshipList(json: Option[String]) = {
-    jsValueMaybe(json).fold(Seq[Sponsorship]())(_.as[Seq[Sponsorship]])
-  }
+  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
   }
 
+  def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
+    NoCache(Ok(views.html.commercial.fluidAds(Configuration.environment.stage)))
+  }
+
   def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
     val sponsoredTags = Store.getDfpSponsoredTags()
     val advertisementTags = Store.getDfpAdvertisementTags()
+    val foundationSupportedTags = Store.getDfpFoundationSupportedTags()
 
-    NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags)))
+    NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags, foundationSupportedTags)))
   }
 
   def renderPageskins = AuthActions.AuthActionTest { implicit request =>
@@ -39,15 +36,27 @@ object CommercialController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
   }
 
-  def renderSurgingContent = AuthActions.AuthActionTest {implicit request =>
-    val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.toSeq
-    val sortedSurging: Seq[(String, Int)] = surging.sortBy(_._2).reverse
-
-    NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, sortedSurging)))
+  def renderSurgingContent = AuthActions.AuthActionTest { implicit request =>
+    val surging = SurgingContentAgent.getSurging
+    NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, surging)))
   }
 
-  def renderInlineMerchandisingSponsorships = AuthActions.AuthActionTest { implicit request =>
-    val sponsorships = Store.getDfpInlineMerchandisingSponsorships()
-    NoCache(Ok(views.html.commercial.inlineMerchandisingSponsorships(Configuration.environment.stage, sponsorships)))
+  def renderInlineMerchandisingTargetedTags = AuthActions.AuthActionTest { implicit request =>
+    val report = Store.getDfpInlineMerchandisingTargetedTagsReport()
+    NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(Configuration.environment.stage, report)))
+  }
+
+  def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
+    val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
+    // get some example trails
+    LiveContentApi.search(Edition(request))
+      .pageSize(4)
+      .response.map { response  =>
+        response.results.map {
+          Content(_)
+        }
+    } map { trails =>
+      NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates, trails)))
+    }
   }
 }

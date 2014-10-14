@@ -14,7 +14,7 @@ trait Http extends Logging {
     val start = currentTimeMillis()
     GET(url, headers: _*) map {
       response =>
-        DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+        DiscussionHttpTimingMetric.recordDuration(currentTimeMillis - start)
 
         response.status match {
           case 200 =>

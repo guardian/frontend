@@ -14,15 +14,21 @@ object MasterClasses extends Controller {
   object lowRelevance extends Relevance[MasterClass] {
     def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclasses(classes)
   }
+  object lowRelevanceV2 extends Relevance[MasterClass] {
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclassesV2(classes)
+  }
 
   object highRelevance extends Relevance[MasterClass] {
     def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclassesHigh(classes)
+  }
+  object highRelevanceV2 extends Relevance[MasterClass] {
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclassesHighV2(classes)
   }
 
   private def renderMasterclasses(relevance: Relevance[MasterClass], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.adsTargetedAt(segment)).distinct match {
+        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.masterclassesTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case masterclasses => Cached(componentMaxAge) {
             format.result(relevance.view(masterclasses take 4))
@@ -33,7 +39,9 @@ object MasterClasses extends Controller {
 
   def masterclassesLowHtml = renderMasterclasses(lowRelevance, htmlFormat)
   def masterclassesLowJson = renderMasterclasses(lowRelevance, jsonFormat)
+  def masterclassesLowJsonV2 = renderMasterclasses(lowRelevanceV2, jsonFormat)
 
   def masterclassesHighHtml = renderMasterclasses(highRelevance, htmlFormat)
   def masterclassesHighJson = renderMasterclasses(highRelevance, jsonFormat)
+  def masterclassesHighJsonV2 = renderMasterclasses(highRelevanceV2, jsonFormat)
 }

@@ -1,8 +1,9 @@
 package model
 
-import common.{Edition, ManifestData, Pagination}
+import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
+import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
 trait MetaData extends Tags {
   def id: String
@@ -16,13 +17,17 @@ trait MetaData extends Tags {
   def rssPath: Option[String] = None
 
   // i.e. show the link back to the desktop site
-  def hasClassicVersion: Boolean = true
+  def hasClassicVersion: Boolean = !special
+
+  // Special means "Next Gen platform only".
+  private lazy val special = id.contains("-sp-")
 
   def title: Option[String] = None
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
+  def revision: String = ManifestData.revision
 
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
@@ -34,28 +39,29 @@ trait MetaData extends Tags {
 
   def hasPageSkin(edition: Edition) = false
 
-  def isSurging = false
+  def isSurging: Seq[Int] = Seq(0)
 
-  def metaData: Map[String, Any] = Map(
-    ("page-id", id),
-    ("section", section),
-    ("web-title", webTitle),
-    ("build-number", buildNumber),
-    ("analytics-name", analyticsName),
-    ("blockVideoAds", false),
-    ("is-front", isFront),
-    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng"),
-    ("is-surging", isSurging)
+  def metaData: Map[String, JsValue] = Map(
+    ("pageId", JsString(id)),
+    ("section", JsString(section)),
+    ("webTitle", JsString(webTitle)),
+    ("buildNumber", JsString(buildNumber)),
+    ("revisionNumber", JsString(revision.take(7))),
+    ("analyticsName", JsString(analyticsName)),
+    ("isFront", JsBoolean(isFront)),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("isSurging", JsString(isSurging.mkString(","))),
+    ("hasClassicVersion", JsBoolean(hasClassicVersion))
   )
 
-  def openGraph: Map[String, Any] = Map(
+  def openGraph: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
 
-  def cards: List[(String, Any)] = List(
+  def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
@@ -64,6 +70,12 @@ trait MetaData extends Tags {
   )
 
   def cacheSeconds = 60
+
+  def customSignPosting: Option[NavItem] = None
+
+  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
+  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
 }
 
 class Page(
@@ -81,7 +93,14 @@ object Page {
     webTitle: String,
     analyticsName: String,
     pagination: Option[Pagination] = None,
-    description: Option[String] = None) = new Page(id, section, webTitle, analyticsName, pagination, description)
+    description: Option[String] = None,
+    maybeContentType: Option[String] = None
+  ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
+    override lazy val contentType = maybeContentType.getOrElse("")
+
+    override def metaData: Map[String, JsValue] =
+      super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
+  }
 }
 
 trait Elements {
@@ -147,6 +166,13 @@ trait Elements {
   lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
 
   def elements: Seq[Element] = Nil
+  def elements(relation: String): Seq[Element] = relation match {
+    case "main" => elements.filter(_.isMain)
+    case "body" => elements.filter(_.isBody)
+    case "gallery" => elements.filter(_.isGallery)
+    case "thumbnail" => elements.filter(_.isThumbnail)
+    case _ => Nil
+  }
 
   protected lazy val images: Seq[ImageElement] = elements.flatMap {
     case image :ImageElement => Some(image)
@@ -177,19 +203,29 @@ trait Tags {
 
   lazy val keywords: Seq[Tag] = tagsOfType("keyword")
   lazy val contributors: Seq[Tag] = tagsOfType("contributor")
+  lazy val isContributorPage: Boolean = contributors.nonEmpty
   lazy val series: Seq[Tag] = tagsOfType("series")
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(tags)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
-  def hasInlineMerchandise = {
-    DfpAgent.hasInlineMerchandise(tags)
-  }
-  def sponsor = DfpAgent.getSponsor(tags)
+  def isSponsored: Boolean
+  def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
+  def isAdvertisementFeature: Boolean
+  def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
+  def isFoundationSupported: Boolean
+  def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
+  def sponsor: Option[String] = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  /**
+   * NOTE:
+   *
+   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
+   * the new container equivalent, see `views.support.CardStyle`.
+   *
+   * TODO: Once we've deleted all of the old-style containers, remove this.
+   */
   lazy val visualTone: String =
     if (isLiveBlog) Tags.VisualTone.Live
     else if (isComment) Tags.VisualTone.Comment
@@ -200,9 +236,22 @@ trait Tags {
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
+  lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
+  lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
+  lazy val isPodcast = types.exists(_.id == Tags.Podcast)
+  lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
+
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
+
+  lazy val isCricketLiveBlog = isLiveBlog &&
+    tags.exists(t => t.id == "sport/england-cricket-team") &&
+    tags.exists(t => t.id == "sport/over-by-over-reports")
 }
 
 object Tags {
+  val Analysis = "tone/analysis"
+  val Podcast = "type/podcast"
+  val Editorial = "tone/editorials"
 
   object VisualTone {
     val Live = "live"
@@ -215,10 +264,14 @@ object Tags {
     "tone/minutebyminute"
   )
 
-  val commentMappings = Seq(
-    "tone/comment",
-    "tone/letters",
-    "tone/editorials"
+  val commentMappings = Seq (
+    "tone/comment"
+  )
+
+  val mediaTypes = Seq(
+    "type/video",
+    "type/audio",
+    "type/gallery"
   )
 
   val featureMappings = Seq(

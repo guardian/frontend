@@ -22,6 +22,10 @@ trait Mappings {
 
   val idEmail: Mapping[String] = email
 
+  val idFirstName: Mapping[String] = nonEmptyText(maxLength = 50)
+
+  val idSecondName: Mapping[String] = nonEmptyText(maxLength = 50)
+
   val idPassword: Mapping[String] = of[String] verifying(
     Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}
   )

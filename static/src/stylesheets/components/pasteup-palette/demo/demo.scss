@@ -1,0 +1,68 @@
+
+@import "../bower_components/guss-colours/_colours.scss";
+@import "../src/_palette";
+
+html {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em 1em 3em;
+    background: #545454;
+    font: 400 1em/1.5 'Helvetica Neue', sans-serif;
+    color: #ffffff;
+    text-align: center;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+h1 {
+    font: 100 6em/1 'Helvetica Neue', sans-serif;
+}
+a {
+    color: #ffffff;
+}
+.clear {
+    margin: 2em;
+    border-top: 1px solid #767676;
+}
+
+@include guss-generate-colour-classes($palette: $pasteup-palette, $property: background-color, $prefix: b-);
+
+[class^=b-] {
+    display: inline-block;
+    width: 10em;
+    height: 10em;
+    margin: 0 1em 1em 0;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 4px solid #fff;
+    text-align: center;
+    text-shadow: #ffffff 0 0 2px;
+    box-shadow: 0 3px 6px rgba(#000000, .3);
+    color: #333333;
+}
+.colour-name,
+.colour-value {
+    font-size: 1em;
+    width: 90%;
+    display: inline-block;
+}
+.colour-name {
+    margin-top: calc(50% - 3em);
+}
+
+@mixin show-colour-meta($palette: $pasteup-palette, $prefix: "b-") {
+    @each $name, $color in $palette {
+        .#{unquote($prefix)}#{$name} {
+            @if lightness($color) < 70% {
+                text-shadow: 0 0 3px #000000;
+                font-weight: 200;
+                color: #ffffff;
+            }
+            &:before {
+                visibility: hidden;
+                content: "#{$name}";
+            }
+        }
+    }
+}
+
+@include show-colour-meta;

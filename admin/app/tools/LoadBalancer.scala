@@ -38,14 +38,16 @@ object LoadBalancer {
   private val agent =  AkkaAgent(loadBalancers)
 
   def refresh() {
-    val client = new AmazonElasticLoadBalancingClient(credentials)
-    client.setEndpoint(AwsEndpoints.elb)
-    val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
-    client.shutdown()
-    val newLoadBalancers = loadBalancers.map{ lb =>
-      lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
+    credentials.foreach{ credentials =>
+      val client = new AmazonElasticLoadBalancingClient(credentials)
+      client.setEndpoint(AwsEndpoints.elb)
+      val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
+      client.shutdown()
+      val newLoadBalancers = loadBalancers.map{ lb =>
+        lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
+      }
+      agent.send(newLoadBalancers)
     }
-    agent.send(newLoadBalancers)
   }
 
   def all: Seq[LoadBalancer] = agent()

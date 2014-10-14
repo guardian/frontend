@@ -1,6 +1,5 @@
-@(  charts: Seq[tools.LineChart],
-    hitMissCharts: Seq[tools.LineChart],
-    jsErrors: tools.LineChart,
+@(  charts: Seq[tools.AwsLineChart],
+    hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: List[conf.Switch],
     env: String)
@@ -19,6 +18,15 @@
     <div class="pingdom-wrapper">
         <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
         <ul id="pingdom"></ul>
+    </div>
+
+    <div class="build-wrapper">
+        <h2>Teamcity builds</h2>
+        @*
+            To add another build just append another &buildTypeId=XXXXXX
+            Note, it will not show unless you enable the "External status widget" for the build in Teamcity
+        *@
+        <script type="text/javascript" src="https://teamcity.gutools.co.uk/externalStatus.html?js=1&buildTypeId=bt1304&buildTypeId=Frontend_IntegrationTests&buildTypeId=Frontend_SanityTests"></script>
     </div>
     
     <div class="expiring-wrapper">
@@ -54,5 +62,4 @@
 
     @charts.map{ chart => @fragments.lineChart(chart)  }
     @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
-    @fragments.lineChart(jsErrors)
 }

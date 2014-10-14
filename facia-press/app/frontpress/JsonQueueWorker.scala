@@ -75,7 +75,7 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
     val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds))
 
     getRequest onComplete {
-      case Success(Some(message @ Message(id, _, receipt, _))) =>
+      case Success(Some(message @ Message(id, _, receipt))) =>
         lastSuccessfulReceipt.refresh()
 
         process(message) onComplete {

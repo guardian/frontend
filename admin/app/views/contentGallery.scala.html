@@ -1,0 +1,51 @@
+@(env: String, pageViewsChart: tools.FormattedChart, lightboxLaunchesChart: tools.FormattedChart, sentryChart: tools.FormattedChart, shareChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
+
+@admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    <h3>@title</h3>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3">
+            @topLine(pageViewsChart)
+        </div>
+        <div class="col-md-3">
+            @topLine(lightboxLaunchesChart)
+        </div>
+        <div class="col-md-3">
+            @topLine(shareChart)
+        </div>
+        <div class="col-md-3">
+            @topLine(sentryChart)
+        </div>
+
+    </div>
+
+    <hr />
+
+    @trendedChart(pageViewsChart)
+    @trendedChart(lightboxLaunchesChart)
+    @trendedChart(shareChart)
+    @trendedChart(sentryChart)
+
+    @reportTimestamp.map { timestamp =>
+        <em>Omniture reports generated at @timestamp</em>
+    }
+}
+
+@topLine(chart: tools.FormattedChart) = {
+    <div class="panel panel-info">
+        @chart.lastValue.map { value =>
+            <div class="panel-body big-metric big-metric-value">@value</div>
+            <div class="panel-footer big-metric big-metric-name">@chart.columns(1).label</div>
+        }
+    </div>
+}
+
+@trendedChart(chart: tools.FormattedChart) = {
+    <div class="row">
+        <div class="col-md-12">
+            @fragments.formattedChart(chart)
+        </div>
+    </div>
+}

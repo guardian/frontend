@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
+import scala.util.matching.Regex
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
@@ -34,6 +35,7 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
+  lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
 
   lazy val aspectRatioWidth: Int = aspectRatio.getNumerator
   lazy val aspectRatioHeight: Int = aspectRatio.getDenominator
@@ -47,6 +49,12 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   lazy val mimeType: Option[String] = delegate.mimeType
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
+  lazy val encoding: Option[Encoding] = {
+    (url, mimeType) match {
+      case (Some(url), Some(mimeType)) => Some(Encoding(url, mimeType))
+      case _ => None
+    }
+  }
 
   // The video duration in seconds
   lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
@@ -54,6 +62,7 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
+  lazy val caption: Option[String] = fields.get("caption")
 }
 
 case class AudioAsset(private val delegate: Asset) {

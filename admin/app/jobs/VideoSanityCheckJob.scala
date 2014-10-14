@@ -1,16 +1,15 @@
 package jobs
 
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsResult
-import common.{Metrics, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import services.CloudWatch
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future.sequence
 
-object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with Logging {
+object VideoSanityCheckJob extends ExecutionContexts with Logging {
 
   def run() {
-
     val videoPageViews = CloudWatch.videoPageViews.map(sanitise)
     val videoStarts = CloudWatch.videoStarts.map(sanitise)
     val videoEnds = CloudWatch.videoEnds.map(sanitise)
@@ -46,5 +45,4 @@ object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with
 
   private def sanitise(result: GetMetricStatisticsResult) =
     result.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
-
 }

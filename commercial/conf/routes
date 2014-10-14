@@ -5,8 +5,8 @@
 # For dev machines
 GET        /assets/*path                                             dev.DevAssetsController.at(path)
 GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents
-
 GET        /_healthcheck                                             conf.HealthCheck.healthcheck()
+
 
 # Travel offers
 GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
@@ -14,11 +14,16 @@ GET        /commercial/travel/offers.json                            controllers
 GET        /commercial/travel/offers-high                            controllers.commercial.TravelOffers.travelOffersHighHtml
 GET        /commercial/travel/offers-high.json                       controllers.commercial.TravelOffers.travelOffersHighJson
 
+
 # Jobs
 GET        /commercial/jobs                                          controllers.commercial.JobAds.jobsLowHtml
 GET        /commercial/jobs.json                                     controllers.commercial.JobAds.jobsLowJson
 GET        /commercial/jobs-high                                     controllers.commercial.JobAds.jobsHighHtml
 GET        /commercial/jobs-high.json                                controllers.commercial.JobAds.jobsHighJson
+
+GET        /commercial/jobs-v2.json                                  controllers.commercial.JobAds.jobsLowJsonV2
+GET        /commercial/jobs-high-v2.json                             controllers.commercial.JobAds.jobsHighJsonV2
+
 
 # Masterclasses
 GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.masterclassesLowHtml
@@ -26,11 +31,20 @@ GET        /commercial/masterclasses.json                            controllers
 GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.masterclassesHighHtml
 GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.masterclassesHighJson
 
+GET        /commercial/masterclasses-v2.json                         controllers.commercial.MasterClasses.masterclassesLowJsonV2
+GET        /commercial/masterclasses-high-v2.json                    controllers.commercial.MasterClasses.masterclassesHighJsonV2
+
+
 # Soulmates
 GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.mixedLowHtml
 GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixedLowJson
 GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.mixedHighHtml
 GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHighJson
+
+GET        /commercial/soulmates/mixed-v2                            controllers.commercial.SoulmateAds.mixedLowHtmlV2
+GET        /commercial/soulmates/mixed-v2.json                       controllers.commercial.SoulmateAds.mixedLowJsonV2
+GET        /commercial/soulmates/mixed-high-v2                       controllers.commercial.SoulmateAds.mixedHighHtmlV2
+GET        /commercial/soulmates/mixed-high-v2.json                  controllers.commercial.SoulmateAds.mixedHighJsonV2
 
 # Money offers
 GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuysLowHtml
@@ -42,6 +56,10 @@ GET        /commercial/money/current-accounts/:currentAccountType    controllers
 GET        /commercial/money/credit-cards/:creditCardType            controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
 
+GET        /commercial/money/bestbuys-v2.json                        controllers.commercial.MoneyOffers.bestBuysLowJsonV2
+GET        /commercial/money/bestbuys-high-v2.json                   controllers.commercial.MoneyOffers.bestBuysHighJsonV2
+
+
 # Book offers
 GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellersLowHtml
 GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellersLowJson
@@ -52,6 +70,15 @@ GET        /commercial/books/bestsellers-high.json                   controllers
 GET        /commercial/books/book.json                               controllers.commercial.BookOffers.bestsellersSuperHighJson
 GET        /commercial/books/book                                    controllers.commercial.BookOffers.bestsellersSuperHighHtml
 
+GET        /commercial/books/bestsellers-v2.json                     controllers.commercial.BookOffers.bestsellersLowJsonV2
+GET        /commercial/books/bestsellers-medium-v2.json              controllers.commercial.BookOffers.bestsellersMediumJsonV2
+GET        /commercial/books/bestsellers-high-v2.json                controllers.commercial.BookOffers.bestsellersHighJsonV2
+GET        /commercial/books/book-v2.json                            controllers.commercial.BookOffers.bestsellersSuperHighJsonV2
+
+
+GET        /commercial/multi.json                                    controllers.commercial.Multi.renderMulti
+
+
 # Content API offers
-GET        /commercial/capi/*contentId.json                          controllers.commercial.ContentApiOffers.itemJson(contentId)
-GET        /commercial/capi/*contentId                               controllers.commercial.ContentApiOffers.itemHtml(contentId)
+GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemsJson
+GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml

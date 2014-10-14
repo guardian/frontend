@@ -1,0 +1,27 @@
+@(page: model.TagIndexPage, title: String)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="l-side-margins l-side-margins--layout-front">
+    <div class="facia-container facia-container--layout-front">
+        <div class="facia-container__inner">
+            <div class="container__header">
+                <h2 class="container__title">
+                    <span class="container__title__label u-text-hyphenate">@title, @page.title.toLowerCase</span>
+                </h2>
+            </div>
+
+            <div class="container__body">
+                <ul class="linkslist">
+                @for(tag <- page.tags) {
+                    <li class="linkslist__item">
+                        <a href="@LinkTo(tag.indexPath)" class="linkslist__action tag-index__tag-link">
+                          @page.indexTitle(tag)
+                        </a>
+                    </li>
+                }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

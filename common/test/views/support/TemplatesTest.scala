@@ -3,7 +3,6 @@ package views.support
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
-import test.Fake
 import xml.XML
 import common.editions.Uk
 import conf.Configuration
@@ -27,6 +26,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "tone/foo", tagType = "tone")),
         Tag(tag(id = "type/video", tagType = "type"))
       )
+      override def isSponsored: Boolean = false
+      override def isFoundationSupported: Boolean = false
+      override def isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("type/video")
   }
@@ -37,6 +39,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "type/article", tagType = "type")),
         Tag(tag(id = "tone/foo", tagType = "tone"))
       )
+      override def isSponsored: Boolean = false
+      override def isFoundationSupported: Boolean = false
+      override def isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("tone/foo")
   }
@@ -48,12 +53,6 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   it should "pluralize tag name" in {
     Tag(tag("Article")).pluralName should be("Articles")
-  }
-
-  "javaScriptVariableName" should "create a sensible Javascript name" in {
-
-    JavaScriptVariableName("web-publication-date") should be("webPublicationDate")
-    JavaScriptVariableName("series") should be("series")
   }
 
   "PictureCleaner" should "correctly format inline pictures" in {
@@ -99,7 +98,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     }
   }
 
-  "InBodyLinkCleaner" should "clean links" in Fake {
+  "InBodyLinkCleaner" should "clean links" in {
     implicit val edition = Uk
     implicit val request = FakeRequest("GET", "/")
 
@@ -110,7 +109,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
-  
+
   "InBodyLinkCleanerForR1" should "clean links" in {
 
     // i. www
@@ -133,8 +132,8 @@ class TemplatesTest extends FlatSpec with Matchers {
         val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
         (bodyAbsolute \ "@href").text should be (value)
     }
-    
-    // iii. relative to the old subdomain 
+
+    // iii. relative to the old subdomain
     val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
     (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
 

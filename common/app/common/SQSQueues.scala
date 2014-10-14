@@ -49,7 +49,7 @@ object SQSQueues {
 
 case class MessageId(get: String) extends AnyVal
 case class ReceiptHandle(get: String) extends AnyVal
-case class Message[A](id: MessageId, get: A, handle: ReceiptHandle, sentAt: Option[DateTime])
+case class Message[A](id: MessageId, get: A, handle: ReceiptHandle)
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
 case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
@@ -59,20 +59,15 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
 
   def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message[A]]] =
     client.receiveMessageFuture(
-      request.withQueueUrl(queueUrl).withAttributeNames("SentTimestamp")
+      request.withQueueUrl(queueUrl)
     ) map { response =>
       response.getMessages.asScala.toSeq map { message =>
         Message(
           MessageId(message.getMessageId),
           Json.fromJson[A](Json.parse(message.getBody)) getOrElse {
-            throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}")
+            throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}: '${message.getBody}'")
           },
-          ReceiptHandle(message.getReceiptHandle),
-          message.getAttributes.asScala.get("SentTimestamp") flatMap { timeStampString =>
-            Try {
-              new DateTime(timeStampString.toLong)
-            }.toOption
-          }
+          ReceiptHandle(message.getReceiptHandle)
         )
     }
   }

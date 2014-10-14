@@ -1,11 +1,10 @@
 package common.Assets
 
-import common.Logging
+import common.{RelativePathEscaper, Logging}
 import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
 import conf.Configuration
-import conf.Switches.SeoBlockGooglebotFromJSPathsSwitch
 import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
@@ -66,6 +65,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "identity" => "identity.css"
         case "football" => "football.css"
         case "commercial" => "commercial.css"
+        case "index" => "index.css"
         case default => "default.css"
       }
       val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
@@ -86,6 +86,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "identity" => "stylesheets/old-ie.head.identity.css"
         case "football" => "stylesheets/old-ie.head.football.css"
         case "commercial" => "stylesheets/old-ie.head.commercial.css"
+        case "index" => "stylesheets/old-ie.head.index.css"
         case _ => "stylesheets/old-ie.head.default.css"
       }
     }
@@ -95,36 +96,17 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "identity" => "stylesheets/ie9.head.identity.css"
         case "football" => "stylesheets/ie9.head.football.css"
         case "commercial" => "stylesheets/ie9.head.commercial.css"
+        case "index" => "stylesheets/ie9.head.index.css"
         case _ => "stylesheets/ie9.head.default.css"
       }
     }
   }
 
   object js {
-
-    private def escapeRelativeJsPaths(unescaped: String): String = {
-
-      // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
-      // we need to escape them out.
-      // "../foo"
-      // "./foo"
-      // and any that are inside single quotes too
-      val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
-
-      val matches = regex.findAllIn(unescaped).toSeq
-
-      matches.foldLeft(unescaped){ case (result:String, matched: String) =>
-        result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
-      }
-    }
-
-    private lazy val curlScript = IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
-    private lazy val escapedCurlScript = escapeRelativeJsPaths(curlScript)
-
-    // TODO make this a val again when we get rid of the switch
-    def curl: String = if (SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) escapedCurlScript else curlScript
-
-
+    lazy val curl: String =
+      RelativePathEscaper.escapeLeadingDotPaths(
+        IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
+      )
   }
 
 }

@@ -1,0 +1,19 @@
+@(fragments: Seq[Html])(implicit request: RequestHeader)
+
+@defining(("1_0", "2014-08-07")) { case (version, date) =>
+    <div class="commercial commercial--multi commercial--high">
+        <div class="facia-container__inner">
+            <div class="container__title commercial__head">
+                <h3 class="commercial__title">
+                    From the guardian
+                </h3>
+                <div class="commercial__explainer">
+                    About this content blah blah, this is what the designer put in the psd.
+                </div>
+            </div>
+            <div class="commercial__body container__body">
+                <ul class="lineitems">@fragments</ul>
+            </div>
+        </div>
+    </div>
+}

@@ -1,64 +1,16 @@
 package frontsapi.model
 
-import play.api.libs.json.{Json, JsValue}
-import tools.FaciaApi
-import org.joda.time.DateTime
-import scala.util.{Success, Failure, Try}
+import com.gu.facia.client.models.{Config, Trail, TrailMetaData}
+import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
-import com.gu.googleauth.UserIdentity
+import julienrf.variants.Variants
+import org.joda.time.DateTime
+import play.api.libs.json.{JsString, Format, JsValue, Json}
+import services.ConfigAgent
+import tools.FaciaApi
 
-object Front {
-  implicit val jsonFormat = Json.format[Front]
-}
-
-case class Front(
-  collections: List[String],
-  navSection: Option[String],
-  webTitle: Option[String],
-  title: Option[String],
-  description: Option[String],
-  priority: Option[String]
-)
-
-object Collection {
-  implicit val jsonFormat = Json.format[Collection]
-
-  /** TODO emulate the current IDs as generated in the JavaScript */
-  def nextId = java.util.UUID.randomUUID().toString
-}
-
-case class Collection(
-  displayName: Option[String],
-  apiQuery: Option[String],
-  `type`: Option[String],
-  href: Option[String],
-  groups: Option[List[String]],
-  uneditable: Option[Boolean],
-  showTags: Option[Boolean],
-  showSections: Option[Boolean]
-)
-
-object Config {
-  implicit val jsonFormat = Json.format[Config]
-
-  def empty = Config(Map.empty, Map.empty)
-}
-
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
-
-object Trail {
-  implicit val jsonFormat = Json.format[Trail]
-}
-
-case class Trail(
-  id: String,
-  frontPublicationDate: Option[DateTime],
-  meta: Option[Map[String, JsValue]]
-)
+import scala.util.{Failure, Success, Try}
 
 object Block {
   implicit val jsonFormat = Json.format[Block]
@@ -73,7 +25,8 @@ case class Block(
                   updatedEmail: String,
                   displayName: Option[String],
                   href: Option[String],
-                  diff: Option[JsValue]
+                  diff: Option[JsValue],
+                  previously: Option[List[Trail]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -82,54 +35,65 @@ case class Block(
   )
 
   private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
-    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
+    val trailGroups = trails.groupBy(_.meta.flatMap(_.group).map(_.toInt).getOrElse(0))
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
+  def updatePreviously(update: UpdateList): Block = {
+    if (update.live) {
+      val itemFromLive: Option[Trail] = live.find(_.id == update.item)
+      val updatedPreviously: Option[List[Trail]] =
+        (for {
+          previousList <- previously
+          trail <- itemFromLive
+        } yield {
+          val previouslyWithoutItem: List[Trail] = previousList.filterNot(_.id == update.item)
+          (trail +: previouslyWithoutItem).take(20)
+        }).orElse(itemFromLive.map(List.apply(_)))
+      this.copy(previously=updatedPreviously)
+    }
+    else
+      this
+  }
 }
 
-object UpdateList {
-  implicit val jsonFormat = Json.format[UpdateList]
-}
+sealed trait FaciaToolUpdate
 
 case class UpdateList(
   id: String,
   item: String,
   position: Option[String],
   after: Option[Boolean],
-  itemMeta: Option[Map[String, JsValue]],
+  itemMeta: Option[TrailMetaData],
   live: Boolean,
   draft: Boolean
-)
+) extends FaciaToolUpdate
 
-object CollectionMetaUpdate {
-  implicit val jsonFormat = Json.format[CollectionMetaUpdate]
+case class Update(update: UpdateList) extends FaciaToolUpdate
+case class Remove(remove: UpdateList) extends FaciaToolUpdate
+
+case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
+
+case class DiscardUpdate(id: String) extends FaciaToolUpdate
+case class PublishUpdate(id: String) extends FaciaToolUpdate
+
+object UpdateList {
+  implicit val format: Format[UpdateList] = Json.format[UpdateList]
 }
 
-case class CollectionMetaUpdate(
-  displayName: Option[String],
-  href: Option[String]
-)
+object FaciaToolUpdate {
+  implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
+}
+
+case class StreamUpdate(update: FaciaToolUpdate, email: String)
+
+object StreamUpdate {
+  implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]
+}
 
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
-  val itemMetaWhitelistFields: Seq[String] = Seq(
-    "headline",
-    "href",
-    "snapType",
-    "snapCss",
-    "snapUri",
-    "trailText",
-    "group",
-    "supporting",
-    "imageAdjust",
-    "imageSrc",
-    "imageSrcWidth",
-    "imageSrcHeight",
-    "isBreaking")
-  
-  implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
@@ -164,9 +128,6 @@ trait UpdateActions extends Logging {
       block.copy(draft=block.draft orElse Option(block.live) map { l => l.filterNot(_.id == update.item) } filter(_ != block.live) )
     else
       block
-
-  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: UserIdentity): Block =
-    block.copy(displayName=update.displayName, href=update.href)
 
   def putBlock(id: String, block: Block, identity: UserIdentity): Block =
     FaciaApi.putBlock(id, block, identity)
@@ -205,6 +166,8 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(removeGroupIfNoLongerGrouped(id, _))
+    .map(pruneBlock)
     .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
@@ -215,27 +178,24 @@ trait UpdateActions extends Logging {
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
+      .map(_.updatePreviously(update))
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .map(removeGroupIfNoLongerGrouped(id, _))
+      .map(pruneBlock)
       .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
 
-  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: UserIdentity): Option[Block] =
-    getBlock(id)
-      .map(updateCollectionMeta(_, update, identity))
-      .map(_.sortByGroup)
-      .map(putBlock(id, _, identity))
-
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val trail: Trail = blocks
       .find(_.id == update.item)
       .map { currentTrail =>
-        val newMeta = for (updateMeta <- update.itemMeta.map(itemMetaWhiteList)) yield updateMeta
+        val newMeta = for (updateMeta <- update.itemMeta) yield updateMeta
         currentTrail.copy(meta = newMeta)
       }
-      .getOrElse(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))
+      .getOrElse(Trail(update.item, DateTime.now.getMillis, update.itemMeta))
 
     val listWithoutItem = blocks.filterNot(_.id == update.item)
 
@@ -257,18 +217,47 @@ trait UpdateActions extends Logging {
     splitList._1 ::: (trail +: splitList._2)
   }
 
-  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
-
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
   }
 
   def capCollection(block: Block): Block =
     block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
+  def removeGroupIfNoLongerGrouped(collectionId: String, block: Block): Block = {
+    ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
+      case Some(groups) if groups.nonEmpty => block
+      case _ => block.copy(
+        live = block.live.map(removeGroupsFromTrail),
+        draft = block.draft.map(_.map(removeGroupsFromTrail)))
+    }
+  }
+
+  private def pruneBlock(block: Block): Block =
+    block.copy(
+      live = block.live
+        .map(pruneGroupOfZero)
+        .map(pruneMetaDataIfEmpty),
+      draft = block.draft.map(
+        _.map(pruneGroupOfZero)
+         .map(pruneMetaDataIfEmpty)
+      )
+    )
+
+  private def pruneGroupOfZero(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(
+      metaData => metaData.copy(json = metaData.json.filter{
+        case ("group", JsString("0")) => false
+        case _ => true})))
+
+  private def pruneMetaDataIfEmpty(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.filter(_.json.nonEmpty))
+
+  private def removeGroupsFromTrail(trail: Trail): Trail =
+    trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 }
 
 object UpdateActions extends UpdateActions

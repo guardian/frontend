@@ -1,8 +1,9 @@
 package services
 
-import common.{SimpleCountMetric, Jobs}
+import common.Jobs
+import metrics.CountMetric
 import model.diagnostics.CloudWatch
-import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.{GlobalSettings, Application => PlayApp}
 
 trait ArchiveMetrics extends GlobalSettings {
 
@@ -28,4 +29,4 @@ trait ArchiveMetrics extends GlobalSettings {
 
 }
 
-object Googlebot404Count extends SimpleCountMetric("archive", "googlebot-404s", "Googlebot 404s", "Googlebot 404s")
+object Googlebot404Count extends CountMetric("googlebot-404s", "Googlebot 404s")

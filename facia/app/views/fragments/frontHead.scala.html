@@ -1,0 +1,5 @@
+@(page: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@import common.LinkTo
+
+<meta name="twitter:url" content="@LinkTo(request.uri)" />
+<meta property="og:title" content="@views.support.Title(page)" />

@@ -1,0 +1,14 @@
+@(sublinks: Seq[model.Trail])(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+
+@import views.html.fragments.items.elements.facia_cards.sublink
+@import views.support.GetClasses
+
+@if(sublinks.nonEmpty) {
+    <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
+        @sublinks.map { link =>
+            <li class="@GetClasses.forSubLink(link)">
+                @sublink(link, 0, 0, true)
+            </li>
+        }
+    </ul>
+}

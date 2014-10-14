@@ -7,6 +7,7 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
+GET        /sport/cricket/match/:matchId.json                                                  controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
@@ -68,4 +69,3 @@ GET        /football/match/:matchId                                             
 GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
-GET        /football/world-cup-2014/r2-front-world-cup-embed                                   football.controllers.WallchartController.renderR2FrontWorldCupEmbed()

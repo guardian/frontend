@@ -1,5 +1,7 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import common._
+@import common.Edition
+@import common.editions._
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>

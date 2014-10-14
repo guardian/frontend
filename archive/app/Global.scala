@@ -1,10 +1,10 @@
 import common.CloudWatchApplicationMetrics
-import conf.{Management, Filters}
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
-import services.ArchiveMetrics
 import play.api.mvc.WithFilters
+import services.ArchiveMetrics
 
 object Global extends WithFilters(Filters.common: _*) with DevParametersLifecycle
   with CloudWatchApplicationMetrics with ArchiveMetrics {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-archive"
 }

@@ -13,7 +13,7 @@ import conf.{Configuration, Filters}
 object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) with SafeLogging
                                                                                     with CloudWatchApplicationMetrics {
 
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-identity"
 
   private lazy val injector = {
     val module =

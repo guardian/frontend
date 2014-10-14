@@ -1,0 +1,15 @@
+.element-pullquote {
+    &:before,
+    &:after {
+        content: '';
+        @include icon(quotemark-mask);
+        display: block !important;
+    }
+    &:before {
+        margin-bottom: 7px;
+    }
+    &:after {
+        margin-top: $gs-baseline/2;
+        @include transform(rotate(180deg));
+    }
+}

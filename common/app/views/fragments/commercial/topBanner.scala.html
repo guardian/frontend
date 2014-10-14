@@ -1,8 +1,11 @@
-@(metaData: model.MetaData)
+@import conf.Switches._
 
-<div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
-        case _: Article => {article}
-        case _          => {facia}
-    }-layout">
-    @fragments.commercial.standardAd("top-above-nav", Seq("top-banner-ad"), Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "940,230", "900,250"), "wide" -> Seq("728,90", "940,230", "900,250", "970,250")))
+<div class="top-banner-ad-container top-banner-ad-container--desktop">
+    @fragments.commercial.standardAd(
+        "top-above-nav",
+        Seq("top-banner-ad"), Map(
+            "mobile" -> Seq("88,70", "728,90"),
+            "desktop" -> Seq("88,70", "728,90", "940,230", "900,250", "970,250")
+        )
+    )
 </div>

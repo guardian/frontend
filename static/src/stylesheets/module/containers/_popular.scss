@@ -1,0 +1,37 @@
+.container.container--popular {
+
+    .most-viewed-no-js i {
+        @include rotate(-90deg);
+        margin-top: 10px;
+    }
+    #most-popular-head {
+        display: none;
+    }
+    .facia-container--layout-content & {
+        margin-bottom: 0;
+    }
+    .content-footer--media & {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(rightCol, desktop) {
+        .headline-list--large .headline-list__item {
+            &:first-child {
+                min-height: 0 !important;
+            }
+            &:nth-child(n+2):before {
+                height: 1px !important;
+            }
+            &:nth-child(4n):before {
+                height: 0 !important;
+            }
+        }
+    }
+    @include mq($until: wide) {
+        .headline-list {
+            margin-left: ($gs-gutter/2) * -1;
+            margin-right: ($gs-gutter/2) * -1;
+            padding: $gs-baseline/3 $gs-gutter/2 0;
+        }
+    }
+}

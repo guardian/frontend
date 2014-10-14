@@ -6,11 +6,12 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import conf.{AdminConfiguration, Configuration}
-import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
-import java.io.Serializable
-import scala.util.{Failure, Try, Success}
 import dfp.DfpApiWrapper.DfpSessionException
+import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
+
+import scala.util.{Failure, Try}
 
 object DfpDataHydrator extends Logging {
 
@@ -54,6 +55,7 @@ object DfpDataHydrator extends Logging {
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
       val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
+      val placementAdUnits = loadAdUnitIdsByPlacement()
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
       val allCustomTargetingValues = loadAllCustomTargetValues()
@@ -72,24 +74,44 @@ object DfpDataHydrator extends Logging {
 
         val dfpTargeting = dfpLineItem.getTargeting
 
-        val adUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
+        val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
           adUnits.flatMap { adUnit =>
             allAdUnits get adUnit.getAdUnitId
           }.toSeq
         } getOrElse Nil
 
-        val geoTargets = Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-          Option(geoTargeting.getTargetedLocations) map { locations =>
-            locations.map { location =>
-              GeoTarget(
-                location.getId,
-                optJavaInt(location.getCanonicalParentId),
-                location.getType,
-                location.getDisplayName
-              )
-            }.toSeq
-          }
-        } getOrElse Nil
+        val adUnitsDerivedFromPlacements = {
+          Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map { placementIds =>
+
+            def adUnitsInPlacement(id: Long) = {
+              placementAdUnits get id map {
+                _ flatMap allAdUnits.get
+              } getOrElse Nil
+            }
+
+            placementIds.flatMap(adUnitsInPlacement).toSeq
+
+          } getOrElse Nil
+        }
+
+        val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+
+        def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+          Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+            Option(locations(geoTargeting)) map { locations =>
+              locations.map { location =>
+                GeoTarget(
+                  location.getId,
+                  optJavaInt(location.getCanonicalParentId),
+                  location.getType,
+                  location.getDisplayName
+                )
+              }.toSeq
+            }
+          } getOrElse Nil
+        }
+        val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+        val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
         val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
           buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
@@ -102,7 +124,7 @@ object DfpDataHydrator extends Logging {
           endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
           isPageSkin = isPageSkin(dfpLineItem),
           sponsor = sponsor,
-          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
+          targeting = GuTargeting(adUnits, geoTargetsIncluded, geoTargetsExcluded, customTargetSets)
         )
       }
 
@@ -123,16 +145,18 @@ object DfpDataHydrator extends Logging {
     session =>
 
       val statementBuilder = new StatementBuilder()
-        .where("parentId is not null and status = :status")
+        .where("status = :status")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
 
-      val descendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists (path => path.length > 1 && path(1).getName == rootName)
+      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
+        }
       }
 
-      descendantAdUnits.map { adUnit =>
+      rootAndDescendantAdUnits.map { adUnit =>
         val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
         (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
@@ -150,7 +174,7 @@ object DfpDataHydrator extends Logging {
         GuAdUnit(adUnit.getId, fullpath.tail)
       }
 
-      allUnits.filter(au => au.path.last == "ng" && au.path.size < 5).sortBy(_.id).distinct
+      allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
   def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
@@ -176,6 +200,60 @@ object DfpDataHydrator extends Logging {
     }.toMap
   }
 
+  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] = dfpSession.fold(Map[Long, Seq[String]]()) { session =>
+    DfpApiWrapper.fetchPlacements(session, new StatementBuilder()).map { placement =>
+      placement.getId.toLong -> placement.getTargetedAdUnitIds.toSeq
+    }.toMap
+  }
+
+  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] = dfpSession.fold(Seq.empty[GuCreativeTemplate]) { session =>
+    val templatesQuery = new StatementBuilder()
+      .where("status = :active and type = :type")
+      .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
+      .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
+      .orderBy("name ASC")
+
+    val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(session, templatesQuery) filterNot { template =>
+      val name = template.getName.toUpperCase
+      name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
+    }
+
+    val creativesQuery = new StatementBuilder()
+      .where("advertiserId = :advertiserId")
+      .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
+
+    val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
+
+    dfpCreativeTemplates map { template =>
+      val templateCreatives = creatives getOrElse(template.getId, Nil)
+      GuCreativeTemplate(
+        id = template.getId,
+        name = template.getName,
+        description = template.getDescription,
+        parameters = template.getVariables map { param =>
+          GuCreativeTemplateParameter(
+            param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+            param.getLabel,
+            param.getIsRequired,
+            param.getDescription
+          )
+        },
+        snippet = template.getSnippet,
+        creatives = templateCreatives map { creative =>
+          val args = creative.getCreativeTemplateVariableValues.foldLeft(Map.empty[String, String]) { case (soFar, arg) =>
+            val argValue = arg.getBaseCreativeTemplateVariableValueType match {
+              case "StringCreativeTemplateVariableValue" => Option(arg.asInstanceOf[StringCreativeTemplateVariableValue].getValue) getOrElse ""
+              case "AssetCreativeTemplateVariableValue" => "https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKCT8L-fJRABGAEyCCXl5VJTW9F8"
+              case "UrlCreativeTemplateVariableValue" => Option(arg.asInstanceOf[UrlCreativeTemplateVariableValue].getValue) getOrElse ""
+              case other => "???"
+            }
+            soFar + (arg.getUniqueName -> argValue)
+          }
+          GuCreative(creative.getId.longValue(), creative.getName, args)
+        }
+      )
+    }
+  }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 

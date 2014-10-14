@@ -1,7 +1,7 @@
 package config
 
+import com.gu.facia.client.models.{CollectionConfig, Config, Front}
 import controllers.CreateFront
-import frontsapi.model.{Collection, Front, Config}
 
 object Transformations {
   /** The Config ought never to contain empty fronts or collections that do not belong to any fronts */
@@ -18,12 +18,18 @@ object Transformations {
 
   def createFront(createCommand: CreateFront, newCollectionId: String)(config: Config): Config = {
     val newFront = Front(
-      List(newCollectionId),
-      createCommand.navSection,
-      createCommand.webTitle,
-      createCommand.title,
-      createCommand.description,
-      createCommand.priority
+      collections =       List(newCollectionId),
+      navSection =        createCommand.navSection,
+      webTitle =          createCommand.webTitle,
+      title =             createCommand.title,
+      description =       createCommand.description,
+      onPageDescription = createCommand.onPageDescription,
+      imageUrl =          createCommand.imageUrl,
+      imageWidth =        createCommand.imageWidth,
+      imageHeight =       createCommand.imageHeight,
+      isImageDisplayed =  createCommand.isImageDisplayed,
+      isHidden =          createCommand.isHidden,
+      priority =          createCommand.priority
     )
 
     config.copy(
@@ -39,7 +45,7 @@ object Transformations {
   def updateCollection(
       frontIds: List[String],
       collectionId: String,
-      collection: Collection
+      collection: CollectionConfig
   )(config: Config): Config = {
     val updatedFronts = frontIds flatMap { frontId =>
       config.fronts.get(frontId) map { front =>

@@ -1,0 +1,97 @@
+@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+
+@import common.LinkTo
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
+@import views.html.fragments.media.video
+@import views.html.fragments.items.facia_cards.meta
+@import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.items.elements.starRating
+@import Function.const
+
+@defining((card.item, card.index)) { case (trail, index) =>
+
+<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
+    @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
+        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes @if(!isList){js-snappable}"
+            @if(trail.isCommentable) {
+                @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+                }
+                data-discussion-closed="@trail.isClosedForComments"
+                data-discussion-inline-upgrade="true"
+            }
+            data-link-name="trail | @{index + 1}"
+            @SnapData(trail)>
+
+            <div class="fc-item__container">
+                @FaciaDisplayElement.fromTrail(trail) match {
+                    case InlineVideo(videoElement, title, endSlatePath) if modifierClasses.showVideoPlayer => {
+                        @defining(VideoPlayer(
+                            videoElement,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            Some(false)
+                        )) { player =>
+                                <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                                    <div class="fc-item__video-container">
+                                    @video(player)
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    case _ => {
+                        @image(trail, inlineImage = containerIndex == 0 && index < 4)
+                    }
+                }
+
+                <div class="fc-item__content">
+                    <div class="@RenderClasses(Map(
+                        ("fc-item__header", true),
+                        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
+                    ))">
+                        @title(trail, index, containerIndex, false)
+                        @trail match {
+                            case content: model.Content => {
+                                @content.byline.filter(const(content.showByline)).map { byline =>
+                                    <div class="fc-item__byline">
+                                        @ContributorLinks(Html(byline), content.contributors)
+                                    </div>
+                                }
+                                @starRating(content)
+                            }
+                            case _ => {}
+                        }
+                    </div>
+
+                    @trail.trailText.map { text =>
+                        <div class="fc-item__standfirst">@Html(text)</div>
+                    }
+
+                    @meta(trail)
+
+                    <div class="fc-item__footer--vertical" aria-hidden="true">
+                        @sublinks(trail.supporting)
+                    </div>
+                </div>
+
+                @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                <div class="fc-item__avatar">
+                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
+                </div>
+                }
+
+                <footer class="fc-item__footer--horizontal">
+                    @sublinks(trail.supporting)
+                </footer>
+
+                <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+            </div>
+        </div>
+    }
+</li>
+}

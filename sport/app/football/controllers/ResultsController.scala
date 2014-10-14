@@ -22,7 +22,7 @@ object ResultsController extends MatchListController with CompetitionResultFilte
 
   private def renderAllResults(date: LocalDate) = Action { implicit request =>
     val results = new ResultsList(date, Competitions())
-    val page = new Page("football/results", "football", "All results", "GFE:Football:automatic:results")
+    val page = new FootballPage("football/results", "football", "All results", "GFE:Football:automatic:results")
     renderMatchList(page, results, filters)
   }
 
@@ -46,13 +46,15 @@ object ResultsController extends MatchListController with CompetitionResultFilte
 
   private def renderCompetitionResults(competitionName: String, competition: Competition, date: LocalDate) = Action { implicit request =>
     val results = new CompetitionResultsList(date, Competitions(), competition.id)
-    val page = new Page(s"football/$competitionName/results", "football", s"${competition.fullName} results", "GFE:Football:automatic:competition results")
+    val page = new FootballPage(s"football/$competitionName/results", "football", s"${competition.fullName} results",
+      "GFE:Football:automatic:competition results")
     renderMatchList(page, results, filters)
   }
 
   private def renderTeamResults(teamName: String, team: FootballTeam, date: LocalDate) = Action { implicit request =>
     val results = new TeamResultsList(date, Competitions(), team.id)
-    val page = new Page(s"/football/$teamName/results", "football", s"${team.name} results", "GFE:Football:automatic:team results")
+    val page = new FootballPage(s"/football/$teamName/results", "football", s"${team.name} results",
+      "GFE:Football:automatic:team results")
     renderMatchList(page, results, filters)
   }
 }

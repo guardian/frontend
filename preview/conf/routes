@@ -8,12 +8,16 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
+GET        /responsive-viewer/*path                                                            controllers.ResponsiveViewerController.preview(path)
+
 #Login
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
-GET           /logout                    controllers.OAuthLoginController.logout
+GET           /login                                                                           controllers.OAuthLoginController.login
+POST          /login                                                                           controllers.OAuthLoginController.loginAction
+GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
+GET           /logout                                                                          controllers.OAuthLoginController.logout
+
+GET           /last-modified/*path.json                                                        controllers.LastModifiedController.render(path)
 
 # Travel offers
 GET        /commercial/travel/offers                                                           controllers.commercial.TravelOffers.travelOffersLowHtml
@@ -77,7 +81,8 @@ GET        /preference/front-alphas/:optAction                                  
 GET        /cards/opengraph/*path.json                                                         controllers.CardController.opengraph(path)
 GET        /tagged.json                                                                        controllers.TaggedContentController.renderJson(tag: String)
 
-GET        /video/section/*sectionId.json                                                      controllers.VideoInSectionController.renderSectionVideos(sectionId)
+GET        /:mediaType/section/:sectionId/*seriesId.json                                       controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
+GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
 
@@ -141,16 +146,17 @@ GET        /football/match/:matchId                                             
 GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
-GET        /football/world-cup-2014/r2-front-world-cup-embed                                   football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
-
 # Onward journeys
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                       controllers.MediaController.render(path)
 
 # Facia
 GET        /                                                                                   controllers.preview.FaciaDraftController.editionRedirect(path = "")
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.preview.FaciaDraftController.editionRedirect(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.preview.FaciaDraftController.renderFrontRss(path)
+GET        /$path<.+>/lite.json                                                                    controllers.preview.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.preview.FaciaDraftController.renderFrontJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                            controllers.preview.FaciaDraftController.renderFront(path)
 
@@ -167,15 +173,12 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      
 
 # the (applications/)? bit here is for X-Accel-Redirects on the preview server
 
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                               controllers.GalleryController.renderLightbox(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                               controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                        controllers.GalleryController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                             controllers.GalleryController.render(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                           controllers.ImageContentController.render(path)
-
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                       controllers.MediaController.render(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                        controllers.InteractiveController.renderInteractive(path)

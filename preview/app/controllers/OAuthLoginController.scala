@@ -5,10 +5,10 @@ import common.ExecutionContexts
 import conf.Configuration
 import org.joda.time.DateTime
 import play.api.libs.json.Json
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 
-object OAuthLoginController extends Controller with ExecutionContexts {
+object OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
   import play.api.Play.current
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
@@ -34,7 +34,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    googleAuthConfig.map { config =>
+    googleAuthConfig.map(checkIsSecure).map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
@@ -44,13 +44,24 @@ object OAuthLoginController extends Controller with ExecutionContexts {
     }.getOrElse(Future.successful(forbiddenNoCredentials))
   }
 
+  // TODO - this is only while in transition from http to https for preview
+  // no copy and paste for use elsewhere, simply go full https
+  private def checkIsSecure(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
+    if (request.isSecure){
+      val oldRedirect = config.redirectUrl
+      config.copy(redirectUrl = oldRedirect.replace("http://", "https://"))
+    } else {
+      config
+    }
+  }
+
   /*
   User comes back from Google.
   We must ensure we have the anti forgery token from the loginAction call and pass this into a verification call which
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    googleAuthConfig.map { config =>
+    googleAuthConfig.map(checkIsSecure).map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>
           Future.successful(Redirect(routes.OAuthLoginController.login())
