@@ -71,6 +71,7 @@ define([
                 {
                     key: 'byline',
                     editable: true,
+                    requires: 'showByline',
                     omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
@@ -164,7 +165,7 @@ define([
                     key: 'showByline',
                     editable: true,
                     omitForSupporting: true,
-                    label: 'show byline',
+                    label: 'byline',
                     type: 'boolean'
                 },
                 {
@@ -415,7 +416,7 @@ define([
                         .filter(function(editor) { return editor.singleton === opts.singleton; })
                         .filter(function(editor) { return editor.key !== key; })
                         .pluck('key')
-                        .each(function(key) { self.meta[key](undefined) })
+                        .each(function(key) { self.meta[key](false) })
                     }
 
                     meta(!meta());
@@ -562,16 +563,12 @@ define([
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
-                // reject undefined properties:
-                .filter(function(p){ return !_.isUndefined(p[1]); })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                // reject whitespace-only strings:
-                .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
+                // reject vals that are equivalent to their defaults (if set) OR are falsey
+                .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
-                // reject vals that are equivalent to their defaults (if any):
-                .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : true; })
                 // convert numbers to strings:
                 .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // recurse into supporting links
