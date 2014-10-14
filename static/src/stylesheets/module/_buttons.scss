@@ -1,0 +1,16 @@
+// Used for liveblog, discussion and fc-container
+.button--show-more {
+    position: relative;
+    padding-left: 36px;
+
+    .i {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 7px;
+    }
+}
