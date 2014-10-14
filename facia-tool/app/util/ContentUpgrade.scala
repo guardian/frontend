@@ -1,5 +1,6 @@
 package util
 
+import fronts.MetadataDefaults
 import model.Content
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import com.gu.openplatform.contentapi.parser.JsonParser._

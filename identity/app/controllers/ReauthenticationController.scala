@@ -57,11 +57,13 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
     def onSuccess(password: String): Future[Result] = {
         logger.trace("reauthenticating with ID API")
-        val authResponse = api.authBrowser(EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp), idRequest.trackingData)
         val persistent = request.user.auth match {
           case ScGuU(_, v) => v.isPersistent
           case _ => false
         }
+        val auth = EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp)
+        val authResponse = api.authBrowser(auth, idRequest.trackingData, Some(persistent))
+
         signInService.getCookies(authResponse, persistent) map {
           case Left(errors) =>
             logger.error(errors.toString())
