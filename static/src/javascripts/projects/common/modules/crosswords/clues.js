@@ -16,7 +16,8 @@ define([
                 return React.DOM.li({
                     className: classSet({
                         'crossword__clues__clue': true,
-                        'crossword__clues__clue--answered': this.props.hasAnswered
+                        'crossword__clues__clue--answered': this.props.hasAnswered,
+                        'crossword__clues__clue--selected': this.props.isSelected
                     }),
                     onClick: this.onClick
                 },
@@ -34,15 +35,16 @@ define([
             function cluesByDirection(direction) {
                 return _.chain(that.props.clues)
                     .filter(function (clue) {
-                        return clue.direction === direction;
+                        return clue.entry.direction === direction;
                     })
                     .map(function (clue) {
                         return Clue({
-                            number: clue.number + '.',
-                            clue: clue.clue,
+                            number: clue.entry.number + '.',
+                            clue: clue.entry.clue,
                             hasAnswered: clue.hasAnswered,
+                            isSelected: clue.isSelected,
                             focusClue: function () {
-                                that.props.focusClue(clue.position.x, clue.position.y, direction)
+                                that.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction)
                             }
                         });
                     });

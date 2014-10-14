@@ -7,6 +7,11 @@ define([
 ) {
     var classSet = React.addons.classSet,
         Cell = React.createClass({
+            onClick: function (event) {
+                event.preventDefault();
+                this.props.handleSelect();
+            },
+
             render: function () {
                 var innerNodes = [],
                     top = this.props.y * 32 + 1,
@@ -33,7 +38,7 @@ define([
                 }
 
                 return React.DOM.g({
-                    onClick: this.props.handleSelect
+                    onClick: this.onClick
                 },
                     React.DOM.rect({
                         x: left,

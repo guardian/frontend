@@ -37,6 +37,10 @@
     margin-right: $gs-baseline;
 }
 
+.crossword__clues__clue--selected {
+    background-color: $c-crosswordAccent1;
+}
+
 .crossword__clues__clue--answered .crossword__clues__clue__text {
     text-decoration: line-through;
 }

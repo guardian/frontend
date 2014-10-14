@@ -106,7 +106,10 @@ define([
 
             wrapper.style.left = (x * 31) + 'px';
             wrapper.style.top = (y * 31) + 'px';
-            this.refs.hiddenInput.getDOMNode().focus();
+
+            if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
+                this.refs.hiddenInput.getDOMNode().focus();
+            }
         },
 
         onSelect: function (x, y) {
@@ -191,11 +194,13 @@ define([
             var that = this;
 
             return _.map(this.props.data.entries, function (entry) {
-                entry.hasAnswered = _.every(helpers.cellsForEntry(entry), function (position) {
-                    return /^[A-Z]$/.test(that.state.grid[position.x][position.y].value);
-                });
-
-                return entry;
+                return {
+                    entry: entry,
+                    hasAnswered: _.every(helpers.cellsForEntry(entry), function (position) {
+                        return /^[A-Z]$/.test(that.state.grid[position.x][position.y].value);
+                    }),
+                    isSelected: that.clueInFocus() === entry
+                };
             });
         },
 
@@ -232,7 +237,8 @@ define([
                             className: 'crossword__hidden-input',
                             ref: 'hiddenInput',
                             onKeyDown: this.onKeyDown,
-                            value: ''
+                            value: '',
+                            onBlur: this.onBlur
                         }
                     ))
                 ),
