@@ -346,7 +346,7 @@ case object QuarterQuarterHl3 extends Slice {
 }
 
 /* ._________________.________.________.
- * |_________________|########|########|
+ * |                 |########|########|
  * |_________________|########|########|
  * |_________________|        |        |
  * |_________________|________|________|
@@ -358,7 +358,7 @@ case object QuarterQuarterHl3 extends Slice {
 * */
 case object Hl4QuarterQuarter extends Slice {
   val layout = SliceLayout(
-    cssClassName = "h14-q-q",
+    cssClassName = "h13-q-q",
     columns = Seq(
       Rows(
         colSpan = 2,
@@ -372,7 +372,7 @@ case object Hl4QuarterQuarter extends Slice {
       Rows(
         colSpan = 2,
         columns = 1,
-        rows = 4,
+        rows = 3,
         ItemClasses(
           mobile = "list",
           tablet = "list-media"
