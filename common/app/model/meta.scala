@@ -285,3 +285,9 @@ object Tags {
     "tone/reviews"
   )
 }
+
+case class BlockLevelSharing(
+  text: String,
+  css: String,
+  url: String
+)

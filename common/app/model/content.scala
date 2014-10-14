@@ -1,7 +1,7 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
-import common.{LinkCounts, LinkTo, Reference}
+import common._
 import conf.Configuration.facebook
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -213,6 +213,15 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val showMainVideo: Boolean = getMeta("showMainVideo")(_.asOpt[Boolean]).getOrElse(false)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
+
+  def icons(blockid: String): Seq[BlockLevelSharing] = {
+    val shortBlockUrl = s"$shortUrl#$blockid".urlEncoded
+    val longBlockUrl = s"$webUrl#$blockid".urlEncoded
+    List(
+    BlockLevelSharing("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=$longBlockUrl&ref=responsive"),
+    BlockLevelSharing("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$shortBlockUrl"),
+    BlockLevelSharing("Google plus", "gplus", s"https://plus.google.com/share?url=$shortBlockUrl")
+  )}
 }
 
 object Content {

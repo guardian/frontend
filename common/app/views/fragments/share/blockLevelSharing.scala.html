@@ -1,12 +1,12 @@
-@(id: String, shareItems: Seq[(String, String,String)], longUrl: String, shortUrl: String)
+@(id: String, shareItems: Seq[model.BlockLevelSharing], longUrl: String, shortUrl: String)
 
 <div class="block-share block-share--liveblog" data-link-name="block share">
 
-    @shareItems.map{ case (text, css, url) =>
-        <a class="block-share__link js-blockshare-link" href="@url" target="_blank" data-link-name="@css">
-            <div class="block-share__item block-share__item--@css">
+    @shareItems.map{ item: model.BlockLevelSharing =>
+        <a class="block-share__link js-blockshare-link" href="@item.url" target="_blank" data-link-name="@item.css">
+            <div class="block-share__item block-share__item--@item.css">
                 <i class="i"></i>
-                <span class="u-h">@text</span>
+                <span class="u-h">@item.text</span>
             </div>
         </a>
     }
@@ -28,11 +28,11 @@
 <div id="share-modal-@id" class="overlay share-modal js-share-modal">
     <div class="share-modal__content" data-link-name="mobile block share">
         <h2 class="share-modal__title">Share this post</h2>
-        @shareItems.map { case (text, css, url) =>
-        <a class="share-modal__link" href="@url" target="_blank" data-link-name="@css">
-            <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@css">
+        @shareItems.map { item: model.BlockLevelSharing =>
+        <a class="share-modal__link" href="@item.url" target="_blank" data-link-name="@item.css">
+            <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
                 <i class="i"></i>
-                @text
+                @item.text
         </div>
         </a>
         }
