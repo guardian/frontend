@@ -134,6 +134,10 @@
                 border-top-color: rgba($tonal__header-text, 0.3);
             }
 
+            .byline-img {
+                background-color: rgba($tonal__header-background, 0.5);
+            }
+
             .bullet:before,
             ul > li:before {
                 background-color: rgba($tonal__standfirst-text, 0.7);
