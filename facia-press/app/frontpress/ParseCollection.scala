@@ -157,10 +157,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     Futures.batchedTraverse(collectionItems.grouped(Configuration.faciatool.frontPressItemSearchBatchSize).toSeq, Configuration.faciatool.frontPressItemBatchSize)({ collectionItems =>
       getContentApiItemFromCollectionItem(collectionItems, edition) map { maybeItem =>
         maybeItem.map(_.map {content =>
-          val internalContentCode: String = content.fields.getOrElse(Map.empty).get("internalContentCode").getOrElse("")
-          val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
-          TrailId(internalContentCodeFormatted) -> content
-        }).getOrElse(Nil)
+          content.fields.getOrElse(Map.empty).get("internalContentCode").map { internalContentCode =>
+            val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
+            TrailId(internalContentCodeFormatted) -> content
+          }
+        }).flatten.getOrElse(Nil)
       }
     }).map(_.flatten.toMap)
 
