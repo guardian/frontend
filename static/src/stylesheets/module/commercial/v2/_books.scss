@@ -96,9 +96,7 @@
 }
 
 /* High relevance only, works for DFP book items */
-.commercial--tone-books.commercial--v-high {
-    .lineitem__image {
-        max-width: 50%;
-        margin: 0;
-    }
+.commercial--tone-books.commercial--v-high .lineitem__image {
+    max-width: 50%;
+    margin: 0;
 }
