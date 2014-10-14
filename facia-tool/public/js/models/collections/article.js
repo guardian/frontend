@@ -497,20 +497,9 @@ define([
 
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
 
-            this.state.tone(getTone(opts));
+            this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
 
-            // Test stuff - will come from opts (CAPI)
-            _.extend(this.metaDefaults, getTone(opts) === 'comment' || getTone(opts) === 'blog' ?
-                {
-                    showQuotedHeadline: true,
-                    showByline: true,
-                    imageCutoutReplace: true
-                }:
-                {
-                    showQuotedHeadline: false,
-                    showByline: false,
-                    imageCutoutReplace: false
-                });
+            this.metaDefaults = (opts.frontsMeta && opts.frontsMeta.defaults) || {};
 
             populateObservables(this.meta, this.metaDefaults);
 
