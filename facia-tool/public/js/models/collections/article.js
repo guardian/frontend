@@ -509,8 +509,6 @@ define([
             if (!this.uneditable) {
                 _.defaults(this.metaDefaults, opts.frontsMeta && opts.frontsMeta.defaults);
 
-                console.log(this.metaDefaults);
-
                 populateObservables(this.meta, this.metaDefaults);
 
                 this.updateEditorsDisplay();
