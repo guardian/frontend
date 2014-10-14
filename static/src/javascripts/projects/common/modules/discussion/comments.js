@@ -67,36 +67,12 @@ Comments.prototype.defaultOptions = {
     showRepliesCount: 3,
     commentId: null,
     order: 'newest',
-    threading: 'collapsed',
-    recommendations: false
+    threading: 'collapsed'
 };
 
 Comments.prototype.comments = null;
 Comments.prototype.topLevelComments = null;
 Comments.prototype.user = null;
-
-Comments.prototype.isOpenForRecommendations = function() {
-    return qwery('.d-discussion--recommendations-open', this.elem);
-};
-
-Comments.prototype.initRecommend = function() {
-    this.on('click', '.js-recommend-comment', function(e) {
-        if (this.isOpenForRecommendations()) {
-            var elem = e.currentTarget,
-                $el = bonzo(elem);
-
-            $el.removeClass('js-recommend-comment');
-
-            var id = elem.getAttribute('data-comment-id'),
-                result = DiscussionApi.recommendComment(id);
-
-            $el.addClass('d-comment__recommend--clicked');
-            return result.then(
-                $el.addClass.bind($el, 'd-comment__recommend--recommended')
-            );
-        }
-    });
-};
 
 Comments.prototype.ready = function() {
 
@@ -112,8 +88,6 @@ Comments.prototype.ready = function() {
         }.bind(this),
         60000
     );
-
-    this.initRecommend();
 
     this.emit('ready');
     this.relativeDates();

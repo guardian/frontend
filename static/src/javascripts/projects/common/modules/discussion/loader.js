@@ -93,9 +93,7 @@ Loader.prototype.initMainComments = function() {
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
-        threading: threading,
-        state: 'partial',
-        recommendations: this.hasState('recommendations-open')
+        threading: threading
     });
 
     this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
@@ -152,6 +150,29 @@ Loader.prototype.initToolbar = function() {
     });
 };
 
+Loader.prototype.isOpenForRecommendations = function() {
+    return qwery('.d-discussion--recommendations-open', this.elem);
+};
+
+Loader.prototype.initRecommend = function() {
+    this.on('click', '.js-recommend-comment', function(e) {
+        if (this.user && this.isOpenForRecommendations()) {
+            var elem = e.currentTarget,
+                $el = bonzo(elem);
+
+            $el.removeClass('js-recommend-comment');
+
+            var id = elem.getAttribute('data-comment-id'),
+                result = DiscussionApi.recommendComment(id);
+
+            $el.addClass('d-comment__recommend--clicked');
+            return result.then(
+                $el.addClass.bind($el, 'd-comment__recommend--recommended')
+            );
+        }
+    });
+};
+
 Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
@@ -166,6 +187,7 @@ Loader.prototype.ready = function() {
     this.initToolbar();
     this.renderCommentCount();
     this.initPagination();
+    this.initRecommend();
 
     DiscussionAnalytics.init();
 
@@ -268,8 +290,9 @@ Loader.prototype.renderCommentCount = function() {
                                '  <i class="i"></i>' + commentCount +
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
+                    $('.js-comment-count').html(html);
 
-                    bonzo(qwery('.js-comment-count')).html(html);
+                    $('.js-discussion-comment-count').text('(' + commentCount + ')');
                 } else {
                     this.setState('empty');
                 }

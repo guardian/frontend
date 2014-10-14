@@ -92,6 +92,11 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion__comment-count {
+    font-weight: bold;
+    color: colour(neutral-2);
+}
+
 .d-discussion--not-staff .d-staff-required {
     display: none !important;
 }
