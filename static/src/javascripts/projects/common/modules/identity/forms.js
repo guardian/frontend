@@ -45,7 +45,7 @@ define([
                 $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(password);
 
             $toggle.previous().addClass('form-field__note--left');
-            bean.add($toggle[0], '.' + toggleClass, 'click', function(e) {
+            bean.add($toggle[0], '.' + toggleClass, 'click', function (e) {
                 e.preventDefault();
                 var link = e.target,
                     inputType = password.getAttribute('type') === 'password' ? 'text' : 'password',

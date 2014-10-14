@@ -31,7 +31,6 @@
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
     "handlebars": "2.0.0",
-    "imagemin-pngquant": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
     "karma": "0.12.24",
