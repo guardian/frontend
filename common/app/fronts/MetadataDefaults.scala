@@ -28,7 +28,7 @@ object MetadataDefaults {
   val Defaults = ImmutableDefaults ++ MutableDefaults
 
   def apply(content: Content) = CardStyle(content) match {
-    case Comment if content.isCartoon => Defaults ++ Map(
+    case _ if content.isCartoon => Defaults ++ Map(
       "showByline" -> true
     )
 
