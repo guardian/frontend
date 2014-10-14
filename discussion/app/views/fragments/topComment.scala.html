@@ -1,18 +1,6 @@
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
 
-@body(edition: Edition, words: Seq[String]) = {
-    @if(words.length > 75) {
-        @withJsoup(BulletCleaner(words.take(75).mkString(" ").stripSuffix(".") + "…"))(
-            InBodyLinkCleaner("in body link")
-        )
-    } else {
-        @withJsoup(BulletCleaner(comment.body))(
-            InBodyLinkCleaner("in body link")
-        )
-    }
-}
-
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-top-comment"
 id="top-comment-@comment.id"
@@ -24,15 +12,29 @@ data-comment-author-id="@comment.profile.userId"
 data-comment-highlighted="@comment.isHighlighted"
 itemscope itemtype="http://schema.org/Comment">
 
-    <div class="d-top-comment__body" itemprop="text">
+    <div class="d-top-comment__bubble">
         <div class="d-top-comment__pick" title="Guardian pick">Guardian Pick</div>
 
-        @body(Edition(request), comment.body.split(" "))
+        <div class="d-top-comment__body" itemprop="text">
+            @if(comment.body.length > 450) {
+                @withJsoup(BulletCleaner(comment.body.take(450).stripSuffix(".") + "…"))(
+                    InBodyLinkCleaner("in body link")
+                )
+            } else {
+                @withJsoup(BulletCleaner(comment.body))(
+                    InBodyLinkCleaner("in body link")
+                )
+            }
+
+        </div>
 
         <a class="d-top-comment__link js-jump-to-comment" href="@Configuration.discussion.url/comment-permalink/@comment.id" data-comment-id="@comment.id">
             Jump to comment
         </a>
     </div>
+    <svg class="d-top-comment__bubble-spout">
+        <path d="M0,0 L0,24 L5.87,24 L19.5,0 L0,0 Z"></path>
+    </svg>
 
 
 

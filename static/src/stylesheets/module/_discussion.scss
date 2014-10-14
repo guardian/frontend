@@ -1,6 +1,6 @@
 $comment-meta-breakpoint: leftCol;
-$avatarSize-big: 60px;
-$avatarSize-small: 44px;
+$avatarSize-big: 48px;
+$avatarSize-small: 36px;
 $avatarPadding: $gs-gutter / 2;
 
 /* ==========================================================================
@@ -172,28 +172,22 @@ $avatarPadding: $gs-gutter / 2;
 ========================================================================== */
 
 .discussion__toolbar {
-    @include mq(tablet) {
-        padding-bottom: $gs-baseline;
-    }
-
     .id--signed-in .discussion--open &,
     .discussion--has-top-comments & {
         border-top: 1px solid colour(neutral-4);
-        padding-top: $gs-baseline;
     }
 }
 
 .discussion__toolbar-dropdown {
     position: relative;
+    top: 1px;
     float: left;
     @include fs-textSans(2);
     color: colour(neutral-2);
     display: inline-block;
     line-height: $gs-baseline * 2;
 
-    @include mq($until: tablet) {
-        margin: $gs-baseline / 2 0;
-    }
+    margin: $gs-baseline 0;
 
     .popup,
     .popup__toggle.is-active:before {
@@ -229,9 +223,10 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__pagination .pagination {
     width: auto;
     line-height: $gs-baseline * 3;
-    margin: 0;
+    margin: $gs-baseline 0;
     padding: 0;
     border: 0;
+    height: $gs-baseline * 2;
     @include mq($until: tablet) {
         float: none;
         display: block;
@@ -365,6 +360,7 @@ $avatarPadding: $gs-gutter / 2;
     .i-comment-anchor {
         display: none;
         vertical-align: middle;
+        margin-left: 2px;
     }
     .d-comment__inner:hover & .i-comment-anchor,
     .d-top-comment__meta:hover & .i-comment-anchor {
@@ -532,7 +528,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment--response,
 .d-comment-box--response {
-    border-top: 2px solid colour(neutral-6);
+    border-top: 1px solid colour(neutral-6);
     margin-left: $gs-gutter * 1.5;
 
     @include mq(tablet) {
@@ -576,7 +572,7 @@ $avatarPadding: $gs-gutter / 2;
 /* Recommend
    ======================================================= */
 
-$comment-recommend-button-size: 25px;
+$comment-recommend-button-size: 19px;
 
 .d-comment__recommend {
     position: absolute;
@@ -594,8 +590,14 @@ $comment-recommend-button-size: 25px;
 .d-comment__recommend-button {
     @include icon-button(up-arrow-grey, $comment-recommend-button-size);
     display: inline-block;
-    background-color: colour(neutral-6);
+    background-color: colour(neutral-7);
     cursor: default;
+    position: relative;
+    top: 1px;
+    i {
+        width: 13px !important;
+        height: 13px !important;
+    }
 
     .id--signed-in .d-discussion--recommendations-open & {
         cursor: pointer;
@@ -613,13 +615,13 @@ $comment-recommend-button-size: 25px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     @include border-radius(18px);
-    background-color: colour(neutral-6);
+    background-color: colour(neutral-7);
 }
 .d-comment__recommend-count {
     display: inline-block;
     overflow: hidden;
     min-width: 12px;
-    @include fs-textSans(3);
+    @include fs-textSans(1);
     color: colour(neutral-2);
     text-align: right;
     line-height: $comment-recommend-button-size;
@@ -845,66 +847,62 @@ $comment-recommend-button-size: 25px;
 
 
 .d-top-comment {
-    margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline * 2;
 
     .d-comment__avatar-wrapper {
         display: inline-block;
         vertical-align: middle;
     }
+
+    .d-comment__avatar {
+        width: $avatarSize-big;
+        height: $avatarSize-big;
+    }
 }
 
 .d-top-comment__pick {
-    @include fs-textSans(2);
     font-weight: bold;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 2 / 3;
 }
 
-
-.d-top-comment__body {
-    border: 1px solid colour(neutral-3);
+.d-top-comment__bubble {
     color: colour(neutral-1);
     @include fs-textSans(4);
     @include box-sizing(border-box);
-    padding: $gs-baseline $gs-gutter;
-    margin-bottom: $gs-baseline * 2.5;
+    padding: $gs-baseline ($gs-baseline * 4 / 3);
     position: relative;
+    background-color: colour(comment-support-2);
+    border-radius: 15px;
+}
 
-    &:before {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 25px 15px 0 0;
-        border-color: colour(neutral-3) transparent transparent;
-        position: absolute;
-        top: 100%;
-        left: 28px;
+.d-top-comment__bubble-spout {
+    width: 24px;
+    height: 24px;
+    margin-left: $avatarSize-big / 2;
+    fill: colour(comment-support-2);
+}
+
+.d-top-comment__body {
+    $line-height: get-line-height(textSans, 4);
+    margin-bottom: $gs-baseline / 2;
+    @include mq(tablet) {
+        min-height: 5 * $line-height;
     }
-    &:after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 23px 13px 0 0;
-        border-color: #ffffff transparent transparent;
-        position: absolute;
-        top: 100%;
-        margin-top: -1px;
-        left: 29px;
+
+    blockquote {
+        padding-left: $gs-gutter / 2;
+        color: colour(neutral-2);
     }
 }
 
 .d-top-comment__meta {
     position: relative;
     .d-comment__meta-text {
-        margin-top: $gs-baseline;
+        margin-top: $gs-baseline / 2;
     }
     .d-comment__timestamp {
         display: block;
         margin-bottom: 0;
-    }
-    .d-comment__recommend {
-        margin-top: $gs-baseline / 3;
     }
 }
 
