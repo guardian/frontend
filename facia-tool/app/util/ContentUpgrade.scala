@@ -6,8 +6,8 @@ import com.gu.openplatform.contentapi.parser.JsonParser._
 import org.json4s.JValue
 import org.json4s.JsonAST._
 import org.json4s.native.JsonMethods
-import views.support.TrailCssClasses
 import Json4s._
+import views.support.CardStyle
 
 /** Helper for Facia tool - passes over the JSON that is proxied, adding in defaults */
 object ContentUpgrade {
@@ -43,8 +43,16 @@ object ContentUpgrade {
   def upgradeItem(json: JValue): JValue = {
     (json, json.extractOpt[ApiContent]) match {
       case (jsObj: JObject, Some(content)) =>
-        val tone = TrailCssClasses.toneClass(Content(content))
-        jsObj update JObject("tone" -> JString(tone))
+        val frontendContent = Content(content)
+
+        val metaDataDefaults = MetadataDefaults(frontendContent)
+        val cardStyle = CardStyle(frontendContent)
+
+        import org.json4s.JsonDSL._
+
+        jsObj update ("frontsMeta" ->
+          ("defaults" -> metaDataDefaults) ~
+          ("tone" -> cardStyle.toneString))
 
       case _ =>
         json
