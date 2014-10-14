@@ -1,5 +1,7 @@
+$c-footer-background: guss-colour(multimedia-support-4, $pasteup-palette);
 $c-primary-footer-background: $c-brandBlue;
 $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
+
 
 /* Elements modifiers specific to the footer
    ========================================================================== */
@@ -16,7 +18,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .l-footer {
     padding: 0;
-    background: $c-footer;
+    background: $c-footer-background;
 
     .hide-in-footer {
         display: none !important;
