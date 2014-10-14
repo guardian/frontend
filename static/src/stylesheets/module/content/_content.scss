@@ -98,14 +98,15 @@
 }
 
 .content__head__comment-count {
-    height: 16px + $gs-baseline; //font-size + $gs-baseline
+    //height: 16px + $gs-baseline; //font-size + $gs-baseline
+    margin: $gs-baseline/2 0;
 
     @include mq(tablet) {
         display: none;
     }
 
-    &.content__head__comment-count--headline { // used in tonal templates
-        display: none;
+    .commentcount {
+        color: inherit;
     }
 }
 
@@ -465,7 +466,7 @@
         vertical-align: -4px;
     }
 
-    .content__head & {
+    .content__head__comment-count & {
         display: block;
         margin-bottom: $gs-baseline;
     }
@@ -486,7 +487,7 @@
         position: static;
         @include box-sizing(border-box);
 
-        .content__head & {
+        .content__head__comment-count & {
             display: none;
         }
 

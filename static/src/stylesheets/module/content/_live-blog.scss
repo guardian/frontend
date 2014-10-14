@@ -3,27 +3,6 @@ $block-padding-right: $gs-gutter;
 
 /* Layout
    ========================================================================== */
-.blog__comment-count {
-    display: block;
-
-    @include mq(mobileLandscape, desktop) {
-        top: $gs-baseline/3;
-    }
-    .commentcount {
-        display: block;
-        color: inherit;
-
-        i {
-            @extend %i-comment-white;
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment-white;
-                }
-            }
-        }
-    }
-}
-
 .content__main-column--liveblog {
     @include mq(rightCol) {
         max-width: gs-span(8);
@@ -40,10 +19,15 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .content__meta-container--liveblog {
     border-top: 1px dotted;
+    border-bottom: 0;
+    margin: 0;
+    padding-top: $gs-baseline/2;
 
     @include mq(rightCol) {
         border-top: 0;
+        padding-top: 0;
         min-height: gs-height(1)*1.5;
+        width: $right-column;
     }
 
     @include mq(rightCol) {
@@ -55,6 +39,7 @@ $block-padding-right: $gs-gutter;
 
     .byline,
     .content__dateline,
+    .content__head__comment-count,
     .commentcount {
         color: inherit;
         margin: 0;
@@ -70,6 +55,8 @@ $block-padding-right: $gs-gutter;
     }
 
     .byline {
+        padding-right: 0;
+
         @include mq(rightCol) {
             padding-top: 0;
         }
@@ -91,6 +78,21 @@ $block-padding-right: $gs-gutter;
 
     .meta__body {
         clear: none;
+    }
+}
+
+.content__head__comment-count--liveblog {
+    display: block;
+
+    .commentcount {
+        display: block;
+        position: static;
+
+        @include mq(mobileLandscape, rightCol) {
+            position: absolute;
+            right: 0;
+            top: $gs-baseline/1.5;
+        }
     }
 }
 

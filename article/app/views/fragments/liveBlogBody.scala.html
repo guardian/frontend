@@ -11,7 +11,7 @@
 
         <header class="content__head">
             @* UPPER HEADER *@
-            <div class="tonal__header">
+            <div class="tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         @fragments.meta.metaInline(article)
@@ -20,7 +20,7 @@
                 </div>
             </div>
             @* LOWER HEADER *@
-            <div class="tonal__standfirst">
+            <div class="tonal__standfirst u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="content__updated-container content__updated-container--liveblog">
@@ -36,7 +36,7 @@
                             <div class="media__body meta__body">
                                 @fragments.meta.byline(article.byline, article)
                                 @fragments.meta.dateline(article.webPublicationDate, secondary = true)
-                                <div class="js-comment-count blog__comment-count"></div>
+                                <div class="content__head__comment-count js-comment-count content__head__comment-count--liveblog"></div>
                             </div>
                         </div>
                     </div>

@@ -95,7 +95,7 @@
         $c-neutral2, // $tonal__header-text
         $c-liveDefault, // $tonal__header-link
         $c-neutral6, // $tonal__standfirst-background
-        $c-neutral2, // $tonal__standfirst-text
+        $c-mediaAccent2, // $tonal__standfirst-text
         $c-liveDefault, // $tonal__standfirst-link
         $c-neutral8, // $tonal__article-background
         $c-liveDefault, // $tonal__article-link
@@ -168,10 +168,6 @@
             @include mq(desktop) {
                 padding-right: $gs-gutter*2;
             }
-        }
-        .content__head__comment-count {
-            position: absolute;
-            bottom: 0;
         }
     }
 }

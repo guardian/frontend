@@ -34,31 +34,29 @@
     }
 }
 
-
 // Styles with global dependencies
 // or for elements which painting can be delayed
-@mixin tone-global($tone, $colour, $accentColour) {
-    .tone-#{$tone} {
-        .commentcount {
-            i {
-                @extend %i-comment-#{$tone};
+@mixin tone-comment-icon($tone, $standfirstCommentIcon) {
+    .tonal--tone-#{$tone} {
+        .commentcount i {
+            @extend %i-comment-tone-#{$tone};
 
-                @if $svg-support {
-                    .svg & {
-                        @extend %svg-i-comment-#{$tone};
-                    }
+            @if $svg-support {
+                .svg & {
+                    @extend %svg-i-comment-tone-#{$tone};
                 }
             }
         }
-    }
-}
 
-@mixin tone-head-comment-icon($tone, $commentIcon) {
-    .tone-#{$tone}.tone-#{$tone}--article .content__head__comment-count i {
-        @extend %i-comment-#{$commentIcon};
-        @if $svg-support {
-            .svg & {
-                @extend %svg-i-comment-#{$commentIcon};
+         .content__head__comment-count {
+            .commentcount i {
+                @extend %i-comment-tone-#{$standfirstCommentIcon};
+
+                @if $svg-support {
+                    .svg & {
+                        @extend %svg-i-comment-tone-#{$standfirstCommentIcon};
+                    }
+                }
             }
         }
     }
@@ -112,7 +110,13 @@
                 color: $tonal__headline-accent;
             }
 
-            @include stars($width: 18px, $margin-top: -($gs-baseline * 2.5), $margin-bottom: $gs-baseline * 2.5, $margin-right: 2px);
+            @include stars($width: 18px, $margin-top: -($gs-baseline * 1.5), $margin-bottom: $gs-baseline * 1.5, $margin-right: 2px);
+
+            .stars {
+                @include mq(tablet) {
+                    margin-top: -($gs-baseline * 2.5);
+                }
+            }
         }
 
         .tonal__headline__accent {
@@ -130,7 +134,7 @@
                 margin: 0;
             }
 
-            .blog__meta-container {
+            .content__meta-container--liveblog {
                 border-top-color: rgba($tonal__header-text, 0.3);
             }
 
@@ -156,7 +160,10 @@
 
         .tonal__article {
             background-color: $tonal__article-background;
-            padding-top: $gs-baseline;
+
+            @include mq(phablet) {
+                padding-top: $gs-baseline * 2;
+            }
 
             .drop-cap {
                 color: $tonal__header-background;

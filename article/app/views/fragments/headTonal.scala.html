@@ -3,7 +3,7 @@
 <header class="content__head
     @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="tonal__header">
+    <div class="tonal__header u-cf">
         <div class="gs-container">
             <div class="content__main-column">
 
@@ -21,10 +21,6 @@
                     }
                 }
 
-                @if(content.isCommentable) {
-                    <div class="content__head__comment-count content__head__comment-count--standfirst js-comment-count"></div>
-                }
-
                 @content.starRating.map { s =>
                     @fragments.items.elements.starRating(content)
                 }
@@ -32,10 +28,14 @@
         </div>
     </div>
 
-    <div class="tonal__standfirst">
+    <div class="tonal__standfirst u-cf">
         <div class="gs-container">
             <div class="content__main-column">
                 @fragments.standfirst(content)
+
+                @if(content.isCommentable) {
+                    <div class="content__head__comment-count js-comment-count"></div>
+                }
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 @import '_tones';
 
-@include tone-global(news, $c-newsDefault, $c-newsAccent);
-@include tone-global(comment, $c-commentDefault, $c-commentAccent);
-@include tone-global(feature, $c-featureDefault, $c-featureAccent);
-@include tone-global(live, $c-liveDefault, $c-liveAccent);
-@include tone-head-comment-icon(feature, 'white');
+@include tone-comment-icon(comment, 'white');
+@include tone-comment-icon(editorial, 'white');
+@include tone-comment-icon(feature, 'white');
+@include tone-comment-icon(review, 'white');
+@include tone-comment-icon(live, 'white');
+@include tone-comment-icon(dead, 'neutral2');
+@include tone-comment-icon(news, 'white');
