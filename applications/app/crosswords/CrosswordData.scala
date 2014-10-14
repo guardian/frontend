@@ -45,6 +45,7 @@ object CrosswordData {
   implicit val jsonWrites = Json.writes[CrosswordData]
 
   def fromCrossword(crossword: Crossword) = CrosswordData(
+    s"${Type.byType(crossword.`type`)}/${crossword.number.toString}",
     crossword.number,
     crossword.name,
     crossword.creator,
@@ -56,6 +57,7 @@ object CrosswordData {
 }
 
 case class CrosswordData(
+  id: String,
   number: Int,
   name: String,
   creator: Option[Creator],

@@ -14,12 +14,13 @@ define([
     /**
      * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
      */
-    function buildGrid(rows, columns, entries) {
-        var grid = _.map(_.range(columns), function () {
-            return _.map(_.range(rows), function () {
+    function buildGrid(rows, columns, entries, savedState) {
+        var grid = _.map(_.range(columns), function (x) {
+            return _.map(_.range(rows), function (y) {
                 return {
                     isHighlighted: false,
-                    isEditable: false
+                    isEditable: false,
+                    value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ""
                 };
             });
         });

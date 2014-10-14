@@ -7,7 +7,8 @@ define([
     'common/modules/crosswords/clues',
     'common/modules/crosswords/grid',
     'common/modules/crosswords/helpers',
-    'common/modules/crosswords/keycodes'
+    'common/modules/crosswords/keycodes',
+    'common/modules/crosswords/persistence'
 ], function (
     $,
     _,
@@ -17,7 +18,8 @@ define([
     Clues,
     Grid,
     helpers,
-    keycodes
+    keycodes,
+    persistence
 ) {
     var Crossword = React.createClass({
         getInitialState: function () {
@@ -28,7 +30,12 @@ define([
             this.clueMap = helpers.buildClueMap(this.props.data.entries);
 
             return {
-                grid: helpers.buildGrid(dimensions.rows, dimensions.cols, this.props.data.entries),
+                grid: helpers.buildGrid(
+                    dimensions.rows,
+                    dimensions.cols,
+                    this.props.data.entries,
+                    persistence.loadGridState(this.props.data.id)
+                ),
                 cellInFocus: null,
                 directionOfEntry: null
             };
@@ -44,6 +51,7 @@ define([
 
             if (event.keyCode == keycodes.backspace) {
                 this.setCellValue(cell.x, cell.y, null);
+                this.save();
                 this.focusPrevious();
             } else if (event.keyCode == keycodes.left) {
                 this.moveFocus(-1, 0);
@@ -55,6 +63,7 @@ define([
                 this.moveFocus(0, 1);
             } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
                 this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
+                this.save();
                 this.focusNext();
             }
         },
@@ -202,6 +211,10 @@ define([
                     isSelected: that.clueInFocus() === entry
                 };
             });
+        },
+
+        save: function () {
+            persistence.saveGridState(this.props.data.id, this.state.grid);
         },
 
         render: function () {
