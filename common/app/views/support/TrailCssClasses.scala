@@ -4,19 +4,7 @@ import model.Trail
 
 object TrailCssClasses {
   def toneClass(trail: Trail, suffix: String) = {
-    val tone = CardStyle(trail) match {
-      case Media => "media"
-      case Comment => "comment"
-      case LiveBlog => "live"
-      case DeadBlog => "dead"
-      case Editorial => "editorial"
-      case Feature => "feature"
-      case Analysis => "analysis"
-      case Review => "review"
-      case Podcast => "podcast"
-      case _ => "news"
-    }
-
+    val tone = CardStyle(trail).toneString
     s"tone-$tone$suffix"
   }
 
@@ -31,7 +19,7 @@ object TrailCssClasses {
 
   def articleToneClass(trail: Trail) = {
     if (SupportedArticleTones.contains(CardStyle(trail))) {
-      toneClass(trail)
+      toneClass(trail, "")
     }
   }
 }
