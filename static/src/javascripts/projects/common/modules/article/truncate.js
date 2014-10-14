@@ -8,7 +8,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/twitter'
-], function(
+], function (
     $,
     bean,
     bonzo,
@@ -35,30 +35,29 @@ define([
 
     function hashLinkedBlockIsTruncated() {
         var id = window.location.hash.slice(1);
-        return find(truncatedBlocks, function(el) { return el.id === id; });
+        return find(truncatedBlocks, function (el) { return el.id === id; });
     }
 
     function truncate() {
 
-        var numBlocks = blocks.length;
+        var numBlocks        = blocks.length,
+            remainingBlocks  = numBlocks - minVisibleBlocks,
+            viewUpdatesLabel = '';
 
         if (config.page.isLiveBlog && numBlocks > minVisibleBlocks && !hashLinkedBlockIsTruncated()) {
 
-            var remainingBlocks = numBlocks - minVisibleBlocks;
-            var viewUpdatesLabel = '';
-
-            if (remainingBlocks === 1 ) {
+            if (remainingBlocks === 1) {
                 viewUpdatesLabel = 'View 1 more update';
             } else {
                 viewUpdatesLabel = 'View ' + remainingBlocks + ' more updates';
             }
 
             $.create(
-                '<button class="u-button-reset button button--large button--show-more liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">'+
-                    '<i class="i i-plus-white-small"></i>'+
-                    viewUpdatesLabel+
+                '<button class="u-button-reset button button--large button--show-more liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">' +
+                    '<i class="i i-plus-white-small"></i>' +
+                    viewUpdatesLabel +
                 '</button>'
-            ).each(function(el) {
+            ).each(function (el) {
                 $('.js-liveblog-body').append(el);
             });
 
