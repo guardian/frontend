@@ -105,12 +105,6 @@
     }
 }
 
-.fc-item--half-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--half;
-    }
-}
-
 .fc-item--half-tablet {
     @include mq(tablet) {
         @include fc-item--half;
