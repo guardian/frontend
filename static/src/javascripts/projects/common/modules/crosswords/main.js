@@ -49,22 +49,24 @@ define([
         onKeyDown: function (event) {
             var cell = this.state.cellInFocus;
 
-            if (event.keyCode == keycodes.backspace) {
-                this.setCellValue(cell.x, cell.y, null);
-                this.save();
-                this.focusPrevious();
-            } else if (event.keyCode == keycodes.left) {
-                this.moveFocus(-1, 0);
-            } else if (event.keyCode == keycodes.up) {
-                this.moveFocus(0, -1);
-            } else if (event.keyCode == keycodes.right) {
-                this.moveFocus(1, 0);
-            } else if (event.keyCode == keycodes.down) {
-                this.moveFocus(0, 1);
-            } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
-                this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
-                this.save();
-                this.focusNext();
+            if (!event.metaKey && !event.ctrlKey && !event.altKey) {
+                if (event.keyCode == keycodes.backspace) {
+                    this.setCellValue(cell.x, cell.y, null);
+                    this.save();
+                    this.focusPrevious();
+                } else if (event.keyCode == keycodes.left) {
+                    this.moveFocus(-1, 0);
+                } else if (event.keyCode == keycodes.up) {
+                    this.moveFocus(0, -1);
+                } else if (event.keyCode == keycodes.right) {
+                    this.moveFocus(1, 0);
+                } else if (event.keyCode == keycodes.down) {
+                    this.moveFocus(0, 1);
+                } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
+                    this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
+                    this.save();
+                    this.focusNext();
+                }
             }
         },
 
