@@ -19,7 +19,7 @@ define([
     * @param {String} id Identifier of the message
     * @param {Object=} options
     */
-    var Message = function(id, options) {
+    var Message = function (id, options) {
         var opts = options || {};
         this.id = id;
         this.important = opts.important || false;
@@ -31,15 +31,15 @@ define([
         this.$footerMessage = $('.js-footer-message');
     };
 
-    Message.prototype.show = function(message) {
-        if(this.pinOnHide) {
+    Message.prototype.show = function (message) {
+        if (this.pinOnHide) {
             $('.js-footer-site-message-copy').html(message);
         }
 
         // don't let messages unknowingly overwrite each other
         if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
             // if we're not showing a banner message, display it in the footer
-            if(this.pinOnHide) {
+            if (this.pinOnHide) {
                 this.$footerMessage.removeClass('is-hidden');
             }
             return false;
@@ -53,11 +53,11 @@ define([
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
-        if(this.type === 'modal') { this.bindModalListeners(); }
+        if (this.type === 'modal') { this.bindModalListeners(); }
     };
 
-    Message.prototype.bindModalListeners = function() {
-        bean.on(document, 'click', '.js-site-message-inner', function(e) {
+    Message.prototype.bindModalListeners = function () {
+        bean.on(document, 'click', '.js-site-message-inner', function (e) {
             // Suppress same-level and parent handling, but allow default click behaviour.
             // This handler must come first.
             e.stopImmediatePropagation();
@@ -66,26 +66,26 @@ define([
         bean.on(document, 'click', '.js-site-message', this.acknowledge.bind(this));
     };
 
-    Message.prototype.hide = function() {
+    Message.prototype.hide = function () {
         $('#header').removeClass('js-site-message');
         $('.site-message').addClass('is-hidden');
-        if(this.pinOnHide) {
+        if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }
     };
 
-    Message.prototype.hasSeen = function() {
+    Message.prototype.hasSeen = function () {
         var messageStates = userPrefs.get(this.prefs);
         return messageStates && messageStates.indexOf(this.id) > -1;
     };
 
-    Message.prototype.remember = function() {
+    Message.prototype.remember = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
         userPrefs.set(this.prefs, uniq(messageStates));
     };
 
-    Message.prototype.acknowledge = function() {
+    Message.prototype.acknowledge = function () {
         this.remember();
         this.hide();
     };

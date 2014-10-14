@@ -10,25 +10,25 @@ define([], function () {
      * @return {?Date} the current date
      */
     function mergeCalls(targetFunction) {
-        var callbacks;
-        var status;
-        var callbackArguments;
+        var callbacks,
+            status,
+            callbackArguments;
 
         function targetCallbackHandler() {
             callbackArguments = arguments;
             status = 'complete';
 
-            for(var i = 0; i < callbacks.length; i++) {
+            for (var i = 0; i < callbacks.length; i++) {
                 callbacks[i].apply(null, callbackArguments);
             }
         }
 
         function callMergingFunction(callback) {
-            if(status === 'init') {
+            if (status === 'init') {
                 status = 'waiting';
                 callbacks.push(callback);
                 targetFunction(targetCallbackHandler);
-            } else if(status === 'waiting') {
+            } else if (status === 'waiting') {
                 callbacks.push(callback);
             } else {
                 callback.apply(null, callbackArguments);
@@ -49,6 +49,6 @@ define([], function () {
     }
 
     return {
-        mergeCalls : mergeCalls
+        mergeCalls: mergeCalls
     };
 });

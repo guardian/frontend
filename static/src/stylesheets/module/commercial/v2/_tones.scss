@@ -8,7 +8,8 @@
         .commercial--tone__highlight {
             color: $accentColour;
         }
-        .container__header {
+        .container__header,
+        .commercial--v-high__header {
             background-color: $colour;
 
             .commercial__title,

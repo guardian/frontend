@@ -16,29 +16,27 @@ define([
             return;
         }
 
-        var chatSocket = new window.WebSocket(config.page.onwardWebSocket);
+        var $pushedContent,
+            chatSocket   = new window.WebSocket(config.page.onwardWebSocket),
+            receiveEvent = function (event) {
+                if (event && 'data' in event) {
+                    var data = JSON.parse(event.data);
 
-        var receiveEvent = function(event) {
-
-            if (event && 'data' in event) {
-                var data = JSON.parse(event.data);
-
-                if (data.error) {
-                    chatSocket.close();
+                    if (data.error) {
+                        chatSocket.close();
+                    } else {
+                        $pushedContent = bonzo.create('<div>' + data.headline + ' ' + data.url + '</div>');
+                        bonzo($pushedContent).addClass('pushed-content lazyloaded');
+                        $('.monocolumn-wrapper').after($pushedContent);
+                    }
                 } else {
-                    var $pushedContent = bonzo.create('<div>' + data.headline + ' ' + data.url + '</div>');
-                    bonzo($pushedContent).addClass('pushed-content lazyloaded');
-                    $('.monocolumn-wrapper').after($pushedContent);
+                    raven.captureMessage('Invalid data returned from socket');
                 }
-            } else {
-                raven.captureMessage('Invalid data returned from socket');
-            }
-        };
-
-        var disconnectEvent = function() {
-            chatSocket.close();
-            connect(config);
-        };
+            },
+            disconnectEvent = function () {
+                chatSocket.close();
+                connect(config);
+            };
 
         chatSocket.onmessage = receiveEvent;
         chatSocket.onerror = disconnectEvent;

@@ -22,7 +22,7 @@ define([
         this.ajax = ajax; // expose publicly so we can inspect it in unit tests
 
         this.view = {
-            showFont: function(style, json) {
+            showFont: function (style, json) {
                 style.innerHTML = json.css;
             }
         };
@@ -33,11 +33,12 @@ define([
             url = url || '';
             // NOTE - clearing old fonts, can be removed after a certain amount of time
             storage.local.clearByPrefix('gu.fonts.Web');
-            for (var i = 0, j = styleNodes.length; i < j; ++i) {
+            var i, j, style, that;
+            for (i = 0, j = styleNodes.length; i < j; ++i) {
                 clearOldFonts(styleNodes[i]);
-                var style = styleNodes[i];
+                style = styleNodes[i];
                 if (fontIsRequired(style)) {
-                    var that = this;
+                    that = this;
                     this.ajax({
                         url: url + style.getAttribute('data-cache-file-' + fileFormat),
                         type: 'jsonp',
@@ -73,11 +74,11 @@ define([
             });
         };
 
-        this.clearFont = function(name) {
+        this.clearFont = function (name) {
             storage.local.clearByPrefix(storagePrefix + name);
         };
 
-        this.clearAllFontsFromStorage = function() {
+        this.clearAllFontsFromStorage = function () {
             storage.local.clearByPrefix(storagePrefix);
         };
 
@@ -91,11 +92,10 @@ define([
             // A final check for storage (is it full, disabled, any other error).
             // Because it would be horrible if people downloaded fonts and then couldn't cache them.
             if (storage.local.isAvailable()) {
-                var nameAndCacheKey =  getNameAndCacheKey(style);
-                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]);
-
-                var widthMatches = true;
-                var minWidth = style.getAttribute('data-min-width');
+                var nameAndCacheKey =  getNameAndCacheKey(style),
+                    cachedValue     = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]),
+                    widthMatches    = true,
+                    minWidth        = style.getAttribute('data-min-width');
                 if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
                     widthMatches = false;
                 }
@@ -110,11 +110,12 @@ define([
          * NOTE: temp method, to fix bug with removal of old fonts - can be removed if font files update
          */
         function clearOldFonts(style) {
-            var key = getNameAndCacheKey(style),
+            var i, name,
+                key        = getNameAndCacheKey(style),
                 fontPrefix = 'gu.fonts.' + key[1],
-                fontName = fontPrefix + '.' + key[0];
-            for (var i = storage.local.length() - 1; i > -1; --i) {
-                var name = storage.local.getKey(i);
+                fontName   = fontPrefix + '.' + key[0];
+            for (i = storage.local.length() - 1; i > -1; --i) {
+                name = storage.local.getKey(i);
                 if (name.indexOf(fontPrefix) === 0 && name.indexOf(fontName) !== 0) {
                     storage.local.remove(name);
                 }

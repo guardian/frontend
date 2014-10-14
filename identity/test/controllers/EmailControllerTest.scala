@@ -1,6 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions.AuthRequest
+import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
 import org.scalatest.{ShouldMatchers, path}
 import services._
@@ -37,7 +38,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = None, receiveGnmMarketing = None))
-  val testAuth = new ScGuU("abc")
+  val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
   val authenticatedUser = AuthenticatedUser(user, testAuth)
   val error = Error("Test message", "Test description", 500)
   val errors = List(error)
