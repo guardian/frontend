@@ -26,14 +26,6 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
 
   // AUTH
-
-  def authApp(auth: Auth, trackingData: TrackingData): Future[Response[AccessTokenResponse]] = {
-    val params = buildParams(Some(auth), Some(trackingData))
-    val headers = buildHeaders(Some(auth))
-    val response = http.GET(apiUrl("auth"), params, headers)
-    response map extract(jsonField("accessToken"))
-  }
-
   def authBrowser(userAuth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] = {
     val params = buildParams(Some(userAuth), Some(trackingData), Iterable("format" -> "cookies"))
     val headers = buildHeaders(Some(userAuth))
