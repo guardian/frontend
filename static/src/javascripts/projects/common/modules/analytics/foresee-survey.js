@@ -1,4 +1,4 @@
-define(['common/utils/cookies'], function(Cookie) {
+define(['common/utils/cookies'], function (Cookie) {
 
     function load() {
 
@@ -7,10 +7,10 @@ define(['common/utils/cookies'], function(Cookie) {
 
         // the Foresee code is large, we only want to load it in when necessary.
         if (!Cookie.get('GU_TEST') && (sample || hasForcedOptIn)) {
-            require(['js!foresee'], function() {});
+            require(['js!foresee'], function () {});
         }
     }
-    
+
     return {
         load: load
     };

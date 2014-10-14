@@ -1,8 +1,9 @@
-.tone-review {
+.tone-review--item {
     @extend %tone-has-background;
+    background-color: $c-reviewBackground;
 
-    &.fc-item {
-        background-color: $c-reviewBackground;
+    &,
+    .fc-sublink__title {
         color: #ffffff;
     }
 
@@ -17,11 +18,33 @@
         color: $c-reviewAccent;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
     .fc-item__standfirst {
         color: fade-out(#ffffff, .4);
     }
 
     .fc-item__meta {
         color: $c-neutral4;
+    }
+}
+
+.tone-review--sublink {
+    .fc-sublink__kicker {
+        color: $c-reviewBackground;
+    }
+
+    @include sublink-style(editorial, feature, live, media, review) {
+        .fc-sublink__kicker {
+            color: $c-reviewAccent;
+        }
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

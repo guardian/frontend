@@ -1,8 +1,9 @@
-.tone-media {
+.tone-media--item {
     @extend %tone-has-background;
+    background-color: $c-neutral1;
 
-    &.fc-item {
-        background-color: $c-neutral1;
+    &,
+    .fc-sublink__title {
         color: #ffffff;
     }
 
@@ -17,8 +18,30 @@
         color: $c-mediaDefault;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
     .fc-item__standfirst,
     .fc-item__meta {
         color: $c-neutral3;
+    }
+}
+
+.tone-media--sublink {
+    .fc-sublink__kicker {
+        color: $c-mediaDefault;
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+
+    @include sublink-style(analysis, comment, dead, news) {
+        .fc-sublink__kicker {
+            color: $c-neutral1;
+        }
     }
 }

@@ -13,10 +13,10 @@ define([
 ], function (
     mediator,
     ab,
-    _where
+    where
 ) {
-    var register = [];
-    var startTime = Date.now();
+    var register = [],
+        startTime = Date.now();
 
     function begin(name) {
         register.push({
@@ -26,16 +26,16 @@ define([
     }
 
     function end(name) {
-        _where(register, {name: name})
-            .forEach(function(module){
+        where(register, {name: name})
+            .forEach(function (module) {
                 module.status = 'completed';
                 module.endTime = Date.now() - startTime + 'ms';
             });
     }
 
     function error(name) {
-        _where(register, {name: name})
-            .forEach(function(module){
+        where(register, {name: name})
+            .forEach(function (module) {
                 module.status = 'failed';
                 module.endTime = Date.now() - startTime + 'ms';
             });
@@ -43,8 +43,10 @@ define([
 
     function sendEvent(config) {
         require('ophan/ng', function (ophan) {
-            ophan.record({'register': register,
-                'abTestRegister': ab.getAbLoggableObject(config) });
+            ophan.record({
+                register: register,
+                abTestRegister: ab.getAbLoggableObject(config)
+            });
         });
     }
 

@@ -10,7 +10,8 @@ define([
 
     var Search = function (config) {
 
-        var enabled,
+        var searchLoader,
+            enabled,
             gcsUrl,
             container,
             self = this;
@@ -20,17 +21,17 @@ define([
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-            var searchLoader = throttle(function() {
+            searchLoader = throttle(function () {
                 self.load();
             });
 
-            bean.on(document, 'click', '.js-search-toggle', function(e) {
+            bean.on(document, 'click', '.js-search-toggle', function (e) {
                 searchLoader();
                 self.focusSearchField();
                 e.preventDefault();
             });
 
-            bean.on(document, 'click', '.search-results', function(e) {
+            bean.on(document, 'click', '.search-results', function (e) {
                 var targetEl = e.target;
                 if (targetEl.nodeName.toLowerCase() === 'a') {
                     targetEl.target = '_self';
@@ -38,14 +39,15 @@ define([
             });
         }
 
-        this.focusSearchField = function() {
+        this.focusSearchField = function () {
             var $input = $('input.gsc-input');
             if ($input.length > 0) {
                 $input.focus();
             }
         };
 
-        this.load = function() {
+        this.load = function () {
+            /* jscs:disable disallowDanglingUnderscores */
             var s,
                 x;
 
@@ -57,7 +59,7 @@ define([
             };
 
             // Unload any search placeholders elsewhere in the DOM
-            Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function(c){
+            Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function (c) {
                 if (c !== container) {
                     c.innerHTML = '';
                 }
@@ -82,7 +84,7 @@ define([
             }
         };
 
-        this.init = function() { };
+        this.init = function () { };
 
     };
 

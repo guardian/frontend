@@ -779,15 +779,15 @@ object GetClasses {
     }
 
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +:
+      TrailCssClasses.toneClass(trail, "--item") +:
         (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
         cutOutClass): _*
     )
   }
 
   def forSubLink(trail: Trail) = RenderClasses(Seq(
-    Some("fc-sublinks__item"),
-    Some(TrailCssClasses.toneClass(trail)),
+    Some("fc-sublink"),
+    Some(TrailCssClasses.toneClass(trail, "--sublink")),
     sublinkMediaTypeClass(trail)
   ).flatten: _*)
 
@@ -799,9 +799,9 @@ object GetClasses {
   }
 
   def sublinkMediaTypeClass(trail: Trail) = trail match {
-    case _: Gallery => Some("fc-sublinks__item--gallery")
-    case _: Video => Some("fc-sublinks__item--video")
-    case _: Audio => Some("fc-sublinks__item--audio")
+    case _: Gallery => Some("fc-sublink--gallery")
+    case _: Video => Some("fc-sublink--video")
+    case _: Audio => Some("fc-sublink--audio")
     case _ => None
   }
 

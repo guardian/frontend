@@ -92,7 +92,7 @@ x x x x x x x x
                 .fc-item__header {
                     padding-right: 0;
                 }
-                
+
                 .fc-sublinks {
                     min-height: gs-height(3) + $gs-baseline;
                 }
@@ -108,7 +108,7 @@ x x x x x x x x
         display: block;
     }
 
-    .fc-sublinks__item:nth-child(n+3) {
+    .fc-sublink:nth-child(n+3) {
         display: none;
     }
 
