@@ -3,6 +3,8 @@ package idapiclient
 import client.{Auth, Parameters}
 import java.net.URLEncoder
 
+import com.gu.identity.cookie.GuUCookieData
+
 case class EmailPassword(email: String, password: String, ipOpt: Option[String]) extends Auth {
   override def parameters: Parameters = List(
     "email" -> email,
@@ -19,7 +21,7 @@ case class ClientAuth(clientAccessToken: String) extends Auth {
   override def headers: Parameters = List("X-GU-ID-Client-Access-Token" -> s"Bearer $clientAccessToken")
 }
 
-class ScGuU(scGuUValue: String) extends Auth {
+case class ScGuU(scGuUValue: String, data: GuUCookieData) extends Auth {
   override def headers: client.Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
 }
 
