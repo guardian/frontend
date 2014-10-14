@@ -1,4 +1,12 @@
-define(['common/utils/$', 'bonzo', 'lodash/collections/filter'], function($, bonzo, _filter) {
+define([
+    'common/utils/$',
+    'bonzo',
+    'lodash/collections/filter'
+], function (
+    $,
+    bonzo,
+    filter
+) {
     var $rhc = $('.js-components-container');
 
     /**
@@ -10,11 +18,11 @@ define(['common/utils/$', 'bonzo', 'lodash/collections/filter'], function($, bon
         var classname = 'component--rhc',
             $cs;
 
-        return $.create('<div class="'+ classname +'" data-importance="'+ importance +'"></div>')
+        return $.create('<div class="' + classname + '" data-importance="' + importance + '"></div>')
             .append(c)
-            .each(function(el) {
-                $cs = $('.'+ classname, $rhc[0]);
-                var inferior = _filter($cs, function(el) {
+            .each(function (el) {
+                $cs = $('.' +  classname, $rhc[0]);
+                var inferior = filter($cs, function (el) {
                     return !el.hasAttribute('data-importance') ||
                         importance > parseInt(el.getAttribute('data-importance'), 10);
                 });

@@ -25,17 +25,11 @@ requirejs.config({
         enhancer:     'components/enhancer/enhancer',
         raven:        'components/raven-js/raven',
         fastclick:    'components/fastclick/fastclick',
+        omniture:     '/base/static/public/javascripts/vendor/omniture',
         stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
-        Squire:       '/base/static/test/javascripts/components/squire/src/Squire',
+        jasq:         '/base/static/test/javascripts/components/jasq/jasq',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers'
-    },
-    map: {
-        '*': {
-            // mock out omniture script
-            // TODO - better way of mocking dependencies?
-            omniture: '/base/static/test/javascripts/spies/omniture.js'
-        }
     },
     shim: {
         imager: {

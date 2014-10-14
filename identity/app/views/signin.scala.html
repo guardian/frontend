@@ -3,12 +3,14 @@
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
+@import views.html.fragments.identityPageHeader
 
 @identityMain(page, conf.Switches.all){
 }{
 <div class="identity-wrapper monocolumn-wrapper">
-    <h1 class="identity-title">Sign in to the Guardian</h1>
-    <p>Don't have an account? <a class="u-underline" data-test-id="register-link" href="@idUrlBuilder.buildUrl("/register", idRequest)">Register now</a>.</p>
+    @identityPageHeader("Sign in to the Guardian") {
+        <p>Don't have an account? <a class="u-underline" data-test-id="register-link" href="@idUrlBuilder.buildUrl("/register", idRequest)">Register now</a>.</p>
+    }
 
     <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
         @if(signinForm.globalError.isDefined) {

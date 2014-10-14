@@ -10,7 +10,7 @@ define([
     'common/utils/pad',
     'common/utils/mediator',
     'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
-], function(
+], function (
     detect,
     ab,
     storage,
@@ -21,7 +21,7 @@ define([
     beacon,
     pad,
     mediator
-    ) {
+) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -39,20 +39,20 @@ define([
 
         this.pageviewSent = false;
 
-        this.logView = function() {
+        this.logView = function () {
             s.t();
             this.confirmPageView();
         };
 
-        this.logUpdate = function() {
-            s.linkTrackVars='events,eVar7';
-            s.linkTrackEvents='event90';
-            s.events='event90';
-            s.eVar7=config.page.analyticsName;
-            s.tl(true,'o','AutoUpdate Refresh');
+        this.logUpdate = function () {
+            s.linkTrackVars = 'events,eVar7';
+            s.linkTrackEvents = 'event90';
+            s.events = 'event90';
+            s.eVar7 = config.page.analyticsName;
+            s.tl(true, 'o', 'AutoUpdate Refresh');
         };
 
-        this.logTag = function(spec) {
+        this.logTag = function (spec) {
             var storeObj,
                 delay;
 
@@ -66,7 +66,7 @@ define([
                     tag: spec.tag,
                     time: new Date().getTime()
                 };
-                try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch(e) {}
+                try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
                 storage.session.set(NG_STORAGE_KEY, storeObj);
             } else {
                 that.populateEventProperties(spec.tag);
@@ -76,7 +76,7 @@ define([
             }
         };
 
-        this.populateEventProperties = function(tag){
+        this.populateEventProperties = function (tag) {
             s.linkTrackVars = 'eVar37,eVar7,prop37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
@@ -86,7 +86,7 @@ define([
             s.eVar7 = 'D=pageName';
             s.prop37 = 'D=v37';
 
-            if(/social/.test(tag)) {
+            if (/social/.test(tag)) {
                 s.linkTrackVars += ',eVar12,prop4,prop9,prop10';
                 s.linkTrackEvents += ',event16';
                 s.eVar12 = tag;
@@ -99,7 +99,7 @@ define([
 
         // used where we don't have an element to pass as a tag
         // eg. keyboard interaction
-        this.trackNonLinkEvent = function(tagStr) {
+        this.trackNonLinkEvent = function (tagStr) {
             s.linkTrackVars = 'eVar37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
@@ -107,17 +107,30 @@ define([
             s.tl(true, 'o', tagStr);
         };
 
-        this.populatePageProperties = function() {
+        this.populatePageProperties = function () {
+
+            var d, shiftValue, guView,
+                now      = new Date(),
+                tpA      = s.getTimeParting('n', '+0'),
+                /* Retrieve navigation interaction data */
+                ni       = storage.session.get(NG_STORAGE_KEY),
+                platform = 'frontend',
+                // cookie used for user migration
+                guShift  = Cookies.get('GU_SHIFT'),
+                mvt      = ab.makeOmnitureTag(config, document),
+                // Tag the identity of this user, which is composed of
+                // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
+                mvtId    = mvtCookie.getMvtFullId();
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
             s.cookieDomainPeriods = '2';
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
 
-            s.trackingServer='hits.theguardian.com';
-            s.trackingServerSecure='hits-secure.theguardian.com';
+            s.trackingServer = 'hits.theguardian.com';
+            s.trackingServerSecure = 'hits-secure.theguardian.com';
 
-            s.ce= 'UTF-8';
+            s.ce = 'UTF-8';
             s.pageName  = config.page.analyticsName;
 
             s.prop1     = config.page.headline || '';
@@ -126,12 +139,11 @@ define([
             // in the Omniture backend it only ever holds the first
             // value a user gets, so in effect it is the first time
             // we saw this user
-            var now = new Date();
             s.eVar1 = now.getFullYear() + '/' +
                 pad(now.getMonth() + 1, 2) + '/' +
                 pad(now.getDate(), 2);
 
-            if(id.getUserFromCookie()) {
+            if (id.getUserFromCookie()) {
                 s.prop2 = 'GUID:' + id.getUserFromCookie().id;
                 s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
             }
@@ -156,10 +168,8 @@ define([
             s.eVar32    = detect.getOrientation();
 
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
-            var tpA = s.getTimeParting('n','+0');
             s.prop20 = tpA[2] + ':' + tpA[1];
             s.eVar20 = 'D=c20';
-
 
             s.prop25    = config.page.blogs || '';
 
@@ -167,7 +177,6 @@ define([
 
             s.prop60    = navigator.mozApps && !window.locationbar.visible ? 'firefoxosapp' : null;
 
-            var platform = 'frontend';
             s.prop19     = platform;
             s.eVar19     = platform;
 
@@ -176,19 +185,15 @@ define([
 
             s.prop47    = config.page.edition || '';
 
-            var mvt = ab.makeOmnitureTag(config, document);
-
             s.prop51  = mvt;
             s.eVar51  = mvt;
 
-            // cookie used for user migration
-            var gu_shift = Cookies.get('GU_SHIFT');
-            if (gu_shift) {
-                var shiftValue = 'gu_shift,' + gu_shift + ',';
-                var gu_view = Cookies.get('GU_VIEW');
+            if (guShift) {
+                shiftValue = 'gu_shift,' + guShift + ',';
+                guView = Cookies.get('GU_VIEW');
 
-                if (gu_view) {
-                    shiftValue += ',' + gu_view;
+                if (guView) {
+                    shiftValue += ',' + guView;
                 }
 
                 s.prop51  = shiftValue + s.prop51;
@@ -196,19 +201,15 @@ define([
             }
 
             if (s.prop51) {
-                s.events = s.apl(s.events,'event58',',');
+                s.events = s.apl(s.events, 'event58', ',');
             }
-
-            // Tag the identity of this user, which is composed of
-            // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
-            var mvtId = mvtCookie.getMvtFullId();
 
             if (mvtId) {
                 s.eVar60 = mvtId;
             }
 
             if (config.page.commentable) {
-                s.events = s.apl(s.events,'event46',',');
+                s.events = s.apl(s.events, 'event46', ',');
             }
 
             if (config.page.section === 'identity')  {
@@ -216,7 +217,7 @@ define([
                 s.prop9 = 'userid';
                 s.eVar27 = config.page.omnitureErrorMessage || '';
                 s.eVar42 = config.page.returnUrl || '';
-                s.hier2='GU/Users/Registration';
+                s.hier2 = 'GU/Users/Registration';
                 s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
@@ -226,6 +227,9 @@ define([
             if (config.page.productionOffice) {
                 s.prop64 = config.page.productionOffice;
             }
+
+            /* Omniture library version */
+            s.prop62    = 'Guardian JS-1.4.1 20140914';
 
             s.prop63    = detect.getPageSpeed();
 
@@ -241,10 +245,10 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            if(s.Util.getQueryParam('INTCMP') !== '') {
+            if (s.Util.getQueryParam('INTCMP') !== '') {
                 s.eVar50 = s.Util.getQueryParam('INTCMP');
             }
-            s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
+            s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
             // the operating system
             s.eVar58 = navigator.platform || 'unknown';
@@ -259,10 +263,8 @@ define([
                 s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
-            /* Retrieve navigation interaction data */
-            var ni = storage.session.get(NG_STORAGE_KEY);
             if (ni) {
-                var d = new Date().getTime();
+                d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
                     s.eVar37 = ni.tag;
@@ -280,8 +282,8 @@ define([
             s.eVar75 = config.page.wordCount || 0;
         };
 
-        this.go = function(c) {
-
+        this.go = function (c) {
+            /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
             config = c; // update the module-wide config
 
             // must be set before the Omniture file is parsed
@@ -293,39 +295,39 @@ define([
             mediator.emit('analytics:ready');
         };
 
-        this.confirmPageView = function() {
+        this.confirmPageView = function () {
             // This ensures that the Omniture pageview beacon has successfully loaded
             // Can be used as a way to prevent other events to fire earlier than the pageview
-            var self = this;
-            var checkForPageViewInterval = setInterval(function() {
-                // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
-                // It does not sit in the DOM tree, and seems to be the only surefire way
-                // to check if the intial beacon has been successfully sent
-                var img = window['s_i_guardiangu-frontend_guardiangu-network'];
-                if (typeof(img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
-                    clearInterval(checkForPageViewInterval);
+            var self = this,
+                checkForPageViewInterval = setInterval(function () {
+                    // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
+                    // It does not sit in the DOM tree, and seems to be the only surefire way
+                    // to check if the intial beacon has been successfully sent
+                    var img = window['s_i_guardiangu-frontend_guardiangu-network'];
+                    if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
+                        clearInterval(checkForPageViewInterval);
 
-                    self.pageviewSent = true;
-                    mediator.emit('module:analytics:omniture:pageview:sent');
-                }
-            }, 250);
+                        self.pageviewSent = true;
+                        mediator.emit('module:analytics:omniture:pageview:sent');
+                    }
+                }, 250);
 
             // Give up after 10 seconds
-            setTimeout(function() {
+            setTimeout(function () {
                 clearInterval(checkForPageViewInterval);
             }, 10000);
         };
 
-        mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+        mediator.on('module:clickstream:interaction', that.trackNonLinkEvent);
 
-        mediator.on('module:clickstream:click', that.logTag );
+        mediator.on('module:clickstream:click', that.logTag);
 
-        mediator.on('module:autoupdate:loaded', function() {
+        mediator.on('module:autoupdate:loaded', function () {
             that.populatePageProperties();
             that.logUpdate();
         });
 
-        mediator.on('module:analytics:omniture:pageview:sent', function(){
+        mediator.on('module:analytics:omniture:pageview:sent', function () {
             // independently log this page view
             // used for checking we have not broken analytics
             beacon.fire('/count/pva.gif');

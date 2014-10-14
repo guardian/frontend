@@ -43,6 +43,7 @@ GET         /analytics/abtests                      controllers.admin.AnalyticsC
 GET         /analytics/confidence                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/google-referrers             controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery              controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog             controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
 GET         /analytics/omniture/segments/:rsid      controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName         controllers.admin.OmnitureReportController.getReport(reportName)
 

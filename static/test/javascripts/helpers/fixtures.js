@@ -14,17 +14,18 @@ define([
         $('#' + id).remove();
     }
 
-     function add(id, fixtures) {
-        $('body').append('<div id="' + id + '"></div>');
+    function add(id, fixtures) {
+        var $fixtureContainer = $.create('<div id="' + id + '"></div>');
         fixtures.forEach(function(fixture) {
-            $('#' + id).append(fixture);
+            $fixtureContainer.append(fixture);
         });
+        return $fixtureContainer.appendTo(document.body);
      }
 
     return {
         render: function(conf) {
             clean(conf.id);
-            add(conf.id, conf.fixtures);
+            return add(conf.id, conf.fixtures);
         },
         clean: clean
     }
