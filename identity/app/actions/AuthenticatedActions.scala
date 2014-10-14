@@ -20,10 +20,14 @@ object AuthenticatedActions {
 @Singleton
 class AuthenticatedActions @Inject()(authService: AuthenticationService, identityApiClient: IdApiClient, identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
 
-  def sendUserToSignin(request: RequestHeader) = {
+  def redirectWithReturn(request: RequestHeader, path: String) = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
-    SeeOther(identityUrlBuilder.buildUrl(s"/signin?returnUrl=$returnUrl"))
+    SeeOther(identityUrlBuilder.buildUrl(s"$path?returnUrl=$returnUrl"))
   }
+
+  def sendUserToSignin(request: RequestHeader) = redirectWithReturn(request, "/signin")
+
+  def sendUserToReauthenticate(request: RequestHeader) = redirectWithReturn(request, "/reauthenticate")
 
   def authAction = new AuthenticatedBuilder(authService.authenticatedUserFor(_), sendUserToSignin)
 
@@ -43,7 +47,7 @@ class AuthenticatedActions @Inject()(authService: AuthenticationService, identit
 
   def recentlyAuthenticatedRefiner() = new ActionRefiner[AuthRequest, AuthRequest] {
     def refine[A](request: AuthRequest[A]) = Future.successful {
-      if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToSignin(request))
+      if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
 
