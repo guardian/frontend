@@ -221,14 +221,12 @@ $fc-item-gutter: $gs-gutter / 4;
     display: block;
     @include text-clamp(4, 1.6em);
     margin-bottom: get-line-height(headline, 1);
+}
 
-    &:before {
-        // Example placeholder until rob sorts it out
-        content: '7m ago ';
-        @include fs-textSans(4);
-        font-weight: bold;
-        line-height: inherit;
-    }
+.fc-item__latest-block-time {
+    @include fs-textSans(4);
+    font-weight: bold;
+    line-height: inherit;
 }
 
 .fc-item__latest-block--unloading {

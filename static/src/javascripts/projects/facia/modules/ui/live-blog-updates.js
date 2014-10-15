@@ -13,14 +13,13 @@ define([
         articleIdAttribute = 'data-article-id',
         updateIntervalInMillis = 15000;
 
-    function createUpdateElement(block) {
+    function createUpdateHtml(block) {
         var posted = new Date(Number(block.posted));
 
-        return $.create('<time class="fc-item__latest-block-time" datetime="' + posted.toISOString() + '">' +
+        return '<time class="fc-item__latest-block-time" datetime="' + posted.toISOString() + '">' +
                 relativeDates.makeRelativeDate(block.posted) + ' ago' +
-                '</time>' +
-                ' <span class="fc-item__latest-block-text">' + block.body + '</span>'
-        );
+                '</time> ' +
+                '<span class="fc-item__latest-block-text">' + block.body + '</span>';
     }
 
     function start() {
@@ -59,7 +58,7 @@ define([
                                             $el.addClass('fc-item__latest-block--loading');
                                             setTimeout(function () {
                                                 $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                                    .html(createUpdateElement(latestBlock))
+                                                    .html(createUpdateHtml(latestBlock))
                                                     .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
                                                 element.setAttribute('data-blockId', latestBlock.blockId);
                                             }, 50);
