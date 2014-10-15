@@ -157,4 +157,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
     now.map(Ok(_)).getOrElse(NotFound)
   }
+
+  def generatePutForCollectionId(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
+    ConfigAgent.getConfig(collectionId).map { collectionConfig =>
+      Ok(Json.toJson(ContentApiWrite.generateContentApiPut(collectionId, collectionConfig)))
+    }.getOrElse(NotFound(s"Collection ID $collectionId does not exist in ConfigAgent"))
+  }
 }

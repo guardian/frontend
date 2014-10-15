@@ -219,8 +219,6 @@ GET         /commercial/masterclasses                                           
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson
 GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.masterclassesHighHtml
 GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.masterclassesHighJson
-GET         /commercial/masterclasses-v2.json                                                                        controllers.commercial.MasterClasses.masterclassesLowJsonV2
-GET         /commercial/masterclasses-high-v2.json                                                                   controllers.commercial.MasterClasses.masterclassesHighJsonV2
 
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson
@@ -254,8 +252,6 @@ GET         /commercial/money/savings/:savingsType                              
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
-GET         /commercial/money/bestbuys-v2.json                                                                       controllers.commercial.MoneyOffers.bestBuysLowJsonV2
-GET         /commercial/money/bestbuys-high-v2.json                                                                  controllers.commercial.MoneyOffers.bestBuysHighJsonV2
 
 GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml

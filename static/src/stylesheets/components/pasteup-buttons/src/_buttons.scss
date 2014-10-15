@@ -46,6 +46,14 @@ They come in different sizes:
 <a href="#" class="button button--small">Link to somewhere</a>
 <a href="#" class="button button--xsmall">Link to somewhere</a>
 ```
+
+Show more button:
+
+```html_example
+<button class="button button--medium button--show-more button--tertiary">
+    <i class="i i-plus-neutral1"></i>View more stories
+</button>
+```
 */
 
 @mixin button-height($button-size) {
@@ -242,4 +250,23 @@ They come in different sizes:
     @include fs-textSans(1);
     line-height: $gs-baseline * 1.5 - 1px;
     font-weight: bold;
+}
+
+$show-more-icon-size: 24px;
+$show-more-icon-spacing: 7px;
+
+.button--show-more {
+    position: relative;
+    padding-left: $show-more-icon-size + $show-more-icon-spacing * 2;
+
+    .i {
+        width: $show-more-icon-size;
+        height: $show-more-icon-size;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $show-more-icon-spacing;
+    }
 }
