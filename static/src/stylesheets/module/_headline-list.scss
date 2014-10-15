@@ -51,7 +51,8 @@
     color: $c-neutral1;
 
     &:visited {
-        .headline-list__body {
+        .headline-list__body,
+        .fc-item__link {
             color: $c-neutral2;
         }
     }
@@ -59,7 +60,8 @@
     &:hover,
     &:active,
     &:focus {
-        .headline-list__body {
+        .headline-list__body,
+        .fc-item__link {
             text-decoration: underline;
         }
 
@@ -70,8 +72,11 @@
 }
 
 .headline-list__body {
-    @include fs-headline(2);
-    font-weight: normal;
+    .fc-item__link & {
+        @include fs-headline(2);
+        font-weight: normal;
+        color: $c-neutral1;
+    }
 }
 
 

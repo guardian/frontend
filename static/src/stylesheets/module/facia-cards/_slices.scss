@@ -124,6 +124,7 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet) {
         .facia-slice__popular-mpu {
             position: absolute;
+            max-width: 320px;
         }
     }
 
