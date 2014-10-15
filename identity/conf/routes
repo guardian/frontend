@@ -17,7 +17,7 @@ POST        /password/change                        @controllers.ChangePasswordC
 GET         /password/reset-confirmation            @controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    @controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
-GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String])
+GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String], skipConfirmation : Option[Boolean])
 POST        /register                               @controllers.RegistrationController.processForm
 GET         /register/confirm                       @controllers.RegistrationController.renderRegistrationConfirmation(returnUrl)
 GET         /email-prefs                            @controllers.EmailController.preferences
