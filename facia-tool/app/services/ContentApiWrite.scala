@@ -74,7 +74,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  private def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
+  def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
     val maybeBlock = FaciaApi.getBlock(id)
 
     ContentApiPut(
