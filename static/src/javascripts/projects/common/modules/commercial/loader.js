@@ -73,8 +73,6 @@ define([
             jobsHighV2:         this.host + 'jobs-high-v2.json?'                + this.getKeywords(),
             masterclasses:      this.host + 'masterclasses.json?'               + this.getKeywords(),
             masterclassesHigh:  this.host + 'masterclasses-high.json?'          + this.getKeywords(),
-            masterclassesV2:    this.host + 'masterclasses-v2.json?'            + this.getKeywords(),
-            masterclassesHighV2:this.host + 'masterclasses-high-v2.json?'       + this.getKeywords(),
             soulmates:          this.host + 'soulmates/mixed.json',
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
             soulmatesV2:        this.host + 'soulmates/mixed-v2.json',

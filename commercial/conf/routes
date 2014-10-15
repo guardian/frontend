@@ -31,10 +31,6 @@ GET        /commercial/masterclasses.json                            controllers
 GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.masterclassesHighHtml
 GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.masterclassesHighJson
 
-GET        /commercial/masterclasses-v2.json                         controllers.commercial.MasterClasses.masterclassesLowJsonV2
-GET        /commercial/masterclasses-high-v2.json                    controllers.commercial.MasterClasses.masterclassesHighJsonV2
-
-
 # Soulmates
 GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.mixedLowHtml
 GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixedLowJson
