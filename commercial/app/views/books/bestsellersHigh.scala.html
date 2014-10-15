@@ -7,115 +7,105 @@
 </style>
 
 @defining(("1_0", "2014-05-8")) { case (version, date) =>
-    <div class="commercial commercial--high commercial--books" role="complementary">
-        <div class="facia-container__inner">
-            <div class="commercial__head container__title">
-                <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+    <div class="commercial--v2 commercial--books--v2 commercial--tone-books commercial--high" role="complementary">
+        <div class="facia-container__inner--commercial">
+
+            <div class="container__header">
+                <div class="container__header__inner">
                     <h3 class="commercial__title">
-                        <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
-                        <span class="u-h">Guardian bookshop</span>
-                    </h3>
-                </a>
-                <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
-                    <div>
-                        <label for="bookshop" class="u-h">Search bookshop:</label>
-                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
-                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-search">
-                            <i class="i i-search-grey-36"></i>
-                            <span class="u-h">Search the Guardian bookshop</span>
-                        </button>
-                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                    </div>
-                </form>
-                <a href="@AdLink{@Configuration.commercial.books_url}"
-                    class="commercial__home-link"
-                    data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
-                    Visit shop
-                    <span class="commercial__home-link__cta">
-                        <span class="i i-arrow-white-right-36"></span>
-                    </span>
-                </a>
-            </div>
-            <div class="commercial__body container__body">
-                <div class="commercial__relevance commercial__relevance-high u-cf">
-                    <div class="highitem" itemscope itemtype="http://schema.org/Book">
-                        <h4 class="commercial__relevance-title commercial__relevance-title-high">Featured book</h4>
-                        @books.take(1).map { book =>
-                        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
-                            @book.jacketUrl.map { url =>
-                            <img itemprop="image" class="highitem__img" src="@url" alt="" />
-                            }
+                        <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+                            <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
+                            <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
                         </a>
-                        <div class="highitem__details">
-                            <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
-                                <h4 itemprop="name" class="lineitem__title">@book.title</h4>
-                                @if(book.author) {
-                                    <p itemprop="author" class="lineitem__meta">By @book.author</p>
-                                }
-                                <meta itemprop="isbn" content="@{book.isbn}" />
-                                <p itemprop="description" class="commercial--books__description">@book.description</p>
-                                <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="commercial--books__price">
-                                    @book.price.map { price =>
-                                    <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
-                                    }
-                                    @book.offerPrice.map { price =>
-                                    <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                                    <meta itemprop="priceCurrency" content="GBP" />
-                                    }
-                                </p>
-                            </a>
-                            <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                    </h3>
+                    <form class="commercial__search" action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" name="QuickSearchForm">
+                        <div class="commercial__search__inner">
+                            <label for="bookshop" class="u-h">Search bookshop:</label>
+                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
+                            <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-search">
+                                <i class="i i-search-grey-36"></i>
+                                <span class="u-h">Search the Guardian Bookshop</span>
+                            </button>
+                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </div>
+                    </form>
+                    <a class="commercial__cta button button--tertiary button--large" href="@AdLink{@Configuration.commercial.books_url}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+                        <i class="i i-arrow-white-right i-right"></i>
+                        <span class="commercial__cta__label">Visit <span class="hide-on-mobile-inline">book</span>shop</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="container__body">
+                <div class="commercial__relevance commercial__relevance--high u-cf">
+                    <div class="lineitems" itemscope itemtype="http://schema.org/Book">
+                        @books.take(1).map { book =>
+                            <div class="lineitem lineitem--high">
+                                <div class="lineitem--high__feature">
+                                    <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
+                                        @book.jacketUrl.map { url =>
+                                            <img class="lineitem__image" itemprop="image" src="@url" alt="" />
+                                        }
+                                    </a>
+                                </div>
+                                <div class="lineitem--high__offer">
+                                    <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
+                                        <h4 itemprop="name" class="lineitem__title">@book.title</h4>
+                                        @if(book.author) {
+                                            <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
+                                        }
+                                        <meta itemprop="isbn" content="@{book.isbn}" />
+                                        <p class="lineitem__desc" itemprop="description">@book.description</p>
+                                        <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        @book.price.map { price =>
+                                            RRP &pound;@("%.2f".format(price))<br/>
+                                        }
+                                        @book.offerPrice.map { price =>
+                                            <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
+                                            <meta itemprop="priceCurrency" content="GBP"/>
+                                        }
+                                        </p>
+                                    </a>
+                                    <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">
+                                        Buy now<i class="i i-arrow-white-right i-right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
-                <div class="commercial__relevance commercial__relevance-low u-cf">
-                    <h4 class="commercial__relevance-title commercial__relevance-title-low">You also might like</h4>
-                    <ul class="u-unstyled lineitems">
+                <div class="commercial__relevance commercial__relevance--low u-cf">
+                    <ul class="lineitems">
                         @books.drop(1).take(2).map { book =>
-                        <li itemscope itemtype="http://schema.org/Book" class="lineitem u-cf">
-                            <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-cover">
+                        <li class="lineitem lineitem--low" itemscope itemtype="http://schema.org/Book">
+                            <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
                                 @book.jacketUrl.map { url =>
-                                <img itemprop="image" class="lineitem__img" src="@url" alt="" />
+                                <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
                                 }
+                                <h4 class="lineitem__title" itemprop="name">@book.title</h4>
+                                @if(book.author) {
+                                <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
+                                }
+                                <meta itemprop="isbn" content="@{book.isbn}"/>
+                                <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                @book.price.map { price =>
+                                    RRP &pound;@("%.2f".format(price))<br/>
+                                }
+                                @book.offerPrice.map { price =>
+                                    <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
+                                    <meta itemprop="priceCurrency" content="GBP"/>
+                                }
+                                </p>
                             </a>
-                            <div class="lowitem__details">
-                                <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
-                                    <h4 class="lineitem__title" itemprop="name">@book.title</h4>
-                                    @if(book.author) {
-                                    <p class="lineitem__meta" itemprop="author">By @book.author</p>
-                                    }
-                                    <meta itemprop="isbn" content="@{book.isbn}" />
-                                    <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                        @book.price.map { price =>
-                                        <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
-                                        }
-                                        @book.offerPrice.map { price =>
-                                        <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                                        <meta itemprop="priceCurrency" content="GBP" />
-                                        }
-                                    </p>
-                                </a>
-                                <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
-                            </div>
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">
+                                Buy now<i class="i i-arrow-white-right i-right"></i>
+                            </a>
                         </li>
                         }
                     </ul>
                 </div>
             </div>
-            <div class="commercial__foot">
-                <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
-                    <div>
-                        <label for="bookshop" class="u-h">Search bookshop:</label>
-                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-search">
-                            <i class="i i-search-grey-36"></i>
-                            <span class="u-h">Search the Guardian bookshop</span>
-                        </button>
-                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                    </div>
-                </form>
-            </div>
+
         </div>
     </div>
 }

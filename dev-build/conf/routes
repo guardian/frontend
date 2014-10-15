@@ -238,11 +238,6 @@ GET         /commercial/books/bestsellers-high                                  
 GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
 GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
-GET         /commercial/books/bestsellers-v2.json                                                                    controllers.commercial.BookOffers.bestsellersLowJsonV2
-GET         /commercial/books/bestsellers-medium-v2.json                                                             controllers.commercial.BookOffers.bestsellersMediumJsonV2
-GET         /commercial/books/bestsellers-high-v2.json                                                               controllers.commercial.BookOffers.bestsellersHighJsonV2
-GET         /commercial/books/book-v2.json                                                                           controllers.commercial.BookOffers.bestsellersSuperHighJsonV2
-
 
 GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson

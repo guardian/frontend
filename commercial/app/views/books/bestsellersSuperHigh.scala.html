@@ -5,41 +5,36 @@
 </style>
 
 @defining(("1_0", "2014-07-10")) { case (version, date) =>
-    
-<div class="commercial commercial--v-high commercial--books" role="complementary" itemscope itemtype="http://schema.org/Book">
-    <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
-        <h3 class="commercial__title">
-            <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
-            <span class="u-h">Guardian bookshop</span>
-        </h3>
-    </a>
-    <div class="commercial--v-high__head">
-        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}-title">
-            <h4 itemprop="name" class="lineitem__title">@book.title</h4>
-            <meta itemprop="isbn" content="@{book.isbn}" />
-            <p itemprop="author" class="lineitem__meta">@book.author</p>
-        </a>
-    </div>
-    <div class="commercial--v-high__body">
-        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
-            @book.jacketUrl.map { url =>
-            <img itemprop="image" class="highitem__img" src="@url" alt="" />
-            }
-            <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="commercial--v-high__price commercial--books__price">
+    <div class="commercial--v2 commercial--tone-books commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book">
+        <div class="commercial--v-high__header">
+            <h3 class="commercial__title">
+                <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+                    <i class="i i-marque-36"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
+                    <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
+                </a>
+            </h3>
+        </div>
+        <div class="commercial--v-high__body">
+            <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
+                @book.jacketUrl.map { url =>
+                <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
+                }
+                <h4 class="lineitem__title" itemprop="name">@book.title</h4>
+                <meta itemprop="isbn" content="@{book.isbn}" />
+                <p class="lineitem__meta lineitem__author" itemprop="author">@book.author</p>
+                <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 @book.price.map { price =>
-                <span class="commercial--v-high__price__rrp commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                    RRP &pound;@("%.2f".format(price))<br/>
                 }
                 @book.offerPrice.map { price =>
-                <span class="commercial--v-high__price__our commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                <meta itemprop="priceCurrency" content="GBP" />
+                    <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
+                    <meta itemprop="priceCurrency" content="GBP"/>
                 }
-            </p>
-        </a>
+                </p>
+            </a>
+            <a href="@AdLink{@book.buyUrl}" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+                Buy now<i class="i i-arrow-white-right i-right"></i>
+            </a>
+        </div>
     </div>
-    <div class="commercial--v-high__footer">
-        <a href="@AdLink{@book.buyUrl}" class="button button--primary button--small" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
-            Buy now <i class="i i-arrow-white-right i-right"></i>
-        </a>
-    </div>
-</div>
 }
