@@ -80,10 +80,6 @@
         .tonal__header {
             background-color: $tonal__header-background;
 
-            .content__main-column {
-                padding-bottom: $gs-baseline * 1.5;
-            }
-
             .content__labels {
                 border-bottom-color: rgba($tonal__header-text, 0.3);
             }
@@ -97,12 +93,12 @@
             }
 
             .content__headline,
-            .content__headline--byline {
-                font-weight: $tonal__headline-weight;
+            .content__head__comment-count .tone-colour {
+                color: $tonal__headline-colour;
             }
 
             .content__headline {
-                color: $tonal__headline-colour;
+                font-weight: $tonal__headline-weight;
             }
 
             .content__headline--byline .tone-colour,
@@ -119,19 +115,13 @@
             }
         }
 
-        .tonal__headline__accent {
-            color: $tonal__headline-accent;
-        }
-
         .tonal__standfirst {
             color: $tonal__standfirst-text;
             background-color: $tonal__standfirst-background;
             padding-top: $gs-baseline / 2;
-            padding-bottom: $gs-baseline * 2;
 
             .content__standfirst {
                 color: $tonal__standfirst-text;
-                margin: 0;
             }
 
             .content__meta-container--liveblog {
@@ -160,15 +150,13 @@
 
         .tonal__article {
             background-color: $tonal__article-background;
+            padding-bottom: $gs-baseline*3;
 
             @include mq(phablet) {
                 padding-top: $gs-baseline * 2;
             }
 
-            .drop-cap {
-                color: $tonal__header-background;
-            }
-
+            .drop-cap,
             .tone-colour {
                 color: $tonal__article-link;
             }

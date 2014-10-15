@@ -8,11 +8,27 @@
 
 
 @mixin tones-content {
+    // Analysis
+    @include tone-article(
+        analysis, // $tone
+        $c-neutral7, // $tonal__header-background
+        $c-neutral2, // $tonal__header-text
+        $c-analysisDefault, // $tonal__header-link
+        $c-neutral8, // $tonal__standfirst-background
+        $c-neutral2, // $tonal__standfirst-text
+        $c-analysisDefault, // $tonal__standfirst-link
+        #ffffff, // $tonal__article-background
+        $c-analysisDefault, // $tonal__article-link
+        400, // $tonal__headline-weight
+        $c-analysisDefault, // $tonal__headline-colour
+        $c-analysisAccent // $tonal__headline-accent
+    );
+
     // Comment
     @include tone-article(
         comment, // $tone
         $c-commentBackground, // $tonal__header-background
-        $c-neutral1, // $tonal__header-text
+        $c-neutral2, // $tonal__header-text
         $c-commentDefault, // $tonal__header-link
         $c-commentDefault, // $tonal__standfirst-background
         #ffffff, // $tonal__standfirst-text
@@ -145,7 +161,6 @@
             }
 
             @include mq(desktop) {
-                height: gs-span(3) + ($gs-gutter*2);
                 right: gs-span(1) + $gs-gutter;
             }
         }
@@ -155,9 +170,9 @@
     }
 
     .content__head--byline-pic {
-        .tone-background .content__main-column {
+        .tonal__header .content__main-column {
             @include mq(tablet) {
-                min-height: gs-height(5);
+                min-height: gs-height(4);
             }
         }
         .content__headline {

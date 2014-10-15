@@ -1,7 +1,6 @@
 .content {
     border-top: 1px solid #ffffff;
     padding-top: 0;
-    padding-bottom: $gs-baseline*3;
 
     &:after { // clearfix
         content: '';
@@ -98,15 +97,10 @@
 }
 
 .content__head__comment-count {
-    //height: 16px + $gs-baseline; //font-size + $gs-baseline
     margin: $gs-baseline/2 0;
 
     @include mq(tablet) {
         display: none;
-    }
-
-    .commentcount {
-        color: inherit;
     }
 }
 
@@ -209,6 +203,13 @@
     }
 }
 
+.content__headline--kicker {
+    &:after {
+        content: ' /';
+        color: fade-out($c-neutral1, .8);
+    }
+}
+
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline;
@@ -301,7 +302,6 @@
         }
     }
 }
-
 
 .content__meta-container .byline-img {
     position: relative;
@@ -475,7 +475,7 @@
         display: block;
         position: absolute;
         right: 0;
-        top: $gs-baseline/3;
+        top: $gs-baseline/1.5;
 
         .content__head & {
             display: none;

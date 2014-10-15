@@ -9,7 +9,12 @@
 
                 @fragments.meta.metaInline(content)
 
-                <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
+                <h1 class="content__headline js-score" itemprop="headline">
+                    @if(content.isAnalysis) {
+                        <span class="content__headline--kicker">Analysis</span>
+                    }
+                    @Html(content.headline)
+                </h1>
 
                 @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                     @fragments.meta.bylineImage(content)
@@ -17,26 +22,28 @@
 
                 @if(content.hasTonalHeaderByline) {
                     @content.byline.map { text =>
-                        <span class="content__headline content__headline--byline tonal__headline__accent">@ContributorLinks(text, content.contributors)</span>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, content.contributors)</span>
                     }
                 }
 
                 @content.starRating.map { s =>
                     @fragments.items.elements.starRating(content)
                 }
-            </div>
-        </div>
-    </div>
-
-    <div class="tonal__standfirst u-cf">
-        <div class="gs-container">
-            <div class="content__main-column">
-                @fragments.standfirst(content)
 
                 @if(content.isCommentable) {
                     <div class="content__head__comment-count js-comment-count"></div>
                 }
             </div>
         </div>
+    </div>
+
+    <div class="tonal__standfirst u-cf">
+        @if(content.hasStandfirst) {
+            <div class="gs-container">
+                <div class="content__main-column">
+                    @fragments.standfirst(content)
+                </div>
+            </div>
+        }
     </div>
 </header>
