@@ -18,7 +18,7 @@ itemscope itemtype="http://schema.org/Comment">
         <div class="d-top-comment__body" itemprop="text">
             @withJsoup(BulletCleaner(comment.body))(
                 InBodyLinkCleaner("in body link"),
-                Truncate(450)
+                TruncateCleaner(450)
             )
         </div>
 

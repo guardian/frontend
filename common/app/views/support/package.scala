@@ -381,9 +381,8 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
-case class Truncate(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
-
 
     def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
       val newCharLimit = charLimit - textNode.text.length
@@ -409,7 +408,6 @@ case class Truncate(limit: Int)(implicit val edition: Edition, implicit val requ
     truncateElement(limit, body)
     body
   }
-
 }
 
 // TODO make this separate
