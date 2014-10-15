@@ -312,10 +312,6 @@ figure.element--thumbnail + h2 {
         margin-left: $width * -1;
     }
 
-    &:before,
-    &:after {
-        @extend %tone-background;
-    }
     blockquote {
         margin: 0;
         font-style: normal;

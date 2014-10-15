@@ -42,7 +42,7 @@
     </div>
 
     <div class="tonal__standfirst u-cf">
-        @if(content.hasStandfirst) {
+        @if(content.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
                     @if(!content.delegate.isVideo && !content.delegate.isGallery) {

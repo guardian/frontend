@@ -43,7 +43,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
-  lazy val hasStandfirst: Boolean = delegate.safeFields.get("standfirst").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
       case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
