@@ -24,15 +24,15 @@
                     @title.map { title =>
                         <h2 class="fc-container__header__title">
                             @href.map { href =>
-                                <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                <a data-link-name="section heading" href="@LinkTo{/@href}">popular</a>
                             }.getOrElse{
-                                @Html(title)
+                                popular
                             }
                         </h2>
                     }
                 </div>
                 <div class="container__body container--rolled-up-hide js-popular-trails">
-                    @defining(Seq(MostPopular(title.getOrElse("Popular"), "popular", collection.items.slice(0, 10)), MostPopular("the guardian", "popular", Nil))){ popular =>
+                    @defining(Seq(MostPopular(title.getOrElse("Popular"), "popular", collection.items.slice(0, 10)), MostPopular("across the guardian", "popular", Nil))){ popular =>
                         @fragments.collections.popular(popular)
                     }
                 </div>
