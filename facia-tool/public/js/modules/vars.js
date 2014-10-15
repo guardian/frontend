@@ -32,6 +32,8 @@ define([
             {name: 'prototype/raclette'}
         ].concat(fixedContainers).concat(dynamicContainers),
 
+        typesDynamic: dynamicContainers,
+
         headlineLength: 200,
         restrictedHeadlineLength: 90,
 

@@ -27,9 +27,14 @@ define([
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+
         this.raw = undefined;
+
         this.groups = this.createGroups(opts.groups);
+
         this.alsoOn = opts.alsoOn || [];
+
+        this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([

@@ -144,6 +144,7 @@ define([
                     key: 'isBoosted',
                     editable: true,
                     omitForSupporting: true,
+                    requiresState: 'inDynamicCollection',
                     label: 'boost',
                     type: 'boolean'
                 },
@@ -278,6 +279,7 @@ define([
                 'isLoaded',
                 'isEmpty',
                 'isSnap',
+                'inDynamicCollection',
                 'tone',
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
@@ -285,6 +287,7 @@ define([
                 'sparkUrl']);
 
             this.state.isSnap(!!snap.validateId(opts.id));
+            this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
@@ -498,9 +501,7 @@ define([
             }
 
             this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
-
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
-
             this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
 
             this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
