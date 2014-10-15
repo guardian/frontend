@@ -1,9 +1,11 @@
 define([
-    'common/utils/$',
-    'bean'
+    'bean',
+    'lodash/functions/debounce',
+    'common/utils/$'
 ], function (
-    $,
-    bean
+    bean,
+    debounce,
+    $
 ) {
 
     function FormstackIframe(el, config) {
@@ -20,7 +22,7 @@ define([
                 }
             });
 
-            bean.on(window, 'resize', self.refreshHeight);
+            mediator.on('window:resize', self.refreshHeight);
 
             // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module

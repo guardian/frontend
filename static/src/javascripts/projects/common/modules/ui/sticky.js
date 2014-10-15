@@ -15,7 +15,7 @@ define([
         // position of element from document top
         this.elementDocOffset = this.element.getBoundingClientRect().top + window.scrollY;
 
-        mediator.on('window:scroll-immediate', throttle(this.updatePosition.bind(this), 10));
+        mediator.on('window:scroll', throttle(this.updatePosition.bind(this), 10));
         // kick off an initial position update
         this.updatePosition();
     };
@@ -31,7 +31,7 @@ define([
                 this.top;
 
             css = {
-                position: fixed,
+                position: 'fixed',
                 top:      elementTop
             };
         } else {

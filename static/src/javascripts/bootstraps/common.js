@@ -5,7 +5,6 @@ define([
     'bonzo',
     'enhancer',
     'fastclick',
-    'lodash/functions/debounce',
     'qwery',
 
     'common/utils/$',
@@ -53,7 +52,6 @@ define([
     bonzo,
     enhancer,
     FastClick,
-    debounce,
     qwery,
 
     $,
@@ -319,18 +317,10 @@ define([
                         resize:            'window:resize',
                         scroll:            'window:scroll',
                         orientationchange: 'window:orientationchange'
-                    },
-                    emitEvent = function (eventName) {
-                        return function (e) {
-                            mediator.emit(eventName, e);
-                        };
                     };
                 for (event in events) {
-                    bean.on(window, event, debounce(emitEvent(events[event]), 200));
+                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
                 }
-
-                // also adding an (non-debounced, non-throttled) event for scroll - this often needs to be immediate
-                bean.on(window, 'scroll', mediator.emit.bind(mediator, 'window:scroll-immediate'));
             },
 
             checkIframe: function () {
