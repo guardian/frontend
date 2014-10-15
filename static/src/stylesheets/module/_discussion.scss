@@ -253,6 +253,14 @@ $avatarPadding: $gs-gutter / 2;
     clear: both;
 }
 
+.d-comment__main {
+    padding-bottom: $gs-baseline * 3;
+}
+
+.d-comment__main--removed {
+    padding-bottom: $gs-baseline;
+}
+
 .d-comment__inner {
     padding-top: $gs-baseline / 2;
     position: relative;
@@ -415,14 +423,6 @@ $avatarPadding: $gs-gutter / 2;
     .i-gupickasterisk {
         margin-bottom: -4px;
         margin-right: $gs-gutter / 4;
-    }
-}
-
-.d-comment__main {
-    padding-bottom: $gs-baseline * 3;
-
-    &.d-comment__main-removed {
-        padding-bottom: $gs-baseline;
     }
 }
 
@@ -691,18 +691,9 @@ $comment-recommend-button-size: 19px;
 /* Comment actions
    ======================================================= */
 
-.id--signed-in .discussion--open .discussion__comments {
+.id--signed-in .discussion--open .discussion__comments .d-comment__actions__main {
     // only show reply/pick actions when user is signed in and discussion is open
-    .d-comment__actions__main {
-        display: block;
-    }
-    .d-comment__main {
-        padding-bottom: $gs-baseline * 3;
-
-        &.d-comment__main-removed {
-            padding-bottom: $gs-baseline;
-        }
-    }
+    display: block;
 }
 
 .d-comment__actions {
