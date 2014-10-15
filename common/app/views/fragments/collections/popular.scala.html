@@ -1,6 +1,6 @@
-@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
+@(popular: Seq[model.MostPopular])(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 @import views.support._
-@import common.LinkTo
+@import views.html.fragments.items.elements.facia_cards.title
 
 @defining(popular.size > 1){ isTabbed =>
 
@@ -8,7 +8,7 @@
 
         @if(isTabbed) {
             <div class="tabs u-cf">
-                <ol class="tabs__container u-h js-tabs" id="js-popular-tabs" role="tablist">
+                <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                         <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
                             <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular in </span>@Html(section.heading)</a>
@@ -31,12 +31,10 @@
                 <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                         <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item">
-                            <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
+                            <div class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <span class="headline-list__count">@info.rowNum</span>
-                                <h4 class="headline-list__body">
-                                    @Html(trail.linkText)
-                                </h4>
-                            </a>
+                                @title(trail, 2, 2, false, "headline-list__body")
+                            </div>
                         </li>
                     }
                 </ul>

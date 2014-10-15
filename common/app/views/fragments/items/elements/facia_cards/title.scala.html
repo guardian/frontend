@@ -8,11 +8,11 @@
 @itemHeader(containerIndex == 0 && itemIndex == 0, trail.showQuotedHeadline) {
     @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
-            <span class="fc-item__breaking-indicator">Breaking news</span>
+            <span class="fc-item__kicker fc-item__breaking-indicator">Breaking news</span>
         }
 
         case LiveKicker => {
-            <span class="fc-item__live-indicator">Live</span>
+            <span class="fc-item__kicker fc-item__live-indicator">Live</span>
         }
 
         case AnalysisKicker => {
