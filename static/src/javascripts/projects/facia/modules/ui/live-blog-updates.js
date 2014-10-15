@@ -1,11 +1,27 @@
 define([
     'common/utils/$',
     'common/utils/ajax',
-    'bonzo'
-], function ($, ajax, bonzo) {
+    'bonzo',
+    'common/modules/ui/relativedates'
+], function (
+    $,
+    ajax,
+    bonzo,
+    relativeDates
+) {
     var selector = '.js-live-blog-latest-block',
         articleIdAttribute = 'data-article-id',
         updateIntervalInMillis = 15000;
+
+    function createUpdateElement(block) {
+        var posted = new Date(Number(block.posted));
+
+        return $.create('<time class="fc-item__latest-block-time" datetime="' + posted.toISOString() + '">' +
+                relativeDates.makeRelativeDate(block.posted) + ' ago' +
+                '</time>' +
+                ' <span class="fc-item__latest-block-text">' + block.body + '</span>'
+        );
+    }
 
     function start() {
         var elementsByArticleId = {},
@@ -34,21 +50,23 @@ define([
                         response.latestBlocks.forEach(function (latestBlock) {
                             var elements = elementsByArticleId[latestBlock.articleId];
 
-                            elements.forEach(function (element) {
-                                if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
-                                    var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
+                            if (elements) {
+                                elements.forEach(function (element) {
+                                    if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
+                                        var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
 
-                                    setTimeout(function () {
-                                        $el.addClass('fc-item__latest-block--loading');
                                         setTimeout(function () {
-                                            $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                            .html(latestBlock.body)
-                                            .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
-                                            element.setAttribute('data-blockId', latestBlock.blockId);
-                                        }, 50);
-                                    }, 250); // wait for transform to finish
-                                }
-                            });
+                                            $el.addClass('fc-item__latest-block--loading');
+                                            setTimeout(function () {
+                                                $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
+                                                    .html(createUpdateElement(latestBlock))
+                                                    .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
+                                                element.setAttribute('data-blockId', latestBlock.blockId);
+                                            }, 50);
+                                        }, 250); // wait for transform to finish
+                                    }
+                                });
+                            }
                         });
                     }
                 }
