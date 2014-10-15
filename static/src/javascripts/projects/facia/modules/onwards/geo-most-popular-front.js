@@ -22,8 +22,6 @@ define([
 
     function GeoMostPopularFront() {
         register.begin('most-popular');
-        this.config = extend(this.config, config);
-        this.mediator = mediator;
     }
 
     Component.define(GeoMostPopularFront);
@@ -34,15 +32,15 @@ define([
     GeoMostPopularFront.prototype.manipulationType = 'html';
 
     GeoMostPopularFront.prototype.prerender = function () {
-        this.elem = $('.headline-list', this.elem)[0];
+        this.elem = qwery('.headline-list', this.elem)[0];
     };
 
     GeoMostPopularFront.prototype.go = function () {
-        var tab = (this.isNetworkFront) ? '.js-tab-1' : '.js-tab-2';
+        var tabSelector = (this.isNetworkFront) ? '.js-tab-1' : '.js-tab-2';
         this.parent = qwery('.js-popular-trails')[0];
 
         if (this.parent) {
-            this.tab = $(tab, this.parent)[0];
+            this.tab = qwery(tabSelector, this.parent)[0];
             this.fetch(this.tab, 'html');
         }
     };
@@ -53,7 +51,7 @@ define([
             $('.js-tabs', this.parent).addClass('u-h');
         }
         register.end('most-popular');
-        this.mediator.emit('modules:geomostpopular:ready');
+        mediator.emit('modules:geomostpopular:ready');
     };
 
     return GeoMostPopularFront;

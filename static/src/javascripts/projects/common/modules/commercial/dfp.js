@@ -125,13 +125,6 @@ define([
                     tablet: '300,250'
                 }
             },
-            inline3: {
-                sizeMappings: {
-                    mobile: '300,50',
-                    'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
-                }
-            },
             'merchandising-high': {
                 label: false,
                 refresh: false,

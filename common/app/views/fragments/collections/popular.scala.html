@@ -1,4 +1,4 @@
-@(popular: Seq[model.MostPopular])(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(popular: Seq[model.MostPopular], config: com.gu.facia.client.models.CollectionConfig)(implicit request: RequestHeader)
 @import views.support._
 @import views.html.fragments.items.elements.facia_cards.title
 
@@ -33,7 +33,7 @@
                         <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item">
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <span class="headline-list__count">@info.rowNum</span>
-                                @title(trail, 2, 2, false, "headline-list__body")
+                                @title(trail, 2, 2, false, "headline-list__body")(request, config)
                             </div>
                         </li>
                     }

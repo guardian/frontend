@@ -21,6 +21,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
+  val config = CollectionConfig.withDefaults(displayName = Option("popular"))
+
   def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
@@ -33,7 +35,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
-            "html" -> views.html.fragments.collections.popular(popular)(request, CollectionConfig.withDefaults(displayName = Option("popular"))),
+            "html" -> views.html.fragments.collections.popular(popular, config),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -55,7 +57,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
     Cached(900) {
       JsonComponent(
-        "html" -> views.html.fragments.collections.popular(Seq(countryPopular))(request, CollectionConfig.withDefaults(displayName = Option("popular"))),
+        "html" -> views.html.fragments.collections.popular(Seq(countryPopular), config),
         "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
         "country" -> countryCode
       )

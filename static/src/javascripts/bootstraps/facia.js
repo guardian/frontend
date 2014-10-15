@@ -38,8 +38,8 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function (config, context) {
-                    var c = context || document;
+                var containerShowMoreAdd = function () {
+                    var c = document;
                     $('.js-container--show-more', c).each(function (container) {
                         new ContainerShowMore(container).addShowMore();
                     });
@@ -54,8 +54,8 @@ define([
             },
 
             showContainerToggle: function () {
-                var containerToggleAdd = function (config, context) {
-                    var c = context || document;
+                var containerToggleAdd = function () {
+                    var c = document;
                     $('.js-container--toggle', c).each(function (container) {
                         new ContainerToggle(container).addToggle();
                     });
@@ -65,7 +65,7 @@ define([
                     'ui:container-toggle:add':  containerToggleAdd,
                     'modules:geomostpopular:ready': containerToggleAdd
                 });
-                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function (config, context) {
+                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function () {
                     $('.js-container--toggle', context).each(function (container) {
                         new ContainerToggle(container).addToggle();
                     });
@@ -79,7 +79,7 @@ define([
             }
         },
 
-        ready = function (config, context) {
+        ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
                 modules.showSnaps();
@@ -87,7 +87,7 @@ define([
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
             }
-            mediator.emit('page:front:ready', config, context);
+            mediator.emit('page:front:ready');
         };
 
     return {
