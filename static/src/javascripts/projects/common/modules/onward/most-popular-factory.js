@@ -4,7 +4,7 @@ define([
     'common/modules/onward/socially-referred-burners'
 ], function (
     qwery,
-    popular,
+    Popular,
     SocialBurners
 ) {
 
@@ -21,7 +21,7 @@ define([
         if (MostPopularFactory.showReferredContent) {
             new SocialBurners(this.config, qwery('.js-referred')).init();
         } else {
-            popular(this.config);
+            new Popular().init();
         }
     };
     return MostPopularFactory;

@@ -50,8 +50,7 @@ define([
     GeoMostPopularFront.prototype.ready = function () {
         if(this.isNetworkFront) {
             $('.js-tabs-content', this.parent).addClass('tabs__content--no-border');
-        } else {
-            $('.js-tabs', this.parent).removeClass('u-h');
+            $('.js-tabs', this.parent).addClass('u-h');
         }
         register.end('most-popular');
         this.mediator.emit('modules:geomostpopular:ready');
