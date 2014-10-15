@@ -1,6 +1,6 @@
 package lib
 
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import org.joda.time.{Duration, DateTimeZone, DateTime}
 
 object CacheHeaders {
@@ -10,7 +10,7 @@ object CacheHeaders {
 
   private def rfc2822String(dateTime: DateTime) = dateTime.withZone(GmtTimeZone).toString(DateTimePattern)
 
-  implicit class RichSimpleResult(result: SimpleResult) {
+  implicit class RichSimpleResult(result: Result) {
     def withLastModified(lastModified: DateTime) = result.withHeaders(
       "Last-Modified" -> rfc2822String(lastModified)
     )

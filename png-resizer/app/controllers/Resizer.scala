@@ -1,10 +1,14 @@
 package controllers
 
+import java.io.InputStream
+
+import org.apache.commons.io.IOUtils
 import play.api.mvc.{Controller, Action}
 import data.Backends
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.ws.WS
+import play.api.Play.current
 import lib.WS._
 import lib.Streams._
 import grizzled.slf4j.Logging
@@ -25,7 +29,7 @@ object Resizer extends Controller with Logging {
           case OK =>
             logger.info(s"Resizing $uri to $width pixels wide at $quality compression")
 
-            val image = response.getAHCResponse.getResponseBodyAsStream.toBufferedImage
+            val image = IOUtils.toInputStream(response.body).toBufferedImage
             val resized = Im4Java.resizeBufferedImage(image, width, quality)
 
             Ok(resized).as("image/png").withTimeToLive(
