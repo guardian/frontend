@@ -25,9 +25,14 @@
             @fragments.mostPopularPlaceholder(content.section, content.visualTone)
         </div>
 
-        <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
-            @fragments.outbrainPlaceholder()
-        </div>
+        @content match {
+            case article: Article if !article.isLiveBlog => {
+                <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
+                    @fragments.outbrainPlaceholder()
+                </div>
+            }
+            case _ => { }
+        }
     }
 
     @if(!content.shouldHideAdverts && !content.isAdvertisementFeature) {
