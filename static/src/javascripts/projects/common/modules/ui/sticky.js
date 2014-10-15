@@ -24,11 +24,11 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var css,
+        var css, elementTop,
             $element = bonzo(this.element);
         // have we scrolled past the element
         if (window.scrollY >= this.elementDocOffset - this.top) {
-            var elementTop = this.container ?
+            elementTop = this.container ?
                 // make sure the element stays within the container
                 Math.min(this.top, this.container.getBoundingClientRect().bottom - $element.dim().height) :
                 this.top;

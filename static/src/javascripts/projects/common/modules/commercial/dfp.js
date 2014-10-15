@@ -153,7 +153,7 @@ define([
         },
         callbacks = {
             '300,251': function (e, $adSlot) {
-                var sticky = new Sticky($adSlot[0], { top: 12, container: qwery('.content__secondary-column')[0] });
+                new Sticky($adSlot[0], { top: 12, container: qwery('.content__secondary-column')[0] }).init();
             }
         },
 
