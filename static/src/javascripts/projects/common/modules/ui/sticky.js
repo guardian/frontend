@@ -1,37 +1,41 @@
 define([
     'bonzo',
-    'common/utils/$',
+    'lodash/functions/throttle',
     'common/utils/mediator'
 ], function (
     bonzo,
-    $,
+    throttle,
     mediator
 ) {
 
-    var Sticky = function (element, top, options) {
-        this.$element   = bonzo(element);
-        this.top        = top;
-        this.bottom     = options.bottom;
+    var Sticky = function (element, options) {
+        this.element          = element;
+        this.top              = options.top || 0;
+        this.container        = options.container;
         // position of element from document top
-        this.elementTop = element.getBoundingClientRect().top + window.scrollY;
+        this.elementDocOffset = this.element.getBoundingClientRect().top + window.scrollY;
 
-        mediator.on('window:scroll-immediate', this.updatePosition.bind(this));
+        mediator.on('window:scroll-immediate', throttle(this.updatePosition.bind(this), 10));
         // kick off an initial position update
         this.updatePosition();
     };
 
     Sticky.prototype.updatePosition = function () {
-        if (window.scrollY >= this.elementTop) {
-            // if there's a bottom param, limit how far the bottom of the element is from the top of the document
-            var limit = this.bottom ? this.bottom - window.scrollY + this.$element.dim().height : this.top;
-            this.css(this.$element, 'fixed', Math.min(this.top, limit));
+        // have we scrolled past the element
+        if (window.scrollY >= this.elementDocOffset - this.top) {
+            var elementTop = this.container ?
+                // make sure the element stays within the container
+                Math.min(this.top, this.container.getBoundingClientRect().bottom - bonzo(this.element).dim().height) :
+                this.top;
+
+            this.css(this.element, 'fixed', elementTop);
         } else {
-            this.css(this.$element, null, null);
+            this.css(this.element, null, null);
         }
     };
 
-    Sticky.prototype.css = function ($element, position, top) {
-        return $element.css({
+    Sticky.prototype.css = function (element, position, top) {
+        return bonzo(element).css({
             position: position,
             top:      top
         });
