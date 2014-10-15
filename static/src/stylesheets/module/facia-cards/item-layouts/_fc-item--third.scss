@@ -29,8 +29,14 @@ x x x x x x x x
 @mixin fc-item--third {
     @include fc-item--standard;
 
-    &.fc-item--has-cutout .fc-item__container {
-        padding-bottom: gs-height(3);
+    &.fc-item--has-cutout {
+        .fc-item__container {
+            padding-bottom: gs-height(3);
+        }
+
+        .fc-sublinks {
+            padding-right: gs-span(2);
+        }
     }
 
     .fc-item__avatar {
