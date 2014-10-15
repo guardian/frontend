@@ -149,6 +149,15 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'showMainVideo',
+                    editable: true,
+                    omitForSupporting: true,
+                    requiresState: 'hasMainVideo',
+                    singleton: 'images',
+                    label: 'show video',
+                    type: 'boolean'
+                },
+                {
                     key: 'showBoostedHeadline',
                     editable: true,
                     omitForSupporting: true,
@@ -167,15 +176,6 @@ define([
                     editable: true,
                     omitForSupporting: true,
                     label: 'byline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showMainVideo',
-                    editable: true,
-                    omitForSupporting: true,
-                    requiresState: 'hasMainVideo',
-                    singleton: 'images',
-                    label: 'show video',
                     type: 'boolean'
                 },
                 {
