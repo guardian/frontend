@@ -11,7 +11,7 @@
 
                 <h1 class="content__headline js-score" itemprop="headline">
                     @if(content.isAnalysis) {
-                        <span class="content__headline--kicker">Analysis</span>
+                        <span class="content__headline__kicker">Analysis</span>
                     }
                     @Html(content.headline)
                 </h1>
@@ -24,6 +24,10 @@
                     @content.byline.map { text =>
                         <span class="content__headline content__headline--byline">@ContributorLinks(text, content.contributors)</span>
                     }
+                }
+
+                @if(content.hasTonalHeaderIllustration) {
+                    <span class="content__head__illustration hide-on-mobile"><i class="i i-illustration-letters"></i></span>
                 }
 
                 @content.starRating.map { s =>

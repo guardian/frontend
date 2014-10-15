@@ -32,6 +32,30 @@
     $c-commentDefault // $tonal__article-link
 );
 
+// Letters
+.tonal--tone-letters {
+    @extend .tonal--tone-comment;
+
+    .tonal__header {
+        .content__head__illustration {
+            margin-bottom: -$gs-baseline*2;
+            position: absolute;
+            bottom: 0;
+            right: $gs-gutter;
+            display: block;
+        }
+    }
+
+    .tonal__standfirst {
+        .content__standfirst {
+            @include mq(tablet, desktop) {
+                @include box-sizing(border-box);
+                padding-right: gs-span(3);
+            }
+        }
+    }
+}
+
 // Editorial
 @include tone-article(
     editorial, // $tone

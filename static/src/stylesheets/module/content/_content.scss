@@ -30,6 +30,10 @@
     margin: auto;
     position: relative;
 
+    .content__head & {
+        position: static;
+    }
+
     @include mq(tablet, desktop) {
         max-width: gs-span(9);
 
@@ -204,7 +208,7 @@
     }
 }
 
-.content__headline--kicker {
+.content__headline__kicker {
     &:after {
         content: ' /';
         color: fade-out($c-neutral1, .8);
