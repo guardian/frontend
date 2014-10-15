@@ -28,10 +28,10 @@
     <div class="pagination u-cf">
 
         @if(showLegend){
-            <div class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
+            <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</span>
         }
 
-        <ol class="u-unstyled pagination__links">
+        <ol class="u-unstyled pagination__list">
             @if(showExtremes){
                 @paginationPointer(if(pagination.currentPage == pagination.lastPage) None else Some(pagination.lastPage), "last", page.url)
             }

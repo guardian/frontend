@@ -58,7 +58,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     }
 }
 
-.pagination__links {
+.pagination__list {
     width: 100%;
 
     @include mq(tablet) {
