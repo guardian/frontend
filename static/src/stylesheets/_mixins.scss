@@ -187,12 +187,13 @@
     align-items: stretch;
 }
 
+// note that if using this in a media query, the fallback needs to
+// be windowed between breakpoints, because the nth-child is not reset
 @mixin columns($cols: 1, $gap: 0) {
     @if $browser-supports-columns {
         -webkit-column-count: $cols;
         -moz-column-count: $cols;
         column-count: $cols;
-
         -webkit-column-gap: $gap;
         -moz-column-gap: $gap;
         column-gap: $gap;
@@ -205,6 +206,10 @@
             float: left;
             padding-left: $gap * .5;
             padding-right: $gap * .5;
+
+            &:nth-child(#{$cols}n+1) {
+                clear: left;
+            }
         }
     }
 }
@@ -227,4 +232,10 @@
 
 %absolute-center {
     @include absolute-center;
+}
+
+@mixin column-break--avoid {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
 }
