@@ -56,10 +56,6 @@ GET        /commercial/money/current-accounts/:currentAccountType    controllers
 GET        /commercial/money/credit-cards/:creditCardType            controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
 
-GET        /commercial/money/bestbuys-v2.json                        controllers.commercial.MoneyOffers.bestBuysLowJsonV2
-GET        /commercial/money/bestbuys-high-v2.json                   controllers.commercial.MoneyOffers.bestBuysHighJsonV2
-
-
 # Book offers
 GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellersLowHtml
 GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellersLowJson
