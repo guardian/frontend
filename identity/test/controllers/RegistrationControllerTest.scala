@@ -28,7 +28,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   val createdUser = mock[User]
   val trackingData = mock[TrackingData]
 
-  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/comeback"), Some("123.456.789.12"))
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/comeback"), Some("123.456.789.12"), Some(false))
   val conf = new IdentityConfiguration
   val signinService = new PlaySigninService(conf)
   val user = User("test@example.com", "123")
@@ -46,7 +46,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val request = TestRequest()
       val returnUrl = Some("http://example.com/return")
       when(returnUrlVerifier.getVerifiedReturnUrl(request)).thenReturn(returnUrl)
-      val result = registrationController.renderForm(returnUrl)(request)
+      val result = registrationController.renderForm(returnUrl, Some(false))(request)
       status(result) should equal(OK)
     }
   }
