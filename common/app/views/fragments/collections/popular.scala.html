@@ -4,23 +4,23 @@
 
 @defining(popular.size > 1){ isTabbed =>
 
-    <div id="popular-trails" data-link-name="most popular" data-test-id="popular-in">
+    <div id="popular-trails" class="facia-slice facia-slice--popular" data-link-name="most popular" data-test-id="popular-in">
 
         @if(isTabbed) {
             <div class="tabs u-cf">
-                <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
+                <ol class="tabs__container u-h js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                         <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
                             <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular in </span>@Html(section.heading)</a>
                         </li>
                     }
                 </ol>
-                <div class="tabs__content">
+                <div class="tabs__content js-tabs-content">
         }
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                 class="@if(isTabbed){tabs__pane @if(!info.isFirst){modern-hidden}} u-cf"
+                 class="@if(isTabbed){tabs__pane js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} u-cf"
                  @if(isTabbed){
                      role="tabpanel"
                      aria-labelledby="tabs-popular-@info.rowNum-tab"
@@ -28,26 +28,22 @@
                  data-link-name="@section.heading"
                  data-link-context="most-read/@section.section">
 
-                <ul class="u-unstyled l-row l-row--items-2 l-row--cols-3 facia-slice facia-slice--popular">
-
-                    <li class="facia-slice__item l-row__item l-row__item--span-2">
-                        <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
-                            @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                                <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item">
-                                    <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
-                                        <span class="headline-list__count">@info.rowNum</span>
-                                        <h4 class="headline-list__body">
-                                            @Html(trail.linkText)
-                                        </h4>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </li>
-                    <li class="facia-slice__item l-row__item l-row__item--span-1 js-facia-slice__item--mpu"></li>
+                <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+                    @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item">
+                            <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
+                                <span class="headline-list__count">@info.rowNum</span>
+                                <h4 class="headline-list__body">
+                                    @Html(trail.linkText)
+                                </h4>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         }
+
+            <div class="facia-slice__popular-mpu js-facia-slice__item--mpu facia-slice__item--no-mpu"></div>
 
         @if(isTabbed) {
                 </div>
