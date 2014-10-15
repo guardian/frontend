@@ -14,10 +14,8 @@ define([
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/discussion/recommend-comments',
     'common/modules/identity/api',
-    'common/modules/ui/relativedates',
-    'common/modules/userPrefs'
+    'common/modules/ui/relativedates'
 ], function(
     bean,
     bonzo,
@@ -34,50 +32,31 @@ define([
     Component,
     DiscussionApi,
     CommentBox,
-    RecommendComments,
     Id,
-    relativedates,
-    userPrefs
+    relativedates
 ) {
 'use strict';
 
 var Comments = function(options) {
     this.setOptions(options);
-    this.options.order = userPrefs.get('discussion.order') || 'newest';
-    this.options.expand = userPrefs.get('discussion.expand') || false;
-    this.options.unthreaded = userPrefs.get('discussion.unthreaded') || false;
 };
 
 Component.define(Comments);
 
-Comments.prototype.componentClass = 'd-discussion';
+Comments.prototype.componentClass = 'd-comments';
 
 Comments.prototype.classes = {
-    jsContent: 'js-discussion-content',
-    container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    changePage: 'js-discussion-change-page',
-    showMoreHiddenContainer: 'show-more__container--hidden',
-    showMoreNewer: 'd-discussion__show-more--newer',
-    showMoreOlder: 'd-discussion__show-more--older',
-    showMoreLoading: 'd-discussion__show-more-loading',
-    showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     showRepliesButton: 'd-show-more-replies__button',
-    heading: 'discussion__heading',
     newComments: 'js-new-comments',
-    orderControl: 'd-discussion__order-control',
-    loader: 'd-discussion__loader',
 
     comment: 'd-comment',
-    commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
-    commentRecommend: 'd-comment__recommend',
     commentStaff: 'd-comment--staff',
-    commentBlocked: 'd-comment--blocked',
     commentBody: 'd-comment__body',
     commentTimestampJs: 'js-timestamp',
     commentReport: 'js-report-comment'
@@ -88,7 +67,7 @@ Comments.prototype.defaultOptions = {
     showRepliesCount: 3,
     commentId: null,
     order: 'newest',
-    state: null
+    threading: 'collapsed'
 };
 
 Comments.prototype.comments = null;
@@ -100,15 +79,8 @@ Comments.prototype.ready = function() {
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
-    if (this.options.state) {
-        this.setState(this.options.state);
-    }
-
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
-    this.on('click', this.getClass('changePage'), this.changePage);
-    this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
-    this.on('change', this.getClass('orderControl'), this.setOrder);
 
     window.setInterval(
         function () {
@@ -120,19 +92,9 @@ Comments.prototype.ready = function() {
     this.emit('ready');
     this.relativeDates();
 
-    $('.js-report-comment-close', this.elem).each(function(close) {
-        bean.on(close, 'click', function() {
-            $('.js-report-comment-form').addClass('u-h');
-        });
+    this.on('click', '.js-report-comment-close', function() {
+        $('.js-report-comment-form').addClass('u-h');
     });
-
-    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
-};
-
-Comments.prototype.handleBodyClick = function(clickspec) {
-    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-        this.showHiddenComments();
-    }
 };
 
 Comments.prototype.handlePickClick = function(e) {
@@ -156,7 +118,6 @@ Comments.prototype.pickComment = function(commentId, $thisButton) {
         .pickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), comment).addClass('d-comment__recommend--left');
             $thisButton.text('Unpick');
             comment.setAttribute('data-comment-highlighted', true);
         });
@@ -170,7 +131,6 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         .unPickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).addClass('u-h');
-            $(self.getClass('commentRecommend'), comment).removeClass('d-comment__recommend--left');
             $thisButton.text('Pick');
             comment.setAttribute('data-comment-highlighted', false);
         });
@@ -192,21 +152,11 @@ Comments.prototype.gotoComment = function(id) {
 };
 
 Comments.prototype.gotoPage = function(page) {
-    this.loading();
-    scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
+    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
     this.relativeDates();
     return this.fetchComments({
         page: page
-    }).then(function() {
-        this.loaded();
-    }.bind(this));
-};
-
-Comments.prototype.changePage = function(e) {
-    e.preventDefault();
-    var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-    this.relativeDates();
-    return this.gotoPage(page);
+    });
 };
 
 Comments.prototype.fetchComments = function(options) {
@@ -219,10 +169,10 @@ Comments.prototype.fetchComments = function(options) {
     var queryParams = {
         orderBy: options.order || this.options.order,
         pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        displayThreaded: !this.options.unthreaded
+        displayThreaded: this.options.threading !== 'unthreaded'
     };
 
-    if (!this.options.expand && !options.comment ) {
+    if (this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
     }
 
@@ -236,7 +186,6 @@ Comments.prototype.fetchComments = function(options) {
 };
 
 Comments.prototype.goToPermalink = function(commentId) {
-
     if (commentId) {
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
@@ -252,18 +201,12 @@ Comments.prototype.renderComments = function(resp) {
     bonzo(this.elem).empty().append(contentEl);
     this.addMoreRepliesButtons(comments);
 
-    if (!this.isReadOnly()) {
-        RecommendComments.initButtons($(this.getClass('commentRecommend'), this.elem));
-    }
-
     this.relativeDates();
-    this.emit('loaded');
+    this.emit('rendered');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
-    this.removeState('shut');
-    this.removeState('partial');
     this.emit('first-load');
     this.relativeDates();
 };
@@ -318,12 +261,6 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(qwery('.d-thread--responses', source)).append(replies);
         bonzo(li).addClass('u-h');
 
-        if (!self.isReadOnly()) {
-            var btns = _map(replies, function(reply) {
-                return qwery(self.getClass('commentRecommend'), reply)[0];
-            });
-            RecommendComments.initButtons(btns);
-        }
         self.relativeDates();
     });
 };
@@ -453,52 +390,6 @@ Comments.prototype.replyToComment = function(e) {
     });
 };
 
-Comments.prototype.showDiscussion = function() {
-    var showDiscussionElem = $('.d-discussion__show-all-comments');
-    if (!showDiscussionElem.hasClass('u-h')) {
-        bean.fire(showDiscussionElem, 'click');
-        showDiscussionElem.addClass('u-h');
-    }
-    this.relativeDates();
-};
-
-Comments.prototype.loading = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
-    $(this.getClass('loader'), this.elem).removeClass('u-h').css({
-        height: $content.offset().height
-    });
-    $content.addClass('u-h');
-};
-
-Comments.prototype.loaded = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
-    $(this.getClass('loader'), this.elem).addClass('u-h').css({
-        height: 'auto'
-    });
-    $content.removeClass('u-h');
-};
-
-Comments.prototype.setOrder = function(e) {
-    var elem = e.currentTarget,
-        newWorldOrder = elem.options[elem.selectedIndex].value,
-        $newComments = $(this.getElem('newComments'));
-
-    this.options.order = newWorldOrder;
-    this.showDiscussion();
-    this.loading();
-
-    $newComments.empty();
-    userPrefs.set('discussion.order', newWorldOrder);
-
-    return this.fetchComments({
-        page: 1
-    }).then(function() {
-        this.showHiddenComments();
-        this.loaded();
-        this.relativeDates();
-    }.bind(this));
-};
-
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
 
@@ -542,7 +433,6 @@ Comments.prototype.addUser = function(user) {
     }
 
     if (!this.isReadOnly()) {
-        RecommendComments.init();
 
         if (this.user && this.user.privateFields.canPostComment) {
 

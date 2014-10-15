@@ -2,6 +2,7 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
+    'lodash/functions/debounce',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/discussion/api',
@@ -13,6 +14,7 @@ define([
     $,
     bean,
     bonzo,
+    debounce,
     config,
     mediator,
     DiscussionApi,
@@ -151,8 +153,11 @@ CommentBox.prototype.ready = function() {
     bean.on(document.body, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(document.body, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+
+    this.on('change', '.d-comment-box__body', this.resetPreviewComment);
     this.on('click', this.getClass('preview'), this.previewComment);
     this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
+
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
