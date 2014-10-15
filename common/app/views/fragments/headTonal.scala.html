@@ -1,4 +1,4 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 <header class="content__head
     @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
@@ -30,6 +30,10 @@
                     @fragments.items.elements.starRating(content)
                 }
 
+                @if(showBadge) {
+                    @fragments.commercial.badge(content)
+                }
+
                 @if(content.isCommentable) {
                     <div class="content__head__comment-count js-comment-count"></div>
                 }
@@ -41,7 +45,9 @@
         @if(content.hasStandfirst) {
             <div class="gs-container">
                 <div class="content__main-column">
-                    @fragments.standfirst(content)
+                    @if(!content.delegate.isVideo && !content.delegate.isGallery) {
+                        @fragments.standfirst(content)
+                    }
                 </div>
             </div>
         }

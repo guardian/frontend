@@ -20,7 +20,6 @@ $block-padding-right: $gs-gutter;
 .content__meta-container--liveblog {
     border-top: 1px dotted;
     border-bottom: 0;
-    margin: 0;
     padding-top: $gs-baseline/2;
 
     @include mq(rightCol) {

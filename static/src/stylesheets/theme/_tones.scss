@@ -12,19 +12,12 @@
             }
         }
 
-        .tone-border,
-        &.tone-border {
-            border-color: $colour;
-        }
-
         .tone-accent-border,
         &.tone-accent-border {
             border-color: $accentColour;
         }
 
-        .tone-background,
-        %tone-background,
-        &.tone-background {
+        %tone-background {
             background-color: $colour;
         }
 

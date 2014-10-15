@@ -501,12 +501,6 @@
 
 }
 
-.commentcount__label {
-    .content__head & {
-        @extend %u-h;
-    }
-}
-
 .content--advertisement-feature {
     background-color: $c-neutral8;
 
