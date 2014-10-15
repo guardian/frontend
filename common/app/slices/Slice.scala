@@ -636,21 +636,21 @@ case object TTT extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       )
     )
@@ -673,14 +673,14 @@ case object TTTL4 extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       Rows(
@@ -712,7 +712,7 @@ case object TTlMpu extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       Rows(

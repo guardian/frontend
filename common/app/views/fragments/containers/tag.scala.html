@@ -20,7 +20,7 @@
             }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
-                <div class="fc-container__header">
+                <div class="fc-container__header js-container__header">
                     @FootballTagPage(page).asOpt.map{ footballTagPage =>
                         @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
                     }.getOrElse{

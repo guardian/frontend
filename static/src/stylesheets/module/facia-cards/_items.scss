@@ -5,6 +5,7 @@
 }
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--third';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
@@ -105,9 +106,9 @@
     }
 }
 
-.fc-item--half-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--half;
+.fc-item--third-tablet {
+    @include mq(tablet) {
+        @include fc-item--third;
     }
 }
 
@@ -133,7 +134,7 @@
     @include mq(tablet) {
         @include fc-item--full;
 
-        .fc-sublinks__item:nth-child(n+5) {
+        .fc-sublink:nth-child(n+5) {
             display: none;
         }
     }

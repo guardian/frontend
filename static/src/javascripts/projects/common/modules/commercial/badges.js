@@ -1,21 +1,21 @@
 define([
     'qwery',
     'bonzo',
-    'lodash/objects/defaults',
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/template',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'text!common/views/commercial/badge.html'
 ], function (
     qwery,
     bonzo,
-    defaults,
     once,
     $,
     template,
-    globalConfig,
-    dfp
+    config,
+    dfp,
+    badgeTpl
 ) {
 
     var adBadgeCount = 0,
@@ -23,10 +23,7 @@ define([
         addPreBadge = function ($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
-                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                        '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
-                        '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
-                    '</div>',
+                    badgeTpl,
                     {
                         header: isSponsored ? 'Sponsored by:' : 'Brought to you by:',
                         sponsor: sponsor
@@ -45,15 +42,7 @@ define([
                 .after($adSlot);
             return $adSlot;
         },
-        init = function (c) {
-
-            var config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    switches: {}
-                }
-            );
+        init = function () {
 
             if (!config.switches.sponsored) {
                 return false;
@@ -98,12 +87,6 @@ define([
                     // add slot to dfp
                     dfp.addSlot($adSlot);
                 }
-            },
-
-            // really only useful for testing
-            reset: function () {
-                badges.init = once(init);
-                adBadgeCount = spBadgeCount = 0;
             }
 
         };

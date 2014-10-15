@@ -184,8 +184,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be true for front of an ad feature section with a multi-part section name" in {
-    testDfpAgent.isAdvertisementFeature("sustainable-business/grundfos-partner-zone",
-      Some("sustainable-business/grundfos-partner-zone")) should be(true)
+    testDfpAgent.isAdvertisementFeature(
+      tagId = "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
+      sectionId = Some("sustainable-business/grundfos-partner-zone")
+    ) should be(true)
   }
 
   it should "be true for an article in an ad feature section with a multi-part section name" in {

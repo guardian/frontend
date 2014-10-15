@@ -19,7 +19,8 @@
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
-    "fastclick": "guardian/fastclick#master"
+    "fastclick": "guardian/fastclick#master",
+    "requirejs-text": "~2.0.12"
   },
   "resolutions": {
     "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf",
