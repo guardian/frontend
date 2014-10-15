@@ -15,12 +15,8 @@ define([
             itemsHiddenOnMobile = qwery('.js-hide-on-mobile', $container).length > 0,
             className = 'fc-show-more--hidden',
             $button = $.create(
-            '<button class="collection__show-more tone-background tone-news" data-test-id="show-more" data-link-name="Show more | 1">' +
-            '<span class="collection__show-more__icon">' +
-            '<span class="i i-plus-white-mask"></span>' +
-            '<span class="i i-plus-white"></span>' +
-            '</span>' +
-            '<span class="u-h">Show more</span>' +
+            '<button class="button button--medium button--show-more collection__show-more button--tertiary" data-test-id="show-more" data-link-name="Show more | 1">' +
+            '<i class="i i-plus-neutral1"></i>View more stories' +
             '</button>'
         );
 
