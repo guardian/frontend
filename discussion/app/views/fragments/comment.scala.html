@@ -69,14 +69,14 @@
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
-                    <span class="d-comment__recommend-count js-recommend-count">
-                        <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
-                        <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
-                    </span>
                     <button class="u-button-reset d-comment__recommend-button">
                         <span class="d-comment__recommend-pulse"></span>
                         <i></i>
                     </button>
+                    <span class="d-comment__recommend-count js-recommend-count">
+                        <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
+                        <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
+                    </span>
                 </div>
             }
 
