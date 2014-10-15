@@ -12,6 +12,9 @@ define([
         this.element          = element;
         this.top              = options.top || 0;
         this.container        = options.container;
+    };
+
+    Sticky.prototype.init = function () {
         // position of element from document top
         this.elementDocOffset = this.element.getBoundingClientRect().top + window.scrollY;
 

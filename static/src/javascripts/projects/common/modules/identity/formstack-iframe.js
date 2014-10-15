@@ -1,11 +1,13 @@
 define([
     'bean',
     'lodash/functions/debounce',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/mediator'
 ], function (
     bean,
     debounce,
-    $
+    $,
+    mediator
 ) {
 
     function FormstackIframe(el, config) {
