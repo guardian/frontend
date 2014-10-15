@@ -70,7 +70,7 @@ define([
                 });
             },
 
-            upgradeMostPopularToGeo: function (config) {
+            upgradeMostPopularToGeo: function () {
                 //if (config.switches.geoMostPopular) {
                 if (true) {
                     new GeoMostPopularFront().go();
