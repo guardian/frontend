@@ -1,28 +1,3 @@
-// Styles for elements available for painting at initial load
-@mixin tone-head($tone, $colour, $accentColour) {
-    .tone-#{$tone} {
-        .tone-colour,
-        %tone-colour,
-        &.tone-colour {
-            &,
-            &:active,
-            &:focus,
-            &:hover {
-                color: $colour;
-            }
-        }
-
-        .tone-accent-border,
-        &.tone-accent-border {
-            border-color: $accentColour;
-        }
-
-        .is-summary > .block-title {
-            color: $colour;
-        }
-    }
-}
-
 // Styles with global dependencies
 // or for elements which painting can be delayed
 @mixin tone-comment-icon($tone, $headerCommentIcon) {
@@ -56,14 +31,14 @@
     $tonal__header-background,
     $tonal__header-text,
     $tonal__header-link,
+    $tonal__headline-weight,
+    $tonal__headline-colour,
+    $tonal__headline-accent,
     $tonal__standfirst-background,
     $tonal__standfirst-text,
     $tonal__standfirst-link,
     $tonal__article-background,
-    $tonal__article-link,
-    $tonal__headline-weight,
-    $tonal__headline-colour,
-    $tonal__headline-accent
+    $tonal__article-link
     ) {
     .tonal--tone-#{$tone} {
         .tonal__header {
@@ -94,18 +69,9 @@
             .content__headline--kicker {
                 color: $tonal__headline-accent;
             }
-
-            @include stars($width: 18px, $margin-top: -($gs-baseline * 1.5), $margin-bottom: $gs-baseline * 1.5, $margin-right: 2px);
-
-            .stars {
-                @include mq(tablet) {
-                    margin-top: -($gs-baseline * 2.5);
-                }
-            }
         }
 
         .tonal__standfirst {
-            color: $tonal__standfirst-text;
             background-color: $tonal__standfirst-background;
             padding-top: $gs-baseline / 2;
 
@@ -131,7 +97,6 @@
                 border-bottom-color: rgba($tonal__standfirst-text, .3);
 
                 &:hover {
-                    color: $tonal__standfirst-link;
                     border-bottom-color: rgba($tonal__standfirst-text, .7);
                 }
             }
@@ -146,8 +111,19 @@
                 padding-top: $gs-baseline * 2;
             }
 
+            .tone-colour,
+            %tone-colour,
+            &.tone-colour {
+                &,
+                &:active,
+                &:focus,
+                &:hover {
+                    color: $tonal__article-link;
+                }
+            }
+
             .drop-cap,
-            .tone-colour {
+            .element-pullquote cite {
                 color: $tonal__article-link;
             }
 

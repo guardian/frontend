@@ -1,147 +1,146 @@
 @import '_tones';
 
-@include tone-head(news, $c-newsDefault, $c-newsAccent);
-@include tone-head(comment, $c-commentDefault, $c-commentAccent);
-@include tone-head(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head(live, $c-liveDefault, $c-liveAccent);
-@include tone-head(media, $c-mediaDefault, $c-mediaDefault);
+// Analysis
+@include tone-article(
+    analysis, // $tone
+    $c-neutral7, // $tonal__header-background
+    $c-neutral2, // $tonal__header-text
+    $c-analysisDefault, // $tonal__header-link
+    400, // $tonal__headline-weight
+    $c-analysisDefault, // $tonal__headline-colour
+    $c-analysisAccent, // $tonal__headline-accent
+    $c-neutral8, // $tonal__standfirst-background
+    $c-neutral2, // $tonal__standfirst-text
+    $c-analysisDefault, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-analysisDefault // $tonal__article-link
+);
 
+// Comment
+@include tone-article(
+    comment, // $tone
+    $c-commentBackground, // $tonal__header-background
+    $c-neutral2, // $tonal__header-text
+    $c-commentDefault, // $tonal__header-link
+    200, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-commentDefault, // $tonal__headline-accent
+    $c-commentDefault, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-commentDefault // $tonal__article-link
+);
 
-@mixin tones-content {
-    // Analysis
-    @include tone-article(
-        analysis, // $tone
-        $c-neutral7, // $tonal__header-background
-        $c-neutral2, // $tonal__header-text
-        $c-analysisDefault, // $tonal__header-link
-        $c-neutral8, // $tonal__standfirst-background
-        $c-neutral2, // $tonal__standfirst-text
-        $c-analysisDefault, // $tonal__standfirst-link
-        #ffffff, // $tonal__article-background
-        $c-analysisDefault, // $tonal__article-link
-        400, // $tonal__headline-weight
-        $c-analysisDefault, // $tonal__headline-colour
-        $c-analysisAccent // $tonal__headline-accent
-    );
+// Editorial
+@include tone-article(
+    editorial, // $tone
+    $c-commentBackground, // $tonal__header-background
+    $c-neutral1, // $tonal__header-text
+    $c-brandBlue, // $tonal__header-link
+    200, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-brandBlue, // $tonal__headline-accent
+    $c-brandBlue, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-brandBlue // $tonal__article-link
+);
 
-    // Comment
-    @include tone-article(
-        comment, // $tone
-        $c-commentBackground, // $tonal__header-background
-        $c-neutral2, // $tonal__header-text
-        $c-commentDefault, // $tonal__header-link
-        $c-commentDefault, // $tonal__standfirst-background
-        #ffffff, // $tonal__standfirst-text
-        #ffffff, // $tonal__standfirst-link
-        #ffffff, // $tonal__article-background
-        $c-commentDefault, // $tonal__article-link
-        200, // $tonal__headline-weight
-        $c-neutral1, // $tonal__headline-colour
-        $c-commentDefault // $tonal__headline-accent
-    );
+// Feature
+@include tone-article(
+    feature, // $tone
+    $c-featureDefault, // $tonal__header-background
+    $c-neutral6, // $tonal__header-text
+    $c-featureAccent, // $tonal__header-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-featureAccent, // $tonal__headline-accent
+    $c-featureAccent2, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-featureDefault // $tonal__article-link
+);
 
-    // Editorial
-    @include tone-article(
-        editorial, // $tone
-        $c-commentBackground, // $tonal__header-background
-        $c-neutral1, // $tonal__header-text
-        $c-brandBlue, // $tonal__header-link
-        $c-brandBlue, // $tonal__standfirst-background
-        #ffffff, // $tonal__standfirst-text
-        #ffffff, // $tonal__standfirst-link
-        #ffffff, // $tonal__article-background
-        $c-brandBlue, // $tonal__article-link
-        200, // $tonal__headline-weight
-        $c-neutral1, // $tonal__headline-colour
-        $c-brandBlue // $tonal__headline-accent
-    );
+// Review
+@include tone-article(
+    review, // $tone
+    darken($c-reviewBackground, 10%), // $tonal__header-background
+    $c-neutral6, // $tonal__header-text
+    $c-reviewAccent, // $tonal__header-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-reviewAccent, // $tonal__headline-accent
+    $c-reviewBackground, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    darken($c-reviewBackground, 10%) // $tonal__article-link
+);
 
-    // Feature
-    @include tone-article(
-        feature, // $tone
-        $c-featureDefault, // $tonal__header-background
-        $c-neutral6, // $tonal__header-text
-        $c-featureAccent, // $tonal__header-link
-        $c-featureAccent2, // $tonal__standfirst-background
-        #ffffff, // $tonal__standfirst-text
-        #ffffff, // $tonal__standfirst-link
-        #ffffff, // $tonal__article-background
-        $c-featureDefault, // $tonal__article-link
-        200, // $tonal__headline-weight
-        #ffffff, // $tonal__headline-colour
-        $c-featureDefault // $tonal__headline-accent
-    );
+// Liveblog
+@include tone-article(
+    live, // $tone
+    $c-liveDefault, // $tonal__header-background
+    $c-neutral6, // $tonal__header-text
+    #ffffff, // $tonal__header-link
+    400, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-liveDefault, // $tonal__headline-accent
+    $c-liveAccent, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    $c-neutral8, // $tonal__article-background
+    $c-liveDefault // $tonal__article-link
+);
 
-    // Review
-    @include tone-article(
-        review, // $tone
-        darken($c-reviewBackground, 10%), // $tonal__header-background
-        $c-neutral6, // $tonal__header-text
-        $c-reviewAccent, // $tonal__header-link
-        $c-reviewBackground, // $tonal__standfirst-background
-        #ffffff, // $tonal__standfirst-text
-        #ffffff, // $tonal__standfirst-link
-        #ffffff, // $tonal__article-background
-        darken($c-reviewBackground, 10%), // $tonal__article-link
-        200, // $tonal__headline-weight
-        #ffffff, // $tonal__headline-colour
-        $c-reviewBackground // $tonal__headline-accent
-    );
+// Deadblog
+@include tone-article(
+    dead, // $tone
+    #ffffff, // $tonal__header-background
+    $c-neutral2, // $tonal__header-text
+    $c-liveDefault, // $tonal__header-link
+    400, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-liveDefault, // $tonal__headline-accent
+    $c-neutral6, // $tonal__standfirst-background
+    $c-mediaAccent2, // $tonal__standfirst-text
+    $c-liveDefault, // $tonal__standfirst-link
+    $c-neutral8, // $tonal__article-background
+    $c-liveDefault // $tonal__article-link
+);
 
-    // Liveblog
-    @include tone-article(
-        live, // $tone
-        $c-liveDefault, // $tonal__header-background
-        $c-neutral6, // $tonal__header-text
-        #ffffff, // $tonal__header-link
-        $c-liveAccent, // $tonal__standfirst-background
-        #ffffff, // $tonal__standfirst-text
-        #ffffff, // $tonal__standfirst-link
-        $c-neutral8, // $tonal__article-background
-        $c-liveDefault, // $tonal__article-link
-        400, // $tonal__headline-weight
-        #ffffff, // $tonal__headline-colour
-        $c-liveDefault // $tonal__headline-accent
-    );
+.tonal__header {
+    position: relative;
 
-    // Deadblog
-    @include tone-article(
-        dead, // $tone
-        #ffffff, // $tonal__header-background
-        $c-neutral2, // $tonal__header-text
-        $c-liveDefault, // $tonal__header-link
-        $c-neutral6, // $tonal__standfirst-background
-        $c-mediaAccent2, // $tonal__standfirst-text
-        $c-liveDefault, // $tonal__standfirst-link
-        $c-neutral8, // $tonal__article-background
-        $c-liveDefault, // $tonal__article-link
-        400, // $tonal__headline-weight
-        $c-neutral1, // $tonal__headline-colour
-        $c-liveDefault // $tonal__headline-accent
-    );
+    // Review stars
+    @include stars($width: 18px, $margin-top: -($gs-baseline * 1.5), $margin-bottom: $gs-baseline * 1.5, $margin-right: 2px);
 
-    /* Tonal byline / contributor image
-       ========================================================================== */
-    .tonal__header {
-        .content__headline--byline {
-            padding-bottom: $gs-baseline*2;
-            min-height: 0;
+    .stars {
+        @include mq(tablet) {
+            margin-top: -($gs-baseline * 2.5);
         }
+    }
 
-        .content__headline--byline,
-        .byline-img {
-            display: block;
-            padding-top: 0;
-            margin-top: -$gs-baseline*2;
+    // Byline
+    .content__headline--byline {
+        display: block;
+        padding-top: 0;
+        margin-top: -$gs-baseline*2;
 
-            @include mq(tablet) {
-                margin-top: -$gs-baseline*3;
-            }
+        @include mq(tablet) {
+            margin-top: -$gs-baseline*3;
         }
+    }
 
+    // Cutout byline image
+    .content__head--byline-pic & {
         .byline-img {
             float: right;
             height: $gs-baseline * 12.5;
+            z-index: 2;
 
             @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
@@ -149,10 +148,10 @@
             }
 
             @include mq(mobileLandscape) {
-                width: 0;
                 position: absolute;
                 bottom: 0;
                 right: gs-span(3);
+                width: 0;
                 height: 80%;
             }
 
@@ -164,17 +163,29 @@
                 right: gs-span(1) + $gs-gutter;
             }
         }
+
         .byline-img__img {
             height: 100%;
         }
-    }
 
-    .content__head--byline-pic {
-        .tonal__header .content__main-column {
-            @include mq(tablet) {
+        .content__head__comment-count {
+            position: absolute;
+
+            @include mq(desktop) {
+                position: static;
+            }
+        }
+
+        .content__main-column {
+            @include mq(mobileLandscape) {
+                min-height: gs-height(5);
+            }
+
+            @include mq(desktop) {
                 min-height: gs-height(4);
             }
         }
+
         .content__headline {
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;

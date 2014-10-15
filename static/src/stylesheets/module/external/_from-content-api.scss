@@ -329,7 +329,6 @@ figure.element--thumbnail + h2 {
         margin-top: 1px;
     }
     cite {
-        @extend %tone-colour;
         font-style: normal;
         color: $c-neutral2;
         @include fs-bodyHeading(2);
