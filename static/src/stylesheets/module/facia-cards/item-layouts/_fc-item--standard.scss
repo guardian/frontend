@@ -27,24 +27,9 @@ x x x x x x x x
 
 
 @mixin fc-item--standard {
-
-    .fc-item__header {
-        @include mq(tablet, desktop) {
-            @include fs-headline(2, true);
-            @include headline-boost(3);
-        }
-    }
-
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(4);
-        }
-
-        .fc-item__header,
-        .fc-sublinks {
-            @include mq($until: tablet) {
-                padding-right: 33%;
-            }
         }
     }
 
@@ -58,30 +43,6 @@ x x x x x x x x
 
     .fc-item__avatar__media {
         right: - gs-span(1);
-    }
-
-    @include mq(tablet) {
-        &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline * 3;
-        }
-
-        .fc-item__avatar__media {
-            right: -40%;
-        }
-    }
-
-    @include mq(desktop) {
-        &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline * 2;
-        }
-
-        .fc-item__avatar {
-            height: gs-height(4);
-        }
-
-        .fc-item__avatar__media {
-            right: -20%;
-        }
     }
 
     &[class*="fc-item--has-sublinks"] {
