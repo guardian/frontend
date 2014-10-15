@@ -33,7 +33,7 @@ define([
     GeoMostPopularFront.prototype.isNetworkFront = config.page.contentType === 'Network Front';
     GeoMostPopularFront.prototype.manipulationType = 'html';
 
-    GeoMostPopularFront.prototype.prerender = function() {
+    GeoMostPopularFront.prototype.prerender = function () {
         this.elem = $('.headline-list', this.elem)[0];
     };
 
@@ -48,7 +48,7 @@ define([
     };
 
     GeoMostPopularFront.prototype.ready = function () {
-        if(this.isNetworkFront) {
+        if (this.isNetworkFront) {
             $('.js-tabs-content', this.parent).addClass('tabs__content--no-border');
             $('.js-tabs', this.parent).addClass('u-h');
         }

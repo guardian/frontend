@@ -18,15 +18,15 @@ define([
         mediator.emit('register:begin', 'popular-in-section');
         this.hasSection = config.page && config.page.section && config.page.section !== 'global';
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
-    };
+    }
 
     Component.define(MostPopular);
 
-    MostPopular.prototype.init = function() {
+    MostPopular.prototype.init = function () {
         this.fetch(qwery('.js-popular-trails'), 'html');
     };
 
-    MostPopular.prototype.prerender = function() {
+    MostPopular.prototype.prerender = function () {
         this.$mpu = $('.js-facia-slice__item--mpu', this.elem);
         this.$mpu.attr('id', 'inline-3')
                     .attr('data-name', 'inline-3')
