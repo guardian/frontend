@@ -16,16 +16,10 @@ itemscope itemtype="http://schema.org/Comment">
         <div class="d-top-comment__pick" title="Guardian pick">Guardian Pick</div>
 
         <div class="d-top-comment__body" itemprop="text">
-            @if(comment.body.length > 450) {
-                @withJsoup(BulletCleaner(comment.body.take(450).stripSuffix(".") + "…"))(
-                    InBodyLinkCleaner("in body link")
-                )
-            } else {
-                @withJsoup(BulletCleaner(comment.body))(
-                    InBodyLinkCleaner("in body link")
-                )
-            }
-
+            @withJsoup(BulletCleaner(comment.body))(
+                InBodyLinkCleaner("in body link"),
+                Truncate(450)
+            )
         </div>
 
         <a class="d-top-comment__link js-jump-to-comment" href="@Configuration.discussion.url/comment-permalink/@comment.id" data-comment-id="@comment.id">
