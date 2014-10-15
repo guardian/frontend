@@ -7,6 +7,7 @@ Multi component (AKA Frankenponent)
         background: $c-neutral4;
         padding: 0 $gs-gutter/4 $gs-baseline/2;
     }
+    
     .commercial__multi-header {
         padding: $gs-baseline/6 $gs-gutter/4;
         margin: 0 (-$gs-gutter/4);
@@ -18,9 +19,18 @@ Multi component (AKA Frankenponent)
             .i-commercial-brand {
                 height: $gs-baseline*1.3333;
             }
+            
+            &.i-soulmates-title-background {
+                height: 60px;
+                text-align: right;
+                
+                .i-soulmates-logo {
+                    margin-top: $gs-baseline*2.5;
+                    margin-right: $gs-gutter*1.5;
+                }
+            }
         }
     }
-    
     .lineitem {
         width: 25%;
     }
@@ -28,12 +38,12 @@ Multi component (AKA Frankenponent)
         margin: 0 (-$gs-gutter/4);
         width: 100%;
         width: calc(100% + #{$gs-gutter/2});
+        
         .lineitem__image {
             left: -7.5%;
             right: -7.5%;
             width: 116.6667%
         }
-
         .lineitem__image-portrait {
             left: 0;
             right: auto;
