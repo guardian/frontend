@@ -13,6 +13,7 @@
         case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(collection), NewsContainer(), index, dataId)(request, templateDeduping, config) }
         case Some("news/headline")              => { @containers.headline(collection, HeadlineContainer(), index, dataId)(request, config) }
         case Some("news/most-popular")          => { @containers.popular(collection, PopularContainer(), index, dataId)(request, config) }
+        case Some("nav/list")                   => { @containers.navlist(collection, index, dataId)(request, config) }
         case Some("news/people")                => { @containers.people(collection, PeopleContainer(), index, dataId)(request, templateDeduping, config) }
         case Some("news/small-list")            => { @containers.small_list(collection, SpecialContainer(), index, dataId)(request, config) }
         case Some("news/special")               => { @containers.special(collection, SpecialContainer(), index, dataId)(request, templateDeduping, config) }
