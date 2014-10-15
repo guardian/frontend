@@ -122,3 +122,21 @@ Hence why a greater depth of selector specificity is needed.
         }
     }
 }
+
+.facia-slice--nav-list {
+    @include mq($until: tablet) {
+        @include columns;
+    }
+    @include mq(tablet, desktop) {
+        @include columns($cols: 3, $gap: $gs-gutter * .5);
+    }
+    @include mq(desktop) {
+        @include columns($cols: 4, $gap: $gs-gutter * .5);
+    }
+}
+
+.facia-slice__item--nav-list {
+    @include vertical-item-separator;
+    position: relative;
+    @include column-break--avoid;
+}
