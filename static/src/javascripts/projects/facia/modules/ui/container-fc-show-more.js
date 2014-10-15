@@ -4,7 +4,7 @@ define([
     'bean',
     'qwery',
     'common/utils/template',
-    'text!facia/views/show-more.html'
+    'text!facia/views/button-show-more.html'
 ], function (
     $,
     bonzo,
@@ -31,7 +31,7 @@ define([
 
         if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
             if (!itemsHiddenOnDesktop) {
-                $container.addClass('fc-show-more--mobile-only');
+                className += " fc-show-more--mobile-only";
             }
 
             $container.addClass(className)
