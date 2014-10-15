@@ -54,19 +54,19 @@ define([
             },
 
             showContainerToggle: function () {
-                var containerToggleAdd = function () {
-                    var c = document;
-                    $('.js-container--toggle', c).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
-                };
+                var c = document,
+                    containerToggleAdd = function () {
+                        $('.js-container--toggle', c).each(function (container) {
+                            new ContainerToggle(container).addToggle();
+                        });
+                    };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
                     'ui:container-toggle:add':  containerToggleAdd,
                     'modules:geomostpopular:ready': containerToggleAdd
                 });
                 mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function () {
-                    $('.js-container--toggle', context).each(function (container) {
+                    $('.js-container--toggle', c).each(function (container) {
                         new ContainerToggle(container).addToggle();
                     });
                 });
