@@ -152,19 +152,8 @@ define([
             }
         },
         callbacks = {
-            '300,250': function (e, $adSlot) {
-                console.log('1');
-                var $col   = $('.content__secondary-column'),
-                    bottom = $col.dim().height + $col[0].getBoundingClientRect().top + window.scrollY,
-                    sticky = new Sticky($adSlot[0], 12, { bottom: bottom });
-                console.log('2');
-            },
-            '300,600': function (e, $adSlot) {
-                console.log('3');
-                var $col   = $('.content__secondary-column'),
-                    bottom = $col.dim().height + $col[0].getBoundingClientRect().top + window.scrollY,
-                    sticky = new Sticky($adSlot[0], 12, { bottom: bottom });
-                console.log('4');
+            '300,251': function (e, $adSlot) {
+                var sticky = new Sticky($adSlot[0], { top: 12, container: qwery('.content__secondary-column')[0] });
             }
         },
 
