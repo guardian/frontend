@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/utils/$',
+    'common/utils/config',
     'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
@@ -16,6 +17,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front'
 ], function (
     $,
+    config,
     ajax,
     mediator,
     bonzo,
@@ -83,7 +85,7 @@ define([
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo(config);
+                modules.upgradeMostPopularToGeo();
             }
             mediator.emit('page:front:ready', config, context);
         };
