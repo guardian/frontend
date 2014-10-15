@@ -1,4 +1,4 @@
-.tone-analysis {
+.tone-analysis--item {
     @extend %tone-has-background;
 
     &.fc-item {
@@ -19,5 +19,17 @@
 
     .fc-item__meta {
         color: $c-neutral2;
+    }
+}
+
+.tone-analysis--sublink {
+    .fc-sublink__kicker {
+        color: $c-analysisAccent;
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

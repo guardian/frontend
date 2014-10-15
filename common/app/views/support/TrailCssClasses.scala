@@ -3,21 +3,9 @@ package views.support
 import model.Trail
 
 object TrailCssClasses {
-  def toneClass(trail: Trail) = {
-    val tone = CardStyle(trail) match {
-      case Analysis => "analysis"
-      case Comment => "comment"
-      case Editorial => "editorial"
-      case Feature => "feature"
-      case Review => "review"
-      case LiveBlog => "live"
-      case DeadBlog => "dead"
-      case Media => "media"
-      case Podcast => "podcast"
-      case _ => "news"
-    }
-
-    s"tone-$tone"
+  def toneClass(trail: Trail, suffix: String) = {
+    val tone = CardStyle(trail).toneString
+    s"tone-$tone$suffix"
   }
 
   /** Article will soon support all tone classes so we'll be able to remove this silliness */
@@ -34,7 +22,7 @@ object TrailCssClasses {
 
   def articleToneClass(trail: Trail) = {
     if (SupportedArticleTones.contains(CardStyle(trail))) {
-      toneClass(trail)
+      toneClass(trail, "")
     }
   }
 }

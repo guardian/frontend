@@ -2,20 +2,21 @@
     margin-top: $gs-baseline * .5;
 }
 
-.fc-sublinks__item {
+.fc-sublink {
     position: relative;
     padding-top: $gs-baseline * .25;
-    margin-top: $gs-baseline * .75;
+    margin: $gs-baseline * .75 0;
 
     a {
         display: block;
     }
 }
 
-.fc-sublinks__item-title {
+.fc-sublink__title {
     @include fs-headline(1);
     padding-top: 0;
     margin: 0;
+    color: $c-neutral1;
 
     &:before {
         display: block;
@@ -27,8 +28,10 @@
         border-top: 1px dotted $c-neutral3;
     }
 
-    .fc-item__kicker {
+    .fc-sublink__kicker {
         font-weight: 500;
+        float: left;
+        margin-right: .2em;
     }
 }
 
@@ -46,7 +49,7 @@
         .fc-sublinks {
             @include flex-display;
         }
-        .fc-sublinks__item {
+        .fc-sublink {
             @include flex(1, 1, 100%);
             margin-right: $gs-gutter;
 
@@ -62,7 +65,7 @@
             table-layout: fixed;
             width: 100%;
         }
-        .fc-sublinks__item {
+        .fc-sublink {
             display: table-cell;
             padding-right: $gs-gutter;
 

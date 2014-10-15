@@ -1,5 +1,7 @@
+$c-footer-background: guss-colour(multimedia-support-4, $pasteup-palette);
 $c-primary-footer-background: $c-brandBlue;
 $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
+
 
 /* Elements modifiers specific to the footer
    ========================================================================== */
@@ -16,7 +18,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .l-footer {
     padding: 0;
-    background: $c-neutral6;
+    background: $c-footer-background;
 
     .hide-in-footer {
         display: none !important;
@@ -74,7 +76,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
     &,
     a {
-        color: $c-neutral1;
+        color: $c-neutral4;
     }
 }
 .colophon {
@@ -105,7 +107,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid fade-out($c-neutral4, .8);
 }
 
 .really-serious-copyright {
