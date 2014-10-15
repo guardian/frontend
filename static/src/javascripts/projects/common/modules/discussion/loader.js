@@ -73,9 +73,7 @@ Loader.prototype.initTopComments = function() {
             if (this.topCommentCount !== 0) {
                 this.setState('has-top-comments');
             }
-        }.bind(this),
-        function () {
-        }
+        }.bind(this)
     );
 };
 
@@ -151,7 +149,7 @@ Loader.prototype.initToolbar = function() {
 };
 
 Loader.prototype.isOpenForRecommendations = function() {
-    return qwery('.d-discussion--recommendations-open', this.elem);
+    return qwery('.d-discussion--recommendations-open', this.elem).length !== 0;
 };
 
 Loader.prototype.initRecommend = function() {
