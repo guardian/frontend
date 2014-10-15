@@ -67,17 +67,9 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--h14-q-q {
+.facia-slice--h13-q-q {
     @if $browser-supports-flexbox {
         @include flex-direction(row-reverse);
-    }
-
-    .fc-item--standard-tablet {
-        .fc-item__standfirst {
-            @include mq(tablet) {
-                display: block;
-            }
-        }
     }
 }
 
