@@ -8,18 +8,18 @@ define([
         updateIntervalInMillis = 15000;
 
     function start() {
-        var elementByArticleId = {},
+        var elementsByArticleId = {},
             elements = $(selector);
 
         elements.each(function (element) {
             if (element.hasAttribute(articleIdAttribute)) {
                 var articleId = element.getAttribute(articleIdAttribute);
 
-                if (!elementByArticleId[articleId]) {
-                    elementByArticleId[articleId] = [];
+                if (!elementsByArticleId[articleId]) {
+                    elementsByArticleId[articleId] = [];
                 }
 
-                elementByArticleId[articleId].push(element);
+                elementsByArticleId[articleId].push(element);
             }
         });
 
@@ -32,7 +32,7 @@ define([
                 success: function (response) {
                     if (response && response.latestBlocks) {
                         response.latestBlocks.forEach(function (latestBlock) {
-                            var elements = elementByArticleId[latestBlock.articleId];
+                            var elements = elementsByArticleId[latestBlock.articleId];
 
                             elements.forEach(function (element) {
                                 if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
