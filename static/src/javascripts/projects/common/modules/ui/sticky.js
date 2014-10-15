@@ -26,6 +26,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var css, stickyTop,
             $element = bonzo(this.element);
+
         // have we scrolled past the element
         if (window.scrollY >= this.elementDocOffset - this.top) {
             stickyTop = this.container ?
@@ -43,6 +44,7 @@ define([
                 top:      null
             };
         }
+
         return $element.css();
     };
 
