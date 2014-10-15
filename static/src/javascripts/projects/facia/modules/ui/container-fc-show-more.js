@@ -31,7 +31,7 @@ define([
 
         if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
             if (!itemsHiddenOnDesktop) {
-                className += " fc-show-more--mobile-only";
+                $container.addClass('fc-show-more--mobile-only');
             }
 
             $container.addClass(className)
