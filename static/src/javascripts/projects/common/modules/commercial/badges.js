@@ -1,7 +1,6 @@
 define([
     'qwery',
     'bonzo',
-    'lodash/objects/defaults',
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/template',
@@ -11,11 +10,10 @@ define([
 ], function (
     qwery,
     bonzo,
-    defaults,
     once,
     $,
     template,
-    globalConfig,
+    config,
     dfp,
     badgeTpl
 ) {
@@ -44,15 +42,7 @@ define([
                 .after($adSlot);
             return $adSlot;
         },
-        init = function (c) {
-
-            var config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    switches: {}
-                }
-            );
+        init = function () {
 
             if (!config.switches.sponsored) {
                 return false;
@@ -97,12 +87,6 @@ define([
                     // add slot to dfp
                     dfp.addSlot($adSlot);
                 }
-            },
-
-            // really only useful for testing
-            reset: function () {
-                badges.init = once(init);
-                adBadgeCount = spBadgeCount = 0;
             }
 
         };
