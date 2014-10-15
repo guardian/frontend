@@ -21,24 +21,26 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
+        var css,
+            $element = bonzo(this.element);
         // have we scrolled past the element
         if (window.scrollY >= this.elementDocOffset - this.top) {
             var elementTop = this.container ?
                 // make sure the element stays within the container
-                Math.min(this.top, this.container.getBoundingClientRect().bottom - bonzo(this.element).dim().height) :
+                Math.min(this.top, this.container.getBoundingClientRect().bottom - $element.dim().height) :
                 this.top;
 
-            this.css(this.element, 'fixed', elementTop);
+            css = {
+                position: fixed,
+                top:      elementTop
+            };
         } else {
-            this.css(this.element, null, null);
+            css = {
+                position: null,
+                top:      null
+            };
         }
-    };
-
-    Sticky.prototype.css = function (element, position, top) {
-        return bonzo(element).css({
-            position: position,
-            top:      top
-        });
+        return $element.css();
     };
 
     return Sticky;
