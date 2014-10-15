@@ -30,9 +30,8 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(rightCol) {
-        margin-left: -($right-column + $gs-gutter);
         position: absolute;
-        left: 0;
+        left: $gs-gutter;
         top: 0;
     }
 
