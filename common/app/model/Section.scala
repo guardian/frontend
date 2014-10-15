@@ -14,10 +14,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
-  lazy val keywordId: String = {
-    val normalizedId = id.replace("/", "-")
-    s"$normalizedId/$normalizedId"
-  }
+  lazy val keywordId: String = FrontKeywordId(id)
 
   override lazy val isFront = true
 
