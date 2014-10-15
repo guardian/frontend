@@ -9,7 +9,7 @@ define([
 ) {
     return function (config, hash) {
 
-        var rawLastModified = hash || document.location.hash,
+        var rawLastModified = hash || document.location.search,
             page = ((config || {}).page || {}),
             lastModifiedMatch;
 
@@ -43,10 +43,10 @@ define([
         }
 
         // clear the hash, people often copy & paste these urls off the preview server.
-        function clearHash() {
+        function clearQueryString() {
             // reasonably well supported http://caniuse.com/#feat=history
             if (history && history.replaceState) {
-                history.replaceState(history.state, document.title, location.href.split('#')[0]);
+                history.replaceState(history.state, document.title, location.href.split('?')[0]);
             }
         }
 
@@ -78,7 +78,7 @@ define([
                     lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
                     if (lastModifiedMatch) {
                         initialFreshnessCheck(lastModifiedMatch[1]);
-                        clearHash();
+                        clearQueryString();
                     }
                 }
             }

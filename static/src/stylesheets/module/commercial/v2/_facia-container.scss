@@ -62,6 +62,7 @@
     .container__header {
         background-color: $c-neutral2;
         height: 100%;
+        padding-top: 0;
 
         @include mq(leftCol) {
             width: $left-column + $gs-gutter;
@@ -72,6 +73,29 @@
         @include mq(wide) {
             width: $left-column-wide + $gs-gutter;
         }
+
+        .commercial__title {
+            .i-guardian-logo-commercial {
+                display: inline-block;
+
+                @include mq(leftCol) {
+                    display: none;
+                }
+            }
+            .i-marque-54 {
+                display: none;
+
+                @include mq(leftCol) {
+                    display: block;
+                }
+            }
+            .i-commercial-brand {
+                @include mq($until: leftCol) {
+                    opacity: .8;
+                }
+            }
+        }
+
         .commercial__cta.button {
             @include button-colour(transparent, #ffffff, transparent, #ffffff);
             border-color: rgba(#ffffff, .3);
@@ -92,6 +116,25 @@
             margin-left: $left-column-wide + $gs-gutter;
             margin-right: 0;
         }
+    }
+
+    .commercial__title {
+        @include fs-header(3);
+        line-height: 1;
+        min-height: $gs-baseline*3;
+        color: #ffffff;
+        margin: 0;
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .commercial__title__logo {
+        @include fs-header(2);
+        display: inline-block;
+        position: relative;
+        top: -5px;
     }
 
     .commercial__search {
@@ -197,44 +240,6 @@
         }
     }
 
-    .commercial__title {
-        @include fs-header(3);
-        line-height: 1;
-        min-height: $gs-baseline*3;
-        color: #ffffff;
-        margin: 0;
-
-        a {
-            color: #ffffff;
-        }
-        .i-guardian-logo-commercial {
-            display: inline-block;
-
-            @include mq(leftCol) {
-                display: none;
-            }
-        }
-        .i-marque-54 {
-            display: none;
-
-            @include mq(leftCol) {
-                display: block;
-            }
-        }
-        .i-commercial-brand {
-            @include mq($until: leftCol) {
-                opacity: .8;
-            }
-        }
-    }
-
-    .commercial__title__logo {
-        @include fs-header(2);
-        display: inline-block;
-        position: relative;
-        top: -5px;
-    }
-
     .commercial__headline {
         @include fs-headline(2);
         margin-bottom: $gs-gutter;
@@ -314,7 +319,8 @@
                 .i-guardian-logo-commercial {
                     display: inline-block;
                 }
-                .i-marque-54 {
+                .i-marque-54,
+                .i-marque-36 {
                     display: none;
                 }
                 .i-commercial-brand {

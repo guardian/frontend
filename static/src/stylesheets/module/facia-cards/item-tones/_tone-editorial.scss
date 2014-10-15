@@ -1,17 +1,10 @@
-.tone-editorial {
+.tone-editorial--item {
     @extend %tone-has-background;
+    background-color: $c-editorialDefault;
 
-    &.fc-item {
-        background-color: $c-editorialDefault;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__standfirst {
-        color: $c-neutral3;
+    &,
+    .fc-sublink__title {
+        color: #ffffff;
     }
 
     .fc-item__content,
@@ -21,15 +14,28 @@
     }
 
     .fc-item__kicker,
-    a.fc-item__kicker,
-    .fc-item__byline a {
+    .fc-item__byline,
+    .fc-item__standfirst {
         color: $c-editorialAccent;
     }
 
     .fc-item__meta {
-        &,
-        & a {
-            color: $c-neutral3;
+        color: $c-neutral3;
+    }
+
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
+}
+
+.tone-editorial--sublink {
+    .fc-sublink__kicker {
+        color: $c-editorialDefault;
+    }
+
+    @include sublink-style(editorial, feature, live, media, review) {
+        .fc-sublink__kicker {
+            color: $c-editorialAccent;
         }
     }
 }

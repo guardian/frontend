@@ -2,7 +2,7 @@ package jobs
 
 import common.Logging
 import services.{S3FrontsApi, FrontPressNotification}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsString, JsObject, JsValue, Json}
 import conf.Switches._
 import conf.Configuration
 
@@ -29,8 +29,7 @@ object RefreshFrontsJob extends Logging {
   }
 
   def getFrontType(json: JsValue, path: String): FrontType = {
-    lazy val isCommercial: Boolean =
-      json.asOpt[Map[String, JsValue]].flatMap(_.get(path)).flatMap(_.asOpt[JsObject]).exists(_.keys.contains("commercial"))
+    lazy val isCommercial: Boolean = (json \ "fronts" \ path \ "priority") == JsString("commercial")
     if (HighFrequency.highFrequencyPaths.contains(path))
       HighFrequency
     else if (isCommercial)

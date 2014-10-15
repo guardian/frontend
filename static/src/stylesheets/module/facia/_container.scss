@@ -97,10 +97,10 @@
 }
 
 .container__body {
-    @include mq(leftCol) {
-        padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline/2;
 
-        .container--has-toggle & {
+    .container--has-toggle & {
+        @include mq(leftCol, wide) {
             padding-top: gs-height(1);
         }
     }

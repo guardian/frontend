@@ -2,6 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import client.Error
+import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
 import conf.{FrontendIdentityCookieDecoder, Switches}
 import formstack.{FormstackApi, FormstackForm}
@@ -33,7 +34,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
   val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder])
 
-  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, new ScGuU("abc")))
+  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
 
   when(requestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData

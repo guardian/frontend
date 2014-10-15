@@ -14,6 +14,7 @@ module.exports = function(config) {
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
             { pattern: 'static/test/javascripts/spies/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
             { pattern: 'static/public/javascripts/**/*.js', included: false }
         ],
 

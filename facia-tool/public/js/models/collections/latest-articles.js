@@ -100,6 +100,7 @@ define([
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
                 var url = vars.CONST.apiSearchBase + '/',
+                    term,
                     propName;
 
                 if (!opts.noFlushFirst) {
@@ -108,10 +109,12 @@ define([
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
+                    term = urlAbsPath(self.term());
+                    self.term(term);
                     propName = 'content';
-                    self.term(urlAbsPath(self.term()));
-                    url += self.term() + '?' + vars.CONST.apiSearchParams;
+                    url += term + '?' + vars.CONST.apiSearchParams;
                 } else {
+                    term = encodeURIComponent(self.term().trim().replace(/ +/g,' AND '));
                     propName = 'results';
                     url += 'search?' + vars.CONST.apiSearchParams;
                     url += self.showingDrafts() ?
@@ -119,14 +122,22 @@ define([
                         '&content-set=web-live&order-by=newest';
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
-                    url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
+                    url += term ? '&q=' + term : '';
                     url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
                 }
 
                 authedAjax.request({
                     url: url
-                }).then(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
+                })
+                .done(function(data) {
+                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [],
+                        errMsg = 'Sorry, the Content API is not currently returning content';
+
+                    if (!term && !rawArticles.length) {
+                        vars.model.alert(errMsg);
+                        self.flush(errMsg);
+                        return;
+                    }
 
                     if (count !== counter) { return; }
 
@@ -143,7 +154,14 @@ define([
                         cache.put('contentApi', icc, article);
                         self.articles.push(new Article(article));
                     });
-                });
+                })
+                .fail(function(xhr) {
+                    var errMsg = 'Content API error (' + xhr.status + '). Content is currently unavailable';
+
+                    vars.model.alert(errMsg);
+                    self.flush(errMsg);
+                })
+                ;
             }, 300);
 
             return true; // ensure default click happens on all the bindings
@@ -152,7 +170,7 @@ define([
         this.flush = function(message) {
             self.articles.removeAll();
             // clean up any dragged-in articles
-            container.innerHTML = message || '';
+            container.innerHTML = message ? '<div class="search-message">' + message + '</div>' : '';
         };
 
         this.refresh = function() {
