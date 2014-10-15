@@ -24,6 +24,10 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
+.discussion:not(.discussion--has-top-comments) .d-discussion--top-comments {
+    display: none;
+}
+
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
     // align comments with main column on liveblogs
     @include mq(desktop) {
@@ -427,6 +431,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__body,
+.d-top-comment__body,
 .d-comment-box__parent-comment-body {
     word-wrap: break-word;
 }
@@ -594,6 +599,7 @@ $comment-recommend-button-size: 19px;
     cursor: default;
     position: relative;
     top: 1px;
+    float: right;
     i {
         width: 13px !important;
         height: 13px !important;
