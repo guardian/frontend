@@ -4,12 +4,12 @@ define([
     'common/utils/mediator'
 ], function (
     debounce,
-    extend,
+    assign,
     mediator
 ) {
 
     function ScrollDepth(config) {
-        this.config = extend(this.config, config);
+        this.config = assign(this.config, config);
 
         if (this.config.isContent) {
             this.config.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
