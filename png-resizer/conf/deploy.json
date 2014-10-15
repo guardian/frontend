@@ -1,0 +1,26 @@
+{
+    "packages" : {
+        "png-resizer" : {
+            "type" : "autoscaling",
+            "apps" : [ "mobile::png-resizer" ],
+            "data" : {
+                "secondsToWait": 500,
+                "port" : 9000,
+                "bucket" : "mobile-apps-api-dist",
+                "healthcheckGrace": 20,
+                "healthcheck_paths" : [ "/healthcheck" ]
+            }
+        }
+    },
+    "recipes" : {
+        "default" : {
+            "depends" : ["artifactUpload", "deploy"]
+        },
+        "deploy": {
+            "actionsBeforeApp": ["png-resizer.deploy"]
+        },
+        "artifactUpload": {
+            "actionsBeforeApp": ["png-resizer.uploadArtifacts"]
+        }
+    }
+}
