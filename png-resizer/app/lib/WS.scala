@@ -4,7 +4,7 @@ import play.api.libs.ws
 import language.reflectiveCalls
 
 object WS {
-  implicit class RichResponse(response: ws.WSResponse) {
-    lazy val contentType: String = response.header("Content-Type").get
+  implicit class RichResponse(response: ws.WSResponseHeaders) {
+    lazy val contentType: String = response.headers.get("Content-Type").map(_ mkString " ").getOrElse("")
   }
 }

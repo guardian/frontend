@@ -1,8 +1,6 @@
 package controllers
 
-import java.io.InputStream
-
-import org.apache.commons.io.IOUtils
+import java.io.ByteArrayInputStream
 import play.api.mvc.{Controller, Action}
 import data.Backends
 import scala.concurrent.Future
@@ -20,25 +18,27 @@ import conf.PngResizerConfiguration
 object Resizer extends Controller with Logging {
   def resize(backend: String, path: String, width: Int, quality: Int) = Action.async {
     Backends.uri(backend, path) match {
-      case Some(uri) => WS.url(uri).get() map { response =>
-        response.status match {
-          case OK if response.contentType != "image/png" =>
-            BadRequest(s"Original image $uri content type (${response.contentType}) is not supported. Only PNG " +
-              s"supported.")
+      case Some(uri) => WS.url(uri).getStream() flatMap { case (responseHeaders, enumerator) =>
+        responseHeaders.status match {
+          case OK if responseHeaders.contentType != "image/png" =>
+            Future.successful(BadRequest(s"Original image $uri content type (${responseHeaders.contentType}) is not " +
+              "supported. Only PNG supported."))
 
           case OK =>
             logger.info(s"Resizing $uri to $width pixels wide at $quality compression")
 
-            val image = IOUtils.toInputStream(response.body).toBufferedImage
-            val resized = Im4Java.resizeBufferedImage(image, width, quality)
+            enumerator.toByteArray map { bytes =>
+              val image = new ByteArrayInputStream(bytes).toBufferedImage
+              val resized = Im4Java.resizeBufferedImage(image, width, quality)
 
-            Ok(resized).as("image/png").withTimeToLive(
-              Duration.standardSeconds(PngResizerConfiguration.ttlInSeconds)
-            )
+              Ok(resized).as("image/png").withTimeToLive(
+                Duration.standardSeconds(PngResizerConfiguration.ttlInSeconds)
+              )
+            }
 
-          case NOT_FOUND => NotFound(s"Unable to find source image at $uri")
+          case NOT_FOUND => Future.successful(NotFound(s"Unable to find source image at $uri"))
 
-          case otherErrorCode => BadGateway(s"Received $otherErrorCode for $uri")
+          case otherErrorCode => Future.successful(BadGateway(s"Received $otherErrorCode for $uri"))
         }
       }
 
