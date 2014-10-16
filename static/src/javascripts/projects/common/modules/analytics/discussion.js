@@ -1,13 +1,11 @@
 define([
-    'bonzo',
-    'lodash/functions/debounce',
     'common/utils/$',
+    'bonzo',
     'common/utils/mediator',
     'common/modules/identity/api'
 ], function (
-    bonzo,
-    debounce,
     $,
+    bonzo,
     mediator,
     Id
 ) {
@@ -102,12 +100,12 @@ define([
             scroll = function () {
                 if (!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    mediator.off('window:scroll', debounce(scroll, 200));
+                    mediator.off('window:scroll', scroll);
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:scroll', debounce(scroll, 200));
+            mediator.on('window:scroll', scroll);
         }
     };
 

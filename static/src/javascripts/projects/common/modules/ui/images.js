@@ -2,7 +2,6 @@ define([
     'bonzo',
     'imager',
     'lodash/collections/forEach',
-    'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/mediator'
@@ -11,7 +10,6 @@ function (
     bonzo,
     imager,
     forEach,
-    debounce,
     $,
     $css,
     mediator
@@ -51,12 +49,12 @@ function (
 
         listen: function () {
             mediator.addListeners({
-                'window:resize': debounce(function () {
+                'window:resize': function () {
                     images.upgrade();
-                }, 200),
-                'window:orientationchange': debounce(function () {
+                },
+                'window:orientationchange': function () {
                     images.upgrade();
-                }, 200),
+                },
                 'ui:images:upgrade': function (context) {
                     images.upgrade(context);
                 }

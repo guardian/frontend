@@ -1,7 +1,6 @@
 define([
-    'bonzo',
-    'lodash/functions/debounce',
     'common/utils/$',
+    'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/template',
@@ -9,9 +8,8 @@ define([
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps'
 ], function (
-    bonzo,
-    debounce,
     $,
+    bonzo,
     ajax,
     mediator,
     template,
@@ -28,9 +26,9 @@ define([
         snaps.forEach(fetchSnap);
 
         if (snaps.length) {
-            mediator.on('window:resize', debounce(function () {
+            mediator.on('window:resize', function () {
                 snaps.forEach(function (el) { addCss(el, true); });
-            }, 200));
+            });
         }
     }
 

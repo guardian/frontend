@@ -1,33 +1,33 @@
 define([
+    'common/utils/_',
     'bean',
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/fsm',
-    'common/utils/mediator',
-    'common/utils/template',
     'common/utils/url',
+    'common/utils/config',
+    'common/utils/mediator',
+    'common/utils/fsm',
+    'common/utils/detect',
     'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/utils/template'
 ], function (
+    _,
     bean,
     bonzo,
     qwery,
     $,
-    _,
     ajax,
-    config,
-    detect,
-    FiniteStateMachine,
-    mediator,
-    template,
     url,
+    config,
+    mediator,
+    FiniteStateMachine,
+    detect,
     Component,
-    imagesModule
+    imagesModule,
+    template
 ) {
     function GalleryLightbox() {
 
@@ -314,14 +314,14 @@ define([
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                mediator.on('window:resize', this.resize);
+                bean.on(window, 'resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                mediator.off('window:resize', this.resize);
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -382,11 +382,11 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                mediator.on('window:resize', this.resize);
+                bean.on(window, 'resize', this.resize);
                 imagesModule.upgrade(this.endslateEl);
             },
             leave: function() {
-                mediator.off('window:resize', this.resize);
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {

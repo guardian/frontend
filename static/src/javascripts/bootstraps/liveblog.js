@@ -18,8 +18,8 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
-    'common/modules/ui/relativedates',
-    'bootstraps/article'
+    'bootstraps/article',
+    'common/modules/ui/relativedates'
 ], function (
     bean,
     bonzo,
@@ -40,8 +40,8 @@ define([
     dropdowns,
     Message,
     NotificationCounter,
-    RelativeDates,
-    article
+    article,
+    RelativeDates
 ) {
     'use strict';
 
@@ -78,7 +78,7 @@ define([
 
         function unselectOnScroll() {
             bean.off(curBinding);
-            curBinding = mediator.once('window:scroll', function () { unselect(); });
+            curBinding = bean.one(document, 'scroll', function () { unselect(); });
         }
 
         bean.on(document.body, 'click', 'a', function (e) {
