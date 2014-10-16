@@ -29,7 +29,7 @@ define([
             crossOrigin: false
         }).then(
             function(status) {
-                JSON.parse(status).checks.filter(function (check) {
+                status.checks.filter(function (check) {
                     return /ELB|Host|CDN|RSS/i.test(check.name);
                 }).forEach(function(check){
                         var li = document.createElement('li');
