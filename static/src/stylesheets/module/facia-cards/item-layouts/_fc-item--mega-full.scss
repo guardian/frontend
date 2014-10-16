@@ -86,8 +86,4 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
     .fc-item__footer--horizontal {
         @include flex-basis(auto);
     }
-
-    &.fc-item--has-sublinks-1 .fc-sublinks {
-        display: none;
-    }
 }

@@ -95,8 +95,4 @@ Three quarter item. Looks like a wide standard, a bit like this:
     &.fc-item--has-sublinks-3:not(.fc-item--has-cutout) {
         @include fc-sublinks--horizontal;
     }
-
-    .fc-sublink:nth-child(n+4) {
-        display: none;
-    }
 }
