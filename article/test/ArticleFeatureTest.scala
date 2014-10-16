@@ -669,5 +669,29 @@ import collection.JavaConversions._
       }
     }
 
+    scenario("Outbrain") {
+
+      Given("I am on an article")
+      goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should be rendered")
+          var outbrainPlaceholder = $(".OUTBRAIN")
+          outbrainPlaceholder.length should be(1)
+          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
+          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
+      }
+
+      Given("I am on a live blog")
+      goTo("/politics/blog/live/2014/oct/15/cameron-and-miliband-at-pmqs-politics-live-blog") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should not be rendered")
+          $(".OUTBRAIN").isEmpty should be(true)
+
+      }
+
+    }
+
   }
 }
