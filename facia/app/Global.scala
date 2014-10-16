@@ -1,14 +1,11 @@
-import com.gu.facia.client.models.Config
 import common._
 import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
-import play.Play
-import play.api.libs.json.Json
 import play.api.mvc.WithFilters
-import services.{IndexListingsLifecycle, ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
+import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
 import play.api.Application
 import liveblogs.LatestBlocks
 
