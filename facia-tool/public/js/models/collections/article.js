@@ -64,12 +64,15 @@ define([
                 {
                     key: 'trailText',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'trail text',
                     type: 'text'
                 },
                 {
                     key: 'byline',
                     editable: true,
+                    requires: 'showByline',
+                    omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
                 },
@@ -83,6 +86,7 @@ define([
                 {
                     key: 'href',
                     editable: true,
+                    omitForSupporting: true,
                     requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
@@ -90,6 +94,7 @@ define([
                 {
                     key: 'imageSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
@@ -110,6 +115,7 @@ define([
                 {
                     key: 'imageCutoutSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
@@ -137,39 +143,45 @@ define([
                 {
                     key: 'isBoosted',
                     editable: true,
+                    omitForSupporting: true,
+                    requiresState: 'inDynamicCollection',
                     label: 'boost',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showBoostedHeadline',
-                    editable: true,
-                    label: 'large headline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showQuotedHeadline',
-                    editable: true,
-                    label: 'quote headline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showByline',
-                    editable: true,
-                    label: 'show byline',
-                    irreleventForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
                     editable: true,
+                    omitForSupporting: true,
                     requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
                 },
                 {
+                    key: 'showBoostedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'large headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showQuotedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'quote headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showByline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'byline',
+                    type: 'boolean'
+                },
+                {
                     key: 'imageCutoutReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'cutout image',
                     type: 'boolean'
@@ -177,14 +189,16 @@ define([
                 {
                     key: 'imageReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'replace image',
-                    irreleventIfNo: 'imageSrc',
+                    omitIfNo: 'imageSrc',
                     type: 'boolean'
                 },
                 {
                     key: 'imageHide',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'hide image',
                     type: 'boolean'
@@ -237,7 +251,7 @@ define([
 
             rxScriptStriper = new RegExp(/<script.*/gi);
 ;
-        function Article(opts) {
+        function Article(opts, withCapiData) {
             var self = this;
 
             opts = opts || {};
@@ -251,6 +265,13 @@ define([
             this.fields = asObservableProps(capiFields);
 
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
+            populateObservables(this.meta, opts.meta);
+
+            this.metaDefaults = {};
+
+            this.collectionMetaDefaults = deepGet(opts, '.group.parent.itemDefaults');
+
+            this.uneditable = opts.uneditable;
 
             this.state = asObservableProps([
                 'underDrag',
@@ -258,13 +279,15 @@ define([
                 'isLoaded',
                 'isEmpty',
                 'isSnap',
+                'inDynamicCollection',
                 'tone',
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl']);
 
-            this.uneditable = opts.uneditable;
+            this.state.isSnap(!!snap.validateId(opts.id));
+            this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
@@ -293,8 +316,6 @@ define([
                     this.meta.href() || this.props.webUrl();
             }, this);
 
-            this.populate(opts);
-
             // Populate supporting
             if (this.group && this.group.parentType !== 'Article') {
                 this.meta.supporting = new Group({
@@ -310,6 +331,10 @@ define([
                 }));
 
                 contentApi.decorateItems(this.meta.supporting.items());
+            }
+
+            if (withCapiData) {
+                this.addCapiData(opts)
             }
         }
 
@@ -337,10 +362,10 @@ define([
             if (opts.type === 'boolean') {
                 display = opts.editable;
                 display = display && (this.meta[opts.key] || function() {})();
-                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true);
-                display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
-                return display ? opts.label : false;
+                display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
+                display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
+                return display ? opts.label : false;
             } else {
                 return false;
             }
@@ -382,10 +407,10 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true;
+                    var display = opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
 
-                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
                     display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+                    display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
                     return display;
                 }, self),
@@ -396,7 +421,7 @@ define([
                         .filter(function(editor) { return editor.singleton === opts.singleton; })
                         .filter(function(editor) { return editor.key !== key; })
                         .pluck('key')
-                        .each(function(key) { self.meta[key](undefined) })
+                        .each(function(key) { self.meta[key](false) })
                     }
 
                     meta(!meta());
@@ -453,44 +478,44 @@ define([
             )
         };
 
-        Article.prototype.populate = function(opts, validate) {
+        Article.prototype.addCapiData = function(opts) {
             var missingProps;
 
             populateObservables(this.props,  opts);
-            populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
-            populateObservables(this.state,  opts.state);
 
-            if (validate || opts.webUrl) {
-                 missingProps = [
-                    'webUrl',
-                    'fields',
-                    'fields.headline'
-                 ].filter(function(prop) {return !deepGet(opts, prop);});
+            this.setRelativeTimes();
 
-                if (missingProps.length) {
-                    vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
-                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
-                } else {
-                    this.state.isLoaded(true);
-                    this.sparkline();
-                }
+            missingProps = [
+                'webUrl',
+                'fields',
+                'fields.headline'
+            ].filter(function(prop) {return !deepGet(opts, prop);});
+
+            if (missingProps.length) {
+                vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
+                window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
+            } else {
+                this.state.isLoaded(true);
+                this.sparkline();
             }
 
             this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
-
-            this.state.isSnap(!!snap.validateId(this.id()));
-
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
+            this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
 
-            this.state.tone(getTone(opts));
+            this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
+            populateObservables(this.meta, this.metaDefaults);
+
+            this.updateEditorsDisplay();
+        };
+
+        Article.prototype.updateEditorsDisplay = function() {
             if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
-
-            this.setRelativeTimes();
-        };
+        }
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
@@ -530,14 +555,10 @@ define([
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
-                // reject undefined properties:
-                .filter(function(p){ return !_.isUndefined(p[1]); })
-                // reject false properties:
-                .filter(function(p){ return p[1] !== false; })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                // reject whitespace-only strings:
-                .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
+                // reject vals that are equivalent to their defaults (if set) OR are falsey
+                .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
                 // convert numbers to strings:
@@ -608,7 +629,10 @@ define([
         };
 
         Article.prototype.close = function() {
-            this.state.isOpen(false);
+            if (this.state.isOpen()) {
+                this.state.isOpen(false);
+                this.updateEditorsDisplay();
+            }
         };
 
         Article.prototype.closeAndSave = function() {

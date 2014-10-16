@@ -31,6 +31,23 @@
     }
 }
 
+@include mq(desktop) {
+    .identity-page-header {
+        .identity-page-header__title {
+            display: table-cell;
+            width: gs-span(6);
+            vertical-align: top;
+            padding-right: $gs-gutter*5;
+        }
+        .identity-page-header__detail {
+            display: table-cell;
+            width: gs-span(6);
+            vertical-align: top;
+            text-align: right;
+        }
+    }
+}
+
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);

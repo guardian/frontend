@@ -55,8 +55,6 @@
 
         @include mq(leftCol) {
             @include box-sizing(border-box);
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
             height: 100%;
         }
     }
@@ -64,6 +62,7 @@
     .container__header {
         background-color: $c-neutral2;
         height: 100%;
+        padding-top: 0;
 
         @include mq(leftCol) {
             width: $left-column + $gs-gutter;
@@ -74,6 +73,29 @@
         @include mq(wide) {
             width: $left-column-wide + $gs-gutter;
         }
+
+        .commercial__title {
+            .i-guardian-logo-commercial {
+                display: inline-block;
+
+                @include mq(leftCol) {
+                    display: none;
+                }
+            }
+            .i-marque-54 {
+                display: none;
+
+                @include mq(leftCol) {
+                    display: block;
+                }
+            }
+            .i-commercial-brand {
+                @include mq($until: leftCol) {
+                    opacity: .8;
+                }
+            }
+        }
+
         .commercial__cta.button {
             @include button-colour(transparent, #ffffff, transparent, #ffffff);
             border-color: rgba(#ffffff, .3);
@@ -94,6 +116,25 @@
             margin-left: $left-column-wide + $gs-gutter;
             margin-right: 0;
         }
+    }
+
+    .commercial__title {
+        @include fs-header(3);
+        line-height: 1;
+        min-height: $gs-baseline*3;
+        color: #ffffff;
+        margin: 0;
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .commercial__title__logo {
+        @include fs-header(2);
+        display: inline-block;
+        position: relative;
+        top: -5px;
     }
 
     .commercial__search {
@@ -149,7 +190,7 @@
         left: 0;
         width: $gs-baseline*3;
         height: $gs-baseline*3;
-        padding: $gs-baseline*.75;
+        padding: $gs-baseline*.75 $gs-baseline;
 
         &:hover,
         &:focus,
@@ -186,49 +227,17 @@
         }
 
         .i-right {
-            @include mq($until: mobile) {
-                margin: -1px -13px 0;
+            @include mq($until: mobileLandscape) {
+                margin: -1px -13px;
                 float: none;
             }
         }
     }
 
-    .commercial__title {
-        @include fs-header(3);
-        line-height: 1;
-        min-height: $gs-baseline*3;
-        color: #ffffff;
-        margin: 0;
-
-        a {
-            color: #ffffff;
-        }
-        .i-guardian-logo-commercial {
-            display: inline-block;
-
-            @include mq(leftCol) {
-                display: none;
-            }
-        }
-        .i-marque-54 {
+    .commercial__cta__label {
+        @include mq($until: mobileLandscape) {
             display: none;
-
-            @include mq(leftCol) {
-                display: block;
-            }
         }
-        .i-commercial-brand {
-            @include mq($until: leftCol) {
-                opacity: .8;
-            }
-        }
-    }
-
-    .commercial__title__logo {
-        @include fs-header(2);
-        display: inline-block;
-        position: relative;
-        top: -5px;
     }
 
     .commercial__headline {
@@ -310,7 +319,8 @@
                 .i-guardian-logo-commercial {
                     display: inline-block;
                 }
-                .i-marque-54 {
+                .i-marque-54,
+                .i-marque-36 {
                     display: none;
                 }
                 .i-commercial-brand {

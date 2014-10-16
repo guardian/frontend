@@ -47,7 +47,8 @@ header {
     width: 100%;
     background: #999999;
     color: #000000;
-    padding: 15px 40px;
+    padding: 17px 40px;
+    min-height: 51px;
     z-index: 10;
     text-align: center;
     background: #ffff00;
@@ -440,7 +441,6 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-transform: uppercase;
-    color: #cccccc;
     padding-right: 3px;
 }
 
@@ -460,7 +460,7 @@ h1 {
 }
 
 .article__ammends .has-sublinks {
-    color: #DD4B39;
+    color: #72b9e4;
     font-weight: bold;
     margin-right: 5px;
 }
@@ -498,6 +498,8 @@ h1 {
 
 .article__overrides {
     margin: 0 0 10px 85px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .article__overrides .tools {
@@ -536,10 +538,6 @@ h1 {
 }
 
 .supporting .trailText,
-.supporting .editor--boolean,
-.supporting .element__trailText,
-.supporting .element__byline,
-.supporting .element__imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
@@ -634,6 +632,7 @@ select {
 .editor--boolean {
     display: inline-block;
     padding: 2px 0;
+    min-width: 100px;
 }
 
 .editor--boolean,
@@ -644,7 +643,11 @@ select {
 .editor--boolean.selected,
 .editor--boolean.selected a,
 .editor--boolean a:hover {
-    color: #DD4B39;
+    color: #148ad2;
+}
+
+.editor--boolean--display {
+    color: #72b9e4;
 }
 
 .editor--boolean__state {
@@ -735,6 +738,11 @@ button {
 
 .search-term input {
     width: 100%;
+}
+
+.search-message {
+    margin: 5px;
+    color: #999999;
 }
 
 .autocompleter {
@@ -1149,7 +1157,7 @@ button {
 
 .cnf-form .api-query-results {
     clear: both;
-    margin: 0 10px 0 91px;
+    margin: 0 10px 10px 126px;
     font-size: 12px;
     line-height: 16px;
     color: #666666;
@@ -1192,10 +1200,20 @@ button {
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
 .icon-trash { background-position: -456px 0; }
+.icon-play { background-position: -264px -72px; }
 .icon-fast-backward {
     margin-top: -1px;
     background-position: -216px -72px;
  }
+
+.has-playable {
+    position: absolute;
+    top: 3px;
+    left: 60px;
+    background: rgba(254,254,254,.6);
+    padding: 1px 3px 1px 2px;
+    border-radius: 1px;
+}
 
 /*****************************************/
 /* MEDIA QUERIES */

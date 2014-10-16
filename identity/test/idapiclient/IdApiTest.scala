@@ -44,54 +44,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
   when(trackingParameters.ipAddress).thenReturn(None)
 
-  "the authApp method" - {
-    val validAccessTokenResponse = HttpResponse( """{"accessToken": "abc", "expiresAt": "2013-10-30T12:21:00+00:00"}""", 200, "OK")
-
-    "given a valid response" - {
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validAccessTokenResponse)))
-
-      "accesses the /auth endpoint" in {
-        api.authApp(Anonymous, trackingParameters)
-        verify(http).GET(Matchers.eq("http://example.com/auth"), Matchers.any[Parameters], Matchers.any[Parameters])
-      }
-
-      "passes the auth parameters to the http lib's GET method" in {
-        api.authApp(ParamAuth, trackingParameters)
-        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), Matchers.any[Parameters])
-      }
-
-      "passes the auth header to the http lib's GET method" in {
-        api.authApp(HeaderAuth, trackingParameters)
-        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
-      }
-
-      "returns an access token response" in {
-        api.authApp(Anonymous, trackingParameters).map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(accessTokenResponse) => {
-            accessTokenResponse should have('accessToken("abc"))
-            accessTokenResponse should have('expiresAt(new DateTime(2013, 10, 30, 12, 21)))
-          }
-        }
-      }
-    }
-
-    "given a failure response" - {
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.authApp(Anonymous, trackingParameters).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-    }
-  }
-
   "the authBrowser method" - {
     "given a valid response" - {
       val validCookieResponse = HttpResponse( """{"expiresAt": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")

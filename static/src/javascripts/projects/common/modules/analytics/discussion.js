@@ -1,11 +1,13 @@
 define([
-    'common/utils/$',
     'bonzo',
+    'lodash/functions/debounce',
+    'common/utils/$',
     'common/utils/mediator',
     'common/modules/identity/api'
-], function(
-    $,
+], function (
     bonzo,
+    debounce,
+    $,
     mediator,
     Id
 ) {
@@ -25,19 +27,20 @@ define([
      * @param {Array.<string>}
      * @return {string}
      */
-    track.getLinkTrackVars = function(extras) {
+    track.getLinkTrackVars = function (extras) {
         extras = extras || [];
         var linkTrackVars = [
             'events',
             'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
             'prop19', 'prop31', 'prop51', 'prop75',
             'eVar7', 'eVar8',  'eVar19', 'eVar31',
-            'eVar51', 'eVar66'];
+            'eVar51', 'eVar66'
+        ];
 
         return linkTrackVars.concat(extras).join(',');
     };
 
-    track.comment = function(comment) {
+    track.comment = function (comment) {
         s.events = 'event51';
         s.eVar66 = Id.getUserFromCookie().id || null;
         s.eVar68 = comment.replyTo ? 'response' : 'comment';
@@ -47,7 +50,7 @@ define([
         s.tl(true, 'o', 'comment');
     };
 
-    track.recommend = function(e) {
+    track.recommend = function (e) {
         s.events = 'event72';
         s.eVar65 = 'recommendation';
         s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
@@ -57,7 +60,7 @@ define([
         s.tl(true, 'o', 'Recommend a comment');
     };
 
-    track.jumpedToComments = function() {
+    track.jumpedToComments = function () {
         if (!track.seen) {
             s.events = 'event72';
             s.eVar65 = 'seen jump-to-comments';
@@ -69,7 +72,7 @@ define([
         }
     };
 
-    track.commentPermalink = function() {
+    track.commentPermalink = function () {
         if (!track.seen) {
             s.events = 'event72';
             s.eVar65 = 'seen comment-permalink';
@@ -81,7 +84,7 @@ define([
         }
     };
 
-    track.scrolledToComments = function() {
+    track.scrolledToComments = function () {
         if (!track.seen) {
             s.events = 'event72';
             s.eVar65 = 'seen scroll-top';
@@ -94,42 +97,43 @@ define([
     };
 
     // Convenience functions
-    track.areCommentsSeen = function() {
+    track.areCommentsSeen = function () {
         var timer,
-            scroll = function() {
-                if(!track.seen && !timer && track.areCommentsVisible()) {
+            scroll = function () {
+                if (!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    mediator.off('window:scroll', scroll);
+                    mediator.off('window:scroll', debounce(scroll, 200));
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:scroll', scroll);
+            mediator.on('window:scroll', debounce(scroll, 200));
         }
     };
 
-    track.areCommentsVisible = function() {
+    track.areCommentsVisible = function () {
         var comments = $('#comments').offset(),
             scrollTop = $('body').first().scrollTop(),
             viewport = bonzo.viewport().height;
 
-        if ((comments.top-((viewport  / 2)) < scrollTop) &&
-            ((comments.top+comments.height)-(viewport / 3) > scrollTop)) {
+        if ((comments.top - ((viewport  / 2)) < scrollTop) &&
+            ((comments.top + comments.height) - (viewport / 3) > scrollTop)) {
             return true;
         } else {
             return false;
         }
     };
 
-    var init = function() {
-        mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
-        mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
-        mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
-        mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
-        mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));
+    return {
+        init: function () {
+            mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
+            mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
+            mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
+            mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
+            mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));
 
-        track.areCommentsSeen();
+            track.areCommentsSeen();
+        }
     };
 
-    return { init: init };
 }); // define

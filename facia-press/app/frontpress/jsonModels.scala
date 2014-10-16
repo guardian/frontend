@@ -1,5 +1,6 @@
 package frontpress
 
+import com.gu.facia.client.models.CollectionConfig
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
 import model._
@@ -57,32 +58,32 @@ object ItemMeta {
   })
 
   def fromContent(content: Content): JsObject = flattenedJsObject(
-    ("headline", content.apiContent.metaData.get("headline")),
-    ("trailText", content.apiContent.metaData.get("trailText")),
-    ("byline", content.apiContent.metaData.get("byline")),
-    ("showByline", content.apiContent.metaData.get("showByline")),
-    ("group", content.apiContent.metaData.get("group")),
-    ("isBoosted", content.apiContent.metaData.get("isBoosted")),
-    ("imageHide", content.apiContent.metaData.get("imageHide")),
-    ("imageCutoutReplace", content.apiContent.metaData.get("imageCutoutReplace")),
-    ("imageCutoutSrc", content.apiContent.metaData.get("imageCutoutSrc")),
-    ("imageCutoutSrcWidth", content.apiContent.metaData.get("imageCutoutSrcWidth")),
-    ("imageCutoutSrcHeight", content.apiContent.metaData.get("imageCutoutSrcHeight")),
-    ("isBreaking", content.apiContent.metaData.get("isBreaking")),
+    ("headline", content.apiContent.metaData.flatMap(_.headline).map(JsString)),
+    ("trailText", content.apiContent.metaData.flatMap(_.trailText).map(JsString)),
+    ("byline", content.apiContent.metaData.flatMap(_.byline).map(JsString)),
+    ("showByline", content.apiContent.metaData.flatMap(_.showByline).map(JsBoolean)),
+    ("group", content.apiContent.metaData.flatMap(_.group).map(JsString)),
+    ("isBoosted", content.apiContent.metaData.flatMap(_.isBoosted).map(JsBoolean)),
+    ("imageHide", content.apiContent.metaData.flatMap(_.imageHide).map(JsBoolean)),
+    ("imageCutoutReplace", content.apiContent.metaData.flatMap(_.imageCutoutReplace).map(JsBoolean)),
+    ("imageCutoutSrc", content.apiContent.metaData.flatMap(_.imageCutoutSrc).map(JsString)),
+    ("imageCutoutSrcWidth", content.apiContent.metaData.flatMap(_.imageCutoutSrcWidth).map(JsString)),
+    ("imageCutoutSrcHeight", content.apiContent.metaData.flatMap(_.imageCutoutSrcHeight).map(JsString)),
+    ("isBreaking", content.apiContent.metaData.flatMap(_.isBreaking).map(JsBoolean)),
     ("supporting", Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item))))
       .filter(_.nonEmpty)
       .map(JsArray.apply)),
-    ("href", content.apiContent.metaData.get("href")),
-    ("snapType", content.apiContent.metaData.get("snapType")),
-    ("snapCss", content.apiContent.metaData.get("snapCss")),
-    ("snapUri", content.apiContent.metaData.get("snapUri")),
-    ("showKickerTag", content.apiContent.metaData.get("showKickerTag")),
-    ("showKickerSection", content.apiContent.metaData.get("showKickerSection")),
-    ("showKickerCustom", content.apiContent.metaData.get("showKickerCustom")),
-    ("customKicker", content.apiContent.metaData.get("customKicker")),
-    ("showBoostedHeadline", content.apiContent.metaData.get("showBoostedHeadline")),
-    ("showQuotedHeadline", content.apiContent.metaData.get("showQuotedHeadline")),
-    ("showMainVideo", content.apiContent.metaData.get("showMainVideo"))
+    ("href", content.apiContent.metaData.flatMap(_.href).map(JsString)),
+    ("snapType", content.apiContent.metaData.flatMap(_.snapType).map(JsString)),
+    ("snapCss", content.apiContent.metaData.flatMap(_.snapCss).map(JsString)),
+    ("snapUri", content.apiContent.metaData.flatMap(_.snapUri).map(JsString)),
+    ("showKickerTag", content.apiContent.metaData.flatMap(_.showKickerTag).map(JsBoolean)),
+    ("showKickerSection", content.apiContent.metaData.flatMap(_.showKickerSection).map(JsBoolean)),
+    ("showKickerCustom", content.apiContent.metaData.flatMap(_.showKickerCustom).map(JsBoolean)),
+    ("customKicker", content.apiContent.metaData.flatMap(_.customKicker).map(JsString)),
+    ("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline).map(JsBoolean)),
+    ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
+    ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean))
   )
 }
 
@@ -147,9 +148,9 @@ case class TrailJson(
 object CollectionJson {
   implicit val jsonFormat = Json.format[CollectionJson]
 
-  def fromCollection(config: Config, collection: Collection) =
+  def fromCollection(config: CollectionConfig, collection: Collection) =
     CollectionJson(
-      apiQuery       = config.contentApiQuery,
+      apiQuery       = config.apiQuery,
       displayName    = config.displayName.orElse(collection.displayName),
       curated        = collection.curated.map(TrailJson.fromContent),
       editorsPicks   = collection.editorsPicks.map(TrailJson.fromContent),
@@ -158,14 +159,14 @@ object CollectionJson {
       lastUpdated    = collection.lastUpdated,
       updatedBy      = collection.updatedBy,
       updatedEmail   = collection.updatedEmail,
-      groups         = Option(config.groups).filter(_.nonEmpty),
+      groups         = config.groups.filter(_.nonEmpty),
       href           = collection.href.orElse(config.href),
       `type`         = config.collectionType,
-      showTags       = config.showTags,
-      showSections   = config.showSections,
-      hideKickers    = config.hideKickers,
-      showDateHeader = config.showDateHeader,
-      showLatestUpdate = config.showLatestUpdate
+      showTags       = config.showTags.getOrElse(false),
+      showSections   = config.showSections.getOrElse(false),
+      hideKickers    = config.hideKickers.getOrElse(false),
+      showDateHeader = config.showDateHeader.getOrElse(false),
+      showLatestUpdate = config.showLatestUpdate.getOrElse(false)
     )
 }
 

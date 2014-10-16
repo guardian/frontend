@@ -1,5 +1,8 @@
 package controllers
 
+import actions.AuthenticatedActions.AuthRequest
+import com.gu.identity.cookie.GuUCookieData
+import org.mockito.Matchers
 import org.scalatest.{ShouldMatchers, path}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
@@ -20,7 +23,7 @@ import com.gu.identity.model.Subscriber
 import services.IdentityRequest
 import client.{Auth, Error}
 import idapiclient.TrackingData
-import actions.AuthRequest
+import actions.AuthenticatedActions
 
 class EmailControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -35,24 +38,24 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = None, receiveGnmMarketing = None))
-  val testAuth = new ScGuU("abc")
+  val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+  val authenticatedUser = AuthenticatedUser(user, testAuth)
   val error = Error("Test message", "Test description", 500)
   val errors = List(error)
 
-  val authAction  = new actions.AuthenticatedAction(authService) {
-    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
-      block(AuthRequest(request, user, testAuth))
-    }
-  }
+  val authenticatedActions  = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
+
+  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, testAuth))
+
   when(idRequestParser.apply(any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
-  val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authAction)
+  val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions)
 
   "The preferences method" - Fake {
     val testRequest = TestRequest()
-    val authRequest = AuthRequest(testRequest, user, testAuth)
+    val authRequest = new AuthRequest(authenticatedUser, testRequest)
 
     "when the api calls succeed" - {
       val subscriber = Subscriber("Text", Nil)
@@ -93,7 +96,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
       val emailFormat = "Text"
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
         .withFormUrlEncodedBody("statusFields.receiveGnmMarketing" -> gnmMarketing, "statusFields.receive3rdPartyMarketing" -> thirdPartyMarketing, "htmlPreference" -> emailFormat, "csrfToken" -> "abc")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
+      val authRequest = new AuthRequest(authenticatedUser, fakeRequest)
 
       "with successful api calls" - {
         val updatedStatus = user.statusFields.copy(receiveGnmMarketing = Some(true), receive3rdPartyMarketing = Some(true))
@@ -136,17 +139,6 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
         "should include the error message on the page" in {
           val result = emailController.savePreferences()(authRequest)
           contentAsString(result).contains(error.description) should equal(true)
-        }
-      }
-    }
-
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
-
-      "should throw a CSRF error" in {
-        intercept[RuntimeException]{
-          contentAsString(emailController.savePreferences()(authRequest))
         }
       }
     }

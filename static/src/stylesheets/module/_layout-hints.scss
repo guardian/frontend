@@ -70,6 +70,10 @@ figure.element.element--thumbnail {
 
     @include mq(tablet) {
         width: gs-span(2);
+
+        &.img--landscape {
+            margin-right: $gs-gutter; // repeat to override negative margin on img--landscape
+        }
     }
 
     @include mq(leftCol) {

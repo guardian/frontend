@@ -19,6 +19,9 @@
             border-left: 0;
         }
     }
+    .lineitem--v-high {
+        float: none;
+    }
     .lineitem__link {
         &:hover {
             text-decoration: none;
@@ -27,6 +30,9 @@
                 text-decoration: underline;
             }
         }
+    }
+    .lineitem__image {
+        display: block;
     }
     .lineitem__image-crop {
         position: relative;
@@ -43,7 +49,7 @@
     }
     .lineitem__title {
         color: $c-neutral1;
-        @include fs-headline(2);
+        @include fs-header(1);
         padding-top: 2px;
         margin-bottom: $gs-baseline;
     }
@@ -109,7 +115,7 @@
             padding: 0 $gs-gutter/2;
 
             &:first-child {
-                border-left: 1px solid $c-neutral3;
+                border-left: 1px solid $c-neutral4;
             }
         }
     }
@@ -134,6 +140,11 @@
         }
         .lineitem.lineitem--high {
             padding-left: 0;
+
+            @include mq($until: tablet) {
+                padding-bottom: $gs-baseline/2;
+            }
+
             @include mq(tablet) {
                 padding-left: $gs-gutter*.5;
             }

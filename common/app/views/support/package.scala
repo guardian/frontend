@@ -1,7 +1,9 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
+import dfp.DfpAgent
 import model._
 
 import java.net.URLEncoder._
@@ -10,7 +12,7 @@ import org.jboss.dna.common.text.Inflector
 import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.nodes.{ Element, Document, TextNode }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.{Json, JsValue, JsString, Writes}
@@ -379,6 +381,35 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+  def clean(body: Document): Document = {
+
+    def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
+      val newCharLimit = charLimit - textNode.text.length
+      if (newCharLimit < 0) {
+        textNode.text(textNode.text.take(charLimit.max(0)).trim.stripSuffix(".") + (if (charLimit > 0) "…" else ""))
+      }
+      newCharLimit
+    }
+
+    def truncateElement(charLimit: Int, element: Element): Int = {
+      element.childNodes.foldLeft(charLimit) {
+        (t, node) =>
+          if (node.isInstanceOf[TextNode]) {
+            truncateTextNode(t, node.asInstanceOf[TextNode])
+          } else if (node.isInstanceOf[Element]) {
+            truncateElement(t, node.asInstanceOf[Element])
+          } else {
+            t
+          }
+      }
+    }
+
+    truncateElement(limit, body)
+    body
+  }
+}
+
 // TODO make this separate
 // this does not fix other links, just the ones in these pages.
 case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
@@ -662,6 +693,16 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else if (page.keywords.nonEmpty) {
+      slices.TagContainers.keywordPage
+    } else {
+      slices.TagContainers.tagPage
+    }
+  }
+
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
@@ -767,19 +808,34 @@ object GetClasses {
     }
 
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +:
+      TrailCssClasses.toneClass(trail, "--item") +:
         (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
         cutOutClass): _*
     )
   }
 
+  def forSubLink(trail: Trail) = RenderClasses(Seq(
+    Some("fc-sublink"),
+    Some(TrailCssClasses.toneClass(trail, "--sublink")),
+    sublinkMediaTypeClass(trail)
+  ).flatten: _*)
+
+  def mediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-item--gallery")
+    case _: Video => Some("fc-item--video")
+    case _: Audio => Some("fc-item--audio")
+    case _ => None
+  }
+
+  def sublinkMediaTypeClass(trail: Trail) = trail match {
+    case _: Gallery => Some("fc-sublink--gallery")
+    case _: Video => Some("fc-sublink--video")
+    case _: Audio => Some("fc-sublink--audio")
+    case _ => None
+  }
+
   def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
-    val itemClass = trail match {
-      case _: Gallery => Some("fc-item--gallery")
-      case _: Video => Some("fc-item--video")
-      case _: Audio => Some("fc-item--audio")
-      case _ => None
-    }
+    val itemClass = mediaTypeClass(trail)
 
     val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "fc-item--has-no-image"
@@ -798,7 +854,6 @@ object GetClasses {
       itemClass,
       if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
       if (trail.isLive) Some("fc-item--live") else None,
-      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
       if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
       if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
 
@@ -926,23 +981,23 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> config.isSponsored,
-      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       Seq(
         "js-container--fetch-updates",
@@ -951,7 +1006,7 @@ object GetClasses {
     )
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten

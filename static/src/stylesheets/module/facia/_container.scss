@@ -1,11 +1,6 @@
 .container {
     position: relative;
     overflow: hidden;
-    margin-bottom: $gs-baseline;
-
-    @include mq(tablet) {
-        margin-bottom: $gs-baseline*2;
-    }
 }
 .container--dark-background {
     background-color: $c-neutral1;
@@ -48,7 +43,21 @@
     }
 }
 .container__header {
+    padding-top: $gs-baseline / 2;
     position: relative;
+
+    @include mq($until: tablet) {
+        @include fs-header(5);
+    }
+
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
 }
 .container__title,
 .container__toggle__text {
@@ -79,17 +88,16 @@
     @include mq(tablet) {
         min-height: 0;
         padding-right: 0;
-        padding-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline;
-    }
-    @include mq(desktop) {
-        padding-top: $gs-baseline/1.5;
     }
 }
 
 .container__body {
-    @include mq(leftCol) {
-        padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline/2;
+
+    .container--has-toggle & {
+        @include mq(leftCol, wide) {
+            padding-top: gs-height(1);
+        }
     }
 }
 
@@ -121,12 +129,11 @@
 }
 
 .container__toggle {
-    position: absolute;
     min-height: gs-height(1);
     min-width: gs-span(1);
+    position: absolute;
     top: 2px;
     right: 0;
-    height: 100%;
     border: 0;
     background-color: transparent;
     @include fs-textSans(3);
@@ -167,6 +174,11 @@
             display: block;
         }
     }
+
+    @include mq(leftCol) {
+        left: gs-span(13) + $gs-gutter;
+    }
+
     @include mq(wide) {
         left: gs-span(15) + $gs-gutter;
     }

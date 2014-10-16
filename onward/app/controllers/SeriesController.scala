@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -46,10 +47,11 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
-    implicit val config = Config(
-      id = series.tag.webTitle, contentApiQuery = Some(series.id), displayName = Some("Series:"), href = Some(series.id)
+    val dataId: String = series.tag.webTitle
+    implicit val config = CollectionConfig.withDefaults(
+      apiQuery = Some(series.id), displayName = Some("Series:"), href = Some(series.id)
     )
-    val response = () => views.html.fragments.containers.series(Collection(series.trails.take(7)), SeriesContainer(), 1, series.tag.description)
+    val response = () => views.html.fragments.containers.series(Collection(series.trails.take(7)), SeriesContainer(), 1, series.tag.description, dataId)
     renderFormat(response, response, 1)
   }
 }

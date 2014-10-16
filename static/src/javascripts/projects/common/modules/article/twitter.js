@@ -5,15 +5,17 @@ define([
     'bonzo',
     'qwery',
     'lodash/collections/forEach',
+    'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator'
-], function(
+], function (
     bean,
     bonzo,
     qwery,
     forEach,
+    debounce,
     $,
     config,
     detect,
@@ -22,7 +24,7 @@ define([
     var body = qwery('.js-liveblog-body');
 
     function bootstrap() {
-        mediator.on('window:scroll', enhanceTweets);
+        mediator.on('window:scroll', debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {
@@ -30,22 +32,22 @@ define([
             return;
         }
 
-        var tweetElements = qwery('blockquote.js-tweet'),
-            widgetScript  = qwery('#twitter-widget'),
-            viewportHeight = bonzo.viewport().height;
+        var scriptElement,
+            tweetElements       = qwery('blockquote.js-tweet'),
+            widgetScript        = qwery('#twitter-widget'),
+            viewportHeight      = bonzo.viewport().height,
+            nativeTweetElements = qwery('blockquote.twitter-tweet');
 
-        tweetElements.forEach( function(element) {
+        tweetElements.forEach(function (element) {
             var $el = bonzo(element);
-            if(((bonzo(document.body).scrollTop() + (viewportHeight * 2.5)) > $el.offset().top) && (bonzo(document.body).scrollTop() < ($el.offset().top + $el.offset().height))) {
+            if (((bonzo(document.body).scrollTop() + (viewportHeight * 2.5)) > $el.offset().top) && (bonzo(document.body).scrollTop() < ($el.offset().top + $el.offset().height))) {
                 $(element).removeClass('js-tweet').addClass('twitter-tweet');
             }
         });
 
-        var nativeTweetElements = qwery('blockquote.twitter-tweet');
-
         if (nativeTweetElements.length > 0) {
             if (widgetScript.length === 0) {
-                var scriptElement = document.createElement('script');
+                scriptElement = document.createElement('script');
                 scriptElement.id = 'twitter-widget';
                 scriptElement.async = true;
                 scriptElement.src = '//platform.twitter.com/widgets.js';

@@ -34,6 +34,7 @@ object Frontend extends Build with Prototypes {
       flexibleContentBlockToText,
       flexibleContentBodyParser,
       scalaCheck,
+      faciaScalaClient,
       filters,
       ws,
       scalaTestPlus
@@ -165,6 +166,13 @@ object Frontend extends Build with Prototypes {
     )
   )
 
+  val pngResizer = application("png-resizer")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+    .settings(
+      libraryDependencies += im4java
+    )
+
   val main = root().aggregate(
     common,
     facia,
@@ -174,6 +182,7 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     image,
+    pngResizer,
     discussion,
     router,
     diagnostics,

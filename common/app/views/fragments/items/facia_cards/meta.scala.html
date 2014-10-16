@@ -4,20 +4,17 @@
 @import views.support.{Format, TrailCssClasses}
 
 <aside class="fc-item__meta">
-@if(!trail.shouldHidePublicationDate) {
+    @if(!trail.shouldHidePublicationDate) {
     <time class="fc-item__timestamp js-item__timestamp"
-          datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-          data-timestamp="@trail.webPublicationDate.getMillis"
-          data-relativeformat="short">
+    datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+    data-timestamp="@trail.webPublicationDate.getMillis"
+    data-relativeformat="short">
         <span class="fc-timestamp__text">
             <span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")
         </span>
     </time>
-
-    <span class="fc-trail__count fc-trail__count--commentcount fc-trail__count--inline-template js-item__inline-comment-template">
-        <a href="@LinkTo(trail)#comments" data-link-name="Comment count">
-            <span class="js-item__comment-count"></span> <span class="u-h js-item__comment-or-comments"></span>
-        </a>
-    </span>
-}
+    }
+    <a class="fc-trail__count fc-trail__count--commentcount fc-trail__count--inline-template js-item__inline-comment-template" href="@LinkTo(trail)#comments" data-link-name="Comment count">
+        <span class="js-item__comment-count"></span> <span class="js-item__comment-or-comments"></span>
+    </a>
 </aside>

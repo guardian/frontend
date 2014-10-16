@@ -60,7 +60,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     def onSuccess(form: (String, String, Boolean)): Future[Result] = form match {
       case (email, password, rememberMe) =>
         logger.trace("authing with ID API")
-        val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), idRequest.trackingData)
+        val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), idRequest.trackingData, Some(rememberMe))
         signInService.getCookies(authResponse, rememberMe) map {
           case Left(errors) =>
             logger.error(errors.toString())

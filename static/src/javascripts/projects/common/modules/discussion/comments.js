@@ -14,14 +14,13 @@ define([
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/discussion/recommend-comments',
     'common/modules/identity/api',
-    'common/modules/userPrefs'
+    'common/modules/ui/relativedates'
 ], function(
     bean,
     bonzo,
     qwery,
-    
+
     _map,
 
     $,
@@ -33,161 +32,71 @@ define([
     Component,
     DiscussionApi,
     CommentBox,
-    RecommendComments,
     Id,
-    userPrefs
+    relativedates
 ) {
 'use strict';
-/**
- * TODO (jamesgorrie):
- * * Move recommending into this, it has no need for it's own module.
- * * Get the selectors up to date with BEM
- * * Move over to $ instead of qwery & bonzo
- * @constructor
- * @extends Component
- * @param {Object=} options
- */
+
 var Comments = function(options) {
     this.setOptions(options);
-
-    if (userPrefs.get('discussion.order')) {
-        this.options.order = userPrefs.get('discussion.order');
-    }
-
-    this.fetchData = {
-        orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        maxResponses: 3
-    };
-
-    this.fetchCommentData = {
-        displayThreaded: true
-    };
-
-    this.endpoint = this.options.commentId ?
-        '/discussion/comment-context/'+ this.options.commentId + '.json' :
-        '/discussion/'+ this.options.discussionId + '.json';
 };
+
 Component.define(Comments);
 
-/**
- * @override
- * @type {string}
- */
-Comments.prototype.componentClass = 'd-discussion';
+Comments.prototype.componentClass = 'd-comments';
 
-/**
- * @type {Object.<string.*>}
- * @override
- */
 Comments.prototype.classes = {
-    jsContent: 'js-discussion-content',
-    container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    changePage: 'js-discussion-change-page',
-    showMoreHiddenContainer: 'show-more__container--hidden',
-    showMoreNewer: 'd-discussion__show-more--newer',
-    showMoreOlder: 'd-discussion__show-more--older',
-    showMoreLoading: 'd-discussion__show-more-loading',
-    showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     showRepliesButton: 'd-show-more-replies__button',
-    heading: 'discussion__heading',
     newComments: 'js-new-comments',
-    orderControl: 'd-discussion__order-control',
-    loader: 'd-discussion__loader',
 
     comment: 'd-comment',
-    commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
-    commentRecommend: 'd-comment__recommend',
     commentStaff: 'd-comment--staff',
-    commentBlocked: 'd-comment--blocked',
     commentBody: 'd-comment__body',
     commentTimestampJs: 'js-timestamp',
     commentReport: 'js-report-comment'
 };
 
-/** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
     discussionId: null,
     showRepliesCount: 3,
     commentId: null,
     order: 'newest',
-    state: null
+    threading: 'collapsed'
 };
 
-/**
- * @type {string}
- * @override
- */
-Comments.prototype.endpoint = '/discussion:discussionId.json';
-
-/** @type {NodeList=} */
 Comments.prototype.comments = null;
-
-/** @type {NodeList=} */
 Comments.prototype.topLevelComments = null;
-
-/** @type {Object=} */
 Comments.prototype.user = null;
 
-/** @override */
-Comments.prototype.prerender = function() {
+Comments.prototype.ready = function() {
 
-    // Ease of use
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
-    if (this.options.state) {
-        this.setState(this.options.state);
-    }
-};
-
-/** @override */
-Comments.prototype.ready = function() {
     this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
-    this.on('click', this.getClass('changePage'), this.changePage);
-    this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
-    this.on('change', this.getClass('orderControl'), this.setOrder);
 
-    this.addMoreRepliesButtons();
-
-    if (this.options.commentId) {
-        var comment = $('#comment-'+ this.options.commentId);
-        this.showHiddenComments();
-        $('.d-discussion__show-all-comments').addClass('u-h');
-        if (comment.attr('hidden')) {
-            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
-        }
-
-        window.location.replace('#comment-'+ this.options.commentId);
-    }
+    window.setInterval(
+        function () {
+            this.relativeDates();
+        }.bind(this),
+        60000
+    );
 
     this.emit('ready');
+    this.relativeDates();
 
-    $('.js-report-comment-close', this.elem).each(function(close) {
-        bean.on(close, 'click', function() {
-            $('.js-report-comment-form').addClass('u-h');
-        });
+    this.on('click', '.js-report-comment-close', function() {
+        $('.js-report-comment-form').addClass('u-h');
     });
-
-    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
 };
 
-Comments.prototype.handleBodyClick = function(clickspec) {
-    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-        this.showHiddenComments();
-    }
-};
-
-/**
- * @param {Event} e
- */
 Comments.prototype.handlePickClick = function(e) {
     e.preventDefault();
     var commentId = e.target.getAttribute('data-comment-id'),
@@ -201,11 +110,6 @@ Comments.prototype.handlePickClick = function(e) {
         });
 };
 
-/**
- * @param {Element} commentId
- * @param {Bonzo} $thisButton
- * @return {Reqwest} AJAX Promise
- */
 Comments.prototype.pickComment = function(commentId, $thisButton) {
     var self = this,
         comment = qwery('#comment-'+ commentId, this.elem);
@@ -214,17 +118,11 @@ Comments.prototype.pickComment = function(commentId, $thisButton) {
         .pickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), comment).addClass('d-comment__recommend--left');
             $thisButton.text('Unpick');
             comment.setAttribute('data-comment-highlighted', true);
         });
 };
 
-/**
- * @param {Element} comment
- * @param {Bonzo} $thisButton
- * @return {Reqwest} AJAX Promise
- */
 Comments.prototype.unPickComment = function(commentId, $thisButton) {
     var self = this,
         comment = qwery('#comment-'+ commentId);
@@ -233,16 +131,11 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         .unPickComment(commentId)
         .then(function () {
             $(self.getClass('commentPick'), comment).addClass('u-h');
-            $(self.getClass('commentRecommend'), comment).removeClass('d-comment__recommend--left');
             $thisButton.text('Pick');
             comment.setAttribute('data-comment-highlighted', false);
         });
 };
 
-/**
- * @param {number} id
- * @return {Reqwest|null}
- */
 Comments.prototype.gotoComment = function(id) {
     var comment = $('#comment-'+ id, this.elem);
 
@@ -258,90 +151,66 @@ Comments.prototype.gotoComment = function(id) {
     }.bind(this));
 };
 
-/**
- * @param {number} page
- */
 Comments.prototype.gotoPage = function(page) {
-    this.loading();
-    scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
-
+    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+    this.relativeDates();
     return this.fetchComments({
         page: page
-    }).then(function() {
-        this.loaded();
-    }.bind(this));
+    });
 };
 
-/**
- * @param {Event} e
- */
-Comments.prototype.changePage = function(e) {
-    e.preventDefault();
-    var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-    return this.gotoPage(page);
-};
-
-/**
- * @param {Object.<string.*>}
- * options {
- *   page: {number},
- *   comment: {number}
- * }
- */
 Comments.prototype.fetchComments = function(options) {
+    options = options || {};
+
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
         '.json?'+ (options.page ? '&page=' + options.page : '');
+
+    var queryParams = {
+        orderBy: options.order || this.options.order,
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        displayThreaded: this.options.threading !== 'unthreaded'
+    };
+
+    if (!options.comment && this.options.threading === 'collapsed') {
+        queryParams.maxResponses = 3;
+    }
 
     return ajax({
         url: url,
         type: 'json',
         method: 'get',
         crossOrigin: true,
-        data: this.fetchData
-    }).then(this.renderComments.bind(this));
+        data: queryParams
+    }).then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
 };
 
-/**
- * @param {Object} resp
- */
-Comments.prototype.renderComments = function(resp) {
-    var html = bonzo.create(resp.html),
-        content = qwery(this.getClass('jsContent'), html);
-
-    // Stop duplication in new comments section
-    qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
-        var $comment = $('#'+ comment.id, html);
-        if ($comment.length === 1) {
-            $(comment).remove();
-        }
-    });
-
-    $(this.getClass('jsContent'), this.elem).replaceWith(content);
-    this.addMoreRepliesButtons(qwery(
-        this.getClass('comment'), content
-    ));
-
-    if (!this.isReadOnly()) {
-        RecommendComments.initButtons($(this.getClass('commentRecommend'), this.elem));
+Comments.prototype.goToPermalink = function(commentId) {
+    if (commentId) {
+        this.showHiddenComments();
+        $('.d-discussion__show-all-comments').addClass('u-h');
+        window.location.replace('#comment-'+ commentId);
     }
-
-    this.emit('loaded');
 };
 
-/**
- * @param {Event} e (optional)
- */
+Comments.prototype.renderComments = function(resp) {
+
+    var contentEl = bonzo.create(resp.html),
+        comments = qwery(this.getClass('comment'), contentEl);
+
+    bonzo(this.elem).empty().append(contentEl);
+    this.addMoreRepliesButtons(comments);
+
+    this.relativeDates();
+    this.emit('rendered');
+};
+
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
-    this.removeState('shut');
-    this.removeState('partial');
     this.emit('first-load');
+    this.relativeDates();
 };
 
-/**
- * @param {NodeList} comments
- */
 Comments.prototype.addMoreRepliesButtons = function (comments) {
 
     comments = comments || this.topLevelComments;
@@ -369,9 +238,6 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
     }.bind(this));
 };
 
-/**
- * @param {Event}
- */
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
 
@@ -385,7 +251,7 @@ Comments.prototype.getMoreReplies = function(event) {
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
-        data: this.fetchCommentData,
+        data: {displayThreaded: true},
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
@@ -395,18 +261,10 @@ Comments.prototype.getMoreReplies = function(event) {
         bonzo(qwery('.d-thread--responses', source)).append(replies);
         bonzo(li).addClass('u-h');
 
-        if (!self.isReadOnly()) {
-            var btns = _map(replies, function(reply) {
-                return qwery(self.getClass('commentRecommend'), reply)[0];
-            });
-            RecommendComments.initButtons(btns);
-        }
+        self.relativeDates();
     });
 };
 
-/**
- * @return {Boolean}
- */
 Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
 };
@@ -474,7 +332,6 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     window.location.replace('#comment-'+ comment.id);
 };
 
-/** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
     e.preventDefault(); // stop the anchor link firing
 
@@ -533,57 +390,6 @@ Comments.prototype.replyToComment = function(e) {
     });
 };
 
-Comments.prototype.showDiscussion = function() {
-    var showDiscussionElem = $('.d-discussion__show-all-comments');
-    if (!showDiscussionElem.hasClass('u-h')) {
-        bean.fire(showDiscussionElem, 'click');
-        showDiscussionElem.addClass('u-h');
-    }
-};
-
-Comments.prototype.loading = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
-    $(this.getClass('loader'), this.elem).removeClass('u-h').css({
-        height: $content.offset().height
-    });
-    $content.addClass('u-h');
-};
-
-Comments.prototype.loaded = function() {
-    var $content = $(this.getClass('jsContent'), this.elem);
-    $(this.getClass('loader'), this.elem).addClass('u-h').css({
-        height: 'auto'
-    });
-    $content.removeClass('u-h');
-};
-
-/**
- * @param {Event} e
- */
-Comments.prototype.setOrder = function(e) {
-    var elem = e.currentTarget,
-        newWorldOrder = elem.options[elem.selectedIndex].value,
-        $newComments = $(this.getElem('newComments'));
-
-    this.options.order = newWorldOrder;
-    this.fetchData.orderBy = newWorldOrder;
-    this.showDiscussion();
-    this.loading();
-
-    $newComments.empty();
-    userPrefs.set('discussion.order', newWorldOrder);
-
-    return this.fetchComments({
-        page: 1
-    }).then(function() {
-        this.showHiddenComments();
-        this.loaded();
-    }.bind(this));
-};
-
-/**
- * @param {Event} e
- */
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
 
@@ -627,7 +433,6 @@ Comments.prototype.addUser = function(user) {
     }
 
     if (!this.isReadOnly()) {
-        RecommendComments.init();
 
         if (this.user && this.user.privateFields.canPostComment) {
 
@@ -637,6 +442,10 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
+};
+
+Comments.prototype.relativeDates = function() {
+    relativedates.init();
 };
 
 return Comments;

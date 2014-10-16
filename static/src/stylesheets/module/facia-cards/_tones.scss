@@ -1,13 +1,17 @@
 %tone-has-background {
-    .fc-item__content {
+    &.fc-item--has-cutout {
+        padding-bottom: 0;
+    }
+
+    .fc-item__content,
+    .fc-item__footer--horizontal {
         padding-left: $fc-item-gutter;
         padding-right: $fc-item-gutter;
     }
 }
 
 %tone-not-background {
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__title {
             @include mq($until: tablet) {
                 padding-top: 0;
@@ -26,8 +30,7 @@
         }
     }
 
-    &.fc-item--list-media-mobile,
-    &.fc-item--list-media-large-mobile {
+    &.fc-item--list-media-mobile {
         .fc-item__header,
         .fc-item__standfirst,
         .fc-item__meta {
@@ -61,6 +64,14 @@
     }
 }
 
+@mixin sublink-style($tones...) {
+    @each $tone in $tones {
+        .tone-#{$tone}--item & {
+            @content;
+        }
+    }
+}
+
 @import 'item-tones/tone-news';
 @import 'item-tones/tone-live';
 @import 'item-tones/tone-comment';
@@ -70,3 +81,4 @@
 @import 'item-tones/tone-review';
 @import 'item-tones/tone-dead';
 @import 'item-tones/tone-podcast';
+@import 'item-tones/tone-editorial';

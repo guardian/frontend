@@ -1,8 +1,8 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isTopComment: Boolean = false)(implicit request: RequestHeader)
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
-<li class="d-comment u-cf
+<li class="d-comment
             @RenderClasses(Map(
                 "d-comment--response" -> isResponse,
                 "d-comment--top-level" -> !isResponse,
@@ -10,7 +10,7 @@
                 "d-comment--has-replies" -> comment.responses.nonEmpty,
                 "d-comment-staff" -> comment.profile.isStaff
             ))"
-           id="@if(isTopComment){top-}comment-@comment.id"
+           id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
            data-comment-replies="@comment.responseCount"
@@ -20,12 +20,6 @@
            itemscope itemtype="http://schema.org/Comment">
 
     <div class="d-comment__inner @if(isResponse){d-comment__inner--response}else{d-comment__inner--top-level}">
-
-        @if(isResponse) {
-            <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
-                <i class="i i-gupickasterisk"></i>Guardian Pick
-            </div>
-        }
         <div class="d-comment__meta">
             <span class="d-comment__avatar-wrapper">
                 <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
@@ -48,18 +42,21 @@
                         <span class="d-comment__reply-to-author">@r.displayName</span>
                     </a>
                 }
+                <div class="d-comment__timestamp">
+                    <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
+                        <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                                    data-timestamp="@comment.date.getMillis" data-relativeformat="med" title="Permalink to this comment">
+                            @Format(comment.date, "d MMM y HH:mm")</time><i class="i i-comment-anchor"></i>
+                    </a>
+                </div>
                 @if(comment.profile.isStaff){
                     <span class="d-comment__author-label">Staff</span>
                 }else { @if(comment.profile.isContributor) {
                     <span class="d-comment__author-label">Contributor</span>}
                 }
-                <div class="d-comment__timestamp">
-                    <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
-                        <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
-                            @Format(comment.date, "d MMM y HH:mm")
-                        </time>
-                    </a>
-                </div>
+                @if(comment.isHighlighted && !comment.isBlocked) {
+                    <div class="d-comment__pick" title="Guardian pick">Guardian Pick</div>
+                }
             </div>
         </div>
 
@@ -67,15 +64,15 @@
 
             @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
                 <div
-                    class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}"
+                    class="d-comment__recommend js-recommend-comment"
                     data-comment-id="@comment.id"
                     data-user-id="@comment.profile.userId"
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
-                    <span class="d-comment__recommend-button">
+                    <button class="u-button-reset d-comment__recommend-button">
                         <span class="d-comment__recommend-pulse"></span>
                         <i></i>
-                    </span>
+                    </button>
                     <span class="d-comment__recommend-count js-recommend-count">
                         <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
                         <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
@@ -83,12 +80,7 @@
                 </div>
             }
 
-            <div class="d-comment__main @if(comment.isBlocked){d-comment__main-removed}">
-                @if(!isResponse) {
-                    <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
-                        <i class="i i-gupickasterisk"></i>Guardian Pick
-                    </div>
-                }
+            <div class="d-comment__main @if(comment.isBlocked){d-comment__main--removed}">
 
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){

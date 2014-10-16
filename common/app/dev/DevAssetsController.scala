@@ -22,6 +22,12 @@ object DevAssetsController extends Controller with ExecutionContexts {
     )
   }
 
+  def atFonts(path: String) = at(s"fonts/$path")
   def atJavascripts(file: String) = at(s"javascripts/$file")
   def atStylesheets(file: String) = at(s"stylesheets/$file")
+
+  def humans(): Action[AnyContent] = controllers.Assets.at(path = "/public", file = "humans.txt")
+
+  def surveys(file: String): Action[AnyContent] =
+    controllers.Assets.at(path = "/public/surveys", file, aggressiveCaching = false)
 }

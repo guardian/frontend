@@ -5,6 +5,7 @@
 }
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--third';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
@@ -56,23 +57,13 @@
 
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
-        @include fc-item--list-media;
+        @include fc-item--list-media(3.5, 2);
     }
 }
 
 .fc-item--list-media-tablet {
     @include mq(tablet) {
-        @include fc-item--list-media(4, 1);
-    }
-
-    @include mq(desktop) {
         @include fc-item--list-media;
-    }
-}
-
-.fc-item--list-media-large-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--list-media-large;
     }
 }
 
@@ -101,12 +92,23 @@
 .fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
+
+        &[class*="fc-item--has-sublinks"] {
+            .fc-item__standfirst,
+            .fc-item__media-wrapper {
+                display: none;
+            }
+        }
+
+        &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
+            display: block;
+        }
     }
 }
 
-.fc-item--half-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--half;
+.fc-item--third-tablet {
+    @include mq(tablet) {
+        @include fc-item--third;
     }
 }
 
@@ -132,7 +134,7 @@
     @include mq(tablet) {
         @include fc-item--full;
 
-        .fc-sublinks__item:nth-child(n+5) {
+        .fc-sublink:nth-child(n+5) {
             display: none;
         }
     }

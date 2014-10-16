@@ -10,7 +10,7 @@ define([
 
         it('should be able to get segments', function () {
             var section = 'news';
-            audienceScienceGateway._init({
+            audienceScienceGateway.init({
                 page: { section: section },
                 switches: { audienceScienceGateway: true }
             });
@@ -48,7 +48,7 @@ define([
         });
 
         it('should return empty object if no segments', function () {
-            audienceScienceGateway._init({
+            audienceScienceGateway.init({
                 page: { section: 'news' },
                 switches: { audienceScienceGateway: true }
             });
@@ -57,7 +57,7 @@ define([
         });
 
         it('should return empty object if switch is off', function () {
-            audienceScienceGateway._init({
+            audienceScienceGateway.init({
                 switches: { audienceScienceGateway: false }
             });
             expect(audienceScienceGateway.getSegments()).toEqual({});

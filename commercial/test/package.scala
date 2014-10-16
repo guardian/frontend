@@ -19,7 +19,6 @@ class CommercialTestSuite extends Suites (
   new money.SavingsApiTest,
   new soulmates.SoulmatesApiTest,
   new travel.TravelOffersApiTest,
-  new AdAgentTest,
   new LookupTest
   ) with SingleServerSuite {
 

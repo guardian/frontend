@@ -4,12 +4,9 @@ import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
-import play.Play
-import play.api.libs.json.Json
 import play.api.mvc.WithFilters
-import services.{IndexListingsLifecycle, ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
+import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
 import play.api.Application
-
 
 object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
@@ -25,9 +22,4 @@ object Global extends WithFilters(Filters.common: _*)
     FaciaMetrics.FaciaToApplicationRedirectMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
   )
-
-  override def onStart(app: Application) {
-    if (Play.isDev) ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
-    super.onStart(app)
-  }
 }

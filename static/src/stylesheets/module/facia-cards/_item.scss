@@ -34,6 +34,10 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__content {
             @include flex-basis(100% - $media-width);
         }
+
+        .fc-item__footer--horizontal {
+            @include flex-basis(100%);
+        }
     }
 
     .has-no-flex-wrap & {
@@ -80,6 +84,10 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item__container {
+    position: relative;
+}
+
 .fc-item {
     @include flex(1);
     background-color: #ffffff;
@@ -88,6 +96,15 @@ $fc-item-gutter: $gs-gutter / 4;
 
     a {
         color: $c-neutral1;
+        color: inherit;
+    }
+
+    // This is a temp fix until we completely remove tone-colour from fc-item
+    .tone-colour,
+    .tone-colour:hover,
+    .tone-colour:active,
+    .tone-colour:visited {
+        color: inherit;
     }
 
     .stars {
@@ -101,10 +118,6 @@ $fc-item-gutter: $gs-gutter / 4;
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-x-small-button-size);
     }
-}
-
-.fc-item--has-image:before {
-    background-color: rgba($c-neutral1, .15);
 }
 
 /* Item elements
@@ -124,34 +137,31 @@ $fc-item-gutter: $gs-gutter / 4;
     @include box-sizing(border-box);
 }
 
-.fc-item__image-container {
-    display: none;
-
-    .fc-item--has-image & {
-        display: block;
-
-        .js-off & {
-            display: none !important;
-        }
-    }
+.fc-item__content,
+.fc-item--has-cutout .fc-item__container,
+.fc-item--list-media-mobile {
+    @include box-shadow(inset 0 1px $c-neutral5);
 }
 
+.fc-item__image-container,
 .fc-item__video-fallback {
     display: none;
 }
 
 .fc-item__live-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
     font: inherit;
     line-height: 1;
-    padding: .1em .2em .05em;
+}
+
+.fc-item__breaking-indicator {
+    color: $c-liveDefault;
 }
 
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
-    padding-bottom: .75em;
+    padding-bottom: .5em;
 
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
@@ -159,15 +169,21 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title,
-.fc-item__byline {
+.fc-item__byline,
+.fc-item__kicker {
     font: inherit;
     line-height: inherit;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline / 3;
+    padding-top: $gs-baseline / 4;
     padding-bottom: 0;
     word-wrap: break-word;
+}
+
+.fc-item__kicker:after {
+    content: ' /';
+    color: fade-out($c-neutral1, .8);
 }
 
 .fc-item__byline {
@@ -177,6 +193,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__standfirst {
     @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
+    color: $c-neutral2;
     display: none;
 
     .fc-item--has-boosted-title & {
@@ -186,15 +203,13 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
+    margin-bottom: $gs-baseline / 4;
+    color: $c-neutral2;
+
     &:after {
         clear: left;
         content: '';
         display: table;
-    }
-
-    &,
-    & a {
-        color: $c-neutral2;
     }
 }
 
@@ -205,7 +220,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    // display: none;
+    display: none;
     margin-right: 1em;
 }
 
@@ -214,7 +229,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
-    display: none;
+    // We never want to show the media and the cutout at the same time, hence the important 
+    display: none !important;
 }
 
 .fc-item__footer--vertical {
@@ -223,7 +239,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__footer--horizontal {
     display: none;
-    @include clearfix;
+    .has-flex-wrap & {
+        @include align-items--end;
+    }
+    .has-no-flex-wrap & {
+        @include clearfix;
+    }
 }
 
 .fc-item__avatar {
@@ -238,10 +259,13 @@ $fc-item-gutter: $gs-gutter / 4;
     position: absolute;
     height: 100%;
     bottom: 0;
-    left: 20%;
+    right: 0;
 
-    @include mq(desktop) {
-        left: 30%;
+    .responsive-img {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
     }
 
     &.image--portrait {

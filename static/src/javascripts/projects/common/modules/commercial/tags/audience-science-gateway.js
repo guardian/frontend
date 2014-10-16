@@ -42,7 +42,7 @@ define([
                     url = [gatewayUrl, '?', query].join('');
 
                 return require(['js!' + url + '!exports=asiPlacements'])
-                    .then(function(asiPlacements) {
+                    .then(function (asiPlacements) {
                         var segments = storage.local.get(storageKey) || {};
                         // override the global value with our previously stored one
                         window.asiPlacements = segments[section];
@@ -51,15 +51,15 @@ define([
                     });
             }
         }),
-        getSegments = function() {
+        getSegments = function () {
             var segments = {},
                 storedSegments = storage.local.get(storageKey);
             if (config.switches.audienceScienceGateway && storedSegments) {
                 segments = _(pairs(storedSegments[section]))
-                    .filter(function(placement) {
+                    .filter(function (placement) {
                         return placement[1]['default'];
                     })
-                    .map(function(placement) {
+                    .map(function (placement) {
                         return ['pq_' + placement[0], 'T'];
                     })
                     .zipObject()
@@ -75,7 +75,7 @@ define([
     return {
         load: load,
         getSegments: getSegments,
-        _init: init
+        init: init
     };
 
 });

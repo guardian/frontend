@@ -7,16 +7,17 @@ import services.{AuthenticationService, IdentityUrlBuilder, IdRequestParser}
 import common.ExecutionContexts
 import utils.SafeLogging
 import model.IdentityPage
-import actions.AuthActionWithUser
+import actions.AuthenticatedActions
 
 @Singleton
 class EmailVerificationController @Inject()( api: IdApiClient,
-                                             authActionWithUser: AuthActionWithUser,
+                                             authenticatedActions: AuthenticatedActions,
                                              authenticationService: AuthenticationService,
                                              idRequestParser: IdRequestParser,
                                              idUrlBuilder: IdentityUrlBuilder)
   extends Controller with ExecutionContexts with SafeLogging {
   import ValidationState._
+  import authenticatedActions.authActionWithUser
 
   val page = IdentityPage("/verify-email", "Verify Email", "verify-email")
 
@@ -44,7 +45,7 @@ class EmailVerificationController @Inject()( api: IdApiClient,
   def resendEmailValidationEmail() = authActionWithUser.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-      api.resendEmailValidationEmail(request.auth, idRequest.trackingData).map { _ =>
+      api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
         Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder))
       }
   }

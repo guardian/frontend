@@ -1,12 +1,13 @@
 package config
 
-import frontsapi.model.{Front, Collection, Config}
+import com.gu.facia.client.models.{Config, Front, Collection, CollectionConfig}
+import org.joda.time.DateTime
 import org.scalatest._
 import controllers.CreateFront
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class TransformationsSpec extends FlatSpec with ShouldMatchers with ConfiguredTestSuite {
-  val collectionFixture = Collection(
+  val collectionFixture = CollectionConfig.withDefaults(
     displayName = Some("New collection"),
     apiQuery = Some("backfill"),
     `type` = Some("???"),
@@ -15,7 +16,6 @@ import test.ConfiguredTestSuite
     uneditable = Some(false),
     showTags = Some(true),
     showSections = Some(false),
-    showMainVideo = None,
     hideKickers = Some(false),
     showLatestUpdate = Some(false),
     showDateHeader = Some(false)
@@ -37,8 +37,7 @@ import test.ConfiguredTestSuite
     initialCollection = collectionFixture
   )
 
-  val emptyCollectionFixture = Collection(
-    None,
+  val emptyCollectionFixture = CollectionConfig(
     None,
     None,
     None,

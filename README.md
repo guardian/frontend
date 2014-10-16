@@ -91,6 +91,7 @@ Local Install Requirements
 * Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) &
  [bundler](http://gembundler.com/) (You may already have this installed, but
  run `ruby -v` to check version number)
+* Xcode (if on a Mac, one of the Node modules requires it) https://itunes.apple.com/gb/app/xcode/id497799835
 * Installed Memcached `sudo apt-get install memcached` - this is optional
 (most of the time you do not want to use it as caching makes local development
 harder)
@@ -245,7 +246,7 @@ Additional Documentation
 ------------------------
 Further documentation notes and useful items can be found in `docs`.
 
-[Integration testing documentation](integration-tests/scala-fw-tests/readme.md)
+[Integration testing documentation](integrated-tests/README.md)
 [sbt]: http://www.scala-sbt.org
 [play2-console]: https://github.com/playframework/Play20/wiki/PlayConsole
 [play2-wiki]: https://github.com/playframework/Play20/wiki

@@ -20,12 +20,15 @@ module.exports = function(grunt, options) {
                 raven:        'components/raven-js/raven',
                 fastclick:    'components/fastclick/fastclick',
                 stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
-                omniture:     '../../public/javascripts/vendor/omniture'
+                omniture:     '../../public/javascripts/vendor/omniture',
+                // plugins
+                text:         'components/requirejs-text/text'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/
+            fileExclusionRegExp: /^bower_components$/,
+            stubModules: ['text']
         },
         common: {
             options: {
@@ -130,6 +133,16 @@ module.exports = function(grunt, options) {
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
+            }
+        },
+        preview: {
+            options: {
+                name: 'bootstraps/preview',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app'
+                ]
             }
         },
         dev: {

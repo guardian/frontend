@@ -16,7 +16,7 @@ define([
     relativeDates
 ) {
 
-    return  {
+    return {
         render:  function (config, options) {
             var opts = options || {},
                 hasSection = config.page && config.page.section && config.page.section !== 'global';
@@ -25,19 +25,20 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(
-                function(resp) {
+                function (resp) {
                     var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
-                    if (!container) {
-                        return false;
-                    }
-                    bonzo(container)
-                        .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
+                    if (container) {
+                        bonzo(container)
+                            .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
 
-                    commentCount.init(container);
-                    // relativise timestamps
-                    relativeDates.init(container);
-                    // upgrade image
-                    images.upgrade(container);
+                        commentCount.init(container);
+                        // relativise timestamps
+                        relativeDates.init(container);
+                        // upgrade image
+                        images.upgrade(container);
+                    }
+
+                    opts.then && opts.then();
                 }
             );
         }

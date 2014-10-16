@@ -14,7 +14,7 @@ define([
     function isNewSession() {
         var key = 'gu.session';
 
-        if (typeof(newSession) !== 'undefined') {
+        if (typeof (newSession) !== 'undefined') {
             return newSession;
         }
 
@@ -29,16 +29,17 @@ define([
     }
 
     function makeUrl(properties, path) {
-        var query = [];
-        for (var name in properties) {
+        var name,
+            query = [];
+        for (name in properties) {
             query.push(name + '=' + encodeURIComponent(properties[name]));
         }
         return path + '?' + query.join('&');
     }
 
-    var liveStats = {
+    return {
 
-        log : function (config) {
+        log: function (config) {
 
             // Also log views and sessions for each participating ab test.
             var abValues = ab.getAbLoggableObject(config);
@@ -50,7 +51,6 @@ define([
             }
             beacon.fire(makeUrl(abValues, '/ab.gif'));
         }
-    };
 
-    return liveStats;
+    };
 });

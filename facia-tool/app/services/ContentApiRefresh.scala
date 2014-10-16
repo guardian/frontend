@@ -13,7 +13,7 @@ object ContentApiRefresh extends ExecutionContexts {
   /** Enumerator of the collection IDs and a Try of the Response from Content API */
   def refresh(): Enumerator[(String, Try[WSResponse])] =
     enumerate(ConfigAgent.getAllCollectionIds) { collectionId =>
-      (ConfigAgent.getConfig(collectionId).map(ContentApiWrite.writeToContentapi) getOrElse {
+      (ConfigAgent.getConfig(collectionId).map(ContentApiWrite.writeToContentapi(collectionId, _)) getOrElse {
         Future.failed(new RuntimeException(
           s"$collectionId, while present in config listing, does not have an entry there"
         ))

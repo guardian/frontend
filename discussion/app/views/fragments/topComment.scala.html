@@ -1,0 +1,85 @@
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
+@import conf.Configuration
+
+@* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
+<li class="d-top-comment"
+id="top-comment-@comment.id"
+data-comment-id="@comment.id"
+data-comment-author="@comment.profile.displayName"
+data-comment-replies="@comment.responseCount"
+data-comment-timestamp="@comment.date"
+data-comment-author-id="@comment.profile.userId"
+data-comment-highlighted="@comment.isHighlighted"
+itemscope itemtype="http://schema.org/Comment">
+
+    <div class="d-top-comment__bubble">
+        <div class="d-top-comment__pick" title="Guardian pick">Guardian Pick</div>
+
+        <div class="d-top-comment__body" itemprop="text">
+            @withJsoup(BulletCleaner(comment.body))(
+                InBodyLinkCleaner("in body link"),
+                TruncateCleaner(450)
+            )
+        </div>
+
+        <a class="d-top-comment__link js-jump-to-comment" href="@Configuration.discussion.url/comment-permalink/@comment.id" data-comment-id="@comment.id">
+            Jump to comment
+        </a>
+    </div>
+    <svg class="d-top-comment__bubble-spout">
+        <path d="M0,0 L0,24 L5.87,24 L19.5,0 L0,0 Z"></path>
+    </svg>
+
+
+
+    <div class="d-top-comment__meta u-cf">
+        <span class="d-comment__avatar-wrapper">
+            <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
+        </span>
+        <div class="d-comment__meta-text">
+            <span
+            itemscope
+            itemprop="author"
+            itemtype="http://schema.org/Person"
+            title="@comment.profile.displayName"
+            class="d-comment__author">
+                <a href="@Configuration.id.url/user/id/@comment.profile.userId" itemprop="url">
+                    <span itemprop="givenName">@comment.profile.displayName</span>
+                </a>
+            </span>
+
+            <div class="d-comment__timestamp">
+                <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
+                    <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                    data-timestamp="@comment.date.getMillis" data-relativeformat="med" title="Permalink to this comment">
+                    @Format(comment.date, "d MMM y HH:mm")
+                    </time>
+                    <i class="i i-comment-anchor"></i>
+                </a>
+            </div>
+            @if(comment.profile.isStaff){
+                <span class="d-comment__author-label">Staff</span>
+            }else { @if(comment.profile.isContributor) {
+                <span class="d-comment__author-label">Contributor</span>}
+            }
+        </div>
+
+
+        <div class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}"
+                data-comment-id="@comment.id"
+                data-user-id="@comment.profile.userId"
+                data-recommend-count="@comment.numRecommends"
+                title="@comment.numRecommends recommendations">
+            <span class="d-comment__recommend-count js-recommend-count">
+                <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
+                <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
+            </span>
+            <button class="u-button-reset d-comment__recommend-button">
+                <span class="d-comment__recommend-pulse"></span>
+                <i></i>
+            </button>
+        </div>
+
+    </div>
+
+</li>

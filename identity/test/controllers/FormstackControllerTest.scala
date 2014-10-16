@@ -1,23 +1,22 @@
 package controllers
 
-import org.scalatest.{ShouldMatchers, path}
-import org.scalatest.mock.MockitoSugar
-import services._
-import formstack.{FormstackForm, FormstackApi}
-import play.api.mvc.{RequestHeader, Request}
-import scala.concurrent.Future
-import conf.{Switches, FrontendIdentityCookieDecoder}
-import idapiclient.ScGuU
-import com.gu.identity.model.{StatusFields, User}
-import org.mockito.Mockito._
-import org.mockito.Matchers
-import test.{TestRequest, Fake}
-import play.api.test.Helpers._
-import play.api.mvc.Result
-import services.IdentityRequest
+import actions.AuthenticatedActions
 import client.Error
-import idapiclient.TrackingData
-import actions.AuthRequest
+import com.gu.identity.cookie.GuUCookieData
+import com.gu.identity.model.{StatusFields, User}
+import conf.{FrontendIdentityCookieDecoder, Switches}
+import formstack.{FormstackApi, FormstackForm}
+import idapiclient.{IdApiClient, ScGuU, TrackingData}
+import org.mockito.Matchers
+import org.mockito.Mockito._
+import org.scalatest.mock.MockitoSugar
+import org.scalatest.{ShouldMatchers, path}
+import play.api.mvc.RequestHeader
+import play.api.test.Helpers._
+import services.{IdentityRequest, _}
+import test.{Fake, TestRequest}
+
+import scala.concurrent.Future
 
 
 class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -33,19 +32,16 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val testAuth = new ScGuU("abc")
+  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder])
 
-  val authAction  = new actions.AuthenticatedAction(authService) {
-    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
-      block(AuthRequest(request, user, testAuth))
-    }
-  }
+  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
+
   when(requestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
-  val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authAction, formstackApi)
+  val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authenticatedActions, formstackApi)
 
-  "when sitched off" - {
+  "when switched off" - {
     Switches.IdentityFormstackSwitch.switchOff()
 
     "the formstack page will not be displayed" in Fake {

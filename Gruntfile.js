@@ -62,7 +62,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('sass:compile', ['concurrent:sass']);
 
-    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function(fullCompile) {
         grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
@@ -143,11 +143,4 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
 
-    grunt.event.on('watch', function(action, filepath, target) {
-        if (target === 'js') {
-            // compile just the project
-            var project = filepath.split('/').shift();
-            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
-        }
-    });
 };

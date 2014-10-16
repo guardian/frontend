@@ -7,11 +7,14 @@ import services.Index
 import views.support.TemplateDeduping
 import services.IndexPage
 import performance.MemcachedAction
+import scala.concurrent.Future.successful
 
 
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
 
   private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+
+  private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
@@ -34,12 +37,21 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   def renderRss(path: String) = render(path)
 
   def render(path: String) = MemcachedAction{ implicit request =>
-    logGoogleBot(request)
-    index(Edition(request), path, inferPage(request), request.isRss) map {
-      case Left(model) => renderFaciaFront(model)
-      case Right(other) => other
+    path match {
+
+      //if this is a section tag e.g. football/football
+      case TagPattern(left, right) if left == right => successful(redirect(left, request.isRss))
+
+      case _ =>
+        logGoogleBot(request)
+        index(Edition(request), path, inferPage(request), request.isRss) map {
+          case Left(model) => renderFaciaFront(model)
+          case Right(other) => other
+        }
     }
   }
+
+  private def redirect(id: String, isRss: Boolean) = Cached(60)(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
 
   def renderTrailsJson(path: String) = renderTrails(path)
 
