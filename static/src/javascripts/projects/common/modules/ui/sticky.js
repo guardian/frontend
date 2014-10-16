@@ -8,10 +8,12 @@ define([
     mediator
 ) {
 
+    /**
+     * @todo: check if browser natively supports "position: sticky"
+     */
     var Sticky = function (element, options) {
-        this.element   = element;
-        this.top       = options.top || 0;
-        this.container = options.container;
+        this.element = element;
+        this.top     = options.top || 0;
     };
 
     Sticky.prototype.init = function () {
@@ -24,19 +26,18 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var css, stickyTop,
+        var parent, fixedTop, css,
             $element = bonzo(this.element);
 
         // have we scrolled past the element
         if (window.scrollY >= this.elementDocOffset - this.top) {
-            stickyTop = this.container ?
-                // make sure the element stays within the container
-                Math.min(this.top, this.container.getBoundingClientRect().bottom - $element.dim().height) :
-                this.top;
+            parent = $element.parent()[0];
+            // make sure the element stays within its parent
+            fixedTop = Math.min(this.top, parent.getBoundingClientRect().bottom - $element.dim().height);
 
             css = {
                 position: 'fixed',
-                top:      stickyTop
+                top:      fixedTop
             };
         } else {
             css = {
@@ -45,7 +46,7 @@ define([
             };
         }
 
-        return $element.css();
+        return $element.css(css);
     };
 
     return Sticky;
