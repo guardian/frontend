@@ -22,13 +22,13 @@
     <h2>Matchday Feed</h2>
 
     <p><strong>This is the feed you are most likely to be interested in.</strong> This feed shows detailed information on today&apos;s
-        matches and is the feed we use while the match is live</p>
+        matches and is the feed we use while the match is live.</p>
 
-    <p>A single call to this api loads match data for today for <i>all</i> competitions and the date format is <i>YYYYMMDD</i></p>
+    <p>A single call to this api loads match data for today for <i>all</i> competitions and the date format is <i>YYYYMMDD</i>.</p>
 
     <p>This api call also includes today&apos;s fixtures and results.</p>
 
-    <p>Here is the API call for today&apos;s live matches</p>
+    <p>Here is the API call for today&apos;s live matches:</p>
 
     <a href="@pa.host/api/football/competitions/matchDay/@pa.apiKey/@today">@pa.host/api/football/competitions/matchDay/@pa.apiKey/<strong>@today</strong></a>
 
@@ -53,7 +53,7 @@
     <p>Shows the results for completed matches. We query each competition separately for results.</p>
 
     <p>Here is the API call for results in the <strong>@competition</strong> (id @competitionId). You can get other competition IDs
-        from the Competitions feed above and the date format is <i>YYYYMMDD</i></p>
+        from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
 
     <a href="@pa.host/api/football/competition/results/@pa.apiKey/@competitionId/@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.host/api/football/competition/results/@pa.apiKey/<strong>@competitionId</strong>/<strong>@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
 
@@ -68,9 +68,15 @@
 
     <h2>Match stats</h2>
 
-    <p>Detailed match stats for a specific match. You would get the match ID from the either fixtures or matchday or results feed</p>
+    <p>Detailed match stats for a specific match. You would get the match ID from either the fixtures or matchday or results feed.</p>
 
     <a href="@pa.host/api/football/match/stats/@pa.apiKey/3630511">@pa.host/api/football/match/stats/@pa.apiKey/<strong>3630511</strong></a>
+
+    <h2>Line ups</h2>
+
+    <p>Team line ups for a specific match, containing team colours (before we apply darkening, and missing colours default to #eeeeee).</p>
+
+    <a href="@pa.host/api/football/match/lineUps/@pa.apiKey/3630511">@pa.host/api/football/match/lineUps/@pa.apiKey/<strong>3630511</strong></a>
 
     <link href="@routes.Assets.at("css/football.css")" rel="stylesheet">
 }

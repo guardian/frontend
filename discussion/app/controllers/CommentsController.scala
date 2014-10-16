@@ -49,7 +49,7 @@ object CommentsController extends DiscussionController {
       Cached(60) {
         if (request.isJson)
           JsonComponent(
-            "html" -> views.html.discussionComments.discussionComponent(page, BlankComment(), params.topComments).toString,
+            "html" -> views.html.discussionComments.commentsList(page, BlankComment(), params.topComments).toString,
             "currentCommentCount" -> page.comments.length
           )
         else

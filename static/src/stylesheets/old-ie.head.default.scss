@@ -3,5 +3,7 @@
 $old-ie:        true;
 $mq-responsive: false;
 $svg-support:   false;
+$browser-supports-flexbox: false;
+$browser-supports-columns: false;
 
 @import 'head.default';

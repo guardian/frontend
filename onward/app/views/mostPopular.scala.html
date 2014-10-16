@@ -6,7 +6,7 @@
         <h1 class="u-h">Most popular</h1>
     @popular.zipWithRowInfo.map{ case (section, info) =>
         <section class="zone-@section.section">
-            <h2 class="tone-news content__inline-section">Most popular in @Html(section.heading)</h2>
+            <h2 class="tone-news content__inline-section">Most popular @Html(section.heading)</h2>
             <div class="headline-list"
                  data-link-name="@section.heading">
                 <ul class="u-unstyled">

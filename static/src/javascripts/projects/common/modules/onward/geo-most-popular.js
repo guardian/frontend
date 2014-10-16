@@ -25,7 +25,7 @@ define([
     GeoMostPopular.prototype.endpoint = '/most-read-geo.json';
 
     GeoMostPopular.prototype.ready = function () {
-        mediator.emit('register:begin', 'geo-most-popular');
+        mediator.emit('register:end', 'geo-most-popular');
     };
 
     return GeoMostPopular;

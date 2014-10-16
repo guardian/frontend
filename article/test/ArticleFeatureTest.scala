@@ -555,7 +555,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see link to most popular in the article section")
-        $(".js-popular a") should have size 1
+        $("[data-link-name=most-popular] a") should have size 1
       }
     }
 
@@ -667,6 +667,30 @@ import collection.JavaConversions._
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
         link.length should be > 0
       }
+    }
+
+    scenario("Outbrain") {
+
+      Given("I am on an article")
+      goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should be rendered")
+          var outbrainPlaceholder = $(".OUTBRAIN")
+          outbrainPlaceholder.length should be(1)
+          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
+          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
+      }
+
+      Given("I am on a live blog")
+      goTo("/politics/blog/live/2014/oct/15/cameron-and-miliband-at-pmqs-politics-live-blog") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should not be rendered")
+          $(".OUTBRAIN").isEmpty should be(true)
+
+      }
+
     }
 
   }

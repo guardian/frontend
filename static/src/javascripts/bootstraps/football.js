@@ -1,33 +1,35 @@
 define([
-    'common/utils/$',
-    'bonzo',
     'bean',
+    'bonzo',
+    'lodash/functions/debounce',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/utils/page',
-    'common/utils/mediator',
     'common/utils/detect',
-    'common/modules/ui/rhc',
+    'common/utils/mediator',
+    'common/utils/page',
     'common/modules/charts/table-doughnut',
-    'common/modules/sport/football/match-list-live',
+    'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
+    'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/score-board',
-    'common/modules/sport/football/football'
+    'common/modules/ui/rhc'
 ], function (
-    $,
-    bonzo,
     bean,
+    bonzo,
+    debounce,
+    $,
     ajax,
     config,
-    page,
-    mediator,
     detect,
-    rhc,
+    mediator,
+    page,
     Doughnut,
-    MatchListLive,
+    football,
     MatchInfo,
+    MatchListLive,
     ScoreBoard,
-    football
+    rhc
 ) {
 
     function renderNav(match, callback) {
@@ -315,7 +317,7 @@ define([
                     }
                     return r;
                 })();
-                mediator.on('window:resize', resize);
+                mediator.on('window:resize', debounce(resize, 200));
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }
