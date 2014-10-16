@@ -302,7 +302,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     /** When retrieving items from Content API, maximum number of requests to make concurrently */
     lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
     /** When retrieving items from Content API, maximum number of items to request per concurrent request */
-    lazy val frontPressItemSearchBatchSize = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
+    lazy val frontPressItemSearchBatchSize = {
+      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
+      assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
+      size
+    }
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
