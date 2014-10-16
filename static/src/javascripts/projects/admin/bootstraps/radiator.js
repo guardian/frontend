@@ -30,7 +30,7 @@ define([
         }).then(
             function(status) {
                 status.checks.filter(function (check) {
-                    return /ELB|Host|CDN|RSS/i.test(check.name);
+                    return /elb|host|cdn|rss/.test(check.name.toLowerCase());
                 }).forEach(function(check){
                         var li = document.createElement('li');
                         li.className = check.status;
