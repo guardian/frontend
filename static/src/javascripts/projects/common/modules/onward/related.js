@@ -40,7 +40,6 @@ define([
         if (!config.page.keywordIds) {
             return false;
         }
-        if (config.page)
         var whitelistedTags = [ // order matters here (first match wins)
                 // sport tags
                 'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
