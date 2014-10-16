@@ -266,7 +266,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
-    display: none;
+    // We never want to show the media and the cutout at the same time, hence the important 
+    display: none !important;
 }
 
 .fc-item__footer--vertical {

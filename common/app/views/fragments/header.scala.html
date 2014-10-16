@@ -12,7 +12,7 @@ to apply any necessary changes to non-shared code there too.
     <div class="l-header-pre gs-container u-cf">
         <div class="brand-bar">
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="brand-bar__item brand-bar__item--profile has-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
+                <div class="brand-bar__item brand-bar__item--profile popup-container has-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
                     <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
                        class="brand-bar__item--action popup__toggle" data-test-id="sign-in-link">
                         <span class="control__icon-wrapper">
@@ -27,7 +27,7 @@ to apply any necessary changes to non-shared code there too.
             }
 
             @if(Edition(request) == Uk) {
-                <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--joinus desktop-only" data-component="joinus">
+                <div class="brand-bar__item has-popup brand-bar__item--has-control popup-container brand-bar__item--joinus desktop-only" data-component="joinus">
                     <a href="#guardian-join-us" class="brand-bar__item--action popup__toggle" data-link-name="topNav : join us"
                     class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="top-bar__popup--joinus">
                         <span class="control__icon-wrapper">
@@ -57,7 +57,7 @@ to apply any necessary changes to non-shared code there too.
             }
 
             @if(SearchSwitch.isSwitchedOn) {
-                <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--search" data-component="search">
+                <div class="brand-bar__item has-popup popup-container brand-bar__item--has-control brand-bar__item--search" data-component="search">
                     <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
                        class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search">
                         <span class="control__icon-wrapper">

@@ -12,23 +12,20 @@ define([
     once,
     $,
     $css,
-    globalConfig,
+    config,
     dfp
 ) {
 
-    function init(c) {
+    function init(options) {
         var $mainCol, adType,
-            config = defaults(
-                c || {},
-                globalConfig,
+            opts        = defaults(
+                options || {},
                 {
                     columnSelector: '.content__secondary-column',
-                    adSlotContainerSelector: '.js-mpu-ad-slot',
-                    switches: {},
-                    page: {}
+                    adSlotContainerSelector: '.js-mpu-ad-slot'
                 }
             ),
-            $col = $(config.columnSelector),
+            $col        = $(opts.columnSelector),
             colIsHidden = $col.length && $css($col, 'display') === 'none';
 
         // is the switch off, or not an article, or the secondary column hidden
@@ -39,18 +36,13 @@ define([
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
         adType   = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
 
-        return $(config.adSlotContainerSelector)
+        return $(opts.adSlotContainerSelector)
             .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
     }
 
     return {
 
-        init: once(init),
-
-        // for testing
-        reset: function () {
-            this.init = once(init);
-        }
+        init: once(init)
 
     };
 

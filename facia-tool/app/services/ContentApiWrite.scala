@@ -74,7 +74,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  private def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
+  def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
     val maybeBlock = FaciaApi.getBlock(id)
 
     ContentApiPut(
@@ -91,7 +91,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.filterNot(t => Snap.isSnap(t.id)).map { trail =>
-      Item(trail.id, trail.meta)
+      Item(trail.id, trail.meta.map(trailMetaData => trailMetaData.copy(json = trailMetaData.json.map(convertFields))))
     }
 
   //TODO: These are in transition and will be removed

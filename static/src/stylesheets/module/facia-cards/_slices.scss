@@ -37,6 +37,14 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice--h-q-q {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: none;
+            }
+        }
+    }
+
     .fc-item--standard-tablet {
         .fc-item__standfirst {
             @include mq(desktop) {
@@ -111,6 +119,38 @@ Hence why a greater depth of selector specificity is needed.
                 @include flex(2);
                 width: 50% !important;
             }
+        }
+    }
+}
+
+.facia-slice--popular {
+
+    .facia-slice__item:before {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        .facia-slice__popular-mpu {
+            position: absolute;
+            max-width: 320px;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        .facia-slice__popular-mpu {
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    @include mq(desktop) {
+        .facia-slice__popular-mpu {
+            top: $gs-baseline;
+            right: -($gs-gutter / 2);
+        }
+
+        .tabs__pane {
+            width: (100% / 3) * 2;
         }
     }
 }

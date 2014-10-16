@@ -108,6 +108,7 @@ define([
         this._prerender();
         bonzo(container).append(this.elem);
         this._ready();
+        return this;
     };
 
     /**
@@ -255,6 +256,7 @@ define([
             elem = !elem.length ? [elem] : elem;
             bean.on(this.elem, eventName, elem, handler.bind(this));
         }
+        return this;
     };
 
     /**

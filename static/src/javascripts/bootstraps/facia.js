@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/utils/$',
+    'common/utils/config',
     'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
@@ -17,6 +18,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front'
 ], function (
     $,
+    config,
     ajax,
     mediator,
     bonzo,
@@ -37,8 +39,8 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function (config, context) {
-                    var c = context || document;
+                var containerShowMoreAdd = function () {
+                    var c = document;
                     $('.js-container--show-more', c).each(function (container) {
                         new ContainerShowMore(container).addShowMore();
                     });
@@ -53,41 +55,41 @@ define([
             },
 
             showContainerToggle: function () {
-                var containerToggleAdd = function (config, context) {
-                    var c = context || document;
-                    $('.js-container--toggle', c).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
-                };
+                var c = document,
+                    containerToggleAdd = function () {
+                        $('.js-container--toggle', c).each(function (container) {
+                            new ContainerToggle(container).addToggle();
+                        });
+                    };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
                     'ui:container-toggle:add':  containerToggleAdd,
                     'modules:geomostpopular:ready': containerToggleAdd
                 });
-                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function (config, context) {
-                    $('.js-container--toggle', context).each(function (container) {
+                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function () {
+                    $('.js-container--toggle', c).each(function (container) {
                         new ContainerToggle(container).addToggle();
                     });
                 });
             },
 
-            upgradeMostPopularToGeo: function (config) {
-                if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
-                    new GeoMostPopularFront(mediator, config).go();
+            upgradeMostPopularToGeo: function () {
+                if (config.switches.geoMostPopular) {
+                    new GeoMostPopularFront().go();
                 }
             }
         },
 
-        ready = function (config, context) {
+        ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo(config);
+                modules.upgradeMostPopularToGeo();
                 liveBlogUpdates();
             }
-            mediator.emit('page:front:ready', config, context);
+            mediator.emit('page:front:ready');
         };
 
     return {

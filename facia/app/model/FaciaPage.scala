@@ -18,11 +18,14 @@ case class FaciaPage(id: String,
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
+  lazy val keywordId: String = FrontKeywordId(section)
+
   override lazy val isFront = true
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
   lazy val faciaPageMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(webTitle.capitalize),
+    "keywordIds" -> JsString(keywordId),
     "contentType" -> JsString(contentType)
   )
 
@@ -30,12 +33,12 @@ case class FaciaPage(id: String,
 
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
-  override lazy val isSponsored = DfpAgent.isSponsored(id, Some(section))
+  override lazy val isSponsored = DfpAgent.isSponsored(keywordId, Some(section))
   override def hasMultipleSponsors = false // Todo: need to think about this
-  override lazy val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id, Some(section))
+  override lazy val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywordId, Some(section))
   override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  override lazy val isFoundationSupported = DfpAgent.isFoundationSupported(id, Some(section))
-  override def sponsor = DfpAgent.getSponsor(id)
+  override lazy val isFoundationSupported = DfpAgent.isFoundationSupported(keywordId, Some(section))
+  override def sponsor = DfpAgent.getSponsor(keywordId)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct
