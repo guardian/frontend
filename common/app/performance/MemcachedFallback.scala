@@ -79,7 +79,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
         for(a <- seqA)
           memcached foreach { m =>
             try {
-              memcachedKey.key(a).map(k => m.set(k, a, cacheTime)) }
+              memcachedKey.key(a).foreach(k => m.set(k, a, cacheTime)) }
             catch { case e: Exception =>
               log.warn(e.toString)}
           }
