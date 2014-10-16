@@ -440,6 +440,10 @@ define([
             }
         },
         ready = function () {
+            modules.initDiscussion();
+            modules.loadFonts(navigator.userAgent);
+            modules.initUserAdTargeting();
+            modules.initId();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
@@ -463,10 +467,6 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner();
-            modules.initDiscussion();
-            modules.loadFonts(navigator.userAgent);
-            modules.initUserAdTargeting();
-            modules.initId();
             modules.logLiveStats();
             modules.loadAnalytics();
             modules.cleanupCookies();
