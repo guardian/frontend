@@ -212,9 +212,11 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__latest-block {
     @include fs-headline(1);
     @include text-clamp(4, 1.6em);
-    padding-top: $gs-baseline;
+    display: none; // Hidden until we can come up with js solution
     overflow: hidden;
-    display: block;
+    max-height: get-line-height(headline, 1) * 3;
+    padding-top: $gs-baseline;
+    word-break: hyphenate;
     margin-bottom: get-line-height(headline, 1);
 }
 
