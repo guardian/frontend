@@ -14,7 +14,6 @@ define([
     'facia/modules/ui/container-fc-show-more',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
-    'facia/modules/ui/live-blog-updates',
     'facia/modules/onwards/geo-most-popular-front'
 ], function (
     $,
@@ -30,7 +29,6 @@ define([
     containerFcShowMore,
     ContainerShowMore,
     ContainerToggle,
-    liveBlogUpdates,
     GeoMostPopularFront
     ) {
     var modules = {
@@ -87,7 +85,6 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
-                liveBlogUpdates();
             }
             mediator.emit('page:front:ready');
         };
