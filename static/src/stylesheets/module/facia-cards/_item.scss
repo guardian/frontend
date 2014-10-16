@@ -211,8 +211,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__latest-block {
     @include fs-headline(1);
-    @include transform(translateX(0));
-    @include transition(transform, 250ms, linear);
     @include text-clamp(4, 1.6em);
     padding-top: $gs-baseline;
     overflow: hidden;
@@ -224,15 +222,6 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-textSans(4);
     font-weight: bold;
     line-height: inherit;
-}
-
-.fc-item__latest-block--unloading {
-    @include transform(translateX(-100%));
-}
-
-.fc-item__latest-block--loading {
-    @include transition-duration(0);
-    @include transform(translateX(100%));
 }
 
 .fc-item__meta {

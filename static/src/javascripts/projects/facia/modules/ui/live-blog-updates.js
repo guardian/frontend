@@ -59,16 +59,8 @@ define([
                             if (elements) {
                                 elements.forEach(function (element) {
                                     if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
-                                        var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
-
-                                        setTimeout(function () {
-                                            $el.addClass('fc-item__latest-block--loading');
-                                            setTimeout(function () {
-                                                $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                                    .html(createUpdateHtml(latestBlock))
-                                                    .attr('data-blockId', latestBlock.blockId);
-                                            }, 50);
-                                        }, 250); // wait for transform to finish
+                                        bonzo(element).html(createUpdateHtml(latestBlock))
+                                           .attr('data-blockId', latestBlock.blockId);
                                     }
                                 });
                             }
