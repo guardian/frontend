@@ -29,8 +29,8 @@
         &:before {
             @include icon(quote-grey, false);
             content: '';
-            height: .8em;
-            width: 1em;
+            height: .72em;
+            width: 1.2em;
             padding-right: .1em;
         }
     }
