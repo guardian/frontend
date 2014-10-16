@@ -68,4 +68,36 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
       }).getOrElse(throw error)
     }
   }
+
+  def withMemcachedFallBack[A](
+    keys: Seq[String],
+    cacheTime: FiniteDuration
+    )(f: Future[Seq[A]])(implicit codec: Codec[A], memcachedKey: MemcacheTypeclass.MemcacheKey[A]): Future[Seq[A]] = {
+
+    f onSuccess {
+      case seqA =>
+        for(a <- seqA)
+          memcached foreach { m =>
+            try {
+              memcachedKey.key(a).map(k => m.set(k, a, cacheTime)) }
+            catch { case e: Exception =>
+              log.warn(e.toString)}
+          }
+    }
+
+    f recoverWith {
+      case error: Throwable =>
+        (memcached map { m =>
+          Future.traverse(keys) { key =>
+            m.get[A](key) map {
+              case None => throw error
+              case Some(a) =>
+                MemcachedFallbackMetric.increment()
+                log.logger.warn(s"Used Memcached value for $key to recover from Content API error", error)
+                a
+            }
+          }
+        }).getOrElse(throw error)
+    }
+  }
 }
