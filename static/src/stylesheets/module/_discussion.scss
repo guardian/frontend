@@ -1129,7 +1129,7 @@ $comment-recommend-button-size: 19px;
     }
     .d-comment-box--top-level.d-comment-box--expanded & {
         @include input-placeholder {
-            color: white;
+            color: #ffffff;
         }
     }
 }
