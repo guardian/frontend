@@ -555,7 +555,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see link to most popular in the article section")
-        $(".js-popular a") should have size 1
+        $("[data-link-name=most-popular] a") should have size 1
       }
     }
 

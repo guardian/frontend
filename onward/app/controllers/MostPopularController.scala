@@ -7,7 +7,7 @@ import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
-import views.support.{TemplateDeduping, PopularContainer}
+import views.support.{TemplateDeduping}
 import play.api.libs.json.{Json, JsArray}
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
@@ -21,10 +21,12 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
+  val config = CollectionConfig.withDefaults(displayName = Option("popular"))
+
   def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
-    val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
+    val globalPopular = MostPopular("across the guardian", "", MostPopularAgent.mostPopular(edition))
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
@@ -33,8 +35,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
-            "html" -> views.html.fragments.collections.popular(popular),
-            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1, s"$path/most-viewed/regular-stories")(request, CollectionConfig.withDefaults(displayName = Option("Most popular"))),
+            "html" -> views.html.fragments.collections.popular(popular, config),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -52,11 +53,11 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
-    val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
+    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
     Cached(900) {
       JsonComponent(
-        "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+        "html" -> views.html.fragments.collections.popular(Seq(countryPopular), config),
         "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
         "country" -> countryCode
       )
@@ -82,7 +83,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .tag(None)
       .showMostViewed(true)
       .response.map{response =>
-      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
+      val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
           val popular = response.mostViewed map { Content(_) } take 10
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }

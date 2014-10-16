@@ -21,9 +21,8 @@
     <div class="js-repositioned-comments content__repositioned-comments"></div>
 
     @if(!content.isAdvertisementFeature) {
-        <div class="facia-container facia-container--layout-content facia-container--default-heading">
-            @fragments.mostPopularPlaceholder(content.section, content.visualTone)
-        </div>
+
+        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
 
         @content match {
             case article: Article if !article.isLiveBlog => {

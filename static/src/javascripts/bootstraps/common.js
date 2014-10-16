@@ -34,7 +34,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/most-popular-factory',
+    'common/modules/onward/popular',
     'common/modules/onward/onward-content',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
@@ -81,7 +81,7 @@ define([
     GeoMostPopular,
     history,
     MoreTags,
-    MostPopularFactory,
+    Popular,
     Onward,
     Related,
     TonalComponent,
@@ -133,7 +133,7 @@ define([
             },
 
             transcludePopular: function () {
-                new MostPopularFactory(config);
+                if (!config.page.isFront) { new Popular().init(); }
             },
 
             transcludeOnwardContent: function () {
