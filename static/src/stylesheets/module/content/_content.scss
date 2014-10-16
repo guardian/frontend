@@ -302,10 +302,7 @@
 
         > li {
             position: relative;
-
-            + li {
-                margin-top: .6em;
-            }
+            margin-bottom: $gs-baseline/3;
         }
 
         + * {

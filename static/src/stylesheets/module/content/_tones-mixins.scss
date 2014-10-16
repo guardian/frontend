@@ -80,8 +80,8 @@
                 margin-bottom: $gs-baseline * 2;
             }
 
-            .content__meta-container--liveblog {
-                border-top-color: rgba($tonal__header-text, .3);
+            .content__meta-container {
+                border-top-color: rgba($tonal__standfirst-text, .3);
             }
 
             .byline-img {
@@ -90,7 +90,7 @@
 
             .bullet:before,
             ul > li:before {
-                background-color: rgba($tonal__standfirst-text, .7);
+                background-color: rgba($tonal__standfirst-text, .4);
             }
 
             .u-underline {
