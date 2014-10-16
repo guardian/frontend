@@ -38,6 +38,10 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 ```
 */
 
+$pagination-item-size: 24px;
+$pagination-height: 48px;
+$pagination-gutter: $pagination-height - $pagination-item-size / 2;
+
 .pagination {
     text-align: right;
     @include f-textSans;
@@ -60,8 +64,8 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__list {
     width: 100%;
-    margin: 12px 0;
-    line-height: 24px;
+    margin: $pagination-gutter 0;
+    line-height: $pagination-item-size;
 
     @include mq(tablet) {
         float: right;
@@ -72,8 +76,8 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 %pagination-link {
     @extend %icon-holder-circle;
     @include box-sizing(border-box);
-    width: 24px;
-    height: 24px;
+    width: $pagination-item-size;
+    height: $pagination-item-size;
     display: inline-block;
     color: $c-neutral2;
 }
@@ -81,13 +85,6 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 .pagination__item {
     display: inline-block;
     text-align: center;
-}
-
-.pagination__item--first {
-    margin-right: $gs-gutter/2;
-}
-.pagination__item--last {
-    margin-left: $gs-gutter/2;
 }
 
 .pagination__action {
