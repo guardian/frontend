@@ -1,4 +1,3 @@
-/*global guardian:true */
 define([
     'raven',
     'qwery',
@@ -50,15 +49,11 @@ define([
                 }
             );
         },
-        modules = {
-
-        },
 
         routes = function () {
             userTiming.mark('App Begin');
 
             bootstrapContext('common', bootstrapCommon);
-
 
             // Front
             if (config.page.isFront) {

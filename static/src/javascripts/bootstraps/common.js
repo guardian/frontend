@@ -1,5 +1,6 @@
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
+/*global guardian:true */
 define([
     'bean',
     'bonzo',
