@@ -43,7 +43,7 @@ define([
     identity,
     profile,
     sport
-    ) {
+) {
 
     var bootstrapContext = function (featureName, boostrap) {
             raven.context(
