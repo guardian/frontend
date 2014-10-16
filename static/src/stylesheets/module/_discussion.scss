@@ -161,6 +161,15 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion--empty {
+    .discussion__top-comments,
+    .discussion__toolbar,
+    .discussion__main-comments,
+    .discussion__show-button {
+        display: none;
+    }
+}
+
 .d-discussion__meta {
     @include fs-textSans(3);
     float: left;
