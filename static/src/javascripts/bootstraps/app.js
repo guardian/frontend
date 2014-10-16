@@ -81,10 +81,11 @@ define([
             userTiming.mark('App Begin');
 
             modules.loadFonts(navigator.userAgent);
-            modules.initId();
             modules.initUserAdTargeting();
 
             bootstrapContext('common', bootstrapCommon);
+
+            modules.initId();
 
             // Front
             if (config.page.isFront) {
