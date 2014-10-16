@@ -5,11 +5,11 @@
             "apps":[ "frontend::png-resizer" ],
             "data":{
                 "secondsToWait":1200,
-                "port":18080,
+                "port":9000,
                 "healthcheckGrace":20,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
-                    "/management/healthcheck"
+                    "/_healthcheck"
                 ]
             }
         },
