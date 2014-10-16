@@ -59,8 +59,8 @@ define([
                                             setTimeout(function () {
                                                 $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
                                                     .html(createUpdateHtml(latestBlock))
-                                                    .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
-                                                element.setAttribute('data-blockId', latestBlock.blockId);
+                                                    .attr('href', latestBlock.articleId + '#' + latestBlock.blockId)
+                                                    .attr('data-blockId', latestBlock.blockId);
                                             }, 50);
                                         }, 250); // wait for transform to finish
                                     }
