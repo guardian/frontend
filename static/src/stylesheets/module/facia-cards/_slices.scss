@@ -172,5 +172,5 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice__item--nav-list {
-    @include column-break--avoid;
+    display: inline-block;
 }

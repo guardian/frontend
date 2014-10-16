@@ -240,12 +240,6 @@
     @include absolute-center;
 }
 
-@mixin column-break--avoid {
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid-column;
-}
-
 @mixin column-rule($style: 1px solid $c-neutral5) {
     -webkit-column-rule: $style;
     -moz-column-rule: $style;
