@@ -1,15 +1,15 @@
 define([
-    'common/utils/$',
     'bonzo',
     'bean',
     'qwery',
+    'common/utils/$',
     'common/utils/template',
     'text!facia/views/button-show-more.html'
 ], function (
-    $,
     bonzo,
     bean,
     qwery,
+    $,
     template,
     showMoreBtn
 ) {
