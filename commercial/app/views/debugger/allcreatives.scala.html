@@ -836,7 +836,7 @@ jQuery(function($) {
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Books</h3>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
@@ -845,16 +845,7 @@ jQuery(function($) {
             </script>
         </div>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-books-low-v2').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">Medium relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">Medium relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
@@ -863,29 +854,11 @@ jQuery(function($) {
             </script>
         </div>
 
-        <h3 class="facia-container__inner test-page-subhead">Medium relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers-medium-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-books-medium-v2').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">High relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {
                 $('.dfp-ad--merchandising-books-high').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers-high-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-books-high-v2').html(json.html);
              });
             </script>
         </div>
@@ -895,30 +868,12 @@ jQuery(function($) {
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Soulmates</h2>
-
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/soulmates/mixed-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-soulmates-low-v2').html(json.html);
-             });
-            </script>
-        </div>
         
         <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
                 $('.dfp-ad--merchandising-soulmates-low').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/soulmates/mixed-high-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-soulmates-high-v2').html(json.html);
              });
             </script>
         </div>
@@ -930,6 +885,19 @@ jQuery(function($) {
                 $('.dfp-ad--merchandising-soulmates-high').html(json.html);
              });
             </script>
+        </div>
+    </div>
+    
+    <hr/>
+    
+    <div class="facia-container facia-container--layout-content">
+            <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-multi ad-slot ad-slot--merchandising ad-slot--commercial-component">
+                <script>
+                    $.getJSON( "/commercial/multi.json?c=travel&c=soulmates&c=masterclasses&c=books", function( json ) {
+                    $('.dfp-ad--merchandising-multi').html(json.html);
+                 });
+                </script>
+            </div>
         </div>
     </div>
     

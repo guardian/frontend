@@ -22,6 +22,7 @@ frontend-applications.properties
 .sass-cache
 .tm_properties
 .vagrant
+.node-version
 
 log
 logs

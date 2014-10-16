@@ -39,12 +39,13 @@ category: Common
 }
 
 .tabs__container {
+    position: relative;
     margin: 0;
     padding: 0;
     border-bottom: 0;
     list-style-type: none;
     overflow: hidden;
-    background: #ffffff;
+    z-index: 2;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -115,12 +116,18 @@ category: Common
 }
 
 .tabs__content {
+    position: relative;
     clear: both;
     padding-top: ($gs-baseline/3)*2;
+    z-index: 1;
 
     @include mq(tablet) {
         border-top: 1px solid $c-neutral5;
     }
+}
+
+.tabs__content--no-border {
+    border-top: 0;
 }
 
 .tabs__heading {

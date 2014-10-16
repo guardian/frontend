@@ -12,7 +12,7 @@ import org.jboss.dna.common.text.Inflector
 import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.nodes.{ Element, Document, TextNode }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.{Json, JsValue, JsString, Writes}
@@ -377,6 +377,35 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
+    body
+  }
+}
+
+case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+  def clean(body: Document): Document = {
+
+    def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
+      val newCharLimit = charLimit - textNode.text.length
+      if (newCharLimit < 0) {
+        textNode.text(textNode.text.take(charLimit.max(0)).trim.stripSuffix(".") + (if (charLimit > 0) "…" else ""))
+      }
+      newCharLimit
+    }
+
+    def truncateElement(charLimit: Int, element: Element): Int = {
+      element.childNodes.foldLeft(charLimit) {
+        (t, node) =>
+          if (node.isInstanceOf[TextNode]) {
+            truncateTextNode(t, node.asInstanceOf[TextNode])
+          } else if (node.isInstanceOf[Element]) {
+            truncateElement(t, node.asInstanceOf[Element])
+          } else {
+            t
+          }
+      }
+    }
+
+    truncateElement(limit, body)
     body
   }
 }
