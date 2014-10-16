@@ -2,12 +2,16 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'bonzo',
-    'common/modules/ui/relativedates'
+    'common/modules/ui/relativedates',
+    'common/utils/template',
+    'text!facia/views/ui/latest-block.html'
 ], function (
     $,
     ajax,
     bonzo,
-    relativeDates
+    relativeDates,
+    template,
+    latestBlockTemplate
 ) {
     var selector = '.js-live-blog-latest-block',
         articleIdAttribute = 'data-article-id',
@@ -16,10 +20,11 @@ define([
     function createUpdateHtml(block) {
         var posted = new Date(Number(block.posted));
 
-        return '<time class="fc-item__latest-block-time" datetime="' + posted.toISOString() + '">' +
-                relativeDates.makeRelativeDate(block.posted) + ' ago' +
-                '</time> ' +
-                '<span class="fc-item__latest-block-text">' + block.body + '</span>';
+        return template(latestBlockTemplate, {
+            dateTimeString: posted.toISOString(),
+            relativeTimeString: relativeDates.makeRelativeDate(block.posted),
+            blockBody: block.body
+        });
     }
 
     function start() {
