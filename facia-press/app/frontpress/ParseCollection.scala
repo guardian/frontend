@@ -47,7 +47,7 @@ object Result {
 case class TrailId(get: String) extends AnyVal
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[List[ApiContent]]]
+  implicit def apiContentCodec = JsonCodecs.snappyCodec[ApiContent]
 
   implicit def resultCodec = JsonCodecs.snappyCodec[Result]
 
@@ -155,22 +155,23 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   private def batchGetContentApiItems(collectionItems: Seq[TrailId],
                                       edition: Edition): Future[Map[TrailId, ApiContent]] =
     Futures.batchedTraverse(collectionItems.grouped(Configuration.faciatool.frontPressItemSearchBatchSize).toSeq, Configuration.faciatool.frontPressItemBatchSize)({ collectionItems =>
-      getContentApiItemFromCollectionItem(collectionItems, edition) map { maybeItem =>
-        maybeItem.map(_.map {content =>
-          content.fields.getOrElse(Map.empty).get("internalContentCode").map { internalContentCode =>
-            val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
-            TrailId(internalContentCodeFormatted) -> content
-          }
-        }).flatten.getOrElse(Nil)
-      }
+      getContentApiItemFromCollectionItem(collectionItems, edition) map { items =>
+          items.map { item =>
+            item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
+              val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
+              TrailId(internalContentCodeFormatted) -> item}
+          }.flatten
+        }
     }).map(_.flatten.toMap)
 
   private def getContentApiItemFromCollectionItem(collectionItems: Seq[TrailId],
-                                                  edition: Edition): Future[Option[Seq[ApiContent]]] = {
-    lazy val collectionIdsQuery: String = collectionItems.map(_.get).mkString(",")
+                                                  edition: Edition): Future[Seq[ApiContent]] = {
+    lazy val itemIds: Seq[String] = collectionItems.map(_.get)
+    lazy val collectionIdsQuery: String = itemIds.mkString(",")
     lazy val response = client.search(edition)
       .ids(collectionIdsQuery)
       .showFields(showFieldsWithBodyQuery)
+      .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
       .response
       .map(Option.apply)
       .recover {
@@ -194,10 +195,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         log.warn("%s: %s".format(collectionIdsQuery, t.toString))
         throw t
       }
-    }.map(_.map(_.results))
+    }.map(_.map(_.results).getOrElse(Nil))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionIdsQuery, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(itemIds, cacheDuration)(response)
     }
     else {
       response
