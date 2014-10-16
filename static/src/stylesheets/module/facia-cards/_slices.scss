@@ -156,19 +156,21 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice--nav-list {
+    $alley: $gs-gutter * .5;
+
     @include mq($until: tablet) {
-        @include columns;
+        @include columns($rule: true);
     }
+
     @include mq(tablet, desktop) {
-        @include columns($cols: 3, $gap: $gs-gutter * .5);
+        @include columns($cols: 3, $gap: $alley, $rule: true);
     }
+
     @include mq(desktop) {
-        @include columns($cols: 4, $gap: $gs-gutter * .5);
+        @include columns($cols: 4, $gap: $alley, $rule: true);
     }
 }
 
 .facia-slice__item--nav-list {
-    @include vertical-item-separator;
-    position: relative;
     @include column-break--avoid;
 }
