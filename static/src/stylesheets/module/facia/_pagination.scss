@@ -60,6 +60,8 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__list {
     width: 100%;
+    margin: 11px 0;
+    line-height: 28px;
 
     @include mq(tablet) {
         float: right;
@@ -68,7 +70,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 }
 
 .pagination__item {
-    color: $c-neutral3;
+    color: $c-neutral2;
     display: inline-block;
 }
 
@@ -80,35 +82,14 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__item--prev,
 .pagination__item--first {
-    @extend %icon-holder-circle;
-
-    width: 24px;
-    height: 24px;
     float: left;
     text-align: left;
-
-    &:before {
-        content: " ";
-        @extend %i-arrow-grey-right;
-    }
 }
 
-.pagination__item-inner:after {
-    @include fs-headline(5);
-    line-height: 20px;
-    .pagination__item--first & {
-        content: '«';
-    }
-    .pagination__item--last & {
-        content: '»';
-    }
-    .pagination__item--next & {
-        content: '›';
-    }
-    .pagination__item--prev & {
-        content: '‹';
-    }
+.pagination__item--inner {
+    @extend %icon-holder-circle;
 }
+
 .pagination__item--first {
     margin-right: $gs-gutter/2;
 }
@@ -117,7 +98,21 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 }
 
 .pagination__action {
-    padding: 0 $gs-gutter / 5;
+    @extend %icon-holder-circle;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    font-weight: bold;
+    border-color: transparent;
+
+    &:hover {
+        border-color: $c-neutral2;
+    }
+
+    &.is-active {
+        color: #ffffff;
+        background-color: $c-neutral2;
+    }
 }
 
 .pagination__action--current {

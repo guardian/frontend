@@ -10,15 +10,13 @@
 
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
-    <li class="pagination__item pagination__item--@dir">
-        @pageNo.map { p =>
+    @pageNo.map { p =>
+        <li class="pagination__item--@dir">
             <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
-                <span class="u-h">@dir.capitalize(0)</span>
+                <i class="i i-arrow-right-grey"></i>
             </a>
-        }.getOrElse{
-
-        }
-    </li>
+        </li>
+    }
 }
 
 @* don't show pagination if this is the only page *@
@@ -43,7 +41,7 @@
             @pagination.pages.map{ pageNum =>
                 <li class="pagination__item">
                     @if(pageNum == pagination.currentPage) {
-                        <span class="pagination__action pagination__action--current">@pageNum</span>
+                        <span class="pagination__action is-active">@pageNum</span>
                     } else {
                         <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)" data-link-name="Pagination view page @pageNum">@pageNum</a>
                     }

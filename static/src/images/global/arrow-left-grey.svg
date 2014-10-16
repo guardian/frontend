@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="6px" height="12px" viewBox="0 0 6 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.1 (8751) - http://www.bohemiancoding.com/sketch -->
+    <title>Left chevron</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Comments---Signed-in" sketch:type="MSArtboardGroup" transform="translate(-921.000000, -541.000000)">
+            <g id="margin-r-+-margin-l" sketch:type="MSLayerGroup"></g>
+            <circle id="Oval-29" stroke="#BDBDBD" sketch:type="MSShapeGroup" cx="925" cy="547" r="12"></circle>
+            <path d="M927.123288,552.25 L922.520548,547 L927.123288,541.75 L926.60274,541.236842 L920.876712,546.736842 L920.876712,547.263158 L926.60274,552.763158 L927.123288,552.25 Z" id="-3" fill="#767676" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
