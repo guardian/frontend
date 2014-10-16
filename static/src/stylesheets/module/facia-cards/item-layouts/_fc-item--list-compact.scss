@@ -8,6 +8,7 @@ x x x x x x x x x x x x x x x x x x x x x x x
 
 .fc-item--list-compact {
     padding-bottom: $gs-baseline;
+    @include fs-bodyHeading(1);
 
     &,
     .fc-item__container {
