@@ -60,7 +60,8 @@
         @include fc-item--list-media(3.5, 2);
 
         .fc-item__media-wrapper {
-            margin: $gs-baseline / 3;
+            margin-top: $gs-baseline / 3;
+            margin-bottom: $gs-baseline / 3;
             padding-left: $gs-baseline / 3;
         }
     }
@@ -82,9 +83,11 @@
     @include mq($until: tablet) {
         @include fc-item--standard;
 
-        .fc-item__header,
-        .fc-sublinks {
-            padding-right: 33%;
+        &.fc-item--has-cutout {
+            .fc-item__header,
+            .fc-sublinks {
+                padding-right: 33%;
+            }
         }
 
         &[class*="fc-item--has-sublinks"] {
