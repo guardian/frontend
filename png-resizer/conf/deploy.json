@@ -1,26 +1,39 @@
 {
-    "packages" : {
-        "png-resizer" : {
-            "type" : "autoscaling",
-            "apps" : [ "mobile::png-resizer" ],
-            "data" : {
-                "secondsToWait": 500,
-                "port" : 9000,
-                "bucket" : "mobile-apps-api-dist",
-                "healthcheckGrace": 20,
-                "healthcheck_paths" : [ "/healthcheck" ]
+    "packages":{
+        "png-resizer":{
+            "type":"autoscaling",
+            "apps":[ "frontend::png-resizer" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        },
+        "frontend-static":{
+            "type":"aws-s3",
+            "apps":[ "aws-s3" ],
+            "data":{
+                "bucket":"aws-frontend-static",
+                "cacheControl":"public, max-age=315360000"
             }
         }
     },
-    "recipes" : {
-        "default" : {
-            "depends" : ["artifactUpload", "deploy"]
+    "recipes":{
+        "default":{
+            "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
-        "deploy": {
+        "deploy":{
             "actionsBeforeApp": ["png-resizer.deploy"]
         },
-        "artifactUpload": {
+        "artifactUpload":{
             "actionsBeforeApp": ["png-resizer.uploadArtifacts"]
+        },
+        "staticFilesUpload":{
+            "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
         }
     }
 }
