@@ -312,6 +312,11 @@ $avatarPadding: $gs-gutter / 2;
     margin-top: $gs-baseline / 6;
 }
 
+.d-comment-box__avatar-wrapper .user-avatar__image {
+    width: 60px;
+    height: 60px;
+}
+
 .d-comment__avatar,
 .user-avatar__image {
     @include border-radius(50%);
