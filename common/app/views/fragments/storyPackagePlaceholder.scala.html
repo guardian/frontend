@@ -1,11 +1,15 @@
 @(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
-@if(related.hasStoryPackage) {
-    <aside role="complementary" class="related @if(content.isAdvertisementFeature){container--advertisement-feature} more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}">
-        @fragments.relatedTrails(related.storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
-    </aside>
-} else {
-    <aside class="related @if(content.isAdvertisementFeature){container--advertisement-feature} js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-        @fragments.relatedTrails(related.related, heading = "Related content", visibleTrails = 5, dataComponent = "related-content")
-    </aside>
+@defining(Seq("related") ++ Option(if(content.isAdvertisementFeature) "container--advertisement-feature" else null)) { classes =>
+
+    @if(related.hasStoryPackage) {
+        <aside class="@classes.mkString(" ") more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}" role="complementary">
+            @fragments.relatedTrails(related.storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
+        </aside>
+    } else {
+        <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
+            @fragments.relatedTrails(related.related, heading = "Related content", visibleTrails = 5, dataComponent = "related-content")
+        </aside>
+    }
+
 }
