@@ -18,8 +18,7 @@ object TrailCssClasses {
     Review,
     LiveBlog,
     DeadBlog,
-    Media,
-    Letters
+    Media
   )
 
   def articleToneClass(trail: Trail) = {
