@@ -1,7 +1,7 @@
 @include tone-content-icons(letters, 'white');
 
-.tonal--tone-letters {
-    @extend .tonal--tone-comment;
+.tonal__head--tone-letters {
+    @extend %tonal__head--tone-comment;
 
     .tonal__header {
         .content__head__illustration {
@@ -25,4 +25,8 @@
             }
         }
     }
+}
+
+.tonal__main--tone-letters {
+    @extend %tonal__main--tone-comment;
 }

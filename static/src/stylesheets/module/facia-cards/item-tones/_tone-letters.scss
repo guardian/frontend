@@ -1,7 +1,7 @@
 .tone-letters--item {
-    @extend .tone-comment--item;
+    @extend %tone-comment--item;
 }
 
 .tone-letters--sublink {
-    @extend .tone-comment--sublink;
+    @extend %tone-comment--sublink;
 }

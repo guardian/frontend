@@ -1,27 +1,25 @@
 @mixin tone-content-icons(
     $tone,
     $tonal__header-icon) {
-    .tonal--tone-#{$tone} {
-        .tonal__head {
-            .commentcount i {
-                @extend %i-comment-tone-#{$tonal__header-icon};
+    .tonal__head--tone-#{$tone} {
+        .commentcount i {
+            @extend %i-comment-tone-#{$tonal__header-icon};
 
-                @if $svg-support {
-                    .svg & {
-                        @extend %svg-i-comment-tone-#{$tonal__header-icon};
-                    }
+            @if $svg-support {
+                .svg & {
+                    @extend %svg-i-comment-tone-#{$tonal__header-icon};
                 }
             }
         }
+    }
 
-        .tonal__main{
-            .commentcount i {
-                @extend %i-comment-tone-#{$tone};
+    .tonal__main--tone-#{$tone} {
+        .commentcount i {
+            @extend %i-comment-tone-#{$tone};
 
-                @if $svg-support {
-                    .svg & {
-                        @extend %svg-i-comment-tone-#{$tone};
-                    }
+            @if $svg-support {
+                .svg & {
+                    @extend %svg-i-comment-tone-#{$tone};
                 }
             }
         }
@@ -40,7 +38,8 @@
     $tonal__standfirst-text,
     $tonal__standfirst-link
     ) {
-    .tonal--tone-#{$tone} {
+    .tonal__head--tone-#{$tone},
+    %tonal__head--tone-#{$tone} {
         .tonal__header {
             background-color: $tonal__header-background;
 
@@ -110,37 +109,36 @@
     $tonal__article-background,
     $tonal__article-link
     ) {
-    .tonal--tone-#{$tone} {
-        .tonal__main {
-            background-color: $tonal__article-background;
-            padding-bottom: $gs-baseline*3;
-            margin-bottom: -$gs-baseline*3;
+    .tonal__main--tone-#{$tone},
+    %tonal__main--tone-#{$tone} {
+        background-color: $tonal__article-background;
+        padding-bottom: $gs-baseline*3;
+        margin-bottom: -$gs-baseline*3;
 
-            @include mq(phablet) {
-                padding-top: $gs-baseline * 2;
-            }
+        @include mq(phablet) {
+            padding-top: $gs-baseline * 2;
+        }
 
-            .tone-colour,
-            %tone-colour,
-            &.tone-colour {
-                &,
-                &:active,
-                &:focus,
-                &:hover {
-                    color: $tonal__article-link;
-                }
-            }
-
-            .drop-cap,
-            .element-pullquote cite {
+        .tone-colour,
+        %tone-colour,
+        &.tone-colour {
+            &,
+            &:active,
+            &:focus,
+            &:hover {
                 color: $tonal__article-link;
             }
+        }
 
-            .element-pullquote {
-                &:before,
-                &:after {
-                    background-color: $tonal__article-link;
-                }
+        .drop-cap,
+        .element-pullquote cite {
+            color: $tonal__article-link;
+        }
+
+        .element-pullquote {
+            &:before,
+            &:after {
+                background-color: $tonal__article-link;
             }
         }
     }
