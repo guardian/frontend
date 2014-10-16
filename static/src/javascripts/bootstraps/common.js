@@ -1,12 +1,14 @@
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
+/*global guardian:true */
 define([
     'bean',
     'bonzo',
     'enhancer',
     'fastclick',
-    'lodash/functions/debounce',
     'qwery',
+
+    'bootstraps/identity',
 
     'common/utils/$',
     'common/utils/ajax',
@@ -22,6 +24,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
@@ -35,13 +38,14 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/most-popular-factory',
+    'common/modules/onward/popular',
     'common/modules/onward/onward-content',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
+    'common/modules/ui/fonts',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
@@ -53,8 +57,9 @@ define([
     bonzo,
     enhancer,
     FastClick,
-    debounce,
     qwery,
+
+    identity,
 
     $,
     ajax,
@@ -70,6 +75,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    userAdTargeting,
     discussionApi,
     CommentCount,
     DiscussionLoader,
@@ -83,13 +89,14 @@ define([
     GeoMostPopular,
     history,
     MoreTags,
-    MostPopularFactory,
+    Popular,
     Onward,
     Related,
     TonalComponent,
     releaseMessage,
     Dropdowns,
     fauxBlockLink,
+    Fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -135,7 +142,7 @@ define([
             },
 
             transcludePopular: function () {
-                new MostPopularFactory(config);
+                if (!config.page.isFront) { new Popular().init(); }
             },
 
             transcludeOnwardContent: function () {
@@ -316,17 +323,12 @@ define([
             windowEventListeners: function () {
                 var event,
                     events = {
-                        resize: 'window:resize',
-                        orientationchange: 'window:orientationchange',
-                        scroll: 'window:scroll'
-                    },
-                    emitEvent = function (eventName) {
-                        return function (e) {
-                            mediator.emit(eventName, e);
-                        };
+                        resize:            'window:resize',
+                        scroll:            'window:scroll',
+                        orientationchange: 'window:orientationchange'
                     };
                 for (event in events) {
-                    bean.on(window, event, debounce(emitEvent(events[event]), 200));
+                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
                 }
             },
 
@@ -419,9 +421,29 @@ define([
                         }, 1);
                     }
                 });
+            },
+            loadFonts: function (ua) {
+                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
+                    var fileFormat = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
+                        f = new Fonts(fontStyleNodes, fileFormat);
+                    f.loadFromServerAndApply();
+                }
+            },
+
+            initId: function () {
+                identity.init(config);
+            },
+
+            initUserAdTargeting: function () {
+                userAdTargeting.requestUserSegmentsFromId();
             }
         },
         ready = function () {
+            modules.initDiscussion();
+            modules.loadFonts(navigator.userAgent);
+            modules.initUserAdTargeting();
+            modules.initId();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
@@ -445,7 +467,6 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner();
-            modules.initDiscussion();
             modules.logLiveStats();
             modules.loadAnalytics();
             modules.cleanupCookies();
