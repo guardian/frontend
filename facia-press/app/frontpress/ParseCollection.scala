@@ -158,8 +158,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getContentApiItemFromCollectionItem(collectionItems, edition) map { items =>
           items.map { item =>
             item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
-              val internalContentCodeFormatted: String = s"internal-code/content/$internalContentCode"
-              TrailId(internalContentCodeFormatted) -> item}
+              TrailId(InternalContentCode.toFormattedInternalContentCode(internalContentCode)) -> item}
           }.flatten
         }
     }).map(_.flatten.toMap)
