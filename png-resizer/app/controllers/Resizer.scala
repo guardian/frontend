@@ -1,6 +1,7 @@
 package controllers
 
 import java.io.ByteArrayInputStream
+import conf.Configuration
 import play.api.mvc.{Controller, Action}
 import data.Backends
 import scala.concurrent.Future
@@ -13,7 +14,6 @@ import grizzled.slf4j.Logging
 import lib.Im4Java
 import lib.CacheHeaders._
 import org.joda.time.Duration
-import conf.PngResizerConfiguration
 
 object Resizer extends Controller with Logging {
   def resize(backend: String, path: String, width: Int, quality: Int) = Action.async {
@@ -32,7 +32,7 @@ object Resizer extends Controller with Logging {
               val resized = Im4Java.resizeBufferedImage(image, width, quality)
 
               Ok(resized).as("image/png").withTimeToLive(
-                Duration.standardSeconds(PngResizerConfiguration.ttlInSeconds)
+                Duration.standardSeconds(Configuration.pngResizer.ttlInSeconds)
               )
             }
 
