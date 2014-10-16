@@ -32,13 +32,6 @@ Media list item. Looks a bit like this:
         left: - $image-width;
     }
 
-    .fc-item__media-wrapper {
-        @include mq($until: tablet) {
-            margin: $gs-baseline / 3;
-            padding-left: $gs-baseline / 3;
-        }
-    }
-
     &.fc-item {
         padding-bottom: 0 !important;
     }

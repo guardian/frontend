@@ -58,6 +58,11 @@
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(3.5, 2);
+
+        .fc-item__media-wrapper {
+            margin: $gs-baseline / 3;
+            padding-left: $gs-baseline / 3;
+        }
     }
 }
 
@@ -77,12 +82,27 @@
     @include mq($until: tablet) {
         @include fc-item--standard;
 
-        .vjs-big-play-button > span {
-            @include video-play-button-size($vjs-small-button-size);
+        .fc-item__header,
+        .fc-sublinks {
+            padding-right: 33%;
         }
 
-        @include mq(mobileLandscape) {
-            .vjs-big-play-button > span {
+        &[class*="fc-item--has-sublinks"] {
+            .has-flex-wrap &.fc-item--has-cutout {
+                .fc-item__header {
+                    padding-right: 0;
+                }
+
+                .fc-sublinks {
+                    min-height: gs-height(3) + $gs-baseline;
+                }
+            }
+        }
+
+        .vjs-big-play-button > span {
+            @include video-play-button-size($vjs-small-button-size);
+
+            @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
         }
@@ -93,6 +113,13 @@
     @include mq(tablet) {
         @include fc-item--standard;
 
+        .fc-item__header {
+            @include mq($until: desktop) {
+                @include fs-headline(2, true);
+                @include headline-boost(3);
+            }
+        }
+
         &[class*="fc-item--has-sublinks"] {
             .fc-item__standfirst,
             .fc-item__media-wrapper {
@@ -102,6 +129,28 @@
 
         &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
             display: block;
+        }
+
+        &.fc-item--has-cutout .fc-item__container {
+            padding-bottom: gs-height(3) + $gs-baseline * 3;
+        }
+
+        .fc-item__avatar__media {
+            right: -40%;
+        }
+    }
+
+    @include mq(desktop) {
+        &.fc-item--has-cutout .fc-item__container {
+            padding-bottom: gs-height(3) + $gs-baseline  * 2;
+        }
+
+        .fc-item__avatar__media {
+            right: -20%;
+        }
+
+        .fc-item__avatar {
+            height: gs-height(4);
         }
     }
 }
