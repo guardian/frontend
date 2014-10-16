@@ -1,25 +1,23 @@
 define([
-    'bean',
-    'bonzo',
-    'qwery',
-    'lodash/collections/forEach',
-    'lodash/functions/debounce',
+    'common/utils/mediator',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/mediator',
     'common/modules/component',
-    'common/modules/gallery/lightbox'
+    'common/modules/gallery/lightbox',
+    'lodash/collections/forEach',
+    'bonzo',
+    'qwery',
+    'bean'
 ], function (
-    bean,
-    bonzo,
-    qwery,
-    forEach,
-    debounce,
+    mediator,
     $,
     config,
-    mediator,
     Component,
-    LightboxGallery
+    LightboxGallery,
+    forEach,
+    bonzo,
+    qwery,
+    bean
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -40,8 +38,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': debounce(setHeight, 200),
-                'window:orientationchange': debounce(setHeight, 200),
+                'window:resize': setHeight,
+                'window:orientationchange': setHeight,
                 'ui:images:vh': setHeight
             });
         },

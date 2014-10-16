@@ -5,6 +5,7 @@ define([
     'bonzo',
     'enhancer',
     'fastclick',
+    'lodash/functions/debounce',
     'qwery',
 
     'common/utils/$',
@@ -52,6 +53,7 @@ define([
     bonzo,
     enhancer,
     FastClick,
+    debounce,
     qwery,
 
     $,
@@ -314,12 +316,17 @@ define([
             windowEventListeners: function () {
                 var event,
                     events = {
-                        resize:            'window:resize',
-                        scroll:            'window:scroll',
-                        orientationchange: 'window:orientationchange'
+                        resize: 'window:resize',
+                        orientationchange: 'window:orientationchange',
+                        scroll: 'window:scroll'
+                    },
+                    emitEvent = function (eventName) {
+                        return function (e) {
+                            mediator.emit(eventName, e);
+                        };
                     };
                 for (event in events) {
-                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
+                    bean.on(window, event, debounce(emitEvent(events[event]), 200));
                 }
             },
 
