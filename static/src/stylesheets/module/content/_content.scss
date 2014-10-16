@@ -30,10 +30,6 @@
     margin: auto;
     position: relative;
 
-    .content__head & {
-        position: static;
-    }
-
     @include mq(tablet, desktop) {
         max-width: gs-span(9);
 

@@ -1,0 +1,20 @@
+@include tone-content-icons(editorial, 'neutral2');
+
+@include tone-content-head(
+    editorial, // $tone
+    $c-commentBackground, // $tonal__header-background
+    $c-neutral1, // $tonal__header-text
+    $c-brandBlue, // $tonal__header-link
+    200, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-brandBlue, // $tonal__headline-accent
+    $c-brandBlue, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff // $tonal__standfirst-link
+);
+
+@include tone-content-main(
+    editorial, // $tone
+    #ffffff, // $tonal__article-background
+    $c-brandBlue // $tonal__article-link
+);

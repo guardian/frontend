@@ -25,13 +25,10 @@ $block-padding-right: $gs-gutter;
     @include mq(rightCol) {
         border-top: 0;
         padding-top: 0;
-        min-height: gs-height(1)*1.5;
+        margin-left: -($right-column + $gs-gutter);
         width: $right-column;
-    }
-
-    @include mq(rightCol) {
+        min-height: gs-height(1)*1.5;
         position: absolute;
-        left: $gs-gutter;
         top: 0;
     }
 

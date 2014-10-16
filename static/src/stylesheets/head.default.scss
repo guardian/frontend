@@ -2,18 +2,17 @@
 
 @import '_head.common';
 
-
 /* ==========================================================================
-   Themeing
+   Icons
    ========================================================================== */
-
-@import 'theme/_tones-head';
+@import 'icons/_content-icons-sprite';
+@import 'icons/_content-icons-svg';
 
 
 /* ==========================================================================
    Global modules
    ========================================================================== */
-
+@import 'module/content/_tones.head';
 @import 'module/content/_article';
 @import 'module/content/_content';
 @import 'module/content/_media.head';
