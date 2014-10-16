@@ -265,6 +265,7 @@ $avatarPadding: $gs-gutter / 2;
     padding: 0;
     display: block;
     clear: both;
+    position: relative;
 }
 
 .d-comment__main {
@@ -281,7 +282,25 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment:target {
-    background-color: $c-neutral7;
+    background-color: colour(neutral-7);
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: .5 * $gs-gutter;
+        top: -1px;
+        background-color: colour(neutral-7);
+        border-style: solid;
+        border-width: 1px 0;
+        border-color: colour(neutral-4);
+    }
+    &:before {
+        left: -.5 * $gs-gutter;
+    }
+    &:after {
+        right: -.5 * $gs-gutter;
+    }
 }
 
 .d-comment-box--top-level .d-comment-box__meta {
