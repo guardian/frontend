@@ -49,16 +49,6 @@ x x x x x x x x
         padding-bottom: 0;
 
         .has-flex-wrap &.fc-item--has-cutout {
-            @include mq($until: tablet) {
-                .fc-item__header {
-                    padding-right: 0;
-                }
-
-                .fc-sublinks {
-                    min-height: gs-height(3) + $gs-baseline;
-                }
-            }
-
             .fc-item__content {
                 @include flex(0);
             }
