@@ -1,6 +1,6 @@
-@(id: String, shareItems: Seq[model.BlockLevelSharing], longUrl: String, shortUrl: String)
+@(id: String, shareItems: Seq[model.BlockLevelSharing], shortUrl: String, tone: Option[String] = None)
 
-<div class="block-share block-share--liveblog" data-link-name="block share">
+<div class="block-share block-share--@tone" data-link-name="block share">
 
     @shareItems.map{ item: model.BlockLevelSharing =>
         <a class="block-share__link js-blockshare-link" href="@item.url" target="_blank" data-link-name="@item.css">
@@ -14,12 +14,11 @@
     <label class="block-share__label" for="block-share-link-@id">copy link text</label>
     <input id="block-share-link-@id" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@shortUrl" readonly="readonly"/>
 
-    <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand"><i class="i i-ellipsis-black"></i><span class="u-h">expand</span></button>
+    <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand"><i class="i i-ellipsis-@if(tone == Some("gallery")){white-36} else {black}"></i><span class="u-h">expand</span></button>
 
 </div>
 
-
-<div class="block-share--liveblog-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
+<div class="block-share--@tone-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
     <div class="block-share__item block-share__item--mobile"><i class="i"></i>
         <span class="u-h">share</span>
     </div>

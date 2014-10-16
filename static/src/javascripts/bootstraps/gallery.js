@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/modules/component',
     'common/modules/gallery/lightbox',
+    'common/modules/ui/blockSharing',
     'lodash/collections/forEach',
     'bonzo',
     'qwery',
@@ -14,6 +15,7 @@ define([
     config,
     Component,
     LightboxGallery,
+    BlockSharing,
     forEach,
     bonzo,
     qwery,
@@ -43,6 +45,7 @@ define([
                 'ui:images:vh': setHeight
             });
         },
+
         transcludeMostPopular = function () {
             var mostViewed = new Component(),
                 container = qwery('.js-gallery-most-popular')[0];
@@ -56,6 +59,7 @@ define([
         },
         ready = function (config) {
             LightboxGallery.init();
+            BlockSharing.init();
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 
@@ -69,7 +73,8 @@ define([
 
             mediator.emit('page:gallery:ready', config);
             transcludeMostPopular();
-        };
+        }
+
 
     return {
         init: ready

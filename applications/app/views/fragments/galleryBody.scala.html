@@ -17,7 +17,7 @@
                 <ul class="gallery2">
                     @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
                         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            <li class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
+                            <li id="@row.rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
                                 <figure itemscope itemtype="http://schema.org/ImageObject">
 
                                     @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
@@ -56,6 +56,8 @@
                                                 <p class="gallery2__credit" itemprop="author">@credit</p>
                                             }
                                         }
+
+                                        @fragments.share.blockLevelSharing(row.rowNum.toString, gallery.shareOptions(row.rowNum.toString), s"${gallery.shortUrl}#${row.rowNum.toString}", Some("gallery"))
                                     </div>
 
                                 </figure>

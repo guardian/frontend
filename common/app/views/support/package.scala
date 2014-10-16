@@ -332,9 +332,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
         val url = s"http://${request.domain}${request.path}#$blockid"
         val shortUrl = s"${article.shortUrl}#$blockid"
 
-        def shareIcons = article.icons(blockid)
+        def shareIcons = article.shareOptions(blockid)
 
-        val html = views.html.fragments.share.blockLevelSharing(blockid, shareIcons, url, shortUrl)
+        val html = views.html.fragments.share.blockLevelSharing(blockid, shareIcons, shortUrl, Some("liveblog"))
 
         el.append(html.toString())
       }

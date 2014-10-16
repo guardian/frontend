@@ -226,3 +226,101 @@
     }
 
 }
+
+.block-share--gallery {
+    margin-top: $gs-baseline;
+    clear: both;
+
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.block-share__item {
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.block-share--gallery .block-share__link,
+.share-modal .share-modal__link {
+
+    .block-share__item--facebook,
+    .share-modal__item--facebook {
+        border-color: #767676;
+        color: #767676;
+        .i { @include icon(share-facebook--white); }
+    }
+
+    .block-share__item--twitter,
+    .share-modal__item--twitter {
+        border-color: #767676;
+        color: #767676;
+        .i { @include icon(share-twitter--white); }
+    }
+
+    .block-share__item--gplus,
+    .share-modal__item--gplus {
+        border-color: #767676;
+        color: #767676;
+        .i { @include icon(share-gplus--white); }
+    }
+
+    &:hover {
+
+        .block-share__item--facebook {
+            border-color: #ffffff;
+            .i { @include icon(share-facebook--white); }
+        }
+
+        .block-share__item--twitter {
+            border-color: #ffffff;
+            .i { @include icon(share-twitter--white); }
+        }
+
+        .block-share__item--gplus {
+            border-color: #ffffff;
+            .i { @include icon(share-gplus--white); }
+        }
+    }
+}
+
+.block-share--gallery-mobile {
+    position: absolute;
+    margin: $gs-baseline 0 $gs-baseline 0;
+    cursor: pointer;
+    opacity: 0.8;
+    .block-share__item {
+        .i {
+            opacity: 1;
+            @include icon(share-android--white);
+        }
+    }
+}
+
+.block-share--gallery {
+    .block-share__item--expand {
+        border-color: #767676;
+
+        &:hover {
+            border-color: #ffffff;
+        }
+    }
+
+    .block-share__item--link {
+        background-color: transparent;
+        color: #ffffff;
+        border-color: #767676;
+
+        &:hover {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+    }
+
+    .block-share__item--expand .i {
+        opacity: 1;
+    }
+}
