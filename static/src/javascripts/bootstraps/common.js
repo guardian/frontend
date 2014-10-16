@@ -7,6 +7,8 @@ define([
     'fastclick',
     'qwery',
 
+    'bootstraps/identity',
+
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -21,6 +23,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
@@ -41,6 +44,7 @@ define([
     'common/modules/release-message',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
+    'common/modules/ui/fonts',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
@@ -53,6 +57,8 @@ define([
     enhancer,
     FastClick,
     qwery,
+
+    identity,
 
     $,
     ajax,
@@ -68,6 +74,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    userAdTargeting,
     discussionApi,
     CommentCount,
     DiscussionLoader,
@@ -88,6 +95,7 @@ define([
     releaseMessage,
     Dropdowns,
     fauxBlockLink,
+    Fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -412,6 +420,22 @@ define([
                         }, 1);
                     }
                 });
+            },
+            loadFonts: function (ua) {
+                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
+                    var fileFormat = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
+                        f = new Fonts(fontStyleNodes, fileFormat);
+                    f.loadFromServerAndApply();
+                }
+            },
+
+            initId: function () {
+                identity.init(config);
+            },
+
+            initUserAdTargeting: function () {
+                userAdTargeting.requestUserSegmentsFromId();
             }
         },
         ready = function () {
@@ -439,6 +463,9 @@ define([
             modules.showMoreTagsLink();
             modules.showSmartBanner();
             modules.initDiscussion();
+            modules.loadFonts(navigator.userAgent);
+            modules.initUserAdTargeting();
+            modules.initId();
             modules.logLiveStats();
             modules.loadAnalytics();
             modules.cleanupCookies();

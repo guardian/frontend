@@ -7,9 +7,6 @@ define([
     'common/utils/config',
     'common/utils/userTiming',
 
-    'common/modules/ui/fonts',
-    'common/modules/commercial/user-ad-targeting',
-
     'bootstraps/common',
     'bootstraps/tag',
     'bootstraps/section',
@@ -18,7 +15,6 @@ define([
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/gallery',
-    'bootstraps/identity',
     'bootstraps/profile',
     'bootstraps/sport'
 ], function (
@@ -28,9 +24,6 @@ define([
     detect,
     config,
     userTiming,
-
-    Fonts,
-    userAdTargeting,
 
     bootstrapCommon,
     tag,
@@ -59,33 +52,13 @@ define([
         },
         modules = {
 
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
-                        f = new Fonts(fontStyleNodes, fileFormat);
-                    f.loadFromServerAndApply();
-                }
-            },
-
-            initId: function () {
-                identity.init(config);
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
-            }
         },
 
         routes = function () {
             userTiming.mark('App Begin');
 
-            modules.loadFonts(navigator.userAgent);
-            modules.initUserAdTargeting();
-
             bootstrapContext('common', bootstrapCommon);
 
-            modules.initId();
 
             // Front
             if (config.page.isFront) {
