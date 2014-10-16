@@ -60,8 +60,8 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__list {
     width: 100%;
-    margin: 11px 0;
-    line-height: 28px;
+    margin: 12px 0;
+    line-height: 24px;
 
     @include mq(tablet) {
         float: right;
@@ -71,15 +71,16 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 %pagination-link {
     @extend %icon-holder-circle;
+    @include box-sizing(border-box);
     width: 24px;
     height: 24px;
     display: inline-block;
+    color: $c-neutral2;
 }
 
 .pagination__item {
     display: inline-block;
     text-align: center;
-    color: $c-neutral2;
 }
 
 .pagination__item--first {
@@ -96,6 +97,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
     &:hover {
         border-color: $c-neutral2;
+        color: $c-neutral2;
     }
 
     &.is-active {
@@ -108,6 +110,10 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     @extend %pagination-link;
     border-color: $c-neutral2;
     text-align: center;
+
+    i {
+        vertical-align: text-top;
+    }
 
     @include mq(desktop) {
         opacity: .6;
