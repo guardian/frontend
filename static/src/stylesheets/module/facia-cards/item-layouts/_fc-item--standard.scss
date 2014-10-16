@@ -108,10 +108,6 @@ x x x x x x x x
         display: block;
     }
 
-    .fc-sublink:nth-child(n+3) {
-        display: none;
-    }
-
     &.fc-item--has-cutout .fc-item__media-wrapper {
         display: none;
     }
