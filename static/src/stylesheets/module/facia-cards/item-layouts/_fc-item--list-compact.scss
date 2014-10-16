@@ -1,0 +1,12 @@
+/*
+
+Compact list item. Looks a bit like this:
+
+x x x x x x x x x x x x x x x x x x x x x x x
+
+ */
+
+.fc-item--list-compact {
+    padding-bottom: $gs-baseline;
+    @include fs-bodyHeading(1);
+}
