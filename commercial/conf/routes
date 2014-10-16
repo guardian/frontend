@@ -37,11 +37,6 @@ GET        /commercial/soulmates/mixed.json                          controllers
 GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.mixedHighHtml
 GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHighJson
 
-GET        /commercial/soulmates/mixed-v2                            controllers.commercial.SoulmateAds.mixedLowHtmlV2
-GET        /commercial/soulmates/mixed-v2.json                       controllers.commercial.SoulmateAds.mixedLowJsonV2
-GET        /commercial/soulmates/mixed-high-v2                       controllers.commercial.SoulmateAds.mixedHighHtmlV2
-GET        /commercial/soulmates/mixed-high-v2.json                  controllers.commercial.SoulmateAds.mixedHighJsonV2
-
 # Money offers
 GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.bestBuysLowJson

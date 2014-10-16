@@ -75,8 +75,6 @@ define([
             masterclassesHigh:  this.host + 'masterclasses-high.json?'          + this.getKeywords(),
             soulmates:          this.host + 'soulmates/mixed.json',
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
-            soulmatesV2:        this.host + 'soulmates/mixed-v2.json',
-            soulmatesHighV2:    this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
             capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords(),
