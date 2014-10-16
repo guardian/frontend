@@ -41,5 +41,3 @@ id.apiClientToken=frontend-code-client-token
 With these in place, you'll be able to browse Identity on
 
   https://profile.thegulocal.com/
-
-test
