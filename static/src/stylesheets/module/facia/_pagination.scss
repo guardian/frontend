@@ -80,8 +80,17 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__item--prev,
 .pagination__item--first {
+    @extend %icon-holder-circle;
+
+    width: 24px;
+    height: 24px;
     float: left;
     text-align: left;
+
+    &:before {
+        content: " ";
+        @extend %i-arrow-grey-right;
+    }
 }
 
 .pagination__item-inner:after {
