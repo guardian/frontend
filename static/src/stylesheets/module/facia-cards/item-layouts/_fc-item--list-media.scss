@@ -28,6 +28,10 @@ Media list item. Looks a bit like this:
         display: block;
     }
 
+    .u-faux-block-link__overlay {
+        left: - $image-width;
+    }
+
     &.fc-item {
         padding-bottom: 0 !important;
     }

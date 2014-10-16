@@ -27,9 +27,14 @@ define([
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+
         this.raw = undefined;
+
         this.groups = this.createGroups(opts.groups);
+
         this.alsoOn = opts.alsoOn || [];
+
+        this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
@@ -54,6 +59,17 @@ define([
             'editingConfig',
             'count',
             'timeAgo']);
+
+        this.itemDefaults = _.reduce({
+            showTags: 'showKickerTag',
+            showSections: 'showKickerSection'
+        }, function(defaults, val, key) {
+            if(_.has(opts, key)) {
+                defaults = defaults || {};
+                defaults[val] = opts[key];
+            }
+            return defaults;
+        }, undefined);
 
         this.setPending(true);
         this.load();

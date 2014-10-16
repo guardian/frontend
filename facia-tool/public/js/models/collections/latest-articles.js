@@ -144,15 +144,15 @@ define([
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
                    _.chain(rawArticles)
-                    .filter(function(article) { return article.fields && article.fields.headline; })
-                    .each(function(article) {
-                        var icc = internalContentCode(article);
+                    .filter(function(opts) { return opts.fields && opts.fields.headline; })
+                    .each(function(opts) {
+                        var icc = internalContentCode(opts);
 
-                        article.id = icc;
-                        article.uneditable = true;
+                        opts.id = icc;
+                        cache.put('contentApi', icc, opts);
 
-                        cache.put('contentApi', icc, article);
-                        self.articles.push(new Article(article));
+                        opts.uneditable = true;
+                        self.articles.push(new Article(opts, true));
                     });
                 })
                 .fail(function(xhr) {

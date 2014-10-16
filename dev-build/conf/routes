@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
-GET         /surveys/*file                                                                                           controllers.Assets.at(path="/public/surveys", file)
+GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
+GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
@@ -21,6 +21,7 @@ GET         /analytics/abtests                                                  
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/google-referrers                                                                              controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog                                                                              controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
 GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
@@ -31,8 +32,6 @@ GET         /analytics/commercial/im-sponsorships                               
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 
 # Discussion
-GET         /discussion/comment-box.json                                                                             controllers.CommentBoxController.commentBox()
-
 GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
 GET         /discussion/comment-counts.json                                                                          controllers.CommentCountController.commentCountJson(shortUrls: String)
 
@@ -225,11 +224,6 @@ GET         /commercial/soulmates/mixed.json                                    
 GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
 GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
 
-GET         /commercial/soulmates/mixed-v2                                                                           controllers.commercial.SoulmateAds.mixedLowHtmlV2
-GET         /commercial/soulmates/mixed-v2.json                                                                      controllers.commercial.SoulmateAds.mixedLowJsonV2
-GET         /commercial/soulmates/mixed-high-v2                                                                      controllers.commercial.SoulmateAds.mixedHighHtmlV2
-GET         /commercial/soulmates/mixed-high-v2.json                                                                 controllers.commercial.SoulmateAds.mixedHighJsonV2
-
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
 GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMediumHtml
@@ -238,11 +232,6 @@ GET         /commercial/books/bestsellers-high                                  
 GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
 GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
-GET         /commercial/books/bestsellers-v2.json                                                                    controllers.commercial.BookOffers.bestsellersLowJsonV2
-GET         /commercial/books/bestsellers-medium-v2.json                                                             controllers.commercial.BookOffers.bestsellersMediumJsonV2
-GET         /commercial/books/bestsellers-high-v2.json                                                               controllers.commercial.BookOffers.bestsellersHighJsonV2
-GET         /commercial/books/book-v2.json                                                                           controllers.commercial.BookOffers.bestsellersSuperHighJsonV2
-
 
 GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson

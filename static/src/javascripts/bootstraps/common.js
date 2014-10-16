@@ -5,7 +5,6 @@ define([
     'bonzo',
     'enhancer',
     'fastclick',
-    'lodash/functions/debounce',
     'qwery',
 
     'common/utils/$',
@@ -35,7 +34,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/most-popular-factory',
+    'common/modules/onward/popular',
     'common/modules/onward/onward-content',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
@@ -53,7 +52,6 @@ define([
     bonzo,
     enhancer,
     FastClick,
-    debounce,
     qwery,
 
     $,
@@ -83,7 +81,7 @@ define([
     GeoMostPopular,
     history,
     MoreTags,
-    MostPopularFactory,
+    Popular,
     Onward,
     Related,
     TonalComponent,
@@ -135,7 +133,7 @@ define([
             },
 
             transcludePopular: function () {
-                new MostPopularFactory(config);
+                if (!config.page.isFront) { new Popular().init(); }
             },
 
             transcludeOnwardContent: function () {
@@ -316,17 +314,12 @@ define([
             windowEventListeners: function () {
                 var event,
                     events = {
-                        resize: 'window:resize',
-                        orientationchange: 'window:orientationchange',
-                        scroll: 'window:scroll'
-                    },
-                    emitEvent = function (eventName) {
-                        return function (e) {
-                            mediator.emit(eventName, e);
-                        };
+                        resize:            'window:resize',
+                        scroll:            'window:scroll',
+                        orientationchange: 'window:orientationchange'
                     };
                 for (event in events) {
-                    bean.on(window, event, debounce(emitEvent(events[event]), 200));
+                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
                 }
             },
 

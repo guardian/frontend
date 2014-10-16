@@ -1,14 +1,3 @@
-.fc-item__title--quoted .fc-item__link,
-.tone-comment--item .fc-item__link {
-    &:before {
-        @include icon(quote-grey, false);
-        content: '';
-        height: .8em;
-        width: 1em;
-        padding-right: .1em;
-    }
-}
-
 .fc-item__timestamp {
     padding-left: 0;
 
@@ -36,6 +25,16 @@
 }
 
 .fc-item__title--quoted {
+    .fc-item__link {
+        &:before {
+            @include icon(quote-grey, false);
+            content: '';
+            height: .8em;
+            width: 1em;
+            padding-right: .1em;
+        }
+    }
+
     .tone-podcast--item & .fc-item__link {
         &:before {
             @include icon(quote-black, false);

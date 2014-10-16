@@ -7,8 +7,6 @@ GET         /assets/*path                                                       
 
 GET         /_healthcheck                                                       conf.HealthCheck.healthcheck()
 
-GET         /discussion/comment-box.json                                        controllers.CommentBoxController.commentBox()
-
 GET         /discussion/comment-counts                                          controllers.CommentCountController.commentCount(shortUrls: String)
 GET         /discussion/comment-counts.json                                     controllers.CommentCountController.commentCountJson(shortUrls: String)
 
