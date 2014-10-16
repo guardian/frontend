@@ -1,33 +1,33 @@
 define([
-    'common/utils/_',
     'bean',
     'bonzo',
     'qwery',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/ajax',
-    'common/utils/url',
     'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fsm',
     'common/utils/detect',
+    'common/utils/fsm',
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/utils/url',
     'common/modules/component',
-    'common/modules/ui/images',
-    'common/utils/template'
+    'common/modules/ui/images'
 ], function (
-    _,
     bean,
     bonzo,
     qwery,
     $,
+    _,
     ajax,
-    url,
     config,
-    mediator,
-    FiniteStateMachine,
     detect,
+    FiniteStateMachine,
+    mediator,
+    template,
+    url,
     Component,
-    imagesModule,
-    template
+    imagesModule
 ) {
     function GalleryLightbox() {
 
@@ -314,14 +314,14 @@ define([
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                bean.on(window, 'resize', this.resize);
+                mediator.on('window:resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                bean.off(window, 'resize', this.resize);
+                mediator.off('window:resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -382,11 +382,11 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                bean.on(window, 'resize', this.resize);
+                mediator.on('window:resize', this.resize);
                 imagesModule.upgrade(this.endslateEl);
             },
             leave: function() {
-                bean.off(window, 'resize', this.resize);
+                mediator.off('window:resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
