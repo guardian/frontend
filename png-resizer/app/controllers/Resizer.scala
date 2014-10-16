@@ -1,7 +1,9 @@
 package controllers
 
 import java.io.ByteArrayInputStream
-import conf.Configuration
+import common.StopWatch
+import conf.{PngResizerMetrics, Configuration}
+import model.Cached
 import play.api.mvc.{Controller, Action}
 import data.Backends
 import scala.concurrent.Future
@@ -12,11 +14,11 @@ import lib.WS._
 import lib.Streams._
 import grizzled.slf4j.Logging
 import lib.Im4Java
-import lib.CacheHeaders._
-import org.joda.time.Duration
 
 object Resizer extends Controller with Logging {
   def resize(backend: String, path: String, width: Int, quality: Int) = Action.async {
+    val downloadStopWatch = new StopWatch
+
     Backends.uri(backend, path) match {
       case Some(uri) => WS.url(uri).getStream() flatMap { case (responseHeaders, enumerator) =>
         responseHeaders.status match {
@@ -28,12 +30,25 @@ object Resizer extends Controller with Logging {
             logger.info(s"Resizing $uri to $width pixels wide at $quality compression")
 
             enumerator.toByteArray map { bytes =>
-              val image = new ByteArrayInputStream(bytes).toBufferedImage
-              val resized = Im4Java.resizeBufferedImage(image, width, quality)
+              logger.info(s"Downloaded $uri in $downloadStopWatch")
+              PngResizerMetrics.downloadTime.recordDuration(downloadStopWatch.elapsed)
 
-              Ok(resized).as("image/png").withTimeToLive(
-                Duration.standardSeconds(Configuration.pngResizer.ttlInSeconds)
-              )
+              val resizeStopWatch = new StopWatch
+
+              val maybeImage = Option(new ByteArrayInputStream(bytes).toBufferedImage)
+
+              maybeImage match {
+                case Some(image) =>
+                  val resized = Im4Java.resizeBufferedImage(image, width, quality)
+
+                  logger.info(s"Resized $uri in $resizeStopWatch")
+                  PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
+
+                  Cached(Configuration.pngResizer.ttlInSeconds)(Ok(resized).as("image/png"))
+
+                case None =>
+                  InternalServerError(s"Could not convert $uri to a buffered image")
+              }
             }
 
           case NOT_FOUND => Future.successful(NotFound(s"Unable to find source image at $uri"))
