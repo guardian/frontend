@@ -51,7 +51,8 @@ trait MetaData extends Tags {
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("hasClassicVersion", JsBoolean(hasClassicVersion))
+    ("hasClassicVersion", JsBoolean(hasClassicVersion)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
   )
 
   def openGraph: Map[String, String] = Map(

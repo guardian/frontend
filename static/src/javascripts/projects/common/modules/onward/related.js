@@ -4,6 +4,7 @@ define([
     'raven',
     'lodash/arrays/intersection',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
@@ -16,6 +17,7 @@ define([
     raven,
     intersection,
     $,
+    config,
     mediator,
     register,
     LazyLoad,
@@ -33,9 +35,12 @@ define([
         Related.overrideUrl = url;
     };
 
-    Related.prototype.popularInTagOverride = function (config) {
+    Related.prototype.popularInTagOverride = function () {
         // whitelist of tags to override related story component with a popular-in-tag component
-        if (!config.page.keywordIds) { return; }
+        if (!config.page.keywordIds) {
+            return false;
+        }
+        if (config.page)
         var whitelistedTags = [ // order matters here (first match wins)
                 // sport tags
                 'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
@@ -48,15 +53,16 @@ define([
                 'football/manchester-united', 'football/chelsea', 'football/arsenal',
                 'football/manchestercity', 'football/tottenham-hotspur', 'football/liverpool'
             ],
-            pageTags = config.page.keywordIds.split(','),
-            match = intersection(whitelistedTags, pageTags);
+            pageTags      = config.page.keywordIds.split(','),
+            // if this is an advertisement feature, use the page's keyword (there'll only be one)
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
-        if (match.length > 0) {
-            return '/popular-in-tag/' + match[0] + '.json';
+        if (popularInTags) {
+            return '/popular-in-tag/' + popularInTags[0] + '.json';
         }
     };
 
-    Related.prototype.renderRelatedComponent = function (config) {
+    Related.prototype.renderRelatedComponent = function () {
         var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
 
@@ -66,13 +72,13 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-            mediator.emit('modules:related:loaded', config);
+            mediator.emit('modules:related:loaded');
 
         } else if (fetchRelated) {
 
             container = document.body.querySelector('.js-related');
             if (container) {
-                popularInTag = this.popularInTagOverride(config);
+                popularInTag = this.popularInTagOverride();
                 componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
                 register.begin(componentName);
 
@@ -94,7 +100,7 @@ define([
                         new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
                         // upgrade images
                         images.upgrade(relatedTrails);
-                        mediator.emit('modules:related:loaded', config);
+                        mediator.emit('modules:related:loaded');
                         register.end(componentName);
                     },
                     error: function () {
