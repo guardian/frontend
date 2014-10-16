@@ -21,7 +21,6 @@ define([
         var posted = new Date(Number(block.posted));
 
         return template(latestBlockTemplate, {
-            id: block.articleId,
             dateTimeString: posted.toISOString(),
             relativeTimeString: relativeDates.makeRelativeDate(block.posted),
             blockBody: block.body,
