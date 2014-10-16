@@ -209,17 +209,14 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item__latest-block-wrapper {
-    padding-top: $gs-baseline;
-    overflow: hidden;
-}
-
 .fc-item__latest-block {
     @include fs-headline(1);
     @include transform(translateX(0));
     @include transition(transform, 250ms, linear);
-    display: block;
     @include text-clamp(4, 1.6em);
+    padding-top: $gs-baseline;
+    overflow: hidden;
+    display: block;
     margin-bottom: get-line-height(headline, 1);
 }
 
@@ -266,7 +263,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
-    // We never want to show the media and the cutout at the same time, hence the important 
+    // We never want to show the media and the cutout at the same time, hence the important
     display: none !important;
 }
 

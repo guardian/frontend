@@ -21,9 +21,11 @@ define([
         var posted = new Date(Number(block.posted));
 
         return template(latestBlockTemplate, {
+            id: block.articleId,
             dateTimeString: posted.toISOString(),
             relativeTimeString: relativeDates.makeRelativeDate(block.posted),
-            blockBody: block.body
+            blockBody: block.body,
+            href: '/' + block.articleId + '#' + block.blockId
         });
     }
 
@@ -64,7 +66,6 @@ define([
                                             setTimeout(function () {
                                                 $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
                                                     .html(createUpdateHtml(latestBlock))
-                                                    .attr('href', latestBlock.articleId + '#' + latestBlock.blockId)
                                                     .attr('data-blockId', latestBlock.blockId);
                                             }, 50);
                                         }, 250); // wait for transform to finish
