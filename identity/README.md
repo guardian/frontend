@@ -42,4 +42,11 @@ With these in place, you'll be able to browse Identity on
 
   https://profile.thegulocal.com/
 
-test
+## Configuration of local Identity API
+
+The Identity site can be configured to use the local Identity API with the
+following properties in `frontend.properties`.
+
+    id.apiRoot=https://idapi.thegulocal.com
+    id.apiClientToken=frontend-dev-client-token
+
