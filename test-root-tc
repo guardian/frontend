@@ -3,7 +3,7 @@
 set -o nounset
 set -o errexit
 
-if [ -z "$teamcity.build.branch.is_default" ]; then
+if [ "$teamcity_build_branch_is_default" == "true" ]; then
   echo "Tests will not run on default branch"
   exit
 fi
