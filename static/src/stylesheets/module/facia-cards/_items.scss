@@ -58,11 +58,11 @@
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(3.5, 2);
-    }
 
-    .fc-item__media-wrapper {
-        margin: $gs-baseline / 3;
-        padding-left: $gs-baseline / 3;
+        .fc-item__media-wrapper {
+            margin: $gs-baseline / 3;
+            padding-left: $gs-baseline / 3;
+        }
     }
 }
 
