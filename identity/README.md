@@ -49,4 +49,3 @@ following properties in `frontend.properties`.
 
     id.apiRoot=https://idapi.thegulocal.com
     id.apiClientToken=frontend-dev-client-token
-
