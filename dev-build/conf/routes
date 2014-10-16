@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
-GET         /surveys/*file                                                                                           controllers.Assets.at(path="/public/surveys", file)
+GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
+GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
@@ -21,6 +21,7 @@ GET         /analytics/abtests                                                  
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/google-referrers                                                                              controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog                                                                              controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
 GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
