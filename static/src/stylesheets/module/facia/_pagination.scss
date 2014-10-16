@@ -39,7 +39,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 */
 
 .pagination {
-    text-align: center;
+    text-align: right;
     @include f-textSans;
     @include font-size(14px, 48px);
     border-top: 1px solid $c-neutral5;
@@ -69,25 +69,17 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     }
 }
 
-.pagination__item {
-    color: $c-neutral2;
+%pagination-link {
+    @extend %icon-holder-circle;
+    width: 24px;
+    height: 24px;
     display: inline-block;
 }
 
-.pagination__item--next,
-.pagination__item--last {
-    float: right;
-    text-align: right;
-}
-
-.pagination__item--prev,
-.pagination__item--first {
-    float: left;
-    text-align: left;
-}
-
-.pagination__item--inner {
-    @extend %icon-holder-circle;
+.pagination__item {
+    display: inline-block;
+    text-align: center;
+    color: $c-neutral2;
 }
 
 .pagination__item--first {
@@ -98,10 +90,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 }
 
 .pagination__action {
-    @extend %icon-holder-circle;
-    width: 24px;
-    height: 24px;
-    display: inline-block;
+    @extend %pagination-link;
     font-weight: bold;
     border-color: transparent;
 
@@ -112,6 +101,21 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     &.is-active {
         color: #ffffff;
         background-color: $c-neutral2;
+    }
+}
+
+.pagination__action--static {
+    @extend %pagination-link;
+    border-color: $c-neutral2;
+    text-align: center;
+
+    @include mq(desktop) {
+        opacity: .6;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
     }
 }
 

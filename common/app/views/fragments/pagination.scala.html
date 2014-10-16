@@ -11,9 +11,13 @@
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     @pageNo.map { p =>
-        <li class="pagination__item--@dir">
-            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
+        <li class="pagination__item">
+            <a class="pagination__action--static @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
+                @if(dir == "next") {
                 <i class="i i-arrow-right-grey"></i>
+                } else {
+                <i class="i i-arrow-left-grey"></i>
+                }
             </a>
         </li>
     }
@@ -29,11 +33,6 @@
 
         <ol class="u-unstyled pagination__list">
             @if(showExtremes){
-                @paginationPointer(if(pagination.currentPage == pagination.lastPage) None else Some(pagination.lastPage), "last", page.url)
-            }
-            @paginationPointer(pagination.next, "next", page.url)
-
-            @if(showExtremes){
                 @paginationPointer(pagination.previous.map(_ => 1), "first", page.url)
             }
             @paginationPointer(pagination.previous, "prev", page.url)
@@ -47,6 +46,11 @@
                     }
                 </li>
             }
+
+            @if(showExtremes){
+                @paginationPointer(if(pagination.currentPage == pagination.lastPage) None else Some(pagination.lastPage), "last", page.url)
+            }
+            @paginationPointer(pagination.next, "next", page.url)
         </ol>
     </div>
 }
