@@ -93,7 +93,7 @@
 }
 
 @include mq(desktop) {
-    @include guss-columns('.headline-column--desktop', $column-min-width: 300px,  $columns-fallback-width: 620px, $columns-fallback-columns: 2);
+    @include guss-columns('.headline-column--desktop', $column-min-width: 300px, $columns-fallback-width: 620px, $columns-fallback-columns: 2);
 
     .headline-column__item {
 
