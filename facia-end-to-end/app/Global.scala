@@ -1,5 +1,6 @@
 import conf.Filters
 import frontpress.ToolPressQueueWorker
+import liveblogs.LatestBlocks
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
 
@@ -10,5 +11,11 @@ with ConfigAgentLifecycle {
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     ToolPressQueueWorker.start()
+    LatestBlocks.start()
+  }
+
+  override def onStop(app: play.api.Application): Unit = {
+    LatestBlocks.stop()
+    super.onStop(app)
   }
 }

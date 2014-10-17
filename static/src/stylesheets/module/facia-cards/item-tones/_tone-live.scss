@@ -19,6 +19,13 @@
         color: $c-liveMute;
     }
 
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-liveMute;
+        }
+    }
+
     .fc-item__kicker:after {
         color: fade-out(#ffffff, .8);
     }

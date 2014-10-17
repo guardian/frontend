@@ -19,7 +19,7 @@ object Dependencies {
   val dnaCommon = "org.jboss.dna" % "dna-common" % "0.6"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.23"
   val faciaScalaClient = "com.gu" %% "facia-api-client" % "0.12"
-  val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.1"
+  val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.2"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.3"
   val guardianConfiguration = "com.gu" %% "configuration" % "3.9"
   val guice = "com.google.inject" % "guice" % "3.0"

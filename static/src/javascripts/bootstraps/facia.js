@@ -32,7 +32,6 @@ define([
     GeoMostPopularFront
     ) {
     var modules = {
-
             showSnaps: function () {
                 snaps.init();
             },

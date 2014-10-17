@@ -178,6 +178,11 @@
     flex-wrap: $wrap;
 }
 
+@mixin transition-duration($duration: 1s) {
+    -webkit-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
 @mixin flex-direction($direction) {
     -webkit-flex-direction: $direction;
     -ms-flex-direction: $direction;

@@ -21,6 +21,9 @@ GET        /pressed/*path                                              controlle
 GET        /collection/*id/rss                                         controllers.FaciaController.renderCollectionRss(id)
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
+# Live blog updates
+GET        /live-blog-updates.json                                     controllers.LiveBlogUpdatesController.latest
+
 # Editionalised pages
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)

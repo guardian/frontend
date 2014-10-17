@@ -69,6 +69,9 @@ POST          /config/collections/*id    controllers.CollectionController.update
 # Editionalised redirects
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 
+# Live blog updates
+GET        /live-blog-updates.json                                     controllers.LiveBlogUpdatesController.latest
+
 #Facia Press
 GET        /pressed/*path                                              controllers.FaciaController.renderFrontPress(path)
 

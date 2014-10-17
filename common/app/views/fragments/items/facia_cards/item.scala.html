@@ -1,10 +1,9 @@
 @(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, LiveBlog}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, CutOut, ContributorLinks}
 @import views.html.fragments.media.video
-@import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import Function.const
@@ -29,13 +28,13 @@
                 @FaciaDisplayElement.fromTrail(trail) match {
                     case InlineVideo(videoElement, title, endSlatePath) if modifierClasses.showVideoPlayer => {
                         @defining(VideoPlayer(
-                            videoElement,
-                            Video640,
-                            title,
-                            autoPlay = false,
-                            showControlsAtStart = false,
-                            endSlatePath,
-                            Some(false)
+                                videoElement,
+                                Video640,
+                                title,
+                                autoPlay = false,
+                                showControlsAtStart = false,
+                                endSlatePath,
+                                Some(false)
                         )) { player =>
                                 <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
                                     <div class="fc-item__video-container">
@@ -73,7 +72,14 @@
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                    @meta(trail)
+                    @trail match {
+                        case liveBlog: LiveBlog if liveBlog.isLive => {
+                            <div class="fc-item__latest-block u-faux-block-link__promote js-live-blog-latest-block" data-article-id="@liveBlog.id">
+                            </div>
+                        }
+
+                        case _ => {}
+                    }
 
                     <div class="fc-item__footer--vertical" aria-hidden="true">
                         @sublinks(trail.supporting, modifierClasses)

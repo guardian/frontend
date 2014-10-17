@@ -105,6 +105,11 @@ Media list item. Looks a bit like this:
         }
     }
 
-    .fc-item__video-container { display: none; }
-    .fc-item__video-fallback { display: block; }
+    .fc-item__video-container {
+        display: none;
+    }
+
+    .fc-item__video-fallback {
+        display: block;
+    }
 }
