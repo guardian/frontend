@@ -137,7 +137,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         case Some((CollectionWithLayout(collection, config, Some(containerLayout)), collectionIndex)) =>
           /** Deduping has already occurred, so pass in an empty instance */
           Cached(60)(Ok(
-            container(collection, containerLayout, collectionIndex)(request, new TemplateDeduping, config)
+            container(collection, containerLayout, collectionIndex, dataId = config.id)(request, new TemplateDeduping, config.config)
           ))
 
         case _ => NotFound
