@@ -1,7 +1,10 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
+
+@import common.{LinkTo, Localisation}
 @import conf.Switches._
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
+@import views.BodyCleaner
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -17,7 +20,7 @@
 
                         <div class="content__labels">
                             <div class="content__section-label">
-                                <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                                <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(Localisation(article.sectionName.toLowerCase))</a>
                             </div>
 
                             @fragments.meta.metaInline(article)
