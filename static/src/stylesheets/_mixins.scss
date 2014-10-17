@@ -62,6 +62,24 @@
     }
 }
 
+@mixin stars($width: 14px, $margin-top: 0, $margin-bottom: 0, $margin-right: 0) {
+    .stars {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-top: $margin-top;
+        margin-bottom: $margin-bottom;
+        width: ($width * 5) + ($margin-right * 5);
+        line-height: 1;
+
+        .star__item {
+            margin-right: $margin-right;
+            width: $width;
+            height: $width;
+        }
+    }
+}
+
 // Hide content visually, still readable by screen readers
 @mixin u-h {
     border: 0 !important;
@@ -146,6 +164,11 @@
     font-size: $size/6 // play triangle is em based so this scales it;
 }
 
+@mixin transition-duration($duration: 1s) {
+    -webkit-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
 @mixin display-flex {
     display: -webkit-box;
     display: -moz-box;
@@ -187,7 +210,9 @@
     align-items: stretch;
 }
 
-@mixin columns($cols: 1, $gap: 0) {
+// note that if using this in a media query, the fallback needs to
+// be windowed between breakpoints, because the nth-child is not reset
+@mixin columns($cols: 1, $gap: 0, $rule: false) {
     @if $browser-supports-columns {
         -webkit-column-count: $cols;
         -moz-column-count: $cols;
@@ -196,6 +221,11 @@
         -webkit-column-gap: $gap;
         -moz-column-gap: $gap;
         column-gap: $gap;
+
+        @if $rule {
+            @include column-rule;
+        }
+
     } @else {
         margin-left: 0 - $gap * .5;
         margin-right: 0 - $gap * .5;
@@ -205,8 +235,18 @@
             float: left;
             padding-left: $gap * .5;
             padding-right: $gap * .5;
+
+            &:nth-child(#{$cols}n+1) {
+                clear: left;
+            }
         }
     }
+}
+
+@mixin column-rule($style: 1px solid $c-neutral5) {
+    -webkit-column-rule: $style;
+    -moz-column-rule: $style;
+    column-rule: $style;
 }
 
 @function colour($color, $pallet: $pasteup-palette) {

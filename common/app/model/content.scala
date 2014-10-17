@@ -15,7 +15,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import conf.Switches.LiveBlogCacheTimeSwitch
+import conf.Switches.ContentCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -52,6 +52,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
   lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
+  lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
     visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
@@ -164,12 +165,20 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-  private lazy val liveCacheTime = if (LiveBlogCacheTimeSwitch.isSwitchedOn) 60 else 5
-  override lazy val cacheSeconds = {
-    if (isLive) liveCacheTime
+  private lazy val defaultCacheTime = {
+    if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
+
+  private lazy val fastCacheTime = {
+    if (isLive) 5
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 10
+    else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 30
+    else 300
+  }
+
+  override lazy val cacheSeconds = if (ContentCacheTimeSwitch.isSwitchedOn) fastCacheTime else defaultCacheTime
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,

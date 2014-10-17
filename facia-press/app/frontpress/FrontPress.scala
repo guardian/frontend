@@ -55,7 +55,12 @@ trait FrontPress extends Logging {
   }
 
   private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(CollectionConfigWithId, Collection)]] = {
-    val collectionIds: List[CollectionConfigWithId] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collectionIds: List[CollectionConfigWithId] =
+      ConfigAgent.getConfigForId(id)
+        .getOrElse{
+        log.warn(s"There are no collections for path $id")
+        throw new IllegalStateException(s"There are no collections for path $id")
+      }
     val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config.config, Uk).map((config, _)))
     Future.sequence(collections)
   }

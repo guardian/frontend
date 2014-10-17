@@ -22,7 +22,7 @@ $commercial-cta-diameter: (
     }
     @include mq(wide) {
         .has-page-skin & {
-            
+
             .facia-container__inner {
                 padding-left: 0;
                 padding-right: 0;
@@ -61,7 +61,7 @@ $commercial-cta-diameter: (
             }
             .lineitem {
                 width: 100%;
-                
+
                 &:nth-child(n+2) {
                     display: none;
                 }
@@ -89,7 +89,7 @@ $commercial-cta-diameter: (
                 @include box-sizing(border-box);
             }
             .lineitem {
-                
+
                 &:nth-child(1) {
                     padding-left: 0;
                 }
@@ -105,16 +105,16 @@ $commercial-cta-diameter: (
         @include mq(tablet, leftCol) {
             .lineitem {
                 width: 100%;
-                
+
                 &:nth-child(n+2) {
                     display: none;
                 }
             }
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             .commercial__head {
                 float: left;
-                
+
                 .commercial__search {
                     display: block;
                 }
@@ -133,7 +133,7 @@ $commercial-cta-diameter: (
     width: 100%;
     position: relative;
     background-color: $c-commercial-comp-neutral;
-    
+
     .container__border {
         border-top: 0;
     }
@@ -150,7 +150,7 @@ $commercial-cta-diameter: (
         background-position: center -6px, center calc(100% + 6px);
         background-repeat: repeat-x;
         padding: $gs-baseline $gs-gutter/2;
-        
+
         .commercial__title {
             float: none;
         }
@@ -197,7 +197,7 @@ $commercial-cta-diameter: (
     }
 }
 .commercial {
-    
+
     .commercial__head {
         @include box-sizing(border-box);
         background-color: #ffffff;
@@ -372,7 +372,7 @@ $commercial-cta-diameter: (
         margin-left: 90px;
     }
     &.commercial--high {
-        
+
         .commercial__relevance-title {
             @include fs-bodyHeading(3);
             margin-bottom: $gs-baseline/2;
@@ -384,7 +384,7 @@ $commercial-cta-diameter: (
             display: none;
         }
         .commercial__relevance-low {
-            
+
             .lineitem_link {
                 width: 100%;
             }
@@ -393,7 +393,7 @@ $commercial-cta-diameter: (
             }
         }
         .commercial__relevance-high {
-            
+
             .lineitem__title {
                 white-space: normal;
             }
@@ -402,7 +402,7 @@ $commercial-cta-diameter: (
             padding-right: $gs-gutter/2;
         }
         @include mq(tablet) {
-            
+
             .lineitem {
                 width: 50%;
             }
@@ -416,7 +416,7 @@ $commercial-cta-diameter: (
             .commercial__relevance-high {
                 width: percentage(2/3);
                 float: left;
-            
+
                 .lineitem__link {
                     width: auto;
                 }
@@ -424,7 +424,7 @@ $commercial-cta-diameter: (
             .commercial__relevance-low {
                 width: percentage(1/3);
                 float: right;
-            
+
                 .lineitem:first-child .lineitem__img {
                     display: block;
                 }
@@ -451,7 +451,7 @@ $commercial-cta-diameter: (
             height: 50px;
             overflow: hidden;
         }
-        
+
         .commercial__title {
             padding: 0;
 
@@ -517,7 +517,7 @@ $commercial-cta-diameter: (
 .commercial {
     .commercial--v-high__body {
         @include mq($until: mobileLandscape) {
-            
+
             .highitem__img {
                 width: 100px;
                 float: none;

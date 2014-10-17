@@ -1,6 +1,6 @@
 package model
 
-import common.{NavItem, Edition}
+import common.{Edition, NavItem}
 import conf.Configuration
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
@@ -18,14 +18,17 @@ case class FaciaPage(id: String,
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
-  lazy val keywordId: String = FrontKeywordId(section)
+  lazy val keywordIds: Seq[String] = {
+    val normalizedId = id.replace("/", "-")
+    Seq(id, s"$normalizedId/$normalizedId")
+  }
 
   override lazy val isFront = true
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
   lazy val faciaPageMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(webTitle.capitalize),
-    "keywordIds" -> JsString(keywordId),
+    "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString(contentType)
   )
 
@@ -33,12 +36,14 @@ case class FaciaPage(id: String,
 
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
-  override lazy val isSponsored = DfpAgent.isSponsored(keywordId, Some(section))
+  override lazy val isSponsored = keywordIds exists (DfpAgent.isSponsored(_, Some(section)))
   override def hasMultipleSponsors = false // Todo: need to think about this
-  override lazy val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywordId, Some(section))
+  override lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
+      Some(section)))
   override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  override lazy val isFoundationSupported = DfpAgent.isFoundationSupported(keywordId, Some(section))
-  override def sponsor = DfpAgent.getSponsor(keywordId)
+  override lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
+      Some(section)))
+  override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct

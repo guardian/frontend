@@ -180,7 +180,7 @@
     min-height: 250 + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
     }
 }
@@ -315,7 +315,7 @@
     }
 }
 .ad-slot--paid-for-badge--live-blog {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         padding-top: $gs-baseline*2;
     }
 }
@@ -381,7 +381,7 @@
         }
         @include comm-paid-logo-placement;
     }
-    
+
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;

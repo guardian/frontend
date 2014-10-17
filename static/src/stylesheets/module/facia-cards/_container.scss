@@ -28,6 +28,11 @@ $header-image-size-desktop: 120px;
 
     @include mq(wide) {
         width: $left-column-wide;
+
+        .has-page-skin & {
+            width: auto;
+            float: none;
+        }
     }
 }
 .fc-container__header__title {

@@ -6,12 +6,6 @@
     @include u-h;
 }
 
-.hide-until-rightcol {
-    @include mq($until: rightCol) {
-        @include u-h;
-    }
-}
-
 .hide-until-leftcol {
     @include mq($until: leftCol) {
         @include u-h;
