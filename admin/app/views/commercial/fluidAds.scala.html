@@ -1,0 +1,27 @@
+@(env: String)
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+    <h1>Commercial</h1>
+
+    <h3>Fluid 250 ads</h3>
+    
+    <p>These are links to the "fluid 250" ads that we have created so far. All are served from DFP and are hidden behind cookies.</p>
+    
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h4><a href="http://m.code.dev-theguardian.com/technology?test=ng101&view=mobile">Live Better</a></h4>
+        </li>
+        <li class="list-group-item">
+            <h4><a href="http://m.code.dev-theguardian.com/technology?test=ng102&view=mobile">Nissan</a></h4>
+        </li>
+        <li class="list-group-item">
+            <h4><a href="http://m.code.dev-theguardian.com/technology?test=ng103&view=mobile">Own the Weekend</a></h4>
+        </li>
+        <li class="list-group-item">
+            <h4><a href="http://m.code.dev-theguardian.com/technology?test=ng104&view=mobile">ITV - Grantchester</a></h4>
+        </li>
+    </ul>
+}

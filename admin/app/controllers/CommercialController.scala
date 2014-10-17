@@ -1,18 +1,25 @@
 package controllers.admin
 
-import common.Logging
-import conf.Configuration
+import common.{ExecutionContexts, Edition, Logging}
+import conf.{LiveContentApi, Configuration}
 import controllers.AuthLogging
 import dfp.DfpDataHydrator
-import model.NoCache
+import model.{Content, NoCache}
 import ophan.SurgingContentAgent
 import play.api.mvc.Controller
 import tools.Store
+import views.support.TemplateDeduping
 
-object CommercialController extends Controller with Logging with AuthLogging {
+object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
+
+  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
+  }
+
+  def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
+    NoCache(Ok(views.html.commercial.fluidAds(Configuration.environment.stage)))
   }
 
   def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
@@ -39,8 +46,17 @@ object CommercialController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(Configuration.environment.stage, report)))
   }
 
-  def renderCreativeTemplates = AuthActions.AuthActionTest { implicit request =>
+  def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
     val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
-    NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates)))
+    // get some example trails
+    LiveContentApi.search(Edition(request))
+      .pageSize(4)
+      .response.map { response  =>
+        response.results.map {
+          Content(_)
+        }
+    } map { trails =>
+      NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates, trails)))
+    }
   }
 }

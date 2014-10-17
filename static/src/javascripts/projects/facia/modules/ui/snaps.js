@@ -1,6 +1,7 @@
 define([
-    'common/utils/$',
     'bonzo',
+    'lodash/functions/debounce',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/template',
@@ -8,8 +9,9 @@ define([
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps'
 ], function (
-    $,
     bonzo,
+    debounce,
+    $,
     ajax,
     mediator,
     template,
@@ -19,16 +21,16 @@ define([
 ) {
 
     function init() {
-        var snaps = toArray($('.facia-snap'))
+        var snaps = toArray($('.js-snappable.js-snap'))
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); })
                 .filter(function (el) { return el.getAttribute('data-snap-type'); });
 
         snaps.forEach(fetchSnap);
 
         if (snaps.length) {
-            mediator.on('window:resize', function () {
+            mediator.on('window:resize', debounce(function () {
                 snaps.forEach(function (el) { addCss(el, true); });
-            });
+            }, 200));
         }
     }
 
@@ -67,10 +69,10 @@ define([
     function injectIframe(el) {
         // Wrapping iframe to fix iOS height-setting bug
         bonzo(el).html(template(
-            '<div style="height:{{height}}px; overflow:hidden;">' +
+            '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
                 '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
             '</div>',
-            {src: el.getAttribute('data-snap-uri'), height: 200}
+            {src: el.getAttribute('data-snap-uri'), height: 250}
         ));
     }
 

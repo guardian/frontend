@@ -1,15 +1,17 @@
-@(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
+
 
 @import views.support.GetClasses
 @import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
 @import model.FaciaComponentName
+@import dfp.DfpAgent
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
              class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
              data-link-name="@FaciaComponentName(config, collection)"
-             data-id="@config.id"
-             @config.sponsorshipKeyword.map { keyword =>
+             data-id="@FaciaComponentName(config, collection)"
+             @DfpAgent.sponsorshipTag(config).map { keyword =>
                  data-keywords="@keyword"
              }
              data-component="@FaciaComponentName(config, collection)">

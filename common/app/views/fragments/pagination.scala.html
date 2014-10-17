@@ -12,7 +12,7 @@
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     <li class="pagination__item pagination__item--@dir">
         @pageNo.map { p =>
-            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)">
+            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
                 <span class="u-h">@dir.capitalize(0)</span>
             </a>
         }.getOrElse{
@@ -47,7 +47,7 @@
                     @if(pageNum == pagination.currentPage) {
                         <span class="pagination__action pagination__action--current">@pageNum</span>
                     } else {
-                        <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)">@pageNum</a>
+                        <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)" data-link-name="Pagination view page @pageNum">@pageNum</a>
                     }
                 </li>
             }

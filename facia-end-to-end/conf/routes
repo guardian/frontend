@@ -19,6 +19,7 @@ GET           /humans.txt                controllers.Assets.at(path="/public", f
 GET           /assets/javascripts/*file  dev.DevAssetsController.atJavascripts(file)
 GET           /assets/stylesheets/*file  dev.DevAssetsController.atStylesheets(file)
 GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/fonts/*path        dev.DevAssetsController.atFonts(path)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
@@ -28,6 +29,9 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 GET           /                          controllers.FaciaToolController.priorities()
 GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
 GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+
+GET           /editorial/2               controllers.FaciaToolController.multiPane(panes:Int=2)
+GET           /editorial/3               controllers.FaciaToolController.multiPane(panes:Int=3)
 
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")

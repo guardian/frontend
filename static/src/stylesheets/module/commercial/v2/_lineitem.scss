@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Line items
+   ========================================================================== */
+.commercial--v2 {
+    .lineitems {
+        padding: 0;
+        margin: 0 $gs-gutter*-.5;
+        overflow: hidden;
+    }
+    .lineitem {
+        @include box-sizing(border-box);
+        list-style-type: none;
+        padding: 0 $gs-gutter/2;
+        border-left: 1px solid $c-neutral4;
+        position: relative;
+        float: left;
+
+        &:first-child {
+            border-left: 0;
+        }
+    }
+    .lineitem--v-high {
+        float: none;
+    }
+    .lineitem__link {
+        &:hover {
+            text-decoration: none;
+
+            .lineitem__title {
+                text-decoration: underline;
+            }
+        }
+    }
+    .lineitem__image {
+        display: block;
+    }
+    .lineitem__image-crop {
+        position: relative;
+        width: 100%;
+        padding-bottom: 60%;
+        overflow: hidden;
+
+        .lineitem__image {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    }
+    .lineitem__title {
+        color: $c-neutral1;
+        @include fs-header(1);
+        padding-top: 2px;
+        margin-bottom: $gs-baseline;
+    }
+    .lineitem__desc {
+        @include fs-headline(1);
+        color: $c-neutral2;
+    }
+    .lineitem__meta {
+        color: $c-neutral2;
+        @include fs-textSans(2);
+        margin-bottom: $gs-baseline/2;
+    }
+    .lineitem__meta__highlight {
+        color: $c-brandBlue;
+    }
+    .lineitem__meta__strong {
+        color: $c-neutral1;
+        font-weight: bold;
+    }
+
+    /* Line items - high relevance */
+    .lineitem.lineitem--high {
+        width: 100%;
+        @include mq($until: tablet) {
+            padding-right: 0;
+        }
+
+        .lineitem--high__feature {
+            @include box-sizing(border-box);
+            width: 50%;
+            float: right;
+            padding-left: $gs-gutter/2;
+        }
+        .lineitem--high__offer {
+            @include box-sizing(border-box);
+            width: 50%;
+            float: left;
+            padding: 0 $gs-gutter/2 0 0;
+        }
+    }
+
+    /* Line items - low relevance */
+    .lineitem.lineitem--low {
+        @include mq($until: tablet) {
+            width: 100%;
+            border-left: 0;
+            border-top: 1px solid $c-neutral3;
+            padding: $gs-baseline/2 0;
+            position: relative;
+
+            .lineitem__title {
+                padding-right: $gs-gutter*5;
+            }
+            .lineitem__cta {
+                margin-right: 0;
+                position: absolute;
+                top: $gs-baseline/2;
+                right: 0;
+            }
+        }
+        @include mq(tablet) {
+            width: percentage(1/2);
+            padding: 0 $gs-gutter/2;
+
+            &:first-child {
+                border-left: 1px solid $c-neutral4;
+            }
+        }
+    }
+
+    /* High relevance container */
+    .commercial__relevance--high {
+        @include box-sizing(border-box);
+        @include mq(tablet) {
+            padding-bottom: $gs-baseline;
+        }
+        @include mq(tablet) {
+            width: percentage(1/2);
+            float: left;
+            padding-bottom: 0;
+        }
+
+        .lineitems {
+            margin: 0;
+            @include mq(tablet) {
+                margin-left: $gs-gutter*-.5;
+            }
+        }
+        .lineitem.lineitem--high {
+            padding-left: 0;
+
+            @include mq($until: tablet) {
+                padding-bottom: $gs-baseline/2;
+            }
+
+            @include mq(tablet) {
+                padding-left: $gs-gutter*.5;
+            }
+
+            .lineitem__title {
+                min-height: 0;
+            }
+        }
+    }
+
+    /* Low relevance container */
+    .commercial__relevance--low {
+        @include box-sizing(border-box);
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            width: percentage(1/2);
+            float: left;
+        }
+
+        .lineitems {
+            margin: 0;
+            @include mq(tablet) {
+                margin: 0 $gs-gutter*-.5;
+            }
+        }
+    }
+}

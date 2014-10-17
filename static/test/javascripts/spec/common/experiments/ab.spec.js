@@ -72,18 +72,18 @@ define(['common/modules/experiments/ab', 'fixtures/ab-test', 'common/modules/ana
             it("should not segment user if test can't be run", function() {
                 test.one.canRun = function() { return false; };
                 ab.segment(switches.test_one_on);
-                expect(ab.getParticipations()).toEqual([]);
+                expect(ab.getParticipations()).toEqual({});
             });
 
             it("should not segment user if the test has expired", function() {
                 test.one.expiry = '2012-01-01';
                 ab.segment(switches.test_one_on);
-                expect(ab.getParticipations()).toEqual([]);
+                expect(ab.getParticipations()).toEqual({});
             });
 
             it("should not segment user if the test is switched off", function() {
                 ab.segment(switches.test_one_off);
-                expect(ab.getParticipations()).toEqual([]);
+                expect(ab.getParticipations()).toEqual({});
             });
 
             it("should not segment user if they already belong to the test", function() {

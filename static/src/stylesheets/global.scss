@@ -55,10 +55,11 @@
 @import 'module/content/_gallery-lightbox';
 
 @import 'module/onward/_right-hand-most-popular';
-@import 'module/onward/_popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
 @import 'module/_submeta';
+
+@import 'module/preview/_freshness-check';
 
 
 /* ==========================================================================
@@ -96,9 +97,8 @@
 @include facia-container--default-heading;
 
 @import 'module/facia/_icons';
-@import 'module/facia/_show-more';
+@import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
-@import 'module/facia/_container-related-keywords';
 
 @import 'module/containers/_features';
 @import 'module/containers/_featuresauto';
@@ -123,6 +123,15 @@
 // card additions
 @import 'module/facia-cards/_tones-images';
 
+// new FACIA CARDS code
+@import 'module/facia-cards/_l-list';
+@import 'module/facia-cards/_container';
+@import 'module/facia-cards/_slices';
+@import 'module/facia-cards/_sublinks';
+@import 'module/facia-cards/_item';
+@import 'module/facia-cards/_items';
+@import 'module/facia-cards/_linkslist';
+@import 'module/facia-cards/_tones';
 
 /* ==========================================================================
    Experiments

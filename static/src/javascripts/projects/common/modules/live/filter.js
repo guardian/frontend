@@ -22,12 +22,12 @@ define([
         this.order = 'newest';
     }
 
-    Filter.prototype.ready = function() {
+    Filter.prototype.ready = function () {
         bean.on(qwery('.js-live-oldest')[0], 'click', this.toggle.bind(this, 'oldest'));
         bean.on(qwery('.js-live-newest')[0], 'click', this.toggle.bind(this, 'newest'));
     };
 
-    Filter.prototype.toggle = function(order) {
+    Filter.prototype.toggle = function (order) {
         bean.fire(qwery('button[data-toggle="popup--live-blog"]')[0], 'click');
         if (this.order !== order) {
             var blocks = toArray($('.block', this.context).detach());

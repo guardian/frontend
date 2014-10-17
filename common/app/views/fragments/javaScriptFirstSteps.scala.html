@@ -1,4 +1,4 @@
-@(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
@@ -14,6 +14,11 @@
     data-cache-file-woff2="@Static("fonts/GuardianEgyptianWeb.woff2.json")"
     data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"></style>
+<style class="initial"
+    data-cache-name="GuardianTextEgyptianWeb"
+    data-cache-file-woff2="@Static("fonts/GuardianTextEgyptianWeb.woff2.json")"
+    data-cache-file-woff="@Static("fonts/GuardianTextEgyptianWeb.woff.json")"
+    data-cache-file-ttf="@Static("fonts/GuardianTextEgyptianWeb.ttf.json")"></style>
 <style class="initial"
     data-cache-name="GuardianTextSansWeb"
     data-min-width="980"
@@ -135,6 +140,8 @@
             }
             if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
                 document.documentElement.className += ' has-flex-wrap';
+            } else {
+                document.documentElement.className += ' has-no-flex-wrap';
             }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }

@@ -5,7 +5,7 @@
 <div style="display: none;" data-bind="visible: true">
 
     <div class="alert" data-bind="visible: alert">
-        <span data-bind="text: alert"></span>
+        <span data-bind="text: alert"></span>.
         <a data-bind="click: pressLiveFront">Retry it?</a>
         If this persists beyond a few minutes, <a href="https://sites.google.com/a/guardian.co.uk/digital-incident-management/">contact support</a>.
         <i class="icon-remove" data-bind="click: clearAlerts"></i>
@@ -89,9 +89,11 @@
                     </div>
                 </div>
 
-                <div data-bind="template: {name: 'template_search_controls'}"></div>
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
 
-                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}"></div>
+
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
             </div>
         </div>
     </div>
@@ -163,7 +165,7 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <span class="editor--boolean  selected">
+        <span class="editor--boolean--display">
             <span class="editor--boolean__label" data-bind="text: $data"></span>
             <span class="editor--boolean__state">✔</span>
         </span>
@@ -269,12 +271,16 @@
             }">
 
             <a class="thumb" data-bind="
-                style: { 'background-image': 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || meta.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')' },
+                style: {backgroundImage: 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')'},
                 attr: {href: id}"></a>
 
-            <!-- ko if: meta.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
+            <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="
-                    style: { 'background-image': 'url(' + meta.imageCutoutSrcFromCapi() + ')' }"></a>
+                    style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+            <!-- /ko -->
+
+            <!-- ko if: state.hasMainVideo -->
+                <div class="has-playable"><i class="icon-play"></i></div>
             <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
@@ -335,8 +341,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
+                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -344,12 +350,6 @@
                                 <span class="time__publication" data-bind="text: webPublicationTime"></span>
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
-
-                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span class="has-sublinks">
-                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
-                                </span>
-                            <!-- /ko -->
 
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
@@ -360,11 +360,21 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: meta.isSnap -->
+                            <!-- ko if: state.isSnap -->
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
+                            <!-- /ko -->
+
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+
+                            <!-- ko if: state.tone -->
+                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- /ko -->
 
                             <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>

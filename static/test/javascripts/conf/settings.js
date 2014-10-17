@@ -7,7 +7,6 @@ module.exports = function(config) {
         files: [
             { pattern: 'static/test/javascripts/components/sinonjs/sinon.js', included: true },
             { pattern: 'static/test/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
-            { pattern: 'static/test/javascripts/components/seedrandom/index.js', included: true },
             { pattern: 'static/test/javascripts/setup.js', included: true },
             { pattern: 'static/test/javascripts/main.js', included: true },
             { pattern: 'static/test/javascripts/components/**/!(*.spec.js)', included: false },
@@ -15,6 +14,7 @@ module.exports = function(config) {
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
             { pattern: 'static/test/javascripts/spies/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
             { pattern: 'static/public/javascripts/**/*.js', included: false }
         ],
 

@@ -32,6 +32,8 @@ define([
             {name: 'prototype/raclette'}
         ].concat(fixedContainers).concat(dynamicContainers),
 
+        typesDynamic: dynamicContainers,
+
         headlineLength: 200,
         restrictedHeadlineLength: 90,
 
@@ -54,7 +56,7 @@ define([
 
         searchPageSize:        50,
 
-        capiBatchSize:         20,
+        capiBatchSize:         10,
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,
@@ -71,7 +73,8 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-elements=video&show-tags=contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail',
+        apiSearchParams:       'show-elements=video&show-tags=tone,type,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
+
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',

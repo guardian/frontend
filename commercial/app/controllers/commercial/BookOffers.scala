@@ -29,7 +29,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.adsTargetedAt(segment))
+        (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.bestsellersTargetedAt(segment))
           .distinctBy(_.isbn).take(5) match {
           case Nil => NoCache(format.nilResult)
           case books => Cached(componentMaxAge) {
@@ -54,16 +54,15 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     }
   }
 
-  def bestsellersLowJson = renderBestsellers(lowRelevance, jsonFormat)
   def bestsellersLowHtml = renderBestsellers(lowRelevance, htmlFormat)
+  def bestsellersLowJson = renderBestsellers(lowRelevance, jsonFormat)
 
-  def bestsellersMediumJson = renderBestsellers(mediumRelevance, jsonFormat)
   def bestsellersMediumHtml = renderBestsellers(mediumRelevance, htmlFormat)
+  def bestsellersMediumJson = renderBestsellers(mediumRelevance, jsonFormat)
 
-  def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
   def bestsellersHighHtml = renderBestsellers(highRelevance, htmlFormat)
+  def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
 
   def bestsellersSuperHighJson = renderSingleBook(jsonFormat)
   def bestsellersSuperHighHtml = renderSingleBook(htmlFormat)
-
 }

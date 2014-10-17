@@ -230,11 +230,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
     lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+    lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v4.json"
-    lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v4.json"
-    lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v4.json"
+    lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v5.json"
+    lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v5.json"
+    lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v5.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v5.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
@@ -397,6 +398,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
         oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
+
+  object pngResizer {
+    val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
+    val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 }
 

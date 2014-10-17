@@ -25,6 +25,7 @@
     .c-football-matches {
         overflow: hidden;
         background: $c-neutral8;
+        width: 100%;
     }
 
     .table,
@@ -223,6 +224,22 @@
                 display: none;
             }
         }
+    }
+}
+
+$footballBadgeSizeMobile: 80px;
+$footballBadgeSizeDesktop: 120px;
+
+.football-badge {
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    width: $footballBadgeSizeMobile;
+    height: $footballBadgeSizeMobile;
+
+    @include mq(desktop) {
+        width: $footballBadgeSizeDesktop;
+        height: $footballBadgeSizeDesktop;
     }
 }
 

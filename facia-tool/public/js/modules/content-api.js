@@ -124,15 +124,15 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.meta.isSnap(); })
+            .filter(function(article) { return !article.state.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
     }
 
-    function populate(article, contentApiArticle) {
-        article.populate(contentApiArticle, true);
+    function populate(article, capiData) {
+        article.addCapiData(capiData);
     }
 
     function fetchContentByIds(ids) {

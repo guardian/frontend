@@ -1,24 +1,22 @@
 package controllers
 
-import org.scalatest._
-import org.scalatest.mock.MockitoSugar
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
-import actions.AuthActionWithUser
-import idapiclient._
+import actions.AuthenticatedActions
+import client.Auth
+import com.gu.identity.cookie.GuUCookieData
+import com.gu.identity.model.{PrivateFields, PublicFields, StatusFields, User}
+import idapiclient.{TrackingData, _}
+import model.Countries
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers}
-import play.api.mvc.{RequestHeader, Request}
-import scala.concurrent.Future
-import com.gu.identity.model.{PrivateFields, PublicFields, StatusFields, User}
+import org.scalatest._
+import org.scalatest.mock.MockitoSugar
+import play.api.mvc._
 import play.api.test.Helpers._
-import actions.AuthRequest
-import play.api.mvc.Result
-import services.IdentityRequest
-import idapiclient.TrackingData
-import test.{FakeCSRFRequest, Fake}
-import play.api.test.FakeRequest
-import client.Auth
-import model.Countries
+import services._
+import test.{Fake, FakeCSRFRequest}
+
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
 //TODO test form validation and population of form fields.
 class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with OptionValues {
@@ -31,18 +29,19 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val testAuth = new ScGuU("abc")
+  val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+  val authenticatedUser = AuthenticatedUser(user, testAuth)
 
-  val authActionWithUser = new AuthActionWithUser(authService, api, idRequestParser) {
-    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
-      block(AuthRequest(request, user, testAuth))
-    }
-  }
+  val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
+
+  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+  when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
   when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
   when(idRequest.returnUrl) thenReturn None
 
-  val controller = new EditProfileController(idUrlBuilder, authActionWithUser, api, idRequestParser)
+  val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser)
 
   "Given the submitPublicProfileForm method is called" - {
     val location = "Test location"
@@ -72,6 +71,8 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
+      Await.result(result, 10.seconds)
+
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
         verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
@@ -87,17 +88,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         status(result) should be(200)
       }
 
-    }
-
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
-
-      "should throw a CSRF error" in {
-        intercept[RuntimeException] {
-          controller.submitPublicProfileForm().apply(authRequest)
-        }
-      }
     }
   }
 
@@ -147,6 +137,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         .thenReturn(Future.successful(Right(updatedUser)))
 
       val result = controller.submitAccountForm().apply(fakeRequest)
+      Await.result(result, 10.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
@@ -167,17 +158,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       "then a status 200 should be returned" in {
         status(result) should be(200)
-      }
-    }
-
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
-
-      "should throw a CSRF error" in {
-        intercept[RuntimeException] {
-          controller.submitAccountForm().apply(authRequest)
-        }
       }
     }
   }

@@ -45,7 +45,6 @@ define([
                 'ui:images:vh': setHeight
             });
         },
-
         transcludeMostPopular = function () {
             var mostViewed = new Component(),
                 container = qwery('.js-gallery-most-popular')[0];
@@ -73,8 +72,7 @@ define([
 
             mediator.emit('page:gallery:ready', config);
             transcludeMostPopular();
-        }
-
+        };
 
     return {
         init: ready

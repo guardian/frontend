@@ -12,7 +12,7 @@ define([
     extend,
     Component,
     mediator
-    ) {
+) {
 
     function GeoMostPopular(config) {
         mediator.emit('register:begin', 'geo-most-popular');
@@ -24,8 +24,8 @@ define([
 
     GeoMostPopular.prototype.endpoint = '/most-read-geo.json';
 
-    GeoMostPopular.prototype.ready = function() {
-        mediator.emit('register:begin', 'geo-most-popular');
+    GeoMostPopular.prototype.ready = function () {
+        mediator.emit('register:end', 'geo-most-popular');
     };
 
     return GeoMostPopular;

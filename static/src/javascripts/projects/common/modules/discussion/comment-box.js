@@ -2,6 +2,7 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
+    'lodash/functions/debounce',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/discussion/api',
@@ -13,6 +14,7 @@ define([
     $,
     bean,
     bonzo,
+    debounce,
     config,
     mediator,
     DiscussionApi,
@@ -29,7 +31,6 @@ define([
  * @param {Object=} options
  */
 function CommentBox(options) {
-    this.mediator = mediator;
     this.setOptions(options);
 
     mediator.on('module:identity:validation-email:success', this.verificationEmailSuccess.bind(this));
@@ -151,8 +152,11 @@ CommentBox.prototype.ready = function() {
     bean.on(document.body, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(document.body, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+
+    this.on('change', '.d-comment-box__body', this.resetPreviewComment);
     this.on('click', this.getClass('preview'), this.previewComment);
     this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
+
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
@@ -167,6 +171,16 @@ CommentBox.prototype.ready = function() {
     if (this.options.focus) {
         this.getElem('body').focus();
     }
+};
+
+CommentBox.prototype.urlify = function(str) {
+    var reOutsideTags = '(?![^<]*>|[^<>]*</)',
+        reUrl = '\\b((https?://|www.)\\S+)\\b',
+        regexp = new RegExp(reUrl + reOutsideTags, 'g');
+    return str.replace(regexp, function(match, url, protocol) {
+        var fullUrl = protocol === 'www.' ? 'http://' + url : url;
+        return '<a href="' + fullUrl +'">' + url + '</a>';
+    });
 };
 
 /**
@@ -196,6 +210,7 @@ CommentBox.prototype.postComment = function(e) {
         }
 
         if (self.errors.length === 0) {
+            comment.body = self.urlify(comment.body);
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
@@ -256,7 +271,7 @@ CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     this.resetPreviewComment();
     this.setFormState();
     this.emit('post:success', comment);
-    this.mediator.emit('discussion:commentbox:post:success', comment);
+    mediator.emit('discussion:commentbox:post:success', comment);
 };
 
 /**
@@ -415,18 +430,19 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
     var formatSelectionLink = function() {
         var href;
-
+        var linkURL;
         if (/^https?:\/\//i.test(selectedText)) {
             href = selectedText;
         } else {
-            href = 'http://';
+            linkURL = window.prompt('Your URL:', 'http://www.');
+            href = linkURL;
+
+            selectedText = selectedText || linkURL;
         }
         var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
-
-        selectNewText(newText);
     };
 
     var selectNewText = function(newText) {

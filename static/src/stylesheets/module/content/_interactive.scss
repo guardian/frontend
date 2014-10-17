@@ -111,4 +111,9 @@
     .element-interactive {
         background-color: #ffffff;
     }
+
+    //TODO: Temporary hack for live-streams until we discuss a better solution with composer
+    [data-alt="Live stream"] {
+        @extend %u-responsive-ratio;
+    }
 }

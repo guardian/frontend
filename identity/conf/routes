@@ -3,6 +3,9 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
+GET         /reauthenticate                         @controllers.ReauthenticationController.renderForm(returnUrl : Option[String])
+POST        /reauthenticate                         @controllers.ReauthenticationController.processForm
+
 GET         /signin                                 @controllers.SigninController.renderForm(returnUrl : Option[String])
 POST        /signin                                 @controllers.SigninController.processForm
 GET         /signout                                @controllers.SignoutController.signout
@@ -17,7 +20,7 @@ POST        /password/change                        @controllers.ChangePasswordC
 GET         /password/reset-confirmation            @controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    @controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
-GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String])
+GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String], skipConfirmation : Option[Boolean])
 POST        /register                               @controllers.RegistrationController.processForm
 GET         /register/confirm                       @controllers.RegistrationController.renderRegistrationConfirmation(returnUrl)
 GET         /email-prefs                            @controllers.EmailController.preferences

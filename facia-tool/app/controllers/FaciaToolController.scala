@@ -13,6 +13,10 @@ import tools.FaciaApi
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
+  def multiPane(panes: Int) = ExpiringActions.ExpiringAuthAction { request =>
+    Cached(60) { Ok(views.html.multipane(panes)) }
+  }
+
   def priorities() = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
@@ -58,7 +62,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(id), identity.email))
     }
     ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)
@@ -156,5 +160,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def getLastModified(path: String) = ExpiringActions.ExpiringAuthAction { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
     now.map(Ok(_)).getOrElse(NotFound)
+  }
+
+  def generatePutForCollectionId(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
+    ConfigAgent.getConfig(collectionId).map { collectionConfig =>
+      Ok(Json.toJson(ContentApiWrite.generateContentApiPut(collectionId, collectionConfig)))
+    }.getOrElse(NotFound(s"Collection ID $collectionId does not exist in ConfigAgent"))
   }
 }

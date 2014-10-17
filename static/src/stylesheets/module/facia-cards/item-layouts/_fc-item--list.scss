@@ -14,11 +14,8 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     $item-vertical-padding: $gs-baseline * .25;
 
     .fc-item__header {
-        @include fs-headline(1, true);
-
-        @include mq(desktop) {
-            @include fs-headline(2, true);
-        }
+        @include fs-headline(2, true);
+        @include headline-boost(3);
     }
 
     .fc-item__media-wrapper {
@@ -26,12 +23,8 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar {
-            display: none !important;
+        .fc-item__avatar__media {
+            display: none;
         }
-    }
-
-    .fc-sublinks {
-        display: none;
     }
 }

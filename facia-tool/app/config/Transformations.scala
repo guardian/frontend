@@ -1,7 +1,7 @@
 package config
 
+import com.gu.facia.client.models.{CollectionConfig, Config, Front}
 import controllers.CreateFront
-import frontsapi.model.{Collection, Front, Config}
 
 object Transformations {
   /** The Config ought never to contain empty fronts or collections that do not belong to any fronts */
@@ -45,7 +45,7 @@ object Transformations {
   def updateCollection(
       frontIds: List[String],
       collectionId: String,
-      collection: Collection
+      collection: CollectionConfig
   )(config: Config): Config = {
     val updatedFronts = frontIds flatMap { frontId =>
       config.fronts.get(frontId) map { front =>

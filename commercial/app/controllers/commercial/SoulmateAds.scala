@@ -19,7 +19,7 @@ object SoulmateAds extends Controller {
     override def view(soulmates: Seq[Member])(implicit request: RequestHeader): Html =
       views.html.soulmatesHigh(soulmates)
   }
-
+  
   private def renderMixed(relevance: Relevance[Member], format: Format) = MemcachedAction { implicit request =>
     Future.successful {
       SoulmatesAggregatingAgent.sampleMembers(segment) match {
@@ -31,9 +31,9 @@ object SoulmateAds extends Controller {
     }
   }
 
-  def mixedLowJson = renderMixed(lowRelevance, jsonFormat)
   def mixedLowHtml = renderMixed(lowRelevance, htmlFormat)
+  def mixedLowJson = renderMixed(lowRelevance, jsonFormat)
 
-  def mixedHighJson = renderMixed(highRelevance, jsonFormat)
   def mixedHighHtml = renderMixed(highRelevance, htmlFormat)
+  def mixedHighJson = renderMixed(highRelevance, jsonFormat)
 }

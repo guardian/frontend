@@ -1,6 +1,6 @@
 package util
 
-import frontsapi.model.{Front, Config}
+import com.gu.facia.client.models.{Config, Front}
 import scala.util.matching.Regex
 
 

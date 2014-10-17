@@ -19,7 +19,7 @@ object TravelOffers extends Controller {
   private def renderTravelOffers(relevance: Relevance[TravelOffer], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.adsTargetedAt(segment)).distinct match {
+        (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.offersTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case offers => Cached(componentMaxAge) {
             format.result(relevance.view(offers take 4))

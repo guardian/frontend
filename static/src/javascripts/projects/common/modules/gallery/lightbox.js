@@ -237,11 +237,11 @@ define([
 
     GalleryLightbox.prototype.getImgSrc = function(imgJson, width, height) {
         var possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
-                var widthBigger = w > width,
-                    calculatedHeight = (w/imgJson.ratio),
-                    heightBigger =  calculatedHeight > height;
-                return widthBigger || heightBigger;
-            }).sort(function(a,b){ return a > b; }),
+            var widthBigger = w > width,
+                calculatedHeight = (w/imgJson.ratio),
+                heightBigger =  calculatedHeight > height;
+            return widthBigger || heightBigger;
+        }).sort(function(a,b){ return a > b; }),
             chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
 
         return imgJson.src.replace('{width}', chosenWidth);
@@ -339,14 +339,14 @@ define([
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                bean.on(window, 'resize', this.resize);
+                mediator.on('window:resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                bean.off(window, 'resize', this.resize);
+                mediator.off('window:resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -407,11 +407,11 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                bean.on(window, 'resize', this.resize);
+                mediator.on('window:resize', this.resize);
                 imagesModule.upgrade(this.endslateEl);
             },
             leave: function() {
-                bean.off(window, 'resize', this.resize);
+                mediator.off('window:resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {

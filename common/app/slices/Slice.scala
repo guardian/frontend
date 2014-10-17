@@ -42,8 +42,8 @@ case object QuarterQlQlQl extends Slice {
       SingleItem(
         1,
         ItemClasses(
-          mobile = "list-media-large",
-          tablet = "standard-quarter"
+          mobile = "list-media",
+          tablet = "standard"
         )
       ),
       Rows(
@@ -71,15 +71,15 @@ case object QuarterQuarterQlQl extends Slice {
       SingleItem(
         1,
         ItemClasses(
-          mobile = "list-media-large",
-          tablet = "standard-quarter"
+          mobile = "list-media",
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
-          mobile = "list-media-large",
-          tablet = "standard-quarter"
+          mobile = "list-media",
+          tablet = "standard"
         )
       ),
       Rows(
@@ -108,21 +108,21 @@ case object QuarterQuarterQuarterQl extends Slice {
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       Rows(
@@ -150,29 +150,29 @@ case object QuarterQuarterQuarterQuarter extends Slice {
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media-large",
-            tablet = "standard-quarter"
+            mobile = "list-media",
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media-large",
-            tablet = "standard-quarter"
+            mobile = "list-media",
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media-large",
-            tablet = "standard-quarter"
+            mobile = "list-media",
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media-large",
-            tablet = "standard-quarter"
+            mobile = "list-media",
+            tablet = "standard"
           )
         )
       )
@@ -275,7 +275,7 @@ case object HalfQuarterQl2Ql4 extends Slice {
       Rows(
         colSpan = 1,
         columns = 1,
-        rows = 4,
+        rows = 5,
         itemClasses = ItemClasses(
           mobile = "list",
           tablet = "list"
@@ -440,7 +440,7 @@ case object ThreeQuarterQuarter extends Slice {
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = "list-media-large",
+          mobile = "list-media",
           tablet = "standard"
         )
       )
@@ -462,7 +462,7 @@ case object QuarterThreeQuarter extends Slice {
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = "list-media-large",
+          mobile = "list-media",
           tablet = "standard"
         )
       ),
@@ -636,21 +636,21 @@ case object TTT extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard"
+          tablet = "third"
         )
       )
     )
@@ -673,20 +673,20 @@ case object TTTL4 extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          tablet = "standard"
+          tablet = "third"
         )
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = "list-media-large",
-          tablet = "standard"
+          mobile = "list-media",
+          tablet = "third"
         )
       ),
       Rows(
         colSpan = 1,
         columns = 1,
-        rows = 4,
+        rows = 3,
         ItemClasses(
           mobile = "list",
           tablet = "list"
@@ -711,7 +711,7 @@ case object TTlMpu extends Slice {
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = "list-media-large",
+          mobile = "list-media",
           tablet = "third"
         )
       ),

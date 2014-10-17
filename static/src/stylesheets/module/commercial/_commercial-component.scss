@@ -4,7 +4,6 @@ $commercial-cta-diameter: (
     mobile: 24px,
     tablet: 36px
 );
-
 .l-footer {
     margin-top: 0 !important;
 }
@@ -23,6 +22,7 @@ $commercial-cta-diameter: (
     }
     @include mq(wide) {
         .has-page-skin & {
+            
             .facia-container__inner {
                 padding-left: 0;
                 padding-right: 0;
@@ -89,6 +89,7 @@ $commercial-cta-diameter: (
                 @include box-sizing(border-box);
             }
             .lineitem {
+                
                 &:nth-child(1) {
                     padding-left: 0;
                 }
@@ -99,7 +100,6 @@ $commercial-cta-diameter: (
         }
     }
 }
-
 .facia-container--layout-content .commercial {
     &.commercial--high {
         @include mq(tablet, leftCol) {
@@ -128,12 +128,12 @@ $commercial-cta-diameter: (
         }
     }
 }
-
 .commercial {
     @include box-sizing(border-box);
     width: 100%;
     position: relative;
     background-color: $c-commercial-comp-neutral;
+    
     .container__border {
         border-top: 0;
     }
@@ -144,7 +144,6 @@ $commercial-cta-diameter: (
         float: none;
         color: $c-newsDefault;
     }
-    
     &.commercial--v-high {
         background-image: radial-gradient(circle at center, #ffffff 3px, transparent 4px), radial-gradient(circle at center, #ffffff 3px, transparent 4px);
         background-size: 14px 12px;
@@ -188,407 +187,393 @@ $commercial-cta-diameter: (
         }
     }
 }
-
 .ad-slot--im {
     padding-right: $gs-gutter;
     width: 50%;
     float: left;
     @include mq(leftCol) {
         @include box-sizing(border-box);
-        width: $left-column + $gs-gutter;
-        margin-left: -($left-column + $gs-gutter);
-    }
-    @include mq(wide) {
         width: $left-column-wide + $gs-gutter;
-        margin-left: -($left-column-wide + $gs-gutter);
     }
 }
+.commercial {
+    
+    .commercial__head {
+        @include box-sizing(border-box);
+        background-color: #ffffff;
+        border-top: 1px solid $c-neutral4;
+        overflow: hidden;
+        height: 40px;
+    }
+    .commercial__logo {
+        margin-bottom: $gs-baseline/2;
+        float: left;
+    }
+    .commercial__title {
+        @include fs-header(3);
+        margin-bottom: $gs-baseline*2;
+        float: left;
+        clear: both;
+    }
+    .commercial__call-to-action {
+        display: block;
+        float: right;
+        @include fs-bodyHeading(2);
 
-.commercial__head {
-    @include box-sizing(border-box);
-    background-color: #ffffff;
-    border-top: 1px solid $c-neutral4;
-    overflow: hidden;
-    height: 40px;
-}
-.commercial__logo {
-    margin-bottom: $gs-baseline/2;
-    float: left;
-}
-.commercial__title {
-    @include fs-header(3);
-    margin-bottom: $gs-baseline*2;
-    float: left;
-    clear: both;
-}
-.commercial__call-to-action {
-    display: block;
-    float: right;
-    @include fs-bodyHeading(2);
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .commercial__body {
+        padding: $comercial-comp-baseline;
+        overflow: hidden;
+    }
+    .commercial__foot {
+        padding: ($gs-baseline/3)*2 0;
+        clear: both;
+        overflow: hidden;
+    }
+    .commercial__search {
+        position: relative;
+        width: 100%;
+        margin-bottom: 0;
+        float: right;
+        overflow: hidden;
+    }
+    .commercial__search__input {
+        @include box-sizing(border-box);
+        width: 100%;
+        height: $gs-row-height;
+        padding: $gs-baseline/3 32px $gs-baseline/3 8px;
+        @include fs-textSans(2);
+        border: 0;
+        @include border-radius(18px);
+        float: left;
+        overflow: hidden;
 
-    &:hover {
-        text-decoration: none;
+        &:hover,
+        &:focus {
+            outline: none;
+        }
+    }
+    .commercial__search__submit {
+        @include rem((
+            width: $gs-baseline*3,
+            height: $gs-baseline*3
+        ));
+        position: absolute;
+        right: 0;
+        opacity: .67;
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: none;
+            opacity: 1;
+        }
     }
 }
-.commercial__body {
-    padding: $comercial-comp-baseline;
-    overflow: hidden;
-}
-.commercial__foot {
-    padding: ($gs-baseline/3)*2 0;
-    clear: both;
-    overflow: hidden;
-}
-.commercial__search {
-    position: relative;
-    width: 100%;
-    margin-bottom: 0;
-    float: right;
-    overflow: hidden;
-}
-.commercial__search__input {
-    @include box-sizing(border-box);
-    width: 100%;
-    height: $gs-row-height;
-    padding: $gs-baseline/3 32px $gs-baseline/3 8px;
-    @include fs-textSans(2);
-    border: 0;
-    @include border-radius(18px);
-    float: left;
-    overflow: hidden;
-
-    &:hover,
-    &:focus {
-        outline: none;
-    }
-}
-.commercial__search__submit {
-    @include rem((
-        width: $gs-baseline*3,
-        height: $gs-baseline*3
-    ));
-    position: absolute;
-    right: 0;
-    opacity: .67;
-
-    &:hover,
-    &:focus,
-    &:active {
-        outline: none;
-        opacity: 1;
-    }
-}
-
 
 /* ==========================================================================
    Entries
    ========================================================================== */
-
-.lineitems,
-.highitem {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-.highitem {
-    position: relative;
-    border-bottom: 1px solid $c-neutral4;
-}
-.lineitem {
-    list-style-type: none;
-    @include box-sizing(border-box);
-    position: relative;
-    padding: 0;
-    @include fs-headline(2);
-
-    &:nth-child(n + 4) {
-        display: none;
+.commercial {
+    .lineitems,
+    .highitem {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
     }
-    &:first-child .lineitem__img {
-        display: block;
+    .highitem {
+        position: relative;
+        border-bottom: 1px solid $c-neutral4;
     }
-    + .lineitem {
-        border-top: 1px solid $c-neutral4;
-    }
-}
-.lineitem__title {
-    @include fs-headline(2);
-    font-weight: normal;
-    text-overflow: ellipsis;
-    white-space: pre;
-    overflow: hidden;
-}
-.lineitem__description,
-.lineitem__link {
-    @include fs-textSans(3);
+    .lineitem {
+        list-style-type: none;
+        @include box-sizing(border-box);
+        position: relative;
+        padding: 0;
+        @include fs-headline(2);
 
-    strong {
-        color: #000000;
+        &:nth-child(n+4) {
+            display: none;
+        }
+        &:first-child .lineitem__img {
+            display: block;
+        }
+        + .lineitem {
+            border-top: 1px solid $c-neutral4;
+        }
+    }
+    .lineitem__title {
+        @include fs-headline(2);
         font-weight: normal;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
     }
-}
-.lineitem__link {
-    color: $c-neutral1;
-    display: block;
-    float: left;
-    overflow: hidden;
+    .lineitem__description,
+    .lineitem__link {
+        @include fs-textSans(3);
 
-    .i.i-arrow-white-right-18 {
-        background-position: 3px 3px;
-        background-color: $c-newsDefault;
-        @include border-radius(50%);
-        margin-right: $gs-gutter/5;
-        width: 18px;
-        height: 18px;
+        strong {
+            color: #000000;
+            font-weight: normal;
+        }
+    }
+    .lineitem__link {
+        color: $c-neutral1;
+        display: block;
         float: left;
-        background-size: 12px 12px;
-    }
-}
-.lineitem__blocklink:hover {
-    text-decoration: none;
+        overflow: hidden;
 
-    .lineitem__title {
-        text-decoration: underline;
-    }
-}
-.lineitem__meta {
-    color: $c-neutral2;
-    @include fs-textSans(2);
-    margin: 0;
-}
-.lineitem__img,
-.highitem__img {
-    height: 100px;
-    display: none;
-    margin-right: $gs-gutter/2;
-    float: left;
-    text-align: center;
-
-    .responsive-img {
-        width: auto;
-        height: 100%;
-    }
-}
-.highitem__img {
-    display: block;
-    height: auto;
-    width: 80px;
-}
-.highitem__details {
-    margin-left: 90px;
-}
-
-.commercial--high {
-    .commercial__relevance-title {
-        @include fs-bodyHeading(3);
-        margin-bottom: $gs-baseline/2;
-    }
-    .lineitem__title {
-        clear: none;
-    }
-    .commercial__head .commercial__search {
-        display: none;
-    }
-    .commercial__relevance-low {
-        .lineitem_link {
-            width: 100%;
-        }
-        .lineitem__img {
-            height: auto;
+        .i.i-arrow-white-right-18 {
+            background-position: 3px 3px;
+            background-color: $c-newsDefault;
+            @include border-radius(50%);
+            margin-right: $gs-gutter/5;
+            width: 18px;
+            height: 18px;
+            float: left;
+            background-size: 12px 12px;
         }
     }
-    .commercial__relevance-high {
+    .lineitem__blocklink:hover {
+        text-decoration: none;
+
         .lineitem__title {
-            white-space: normal;
+            text-decoration: underline;
         }
+    }
+    .lineitem__meta {
+        color: $c-neutral2;
+        @include fs-textSans(2);
+        margin: 0;
+    }
+    .lineitem__img,
+    .highitem__img {
+        height: 100px;
+        display: none;
+        margin-right: $gs-gutter/2;
+        float: left;
+        text-align: center;
+
+        .responsive-img {
+            width: auto;
+            height: 100%;
+        }
+    }
+    .highitem__img {
+        display: block;
+        height: auto;
+        width: 80px;
     }
     .highitem__details {
-        padding-right: $gs-gutter/2;
+        margin-left: 90px;
     }
-    @include mq(tablet) {
-        .lineitem {
-            width: 50%;
+    &.commercial--high {
+        
+        .commercial__relevance-title {
+            @include fs-bodyHeading(3);
+            margin-bottom: $gs-baseline/2;
         }
-        .highitem {
-            border-bottom: 0;
-            padding-bottom: 0;
+        .lineitem__title {
+            clear: none;
         }
-        .commercial__search {
-            margin-top: $gs-baseline;
-        }
-        .commercial__relevance-high {
-            width: percentage(2/3);
-            float: left;
-            
-            .lineitem__link {
-                width: auto;
-            }
+        .commercial__head .commercial__search {
+            display: none;
         }
         .commercial__relevance-low {
-            width: percentage(1/3);
-            float: right;
             
-            .lineitem:first-child .lineitem__img {
+            .lineitem_link {
+                width: 100%;
+            }
+            .lineitem__img {
+                height: auto;
+            }
+        }
+        .commercial__relevance-high {
+            
+            .lineitem__title {
+                white-space: normal;
+            }
+        }
+        .highitem__details {
+            padding-right: $gs-gutter/2;
+        }
+        @include mq(tablet) {
+            
+            .lineitem {
+                width: 50%;
+            }
+            .highitem {
+                border-bottom: 0;
+                padding-bottom: 0;
+            }
+            .commercial__search {
+                margin-top: $gs-baseline;
+            }
+            .commercial__relevance-high {
+                width: percentage(2/3);
+                float: left;
+            
+                .lineitem__link {
+                    width: auto;
+                }
+            }
+            .commercial__relevance-low {
+                width: percentage(1/3);
+                float: right;
+            
+                .lineitem:first-child .lineitem__img {
+                    display: block;
+                }
+            }
+        }
+        @include mq(leftCol) {
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .lineitem {
+                width: 50%;
+            }
+            .lineitem:nth-child(n+2) {
                 display: block;
             }
         }
     }
-    @include mq(leftCol) {
-        .commercial__relevance-high,
-        .commercial__relevance-low,
-        .lineitem {
-            width: 50%;
-        }
-        .lineitem:nth-child(n+2) {
-            display: block;
-        }           
-    }
 }
 
 @include mq($until: tablet) {
-    .commercial__head {
-        padding-left: $gs-baseline/2;
-        padding-right: $gs-baseline/2;
-        height: 50px;
-        overflow: hidden;
-    }
-    .commercial__title {
-        padding: 0;
-
-        .i {
-            margin-top: $gs-baseline/3;
+    .commercial {
+        .commercial__head {
+            padding-left: $gs-baseline/2;
+            padding-right: $gs-baseline/2;
+            height: 50px;
+            overflow: hidden;
         }
-    }
-}
+        
+        .commercial__title {
+            padding: 0;
 
-@include mq(tablet) {
-    .commercial__search {
-        width: 40%;
-    }
-    .lineitem {
-        width: 20%;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
-        float: left;
-
-        &:nth-child(n + 4) {
-            display: block;
-        }
-
-        + .lineitem {
-            border-top: 0;
-            border-left: 1px solid $c-neutral4;
-        }
-    }
-    .lineitem__link {
-        width: 100%;
-    }
-    .lineitem__title {
-        white-space: nowrap;
-        clear: both;
-    }
-    .lineitem__img {
-        display: block;
-        margin-bottom: $gs-baseline;
-    }
-    .highitem__details {
-        margin-left: 110px;
-    }
-    .highitem__img {
-        width: 100px;
-    }
-}
-
-@include mq(desktop) {
-    .lineitem__title {
-        white-space: normal;
-    }
-}
-
-@include mq(leftCol) {
-    .commercial .container__title {
-        padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
-        float: left;
-    }
-}
-
-.commercial--v-high__body {
-    @include mq($until: mobileLandscape) {
-        .highitem__img {
-            width: 100px;
-            float: none;
-            margin-bottom: $gs-baseline/2;
-        }
-    }
-
-    @include mq(leftCol, wide) {
-        .highitem__img {
-            width: 100%;
-            float: none;
-            margin-bottom: $gs-baseline/2;
-        }
-    }
-}
-
-.commercial__home-link {
-    position: relative;
-    display: inline-block;
-    padding-left: map-get($commercial-cta-diameter, mobile)+5;
-    @include f-bodyHeading;
-    @include font-size(14, map-get($commercial-cta-diameter, tablet));
-
-    @include mq(tablet) {
-        padding-left: map-get($commercial-cta-diameter, tablet)+5;
-    }
-    .commercial__home-link__cta {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: map-get($commercial-cta-diameter, mobile);
-        height: map-get($commercial-cta-diameter, mobile);
-        margin-top: -(map-get($commercial-cta-diameter, mobile)/2)-1;
-        background-position: center;
-        background-color: $c-newsDefault;
-        @include border-radius(50%);
-        @include mq(tablet) {
-            width: map-get($commercial-cta-diameter, tablet);
-            height: map-get($commercial-cta-diameter, tablet);
-            margin-top: -(map-get($commercial-cta-diameter, tablet)/2);
-        }
-    }
-    .i {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin: -12px;
-
-        // resize only if it's using the svg
-        @include mq($until: tablet) {
-            .svg & {
-                width: 16px;
-                height: 16px;
-                margin: -8px;
-                background-size: contain;
+            .i {
+                margin-top: $gs-baseline/3;
             }
         }
     }
-    .commercial__home-link__pill {
-        padding: 4px 25px 4px 12px;
-        background-position: right;
-        background-color: $c-newsDefault;
-        @include border-radius(50%);
-        white-space: nowrap;
-        
-        .i {
-            left: auto;
-            right: 10px;
-            margin-top: -6px;
-            margin-right: auto;
+}
+@include mq(tablet) {
+    .commercial {
+        .commercial__search {
+            width: 40%;
+        }
+        .lineitem {
+            width: 20%;
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+            float: left;
+
+            &:nth-child(n+4) {
+                display: block;
+            }
+            + .lineitem {
+                border-top: 0;
+                border-left: 1px solid $c-neutral4;
+            }
+        }
+        .lineitem__link {
+            width: 100%;
+        }
+        .lineitem__title {
+            white-space: nowrap;
+            clear: both;
+        }
+        .lineitem__img {
+            display: block;
+            margin-bottom: $gs-baseline;
+        }
+        .highitem__details {
+            margin-left: 110px;
+        }
+        .highitem__img {
+            width: 100px;
+        }
+    }
+}
+@include mq(desktop) {
+    .commercial {
+        .lineitem__title {
+            white-space: normal;
+        }
+    }
+}
+@include mq(leftCol) {
+    .commercial {
+        .container__title {
+            padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
+            float: left;
+        }
+    }
+}
+.commercial {
+    .commercial--v-high__body {
+        @include mq($until: mobileLandscape) {
             
-            .svg & {
-                width: 12px;
-                height: 12px;
-                background-size: contain;
+            .highitem__img {
+                width: 100px;
+                float: none;
+                margin-bottom: $gs-baseline/2;
+            }
+        }
+        @include mq(leftCol) {
+            .highitem__img {
+                width: 100%;
+                float: none;
+                margin-bottom: $gs-baseline/2;
+            }
+        }
+    }
+}
+.commercial {
+    .commercial__home-link {
+        position: relative;
+        display: inline-block;
+        padding-left: map-get($commercial-cta-diameter, mobile)+5;
+        @include f-bodyHeading;
+        @include font-size(14, map-get($commercial-cta-diameter, tablet));
+
+        @include mq(tablet) {
+            padding-left: map-get($commercial-cta-diameter, tablet)+5;
+        }
+        .commercial__home-link__cta {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: map-get($commercial-cta-diameter, mobile);
+            height: map-get($commercial-cta-diameter, mobile);
+            margin-top: -(map-get($commercial-cta-diameter, mobile)/2)-1;
+            background-position: center;
+            background-color: $c-newsDefault;
+            @include border-radius(50%);
+            @include mq(tablet) {
+                width: map-get($commercial-cta-diameter, tablet);
+                height: map-get($commercial-cta-diameter, tablet);
+                margin-top: -(map-get($commercial-cta-diameter, tablet)/2);
+            }
+        }
+        .i {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -12px;
+
+            // resize only if it's using the svg
+            @include mq($until: tablet) {
+                .svg & {
+                    width: 16px;
+                    height: 16px;
+                    margin: -8px;
+                    background-size: contain;
+                }
             }
         }
     }

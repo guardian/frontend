@@ -1,18 +1,17 @@
 package model.commercial.money
 
-import model.commercial.{Segment, Ad}
 import scala.xml.Elem
 
 object SavingsAccounts {
 
   def currentAds: Map[String, Seq[SavingsAccount]] = Map(
-    "cash-isas" -> savingsAgent.CashIsas.currentAds,
-    "easy-access" -> savingsAgent.EasyAccess.currentAds,
-    "fixed-rate-bonds" -> savingsAgent.FixedRateBonds.currentAds,
-    "regular-savings" -> savingsAgent.RegularSavings.currentAds,
-    "childrens-accounts" -> savingsAgent.ChildrensAccounts.currentAds,
-    "notice-accounts" -> savingsAgent.NoticeAccounts.currentAds,
-    "offshore-accounts" -> savingsAgent.OffshoreAccounts.currentAds
+    "cash-isas" -> savingsAgent.CashIsas.available,
+    "easy-access" -> savingsAgent.EasyAccess.available,
+    "fixed-rate-bonds" -> savingsAgent.FixedRateBonds.available,
+    "regular-savings" -> savingsAgent.RegularSavings.available,
+    "childrens-accounts" -> savingsAgent.ChildrensAccounts.available,
+    "notice-accounts" -> savingsAgent.NoticeAccounts.available,
+    "offshore-accounts" -> savingsAgent.OffshoreAccounts.available
   )
 
 }
@@ -28,10 +27,6 @@ case class SavingsAccount(
                            minimumInvestment: Int,
                            transferIn: Boolean,
                            access: Map[String, Boolean])
-  extends Ad {
-
-  def isTargetedAt(segment: Segment): Boolean = true
-}
 
 
 trait SavingsApi extends MoneySupermarketApi[SavingsAccount] {

@@ -1,9 +1,8 @@
 @(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-@import common.Edition
-@import views.support.RenderClasses
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
+@import views.support.RenderClasses
 
 @if(faciaPage.collections.nonEmpty) {
     <div class="l-side-margins l-side-margins--layout-front">
@@ -18,30 +17,26 @@
             }
             role="main">
 
-            @if(faciaPage.hasPageSkin(Edition(request))) {
-                @fragments.commercial.pageSkin()
-            }
-
             @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
                 @collections.zipWithIndex.map{ case(block, index) =>
-                    @fragments.frontCollection(faciaPage, block, collections.size, index)
+                    @fragments.frontCollection(faciaPage, (block._1.config, block._2), collections.size, index, block._1.id)
                 }
             }
-
 
             <section class="facia-container__inner">
                 @defining(topTags(faciaPage.allItems).take(20)) { tags =>
                     @if(tags.nonEmpty) {
-                        <div class="facia-container__related-keywords">
-                            <div class="facia-container__related-keywords__body">
-                                @keywordList(tags, 5, "See also")
-                            </div>
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Trending topics</h2>
+                            @keywordList(tags, 5, "See also")
                         </div>
                     }
                 }
             </section>
 
+        @if(!faciaPage.isAdvertisementFeature) {
             @fragments.commercial.commercialComponent()
+        }
         </div>
     </div>
 }

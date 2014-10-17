@@ -13,20 +13,74 @@
     }
 }
 
-.fc-trail__count {
-    &:before {
-        @include icon(comment-light-grey, false);
-        width: 16px;
-        height: 16px;
-        content: '';
-        position: relative;
-        top: 3px;
-        float: left;
-        margin-right: 1px;
+.fc-trail__count:before {
+    @include icon(comment-light-grey, false);
+    width: 16px;
+    height: 16px;
+    content: '';
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 1px;
+}
+
+.fc-item__title--quoted {
+    .fc-item__link {
+        &:before {
+            @include icon(quote-grey, false);
+            content: '';
+            height: .8em;
+            width: 1em;
+            padding-right: .1em;
+        }
+    }
+
+    .tone-podcast--item & .fc-item__link {
+        &:before {
+            @include icon(quote-black, false);
+        }
+    }
+
+    .tone-feature--item & .fc-item__link {
+        &:before {
+            @include icon(quote-light-pink, false);
+        }
+    }
+
+    .tone-live--item & .fc-item__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
+    }
+
+    .tone-media--item & .fc-item__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
+    }
+
+    .tone-editorial--item & .fc-item__link {
+        &:before {
+            @include icon(quote-white, false);
+        }
     }
 }
 
-.tone-podcast {
+.tone-analysis--item,
+.tone-comment--item,
+.tone-dead--item,
+.tone-news--item {
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-black, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-black-large, false);
+    }
+}
+
+.tone-podcast--item,
+.tone-podcast--sublink {
     .fc-item__timestamp:before {
         @include icon(clock-white, false);
     }
@@ -41,9 +95,18 @@
         height: .75em;
         width: .95em;
     }
+
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-white, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-white-large, false);
+    }
 }
 
-.tone-media {
+.tone-media--item,
+.tone-media--sublink {
     .fc-item__timestamp:before {
         @include icon(clock-grey, false);
     }
@@ -53,26 +116,30 @@
     }
 }
 
-.fc-item--video {
-    .fc-item__title:before {
+.fc-item--video .fc-item__title,
+.fc-sublink--video .fc-sublink__link {
+    &:before {
         @include icon(video-icon, false);
         content: '';
         height: .75em;
-        width: 1.2em;
-        margin-right: 2px;
+        width: 1.1em;
+        margin-right: .3em;
     }
 }
 
-.fc-item--gallery {
-    .fc-item__title:before {
+.fc-item--gallery .fc-item__title,
+.fc-sublink--gallery .fc-sublink__link {
+    &:before {
         @include icon(camera-yellow-large, false);
         content: '';
-        height: .75em;
+        height: .72em;
         width: 1.2em;
+        margin-right: .1em;
     }
 }
 
-.tone-live {
+.tone-live--item,
+.tone-live--sublink {
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
@@ -82,21 +149,13 @@
     }
 }
 
-.tone-feature {
+.tone-feature--item,
+.tone-feature--sublink {
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
 
     .fc-trail__count:before {
         @include icon(comment-light-pink, false);
-    }
-}
-
-.tone-comment {
-    .fc-item__title:before {
-        @include icon(quote-grey, false);
-        content: '';
-        height: .8em;
-        width: 1em;
     }
 }

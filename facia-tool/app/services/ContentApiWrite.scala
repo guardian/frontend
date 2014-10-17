@@ -3,8 +3,8 @@ package services
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import frontsapi.model.Trail
-import model.{Snap, Config}
+import com.gu.facia.client.models.{CollectionConfig, TrailMetaData, Trail}
+import model.Snap
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
@@ -22,13 +22,14 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   metadata: Option[Map[String, JsValue]]
+                   metadata: Option[TrailMetaData]
                    )
 
   case class ContentApiPut(
                             `type`: String,
                             title: String,
                             groups: Seq[String],
+                            editorsPicks: Option[Seq[String]],
                             curatedContent: Seq[Item],
                             backfill: Option[String],
                             lastModified: String,
@@ -44,15 +45,15 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/$id")
 
-  def writeToContentapi(config: Config): Future[WSResponse] = {
+  def writeToContentapi(id: String, config: CollectionConfig): Future[WSResponse] = {
     import play.api.Play.current
     (for {
       username      <- Configuration.contentApi.write.username
       password      <- Configuration.contentApi.write.password
-      url           <- getCollectionUrlForWrite(config.id)
+      url           <- getCollectionUrlForWrite(id)
     } yield
     {
-      val contentApiPut = generateContentApiPut(config)
+      val contentApiPut = generateContentApiPut(id, config)
 
       val response = WS
         .url(url).withAuth(username, password, WSAuthScheme.NONE)
@@ -63,25 +64,26 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
           case 202 => ContentApiPutSuccess.increment()
           case _   => ContentApiPutFailure.increment()
         }
-        log.info(s"Successful Put for ${config.id} to content api with status ${r.status}: ${r.body}")
+        log.info(s"Successful Put for $id to content api with status ${r.status}: ${r.body}")
       }
       response.onFailure{case e =>
       ContentApiPutFailure.increment()
-        log.warn(s"Failure to put ${config.id} to content api with exception ${e.toString}")
+        log.warn(s"Failure to put $id to content api with exception ${e.toString}")
       }
       response
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  private def generateContentApiPut(config: Config): ContentApiPut = {
-    val maybeBlock = FaciaApi.getBlock(config.id)
+  def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
+    val maybeBlock = FaciaApi.getBlock(id)
 
     ContentApiPut(
-      config.collectionType.getOrElse(defaultCollectionType),
+      config.`type`.getOrElse(defaultCollectionType),
       config.displayName.orElse(maybeBlock.flatMap(_.displayName)).getOrElse(defaultTitle),
-      config.groups,
+      config.groups.getOrElse(Nil),
+      ConfigAgent.editorsPicksForCollection(id),
       maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
-      config.contentApiQuery,
+      config.apiQuery,
       maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
       maybeBlock map { _.updatedEmail } getOrElse { defaultEmail }
     )
@@ -89,7 +91,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.filterNot(t => Snap.isSnap(t.id)).map { trail =>
-      Item(trail.id, trail.meta.map(_.map(convertFields)))
+      Item(trail.id, trail.meta.map(trailMetaData => trailMetaData.copy(json = trailMetaData.json.map(convertFields))))
     }
 
   //TODO: These are in transition and will be removed

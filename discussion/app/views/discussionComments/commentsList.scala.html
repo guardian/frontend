@@ -1,77 +1,36 @@
 @(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
 <div
-    class="d-discussion d-discussion--not-staff @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
+    class="d-discussion @if(isTopComments){d-discussion--top-comments} d-discussion--not-staff @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
-    <div class="d-discussion__comment-count">
-        <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
-            @if(page.commentCount > 0){
-                @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
-            }
-        </div>
 
-        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item modern-visible">
-            View
-            <select class="d-discussion__order-control">
-                <option value="oldest" @if(page.orderBy == "oldest"){selected="selected"}>oldest</option>
-                <option value="newest" @if(page.orderBy == "newest"){selected="selected"}>newest</option>
-            </select>
-            first
-        </div>
-        <div class="d-discussion__meta d-dicussion__meta--sorting modern-hidden">
-            Sort comments
-            @defining(if(page.orderBy == "oldest") "newest" else "oldest"){ orderTo =>
-                <span class="modern-hidden">
-                    <a href="@LinkTo{/discussion/@orderTo/@page.id}">@orderTo</a>
-                </span>
+    @if(isTopComments) {
+        <ul class="d-top-comment-container d-top-comment-container--left">
+            @page.comments.zipWithIndex.filter(_._2 % 2 == 0).map { case (comment, i) =>
+                @fragments.topComment(comment, page.isClosedForRecommendation, false)
             }
-            first
-        </div>
-    </div>
-
-    <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
-    <div class="discussion-content js-discussion-content">
-        @if(!isTopComments){
-            <div class="d-discussion__pagination">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
-            </div>
-        }
-
-        @if(page.orderBy == "newest"){<div class="js-new-comments"></div>}
-        <ul class="d-thread d-thread--top-level">
-            @page.comments.map{ comment =>
-                @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
-            }
-            <li class="d-image-fade u-h"></li>
         </ul>
-        @if(page.orderBy == "oldest"){<div class="js-new-comments"></div>}
-
-        @if(!isTopComments){
-            <div class="d-discussion__pagination u-cf">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
-            </div>
-        }
-    </div>
-
-    @if(isTopComments){
-        <div class="show-more__container show-more__container--featured u-h">
-            <a class="js-show-more-top-comments d-discussion__show-more d-discussion__show-more--featured"
-                data-link-name="Show more featured comments"
-                data-remove="true"
-                href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
-                title="Show more featured comments">
-                <span class="d-discussion__show-more-button"><i></i></span>
-                <span class="d-discussion__show-more-text">Show more featured comments</span>
-            </a>
-        </div>
-    }else{
-        @fragments.reportComment()
+        <ul class="d-top-comment-container d-top-comment-container--right">
+            @page.comments.zipWithIndex.filter(_._2 % 2 == 1).map { case (comment, i) =>
+                @fragments.topComment(comment, page.isClosedForRecommendation, false)
+            }
+        </ul>
+        } else {
+        <ul class="d-thread d-thread--top-level">
+            @page.comments.map { comment =>
+                @fragments.comment(comment, page.isClosedForRecommendation, false)
+            }
+        </ul>
     }
-    <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
-    <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
+
     @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
-    <script type="text/template" id="tmpl-staff-badge">
-        <i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>
-    </script>
+
+    @if(!isTopComments) {
+    <div class="discussion__pagination discussion__pagination--bottom js-discussion-pagination">
+        @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
+    </div>
+    @fragments.reportComment()
+    }
+
 </div>

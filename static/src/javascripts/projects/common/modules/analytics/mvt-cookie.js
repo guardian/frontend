@@ -4,11 +4,10 @@ define([
     cookies
 ) {
     var MULTIVARIATE_ID_COOKIE = 'GU_mvt_id',
-        VISITOR_ID_COOKIE ='s_vi',
-        BROWSER_ID_COOKIE = 'bwid';
-
-    // Nice manageable range :)
-    var MAX_INT = 1000000;
+        VISITOR_ID_COOKIE = 's_vi',
+        BROWSER_ID_COOKIE = 'bwid',
+        // Nice manageable range :)
+        MAX_INT = 1000000;
 
     function generateMvtCookie() {
         if (!getMvtValue() || getMvtValue() > MAX_INT) {

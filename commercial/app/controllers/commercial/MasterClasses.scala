@@ -22,7 +22,7 @@ object MasterClasses extends Controller {
   private def renderMasterclasses(relevance: Relevance[MasterClass], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.adsTargetedAt(segment)).distinct match {
+        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.masterclassesTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case masterclasses => Cached(componentMaxAge) {
             format.result(relevance.view(masterclasses take 4))

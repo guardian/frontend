@@ -8,16 +8,16 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/mediator',
+    'common/utils/scroller',
 
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
-    'common/modules/discussion/activity-stream',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
-    'common/modules/discussion/top-comments',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
     bean,
     bonzo,
@@ -27,316 +27,251 @@ define([
     ajax,
     config,
     mediator,
+    scroller,
     DiscussionAnalytics,
     register,
     Component,
-    ActivityStream,
     DiscussionApi,
     CommentBox,
     Comments,
-    TopComments,
-    Id
+    Id,
+    userPrefs
 ) {
 
-/**
- * We have a few rendering hacks in here
- * We'll move the rendering to the play app once we
- * have the discussion stack up that can read cookies
- * This is true for the comment-box / signin / closed discussion
- * And also the premod / banned state of the user
- * @constructor
- * @extends Component
- */
 var Loader = function() {
     register.begin('discussion');
 };
 Component.define(Loader);
 
-/**
- * @type {Object.<string.string>}
- * @override
- */
-Loader.prototype.classes = {
-    commentsContainer: 'discussion__comments__container',
-    comments: 'discussion__comments',
-    commentBox: 'discussion__comment-box',
-    commentBoxBottom: 'discussion__comment-box--bottom',
-    topComments: 'discussion__comments--top-comments'
-};
+Loader.prototype.classes = { };
 
-/**
- * @type {string}
- * @override
- */
 Loader.prototype.componentClass = 'discussion';
-
-/** @type {Comments} */
 Loader.prototype.comments = null;
-
-/** @type {CommentBox} */
-Loader.prototype.commentBox = null;
-
-/** @type {CommentBox} */
-Loader.prototype.bottomCommentBox = null;
-
-/** @type {Object.<string.*>} */
 Loader.prototype.user = null;
 
-/**
- * @override
- * We need the user for comments
- * We also need them for the comment bar
- * So the flow is essentially:
- * 1. fetch user
- * 2. fetch comments
- * 3. render comment bar
- */
-Loader.prototype.ready = function() {
-    var self = this,
-        topCommentsElem = this.getElem('topComments'),
-        commentsContainer = this.getElem('commentsContainer'),
-        commentsElem = this.getElem('comments'),
-        commentId = this.getCommentIdFromHash();
+Loader.prototype.initTopComments = function() {
+
+    this.on('click', '.js-jump-to-comment', function(e) {
+        e.preventDefault();
+        this.removeState('truncated');
+        this.setState('loading');
+        scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+        var commentId = bonzo(e.currentTarget).data('comment-id');
+        this.comments.fetchComments({comment: commentId}).then(this.removeState.bind(this, 'loading'));
+    });
+
+    return ajax({
+        url: '/discussion/' + this.getDiscussionId() + '.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true,
+        data: { topComments: true }
+    }).then(
+        function render(resp) {
+            this.$topCommentsContainer.html(resp.html);
+            this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
+            if (this.topCommentCount !== 0) {
+                this.setState('has-top-comments');
+            }
+        }.bind(this)
+    );
+};
+
+Loader.prototype.initMainComments = function() {
+
+    var commentId = this.getCommentIdFromHash();
 
     if (commentId) {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.topComments = new TopComments({
-        discussionId: this.getDiscussionId()
-    });
+    var order = userPrefs.get('discussion.order') || this.getDiscussionClosed() ? 'oldest' : 'newest';
+    var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
-        commentId: commentId ? commentId : null,
-        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
-        state: 'partial'
+        order: order,
+        threading: threading
     });
 
-    this.topComments.fetch(topCommentsElem);
+    this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
 
-    this.comments.fetch(commentsElem).then(function() {
-        $('.discussion .preload-msg').addClass('u-h');
+    this.comments.on('rendered', function() {
+        var newPagination = $('.js-discussion-pagination', this.comments.elem).html();
+        $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
+    }.bind(this));
 
-        if (commentId || window.location.hash === '#comments') {
-            self.comments.removeState('shut');
+    this.setState('loading');
+    this.comments.fetchComments({comment: commentId}).then(function() {
+        this.removeState('loading');
+
+        if (!commentId && window.location.hash !== '#comments') {
+            this.setState('truncated');
         }
 
-        bonzo(commentsContainer).removeClass('modern-hidden');
-        self.initUnthreaded();
-
-        self.on('user:loaded', function() {
-            self.renderCommentBar();
-            if (self.user) {
-                self.comments.addUser(self.user);
+        this.on('user:loaded', function() {
+            this.initState();
+            this.renderCommentBar();
+            if (this.user) {
+                this.comments.addUser(this.user);
             }
         });
-        self.getUser();
+        this.getUser();
+    }.bind(this));
+};
+
+
+Loader.prototype.initToolbar = function() {
+
+    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span');
+    $orderLabel.text(this.comments.options.order);
+    this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.order = bonzo(e.currentTarget).data('order');
+        $orderLabel.text(this.comments.options.order);
+        userPrefs.set('discussion.order', this.comments.options.order);
+        this.setState('loading');
+        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
 
-    this.checkCommentsLoaded();
+    var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
+    $threadingLabel.text(this.comments.options.threading);
+    this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.threading = bonzo(e.currentTarget).data('threading');
+        $threadingLabel.text(this.comments.options.threading);
+        userPrefs.set('discussion.threading', this.comments.options.threading);
+        this.setState('loading');
+        this.comments.fetchComments().then(this.removeState.bind(this, 'loading'));
+    });
+};
 
+Loader.prototype.isOpenForRecommendations = function() {
+    return qwery('.d-discussion--recommendations-open', this.elem).length !== 0;
+};
+
+Loader.prototype.initRecommend = function() {
+    this.on('click', '.js-recommend-comment', function(e) {
+        if (this.user && this.isOpenForRecommendations()) {
+            var elem = e.currentTarget,
+                $el = bonzo(elem);
+
+            $el.removeClass('js-recommend-comment');
+
+            var id = elem.getAttribute('data-comment-id'),
+                result = DiscussionApi.recommendComment(id);
+
+            $el.addClass('d-comment__recommend--clicked');
+            return result.then(
+                $el.addClass.bind($el, 'd-comment__recommend--recommended')
+            );
+        }
+    });
+};
+
+Loader.prototype.ready = function() {
+
+    this.$topCommentsContainer = $('.js-discussion-top-comments');
+    this.toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
+
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function() {
+        this.removeState('truncated');
+    });
+
+    this.initTopComments();
+    this.initMainComments();
+    this.initToolbar();
     this.renderCommentCount();
+    this.initPagination();
+    this.initRecommend();
 
     DiscussionAnalytics.init();
 
     bean.on(window, 'hashchange', function() {
-        var commentId = self.getCommentIdFromHash();
+        var commentId = this.getCommentIdFromHash();
         if (commentId) {
-            self.comments.gotoComment(commentId);
+            this.comments.gotoComment(commentId);
         }
-    });
+    }.bind(this));
 
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
+    mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
+
+    mediator.on('module:clickstream:click', function(clickspec) {
+        if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+            this.removeState('truncated');
+        }
+    }.bind(this));
+
     register.end('discussion');
 };
 
-Loader.prototype.initUnthreaded = function() {
-    var self = this;
-    // Non threaded view
-    var $discussionContainer = $('.js-discussion-container', this.elem),
-        $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
-        $loader = $('.d-discussion__loader--comments', this.elem),
-        $state = $('.discussion__show-threaded-state', this.elem);
-
-    this.on('click', '.js-show-threaded', function(e) {
-        var $el = bonzo(e.currentTarget);
-
-        $state.toggleClass('u-h');
-        $nonThreadedContainer.toggleClass('u-h');
-        $discussionContainer.toggleClass('u-h');
-
-        if (!$el.data('loaded')) {
-            var activityStream = new ActivityStream();
-
-            $el.data('loaded', true);
-            $loader.removeClass('u-h');
-            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
-            activityStream
-                .fetch($nonThreadedContainer[0])
-                .then(function() {
-                    $loader.addClass('u-h');
-                });
-        }
-    });
-
-    this.on('click', '.js-comment-permalink', function(e) {
-        var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
-        e.preventDefault();
-        $nonThreadedContainer.addClass('u-h');
-        $state.removeClass('u-h');
-        self.comments.showHiddenComments();
-
-        if (promise) {
-            $loader.removeClass('u-h');
-            promise.then(function() {
-                $loader.addClass('u-h');
-                $discussionContainer.removeClass('u-h');
-            });
-        } else {
-            $discussionContainer.removeClass('u-h');
-        }
-    });
-};
-
-/** @return {Reqwest|null} */
 Loader.prototype.getUser = function() {
-    var self = this;
-
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
-            self.user = resp.userProfile;
-            self.emit('user:loaded');
-        });
+            this.user = resp.userProfile;
+            this.emit('user:loaded');
+        }.bind(this));
     } else {
-        self.emit('user:loaded');
+        this.emit('user:loaded');
     }
 };
 
-Loader.prototype.renderReadOnly = function() {
-    this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--closed">'+
-            '<b>We’re doing some maintenance right now.</b>'+
-            ' You can still read comments, but please come back later to add your own.'+
-        '</div>';
+Loader.prototype.isCommentable = function() {
+    // not readonly, not closed and user is signed in
+    var userCanPost = this.user && this.user.privateFields && this.user.privateFields.canPostComment;
+    return userCanPost && !this.comments.isReadOnly() && !this.getDiscussionClosed();
 };
 
-/** TODO: This logic will be moved to the Play app renderer */
-Loader.prototype.renderDiscussionClosedMessage = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
+Loader.prototype.initState = function() {
+    if (this.getDiscussionClosed()) {
+        this.setState('closed');
+    } else if (this.comments.isReadOnly()) {
+        this.setState('readonly');
+    } else if (Id.getUserFromCookie()) {
+        if (this.user && this.user.privateFields && !this.user.privateFields.canPostComment) {
+            this.setState('banned');
+        } else {
+            this.setState('open');
+        }
+    } else {
+        this.setState('open');
+    }
 };
 
-/** TODO: This logic will be moved to the Play app renderer */
-Loader.prototype.renderSignin = function() {
-    var url = Id.getUrl() +'/{1}?returnUrl='+ window.location.href;
-    this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--signin">Open for comments. <a class="u-underline" href="'+
-            url.replace('{1}', 'signin') +'">Sign in</a> or '+
-            '<a class="u-underline" href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
-            'to join the discussion.'+
-        '</div>';
-};
-
-/**
- * If discussion is closed -> render closed
- * If not signed in -> render signin,
- * Else render comment box
- */
 Loader.prototype.renderCommentBar = function() {
-    if (this.comments.isReadOnly()) {
-        this.renderReadOnly();
-    } else if (this.getDiscussionClosed()) {
-        this.renderDiscussionClosedMessage();
-    } else if (!Id.getUserFromCookie()) {
-        this.renderSignin();
-    } else {
-        this.renderCommentBox();
-        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
-        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
+    if (this.isCommentable()) {
+        this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
+        this.comments.on('first-load', this.renderCommentBox.bind(this, qwery('.js-discussion-comment-box--bottom')[0]));
     }
 };
 
-/**
- * TODO: This logic will be moved to the Play app renderer
- */
-Loader.prototype.renderCommentBox = function() {
-    // If this privateFields aren't there,
-    // they're not the right person
-    // More a sanity check than anything
-    if (!this.user.privateFields) { // not signed in
-        this.renderSignin();
-    } else if (!this.user.privateFields.canPostComment) { // signed in but can't post
-        this.renderUserBanned();
-    } else { // signed in and can post
-        this.commentBox = new CommentBox({
-            discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated
-        });
-        this.commentBox.render(this.getElem('commentBox'));
-
-        this.commentBox.on('post:success', this.commentPosted.bind(this));
-    }
-};
-
-/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
 Loader.prototype.commentPosted = function () {
+    this.removeState('truncated');
     this.comments.addComment.apply(this.comments, arguments);
-
-    // Should more comments be shown?
-    if (!this.firstComment) {
-        this.firstComment = true;
-        this.comments.showHiddenComments();
-        this.cleanUpOnShowComments();
-    }
-
 };
 
-/* Configure DOM for viewing of comments once some have been shown */
-Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo(this.comments.getElem('header')).removeClass('u-h');
-};
-
-Loader.prototype.renderUserBanned = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-discussion__error d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
-};
-
-/**
- * This comment box is only rendered
- * When you load more comments
- */
-Loader.prototype.renderBottomCommentBox = function() {
-    if (this.bottomCommentBox) { return; }
-    this.bottomCommentBox = new CommentBox({
+Loader.prototype.renderCommentBox = function(elem) {
+    return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
-    });
-    this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
-    this.bottomCommentBox.on('post:success', function(comment) {
-        this.comments.addComment(comment, true);
-    }.bind(this));
+    }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
-/**
- * @return {string}
- */
 Loader.prototype.getDiscussionId = function() {
     return this.elem.getAttribute('data-discussion-key');
 };
 
-/**
- * @return {boolean}
- */
 Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-/**
- * TODO (jamesgorrie): Needs a refactor, good ol' copy and paste.
- */
 Loader.prototype.renderCommentCount = function() {
     ajax({
         url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
@@ -355,40 +290,32 @@ Loader.prototype.renderCommentCount = function() {
                                '  <i class="i"></i>' + commentCount +
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
+                    $('.js-comment-count').html(html);
 
-                    bonzo(qwery('.js-comment-count')).html(html);
+                    $('.js-discussion-comment-count').text('(' + commentCount + ')');
+                } else {
+                    this.setState('empty');
                 }
             }
-        }
+        }.bind(this)
     });
 };
 
-/**
- * @return {number}
- */
 Loader.prototype.getCommentIdFromHash = function() {
     var reg = (/#comment-(\d+)/);
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
-Loader.prototype.checkCount = 0;
-
-Loader.prototype.checkCommentsLoaded = function() {
-
-    // Limit the number of tries.
-    if (++this.checkCount > 10 ) {
-        return;
-    }
-
-    if (this.topComments.rendered && this.comments.rendered) {
-        if (this.topComments.topCommentsAmount > 0) {
-            this.comments.removeState('partial');
-            this.comments.setState('shut');
-        }
-    } else {
-        _.delay(this.checkCommentsLoaded.bind(this), 1000);
-    }
+Loader.prototype.initPagination = function() {
+    this.on('click', '.js-discussion-change-page', function(e) {
+        e.preventDefault();
+        var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+        this.setState('loading');
+        return this.comments.gotoPage(page).then(this.removeState.bind(this, 'loading'));
+    });
 };
+
+
 
 return Loader;
 

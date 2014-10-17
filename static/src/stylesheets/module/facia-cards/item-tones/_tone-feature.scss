@@ -1,26 +1,30 @@
-.tone-feature {
-    @extend %tone-background;
+.tone-feature--item {
+    @extend %tone-has-background;
+    background-color: $c-featureDefault;
 
-    &.fc-item {
-        background-color: $c-featureDefault;
-
-        &,
-        & a,
-        & .fc-item__standfirst {
-            color: #ffffff;
-        }
+    &,
+    .fc-sublink__title {
+        color: #ffffff;
     }
 
-    .fc-item__header {
-        font-weight: 400;
+    .fc-item__content,
+    &.fc-item--has-cutout .fc-item__container,
+    &.fc-item--list-media-mobile {
+        @include box-shadow(inset 0 1px $c-featureMute);
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
-        &,
-        & a {
-            color: $c-featureMute !important;
-        }
+    .fc-item__byline,
+    .fc-item__meta {
+        color: $c-featureMute;
+    }
+
+    .fc-item__kicker:after {
+        color: fade-out(#ffffff, .8);
+    }
+
+    .fc-item__standfirst {
+        color: fade-out(#ffffff, .2);
     }
 
     .fc-item__title .i {
@@ -30,9 +34,18 @@
         background-position: center;
     }
 
-    .fc-item__meta {
-        &,
-        & a {
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
+}
+
+.tone-feature--sublink {
+    .fc-sublink__kicker {
+        color: $c-featureDefault;
+    }
+
+    @include sublink-style(editorial, feature, live, media, review) {
+        .fc-sublink__kicker {
             color: $c-featureMute;
         }
     }
