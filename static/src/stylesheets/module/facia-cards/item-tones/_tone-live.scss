@@ -7,6 +7,13 @@
         color: #ffffff;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix(#ffffff, $c-liveDefault, 80%);
+        }
+    }
+
     .fc-item__content,
     &.fc-item--has-cutout .fc-item__container,
     &.fc-item--list-media-mobile {

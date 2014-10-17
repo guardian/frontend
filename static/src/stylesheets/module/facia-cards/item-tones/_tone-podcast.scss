@@ -7,6 +7,13 @@
         color: $c-neutral1;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-neutral1, $c-podcastBackground, 80%);
+        }
+    }
+
     .fc-item__content,
     &.fc-item--has-cutout .fc-item__container,
     &.fc-item--list-media-mobile {
