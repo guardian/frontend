@@ -4,7 +4,7 @@
 $popup-toggle-arrow-size: 4px;
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-popup-bg: #ffffff;
+$c-popup-bg: colour(neutral-8);
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -21,7 +21,7 @@ $control-offset: 36 + $gs-gutter/2;
     padding: 0;
     list-style: none;
     @include box-shadow(0 rem(1px 1px) 0 rgba(0, 0, 0, .25));
-    min-width: gs-span(2) + $gs-gutter * 3;
+    min-width: gs-span(2);
     top: $popup-top - 2;
 
     @include mq(mobileLandscape) {
@@ -45,7 +45,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__group {
-    z-index: 1;
+    z-index: 3;
     margin: 0;
     padding: 0 $gs-gutter/2;
 }
@@ -68,9 +68,12 @@ $control-offset: 36 + $gs-gutter/2;
     position: relative;
 }
 
-.popup__toggle {
+.popup-container {
     position: relative;
     z-index: 11;
+}
+
+.popup__toggle {
 
     // disclosure arrow
     &:after {
@@ -86,9 +89,6 @@ $control-offset: 36 + $gs-gutter/2;
         border-left: $popup-toggle-arrow-size solid transparent;
         border-right: $popup-toggle-arrow-size solid transparent;
         border-top: $popup-toggle-arrow-size solid $c-popup-bg;
-        @include mq($until: tablet) {
-            display: none;
-        };
     }
 
     &.is-active,
@@ -114,7 +114,7 @@ $control-offset: 36 + $gs-gutter/2;
             border-left: $popup-anchor-arrow-size solid transparent;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
-            top: $popup-top - $popup-anchor-arrow-size - $gs-baseline/2;
+            top: $popup-top - $popup-anchor-arrow-size;
 
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
@@ -137,14 +137,27 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+.l-header .popup__toggle {
+    &:after {
+        @include mq($until: tablet) {
+            display: none;
+        };
+    }
+}
 
 .popup__item {
     display: block;
-    border-bottom: 1px solid $c-neutral7;
+    border-bottom: 1px solid colour(neutral-5);
+    line-height: 36px;
 
     &:last-child {
         border-bottom: 0;
     };
+}
+
+.popup__item,
+.popup__action {
+    text-align: left;
 }
 
 .popup {

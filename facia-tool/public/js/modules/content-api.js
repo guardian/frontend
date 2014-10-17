@@ -131,8 +131,8 @@ function (
         });
     }
 
-    function populate(article, contentApiArticle) {
-        article.populate(contentApiArticle, true);
+    function populate(article, capiData) {
+        article.addCapiData(capiData);
     }
 
     function fetchContentByIds(ids) {

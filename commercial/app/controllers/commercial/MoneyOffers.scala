@@ -13,18 +13,10 @@ object MoneyOffers extends Controller {
     override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
       views.html.moneysupermarket.bestBuys(bestBuys)
   }
-  object lowRelevanceV2 extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuysV2(bestBuys)
-  }
 
   object highRelevance extends BestBuysRelevance {
     override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
       views.html.moneysupermarket.bestBuysHigh(bestBuys)
-  }
-  object highRelevanceV2 extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuysHighV2(bestBuys)
   }
 
   private def bestBuys(relevance: BestBuysRelevance, format: Format) = MemcachedAction { implicit request =>
@@ -38,11 +30,9 @@ object MoneyOffers extends Controller {
 
   def bestBuysLowHtml = bestBuys(lowRelevance, htmlFormat)
   def bestBuysLowJson = bestBuys(lowRelevance, jsonFormat)
-  def bestBuysLowJsonV2 = bestBuys(lowRelevanceV2, jsonFormat)
 
   def bestBuysHighHtml = bestBuys(highRelevance, htmlFormat)
   def bestBuysHighJson = bestBuys(highRelevance, jsonFormat)
-  def bestBuysHighJsonV2 = bestBuys(highRelevanceV2, jsonFormat)
 
   def savings(savingsType: String) = MemcachedAction { implicit request =>
     Future.successful {
