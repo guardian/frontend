@@ -20,18 +20,18 @@ define([
 
     var badgesConfig = {
             sponsored: {
-                count     : 0,
-                header    : 'Sponsored by:',
+                count:      0,
+                header:     'Sponsored by:',
                 namePrefix: 'sp'
             },
             'advertisement-feature': {
-                count     : 0,
-                header    : 'Brought to you by:',
+                count:      0,
+                header:     'Brought to you by:',
                 namePrefix: 'ad'
             },
             'foundation-supported': {
-                count     : 0,
-                header    : 'Supported by:',
+                count:      0,
+                header:     'Supported by:',
                 namePrefix: 'fo'
             }
         },
@@ -86,7 +86,7 @@ define([
                         container,
                         $container.data('sponsorship'),
                         {
-                            sponsor : $container.data('sponsor'),
+                            sponsor:  $container.data('sponsor'),
                             keywords: $container.data('keywords')
                         }
                     );
@@ -110,7 +110,7 @@ define([
                         container,
                         $container.data('sponsorship'),
                         {
-                            sponsor : $container.data('sponsor'),
+                            sponsor:  $container.data('sponsor'),
                             keywords: $container.data('keywords')
                         }
                     );
