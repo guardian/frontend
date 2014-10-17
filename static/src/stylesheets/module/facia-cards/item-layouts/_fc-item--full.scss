@@ -98,15 +98,4 @@ Full item. A 100% width version of the Three quarter item.
     .fc-item__avatar__media {
         right: -5%;
     }
-
-    &.item--has-discussion {
-        padding-bottom: get-line-height(headline, 3) + $gs-baseline / 3;
-        @include mq(desktop) {
-            padding-bottom: get-line-height(headline, 5) + $gs-baseline / 3;
-        }
-    }
-
-    &.item--has-no-discussion {
-        padding-bottom: $gs-baseline / 3;
-    }
 }

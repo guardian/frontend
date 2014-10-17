@@ -68,7 +68,7 @@ Media list item. Looks a bit like this:
     }
 
     .fc-item__media-wrapper {
-        position: absolute;
+        float: left;
         margin-left: 0 - $image-width;
         width: $image-width;
     }
@@ -104,14 +104,11 @@ Media list item. Looks a bit like this:
         }
     }
 
-    .fc-item__video-container { display: none; }
-    .fc-item__video-fallback { display: block; }
-
-    &.item--has-no-discussion {
-        padding-bottom: $gs-baseline / 3;
+    .fc-item__video-container {
+        display: none;
     }
 
-    &.item--has-discussion {
-        padding-bottom: get-line-height(headline, $headline-size) * 2;
+    .fc-item__video-fallback {
+        display: block;
     }
 }
