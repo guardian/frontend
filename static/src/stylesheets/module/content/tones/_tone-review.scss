@@ -1,0 +1,31 @@
+@include tone-content-icons(review, 'white');
+
+@include tone-content-head(
+    review, // $tone
+    darken($c-reviewBackground, 10%), // $tonal__header-background
+    $c-neutral6, // $tonal__header-text
+    $c-reviewAccent, // $tonal__header-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-reviewAccent, // $tonal__headline-accent
+    $c-reviewBackground, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff // $tonal__standfirst-link
+);
+
+@include tone-content-main(
+    review, // $tone
+    #ffffff, // $tonal__article-background
+    darken($c-reviewBackground, 10%) // $tonal__article-link
+);
+
+.tonal--tone-review {
+    // Review stars
+    @include stars($width: 18px, $margin-top: -($gs-baseline * 1.5), $margin-bottom: $gs-baseline * 1.5, $margin-right: 2px);
+
+    .stars {
+        @include mq(tablet) {
+            margin-top: -($gs-baseline * 2.5);
+        }
+    }
+}

@@ -39,7 +39,7 @@
         }
     }
 
-    @include sublink-style(analysis, comment, dead, news) {
+    @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
             color: $c-neutral1;
         }
