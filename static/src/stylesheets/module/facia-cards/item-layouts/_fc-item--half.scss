@@ -105,10 +105,6 @@ x x x x x x x x x x x x x x x x x x
         @include flex-basis(auto);
     }
 
-    .fc-sublink:nth-child(n+3) {
-        display: none;
-    }
-
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-small-button-size);
 

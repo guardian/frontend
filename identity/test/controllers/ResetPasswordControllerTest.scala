@@ -22,7 +22,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val trackingData = mock[TrackingData]
   val authenticationService = mock[AuthenticationService]
-  val identityRequest = IdentityRequest(trackingData, None, Some("123.456.789.10"))
+  val identityRequest = IdentityRequest(trackingData, None, Some("123.456.789.10"), Some(false))
 
   val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder, authenticationService)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)

@@ -201,6 +201,8 @@ Loader.prototype.ready = function() {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
+    mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
+
     mediator.on('module:clickstream:click', function(clickspec) {
         if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
             this.removeState('truncated');

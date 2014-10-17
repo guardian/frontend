@@ -172,7 +172,7 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
-    if (this.options.threading === 'collapsed') {
+    if (!options.comment && this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
     }
 

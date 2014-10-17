@@ -117,12 +117,13 @@ h1 {
     position: absolute;
     top: 60px;
     left: 20px;
+    color: #999999;
 }
 
 .front-priorities--priority {
     display: block;
-    font-size: 17px;
-    padding: 10px 0 0 0;
+    font-size: 18px;
+    padding: 15px 0 0 0;
 }
 
 .finder__controls {

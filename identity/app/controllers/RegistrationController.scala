@@ -40,7 +40,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     )
   )
 
-  def renderForm(returnUrl: Option[String]) = Action { implicit request =>
+  def renderForm(returnUrl: Option[String], skipConfirmation: Option[Boolean]) = Action { implicit request =>
     logger.trace("Rendering registration form")
 
     val idRequest = idRequestParser(request)
@@ -60,10 +60,11 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     val boundForm = registrationForm.bindFromRequest
     val trackingData = idRequest.trackingData
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+    var skipConfirmation = idRequest.skipConfirmation
 
     def onError(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]): Future[Result] = {
       logger.info("Invalid registration request")
-      Future.successful(redirectToRegistrationPage(formWithErrors, verifiedReturnUrlAsOpt))
+      Future.successful(redirectToRegistrationPage(formWithErrors, verifiedReturnUrlAsOpt, skipConfirmation))
     }
 
     def onSuccess(form: (String, String, String, String, String, Boolean, Boolean)): Future[Result] = form match {
@@ -80,7 +81,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
               }
             }
             formWithError.fill(firstName, secondName, email,username,"",thirdPartyMarketing,gnmMarketing)
-            Future.successful(redirectToRegistrationPage(formWithError, verifiedReturnUrlAsOpt))
+            Future.successful(redirectToRegistrationPage(formWithError, verifiedReturnUrlAsOpt, skipConfirmation))
 
           case Right(usr) =>
             val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
@@ -90,9 +91,12 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                 NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url))
 
               case Right(responseCookies) =>
-                NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url)).withCookies(responseCookies:_*)
+                if (skipConfirmation.getOrElse(false)) {
+                  Redirect(verifiedReturnUrl).withCookies(responseCookies:_*)
+                } else {
+                  NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url)).withCookies(responseCookies:_*)
+                }
             }
-
             response
         }
         result
@@ -102,8 +106,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   }
 
   private def redirectToRegistrationPage(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)],
-                                         returnUrl: Option[String]) = NoCache(
-    SeeOther(routes.RegistrationController.renderForm(returnUrl).url).flashing(
+                                         returnUrl: Option[String], skipConfirmation: Option[Boolean]) = NoCache(
+    SeeOther(routes.RegistrationController.renderForm(returnUrl, skipConfirmation).url).flashing(
       clearPassword(formWithErrors).toFlash
     )
   )

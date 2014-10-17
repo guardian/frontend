@@ -31,7 +31,6 @@ define([
  * @param {Object=} options
  */
 function CommentBox(options) {
-    this.mediator = mediator;
     this.setOptions(options);
 
     mediator.on('module:identity:validation-email:success', this.verificationEmailSuccess.bind(this));
@@ -272,7 +271,7 @@ CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     this.resetPreviewComment();
     this.setFormState();
     this.emit('post:success', comment);
-    this.mediator.emit('discussion:commentbox:post:success', comment);
+    mediator.emit('discussion:commentbox:post:success', comment);
 };
 
 /**
