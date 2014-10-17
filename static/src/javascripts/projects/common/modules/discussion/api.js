@@ -27,7 +27,7 @@ Api.init = function(config) {
         Api.root = config.page.discussionApiRoot;
     }
     Api.clientHeader = config.page.discussionApiClientHeader;
-    mediator.emit("discussion:api:ready");
+    mediator.emit('discussion:api:ready');
 };
 
 /**
