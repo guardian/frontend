@@ -21,7 +21,8 @@ function (
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
             capiId = urlAbsPath(item.id()),
-            data = cache.get('contentApi', capiId);
+            data = cache.get('contentApi', capiId),
+            isFromGuardian;
 
         if (snapId) {
             item.id(snapId);
@@ -37,7 +38,14 @@ function (
             defer.resolve(item);
 
         } else {
-            fetchContentById(capiId)
+            isFromGuardian = urlHost(item.id()) === 'www.theguardian.com';
+
+            // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
+            if (isFromGuardian && capiId.match(/\+/)) {
+                capiId = 'search?tag=' + capiId.split(/\+/).join(',');
+            }
+
+            fetchContent(capiId)
             .done(function(results) {
                 var capiItem,
                     icc,
@@ -64,7 +72,7 @@ function (
                     err = 'Sorry, that\'s not a valid URL';
 
                 // A snap, but a link to unavailable guardian content
-                } else if (urlHost(item.id()) === 'www.theguardian.com' && results.length === 0) {
+                } else if (isFromGuardian && results.length === 0) {
                     err = 'Sorry, that Guardian content is unavailable';
 
                 // A snap, but snaps can only be created to the Clipboard
@@ -146,10 +154,6 @@ function (
         } else {
             return $.Deferred().resolve([]);
         }
-    }
-
-    function fetchContentById(id) {
-        return fetchContent(id + '?' + vars.CONST.apiSearchParams);
     }
 
     function fetchContent(apiUrl) {

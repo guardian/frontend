@@ -10,6 +10,7 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
   def apply(request: RequestHeader): IdentityRequest = {
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val ip = clientIp(request)
+    val skipConfirmation = request.getQueryString("skipConfirmation").map(_ == "true")
     IdentityRequest(
       TrackingData(
         returnUrl,
@@ -20,9 +21,10 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
         request.headers.get("User-Agent")
       ),
       returnUrl,
-      ip
+      ip,
+      skipConfirmation
     )
   }
 }
 
-case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String])
+case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean])
