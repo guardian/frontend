@@ -54,7 +54,7 @@ define([
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
             popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
 
-        if (popularInTags) {
+        if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
         }
     };
