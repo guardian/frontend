@@ -89,28 +89,28 @@
                                             }
                                         }
                                     }
-
-                                    @fragments.contentMeta(media)
-
-                                    @defining(media match {
-                                        case v: Video => v.standfirst.getOrElse("").length > 350
-                                        case a: Audio => a.body.getOrElse("").length > 800
-                                    }) { breakIntoLeftCol =>
-                                        <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
-                                            @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                                                <div class="submeta" data-link-name="keywords">
-                                                    <h2 class="submeta__head">Topics</h2>
-                                                    @fragments.keywordList(media.keywords, tone = Some("media"))
-                                                </div>
-                                            }
-                                            <div class="submeta hide-from-leftcol" data-component="share">
-                                                <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                                                @fragments.social(media, iconModifier = "white")
-                                            </div>
-
-                                        </div>
-                                    }
                                 </div>
+
+                                @fragments.contentMeta(media)
+
+                                @defining(media match {
+                                    case v: Video => v.standfirst.getOrElse("").length > 350
+                                    case a: Audio => a.body.getOrElse("").length > 800
+                                }) { breakIntoLeftCol =>
+                                    <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
+                                        @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                            <div class="submeta" data-link-name="keywords">
+                                                <h2 class="submeta__head">Topics</h2>
+                                                @fragments.keywordList(media.keywords, tone = Some("media"))
+                                            </div>
+                                        }
+                                        <div class="submeta hide-from-leftcol" data-component="share">
+                                            <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                                            @fragments.social(media, iconModifier = "white")
+                                        </div>
+
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

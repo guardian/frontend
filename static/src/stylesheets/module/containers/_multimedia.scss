@@ -1,6 +1,14 @@
 .container--multimedia {
     margin-bottom: 0;
 
+    .submeta {
+        border-color: $c-neutral2;
+    }
+
+    .submeta__head {
+        color: $c-neutral7;
+    }
+
     .item {
         margin-bottom: 0;
     }
