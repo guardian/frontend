@@ -2,7 +2,7 @@
     position: relative;
     @include box-sizing(border-box);
     padding-left: gs-span(1) - $gs-gutter/2;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline * 2;
 
     &:before {
@@ -24,6 +24,7 @@
     }
 
     @include mq(tablet) {
+        padding-top: $gs-baseline / 4;
         padding-bottom: 0;
         min-height: gs-height(2) - $gs-baseline;
 
@@ -41,7 +42,7 @@
     @include font($f-serif-headline, 200, 44px);
 
     @include mq(rightCol) {
-        top: ($gs-baseline/3) * 2;
+        top: $gs-baseline / 4;
     }
 }
 
@@ -49,6 +50,12 @@
     display: block;
     overflow: hidden;
     color: $c-neutral1;
+    @include fs-headline(2);
+    font-weight: 500;
+
+    .fc-item__title {
+        margin-top: -1 * ($gs-baseline / 3);
+    }
 
     &:visited {
         .headline-list__body,
@@ -73,8 +80,6 @@
 
 .headline-list__body {
     .fc-item__link & {
-        @include fs-headline(2);
-        font-weight: normal;
         color: $c-neutral1;
     }
 }
