@@ -1,22 +1,18 @@
 @(displayName: Option[String], href: Option[String], description: Option[String], tagId: String, isContributorsPage: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
+@import common.Localisation
 
 <div class="container__meta">
     @displayName.map { name =>
-        <h2 class="container__meta__label hide-on-mobile">@name</h2>
+        <h2 class="container__meta__label hide-on-mobile">@Localisation(name)</h2>
     }
     <dl class="container__meta__description">
-
-    @if(isContributorsPage) {
-        <dt class="container__meta__title tone-comment tone-colour">
-    } else {
-        <dt class="container__meta__title">
-    }
+        <dt class="container__meta__title@if(isContributorsPage) { tone-comment tone-colour}">
             @if(href) {
-                <a href="@LinkTo{/@href}" data-link-name="tag heading">@tagId</a>
+                <a href="@LinkTo{/@href}" data-link-name="tag heading">@Localisation(tagId)</a>
             } else {
-                @tagId
+                @Localisation(tagId)
             }
         </dt>
         @description.map { desc =>

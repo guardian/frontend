@@ -1,7 +1,10 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
+
+@import common.{LinkTo, Localisation}
 @import conf.Switches._
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
+@import views.BodyCleaner
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
