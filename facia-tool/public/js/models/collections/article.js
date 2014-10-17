@@ -697,7 +697,7 @@ define([
         ko.bindingHandlers.autoResize = {
             init: function(el) {
                 resize(el);
-                $(el).on('keydown', function() { resize(el); });
+                $(el).keydown(function() { resize(el); });
             }
         };
 
@@ -705,7 +705,7 @@ define([
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
                 var self = this;
 
-                $(el).on('keydown', function(e) {
+                $(el).keydown(function(e) {
                     var keyCode = e.keyCode || e.which,
                         formField,
                         formFields,
