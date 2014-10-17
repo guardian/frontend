@@ -4,14 +4,14 @@ import common.editions.Us
 import play.api.mvc.RequestHeader
 
 object Translation {
-  /** Helper functions for constructing translations */
+  /* Helper functions for constructing translations */
   def toLower(tuple: (String, Seq[Translation])) = {
     val (from, translations) = tuple
 
     (from.toLowerCase, translations.map(t => t.copy(get = t.get.toLowerCase)))
   }
 
-  def t(translations: (Edition, String)*) =
+  def becomes(translations: (Edition, String)*) =
     translations.map((Translation.apply _).tupled)
 }
 
@@ -30,14 +30,14 @@ object Localisation {
   import Translation._
 
   val caseInsensitive = Seq(
-    ("Film", t((Us, "Movies"))),
-    ("Football", t((Us, "Soccer")))
+    ("Film", becomes((Us, "Movies"))),
+    ("Football", becomes((Us, "Soccer")))
   )
 
   val caseSensitive = Seq(
-    ("in film", t((Us, "in movies"))),
-    ("in football", t((Us, "in soccer"))),
-    ("Football news, match reports and fixtures", t((Us, "Soccer news, match reports and fixtures")))
+    ("in film", becomes((Us, "in movies"))),
+    ("in football", becomes((Us, "in soccer"))),
+    ("Football news, match reports and fixtures", becomes((Us, "Soccer news, match reports and fixtures")))
   )
 
   val all = (caseInsensitive ++ caseInsensitive.map(toLower) ++ caseSensitive).toMap
