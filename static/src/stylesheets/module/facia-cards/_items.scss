@@ -26,6 +26,10 @@
         &.l-list__item {
             margin-bottom: 0;
             padding-bottom: $gs-baseline;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
         }
     }
 
