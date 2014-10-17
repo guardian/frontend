@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut, CardStyle}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
@@ -22,7 +22,7 @@
                 data-discussion-closed="@trail.isClosedForComments"
                 data-discussion-inline-upgrade="true"
             }
-            data-link-name="trail | @{index + 1}"
+            data-link-name="trail | @CardStyle(trail).toneString | @{index + 1}"
             @SnapData(trail)>
 
             <div class="fc-item__container">
