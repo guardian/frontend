@@ -66,7 +66,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "football" => "football.css"
         case "commercial" => "commercial.css"
         case "index" => "index.css"
-        case default => "default.css"
+        case "content" => "content.css"
       }
       val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
 
@@ -87,7 +87,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "football" => "stylesheets/old-ie.head.football.css"
         case "commercial" => "stylesheets/old-ie.head.commercial.css"
         case "index" => "stylesheets/old-ie.head.index.css"
-        case _ => "stylesheets/old-ie.head.default.css"
+        case _ => "stylesheets/old-ie.head.content.css"
       }
     }
     private def cssIE9(project: String): String = {
@@ -97,7 +97,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "football" => "stylesheets/ie9.head.football.css"
         case "commercial" => "stylesheets/ie9.head.commercial.css"
         case "index" => "stylesheets/ie9.head.index.css"
-        case _ => "stylesheets/ie9.head.default.css"
+        case _ => "stylesheets/ie9.head.content.css"
       }
     }
   }
