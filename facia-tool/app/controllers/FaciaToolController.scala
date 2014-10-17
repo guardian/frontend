@@ -13,6 +13,10 @@ import tools.FaciaApi
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
+  def multiPane(panes: Int) = ExpiringActions.ExpiringAuthAction { request =>
+    Cached(60) { Ok(views.html.multipane(panes)) }
+  }
+
   def priorities() = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }

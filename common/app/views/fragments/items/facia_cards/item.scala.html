@@ -8,12 +8,13 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import Function.const
+@import layout.Sublinks
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes @if(!isList){js-snappable}"
+        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer, Sublinks.numberOfSublinks(trail, modifierClasses)) @modifierClasses.classes @if(!isList){js-snappable}"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -75,7 +76,7 @@
                     @meta(trail)
 
                     <div class="fc-item__footer--vertical" aria-hidden="true">
-                        @sublinks(trail.supporting)
+                        @sublinks(trail.supporting, modifierClasses)
                     </div>
                 </div>
 
@@ -86,7 +87,7 @@
                 }
 
                 <footer class="fc-item__footer--horizontal">
-                    @sublinks(trail.supporting)
+                    @sublinks(trail.supporting, modifierClasses)
                 </footer>
 
                 <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>

@@ -32,13 +32,6 @@ Media list item. Looks a bit like this:
         left: - $image-width;
     }
 
-    .fc-item__media-wrapper {
-        @include mq($until: tablet) {
-            margin: $gs-baseline / 3;
-            padding-left: $gs-baseline / 3;
-        }
-    }
-
     &.fc-item {
         padding-bottom: 0 !important;
     }
@@ -85,6 +78,10 @@ Media list item. Looks a bit like this:
         display: none;
     }
 
+    .fc-item__footer--vertical {
+        margin-left: 0 - $image-width;
+    }
+
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(2) + $gs-baseline;
@@ -101,6 +98,10 @@ Media list item. Looks a bit like this:
                 display: block;
                 right: - $gs-gutter;
             }
+        }
+
+        .fc-item__footer--vertical {
+            margin-left: 0;
         }
     }
 
