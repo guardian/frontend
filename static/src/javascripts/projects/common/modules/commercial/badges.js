@@ -29,7 +29,11 @@ define([
                 header    : 'Brought to you by:',
                 namePrefix: 'ad'
             },
-            'foundation-supported': { }
+            'foundation-supported': {
+                count     : 0,
+                header    : 'Supported by:',
+                namePrefix: 'fo'
+            }
         },
         addPreBadge  = function ($adSlot, header, sponsor) {
             if (sponsor) {

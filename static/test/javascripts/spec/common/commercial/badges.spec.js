@@ -98,10 +98,10 @@ define([
                         type: 'advertisement-feature',
                         name: 'adbadge1'
                     },
-//                    {
-//                        type: 'foundation-supported',
-//                        name: 'fobadge1'
-//                    }
+                    {
+                        type: 'foundation-supported',
+                        name: 'fobadge1'
+                    }
                 ].forEach(function (badge) {
 
                         it(
@@ -147,10 +147,10 @@ define([
                         type: 'advertisement-feature',
                         name: 'adbadge1'
                     },
-//                    {
-//                        type: 'foundation-supported',
-//                        name: 'fobadge1'
-//                    }
+                    {
+                        type: 'foundation-supported',
+                        name: 'fobadge1'
+                    }
                 ];
 
                 configs.forEach(function (badge) {
