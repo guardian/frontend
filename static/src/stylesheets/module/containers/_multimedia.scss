@@ -46,7 +46,7 @@
             }
         }
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 .item__title {

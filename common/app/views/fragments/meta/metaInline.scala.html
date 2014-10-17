@@ -1,8 +1,10 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
+@import common.{LinkTo, Localisation}
+
 <div class="content__labels">
     <div class="content__section-label">
-        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(Localisation(content.sectionName.toLowerCase))</a>
     </div>
 
     @if(content.isSeries) {

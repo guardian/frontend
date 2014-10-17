@@ -127,7 +127,7 @@
             display: none;
         }
 
-        @include mq(rightCol) {
+        @include mq(desktop) {
             position: absolute;
             top: 0;
             right: 0;

@@ -45,25 +45,19 @@ $left-column-wide: gs-span(3);
 // NB. If these change, please update javascripts/utils/detect.js to match
 
 $mq-breakpoints: (
-    mobile:  gs-span(4)  + $gs-gutter,   // 320px
-    tablet:  gs-span(9)  + $gs-gutter*2, // 740px
-    desktop: gs-span(12) + $gs-gutter*2, // 980px
-    wide:    gs-span(16) + $gs-gutter*2, // 1300px
-
-    // Tweakpoints
-    mobileLandscape: gs-span(6) + $gs-gutter, // 480px
-    phablet: gs-span(8) + $gs-gutter*2, // 660px
-
-    // Content
-    rightCol: gs-span(12) + $gs-gutter*2, // 980px
-    leftCol:  gs-span(14) + $gs-gutter*2, // 1140px
+    mobile:          gs-span(4)  + $gs-gutter,   // 320px
+    mobileLandscape: gs-span(6)  + $gs-gutter,   // 480px
+    phablet:         gs-span(8)  + $gs-gutter*2, // 660px
+    tablet:          gs-span(9)  + $gs-gutter*2, // 740px
+    desktop:         gs-span(12) + $gs-gutter*2, // 980px
+    leftCol:         gs-span(14) + $gs-gutter*2, // 1140px
+    wide:            gs-span(16) + $gs-gutter*2, // 1300px
 );
-
 
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, leftCol, wide);
 
 
 // Guss defaults overrides

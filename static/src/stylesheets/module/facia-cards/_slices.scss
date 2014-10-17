@@ -54,6 +54,16 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+.facia-slice--h-q_ql2-ql4 {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block !important;
+            }
+        }
+    }
+}
+
 // reduce type size on q-q-q-q slice if it follows another slice in the same container
 .facia-slice-wrapper + .facia-slice-wrapper {
     .facia-slice--q-q-q-q {
@@ -152,5 +162,41 @@ Hence why a greater depth of selector specificity is needed.
         .tabs__pane {
             width: (100% / 3) * 2;
         }
+    }
+}
+
+/**
+ * Commercial Nav lists
+ */
+
+.facia-slice--nav-list {
+    $alley: $gs-gutter * .5;
+
+    @include mq($until: tablet) {
+        @include columns($rule: true);
+    }
+
+    @include mq(tablet, desktop) {
+        @include columns($cols: 3, $gap: $alley, $rule: true);
+    }
+
+    @include mq(desktop) {
+        @include columns($cols: 4, $gap: $alley, $rule: true);
+    }
+}
+
+.facia-slice__item--nav-list {
+    display: block;
+}
+
+.facia-slice--nav-list--media {
+    $alley: $gs-gutter * .5;
+
+    @include mq($until: tablet) {
+        @include columns($rule: true);
+    }
+
+    @include mq(tablet) {
+        @include columns($cols: 3, $gap: $alley, $rule: true);
     }
 }

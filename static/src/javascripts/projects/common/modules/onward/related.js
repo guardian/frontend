@@ -8,7 +8,6 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
-    'common/modules/onward/history',
     'common/modules/ui/expandable',
     'common/modules/ui/images'
 ], function (
@@ -21,7 +20,6 @@ define([
     mediator,
     register,
     LazyLoad,
-    History,
     Expandable,
     images
 ) {

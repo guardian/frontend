@@ -99,7 +99,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile: '300,250|300,600'
+                    mobile: '300,250|300,251|300,600'
                 }
             },
             'right-small': {
@@ -119,7 +119,8 @@ define([
                 sizeMappings: {
                     mobile: '300,50',
                     'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
+                    tablet: '300,250',
+                    desktop: '300,1|300,250'
                 }
             },
             inline2: {
@@ -154,6 +155,9 @@ define([
         callbacks = {
             '300,251': function (e, $adSlot) {
                 new Sticky($adSlot.parent()[0], { top: 12 }).init();
+            },
+            '300,1': function (e, $adSlot) {
+                $adSlot.css('display', 'none');
             }
         },
 
