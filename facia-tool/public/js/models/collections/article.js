@@ -663,6 +663,7 @@ define([
         }
 
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
+            console.log('IMG: ' + imageSrc());
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
                     .done(function(width, height) {
