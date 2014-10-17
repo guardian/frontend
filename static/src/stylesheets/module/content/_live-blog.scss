@@ -97,10 +97,10 @@ $block-padding-right: $gs-gutter;
 }
 
 @include keyframes(live-pulse) {
-    0% {background-color: 1};
-    10% {background-color: .25};
-    40% {background-color: 1};
-    100% {background-color: 1};
+    0% {background-color: 1;}
+    10% {background-color: .25;}
+    40% {background-color: 1;}
+    100% {background-color: 1;}
 }
 
 .blog__live {
