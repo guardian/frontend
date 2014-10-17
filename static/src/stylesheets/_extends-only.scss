@@ -53,14 +53,13 @@
 }
 
 %u-responsive-ratio {
-    @include fix-aspect-ratio(5, 3); // 1
+    @include fix-aspect-ratio(5, 3);
 
     img,
     object,
     embed,
     iframe,
     video {
-        // 2
         width: 100%;
         height: 100%;
         position: absolute;
