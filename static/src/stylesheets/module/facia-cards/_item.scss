@@ -150,9 +150,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__live-indicator {
     color: $c-liveDefault;
-    font: inherit;
-    line-height: inherit;
-    
+
     .blog__live-icon {
         display: inline-block;
         margin: 0;
