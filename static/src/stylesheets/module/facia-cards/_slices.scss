@@ -155,6 +155,10 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+/**
+ * Commercial Nav lists
+ */
+
 .facia-slice--nav-list {
     $alley: $gs-gutter * .5;
 
@@ -185,8 +189,4 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet) {
         @include columns($cols: 3, $gap: $alley, $rule: true);
     }
-}
-
-.facia-slice__item--nav-list {
-    display: inline-block;
 }
