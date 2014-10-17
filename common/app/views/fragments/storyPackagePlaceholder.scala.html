@@ -1,6 +1,6 @@
 @(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
-@defining(Seq("related") ++ if(content.isAdvertisementFeature) Seq("container--advertisement-feature") else Nil) { classes =>
+@defining(Seq("related") ++ (if(content.isAdvertisementFeature) Seq("container--advertisement-feature") else Nil)) { classes =>
 
     @if(related.hasStoryPackage) {
         <aside class="@classes.mkString(" ") more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}" role="complementary">
