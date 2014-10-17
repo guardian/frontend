@@ -10,7 +10,6 @@ define([
     }
 
     function avatarify(el) {
-        console.log("avatarify")
         var container = bonzo(el),
             updating = bonzo(bonzo.create('<div class="is-updating"></div>')),
             avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />')),
