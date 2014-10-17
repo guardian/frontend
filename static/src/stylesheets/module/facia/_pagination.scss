@@ -78,21 +78,12 @@ $text-size:            14px;
 
     @include mq(tablet) {
         float: right;
-        width: gs-span(4);
+        width: gs-span(6);
     }
 }
 
 .pagination__legend {
     float: left;
-}
-
-%pagination-link {
-    @extend %icon-holder-circle;
-    @include box-sizing(border-box);
-    width: $pagination-item-size;
-    height: $pagination-item-size;
-    display: inline-block;
-    color: $c-neutral2;
 }
 
 .pagination__item {
@@ -105,40 +96,28 @@ $text-size:            14px;
  *     but most of them need one 1px indent so it looks nicer.
  */
 .pagination__action {
-    @extend %pagination-link;
-    font-weight: bold;
-    text-indent: 1px; /* [1] */
+    @include font-size($text-size, $pagination-item-size);
+    margin: 0;
+    color: $c-neutral2;
     border-color: transparent;
-
-    &:hover {
-        border-color: $c-neutral2;
-        color: $c-neutral2;
-    }
 
     &.is-active {
         color: #ffffff;
         background-color: $c-neutral2;
+        border-color: $c-neutral2;
     }
 }
 
 .pagination__action--static {
-    @extend %pagination-link;
-    border-color: $c-neutral2;
+    margin: 0;
     text-align: center;
 
-    i {
+    .i {
+        width: 6px;
         height: $text-size;
+        margin: 0;
         line-height: $text-size;
         vertical-align: middle;
-    }
-
-    @include mq(desktop) {
-        opacity: .6;
-
-        &:hover,
-        &:focus {
-            opacity: 1;
-        }
     }
 }
 .pagination__text {
