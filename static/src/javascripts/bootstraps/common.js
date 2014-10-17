@@ -440,10 +440,10 @@ define([
             }
         },
         ready = function () {
-            modules.initId();
             modules.initDiscussion();
             modules.loadFonts(navigator.userAgent);
             modules.initUserAdTargeting();
+            modules.initId();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
