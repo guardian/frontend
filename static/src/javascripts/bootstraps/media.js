@@ -13,7 +13,6 @@ define([
     'common/utils/mediator',
     'common/utils/preferences',
     'common/utils/url',
-    'common/modules/analytics/beacon',
     'common/modules/analytics/omnitureMedia',
     'common/modules/commercial/dfp',
     'common/modules/component',
@@ -32,7 +31,6 @@ define([
     mediator,
     preferences,
     urlUtils,
-    beacon,
     OmnitureMedia,
     dfp,
     Component,
@@ -91,28 +89,6 @@ define([
 
         initOmnitureTracking: function (player) {
             new OmnitureMedia(player).init();
-        },
-
-        bindDiagnosticsEvents: function (player) {
-            player.on(constructEventName('preroll:play', player), function () {
-                beacon.fire('/count/vps.gif');
-            });
-            player.on(constructEventName('preroll:end', player), function () {
-                beacon.fire('/count/vpe.gif');
-            });
-            player.on(constructEventName('content:play', player), function () {
-                beacon.fire('/count/vs.gif');
-            });
-            player.on(constructEventName('content:end', player), function () {
-                beacon.fire('/count/ve.gif');
-            });
-
-            // count the number of video starts that happen after a preroll
-            player.on(constructEventName('preroll:play', player), function () {
-                player.on(constructEventName('content:play', player), function () {
-                    beacon.fire('/count/vsap.gif');
-                });
-            });
         },
 
         bindPrerollEvents: function (player) {
@@ -342,7 +318,6 @@ define([
                             // preroll for videos only
                             if (mediaType === 'video') {
 
-                                modules.bindDiagnosticsEvents(player);
                                 player.fullscreener();
 
                                 // Init plugins
