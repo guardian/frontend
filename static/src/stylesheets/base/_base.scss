@@ -33,9 +33,6 @@ head {
     @include mq(tablet) {
         font-family: 'tablet';
     }
-    @include mq(rightCol) {
-        font-family: 'rightCol';
-    }
     @include mq(desktop) {
         font-family: 'desktop';
     }
@@ -55,9 +52,6 @@ body:after {
     }
     @include mq(tablet) {
         content: 'tablet';
-    }
-    @include mq(rightCol) {
-        content: 'rightCol';
     }
     @include mq(desktop) {
         content: 'desktop';

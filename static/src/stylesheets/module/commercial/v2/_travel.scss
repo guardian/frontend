@@ -19,7 +19,7 @@
                 display: none;
             }
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             &:nth-child(n+4) {
                 display: block;
             }
