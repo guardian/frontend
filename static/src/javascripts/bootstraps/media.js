@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'raven',
+    'lodash/collections/find',
     'lodash/functions/throttle',
     'lodash/objects/isFunction',
     'common/utils/$',
@@ -16,11 +17,13 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/commercial/dfp',
     'common/modules/component',
+    'common/modules/onward/history',
     'common/modules/ui/images'
 ], function (
     bean,
     bonzo,
     raven,
+    find,
     throttle,
     isFunction,
     $,
@@ -34,6 +37,7 @@ define([
     OmnitureMedia,
     dfp,
     Component,
+    history,
     images
 ) {
     var modules, ready,
@@ -56,7 +60,10 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop;
+        var pageHasBeenSeen = find(history.get(), function (historyItem) {
+            return (historyItem.id === '/' + config.page.pageId) && historyItem.count > 1;
+        });
+        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop && !pageHasBeenSeen;
     }
 
     function constructEventName(eventName, player) {
