@@ -8,7 +8,7 @@
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
-    class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
+    class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty) container--news"
     data-link-name="@FaciaComponentName(config, collection)"
     data-id="@FaciaComponentName(config, collection)"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
