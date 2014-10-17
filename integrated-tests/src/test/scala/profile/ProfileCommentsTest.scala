@@ -5,7 +5,6 @@ import driver.Driver
 import org.scalatest.tags.Retryable
 import org.scalatest.{FlatSpec, Matchers}
 
-
 @Retryable class ProfileCommentsTest extends FlatSpec with Matchers with Driver {
 
   "Profile pages" should "show user comments" in {
@@ -13,7 +12,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
     $("[itemtype='http://schema.org/UserComments']") should not be empty
     $("[itemtype='http://schema.org/Comment']") should not be empty
-
   }
 
   they should "show replies to user comments" in {
