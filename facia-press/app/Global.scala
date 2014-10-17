@@ -26,6 +26,7 @@ object Global extends GlobalSettings
     FaciaPressMetrics.FrontPressLiveSuccess,
     FaciaPressMetrics.FrontPressCronSuccess,
     FaciaPressMetrics.FrontPressCronFailure,
+    GaugeMetric("content-api-calls", "Total number of Content API calls", () => ContentApiMetrics.ElasticHttpTimingMetric.getCount),
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
     ContentApiMetrics.ContentApi404Metric,
