@@ -36,7 +36,7 @@
                     left: $gs-gutter/2;
                     top: 0;
                 }
-                
+
                 &.hide-cta-link {
                     display: none !important;
                 }
@@ -63,9 +63,9 @@
                     display: none;
                 }
             }
-            @include mq(rightCol) {
+            @include mq(desktop) {
                 width: percentage(1/4);
-                
+
                 &:nth-child(n+4) {
                     display: block;
                 }
@@ -82,7 +82,7 @@
                 }
             }
 
-            @include mq(rightCol) {
+            @include mq(desktop) {
                 .lineitem__image-crop {
                     width: 50%;
                     float: left;
@@ -93,7 +93,7 @@
         }
 
         &.commercial--items-dfp-3 {
-            @include mq(rightCol) {
+            @include mq(desktop) {
                 .lineitem {
                     width: percentage(1/3);
 

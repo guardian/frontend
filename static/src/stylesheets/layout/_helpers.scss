@@ -43,7 +43,7 @@
 .component--rhc {
     display: none;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
         margin-top: $gs-baseline * 3;
     }

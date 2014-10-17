@@ -17,7 +17,7 @@
     min-height: 200px;
     margin-bottom: $gs-baseline;
 
-    @include mq($until: rightCol) {
+    @include mq($until: desktop) {
         border-top: 1px dotted $c-mediaAccent2;
         padding-top: $gs-baseline;
 
@@ -30,7 +30,7 @@
         .gallery2__item--advert + & {
         }
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         padding-right: gs-span(3) + $gs-gutter;
         margin-bottom: $gs-baseline*3;
 
@@ -38,7 +38,7 @@
             margin-bottom: $gs-baseline*2;
         }
     }
-    @include mq(rightCol, leftCol) {
+    @include mq(desktop, leftCol) {
         &:first-child {
             margin-top: $gs-baseline*2;
         }
@@ -64,14 +64,14 @@
         padding-right: gs-span(2);
     }
 
-    @include mq(tablet, $until: rightCol) {
+    @include mq(tablet, $until: desktop) {
         padding-right: gs-span(3);
     }
 
-    @include mq($until: rightCol) {
+    @include mq($until: desktop) {
         margin-bottom: $gs-baseline*3;
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         @include fs-textSans(2, true);
         position: absolute;
         width: gs-span(3);
@@ -220,7 +220,7 @@
     }
 
     .content__standfirst {
-        @include mq(rightCol) {
+        @include mq(desktop) {
             padding-right: gs-span(3);
         }
     }

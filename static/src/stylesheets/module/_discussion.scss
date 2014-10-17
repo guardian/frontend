@@ -176,7 +176,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .content__repositioned-comments .content__main-column {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         max-width: none;
         margin-right: 25%;
     }
@@ -629,7 +629,7 @@ $comment-recommend-button-size: 19px;
     height: $comment-recommend-button-size;
     z-index: 1;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         min-width: 28px;
         text-align: center;
     }

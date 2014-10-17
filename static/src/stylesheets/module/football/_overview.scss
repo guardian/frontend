@@ -17,7 +17,7 @@
             width: 49.5%;
         }
 
-        @include mq(rightCol) {
+        @include mq(desktop) {
             width: 24.5%;
         }
 
@@ -107,7 +107,7 @@
 }
 
 .football-knockouts--has-spider {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: none;
     }
 }
@@ -198,7 +198,7 @@
         margin-left: 1px;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
     }
 }

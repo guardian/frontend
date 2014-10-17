@@ -14,19 +14,6 @@
         margin-top: $gs-baseline;
     }
 
-    @include mq(rightCol, desktop) {
-        .headline-list--large .headline-list__item {
-            &:first-child {
-                min-height: 0 !important;
-            }
-            &:nth-child(n+2):before {
-                height: 1px !important;
-            }
-            &:nth-child(4n):before {
-                height: 0 !important;
-            }
-        }
-    }
     @include mq($until: wide) {
         .headline-list {
             margin-left: ($gs-gutter/2) * -1;

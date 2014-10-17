@@ -121,9 +121,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val LiveBlogCacheTimeSwitch = Switch("Performance", "live-blog-cache-time",
-    "If this switch is on the live blog cache time will be 60s, otherwise it is 5s.",
-    safeState = On, sellByDate = never
+  val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
+    "If this switch is on then content will have a shorter cache time",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
   )
 
   // Commercial
@@ -431,7 +431,7 @@ object Switches extends Collections {
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    LiveBlogCacheTimeSwitch,
+    ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch
   )
 

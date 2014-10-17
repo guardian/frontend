@@ -10,6 +10,8 @@
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--list';
+@import 'item-layouts/fc-item--list-compact';
+@import 'item-layouts/fc-item--list-compact--media';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
 @import 'item-layouts/fc-item--full';
@@ -24,6 +26,10 @@
         &.l-list__item {
             margin-bottom: 0;
             padding-bottom: $gs-baseline;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
         }
     }
 
@@ -196,4 +202,13 @@
     @include mq(tablet) {
         @include fc-item--mega-full;
     }
+}
+
+// Commercial items
+.fc-item--list-compact {
+    @include fc-item--list-compact;
+}
+
+.fc-item--list-compact--media {
+    @include fc-item--list-compact--media;
 }

@@ -85,7 +85,7 @@ Loader.prototype.initMainComments = function() {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    var order = userPrefs.get('discussion.order') || this.getDiscussionClosed() ? 'oldest' : 'newest';
+    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     this.comments = new Comments({
