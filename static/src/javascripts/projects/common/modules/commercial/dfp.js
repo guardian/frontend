@@ -116,12 +116,16 @@ define([
                 }
             },
             inline1: {
-                sizeMappings: {
-                    mobile: '300,50',
-                    'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250',
-                    desktop: '300,1|300,250'
-                }
+                sizeMappings: globalConfig.switches.mobileMpu ?
+                    {
+                        mobile: '300,50|320,50|300,1|300,250'
+                    } :
+                    {
+                        mobile: '300,50',
+                        'mobile-landscape': '300,50|320,50',
+                        tablet: '300,250',
+                        desktop: '300,1|300,250'
+                    }
             },
             inline2: {
                 sizeMappings: {
