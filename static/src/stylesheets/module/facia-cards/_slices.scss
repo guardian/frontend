@@ -54,6 +54,16 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+.facia-slice--h-q_ql2-ql4 {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block !important;
+            }
+        }
+    }
+}
+
 // reduce type size on q-q-q-q slice if it follows another slice in the same container
 .facia-slice-wrapper + .facia-slice-wrapper {
     .facia-slice--q-q-q-q {
