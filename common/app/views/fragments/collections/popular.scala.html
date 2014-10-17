@@ -1,4 +1,6 @@
 @(popular: Seq[model.MostPopular], config: com.gu.facia.client.models.CollectionConfig)(implicit request: RequestHeader)
+
+@import common.Localisation
 @import views.support._
 @import views.html.fragments.items.elements.facia_cards.title
 
@@ -11,7 +13,7 @@
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                         <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
-                            <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(section.heading.stripPrefix("popular "))</a>
+                            <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Popular </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
                         </li>
                     }
                 </ol>

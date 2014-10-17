@@ -3,6 +3,7 @@
 @import common.LinkTo
 @import views.support.{ImgSrc, Item140, LatestUpdate, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
+@import common.Localisation
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
     <div class="fc-container__header js-container__header">
@@ -14,10 +15,10 @@
                     "tone-colour" -> isContributor))">
                     @href.map { href =>
                         <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
-                          @Html(title)
+                          @Html(Localisation(title))
                         </a>
                     }.getOrElse {
-                        <span class="u-text-hyphenate">@Html(title)</span>
+                        <span class="u-text-hyphenate">@Html(Localisation(title))</span>
                     }
 
                     @if(config.showDateHeader.exists(identity)) {
