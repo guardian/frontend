@@ -1,0 +1,17 @@
+/*
+
+Compact list item. Looks a bit like this:
+
+x x x x x x x x x x x x x x x x x x x x x x x
+
+ */
+
+@mixin fc-item--list-compact {
+    @include fs-bodyHeading(2);
+    padding-bottom: $gs-baseline;
+    display: block !important;
+
+    .fc-item__container {
+        display: block !important;
+    }
+}
