@@ -2,7 +2,7 @@
     pagination: Pagination,
     actionClass: Option[String] = None,
     showExtremes: Boolean = false,
-    showLegend: Boolean = true)(implicit request: RequestHeader)
+    showFull: Boolean = true)(implicit request: RequestHeader)
 @import model._
 @import common._
 
@@ -25,16 +25,18 @@
 
 @* don't show pagination if this is the only page *@
 @if(pagination.lastPage > 1) {
+    @if(showFull){
+    <div class="pagination pagination--full u-cf">
+        <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</span>
+    } else {
     <div class="pagination u-cf">
-
-        @if(showLegend){
-            <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</span>
-        }
+    }
 
         <ol class="u-unstyled pagination__list">
             @if(showExtremes){
                 @paginationPointer(pagination.previous.map(_ => 1), "first", page.url)
             }
+
             @paginationPointer(pagination.previous, "prev", page.url)
 
             @pagination.pages.map{ pageNum =>

@@ -47,9 +47,14 @@ $pagination-gutter:    ($pagination-height - $pagination-item-size) / 2;
 $text-size:            14px;
 
 .pagination {
+    width: auto;
     text-align: right;
     @include f-textSans;
     @include font-size($text-size, 48px);
+}
+
+.pagination--full {
+    width: 100%;
     border-top: 1px solid $c-neutral5;
 
     @include mq(leftCol) {
