@@ -12,13 +12,13 @@ define([
     $
     ) {
 
-    var truncateBlockShareIcons = function(blockShareEl){
+    var truncateBlockShareIcons = function (blockShareEl) {
         var truncated = qwery('> *', blockShareEl).slice(2);
         bonzo(truncated).addClass('u-h');
         $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
-    };
+    },
 
-    var initBlockSharing = function () {
+    initBlockSharing = function () {
         bean.on(document.body, 'click', '.js-blockshare-expand', function (e) {
             var expandButton = bonzo(e.currentTarget),
                 container = expandButton.parent()[0];
