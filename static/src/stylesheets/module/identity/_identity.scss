@@ -71,7 +71,7 @@
     }
 }
 .identity-title--public-profile {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         float: left;
         white-space: nowrap;
     }
@@ -212,7 +212,7 @@
         margin-top: 0;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         margin-top: $gs-baseline/2;
         float: right;
     }

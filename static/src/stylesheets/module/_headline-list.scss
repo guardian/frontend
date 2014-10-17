@@ -41,7 +41,7 @@
     color: $c-neutral4;
     @include font($f-serif-headline, 200, 44px);
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         top: $gs-baseline / 4;
     }
 }

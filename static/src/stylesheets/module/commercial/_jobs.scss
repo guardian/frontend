@@ -56,11 +56,11 @@
                 background-color: $c-newsDefault;
             }
         }
-   
+
         &:nth-child(2n+1) .commercial--jobs__sector__link {
             margin-right: $gs-gutter/2;
         }
-        
+
         &:nth-child(2n) .commercial--jobs__sector__link {
             margin-left: $gs-gutter/2;
         }
@@ -112,7 +112,7 @@
             margin-left: 0;
             display: none;
         }
-        
+
         &:nth-child(2) {
             padding-right: 0;
         }
@@ -175,7 +175,7 @@
         .commercial--jobs__class {
             padding-left: $gs-gutter/2;
             width: 25%;
-        
+
             &:nth-child(n+4) {
                 display: block;
             }
@@ -230,7 +230,7 @@
             width: 33%;
         }
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         .commercial__head {
             width: 25%;
             float: left;
@@ -249,8 +249,6 @@
                 display: block;
             }
         }
-    }
-    @include mq(desktop) {
         .commercial__home-link {
             left: $gs-gutter;
         }

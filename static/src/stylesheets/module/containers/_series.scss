@@ -24,7 +24,7 @@
             @include item--hide-tone-border;
         }
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 @include flex-grow(2);

@@ -106,7 +106,7 @@ $c-commercial-books-dark: #630d4c;
             float: none;
             width: 100%;
             margin-top: $gs-baseline*4;
-        }        
+        }
         .lineitem {
             position: relative;
             width: percentage(1/3);
@@ -155,7 +155,7 @@ $c-commercial-books-dark: #630d4c;
         .lineitem:first-child .lineitem__img {
             display: block;
         }
-        
+
         @include mq(tablet) {
             .commercial__body {
                 padding-left: $gs-gutter/2;
@@ -243,7 +243,7 @@ $c-commercial-books-dark: #630d4c;
 
 /* article */
 .facia-container--layout-content .commercial--books {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         .commercial__head {
             float: left;
             width: 25%;
@@ -253,7 +253,7 @@ $c-commercial-books-dark: #630d4c;
             padding-left: 0;
         }
     }
-    @include mq(rightCol, leftCol) {
+    @include mq(desktop, leftCol) {
         &.commercial--high .commercial__head {
             padding-right: 16px;
         }
@@ -277,5 +277,5 @@ $c-commercial-books-dark: #630d4c;
         .commercial__search {
             margin-top: 40px;
         }
-    }    
+    }
 }

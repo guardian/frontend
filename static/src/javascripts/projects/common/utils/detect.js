@@ -53,11 +53,6 @@ define([
                 width: 740
             },
             {
-                name: 'rightCol',
-                isTweakpoint: true,
-                width: 980
-            },
-            {
                 name: 'desktop',
                 isTweakpoint: false,
                 width: 980

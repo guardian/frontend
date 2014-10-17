@@ -73,25 +73,25 @@
     }
 
     .content__main-column--video {
-        @include mq(rightCol) {
+        @include mq(desktop) {
             min-height: gs-height(12);
         }
     }
     .content__secondary-column--media {
-        @include mq($until: rightCol) {
+        @include mq($until: desktop) {
             display: block;
             position: relative;
             width: 100%;
             max-width: gs-span(9);
             margin: $gs-baseline*2 auto 0;
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             padding-left: $gs-gutter/2;
             border-left: 1px solid $c-neutral2;
         }
     }
     .content__secondary-column--video {
-        @include mq(rightCol) {
+        @include mq(desktop) {
             height: auto;
         }
     }
@@ -205,7 +205,7 @@
                 border-right: 1px solid $c-neutral2;
             }
         }
-        @include mq(tablet, rightCol) {
+        @include mq(tablet, desktop) {
             width: 33.3%;
 
             &:nth-child(-n+3) {
@@ -218,7 +218,7 @@
                 border-right: 1px solid $c-neutral2;
             }
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             &:nth-child(-n+2) {
                 .item__container {
                     border-top: 0;
@@ -241,7 +241,7 @@
     @include mq($until: tablet) {
         margin-bottom: 0;
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         margin-bottom: 0;
     }
 }
@@ -250,19 +250,19 @@
         @include mq($until: tablet) {
             margin-bottom: 0;
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             margin-bottom: 0;
         }
     }
     .item:nth-child(4) {
-        @include mq(tablet, rightCol) {
+        @include mq(tablet, desktop) {
             display: none;
         }
     }
 }
 
 .content--video {
-    @include mq(tablet, rightCol) {
+    @include mq(tablet, desktop) {
         .content__meta-container {
             float: left;
             width: 404px; //Magic, as video items below are off grid at 33.3% width

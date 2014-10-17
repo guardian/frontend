@@ -4,7 +4,7 @@ $block-padding-right: $gs-gutter;
 /* Layout
    ========================================================================== */
 .content__main-column--liveblog {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         max-width: gs-span(8);
         margin-left: $right-column + $gs-gutter;
         margin-right: 0;
@@ -22,7 +22,7 @@ $block-padding-right: $gs-gutter;
     border-bottom: 0;
     padding-top: $gs-baseline/2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         border-top: 0;
         padding-top: 0;
         margin-left: -($right-column + $gs-gutter);
@@ -52,7 +52,7 @@ $block-padding-right: $gs-gutter;
     .byline {
         padding-right: 0;
 
-        @include mq(rightCol) {
+        @include mq(desktop) {
             padding-top: 0;
         }
     }
@@ -83,7 +83,7 @@ $block-padding-right: $gs-gutter;
         display: block;
         position: static;
 
-        @include mq(mobileLandscape, rightCol) {
+        @include mq(mobileLandscape, desktop) {
             position: absolute;
             right: 0;
             top: $gs-baseline/1.5;
@@ -503,7 +503,7 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .dropdown--key-events,
 .dropdown--live-feed {
-    @include mq($until: rightCol) {
+    @include mq($until: desktop) {
         margin-right: $gs-gutter*-1;
         margin-left: $gs-gutter*-1;
         padding-right: $gs-gutter;
@@ -512,7 +512,7 @@ $block-padding-right: $gs-gutter;
     }
 
     .dropdown__button {
-        @include mq($until: rightCol) {
+        @include mq($until: desktop) {
             background-color: #ffffff;
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
@@ -522,12 +522,12 @@ $block-padding-right: $gs-gutter;
             left: 0;
         }
 
-        @include mq(rightCol) {
+        @include mq(desktop) {
             display: none;
         }
 
         .blog__timeline & {
-            @include mq(rightCol) {
+            @include mq(desktop) {
                 display: block;
                 border-top: 0;
                 padding-top: 0;
@@ -545,12 +545,12 @@ $block-padding-right: $gs-gutter;
         position: relative;
         margin: 0;
 
-        @include mq($until: rightCol) {
+        @include mq($until: desktop) {
             background-color: $c-neutral8;
             padding: $gs-baseline 0;
         }
 
-        @include mq(rightCol) {
+        @include mq(desktop) {
             display: block !important; //Overrides JS active state
         }
     }
@@ -561,7 +561,7 @@ $block-padding-right: $gs-gutter;
 $timeline-width: 14px;
 
 .blog__timeline {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         &:before,
         &:after,
         .control {
@@ -588,7 +588,7 @@ $timeline-width: 14px;
 }
 
 .blog__timeline-container {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         @include transform(translateZ(0)); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
@@ -598,7 +598,7 @@ $timeline-width: 14px;
 .timeline {
     position: relative;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         margin-left: $timeline-width/2;
     }
 }
@@ -613,7 +613,7 @@ $timeline-width: 14px;
         border-bottom: 0;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
         overflow: visible;
         border-bottom: 0;
@@ -631,7 +631,7 @@ $timeline-width: 14px;
         text-decoration: none;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
         border-left: 1px solid $c-neutral5;
@@ -678,7 +678,7 @@ $timeline-width: 14px;
         display: none;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
         position: relative;
         top: ($gs-baseline/3)*-1;
@@ -694,7 +694,7 @@ $timeline-width: 14px;
         border-color: $c-neutral2;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: inline;
 
         .live-blog__key-event--selected & {
@@ -780,7 +780,7 @@ $timeline-width: 14px;
         margin-bottom: $gs-baseline;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         .tabs__container--multiple {
             background-color: $c-neutral8;
         }
@@ -834,7 +834,7 @@ $timeline-width: 14px;
     }
 }
 
-@include mq(rightCol) {
+@include mq(desktop) {
     .blog__left-col {
         position: absolute;
         top: 0;
