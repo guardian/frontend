@@ -303,7 +303,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
     /** When retrieving items from Content API, maximum number of items to request per concurrent request */
     lazy val frontPressItemSearchBatchSize = {
-      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 10)
+      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
       assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
       size
     }
