@@ -1,13 +1,13 @@
 @mixin tone-content-icons(
     $tone,
-    $tonal__header-icon) {
+    $tonal__head-icon) {
     .tonal__head--tone-#{$tone} {
         .commentcount i {
-            @extend %i-comment-tone-#{$tonal__header-icon};
+            @extend %i-comment-tone-#{$tonal__head-icon};
 
             @if $svg-support {
                 .svg & {
-                    @extend %svg-i-comment-tone-#{$tonal__header-icon};
+                    @extend %svg-i-comment-tone-#{$tonal__head-icon};
                 }
             }
         }
