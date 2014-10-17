@@ -14,6 +14,9 @@
             @faciaPage.sponsor.map { sponsor =>
                 data-sponsor="@sponsor"
             }
+            @faciaPage.sponsorshipType.map { sponsorshipType =>
+                data-sponsorship="@sponsorshipType"
+            }
             role="main">
 
             @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>

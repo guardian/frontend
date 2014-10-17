@@ -13,6 +13,9 @@
         @index.page.sponsor.map { sponsor =>
             data-sponsor="@sponsor"
         }
+        @index.page.sponsorshipType.map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
+        }
         role="main">
 
         @defining(getTagType(index.page)) { tagPage =>

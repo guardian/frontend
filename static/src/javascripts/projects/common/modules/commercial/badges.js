@@ -66,14 +66,14 @@ define([
                 return false;
             }
 
-            $('.js-sponsored-front').each(function (faciaContainer) {
-                var $faciaContainer = bonzo(faciaContainer);
+            $('.js-sponsored-front').each(function (front) {
+                var $front = bonzo(front);
 
                 createAdSlot(
-                    qwery('.container', faciaContainer)[0],
-                    $faciaContainer.data('sponsorship'),
+                    qwery('.container', front)[0],
+                    $front.data('sponsorship'),
                     {
-                        sponsor: $faciaContainer.data('sponsor')
+                        sponsor: $front.data('sponsor')
                     }
                 );
             });
