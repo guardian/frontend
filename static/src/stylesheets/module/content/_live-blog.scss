@@ -97,10 +97,10 @@ $block-padding-right: $gs-gutter;
 }
 
 @include keyframes(live-pulse) {
-    0% {background-color: #ffffff;}
-    10% {background-color: #df7787;}
-    40% {background-color: #ffffff;}
-    100% {background-color: #ffffff;}
+    0% {background-color: 1;}
+    10% {background-color: .25;}
+    40% {background-color: 1;}
+    100% {background-color: 1;}
 }
 
 .blog__live {
@@ -144,6 +144,19 @@ $block-padding-right: $gs-gutter;
         margin: 0;
         @include fs-textSans(2);
         font-weight: bold;
+    }
+
+    .blog__live-icon--red {
+        $size: 12px;
+        display: inline-block;
+        content: '';
+        background-color: $c-liveDefault;
+        width: $size;
+        height: $size;
+        margin-bottom: -1px;
+        margin-right: 3px;
+        @include border-radius(50%);
+        @include animation(live-pulse 2s infinite);
     }
 
     .block-time__absolute {
