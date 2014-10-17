@@ -42,8 +42,11 @@ function (
 
             // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
             if (isFromGuardian && capiId.match(/\+/)) {
-                capiId = 'search?tag=' + capiId.split(/\+/).join(',');
+                capiId = 'search?tag=' + capiId.split(/\+/).join(',') + '&';
+            } else {
+                capiId+= '?';
             }
+            capiId += vars.CONST.apiSearchParams;
 
             fetchContent(capiId)
             .done(function(results) {
