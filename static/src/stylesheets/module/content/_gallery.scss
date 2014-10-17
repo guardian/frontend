@@ -218,11 +218,4 @@
             }
         }
     }
-
-    .content__standfirst {
-        @include mq(rightCol) {
-            padding-right: gs-span(3);
-        }
-    }
-
 }

@@ -1,5 +1,4 @@
 .content--media {
-
     .byline,
     .content__dateline,
     .content__meta-container,
@@ -10,18 +9,6 @@
 
     .content__dateline {
         color: $c-neutral3;
-    }
-
-    .commentcount.tone-colour {
-        color: $c-mediaDefault;
-
-        &:hover {
-            color: $c-mediaDefault;
-        }
-
-        i {
-            @include icon(comment-tone-media);
-        }
     }
 
     .content__head__comment-count {

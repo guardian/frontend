@@ -1,5 +1,4 @@
 .content__main-column--media {
-
     @include mq(wide) {
         width: gs-span(9);
     }
@@ -18,8 +17,7 @@
 }
 
 .content--media {
-    background-color: $c-neutral1;
-    color: $c-neutral7;
+    //color: $c-neutral7;
 
     .byline {
         word-break: break-word;
@@ -27,46 +25,6 @@
 
         a {
             color: #ffffff;
-        }
-    }
-
-    .byline .tone-colour {
-        color: $c-neutral7;
-    }
-
-    .content__labels {
-        border-bottom-color: $c-neutral2;
-    }
-
-    .content__section-label__link {
-        color: $c-mediaDefault;
-    }
-
-    .content__series-label {
-        &:before {
-            color: fade-out($c-neutral3, .5);
-        }
-
-        .content__series-label__link {
-            color: $c-neutral3;
-        }
-    }
-
-    .content__standfirst {
-        color: $c-neutral5;
-
-        a {
-            color: $c-neutral5;
-        }
-
-        .u-underline {
-            border-color: $c-neutral3;
-
-            &:focus,
-            &:active,
-            &:hover {
-                border-color: $c-neutral8;
-            }
         }
     }
 
