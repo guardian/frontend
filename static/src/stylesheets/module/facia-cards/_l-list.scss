@@ -10,10 +10,6 @@
 .l-list__item {
     float: left;
 
-    &:last-child {
-        margin-bottom: 0;
-    }
-
     .has-flex-wrap & {
         @include flex-grow(0);
         @include flex-basis(100%);
