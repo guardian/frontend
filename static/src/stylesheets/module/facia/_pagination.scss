@@ -25,6 +25,9 @@ The user needs to view a subset of sorted data that is not easily displayed on o
             <span class="pagination__action is-active">5</span>
         </li>
         <li class="pagination__item">
+            <span class="pagination__text">...</span>
+        </li>
+        <li class="pagination__item">
             <a class="pagination__action" href="#">6</a>
         </li>
         <li class="pagination__item">
@@ -129,4 +132,7 @@ $pagination-gutter: ($pagination-height - $pagination-item-size) / 2;
             opacity: 1;
         }
     }
+}
+.pagination__text {
+    color: $c-neutral2;
 }

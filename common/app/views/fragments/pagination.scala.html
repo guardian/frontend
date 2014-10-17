@@ -51,6 +51,10 @@
                 @paginationPointer(if(pagination.currentPage == pagination.lastPage) None else Some(pagination.lastPage), "last", page.url)
             }
             @paginationPointer(pagination.next, "next", page.url)
+
+            <li class="pagination__item">
+                <span class="pagination__text">...</span>
+            </li>
         </ol>
     </div>
 }
