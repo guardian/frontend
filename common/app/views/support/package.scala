@@ -999,7 +999,8 @@ object GetClasses {
     Seq(
       "container" -> true,
       "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
+      "container--advertisement-feature" -> DfpAgent.isAdvertisementFeature(config),
+      "container--foundation-supported" -> DfpAgent.isFoundationSupported(config),
       "container--first" -> isFirst,
       "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {

@@ -10,7 +10,8 @@
                 "facia-container" -> true,
                 "facia-container--layout-front" -> true,
                 "facia-container--sponsored" -> faciaPage.isSponsored,
-                "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+                "facia-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
+                "facia-container--foundation-supported" -> faciaPage.isFoundationSupported))"
             data-link-name="Front | @request.path"
             @faciaPage.sponsor.map { sponsor =>
                 data-sponsor="@sponsor"
