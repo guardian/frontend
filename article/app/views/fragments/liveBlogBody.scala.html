@@ -9,113 +9,111 @@
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog" data-test-id="live-blog"
-        class="content content--liveblog blog @articleToneClass(article) @articleToneClass(article)--article section-@article.sectionName.toLowerCase"
+        class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-        <header class="content__head content__head--tonal">
+        <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
             @* UPPER HEADER *@
-            <div class="tone-background">
+            <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-
-                        <div class="content__labels">
-                            <div class="content__section-label">
-                                <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(Localisation(article.sectionName.toLowerCase))</a>
-                            </div>
-
-                            @fragments.meta.metaInline(article)
-                        </div>
-
+                        @fragments.meta.metaInline(article)
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                     </div>
                 </div>
             </div>
             @* LOWER HEADER *@
-            <div class="tone-background--accent content__head__lower">
+            <div class="tonal__standfirst u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-                        <div class="blog__last-updated-container">
-                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                        <div class="content__updated-container content__updated-container--liveblog">
+                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
 
-                        <div class="blog__meta-container">
-                            @fragments.meta.byline(article.byline, article)
-                            @fragments.meta.dateline(article.webPublicationDate, secondary = true)
-                            <div class="js-comment-count blog__comment-count"></div>
+                        @fragments.standfirst(article)
+
+                        <div class="content__meta-container content__meta-container--liveblog u-cf">
+                            <div class="media__img meta__image">
+                                @fragments.meta.bylineImage(article)
+                            </div>
+                            <div class="media__body meta__body">
+                                @fragments.meta.byline(article.byline, article)
+                                @fragments.meta.dateline(article.webPublicationDate, secondary = true)
+                                <div class="content__head__comment-count js-comment-count content__head__comment-count--liveblog"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div class="gs-container">
-            <div class="content__main-column content__main-column--liveblog">
+        <div class="tonal__main tonal__main--@articleToneClass(article)">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--liveblog">
+                    <div class="js-cricket-score js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
 
-                @fragments.standfirst(article)
+                    @fragments.mainMedia(article)
 
-                <div class="js-cricket-score js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
+                    @fragments.witnessCallToAction(article)
 
-                @fragments.mainMedia(article)
+                    <div class="blog__left-col">
 
-                @fragments.witnessCallToAction(article)
+                        @fragments.commercial.badge(article)
 
-                <div class="blog__left-col">
+                        <div class="js-top-marker"></div>
+                        @if(article.hasKeyEvents) {
+                            <div class="blog__timeline blog__dropdown js-live-blog__key-events">
+                                <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
+                                    @fragments.dropdown("Key events", Some("key-events"), false) {
+                                        <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                                    }
+                                    <div class="js-comment-count comment-count--timeline"></div>
+                                </div>
+                            </div>
+                        }
+                        <div class="js-components-container"></div>
+                    </div>
 
-                    @fragments.commercial.badge(article)
+                    @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                        <div class="js-article__container" data-component="body">
+                            @fragments.liveFilter(article.isLive)
 
-                    <div class="js-top-marker"></div>
-                    @if(article.hasKeyEvents) {
-                        <div class="blog__timeline blog__dropdown js-live-blog__key-events">
-                            <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                @fragments.dropdown("Key events", Some("key-events"), false) {
-                                    <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
-                                }
-                                <div class="js-comment-count comment-count--timeline tone-colour"></div>
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
+                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
+                                @BodyCleaner(article, article.body)
                             </div>
                         </div>
+
+                        <div class="submeta-container">
+                            <div class="submeta" data-link-name="keywords">
+                                @fragments.keywordList(article.keywords, tone = Some(article.visualTone))
+                            </div>
+                            <div class="submeta" data-component="share">
+                                @fragments.social(article)
+                            </div>
+                        </div>
+
+                        <div class="after-article js-after-article"></div>
+
+                        <div class="js-bottom-marker"></div>
                     }
-                    <div class="js-components-container"></div>
                 </div>
 
-                @fragments.dropdown("Live feed", Some("live-feed"), true) {
-                    <div class="js-article__container" data-component="body">
-                        @fragments.liveFilter(article.isLive)
+                <div class="content__secondary-column" aria-hidden="true">
+                    <div class="mpu-container js-mpu-ad-slot"></div>
+                    @if(model.related.hasStoryPackage) {
+                        <aside role="complementary" class="blog__related">
+                            <h3 class="blog__related__head">More on this story</h3>
+                            <ul class="u-unstyled">
+                                @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
+                                    @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, CollectionConfig.emptyConfig)
+                                }
+                            </ul>
+                        </aside>
+                    }
+                </div>
 
-                        <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
-                            itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                            @BodyCleaner(article, article.body)
-                        </div>
-                    </div>
-
-                    <div class="submeta-container">
-                        <div class="submeta" data-link-name="keywords">
-                            @fragments.keywordList(article.keywords, tone = Some(article.visualTone))
-                        </div>
-                        <div class="submeta" data-component="share">
-                            @fragments.social(article)
-                        </div>
-                    </div>
-
-                    <div class="after-article js-after-article"></div>
-
-                    <div class="js-bottom-marker"></div>
-                }
             </div>
-
-            <div class="content__secondary-column" aria-hidden="true">
-                <div class="mpu-container js-mpu-ad-slot"></div>
-                @if(model.related.hasStoryPackage) {
-                    <aside role="complementary" class="blog__related">
-                        <h3 class="blog__related__head">More on this story</h3>
-                        <ul class="u-unstyled">
-                            @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                                @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, CollectionConfig.emptyConfig)
-                            }
-                        </ul>
-                    </aside>
-                }
-            </div>
-
         </div>
     </article>
 

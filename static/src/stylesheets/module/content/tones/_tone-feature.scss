@@ -1,0 +1,21 @@
+@include tone-content-icons(feature, 'white');
+
+@include tone-content-head(
+    feature, // $tone
+    $c-featureDefault, // $tonal__header-background
+    $c-neutral6, // $tonal__header-text
+    $c-featureAccent, // $tonal__header-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    $c-featureAccent, // $tonal__headline-accent
+    $c-featureAccent2, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff // $tonal__standfirst-link
+
+);
+
+@include tone-content-main(
+    feature, // $tone
+    #ffffff, // $tonal__article-background
+    $c-featureDefault // $tonal__article-link
+);

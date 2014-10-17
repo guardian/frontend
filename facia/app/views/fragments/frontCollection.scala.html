@@ -9,6 +9,8 @@
 
 @defining(block){ case (config, collection) =>
     @config.collectionType match {
+        case Some("nav/list")                   => { @containers.navlist(collection, index, dataId)(request, config) }
+        case Some("nav/media-list")             => { @containers.navmedialist(collection, index, dataId)(request, config) }
         case Some("news")                       => { @containers.news(front, collection, NewsContainer(), index, dataId)(request, templateDeduping, config) }
         case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(collection), NewsContainer(), index, dataId)(request, templateDeduping, config) }
         case Some("news/headline")              => { @containers.headline(collection, HeadlineContainer(), index, dataId)(request, config) }

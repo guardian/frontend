@@ -12,7 +12,7 @@ object Title {
       case c: Content =>
         s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
       case t: Tag     =>
-        s"${Localisation(t.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(page.section))}"
+        s"${Localisation(t.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(t.sectionName))}"
       case _          =>
         page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
           s"${Localisation(page.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.webTitle, Option(page.section))}"
