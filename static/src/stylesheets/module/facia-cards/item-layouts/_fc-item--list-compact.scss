@@ -6,7 +6,12 @@ x x x x x x x x x x x x x x x x x x x x x x x
 
  */
 
-.fc-item--list-compact {
+@mixin fc-item--list-compact {
+    @include fs-bodyHeading(2);
     padding-bottom: $gs-baseline;
-    @include fs-bodyHeading(1);
+    display: block !important;
+
+    .fc-item__container {
+        display: block !important;
+    }
 }

@@ -174,3 +174,19 @@ Hence why a greater depth of selector specificity is needed.
 .facia-slice__item--nav-list {
     display: inline-block;
 }
+
+.facia-slice--nav-list--media {
+    $alley: $gs-gutter * .5;
+
+    @include mq($until: tablet) {
+        @include columns($rule: true);
+    }
+
+    @include mq(tablet) {
+        @include columns($cols: 3, $gap: $alley, $rule: true);
+    }
+}
+
+.facia-slice__item--nav-list {
+    display: inline-block;
+}

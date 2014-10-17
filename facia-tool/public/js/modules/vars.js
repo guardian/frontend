@@ -15,6 +15,7 @@ define([
 
         types: [
             {name: 'nav/list'},
+            {name: 'nav/media-list'},
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
             {name: 'news/headline', groups: ['standard', 'big', 'very big']},
