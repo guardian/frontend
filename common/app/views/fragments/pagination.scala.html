@@ -14,9 +14,9 @@
         <li class="pagination__item">
             <a class="pagination__action--static @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
                 @if(dir == "next") {
-                <i class="i i-arrow-right-grey"></i>
+                <i class="i i-arrow-right-grey"><span class="u-h">@dir.capitalize(0)</span></i>
                 } else {
-                <i class="i i-arrow-left-grey"></i>
+                <i class="i i-arrow-left-grey"><span class="u-h">@dir.capitalize(0)</span></i>
                 }
             </a>
         </li>

@@ -11,12 +11,9 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     <span class="pagination__legend hide-on-mobile-inline">
         About 12,345 results for Tag Name
     </span>
-    <ol class="pagination__links u-unstyled">
-        <li class="pagination__item pagination__item--next">
+    <ol class="pagination__list u-unstyled">
+        <li class="pagination__item">
             <a class="pagination__item-inner pagination__action" rel="next" href="#"><span class="u-h">N</span></a>
-        </li>
-        <li class="pagination__item pagination__item--prev">
-            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
         </li>
         <li class="pagination__item">
             <a class="pagination__action" href="#">3</a>
@@ -25,13 +22,16 @@ The user needs to view a subset of sorted data that is not easily displayed on o
             <a class="pagination__action" href="#">4</a>
         </li>
         <li class="pagination__item">
-            <span class="pagination__action pagination__action--current">5</span>
+            <span class="pagination__action is-active">5</span>
         </li>
         <li class="pagination__item">
             <a class="pagination__action" href="#">6</a>
         </li>
         <li class="pagination__item">
             <a class="pagination__action" href="#">7</a>
+        </li>
+        <li class="pagination__item">
+            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
         </li>
     </ol>
 </div>
@@ -40,7 +40,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 $pagination-item-size: 24px;
 $pagination-height: 48px;
-$pagination-gutter: $pagination-height - $pagination-item-size / 2;
+$pagination-gutter: ($pagination-height - $pagination-item-size) / 2;
 
 .pagination {
     text-align: right;
@@ -73,6 +73,10 @@ $pagination-gutter: $pagination-height - $pagination-item-size / 2;
     }
 }
 
+.pagination__legend {
+    float: left;
+}
+
 %pagination-link {
     @extend %icon-holder-circle;
     @include box-sizing(border-box);
@@ -87,9 +91,14 @@ $pagination-gutter: $pagination-height - $pagination-item-size / 2;
     text-align: center;
 }
 
+/**
+ *  1. to align font to the middle. Some numbers are in the middle by default (1, 4)
+ *     but most of them need one 1px indent so it looks nicer.
+ */
 .pagination__action {
     @extend %pagination-link;
     font-weight: bold;
+    text-indent: 1px; /* [1] */
     border-color: transparent;
 
     &:hover {
@@ -120,12 +129,4 @@ $pagination-gutter: $pagination-height - $pagination-item-size / 2;
             opacity: 1;
         }
     }
-}
-
-.pagination__action--current {
-    color: $c-neutral2-contrasted;
-}
-
-.pagination__legend {
-    float: left;
 }
