@@ -32,10 +32,6 @@ trait AdminLifecycle extends GlobalSettings {
       AnalyticsSanityCheckJob.run()
     }
 
-    Jobs.schedule("VideoSanityCheckJob", "0 0/15 * * * ?") {
-      VideoSanityCheckJob.run()
-    }
-
     Jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
       RefreshFrontsJob.runHighFrequency()
     }
@@ -75,7 +71,6 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("LoadBalancerLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
-    Jobs.deschedule("VideoSanityCheckJob")
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")

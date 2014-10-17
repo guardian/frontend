@@ -61,17 +61,7 @@ trait CloudWatch extends Logging with ExecutionContexts {
 
   def rawPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
 
-  def videoPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-video-page-views")
-
   def analyticsPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views")
-
-  def videoStarts: Future[GetMetricStatisticsResult] = sanityData("kpis-video-starts")
-
-  def videoEnds: Future[GetMetricStatisticsResult] = sanityData("kpis-video-ends")
-
-  def videoPrerollStarts: Future[GetMetricStatisticsResult] = sanityData("kpis-video-preroll-start")
-
-  def videoPrerollEnds: Future[GetMetricStatisticsResult] = sanityData("kpis-video-preroll-end")
 }
 
 object CloudWatch extends CloudWatch
