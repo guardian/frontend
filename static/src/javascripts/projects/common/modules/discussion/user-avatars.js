@@ -1,14 +1,16 @@
 define([
     'common/utils/$',
+    'common/utils/mediator',
     'bonzo',
     'common/modules/discussion/api'
-], function ($, bonzo, discussionApi) {
+], function ($, mediator, bonzo, discussionApi) {
 
     function init() {
         $('.user-avatar').each(avatarify);
     }
 
     function avatarify(el) {
+        console.log("avatarify")
         var container = bonzo(el),
             updating = bonzo(bonzo.create('<div class="is-updating"></div>')),
             avatar = bonzo(bonzo.create('<img class="user-avatar__image" alt="" />')),
@@ -18,12 +20,15 @@ define([
         updating
             .css('display', 'block')
             .appendTo(container);
-        discussionApi.getUser(userId)
-            .then(function (response) {
-                avatar.attr('src', response.userProfile.secureAvatarUrl);
-                updating.remove();
-                avatar.appendTo(container);
-            });
+
+        mediator.on("discussion:api:ready", function(userId) {
+            discussionApi.getUser(userId)
+                .then(function (response) {
+                    avatar.attr('src', response.userProfile.secureAvatarUrl);
+                    updating.remove();
+                    avatar.appendTo(container);
+                });
+        });
     }
 
     return {init: init, avatarify: avatarify};

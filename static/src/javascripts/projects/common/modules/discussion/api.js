@@ -1,9 +1,11 @@
 define([
     'common/utils/ajax',
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/utils/mediator'
 ], function(
     ajax,
-    cookies
+    cookies,
+    mediator
 ) {
 
 /**
@@ -25,6 +27,7 @@ Api.init = function(config) {
         Api.root = config.page.discussionApiRoot;
     }
     Api.clientHeader = config.page.discussionApiClientHeader;
+    mediator.emit("discussion:api:ready");
 };
 
 /**
@@ -40,14 +43,14 @@ Api.send = function(endpoint, method, data) {
     }
 
     var request = ajax({
-        url: Api.root + endpoint,
+        url:  Api.root  + endpoint,
         type: ('get' === method) ? 'jsonp' : 'json',
         method: method,
         crossOrigin: true,
         data: data,
         headers: {
             'D2-X-UID': 'zHoBy6HNKsk',
-            'GU-Client': Api.clientHeader
+            'GU-Client': 'nextgen'
         }
     });
 
