@@ -52,7 +52,6 @@ $mq-breakpoints: (
     desktop:         gs-span(12) + $gs-gutter*2, // 980px
     leftCol:         gs-span(14) + $gs-gutter*2, // 1140px
     wide:            gs-span(16) + $gs-gutter*2, // 1300px
-
 );
 
 // Show the current breakpoint in the top right corner of the viewport:
