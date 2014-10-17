@@ -44,8 +44,9 @@ function (
             if (isFromGuardian && capiId.match(/\+/)) {
                 capiId = 'search?tag=' + capiId.split(/\+/).join(',') + '&';
             } else {
-                capiId+= '?';
+                capiId += '?';
             }
+
             capiId += vars.CONST.apiSearchParams;
 
             fetchContent(capiId)
