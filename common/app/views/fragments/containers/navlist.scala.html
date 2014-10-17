@@ -8,7 +8,7 @@
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
-    class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
+    class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty) container--news"
     data-link-name="@FaciaComponentName(config, collection)"
     data-id="@FaciaComponentName(config, collection)"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
@@ -20,11 +20,11 @@
             <div class="container__body">
                 <div class="facia-slice-wrapper">
                     <ul class="u-unstyled facia-slice facia-slice--nav-list">
-                    @collection.items.map { item =>
+                    @collection.items.zipWithIndex.map { case (item, index) =>
                         <li class="facia-slice__item--nav-list">
                             <div class="fc-item fc-item--list-compact">
                                 <div class="fc-item__container">
-                                    <a href="@LinkTo(item)" data-link-name=" | article | @index">@item.webTitle</a>
+                                    <a href="@LinkTo(item)" data-link-name=" | article | @index">@item.headline</a>
                                 </div>
                             </div>
                         </li>
