@@ -13,7 +13,8 @@ define([
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
-    'common/utils/template'
+    'common/utils/template',
+    'text!common/views/content/block-sharing.html'
 ], function (
     _,
     bean,
@@ -29,7 +30,8 @@ define([
     Component,
     BlockSharing,
     imagesModule,
-    template
+    template,
+    blockSharingTpl
     ) {
     function GalleryLightbox() {
 
@@ -54,36 +56,24 @@ define([
 
         this.loaderHTML =
             '<div class="pamplemousse gallery-lightbox__loader js-loader">' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
+            '<div class="pamplemousse__pip"><i></i></div>' +
+            '<div class="pamplemousse__pip"><i></i></div>' +
+            '<div class="pamplemousse__pip"><i></i></div>' +
             '</div>';
-
-        this.imgElementHtml =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--img js-gallery-slide">' +
-                '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
-                '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
-                    '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index">{{index}}</span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count">{{count}}</span>' +
-                    '</div>' +
-                    '<div class="gallery-lightbox__img-caption">{{caption}}</div>' +
-                    '<div class="gallery-lightbox__img-credit">{{credit}}</div>' +
-                    '<div class="block-share block-share--gallery" data-link-name="block share">' +
-                        '{{shareButtons}}' +
-                    '<label class="block-share__label" for="block-share-link-@id">copy link text</label>' +
-                    '<input id="block-share-link-{{index}}" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="{{blockShortUrl}}" readonly="readonly"/>' +
-                '<button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand"><i class="i i-ellipsis-white-36"></i><span class="u-h">expand</span></button>' +
-                '</div>' +
-                '</div>' +
-                '</li>';
 
         this.shareButtonHtml =
             '<a class="block-share__link js-blockshare-link" href="{{url}}" target="_blank" data-link-name="{{css}}">' +
             '<div class="block-share__item block-share__item--{{css}}">' +
             '<i class="i"></i>'+
             '<span class="u-h">{{text}}</span>' +
+            '</div>' +
+            '</a>';
+
+        this.shareButtonMobileHtml =
+            '<a class="share-modal__link" href="{{url}}" target="_blank" data-link-name="{{css}}">' +
+            '<div class="share-modal__item button button--xlarge button--tertiary share-modal__item--{{css}}">' +
+            '<i class="i"></i>' +
+            '{{text}}' +
             '</div>' +
             '</a>';
 
@@ -158,21 +148,31 @@ define([
     }
 
     GalleryLightbox.prototype.generateImgHTML = function(img, i) {
-        var blockShortUrl = config.page.shortUrl + '#' + i,
-            blockLongUrl = window.location.href.match(/^[^\#\?]+/)[0] + '#' + i,
-            shareItems = [
-            {"text": "Facebook", "css": "facebook", "url": encodeURI("https://www.facebook.com/sharer/sharer.php?u=" + blockLongUrl + "&ref=responsive")},
-            {"text": "Twitter", "css": "twitter", "url": encodeURI("https://twitter.com/intent/tweet?text=" + config.page.webTitle + "&url=" + blockShortUrl)},
-            {"text": "Google plus", "css": "gplus", "url": encodeURI("https://plus.google.com/share?url=" + blockShortUrl)}
-        ];
+        var blockShortUrl = config.page.shortUrl + '?index=' + i,
+            blockLongUrl = window.location.href.match(/^[^\#\?]+/)[0] + '?index=' + i,
+            shareItems = [{
+                'text': 'Facebook',
+                'css': 'facebook',
+                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockLongUrl + '&ref=responsive')
+            }, {
+                'text': 'Twitter',
+                'css': 'twitter',
+                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl)
+            }, {
+                'text': 'Google plus',
+                'css': 'gplus',
+                'url': encodeURI('https://plus.google.com/share?url=' + blockShortUrl)
+            }];
 
-        return template(this.imgElementHtml, {
+        return template(blockSharingTpl, {
+            articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: _.map(shareItems, template.bind(null, this.shareButtonHtml)).join('')
+            shareButtons: _.map(shareItems, template.bind(null, this.shareButtonHtml)).join(''),
+            shareButtonsMobile: _.map(shareItems, template.bind(null, this.shareButtonMobileHtml)).join('')
         });
     };
 
@@ -237,11 +237,11 @@ define([
 
     GalleryLightbox.prototype.getImgSrc = function(imgJson, width, height) {
         var possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
-            var widthBigger = w > width,
-                calculatedHeight = (w/imgJson.ratio),
-                heightBigger =  calculatedHeight > height;
-            return widthBigger || heightBigger;
-        }).sort(function(a,b){ return a > b; }),
+                var widthBigger = w > width,
+                    calculatedHeight = (w/imgJson.ratio),
+                    heightBigger =  calculatedHeight > height;
+                return widthBigger || heightBigger;
+            }).sort(function(a,b){ return a > b; }),
             chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
 
         return imgJson.src.replace('{width}', chosenWidth);

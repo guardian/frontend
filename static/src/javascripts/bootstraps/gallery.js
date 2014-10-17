@@ -40,8 +40,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': setHeight,
-                'window:orientationchange': setHeight,
+                'window:resize': debounce(setHeight, 200),
+                'window:orientationchange': debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });
         },
