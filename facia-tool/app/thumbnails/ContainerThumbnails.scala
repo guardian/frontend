@@ -1,7 +1,7 @@
 package thumbnails
 
 import layout._
-import slices.{Slice, FixedContainers}
+import slices._
 
 case class Rectangle(x: Double, y: Double, width: Double, height: Double)
 
@@ -110,27 +110,53 @@ object ContainerThumbnails {
                 style="font: 10px Arial, Verdana, sans-serif; alignment-baseline: central; fill: white;">MPU</text>
         </g>
 
-      case _: SplitColumn =>
+      case SplitColumn(_, topItemClasses, bottomItemClasses) =>
         val centreY = y + height / 2
 
         <g>
-          <rect x={x.toString} y={y.toString} width={width.toString} height={(height / 2).toString} style={Style} />
-          <rect x={x.toString} y={centreY.toString} width={width.toString} height={(height / 4).toString} style={Style} />
-          <rect x={x.toString} y={(centreY + height / 4).toString} width={width.toString} height={(height / 4).toString} style={Style} />
+          <rect x={x.toString}
+                y={y.toString}
+                width={width.toString}
+                height={(height / 2).toString}
+                style={Style} />
+          {drawImage(x, y, width, height / 2, topItemClasses)}
+          <rect x={x.toString}
+                y={centreY.toString}
+                width={width.toString}
+                height={(height / 4).toString}
+                style={Style} />
+          {drawImage(x, centreY, width, height / 4, bottomItemClasses)}
+          <rect x={x.toString}
+                y={(centreY + height / 4).toString}
+                width={width.toString}
+                height={(height / 4).toString}
+                style={Style} />
+          {drawImage(x, centreY + height / 4, width, height / 4, bottomItemClasses)}
         </g>
 
     }
   }
 
   def fromId(id: String) = {
-    FixedContainers.unapply(Some(id)) map { container =>
-      val yPositions = summing(container.slices)(sliceHeight)
+    val maybeSlices = id match {
+      case "dynamic/fast" =>
+        Some(Seq(HalfQuarterQl2Ql4))
+
+      case "dynamic/slow" =>
+        Some(Seq(Hl4Half))
+
+      case _ =>
+        FixedContainers.unapply(Some(id)).map(_.slices)
+    }
+
+    maybeSlices map { slices =>
+      val yPositions = summing(slices)(sliceHeight)
 
       <svg xmlns="http://www.w3.org/2000/svg"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            width={Width.toString}
-           height={container.slices.map(sliceHeight).sum.toString}>
-        {container.slices.zip(yPositions).map((drawSlice _).tupled)}
+           height={slices.map(sliceHeight).sum.toString}>
+        {slices.zip(yPositions).map((drawSlice _).tupled)}
       </svg>
     }
   }
