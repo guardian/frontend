@@ -253,9 +253,9 @@ define([
                 });
 
                 if (badCells.length === 0) {
-                    this.flashCells(cells, 'isSuccess');
+                    this.flashCells(_.reject(cells, 'isSuccess'), 'isSuccess');
                 } else {
-                    this.flashCells(badCells, 'isError');
+                    this.flashCells(_.reject(badCells, 'isError'), 'isError');
                 }
             }
         },
