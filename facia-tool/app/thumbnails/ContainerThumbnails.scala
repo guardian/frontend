@@ -45,11 +45,11 @@ object ContainerThumbnails {
     ((itemClasses.tablet match {
       case "list-media" =>
         Some(Rectangle(x + 1, y + 1, width / 2, height - 2))
-      case "three-quarters" =>
+      case "three-quarters" | "full" =>
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
       case "three-quarters-right" =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
-      case "standard" | "half" | "third" =>
+      case "standard" | "half" | "third" | "mega-full" =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * 2.0 / 3.0))
       case _ =>
         None
@@ -107,7 +107,7 @@ object ContainerThumbnails {
           <text x={centreX.toString}
                 y={centreY.toString}
                 text-anchor="middle"
-                style="font: 10px Arial, Verdana; alignment-baseline: central; fill: white;">MPU</text>
+                style="font: 10px Arial, Verdana, sans-serif; alignment-baseline: central; fill: white;">MPU</text>
         </g>
 
       case _: SplitColumn =>

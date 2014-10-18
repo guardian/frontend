@@ -111,6 +111,10 @@
                     options: $root.types,
                     value: meta.type"></select>
 
+                <!-- ko if: containerThumbnail -->
+                <img data-bind="attr: { src: containerThumbnail }" />
+                <!-- /ko -->
+
                 <!-- ko if: meta.groups -->
                     <label>Groups</label>
                     <span class="cnf-form__value" data-bind="text: meta.groups"></span>
