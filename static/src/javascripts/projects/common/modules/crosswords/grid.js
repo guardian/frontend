@@ -47,6 +47,9 @@ define([
                         height: 31,
                         className: classSet({
                             'crossword__grid__cell': true,
+                            'crossword__grid__cell--error': this.props.isError,
+                            'crossword__grid__cell--success': this.props.isSuccess,
+                            'crossword__grid__cell--animating': this.props.isAnimating,
                             'crossword__grid__cell--focussed': this.props.isFocussed,
                             'crossword__grid__cell--highlighted': this.props.isHighlighted
                         })

@@ -44,8 +44,11 @@ define([
         },
 
         setCellValue: function (x, y, value) {
-            this.state.grid[x][y].value = value;
-            this.setState(this.state);
+            var cell = this.state.grid[x][y];
+
+            cell.value = value;
+            cell.isError = false;
+            this.forceUpdate();
         },
 
         onKeyDown: function (event) {
@@ -90,7 +93,7 @@ define([
                     this.state.directionOfEntry = 'across';
                 }
 
-                this.setState(this.state);
+                this.forceUpdate();
             }
         },
 
@@ -226,8 +229,7 @@ define([
                 cells = helpers.cellsForEntry(entry);
 
             if (entry.solution) {
-                _.forEach(_.range(entry.length), function (n) {
-                    var cell = cells[n];
+                _.forEach(cells, function (cell, n) {
                     that.state.grid[cell.x][cell.y].value = entry.solution[n];
                 });
 
@@ -237,16 +239,52 @@ define([
 
         check: function (entry) {
             var that = this,
-                cells = helpers.cellsForEntry(entry);
-
-            if (entry.solution) {
-                var isCorrect = _.every(_.range(entry.length), function (n) {
-                    var cell = cells[n];
-                    return that.state.grid[cell.x][cell.y].value === entry.solution[n];
+                cells = _.map(helpers.cellsForEntry(entry), function (cell) {
+                    return that.state.grid[cell.x][cell.y];
                 });
 
-                // do something interesting
+            if (entry.solution) {
+                var badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
+                    var cell = cellAndSolution[0],
+                        solution = cellAndSolution[1];
+                    return cell.value !== solution;
+                }), function (cellAndSolution) {
+                    return cellAndSolution[0];
+                });
+
+                if (badCells.length === 0) {
+                    this.flashCells(cells, 'isSuccess');
+                } else {
+                    this.flashCells(badCells, 'isError');
+                }
             }
+        },
+
+        flashCells: function(cells, animationProperty) {
+            var that = this;
+
+            _.forEach(cells, function (cell) {
+                cell[animationProperty] = true;
+                cell.isAnimating = true;
+            });
+
+            this.forceUpdate();
+
+            setTimeout(function () {
+                _.forEach(cells, function (cell) {
+                    cell[animationProperty] = false;
+                });
+
+                that.forceUpdate();
+
+                setTimeout(function () {
+                    _.forEach(cells, function (cell) {
+                        cell.isAnimating = false;
+                    });
+
+                    that.forceUpdate();
+                }, 250);
+            }, 250);
         },
 
         onCheat: function () {
