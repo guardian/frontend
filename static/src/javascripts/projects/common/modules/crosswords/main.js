@@ -5,6 +5,7 @@ define([
     'bonzo',
     'react',
     'common/modules/crosswords/clues',
+    'common/modules/crosswords/controls',
     'common/modules/crosswords/grid',
     'common/modules/crosswords/helpers',
     'common/modules/crosswords/keycodes',
@@ -16,6 +17,7 @@ define([
     bonzo,
     React,
     Clues,
+    Controls,
     Grid,
     helpers,
     keycodes,
@@ -219,6 +221,22 @@ define([
             persistence.saveGridState(this.props.data.id, this.state.grid);
         },
 
+        onCheat: function () {
+
+        },
+
+        onCheck: function () {
+
+        },
+
+        onSolution: function () {
+
+        },
+
+        onCheckAll: function () {
+
+        },
+
         render: function () {
             var focussed = this.clueInFocus(),
                 isHighlighted = function (x, y) {
@@ -257,6 +275,13 @@ define([
                         }
                     ))
                 ),
+                Controls({
+                    clueInFocus: focussed,
+                    onCheat: this.onCheat,
+                    onSolution: this.onSolution,
+                    onCheck: this.onCheck,
+                    onCheckAll: this.onCheckAll
+                }),
                 Clues({
                     clues: this.cluesData(),
                     focusClue: this.focusClue

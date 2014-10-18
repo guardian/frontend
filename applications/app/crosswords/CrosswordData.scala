@@ -21,7 +21,8 @@ object CrosswordEntry {
     entry.clue,
     entry.direction,
     entry.length,
-    entry.position
+    entry.position,
+    entry.solution
   )
 }
 
@@ -30,7 +31,8 @@ case class CrosswordEntry(
   clue: String,
   direction: Direction,
   length: Int,
-  position: Position
+  position: Position,
+  solution: Option[String]
 )
 
 object CrosswordData {
