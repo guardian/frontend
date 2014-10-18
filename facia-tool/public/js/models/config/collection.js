@@ -58,7 +58,7 @@ define([
         this.containerThumbnail = ko.computed(function () {
             var containerId = this.meta.type();
 
-            if (/^fixed\//.test(containerId)) {
+            if (/^(fixed|dynamic)\//.test(containerId)) {
                 return "/thumbnails/" + containerId + ".svg";
             } else {
                 return null;
