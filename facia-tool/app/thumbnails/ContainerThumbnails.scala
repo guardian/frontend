@@ -128,8 +128,8 @@ object ContainerThumbnails {
 
       <svg xmlns="http://www.w3.org/2000/svg"
            xmlns:xlink="http://www.w3.org/1999/xlink"
-           width={(Width + 2).toString}
-           height={((container.slices.length * SliceHeight) + 2).toString}>
+           width={Width.toString}
+           height={container.slices.map(sliceHeight).sum.toString}>
         {container.slices.zip(yPositions).map((drawSlice _).tupled)}
       </svg>
     }
