@@ -40,7 +40,11 @@
                                 Sponsored by:
                             }
                         } else {
+                          @if(content.isAdvertisementFeature) {
                             Brought to you by:
+                          } else {
+                            Supported by:
+                          }
                         }
                     </h3>
                     @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {

@@ -117,12 +117,13 @@ h1 {
     position: absolute;
     top: 60px;
     left: 20px;
+    color: #999999;
 }
 
 .front-priorities--priority {
     display: block;
-    font-size: 17px;
-    padding: 10px 0 0 0;
+    font-size: 18px;
+    padding: 15px 0 0 0;
 }
 
 .finder__controls {
@@ -1157,7 +1158,7 @@ button {
 
 .cnf-form .api-query-results {
     clear: both;
-    margin: 0 10px 0 91px;
+    margin: 0 10px 10px 126px;
     font-size: 12px;
     line-height: 16px;
     color: #666666;
@@ -1200,10 +1201,20 @@ button {
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
 .icon-trash { background-position: -456px 0; }
+.icon-play { background-position: -264px -72px; }
 .icon-fast-backward {
     margin-top: -1px;
     background-position: -216px -72px;
  }
+
+.has-playable {
+    position: absolute;
+    top: 3px;
+    left: 60px;
+    background: rgba(254,254,254,.6);
+    padding: 1px 3px 1px 2px;
+    border-radius: 1px;
+}
 
 /*****************************************/
 /* MEDIA QUERIES */

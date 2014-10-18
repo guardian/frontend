@@ -279,6 +279,10 @@
                     style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
             <!-- /ko -->
 
+            <!-- ko if: state.hasMainVideo -->
+                <div class="has-playable"><i class="icon-play"></i></div>
+            <!-- /ko -->
+
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"
                     data-bind="template: {name: 'template_editor', foreach: editors}"></div>

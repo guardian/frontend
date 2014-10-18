@@ -1,72 +1,108 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
 
-<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open} u-cf"
+@sectionHeading = {
+
+
+    <div class="discussion__heading">
+
+        <div class="container__meta">
+            <h2 class="container__meta__title">Comments <span class="discussion__comment-count js-discussion-comment-count"></span></h2>
+
+            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out"><a class="u-underline" href="@Configuration.id.url/signin">Sign in</a>
+                or <a class="u-underline" href="@Configuration.id.url/register">create your Guardian account</a> to join the discussion.
+            </p>
+
+            <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>
+
+            <p class="container__meta__item discussion__meta discussion__meta--readonly">
+                We’re doing some maintenance right now. You can still read comments, but please come back later to add your own.
+            </p>
+
+            <p class="container__meta__item d-discussion__error discussion__meta discussion__meta--banned">
+                Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>)
+            </p>
+        </div>
+    </div>
+}
+
+@toolbar = {
+    <div class="discussion__toolbar js-discussion-toolbar u-cf">
+
+        <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
+
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span></span></button>
+
+            <ul class="popup popup__group popup--comments-order is-off">
+                @List("newest", "oldest").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
+                    </li>
+                }
+            </ul>
+
+        </div>
+
+
+        <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span></span></button>
+
+            <ul class="popup popup__group popup--comments-threading is-off">
+                @List("collapsed", "expanded", "unthreaded").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-threading="@value" data-link-name="comments-threading-@value">@value</button>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="discussion__pagination discussion__pagination--top js-discussion-pagination"></div>
+
+    </div>
+
+}
+
+<div id="comments" class="discussion discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
-
-    <div class="discussion__top-border gs-container ">
+    <div class="discussion__top-border gs-container">
         <div class="content__main-column">
 
-            <h2 class="container__title modern-hidden">
-                <a href="@LinkTo{/discussion@discussionId}" class="tone-news tone-colour"
-                    data-link-name="View all comments">View all comments</a>
-            </h2>
-
-            <div class="discussion__comments--top-comments modern-visible">
-                <h2 id="top-comments" class="js-top-comments container__title container__title discussion__heading">Comments</h2>
-                <div class="discussion__comments__top"></div>
+            <div class="modern-hidden">
+                <div class="discussion__heading">
+                    <div class="container__meta modern-hidden">
+                        <h2 class="container__meta__title">
+                            <a href="@LinkTo{/discussion@discussionId}" class="tone-news tone-colour"
+                            data-link-name="View all comments">View all comments &gt;</a>
+                        </h2>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </div>
+            <div class="modern-visible">
+                @sectionHeading
 
+                <div class="discussion__comment-box js-discussion-comment-box--top"></div>
 
-    <div class="discussion__top-border gs-container ">
-        <div class="content__main-column">
+                <div class="discussion__top-comments js-discussion-top-comments"></div>
 
-            <div class="preload-msg">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
+                @toolbar
 
-            <div class="discussion__comments__container modern-hidden">
+                <div class="preload-msg discussion__loader">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
 
-                <div class="discussion__heading">
+                <div class="discussion__main-comments js-discussion-main-comments"></div>
 
-                    <div class="container__meta">
+                <div class="discussion__comment-box js-discussion-comment-box--bottom"></div>
 
-                        <h2 class="container__meta__title modern-visible">Comments</h2>
-
-                        <p class="container__meta__item discussion__meta discussion__meta--open-signed-out">Open for comments. <a class="u-underline" href="@Configuration.id.url/signin">Sign in</a>
-                            or <a class="u-underline" href="@Configuration.id.url/register">create your Guardian account</a> to join the discussion.
-                        </p>
-
-                        <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>
-
-                        <p class="container__meta__item discussion__meta discussion__meta--readonly">
-                            We’re doing some maintenance right now. You can still read comments, but please come back later to add your own.
-                        </p>
-
-                        <p class="container__meta__item d-discussion__error discussion__meta discussion__meta--banned">
-                            Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>)
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded">
-                    View <span class="discussion__show-threaded-state">un</span>threaded
+                <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button">
+                    <i class="i i-plus-white"></i>
+                    View more comments
                 </button>
 
-                <button class="u-button-reset u-fauxlink modern-visible discussion__show-all discussion__show-all--off js-show-all">
-                    <span class="discussion__show-all__off-text">Expand comment threads</span>
-                    <span class="discussion__show-all__on-text">Collapse comment threads</span>
-                </button>
+                <script type="text/template" id="tmpl-comment-box">
+                    @fragments.commentBox()
+                </script>
 
-                <div class="discussion-container js-discussion-container">
-                    <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
-                    <div class="discussion__comments"></div>
-                    <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
-                </div>
             </div>
 
         </div>

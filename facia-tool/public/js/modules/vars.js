@@ -14,6 +14,8 @@ define([
         editions: ['uk', 'us', 'au'],
 
         types: [
+            {name: 'nav/list'},
+            {name: 'nav/media-list'},
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
             {name: 'news/headline', groups: ['standard', 'big', 'very big']},
@@ -31,6 +33,8 @@ define([
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'}
         ].concat(fixedContainers).concat(dynamicContainers),
+
+        typesDynamic: dynamicContainers,
 
         headlineLength: 200,
         restrictedHeadlineLength: 90,
@@ -71,7 +75,7 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-elements=video&show-tags=tone,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail',
+        apiSearchParams:       'show-elements=video&show-tags=tone,type,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
 
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',

@@ -18,31 +18,28 @@ define([
     defaults,
     $,
     _,
-    globalConfig,
+    config,
     template,
     userPrefs,
     dfp
 ) {
 
     var adNames = ['inline1', 'inline2'],
-        init = function (c) {
+        init = function (options) {
 
             var container, containerId, $adSlice, isFrontFirst,
-                config = defaults(
-                    c || {},
-                    globalConfig,
+                opts = defaults(
+                    options || {},
                     {
                         containerSelector: '.container',
-                        sliceSelector: '.js-slice--ad-candidate, .js-facia-slice__item--mpu',
-                        page: {},
-                        switches: {}
+                        sliceSelector: '.js-slice--ad-candidate, .js-facia-slice__item--mpu'
                     }
                 ),
                 // get all the containers
-                containers   = qwery(config.containerSelector),
+                containers   = qwery(opts.containerSelector),
                 index        = 0,
                 adSlices     = [],
-                containerGap = 2,
+                containerGap = 1,
                 prefs        = userPrefs.get('container-states');
 
             if (!config.switches.standardAdverts) {
@@ -53,9 +50,10 @@ define([
             while (index < containers.length) {
                 container    = containers[index],
                 containerId  = bonzo(container).data('id'),
-                $adSlice     = $(config.sliceSelector, container),
+                $adSlice     = $(opts.sliceSelector, container),
                 // don't display ad in the first container on the fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
@@ -81,12 +79,7 @@ define([
 
     return {
 
-        init: once(init),
-
-        // for testing
-        reset: function () {
-            this.init = once(init);
-        }
+        init: once(init)
 
     };
 

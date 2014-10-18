@@ -37,10 +37,28 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice--h-q-q {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: none;
+            }
+        }
+    }
+
     .fc-item--standard-tablet {
         .fc-item__standfirst {
             @include mq(desktop) {
                 display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--h-q_ql2-ql4 {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block !important;
             }
         }
     }
@@ -112,5 +130,73 @@ Hence why a greater depth of selector specificity is needed.
                 width: 50% !important;
             }
         }
+    }
+}
+
+.facia-slice--popular {
+
+    .facia-slice__item:before {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        .facia-slice__popular-mpu {
+            position: absolute;
+            max-width: 320px;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        .facia-slice__popular-mpu {
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    @include mq(desktop) {
+        .facia-slice__popular-mpu {
+            top: $gs-baseline;
+            right: -($gs-gutter / 2);
+        }
+
+        .tabs__pane {
+            width: (100% / 3) * 2;
+        }
+    }
+}
+
+/**
+ * Commercial Nav lists
+ */
+
+.facia-slice--nav-list {
+    $alley: $gs-gutter * .5;
+
+    @include mq($until: tablet) {
+        @include columns($rule: true);
+    }
+
+    @include mq(tablet, desktop) {
+        @include columns($cols: 3, $gap: $alley, $rule: true);
+    }
+
+    @include mq(desktop) {
+        @include columns($cols: 4, $gap: $alley, $rule: true);
+    }
+}
+
+.facia-slice__item--nav-list {
+    display: block;
+}
+
+.facia-slice--nav-list--media {
+    $alley: $gs-gutter * .5;
+
+    @include mq($until: tablet) {
+        @include columns($rule: true);
+    }
+
+    @include mq(tablet) {
+        @include columns($cols: 3, $gap: $alley, $rule: true);
     }
 }

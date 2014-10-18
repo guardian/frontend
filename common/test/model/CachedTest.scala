@@ -13,7 +13,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   "Cached" should "cache live content for 5 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
-    Switches.LiveBlogCacheTimeSwitch.switchOff()
+    Switches.ContentCacheTimeSwitch.switchOff()
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)

@@ -22,6 +22,8 @@ object CardStyle {
       Analysis
     } else if (trail.isReview) {
       Review
+    } else if (trail.isLetters) {
+      Letters
     } else if (trail.isFeature) {
       Feature
     } else {
@@ -68,6 +70,10 @@ case object Analysis extends CardStyle {
 
 case object Review extends CardStyle {
   override def toneString: String = "review"
+}
+
+case object Letters extends CardStyle {
+  override def toneString: String = "letters"
 }
 
 case object Default extends CardStyle {

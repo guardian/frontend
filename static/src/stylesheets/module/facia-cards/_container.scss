@@ -5,10 +5,6 @@ $header-image-size-desktop: 120px;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
 
-    @include mq(tablet) {
-        padding-bottom: $gs-baseline * 2;
-    }
-
     .facia-container__inner {
         border-top: 1px solid $c-newsAccent;
     }
@@ -32,6 +28,11 @@ $header-image-size-desktop: 120px;
 
     @include mq(wide) {
         width: $left-column-wide;
+
+        .has-page-skin & {
+            width: auto;
+            float: none;
+        }
     }
 }
 .fc-container__header__title {

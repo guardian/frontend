@@ -151,6 +151,7 @@ object Frontend extends Build with Prototypes {
   val faciaEndToEnd = application("facia-end-to-end")
     .dependsOn(commonWithTests)
     .dependsOn(facia, faciaTool, faciaPress)
+    .aggregate(common, facia, faciaTool, faciaPress)
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD
@@ -172,6 +173,13 @@ object Frontend extends Build with Prototypes {
     )
   )
 
+  val pngResizer = application("png-resizer")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+    .settings(
+      libraryDependencies += im4java
+    )
+
   val main = root().aggregate(
     common,
     facia,
@@ -181,6 +189,7 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     image,
+    pngResizer,
     discussion,
     router,
     diagnostics,

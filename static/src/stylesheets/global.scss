@@ -29,7 +29,6 @@
 @import 'module/_profile';
 @import 'module/_cta';
 @import 'layout/_footer';
-@import 'module/_stars';
 @import 'module/content/_gallerythumbs';
 @import 'module/_dropdown';
 @import 'module/charts/_doughnuts';
@@ -57,7 +56,6 @@
 @import 'module/_crosswords';
 
 @import 'module/onward/_right-hand-most-popular';
-@import 'module/onward/_popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
 @import 'module/_submeta';
@@ -100,7 +98,7 @@
 @include facia-container--default-heading;
 
 @import 'module/facia/_icons';
-@import 'module/facia/_show-more';
+@import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
 
 @import 'module/containers/_features';
@@ -149,13 +147,6 @@
 @import 'icons/_global-icons-sprite';
 @import 'icons/_global-icons-svg';
 @import 'theme/_icons';
-
-
-/* ==========================================================================
-   Colours
-   ========================================================================== */
-
-@import 'theme/_tones-global';
 
 
 /* ==========================================================================

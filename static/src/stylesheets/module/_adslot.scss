@@ -180,7 +180,7 @@
     min-height: 250 + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
     }
 }
@@ -191,6 +191,15 @@
     overflow: hidden;
     border-top: 1px solid $c-neutral5;
     padding-top: $gs-baseline/2;
+
+    .ad-slot--gallery-inline &,
+    .ad-slot--liveblog-inline & {
+        @include mq(tablet) {
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
 }
 .ad-slot--sponsored__article {
     text-align: left;
@@ -306,7 +315,7 @@
     }
 }
 .ad-slot--paid-for-badge--live-blog {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         padding-top: $gs-baseline*2;
     }
 }
@@ -372,7 +381,7 @@
         }
         @include comm-paid-logo-placement;
     }
-    
+
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
