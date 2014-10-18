@@ -221,20 +221,59 @@ define([
             persistence.saveGridState(this.props.data.id, this.state.grid);
         },
 
-        onCheat: function () {
+        cheat: function (entry) {
+            var that = this,
+                cells = helpers.cellsForEntry(entry);
 
+            if (entry.solution) {
+                _.forEach(_.range(entry.length), function (n) {
+                    var cell = cells[n];
+                    that.state.grid[cell.x][cell.y].value = entry.solution[n];
+                });
+
+                this.forceUpdate();
+            }
+        },
+
+        check: function (entry) {
+            var that = this,
+                cells = helpers.cellsForEntry(entry);
+
+            if (entry.solution) {
+                var isCorrect = _.every(_.range(entry.length), function (n) {
+                    var cell = cells[n];
+                    return that.state.grid[cell.x][cell.y].value === entry.solution[n];
+                });
+
+                // do something interesting
+            }
+        },
+
+        onCheat: function () {
+            this.cheat(this.clueInFocus());
+            this.save();
         },
 
         onCheck: function () {
-
+            this.check(this.clueInFocus());
         },
 
         onSolution: function () {
+            var that = this;
 
+            _.forEach(this.props.data.entries, function (entry) {
+                that.cheat(entry);
+            });
+
+            this.save();
         },
 
         onCheckAll: function () {
+            var that = this;
 
+            _.forEach(this.props.data.entries, function (entry) {
+                that.check(entry);
+            });
         },
 
         render: function () {
