@@ -21,7 +21,7 @@ define([
                     innerNodes.push(
                         React.DOM.text({
                             x: left + 1,
-                            y: top + 1,
+                            y: top + 8,
                             key: 'number',
                             className: 'crossword__cell-number'
                         }, this.props.number)
@@ -31,7 +31,7 @@ define([
                 if (this.props.value !== undefined) {
                     innerNodes.push(React.DOM.text({
                         x: left + 31 / 2,
-                        y: top + 31 / 2,
+                        y: top + 31 / 2 + 5,
                         key: 'entry',
                         className: classSet({
                             'crossword__cell-text': true,
