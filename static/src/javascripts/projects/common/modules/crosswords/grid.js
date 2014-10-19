@@ -23,7 +23,7 @@ define([
                             x: left + 1,
                             y: top + 1,
                             key: 'number',
-                            className: 'crossword__grid__cell__number'
+                            className: 'crossword__cell-number'
                         }, this.props.number)
                     );
                 }
@@ -49,9 +49,9 @@ define([
                         width: 31,
                         height: 31,
                         className: classSet({
-                            'crossword__grid__cell': true,
-                            'crossword__grid__cell--focussed': this.props.isFocussed,
-                            'crossword__grid__cell--highlighted': this.props.isHighlighted
+                            'crossword__cell': true,
+                            'crossword__cell--focussed': this.props.isFocussed,
+                            'crossword__cell--highlighted': this.props.isHighlighted
                         })
                     }),
                     innerNodes

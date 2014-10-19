@@ -1,17 +1,17 @@
-.crossword__grid__cell {
+.crossword__cell {
     cursor: pointer;
     fill: #ffffff;
 }
 
-.crossword__grid__cell--highlighted {
+.crossword__cell--highlighted {
     fill: lighten($c-crosswordAccent1, 10%);
 }
 
-.crossword__grid__cell--focussed {
+.crossword__cell--focussed {
     fill: $c-crosswordAccent1;
 }
 
-.crossword__grid__cell__number {
+.crossword__cell-number {
     font-size: 8px;
     font-family: $f-sans-serif-text;
     alignment-baseline: before-edge;
@@ -34,26 +34,26 @@
     opacity: 0;
 }
 
-.crossword__clues__clue {
+.crossword__clue {
     list-style: none;
     cursor: pointer;
 }
 
-.crossword__clues__clue__number {
+.crossword__clue-number {
     display: inline-block;
     min-width: 20px;
     margin-right: $gs-baseline;
 }
 
-.crossword__clues__clue--selected {
+.crossword__clue--selected {
     background-color: $c-crosswordAccent1;
 }
 
-.crossword__clues__clue--answered .crossword__clues__clue__text {
+.crossword__clue--answered .crossword__clue-text {
     text-decoration: line-through;
 }
 
-.crossword__clues__header {
+.crossword__clues-header {
     font-weight: 800;
 }
 

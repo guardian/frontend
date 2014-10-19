@@ -15,14 +15,14 @@ define([
             render: function () {
                 return React.DOM.li({
                     className: classSet({
-                        'crossword__clues__clue': true,
-                        'crossword__clues__clue--answered': this.props.hasAnswered,
-                        'crossword__clues__clue--selected': this.props.isSelected
+                        'crossword__clue': true,
+                        'crossword__clue--answered': this.props.hasAnswered,
+                        'crossword__clue--selected': this.props.isSelected
                     }),
                     onClick: this.onClick
                 },
-                    React.DOM.span({className: 'crossword__clues__clue__number'}, this.props.number),
-                    React.DOM.span({className: 'crossword__clues__clue__text'}, this.props.clue)
+                    React.DOM.span({className: 'crossword__clue-number'}, this.props.number),
+                    React.DOM.span({className: 'crossword__clue-text'}, this.props.clue)
                 );
             }
         });
@@ -30,7 +30,7 @@ define([
     return React.createClass({
         render: function () {
             var that = this,
-                headerClass = 'crossword__clues__header';
+                headerClass = 'crossword__clues-header';
 
             function cluesByDirection(direction) {
                 return _.chain(that.props.clues)
