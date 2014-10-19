@@ -396,7 +396,8 @@ define([
                             maxLength: "1",
                             onKeyDown: this.onKeyDown,
                             value: this.hiddenInputValue(),
-                            onClick: this.onClickHiddenInput
+                            onClick: this.onClickHiddenInput,
+                            autoComplete: "off"
                         }
                     ))
                 ),
