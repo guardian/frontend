@@ -6,6 +6,7 @@ define([
     'react',
     'common/modules/crosswords/clues',
     'common/modules/crosswords/controls',
+    'common/modules/crosswords/focussedClue',
     'common/modules/crosswords/grid',
     'common/modules/crosswords/helpers',
     'common/modules/crosswords/keycodes',
@@ -18,6 +19,7 @@ define([
     React,
     Clues,
     Controls,
+    FocussedClue,
     Grid,
     helpers,
     keycodes,
@@ -325,6 +327,9 @@ define([
                 };
 
             return React.DOM.div(null,
+                FocussedClue({
+                    clueText: focussed ? focussed.clue : null
+                }),
                 React.DOM.div({
                     className: 'crossword__grid-wrapper'
                 },
