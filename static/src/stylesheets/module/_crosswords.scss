@@ -61,7 +61,8 @@
 }
 
 .crossword__grid-wrapper {
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
     position: relative;
 }
 
