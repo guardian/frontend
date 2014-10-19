@@ -329,6 +329,16 @@ define([
             });
         },
 
+        onClearAll: function () {
+            _.forEach(this.state.grid, function (row) {
+                _.forEach(row, function (cell) {
+                    cell.value = "";
+                });
+            });
+
+            this.forceUpdate();
+        },
+
         render: function () {
             var focussed = this.clueInFocus(),
                 isHighlighted = function (x, y) {
@@ -375,7 +385,8 @@ define([
                     onCheat: this.onCheat,
                     onSolution: this.onSolution,
                     onCheck: this.onCheck,
-                    onCheckAll: this.onCheckAll
+                    onCheckAll: this.onCheckAll,
+                    onClearAll: this.onClearAll
                 }),
                 Clues({
                     clues: this.cluesData(),

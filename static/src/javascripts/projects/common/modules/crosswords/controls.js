@@ -22,7 +22,11 @@ define([
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onSolution
-                }, "Solution")
+                }, "Solution"),
+                React.DOM.button({
+                    className: buttonClassName,
+                    onClick: this.props.onClearAll
+                }, "Clear")
             ];
 
             return React.DOM.div({
