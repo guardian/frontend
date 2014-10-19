@@ -6,7 +6,7 @@ define([
             return React.DOM.div({
                 className: 'crossword__focussed-clue',
                 dangerouslySetInnerHTML: {
-                    __html: this.props.clueText
+                    '__html': this.props.clueText
                 }
             });
         }

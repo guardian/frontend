@@ -22,7 +22,7 @@ define([
                     onClick: this.onClick,
                     value: this.props.number,
                     dangerouslySetInnerHTML: {
-                        __html: this.props.clue
+                        '__html': this.props.clue
                     }
                 });
             }

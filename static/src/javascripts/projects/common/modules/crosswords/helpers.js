@@ -22,7 +22,7 @@ define([
                     isEditable: false,
                     isError: false,
                     isAnimating: false,
-                    value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ""
+                    value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ''
                 };
             });
         });

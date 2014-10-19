@@ -91,20 +91,22 @@ define([
 
         focusPreviousClue: function () {
             var i = this.indexOfClueInFocus(),
-                entries = this.props.data.entries;
+                entries = this.props.data.entries,
+                newClue;
 
             if (i !== -1) {
-                var newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
+                newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
                 this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
             }
         },
 
         focusNextClue: function () {
             var i = this.indexOfClueInFocus(),
-                entries = this.props.data.entries;
+                entries = this.props.data.entries,
+                newClue;
 
             if (i !== -1) {
-                var newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
+                newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
                 this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
             }
         },
@@ -276,10 +278,11 @@ define([
             var that = this,
                 cells = _.map(helpers.cellsForEntry(entry), function (cell) {
                     return that.state.grid[cell.x][cell.y];
-                });
+                }),
+                badCells;
 
             if (entry.solution) {
-                var badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
+                badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
                     var cell = cellAndSolution[0],
                         solution = cellAndSolution[1];
                     return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
@@ -296,7 +299,7 @@ define([
                 setTimeout(function () {
                     _.forEach(badCells, function (cell) {
                         cell.isError = false;
-                        cell.value = "";
+                        cell.value = '';
                     });
                     that.forceUpdate();
                     that.save();
@@ -334,7 +337,7 @@ define([
         onClearAll: function () {
             _.forEach(this.state.grid, function (row) {
                 _.forEach(row, function (cell) {
-                    cell.value = "";
+                    cell.value = '';
                 });
             });
 
@@ -349,7 +352,7 @@ define([
                 currentValue = this.state.grid[cell.x][cell.y].value;
             }
 
-            return currentValue ? currentValue : "";
+            return currentValue ? currentValue : '';
         },
 
         onClickHiddenInput: function () {
@@ -393,11 +396,11 @@ define([
                             type: 'text',
                             className: 'crossword__hidden-input',
                             ref: 'hiddenInput',
-                            maxLength: "1",
+                            maxLength: '1',
                             onKeyDown: this.onKeyDown,
                             value: this.hiddenInputValue(),
                             onClick: this.onClickHiddenInput,
-                            autoComplete: "off"
+                            autoComplete: 'off'
                         }
                     ))
                 ),

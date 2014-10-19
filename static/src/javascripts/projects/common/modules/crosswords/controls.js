@@ -1,7 +1,7 @@
 define([
     'react'
 ], function (React) {
-    var buttonClassName = "button button--small";
+    var buttonClassName = 'button button--small';
 
     return React.createClass({
         render: function () {
@@ -9,29 +9,29 @@ define([
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onCheck
-                }, "Check"),
+                }, 'Check'),
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onCheat
-                }, "Cheat")
+                }, 'Cheat')
             ], omnipresentControls = [
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onCheckAll
-                }, "Check all"),
+                }, 'Check all'),
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onSolution
-                }, "Solution"),
+                }, 'Solution'),
                 React.DOM.button({
                     className: buttonClassName,
                     onClick: this.props.onClearAll
-                }, "Clear")
+                }, 'Clear')
             ];
 
             return React.DOM.div({
-                    className: "crossword__controls"
-                },
+                className: 'crossword__controls'
+            },
                 this.props.clueInFocus ? focussedControls.concat(omnipresentControls) : omnipresentControls
             )
         }
