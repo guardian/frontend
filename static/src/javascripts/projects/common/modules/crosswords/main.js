@@ -64,6 +64,7 @@ define([
                     this.focusNextClue();
                 }
             } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
+                event.preventDefault();
                 if (event.keyCode == keycodes.backspace) {
                     this.setCellValue(cell.x, cell.y, null);
                     this.save();
@@ -153,8 +154,9 @@ define([
         focusHiddenInput: function (x, y) {
             var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
 
-            wrapper.style.left = (x * 31) + 'px';
-            wrapper.style.top = (y * 31) + 'px';
+            /** This has to be done before focus to move viewport accordingly */
+            wrapper.style.left = ((x * 32) + 1) + 'px';
+            wrapper.style.top = ((y * 32) + 1) + 'px';
 
             if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
                 this.refs.hiddenInput.getDOMNode().focus();
@@ -339,6 +341,23 @@ define([
             this.forceUpdate();
         },
 
+        hiddenInputValue: function () {
+            var cell = this.state.cellInFocus,
+                currentValue;
+
+            if (cell) {
+                currentValue = this.state.grid[cell.x][cell.y].value;
+            }
+
+            return currentValue ? currentValue : "";
+        },
+
+        onClickHiddenInput: function () {
+            var focussed = this.state.cellInFocus;
+
+            this.onSelect(focussed.x, focussed.y);
+        },
+
         render: function () {
             var focussed = this.clueInFocus(),
                 isHighlighted = function (x, y) {
@@ -374,9 +393,10 @@ define([
                             type: 'text',
                             className: 'crossword__hidden-input',
                             ref: 'hiddenInput',
+                            maxLength: "1",
                             onKeyDown: this.onKeyDown,
-                            value: '',
-                            onBlur: this.onBlur
+                            value: this.hiddenInputValue(),
+                            onClick: this.onClickHiddenInput
                         }
                     ))
                 ),

@@ -67,12 +67,21 @@
 
 .crossword__hidden-input-wrapper {
     position: absolute;
-    overflow: hidden;
-    width: 0;
 }
 
 .crossword__hidden-input {
-    opacity: 0;
+    border: 0;
+    padding: 0;
+    width: 31px;
+    height: 31px;
+    line-height: 31px;
+    text-align: center;
+    color: transparent;
+    background-color: transparent;
+    font-size: 14px;
+    font-family: $f-serif-text;
+    font-weight: 800;
+    text-anchor: middle;
 }
 
 .crossword__focussed-clue {
