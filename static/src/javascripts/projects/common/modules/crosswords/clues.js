@@ -19,11 +19,12 @@ define([
                         'crossword__clue--answered': this.props.hasAnswered,
                         'crossword__clue--selected': this.props.isSelected
                     }),
-                    onClick: this.onClick
-                },
-                    React.DOM.span({className: 'crossword__clue-number'}, this.props.number),
-                    React.DOM.span({className: 'crossword__clue-text'}, this.props.clue)
-                );
+                    onClick: this.onClick,
+                    value: this.props.number,
+                    dangerouslySetInnerHTML: {
+                        __html: this.props.clue
+                    }
+                });
             }
         });
 
@@ -56,11 +57,11 @@ define([
                 React.DOM.h3({
                     className: headerClass
                 }, 'Across'),
-                React.DOM.ul(null, cluesByDirection('across')),
+                React.DOM.ol(null, cluesByDirection('across')),
                 React.DOM.h3({
                     className: headerClass
                 }, 'Down'),
-                React.DOM.ul(null, cluesByDirection('down'))
+                React.DOM.ol(null, cluesByDirection('down'))
             );
         }
     });

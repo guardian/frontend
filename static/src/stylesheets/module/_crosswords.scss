@@ -35,7 +35,6 @@
 }
 
 .crossword__clue {
-    list-style: none;
     cursor: pointer;
 }
 
@@ -49,7 +48,7 @@
     background-color: $c-crosswordAccent1;
 }
 
-.crossword__clue--answered .crossword__clue-text {
+.crossword__clue--answered {
     text-decoration: line-through;
 }
 
