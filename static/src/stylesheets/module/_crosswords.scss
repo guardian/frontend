@@ -14,7 +14,7 @@
 .crossword__cell-number {
     font-size: 8px;
     font-family: $f-sans-serif-text;
-    alignment-baseline: before-edge;
+    dominant-baseline: text-before-edge;
 }
 
 .crossword__cell-text {
@@ -23,7 +23,7 @@
     font-family: $f-serif-text;
     font-weight: 800;
     text-anchor: middle;
-    alignment-baseline: central;
+    dominant-baseline: central;
     opacity: 1;
 
     @include transition(opacity .15s ease-in);
