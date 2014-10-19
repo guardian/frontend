@@ -361,6 +361,10 @@ define([
             this.onSelect(focussed.x, focussed.y);
         },
 
+        hasSolutions: function () {
+            return 'solution' in this.props.data.entries[0];
+        },
+
         render: function () {
             var focussed = this.clueInFocus(),
                 isHighlighted = function (x, y) {
@@ -405,6 +409,7 @@ define([
                     ))
                 ),
                 Controls({
+                    hasSolutions: this.hasSolutions(),
                     clueInFocus: focussed,
                     onCheat: this.onCheat,
                     onSolution: this.onSolution,
