@@ -59,6 +59,16 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        crosswords: {
+            options: {
+                name: 'bootstraps/crosswords',
+                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',
