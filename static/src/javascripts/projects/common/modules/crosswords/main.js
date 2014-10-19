@@ -56,7 +56,14 @@ define([
         onKeyDown: function (event) {
             var cell = this.state.cellInFocus;
 
-            if (!event.metaKey && !event.ctrlKey && !event.altKey) {
+            if (event.keyCode == keycodes.tab) {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    this.focusPreviousClue();
+                } else {
+                    this.focusNextClue();
+                }
+            } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
                 if (event.keyCode == keycodes.backspace) {
                     this.setCellValue(cell.x, cell.y, null);
                     this.save();
@@ -74,6 +81,30 @@ define([
                     this.save();
                     this.focusNext();
                 }
+            }
+        },
+
+        indexOfClueInFocus: function () {
+            return this.props.data.entries.indexOf(this.clueInFocus());
+        },
+
+        focusPreviousClue: function () {
+            var i = this.indexOfClueInFocus(),
+                entries = this.props.data.entries;
+
+            if (i !== -1) {
+                var newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
+                this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
+            }
+        },
+
+        focusNextClue: function () {
+            var i = this.indexOfClueInFocus(),
+                entries = this.props.data.entries;
+
+            if (i !== -1) {
+                var newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
+                this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
             }
         },
 
