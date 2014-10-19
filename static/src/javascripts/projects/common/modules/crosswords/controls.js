@@ -8,24 +8,29 @@ define([
             var focussedControls = [
                 React.DOM.button({
                     className: buttonClassName,
-                    onClick: this.props.onCheck
+                    onClick: this.props.onCheck,
+                    key: 'check'
                 }, 'Check'),
                 React.DOM.button({
                     className: buttonClassName,
-                    onClick: this.props.onCheat
+                    onClick: this.props.onCheat,
+                    key: 'cheat'
                 }, 'Cheat')
             ], omnipresentControls = [
                 React.DOM.button({
                     className: buttonClassName,
-                    onClick: this.props.onCheckAll
+                    onClick: this.props.onCheckAll,
+                    key: 'checkAll'
                 }, 'Check all'),
                 React.DOM.button({
                     className: buttonClassName,
-                    onClick: this.props.onSolution
+                    onClick: this.props.onSolution,
+                    key: 'solution'
                 }, 'Solution'),
                 React.DOM.button({
                     className: buttonClassName,
-                    onClick: this.props.onClearAll
+                    onClick: this.props.onClearAll,
+                    key: 'clear'
                 }, 'Clear')
             ];
 
