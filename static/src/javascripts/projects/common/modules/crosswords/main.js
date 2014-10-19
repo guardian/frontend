@@ -266,6 +266,7 @@ define([
                         cell.value = "";
                     });
                     that.forceUpdate();
+                    that.save();
                 }, 150);
             }
         },
