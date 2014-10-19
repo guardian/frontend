@@ -11,31 +11,27 @@
     fill: $c-crosswordAccent1;
 }
 
-.crossword__grid__cell--animating {
-    @include transition(fill .25s ease-in-out);
-}
-
-.crossword__grid__cell--error {
-    fill: lighten($c-error, 30%);
-}
-
-.crossword__grid__cell--success {
-    fill: lighten($c-success, 30%);
-}
-
 .crossword__grid__cell__number {
     font-size: 8px;
     font-family: $f-sans-serif-text;
     alignment-baseline: before-edge;
 }
 
-.crossword__grid__cell__entry {
+.crossword__cell-text {
     display: inline-block;
     font-size: 14px;
     font-family: $f-serif-text;
     font-weight: 800;
     text-anchor: middle;
     alignment-baseline: central;
+    opacity: 1;
+
+    @include transition(opacity .15s ease-in);
+}
+
+.crossword__cell-text--error {
+    fill: darken($c-error, 20%);
+    opacity: 0;
 }
 
 .crossword__clues__clue {

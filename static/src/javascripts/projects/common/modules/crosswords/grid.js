@@ -33,7 +33,10 @@ define([
                         x: left + 31 / 2,
                         y: top + 31 / 2,
                         key: 'entry',
-                        className: 'crossword__grid__cell__entry'
+                        className: classSet({
+                            'crossword__cell-text': true,
+                            'crossword__cell-text--error': this.props.isError
+                        })
                     }, this.props.value));
                 }
 
@@ -47,9 +50,6 @@ define([
                         height: 31,
                         className: classSet({
                             'crossword__grid__cell': true,
-                            'crossword__grid__cell--error': this.props.isError,
-                            'crossword__grid__cell--success': this.props.isSuccess,
-                            'crossword__grid__cell--animating': this.props.isAnimating,
                             'crossword__grid__cell--focussed': this.props.isFocussed,
                             'crossword__grid__cell--highlighted': this.props.isHighlighted
                         })

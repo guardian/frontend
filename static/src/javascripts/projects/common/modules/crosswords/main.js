@@ -249,44 +249,25 @@ define([
                 var badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
                     var cell = cellAndSolution[0],
                         solution = cellAndSolution[1];
-                    return cell.value !== solution;
+                    return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
                 }), function (cellAndSolution) {
                     return cellAndSolution[0];
                 });
 
-                if (badCells.length === 0) {
-                    this.flashCells(_.reject(cells, 'isSuccess'), 'isSuccess');
-                } else {
-                    this.flashCells(_.reject(badCells, 'isError'), 'isError');
-                }
-            }
-        },
-
-        flashCells: function(cells, animationProperty) {
-            var that = this;
-
-            _.forEach(cells, function (cell) {
-                cell[animationProperty] = true;
-                cell.isAnimating = true;
-            });
-
-            this.forceUpdate();
-
-            setTimeout(function () {
-                _.forEach(cells, function (cell) {
-                    cell[animationProperty] = false;
+                _.forEach(badCells, function (cell) {
+                    cell.isError = true;
                 });
 
-                that.forceUpdate();
+                this.forceUpdate();
 
                 setTimeout(function () {
-                    _.forEach(cells, function (cell) {
-                        cell.isAnimating = false;
+                    _.forEach(badCells, function (cell) {
+                        cell.isError = false;
+                        cell.value = "";
                     });
-
                     that.forceUpdate();
-                }, 250);
-            }, 250);
+                }, 150);
+            }
         },
 
         onCheat: function () {
