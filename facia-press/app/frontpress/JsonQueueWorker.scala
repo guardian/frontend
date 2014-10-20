@@ -90,6 +90,9 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
             consecutiveProcessingErrors.recordSuccess()
 
           case Failure(error) =>
+            queue.delete(receipt) onFailure {
+              case e => log.error(s"Error deleting message $id from queue", e)
+            }
             log.error(s"Error processing message $id", error)
             consecutiveProcessingErrors.recordError()
         }
