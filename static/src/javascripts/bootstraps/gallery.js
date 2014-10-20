@@ -5,7 +5,6 @@ define([
     'lodash/functions/debounce',
     'lodash/collections/forEach',
     'common/utils/$',
-    'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
     'common/modules/gallery/lightbox',
@@ -17,7 +16,6 @@ define([
     debounce,
     forEach,
     $,
-    config,
     mediator,
     Component,
     LightboxGallery,
@@ -58,7 +56,7 @@ define([
             };
             mostViewed.fetch(container, 'html');
         },
-        ready = function (config) {
+        ready = function () {
             LightboxGallery.init();
             blockSharing.init();
 
@@ -83,7 +81,7 @@ define([
 
             mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
-            mediator.emit('page:gallery:ready', config);
+            mediator.emit('page:gallery:ready');
             transcludeMostPopular();
         };
 
