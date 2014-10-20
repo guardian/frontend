@@ -1,8 +1,7 @@
 define([
-    'common/utils/ajax',
     'helpers/fixtures',
     'jasq'
-], function(ajax, fixtures) {
+], function(fixtures) {
 
     describe("Most popular", {
         moduleName: 'common/modules/onward/popular',
