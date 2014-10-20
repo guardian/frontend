@@ -1175,6 +1175,11 @@ button {
     display: block;
 }
 
+.cnf-form__thumbnail {
+    position: absolute;
+    right: 10px;
+}
+
 /*****************************************/
 /* ICONS */
 /*****************************************/
