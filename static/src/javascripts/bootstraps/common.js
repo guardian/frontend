@@ -421,24 +421,10 @@ define([
                         }, 1);
                     }
                 });
-            },
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
-                        f = new Fonts(fontStyleNodes, fileFormat);
-                    f.loadFromServerAndApply();
-                }
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
             }
         },
         ready = function () {
             modules.initDiscussion();
-            modules.loadFonts(navigator.userAgent);
-            modules.initUserAdTargeting();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
