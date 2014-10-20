@@ -567,6 +567,7 @@ $avatarPadding: $gs-gutter / 2;
     @include mq(tablet) {
         .d-comment__avatar {
             width: $avatarSize-small;
+            height: $avatarSize-small;
         }
         .d-comment__content {
             margin-left: $avatarSize-small + $avatarPadding;
