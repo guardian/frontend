@@ -116,7 +116,7 @@ define([
                 }
             },
             inline1: {
-                sizeMappings: globalConfig.switches.mobileMpu ?
+                sizeMappings: globalConfig.switches.mobileMpu && globalConfig.page.edition === 'UK' ?
                     {
                         mobile:             '300,50|300,250',
                         'mobile-landscape': '300,50|320,50|300,250',
