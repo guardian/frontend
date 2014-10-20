@@ -1,27 +1,27 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
-    'common/utils/config',
-    'common/modules/component',
-    'common/modules/gallery/lightbox',
-    'common/modules/ui/blockSharing',
-    'lodash/functions/debounce',
-    'lodash/collections/forEach',
+    'bean',
     'bonzo',
     'qwery',
-    'bean'
+    'lodash/functions/debounce',
+    'lodash/collections/forEach',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/mediator',
+    'common/modules/component',
+    'common/modules/gallery/lightbox',
+    'common/modules/ui/blockSharing'
 ], function (
-    mediator,
-    $,
-    config,
-    Component,
-    LightboxGallery,
-    BlockSharing,
-    debounce,
-    forEach,
+    bean,
     bonzo,
     qwery,
-    bean
+    debounce,
+    forEach,
+    $,
+    config,
+    mediator,
+    Component,
+    LightboxGallery,
+    blockSharing
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -60,7 +60,7 @@ define([
         },
         ready = function (config) {
             LightboxGallery.init();
-            BlockSharing.init();
+            blockSharing.init();
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 

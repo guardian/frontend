@@ -2,8 +2,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -25,8 +25,8 @@ define([
     bean,
     bonzo,
     qwery,
-    $,
     _,
+    $,
     config,
     detect,
     mediator,
@@ -38,7 +38,7 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
-    BlockSharing,
+    blockSharing,
     dropdowns,
     Message,
     NotificationCounter,
@@ -192,7 +192,7 @@ define([
         handleUpdates: function () {
             mediator.on('modules:autoupdate:updates', function () {
                 modules.createTimeline();
-                BlockSharing.init();
+                blockSharing.init();
             });
         },
 
@@ -276,7 +276,7 @@ define([
         article.modules.initOpen(config);
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
-        BlockSharing.init();
+        blockSharing.init();
 
         mediator.emit('page:liveblog:ready', config);
     }

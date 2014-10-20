@@ -5,7 +5,6 @@ import com.gu.openplatform.contentapi.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
 }
 import common.{LinkCounts, LinkTo, Reference}
-import common.`package`._
 import conf.Configuration.facebook
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
@@ -239,16 +238,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   } yield FaciaImageElement(src, width, height)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
-
-  def shareOptions(blockid: String): Seq[BlockLevelSharing] = {
-    val shortBlockUrl = s"$shortUrl#$blockid".urlEncoded
-    val longBlockUrl = s"$webUrl#$blockid".urlEncoded
-    List(
-      BlockLevelSharing("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=$longBlockUrl&ref=responsive"),
-      BlockLevelSharing("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$shortBlockUrl"),
-      BlockLevelSharing("Google plus", "gplus", s"https://plus.google.com/share?url=$shortBlockUrl")
-    )
-  }
 }
 
 object Content {
@@ -420,7 +409,7 @@ object Snap {
   def isSnap(id: String): Boolean = id.startsWith("snap/")
 }
 
-class Article(content: ApiContentWithMeta) extends Content(content) {
+class Article(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -562,7 +551,7 @@ object Video {
   def apply(delegate: ApiContent): Video = new Video(ApiContentWithMeta(delegate))
 }
 
-class Gallery(content: ApiContentWithMeta) extends Content(content) {
+class Gallery(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 

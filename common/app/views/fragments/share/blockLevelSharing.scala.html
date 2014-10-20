@@ -1,8 +1,8 @@
-@(id: String, shareItems: Seq[model.BlockLevelSharing], shortUrl: String, articleType: Option[String] = None)
+@(id: String, shareItems: Seq[model.ShareOption], shortUrl: String, articleType: Option[String] = None)
 
-<div class="block-share block-share--@articleType" data-link-name="block share">
+<div class="block-share @if(articleType.nonEmpty) { block-share--@articleType }" data-link-name="block share">
 
-    @shareItems.map{ item: model.BlockLevelSharing =>
+    @shareItems.map{ item: model.ShareOption =>
         <a class="block-share__link js-blockshare-link" href="@item.url" target="_blank" data-link-name="@item.css">
             <div class="block-share__item block-share__item--@item.css">
                 <i class="i"></i>
@@ -18,7 +18,7 @@
 
 </div>
 
-<div class="block-share--@articleType-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
+<div class="@if(articleType.nonEmpty) { block-share--@articleType-mobile }" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
     <div class="block-share__item block-share__item--mobile"><i class="i"></i>
         <span class="u-h">share</span>
     </div>
@@ -27,7 +27,7 @@
 <div id="share-modal-@id" class="overlay share-modal js-share-modal">
     <div class="share-modal__content" data-link-name="mobile block share">
         <h2 class="share-modal__title">Share this post</h2>
-        @shareItems.map { item: model.BlockLevelSharing =>
+        @shareItems.map { item: model.ShareOption =>
         <a class="share-modal__link" href="@item.url" target="_blank" data-link-name="@item.css">
             <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
                 <i class="i"></i>

@@ -247,20 +247,20 @@
 .block-share--gallery .block-share__link {
 
     .block-share__item--facebook {
-        border-color: #767676;
-        color: #767676;
+        border-color: $c-neutral2;
+        color: $c-neutral2;
         .i { @include icon(share-facebook--white); }
     }
 
     .block-share__item--twitter {
-        border-color: #767676;
-        color: #767676;
+        border-color: $c-neutral2;
+        color: $c-neutral2;
         .i { @include icon(share-twitter--white); }
     }
 
     .block-share__item--gplus {
-        border-color: #767676;
-        color: #767676;
+        border-color: $c-neutral2;
+        color: $c-neutral2;
         .i { @include icon(share-gplus--white); }
     }
 
@@ -297,7 +297,7 @@
 
 .block-share--gallery {
     .block-share__item--expand {
-        border-color: #767676;
+        border-color: $c-neutral2;
 
         &:hover {
             border-color: #ffffff;
@@ -307,7 +307,7 @@
     .block-share__item--link {
         background-color: transparent;
         color: #ffffff;
-        border-color: #767676;
+        border-color: $c-neutral2;
 
         &:hover {
             color: #ffffff;

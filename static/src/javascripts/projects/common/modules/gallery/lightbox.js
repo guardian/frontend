@@ -1,36 +1,36 @@
 define([
-    'common/utils/_',
     'bean',
     'bonzo',
     'qwery',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/url',
     'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fsm',
     'common/utils/detect',
+    'common/utils/fsm',
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/utils/url',
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
-    'common/utils/template',
     'text!common/views/content/block-sharing.html'
 ], function (
-    _,
     bean,
     bonzo,
     qwery,
+    _,
     $,
     ajax,
-    url,
     config,
-    mediator,
-    FiniteStateMachine,
     detect,
-    Component,
-    BlockSharing,
-    imagesModule,
+    FiniteStateMachine,
+    mediator,
     template,
+    url,
+    Component,
+    blockSharing,
+    imagesModule,
     blockSharingTpl
     ) {
     function GalleryLightbox() {
@@ -149,7 +149,7 @@ define([
 
     GalleryLightbox.prototype.generateImgHTML = function(img, i) {
         var blockShortUrl = config.page.shortUrl + '?index=' + i,
-            blockLongUrl = window.location.href.match(/^[^\#\?]+/)[0] + '?index=' + i,
+            blockLongUrl = config.page.pageId + '?index=' + i,
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
@@ -439,7 +439,7 @@ define([
     };
 
     GalleryLightbox.prototype.show = function() {
-        BlockSharing.init();
+        blockSharing.init();
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
