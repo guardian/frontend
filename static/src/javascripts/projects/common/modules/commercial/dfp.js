@@ -164,6 +164,13 @@ define([
                 sizeMappings: {
                     mobile: '140,90'
                 }
+            },
+            fobadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
             }
         },
         callbacks = {

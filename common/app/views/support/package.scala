@@ -998,9 +998,8 @@ object GetClasses {
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
+      "js-sponsored-container" -> (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)),
       "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls

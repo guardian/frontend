@@ -17,6 +17,9 @@
                 @DfpAgent.sponsorshipTag(config).map { keyword =>
                     data-keywords="@keyword"
                 }
+                @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
+                    data-sponsorship="@sponsorshipType"
+                }
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
