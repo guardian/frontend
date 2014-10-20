@@ -35,23 +35,23 @@ $avatarPadding: $gs-gutter / 2;
         margin-right: 0;
         max-width: gs-span(8);
         .discussion__heading,
-        .d-comment-box__meta {
+        .d-comment-box--top-level .d-comment-box__meta {
             margin-left: -1 * (gs-span(2)  + $gs-gutter);
             width: $left-column;
             position: absolute;
         }
-        .d-comment-box__meta {
-            top: $gs-baseline * 4;
-        }
         .d-comment-box--top-level {
             padding-top: $gs-baseline * 2;
+            .d-comment-box__meta {
+                top: $gs-baseline * 4;
+            }
         }
     }
     @include mq(leftCol) {
         margin-left: gs-span(4) + $gs-gutter;
         margin-right: 0;
         .discussion__heading,
-        .d-comment-box__meta {
+        .d-comment-box--top-level .d-comment-box__meta {
             margin-left: -1 * (gs-span(4) + $gs-gutter);
         }
     }
