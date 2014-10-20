@@ -688,7 +688,6 @@ define([
 
         function resize(el) {
             setTimeout(function() {
-                el.style.height = '1px';
                 el.style.height = (el.scrollHeight) + 'px';
             });
         }
