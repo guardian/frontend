@@ -6,6 +6,7 @@
     <article class="content content--interactive tone-@interactive.visualTone @interactive match {
             case a if a.isAdvertisementFeature => {content--advertisement-feature}
             case s if s.isSponsored => {content--sponsored}
+            case s if s.isFoundationSupported => {content--foundation-supported}
             case _ => { }
         }"
         itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">

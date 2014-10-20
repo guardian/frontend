@@ -186,7 +186,8 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice__item--nav-list {
-    display: block;
+    display: inline-block;
+    width: 100%;
 }
 
 .facia-slice--nav-list--media {
