@@ -57,6 +57,10 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.id--signed-out .discussion--empty {
+    min-height: gs-height(2);
+}
+
 .discussion__top-border {
     border-top: 1px solid colour(neutral-4);
     margin-top: -1px;
