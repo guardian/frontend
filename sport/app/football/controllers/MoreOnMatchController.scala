@@ -121,11 +121,11 @@ object MoreOnMatchController extends Controller with Football with Requests with
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
-        Cached(60)(TemporaryRedirect(canonicalPage.url))
+        Cached(60)(Found(canonicalPage.url))
       }
     }.getOrElse {
       // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-      Future.successful(Cached(60)(TemporaryRedirect("/football/results")))
+      Future.successful(Cached(60)(Found("/football/results")))
     }
   }
 
