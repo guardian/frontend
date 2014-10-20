@@ -15,7 +15,8 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
       ("secondName", textField),
       ("gender", comboList(genders)),
       "birthDate" -> dateMapping,
-      "address" -> idAddress
+      "address" -> idAddress,
+      "billingAddress" -> idAddress
     )(AccountFormData.apply)(AccountFormData.unapply)
   }
 
@@ -45,7 +46,8 @@ case class AccountFormData(
   secondName: String,
   gender: String,
   birthDate: DateFormData,
-  address: AddressFormData
+  address: AddressFormData,
+  billingAddress: AddressFormData
 ) extends UserFormData{
 
   def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
@@ -60,7 +62,13 @@ case class AccountFormData(
       address3 = toUpdate(address.address3, currentUser.privateFields.address3),
       address4 = toUpdate(address.address4, currentUser.privateFields.address4),
       postcode = toUpdate(address.postcode, currentUser.privateFields.postcode),
-      country = toUpdate(address.country, currentUser.privateFields.country)
+      country = toUpdate(address.country, currentUser.privateFields.country),
+      billingAddress1 = toUpdate(billingAddress.address1, currentUser.privateFields.billingAddress1),
+      billingAddress2 = toUpdate(billingAddress.address2, currentUser.privateFields.billingAddress2),
+      billingAddress3 = toUpdate(billingAddress.address3, currentUser.privateFields.billingAddress3),
+      billingAddress4 = toUpdate(billingAddress.address4, currentUser.privateFields.billingAddress4),
+      billingPostcode = toUpdate(billingAddress.postcode, currentUser.privateFields.billingPostcode),
+      billingCountry  = toUpdate(billingAddress.country, currentUser.privateFields.billingCountry)
     ))
   )
 
@@ -81,6 +89,14 @@ object AccountFormData {
       address4 = user.privateFields.address4 getOrElse "",
       postcode = user.privateFields.postcode getOrElse "",
       country = user.privateFields.country getOrElse ""
+    ),
+    billingAddress = AddressFormData(
+      address1 = user.privateFields.billingAddress1 getOrElse "",
+      address2 = user.privateFields.billingAddress2 getOrElse "",
+      address3 = user.privateFields.billingAddress3 getOrElse "",
+      address4 = user.privateFields.billingAddress4 getOrElse "",
+      postcode = user.privateFields.billingPostcode getOrElse "",
+      country = user.privateFields.billingCountry getOrElse ""
     )
   )
 }
