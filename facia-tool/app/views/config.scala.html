@@ -85,13 +85,13 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
-                <label>ContentApi</label>
+                <label>ContentApi <span class="linky" data-bind="
+                    click: checkApiQueryStatus,
+                    visible: meta.apiQuery()">check</span></label>
                 <input type="text" data-bind="
                     value: meta.apiQuery,
                     valueUpdate: 'afterkeydown'"/>
-                <span class="linky api-query-status" data-bind="
-                    click: checkApiQueryStatus,
-                    visible: meta.apiQuery() && !state.apiQueryStatus()">check</span>
+
                 <!-- ko if: state.apiQueryStatus -->
                     <div class="api-query-results">
                         <div data-bind="
