@@ -425,6 +425,8 @@ define([
         },
         ready = function () {
             modules.initDiscussion();
+            modules.loadFonts(navigator.userAgent);
+            modules.initUserAdTargeting();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();

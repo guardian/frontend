@@ -43,7 +43,7 @@ Api.send = function(endpoint, method, data) {
     }
 
     var request = ajax({
-        url:  Api.root  + endpoint,
+        url: Api.root + endpoint,
         type: ('get' === method) ? 'jsonp' : 'json',
         method: method,
         crossOrigin: true,
