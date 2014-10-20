@@ -93,6 +93,12 @@ define([
                 });
             }
 
+            if (config.page.section === 'crosswords') {
+                require(['bootstraps/crosswords'], function (crosswords) {
+                    bootstrapContext('crosswords', crosswords);
+                });
+            }
+
             if (config.page.contentType === 'Article') {
                 bootstrapContext('article', article);
             }
