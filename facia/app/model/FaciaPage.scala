@@ -19,8 +19,12 @@ case class FaciaPage(id: String,
   override lazy val title: Option[String] = seoData.title
 
   lazy val keywordIds: Seq[String] = {
-    val normalizedId = id.replace("/", "-")
-    Seq(id, s"$normalizedId/$normalizedId")
+    if (id.split("/").size == 1) {
+      Seq(s"$id/$id")
+    } else {
+      val normalizedId = id.replace("/", "-")
+      Seq(id, s"$normalizedId/$normalizedId")
+    }
   }
 
   override lazy val isFront = true
