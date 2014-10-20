@@ -20,7 +20,7 @@ define([
             .css('display', 'block')
             .appendTo(container);
 
-        mediator.on('discussion:api:ready', function() {
+        mediator.on('discussion:api:ready', function () {
             discussionApi.getUser(userId)
                 .then(function (response) {
                     avatar.attr('src', response.userProfile.secureAvatarUrl);
