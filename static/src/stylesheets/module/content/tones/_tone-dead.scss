@@ -1,6 +1,6 @@
 @include tone-content-icons(dead, 'neutral2');
 
-@include tone-content-head(
+@include tone-content(
     dead, // $tone
     #ffffff, // $tonal__header-background
     $c-neutral2, // $tonal__header-text
@@ -10,11 +10,7 @@
     $c-liveDefault, // $tonal__headline-accent
     $c-neutral6, // $tonal__standfirst-background
     $c-mediaAccent2, // $tonal__standfirst-text
-    $c-liveDefault // $tonal__standfirst-link
-);
-
-@include tone-content-main(
-    dead, // $tone
+    $c-liveDefault, // $tonal__standfirst-link
     $c-neutral8, // $tonal__article-background
     $c-liveDefault // $tonal__article-link
 );

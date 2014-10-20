@@ -1,13 +1,13 @@
 @mixin tone-content-icons(
     $tone,
-    $tonal__header-icon) {
+    $tonal__head-icon) {
     .tonal__head--tone-#{$tone} {
         .commentcount i {
-            @extend %i-comment-tone-#{$tonal__header-icon};
+            @extend %i-comment-tone-#{$tonal__head-icon};
 
             @if $svg-support {
                 .svg & {
-                    @extend %svg-i-comment-tone-#{$tonal__header-icon};
+                    @extend %svg-i-comment-tone-#{$tonal__head-icon};
                 }
             }
         }
@@ -26,7 +26,7 @@
     }
 }
 
-@mixin tone-content-head(
+@mixin tone-content(
     $tone,
     $tonal__header-background,
     $tonal__header-text,
@@ -36,10 +36,14 @@
     $tonal__headline-accent,
     $tonal__standfirst-background,
     $tonal__standfirst-text,
-    $tonal__standfirst-link
+    $tonal__standfirst-link,
+    $tonal__article-background,
+    $tonal__article-link
     ) {
-    .tonal__head--tone-#{$tone},
-    %tonal__head--tone-#{$tone} {
+    .tonal--tone-#{$tone},
+    %tonal--tone-#{$tone} {
+        background-color: $tonal__article-background;
+
         .tonal__header {
             background-color: $tonal__header-background;
 
@@ -102,44 +106,33 @@
                 }
             }
         }
-    }
-}
 
-@mixin tone-content-main(
-    $tone,
-    $tonal__article-background,
-    $tonal__article-link
-    ) {
-    .tonal__main--tone-#{$tone},
-    %tonal__main--tone-#{$tone} {
-        background-color: $tonal__article-background;
-        padding-bottom: $gs-baseline*3;
-        margin-bottom: -$gs-baseline*3;
+        .tonal__main {
+            @include mq(phablet) {
+                padding-top: $gs-baseline * 2;
+            }
 
-        @include mq(phablet) {
-            padding-top: $gs-baseline * 2;
-        }
+            .tone-colour,
+            %tone-colour,
+            &.tone-colour {
+                &,
+                &:active,
+                &:focus,
+                &:hover {
+                    color: $tonal__article-link;
+                }
+            }
 
-        .tone-colour,
-        %tone-colour,
-        &.tone-colour {
-            &,
-            &:active,
-            &:focus,
-            &:hover {
+            .drop-cap,
+            .element-pullquote cite {
                 color: $tonal__article-link;
             }
-        }
 
-        .drop-cap,
-        .element-pullquote cite {
-            color: $tonal__article-link;
-        }
-
-        .element-pullquote {
-            &:before,
-            &:after {
-                background-color: $tonal__article-link;
+            .element-pullquote {
+                &:before,
+                &:after {
+                    background-color: $tonal__article-link;
+                }
             }
         }
     }
