@@ -16,7 +16,10 @@ define([
                 },
                 'common/modules/commercial/dfp': function () {
                     return {
-                        addSlot: function () {}
+                        addSlot: function () {},
+                        createAdSlot: function () {
+                            return '<div class="ad-slot"></div>';
+                        }
                     }
                 }
             }
