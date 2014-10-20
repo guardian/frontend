@@ -14,7 +14,12 @@ define([
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
-    'text!common/views/content/block-sharing.html'
+    'text!common/views/content/block-sharing.html',
+    'text!common/views/content/button.html',
+    'text!common/views/content/endslate.html',
+    'text!common/views/content/loader.html',
+    'text!common/views/content/share-button.html',
+    'text!common/views/content/share-button-mobile.html'
 ], function (
     bean,
     bonzo,
@@ -31,7 +36,12 @@ define([
     Component,
     blockSharing,
     imagesModule,
-    blockSharingTpl
+    blockSharingTpl,
+    buttonTpl,
+    endslateTpl,
+    loaderTpl,
+    shareButtonTpl,
+    shareButtonMobileTpl
     ) {
     function GalleryLightbox() {
 
@@ -42,40 +52,9 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl =
-                '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                '<button class="gallery-lightbox__btn-body"><i></i>{{label}}</button>' +
-                '</div>';
+            var tmpl = buttonTpl;
             return template(tmpl, {label: label});
         }
-
-        this.endslateHTML =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--endslate js-gallery-slide">' +
-            '<div class="gallery-lightbox__endslate js-gallery-endslate"></div>' +
-            '</li>';
-
-        this.loaderHTML =
-            '<div class="pamplemousse gallery-lightbox__loader js-loader">' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
-
-        this.shareButtonHtml =
-            '<a class="block-share__link js-blockshare-link" href="{{url}}" target="_blank" data-link-name="{{css}}">' +
-            '<div class="block-share__item block-share__item--{{css}}">' +
-            '<i class="i"></i>'+
-            '<span class="u-h">{{text}}</span>' +
-            '</div>' +
-            '</a>';
-
-        this.shareButtonMobileHtml =
-            '<a class="share-modal__link" href="{{url}}" target="_blank" data-link-name="{{css}}">' +
-            '<div class="share-modal__item button button--xlarge button--tertiary share-modal__item--{{css}}">' +
-            '<i class="i"></i>' +
-            '{{text}}' +
-            '</div>' +
-            '</a>';
 
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
@@ -171,8 +150,8 @@ define([
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl: blockShortUrl,
-            shareButtons: _.map(shareItems, template.bind(null, this.shareButtonHtml)).join(''),
-            shareButtonsMobile: _.map(shareItems, template.bind(null, this.shareButtonMobileHtml)).join('')
+            shareButtons: _.map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: _.map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
@@ -256,7 +235,7 @@ define([
                     $img = bonzo(this.$images[i]);
                 if ($img.attr('src') !== imgSrc) {
                     var $parent = $img.parent()
-                        .append(bonzo.create(this.loaderHTML));
+                        .append(bonzo.create(loaderTpl));
 
                     $img.attr('src', imgSrc); // src can change with width so overwrite every time
 
@@ -494,7 +473,7 @@ define([
 
     GalleryLightbox.prototype.loadEndslate = function() {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(this.endslateHTML);
+            this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';
