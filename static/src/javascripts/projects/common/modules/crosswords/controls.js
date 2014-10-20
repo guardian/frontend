@@ -57,7 +57,7 @@ define([
                 className: 'crossword__controls'
             },
                 controls
-            )
+            );
         }
     });
 });

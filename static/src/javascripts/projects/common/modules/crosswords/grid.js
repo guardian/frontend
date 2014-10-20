@@ -1,3 +1,4 @@
+/* jshint newcap: false */
 define([
     'common/utils/_',
     'react'

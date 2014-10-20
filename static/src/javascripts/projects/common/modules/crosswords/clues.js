@@ -1,3 +1,4 @@
+/* jshint newcap: false */
 define([
     'common/utils/_',
     'react'
@@ -45,7 +46,7 @@ define([
                             hasAnswered: clue.hasAnswered,
                             isSelected: clue.isSelected,
                             focusClue: function () {
-                                that.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction)
+                                that.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
                             }
                         });
                     });

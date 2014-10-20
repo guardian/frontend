@@ -16,6 +16,7 @@
     "quotmark" : "single",
     "unused"   : true,
     "undef"    : true,
+    "newcap"   : true,
     "trailing" : true,
 
     // Relaxing options

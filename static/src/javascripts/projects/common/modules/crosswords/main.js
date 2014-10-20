@@ -1,3 +1,4 @@
+/* jshint newcap: false */
 define([
     'common/utils/$',
     'common/utils/_',
@@ -56,7 +57,7 @@ define([
         onKeyDown: function (event) {
             var cell = this.state.cellInFocus;
 
-            if (event.keyCode == keycodes.tab) {
+            if (event.keyCode === keycodes.tab) {
                 event.preventDefault();
                 if (event.shiftKey) {
                     this.focusPreviousClue();
@@ -65,17 +66,17 @@ define([
                 }
             } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
                 event.preventDefault();
-                if (event.keyCode == keycodes.backspace) {
+                if (event.keyCode === keycodes.backspace) {
                     this.setCellValue(cell.x, cell.y, null);
                     this.save();
                     this.focusPrevious();
-                } else if (event.keyCode == keycodes.left) {
+                } else if (event.keyCode === keycodes.left) {
                     this.moveFocus(-1, 0);
-                } else if (event.keyCode == keycodes.up) {
+                } else if (event.keyCode === keycodes.up) {
                     this.moveFocus(0, -1);
-                } else if (event.keyCode == keycodes.right) {
+                } else if (event.keyCode === keycodes.right) {
                     this.moveFocus(1, 0);
-                } else if (event.keyCode == keycodes.down) {
+                } else if (event.keyCode === keycodes.down) {
                     this.moveFocus(0, 1);
                 } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
                     this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
@@ -123,9 +124,9 @@ define([
                     y: y
                 };
 
-                if (deltaY != 0) {
+                if (deltaY !== 0) {
                     this.state.directionOfEntry = 'down';
-                } else if (deltaX != 0) {
+                } else if (deltaX !== 0) {
                     this.state.directionOfEntry = 'across';
                 }
 
