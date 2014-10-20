@@ -34,7 +34,7 @@
             @paginationDivider
         }
         <li class="pagination__item">
-            <a class="button button--small button--tertiary pagination__action pagination__action--@dir" href="@paginated(url, p)" data-link-name="Pagination view page @p">@p</a>
+            <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass" href="@paginated(url, p)" data-page="@p" data-link-name="Pagination view page @p">@p</a>
         </li>
       @if(dir == "first") {
           @paginationDivider
@@ -52,10 +52,12 @@
     }
 
         <ol class="u-unstyled pagination__list">
-            @paginationPointer(pagination.previous, "prev", page.url)
+            @if(pagination.lastPage > 5) {
+                @paginationPointer(pagination.previous, "prev", page.url)
 
-            @if(pagination.currentPage - 2 > 1) {
-                @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
+                @if(pagination.currentPage - 2 > 1) {
+                    @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
+                }
             }
 
             @pagination.pages.map{ pageNum =>
@@ -68,11 +70,13 @@
                 </li>
             }
 
-            @if(pagination.currentPage + 2 < pagination.lastPage) {
-                @paginationExtreme(Some(pagination.lastPage), "last", page.url)
-            }
+            @if(pagination.lastPage > 5) {
+                @if(pagination.currentPage + 2 < pagination.lastPage) {
+                    @paginationExtreme(Some(pagination.lastPage), "last", page.url)
+                }
 
-            @paginationPointer(pagination.next, "next", page.url)
+                @paginationPointer(pagination.next, "next", page.url)
+            }
         </ol>
     </div>
 }
