@@ -105,14 +105,23 @@
                     </div>
                 <!-- /ko -->
 
-                <label>Type</label>
-                <select data-bind="
-                    optionsCaption: 'Choose...',
-                    options: $root.types,
-                    value: meta.type"></select>
+                <div class="type-option type-option-chosen" data-bind="click: toggleOpenTypePicker">
+                    <div data-bind="text: meta.type() || 'Choose layout...'"></div>
+                    <!-- ko if: containerThumbnail -->
+                        <img onerror="this.style.display='none'" data-bind="attr: {src: containerThumbnail}" />
+                    <!-- /ko -->
+                </div>
 
-                <!-- ko if: containerThumbnail -->
-                <img class="cnf-form__thumbnail" data-bind="attr: { src: containerThumbnail }" />
+                <!-- ko if: state.isOpenTypePicker -->
+                    <i class="icon-remove type-picker-closer" data-bind="click: toggleOpenTypePicker"></i>
+                    <div class="type-picker" data-bind="foreach: $root.types">
+                        <div class="type-option" data-bind="
+                            css: {'type-option--highlight': $data === $parent.meta.type()},
+                            click: $parent.typePicker">
+                            <div data-bind="text: $data"></div>
+                            <img onerror="this.style.display='none'" data-bind="attr: {src: '/thumbnails/' + $data + '.svg'}" />
+                        </div>
+                    </div>
                 <!-- /ko -->
 
                 <!-- ko if: meta.groups -->

@@ -11,7 +11,7 @@ object ContainerThumbnails {
   val BaseRowHeight = 7
   val Width = 100
 
-  val Style = "fill: rgba(0,0,0,.04); stroke: rgba(255,255,255,.75); stroke-width: 1"
+  val Style = "fill: #CCCCCC; stroke: rgba(255,255,255,.75); stroke-width: 1"
 
   def totalSpan(columns: Seq[Column]) = columns.map(_.colSpan).sum
 
@@ -64,7 +64,7 @@ object ContainerThumbnails {
             y={rectDef.y.toString}
             width={rectDef.width.toString}
             height={rectDef.height.toString}
-            style="fill: rgba(0,0,0,.045); stroke-width: 0"
+            style="fill: #BBBBBB; stroke-width: 0"
         />
     }).toSeq
   }

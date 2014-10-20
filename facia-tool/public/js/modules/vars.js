@@ -13,7 +13,7 @@ define([
     var CONST = {
         editions: ['uk', 'us', 'au'],
 
-        types: [
+        types: dynamicContainers.concat(fixedContainers).concat([
             {name: 'nav/list'},
             {name: 'nav/media-list'},
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
@@ -32,7 +32,7 @@ define([
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'}
-        ].concat(fixedContainers).concat(dynamicContainers),
+        ]),
 
         typesDynamic: dynamicContainers,
 
