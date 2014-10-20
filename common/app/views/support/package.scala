@@ -678,7 +678,7 @@ object ArticleLayout {
         .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
   }
 }
 
