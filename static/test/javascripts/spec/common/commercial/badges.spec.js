@@ -30,7 +30,7 @@ define([
         specify: function () {
 
             var fixturesConfig = {
-                    id      : 'badges',
+                    id:       'badges',
                     fixtures: [
                         '<div class="facia-container">\
                             <div class="container">\
@@ -124,7 +124,7 @@ define([
                                 container = $('.facia-container', $fixtureContainer).first()
                                     .addClass('js-sponsored-front')
                                     .attr({
-                                        'data-sponsor'    : sponsor,
+                                        'data-sponsor':     sponsor,
                                         'data-sponsorship': badge.type
                                     })[0];
                             badges.init();
@@ -181,7 +181,7 @@ define([
                             container = $('.container', $fixtureContainer).first()
                                 .addClass('js-sponsored-container')
                                 .attr({
-                                    'data-sponsor'    : sponsor,
+                                    'data-sponsor':     sponsor,
                                     'data-sponsorship': badge.type
                                 })[0];
                         badges.init();
@@ -200,7 +200,7 @@ define([
                     $('.container', $fixtureContainer).first()
                         .addClass('js-sponsored-container')
                         .attr({
-                            'data-keywords'   : 'russia,ukraine',
+                            'data-keywords':    'russia,ukraine',
                             'data-sponsorship': 'sponsored'
                         });
                     badges.init();
@@ -211,7 +211,7 @@ define([
                     $('.facia-container .container', $fixtureContainer).first()
                         .addClass('js-sponsored-container')
                         .attr({
-                            'data-keywords'   : 'russia,ukraine',
+                            'data-keywords':    'russia,ukraine',
                             'data-sponsorship': 'sponsored'
                         })[0];
                     badges.init();
