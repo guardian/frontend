@@ -1,4 +1,4 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isThreaded: Boolean = true)(implicit request: RequestHeader)
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
@@ -36,15 +36,12 @@
                     </a>
                 </span>
 
-                @if(isThreaded && isResponse) {
-                    @comment.responseTo.map{ r =>
-                        <span class="i i-reply-grey"></span>
-                        <a href="#comment-@r.commentId">
-                            <span class="d-comment__reply-to-author">@r.displayName</span>
-                        </a>
-                    }
+                @comment.responseTo.map{ r =>
+                    <span class="i i-reply-grey"></span>
+                    <a href="#comment-@r.commentId">
+                        <span class="d-comment__reply-to-author">@r.displayName</span>
+                    </a>
                 }
-
                 <div class="d-comment__timestamp">
                     <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
                         <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"

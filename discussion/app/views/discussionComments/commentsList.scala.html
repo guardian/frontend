@@ -1,4 +1,4 @@
-@(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false, isThreaded: Boolean = true)(implicit request: RequestHeader)
+@(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
 <div
     class="d-discussion @if(isTopComments){d-discussion--top-comments} d-discussion--not-staff @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch =>
@@ -19,7 +19,7 @@
         } else {
         <ul class="d-thread d-thread--top-level">
             @page.comments.map { comment =>
-                @fragments.comment(comment, page.isClosedForRecommendation, false, isThreaded)
+                @fragments.comment(comment, page.isClosedForRecommendation, false)
             }
         </ul>
     }
