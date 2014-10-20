@@ -276,7 +276,8 @@ object Tags {
   val mediaTypes = Seq(
     "type/video",
     "type/audio",
-    "type/gallery"
+    "type/gallery",
+    "type/picture"
   )
 
   val featureMappings = Seq(

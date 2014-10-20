@@ -19,12 +19,15 @@
 .tonal--tone-podcast,
 .tonal--tone-media {
     .tonal__main {
+        padding-top: 0;
+
         .byline,
         .content__dateline {
             color: $c-neutral3;
         }
 
         .byline a,
+        .caption,
         .submeta__head,
         .ad-slot--paid-for-badge__header,
         .ad-slot--paid-for-badge__label,
