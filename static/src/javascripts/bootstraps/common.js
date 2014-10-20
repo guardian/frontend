@@ -431,10 +431,6 @@ define([
                 }
             },
 
-            initId: function () {
-                identity.init(config);
-            },
-
             initUserAdTargeting: function () {
                 userAdTargeting.requestUserSegmentsFromId();
             }
@@ -443,7 +439,6 @@ define([
             modules.initDiscussion();
             modules.loadFonts(navigator.userAgent);
             modules.initUserAdTargeting();
-            modules.initId();
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
