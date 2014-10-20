@@ -40,6 +40,8 @@ define([
         JOIN: 'js-membership-join-date',
         NEXT: 'js-membership-payment-next',
         INTERVAL: 'js-membership-plan-interval',
+        NUM_CONTAINER: 'js-membership-number-container',
+        NUM_TEXT: 'js-membership-number',
         CC_SUMMARY_LAST4: 'js-membership-summary-card-lastfour',
         CC_PAYMENT_LAST4: 'js-membership-payment-card-lastfour',
         CC_PAYMENT_TYPE: 'js-membership-payment-card-type',
@@ -118,7 +120,9 @@ define([
             notificationCancelElement = self.getElem('NOTIFICATION_CANCEL'),
             notificationChangeElement = self.getElem('NOTIFICATION_CHANGE'),
             upperTabDetailsList = self.getClass('TAB_DETAILS_LIST_UPPER'),
-            lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
+            lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER'),
+            membershipNumberContainer = self.getElem('NUM_CONTAINER'),
+            membershipNumberElement = self.getElem('NUM_TEXT');
 
         ajax({
             url: config.page.membershipUrl + '/user/me/details',
@@ -155,6 +159,12 @@ define([
                 } else {
                     self.displayLowerTabContents.call(self, lowerTabDetailsList, resp, subscriptionDates);
                 }
+            }
+
+            // this field is generated in batches so isn't available immediately after registering
+            if (resp.regNumber) {
+                $(membershipNumberContainer).removeClass('is-hidden');
+                $(membershipNumberElement).text(resp.regNumber);
             }
 
             self.ready();
