@@ -1,11 +1,13 @@
 define([
     'raven',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/component',
     'common/modules/ui/images'
 ], function(
     raven,
+    config,
     mediator,
     register,
     Component,
@@ -14,12 +16,11 @@ define([
 
     var noop = function(){};
 
-    function TonalComponent(config){
+    function TonalComponent(){
 
         register.begin('tonal-content');
 
-        this.config = config;
-        this.edition = this.config.page.edition.toLowerCase();
+        this.edition = config.page.edition.toLowerCase();
 
         //Ensures we only fetch supported tones.
         if(this.isSupported()) {
@@ -45,7 +46,7 @@ define([
     };
 
     TonalComponent.prototype.getTone = function() {
-        return this.config.page.tones.split(',')[0].toLowerCase();
+        return config.page.tones.split(',')[0].toLowerCase();
     };
 
     TonalComponent.prototype.ready = function() {

@@ -1,9 +1,11 @@
 define([
     'common/utils/ajax',
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/utils/config'
 ], function(
     ajax,
-    cookies
+    cookies,
+    config
 ) {
 
 /**
@@ -18,7 +20,7 @@ var Api = {
 /**
  * @param {Object.<string.*>}
  */
-Api.init = function(config) {
+Api.init = function() {
     if ('https:' === document.location.protocol) {
         Api.root = config.page.secureDiscussionApiRoot;
     } else {
