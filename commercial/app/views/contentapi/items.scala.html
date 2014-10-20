@@ -6,10 +6,10 @@
             <div class="container__title commercial__head">
                 <h3 class="commercial__title">
                     The Guardian
-                    @for(logoUrl <- optLogo) {
-                        <img src="@logoUrl" />
-                    }
                 </h3>
+                @for(logoUrl <- optLogo) {
+                    <img src="@logoUrl" alt="" />
+                }
             </div>
             <div class="container__body commercial__body">
                 <ul class="lineitems">
