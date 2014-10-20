@@ -8,8 +8,12 @@ class FaciaPageTest extends FlatSpec with Matchers {
     FaciaPage(id, SeoData.empty, FrontProperties.empty, Nil)
   }
 
-  "keywordIds" should "be same as section keyword ID for content pages in an editorial section" in {
-    toFaciaPage("culture").keywordIds should be(Seq("culture/culture"))
+  "keywordIds" should "be same as section keyword ID for content pages in a section" in {
+    toFaciaPage("fashion").keywordIds should be(Seq("fashion/fashion"))
+  }
+
+  it should "be same as section keyword ID for content pages in an editionalised section" in {
+    toFaciaPage("uk/culture").keywordIds should be(Seq("culture/culture"))
   }
 
   it should
@@ -19,8 +23,7 @@ class FaciaPageTest extends FlatSpec with Matchers {
   }
 
   it should
-    "reflect that front could be either a section front or a tag page in a commercial partner " +
-      "zone" in {
+    "reflect that front could be either a section front or a tag page in a partner zone" in {
     toFaciaPage("sustainable-business/grundfos-partner-zone").keywordIds should be(Seq(
       "sustainable-business/grundfos-partner-zone",
       "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone"))
