@@ -6,12 +6,12 @@ import slices._
 case class Rectangle(x: Double, y: Double, width: Double, height: Double)
 
 object ContainerThumbnails {
-  val SliceHeight = 25
+  val SliceHeight = 40
   // if rows are not stretched to accommodate another column
   val BaseRowHeight = 7
   val Width = 100
 
-  val Style = "fill: #94b1ca; stroke: white; stroke-width: 1"
+  val Style = "fill: rgba(0,0,0,.04); stroke: rgba(255,255,255,.75); stroke-width: 1"
 
   def totalSpan(columns: Seq[Column]) = columns.map(_.colSpan).sum
 
@@ -44,13 +44,19 @@ object ContainerThumbnails {
 
     ((itemClasses.tablet match {
       case "list-media" =>
-        Some(Rectangle(x + 1, y + 1, width / 2, height - 2))
+        Some(Rectangle(x + 1, y + 1, width * .3, height))
       case "three-quarters" | "full" =>
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
       case "three-quarters-right" =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
-      case "standard" | "half" | "third" | "mega-full" =>
-        Some(Rectangle(x + 1, y + 1, width - 2, height * 2.0 / 3.0))
+      case "standard"  =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
+      case "half"  =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .7))
+      case "third" =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
+      case "mega-full" =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .6))
       case _ =>
         None
     }) map { rectDef =>
@@ -58,7 +64,7 @@ object ContainerThumbnails {
             y={rectDef.y.toString}
             width={rectDef.width.toString}
             height={rectDef.height.toString}
-            style="fill: #005689; stroke-width: 0"
+            style="fill: rgba(0,0,0,.045); stroke-width: 0"
         />
     }).toSeq
   }
