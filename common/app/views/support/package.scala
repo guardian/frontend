@@ -674,7 +674,7 @@ object ArticleLayout {
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
     lazy val hasSupportingAtBottom: Boolean = {
-      val supportingClasses = Set("showcase", "supporting", "thumbnail").map("element--" + _)
+      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
       val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
       val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
       supportingEls.isDefined
