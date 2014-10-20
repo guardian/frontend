@@ -1,11 +1,9 @@
 define([
     'common/utils/ajax',
-    'common/utils/cookies',
-    'common/utils/mediator'
+    'common/utils/cookies'
 ], function(
     ajax,
-    cookies,
-    mediator
+    cookies
 ) {
 
 /**
@@ -27,7 +25,6 @@ Api.init = function(config) {
         Api.root = config.page.discussionApiRoot;
     }
     Api.clientHeader = config.page.discussionApiClientHeader;
-    mediator.emit('discussion:api:ready');
 };
 
 /**
@@ -50,7 +47,7 @@ Api.send = function(endpoint, method, data) {
         data: data,
         headers: {
             'D2-X-UID': 'zHoBy6HNKsk',
-            'GU-Client': 'nextgen'
+            'GU-Client': Api.clientHeader
         }
     });
 
