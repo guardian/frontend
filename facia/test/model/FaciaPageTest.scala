@@ -12,8 +12,16 @@ class FaciaPageTest extends FlatSpec with Matchers {
     toFaciaPage("fashion").keywordIds should be(Seq("fashion/fashion"))
   }
 
-  it should "be same as section keyword ID for content pages in an editionalised section" in {
+  it should "be same as section keyword ID for content pages in a UK editionalised section" in {
     toFaciaPage("uk/culture").keywordIds should be(Seq("culture/culture"))
+  }
+
+  it should "be same as section keyword ID for content pages in a AU editionalised section" in {
+    toFaciaPage("au/business").keywordIds should be(Seq("business/business"))
+  }
+
+  it should "be same as section keyword ID for content pages in a US editionalised section" in {
+    toFaciaPage("us/commentisfree").keywordIds should be(Seq("commentisfree/commentisfree"))
   }
 
   it should
