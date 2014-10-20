@@ -11,7 +11,7 @@
         width: .95em;
         @include icon(volume-high-black, $with-width: false);
 
-        .container--dark-background & {
+        .svg .container--dark-background & {
             @extend %svg-i-volume-high-white;
         }
     }
@@ -21,8 +21,8 @@
         width: 1.2em;
         @include icon(video-icon-black, $with-width: false);
 
-        .container--dark-background &,
-        .end-slate--video & {
+        .svg .container--dark-background &,
+        .svg .end-slate--video & {
             @extend %svg-i-video-icon-white;
         }
     }
@@ -32,7 +32,7 @@
         width: 1.04em;
         @include icon(camera-black-large, $with-width: false);
 
-        .container--dark-background & {
+        .svg .container--dark-background & {
             @extend %svg-i-camera-white-large;
         }
     }
