@@ -3,15 +3,13 @@ define([
     'bonzo',
     'qwery',
     'common/utils/_',
-    'common/utils/$',
-    'common/utils/mediator'
+    'common/utils/$'
 ], function (
     bean,
     bonzo,
     qwery,
     _,
-    $,
-    mediator
+    $
     ) {
 
     var truncateBlockShareIcons = function (blockShareEl) {
