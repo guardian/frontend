@@ -14,11 +14,12 @@ object TrailCssClasses {
     Comment,
     Letters,
     Editorial,
-    Feature,
-    Review,
-    LiveBlog,
     DeadBlog,
-    Media
+    Feature,
+    LiveBlog,
+    Media,
+    Podcast,
+    Review
   )
 
   def articleToneClass(trail: Trail) = {
