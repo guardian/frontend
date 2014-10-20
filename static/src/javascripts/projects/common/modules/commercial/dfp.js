@@ -48,7 +48,7 @@ define([
     $,
     $css,
     _,
-    globalConfig,
+    config,
     cookies,
     detect,
     mediator,
@@ -87,11 +87,11 @@ define([
     /**
      * Private variables
      */
-    var displayed         = false,
+    var adSlotSelector    = '.ad-slot--dfp',
+        displayed         = false,
         rendered          = false,
         slots             = {},
         slotsToRefresh    = [],
-        config            = {},
         breakoutClasses   = [
             'breakout__html',
             'breakout__script'
@@ -116,7 +116,7 @@ define([
                 }
             },
             inline1: {
-                sizeMappings: globalConfig.switches.mobileMpu && globalConfig.page.edition === 'UK' ?
+                sizeMappings: config.switches.mobileMpu && config.page.edition === 'UK' ?
                     {
                         mobile:             '300,50|300,250',
                         'mobile-landscape': '300,50|320,50|300,250',
@@ -186,7 +186,7 @@ define([
             });
         },
         setPageTargeting = function () {
-            forOwn(buildPageTargeting(config), function (value, key) {
+            forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -195,7 +195,7 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(qwery(config.adSlotSelector))
+            slots = _(qwery(adSlotSelector))
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
@@ -230,26 +230,16 @@ define([
         /**
          * Public functions
          */
-        init = function (c) {
-
-            config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    adSlotSelector: '.ad-slot--dfp',
-                    page: {},
-                    switches: {}
-                }
-            );
+        init = function () {
 
             if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
                 return false;
             }
 
             if (!config.switches.standardAdverts) {
-                config.adSlotSelector = '.ad-slot--commercial-component';
+                adSlotSelector = '.ad-slot--commercial-component';
             } else if (!config.switches.commercialComponents) {
-                config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
             }
 
             // if we don't already have googletag, create command queue and load it async
@@ -338,7 +328,7 @@ define([
          * pt     = content type
          * url    = path
          */
-        buildPageTargeting = function (config) {
+        buildPageTargeting = function () {
 
             function encodeTargetValue(value) {
                 return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
@@ -595,27 +585,12 @@ define([
          * Module
          */
         dfp = {
-
-            init: once(init),
-
-            addSlot: addSlot,
-
-            refreshSlot: refreshSlot,
-
-            getSlots: getSlots,
-
+            init:               once(init),
+            addSlot:            addSlot,
+            refreshSlot:        refreshSlot,
+            getSlots:           getSlots,
             buildPageTargeting: buildPageTargeting,
-
-            createAdSlot: createAdSlot,
-
-            // really only useful for testing
-            reset: function () {
-                displayed = false;
-                slots = {};
-                slotsToRefresh = [];
-                dfp.init = once(init);
-            }
-
+            createAdSlot:       createAdSlot
         };
 
     return dfp;
