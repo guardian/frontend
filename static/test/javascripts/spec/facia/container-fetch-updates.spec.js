@@ -30,6 +30,9 @@ define([
                       pageId: 'football',
                       ajaxUrl: "",
                       edition: "UK"
+                  },
+                  switches: {
+                      autoRefresh: true
                   }
               },
               'text!common/views/ui/updates.html' : updatesTpl,
