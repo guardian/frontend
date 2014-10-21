@@ -9,7 +9,10 @@
         <div class="@RenderClasses(Map(
                 "facia-container" -> true,
                 "facia-container--layout-front" -> true,
-                "js-sponsored-front" -> (faciaPage.isSponsored && faciaPage.isAdvertisementFeature && faciaPage.isFoundationSupported)))"
+                "facia-container--sponsored" -> faciaPage.isSponsored,
+                "facia-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
+                "facia-container--foundation-supported" -> faciaPage.isFoundationSupported,
+                "js-sponsored-front" -> (faciaPage.isSponsored || faciaPage.isAdvertisementFeature || faciaPage.isFoundationSupported)))"
             data-link-name="Front | @request.path"
             @faciaPage.sponsor.map { sponsor =>
                 data-sponsor="@sponsor"

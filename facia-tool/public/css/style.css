@@ -1087,7 +1087,7 @@ button {
 }
 
 .cnf-collection .cnf-form {
-    margin-left: 20px;
+    margin: 10px 0 0 20px;
 }
 
 .cnf-form label {
@@ -1166,6 +1166,7 @@ button {
     line-height: 16px;
     color: #666666;
     height: 64px;
+    width: 295px;
     overflow-y: auto;
 }
 
@@ -1175,8 +1176,53 @@ button {
     display: block;
 }
 
-.cnf-form__thumbnail {
+.cnf-form .type-picker {
+    display: flex;
+    flex-wrap: wrap;
     position: absolute;
+    top: 25px;
+    left: 0;
+    padding: 10px;
+    background: #FFFFFF;
+    z-index: 1;
+}
+
+.cnf-form .type-picker-closer {
+    position: absolute;
+    top: 32px;
+    right: 8px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.cnf-form .type-option {
+    padding: 5px 0;
+    font-size: 12px;
+    line-height: 12px;
+    color: #666666;
+    text-align: center;
+    cursor: pointer;
+}
+
+.cnf-form .type-option img {
+    display: block;
+    margin: 3px auto 5px auto;
+}
+
+.cnf-form .type-option--highlight {
+    color: #FFFFFF;
+    background: #2ea3eb;
+}
+
+.cnf-form .type-picker .type-option {
+    flex: 0 0 24%;
+    flex-wrap: wrap;
+}
+
+.cnf-form .type-option-chosen {
+    color: #2ea3eb;
+    position: absolute;
+    top: 25px;
     right: 10px;
 }
 

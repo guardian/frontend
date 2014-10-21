@@ -15,7 +15,6 @@ import scala.util.{Failure, Try}
 
 object DfpDataHydrator extends Logging {
 
-
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
       clientId <- AdminConfiguration.dfpApi.clientId
@@ -218,9 +217,12 @@ object DfpDataHydrator extends Logging {
       name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
     }
 
+    // fetch merchandising creatives by advertiser and logo creatives by size
     val creativesQuery = new StatementBuilder()
-      .where("advertiserId = :advertiserId")
+      .where("advertiserId = :advertiserId or (width = :width and height = :height)")
       .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
+      .withBindVariableValue("width", "140")
+      .withBindVariableValue("height", "90")
 
     val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
 

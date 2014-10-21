@@ -85,7 +85,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "facia" => "stylesheets/old-ie.head.facia.css"
         case "identity" => "stylesheets/old-ie.head.identity.css"
         case "football" => "stylesheets/old-ie.head.football.css"
-        case "commercial" => "stylesheets/old-ie.head.commercial.css"
         case "index" => "stylesheets/old-ie.head.index.css"
         case _ => "stylesheets/old-ie.head.default.css"
       }
@@ -95,7 +94,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "facia" => "stylesheets/ie9.head.facia.css"
         case "identity" => "stylesheets/ie9.head.identity.css"
         case "football" => "stylesheets/ie9.head.football.css"
-        case "commercial" => "stylesheets/ie9.head.commercial.css"
         case "index" => "stylesheets/ie9.head.index.css"
         case _ => "stylesheets/ie9.head.default.css"
       }

@@ -5,7 +5,7 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
-import com.gu.openplatform.contentapi.ApiError
+import com.gu.contentapi.client.GuardianContentApiError
 
 object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
@@ -36,7 +36,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
           case Nil => None
           case picks => Some(picks)
         }
-      }.recover{case ApiError(404, message) =>
+      } recover { case GuardianContentApiError(404, message) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
       }
@@ -65,11 +65,11 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
-    val response = if (request.getQueryString("view") == Some("link")) 
+    val response = if (request.getQueryString("view") == Some("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)
     else
       () => views.html.fragments.trailblocks.headline(trails, trailsLength)
-      
+
     renderFormat(response, response, 900)
   }
 }

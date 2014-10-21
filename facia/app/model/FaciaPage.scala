@@ -18,18 +18,7 @@ case class FaciaPage(id: String,
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
-  lazy val keywordIds: Seq[String] = {
-    val path = Edition.all.foldLeft(id) { case (soFar, edition) =>
-      val editionName = edition.id.toLowerCase
-      soFar.stripPrefix(s"$editionName/")
-    }
-    if (path.split("/").size == 1) {
-      Seq(s"$path/$path")
-    } else {
-      val normalizedPath = path.replace("/", "-")
-      Seq(path, s"$normalizedPath/$normalizedPath")
-    }
-  }
+  lazy val keywordIds: Seq[String] = frontKeywordIds(id)
 
   override lazy val isFront = true
 
