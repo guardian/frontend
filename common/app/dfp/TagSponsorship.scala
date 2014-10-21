@@ -28,7 +28,9 @@ case class Sponsorship(tags: Seq[String],
                        sponsor: Option[String],
                        countries: Seq[String],
                        lineItemId: Long) {
-  def hasTag(tagId: String): Boolean = tags contains tagId.split('/').last
+  def hasTag(tagId: String): Boolean = tagId.split('/').lastOption.exists { endPart =>
+    tags contains endPart
+  }
 }
 
 
@@ -38,7 +40,9 @@ object InlineMerchandisingTagSet {
 
 case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: Set[String] = Set.empty, contributors: Set[String] = Set.empty) {
 
-  private def hasTagId(tags: Set[String], tagId: String): Boolean = tags contains tagId.split('/').last
+  private def hasTagId(tags: Set[String], tagId: String): Boolean = tagId.split('/').lastOption exists { lastPart =>
+    tags contains lastPart
+  }
 
   def hasTag(tag: Tag): Boolean = tag.tagType match {
     case "keyword" => hasTagId(keywords, tag.id)
