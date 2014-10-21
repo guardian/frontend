@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Section => ApiSection }
+import com.gu.contentapi.client.model.{ Section => ApiSection }
 import common.{Edition, Pagination}
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}

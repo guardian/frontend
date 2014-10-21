@@ -1179,6 +1179,10 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__submit {
     vertical-align: middle;
+    &[disabled] {
+        background-color: colour(neutral-3);
+        border-color: colour(neutral-3);
+    }
 }
 .d-comment-box__cancel {
     margin-left: $gs-gutter;

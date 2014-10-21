@@ -3,7 +3,7 @@ package frontpress
 import com.gu.facia.client.models.CollectionConfig
 import model._
 import org.scalatest.{DoNotDiscover, TryValues, Matchers, FlatSpec}
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import services.CollectionConfigWithId
 import test.ConfiguredTestSuite
 
@@ -41,8 +41,6 @@ import test.ConfiguredTestSuite
       "",
       "",
       None,
-      Nil,
-      Nil,
       Nil,
       None
     )
