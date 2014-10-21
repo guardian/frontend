@@ -17,6 +17,7 @@ $header-image-size-desktop: 120px;
         margin-top: 0;
     }
 }
+
 .fc-container__header {
     padding-top: $gs-baseline / 2;
     position: relative;
@@ -36,6 +37,7 @@ $header-image-size-desktop: 120px;
     }
 }
 .fc-container__header__title {
+    position: relative;
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
     @include fs-header(5);
@@ -102,8 +104,13 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-today {
+    display: none;
     padding-top: $gs-baseline/3;
     @include fs-headline(2);
+
+    @include mq(tablet) {
+        display: block;
+    }
 
     @include mq(leftCol) {
         border-top: 1px solid $c-neutral5;
@@ -161,25 +168,104 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-container__updated {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-bottom: $gs-baseline / 2;
     color: $c-neutral2;
-    display: none;
-    margin-top: ($gs-baseline/3)*5;
-    padding-bottom: $gs-baseline/3;
-    border-bottom: 1px dotted $c-neutral5;
 
     @include fs-headline(1);
 
     @include mq(leftCol) {
-        display: block;
+        position: static;
+        margin-top: ($gs-baseline / 3) * 5;
+        padding-bottom: $gs-baseline / 2;
+        border-bottom: 1px dotted $c-neutral5;
     }
 
     @include mq(wide) {
         .has-page-skin & {
-            display: none;
+            position: absolute;
+            right: -1 * (gs-span(9) + $gs-gutter);
+            bottom: 0;
         }
+    }
+}
+
+.fc-container__updated--has-updates {
+    border: 0;
+}
+
+.fc-container__update-cta {
+    margin-right: 0;
+    margin-bottom: -1 * $gs-baseline / 3;
+
+    .i {
+        width: 16px;
+        height: 16px;
+        margin-bottom: -1 * $gs-baseline / 6;
+        margin-right: -1 * $gs-gutter / 4;
+        margin-left: $gs-gutter / 6;
+    }
+
+    @include mq(tablet) {
+        margin-bottom: 0;
+    }
+}
+
+.fc-container__update-cta__desc {
+    display: none;
+
+    @include mq(tablet) {
+        display: inline;
+    }
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fc-container__update-cta--is-updating {
+    .i {
+        -webkit-animation: spin 1s infinite linear;
+        -moz-animation: spin 1s infinite linear;
     }
 }
 
 .fc-timestamp {
     display: inline-block;
+}
+
+.fc-container__body {
+    opacity: 1;
+    @include transition(opacity .25s linear); // Used to fade-in new updates
+}
+
+.fc-container__body--is-hidden {
+    opacity: 0;
+    @include transition(opacity .25s linear); // Used to fade-in new updates
 }
