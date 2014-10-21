@@ -97,21 +97,6 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
 
 trait ContentApiClient extends ContentApiClientLogic with ApiQueryDefaults with DelegateHttp with Logging {
   override val apiKey = contentApi.key.getOrElse("")
-
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    checkQueryIsEditionalized(url, parameters)
-
-    super.fetch(url, parameters + ("user-tier" -> "internal"))
-  }
-
-  private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries
-    if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
-    )
-  }
-
-  private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
 trait CircuitBreakingContentApiClient extends ContentApiClient {
