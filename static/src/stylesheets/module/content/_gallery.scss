@@ -229,6 +229,7 @@
     }
 
     .block-share__item {
+        @include transition(opacity 0.15s linear);
         opacity: .8;
 
         &:hover {
