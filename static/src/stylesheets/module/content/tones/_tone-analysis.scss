@@ -1,0 +1,16 @@
+@include tone-content-icons(analysis, 'analysis');
+
+@include tone-content(
+    analysis, // $tone
+    $c-neutral7, // $tonal__header-background
+    $c-neutral2, // $tonal__header-text
+    $c-analysisDefault, // $tonal__header-link
+    400, // $tonal__headline-weight
+    $c-analysisDefault, // $tonal__headline-colour
+    $c-analysisAccent, // $tonal__headline-accent
+    $c-neutral8, // $tonal__standfirst-background
+    $c-neutral2, // $tonal__standfirst-text
+    $c-analysisDefault, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-analysisDefault // $tonal__article-link
+);

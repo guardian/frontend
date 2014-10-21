@@ -1,8 +1,9 @@
-.tone-feature {
+.tone-feature--item {
     @extend %tone-has-background;
+    background-color: $c-featureDefault;
 
-    &.fc-item {
-        background-color: $c-featureDefault;
+    &,
+    .fc-sublink__title {
         color: #ffffff;
     }
 
@@ -31,5 +32,21 @@
         height: .9em;
         width: 1em;
         background-position: center;
+    }
+
+    .fc-sublink__title:before {
+        border-color: fade-out(#ffffff, .8);
+    }
+}
+
+.tone-feature--sublink {
+    .fc-sublink__kicker {
+        color: $c-featureDefault;
+    }
+
+    @include sublink-style(editorial, feature, live, media, review) {
+        .fc-sublink__kicker {
+            color: $c-featureMute;
+        }
     }
 }

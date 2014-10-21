@@ -4,7 +4,7 @@ import actions.AuthenticatedActions
 import com.google.inject.{Inject, Singleton}
 import common.ExecutionContexts
 import form.Mappings
-import idapiclient.{EmailPassword, IdApiClient}
+import idapiclient.{ScGuU, EmailPassword, IdApiClient}
 import implicits.Forms
 import model.{IdentityPage, NoCache}
 import play.api.data._
@@ -57,8 +57,14 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
     def onSuccess(password: String): Future[Result] = {
         logger.trace("reauthenticating with ID API")
-        val authResponse = api.authBrowser(EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp), idRequest.trackingData)
-        signInService.getCookies(authResponse, true) map {
+        val persistent = request.user.auth match {
+          case ScGuU(_, v) => v.isPersistent
+          case _ => false
+        }
+        val auth = EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp)
+        val authResponse = api.authBrowser(auth, idRequest.trackingData, Some(persistent))
+
+        signInService.getCookies(authResponse, persistent) map {
           case Left(errors) =>
             logger.error(errors.toString())
             logger.info(s"Reauthentication failed for user, ${errors.toString()}")

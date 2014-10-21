@@ -13,7 +13,10 @@
         class="@GetClasses.forNewStyleContainer(config, false, webTitle.nonEmpty, Seq("fc-container--first"))"
         data-link-name="all index"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
-        data-keywords="@keyword"
+            data-keywords="@keyword"
+        }
+        @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
         }
         data-component="all index">
         <div class="facia-container__inner">

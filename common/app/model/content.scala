@@ -6,6 +6,7 @@ import com.gu.openplatform.contentapi.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -13,7 +14,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import conf.Switches.LiveBlogCacheTimeSwitch
+import conf.Switches.ContentCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -50,6 +51,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
   lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
+  lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
     visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
@@ -128,7 +130,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
   override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline"))
-  override val showByline = apiContent.metaData.flatMap(_.showByline).getOrElse(isComment)
+  override val showByline = apiContent.metaData.flatMap(_.showByline).getOrElse(metaDataDefault("showByline"))
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
@@ -162,12 +164,20 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-  private lazy val liveCacheTime = if (LiveBlogCacheTimeSwitch.isSwitchedOn) 60 else 5
-  override lazy val cacheSeconds = {
-    if (isLive) liveCacheTime
+  private lazy val defaultCacheTime = {
+    if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
+
+  private lazy val fastCacheTime = {
+    if (isLive) 5
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 10
+    else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 30
+    else 300
+  }
+
+  override lazy val cacheSeconds = if (ContentCacheTimeSwitch.isSwitchedOn) fastCacheTime else defaultCacheTime
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
@@ -184,6 +194,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil)
 
+  private lazy val metaDataDefaults = MetadataDefaults(this)
+  private def metaDataDefault(key: String) = metaDataDefaults.getOrElse(key, false)
+
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
   override lazy val supporting: List[Content] = apiContent.supporting
@@ -193,9 +206,15 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
   override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
-  override lazy val showQuotedHeadline: Boolean = apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(false)
+
+  override lazy val showQuotedHeadline: Boolean =
+    apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
+
   override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
-  override lazy val showKickerTag: Boolean = apiContent.metaData.flatMap(_.showKickerTag).getOrElse(false)
+
+  override lazy val showKickerTag: Boolean =
+    apiContent.metaData.flatMap(_.showKickerTag).getOrElse(metaDataDefault("showKickerTag"))
+
   override lazy val showKickerSection: Boolean = apiContent.metaData.flatMap(_.showKickerSection).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.flatMap(_.imageSrcWidth)
@@ -206,9 +225,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
-  override lazy val showMainVideo: Boolean = apiContent.metaData.flatMap(_.showMainVideo).getOrElse(false)
+  override lazy val showMainVideo: Boolean =
+    apiContent.metaData.flatMap(_.showMainVideo).getOrElse(metaDataDefault("showMainVideo"))
 
-  override lazy val imageCutoutReplace: Boolean = apiContent.metaData.flatMap(_.imageCutoutReplace).getOrElse(false)
+  override lazy val imageCutoutReplace: Boolean =
+    apiContent.metaData.flatMap(_.imageCutoutReplace).getOrElse(metaDataDefault("imageCutoutReplace"))
 
   override lazy val customImageCutout: Option[FaciaImageElement] = for {
     src <- apiContent.metaData.flatMap(_.imageCutoutSrc)

@@ -1,28 +1,24 @@
 define([
-    'common/utils/$',
     'bonzo',
     'bean',
-    'qwery'
+    'qwery',
+    'common/utils/$',
+    'common/utils/template',
+    'text!facia/views/button-show-more.html'
 ], function (
-    $,
     bonzo,
     bean,
-    qwery
+    qwery,
+    $,
+    template,
+    showMoreBtn
 ) {
     return function (container) {
         var $container = bonzo(container),
             itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
             itemsHiddenOnMobile = qwery('.js-hide-on-mobile', $container).length > 0,
             className = 'fc-show-more--hidden',
-            $button = $.create(
-            '<button class="collection__show-more tone-background tone-news" data-test-id="show-more" data-link-name="Show more | 1">' +
-            '<span class="collection__show-more__icon">' +
-            '<span class="i i-plus-white-mask"></span>' +
-            '<span class="i i-plus-white"></span>' +
-            '</span>' +
-            '<span class="u-h">Show more</span>' +
-            '</button>'
-        );
+            $button = $.create(template(showMoreBtn));
 
         function showMore() {
             /**

@@ -15,7 +15,7 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "2.20"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.27.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.33.0"
   val dnaCommon = "org.jboss.dna" % "dna-common" % "0.6"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.23"
   val faciaScalaClient = "com.gu" %% "facia-api-client" % "0.12"
@@ -26,6 +26,7 @@ object Dependencies {
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
+  val im4java = "org.im4java" % "im4java" % "1.4.0"
   val jacksonCore = "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6"
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
   val jodaTime = "joda-time" % "joda-time" % "2.2"

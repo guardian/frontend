@@ -22,6 +22,8 @@ object CardStyle {
       Analysis
     } else if (trail.isReview) {
       Review
+    } else if (trail.isLetters) {
+      Letters
     } else if (trail.isFeature) {
       Feature
     } else {
@@ -30,15 +32,50 @@ object CardStyle {
   }
 }
 
-sealed trait CardStyle
+sealed trait CardStyle {
+  def toneString: String
+}
 
-case object LiveBlog extends CardStyle
-case object DeadBlog extends CardStyle
-case object Feature extends CardStyle
-case object Editorial extends CardStyle
-case object Comment extends CardStyle
-case object Podcast extends CardStyle
-case object Media extends CardStyle
-case object Analysis extends CardStyle
-case object Review extends CardStyle
-case object Default extends CardStyle
+case object LiveBlog extends CardStyle {
+  override def toneString: String = "live"
+}
+
+case object DeadBlog extends CardStyle {
+  override def toneString: String = "dead"
+}
+
+case object Feature extends CardStyle {
+  override def toneString: String = "feature"
+}
+
+case object Editorial extends CardStyle {
+  override def toneString: String = "editorial"
+}
+
+case object Comment extends CardStyle {
+  override def toneString: String = "comment"
+}
+
+case object Podcast extends CardStyle {
+  override def toneString: String = "podcast"
+}
+
+case object Media extends CardStyle {
+  override def toneString: String = "media"
+}
+
+case object Analysis extends CardStyle {
+  override def toneString: String = "analysis"
+}
+
+case object Review extends CardStyle {
+  override def toneString: String = "review"
+}
+
+case object Letters extends CardStyle {
+  override def toneString: String = "letters"
+}
+
+case object Default extends CardStyle {
+  override def toneString: String = "news"
+}

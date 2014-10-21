@@ -29,8 +29,8 @@ define([
             crossOrigin: false
         }).then(
             function(status) {
-                JSON.parse(status).checks.filter(function (check) {
-                    return /ELB|Host|CDN/.test(check.name);
+                status.checks.filter(function (check) {
+                    return /elb|host|cdn|rss/.test(check.name.toLowerCase());
                 }).forEach(function(check){
                         var li = document.createElement('li');
                         li.className = check.status;

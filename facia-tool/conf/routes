@@ -22,6 +22,9 @@ GET           /                          controllers.FaciaToolController.priorit
 GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
 GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
 
+GET           /editorial/2               controllers.FaciaToolController.multiPane(panes:Int=2)
+GET           /editorial/3               controllers.FaciaToolController.multiPane(panes:Int=3)
+
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 
@@ -36,6 +39,7 @@ POST          /press/draft/*path         controllers.FaciaToolController.pressDr
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
+GET           /collection-put/*collectionId controllers.FaciaToolController.generatePutForCollectionId(collectionId)
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
@@ -45,6 +49,9 @@ GET           /config                    controllers.FaciaToolController.getConf
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+
+# thumbnails
+GET           /thumbnails/*id.svg        controllers.ThumbnailController.container(id)
 
 # Updating config
 

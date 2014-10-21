@@ -60,7 +60,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       .withAuth(user, password,  WSAuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>
-        NoCache(Ok(Json.toJson(response.body)))
+        NoCache(Ok(Json.parse(response.body)))
       }
   }
 }

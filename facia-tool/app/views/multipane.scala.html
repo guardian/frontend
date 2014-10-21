@@ -1,0 +1,14 @@
+@(panes: Int)
+
+@if(panes==3) {
+    <frameset cols="50%,25%,25%">
+        <frame src="/editorial" />
+        <frame src="/editorial" />
+        <frame src="/editorial" />
+    </frameset>
+} else {
+    <frameset cols="65%,35%">
+        <frame src="/editorial" />
+        <frame src="/editorial" />
+    </frameset>
+}

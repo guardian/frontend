@@ -1,9 +1,9 @@
-.tone-analysis {
+.tone-analysis--item {
     @extend %tone-has-background;
 
     &.fc-item {
         background-color: $c-analysisBackground;
-        color: $c-newsDefault;
+        color: $c-analysisDefault;
     }
 
     .fc-item__content,
@@ -19,5 +19,17 @@
 
     .fc-item__meta {
         color: $c-neutral2;
+    }
+}
+
+.tone-analysis--sublink {
+    .fc-sublink__kicker {
+        color: $c-analysisAccent;
+    }
+
+    @include sublink-style(podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

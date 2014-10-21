@@ -1,5 +1,6 @@
 package controllers
 
+import org.mockito.Matchers
 import org.scalatest.path
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
@@ -33,7 +34,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val api = mock[IdApiClient]
   val conf = new IdentityConfiguration
   val trackingData = mock[TrackingData]
-  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None)
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, Some(false))
   val signInService = new PlaySigninService(conf)
 
   val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
@@ -53,7 +54,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth], same(trackingData))
+        verify(api, never).authBrowser(any[Auth], same(trackingData), any[Option[Boolean]])
       }
 
       "form is re-shown with errors" in Fake {
@@ -62,17 +63,22 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
     }
 
     "with valid API response" - {
-      val fakeRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "test@example.com", "password" -> "testpassword")
+      val fakeRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "test@example.com", "password" -> "testpassword", "keepMeSignedIn" -> "true")
+      val fakeSharedComputerRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "test@example.com", "password" -> "testpassword")
       val auth = EmailPassword("test@example.com", "testpassword", identityRequest.clientIp)
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth], same(trackingData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+        when(api.authBrowser(any[Auth], same(trackingData), any[Option[Boolean]])).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth, trackingData)
+          verify(api).authBrowser(auth, trackingData, Some(true))
         }
 
+        "should call authBrowser with provided credentials, asking for non-persistent cookies" in Fake {
+          signinController.processForm()(fakeSharedComputerRequest)
+          verify(api).authBrowser(auth, trackingData, Some(false))
+        }
 
         "should redirect the user to the returnUrl" in Fake {
           when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))

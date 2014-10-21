@@ -3,8 +3,14 @@
 @admin_main("Fronts Editor", env, Some(priority), isAuthed = true, identity=identity) {
 
 <div class="front-priorities">
-    <a class="front-priorities--priority" href="/editorial">Editorial Fronts</a>
-    <a class="front-priorities--priority" href="/commercial">Commercial Fronts</a>
+    <div class="front-priorities--priority">
+        <a href="/editorial">Editorial Fronts</a>
+        · <a href="/editorial/2">2</a>
+        · <a href="/editorial/3">3</a>
+    </div>
+    <div class="front-priorities--priority">
+        <a href="/commercial">Commercial Fronts</a>
+    </div>
 </div>
 
 }

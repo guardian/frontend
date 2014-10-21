@@ -4,14 +4,18 @@ define([
     'bean',
     'qwery',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/template',
+    'text!facia/views/button-show-more.html'
 ], function (
     $,
     bonzo,
     bean,
     qwery,
     detect,
-    mediator
+    mediator,
+    template,
+    showMoreBtn
 ) {
     /** TODO: Remove this once the new Facia Cards work is complete. See container-fc-show-more.js for its replacement.
       */
@@ -25,15 +29,7 @@ define([
 
         this._className = 'show-more--hidden';
 
-        this._$button = bonzo(bonzo.create(
-            '<button class="collection__show-more tone-background" data-link-name="Show more | 1">' +
-                '<span class="collection__show-more__icon">' +
-                    '<span class="i i-plus-white-mask"></span>' +
-                    '<span class="i i-plus-white"></span>' +
-                '</span>' +
-                '<span class="u-h">Show more</span>' +
-            '</button>'
-        ));
+        this._$button = $.create(template(showMoreBtn));
 
         this._renderButton = function() {
             this._$button

@@ -1,0 +1,60 @@
+@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
+@import views.support.TrailCssClasses.articleToneClass
+
+<header class="content__head tonal__head tonal__head--@articleToneClass(content)
+    @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
+
+    <div class="content__header tonal__header u-cf">
+        <div class="gs-container">
+            <div class="content__main-column">
+
+                @fragments.meta.metaInline(content)
+
+                <h1 class="content__headline js-score" itemprop="headline">
+                    @if(content.isAnalysis) {
+                        <span class="content__headline__kicker">Analysis</span>
+                    }
+                    @Html(content.headline)
+                </h1>
+
+                @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
+                    @fragments.meta.bylineImage(content)
+                }
+
+                @if(content.hasTonalHeaderByline) {
+                    @content.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, content.contributors)</span>
+                    }
+                }
+
+                @if(content.hasTonalHeaderIllustration) {
+                    <span class="content__head__illustration hide-on-mobile"><i class="i i-illustration-letters"></i></span>
+                }
+
+                @content.starRating.map { s =>
+                    @fragments.items.elements.starRating(content)
+                }
+
+                @if(showBadge) {
+                    @fragments.commercial.badge(content)
+                }
+
+                @if(content.isCommentable) {
+                    <div class="content__head__comment-count js-comment-count"></div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="tonal__standfirst u-cf">
+        @if(content.standfirst.isDefined) {
+            <div class="gs-container">
+                <div class="content__main-column">
+                    @if(!content.delegate.isVideo) {
+                        @fragments.standfirst(content)
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</header>
