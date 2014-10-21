@@ -96,6 +96,10 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
 
+    this.comments.on('untruncate-thread', function() {
+        this.removeState('truncated');
+    }.bind(this));
+
     this.comments.on('rendered', function() {
         var newPagination = $('.js-discussion-pagination', this.comments.elem).html();
         $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
