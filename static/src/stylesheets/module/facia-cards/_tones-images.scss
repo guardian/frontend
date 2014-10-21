@@ -26,13 +26,11 @@
 
 .fc-item__title--quoted {
     .fc-item__link {
-        &:before {
-            @include icon(quote-grey, false);
-            content: '';
-            height: .72em;
-            width: 1.2em;
-            padding-right: .2em;
-        }
+        @include icon(quote-grey, false);
+        content: '';
+        background-size: 1.2em .75em !important;
+        background-position: 0 .2em !important;
+        text-indent: 1.4em;
     }
 
     .tone-podcast--item & .fc-item__link {
