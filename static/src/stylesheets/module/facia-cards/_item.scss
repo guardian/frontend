@@ -79,18 +79,17 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__container {
-    // position: relative;
+    position: relative;
 }
 
 .item--has-discussion {
-    .fc-item__container {
+    .fc-item__content {
         padding-bottom: $gs-baseline * 2;
     }
 }
 
 .fc-item {
     @include flex(1);
-    position: relative;
     background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
