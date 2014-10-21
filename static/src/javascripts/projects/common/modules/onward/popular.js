@@ -1,40 +1,42 @@
 define([
-    'raven',
+    'qwery',
+    'common/utils/$',
+    'common/utils/config',
+    'common/modules/component',
     'common/utils/mediator',
-    'common/modules/lazyload'
+    'common/modules/commercial/dfp'
 ], function (
-    raven,
+    qwery,
+    $,
+    config,
+    Component,
     mediator,
-    LazyLoad
+    dfp
 ) {
 
-    function popular(config, isExpandable, url, targetSelector) {
+    function MostPopular() {
         mediator.emit('register:begin', 'popular-in-section');
-
-        targetSelector = targetSelector || '.js-popular';
-        var hasSection, expandable,
-            container = document.body.querySelector(targetSelector);
-
-        if (container) {
-            // some pages, e.g. profiles, are flagged as 'section: global', a non-existent section - this ignores those
-            hasSection = config.page && config.page.section && config.page.section !== 'global';
-            expandable = isExpandable ? '/expandable' : '';
-
-            url = url || '/most-read' + expandable + (hasSection ? '/' + config.page.section : '');
-            new LazyLoad({
-                url: url + '.json',
-                container: container,
-                success: function () {
-                    mediator.emit('modules:popular:loaded', container);
-                    mediator.emit('fragment:ready:images', container);
-                    mediator.emit('register:end', 'popular-in-section');
-                },
-                error: function () {
-                    mediator.emit('register:error', 'popular-in-section');
-                }
-            }).load();
-        }
+        this.hasSection = config.page && config.page.section && config.page.section !== 'global';
+        this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
     }
 
-    return popular;
+    Component.define(MostPopular);
+
+    MostPopular.prototype.init = function () {
+        this.fetch(qwery('.js-popular-trails'), 'html');
+    };
+
+    MostPopular.prototype.prerender = function () {
+        this.$mpu = $('.js-facia-slice__item--mpu', this.elem)
+            .append(dfp.createAdSlot('inline3', 'container-inline'));
+    };
+
+    MostPopular.prototype.ready = function () {
+        dfp.addSlot($('.ad-slot', this.$mpu));
+        this.$mpu.removeClass('facia-slice__item--no-mpu');
+        mediator.emit('modules:popular:loaded', this.elem);
+        mediator.emit('register:end', 'popular-in-section');
+    };
+
+    return MostPopular;
 });

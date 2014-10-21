@@ -19,7 +19,7 @@
                 display: none;
             }
         }
-        @include mq(rightCol) {
+        @include mq(desktop) {
             &:nth-child(n+4) {
                 display: block;
             }
@@ -36,7 +36,7 @@
     .lineitem__image-crop .lineitem__image {
         left: -7.5%;
         right: -7.5%;
-        width: 116.6667%;
+        width: 115%;
     }
 
     /* Line items - high relevance */

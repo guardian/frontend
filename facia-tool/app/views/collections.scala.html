@@ -136,8 +136,7 @@
                         },
                         autoResize: true,
                         tabbableFormField: true,
-                        valueUpdate: 'afterkeydown',
-                        value: overrideOrVal"></textarea>
+                        textInput: overrideOrVal"></textarea>
 
                     <!-- ko if: hasFocus() -->
                         <span class="editor__length" data-bind="
@@ -277,6 +276,10 @@
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="
                     style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+            <!-- /ko -->
+
+            <!-- ko if: state.hasMainVideo -->
+                <div class="has-playable"><i class="icon-play"></i></div>
             <!-- /ko -->
 
             <div data-bind="if: state.isOpen">

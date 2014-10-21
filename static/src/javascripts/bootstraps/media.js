@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'raven',
+    'lodash/collections/find',
     'lodash/functions/throttle',
     'lodash/objects/isFunction',
     'common/utils/$',
@@ -13,15 +14,16 @@ define([
     'common/utils/mediator',
     'common/utils/preferences',
     'common/utils/url',
-    'common/modules/analytics/beacon',
     'common/modules/analytics/omnitureMedia',
     'common/modules/commercial/dfp',
     'common/modules/component',
+    'common/modules/onward/history',
     'common/modules/ui/images'
 ], function (
     bean,
     bonzo,
     raven,
+    find,
     throttle,
     isFunction,
     $,
@@ -32,10 +34,10 @@ define([
     mediator,
     preferences,
     urlUtils,
-    beacon,
     OmnitureMedia,
     dfp,
     Component,
+    history,
     images
 ) {
     var modules, ready,
@@ -58,7 +60,10 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop;
+        var pageHasBeenSeen = find(history.get(), function (historyItem) {
+            return (historyItem.id === '/' + config.page.pageId) && historyItem.count > 1;
+        });
+        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop && !pageHasBeenSeen;
     }
 
     function constructEventName(eventName, player) {
@@ -91,28 +96,6 @@ define([
 
         initOmnitureTracking: function (player) {
             new OmnitureMedia(player).init();
-        },
-
-        bindDiagnosticsEvents: function (player) {
-            player.on(constructEventName('preroll:play', player), function () {
-                beacon.fire('/count/vps.gif');
-            });
-            player.on(constructEventName('preroll:end', player), function () {
-                beacon.fire('/count/vpe.gif');
-            });
-            player.on(constructEventName('content:play', player), function () {
-                beacon.fire('/count/vs.gif');
-            });
-            player.on(constructEventName('content:end', player), function () {
-                beacon.fire('/count/ve.gif');
-            });
-
-            // count the number of video starts that happen after a preroll
-            player.on(constructEventName('preroll:play', player), function () {
-                player.on(constructEventName('content:play', player), function () {
-                    beacon.fire('/count/vsap.gif');
-                });
-            });
         },
 
         bindPrerollEvents: function (player) {
@@ -342,7 +325,6 @@ define([
                             // preroll for videos only
                             if (mediaType === 'video') {
 
-                                modules.bindDiagnosticsEvents(player);
                                 player.fullscreener();
 
                                 // Init plugins

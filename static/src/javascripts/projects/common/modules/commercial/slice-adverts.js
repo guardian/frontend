@@ -39,7 +39,7 @@ define([
                 containers   = qwery(opts.containerSelector),
                 index        = 0,
                 adSlices     = [],
-                containerGap = 2,
+                containerGap = 1,
                 prefs        = userPrefs.get('container-states');
 
             if (!config.switches.standardAdverts) {

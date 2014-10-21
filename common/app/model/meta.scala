@@ -51,7 +51,8 @@ trait MetaData extends Tags {
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("hasClassicVersion", JsBoolean(hasClassicVersion))
+    ("hasClassicVersion", JsBoolean(hasClassicVersion)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
   )
 
   def openGraph: Map[String, String] = Map(
@@ -216,6 +217,17 @@ trait Tags {
   def isFoundationSupported: Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
+  def sponsorshipType: Option[String] = {
+    if (isSponsored) {
+      Option("sponsored")
+    } else if (isAdvertisementFeature) {
+      Option("advertisement-feature")
+    } else if (isFoundationSupported) {
+      Option("foundation-supported")
+    } else {
+      None
+    }
+  }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   /**
@@ -241,6 +253,7 @@ trait Tags {
   lazy val isPodcast = types.exists(_.id == Tags.Podcast)
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
+  lazy val isLetters = tones.exists(_.id == Tags.Letters)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -254,6 +267,7 @@ object Tags {
   val Podcast = "type/podcast"
   val Editorial = "tone/editorials"
   val Cartoon = "type/cartoon"
+  val Letters = "tone/letters"
 
   object VisualTone {
     val Live = "live"

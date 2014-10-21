@@ -4,7 +4,7 @@ import model.{FaciaImageElement, Trail}
 
 object CutOut {
   def fromTrail(trail: Trail): Option[CutOut] = {
-    if ((trail.isComment && !trail.isCartoon) || trail.imageCutoutReplace) {
+    if (trail.imageCutoutReplace) {
       trail.customImageCutout map {
         case FaciaImageElement(src, width, height) => CutOut("", src, Orientation.fromDimensions(width, height))
       } orElse {

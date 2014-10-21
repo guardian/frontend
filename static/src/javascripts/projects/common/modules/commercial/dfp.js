@@ -28,6 +28,7 @@ define([
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
+    'common/modules/ui/sticky',
     'text!common/views/commercial/ad-slot.html'
 ], function (
     bean,
@@ -47,7 +48,7 @@ define([
     $,
     $css,
     _,
-    globalConfig,
+    config,
     cookies,
     detect,
     mediator,
@@ -58,6 +59,7 @@ define([
     criteo,
     userAdTargeting,
     ab,
+    Sticky,
     adSlotTpl
 ) {
 
@@ -85,11 +87,11 @@ define([
     /**
      * Private variables
      */
-    var displayed         = false,
+    var adSlotSelector    = '.ad-slot--dfp',
+        displayed         = false,
         rendered          = false,
         slots             = {},
         slotsToRefresh    = [],
-        config            = {},
         breakoutClasses   = [
             'breakout__html',
             'breakout__script'
@@ -97,7 +99,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile: '300,250|300,600'
+                    mobile: '300,250|300,251|300,600'
                 }
             },
             'right-small': {
@@ -114,13 +116,28 @@ define([
                 }
             },
             inline1: {
+                sizeMappings: config.switches.mobileMpu && config.page.edition === 'UK' ?
+                    {
+                        mobile:             '300,50|300,250',
+                        'mobile-landscape': '300,50|320,50|300,250',
+                        tablet:             '300,250',
+                        desktop:            '300,1|300,250'
+                    } :
+                    {
+                        mobile:             '300,50',
+                        'mobile-landscape': '300,50|320,50',
+                        tablet:             '300,250',
+                        desktop:            '300,1|300,250'
+                    }
+            },
+            inline2: {
                 sizeMappings: {
                     mobile: '300,50',
                     'mobile-landscape': '300,50|320,50',
                     tablet: '300,250'
                 }
             },
-            inline2: {
+            inline3: {
                 sizeMappings: {
                     mobile: '300,50',
                     'mobile-landscape': '300,50|320,50',
@@ -147,6 +164,21 @@ define([
                 sizeMappings: {
                     mobile: '140,90'
                 }
+            },
+            fobadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
+            }
+        },
+        callbacks = {
+            '300,251': function (e, $adSlot) {
+                new Sticky($adSlot.parent()[0], { top: 12 }).init();
+            },
+            '300,1': function (e, $adSlot) {
+                $adSlot.css('display', 'none');
             }
         },
 
@@ -161,7 +193,7 @@ define([
             });
         },
         setPageTargeting = function () {
-            forOwn(buildPageTargeting(config), function (value, key) {
+            forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -170,7 +202,7 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(qwery(config.adSlotSelector))
+            slots = _(qwery(adSlotSelector))
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
@@ -205,26 +237,16 @@ define([
         /**
          * Public functions
          */
-        init = function (c) {
-
-            config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    adSlotSelector: '.ad-slot--dfp',
-                    page: {},
-                    switches: {}
-                }
-            );
+        init = function () {
 
             if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
                 return false;
             }
 
             if (!config.switches.standardAdverts) {
-                config.adSlotSelector = '.ad-slot--commercial-component';
+                adSlotSelector = '.ad-slot--commercial-component';
             } else if (!config.switches.commercialComponents) {
-                config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
             }
 
             // if we don't already have googletag, create command queue and load it async
@@ -283,7 +305,7 @@ define([
                     {
                         name: definition.name || name,
                         // badges now append their index to the name
-                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
+                        normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
                         types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     })
@@ -313,7 +335,7 @@ define([
          * pt     = content type
          * url    = path
          */
-        buildPageTargeting = function (config) {
+        buildPageTargeting = function () {
 
             function encodeTargetValue(value) {
                 return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
@@ -388,10 +410,11 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId());
+            var $slot = $('#' + event.slot.getSlotId().getDomId()),
+                size  = event.size.join(',');
 
             // remove any placeholder ad content
-            $('.ad-slot__content--placeholder', $slot[0]).remove();
+            $('.ad-slot__content--placeholder', $slot).remove();
 
             if (event.isEmpty) {
                 removeLabel($slot);
@@ -399,6 +422,9 @@ define([
                 checkForBreakout($slot);
                 addLabel($slot);
             }
+
+            // is there a callback for this size
+            callbacks[size] && callbacks[size](event, $slot);
         },
         addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
@@ -566,27 +592,12 @@ define([
          * Module
          */
         dfp = {
-
-            init: once(init),
-
-            addSlot: addSlot,
-
-            refreshSlot: refreshSlot,
-
-            getSlots: getSlots,
-
+            init:               once(init),
+            addSlot:            addSlot,
+            refreshSlot:        refreshSlot,
+            getSlots:           getSlots,
             buildPageTargeting: buildPageTargeting,
-
-            createAdSlot: createAdSlot,
-
-            // really only useful for testing
-            reset: function () {
-                displayed = false;
-                slots = {};
-                slotsToRefresh = [];
-                dfp.init = once(init);
-            }
-
+            createAdSlot:       createAdSlot
         };
 
     return dfp;

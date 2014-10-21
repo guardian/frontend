@@ -301,6 +301,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     /** When retrieving items from Content API, maximum number of requests to make concurrently */
     lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
+    /** When retrieving items from Content API, maximum number of items to request per concurrent request */
+    lazy val frontPressItemSearchBatchSize = {
+      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
+      assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
+      size
+    }
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -398,6 +404,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
         oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
+
+  object pngResizer {
+    val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
+    val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 }
 

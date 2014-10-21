@@ -110,8 +110,14 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
+    @include stars();
+
     .stars {
         margin-bottom: 0;
+
+        .star__item {
+            vertical-align: bottom;
+        }
     }
 
     .gu-media-wrapper {
@@ -153,8 +159,14 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__live-indicator {
     color: $c-liveDefault;
-    font: inherit;
-    line-height: 1;
+
+    .blog__live-icon {
+        display: inline-block;
+        margin: 0;
+        margin-right: .2em;
+        height: .7em;
+        width: .7em;
+    }
 }
 
 .fc-item__breaking-indicator {
@@ -184,9 +196,18 @@ $fc-item-gutter: $gs-gutter / 4;
     word-wrap: break-word;
 }
 
-.fc-item__kicker:after {
-        content: ' /';
+.fc-item__kicker,
+.fc-sublink__kicker {
+    &:after {
+        content: '/';
+        display: inline-block;
+        margin-left: .2em;
         color: fade-out($c-neutral1, .8);
+    }
+
+    &:hover:after {
+        text-decoration: none;
+    }
 }
 
 .fc-item__byline {
@@ -206,7 +227,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    margin-bottom: $gs-baseline / 4;
     color: $c-neutral2;
 }
 
@@ -221,6 +241,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-trail__count {
     position: relative;
     float: left;
+    margin-bottom: $gs-baseline / 4;
 }
 
 .fc-item__timestamp {
@@ -233,7 +254,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
-    display: none;
+    // We never want to show the media and the cutout at the same time, hence the important
+    display: none !important;
 }
 
 .fc-item__footer--vertical {

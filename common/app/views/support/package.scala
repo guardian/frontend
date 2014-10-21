@@ -12,7 +12,7 @@ import org.jboss.dna.common.text.Inflector
 import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.nodes.{ Element, Document, TextNode }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.{Json, JsValue, JsString, Writes}
@@ -381,6 +381,35 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+  def clean(body: Document): Document = {
+
+    def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
+      val newCharLimit = charLimit - textNode.text.length
+      if (newCharLimit < 0) {
+        textNode.text(textNode.text.take(charLimit.max(0)).trim.stripSuffix(".") + (if (charLimit > 0) "…" else ""))
+      }
+      newCharLimit
+    }
+
+    def truncateElement(charLimit: Int, element: Element): Int = {
+      element.childNodes.foldLeft(charLimit) {
+        (t, node) =>
+          if (node.isInstanceOf[TextNode]) {
+            truncateTextNode(t, node.asInstanceOf[TextNode])
+          } else if (node.isInstanceOf[Element]) {
+            truncateElement(t, node.asInstanceOf[Element])
+          } else {
+            t
+          }
+      }
+    }
+
+    truncateElement(limit, body)
+    body
+  }
+}
+
 // TODO make this separate
 // this does not fix other links, just the ones in these pages.
 case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
@@ -644,9 +673,12 @@ object ArticleLayout {
     lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-    lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
-        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+    lazy val hasSupportingAtBottom: Boolean = {
+      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
+      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
+      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      supportingEls.isDefined
+    }
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
       Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
@@ -771,7 +803,7 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean, numberOfSublinks: Int): String = {
     val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
       Seq("fc-item--has-cutout")
     } else {
@@ -780,7 +812,7 @@ object GetClasses {
 
     RenderClasses(
       TrailCssClasses.toneClass(trail, "--item") +:
-        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
+        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false, numberOfSublinks) ++
         cutOutClass): _*
     )
   }
@@ -805,10 +837,15 @@ object GetClasses {
     case _ => None
   }
 
-  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+  def commonFcItemClasses(
+      trail: Trail,
+      isFirstContainer: Boolean,
+      forceHasImage: Boolean,
+      numberOfSublinks: Int
+  ): Seq[String] = {
     val itemClass = mediaTypeClass(trail)
 
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5, 3).isEmpty || trail.imageHide)) {
       "fc-item--has-no-image"
     } else {
       "fc-item--has-image"
@@ -824,13 +861,19 @@ object GetClasses {
       itemClass,
       if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
       if (trail.isLive) Some("fc-item--live") else None,
-      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-$numberOfSublinks") else None,
       if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
 
-      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
-      else
+      if (forceHasImage || trail.trailPicture(5, 3).nonEmpty) {
+        if (trail.isBoosted)
+          Some("item--imageadjust-boost")
+        else if (trail.imageHide)
+          Some("item--imageadjust-hide")
+        else
+          Some("item--imageadjust-default")
+      } else {
         None
+      }
     ).flatten ++ makeSnapClasses(trail)
   }
 
@@ -958,9 +1001,11 @@ object GetClasses {
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> DfpAgent.isAdvertisementFeature(config),
+      "container--foundation-supported" -> DfpAgent.isFoundationSupported(config),
+      "js-sponsored-container" -> (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)),
       "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls

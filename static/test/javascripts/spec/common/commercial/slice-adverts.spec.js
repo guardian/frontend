@@ -77,10 +77,10 @@ define([
                     });
             });
 
-            it('should have at least two non-advert containers between advert containers', function (sliceAdverts) {
+            it('should have at least one non-advert containers between advert containers', function (sliceAdverts) {
                 sliceAdverts.init();
                 expect(qwery('.container-first .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-fourth .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
             it('should not not display ad slot if standard-adverts switch is off', function (sliceAdverts, deps) {
@@ -94,7 +94,7 @@ define([
                 sliceAdverts.init();
                 expect(qwery('.container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-sixth .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
             it('should not add ad to container if it is closed', function (sliceAdverts) {
@@ -105,7 +105,7 @@ define([
                 userPrefs.set('container-states', prefs);
                 sliceAdverts.init();
                 expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-sixth .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
         }

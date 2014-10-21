@@ -1,38 +1,45 @@
 @(book: model.commercial.books.Book)(implicit request: RequestHeader)
 
-@defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <li class="lineitem u-cf lineitem__multi lineitem__book u-cf" itemscope itemtype="http://schema.org/Book">
-        <h4 class="commercial__title">
-            <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
-            data-link-name="merchandising-hybrid-book-v@{version}_@{date}-visit-shop">
-                <span class="i i--commercial i-bookshop-logo--guardian"></span>
-                <span class="i i--commercial i-bookshop-logo--bookshop"></span>
-                <span class="u-h">Guardian bookshop</span>
+@defining(("2_0", "2014-10-14")) { case (version, date) =>
+    <li class="lineitem lineitem__multi commercial--tone-books" itemscope itemtype="http://schema.org/Book">
+        <div class="commercial__multi-wrapper">
+            <div class="commercial__multi-header">
+                <h4 class="commercial__title">
+                    <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
+                    data-link-name="merchandising-hybrid-book-v@{version}_@{date}-visit-shop">
+                        <i class="i i-marque-36"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
+                        <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
+                    </a>
+                </h4>
+            </div>
+            <a href="@AdLink{@book.buyUrl}"
+            class="lineitem__link"
+            data-link-name="merchandising-hybrid-book-v@{version}_@{date}-@book.title">
+                <div class="lineitem__image-crop">
+                    @book.jacketUrl.map { url =>
+                        <img itemprop="image" class="lineitem__image lineitem__image-portrait" src="@url" alt="" />
+                    }
+                </div>
+                <h4 class="lineitem__title" itemprop="name">@book.title</h4>
+                <div class="lineitem__offer">
+                    @if(book.author) {
+                        <p class="lineitem__meta" itemprop="author">By @book.author</p>
+                    }
+                    <meta itemprop="isbn" content="@{book.isbn}" />
+                    <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        @book.price.map { price =>
+                            <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span><br/>
+                        }
+                        @book.offerPrice.map { price =>
+                            <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                            <meta itemprop="priceCurrency" content="GBP" />
+                        }
+                    </p>
+                </div>
             </a>
-        </h4>
-        <a href="@AdLink{@book.buyUrl}"
-        class="lineitem__link"
-        data-link-name="merchandising-hybrid-book-v@{version}_@{date}-@book.title">
-            @book.jacketUrl.map { url =>
-                <img itemprop="image" class="lineitem__img" src="@url" alt="" />
-            }
-            <h4 class="lineitem__title" itemprop="name">@book.title</h4>
-            @if(book.author) {
-                <p class="lineitem__meta" itemprop="author">By @book.author</p>
-            }
-            <meta itemprop="isbn" content="@{book.isbn}" />
-            <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                @book.price.map { price =>
-                    <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
-                }
-                @book.offerPrice.map { price =>
-                    <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                    <meta itemprop="priceCurrency" content="GBP" />
-                }
-            </p>
-        </a>
-        <a class="lineitem__link commercial--travel__description__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
-            <i class="i i-arrow-white-right-18"></i>Buy now
-        </a>
+            <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
+                Buy now<i class="i i-arrow-black-right i-right"></i>
+            </a>
+        </div>
     </li>
 }
