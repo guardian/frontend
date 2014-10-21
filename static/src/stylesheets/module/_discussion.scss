@@ -203,6 +203,10 @@ $avatarPadding: $gs-gutter / 2;
     .discussion--has-top-comments & {
         border-top: 1px solid colour(neutral-4);
     }
+
+    .pagination {
+        text-align: center;
+    }
 }
 
 .discussion__toolbar-dropdown {
@@ -241,8 +245,8 @@ $avatarPadding: $gs-gutter / 2;
     }
 
     &:first-child {
-        padding-right: $gs-gutter;
-        margin-right: $gs-gutter;
+        padding-right: $gs-gutter * 3 / 4;
+        margin-right: $gs-gutter / 2;
         border-right: 1px solid colour(neutral-4);
     }
 }
