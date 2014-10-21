@@ -1,8 +1,8 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
+import com.gu.openplatform.contentapi.model.{MediaAsset, Content => ApiContent}
 import common.Edition
-import org.joda.time.format.ISODateTimeFormat
+
 import scala.math.abs
 
 object `package` {
@@ -49,14 +49,19 @@ object `package` {
   }
 
   def frontKeywordIds(pageId: String): Seq[String] = {
-    val path = Edition.all.foldLeft(pageId) { case (soFar, edition) =>
-      val editionName = edition.id.toLowerCase
-      soFar.stripPrefix(s"$editionName/")
+    val editions = Edition.all.map(_.id.toLowerCase).toSet
+
+    val parts = pageId.split("/").toList match {
+      case edition :: rest if editions.contains(edition) => rest
+      case uneditionalised => uneditionalised
     }
-    if (path.split("/").size == 1) {
+
+    val path = parts.mkString("/")
+
+    if (parts.size == 1) {
       Seq(s"$path/$path")
     } else {
-      val normalizedPath = path.replace("/", "-")
+      val normalizedPath = parts.mkString("-")
       Seq(path, s"$normalizedPath/$normalizedPath")
     }
   }
