@@ -68,8 +68,6 @@ class DedupingTest extends FlatSpec with Matchers {
         "",
         None,
         Nil,
-        Nil,
-        Nil,
         None
       )
     ))

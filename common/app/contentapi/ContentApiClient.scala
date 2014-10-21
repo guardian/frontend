@@ -14,8 +14,9 @@ import com.gu.contentapi.client.model.ItemResponse
 
 import scala.concurrent.duration.{Duration, SECONDS, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
+import ExecutionContexts.{executionContext => implicitExecutionContext}
 
-trait QueryDefaults extends implicits.Collections with ExecutionContexts {
+trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
   val trailFields = List(
     "headline",
@@ -36,13 +37,6 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     "pa-football-team",
     "witness-assignment",
     "esa-cricket-match"
-  ).mkString(",")
-
-  val inlineElements = List(
-    "picture",
-    "witness",
-    "video",
-    "embed"
   ).mkString(",")
 
   val leadContentMaxAge = 1.day
@@ -89,16 +83,13 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .edition(edition)
     .showTags("all")
     .showFields(trailFields)
-    .showInlineElements(inlineElements)
     .showElements("all")
     .showReferences(references)
     .showStoryPackage(true)
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
-    .edition(edition.id)
     .showTags("all")
-    .showInlineElements(inlineElements)
     .showReferences(references)
     .showFields(trailFields)
     .showElements("all")

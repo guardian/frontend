@@ -7,7 +7,7 @@ import services._
 import play.api.libs.json.{Json, JsArray}
 import scala.concurrent.Future
 import conf.LiveContentApi
-import com.gu.contentapi.client.ApiError
+import com.gu.contentapi.client.GuardianContentApiError
 
 object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
 
@@ -49,7 +49,7 @@ object TaggedContentController extends Controller with Related with Logging with
       .response
       .map { response =>
         response.results map { Content(_) }
-    }.recover{case ApiError(404, message) =>
+    } recover { case GuardianContentApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil
     }

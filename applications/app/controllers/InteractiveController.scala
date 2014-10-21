@@ -26,7 +26,6 @@ object InteractiveController extends Controller with Logging with ExecutionConte
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showFields("all")
       .response
 

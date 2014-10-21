@@ -42,8 +42,6 @@ import test.ConfiguredTestSuite
       "",
       None,
       Nil,
-      Nil,
-      Nil,
       None
     )
   ))

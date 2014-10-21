@@ -2,12 +2,12 @@ package test
 
 import conf.{LiveContentApi, Configuration}
 import java.net.URLEncoder
+import contentapi.Http
 import org.scalatest.Suites
 import org.scalatestplus.play._
 import play.api.test._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
-import com.gu.contentapi.client.connection.Http
 import recorder.ContentApiHttpRecorder
 import play.api.GlobalSettings
 import org.apache.commons.codec.digest.DigestUtils

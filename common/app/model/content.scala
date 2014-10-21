@@ -368,8 +368,6 @@ object SnapApiContent {
     apiUrl                      = "",
     fields                      = None,
     tags                        = Nil,
-    factboxes                   = Nil,
-    mediaAssets                 = Nil,
     elements                    = Option(Nil),
     references                  = Nil,
     isExpired                   = None

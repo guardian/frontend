@@ -27,7 +27,6 @@ object MediaController extends Controller with Logging with ExecutionContexts {
 
     log.info(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
       .response

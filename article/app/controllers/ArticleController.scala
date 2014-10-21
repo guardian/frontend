@@ -56,7 +56,6 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")

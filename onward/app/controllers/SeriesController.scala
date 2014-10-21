@@ -7,7 +7,7 @@ import model._
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
-import com.gu.contentapi.client.ApiError
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import views.support.{TemplateDeduping, SeriesContainer}
 
@@ -19,7 +19,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
-      series.map (renderSeriesTrails(_)).getOrElse(NotFound)
+      series.map(renderSeriesTrails).getOrElse(NotFound)
     }
   }
 
@@ -40,7 +40,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
           } else { None }
         }
       }
-      seriesResponse.recover{ case ApiError(404, message) =>
+      seriesResponse.recover{ case GuardianContentApiError(404, message) =>
         log.info(s"Got a 404 calling content api: $message" )
         None
       }

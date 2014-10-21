@@ -10,7 +10,7 @@ import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
-import com.gu.contentapi.client.ApiError
+import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
 
 object IndexPagePagination {
@@ -95,7 +95,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     promiseOfResponse.recover(convertApiExceptions)
       //this is the best handle we have on a wrong 'page' number
-      .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
+      .recover{ case GuardianContentApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
   }
 
   private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
@@ -131,7 +131,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }
     promiseOfResponse.recover(convertApiExceptions)
       //this is the best handle we have on a wrong 'page' number
-      .recover{ case ApiError(400, _) if pageNum != 1 => Right(Found(s"/$path")) }
+      .recover{ case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path")) }
   }
 
 
@@ -171,7 +171,6 @@ trait ImageQuery extends ConciergeRepository {
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
     val response = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showFields("all")
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .response.map { response:ItemResponse =>
