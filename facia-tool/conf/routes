@@ -11,7 +11,7 @@ GET           /oauth2callback            controllers.OAuthLoginController.oauth2
 GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
-GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/*file              controllers.UncachedAssets.at(file)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
