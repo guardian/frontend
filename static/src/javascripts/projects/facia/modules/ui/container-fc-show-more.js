@@ -15,11 +15,11 @@ define([
 ) {
     return function (container) {
         var $container           = bonzo(container),
-            self                 = this,
-            itemsHiddenOnDesktop = $container.hasClass("js-hide"),
-            itemsHiddenOnMobile  = $container.hasClass('js-hide-on-mobile'),
+            itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
+            itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
             className            = 'fc-show-more--hidden',
-            $button              = null;
+            $button              = null,
+            self                 = this;
 
         this.addShowMoreButton = function() {
             $button = $.create(template(showMoreBtn, {
@@ -31,6 +31,8 @@ define([
                     $container.addClass('fc-show-more--mobile-only');
                 }
 
+                console.log("Step 2");
+
                 $container.addClass(className)
                     .append($button)
                     .removeClass('js-container--fc-show-more');
@@ -39,7 +41,7 @@ define([
         };
 
         this.getContainerType = function() {
-            return $container.parent().parent().data("id").replace("-", " ");
+            return $container.parent().parent().data("id").replace(/-/g, " ");
         };
 
         function showMore() {

@@ -16,18 +16,20 @@ define([
     containerFcShowMore
     ) {
 
-    ddescribe('Container Show More', function() {
+    describe('Container Show More', function() {
 
         var container,
             $container,
-            containerId = 'talking-points',
+            containerId = 'pictures-and-video',
             sut;
 
         beforeEach(function () {
             container = bonzo.create(
                     '<section class="container" data-id="' + containerId + '">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide"></div>' +
+                            '<div class="container__body js-hide">' +
+                                '<div class="js-hide"></div>' +
+                            '</div>' +
                         '</div>' +
                     '</section>'
             )[0];
@@ -41,7 +43,7 @@ define([
         });
 
         it("should get section (container) id", function() {
-            expect(sut.getContainerType()).toEqual("talking points");
+            expect(sut.getContainerType()).toEqual("pictures and video");
         });
 
         it("should add button to the container", function() {
@@ -54,7 +56,7 @@ define([
             expect($container.text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                .toEqual("More talking points");
+                .toEqual("More pictures and video");
         });
     });
 });
