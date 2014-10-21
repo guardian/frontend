@@ -44,6 +44,7 @@
         }
     }
     &.content--sponsored,
+    &.content--foundation-supported,
     &.content--advertisement-feature {
         .content__headline {
             @include mq(desktop) {

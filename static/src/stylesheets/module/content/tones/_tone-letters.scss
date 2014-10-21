@@ -1,8 +1,21 @@
 @include tone-content-icons(letters, 'white');
 
-.tonal__head--tone-letters {
-    @extend %tonal__head--tone-comment;
+@include tone-content(
+    comment, // $tone
+    $c-commentBackground, // $tonal__header-background
+    $c-neutral2, // $tonal__header-text
+    $c-commentDefault, // $tonal__header-link
+    200, // $tonal__headline-weight
+    $c-neutral1, // $tonal__headline-colour
+    $c-commentDefault, // $tonal__headline-accent
+    $c-commentDefault, // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    $c-commentDefault // $tonal__article-link
+);
 
+.tonal--tone-letters {
     .tonal__header {
         .content__head__illustration {
             margin-bottom: -$gs-baseline*2;
@@ -25,8 +38,4 @@
             }
         }
     }
-}
-
-.tonal__main--tone-letters {
-    @extend %tonal__main--tone-comment;
 }

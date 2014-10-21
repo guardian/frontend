@@ -673,9 +673,12 @@ object ArticleLayout {
     lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-    lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
-        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+    lazy val hasSupportingAtBottom: Boolean = {
+      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
+      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
+      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      supportingEls.isDefined
+    }
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
       Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
@@ -998,9 +1001,8 @@ object GetClasses {
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
       "container" -> true,
-      "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
       "container--first" -> isFirst,
+      "js-sponsored-container" -> (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)),
       "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {
       case (kls, true) => kls

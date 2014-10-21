@@ -3,10 +3,9 @@
   "version": "0.1.0 ",
   "dependencies": {
     "eventEmitter": "~4.2.6",
-    "bootstrap.css": "~2.3.2",
     "curl": "~0.8.4",
     "jquery": "~2.0.3",
-    "knockout.js": "~3.0.0",
+    "knockout.js": "~3.2.0",
     "underscore": "~1.5.2"
   },
   "devDependencies": {
