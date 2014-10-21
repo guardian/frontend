@@ -6,7 +6,7 @@ import conf.Static
 import play.api.mvc.{Result, Action, Controller}
 import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
 import scala.concurrent.Future
-import scala.util.{Success, Try}
+import scala.util.Try
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordTypeString: String, idString: String)(f: Crossword => Result): Future[Result] = {
@@ -30,13 +30,16 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
   def crossword(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
     withCrossword(crosswordTypeString, idString) { crossword =>
-      Ok(views.html.crossword(new CrosswordPage(CrosswordData.fromCrossword(crossword))))
+      Ok(views.html.crossword(
+        new CrosswordPage(CrosswordData.fromCrossword(crossword)),
+        CrosswordSvg.apply(crossword, None, None)
+      ))
     }
   }
 
   def thumbnail(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
     withCrossword(crosswordTypeString, idString) { crossword =>
-      val xml = CrosswordSvg.apply(crossword)
+      val xml = CrosswordSvg.apply(crossword, Some("100%"), Some("100%"))
 
       val globalStylesheet = Static("stylesheets/global.css")
 

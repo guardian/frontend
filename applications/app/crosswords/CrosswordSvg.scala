@@ -37,7 +37,7 @@ case class Grid(columns: Int, rows: Int, cells: Map[Position, Cell])
 
 object CrosswordSvg {
   val BorderSize = 1
-  val CellSize = 28
+  val CellSize = 30
 
   implicit val positionOrdering = Ordering.by[Position, (Int, Int)](position => (position.y, position.x))
 
@@ -56,7 +56,7 @@ object CrosswordSvg {
     } getOrElse cellRect
   }
 
-  def apply(crossword: Crossword) = {
+  def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String]) = {
     val Dimensions(columns, rows) = crossword.dimensions
 
     val width = columns * (BorderSize + CellSize) + BorderSize
@@ -66,8 +66,8 @@ object CrosswordSvg {
          xmlns:xlink="http://www.w3.org/1999/xlink"
          viewBox={s"0, 0, $width, $height"}
          preserveAspectRatio="none"
-         width="100%"
-         height="100%"
+         width={boxWidth.getOrElse(width + "px")}
+         height={boxHeight.getOrElse(height + "px")}
          style="font-size: 10px">
       <rect x="0" y="0" width={width.toString} height={height.toString} style="fill: #000000" />
       {

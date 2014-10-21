@@ -1,7 +1,9 @@
-@(crosswordPage: crosswords.CrosswordPage)(implicit request: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import play.api.libs.json._
+@import views.html.fragments.crosswordEntries
+@import com.gu.crosswords.api.client.models.{Across, Down}
 
 @main(crosswordPage) { } {
     <div class="l-side-margins l-side-margins--layout-content">
@@ -26,7 +28,23 @@
                 <div class="content__main-column content__main-column--article js-content-main-column">
 
                     <div class="js-crossword"
-                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
+                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
+
+                        @* The following is a fallback for when JavaScript is not enabled *@
+                        <div style="@crosswordPage.fallbackDimensions.styleString">
+                            @svg
+                        </div>
+
+                        <div class="crossword__clues">
+                            <h3 class="crossword__clues-header">Across</h3>
+
+                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
+
+                            <h3 class="crossword__clues-header">Down</h3>
+
+                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>
