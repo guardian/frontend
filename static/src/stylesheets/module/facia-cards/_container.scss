@@ -17,6 +17,7 @@ $header-image-size-desktop: 120px;
         margin-top: 0;
     }
 }
+
 .fc-container__header {
     padding-top: $gs-baseline / 2;
     position: relative;
@@ -180,8 +181,73 @@ $header-image-size-desktop: 120px;
 
     @include mq(wide) {
         .has-page-skin & {
-            display: none;
+            position: absolute;
+            right: -1 * (gs-span(9) + $gs-gutter);
+            bottom: 0;
         }
+    }
+}
+
+.fc-container__updated--has-updates {
+    border: 0;
+}
+
+.fc-container__update-cta {
+    margin-right: 0;
+    margin-bottom: -1 * $gs-baseline / 3;
+
+    .i {
+        width: 16px;
+        height: 16px;
+        margin-bottom: -1 * $gs-baseline / 6;
+        margin-right: -1 * $gs-gutter / 4;
+        margin-left: $gs-gutter / 6;
+    }
+
+    @include mq(tablet) {
+        margin-bottom: 0;
+    }
+}
+
+.fc-container__update-cta__desc {
+    display: none;
+
+    @include mq(tablet) {
+        display: inline;
+    }
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fc-container__update-cta--is-updating {
+    .i {
+        -webkit-animation: spin 1s infinite linear;
+        -moz-animation: spin 1s infinite linear;
     }
 }
 
@@ -189,39 +255,12 @@ $header-image-size-desktop: 120px;
     display: inline-block;
 }
 
-.fc-container__updates {
-    @include fs-headline(2);
-    display: inline-block;
-    background-color: $c-commentBackground;
-    border-radius: 16px;
-    padding-right: $gs-gutter / 3;
-    line-height: 24px;
-    font-size: 14px;
-    font-family: $f-sans-serif-text;
-    margin-top: $gs-baseline/2;
-
-    a:hover {
-        text-decoration: none;
-    }
+.fc-container__body {
+    opacity: 1;
+    @include transition(opacity .25s linear); // Used to fade-in new updates
 }
 
-.fc-container__updates__number {
-    display: inline-block;
-    width: 24px;
-    border-radius: 16px;
-    background-color: $c-liveDefault;
-    color: #ffffff;
-    text-align: center;
-}
-
-.fc-container__updates--mobile {
-    @include mq(tablet) {
-        display: none;
-    }
-}
-
-.fc-container__updates--desktop {
-    @include mq($until: mobile) {
-        display: none;
-    }
+.fc-container__body--is-hidden {
+    opacity: 0;
+    @include transition(opacity .25s linear); // Used to fade-in new updates
 }
