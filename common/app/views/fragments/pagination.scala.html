@@ -10,7 +10,7 @@
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     @pageNo.map { p =>
-        <li class="pagination__item">
+        <li class="pagination__item pagination__item--pointer">
             <a class="button button--small button--tertiary pagination__action--static @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
                 @if(dir == "next") {
                 <i class="i i-arrow-right-grey"><span class="u-h">@dir.capitalize(0)</span></i>

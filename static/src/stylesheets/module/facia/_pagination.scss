@@ -91,6 +91,26 @@ $text-size:            14px;
     text-align: center;
 }
 
+.discussion__toolbar {
+    .pagination {
+        @include mq($until: tablet) {
+            clear: both;
+
+            .pagination__item--pointer {
+                &:first-child {
+                    float: left;
+                }
+                &:last-child {
+                    float: right;
+                }
+            }
+        }
+        @include mq(tablet) {
+            text-align: right;
+        }
+    }
+}
+
 /**
  *  1. to align font to the middle. Some numbers are in the middle by default (1, 4)
  *     but most of them need one 1px indent so it looks nicer.
