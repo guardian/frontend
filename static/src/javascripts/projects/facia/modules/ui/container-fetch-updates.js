@@ -1,6 +1,11 @@
 define([
     'bean',
     'bonzo',
+    'lodash/collections/contains',
+    'lodash/collections/filter',
+    'lodash/objects/has',
+    'lodash/collections/indexBy',
+    'lodash/collections/map',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
@@ -9,16 +14,16 @@ define([
     'common/utils/template',
     'common/modules/component',
     'common/modules/ui/relativedates',
-    'lodash/collections/contains',
-    'lodash/collections/filter',
-    'lodash/objects/has',
-    'lodash/collections/indexBy',
-    'lodash/collections/map',
     'text!common/views/ui/updates.html',
     'text!common/views/ui/updated.html'
 ], function (
     bean,
     bonzo,
+    contains,
+    filter,
+    has,
+    indexBy,
+    map,
     $,
     ajax,
     mediator,
@@ -27,11 +32,6 @@ define([
     template,
     Component,
     relativedate,
-    contains,
-    filter,
-    has,
-    indexBy,
-    map,
     updatesTpl,
     updatedTpl
 ) {
@@ -62,7 +62,7 @@ define([
     Cta.prototype.generateUpdatedTemplate = function () {
         var date = new Date();
         return template(updatedTpl, {
-            datetime: Date.now(),
+            datetime: date.getTime(),
             timestamp: date.toISOString(),
             text: 'Just now'
         });
@@ -233,15 +233,17 @@ define([
     }
 
     return function () {
-        var $containers = $('.js-container--fetch-updates'),
-            updateInterval = detect.isBreakpoint('mobile') ? 20000 : 10000;
+        if (config.switches.autoRefresh) {
+            var $containers = $('.js-container--fetch-updates'),
+                updateInterval = detect.isBreakpoint('mobile') ? 20000 : 10000;
 
-        if ($containers.length > 0) {
-            $containers.each(function (el) {
-                new Container(el).init();
-            });
-            triggerUpdate();
-            setInterval(triggerUpdate, updateInterval);
+            if ($containers.length > 0) {
+                $containers.each(function (el) {
+                    new Container(el).init();
+                });
+                triggerUpdate();
+                setInterval(triggerUpdate, updateInterval);
+            }
         }
     };
 });

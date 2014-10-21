@@ -81,9 +81,7 @@ define([
             },
 
             fetchUpdates: function () {
-                if (config.switches.autoRefresh) {
-                    containerFetchUpdates();
-                }
+                containerFetchUpdates();
             }
         },
 
