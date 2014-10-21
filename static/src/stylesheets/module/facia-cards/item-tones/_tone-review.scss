@@ -1,11 +1,12 @@
 .tone-review--item {
     $c-headline: #ffffff;
+
     @extend %tone-has-background;
     background-color: $c-reviewBackground;
 
     &,
     .fc-sublink__title {
-        color: $c-headline:
+        color: $c-headline;
     }
 
     .fc-item__link,
