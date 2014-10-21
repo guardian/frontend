@@ -47,4 +47,18 @@ object `package` {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i
   }
+
+  def frontKeywordIds(pageId: String): Seq[String] = {
+    val path = Edition.all.foldLeft(pageId) { case (soFar, edition) =>
+      val editionName = edition.id.toLowerCase
+      soFar.stripPrefix(s"$editionName/")
+    }
+    if (path.split("/").size == 1) {
+      Seq(s"$path/$path")
+    } else {
+      val normalizedPath = path.replace("/", "-")
+      Seq(path, s"$normalizedPath/$normalizedPath")
+    }
+  }
+
 }
