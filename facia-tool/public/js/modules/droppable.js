@@ -105,7 +105,7 @@ define([
                             mediaItem = _.chain(mediaItem.assets)
                                 .filter(function(asset) {
                                     var width = deepGet(asset, '.dimensions.width');
-                                    return width >= 500 && width <= 1000;
+                                    return width <= 1000;
                                 })
                                 .sortBy(function(asset) {
                                     var width = deepGet(asset, '.dimensions.width');
