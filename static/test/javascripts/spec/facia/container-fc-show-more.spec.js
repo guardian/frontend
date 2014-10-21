@@ -1,0 +1,60 @@
+define([
+    'bonzo',
+    'bean',
+    'qwery',
+    'common/utils/$',
+    'common/utils/template',
+    'text!facia/views/button-show-more.html',
+    'facia/modules/ui/container-fc-show-more'
+], function (
+    bonzo,
+    bean,
+    qwery,
+    $,
+    template,
+    showMoreBtn,
+    containerFcShowMore
+    ) {
+
+    ddescribe('Container Show More', function() {
+
+        var container,
+            $container,
+            containerId = 'talking-points',
+            sut;
+
+        beforeEach(function () {
+            container = bonzo.create(
+                    '<section class="container" data-id="' + containerId + '">' +
+                        '<div class="facia-container__inner">' +
+                            '<div class="container__body js-hide"></div>' +
+                        '</div>' +
+                    '</section>'
+            )[0];
+            $container = bonzo(container);
+
+            sut = new containerFcShowMore($(".container__body", $container));
+        });
+
+        afterEach(function () {
+            sut = null;
+        });
+
+        it("should get section (container) id", function() {
+            expect(sut.getContainerType()).toEqual("talking points");
+        });
+
+        it("should add button to the container", function() {
+            spyOn(sut, "getContainerType").and.callThrough();
+
+            sut.addShowMoreButton();
+
+            expect(sut.getContainerType).toHaveBeenCalled();
+            expect($(".button", $container).length > 0).toBeTruthy;
+            expect($container.text()
+                .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
+                .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
+                .toEqual("More talking points");
+        });
+    });
+});

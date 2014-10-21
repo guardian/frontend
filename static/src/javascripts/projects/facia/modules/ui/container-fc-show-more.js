@@ -14,13 +14,33 @@ define([
     showMoreBtn
 ) {
     return function (container) {
-        var $container = bonzo(container),
-            itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
-            itemsHiddenOnMobile = qwery('.js-hide-on-mobile', $container).length > 0,
-            className = 'fc-show-more--hidden',
+        var $container           = bonzo(container),
+            self                 = this,
+            itemsHiddenOnDesktop = $container.hasClass("js-hide"),
+            itemsHiddenOnMobile  = $container.hasClass('js-hide-on-mobile'),
+            className            = 'fc-show-more--hidden',
+            $button              = null;
+
+        this.addShowMoreButton = function() {
             $button = $.create(template(showMoreBtn, {
-                type:
+                type: self.getContainerType()
             }));
+
+            if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
+                if (!itemsHiddenOnDesktop) {
+                    $container.addClass('fc-show-more--mobile-only');
+                }
+
+                $container.addClass(className)
+                    .append($button)
+                    .removeClass('js-container--fc-show-more');
+                bean.on($button[0], 'click', showMore);
+            }
+        };
+
+        this.getContainerType = function() {
+            return $container.parent().parent().data("id").replace("-", " ");
+        };
 
         function showMore() {
             /**
@@ -29,17 +49,6 @@ define([
              */
             $button.hide();
             $container.removeClass(className);
-        }
-
-        if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
-            if (!itemsHiddenOnDesktop) {
-                $container.addClass('fc-show-more--mobile-only');
-            }
-
-            $container.addClass(className)
-                .append($button)
-                .removeClass('js-container--fc-show-more');
-            bean.on($button[0], 'click', showMore);
         }
     };
 });

@@ -45,7 +45,7 @@ define([
                     });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        containerFcShowMore(container);
+                        new containerFcShowMore(container).addShowMoreButton();
                     });
                 };
                 mediator.addListeners({
