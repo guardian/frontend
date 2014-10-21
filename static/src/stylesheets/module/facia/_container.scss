@@ -181,5 +181,9 @@
 
     @include mq(wide) {
         left: gs-span(15) + $gs-gutter;
+
+        .has-page-skin & {
+            left: auto;
+        }
     }
 }

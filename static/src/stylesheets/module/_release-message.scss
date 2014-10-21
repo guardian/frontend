@@ -20,7 +20,7 @@
         min-height: gs-height(2) - $gs-baseline;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         min-height: gs-height(2) - $gs-baseline*2;
     }
 
@@ -39,7 +39,7 @@
         display: block;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: table-cell;
         vertical-align: middle;
     }
@@ -78,13 +78,9 @@
         max-width: gs-span(4) + $gs-gutter;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         @include fs-headline(2, true);
         padding-right: $gs-gutter/2;
-        max-width: gs-span(6) + $gs-gutter/2;
-    }
-
-    @include mq(desktop) {
         max-width: gs-span(7) - $gs-gutter*2;
     }
 
@@ -159,7 +155,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     vertical-align: middle;
     padding-right: $gs-gutter/2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         padding-right: $gs-gutter;
     }
 }

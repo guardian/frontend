@@ -10,16 +10,23 @@ object TrailCssClasses {
 
   /** Article will soon support all tone classes so we'll be able to remove this silliness */
   val SupportedArticleTones: Set[CardStyle] = Set(
-    Media,
+    Analysis,
     Comment,
-    LiveBlog,
+    Letters,
+    Editorial,
     DeadBlog,
-    Feature
+    Feature,
+    LiveBlog,
+    Media,
+    Podcast,
+    Review
   )
 
   def articleToneClass(trail: Trail) = {
     if (SupportedArticleTones.contains(CardStyle(trail))) {
       toneClass(trail, "")
-    }
+      } else {
+        "tone-news"
+      }
   }
 }

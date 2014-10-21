@@ -6,12 +6,6 @@
     @include u-h;
 }
 
-.hide-until-rightcol {
-    @include mq($until: rightCol) {
-        @include u-h;
-    }
-}
-
 .hide-until-leftcol {
     @include mq($until: leftCol) {
         @include u-h;
@@ -159,7 +153,8 @@
  * Fakes text underline with a border
  */
 
-.u-underline {
+.u-underline,
+%u-underline {
     text-decoration: none !important;
     border-bottom: 1px solid $c-neutral4;
     @include transition(border-color .15s ease-out);

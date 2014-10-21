@@ -14,6 +14,8 @@ define([
         editions: ['uk', 'us', 'au'],
 
         types: [
+            {name: 'nav/list'},
+            {name: 'nav/media-list'},
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
             {name: 'news/headline', groups: ['standard', 'big', 'very big']},
@@ -47,7 +49,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 200,
+        maxFronts: 300,
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },

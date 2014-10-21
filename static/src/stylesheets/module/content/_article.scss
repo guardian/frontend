@@ -1,6 +1,5 @@
 .media-primary {
-    margin-left: $gs-gutter * -.5;
-    margin-right: $gs-gutter * -.5;
+    margin: 0 $gs-gutter * -.5;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / -1;
@@ -23,7 +22,7 @@
     @include mq(tablet) {
         max-width: gs-span(8);
     }
-    @include mq(rightCol) {
+    @include mq(desktop) {
         max-width: none;
     }
     .content__main-column--image & {
@@ -53,7 +52,7 @@
     margin-top: $gs-baseline*2;
 
     //This is required for football components, please do not remove
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: none;
     }
 }
