@@ -40,8 +40,8 @@ object InlineMerchandisingTagSet {
 
 case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: Set[String] = Set.empty, contributors: Set[String] = Set.empty) {
 
-  private def hasTagId(tags: Set[String], tagId: String): Boolean = tagId.split('/').lastOption exists { lastPart =>
-    tags contains lastPart
+  private def hasTagId(tags: Set[String], tagId: String): Boolean = tagId.split('/').lastOption exists { endPart =>
+    tags contains endPart
   }
 
   def hasTag(tag: Tag): Boolean = tag.tagType match {
