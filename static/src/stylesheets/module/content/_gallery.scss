@@ -218,13 +218,6 @@
             }
         }
     }
-
-    .content__standfirst {
-        @include mq(desktop) {
-            padding-right: gs-span(3);
-        }
-    }
-
 }
 
 .block-share--gallery {

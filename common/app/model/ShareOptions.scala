@@ -19,5 +19,4 @@ trait ShareOptions extends Content {
       ShareOption("Google plus", "gplus", s"https://plus.google.com/share?url=$shortBlockUrl")
     )
   }
-
 }

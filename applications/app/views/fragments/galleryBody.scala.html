@@ -1,101 +1,102 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
+@import views.support.TrailCssClasses.articleToneClass
+
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
 
     <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
-        <article class="content content--media content--gallery tone-@gallery.visualTone"
-        itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
+        <article class="content content--media content--gallery tonal tonal--@articleToneClass(gallery)"
+            itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
-        @fragments.headDefault(gallery)
+            @fragments.headTonal(gallery)
 
-        <div class="gs-container">
-            <div class="content__main-column content__main-column--gallery js-content-main-column">
+            <div class="content__main tonal__main tonal__main--@articleToneClass(gallery)">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--gallery">
+                        @fragments.contentMeta(gallery)
 
-                @fragments.standfirst(gallery)
+                        <ul class="gallery2">
+                            @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
+                                @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                                    <li id="@row.rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
+                                        <figure itemscope itemtype="http://schema.org/ImageObject">
 
-                @fragments.contentMeta(gallery)
+                                            @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
 
-                <ul class="gallery2">
-                    @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
-                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            <li id="@row.rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
-                                <figure itemscope itemtype="http://schema.org/ImageObject">
+                                                @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                                    @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
+                                                    <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
+                                                        href="@LinkTo{@gallery.url?index=@row.rowNum}"
+                                                        data-src="@imgSrc"
+                                                        data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                                        @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
+                                                        <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                            src="@url"
+                                                            alt="@image.altText.getOrElse("")"
+                                                            itemprop="contentUrl" />
 
-                                            <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                                                href="@LinkTo{@gallery.url?index=@row.rowNum}"
-                                                data-src="@imgSrc"
-                                                data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                                                        <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                            alt="@image.altText.getOrElse("")"
+                                                            itemprop="contentUrl" />
 
-                                                <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                                                    src="@url"
-                                                    alt="@image.altText.getOrElse("")"
-                                                    itemprop="contentUrl" />
+                                                        <span class="gallery2__fullscreen">
+                                                            <i class="i i-expand-white"></i>
+                                                            <i class="i i-expand-black"></i>
+                                                        </span>
 
-                                                <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                                                    alt="@image.altText.getOrElse("")"
-                                                    itemprop="contentUrl" />
+                                                    </a>
+                                                }
+                                            }
 
-                                                <span class="gallery2__fullscreen">
-                                                    <i class="i i-expand-white"></i>
-                                                    <i class="i i-expand-black"></i>
-                                                </span>
+                                            <div class="gallery2__figcaption">
+                                                @image.caption.map { caption =>
+                                                    <p class="gallery2__caption" itemprop="caption">@Html(caption)</p>
+                                                }
+                                                @if(image.displayCredit) {
+                                                    @image.credit.map { credit =>
+                                                        <p class="gallery2__credit" itemprop="author">@credit</p>
+                                                    }
+                                                }
 
-                                            </a>
+                                                @fragments.share.blockLevelSharing(row.rowNum.toString, gallery.shareOptions(row.rowNum.toString), s"${gallery.shortUrl}#${row.rowNum.toString}", Some("gallery"))
+                                            </div>
+
+                                        </figure>
+                                    </li>
+
+                                    @if(row.rowNum % adInterval == 0) {
+                                        @adSlots.lift((row.rowNum / adInterval) - 1).map { adSlot =>
+                                            <li class="gallery2__item gallery2__item--advert">
+                                                @fragments.commercial.standardAd(
+                                                    adSlot,
+                                                    Seq("gallery-inline", "dark"),
+                                                    Map(
+                                                        "mobile" -> Seq("300,50"),
+                                                        "mobile-landscape" -> Seq("300,50", "320,50"),
+                                                        "tablet" -> Seq("300,250")
+                                                    )
+                                                )
+                                            </li>
                                         }
                                     }
-
-                                    <div class="gallery2__figcaption">
-                                        @image.caption.map { caption =>
-                                            <p class="gallery2__caption" itemprop="caption">@Html(caption)</p>
-                                        }
-                                        @if(image.displayCredit) {
-                                            @image.credit.map { credit =>
-                                                <p class="gallery2__credit" itemprop="author">@credit</p>
-                                            }
-                                        }
-
-                                        @fragments.share.blockLevelSharing(row.rowNum.toString, gallery.shareOptions(row.rowNum.toString), s"${gallery.shortUrl}#${row.rowNum.toString}", Some("gallery"))
-                                    </div>
-
-                                </figure>
-                            </li>
-
-                            @if(row.rowNum % adInterval == 0) {
-                                @adSlots.lift((row.rowNum / adInterval) - 1).map { adSlot =>
-                                    <li class="gallery2__item gallery2__item--advert">
-                                        @fragments.commercial.standardAd(
-                                            adSlot,
-                                            Seq("gallery-inline", "dark"),
-                                            Map(
-                                                "mobile" -> Seq("300,50"),
-                                                "mobile-landscape" -> Seq("300,50", "320,50"),
-                                                "tablet" -> Seq("300,250")
-                                            )
-                                        )
-                                    </li>
                                 }
                             }
-                        }
-                    }
-                </ul>
-                <div class="submeta-container submeta-container--break-at-leftcol">
-                    @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <div class="submeta" data-link-name="keywords">
-                            <h2 class="submeta__head">Topics</h2>
-                            @fragments.keywordList(gallery.keywords, tone = Some("media"))
+                        </ul>
+                        <div class="submeta-container submeta-container--break-at-leftcol">
+                            @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                <div class="submeta" data-link-name="keywords">
+                                    <h2 class="submeta__head">Topics</h2>
+                                    @fragments.keywordList(gallery.keywords, tone = Some("media"))
+                                </div>
+                            }
+                            <div class="submeta" data-component="share">
+                                <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                                @fragments.social(gallery, iconModifier = "white")
+                            </div>
                         </div>
-                    }
-                    <div class="submeta" data-component="share">
-                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                        @fragments.social(gallery, iconModifier = "white")
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
     </div>
 
     <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading hide-on-childrens-books-site">

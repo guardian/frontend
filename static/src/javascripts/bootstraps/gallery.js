@@ -61,6 +61,15 @@ define([
         ready = function (config) {
             LightboxGallery.init();
             blockSharing.init();
+
+            // Opens block level sharing links in the lightbox
+            var galleryHash = window.location.hash;
+            if(galleryHash) {
+                var lightbox = new LightboxGallery.GalleryLightbox();
+                var hashIndex = galleryHash.split('#')[1];
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, hashIndex);
+            }
+
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 

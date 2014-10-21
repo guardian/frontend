@@ -133,6 +133,19 @@ trait DfpAgent {
       sponsor <- getSponsor(tagId)
     } yield sponsor
   }
+
+  def sponsorshipType(config: CollectionConfig): Option[String] = {
+    if (isSponsored(config)) {
+      Option("sponsored")
+    } else if (isAdvertisementFeature(config)) {
+      Option("advertisement-feature")
+    } else if (isFoundationSupported(config)) {
+      Option("foundation-supported")
+    } else {
+      None
+    }
+  }
+
 }
 
 

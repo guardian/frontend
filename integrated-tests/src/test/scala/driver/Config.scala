@@ -24,6 +24,7 @@ object Config {
 
   val remoteMode = optionalProperty("tests.mode").exists(_ == "remote")
   val baseUrl = optionalProperty("tests.baseUrl").getOrElse("http://www.theguardian.com")
+  val profileBaseUrl = optionalProperty("tests.profileBaseUrl").getOrElse("https://profile.theguardian.com")
 
   object stack {
     lazy val userName = mandatoryProperty("stack.userName")
