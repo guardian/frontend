@@ -117,7 +117,7 @@ define([
 
     Cta.prototype.bindListeners = function () {
         this.on('click', this.classes.btn, this.updating.bind(this));
-        mediator.on('modules:containers:' + this.id + ':loaded', this.hide.bind(this));
+        mediator.on('modules:containers:' + this.id + ':rendered', this.hide.bind(this));
     };
 
     function Container(el) {
@@ -196,8 +196,9 @@ define([
 
             setTimeout(function () {
                 $new.removeClass(hideCls);
-            }, 20);
-        }, 500);
+                mediator.emit('modules:containers:' + this.id + ':rendered');
+            }.bind(this), 20);
+        }.bind(this), 500);
     };
 
     // Having to override Components default fetch method.

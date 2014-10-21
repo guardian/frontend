@@ -5,6 +5,7 @@ define([
     'text!fixtures/ui/container.html',
     'text!fixtures/ui/collection.json',
     'text!common/views/ui/updates.html',
+    'text!common/views/ui/updated.html',
     'fixtures/ui/front-index',
     'helpers/fixtures',
     'jasq'
@@ -15,6 +16,7 @@ define([
     containerTmpl,
     collectionJson,
     updatesTpl,
+    updatedTpl,
     index,
     fixtures
 ) {
@@ -30,7 +32,8 @@ define([
                       edition: "UK"
                   }
               },
-              'text!common/views/ui/updates.html' : updatesTpl
+              'text!common/views/ui/updates.html' : updatesTpl,
+              'text!common/views/ui/updated.html' : updatedTpl
           }
         },
         specify: function () {
@@ -38,7 +41,9 @@ define([
                     id: 'container',
                     fixtures: [containerTmpl]
                 },
-                server;
+                server,
+                originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+
 
             beforeEach(function () {
                 // set up fake server
@@ -51,6 +56,7 @@ define([
             afterEach(function () {
                 server.restore();
                 fixtures.clean(container.id);
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
             });
 
             function initModule(module, deps, callback) {
@@ -79,7 +85,7 @@ define([
 
             it("should display update count in call-to-action", function(fetchUpdates, deps, done) {
                 initModule(fetchUpdates, deps, function(){
-                    expect($('.js-updates', $container).text()).toBe('1 update');
+                    expect($('.js-updates', $container).text()).toBe('1 new story');
                     done();
                 });
             });
@@ -97,13 +103,12 @@ define([
                 });
             });
 
-            it("should replace container items with new updates", function(fetchUpdates, deps, done) {
-                var stub = sinon.stub();
-                deps['common/utils/mediator'].once('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:loaded', stub);
+            xit("should hide call-to-action once updated", function(fetchUpdates, deps, done) {
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
                 initModule(fetchUpdates, deps, function(){
                     server.respondWith('football/collections/f3d7d2bc-e667-4a86-974f-fe27daeaebcc/1437282511.json', [200, {}, collectionJson]);
-                    deps['common/utils/mediator'].on('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:loaded', function() {
-                        expect($('[data-id=football/2014/oct/20/hillsborough-inquest-ch-insp-is-covering-up-his-cover-up]', $container).length).toBe(1);
+                    deps['common/utils/mediator'].on('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:rendered', function() {
+                        expect($('.fc-container__update-cta', $container).hasClass('u-h')).toBe(true);
                         done();
                     });
                     bean.fire(qwery('.fc-container__update-cta')[0], 'click');
