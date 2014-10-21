@@ -1166,6 +1166,7 @@ button {
     line-height: 16px;
     color: #666666;
     height: 64px;
+    width: 295px;
     overflow-y: auto;
 }
 
@@ -1209,10 +1210,8 @@ button {
 }
 
 .cnf-form .type-option--highlight {
-    font-weight: bold;
     color: #FFFFFF;
-    background: #999999;
-    border-radius: 4px;
+    background: #2ea3eb;
 }
 
 .cnf-form .type-picker .type-option {
@@ -1221,6 +1220,7 @@ button {
 }
 
 .cnf-form .type-option-chosen {
+    color: #2ea3eb;
     position: absolute;
     top: 25px;
     right: 10px;

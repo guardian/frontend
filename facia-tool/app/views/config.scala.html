@@ -77,6 +77,25 @@
 
             <!-- ko if: state.isOpen -->
             <div class="cnf-form">
+                <div class="type-option type-option-chosen" data-bind="click: toggleOpenTypePicker">
+                    <div data-bind="text: meta.type() || 'Choose layout...'"></div>
+                    <!-- ko if: containerThumbnail -->
+                    <img onerror="this.style.display='none'" data-bind="attr: {src: containerThumbnail}" />
+                    <!-- /ko -->
+                </div>
+
+                <!-- ko if: state.isOpenTypePicker -->
+                <i class="icon-remove type-picker-closer" data-bind="click: toggleOpenTypePicker"></i>
+                <div class="type-picker" data-bind="foreach: $root.types">
+                    <div class="type-option" data-bind="
+                            css: {'type-option--highlight': $data === $parent.meta.type()},
+                            click: $parent.typePicker">
+                        <div data-bind="text: $data"></div>
+                        <img onerror="this.style.display='none'" data-bind="attr: {src: '/thumbnails/' + $data + '.svg'}" />
+                    </div>
+                </div>
+                <!-- /ko -->
+
                 <label>Title</label>
                 <input type="text" data-bind="
                     value: meta.displayName"/>
@@ -101,25 +120,6 @@
                             <a target="_article" class="api-query-result" data-bind="
                                     attr: {href: 'http://www.theguardian.com/' + id},
                                     text: fields.headline"></a>
-                        </div>
-                    </div>
-                <!-- /ko -->
-
-                <div class="type-option type-option-chosen" data-bind="click: toggleOpenTypePicker">
-                    <div data-bind="text: meta.type() || 'Choose layout...'"></div>
-                    <!-- ko if: containerThumbnail -->
-                        <img onerror="this.style.display='none'" data-bind="attr: {src: containerThumbnail}" />
-                    <!-- /ko -->
-                </div>
-
-                <!-- ko if: state.isOpenTypePicker -->
-                    <i class="icon-remove type-picker-closer" data-bind="click: toggleOpenTypePicker"></i>
-                    <div class="type-picker" data-bind="foreach: $root.types">
-                        <div class="type-option" data-bind="
-                            css: {'type-option--highlight': $data === $parent.meta.type()},
-                            click: $parent.typePicker">
-                            <div data-bind="text: $data"></div>
-                            <img onerror="this.style.display='none'" data-bind="attr: {src: '/thumbnails/' + $data + '.svg'}" />
                         </div>
                     </div>
                 <!-- /ko -->
