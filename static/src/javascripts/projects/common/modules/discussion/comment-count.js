@@ -2,12 +2,14 @@ define([
     'common/utils/$',
     'bonzo',
     'qwery',
+    'lodash/collections/forEach',
     'common/utils/mediator',
     'common/utils/ajax'
 ], function (
     $,
     bonzo,
     qwery,
+    forEach,
     mediator,
     ajax
 ) {
@@ -36,32 +38,32 @@ define([
 
     function renderCounts(counts) {
         counts.forEach(function(c){
-            var node = document.body.querySelector('[data-discussion-id="' + c.id +'"]');
-            if (node) {
-                if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
+            forEach(qwery('[data-discussion-id="' + c.id +'"]'), function (node) {
+                var $node = bonzo(node),
+                    commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                    url,
+                    data;
+
+                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
 
-                var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
-
-                if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
+                if ($node.attr('data-discussion-inline-upgrade') === 'true') {
                     $('.js-item__comment-count', node).append(c.count + '');
                     $('.js-item__comment-or-comments', node).append(commentOrComments);
                     $('.js-item__inline-comment-template', node).show('inline');
                 } else {
-                    var url = getContentUrl(node),
-                        data = tpl.replace('[URL]', url);
-
-                    data = data.replace('[LABEL]', commentOrComments);
+                    url = getContentUrl(node);
+                    data = tpl.replace('[URL]', url).replace('[LABEL]', commentOrComments);
 
                     // put in trail__meta, if exists
                     var meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node),
-                        $node = meta.length ? bonzo(meta) : bonzo(node);
+                        $container = meta.length ? bonzo(meta) : $node;
 
-                    $node.append(data.replace('[COUNT]', c.count));
-                    node.removeAttribute(attributeName);
+                    $container.append(data.replace('[COUNT]', c.count));
+                    $node.removeAttr(attributeName);
                 }
-            }
+            });
         });
     }
 
