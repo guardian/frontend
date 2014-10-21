@@ -2,17 +2,28 @@
 
 @defining(("1_0", "2014-08-18")) { case (version, date) =>
     <li class="lineitem lineitem__multi lineitem__soulmates u-cf">
-        <span class="u-h">The Guardian</span>
-    	<h4 class="commercial__title container__title__wrapper i--commercial i-soulmates-title-background">
-    	    <span class="i i--commercial i-soulmates-logo"></span>
-            <span class="u-h">Soulmates</span>
-    	</h4>
-        <a class="lineitem__link"
-        href="@AdLink{@member.profileUrl}"
-        data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">
-            <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
-            <h4 class="lineitem__title">@member.username</h4>
-            <p class="lineitem__meta">@member.age, @member.location</p>
-        </a>
+        <div class="commercial__multi-wrapper">
+            <div class="commercial__multi-header">
+                <span class="u-h">The Guardian</span>
+            	<h4 class="commercial__title container__title__wrapper i-soulmates-title-background">
+            	    <span class="i i--commercial i-soulmates-logo"></span>
+                    <span class="u-h">Soulmates</span>
+            	</h4>
+            </div>
+            <a class="lineitem__link"
+            href="@AdLink{@member.profileUrl}"
+            data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">
+                <div class="lineitem__image-crop">
+                    <img class="lineitem__image lineitem__image-portrait" src="@member.profilePhoto" alt="" />
+                </div>
+                <h4 class="lineitem__title">@member.username</h4>
+                <div class="lineitem__offer">
+                    <p class="lineitem__meta">@member.age, @member.location</p>
+                </div>
+            </a>
+            <a class="lineitem__cta button button--primary button--small button--tone-media" href="@AdLink{@Configuration.commercial.soulmates_url}">
+                Find a Soulmate<i class="i i-arrow-white-right i-right"></i>
+            </a>
+        </div>
     </li>
 }

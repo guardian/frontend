@@ -169,7 +169,9 @@ CommentBox.prototype.ready = function() {
     this.setState(this.options.state);
 
     if (this.options.focus) {
-        this.getElem('body').focus();
+        window.setTimeout(function() {
+            this.getElem('body').focus();
+        }.bind(this), 0);
     }
 };
 
