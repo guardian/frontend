@@ -31,8 +31,6 @@ define([
                     $container.addClass('fc-show-more--mobile-only');
                 }
 
-                console.log("Step 2");
-
                 $container.addClass(className)
                     .append($button)
                     .removeClass('js-container--fc-show-more');

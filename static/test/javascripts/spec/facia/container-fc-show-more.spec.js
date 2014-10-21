@@ -58,5 +58,12 @@ define([
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
                 .toEqual("More pictures and video");
         });
+
+        it("should hide button after click", function() {
+            sut.addShowMoreButton();
+
+            bean.fire($('.button', $container)[0], 'click');
+            expect($('.button', $container).css('display')).toBe('none');
+        });
     });
 });
