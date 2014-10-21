@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.crosswords.api.client.models.{Crossword, Type}
 import common.ExecutionContexts
+import conf.Static
 import play.api.mvc.{Result, Action, Controller}
 import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
 import scala.concurrent.Future
@@ -33,15 +34,13 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
-  def thumbnail(crosswordTypeString: String, idString: String, widthString: String, heightString: String) = Action.async { implicit request =>
-    Try {
-      (widthString.toInt, heightString.toInt)
-    } match {
-      case Success((width, height)) => withCrossword(crosswordTypeString, idString) { crossword =>
-        Ok(CrosswordSvg.apply(crossword, width, height)).as("image/svg+xml")
-      }
+  def thumbnail(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
+    withCrossword(crosswordTypeString, idString) { crossword =>
+      val xml = CrosswordSvg.apply(crossword)
 
-      case _ => Future.successful(BadRequest("width and height must both be integers"))
+      val globalStylesheet = Static("stylesheets/global.css")
+
+      Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml")
     }
   }
 }
