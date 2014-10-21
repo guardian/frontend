@@ -10,6 +10,7 @@ GET        /_healthcheck                                                        
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 GET        /crosswords/:crosswordType/:id                                       controllers.CrosswordsController.crossword(crosswordType, id)
+GET        /crossword-thumbnails/:width/:height/:crosswordType/:id.svg          controllers.CrosswordsController.thumbnail(crosswordType, id, width, height)
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)

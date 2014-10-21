@@ -1,21 +1,19 @@
 package controllers
 
-import com.gu.crosswords.api.client.models.Type
+import com.gu.crosswords.api.client.models.{Crossword, Type}
 import common.ExecutionContexts
-import play.api.mvc.{Action, Controller}
-import crosswords.{CrosswordData, CrosswordPage, maybeApi}
+import play.api.mvc.{Result, Action, Controller}
+import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
 import scala.concurrent.Future
-import scala.util.Try
+import scala.util.{Success, Try}
 
 object CrosswordsController extends Controller with ExecutionContexts {
-  def crossword(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
+  protected def withCrossword(crosswordTypeString: String, idString: String)(f: Crossword => Result): Future[Result] = {
     maybeApi match {
       case Some(apiClient) =>
         (Type.fromString(crosswordTypeString), Try(idString.toInt).toOption) match {
           case (Some(crosswordType), Some(id)) =>
-            apiClient.getCrossword(crosswordType, id) map { crossword =>
-              Ok(views.html.crossword(new CrosswordPage(CrosswordData.fromCrossword(crossword))))
-            }
+            apiClient.getCrossword(crosswordType, id).map(f)
 
           case (None, _) =>
             Future.successful(NotFound(s"$crosswordTypeString is not a valid crossword type"))
@@ -26,6 +24,24 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
       case None =>
         Future.successful(InternalServerError("Crossword API credentials not set up."))
+    }
+  }
+
+  def crossword(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
+    withCrossword(crosswordTypeString, idString) { crossword =>
+      Ok(views.html.crossword(new CrosswordPage(CrosswordData.fromCrossword(crossword))))
+    }
+  }
+
+  def thumbnail(crosswordTypeString: String, idString: String, widthString: String, heightString: String) = Action.async { implicit request =>
+    Try {
+      (widthString.toInt, heightString.toInt)
+    } match {
+      case Success((width, height)) => withCrossword(crosswordTypeString, idString) { crossword =>
+        Ok(CrosswordSvg.apply(crossword, width, height)).as("image/svg+xml")
+      }
+
+      case _ => Future.successful(BadRequest("width and height must both be integers"))
     }
   }
 }

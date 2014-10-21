@@ -1,3 +1,4 @@
+import com.gu.crosswords.api.client.models.{Entry, Down, Across}
 import com.gu.crosswords.api.client.{Response, Http, ApiClient}
 import common.ExecutionContexts
 import conf.Configuration
@@ -13,5 +14,14 @@ package object crosswords extends ExecutionContexts {
         Response(wsResponse.status, wsResponse.statusText, wsResponse.body)
       }
     })
+  }
+
+  implicit class RichEntry(crosswordEntry: Entry) {
+    def allPositions = (0 until crosswordEntry.length).toList map { i =>
+      crosswordEntry.direction match {
+        case Across => crosswordEntry.position.copy(x = crosswordEntry.position.x + i)
+        case Down => crosswordEntry.position.copy(y = crosswordEntry.position.y + i)
+      }
+    }
   }
 }
