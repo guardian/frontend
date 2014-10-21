@@ -305,7 +305,7 @@ define([
                     {
                         name: definition.name || name,
                         // badges now append their index to the name
-                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
+                        normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
                         types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     })

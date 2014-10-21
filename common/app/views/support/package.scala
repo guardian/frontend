@@ -331,7 +331,7 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockid = el.id()
-        val url = s"http://${request.domain}${request.path}#$blockid"
+        val url = s"${article.webUrl}#$blockid"
         val shortUrl = s"${article.shortUrl}#$blockid"
 
         val icons = List(
@@ -673,12 +673,15 @@ object ArticleLayout {
     lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-    lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
-        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+    lazy val hasSupportingAtBottom: Boolean = {
+      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
+      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
+      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      supportingEls.isDefined
+    }
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
   }
 }
 
@@ -999,6 +1002,9 @@ object GetClasses {
     Seq(
       "container" -> true,
       "container--first" -> isFirst,
+      "container--sponsored" -> DfpAgent.isSponsored(config),
+      "container--advertisement-feature" -> DfpAgent.isAdvertisementFeature(config),
+      "container--foundation-supported" -> DfpAgent.isFoundationSupported(config),
       "js-sponsored-container" -> (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)),
       "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
     ) collect {

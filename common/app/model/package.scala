@@ -1,5 +1,6 @@
 package model
 
+import common.Edition
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import scala.math.abs
 
@@ -40,4 +41,23 @@ object `package` {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i
   }
+
+  def frontKeywordIds(pageId: String): Seq[String] = {
+    val editions = Edition.all.map(_.id.toLowerCase).toSet
+
+    val parts = pageId.split("/").toList match {
+      case edition :: rest if editions.contains(edition) => rest
+      case uneditionalised => uneditionalised
+    }
+
+    val path = parts.mkString("/")
+
+    if (parts.size == 1) {
+      Seq(s"$path/$path")
+    } else {
+      val normalizedPath = parts.mkString("-")
+      Seq(path, s"$normalizedPath/$normalizedPath")
+    }
+  }
+
 }
