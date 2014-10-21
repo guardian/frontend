@@ -1,45 +1,63 @@
 @(items: Seq[model.Content], optLogo: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <div class="commercial commercial--low commercial--capi">
+    <section class="container container--special container--merchandising container--advertisement-feature container--commercial-capi">
         <div class="facia-container__inner">
-            <div class="container__title commercial__head">
-                <h3 class="commercial__title">
-                    The Guardian
+        <div class="container__border tone-news tone-accent-border"></div>
+            <div class="container__header">
+                <h2 class="container__title tone-news">
+                    <span class="container__title__label u-text-hyphenate">The Guardian</span>
                 </h3>
+            </div>
+            <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 @for(logoUrl <- optLogo) {
-                    <img src="@logoUrl" alt="" />
+                    <div class="ad-slot--paid-for-badge__inner">
+                        <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
+                        <a href="#" class="ad-slot--paid-for-badge__link">
+                            <img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />
+                        </a>
+                        <a href="http://theguardian.com/paid-for-content" class="ad-slot--paid-for-badge__help">About this content</a>
+                    </div>
                 }
             </div>
-            <div class="container__body commercial__body">
-                <ul class="lineitems">
-                    @for(item <- items) {
-                        <li class="lineitem">
-                            <a class="lineitem__link" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
-                                @item.mainPicture.map{ picture =>
-                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                }
-                                <div class="lineitem__offer">
-                                    <h4 class="lineitem__title">@item.webTitle</h4>
-                                    <div class="item__meta">
-                                        <time
-                                            class="item__timestamp js-item__timestamp"
-                                            datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                            data-timestamp="@item.webPublicationDate.getMillis"
-                                            data-relativeformat="short">
-                                            <i class="i i-clock-light-grey"></i>
-                                            <span class="timestamp__text">
-                                                <span class="u-h">Published: </span>
-                                                @Format(item.webPublicationDate, "d MMM y")
-                                            </span>
-                                        </time>
+            <div class="container__body">
+                <div class="facia-slice-wrapper">
+                    <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                        @for(item <- items) {
+                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                <div class="item item--has-image item--imageadjust-default tone-news">
+                                    <div class="item__container">
+                                        <a class="item__link tone-accent-border" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
+                                            <div class="item__media-wrapper">
+                                                <div class="item__image-container u-responsive-ratio">
+                                            @item.mainPicture.map{ picture =>
+                                                @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                            }
+                                                </div>
+                                            </div>
+                                            
+                                            <h2 class="item__title">@item.webTitle</h2>
+                                            <div class="item__meta">
+                                                <time
+                                                    class="item__timestamp js-item__timestamp"
+                                                    datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                                    data-timestamp="@item.webPublicationDate.getMillis"
+                                                    data-relativeformat="short">
+                                                    <i class="i i-clock-light-grey"></i>
+                                                    <span class="timestamp__text">
+                                                        <span class="u-h">Published: </span>
+                                                        @Format(item.webPublicationDate, "d MMM y")
+                                                    </span>
+                                                </time>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                            </a>
-                        </li>
-                    }
-                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 }
