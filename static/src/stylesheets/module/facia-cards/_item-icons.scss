@@ -1,3 +1,6 @@
+// Default Icons
+// =============================================================================
+
 .fc-item__timestamp {
     padding-left: 0;
 
@@ -72,6 +75,45 @@
     }
 }
 
+// Media Icons
+// =============================================================================
+
+.fc-item--video .fc-item__title,
+.fc-sublink--video .fc-sublink__link {
+    &:before {
+        @include icon(video-icon, false);
+        content: '';
+        height: .75em;
+        width: 1.1em;
+        margin-right: .3em;
+    }
+}
+
+.fc-item--gallery .fc-item__title,
+.fc-sublink--gallery .fc-sublink__link {
+    &:before {
+        @include icon(camera-yellow-large, false);
+        content: '';
+        height: .72em;
+        width: 1.2em;
+        margin-right: .1em;
+    }
+}
+
+.fc-item--audio .fc-item__title,
+.fc-sublink--audio .fc-sublink__link {
+    &:before {
+        @include icon(volume-high-yellow, false);
+        content: '';
+        height: .72em;
+        width: 1.2em;
+        margin-right: .1em;
+    }
+}
+
+// Tonal Overrides
+// =============================================================================
+
 .tone-analysis--item,
 .tone-comment--item,
 .tone-dead--item,
@@ -95,11 +137,9 @@
         @include icon(comment-white, false);
     }
 
-    .fc-item__title:before {
+    &.fc-item--audio .fc-item__title:before,
+    .fc-sublink--audio .fc-item__title:before {
         @include icon(volume-high-dark-blue, false);
-        content: '';
-        height: .75em;
-        width: .95em;
     }
 
     .fc-sublink--video .fc-sublink__link:before {
@@ -119,28 +159,6 @@
 
     .fc-trail__count:before {
         @include icon(comment-grey, false);
-    }
-}
-
-.fc-item--video .fc-item__title,
-.fc-sublink--video .fc-sublink__link {
-    &:before {
-        @include icon(video-icon, false);
-        content: '';
-        height: .75em;
-        width: 1.1em;
-        margin-right: .3em;
-    }
-}
-
-.fc-item--gallery .fc-item__title,
-.fc-sublink--gallery .fc-sublink__link {
-    &:before {
-        @include icon(camera-yellow-large, false);
-        content: '';
-        height: .72em;
-        width: 1.2em;
-        margin-right: .1em;
     }
 }
 
