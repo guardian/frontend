@@ -331,7 +331,7 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockid = el.id()
-        val url = s"http://${request.domain}${request.path}#$blockid"
+        val url = s"${article.webUrl}#$blockid"
         val shortUrl = s"${article.shortUrl}#$blockid"
 
         val icons = List(
