@@ -57,9 +57,9 @@ define([
         this.adType                 = options.adType || 'desktop';
         this.multiComponents        = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
         this.capi                   = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
-        this.capiTitle              = options.capi_title || '';
-        this.capiLinkUrl            = options.capi_link_url || '';
-        this.capiAboutLinkUrl       = options.capi_about_link_url || '';
+        this.capiTitle              = options.capiTitle || '';
+        this.capiLinkUrl            = options.capiLinkUrl || '';
+        this.capiAboutLinkUrl       = options.capiAboutLinkUrl || '';
         this.logo                   = options.logo || '';
         this.components             = {
             bestbuy:            this.host + 'money/bestbuys.json',
