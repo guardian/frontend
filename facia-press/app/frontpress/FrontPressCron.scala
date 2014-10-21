@@ -14,6 +14,7 @@ import scala.util.{Failure, Success}
 
 object FrontPressCron extends JsonQueueWorker[SNSNotification] {
   val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
+  override val deleteOnFailure: Boolean = true
 
   override val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials

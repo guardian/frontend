@@ -62,6 +62,7 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
   import JsonQueueWorker._
 
   val queue: JsonMessageQueue[A]
+  val deleteOnFailure: Boolean = false
 
   final private val lastSuccessfulReceipt = DateTimeRecorder()
   final private val consecutiveProcessingErrors = ConsecutiveErrorsRecorder()
@@ -90,6 +91,9 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
             consecutiveProcessingErrors.recordSuccess()
 
           case Failure(error) =>
+            if (deleteOnFailure) {
+              queue.delete(receipt) onFailure {
+                case e => log.error(s"Error deleting message $id from queue", e)}}
             log.error(s"Error processing message $id", error)
             consecutiveProcessingErrors.recordError()
         }
