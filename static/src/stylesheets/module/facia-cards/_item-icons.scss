@@ -31,9 +31,10 @@
     .fc-item__link {
         @include icon(quote-grey, false);
         content: '';
+        display: inline !important;
         background-size: 1.2em .75em !important;
-        background-position: 0 .2em !important;
-        text-indent: 1.4em;
+        background-position: 0 .1em !important;
+        padding-left: 1.4em;
     }
 
     .tone-podcast--item & .fc-item__link {
