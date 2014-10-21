@@ -126,6 +126,17 @@ define([
         }
     }
 
+    function mediaHandler(opts) {
+        var article = deepGet(opts, '.targetGroup.parentType') === 'Article' ? deepGet(opts, '.targetGroup.parent') : undefined;
+
+        if (article) {
+            article.meta.imageReplace(true);
+            article.meta.imageSrc(opts.mediaItem.file);
+        } else {
+            window.alert('You can only drop media into an opened article')
+        }
+    }
+
     function remover(sourceGroup, id) {
         if (sourceGroup &&
             sourceGroup.parentType === 'Collection' &&
@@ -144,6 +155,7 @@ define([
     return {
         newItemsConstructor: newItemsConstructor,
         newItemsValidator: newItemsValidator,
-        newItemsPersister: newItemsPersister
+        newItemsPersister: newItemsPersister,
+        mediaHandler: mediaHandler
     };
 });

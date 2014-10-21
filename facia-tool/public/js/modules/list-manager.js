@@ -25,11 +25,22 @@ define([
         targetGroup
 
         isAfter (optional)
+
+        mediaItem (optional)
     */
     function listManager(opts) {
         var position,
             newItems,
             insertAt;
+
+        if (opts.mediaItem) {
+            if (_.isFunction(opts.mediaHandler)) {
+                opts.mediaHandler(opts);
+            } else {
+                window.alert('Unhandled media item');
+            }
+            return;
+        }
 
         position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
 

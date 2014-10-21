@@ -458,8 +458,8 @@ define([
                 this.meta.imageSrcWidth,
                 this.meta.imageSrcHeight,
                 {
-                    maxWidth: 940,
-                    minWidth: 620,
+                    maxWidth: 1000,
+                    minWidth: 500,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
                 }
@@ -472,7 +472,7 @@ define([
                 this.meta.imageCutoutSrcWidth,
                 this.meta.imageCutoutSrcHeight,
                 {
-                    maxWidth: 940,
+                    maxWidth: 1000,
                     minWidth: 400
                 }
             )
