@@ -66,7 +66,6 @@ define([
             var galleryHash = window.location.hash,
                 lightbox = new LightboxGallery.GalleryLightbox(),
                 hashIndex = galleryHash.split('#')[1];
-            
             if (galleryHash) {
                 lightbox.loadGalleryfromJson(config.page.galleryLightbox, hashIndex);
             }
