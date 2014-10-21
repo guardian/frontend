@@ -130,6 +130,7 @@
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {
+			var docClass = document.documentElement.className;
             @* http://modernizr.com/download/#-svg *@
             function hasSvgSupport() {
                 var ns = {'svg': 'http://www.w3.org/2000/svg'};
@@ -138,6 +139,13 @@
             if (hasSvgSupport()) {
                 document.documentElement.className += ' svg';
             }
+			
+            if(testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
+                docClass += ' has-flex';
+            } else {
+                docClass += ' has-no-flex';
+            }
+			
             if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
                 document.documentElement.className += ' has-flex-wrap';
             } else {
