@@ -63,10 +63,11 @@ define([
             blockSharing.init();
 
             // Opens block level sharing links in the lightbox
-            var galleryHash = window.location.hash;
+            var galleryHash = window.location.hash,
+                lightbox = new LightboxGallery.GalleryLightbox(),
+                hashIndex = galleryHash.split('#')[1];
+            
             if (galleryHash) {
-                var lightbox = new LightboxGallery.GalleryLightbox(),
-                    hashIndex = galleryHash.split('#')[1];
                 lightbox.loadGalleryfromJson(config.page.galleryLightbox, hashIndex);
             }
 
