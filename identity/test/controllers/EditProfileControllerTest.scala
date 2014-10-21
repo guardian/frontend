@@ -102,6 +102,12 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     val address4 = ""
     val postcode = "N1 9GU"
     val country = Countries.UK
+    val billingAddress1 = "Buckingham Palace"
+    val billingAddress2 = "London"
+    val billingAddress3 = ""
+    val billingAddress4 = ""
+    val billingPostcode = "SW1A 1AA"
+    val billingCountry = Countries.UK
 
     "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
@@ -115,7 +121,13 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
           ("address.line3", address3),
           ("address.line4", address4),
           ("address.postcode", postcode),
-          ("address.country", country)
+          ("address.country", country),
+          ("billingAddress.line1", billingAddress1),
+          ("billingAddress.line2", billingAddress2),
+          ("billingAddress.line3", billingAddress3),
+          ("billingAddress.line4", billingAddress4),
+          ("billingAddress.postcode", billingPostcode),
+          ("billingAddress.country", billingCountry)
         )
 
       val updatedUser = user.copy(
