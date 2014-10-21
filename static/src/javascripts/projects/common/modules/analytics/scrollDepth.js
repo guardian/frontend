@@ -8,17 +8,17 @@ define([
     mediator
 ) {
 
-    function ScrollDepth(config) {
-        this.config = assign(this.config, config);
+    function ScrollDepth(options) {
+        this.opts = assign(this.opts, options);
 
-        if (this.config.isContent) {
-            this.config.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
+        if (this.opts.isContent) {
+            this.opts.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
         }
 
         this.init();
     }
 
-    ScrollDepth.prototype.config = {
+    ScrollDepth.prototype.opts = {
         changeThreshold: 10,
         isContent: false,
         pageEl: document.body
@@ -61,12 +61,12 @@ define([
 
     ScrollDepth.prototype.setData = function (type) {
         var currentDepth,
-            el = this.config[type + 'El'];
+            el = this.opts[type + 'El'];
         if (!el) {
             return false;
         }
         currentDepth = this.getPercentageInViewPort(el);
-        if ((currentDepth - this.data[type].depth) > this.config.changeThreshold) {
+        if ((currentDepth - this.data[type].depth) > this.opts.changeThreshold) {
             this.data[type].depth = currentDepth;
             if (typeof this.data[type].duration === 'number') {
                 this.data[type].duration = this.timeSince(this.data[type].start);
@@ -79,7 +79,7 @@ define([
 
     ScrollDepth.prototype.hasDataChanged = function () {
         var page = this.setData('page'),
-            content = (this.config.isContent) ? this.setData('content') : false;
+            content = (this.opts.isContent) ? this.setData('content') : false;
         if (page || content) {
             this.log();
         }

@@ -4,39 +4,30 @@
 define([
     'lodash/objects/defaults',
     'common/utils/config',
+    'common/modules/commercial/outbrain',
+    'common/modules/commercial/tags/amaa',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
+    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/tags/effective-measure',
     'common/modules/commercial/tags/imrworldwide',
     'common/modules/commercial/tags/media-math',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/tags/remarketing',
-    'common/modules/commercial/tags/amaa',
-    'common/modules/commercial/tags/effective-measure',
-    'common/modules/commercial/outbrain'
+    'common/modules/commercial/tags/remarketing'
 ], function (
     defaults,
-    globalConfig,
+    config,
+    outbrain,
+    amaa,
     audienceScience,
     audienceScienceGateway,
+    criteo,
+    effectiveMeasure,
     imrWorldwide,
     mediaMath,
-    criteo,
-    remarketing,
-    amaa,
-    effectiveMeasure,
-    outbrain
+    remarketing
 ) {
 
-    function init(c) {
-
-        var config = defaults(
-            c || {},
-            globalConfig,
-            {
-                switches: {},
-                page: {}
-            }
-        );
+    function init() {
 
         if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
             return false;

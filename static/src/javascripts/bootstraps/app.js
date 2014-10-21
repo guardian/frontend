@@ -53,7 +53,7 @@ define([
                     }
                 },
                 function () {
-                    boostrap.init(config);
+                    boostrap.init();
                 }
             );
         },
