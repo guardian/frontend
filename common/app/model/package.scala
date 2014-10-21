@@ -1,8 +1,8 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
+import com.gu.openplatform.contentapi.model.{MediaAsset, Content => ApiContent}
 import common.Edition
-import org.joda.time.format.ISODateTimeFormat
+
 import scala.math.abs
 
 object `package` {
@@ -47,4 +47,23 @@ object `package` {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i
   }
+
+  def frontKeywordIds(pageId: String): Seq[String] = {
+    val editions = Edition.all.map(_.id.toLowerCase).toSet
+
+    val parts = pageId.split("/").toList match {
+      case edition :: rest if editions.contains(edition) => rest
+      case uneditionalised => uneditionalised
+    }
+
+    val path = parts.mkString("/")
+
+    if (parts.size == 1) {
+      Seq(s"$path/$path")
+    } else {
+      val normalizedPath = parts.mkString("-")
+      Seq(path, s"$normalizedPath/$normalizedPath")
+    }
+  }
+
 }
