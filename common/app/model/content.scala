@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.openplatform.contentapi.model.{
+import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
 }
 import common.{LinkCounts, LinkTo, Reference}
@@ -368,8 +368,6 @@ object SnapApiContent {
     apiUrl                      = "",
     fields                      = None,
     tags                        = Nil,
-    factboxes                   = Nil,
-    mediaAssets                 = Nil,
     elements                    = Option(Nil),
     references                  = Nil,
     isExpired                   = None
