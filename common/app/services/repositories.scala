@@ -2,7 +2,7 @@ package services
 
 import common.{Logging, ExecutionContexts}
 import scala.concurrent.Future
-import com.gu.openplatform.contentapi.ApiError
+import com.gu.contentapi.client.ApiError
 
 trait ConciergeRepository extends ExecutionContexts with Logging {
   implicit class future2RecoverApi404With[T](response: Future[T]) {

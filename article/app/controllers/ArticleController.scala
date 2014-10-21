@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import common._
 import conf._
 import model._

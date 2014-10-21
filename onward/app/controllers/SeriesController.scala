@@ -7,8 +7,8 @@ import model._
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
-import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.ApiError
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import views.support.{TemplateDeduping, SeriesContainer}
 
 case class Series(id: String, tag: Tag, trails: Seq[Content])

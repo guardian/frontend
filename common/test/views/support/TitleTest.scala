@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, FlatSpec}
 import model.{Tag, MetaData, Content, Page}
 import play.api.test.FakeRequest
 import common.Pagination
-import com.gu.openplatform.contentapi.model.{Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import org.joda.time.DateTime
 
 class TitleTest extends FlatSpec with Matchers {

@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{ Asset, Element =>ApiElement, Content => ApiContent, Tag => ApiTag }
+import com.gu.contentapi.client.model.{ Asset, Element =>ApiElement, Content => ApiContent, Tag => ApiTag }
 
 class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 

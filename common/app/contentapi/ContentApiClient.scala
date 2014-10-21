@@ -1,7 +1,7 @@
 package contentapi
 
 import akka.actor.ActorSystem
-import com.gu.openplatform.contentapi.Api
+import com.gu.contentapi.client.ContentApiClientLogic
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.Switches
 import scala.concurrent.Future
@@ -10,7 +10,7 @@ import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 
 import scala.concurrent.duration.{Duration, SECONDS, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
@@ -81,7 +81,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 }
 
 
-trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: Api =>
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: ContentApiClientLogic =>
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
@@ -104,8 +104,8 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .showElements("all")
 }
 
-trait ContentApiClient extends Api with ApiQueryDefaults with DelegateHttp with Logging {
-  override val apiKey = contentApi.key
+trait ContentApiClient extends ContentApiClientLogic with ApiQueryDefaults with DelegateHttp with Logging {
+  override val apiKey = contentApi.key.getOrElse("")
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)

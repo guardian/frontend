@@ -5,7 +5,7 @@ import conf._
 import model._
 import play.api.mvc._
 import scala.concurrent.Future
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import views.support.RenderOtherStatus
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent)

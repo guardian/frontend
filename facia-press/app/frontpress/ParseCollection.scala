@@ -3,7 +3,7 @@ package services
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.facia.client.models.{Trail, _}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import common._
 import conf.Switches.FaciaToolCachedContentApiSwitch
 import conf.{Configuration, LiveContentApi}
@@ -174,11 +174,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .response
       .map(Option.apply)
       .recover {
-      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+      case apiError: com.gu.contentapi.client.ApiError if apiError.httpStatus == 404 => {
         log.warn(s"Content API Error: 404 for collectionIds $collectionIdsQuery")
         None
       }
-      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+      case apiError: com.gu.contentapi.client.ApiError if apiError.httpStatus == 410 => {
         log.warn(s"Content API Error: 410 for collectionIds $collectionIdsQuery")
         None
       }
@@ -284,11 +284,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
-    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+    case apiError: com.gu.contentapi.client.ApiError if apiError.httpStatus == 404 => {
       log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
       Result.empty
     }
-    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+    case apiError: com.gu.contentapi.client.ApiError if apiError.httpStatus == 410 => {
       log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
       Result.empty
     }

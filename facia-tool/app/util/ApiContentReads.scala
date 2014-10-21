@@ -1,6 +1,6 @@
 package util
 
-import com.gu.openplatform.contentapi.model._
+import com.gu.contentapi.client.model._
 import play.api.libs.json.{JsResult, JsValue, Reads, Json}
 
 case class RealTag(

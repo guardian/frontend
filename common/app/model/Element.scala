@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.openplatform.contentapi.model.{Element => ApiElement}
+import com.gu.contentapi.client.model.{Element => ApiElement}
 
 trait Element {
   def delegate: ApiElement

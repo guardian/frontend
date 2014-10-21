@@ -1,6 +1,6 @@
 package services
 
-import com.gu.openplatform.contentapi.model._
+import com.gu.contentapi.client.model._
 import play.api.libs.json.Json
 
 object ParseCollectionJsonImplicits {

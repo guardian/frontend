@@ -1,12 +1,9 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
-import common.Edition
-import org.joda.time.format.ISODateTimeFormat
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import scala.math.abs
 
 object `package` {
-
   implicit class ApiContent2Is(content: ApiContent) {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
     lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
@@ -33,10 +30,6 @@ object `package` {
     lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
     lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
     lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
-  }
-
-  implicit class Media2rich(a: MediaAsset) {
-    lazy val safeFields = a.fields.getOrElse(Map.empty)
   }
 
   implicit class Any2In[A](a: A) {

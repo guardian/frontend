@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import conf.Configuration
 import play.api.libs.json.{JsArray, JsString, JsValue}

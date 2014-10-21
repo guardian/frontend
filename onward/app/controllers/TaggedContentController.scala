@@ -7,7 +7,7 @@ import services._
 import play.api.libs.json.{Json, JsArray}
 import scala.concurrent.Future
 import conf.LiveContentApi
-import com.gu.openplatform.contentapi.ApiError
+import com.gu.contentapi.client.ApiError
 
 object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
 

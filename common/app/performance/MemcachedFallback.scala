@@ -18,8 +18,8 @@ object MemcacheTypeclass {
   }
 
   object MemcacheKey {
-    implicit object ContentMemcacheKey extends MemcacheKey[com.gu.openplatform.contentapi.model.Content] {
-      def key(c: com.gu.openplatform.contentapi.model.Content): Option[String] =
+    implicit object ContentMemcacheKey extends MemcacheKey[com.gu.contentapi.client.model.Content] {
+      def key(c: com.gu.contentapi.client.model.Content): Option[String] =
         c.fields.flatMap(_.get("internalContentCode"))
           .filter(_.nonEmpty)
           .map(InternalContentCode.toFormattedInternalContentCode)}}
@@ -55,7 +55,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
     f onSuccess {
       case a => memcached foreach { m => try { m.set(key, a, cacheTime) } catch { case e: Exception => log.warn(e.toString)} }
     }
-    
+
     f recoverWith {
       case error: Throwable =>
         (memcached map { _.get[A](key) map {

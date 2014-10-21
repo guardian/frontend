@@ -1,7 +1,7 @@
 package frontpress
 
 import com.gu.facia.client.models.CollectionConfig
-import com.gu.openplatform.contentapi.model.Asset
+import com.gu.contentapi.client.model.Asset
 import conf.Switches
 import model._
 import org.joda.time.DateTime

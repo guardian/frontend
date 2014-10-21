@@ -4,13 +4,13 @@ import model._
 import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
-import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
+import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
-import com.gu.openplatform.contentapi.ApiError
+import com.gu.contentapi.client.ApiError
 import controllers.ImageContentPage
 
 object IndexPagePagination {

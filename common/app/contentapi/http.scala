@@ -3,7 +3,7 @@ package contentapi
 import java.net.InetAddress
 import java.util.concurrent.TimeoutException
 
-import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
+import com.gu.contentapi.client.connection.{Http, HttpResponse}
 import common.ContentApiMetrics.ContentApi404Metric
 import common.{Logging, ExecutionContexts}
 import conf.Configuration

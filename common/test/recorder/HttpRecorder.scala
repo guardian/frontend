@@ -3,7 +3,7 @@ package recorder
 import java.io._
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
-import com.gu.openplatform.contentapi.connection.HttpResponse
+import com.gu.contentapi.client.connection.HttpResponse
 import scala.concurrent.Future
 import common.ExecutionContexts
 import conf.Configuration
