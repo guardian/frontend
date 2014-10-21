@@ -8,7 +8,10 @@
     <div class="@RenderClasses(Map(
             "facia-container" -> true,
             "facia-container--layout-front" -> true,
-            "js-sponsored-front" -> (index.page.isSponsored && index.page.isAdvertisementFeature && index.page.isFoundationSupported)))"
+            "facia-container--sponsored" -> index.page.isSponsored,
+            "facia-container--advertisement-feature" -> index.page.isAdvertisementFeature,
+            "facia-container--foundation-supported" -> index.page.isFoundationSupported,
+            "js-sponsored-front" -> (index.page.isSponsored || index.page.isAdvertisementFeature || index.page.isFoundationSupported)))"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>
             data-sponsor="@sponsor"
