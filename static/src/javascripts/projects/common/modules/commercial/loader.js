@@ -47,18 +47,21 @@ define([
     var Loader = function (options) {
         var page = (options.config && options.config.page) || config.page || {};
 
-        this.pageId             = page.pageId;
-        this.keywordIds         = page.keywordIds || '';
-        this.section            = page.section;
-        this.host               = page.ajaxUrl + '/commercial/';
-        this.isbn               = page.isbn || '';
-        this.oastoken           = options.oastoken || '';
-        this.jobs               = options.jobIds || '';
-        this.adType             = options.adType || 'desktop';
-        this.multiComponents    = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
-        this.capi               = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
-        this.logo               = options.logo || '';
-        this.components         = {
+        this.pageId                 = page.pageId;
+        this.keywordIds             = page.keywordIds || '';
+        this.section                = page.section;
+        this.host                   = page.ajaxUrl + '/commercial/';
+        this.isbn                   = page.isbn || '';
+        this.oastoken               = options.oastoken || '';
+        this.jobs                   = options.jobIds || '';
+        this.adType                 = options.adType || 'desktop';
+        this.multiComponents        = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
+        this.capi                   = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
+        this.capiTitle              = options.capi_title || '';
+        this.capiLinkUrl            = options.capi_link_url || '';
+        this.capiAboutLinkUrl       = options.capi_about_link_url || '';
+        this.logo                   = options.logo || '';
+        this.components             = {
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',
             book:               this.host + 'books/book.json?'                  + 't=' + this.isbn,
@@ -75,7 +78,7 @@ define([
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords() + '&' + "l=" + this.logo,
+            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords() + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
             multi:              this.host + 'multi.json?'                       + this.multiComponents
         };
         this.postLoadEvents = {

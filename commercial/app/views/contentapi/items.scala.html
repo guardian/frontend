@@ -1,4 +1,4 @@
-@(items: Seq[model.Content], optLogo: Option[String])(implicit request: RequestHeader)
+@(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="container container--special container--merchandising container--advertisement-feature container--commercial-capi">
@@ -6,19 +6,19 @@
         <div class="container__border tone-news tone-accent-border"></div>
             <div class="container__header">
                 <h2 class="container__title tone-news">
-                    <span class="container__title__label u-text-hyphenate">The Guardian</span>
+                    <span class="container__title__label u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
                 </h3>
             </div>
-            <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
-                @for(logoUrl <- optLogo) {
-                    <div class="ad-slot--paid-for-badge__inner">
-                        <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
-                        <a href="#" class="ad-slot--paid-for-badge__link">
-                            <img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />
-                        </a>
-                        <a href="http://theguardian.com/paid-for-content" class="ad-slot--paid-for-badge__help">About this content</a>
-                    </div>
-                }
+            <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                <div class="ad-slot--paid-for-badge__inner">
+                    <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
+                    <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
+                        @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
+                    </a>
+                    @for(aboutLinkUrl <- optCapiAbout) {
+                        <a href="@aboutLinkUrl" class="ad-slot--paid-for-badge__help">About this content</a>
+                    }
+                </div>
             </div>
             <div class="container__body">
                 <div class="facia-slice-wrapper">

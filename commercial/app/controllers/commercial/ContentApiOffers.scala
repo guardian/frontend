@@ -14,6 +14,12 @@ object ContentApiOffers extends Controller with ExecutionContexts {
     val optKeyword = request.queryString get "k" map (_.head)
     
     val optLogo = request.queryString get "l" map (_.head)
+    
+    val optCapiTitle = request.queryString get "ct" map (_.head)
+    
+    val optCapiLink = request.queryString get "cl" map (_.head)
+    
+    val optCapiAbout = request.queryString get "cal" map (_.head)
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
       Lookup.latestContentByKeyword(keyword, 4)
@@ -27,7 +33,7 @@ object ContentApiOffers extends Controller with ExecutionContexts {
     futureContents map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
-        format.result(views.html.contentapi.items(contents, optLogo))
+        format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
       }
     }
   }
