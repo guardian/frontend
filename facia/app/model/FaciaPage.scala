@@ -18,10 +18,7 @@ case class FaciaPage(id: String,
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
-  lazy val keywordIds: Seq[String] = {
-    val normalizedId = id.replace("/", "-")
-    Seq(id, s"$normalizedId/$normalizedId")
-  }
+  lazy val keywordIds: Seq[String] = frontKeywordIds(id)
 
   override lazy val isFront = true
 

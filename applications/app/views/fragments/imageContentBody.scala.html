@@ -20,12 +20,20 @@
                     @if(image.keywords.filterNot(_.isSectionTag).nonEmpty) {
                         <div class="submeta" data-link-name="keywords">
                             <h2 class="submeta__head">Topics</h2>
-                            @fragments.keywordList(image.keywords)
+                            @if(image.isCartoon) {
+                                @fragments.keywordList(image.keywords)
+                            } else {
+                                @fragments.keywordList(image.keywords, tone = Some("media"))
+                            }
                         </div>
                     }
                     <div class="submeta" data-component="share">
                         <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                        @fragments.social(image)
+                        @if(image.isCartoon) {
+                            @fragments.social(image)
+                        } else {
+                            @fragments.social(image, iconModifier = "white")
+                        }
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@
 .tonal--tone-media {
     .tonal__main {
         color: $c-neutral7;
+        padding-top: 0;
 
         .byline,
         .content__dateline {
@@ -27,6 +28,7 @@
         }
 
         .byline a,
+        .caption,
         .submeta__head,
         .ad-slot--paid-for-badge__header,
         .ad-slot--paid-for-badge__label,

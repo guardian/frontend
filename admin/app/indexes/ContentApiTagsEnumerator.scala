@@ -5,7 +5,7 @@ import common.StringEncodings.asAscii
 import conf.LiveContentApi
 
 import scala.concurrent.Future
-import com.gu.openplatform.contentapi.model.{Tag, TagsResponse}
+import com.gu.contentapi.client.model.{Tag, TagsResponse}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.iteratee.{Enumeratee, Enumerator}

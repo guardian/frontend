@@ -48,6 +48,7 @@ define([
 
         this.state = asObservableProps([
             'isOpen',
+            'isOpenTypePicker',
             'underDrag',
             'apiQueryStatus']);
 
@@ -78,10 +79,21 @@ define([
                 .groups
             );
         }, this);
+
+        this.typePicker = this._typePicker.bind(this);
     }
 
     Collection.prototype.toggleOpen = function() {
         this.state.isOpen(!this.state.isOpen());
+    };
+
+    Collection.prototype.toggleOpenTypePicker = function() {
+        this.state.isOpenTypePicker(!this.state.isOpenTypePicker());
+    };
+
+    Collection.prototype._typePicker = function(type) {
+        this.meta.type(type);
+        this.state.isOpenTypePicker(false);
     };
 
     Collection.prototype.close = function() {

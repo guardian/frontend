@@ -1,6 +1,6 @@
 package util
 
-import com.gu.openplatform.contentapi.model._
+import com.gu.contentapi.client.model._
 import play.api.libs.json.{JsResult, JsValue, Reads, Json}
 
 case class RealTag(
@@ -39,9 +39,7 @@ object ApiContentReads {
   implicit val assetReads = Json.reads[Asset]
   implicit val podcastReads = Json.reads[Podcast]
   implicit val mediaEncodingReads = Json.reads[MediaEncoding]
-  implicit val mediaAssetReads = Json.reads[MediaAsset]
   implicit val referenceReads = Json.reads[Reference]
-  implicit val factBoxReads = Json.reads[Factbox]
   implicit val elementReads = Json.reads[Element]
   implicit val tagReads = Json.reads[RealTag].map(_.toTag)
   implicit val contentReads = Json.reads[Content]
