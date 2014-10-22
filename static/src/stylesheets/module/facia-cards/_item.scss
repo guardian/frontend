@@ -99,6 +99,13 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-neutral1, #ffffff, 80%);
+        }
+    }
+
     // This is a temp fix until we completely remove tone-colour from fc-item
     .tone-colour,
     .tone-colour:hover,
@@ -107,8 +114,14 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
+    @include stars();
+
     .stars {
         margin-bottom: 0;
+
+        .star__item {
+            vertical-align: bottom;
+        }
     }
 
     .gu-media-wrapper {
@@ -172,8 +185,6 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
     }
-
-    @include stars($margin-top: 4px);
 }
 
 .fc-item__title,
@@ -220,7 +231,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    margin-bottom: $gs-baseline / 4;
     color: $c-neutral2;
 
     &:after {
@@ -234,6 +244,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-trail__count {
     position: relative;
     float: left;
+    margin-bottom: $gs-baseline / 4;
 }
 
 .fc-item__timestamp {
@@ -286,9 +297,15 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     &.image--portrait {
-        bottom: auto;
         top: 0;
         height: auto;
         width: 80%;
+
+        .responsive-img {
+            position: absolute;
+            height: auto;
+            width: 100%;
+            bottom: auto;
+        }
     }
 }

@@ -1,6 +1,6 @@
 @include tone-content-icons(review, 'white');
 
-@include tone-content-head(
+@include tone-content(
     review, // $tone
     darken($c-reviewBackground, 10%), // $tonal__header-background
     $c-neutral6, // $tonal__header-text
@@ -10,11 +10,7 @@
     $c-reviewAccent, // $tonal__headline-accent
     $c-reviewBackground, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
-    #ffffff // $tonal__standfirst-link
-);
-
-@include tone-content-main(
-    review, // $tone
+    #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
     darken($c-reviewBackground, 10%) // $tonal__article-link
 );

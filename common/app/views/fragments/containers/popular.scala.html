@@ -11,13 +11,10 @@
     @if(collection.items.nonEmpty) {
         <section
             id="@FaciaComponentName(config, collection)"
-            class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
+            class="container fc-container"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@FaciaComponentName(config, collection)"
             data-type="@style.containerType"
-            @DfpAgent.sponsorshipTag(config).map { keyword =>
-                data-keywords="@keyword"
-            }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
                 <div class="fc-container__header js-container__header">

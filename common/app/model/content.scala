@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.openplatform.contentapi.model.{
+import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
 }
 import common.{LinkCounts, LinkTo, Reference}
@@ -368,8 +368,6 @@ object SnapApiContent {
     apiUrl                      = "",
     fields                      = None,
     tags                        = Nil,
-    factboxes                   = Nil,
-    mediaAssets                 = Nil,
     elements                    = Option(Nil),
     references                  = Nil,
     isExpired                   = None
@@ -409,7 +407,7 @@ object Snap {
   def isSnap(id: String): Boolean = id.startsWith("snap/")
 }
 
-class Article(content: ApiContentWithMeta) extends Content(content) {
+class Article(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -551,7 +549,7 @@ object Video {
   def apply(delegate: ApiContent): Video = new Video(ApiContentWithMeta(delegate))
 }
 
-class Gallery(content: ApiContentWithMeta) extends Content(content) {
+class Gallery(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 

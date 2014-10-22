@@ -49,7 +49,7 @@
     @SeoOptimisedContentImage.elementFor(picture).map { img =>
         @img.caption.map { caption =>
             <figcaption class="caption caption--main caption--img" itemprop="description">
-                @Html(caption) @if(img.displayCredit) { @img.credit.map(Html(_)) }
+                @Html(caption) @if(img.displayCredit && !img.credit.exists(caption.endsWith)) { @img.credit.map(Html(_)) }
             </figcaption>
         }
     }

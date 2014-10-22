@@ -217,6 +217,17 @@ trait Tags {
   def isFoundationSupported: Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
+  def sponsorshipType: Option[String] = {
+    if (isSponsored) {
+      Option("sponsored")
+    } else if (isAdvertisementFeature) {
+      Option("advertisement-feature")
+    } else if (isFoundationSupported) {
+      Option("foundation-supported")
+    } else {
+      None
+    }
+  }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   /**
@@ -276,7 +287,8 @@ object Tags {
   val mediaTypes = Seq(
     "type/video",
     "type/audio",
-    "type/gallery"
+    "type/gallery",
+    "type/picture"
   )
 
   val featureMappings = Seq(

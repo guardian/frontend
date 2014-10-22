@@ -458,8 +458,8 @@ define([
                 this.meta.imageSrcWidth,
                 this.meta.imageSrcHeight,
                 {
-                    maxWidth: 940,
-                    minWidth: 620,
+                    maxWidth: 1000,
+                    minWidth: 500,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
                 }
@@ -472,7 +472,7 @@ define([
                 this.meta.imageCutoutSrcWidth,
                 this.meta.imageCutoutSrcHeight,
                 {
-                    maxWidth: 940,
+                    maxWidth: 1000,
                     minWidth: 400
                 }
             )
@@ -503,6 +503,7 @@ define([
             this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
             this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
+            this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
 
             this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
@@ -528,9 +529,6 @@ define([
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
                     vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
-                );
-                this.state.ophanUrl(
-                    vars.CONST.ophanBase + '?path=/' + path
                 );
             }
         };
@@ -688,7 +686,6 @@ define([
 
         function resize(el) {
             setTimeout(function() {
-                el.style.height = '1px';
                 el.style.height = (el.scrollHeight) + 'px';
             });
         }
@@ -696,7 +693,7 @@ define([
         ko.bindingHandlers.autoResize = {
             init: function(el) {
                 resize(el);
-                $(el).on('keydown', function() { resize(el); });
+                $(el).keydown(function() { resize(el); });
             }
         };
 
@@ -704,7 +701,7 @@ define([
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
                 var self = this;
 
-                $(el).on('keydown', function(e) {
+                $(el).keydown(function(e) {
                     var keyCode = e.keyCode || e.which,
                         formField,
                         formFields,

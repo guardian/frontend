@@ -3,7 +3,7 @@ package controllers
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{RequestHeader, Controller, Action}
 import views.support.RenderOtherStatus
 
 case class GalleryPage(
@@ -38,7 +38,6 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
       .response.map{response =>

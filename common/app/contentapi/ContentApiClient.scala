@@ -1,7 +1,7 @@
 package contentapi
 
 import akka.actor.ActorSystem
-import com.gu.openplatform.contentapi.Api
+import com.gu.contentapi.client.ContentApiClientLogic
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.Switches
 import scala.concurrent.Future
@@ -10,12 +10,13 @@ import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 
 import scala.concurrent.duration.{Duration, SECONDS, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
+import ExecutionContexts.{executionContext => implicitExecutionContext}
 
-trait QueryDefaults extends implicits.Collections with ExecutionContexts {
+trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
   val trailFields = List(
     "headline",
@@ -36,13 +37,6 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     "pa-football-team",
     "witness-assignment",
     "esa-cricket-match"
-  ).mkString(",")
-
-  val inlineElements = List(
-    "picture",
-    "witness",
-    "video",
-    "embed"
   ).mkString(",")
 
   val leadContentMaxAge = 1.day
@@ -81,7 +75,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 }
 
 
-trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: Api =>
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: ContentApiClientLogic =>
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
@@ -89,38 +83,20 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .edition(edition)
     .showTags("all")
     .showFields(trailFields)
-    .showInlineElements(inlineElements)
     .showElements("all")
     .showReferences(references)
     .showStoryPackage(true)
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
-    .edition(edition.id)
     .showTags("all")
-    .showInlineElements(inlineElements)
     .showReferences(references)
     .showFields(trailFields)
     .showElements("all")
 }
 
-trait ContentApiClient extends Api with ApiQueryDefaults with DelegateHttp with Logging {
-  override val apiKey = contentApi.key
-
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    checkQueryIsEditionalized(url, parameters)
-
-    super.fetch(url, parameters + ("user-tier" -> "internal"))
-  }
-
-  private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries
-    if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
-      s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
-    )
-  }
-
-  private def isTagQuery(url: String) = url.endsWith("/tags")
+trait ContentApiClient extends ContentApiClientLogic with ApiQueryDefaults with DelegateHttp with Logging {
+  override val apiKey = contentApi.key.getOrElse("")
 }
 
 trait CircuitBreakingContentApiClient extends ContentApiClient {

@@ -2,8 +2,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
+    'common/modules/ui/blockSharing',
     'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
@@ -24,8 +25,8 @@ define([
     bean,
     bonzo,
     qwery,
-    $,
     _,
+    $,
     config,
     detect,
     mediator,
@@ -37,6 +38,7 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
+    blockSharing,
     dropdowns,
     Message,
     NotificationCounter,
@@ -190,6 +192,7 @@ define([
         handleUpdates: function () {
             mediator.on('modules:autoupdate:updates', function () {
                 modules.createTimeline();
+                blockSharing.init();
             });
         },
 
@@ -257,22 +260,6 @@ define([
                 60000
             );
 
-        },
-
-        truncateBlockShareIcons: function (blockShareEl) {
-            var truncated = qwery('> *', blockShareEl).slice(2);
-            bonzo(truncated).addClass('u-h');
-            $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
-        },
-
-        initBlockSharing: function () {
-            bean.on(document.body, 'click', '.js-blockshare-expand', function (e) {
-                var expandButton = bonzo(e.currentTarget),
-                    container = expandButton.parent()[0];
-                $('> *', container).removeClass('u-h');
-                expandButton.addClass('u-h');
-            });
-            $.forEachElement('.block-share', modules.truncateBlockShareIcons);
         }
     };
 
@@ -283,13 +270,13 @@ define([
         modules.createAutoUpdate();
         modules.showFootballLiveBlogMessage();
         modules.keepTimestampsCurrent();
-        modules.initBlockSharing();
         modules.handleUpdates();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
+        blockSharing.init();
 
         mediator.emit('page:liveblog:ready', config);
     }

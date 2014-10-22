@@ -158,6 +158,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val MobileMPUSwitch = Switch("Commercial", "mobile-mpu",
+    "Turn on MPUs at mobile breakpoint.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 1)
+  )
+
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
@@ -400,6 +405,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
+    MobileMPUSwitch,
     MediaMathSwitch,
     RemarketingSwitch,
     OutbrainSwitch,

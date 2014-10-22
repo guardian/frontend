@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 
 case class RelatedContent(
   // A manually curated list of related content. You want to to favour this over `related`

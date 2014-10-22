@@ -5,7 +5,7 @@ import conf.Switches.DoubleCacheTimesSwitch
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
+import com.gu.contentapi.client.model.{ Content => ApiContent }
 import play.api.mvc.Results
 import org.scala_tools.time.Imports._
 
