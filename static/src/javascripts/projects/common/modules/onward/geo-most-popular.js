@@ -5,24 +5,24 @@
 define([
     'Promise',
     'qwery',
+    'lodash/functions/once',
     'common/modules/component',
     'common/utils/mediator'
 ], function (
     Promise,
     qwery,
+    once,
     Component,
     mediator
 ) {
 
-    var geoMostPopular,
-        promise = new Promise(function (resolve, reject) {
-            mediator.on('modules:onward:geo-most-popular:ready', resolve);
-            mediator.on('modules:onward:geo-most-popular:error', reject);
-        });
+    var promise = new Promise(function (resolve, reject) {
+        mediator.on('modules:onward:geo-most-popular:ready', resolve);
+        mediator.on('modules:onward:geo-most-popular:error', reject);
+    });
 
     function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
-        this.fetch(qwery('.js-components-container'), 'rightHtml');
     }
 
     Component.define(GeoMostPopular);
@@ -40,10 +40,10 @@ define([
 
     return {
 
-        render: function () {
-            geoMostPopular = new GeoMostPopular();
+        render: once(function () {
+            new GeoMostPopular().fetch(qwery('.js-components-container'), 'rightHtml');
             return promise;
-        },
+        }),
 
         whenRendered: promise
 
