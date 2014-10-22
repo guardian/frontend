@@ -1,9 +1,9 @@
 package test
 
+import common.ExecutionContexts
 import conf.{LiveContentApi, Configuration}
 import java.net.URLEncoder
 import contentapi.Http
-import org.scalatest.Suites
 import org.scalatestplus.play._
 import play.api.test._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -64,7 +64,7 @@ trait TestSettings {
   LiveContentApi._http = toRecorderHttp(LiveContentApi._http)
 }
 
-trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
+trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
   lazy val host = s"http://localhost:${port}"
