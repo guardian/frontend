@@ -19,7 +19,9 @@ bower install guss-layout --save
 
 ## Features
 
-Low-level responsive layout patterns.
+Low-level responsive layout patterns using flex-box, that falls back to floats where not supported.
+
+Support can be defined via feature-detected class (e.g. using modernizr) or Sass variable (`$browser-supports-flexbox`).
 
 ## Demos
 
