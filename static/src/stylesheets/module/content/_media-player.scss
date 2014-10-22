@@ -244,11 +244,19 @@ $vjs-progress-inset-bottom: 4px;
     margin: 7px;
 
     .vjs-paused & {
-        @include icon(play-32-yellow);
+        @include icon(play-32--tone-media);
+    }
+
+    .gu-media-wrapper--podcast .vjs-paused & {
+        @include icon(play-32--tone-podcast);
     }
 
     .vjs-playing & {
-        @include icon(pause-32-yellow);
+        @include icon(pause-32--tone-media);
+    }
+
+    .gu-media-wrapper--podcast .vjs-playing & {
+        @include icon(pause-32--tone-podcast);
     }
 }
 
@@ -337,6 +345,10 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-play-progress {
     background-color: $c-mediaDefault;
     z-index: 2;
+
+    .gu-media-wrapper--podcast & {
+        background-color: $c-podcastDefault;
+    }
 }
 
 
@@ -374,6 +386,10 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-level {
     background-color: $c-mediaDefault;
+
+    .gu-media-wrapper--podcast & {
+        background-color: $c-podcastDefault;
+    }
 }
 
 .vjs-volume-handle {
@@ -381,6 +397,10 @@ $vjs-progress-inset-bottom: 4px;
     background-color: $c-mediaDefault;
     height: 11px;
     width: 2px;
+
+    .gu-media-wrapper--podcast & {
+        background-color: $c-podcastDefault;
+    }
 }
 
 .vjs-mute-control {
@@ -396,23 +416,38 @@ $vjs-progress-inset-bottom: 4px;
         @include icon(volume-low-white);
     }
     &:hover > div {
-        @include icon(volume-low-yellow);
+        @include icon(volume-low--tone-media);
     }
 
     &.vjs-vol-0 > div {
         @include icon(volume-mute-white);
     }
     &.vjs-vol-0:hover > div {
-        @include icon(volume-mute-yellow);
+        @include icon(volume-mute--tone-media);
     }
 
     &.vjs-vol-3 > div {
         @include icon(volume-high-white);
     }
     &.vjs-vol-3:hover > div {
-        @include icon(volume-high-yellow);
+        @include icon(volume-high--tone-media);
+    }
+
+    .gu-media-wrapper--podcast & {
+        &:hover > div {
+            @include icon(volume-low--tone-podcast);
+        }
+
+        &.vjs-vol-0:hover > div {
+            @include icon(volume-mute--tone-podcast);
+        }
+
+        &.vjs-vol-3:hover > div {
+            @include icon(volume-high--tone-podcast);
+        }
     }
 }
+
 
 /* VJS: OVERLAYS
    ========================================================================== */
@@ -465,7 +500,6 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-overlay--big-title {
-
     .vjs-overlay__title {
         text-align: left;
         padding: $gs-gutter/2;
@@ -479,7 +513,7 @@ $vjs-progress-inset-bottom: 4px;
         &:before {
             content: '';
             margin-right: $gs-gutter/2;
-            @include icon(video-camera-yellow);
+            @include icon(video-camera--tone-media);
         }
     }
 
@@ -488,6 +522,10 @@ $vjs-progress-inset-bottom: 4px;
         color: $c-mediaDefault;
         @include fs-headline(3);
         padding: 0 $gs-gutter/2 $gs-baseline*2;
+
+        .gu-media-wrapper--podcast & {
+            color: $c-podcastDefault;
+        }
     }
 }
 

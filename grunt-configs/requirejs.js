@@ -28,8 +28,7 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/,
-            stubModules: ['text']
+            fileExclusionRegExp: /^bower_components$/
         },
         common: {
             options: {
@@ -46,15 +45,24 @@ module.exports = function(grunt, options) {
                 },
                 modules: [
                     {
-                        name: 'core'
+                        name: 'core',
+                        exclude: [
+                            'text'
+                        ]
                     },
                     {
                         name: 'bootstraps/app',
-                        exclude: ['core']
+                        exclude: [
+                            'core',
+                            'text'
+                        ]
                     },
                     {
                         name: 'bootstraps/commercial',
-                        exclude: ['core']
+                        exclude: [
+                            'core',
+                            'text'
+                        ]
                     }
                 ]
             }
@@ -65,7 +73,8 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
                 exclude: [
                     'core',
-                    'bootstraps/app'
+                    'bootstraps/app',
+                    'text'
                 ]
             }
         },
@@ -75,7 +84,8 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
                     'core',
-                    'bootstraps/app'
+                    'bootstraps/app',
+                    'text'
                 ]
             }
         },
@@ -86,7 +96,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    '../../public/javascripts/vendor/stripe/stripe.min'
+                    '../../public/javascripts/vendor/stripe/stripe.min',
+                    'text'
                 ]
             }
         },
@@ -152,7 +163,8 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
                 exclude: [
                     'core',
-                    'bootstraps/app'
+                    'bootstraps/app',
+                    'text'
                 ]
             }
         },
@@ -166,7 +178,8 @@ module.exports = function(grunt, options) {
             },
             exclude: [
                 'core',
-                'bootstraps/app'
+                'bootstraps/app',
+                'text'
             ]
         }
     };
