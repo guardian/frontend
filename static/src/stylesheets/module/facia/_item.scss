@@ -129,16 +129,24 @@
 .container--advertisement-feature {
     background-color: $c-neutral8;
 
+    .fc-item {
+        background-color: $c-neutral8;
+    }
     .linkslist__action:visited,
+    .fc-item__link:visited,
     .item__link:visited,
     .item__link:visited .item__title,
+    .fc-item__standfirst,
     .item__standfirst,
     .fromage__standfirst {
         color: $c-neutral2-contrasted;
     }
+    .fc-item__header,
     .item__title,
     .item__standfirst,
+    .fc-item__standfirst,
     .fromage__standfirst,
+    .fc-item--list-compact,
     .linkslist__action {
         @include f-headlineSans;
     }
