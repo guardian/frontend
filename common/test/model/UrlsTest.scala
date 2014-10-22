@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
+import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag }
 import org.joda.time.DateTime
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers

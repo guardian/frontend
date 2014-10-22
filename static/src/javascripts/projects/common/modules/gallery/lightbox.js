@@ -2,8 +2,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
@@ -12,13 +12,20 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/ui/blockSharing',
+    'common/modules/ui/images',
+    'text!common/views/content/block-sharing.html',
+    'text!common/views/content/button.html',
+    'text!common/views/content/endslate.html',
+    'text!common/views/content/loader.html',
+    'text!common/views/content/share-button.html',
+    'text!common/views/content/share-button-mobile.html'
 ], function (
     bean,
     bonzo,
     qwery,
-    $,
     _,
+    $,
     ajax,
     config,
     detect,
@@ -27,8 +34,15 @@ define([
     template,
     url,
     Component,
-    imagesModule
-) {
+    blockSharing,
+    imagesModule,
+    blockSharingTpl,
+    buttonTpl,
+    endslateTpl,
+    loaderTpl,
+    shareButtonTpl,
+    shareButtonMobileTpl
+    ) {
     function GalleryLightbox() {
 
         // CONFIG
@@ -38,58 +52,28 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl =
-                '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                    '<button class="gallery-lightbox__btn-body"><i></i>{{label}}</button>' +
-                '</div>';
+            var tmpl = buttonTpl;
             return template(tmpl, {label: label});
         }
 
-        this.endslateHTML =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--endslate js-gallery-slide">' +
-                '<div class="gallery-lightbox__endslate js-gallery-endslate"></div>' +
-            '</li>';
-
-        this.loaderHTML =
-            '<div class="pamplemousse gallery-lightbox__loader js-loader">' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
-
-        this.imgElementHtml =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--img js-gallery-slide">' +
-                '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
-                '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
-                    '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index">{{index}}</span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count">{{count}}</span>' +
-                    '</div>' +
-                    '<div class="gallery-lightbox__img-caption">{{caption}}</div>' +
-                    '<div class="gallery-lightbox__img-credit">{{credit}}</div>' +
-                '</div>' +
-            '</li>';
-
-
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
-                '<div class="gallery-lightbox__sidebar">' +
-                    generateButtonHTML('close') +
-                    '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
-                        '<span class="gallery-lightbox__index js-gallery-index"></span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count js-gallery-count"></span>' +
-                    '</div>' +
-                    generateButtonHTML('next') +
-                    generateButtonHTML('prev') +
-                    generateButtonHTML('info-button') +
-                '</div>' +
+            '<div class="gallery-lightbox__sidebar">' +
+            generateButtonHTML('close') +
+            '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
+            '<span class="gallery-lightbox__index js-gallery-index"></span>' +
+            '<span class="gallery-lightbox__progress-separator"></span>' +
+            '<span class="gallery-lightbox__count js-gallery-count"></span>' +
+            '</div>' +
+            generateButtonHTML('next') +
+            generateButtonHTML('prev') +
+            generateButtonHTML('info-button') +
+            '</div>' +
 
-                '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
-                    '<ul class="gallery-lightbox__content js-gallery-content">' +
-                    '</ul>' +
-                '</div>' +
+            '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
+            '<ul class="gallery-lightbox__content js-gallery-content">' +
+            '</ul>' +
+            '</div>' +
 
             '</div>';
 
@@ -143,11 +127,31 @@ define([
     }
 
     GalleryLightbox.prototype.generateImgHTML = function(img, i) {
-        return template(this.imgElementHtml, {
+        var blockShortUrl = config.page.shortUrl + '?index=' + i,
+            blockLongUrl = config.page.pageId + '?index=' + i,
+            shareItems = [{
+                'text': 'Facebook',
+                'css': 'facebook',
+                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockLongUrl + '&ref=responsive')
+            }, {
+                'text': 'Twitter',
+                'css': 'twitter',
+                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl)
+            }, {
+                'text': 'Google plus',
+                'css': 'gplus',
+                'url': encodeURI('https://plus.google.com/share?url=' + blockShortUrl)
+            }];
+
+        return template(blockSharingTpl, {
+            articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
-            credit: img.displayCredit ? img.credit : ''
+            credit: img.displayCredit ? img.credit : '',
+            blockShortUrl: blockShortUrl,
+            shareButtons: _.map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: _.map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
@@ -217,7 +221,7 @@ define([
                 heightBigger =  calculatedHeight > height;
             return widthBigger || heightBigger;
         }).sort(function(a,b){ return a > b; }),
-            chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
+        chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
 
         return imgJson.src.replace('{width}', chosenWidth);
     };
@@ -231,7 +235,7 @@ define([
                     $img = bonzo(this.$images[i]);
                 if ($img.attr('src') !== imgSrc) {
                     var $parent = $img.parent()
-                        .append(bonzo.create(this.loaderHTML));
+                        .append(bonzo.create(loaderTpl));
 
                     $img.attr('src', imgSrc); // src can change with width so overwrite every time
 
@@ -414,6 +418,7 @@ define([
     };
 
     GalleryLightbox.prototype.show = function() {
+        blockSharing.init();
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
@@ -468,7 +473,7 @@ define([
 
     GalleryLightbox.prototype.loadEndslate = function() {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(this.endslateHTML);
+            this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';

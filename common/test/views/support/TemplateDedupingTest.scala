@@ -3,7 +3,7 @@ package views.support
 import org.scalatest.{Ignore, BeforeAndAfter, FlatSpec, Matchers}
 import model.{FaciaImageElement, Collection, Trail}
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
 

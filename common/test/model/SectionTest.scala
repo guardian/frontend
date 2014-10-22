@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Section => ApiSection}
+import com.gu.contentapi.client.model.{Section => ApiSection}
 import org.scalatest.{FlatSpec, Matchers}
 
 class SectionTest extends FlatSpec with Matchers {
@@ -11,12 +11,13 @@ class SectionTest extends FlatSpec with Matchers {
     Section(delegate)
   }
 
-  "keywordId" should "be same as section keyword ID for content pages in section" in {
+  "keywordIds" should "be same as section keyword ID for content pages in section" in {
 
-    toSection("culture").keywordId should be("culture/culture")
+    toSection("culture").keywordIds should be(Seq("culture/culture"))
 
-    toSection("sustainable-business/grundfos-partner-zone").keywordId should be(
-      "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")
+    toSection("sustainable-business/grundfos-partner-zone").keywordIds should be(Seq(
+      "sustainable-business/grundfos-partner-zone",
+      "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone"))
   }
 
 }
