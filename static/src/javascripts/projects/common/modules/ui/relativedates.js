@@ -25,7 +25,7 @@ define([
     }
 
     function twelveHourClock(hours) {
-        return  hours > 12 ? hours - 12 : hours;
+        return hours > 12 ? hours - 12 : hours;
     }
 
     function isToday(date) {
@@ -58,34 +58,35 @@ define([
     }
 
     function getSuffix(type, format, value) {
-        var units = {
-            s: {
-                'short': ['s'],
-                'med': ['s ago'],
-                'long':  [' second ago', ' seconds ago']
-            },
-            m: {
-                'short': ['m'],
-                'med': ['m ago'],
-                'long':  [' minute ago', ' minutes ago']
-            },
-            h: {
-                'short': ['h'],
-                'med': ['h ago'],
-                'long':  [' hour ago', ' hours ago']
-            },
-            d: {
-                'short': ['d'],
-                'med': ['d ago'],
-                'long':  [' day ago', ' days ago']
-            }
-        };
+        var strs,
+            units = {
+                s: {
+                    'short': ['s'],
+                    'med': ['s ago'],
+                    'long':  [' second ago', ' seconds ago']
+                },
+                m: {
+                    'short': ['m'],
+                    'med': ['m ago'],
+                    'long':  [' minute ago', ' minutes ago']
+                },
+                h: {
+                    'short': ['h'],
+                    'med': ['h ago'],
+                    'long':  [' hour ago', ' hours ago']
+                },
+                d: {
+                    'short': ['d'],
+                    'med': ['d ago'],
+                    'long':  [' day ago', ' days ago']
+                }
+            };
         if (units[type]) {
-            var strs = units[type][format];
+            strs = units[type][format];
             if (value === 1) {
                 return strs[0];
             } else {
-                return strs[strs.length-1];
+                return strs[strs.length - 1];
             }
         } else {
             return '';
@@ -95,9 +96,9 @@ define([
     function makeRelativeDate(epoch, opts) {
         opts = opts || {};
 
-        var then = new Date(Number(epoch)),
+        var minutes, hours, days, delta,
+            then = new Date(Number(epoch)),
             now = new Date(),
-            delta,
             format = opts.format || 'short',
             extendedFormatting = (opts.format === 'short' || opts.format === 'med');
 
@@ -117,15 +118,15 @@ define([
             return delta + getSuffix('s', format, delta);
 
         } else if (delta < (55 * 60)) {
-            var minutes = Math.round(delta / 60, 10);
+            minutes = Math.round(delta / 60, 10);
             return minutes + getSuffix('m', format, minutes);
 
         } else if (isToday(then) || (extendedFormatting && isWithin24Hours(then))) {
-            var hours = Math.round(delta / 3600);
+            hours = Math.round(delta / 3600);
             return hours + getSuffix('h', format, hours);
 
         } else if (extendedFormatting && isWithinPastWeek(then)) {
-            var days = Math.round(delta / 3600 / 24);
+            days = Math.round(delta / 3600 / 24);
             return days + getSuffix('d', format, days);
 
         } else if (isYesterday(then)) { // yesterday
@@ -153,12 +154,12 @@ define([
 
     function replaceLocaleTimestamps() {
         var cls = 'js-locale-timestamp';
-        $('.' + cls).each(function(el){
+        $('.' + cls).each(function (el) {
             var datetime,
                 $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10);
 
-            if(timestamp) {
+            if (timestamp) {
                 datetime = new Date(timestamp);
                 el.innerHTML = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
                 $el.removeClass(cls);
@@ -169,20 +170,22 @@ define([
     function replaceValidTimestamps(opts) {
         opts = opts || {};
 
-        findValidTimestamps().each(function(el) {
-            var $el = bonzo(el),
-                timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'), // Epoch dates are more reliable, fallback to datetime for liveblog blocks
+        findValidTimestamps().each(function (el) {
+            var targetEl,
+                $el = bonzo(el),
+                // Epoch dates are more reliable, fallback to datetime for liveblog blocks
+                timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'),
                 datetime = new Date(timestamp),
                 relativeDate = makeRelativeDate(datetime.getTime(), {
-                                  // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-                                  showTime: bonzo($el.parent()).hasClass('block-time'),
-                                  format:   $el.attr('data-relativeformat'),
-                                  notAfter: opts.notAfter
-                               });
+                    // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
+                    showTime: bonzo($el.parent()).hasClass('block-time'),
+                    format:   $el.attr('data-relativeformat'),
+                    notAfter: opts.notAfter
+                });
 
             if (relativeDate) {
                 // If we find .timestamp__text (facia), use that instead
-                var targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
+                targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
 
                 if (!targetEl.getAttribute('title')) {
                     targetEl.setAttribute('title', bonzo(targetEl).text());
@@ -195,7 +198,7 @@ define([
     }
 
      // DEPRECATED: Bindings
-    ['related', 'autoupdate'].forEach(function(module) {
+    ['related', 'autoupdate'].forEach(function (module) {
         mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
 

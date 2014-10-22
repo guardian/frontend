@@ -42,9 +42,7 @@ module.exports = function(grunt, options) {
                     '!modules/router.js',
                     '!modules/sport/football/football.js',
                     '!modules/sport/football/match-info.js',
-                    '!modules/sport/football/match-list-live.js',
-                    '!modules/ui/autoupdate.js',
-                    '!modules/ui/relativedates.js'
+                    '!modules/sport/football/match-list-live.js'
                 ]
             }]
         },
