@@ -33,11 +33,12 @@
     display: block;
     width: 30px;
     height: 30px;
+    border: 1px solid $c-neutral1;
     padding: 0;
     @include border-radius(50%);
     @include box-sizing(content-box); // Force proper sizing on button elements
-    background-color: red;
-    
+    background-color: transparent;
+
     &,
     &:active,
     &:focus,

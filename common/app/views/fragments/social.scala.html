@@ -1,24 +1,14 @@
-@(page: model.Content, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
+@(page: model.Content, position: String = "bottom", iconModifier: String = "white")(implicit request: RequestHeader)
 
 
 @defining(s"http://${request.host}${request.path}"){ url =>
     <ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
-        <li class="social__item" data-link-name="email">
-            <a  class="social__action social-icon-wrapper"
-                data-link-name="@position"
-                href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
-                <span class="u-h">Share via Email</span>
-                <span class="social-icon">
-                    <i class="i-share-email@if(iconModifier) {--@iconModifier} i"></i>
-                </span>
-            </a>
-        </li>
         <li class="social__item" data-link-name="facebook">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="@position"
                 href="https://www.facebook.com/sharer/sharer.php?u=@helper.urlEncode(url)&ref=responsive">
                 <span class="u-h">Share on Facebook</span>
-                <span class="social-icon">
+                <span class="social-icon social-icon--facebook">
                     <i class="i-share-facebook@if(iconModifier) {--@iconModifier} i"></i>
                 </span>
             </a>
@@ -28,7 +18,7 @@
                 data-link-name="@position"
                 href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&amp;url=@helper.urlEncode(page.shortUrl + "/tw")">
                 <span class="u-h">Share on Twitter</span>
-                <span class="social-icon">
+                <span class="social-icon social-icon--twitter">
                     <i class="i-share-twitter@if(iconModifier) {--@iconModifier} i"></i>
                 </span>
             </a>
@@ -38,9 +28,19 @@
                 data-link-name="@position"
                 href="https://plus.google.com/share?url=@helper.urlEncode(url)&amp;hl=en-GB&amp;wwc=1">
                 <span class="u-h">Share on Google+</span>
-                <span class="social-icon">
+                <span class="social-icon social-icon--gplus">
                     <i class="i-share-gplus@if(iconModifier) {--@iconModifier} i"></i>
                </span>
+            </a>
+        </li>
+        <li class="social__item" data-link-name="email">
+            <a  class="social__action social-icon-wrapper"
+            data-link-name="@position"
+            href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
+                <span class="u-h">Share via Email</span>
+                <span class="social-icon social-icon--email">
+                    <i class="i-share-email@if(iconModifier) {--@iconModifier} i"></i>
+                </span>
             </a>
         </li>
     </ul>
