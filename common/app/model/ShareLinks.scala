@@ -17,10 +17,10 @@ trait ShareLinks { self: Content =>
       blockId.map { block => s"$shortUrl/$campaign#$block" } getOrElse s"$shortUrl/$campaign"
     }
 
-    val facebook = shareCampaignUrl("sfb", blockId).urlEncoded
-    val googlePlus = shareCampaignUrl("sgp", blockId).urlEncoded
-    val link = shareCampaignUrl("sbl", blockId)
-    val twitter = shareCampaignUrl("stw", blockId).urlEncoded
+    lazy val facebook = shareCampaignUrl("sfb", blockId).urlEncoded
+    lazy val googlePlus = shareCampaignUrl("sgp", blockId).urlEncoded
+    lazy val link = shareCampaignUrl("sbl", blockId)
+    lazy val twitter = shareCampaignUrl("stw", blockId).urlEncoded
 
     shareType match {
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
