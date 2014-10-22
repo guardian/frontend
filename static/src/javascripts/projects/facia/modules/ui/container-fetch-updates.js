@@ -130,7 +130,7 @@ define([
     Component.define(Container);
 
     Container.prototype.endpoint = function () {
-        return config.page.pageId + '/collections/' + this.id + '/' + this.index.versionId + '.json';
+        return '/' + config.page.pageId + '/collections/' + this.id + '/' + this.index.versionId + '.json';
     };
 
     Container.prototype.getItems = function () {
@@ -223,7 +223,7 @@ define([
 
     function triggerUpdate() {
         ajax({
-            url: config.page.pageId + '/front-index.json',
+            url: '/' + config.page.pageId + '/front-index.json',
             type: 'json',
             method: 'get',
             crossOrigin: 'true'
