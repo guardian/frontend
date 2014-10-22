@@ -20,10 +20,11 @@
 // overrides of current slices
 .fc-container {
     .facia-slice__item {
+        padding-bottom: 0;
+
         .has-flex & {
             @include flex-display;
         }
-        padding-bottom: 0;
 
         &.l-list__item {
             margin-bottom: 0;
