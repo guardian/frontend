@@ -1,14 +1,16 @@
 define([
+    'bonzo',
     'qwery',
-    'helpers/fixtures',
     'common/utils/$',
     'common/modules/userPrefs',
+    'helpers/fixtures',
     'jasq'
 ], function (
+    bonzo,
     qwery,
-    fixtures,
     $,
-    userPrefs
+    userPrefs,
+    fixtures
 ) {
 
     describe('Slice Adverts', {
@@ -69,12 +71,19 @@ define([
 
             it('should have the correct size mappings', function (sliceAdverts) {
                 sliceAdverts.init();
-                $('.slice--has-ad .ad-slot', $fixtureContainer)
-                    .map(function(slot) { return $(slot); })
-                    .forEach(function($adSlot) {
-                        expect($adSlot.data('mobile')).toEqual('300,50');
-                        expect($adSlot.data('tablet')).toEqual('300,250');
-                    });
+                $('.slice--has-ad .ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+                    expect($adSlot.data('mobile')).toEqual('300,50|300,250');
+                    expect($adSlot.data('mobile-landscape')).toEqual('300,50|320,50|300,250');
+                    expect($adSlot.data('tablet')).toEqual('300,250');
+                    expect($adSlot.data('desktop')).toEqual('300,1|300,250');
+                });
+                $('.slice--has-ad .ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+                    expect($adSlot.data('mobile')).toEqual('300,50');
+                    expect($adSlot.data('mobile-landscape')).toEqual('300,50|320,50');
+                    expect($adSlot.data('tablet')).toEqual('300,250');
+                });
             });
 
             it('should have at least one non-advert containers between advert containers', function (sliceAdverts) {
