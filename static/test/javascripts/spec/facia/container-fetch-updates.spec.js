@@ -63,7 +63,7 @@ define([
             });
 
             function initModule(module, deps, callback) {
-                server.respondWith('football/front-index.json', [200, {}, JSON.stringify(index)]);
+                server.respondWith('/football/front-index.json', [200, {}, JSON.stringify(index)]);
                 deps['common/utils/ajax'].init();
                 deps['common/utils/mediator'].on("modules:containers:update", callback);
                 module();
@@ -97,7 +97,7 @@ define([
                 var stub = sinon.stub();
                 deps['common/utils/mediator'].once('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:loaded', stub);
                 initModule(fetchUpdates, deps, function(){
-                    server.respondWith('football/collections/f3d7d2bc-e667-4a86-974f-fe27daeaebcc/1437282511.json', [200, {}, collectionJson]);
+                    server.respondWith('/football/collections/f3d7d2bc-e667-4a86-974f-fe27daeaebcc/1437282511.json', [200, {}, collectionJson]);
                     deps['common/utils/mediator'].on('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:loaded', function() {
                         expect(stub).toHaveBeenCalled;
                         done();
@@ -109,7 +109,7 @@ define([
             xit("should hide call-to-action once updated", function(fetchUpdates, deps, done) {
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
                 initModule(fetchUpdates, deps, function(){
-                    server.respondWith('football/collections/f3d7d2bc-e667-4a86-974f-fe27daeaebcc/1437282511.json', [200, {}, collectionJson]);
+                    server.respondWith('/football/collections/f3d7d2bc-e667-4a86-974f-fe27daeaebcc/1437282511.json', [200, {}, collectionJson]);
                     deps['common/utils/mediator'].on('modules:containers:f3d7d2bc-e667-4a86-974f-fe27daeaebcc:rendered', function() {
                         expect($('.fc-container__update-cta', $container).hasClass('u-h')).toBe(true);
                         done();
