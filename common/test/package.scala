@@ -61,7 +61,7 @@ trait TestSettings {
     }
   }
 
-  LiveContentApi.http = toRecorderHttp(LiveContentApi.http)
+  LiveContentApi._http = toRecorderHttp(LiveContentApi._http)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
