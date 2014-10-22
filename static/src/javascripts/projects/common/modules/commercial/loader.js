@@ -60,6 +60,7 @@ define([
         this.capiTitle              = options.capiTitle || '';
         this.capiLinkUrl            = options.capiLinkUrl || '';
         this.capiAboutLinkUrl       = options.capiAboutLinkUrl || '';
+        this.capiKeywords           = map(options.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
         this.logo                   = options.logo || '';
         this.components             = {
             bestbuy:            this.host + 'money/bestbuys.json',
@@ -78,7 +79,7 @@ define([
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords() + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
+            capi:               this.host + 'capi.json?'                        + this.capi + this.capiKeywords + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
             multi:              this.host + 'multi.json?'                       + this.multiComponents
         };
         this.postLoadEvents = {
