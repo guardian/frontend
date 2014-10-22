@@ -1,11 +1,11 @@
 define([
     'common/utils/ajax',
-    'common/utils/cookies',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/cookies'
 ], function(
     ajax,
-    cookies,
-    config
+    config,
+    cookies
 ) {
 
 /**
