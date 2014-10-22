@@ -503,6 +503,7 @@ define([
             this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
             this.state.hasMainVideo(getMainMediaType(opts) === 'video');
             this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
+            this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
 
             this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
@@ -528,9 +529,6 @@ define([
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
                     vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
-                );
-                this.state.ophanUrl(
-                    vars.CONST.ophanBase + '?path=/' + path
                 );
             }
         };
