@@ -55,7 +55,6 @@
     .fc-sublink__live-indicator,
     .fc-sublink__breaking-indicator {
         color: $c-liveDefault;
-        font-weight: 400;
     }
 
     @include sublink-style(editorial, feature, live, review) {

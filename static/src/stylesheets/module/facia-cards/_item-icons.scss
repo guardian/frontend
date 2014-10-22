@@ -29,49 +29,36 @@
 
 .fc-item__title--quoted {
     .fc-item__link {
-        &:before {
-            @include icon(quote-grey, false);
-            content: '';
-            height: .72em;
-            width: 1.2em;
-            padding-right: .2em;
-        }
+        @include icon(quote-grey, false);
+        content: '';
+        display: inline !important;
+        background-size: 1.2em .75em !important;
+        background-position: 0 .1em !important;
+        padding-left: 1.4em;
     }
 
     .tone-podcast--item & .fc-item__link {
-        &:before {
-            @include icon(quote-black, false);
-        }
+        @include icon(quote-black, false);
     }
 
     .tone-feature--item & .fc-item__link {
-        &:before {
-            @include icon(quote-light-pink, false);
-        }
+        @include icon(quote-light-pink, false);
     }
 
     .tone-live--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-media--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-editorial--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-review--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 }
 
@@ -124,6 +111,16 @@
 
     .fc-sublink--gallery .fc-sublink__link:before {
         @include icon(camera-black-large, false);
+    }
+
+    .fc-sublink--audio {
+        .fc-sublink__link:before {
+            @include icon(volume-high-black, false);
+        }
+
+        &.tone-podcast--sublink .fc-sublink__link:before {
+            @include icon(volume-high-dark-blue, false);
+        }
     }
 }
 

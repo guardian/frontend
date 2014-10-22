@@ -15,12 +15,6 @@
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@FaciaComponentName(config, collection)"
             data-type="@style.containerType"
-            @DfpAgent.sponsorshipTag(config).map { keyword =>
-                data-keywords="@keyword"
-            }
-            @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
-                data-sponsorship="@sponsorshipType"
-            }
             data-component="@FaciaComponentName(config, collection)">
             <div class="facia-container__inner">
                 <div class="fc-container__header js-container__header">
