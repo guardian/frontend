@@ -1,47 +1,16 @@
-@(page: model.Content, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
+@(content: model.Content, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
 
-
-@defining(s"http://${request.host}${request.path}"){ url =>
-    <ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
-        <li class="social__item" data-link-name="email">
+<ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
+    @content.pageShares.map { item: model.ShareLink =>
+        <li class="social__item" data-link-name="@item.css">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="@position"
-                href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
-                <span class="u-h">Share via Email</span>
+                href="@item.href">
+                <span class="u-h">@item.userMessage</span>
                 <span class="social-icon">
-                    <i class="i-share-email@if(iconModifier) {--@iconModifier} i"></i>
+                    <i class="i-share-@item.css@if(iconModifier) {--@iconModifier} i"></i>
                 </span>
             </a>
         </li>
-        <li class="social__item" data-link-name="facebook">
-            <a  class="social__action social-icon-wrapper"
-                data-link-name="@position"
-                href="https://www.facebook.com/sharer/sharer.php?u=@helper.urlEncode(url)&ref=responsive">
-                <span class="u-h">Share on Facebook</span>
-                <span class="social-icon">
-                    <i class="i-share-facebook@if(iconModifier) {--@iconModifier} i"></i>
-                </span>
-            </a>
-        </li>
-        <li class="social__item" data-link-name="twitter">
-            <a  class="social__action social-icon-wrapper"
-                data-link-name="@position"
-                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&amp;url=@helper.urlEncode(page.shortUrl + "/tw")">
-                <span class="u-h">Share on Twitter</span>
-                <span class="social-icon">
-                    <i class="i-share-twitter@if(iconModifier) {--@iconModifier} i"></i>
-                </span>
-            </a>
-        </li>
-        <li class="social__item" data-link-name="gplus">
-            <a  class="social__action social-icon-wrapper"
-                data-link-name="@position"
-                href="https://plus.google.com/share?url=@helper.urlEncode(url)&amp;hl=en-GB&amp;wwc=1">
-                <span class="u-h">Share on Google+</span>
-                <span class="social-icon">
-                    <i class="i-share-gplus@if(iconModifier) {--@iconModifier} i"></i>
-               </span>
-            </a>
-        </li>
-    </ul>
-}
+    }
+</ul>

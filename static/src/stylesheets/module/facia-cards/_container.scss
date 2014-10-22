@@ -170,6 +170,12 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.fc-show-more--mobile-only .button--show-more {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
         display: none !important;

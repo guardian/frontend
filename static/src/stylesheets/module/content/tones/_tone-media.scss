@@ -2,69 +2,67 @@
 
 @include tone-content(
     media, // $tone
-    $c-neutral1, // $tonal__header-background
+    $c-mediaBackground, // $tonal__header-background
     $c-neutral6, // $tonal__header-text
-    $c-mediaAccent, // $tonal__header-link
+    $c-mediaDefault, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-mediaAccent, // $tonal__headline-accent
-    $c-neutral1, // $tonal__standfirst-background
+    $c-mediaDefault, // $tonal__headline-accent
+    $c-mediaBackground, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $c-neutral1, // $tonal__article-background
-    $c-mediaAccent // $tonal__article-link
+    $c-mediaBackground, // $tonal__article-background
+    $c-mediaDefault // $tonal__article-link
 );
 
-// Podcast and media tones share page styling... for now!
-.tonal--tone-podcast,
-.tonal--tone-media {
-    .tonal__main {
+// Podcast and media tones share page styling
+.tonal--tone-media .tonal__main--tone-media,
+.tonal--tone-podcast .tonal__main--tone-podcast {
+    color: $c-neutral7;
+    padding-top: 0;
+
+    .byline,
+    .content__dateline {
+        color: $c-neutral3;
+    }
+
+    .byline a,
+    .caption,
+    .submeta__head,
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help,
+    .from-content-api {
         color: $c-neutral7;
-        padding-top: 0;
+    }
 
-        .byline,
-        .content__dateline {
-            color: $c-neutral3;
+    .byline,
+    .content__dateline,
+    .content__meta-container,
+    .ad-slot--paid-for-badge--article,
+    .submeta,
+    .submeta-container,
+    .commentcount {
+        border-color: $c-neutral2;
+    }
+
+    .from-content-api {
+        a {
+            @extend %u-underline;
         }
 
-        .byline a,
-        .caption,
-        .submeta__head,
-        .ad-slot--paid-for-badge__header,
-        .ad-slot--paid-for-badge__label,
-        .ad-slot--paid-for-badge__help,
-        .from-content-api {
-            color: $c-neutral7;
-        }
+        a,
+        .u-underline {
+            color: inherit;
+            border-bottom-color: $c-neutral2;
 
-        .byline,
-        .content__dateline,
-        .content__meta-container,
-        .ad-slot--paid-for-badge--article,
-        .submeta,
-        .submeta-container,
-        .commentcount {
-            border-color: $c-neutral2;
-        }
-
-        .from-content-api {
-            a {
-                @extend %u-underline;
+            &:hover,
+            &:focus {
+                border-color: mix($c-neutral2, $c-neutral4, 50%);
             }
-
-            a,
-            .u-underline {
-                color: inherit;
-                border-bottom-color: $c-neutral2;
-
-                &:hover,
-                &:focus {
-                    border-color: mix($c-neutral2, $c-neutral4, 50%);
-                }
-                &:active {
-                    color: $c-mediaAccent;
-                    border-color: $c-mediaAccent;
-                }
+            &:active {
+                color: $c-mediaDefault;
+                border-color: $c-mediaDefault;
             }
         }
     }

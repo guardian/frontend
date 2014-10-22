@@ -90,7 +90,7 @@
 .fc-item--audio .fc-item__title,
 .fc-sublink--audio .fc-sublink__link {
     &:before {
-        @include icon(volume-high-yellow, false);
+        @include icon(volume-high--tone-media, false);
         content: '';
         height: .72em;
         width: 1.2em;
@@ -119,7 +119,7 @@
         }
 
         &.tone-podcast--sublink .fc-sublink__link:before {
-            @include icon(volume-high-dark-blue, false);
+            @include icon(volume-high--tone-podcast, false);
         }
     }
 }
@@ -136,7 +136,7 @@
 
     &.fc-item--audio .fc-item__title:before,
     .fc-sublink--audio .fc-item__title:before {
-        @include icon(volume-high-dark-blue, false);
+        @include icon(volume-high--tone-podcast, false);
     }
 
     .fc-sublink--video .fc-sublink__link:before {

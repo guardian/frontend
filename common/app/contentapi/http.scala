@@ -63,10 +63,7 @@ trait DelegateHttp { self: ContentApiClientLogic =>
   val httpTimingMetric: FrontendTimingMetric
   val httpTimeoutMetric: CountMetric
 
-  protected var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
-
-  def http = _http
-  def http_=(delegateHttp: Http) { _http = delegateHttp }
+  var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
   override def get(url: String, headers: Map[String, String]) =
     _http.GET(url, headers) map { response: Response =>

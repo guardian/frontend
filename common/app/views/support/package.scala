@@ -330,13 +330,11 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
-        val blockid = el.id()
-        val url = s"${article.webUrl}#$blockid"
-        val shortUrl = s"${article.shortUrl}#$blockid"
+        val blockId = el.id()
+        val shares = article.blockLevelShares(blockId)
+        val link = article.blockLevelLink(blockId)
 
-        def shareIcons = article.shareOptions(blockid)
-
-        val html = views.html.fragments.share.blockLevelSharing(blockid, shareIcons, shortUrl, Some("liveblog"))
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
 
         el.append(html.toString())
       }
@@ -670,8 +668,12 @@ object ArticleLayout {
 
     lazy val hasSupportingAtBottom: Boolean = {
       val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
-      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      var wordCount = 0
+      val lastEls = Jsoup.parseBodyFragment(a.body).select("body > *").reverseIterator.takeWhile{ el =>
+        wordCount += el.text.length
+        wordCount < 1500
+      }
+      val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
       supportingEls.isDefined
     }
 
