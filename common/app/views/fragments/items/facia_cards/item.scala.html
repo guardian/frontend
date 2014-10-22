@@ -22,7 +22,7 @@
                 data-discussion-closed="@trail.isClosedForComments"
                 data-discussion-inline-upgrade="true"
             }
-            data-link-name="trail | @CardStyle(trail).toneString | @{index + 1}"
+            data-link-name="@CardStyle(trail).toneString | @{index + 1}"
             @trail match {
                 case content: Content => {
                     data-id="@content.id"
