@@ -1,6 +1,5 @@
 package frontpress
 
-import com.gu.facia.client.models.CollectionConfig
 import com.gu.contentapi.client.model.ItemResponse
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common.{Edition, Logging}
@@ -15,6 +14,10 @@ import services._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
+
+object BlockingExceptions {
+  val exceptions: List[String] = List("breaking-news")
+}
 
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
@@ -34,7 +37,7 @@ trait FrontPress extends Logging {
                    frontProperties: FrontProperties,
                    collections: Seq[(CollectionConfigWithId, Collection)]): Try[JsObject] = {
 
-    if (collections.forall(_._2.isEmpty)) {
+    if (!BlockingExceptions.exceptions.contains(id) && collections.forall(_._2.isEmpty)) {
       val errorMessage = s"Tried to generate pressed JSON for front $id but it ended up being empty - aborting!"
       log.error(errorMessage)
       Failure(new RuntimeException(errorMessage))
