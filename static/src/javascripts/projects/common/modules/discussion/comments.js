@@ -244,8 +244,7 @@ Comments.prototype.getMoreReplies = function(event) {
     var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
     li.innerHTML = 'Loading…';
 
-    var self = this,
-        source = bonzo(event.target).data('source-comment');
+    var source = bonzo(event.target).data('source-comment');
 
     ajax({
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
@@ -255,14 +254,15 @@ Comments.prototype.getMoreReplies = function(event) {
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
-            replies = qwery(self.getClass('reply'), comment);
+            replies = qwery(this.getClass('reply'), comment);
 
-        replies = replies.slice(self.options.showRepliesCount);
+        replies = replies.slice(this.options.showRepliesCount);
         bonzo(qwery('.d-thread--responses', source)).append(replies);
         bonzo(li).addClass('u-h');
+        this.emit('untruncate-thread');
 
-        self.relativeDates();
-    });
+        this.relativeDates();
+    }.bind(this));
 };
 
 Comments.prototype.isReadOnly = function() {
