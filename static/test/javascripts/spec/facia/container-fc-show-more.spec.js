@@ -46,6 +46,12 @@ define([
             expect(sut.getContainerTitle()).toEqual("US news");
         });
 
+        it("should return empty string if there is no data attribute", function() {
+            $(".container__body", $container).removeAttr("data-title");
+
+            expect(sut.getContainerTitle()).toEqual("");
+        });
+
         it("should add button to the container", function() {
             spyOn(sut, "getContainerTitle").and.callThrough();
 

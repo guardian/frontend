@@ -38,7 +38,9 @@ define([
         };
 
         this.getContainerTitle = function () {
-            return $container.data('title');
+            var titleAttr = $container.data('title');
+
+            return (typeof titleAttr !== 'undefined') ? titleAttr : '';
         };
 
         function showMore() {
