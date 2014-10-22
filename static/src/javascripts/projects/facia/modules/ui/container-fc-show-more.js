@@ -39,7 +39,7 @@ define([
         };
 
         this.getContainerType = function() {
-            return $container.parent().parent().data("id").replace(/-/g, " ");
+            return $container.parent().parent().data('id').replace(/-/g, ' ');
         };
 
         function showMore() {
