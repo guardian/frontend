@@ -1,25 +1,30 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
     'fence',
-    'common/modules/ui/rhc',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/open/cta'
-
+    'common/modules/onward/geo-most-popular',
+    'common/modules/open/cta',
+    'common/modules/ui/rhc'
 ], function (
-    mediator,
-    $,
     fence,
-    rhc,
+    $,
+    config,
+    detect,
+    mediator,
     truncate,
     twitter,
-    OpenCta
+    geoMostPopular,
+    OpenCta,
+    rhc
 ) {
 
     var modules = {
 
-            initOpen: function (config) {
+            initOpen: function () {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(mediator, {
                         discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
@@ -43,16 +48,23 @@ define([
                 truncate();
                 twitter.init();
                 twitter.enhanceTweets();
+            },
+
+            initRightHandComponent: function () {
+                if (detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500) {
+                    geoMostPopular.render();
+                }
             }
 
         },
 
-        ready = function (config) {
-            modules.initOpen(config);
+        ready = function () {
+            modules.initOpen();
             modules.initFence();
             modules.initTruncateAndTwitter();
+            modules.initRightHandComponent();
 
-            mediator.emit('page:article:ready', config);
+            mediator.emit('page:article:ready');
         };
 
     return {
