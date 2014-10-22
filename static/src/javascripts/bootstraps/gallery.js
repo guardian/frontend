@@ -66,8 +66,10 @@ define([
             var galleryHash = window.location.hash,
                 lightbox = new LightboxGallery.GalleryLightbox(),
                 hashIndex = galleryHash.split('#')[1];
+                parsedGalleryIndex = parseInt(hashIndex, 10),
+                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             if (galleryHash) {
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, hashIndex);
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
             }
 
             verticallyResponsiveImages();
