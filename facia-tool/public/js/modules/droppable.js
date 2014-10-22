@@ -103,8 +103,8 @@ define([
                             return;
                         } else {
                             mediaItem = _.chain(mediaItem.assets)
-                                .filter(function(asset) { return width = deepGet(asset, '.dimensions.width') <= 1000; })
-                                .sortBy(function(asset) { return width = deepGet(asset, '.dimensions.width') * -1; })
+                                .filter(function(asset) { return deepGet(asset, '.dimensions.width') <= 1000; })
+                                .sortBy(function(asset) { return deepGet(asset, '.dimensions.width') * -1; })
                                 .first()
                                 .value();
                         }
