@@ -112,6 +112,16 @@
     .fc-sublink--gallery .fc-sublink__link:before {
         @include icon(camera-black-large, false);
     }
+
+    .fc-sublink--audio {
+        .fc-sublink__link:before {
+            @include icon(volume-high-black, false);
+        }
+
+        &.tone-podcast--sublink .fc-sublink__link:before {
+            @include icon(volume-high-dark-blue, false);
+        }
+    }
 }
 
 .tone-podcast--item,
