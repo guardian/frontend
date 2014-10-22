@@ -995,18 +995,14 @@ object GetClasses {
   }
 
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
-    val isPopular = config.apiQuery.exists { q =>
-      q.contains("show-most-viewed=true") && q.contains("hide-recent-content=true")
-    }
     Seq(
       ("container", true),
       ("container--first", isFirst),
-      ("container--sponsored", (DfpAgent.isSponsored(config) && !isPopular)),
-      ("container--advertisement-feature", (DfpAgent.isAdvertisementFeature(config) && !isPopular)),
-      ("container--foundation-supported", (DfpAgent.isFoundationSupported(config) && !isPopular)),
+      ("container--sponsored", DfpAgent.isSponsored(config)),
+      ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
+      ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
       ("js-sponsored-container", (
-        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)) &&
-        !isPopular
+        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
       )),
       ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
     ) collect {
