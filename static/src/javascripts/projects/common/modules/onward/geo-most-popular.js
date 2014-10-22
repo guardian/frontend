@@ -3,20 +3,24 @@
  Description: Shows popular trails for a given country.
  */
 define([
+    'Promise',
     'qwery',
-    'lodash/objects/assign',
     'common/modules/component',
     'common/utils/mediator'
 ], function (
+    Promise,
     qwery,
-    extend,
     Component,
     mediator
 ) {
 
-    function GeoMostPopular(config) {
+    var promise = new Promise(function (resolve, reject) {
+        mediator.on('modules:onward:geo-most-popular:ready', resolve);
+        mediator.on('modules:onward:geo-most-popular:error', reject);
+    });
+
+    function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
-        this.config = extend(this.config, config);
         this.fetch(qwery('.js-components-container'), 'rightHtml');
     }
 
@@ -26,7 +30,22 @@ define([
 
     GeoMostPopular.prototype.ready = function () {
         mediator.emit('register:end', 'geo-most-popular');
+        mediator.emit('modules:onward:geo-most-popular:ready', this);
     };
 
-    return GeoMostPopular;
+    GeoMostPopular.prototype.error = function (error) {
+        mediator.emit('modules:onward:geo-most-popular:error', error);
+    };
+
+    return {
+
+        render: function () {
+            new GeoMostPopular();
+            return promise;
+        },
+
+        whenRendered: promise
+
+    };
+
 });

@@ -21,7 +21,8 @@
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
     "fastclick": "guardian/fastclick#master",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "native-promise-only": "~0.7.6-a"
   },
   "resolutions": {
     "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf",
@@ -45,7 +46,8 @@
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
       "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
-      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js"
+      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js",
+      "native-promise-only": "bower_components/native-promise-only/lib/npo.src.js"
     }
   }
 }

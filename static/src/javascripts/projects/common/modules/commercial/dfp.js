@@ -99,7 +99,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile: '300,250|300,251|300,600'
+                    mobile: '300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
                 }
             },
             'right-small': {
@@ -172,6 +172,10 @@ define([
             },
             '300,1': function (e, $adSlot) {
                 $adSlot.addClass('u-h');
+            },
+            '300,1050': function (e, $adSlot) {
+                // remove most popular container if this larger ad is loaded
+                $adSlot.css('display', 'none');
             }
         },
 

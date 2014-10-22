@@ -85,7 +85,7 @@ define([
     Profile,
     Search,
     breakingNews,
-    GeoMostPopular,
+    geoMostPopular,
     history,
     MoreTags,
     Popular,
@@ -188,7 +188,9 @@ define([
                 if (config.page.contentType === 'Article' &&
                     detect.getBreakpoint() !== 'mobile' &&
                     parseInt(config.page.wordCount, 10) > 500) {
-                    new GeoMostPopular({});
+                    geoMostPopular.render().then(function (geoMostPopular) {
+                        console.log(geoMostPopular);
+                    });
                 }
             },
 
