@@ -47,7 +47,7 @@ Multi component (AKA Frankenponent)
         
         @include mq(mobileLandscape) {
             float: left;
-            width: percentage(1/2);
+            width: 50%;
             &:nth-child(n+2) {
                 display: block;
             }
@@ -74,7 +74,7 @@ Multi component (AKA Frankenponent)
             &:nth-child(n+4) {
                 display: block;
             }
-            width: percentage(1/4);
+            width: 25%;
         }
     }
     .lineitem__image-crop {
