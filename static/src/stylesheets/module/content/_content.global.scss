@@ -6,10 +6,10 @@
         display: block !important;
     }
     &:before {
-        margin-bottom: 7px;
+        margin-bottom: $gs-baseline / 3;
     }
     &:after {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline / 3;
         @include transform(rotate(180deg));
     }
 }
