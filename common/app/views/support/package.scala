@@ -330,13 +330,11 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
-        val blockid = el.id()
-        val url = s"${article.webUrl}#$blockid"
-        val shortUrl = s"${article.shortUrl}#$blockid"
+        val blockId = el.id()
+        val shares = article.blockLevelShares(blockId)
+        val link = article.blockLevelLink(blockId)
 
-        def shareIcons = article.shareOptions(blockid)
-
-        val html = views.html.fragments.share.blockLevelSharing(blockid, shareIcons, shortUrl, Some("liveblog"))
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
 
         el.append(html.toString())
       }
