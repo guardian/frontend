@@ -83,7 +83,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving front index: $path")
 
     withFaciaPage(path) { page =>
-      Cached(60)(Ok(Json.toJson(FrontIndex.fromFaciaPage(page))))
+      Cached(60)(JsonComponent(Json.toJson(FrontIndex.fromFaciaPage(page)).asInstanceOf[JsObject]))
     }
   }
 

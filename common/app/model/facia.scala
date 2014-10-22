@@ -22,6 +22,8 @@ case class Collection(curated: Seq[Content],
 
   def isBackFillEmpty =
     (editorsPicks ++ mostViewed ++ results).isEmpty
+
+  lazy val isEmpty = items.isEmpty
 }
 
 object Collection {
