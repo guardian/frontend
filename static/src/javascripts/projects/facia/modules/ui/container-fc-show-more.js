@@ -38,7 +38,7 @@ define([
         };
 
         this.getContainerType = function () {
-            return $container.parent().parent().data('id').replace(/-/g, ' ');
+            return $container.parent().parent().data('link-name').replace(/-/g, ' ');
         };
 
         function showMore() {
