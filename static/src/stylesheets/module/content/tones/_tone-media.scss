@@ -4,15 +4,15 @@
     media, // $tone
     $c-mediaBackground, // $tonal__header-background
     $c-neutral6, // $tonal__header-text
-    $c-mediaAccent, // $tonal__header-link
+    $c-mediaDefault, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-mediaAccent, // $tonal__headline-accent
+    $c-mediaDefault, // $tonal__headline-accent
     $c-mediaBackground, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     $c-mediaBackground, // $tonal__article-background
-    $c-mediaAccent // $tonal__article-link
+    $c-mediaDefault // $tonal__article-link
 );
 
 // Podcast and media tones share page styling
@@ -62,8 +62,8 @@
                     border-color: mix($c-neutral2, $c-neutral4, 50%);
                 }
                 &:active {
-                    color: $c-mediaAccent;
-                    border-color: $c-mediaAccent;
+                    color: $c-mediaDefault;
+                    border-color: $c-mediaDefault;
                 }
             }
         }
