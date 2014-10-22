@@ -47,22 +47,22 @@ define([
     var Loader = function (options) {
         var page = (options.config && options.config.page) || config.page || {};
 
-        this.pageId                 = page.pageId;
-        this.keywordIds             = page.keywordIds || '';
-        this.section                = page.section;
-        this.host                   = page.ajaxUrl + '/commercial/';
-        this.isbn                   = page.isbn || '';
-        this.oastoken               = options.oastoken || '';
-        this.jobs                   = options.jobIds || '';
-        this.adType                 = options.adType || 'desktop';
-        this.multiComponents        = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
-        this.capi                   = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
-        this.capiTitle              = options.capiTitle || '';
-        this.capiLinkUrl            = options.capiLinkUrl || '';
-        this.capiAboutLinkUrl       = options.capiAboutLinkUrl || '';
-        this.capiKeywords           = map(options.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
-        this.logo                   = options.logo || '';
-        this.components             = {
+        this.pageId             = page.pageId;
+        this.keywordIds         = page.keywordIds || '';
+        this.section            = page.section;
+        this.host               = page.ajaxUrl + '/commercial/';
+        this.isbn               = page.isbn || '';
+        this.oastoken           = options.oastoken || '';
+        this.jobs               = options.jobIds || '';
+        this.adType             = options.adType || 'desktop';
+        this.multiComponents    = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
+        this.capi               = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
+        this.capiTitle          = options.capiTitle || '';
+        this.capiLinkUrl        = options.capiLinkUrl || '';
+        this.capiAboutLinkUrl   = options.capiAboutLinkUrl || '';
+        this.capiKeywords       = map(options.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
+        this.logo               = options.logo || '';
+        this.components         = {
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',
             book:               this.host + 'books/book.json?'                  + 't=' + this.isbn,
@@ -79,7 +79,7 @@ define([
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            capi:               this.host + 'capi.json?'                        + this.capi + this.capiKeywords + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
+            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.capiKeywords + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
             multi:              this.host + 'multi.json?'                       + this.multiComponents
         };
         this.postLoadEvents = {
