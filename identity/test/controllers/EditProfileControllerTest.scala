@@ -141,7 +141,13 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
           address3 = Some(address3),
           address4 = Some(address4),
           postcode = Some(postcode),
-          country = Some(country)
+          country = Some(country),
+          billingAddress1 = Some(billingAddress1),
+          billingAddress2 = Some(billingAddress2),
+          billingAddress3 = Some(billingAddress3),
+          billingAddress4 = Some(billingAddress4),
+          billingPostcode = Some(billingPostcode),
+          billingCountry  = Some(billingCountry)
         )
       )
 
@@ -166,6 +172,12 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.privateFields.value.address4 should equal(None)
         userUpdate.privateFields.value.postcode.value should equal(postcode)
         userUpdate.privateFields.value.country.value should equal(country)
+        userUpdate.privateFields.value.billingAddress1.value should equal(billingAddress1)
+        userUpdate.privateFields.value.billingAddress2.value should equal(billingAddress2)
+        userUpdate.privateFields.value.billingAddress3 should equal(None)
+        userUpdate.privateFields.value.billingAddress4 should equal(None)
+        userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
+        userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
       }
 
       "then a status 200 should be returned" in {
@@ -174,4 +186,3 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     }
   }
 }
-

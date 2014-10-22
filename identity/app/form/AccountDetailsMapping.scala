@@ -32,7 +32,13 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
     ("privateFields.address3", "address.line3"),
     ("privateFields.address4", "address.line4"),
     ("privateFields.postcode", "address.postcode"),
-    ("privateFields.country", "address.country")
+    ("privateFields.country", "address.country"),
+    ("privateFields.billingAddress1", "billingAddress.line1"),
+    ("privateFields.billingAddress2", "billingAddress.line2"),
+    ("privateFields.billingAddress3", "billingAddress.line3"),
+    ("privateFields.billingAddress4", "billingAddress.line4"),
+    ("privateFields.billingPostcode", "billingAddress.postcode"),
+    ("privateFields.billingCountry", "billingAddress.country")
   )
 }
 
