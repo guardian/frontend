@@ -79,7 +79,7 @@ import scala.concurrent.duration._
       blogTag,
       advertisingTag,
       otherDigitalSolutionsTag
-    ).run(byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase) shouldEqual Seq(
+    ).run(byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, asciiLowerWebTitle) shouldEqual Seq(
       TagIndexPage(
         "a",
         "A",
