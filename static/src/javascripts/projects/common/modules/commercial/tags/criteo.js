@@ -20,7 +20,7 @@ define([
         return (config.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
     }
 
-    function load(c) {
+    function load() {
         if (config.switches.criteo) {
             var query = urlUtils.constructQuery({
                 netid: netId,

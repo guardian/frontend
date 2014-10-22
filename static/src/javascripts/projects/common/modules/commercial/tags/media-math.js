@@ -12,8 +12,7 @@ define([
     urlUtils
 ) {
 
-    var
-        mediaMathBaseUrl = '//pixel.mathtag.com/event/img?mt_id=328671&mt_adid=114751',
+    var mediaMathBaseUrl = '//pixel.mathtag.com/event/img?mt_id=328671&mt_adid=114751',
         extractSearchTerm = function (referrer) {
             return _(referrer.split('?').pop().split('&'))
                 .filter(function (query) {
@@ -30,22 +29,23 @@ define([
 
     return {
         load: function (options) {
-            var referrer = (options || {}).referrer || document.referrer;
+            var page, tags, img,
+                referrer = (options || {}).referrer || document.referrer;
 
             if (!config.switches.mediaMath) {
                 return false;
             }
 
-            var page = config.page,
-                tags = {
-                    v1: (page.host ? page.host : '') + '/' + page.pageId,
-                    v2: page.section,
-                    v3: extractSearchTerm(referrer),
-                    v4: referrer,
-                    v5: page.keywords ? page.keywords.replace(/,/g, '|') : '',
-                    v6: page.contentType ? page.contentType.toLowerCase() : ''
-                },
-                img = new Image();
+            page = config.page;
+            tags = {
+                v1: (page.host ? page.host : '') + '/' + page.pageId,
+                v2: page.section,
+                v3: extractSearchTerm(referrer),
+                v4: referrer,
+                v5: page.keywords ? page.keywords.replace(/,/g, '|') : '',
+                v6: page.contentType ? page.contentType.toLowerCase() : ''
+            };
+            img = new Image();
 
             img.src = mediaMathBaseUrl + '&' + urlUtils.constructQuery(tags);
             return img;
