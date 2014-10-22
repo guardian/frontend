@@ -323,6 +323,12 @@
                         click: $parent.omitItem">
                         <i class="icon-trash"></i></a>
 
+                    <a class="tool tool--small tool--small--ophan" target="_blank" data-bind="
+                        click: function() { return true; },
+                        clickBubble: false,
+                        attr: {href: state.ophanUrl}">
+                        <i class="icon-signal"></i></a>
+
                     <a class="tool tool--small tool--small--href" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
@@ -360,7 +366,7 @@
                             <!-- /ko -->
 
                             <!-- ko if: state.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'special link'"></span>
                             <!-- /ko -->
 
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->

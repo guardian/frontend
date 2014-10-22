@@ -178,7 +178,7 @@ define([
                 new Sticky($adSlot.parent()[0], { top: 12 }).init();
             },
             '300,1': function (e, $adSlot) {
-                $adSlot.css('display', 'none');
+                $adSlot.addClass('u-h');
             }
         },
 

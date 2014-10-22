@@ -915,7 +915,7 @@ button {
     font-size: 12px;
     line-height: 22px;
     color: #333333;
-    width: 60px;
+    width: 62px;
     height: 22px;
     padding: 0;
     opacity: 0.7;
@@ -936,13 +936,26 @@ button {
     margin: 1px 1px 0 0;
 }
 
+.tool--small--href,
+.tool--small--ophan,
+.tool--small--remove {
+    width: 41px;
+}
+
+.latest-articles .article__tools {
+    width: 120px;
+}
+
+.latest-articles .tool--small--copy {
+    width: 83px;
+}
+
 .latest-articles .tool--small--remove,
 .latest-articles .tool--small--paste {
     display: none;
 }
 
 .latest-articles .tool--small--href {
-    clear: both;
 }
 
 .article > .closed .tool--small:hover {
@@ -1255,6 +1268,7 @@ button {
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
 .icon-trash { background-position: -456px 0; }
+.icon-signal { background-position: -408px 0; }
 .icon-play { background-position: -264px -72px; }
 .icon-fast-backward {
     margin-top: -1px;

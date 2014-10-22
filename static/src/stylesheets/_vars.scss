@@ -73,6 +73,7 @@ $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgi
 $c-brandBlue: guss-colour(guardian-brand, $pasteup-palette);
 $c-brandLightBlue: guss-colour(guardian-brand-light, $pasteup-palette);
 $c-error: guss-colour(error, $pasteup-palette);
+$c-success: guss-colour(success, $pasteup-palette);
 
 $c-neutral1: guss-colour(neutral-1, $pasteup-palette);
 $c-neutral2: guss-colour(neutral-2, $pasteup-palette);
@@ -123,6 +124,9 @@ $c-podcastAccent2: #ffffff;
 
 $c-editorialDefault: guss-colour(news-main-1, $pasteup-palette);
 $c-editorialAccent: guss-colour(news-support-1, $pasteup-palette);
+
+$c-crosswordAccent1: guss-colour(multimedia-support-1, $pasteup-palette);
+$c-crosswordAccent2: guss-colour(comment-support-2, $pasteup-palette);
 
 
 // Football

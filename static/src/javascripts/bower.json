@@ -10,6 +10,7 @@
     "bonzo": "~2.0.0",
     "curl": "~0.8.9",
     "qwery": "3.4.2",
+    "react": "0.11.2",
     "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
     "videojs": "4.8.3",
