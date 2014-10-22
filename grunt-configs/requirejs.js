@@ -28,8 +28,7 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/,
-            stubModules: ['text']
+            fileExclusionRegExp: /^bower_components$/
         },
         common: {
             options: {
@@ -46,7 +45,8 @@ module.exports = function(grunt, options) {
                 },
                 modules: [
                     {
-                        name: 'core'
+                        name: 'core',
+                        exclude: ['text']
                     },
                     {
                         name: 'bootstraps/app',

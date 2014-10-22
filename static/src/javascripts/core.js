@@ -36,5 +36,8 @@ require([
     'common/modules/lazyload',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+
+    // plugins
+    'text'
 ], function () {});
