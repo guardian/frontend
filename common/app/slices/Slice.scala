@@ -416,6 +416,13 @@ case object Hl4Half extends Slice {
   )
 }
 
+/** This is not actually used but is a reflection of Hl4Half, for the thumbnail display in the tool */
+object HalfHl4 extends Slice {
+  val layout = Hl4Half.layout.copy(
+    columns = Hl4Half.layout.columns.reverse
+  )
+}
+
 
 /*** VOLUME SLICES ***/
 
