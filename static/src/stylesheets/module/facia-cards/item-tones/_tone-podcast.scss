@@ -27,6 +27,10 @@
         color: $c-podcastDefault;
     }
 
+    .fc-item__kicker:after {
+        color: fade-out($c-headline, .8);
+    }
+
     .fc-item__standfirst {
         color: $c-headline;
     }

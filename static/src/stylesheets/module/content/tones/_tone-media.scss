@@ -16,55 +16,53 @@
 );
 
 // Podcast and media tones share page styling
-.tonal--tone-podcast,
-.tonal--tone-media {
-    .tonal__main {
+.tonal--tone-media .tonal__main--tone-media,
+.tonal--tone-podcast .tonal__main--tone-podcast {
+    color: $c-neutral7;
+    padding-top: 0;
+
+    .byline,
+    .content__dateline {
+        color: $c-neutral3;
+    }
+
+    .byline a,
+    .caption,
+    .submeta__head,
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help,
+    .from-content-api {
         color: $c-neutral7;
-        padding-top: 0;
+    }
 
-        .byline,
-        .content__dateline {
-            color: $c-neutral3;
+    .byline,
+    .content__dateline,
+    .content__meta-container,
+    .ad-slot--paid-for-badge--article,
+    .submeta,
+    .submeta-container,
+    .commentcount {
+        border-color: $c-neutral2;
+    }
+
+    .from-content-api {
+        a {
+            @extend %u-underline;
         }
 
-        .byline a,
-        .caption,
-        .submeta__head,
-        .ad-slot--paid-for-badge__header,
-        .ad-slot--paid-for-badge__label,
-        .ad-slot--paid-for-badge__help,
-        .from-content-api {
-            color: $c-neutral7;
-        }
+        a,
+        .u-underline {
+            color: inherit;
+            border-bottom-color: $c-neutral2;
 
-        .byline,
-        .content__dateline,
-        .content__meta-container,
-        .ad-slot--paid-for-badge--article,
-        .submeta,
-        .submeta-container,
-        .commentcount {
-            border-color: $c-neutral2;
-        }
-
-        .from-content-api {
-            a {
-                @extend %u-underline;
+            &:hover,
+            &:focus {
+                border-color: mix($c-neutral2, $c-neutral4, 50%);
             }
-
-            a,
-            .u-underline {
-                color: inherit;
-                border-bottom-color: $c-neutral2;
-
-                &:hover,
-                &:focus {
-                    border-color: mix($c-neutral2, $c-neutral4, 50%);
-                }
-                &:active {
-                    color: $c-mediaDefault;
-                    border-color: $c-mediaDefault;
-                }
+            &:active {
+                color: $c-mediaDefault;
+                border-color: $c-mediaDefault;
             }
         }
     }

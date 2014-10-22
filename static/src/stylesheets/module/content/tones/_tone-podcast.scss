@@ -14,3 +14,15 @@
     $c-podcastBackground, // $tonal__article-background
     $c-podcastDefault // $tonal__article-link
 );
+
+.tonal--tone-podcast .tonal__main--tone-podcast {
+    .from-content-api {
+        a,
+        .u-underline {
+            &:active {
+                color: $c-podcastDefault;
+                border-color: $c-podcastDefault;
+            }
+        }
+    }
+}
