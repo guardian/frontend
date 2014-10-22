@@ -41,9 +41,9 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 ```
 */
 
-$pagination-item-size: 24px;
-$pagination-height:    48px;
-$pagination-gutter:    ($pagination-height - $pagination-item-size) / 2;
+$pagination-item-size: $gs-baseline * 2;
+$pagination-height:    $gs-baseline * 4;
+$pagination-gutter:    $gs-baseline;
 $text-size:            14px;
 
 .pagination {
