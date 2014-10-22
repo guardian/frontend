@@ -202,7 +202,7 @@ $header-image-size-desktop: 120px;
             position: absolute;
             right: -1 * (gs-span(9) + $gs-gutter);
             bottom: 0;
-            border-top: none;
+            border-top: 0;
         }
     }
 }
