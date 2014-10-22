@@ -38,7 +38,7 @@
 *@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
 @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
-    <link rel="stylesheet" data-reload="head@projectName.map("." + _).getOrElse(".default")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".default") + ".css")" />
+    <link rel="stylesheet" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
 } else {
     <style>
         @Html(Static.css.head(projectName))

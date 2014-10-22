@@ -1,6 +1,6 @@
 package indexes
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
+import com.gu.contentapi.client.model.{Tag => ApiTag}
 import model.{TagDefinition, TagIndexPage}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
@@ -79,7 +79,7 @@ import scala.concurrent.duration._
       blogTag,
       advertisingTag,
       otherDigitalSolutionsTag
-    ).run(byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase) shouldEqual Seq(
+    ).run(byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, asciiLowerWebTitle) shouldEqual Seq(
       TagIndexPage(
         "a",
         "A",

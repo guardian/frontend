@@ -532,7 +532,7 @@ h1 {
 }
 
 .supporting-message {
-    font-size: 10px;
+    font-size: 12px;
     color: #999999;
     float: left;
     margin: 5px 0 0 5px;
@@ -915,7 +915,7 @@ button {
     font-size: 12px;
     line-height: 22px;
     color: #333333;
-    width: 60px;
+    width: 62px;
     height: 22px;
     padding: 0;
     opacity: 0.7;
@@ -936,13 +936,26 @@ button {
     margin: 1px 1px 0 0;
 }
 
+.tool--small--href,
+.tool--small--ophan,
+.tool--small--remove {
+    width: 41px;
+}
+
+.latest-articles .article__tools {
+    width: 120px;
+}
+
+.latest-articles .tool--small--copy {
+    width: 83px;
+}
+
 .latest-articles .tool--small--remove,
 .latest-articles .tool--small--paste {
     display: none;
 }
 
 .latest-articles .tool--small--href {
-    clear: both;
 }
 
 .article > .closed .tool--small:hover {
@@ -1087,7 +1100,7 @@ button {
 }
 
 .cnf-collection .cnf-form {
-    margin-left: 20px;
+    margin: 10px 0 0 20px;
 }
 
 .cnf-form label {
@@ -1166,6 +1179,7 @@ button {
     line-height: 16px;
     color: #666666;
     height: 64px;
+    width: 295px;
     overflow-y: auto;
 }
 
@@ -1175,8 +1189,53 @@ button {
     display: block;
 }
 
-.cnf-form__thumbnail {
+.cnf-form .type-picker {
+    display: flex;
+    flex-wrap: wrap;
     position: absolute;
+    top: 25px;
+    left: 0;
+    padding: 10px;
+    background: #FFFFFF;
+    z-index: 1;
+}
+
+.cnf-form .type-picker-closer {
+    position: absolute;
+    top: 32px;
+    right: 8px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.cnf-form .type-option {
+    padding: 5px 0;
+    font-size: 12px;
+    line-height: 12px;
+    color: #666666;
+    text-align: center;
+    cursor: pointer;
+}
+
+.cnf-form .type-option img {
+    display: block;
+    margin: 3px auto 5px auto;
+}
+
+.cnf-form .type-option--highlight {
+    color: #FFFFFF;
+    background: #2ea3eb;
+}
+
+.cnf-form .type-picker .type-option {
+    flex: 0 0 24%;
+    flex-wrap: wrap;
+}
+
+.cnf-form .type-option-chosen {
+    color: #2ea3eb;
+    position: absolute;
+    top: 25px;
     right: 10px;
 }
 
@@ -1209,6 +1268,7 @@ button {
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
 .icon-trash { background-position: -456px 0; }
+.icon-signal { background-position: -408px 0; }
 .icon-play { background-position: -264px -72px; }
 .icon-fast-backward {
     margin-top: -1px;

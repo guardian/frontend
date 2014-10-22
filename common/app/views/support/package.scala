@@ -330,18 +330,11 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
-        val blockid = el.id()
-        val url = s"http://${request.domain}${request.path}#$blockid"
-        val shortUrl = s"${article.shortUrl}#$blockid"
+        val blockId = el.id()
+        val shares = article.blockLevelShares(blockId)
+        val link = article.blockLevelLink(blockId)
 
-        val icons = List(
-          // (cssClassName, Url)
-          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
-          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
-          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
-        )
-
-        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
 
         el.append(html.toString())
       }
@@ -675,13 +668,17 @@ object ArticleLayout {
 
     lazy val hasSupportingAtBottom: Boolean = {
       val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
-      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      var wordCount = 0
+      val lastEls = Jsoup.parseBodyFragment(a.body).select("body > *").reverseIterator.takeWhile{ el =>
+        wordCount += el.text.length
+        wordCount < 1500
+      }
+      val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
       supportingEls.isDefined
     }
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
   }
 }
 
@@ -855,6 +852,7 @@ object GetClasses {
 
     Seq(
       "fc-item",
+      "js-fc-item",
       imageClass,
       discussionClass
     ) ++ Seq(
@@ -1000,13 +998,15 @@ object GetClasses {
 
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
     Seq(
-      "container" -> true,
-      "container--first" -> isFirst,
-      "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> DfpAgent.isAdvertisementFeature(config),
-      "container--foundation-supported" -> DfpAgent.isFoundationSupported(config),
-      "js-sponsored-container" -> (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)),
-      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
+      ("container", true),
+      ("container--first", isFirst),
+      ("container--sponsored", DfpAgent.isSponsored(config)),
+      ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
+      ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
+      ("js-sponsored-container", (
+        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
+      )),
+      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
     ) collect {
       case (kls, true) => kls
     }
@@ -1014,9 +1014,10 @@ object GetClasses {
 
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "fc-container" +:
-        (commonContainerStyles(config, isFirst, hasTitle) ++
-        extraClasses): _*
+      Seq(
+        "js-container--fetch-updates",
+        "fc-container"
+      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
     )
   }
 

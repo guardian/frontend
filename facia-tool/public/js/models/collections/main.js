@@ -130,12 +130,14 @@ define([
 
                         if (_.isDate(lastPressed)) {
                             model.frontAge(humanTime(resp.responseText));
-                            model.alert(
-                                _.some(model.collections(), function(collection) {
-                                    var l = new Date(collection.state.lastUpdated());
-                                    return _.isDate(l) ? l > lastPressed : false;
-                                }) ? 'Sorry, the latest edit to this front hasn\'t gone live.' : false
-                            );
+                            if (pageConfig.env !== 'dev') {
+                                model.alert(
+                                    _.some(model.collections(), function (collection) {
+                                        var l = new Date(collection.state.lastUpdated());
+                                        return _.isDate(l) ? l > lastPressed : false;
+                                    }) ? 'Sorry, the latest edit to this front hasn\'t gone live.' : false
+                                );
+                            }
                         }
                     }
                 });
@@ -208,7 +210,9 @@ define([
                 .always(function(resp) {
                     if (resp.status === 200 && resp.responseText) {
                         model.frontAge(humanTime(resp.responseText));
-                        model.alertFrontIsStale(opts.alertIfStale && new Date() - new Date(resp.responseText) > getFrontAgeAlertMs());
+                        if (pageConfig.env !== 'dev') {
+                            model.alertFrontIsStale(opts.alertIfStale && new Date() - new Date(resp.responseText) > getFrontAgeAlertMs());
+                        }
                     } else {
                         model.frontAge(undefined);
                     }

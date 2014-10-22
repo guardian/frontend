@@ -1,0 +1,52 @@
+@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import play.api.libs.json._
+@import views.html.fragments.crosswordEntries
+@import com.gu.crosswords.api.client.models.{Across, Down}
+
+@main(crosswordPage) { } {
+    <div class="l-side-margins l-side-margins--layout-content">
+        <article id="crossword" class="content content--article tone-news tone-news--article" role="main">
+            <header class="content__head u-cf">
+                <div class="gs-container">
+                    <div class="content__main-column">
+
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("type/crossword")">Crosswords</a>
+                            </div>
+                        </div>
+
+                        <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+
+                    </div>
+                </div>
+            </header>
+
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--article js-content-main-column">
+
+                    <div class="js-crossword"
+                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
+
+                        @* The following is a fallback for when JavaScript is not enabled *@
+                        <div style="@crosswordPage.fallbackDimensions.styleString">
+                            @svg
+                        </div>
+
+                        <div class="crossword__clues">
+                            <h3 class="crossword__clues-header">Across</h3>
+
+                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
+
+                            <h3 class="crossword__clues-header">Down</h3>
+
+                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+}

@@ -99,6 +99,13 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-neutral1, #ffffff, 80%);
+        }
+    }
+
     // This is a temp fix until we completely remove tone-colour from fc-item
     .tone-colour,
     .tone-colour:hover,
@@ -286,9 +293,15 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     &.image--portrait {
-        bottom: auto;
         top: 0;
         height: auto;
         width: 80%;
+
+        .responsive-img {
+            position: absolute;
+            height: auto;
+            width: 100%;
+            bottom: auto;
+        }
     }
 }

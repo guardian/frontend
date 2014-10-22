@@ -4,7 +4,7 @@ import pa._
 import org.joda.time.{ DateTime, LocalDate }
 import model._
 import views.MatchStatus
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 trait Football extends Collections {
 

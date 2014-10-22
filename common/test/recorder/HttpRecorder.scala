@@ -1,9 +1,9 @@
 package recorder
 
 import java.io._
+import contentapi.Response
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
-import com.gu.openplatform.contentapi.connection.HttpResponse
 import scala.concurrent.Future
 import common.ExecutionContexts
 import conf.Configuration
@@ -65,21 +65,21 @@ trait HttpRecorder[A] extends ExecutionContexts {
   }
 }
 
-trait ContentApiHttpRecorder extends HttpRecorder[HttpResponse] {
+trait ContentApiHttpRecorder extends HttpRecorder[Response] {
 
   def toResponse(str: String) = {
     if (str.startsWith("Error:")) {
-      HttpResponse("", str.replace("Error:", "").toInt, "")
+      Response("", str.replace("Error:", "").toInt, "")
     } else {
-      HttpResponse(str, 200, "")
+      Response(str, 200, "")
     }
   }
 
-  def fromResponse(response: HttpResponse) = {
-    if (response.statusCode == 200) {
+  def fromResponse(response: Response) = {
+    if (response.status == 200) {
       response.body
     } else {
-      s"Error:${response.statusCode}"
+      s"Error:${response.status}"
     }
   }
 }

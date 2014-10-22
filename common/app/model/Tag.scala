@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import conf.Configuration
 import play.api.libs.json.{JsArray, JsString, JsValue}
@@ -34,8 +34,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
-  lazy val isSeries: Boolean = delegate.tagType == "series"
-  lazy val isBlog: Boolean = delegate.tagType == "blog"
+  lazy val isSeries: Boolean = tagType == "series"
+  lazy val isBlog: Boolean = tagType == "blog"
 
   override lazy val isFront = true
 

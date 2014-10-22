@@ -12,6 +12,7 @@ define([
     'common/utils/to-array',
     'facia/modules/ui/snaps',
     'facia/modules/ui/container-fc-show-more',
+    'facia/modules/ui/container-fetch-updates',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
     'facia/modules/onwards/geo-most-popular-front'
@@ -26,7 +27,8 @@ define([
     storage,
     toArray,
     snaps,
-    containerFcShowMore,
+    ContainerFcShowMore,
+    containerFetchUpdates,
     ContainerShowMore,
     ContainerToggle,
     GeoMostPopularFront
@@ -45,7 +47,7 @@ define([
                     });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        containerFcShowMore(container);
+                        new ContainerFcShowMore(container).addShowMoreButton();
                     });
                 };
                 mediator.addListeners({
@@ -76,6 +78,10 @@ define([
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
+            },
+
+            fetchUpdates: function () {
+                containerFetchUpdates();
             }
         },
 
@@ -86,6 +92,7 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
+                modules.fetchUpdates();
             }
             mediator.emit('page:front:ready');
         };

@@ -106,7 +106,7 @@ define([
 
         this.elem = template;
         this._prerender();
-        bonzo(container).append(this.elem);
+        bonzo(container)[this.manipulationType](this.elem);
         this._ready();
         return this;
     };
@@ -148,7 +148,7 @@ define([
      * @return Reqwest
      */
     Component.prototype._fetch = function() {
-        var endpoint = this.endpoint,
+        var endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint,
             opt;
 
         for (opt in this.options) {

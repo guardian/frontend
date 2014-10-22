@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import com.gu.openplatform.contentapi.model.{ Section, ItemResponse, Tag, Content }
+import com.gu.contentapi.client.model.{ Section, ItemResponse, Tag, Content }
 import org.joda.time.DateTime
 import play.api.test.Helpers._
 import play.api.mvc.RequestHeader

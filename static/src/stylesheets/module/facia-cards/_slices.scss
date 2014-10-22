@@ -64,6 +64,16 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+.facia-slice--q-qqq {
+    .fc-item--list-mobile {
+        @include mq($until: tablet) {
+            .fc-item__header {
+                @include fs-headline(3, true);
+            }
+        }
+    }
+}
+
 // reduce type size on q-q-q-q slice if it follows another slice in the same container
 .facia-slice-wrapper + .facia-slice-wrapper {
     .facia-slice--q-q-q-q {
@@ -134,8 +144,11 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice--popular {
-
     .facia-slice__item:before {
+        display: none;
+    }
+
+    .fc-item__live-indicator .blog__live-icon {
         display: none;
     }
 
