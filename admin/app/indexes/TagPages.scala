@@ -91,17 +91,29 @@ object TagPages {
       insertWith(acc, key(tag), Set(tag))(_ union _)
     }
 
-  def toPages(tagsByKey: Map[String, Set[Tag]])(titleFromKey: String => String) = tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
-    TagIndexPage(
-      id,
-      titleFromKey(id),
-      tagSet.toSeq.sortBy(tag => asAscii(tag.webTitle).toLowerCase).map(TagDefinition.fromContentApiTag)
-    )
-  }
+  def asciiLowerWebTitle(tag: Tag) =
+    asAscii(tag.webTitle).toLowerCase
+
+  def nameOrder(tag: Tag) =
+    (tag.lastName, tag.firstName, tag.webTitle)
+
+  def toPages[A: Ordering](tagsByKey: Map[String, Set[Tag]])
+                          (titleFromKey: String => String, sortKey: Tag => A) =
+    tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
+      TagIndexPage(
+        id,
+        titleFromKey(id),
+        tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag)
+      )
+    }
 
   val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(ValidSections.contains))
 
   val byWebTitle = mappedByKey(tag => alphaIndexKey(tag.webTitle))
+
+  val byContributorNameOrder = mappedByKey { tag =>
+    alphaIndexKey(tag.lastName orElse tag.firstName getOrElse tag.webTitle)
+  }
 
   val bySection = invalidSectionsFilter &>> mappedByKey(_.sectionId.get)
 }
