@@ -2,20 +2,20 @@
 
 @include tone-content(
     media, // $tone
-    $c-neutral1, // $tonal__header-background
+    $c-mediaBackground, // $tonal__header-background
     $c-neutral6, // $tonal__header-text
     $c-mediaAccent, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
     $c-mediaAccent, // $tonal__headline-accent
-    $c-neutral1, // $tonal__standfirst-background
+    $c-mediaBackground, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $c-neutral1, // $tonal__article-background
+    $c-mediaBackground, // $tonal__article-background
     $c-mediaAccent // $tonal__article-link
 );
 
-// Podcast and media tones share page styling... for now!
+// Podcast and media tones share page styling
 .tonal--tone-podcast,
 .tonal--tone-media {
     .tonal__main {

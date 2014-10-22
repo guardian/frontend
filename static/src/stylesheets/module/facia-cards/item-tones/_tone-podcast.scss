@@ -1,5 +1,5 @@
 .tone-podcast--item {
-    $c-headline: $c-neutral1;
+    $c-headline: #ffffff;
 
     @extend %tone-has-background;
     background-color: $c-podcastBackground;
