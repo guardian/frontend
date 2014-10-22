@@ -261,8 +261,8 @@ define([
                         name: 'inline1',
                         type: 'inline',
                         html: '<div id="dfp-ad--inline1" class="ad-slot ad-slot--dfp ad-slot--inline1 ad-slot--inline" ' +
-                            'data-link-name="ad slot inline1" data-test-id="ad-slot-inline1" data-name="inline1" data-mobile="300,50" ' +
-                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
+                            'data-link-name="ad slot inline1" data-test-id="ad-slot-inline1" data-name="inline1" data-mobile="300,50|300,250" ' +
+                            'data-mobile-landscape="300,50|320,50|300,250" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
                     },
                     {
                         name: 'inline2',

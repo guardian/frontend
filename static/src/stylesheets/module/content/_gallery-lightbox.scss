@@ -1,7 +1,7 @@
 $gallery-lightbox-sidebar-width: gs-span(1);
 $gallery-lightbox-info-width-desktop: gs-span(4) + $gs-gutter;
 $gallery-lightbox-info-width-wide: gs-span(5) + $gs-gutter;
-$c-gallery-lightbox-btn: $c-mediaAccent2;
+$c-gallery-lightbox-btn: $c-mediaBackgroundAccent;
 $c-gallery-lightbox-btn--active: $c-neutral2;
 $gallery-lightbox-sidebar-breakpoint: desktop;
 
@@ -235,7 +235,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         right: 0;
         width: $gallery-lightbox-sidebar-width;
         z-index: 6; // above content
-        border-left: 1px solid $c-mediaAccent2;
+        border-left: 1px solid $c-mediaBackgroundAccent;
         background: $c-mediaBackground;
     }
 }

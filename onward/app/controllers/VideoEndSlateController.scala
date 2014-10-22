@@ -22,8 +22,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching video content in section: $sectionId" )
 
-    def isCurrentStory(content: ApiContent) =
-      content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
 
     val promiseOrResponse = LiveContentApi.search(edition)
       .section(sectionId)
@@ -33,7 +32,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .response
       .map {
         response =>
-          response.results filter { content => isCurrentStory(content) } map { result =>
+          response.results filter { content => !isCurrentStory(content) } map { result =>
             Video(result)
           } match {
             case Nil => None
@@ -64,7 +63,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => !shortUrl.equals(currentShortUrl)}.getOrElse(false)
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
 
     val promiseOrResponse = LiveContentApi.item(seriesId, edition)
       .tag("type/video")
@@ -73,7 +72,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .response
       .map {
       response =>
-        response.results filter { content => isCurrentStory(content) } map { result =>
+        response.results filter { content => !isCurrentStory(content) } map { result =>
           Video(result)
         } match {
           case Nil => None

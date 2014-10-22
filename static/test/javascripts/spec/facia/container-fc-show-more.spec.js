@@ -25,7 +25,7 @@ define([
 
         beforeEach(function () {
             container = bonzo.create(
-                    '<section class="container" data-id="' + containerId + '">' +
+                    '<section class="container" data-link-name="' + containerId + '">' +
                         '<div class="facia-container__inner">' +
                             '<div class="container__body js-hide">' +
                                 '<div class="js-hide"></div>' +
