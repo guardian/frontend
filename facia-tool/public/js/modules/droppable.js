@@ -4,12 +4,14 @@ define([
     'models/group',
     'modules/copied-article',
     'utils/mediator',
+    'utils/deep-get',
     'utils/parse-query-params'
 ], function(
     ko,
     Group,
     copiedArticle,
     mediator,
+    deepGet,
     parseQueryParams
 ) {
 
@@ -70,6 +72,7 @@ define([
                     var targetGroup = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.dataTransfer.getData('Text'),
+                        mediaItem = event.dataTransfer.getData('application/vnd.mediaservice.crops+json'),
                         knownQueryParams = parseQueryParams(id, {
                             namespace: 'gu-',
                             excludeNamespace: false,
@@ -88,11 +91,33 @@ define([
 
                     copiedArticle.flush();
 
-                    if (!targetGroup) {
-                        return;
-                    }
+                    if (mediaItem) {
+                        try {
+                            mediaItem = JSON.parse(mediaItem);
+                        } catch(e) {
+                            mediaItem = undefined;
+                        }
 
-                    if (!id) {
+                        if (!mediaItem) {
+                            window.alert('Sorry, that image could not be understood.');
+                            return;
+                        } else {
+                            mediaItem = _.chain(mediaItem.assets)
+                                .filter(function(asset) { return deepGet(asset, '.dimensions.width') <= 1000; })
+                                .sortBy(function(asset) { return deepGet(asset, '.dimensions.width') * -1; })
+                                .first()
+                                .value();
+                        }
+
+                        if (!mediaItem) {
+                            window.alert('Sorry, a suitable crop size does not exist for this image');
+                            return;
+                        }
+
+                    } else if (!targetGroup) {
+                        return;
+
+                    } else if (!id) {
                         window.alert('Sorry, you can\'t add that to a front');
                         return;
                     }
@@ -144,7 +169,8 @@ define([
                         sourceGroup: sourceGroup,
                         targetItem: targetItem,
                         targetGroup: targetGroup,
-                        isAfter: isAfter
+                        isAfter: isAfter,
+                        mediaItem: mediaItem
                     });
 
                 }, false);

@@ -21,7 +21,7 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
+class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
 
@@ -190,9 +190,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def elements: Seq[Element] = delegate.elements
-      .map(imageElement ++: _)
-      .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-      .getOrElse(Nil)
+    .map(imageElement ++: _)
+    .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
+    .getOrElse(Nil)
 
   private lazy val metaDataDefaults = MetadataDefaults(this)
   private def metaDataDefault(key: String) = metaDataDefaults.getOrElse(key, false)
@@ -407,7 +407,7 @@ object Snap {
   def isSnap(id: String): Boolean = id.startsWith("snap/")
 }
 
-class Article(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
+class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -549,7 +549,7 @@ object Video {
   def apply(delegate: ApiContent): Video = new Video(ApiContentWithMeta(delegate))
 }
 
-class Gallery(content: ApiContentWithMeta) extends Content(content) with ShareOptions {
+class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
@@ -647,4 +647,7 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   )
 }
 
-case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)
+case class ApiContentWithMeta(
+  delegate: ApiContent,
+  supporting: List[Content] = Nil,
+  metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)

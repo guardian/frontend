@@ -1,4 +1,5 @@
 @(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@import views.helpers.environment.urlBase
 
 @admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
 
@@ -247,9 +248,11 @@
                  <!-- ko if: id -->
                     <div class="instructions">
                         <!-- ko if: !state.isOpenProps() -->
-                            <span class="linky" data-bind="click: openProps">Edit metadata</span>
+                            <span class="linky" data-bind="click: openProps">edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">content</a>
+                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">edit content</a>
+                            &middot;
+                            <a data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
                         <!-- /ko -->
                     </div>
 
@@ -260,7 +263,7 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        <span data-bind="click: createCollection" class="linky">Create a container</span> or drop one above.
+                        <span data-bind="click: createCollection" class="linky">create a container</span> or drop one above.
                         <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->

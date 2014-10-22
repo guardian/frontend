@@ -73,6 +73,7 @@ $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgi
 $c-brandBlue: guss-colour(guardian-brand, $pasteup-palette);
 $c-brandLightBlue: guss-colour(guardian-brand-light, $pasteup-palette);
 $c-error: guss-colour(error, $pasteup-palette);
+$c-success: guss-colour(success, $pasteup-palette);
 
 $c-neutral1: guss-colour(neutral-1, $pasteup-palette);
 $c-neutral2: guss-colour(neutral-2, $pasteup-palette);
@@ -111,18 +112,19 @@ $c-liveMute: guss-colour(features-support-3, $pasteup-palette);
 
 $c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
 $c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
-$c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
-$c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
+$c-mediaBackgroundAccent: guss-colour(multimedia-support-4, $pasteup-palette);
 
-$c-reviewBackground: guss-colour(comment-support-1, $pasteup-palette);
+$c-podcastDefault: guss-colour(news-support-1, $pasteup-palette);
+$c-podcastBackground: guss-colour(multimedia-support-4, $pasteup-palette);
+
 $c-reviewAccent: guss-colour(comment-support-3, $pasteup-palette);
-
-$c-podcastBackground: guss-colour(news-main-2, $pasteup-palette);
-$c-podcastAccent: guss-colour(guardian-brand-dark, $pasteup-palette);
-$c-podcastAccent2: #ffffff;
+$c-reviewBackground: guss-colour(comment-support-1, $pasteup-palette);
 
 $c-editorialDefault: guss-colour(news-main-1, $pasteup-palette);
 $c-editorialAccent: guss-colour(news-support-1, $pasteup-palette);
+
+$c-crosswordAccent1: guss-colour(multimedia-support-1, $pasteup-palette);
+$c-crosswordAccent2: guss-colour(comment-support-2, $pasteup-palette);
 
 
 // Football

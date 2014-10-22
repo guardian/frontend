@@ -297,9 +297,15 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     &.image--portrait {
-        bottom: auto;
         top: 0;
         height: auto;
         width: 80%;
+
+        .responsive-img {
+            position: absolute;
+            height: auto;
+            width: 100%;
+            bottom: auto;
+        }
     }
 }

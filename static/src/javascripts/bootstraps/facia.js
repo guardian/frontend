@@ -27,7 +27,7 @@ define([
     storage,
     toArray,
     snaps,
-    containerFcShowMore,
+    ContainerFcShowMore,
     containerFetchUpdates,
     ContainerShowMore,
     ContainerToggle,
@@ -47,7 +47,7 @@ define([
                     });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        containerFcShowMore(container);
+                        new ContainerFcShowMore(container).addShowMoreButton();
                     });
                 };
                 mediator.addListeners({

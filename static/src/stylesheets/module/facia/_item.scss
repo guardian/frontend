@@ -58,7 +58,7 @@
         }
         .item__cta--gallery,
         .item__cta--video {
-            background-color: $c-mediaAccent;
+            background-color: $c-mediaDefault;
         }
     }
     &:active {
@@ -363,7 +363,7 @@ $cta-icon-gap: 2px;
 .item__cta--video {
     width: 36px;
     height: 36px;
-    background-color: $c-mediaAccent;
+    background-color: $c-mediaDefault;
 }
 
 .item__cta__icon {

@@ -2,15 +2,27 @@
 
 @include tone-content(
     podcast, // $tone
-    $c-neutral1, // $tonal__header-background
+    $c-podcastBackground, // $tonal__header-background
     $c-neutral6, // $tonal__header-text
-    $c-mediaAccent, // $tonal__header-link
+    $c-podcastDefault, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-mediaAccent, // $tonal__headline-accent
-    $c-neutral1, // $tonal__standfirst-background
+    $c-podcastDefault, // $tonal__headline-accent
+    $c-podcastBackground, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $c-neutral1, // $tonal__article-background
-    $c-mediaAccent // $tonal__article-link
+    $c-podcastBackground, // $tonal__article-background
+    $c-podcastDefault // $tonal__article-link
 );
+
+.tonal--tone-podcast .tonal__main--tone-podcast {
+    .from-content-api {
+        a,
+        .u-underline {
+            &:active {
+                color: $c-podcastDefault;
+                border-color: $c-podcastDefault;
+            }
+        }
+    }
+}

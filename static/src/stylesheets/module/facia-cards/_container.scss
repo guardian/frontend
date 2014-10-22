@@ -170,6 +170,12 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.fc-show-more--mobile-only .button--show-more {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
         display: none !important;
@@ -200,7 +206,6 @@ $header-image-size-desktop: 120px;
     @include mq(wide) {
         .has-page-skin & {
             position: absolute;
-            right: -1 * (gs-span(9) + $gs-gutter);
             bottom: 0;
             border-top: 0;
         }

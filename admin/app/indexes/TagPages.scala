@@ -1,5 +1,6 @@
 package indexes
 
+import common.Logging
 import common.Maps._
 import com.gu.contentapi.client.model.Tag
 import model.{TagDefinition, TagIndexPage}
@@ -7,8 +8,9 @@ import common.StringEncodings.asAscii
 
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.Try
 
-object TagPages {
+object TagPages extends Logging {
   /** To be curated by Peter Martin */
   val ValidSections = Map(
     ("artanddesign", "Art and design"),
@@ -77,13 +79,15 @@ object TagPages {
   )
 
   def alphaIndexKey(s: String) = {
-    val firstChar = asAscii(s).toLowerCase.charAt(0)
+    val badCharacters = """[^a-z0-9]+""".r
 
-    if (firstChar.isDigit) {
-      "1-9"
-    } else {
-      firstChar.toString
+    val maybeFirstChar = Try(badCharacters.replaceAllIn(asAscii(s).toLowerCase, "").charAt(0)).toOption
+
+    if (maybeFirstChar.isEmpty) {
+      log.error(s"Tag without alpha index, being shoved into 1-9: $s")
     }
+
+    maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
   }
 
   private def mappedByKey(key: Tag => String) =
@@ -91,17 +95,29 @@ object TagPages {
       insertWith(acc, key(tag), Set(tag))(_ union _)
     }
 
-  def toPages(tagsByKey: Map[String, Set[Tag]])(titleFromKey: String => String) = tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
-    TagIndexPage(
-      id,
-      titleFromKey(id),
-      tagSet.toSeq.sortBy(tag => asAscii(tag.webTitle).toLowerCase).map(TagDefinition.fromContentApiTag)
-    )
-  }
+  def asciiLowerWebTitle(tag: Tag) =
+    asAscii(tag.webTitle).toLowerCase
+
+  def nameOrder(tag: Tag) =
+    (tag.lastName, tag.firstName, tag.webTitle)
+
+  def toPages[A: Ordering](tagsByKey: Map[String, Set[Tag]])
+                          (titleFromKey: String => String, sortKey: Tag => A) =
+    tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
+      TagIndexPage(
+        id,
+        titleFromKey(id),
+        tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag)
+      )
+    }
 
   val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(ValidSections.contains))
 
   val byWebTitle = mappedByKey(tag => alphaIndexKey(tag.webTitle))
+
+  val byContributorNameOrder = mappedByKey { tag =>
+    alphaIndexKey(tag.lastName orElse tag.firstName getOrElse tag.webTitle)
+  }
 
   val bySection = invalidSectionsFilter &>> mappedByKey(_.sectionId.get)
 }
