@@ -21,7 +21,7 @@ define([
             $button              = null,
             self                 = this;
 
-        this.addShowMoreButton = function() {
+        this.addShowMoreButton = function () {
             $button = $.create(template(showMoreBtn, {
                 type: self.getContainerType()
             }));
@@ -38,7 +38,7 @@ define([
             }
         };
 
-        this.getContainerType = function() {
+        this.getContainerType = function () {
             return $container.parent().parent().data('id').replace(/-/g, ' ');
         };
 
