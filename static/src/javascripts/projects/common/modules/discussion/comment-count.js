@@ -43,7 +43,6 @@ define([
                 var $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                     $container,
-                    data,
                     meta;
 
                 if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
