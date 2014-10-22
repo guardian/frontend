@@ -2,24 +2,26 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/forEach',
     'lodash/functions/debounce',
+    'lodash/collections/forEach',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
-    'common/modules/gallery/lightbox'
+    'common/modules/gallery/lightbox',
+    'common/modules/ui/blockSharing'
 ], function (
     bean,
     bonzo,
     qwery,
-    forEach,
     debounce,
+    forEach,
     $,
     config,
     mediator,
     Component,
-    LightboxGallery
+    LightboxGallery,
+    blockSharing
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -58,6 +60,18 @@ define([
         },
         ready = function (config) {
             LightboxGallery.init();
+            blockSharing.init();
+
+            // Opens block level sharing links in the lightbox
+            var galleryHash = window.location.hash,
+                lightbox = new LightboxGallery.GalleryLightbox(),
+                hashIndex = galleryHash.substr(1),
+                parsedGalleryIndex = parseInt(hashIndex, 10),
+                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+            if (galleryHash) {
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
+            }
+
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 

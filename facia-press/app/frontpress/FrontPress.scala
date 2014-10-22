@@ -1,7 +1,7 @@
 package frontpress
 
 import com.gu.facia.client.models.CollectionConfig
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common.{Edition, Logging}
 import common.editions.Uk

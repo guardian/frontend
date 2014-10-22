@@ -5,7 +5,7 @@ import conf._
 import model._
 import play.api.mvc._
 import scala.concurrent.Future
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import views.support.RenderOtherStatus
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent)
@@ -26,7 +26,6 @@ object InteractiveController extends Controller with Logging with ExecutionConte
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showFields("all")
       .response
 

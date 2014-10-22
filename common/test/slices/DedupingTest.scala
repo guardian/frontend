@@ -4,7 +4,7 @@ import layout.ContainerLayout
 import model.{ApiContentWithMeta, Content, Collection}
 import org.scalatest.{FlatSpec, Matchers}
 import views.support.TemplateDeduping
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 class DedupingTest extends FlatSpec with Matchers {
   val containerFixture = ContainerDefinition(Seq(QuarterQuarterQuarterQuarter), RestrictTo(6))
@@ -67,8 +67,6 @@ class DedupingTest extends FlatSpec with Matchers {
         "",
         "",
         None,
-        Nil,
-        Nil,
         Nil,
         None
       )

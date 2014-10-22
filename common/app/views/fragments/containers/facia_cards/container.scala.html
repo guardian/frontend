@@ -10,14 +10,17 @@
     <section id="@FaciaComponentName(config, collection)"
              class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
              data-link-name="@FaciaComponentName(config, collection)"
-             data-id="@FaciaComponentName(config, collection)"
+             data-id="@dataId"
              @DfpAgent.sponsorshipTag(config).map { keyword =>
                  data-keywords="@keyword"
+             }
+             @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
+                 data-sponsorship="@sponsorshipType"
              }
              data-component="@FaciaComponentName(config, collection)">
         <div class="facia-container__inner">
             @containerHeader(collection, frontProperties, containerIndex)
-            <div class="container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more">
+            <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more">
                 @for(sliceWithCards <- containerLayout.slices) {
                     @slice(sliceWithCards, containerIndex)
                 }
