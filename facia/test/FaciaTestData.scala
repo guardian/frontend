@@ -7,7 +7,7 @@ import controllers.front.Front
 import model._
 import model.FaciaPage
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import services.CollectionConfigWithId
 
 object TestContent {

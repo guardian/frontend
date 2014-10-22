@@ -56,6 +56,10 @@ Show more button:
 ```
 */
 
+/**
+ * 1. As on mobile devices we use Helvetica font which have a different baseline
+ *    we have to change line-height depending on resolution.
+ */
 @mixin button-height($button-size) {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -63,9 +67,13 @@ Show more button:
     height: $button-size;
     padding: 0 ($button-size / 3);
     margin-right: $button-size / 3;
-    line-height: $button-size + 2px;
+    line-height: $button-size - 2px; /* [1] */
     border-width: 1px;
     border-style: solid;
+
+    @include mq($from: desktop) {
+        line-height: $button-size + 2px;
+    }
 
     .i {
         width: $button-size;

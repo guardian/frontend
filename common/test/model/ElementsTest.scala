@@ -3,7 +3,7 @@ package model
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
-import com.gu.openplatform.contentapi.model.{ Asset, Element => ApiElement, Content => ApiContent}
+import com.gu.contentapi.client.model.{ Asset, Element => ApiElement, Content => ApiContent}
 import org.joda.time.DateTime
 
 class ElementsTest extends FlatSpec with Matchers {

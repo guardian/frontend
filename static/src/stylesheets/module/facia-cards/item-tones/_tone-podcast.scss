@@ -1,10 +1,19 @@
 .tone-podcast--item {
+    $c-headline: $c-neutral1;
+
     @extend %tone-has-background;
     background-color: $c-podcastBackground;
 
     &,
     .fc-sublink__title {
-        color: $c-neutral1;
+        color: $c-headline;
+    }
+
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-headline, $c-podcastBackground, 80%);
+        }
     }
 
     .fc-item__content,
@@ -19,7 +28,7 @@
     }
 
     .fc-item__standfirst {
-        color: $c-neutral1;
+        color: $c-headline;
     }
 
     .fc-item__meta {
@@ -27,7 +36,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: $c-neutral1;
+        border-color: $c-headline;
     }
 }
 

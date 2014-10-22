@@ -1,3 +1,6 @@
+// Default Icons
+// =============================================================================
+
 .fc-item__timestamp {
     padding-left: 0;
 
@@ -26,101 +29,41 @@
 
 .fc-item__title--quoted {
     .fc-item__link {
-        &:before {
-            @include icon(quote-grey, false);
-            content: '';
-            height: .72em;
-            width: 1.2em;
-            padding-right: .2em;
-        }
+        @include icon(quote-grey, false);
+        content: '';
+        display: inline !important;
+        background-size: 1.2em .75em !important;
+        background-position: 0 .1em !important;
+        padding-left: 1.4em;
     }
 
     .tone-podcast--item & .fc-item__link {
-        &:before {
-            @include icon(quote-black, false);
-        }
+        @include icon(quote-black, false);
     }
 
     .tone-feature--item & .fc-item__link {
-        &:before {
-            @include icon(quote-light-pink, false);
-        }
+        @include icon(quote-light-pink, false);
     }
 
     .tone-live--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-media--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-editorial--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 
     .tone-review--item & .fc-item__link {
-        &:before {
-            @include icon(quote-white, false);
-        }
+        @include icon(quote-white, false);
     }
 }
 
-.tone-analysis--item,
-.tone-comment--item,
-.tone-dead--item,
-.tone-news--item {
-    .fc-sublink--video .fc-sublink__link:before {
-        @include icon(video-icon-black, false);
-    }
-
-    .fc-sublink--gallery .fc-sublink__link:before {
-        @include icon(camera-black-large, false);
-    }
-}
-
-.tone-podcast--item,
-.tone-podcast--sublink {
-    .fc-item__timestamp:before {
-        @include icon(clock-white, false);
-    }
-
-    .fc-trail__count:before {
-        @include icon(comment-white, false);
-    }
-
-    .fc-item__title:before {
-        @include icon(volume-high-dark-blue, false);
-        content: '';
-        height: .75em;
-        width: .95em;
-    }
-
-    .fc-sublink--video .fc-sublink__link:before {
-        @include icon(video-icon-white, false);
-    }
-
-    .fc-sublink--gallery .fc-sublink__link:before {
-        @include icon(camera-white-large, false);
-    }
-}
-
-.tone-media--item,
-.tone-media--sublink {
-    .fc-item__timestamp:before {
-        @include icon(clock-grey, false);
-    }
-
-    .fc-trail__count:before {
-        @include icon(comment-grey, false);
-    }
-}
+// Media Icons
+// =============================================================================
 
 .fc-item--video .fc-item__title,
 .fc-sublink--video .fc-sublink__link {
@@ -141,6 +84,78 @@
         height: .72em;
         width: 1.2em;
         margin-right: .1em;
+    }
+}
+
+.fc-item--audio .fc-item__title,
+.fc-sublink--audio .fc-sublink__link {
+    &:before {
+        @include icon(volume-high-yellow, false);
+        content: '';
+        height: .72em;
+        width: 1.2em;
+        margin-right: .1em;
+    }
+}
+
+// Tonal Overrides
+// =============================================================================
+
+.tone-analysis--item,
+.tone-comment--item,
+.tone-dead--item,
+.tone-news--item {
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-black, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-black-large, false);
+    }
+
+    .fc-sublink--audio {
+        .fc-sublink__link:before {
+            @include icon(volume-high-black, false);
+        }
+
+        &.tone-podcast--sublink .fc-sublink__link:before {
+            @include icon(volume-high-dark-blue, false);
+        }
+    }
+}
+
+.tone-podcast--item,
+.tone-podcast--sublink {
+    .fc-item__timestamp:before {
+        @include icon(clock-white, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-white, false);
+    }
+
+    &.fc-item--audio .fc-item__title:before,
+    .fc-sublink--audio .fc-item__title:before {
+        @include icon(volume-high-dark-blue, false);
+    }
+
+    .fc-sublink--video .fc-sublink__link:before {
+        @include icon(video-icon-white, false);
+    }
+
+    .fc-sublink--gallery .fc-sublink__link:before {
+        @include icon(camera-white-large, false);
+    }
+}
+
+.tone-media--item,
+.tone-media--sublink {
+    .fc-item__timestamp:before {
+        @include icon(clock-grey, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-grey, false);
     }
 }
 

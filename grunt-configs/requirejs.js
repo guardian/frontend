@@ -12,6 +12,7 @@ module.exports = function(grunt, options) {
                 bonzo:        'components/bonzo/bonzo',
                 EventEmitter: 'components/eventEmitter/EventEmitter',
                 qwery:        'components/qwery/qwery',
+                react:        'components/react/react',
                 reqwest:      'components/reqwest/reqwest',
                 lodash:       'components/lodash-amd',
                 imager:       'components/imager.js/container',
@@ -55,6 +56,16 @@ module.exports = function(grunt, options) {
                         name: 'bootstraps/commercial',
                         exclude: ['core']
                     }
+                ]
+            }
+        },
+        crosswords: {
+            options: {
+                name: 'bootstraps/crosswords',
+                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app'
                 ]
             }
         },

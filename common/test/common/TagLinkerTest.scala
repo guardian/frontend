@@ -2,7 +2,7 @@ package common
 
 import org.jsoup.Jsoup
 import org.scalatest.{Matchers, FlatSpec}
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Content => ApiContent}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Content => ApiContent}
 import model.{ApiContentWithMeta, Article}
 import views.support.TagLinker
 import org.joda.time.DateTime

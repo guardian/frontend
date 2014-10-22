@@ -59,7 +59,13 @@ object Frontend extends Build with Prototypes {
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
-  val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
+  val applications = application("applications")
+    .dependsOn(commonWithTests)
+    .settings(
+      libraryDependencies += crosswordsApiClient
+    )
+    .aggregate(common)
+
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(

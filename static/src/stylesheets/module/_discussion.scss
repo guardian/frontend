@@ -295,6 +295,19 @@ $avatarPadding: $gs-gutter / 2;
     &:after {
         right: -.5 * $gs-gutter;
     }
+    &.d-comment--response {
+        &:before,
+        &:after {
+            border-color: colour(neutral-6);
+        }
+    }
+
+    .d-comment-box__parent-comment-spout {
+        border-bottom-color: colour(neutral-5);
+    }
+    .d-comment-box__parent-comment {
+        background-color: colour(neutral-5);
+    }
 }
 
 .d-comment-box--top-level .d-comment-box__meta {
@@ -552,6 +565,7 @@ $avatarPadding: $gs-gutter / 2;
     @include mq(tablet) {
         .d-comment__avatar {
             width: $avatarSize-small;
+            height: $avatarSize-small;
         }
         .d-comment__content {
             margin-left: $avatarSize-small + $avatarPadding;
@@ -567,6 +581,7 @@ $avatarPadding: $gs-gutter / 2;
     @include mq(tablet) {
         margin-left: $avatarSize-big + $avatarPadding;
     }
+
 }
 
 .d-show-more-replies {
@@ -1084,13 +1099,6 @@ $comment-recommend-button-size: 19px;
     }
 }
 
-
-.d-comment-box--response {
-    @include mq(tablet) {
-        padding-left: $avatarSize-small + $avatarPadding;
-    }
-}
-
 .discussion__comment-box {
     display: none;
     .id--signed-in .discussion--open & {
@@ -1152,6 +1160,10 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__submit {
     vertical-align: middle;
+    &[disabled] {
+        background-color: colour(neutral-3);
+        border-color: colour(neutral-3);
+    }
 }
 .d-comment-box__cancel {
     margin-left: $gs-gutter;
@@ -1180,6 +1192,7 @@ $comment-recommend-button-size: 19px;
     margin-left: $gs-gutter;
     @include fs-textSans(2);
 }
+
 .d-comment-box--response {
 
     padding-top: $gs-baseline / 2;
@@ -1257,12 +1270,6 @@ $comment-recommend-button-size: 19px;
     .d-comment-box__hide-parent {
         margin-left: 0;
     }
-}
-.d-comment:target .d-comment-box__parent-comment-spout {
-    border-bottom-color: $c-neutral5;
-}
-.d-comment:target .d-comment-box__parent-comment {
-    background-color: $c-neutral5;
 }
 .d-comment-box__parent-comment-author {
     display: inline-block;

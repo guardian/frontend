@@ -102,6 +102,12 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     val address4 = ""
     val postcode = "N1 9GU"
     val country = Countries.UK
+    val billingAddress1 = "Buckingham Palace"
+    val billingAddress2 = "London"
+    val billingAddress3 = ""
+    val billingAddress4 = ""
+    val billingPostcode = "SW1A 1AA"
+    val billingCountry = Countries.UK
 
     "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
@@ -115,7 +121,13 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
           ("address.line3", address3),
           ("address.line4", address4),
           ("address.postcode", postcode),
-          ("address.country", country)
+          ("address.country", country),
+          ("billingAddress.line1", billingAddress1),
+          ("billingAddress.line2", billingAddress2),
+          ("billingAddress.line3", billingAddress3),
+          ("billingAddress.line4", billingAddress4),
+          ("billingAddress.postcode", billingPostcode),
+          ("billingAddress.country", billingCountry)
         )
 
       val updatedUser = user.copy(
@@ -129,7 +141,13 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
           address3 = Some(address3),
           address4 = Some(address4),
           postcode = Some(postcode),
-          country = Some(country)
+          country = Some(country),
+          billingAddress1 = Some(billingAddress1),
+          billingAddress2 = Some(billingAddress2),
+          billingAddress3 = Some(billingAddress3),
+          billingAddress4 = Some(billingAddress4),
+          billingPostcode = Some(billingPostcode),
+          billingCountry  = Some(billingCountry)
         )
       )
 
@@ -154,6 +172,12 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.privateFields.value.address4 should equal(None)
         userUpdate.privateFields.value.postcode.value should equal(postcode)
         userUpdate.privateFields.value.country.value should equal(country)
+        userUpdate.privateFields.value.billingAddress1.value should equal(billingAddress1)
+        userUpdate.privateFields.value.billingAddress2.value should equal(billingAddress2)
+        userUpdate.privateFields.value.billingAddress3 should equal(None)
+        userUpdate.privateFields.value.billingAddress4 should equal(None)
+        userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
+        userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
       }
 
       "then a status 200 should be returned" in {
@@ -162,4 +186,3 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     }
   }
 }
-

@@ -1,6 +1,6 @@
 package common
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
 import implicits.ItemResponses
