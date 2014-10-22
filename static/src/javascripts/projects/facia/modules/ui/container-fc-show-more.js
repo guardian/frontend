@@ -18,12 +18,11 @@ define([
             itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
             itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
             className            = 'fc-show-more--hidden',
-            $button              = null,
-            self                 = this;
+            $button              = null;
 
         this.addShowMoreButton = function () {
             $button = $.create(template(showMoreBtn, {
-                type: self.getContainerType()
+                type: this.getContainerType()
             }));
 
             if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
