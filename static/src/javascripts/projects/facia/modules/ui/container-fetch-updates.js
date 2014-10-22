@@ -76,7 +76,7 @@ define([
     };
 
     Cta.prototype.updateCount = function () {
-        $('.js-updates', this.elem).text(this.count + ' ' + this.getUpdateText());
+        $('.js-updates', this.elem).text(this.count + ' new ' + this.getUpdateText());
     };
 
     Cta.prototype.showTimestamp = function () {
