@@ -26,7 +26,7 @@ define([
     storage,
     toArray,
     snaps,
-    containerFcShowMore,
+    ContainerFcShowMore,
     ContainerShowMore,
     ContainerToggle,
     GeoMostPopularFront
@@ -45,7 +45,7 @@ define([
                     });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        new containerFcShowMore(container).addShowMoreButton();
+                        new ContainerFcShowMore(container).addShowMoreButton();
                     });
                 };
                 mediator.addListeners({
