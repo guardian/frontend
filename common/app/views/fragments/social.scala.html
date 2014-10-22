@@ -2,7 +2,7 @@
 
 <ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
     @content.pageShares.map { item: model.ShareLink =>
-        <li class="social__item" data-link-name="@item.text">
+        <li class="social__item" data-link-name="@item.css">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="@position"
                 href="@item.href">
