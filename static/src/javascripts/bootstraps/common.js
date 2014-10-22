@@ -188,9 +188,7 @@ define([
                 if (config.page.contentType === 'Article' &&
                     detect.getBreakpoint() !== 'mobile' &&
                     parseInt(config.page.wordCount, 10) > 500) {
-                    geoMostPopular.render().then(function (geoMostPopular) {
-                        console.log(geoMostPopular);
-                    });
+                    geoMostPopular.render();
                 }
             },
 
