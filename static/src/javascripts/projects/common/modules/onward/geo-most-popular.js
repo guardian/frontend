@@ -14,10 +14,11 @@ define([
     mediator
 ) {
 
-    var promise = new Promise(function (resolve, reject) {
-        mediator.on('modules:onward:geo-most-popular:ready', resolve);
-        mediator.on('modules:onward:geo-most-popular:error', reject);
-    });
+    var geoMostPopular,
+        promise = new Promise(function (resolve, reject) {
+            mediator.on('modules:onward:geo-most-popular:ready', resolve);
+            mediator.on('modules:onward:geo-most-popular:error', reject);
+        });
 
     function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
@@ -40,7 +41,7 @@ define([
     return {
 
         render: function () {
-            new GeoMostPopular();
+            geoMostPopular = new GeoMostPopular();
             return promise;
         },
 
