@@ -3,6 +3,16 @@
 
 @defining(s"http://${request.host}${request.path}"){ url =>
     <ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
+        <li class="social__item" data-link-name="email">
+            <a  class="social__action social-icon-wrapper"
+            data-link-name="@position"
+            href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
+                <span class="u-h">Share via Email</span>
+                <span class="social-icon social-icon--email">
+                    <i class="i-share-email@if(iconModifier) {--@iconModifier} i"></i>
+                </span>
+            </a>
+        </li>
         <li class="social__item" data-link-name="facebook">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="@position"
@@ -31,16 +41,6 @@
                 <span class="social-icon social-icon--gplus">
                     <i class="i-share-gplus@if(iconModifier) {--@iconModifier} i"></i>
                </span>
-            </a>
-        </li>
-        <li class="social__item" data-link-name="email">
-            <a  class="social__action social-icon-wrapper"
-            data-link-name="@position"
-            href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&amp;body=@helper.urlEncode(url)">
-                <span class="u-h">Share via Email</span>
-                <span class="social-icon social-icon--email">
-                    <i class="i-share-email@if(iconModifier) {--@iconModifier} i"></i>
-                </span>
             </a>
         </li>
     </ul>

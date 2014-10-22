@@ -110,6 +110,13 @@ category: Common
     }
 }
 
+.social-icon--whatsapp {
+    background-color: #5cbe4a;
+    &:hover {
+        background-color: darken(#5cbe4a, 10%);
+    }
+}
+
 .social-icon--email {
     background-color: #767676;
     &:hover {
