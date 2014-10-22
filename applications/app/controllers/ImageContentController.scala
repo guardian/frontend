@@ -14,8 +14,8 @@ object ImageContentController extends Controller with ImageQuery with Logging wi
 
   def render(path: String) = Action.async { implicit request =>
     image(Edition(request), path).map {
-        case Left(content) => renderImageContent(content)
-        case Right(result) => result
+      case Left(content) => renderImageContent(content)
+      case Right(result) => result
     }
   }
 
