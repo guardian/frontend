@@ -7,7 +7,7 @@ define([
     qwery,
     $,
     fixtures
-    ) {
+) {
 
     describe('Article Aside Adverts', {
         moduleName: 'common/modules/commercial/article-aside-adverts',

@@ -11,7 +11,7 @@ GET           /oauth2callback            controllers.OAuthLoginController.oauth2
 GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
-GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/*file              controllers.UncachedAssets.at(file)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
@@ -49,6 +49,9 @@ GET           /config                    controllers.FaciaToolController.getConf
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+
+# thumbnails
+GET           /thumbnails/*id.svg        controllers.ThumbnailController.container(id)
 
 # Updating config
 

@@ -177,6 +177,7 @@
 }
 .ad-slot--mpu-banner-ad {
     display: none;
+    width: 300px;
     min-height: 250 + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
@@ -406,8 +407,10 @@
 }
 .facia-container--sponsored .container:first-child,
 .facia-container--advertisement-feature .container:first-child,
+.facia-container--foundation-supported .container:first-child,
 .container--sponsored,
-.container--advertisement-feature {
+.container--advertisement-feature,
+.container--foundation-supported {
     .container__header + .container__body {
         margin-top: 104px;
 

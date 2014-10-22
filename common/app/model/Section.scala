@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Section => ApiSection }
+import com.gu.contentapi.client.model.{ Section => ApiSection }
 import common.{Edition, Pagination}
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
@@ -14,10 +14,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
-  lazy val keywordId: String = {
-    val normalizedId = id.replace("/", "-")
-    s"$normalizedId/$normalizedId"
-  }
+  lazy val keywordIds: Seq[String] = frontKeywordIds(id)
 
   override lazy val isFront = true
 
@@ -29,15 +26,29 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "keywords" -> JsString(webTitle),
-    "keywordIds" -> JsString(keywordId),
+    "keywordIds" -> JsString(keywordIds.mkString(",")),
     "content-type" -> JsString("Section")
   )
 
-  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(keywordId, Some(id))
-  override lazy val hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(keywordId)
-  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(keywordId, Some(id))
-  override lazy val hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(keywordId)
-  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(keywordId, Some(id))
-  override lazy val sponsor: Option[String] = DfpAgent.getSponsor(keywordId)
+  override lazy val isSponsored: Boolean = keywordIds exists (DfpAgent.isSponsored(_, Some(id)))
+
+  override lazy val hasMultipleSponsors: Boolean = keywordIds exists {
+    DfpAgent.hasMultipleSponsors
+  }
+
+  override lazy val isAdvertisementFeature: Boolean = keywordIds exists {
+    DfpAgent.isAdvertisementFeature(_, Some(id))
+  }
+
+  override lazy val hasMultipleFeatureAdvertisers: Boolean = keywordIds exists {
+    DfpAgent.hasMultipleFeatureAdvertisers
+  }
+
+  override lazy val isFoundationSupported: Boolean = keywordIds exists {
+    DfpAgent.isFoundationSupported(_, Some(id))
+  }
+
+  override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
+
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

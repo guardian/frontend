@@ -48,11 +48,22 @@ define([
 
         this.state = asObservableProps([
             'isOpen',
+            'isOpenTypePicker',
             'underDrag',
             'apiQueryStatus']);
 
         this.state.withinPriority = ko.computed(function() {
             return _.some(this.parents(), function(front) {return front.props.priority() === vars.priority; });
+        }, this);
+
+        this.containerThumbnail = ko.computed(function () {
+            var containerId = this.meta.type();
+
+            if (/^(fixed|dynamic)\//.test(containerId)) {
+                return "/thumbnails/" + containerId + ".svg";
+            } else {
+                return null;
+            }
         }, this);
 
         this.meta.apiQuery.subscribe(function(apiQuery) {
@@ -68,10 +79,21 @@ define([
                 .groups
             );
         }, this);
+
+        this.typePicker = this._typePicker.bind(this);
     }
 
     Collection.prototype.toggleOpen = function() {
         this.state.isOpen(!this.state.isOpen());
+    };
+
+    Collection.prototype.toggleOpenTypePicker = function() {
+        this.state.isOpenTypePicker(!this.state.isOpenTypePicker());
+    };
+
+    Collection.prototype._typePicker = function(type) {
+        this.meta.type(type);
+        this.state.isOpenTypePicker(false);
     };
 
     Collection.prototype.close = function() {

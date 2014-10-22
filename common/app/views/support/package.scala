@@ -331,17 +331,12 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockid = el.id()
-        val url = s"http://${request.domain}${request.path}#$blockid"
+        val url = s"${article.webUrl}#$blockid"
         val shortUrl = s"${article.shortUrl}#$blockid"
 
-        val icons = List(
-          // (cssClassName, Url)
-          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
-          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
-          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
-        )
+        def shareIcons = article.shareOptions(blockid)
 
-        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+        val html = views.html.fragments.share.blockLevelSharing(blockid, shareIcons, shortUrl, Some("liveblog"))
 
         el.append(html.toString())
       }
@@ -673,12 +668,15 @@ object ArticleLayout {
     lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-    lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
-        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+    lazy val hasSupportingAtBottom: Boolean = {
+      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
+      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
+      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      supportingEls.isDefined
+    }
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
   }
 }
 
@@ -852,6 +850,7 @@ object GetClasses {
 
     Seq(
       "fc-item",
+      "js-fc-item",
       imageClass,
       discussionClass
     ) ++ Seq(
@@ -996,12 +995,20 @@ object GetClasses {
   }
 
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+    val isPopular = config.apiQuery.exists { q =>
+      q.contains("show-most-viewed=true") && q.contains("hide-recent-content=true")
+    }
     Seq(
-      "container" -> true,
-      "container--sponsored" -> DfpAgent.isSponsored(config),
-      "container--advertisement-feature" -> (DfpAgent.isAdvertisementFeature(config) && !DfpAgent.isSponsored(config)),
-      "container--first" -> isFirst,
-      "js-container--toggle" -> (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config)))
+      ("container", true),
+      ("container--first", isFirst),
+      ("container--sponsored", (DfpAgent.isSponsored(config) && !isPopular)),
+      ("container--advertisement-feature", (DfpAgent.isAdvertisementFeature(config) && !isPopular)),
+      ("container--foundation-supported", (DfpAgent.isFoundationSupported(config) && !isPopular)),
+      ("js-sponsored-container", (
+        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)) &&
+        !isPopular
+      )),
+      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
     ) collect {
       case (kls, true) => kls
     }
@@ -1009,9 +1016,10 @@ object GetClasses {
 
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "fc-container" +:
-        (commonContainerStyles(config, isFirst, hasTitle) ++
-        extraClasses): _*
+      Seq(
+        "js-container--fetch-updates",
+        "fc-container"
+      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
     )
   }
 

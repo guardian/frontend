@@ -6,12 +6,14 @@ import front._
 import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
+import updates.{CollectionWithLayout, FrontIndex}
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction
 import services.ConfigAgent
 import common.FaciaMetrics.FaciaToApplicationRedirectMetric
+import views.html.fragments.containers.facia_cards.container
 
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
@@ -64,6 +66,27 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPressResult(path)
   }
 
+  private def withFaciaPage(path: String)(f: FaciaPage => Result): Future[Result] = {
+    if (ConfigAgent.shouldServeFront(path)) {
+      for {
+        maybeFront <- frontJson.get(path)
+      } yield maybeFront match {
+        case Some(front) => f(front)
+        case None => Cached(60)(NotFound)
+      }
+    } else {
+      Future.successful(Cached(60)(NotFound))
+    }
+  }
+
+  def renderFrontIndex(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving front index: $path")
+
+    withFaciaPage(path) { page =>
+      Cached(60)(Ok(Json.toJson(FrontIndex.fromFaciaPage(page))))
+    }
+  }
+
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
     frontJson.getAsJsValue(path).map{ json =>
       Cached(60)(JsonComponent(FrontJsonLite.get(json)))
@@ -102,6 +125,25 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
         }.getOrElse(ServiceUnavailable)
       }
+  }
+
+  def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving collection $collectionId on front $frontId")
+
+    withFaciaPage(frontId) { faciaPage =>
+      val layouts = CollectionWithLayout.fromFaciaPage(faciaPage).zipWithIndex
+
+      layouts.find(_._1.config.id == collectionId) match {
+        case Some((CollectionWithLayout(collection, config, Some(containerLayout)), collectionIndex)) =>
+          /** Deduping has already occurred, so pass in an empty instance */
+          Cached(60) {
+            JsonComponent(
+              "html" -> container(collection, containerLayout, collectionIndex, dataId = config.id)(request, new TemplateDeduping, config.config)
+            )
+          }
+        case _ => NotFound
+      }
+    }
   }
 
   private object JsonCollection{

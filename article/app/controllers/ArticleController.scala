@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 import common._
 import conf._
 import model._
@@ -56,7 +56,6 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")

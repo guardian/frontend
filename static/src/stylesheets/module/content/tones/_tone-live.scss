@@ -1,6 +1,6 @@
 @include tone-content-icons(live, 'white');
 
-@include tone-content-head(
+@include tone-content(
     live, // $tone
     $c-liveDefault, // $tonal__header-background
     $c-neutral6, // $tonal__header-text
@@ -10,11 +10,7 @@
     $c-liveDefault, // $tonal__headline-accent
     $c-liveAccent, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
-    #ffffff // $tonal__standfirst-link
-);
-
-@include tone-content-main(
-    live, // $tone
+    #ffffff, // $tonal__standfirst-link
     $c-neutral8, // $tonal__article-background
     $c-liveDefault // $tonal__article-link
 );

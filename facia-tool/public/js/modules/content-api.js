@@ -67,6 +67,10 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
+                // A snap, but snaps can only be created to the Clipboard
+                } else if (item.group.parentType !== 'Clipboard') {
+                    err = 'Sorry, special links must be dragged to the Clipboard, initially';
+
                 // A snap, but a link off of the tool itself
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
@@ -78,10 +82,6 @@ function (
                 // A snap, but a link to unavailable guardian content
                 } else if (isFromGuardian && results.length === 0) {
                     err = 'Sorry, that Guardian content is unavailable';
-
-                // A snap, but snaps can only be created to the Clipboard
-                } else if (item.group.parentType !== 'Clipboard' && results.length === 0) {
-                    err = 'Sorry, snaps can only be created on the Clipboard';
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
