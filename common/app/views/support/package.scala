@@ -670,8 +670,12 @@ object ArticleLayout {
 
     lazy val hasSupportingAtBottom: Boolean = {
       val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-      val last5els = Jsoup.parseBodyFragment(a.body).select("body > *").takeRight(5)
-      val supportingEls = last5els.find(_.classNames.intersect(supportingClasses).size > 0)
+      var wordCount = 0
+      val lastEls = Jsoup.parseBodyFragment(a.body).select("body > *").reverseIterator.takeWhile{ el =>
+        wordCount += el.text.length
+        wordCount < 1500
+      }
+      val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
       supportingEls.isDefined
     }
 
