@@ -8,7 +8,7 @@
 
 @container(stories: Seq[model.Content], title: String, dataId: String) = {
     @defining(Collection(stories, Some(title))) { collection =>
-        @containers.facia_cards.container(collection, ContainerLayout(FixedContainers.all("fixed/medium/fast-XII"), collection, None), 2, FrontProperties.empty, dataId = dataId)(request, new views.support.TemplateDeduping, com.gu.facia.client.models.CollectionConfig.emptyConfig)
+        @containers.facia_cards.container(collection, ContainerLayout(FixedContainers.fixedMediumFastXII, collection, None), 2, FrontProperties.empty, dataId = dataId)(request, new views.support.TemplateDeduping, com.gu.facia.client.models.CollectionConfig.emptyConfig)
     }
 }
 

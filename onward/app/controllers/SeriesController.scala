@@ -53,7 +53,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val displayName = Some(series.tag.webTitle)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
     val collection = Collection(series.trails.take(7), displayName)
-    val layout = ContainerLayout(FixedContainers.all("fixed/medium/slow-VII"), collection, None)
+    val layout = ContainerLayout(FixedContainers.fixedMediumSlowVII, collection, None)
 
     implicit val config = CollectionConfig.withDefaults(
       apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)

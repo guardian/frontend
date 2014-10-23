@@ -77,7 +77,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
     val dataId = s"$pluralMediaType in section"
     val displayName =  Some(s"more ${sectionName} $pluralMediaType")
     val collection = Collection(trails.take(7), displayName)
-    val layout = ContainerLayout(FixedContainers.all("fixed/medium/fast-XI"), collection, None)
+    val layout = ContainerLayout(FixedContainers.fixedMediumFastXI, collection, None)
     val templateDeduping = new TemplateDeduping
     implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
 

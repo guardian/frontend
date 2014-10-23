@@ -26,7 +26,7 @@ object RelatedController extends Controller with Related with Logging with Execu
     val displayName = Some(dataId)
     val properties = FrontProperties.empty
     val collection = Collection(trails.take(8), displayName)
-    val layout = ContainerLayout(FixedContainers.all("fixed/medium/fast-XII"), collection, None)
+    val layout = ContainerLayout(FixedContainers.fixedMediumFastXII, collection, None)
     val config = CollectionConfig.withDefaults(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(collection, layout, 1, properties, dataId)(request, new views.support.TemplateDeduping, config)
