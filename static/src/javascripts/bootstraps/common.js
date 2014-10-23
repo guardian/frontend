@@ -80,7 +80,7 @@ define([
     ab,
     id,
     AutoSignin,
-    Navigation,
+    navigation,
     Profile,
     Search,
     breakingNews,
@@ -114,7 +114,7 @@ define([
 
             initialiseTopNavItems: function () {
                 var profile,
-                    search = new Search(config),
+                    search = new Search(),
                     header = document.getElementById('header');
 
                 if (header) {
@@ -130,12 +130,11 @@ define([
             },
 
             initialiseNavigation: function () {
-                Navigation.init(config);
+                navigation.init();
             },
 
             transcludeRelated: function () {
-                var r = new Related();
-                r.renderRelatedComponent(config);
+                new Related().renderRelatedComponent();
             },
 
             transcludePopular: function () {
@@ -144,10 +143,10 @@ define([
 
             transcludeOnwardContent: function () {
                 if ('seriesId' in config.page) {
-                    new Onward(config, qwery('.js-onward'));
+                    new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {
-                        new TonalComponent(config, c).fetch(c, 'html');
+                        new TonalComponent().fetch(c, 'html');
                     });
                 }
             },
@@ -183,13 +182,11 @@ define([
             },
 
             logLiveStats: function () {
-                liveStats.log(config);
+                liveStats.log();
             },
 
             loadAnalytics: function () {
-                var omniture = new Omniture();
-
-                omniture.go(config);
+                new Omniture(window.s).go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
@@ -277,7 +274,7 @@ define([
 
             displayBreakingNews: function () {
                 if (config.switches.breakingNews) {
-                    breakingNews(config);
+                    breakingNews();
                 }
             },
 
@@ -304,7 +301,7 @@ define([
             initAutoSignin: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
-                        new AutoSignin(config).init();
+                        new AutoSignin().init();
                     }
                 });
             },
@@ -337,7 +334,7 @@ define([
                 mediator.on('page:common:ready', function () {
                     if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                         $('figure.interactive').each(function (el) {
-                            enhancer.render(el, config, mediator);
+                            enhancer.render(el, document, config, mediator);
                         });
                     }
                 });
@@ -345,7 +342,7 @@ define([
 
             startRegister: function () {
                 if (!config.page.isSSL) {
-                    register.initialise(config);
+                    register.initialise();
                 }
             },
 
@@ -366,7 +363,7 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init(config);
+                discussionApi.init();
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
                         var discussionLoader = new DiscussionLoader();
@@ -384,7 +381,7 @@ define([
             },
 
             initReleaseMessage: function () {
-                releaseMessage.init(config);
+                releaseMessage.init();
             },
 
             initOpenOverlayOnClick: function () {

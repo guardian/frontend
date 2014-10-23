@@ -1,38 +1,38 @@
 define([
-    // Common libraries
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/ajax',
-    'common/utils/mediator',
     'bonzo',
     'qwery',
-    // Modules
+    // Common libraries
+    'common/utils/$',
+    'common/utils/ajax',
+    'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/storage',
     'common/utils/to-array',
-    'facia/modules/ui/snaps',
+    // Modules
+    'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-fc-show-more',
     'facia/modules/ui/container-fetch-updates',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
-    'facia/modules/onwards/geo-most-popular-front'
+    'facia/modules/ui/snaps'
 ], function (
-    $,
-    config,
-    ajax,
-    mediator,
     bonzo,
     qwery,
+    $,
+    ajax,
+    config,
     detect,
+    mediator,
     storage,
     toArray,
-    snaps,
+    GeoMostPopularFront,
     ContainerFcShowMore,
     containerFetchUpdates,
     ContainerShowMore,
     ContainerToggle,
-    GeoMostPopularFront
-    ) {
+    snaps
+) {
     var modules = {
 
             showSnaps: function () {

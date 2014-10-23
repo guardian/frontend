@@ -34,7 +34,7 @@
             }
         }
         @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
-            @if(hasDescription){
+            @if(containerIndex == 0 && hasDescription){
                 <div class="@RenderClasses(Map(
                     "fc-container__header__description" -> true,
                     "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
