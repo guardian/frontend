@@ -68,10 +68,10 @@ category: Common
 @include mq(desktop) {
 
     $social-icon: (
-            width: 36px,
-            height: 36px,
-            color: $c-neutral2,
-            space-in-between: 2px
+        width: 36px,
+        height: 36px,
+        color: $c-neutral2,
+        space-in-between: 2px
     );
 
 }
