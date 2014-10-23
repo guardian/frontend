@@ -168,7 +168,7 @@ $breakpoints: (
     .container__meta {
         padding-top: $gs-baseline/2;
         @include mq($halfWidthBreakpoint) {
-            padding-top: $gs-baseline/1.5;
+            padding-top: $gs-baseline/2;
         }
         @include mq($halfWidthBreakpoint, $leftColumn) {
             max-width: 50%;

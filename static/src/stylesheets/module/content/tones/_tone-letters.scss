@@ -1,7 +1,7 @@
 @include tone-content-icons(letters, 'white');
 
 @include tone-content(
-    comment, // $tone
+    letters, // $tone
     $c-commentBackground, // $tonal__header-background
     $c-neutral2, // $tonal__header-text
     $c-commentDefault, // $tonal__header-link

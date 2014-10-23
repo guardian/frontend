@@ -42,18 +42,12 @@
 
 .tone-review--sublink {
     .fc-sublink__kicker {
-        color: $c-reviewBackground;
+        color: $c-reviewAccent;
     }
 
-    @include sublink-style(editorial, feature, live, media, review) {
+    @include sublink-style(analysis, comment, dead, letters, news) {
         .fc-sublink__kicker {
-            color: $c-reviewAccent;
-        }
-    }
-
-    @include sublink-style(podcast) {
-        .fc-sublink__kicker {
-            color: #ffffff;
+            color: $c-reviewBackground;
         }
     }
 }

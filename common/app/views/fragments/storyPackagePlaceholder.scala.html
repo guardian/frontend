@@ -1,14 +1,26 @@
 @(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
+@import layout.ContainerLayout
+@import model.{Collection, FrontProperties}
+@import views.support.TemplateDeduping
+@import views.html.fragments.containers
+@import slices.{FixedContainers}
+
+@container(stories: Seq[model.Content], title: String, dataId: String) = {
+    @defining(Collection(stories, Some(title))) { collection =>
+        @containers.facia_cards.container(collection, ContainerLayout(FixedContainers.fixedMediumFastXII, collection, None), 2, FrontProperties.empty, dataId = dataId)(request, new views.support.TemplateDeduping, com.gu.facia.client.models.CollectionConfig.emptyConfig)
+    }
+}
+
 @defining(Seq("related") ++ (if(content.isAdvertisementFeature) Seq("container--advertisement-feature") else Nil)) { classes =>
 
     @if(related.hasStoryPackage) {
-        <aside class="@classes.mkString(" ") more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}" role="complementary">
-            @fragments.relatedTrails(related.storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
+        <aside class="@classes.mkString(" ") more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}" role="complementary" aria-labelledby="related-content-head">
+            @container(related.storyPackage, "more on this story", "more-on-this-story")
         </aside>
     } else {
         <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-            @fragments.relatedTrails(related.related, heading = "Related content", visibleTrails = 5, dataComponent = "related-content")
+            @container(related.related, "related content", "related-content")
         </aside>
     }
 

@@ -41,6 +41,11 @@ object TagContainers {
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
+  //TODO: Temporary vals for content until we refactor
+  val fixedMediumSlowVII = slices(HalfQQ, QuarterQuarterQuarterQuarter)
+  val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
+  val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
+
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(Full)),
     ("fixed/small/slow-III", slices(HalfQQ)),
@@ -52,10 +57,10 @@ object FixedContainers {
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),
     ("fixed/medium/slow-VI", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter)),
-    ("fixed/medium/slow-VII", slices(HalfQQ, QuarterQuarterQuarterQuarter)),
+    ("fixed/medium/slow-VII", fixedMediumSlowVII),
     ("fixed/medium/slow-XII-mpu", slices(TTT, TlTlMpu)),
-    ("fixed/medium/fast-XI", slices(HalfQQ, Ql2Ql2Ql2Ql2)),
-    ("fixed/medium/fast-XII", slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
+    ("fixed/medium/fast-XI", fixedMediumFastXI),
+    ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/large/fast-XV", slices(HalfQQ, Ql3Ql3Ql3Ql3))
   )

@@ -8,7 +8,7 @@ import feed.MostReadAgent
 import conf.Switches.RelatedContentSwitch
 
 trait Related extends ConciergeRepository {
-  def related(edition: Edition, path: String): Future[Seq[Trail]] = {
+  def related(edition: Edition, path: String): Future[Seq[Content]] = {
 
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(Nil)
@@ -28,7 +28,7 @@ trait Related extends ConciergeRepository {
     }
   }
 
-  def getPopularInTag(edition: Edition, tag: String): Future[Seq[Trail]] = {
+  def getPopularInTag(edition: Edition, tag: String): Future[Seq[Content]] = {
 
     val response = LiveContentApi.search(edition)
       .tag(tag)
