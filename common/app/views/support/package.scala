@@ -1048,6 +1048,9 @@ object SnapData {
     case snap: Snap =>
       snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
       snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case content: Content =>
+        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
     case _  => Nil
   }
 }
