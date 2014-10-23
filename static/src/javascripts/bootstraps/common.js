@@ -219,7 +219,7 @@ define([
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, usMsg,
+                var exitLink, msg, usMsg, feedbackLink,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
@@ -232,6 +232,9 @@ define([
                     Cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+                    feedbackLink = config.page.edition === 'US' ?
+                        'https://www.surveymonkey.com/s/theguardian-us-edition-feedback' :
+                        'https://www.surveymonkey.com/s/theguardian-beta-feedback';
 
                     msg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
@@ -245,7 +248,7 @@ define([
                         '</li>' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
                         '</li>' +
                         '</ul>';
 
@@ -256,7 +259,7 @@ define([
                         '<ul class="site-message__actions u-unstyled">' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
                         '</li>' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
