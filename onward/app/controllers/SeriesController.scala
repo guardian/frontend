@@ -9,7 +9,9 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import views.support.{TemplateDeduping, SeriesContainer}
+import views.support.{TemplateDeduping}
+import layout.ContainerLayout
+import slices.{FixedContainers}
 
 case class Series(id: String, tag: Tag, trails: Seq[Content])
 
@@ -47,11 +49,18 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
-    val dataId: String = series.tag.webTitle
+    val dataId = "series"
+    val displayName = Some(series.tag.webTitle)
+    val properties = FrontProperties(series.tag.description, None, None, None, false, None)
+    val collection = Collection(series.trails.take(7), displayName)
+    val layout = ContainerLayout(FixedContainers.all("fixed/medium/slow-VII"), collection, None)
+
     implicit val config = CollectionConfig.withDefaults(
-      apiQuery = Some(series.id), displayName = Some("Series:"), href = Some(series.id)
+      apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
     )
-    val response = () => views.html.fragments.containers.series(Collection(series.trails.take(7)), SeriesContainer(), 1, series.tag.description, dataId)
+
+    val response = () => views.html.fragments.containers.facia_cards.container(collection, layout, 1, properties, dataId)(request, new views.support.TemplateDeduping, config)
+
     renderFormat(response, response, 1)
   }
 }
