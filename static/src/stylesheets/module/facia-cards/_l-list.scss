@@ -22,8 +22,12 @@
         .l-row--cols-#{$column} {
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
-                    @include flex($span);
                     width: (100% / $column) * $span;
+                    float: left;
+
+                    .has-flex-wrap & {
+                        @include flex($span);
+                    }
                 }
             }
         }
@@ -47,7 +51,9 @@
 
             .has-flex-wrap & {
                 @include mq(tablet) {
-                    @include flex-basis(100% / $column);
+                    .has-flex-wrap & {
+                        @include flex-basis(100% / $column);
+                    }
                 }
             }
         }

@@ -4,7 +4,7 @@
 
 /**
  * Row utility class.
- * 
+ *
  * @type String
  *
  * @group layout
@@ -15,7 +15,7 @@ $guss-row-utility-class: '.l-row' !default;
  * When set to false, output a simpler version with a static width.
  *
  * @link http://caniuse.com/#feat=flexbox Flexbox support table
- * 
+ *
  * @type Bool
  *
  * @group layout
@@ -23,8 +23,21 @@ $guss-row-utility-class: '.l-row' !default;
 $browser-supports-flexbox: true !default;
 
 /**
+ * Classes to manage feature-detection support for flex. Override if your
+ * detection uses a different convention.
+ *
+ * @link http://modernizr.com/docs/#flexbox Modernizr detection for flex
+ *
+ * @type String
+ *
+ * @group layout
+ */
+$has-flex: has-flex !default;
+$has-no-flex: has-no-flex !default;
+
+/**
  * Static width for older browsers.
- * 
+ *
  * @type Number
  *
  * @group layout
@@ -42,7 +55,7 @@ $guss-row-fallback-width: 940px !default;
  * @requires {mixin} mq
  * @requires {mixin} flex-grow
  * @requires {mixin} flex-basis
- * 
+ *
  * @link http://sassmeister.com/gist/9b6033675b0f01de21f0 Examples on Sassmeister
  *
  * @example scss
@@ -65,108 +78,143 @@ $guss-row-fallback-width: 940px !default;
  *
  * @group layout
  */
-@mixin guss-row($base-class) {
-    @if ($browser-supports-flexbox) {
-        @include mq(tablet) {
-            #{$base-class} {
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
-                -webkit-box-direction: normal;
-                -moz-box-direction: normal;
-                -webkit-box-orient: horizontal;
-                -moz-box-orient: horizontal;
-                -webkit-flex-direction: row;
-                -ms-flex-direction: row;
-                flex-direction: row;
-                -webkit-flex-wrap: nowrap;
-                -ms-flex-wrap: nowrap;
-                flex-wrap: nowrap;
-                -webkit-align-content: stretch;
-                -ms-flex-line-pack: stretch;
-                align-content: stretch;
-                -webkit-box-align: stretch;
-                -moz-box-align: stretch;
-                -webkit-align-items: stretch;
-                -ms-flex-align: stretch;
-                align-items: stretch;
-                width: 100%; // Prevent consecutive rows from flexing together in FF
-            }
-            #{$base-class}--reverse {
-                -webkit-flex-direction: row-reverse;
-                -ms-flex-direction: row-reverse;
-                flex-direction: row-reverse;
-            }
-            #{$base-class}__item {
-                -webkit-box-flex: 1;
-                -moz-box-flex: 1;
-                -webkit-flex: 1;
-                -ms-flex: 1;
-                flex: 1;
-                @include flex-grow(1);
-                @include flex-basis(0);
-                width: 0; // Prevent items to grow out of their parent in FF
-            }
-            #{$base-class}__item--boost-1 { @include flex-grow(1.5); }
-            #{$base-class}__item--boost-2 { @include flex-grow(2); }
+@mixin guss-row($base-class, $detect: false) {
+    @if ($detect) {
+        .#{$has-flex} {
+            @include flex-row($base-class);
         }
-
-        // Mobile layout variation:
-        // - Items are aligned horizontally, 50% each
-        // - Should degrade into a vertical list
-        //
-        // Browser support:
-        // - iOS 7+ (-webkit- prefix required)
-        // - Chrome
-        // - IE 11+
-        // - Firefox 28+ (for flex-wrap support)
-        @include mq($until: tablet) {
-            #{$base-class}--layout-m {
-                display: -webkit-flex;
-                display: flex;
-                -webkit-flex-wrap: wrap;
-                flex-wrap: wrap;
-
-                // Items fill half the width of their container
-                #{$base-class}__item {
-                    -webkit-flex-basis: 50%;
-                    flex-basis: 50%;
-                }
-
-                // Break the flow on mobile:
-                // Item will fill the whole width of its container
-                #{$base-class}__item--break-m {
-                    -webkit-flex: 1 100%;
-                    flex: 1 100%;
-                }
-            }
+        .#{$has-no-flex} {
+            @include no-flex-row($base-class);
         }
     } @else {
+        @if ($browser-supports-flexbox) {
+            @include flex-row($base-class);
+        } @else {
+            @include no-flex-row($base-class);
+        }
+    }
+}
+
+/**
+ * Rows for flex browsers.
+ *
+ * @requires {variable} base-class
+ *
+ * @group layout
+ */
+
+@mixin flex-row($base-class) {
+    @include mq(tablet) {
         #{$base-class} {
-            width: $guss-row-fallback-width;
-
-            // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
-            zoom: 1;
-
-            &:after,
-            &:before {
-                content: "";
-                display: table;
-            }
-            &:after {
-                clear: both;
-            }
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-direction: normal;
+            -moz-box-direction: normal;
+            -webkit-box-orient: horizontal;
+            -moz-box-orient: horizontal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            -webkit-align-content: stretch;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-box-align: stretch;
+            -moz-box-align: stretch;
+            -webkit-align-items: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+            width: 100%; // Prevent consecutive rows from flexing together in FF
         }
-
+        #{$base-class}--reverse {
+            -webkit-flex-direction: row-reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+        }
         #{$base-class}__item {
-            float: left;
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            @include flex-grow(1);
+            @include flex-basis(0);
+            width: 0; // Prevent items to grow out of their parent in FF
         }
-        @each $i in 2, 3, 4 {
-            #{$base-class}--items-#{$i} #{$base-class}__item {
-                width: $guss-row-fallback-width / $i;
+        #{$base-class}__item--boost-1 { @include flex-grow(1.5); }
+        #{$base-class}__item--boost-2 { @include flex-grow(2); }
+    }
+
+    // Mobile layout variation:
+    // - Items are aligned horizontally, 50% each
+    // - Should degrade into a vertical list
+    //
+    // Browser support:
+    // - iOS 7+ (-webkit- prefix required)
+    // - Chrome
+    // - IE 11+
+    // - Firefox 28+ (for flex-wrap support)
+    @include mq($until: tablet) {
+        #{$base-class}--layout-m {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+
+            // Items fill half the width of their container
+            #{$base-class}__item {
+                -webkit-flex-basis: 50%;
+                flex-basis: 50%;
             }
+
+            // Break the flow on mobile:
+            // Item will fill the whole width of its container
+            #{$base-class}__item--break-m {
+                -webkit-flex: 1 100%;
+                flex: 1 100%;
+            }
+        }
+    }
+}
+
+/**
+ * Rows for non-flex browsers.
+ *
+ * @requires {variable} base-class
+ * @requires {variable} guss-row-fallback-width
+ *
+ * @group layout
+ */
+
+@mixin no-flex-row($base-class) {
+    #{$base-class} {
+        width: $guss-row-fallback-width;
+
+        // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
+        zoom: 1;
+
+        &:after,
+        &:before {
+            content: "";
+            display: table;
+        }
+        &:after {
+            clear: both;
+        }
+    }
+
+    #{$base-class}__item {
+        float: left;
+    }
+
+    @each $i in 2, 3, 4 {
+        #{$base-class}--items-#{$i} #{$base-class}__item {
+            width: $guss-row-fallback-width / $i;
         }
     }
 }
@@ -179,6 +227,6 @@ $guss-row-fallback-width: 940px !default;
  *
  * @group layout
  */
-@mixin guss-row-utility {
-    @include guss-row($guss-row-utility-class);
+@mixin guss-row-utility($detect: false) {
+    @include guss-row($guss-row-utility-class, $detect: $detect);
 }
