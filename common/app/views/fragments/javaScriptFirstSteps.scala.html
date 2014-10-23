@@ -130,29 +130,20 @@
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {
-            var docClass = document.documentElement.className;
-
             @* http://modernizr.com/download/#-svg *@
             function hasSvgSupport() {
                 var ns = {'svg': 'http://www.w3.org/2000/svg'};
                 return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
             }
             if (hasSvgSupport()) {
-                docClass += ' svg';
+                document.documentElement.className += ' svg';
             }
-
-            if(testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
-                docClass += ' has-flex';
-            } else {
-                docClass += ' has-no-flex';
-            }
-
             if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
-                docClass += ' has-flex-wrap';
+                document.documentElement.className += ' has-flex-wrap';
             } else {
-                docClass += ' has-no-flex-wrap';
+                document.documentElement.className += ' has-no-flex-wrap';
             }
-            document.documentElement.className = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+            document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);
 
