@@ -21,6 +21,7 @@ module.exports = function(grunt, options) {
                     '!modules/discussion/loader.js',
                     '!modules/discussion/recommend-comments.js',
                     '!modules/discussion/top-comments.js',
+                    '!modules/experiments/ab.js',
                     '!modules/gallery/lightbox.js',
                     '!modules/identity/account-profile.js',
                     '!modules/identity/api.js',
