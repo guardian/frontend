@@ -33,10 +33,4 @@
             color: $c-commentBackground;
         }
     }
-
-    @include sublink-style(podcast) {
-        .fc-sublink__kicker {
-            color: #ffffff;
-        }
-    }
 }
