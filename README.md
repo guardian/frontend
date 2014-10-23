@@ -31,8 +31,8 @@ Contents:
 * [IDE Setup](#ide-setup)
 * [Troubleshooting](#troubleshooting)
 * [Optional steps](#optional-steps)
-* [Useful information and hints](useful-information-and-hints)
-* [Additional Documentation](additional-documentation)
+* [Useful information and hints](#useful-information-and-hints)
+* [Additional Documentation](#additional-documentation)
 
 ##Local Test Server setup
 You need A Mac or Linux PC (ubuntu), then each of the things listed...
@@ -143,7 +143,7 @@ Install additional dependencies:
 bundle
 ```
 
-After this, you can compile the assets (see the note about `grunt watch` [below](#client-side-development)):
+After this, you can compile the assets:
 ```
 grunt compile
 ```
@@ -200,8 +200,8 @@ See https://github.com/mpeltonen/sbt-idea for more info.
 
 ## Troubleshooting
 
-NPM ownership
--------------
+###NPM "EACCES"
+
 If you get errors like this on `npm install`
 ```
 npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirejs-4becac899d6c8f35.lock'
@@ -216,14 +216,13 @@ If it is owned by root then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
 
-File handles
-------------
+###File handles - "Too many files open"
 
 You may run into a "too many files open" error during
 compilation or reloading. You can find out how many file handles you are
 allowed per process by running `ulimit -n`. This can be quite low, e.g. 1024 on linux or 256 on Mac
 
-###Linux
+####Linux
 
 To increase the limit do the following (instructions from Ubuntu 12.10)...
 
@@ -242,7 +241,7 @@ Restart the machine.
 
 For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 
-###Mac
+####Mac
 
 * Edit your `~/.bash-profile` file
 * add the following line: `ulimit -n 1024`
@@ -256,11 +255,11 @@ Now you should be able to compile and run. Yay.
 ## Optional steps
 
 ###NVM
-* Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
+Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
 
 ###Memcached
 
-* OPT - Memcached `sudo apt-get install memcached` -
+Memcached `sudo apt-get install memcached` -
 (most of the time you do not want to use it as caching makes local development
 harder)
 
@@ -271,7 +270,7 @@ If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](./nginx/README.md) in this project.
 
-###Vagrant OPT
+###Vagrant
 
 You can run the project with the supplied Vagrantfile - make sure you
 understand what vagrant is http://www.vagrantup.com/
@@ -286,7 +285,7 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 * `./sbt`
 
 
-###Client-side dev mode
+###Client-side development mode
 
 There is a `grunt watch` task available to build and watch for development
 changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
