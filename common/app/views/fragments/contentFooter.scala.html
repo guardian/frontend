@@ -1,6 +1,6 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
-<div class="content-footer @if(cssClass){ content-footer--@cssClass }">
+<div class="content-footer @if(cssClass){ content-footer--@cssClass } facia-container--layout-content">
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
@@ -11,12 +11,11 @@
         }
 
         @if(!content.shouldHideAdverts) {
-            <div class="facia-container facia-container--layout-content facia-container--commercial">
+            <div class="facia-container facia-container--commercial">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
 
-        @fragments.referredContentPlaceholder(content.visualTone)
         @fragments.storyPackagePlaceholder(content, related)
         @fragments.onwardPlaceholder(content.visualTone)
 
@@ -26,7 +25,7 @@
 
         @content match {
             case article: Article if !article.isLiveBlog => {
-                <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
+                <div class="facia-container facia-container--outbrain hide-on-childrens-books-site">
                     @fragments.outbrainPlaceholder()
                 </div>
             }
@@ -34,7 +33,7 @@
         }
 
         @if(!content.shouldHideAdverts) {
-            <div class="facia-container facia-container--layout-content facia-container--commercial">
+            <div class="facia-container facia-container--commercial">
                 @fragments.commercial.commercialComponent()
             </div>
         }

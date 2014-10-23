@@ -10,6 +10,10 @@
 .l-list__item {
     float: left;
 
+    @include mq(tablet) {
+        max-width: 50%;
+    }
+
     .has-flex-wrap & {
         @include flex-grow(0);
         @include flex-basis(100%);

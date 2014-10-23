@@ -4,10 +4,10 @@ import com.gu.contentapi.client.model.ItemResponse
 
 case class RelatedContent(
   // A manually curated list of related content. You want to to favour this over `related`
-  storyPackage: Seq[Trail],
+  storyPackage: Seq[Content],
 
   // Related content worked out by an algorithm
-  related: Seq[Trail]
+  related: Seq[Content]
 ) {
   val hasStoryPackage: Boolean = storyPackage.nonEmpty
 }
