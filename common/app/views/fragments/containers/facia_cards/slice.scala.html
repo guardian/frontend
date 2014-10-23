@@ -4,7 +4,7 @@
 @import views.html.fragments.items.facia_cards.item
 
 <div class="facia-slice-wrapper">
-    <ul class="u-unstyled l-row l-row--items-@slice.numberOfItems l-row--cols-@slice.numberOfCols facia-slice facia-slice--@slice.cssClassName">
+    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols facia-slice facia-slice--@slice.cssClassName">
     @for(ColumnAndCards(column, cards) <- slice.columns) {
         @column match {
             case SingleItem(colSpan, itemClasses) => {
