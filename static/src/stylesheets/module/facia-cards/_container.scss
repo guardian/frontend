@@ -7,7 +7,11 @@ $header-image-size-desktop: 120px;
 
     .facia-container__inner {
         border-top: 1px solid $c-newsAccent;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 4;
+
+        @include mq(tablet) {
+            padding-top: $gs-baseline / 2;
+        }
     }
 
     &.container--first {
@@ -156,6 +160,10 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.container__toggle i {
+    top: $gs-baseline / 3 * 2;
+}
+
 /**
  * This for adding padding-top. On old layout container--first is taking care of this.
  * When we move to new layout container--news should be deprecated and this class should be
@@ -284,9 +292,14 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-container__body {
-    padding-top: $gs-baseline / 4;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
     opacity: 1;
     @include transition(opacity .25s linear); // Used to fade-in new updates
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 4;
+    }
 }
 
 .fc-container__body--is-hidden {
