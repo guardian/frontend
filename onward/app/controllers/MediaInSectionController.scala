@@ -1,9 +1,11 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfig
+import layout.ContainerLayout
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
+import slices.FixedContainers
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
@@ -59,7 +61,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
   }
 
   private def renderSectionTrails(mediaType: String, trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
-    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
+    val sectionName = trails.headOption.map(t => t.sectionName.toLowerCase).getOrElse("")
 
     // Content API doesn't understand the alias 'uk-news'.
     val sectionTag = sectionId match {
@@ -71,8 +73,21 @@ object MediaInSectionController extends Controller with Logging with Paging with
       case "audio" => "audio"
       case m => s"${m}s"
     }
-    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $pluralMediaType"))
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false, dataId = sectionId)
+
+    val dataId = s"$pluralMediaType in section"
+    val displayName =  Some(s"more ${sectionName} $pluralMediaType")
+    val collection = Collection(trails.take(7), displayName)
+    val layout = ContainerLayout(FixedContainers.all("fixed/medium/fast-XI"), collection, None)
+    val templateDeduping = new TemplateDeduping
+    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
+
+    val response = () => views.html.fragments.containers.facia_cards.container(
+      collection,
+      layout,
+      1,
+      FrontProperties.empty,
+      dataId
+    )(request, templateDeduping, config)
     renderFormat(response, response, 1)
   }
 }
