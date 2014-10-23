@@ -3,8 +3,8 @@ define([], function () {
     /*
         simple practical and flexible "finite state machine" implementation
 
-        example config object: (see gallery/lightbox.js for a working example)
-        var config = {
+        example options object: (see gallery/lightbox.js for a working example)
+        var options = {
             initial: 'closed', // the initial state of the fsm
             context: element, // event functions are run in the context of this element
             states: {
@@ -33,12 +33,12 @@ define([], function () {
         };
     */
 
-    function FiniteStateMachine(config) {
-        this.context = config.context || undefined;
-        this.states = config.states || {};
-        this.context.state = config.initial || '';
-        this.debug = config.debug || false;
-        this.onChangeState = config.onChangeState.bind(this.context) || function () {};
+    function FiniteStateMachine(options) {
+        this.context = options.context || undefined;
+        this.states = options.states || {};
+        this.context.state = options.initial || '';
+        this.debug = options.debug || false;
+        this.onChangeState = options.onChangeState.bind(this.context) || function () {};
     }
 
     FiniteStateMachine.prototype.log = function () {

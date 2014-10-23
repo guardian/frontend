@@ -9,6 +9,7 @@ define([
     'lodash/objects/assign',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/twitter',
@@ -20,6 +21,7 @@ define([
     assign,
     $,
     ajax,
+    config,
     detect,
     mediator,
     twitter,
@@ -33,7 +35,7 @@ define([
             switches         : {Object}              Global switches object
             manipulationType : {String}              Which manipulation method used to insert content into DOM
     */
-    function Autoupdate(config) {
+    function Autoupdate(opts) {
 
         var options = assign({
             'activeClass': 'is-active',
@@ -41,7 +43,7 @@ define([
             'manipulationType' : 'html',
             'backoff': 1, // 1 = no backoff
             'backoffMax': 1000 * 60 * 20 // 20 mins
-        }, config);
+        }, opts);
 
         this.unreadBlocks = 0;
         this.notification = '<';
@@ -172,7 +174,7 @@ define([
         };
 
         this.init = function() {
-            if (options.switches && options.switches.autoRefresh !== true) {
+            if (config.switches && config.switches.autoRefresh !== true) {
                 return;
             }
 
