@@ -38,10 +38,6 @@
     .fc-item__meta {
         color: #ffffff;
     }
-
-    .fc-sublink__title:before {
-        border-color: $c-headline;
-    }
 }
 
 .tone-podcast--sublink {
@@ -49,9 +45,9 @@
         color: $c-podcastDefault;
     }
 
-    @include sublink-style(editorial, feature, live, media) {
+    @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $c-podcastBackground;
+            color: $c-neutral1;
         }
     }
 }

@@ -42,7 +42,7 @@
         color: $c-editorialDefault;
     }
 
-    @include sublink-style(editorial, feature, live, media, review) {
+    @include sublink-style(editorial, feature, live, media, podcast, review) {
         .fc-sublink__kicker {
             color: $c-editorialAccent;
         }
