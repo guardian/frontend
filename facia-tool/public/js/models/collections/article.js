@@ -497,19 +497,19 @@ define([
                 window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
             } else {
                 this.state.isLoaded(true);
-                this.sparkline();
+                this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
+                this.state.hasMainVideo(getMainMediaType(opts) === 'video');
+                this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
+                this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
+
+                this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
+
+                populateObservables(this.meta, this.metaDefaults);
+
+                this.updateEditorsDisplay();
+
+                this.loadSparkline();
             }
-
-            this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
-            this.state.hasMainVideo(getMainMediaType(opts) === 'video');
-            this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
-            this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
-
-            this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
-
-            populateObservables(this.meta, this.metaDefaults);
-
-            this.updateEditorsDisplay();
         };
 
         Article.prototype.updateEditorsDisplay = function() {
@@ -523,19 +523,17 @@ define([
             this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
         };
 
-        Article.prototype.sparkline = function() {
-            var path = urlAbsPath(this.props.webUrl());
+        Article.prototype.loadSparkline = function() {
+            var self = this;
 
             if (vars.model.switches()['facia-tool-sparklines']) {
-                this.state.sparkUrl(
-                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
-                );
-            }
-        };
-
-        Article.prototype.refreshSparkline = function() {
-            if (vars.model.switches()['facia-tool-sparklines']) {
-                this.state.sparkUrl.valueHasMutated();
+                setTimeout(function() {
+                    if (self.state.sparkUrl()) {
+                        self.state.sparkUrl.valueHasMutated();
+                    } else {
+                        self.state.sparkUrl(vars.sparksBase + urlAbsPath(self.props.webUrl()) + (self.frontPublicationDate ? '&markers=' + (self.frontPublicationDate/1000) + ':46C430' : ''));
+                    }
+                }, Math.floor(Math.random() * 5000));
             }
         };
 

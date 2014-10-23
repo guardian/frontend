@@ -99,10 +99,6 @@
 
 .submeta {
     border-top: 1px dotted $c-neutral4;
-
-    .social {
-        float: left;
-    }
 }
 
 .content--article,
@@ -110,9 +106,16 @@
 .content--gallery,
 .content--media,
 .content--image {
-    .submeta--top {
+    .submeta__head {
         @include mq($until: leftCol) {
             display: none;
+        }
+    }
+    .social {
+        padding-top: $gs-baseline / 2;
+
+        @include mq($until: leftCol) {
+            padding-bottom: $gs-baseline / 2;
         }
     }
 }

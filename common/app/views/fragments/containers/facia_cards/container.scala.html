@@ -5,6 +5,7 @@
 @import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
 @import model.FaciaComponentName
 @import dfp.DfpAgent
+@import common.Localisation
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
@@ -20,13 +21,16 @@
              data-component="@FaciaComponentName(config, collection)">
         <div class="facia-container__inner">
             @containerHeader(collection, frontProperties, containerIndex)
-            <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more">
-                @for(sliceWithCards <- containerLayout.slices) {
-                    @slice(sliceWithCards, containerIndex)
-                }
+            @title.map { title =>
+                <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
+                data-title="@Html(Localisation(title))">
+                    @for(sliceWithCards <- containerLayout.slices) {
+                        @slice(sliceWithCards, containerIndex)
+                    }
 
-                @show_more(containerLayout.remainingCards, containerIndex)
-            </div>
+                    @show_more(containerLayout.remainingCards, containerIndex)
+                </div>
+            }
         </div>
     </section>
 }

@@ -7,7 +7,7 @@ import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import conf.Configuration
 
-abstract class ElementProfile {
+trait ElementProfile {
 
   def width: Option[Int]
   def height: Option[Int]

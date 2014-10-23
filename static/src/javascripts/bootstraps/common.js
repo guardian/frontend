@@ -34,11 +34,10 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/breaking-news',
-    'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/popular',
     'common/modules/onward/onward-content',
+    'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
@@ -85,11 +84,10 @@ define([
     Profile,
     Search,
     breakingNews,
-    GeoMostPopular,
     history,
     MoreTags,
-    Popular,
     Onward,
+    Popular,
     Related,
     TonalComponent,
     releaseMessage,
@@ -182,14 +180,6 @@ define([
 
             initClickstream: function () {
                 new Clickstream({filter: ['a', 'button']});
-            },
-
-            initRightHandComponent: function () {
-                if (config.page.contentType === 'Article' &&
-                    detect.getBreakpoint() !== 'mobile' &&
-                    parseInt(config.page.wordCount, 10) > 500) {
-                    new GeoMostPopular({});
-                }
             },
 
             logLiveStats: function () {
@@ -453,7 +443,6 @@ define([
             modules.transcludePopular();
             modules.transcludeRelated();
             modules.transcludeOnwardContent();
-            modules.initRightHandComponent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
 
