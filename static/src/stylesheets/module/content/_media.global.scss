@@ -23,19 +23,6 @@
         margin-bottom: 0;
     }
 
-    .social-icon-wrapper {
-        opacity: .8;
-
-        &:hover,
-        &:focus {
-            opacity: 1;
-
-            .social-icon {
-                border-color: #ffffff;
-            }
-        }
-    }
-
     .social-icon {
         overflow: visible; // opacity cuts borders off on chrome otherwise
     }
