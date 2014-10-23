@@ -8,15 +8,12 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 ```html_example
 <div class="pagination u-cf">
-    <div class="pagination__legend hide-on-mobile-inline">
+    <span class="pagination__legend hide-on-mobile-inline">
         About 12,345 results for Tag Name
-    </div>
-    <ol class="pagination__links u-unstyled">
-        <li class="pagination__item pagination__item--next">
+    </span>
+    <ol class="pagination__list u-unstyled">
+        <li class="pagination__item">
             <a class="pagination__item-inner pagination__action" rel="next" href="#"><span class="u-h">N</span></a>
-        </li>
-        <li class="pagination__item pagination__item--prev">
-            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
         </li>
         <li class="pagination__item">
             <a class="pagination__action" href="#">3</a>
@@ -25,7 +22,10 @@ The user needs to view a subset of sorted data that is not easily displayed on o
             <a class="pagination__action" href="#">4</a>
         </li>
         <li class="pagination__item">
-            <span class="pagination__action pagination__action--current">5</span>
+            <span class="pagination__action is-active">5</span>
+        </li>
+        <li class="pagination__item">
+            <span class="pagination__text">&#8230;</span>
         </li>
         <li class="pagination__item">
             <a class="pagination__action" href="#">6</a>
@@ -33,16 +33,28 @@ The user needs to view a subset of sorted data that is not easily displayed on o
         <li class="pagination__item">
             <a class="pagination__action" href="#">7</a>
         </li>
+        <li class="pagination__item">
+            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
+        </li>
     </ol>
 </div>
 ```
 */
 
+$pagination-item-size: $gs-baseline * 2;
+$pagination-height:    $gs-baseline * 4;
+$pagination-gutter:    $gs-baseline;
+$text-size:            14px;
+
 .pagination {
-    padding-top: $gs-baseline / 2;
-    margin: $gs-baseline 0;
-    text-align: center;
-    @include fs-textSans(4);
+    width: auto;
+    text-align: right;
+    @include f-textSans;
+    @include font-size($text-size, 48px);
+}
+
+.pagination--full {
+    width: 100%;
     border-top: 1px solid $c-neutral5;
 
     @include mq(leftCol) {
@@ -59,8 +71,10 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     }
 }
 
-.pagination__links {
+.pagination__list {
     width: 100%;
+    margin: $pagination-gutter 0;
+    line-height: $pagination-item-size;
 
     @include mq(tablet) {
         float: right;
@@ -68,54 +82,64 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     }
 }
 
-.pagination__item {
-    color: $c-neutral3;
-    display: inline-block;
-}
-
-.pagination__item--next,
-.pagination__item--last {
-    float: right;
-    text-align: right;
-}
-
-.pagination__item--prev,
-.pagination__item--first {
-    float: left;
-    text-align: left;
-}
-
-.pagination__item-inner:after {
-    @include fs-headline(5);
-    line-height: 20px;
-    .pagination__item--first & {
-        content: '«';
-    }
-    .pagination__item--last & {
-        content: '»';
-    }
-    .pagination__item--next & {
-        content: '›';
-    }
-    .pagination__item--prev & {
-        content: '‹';
-    }
-}
-.pagination__item--first {
-    margin-right: $gs-gutter/2;
-}
-.pagination__item--last {
-    margin-left: $gs-gutter/2;
-}
-
-.pagination__action {
-    padding: 0 $gs-gutter / 5;
-}
-
-.pagination__action--current {
-    color: $c-neutral2-contrasted;
-}
-
 .pagination__legend {
     float: left;
+}
+
+.pagination__item {
+    display: inline-block;
+    text-align: center;
+}
+
+.discussion__toolbar {
+    .pagination {
+        @include mq($until: tablet) {
+            clear: both;
+
+            .pagination__item--pointer {
+                &:first-child {
+                    float: left;
+                }
+                &:last-child {
+                    float: right;
+                }
+            }
+        }
+        @include mq(tablet) {
+            text-align: right;
+        }
+    }
+}
+
+/**
+ *  1. to align font to the middle. Some numbers are in the middle by default (1, 4)
+ *     but most of them need one 1px indent so it looks nicer.
+ */
+.pagination__action {
+    @include font-size($text-size, $pagination-item-size);
+    margin: 0;
+    color: $c-neutral2;
+    border-color: transparent;
+
+    &.is-active {
+        color: #ffffff;
+        background-color: $c-neutral2;
+        border-color: $c-neutral2;
+    }
+}
+
+.pagination__action--static {
+    margin: 0;
+    text-align: center;
+
+    .i {
+        width: 6px;
+        height: $text-size;
+        margin: 0;
+        line-height: $text-size;
+        vertical-align: text-bottom;
+    }
+}
+.pagination__text {
+    color: $c-neutral2;
 }
