@@ -16,7 +16,7 @@ define([
     function OnwardContent(context) {
         register.begin('series-content');
         this.context = context;
-        this.endpoint = '/series/' + this.config.page.seriesId + '.json?shortUrl=' + encodeURIComponent(this.config.page.shortUrl);
+        this.endpoint = '/series/' + config.page.seriesId + '.json?shortUrl=' + encodeURIComponent(config.page.shortUrl);
         this.fetch(this.context, 'html');
     }
 

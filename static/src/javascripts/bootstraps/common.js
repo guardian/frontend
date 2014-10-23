@@ -186,7 +186,7 @@ define([
             },
 
             loadAnalytics: function () {
-                new Omniture().go();
+                new Omniture(window.s).go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
