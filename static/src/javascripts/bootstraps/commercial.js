@@ -45,7 +45,7 @@ define([
                             slot = qwery('[data-name="' + data[1] + '"]').shift();
                         if (commercialComponent && slot) {
                             bonzo(slot).removeClass('ad-slot--dfp');
-                            loader = new CommercialLoader({ config: config });
+                            loader = new CommercialLoader();
                             postLoadEvents = {};
                             postLoadEvents[commercialComponent[1]] = function () {
                                 slot.style.display = 'block';

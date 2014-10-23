@@ -1,9 +1,11 @@
 define([
+    'common/utils/config',
     'common/utils/detect',
     'common/utils/preferences',
     'common/utils/template',
     'common/modules/ui/message'
 ], function (
+    config,
     detect,
     preferences,
     template,
@@ -57,7 +59,7 @@ define([
                     );
                 new Message(type + '-release', { pinOnHide: true }).show(msg);
             },
-            init: function (config) {
+            init: function () {
                 if (
                     detect.getBreakpoint() !== 'mobile' &&
                     !preferences.hasOptedIntoResponsive() &&

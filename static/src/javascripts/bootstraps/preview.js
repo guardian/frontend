@@ -10,7 +10,7 @@ define([
 
     var modules = {
         checkFreshness: function () {
-            new FreshnessCheck(config).check();
+            new FreshnessCheck().check();
         }
     },
 
