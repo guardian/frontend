@@ -169,10 +169,10 @@ define([
             }
         },
         callbacks = {
-            '300,251': function (e, $adSlot) {
+            '300,251': function (event, $adSlot) {
                 new Sticky($adSlot.parent()[0], { top: 12 }).init();
             },
-            '300,1': function (e, $adSlot) {
+            '300,1': function (event, $adSlot) {
                 $adSlot.addClass('u-h');
             },
             '300,1050': function () {
@@ -180,6 +180,12 @@ define([
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
                     bonzo(geoMostPopular.elem).remove();
                 });
+            },
+            '1,1': function (event) {
+                if (event.slot.getOutOfPage()) {
+                    // add page skin class to body, to be sure
+                    bonzo(document.body).addClass('has-page-skin');
+                }
             }
         },
 
@@ -411,8 +417,8 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId()),
-                size  = event.size.join(',');
+            var size,
+                $slot = $('#' + event.slot.getSlotId().getDomId());
 
             // remove any placeholder ad content
             $('.ad-slot__content--placeholder', $slot).remove();
@@ -422,10 +428,12 @@ define([
             } else {
                 checkForBreakout($slot);
                 addLabel($slot);
+
+                // is there a callback for this size
+                size = event.size.join(',');
+                callbacks[size] && callbacks[size](event, $slot);
             }
 
-            // is there a callback for this size
-            callbacks[size] && callbacks[size](event, $slot);
         },
         addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
