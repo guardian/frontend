@@ -2,20 +2,23 @@ define([
     'common/utils/$',
     'bonzo',
     'qwery',
+    'lodash/collections/forEach',
     'common/utils/mediator',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'common/utils/template',
+    'text!common/views/discussion/comment-count.html'
 ], function (
     $,
     bonzo,
     qwery,
+    forEach,
     mediator,
-    ajax
+    ajax,
+    template,
+    commentCountTemplate
 ) {
     var attributeName = 'data-discussion-id',
-        countUrl = '/discussion/comment-counts.json?shortUrls=',
-        tpl = '<span class="trail__count trail__count--commentcount tone-colour">';
-        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>[COUNT]';
-        tpl += '<span class="u-h"> [LABEL]</span></a></span>';
+        countUrl = '/discussion/comment-counts.json?shortUrls=';
 
     function getContentIds() {
         var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
@@ -36,32 +39,34 @@ define([
 
     function renderCounts(counts) {
         counts.forEach(function(c){
-            var node = document.body.querySelector('[data-discussion-id="' + c.id +'"]');
-            if (node) {
-                if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
+            forEach(qwery('[data-discussion-id="' + c.id +'"]'), function (node) {
+                var $node = bonzo(node),
+                    commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                    $container,
+                    meta;
+
+                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
 
-                var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
-
-                if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
+                if ($node.attr('data-discussion-inline-upgrade') === 'true') {
                     $('.js-item__comment-count', node).append(c.count + '');
                     $('.js-item__comment-or-comments', node).append(commentOrComments);
                     $('.js-item__inline-comment-template', node).show('inline');
                 } else {
-                    var url = getContentUrl(node),
-                        data = tpl.replace('[URL]', url);
-
-                    data = data.replace('[LABEL]', commentOrComments);
-
                     // put in trail__meta, if exists
-                    var meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node),
-                        $node = meta.length ? bonzo(meta) : bonzo(node);
+                    meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node);
+                    $container = meta.length ? bonzo(meta) : $node;
 
-                    $node.append(data.replace('[COUNT]', c.count));
-                    node.removeAttribute(attributeName);
+                    $container.append(template(commentCountTemplate, {
+                        url: getContentUrl(node),
+                        count: c.count,
+                        label: commentOrComments
+                    }));
+
+                    $node.removeAttr(attributeName);
                 }
-            }
+            });
         });
     }
 
@@ -96,5 +101,4 @@ define([
         getCommentCounts: getCommentCounts,
         getContentIds: getContentIds
     };
-
 });

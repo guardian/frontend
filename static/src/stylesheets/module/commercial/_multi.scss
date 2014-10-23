@@ -8,6 +8,12 @@ Multi component (AKA Frankenponent)
         padding: 0 $gs-gutter/4 $gs-baseline/2;
     }
     
+    .container__header {
+        background-color: transparent;
+        .commercial__title {
+            color: inherit;
+        }
+    }
     .commercial__multi-header {
         padding: $gs-baseline/6 $gs-gutter/4;
         margin: 0 (-$gs-gutter/4);
@@ -32,7 +38,44 @@ Multi component (AKA Frankenponent)
         }
     }
     .lineitem {
-        width: 25%;
+        width: auto;
+        float: none;
+
+        &:nth-child(n+2) {
+            display: none;
+        }
+        
+        @include mq(mobileLandscape) {
+            float: left;
+            width: 50%;
+            &:nth-child(n+2) {
+                display: block;
+            }
+            
+            &:nth-child(n+3) {
+                display: none;
+            }
+            .lineitem__title,
+            .lineitem__offer {
+                min-height: $gs-baseline*5;
+            }
+        }
+        @include mq(tablet) {
+            width: percentage(1/3);
+            &:nth-child(n+3) {
+                display: block;
+            }
+
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+        @include mq(desktop) {
+            &:nth-child(n+4) {
+                display: block;
+            }
+            width: 25%;
+        }
     }
     .lineitem__image-crop {
         margin: 0 (-$gs-gutter/4);
@@ -51,9 +94,4 @@ Multi component (AKA Frankenponent)
             height: 100%;
         }
     }
-    .lineitem__title,
-    .lineitem__offer {
-        min-height: $gs-baseline*5;
-    }
 }
-

@@ -1,10 +1,19 @@
 .tone-feature--item {
+    $c-headline: #ffffff;
+
     @extend %tone-has-background;
     background-color: $c-featureDefault;
 
     &,
     .fc-sublink__title {
-        color: #ffffff;
+        color: $c-headline;
+    }
+
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-headline, $c-featureDefault, 80%);
+        }
     }
 
     .fc-item__content,
@@ -20,11 +29,11 @@
     }
 
     .fc-item__kicker:after {
-        color: fade-out(#ffffff, .8);
+        color: fade-out($c-headline, .8);
     }
 
     .fc-item__standfirst {
-        color: fade-out(#ffffff, .2);
+        color: fade-out($c-headline, .2);
     }
 
     .fc-item__title .i {
@@ -35,7 +44,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: fade-out(#ffffff, .8);
+        border-color: fade-out($c-headline, .8);
     }
 }
 

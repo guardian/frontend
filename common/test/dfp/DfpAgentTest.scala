@@ -6,7 +6,7 @@ import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Tag
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
-import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
+import com.gu.contentapi.client.model.{ Tag => ApiTag }
 
 
 class DfpAgentTest extends FlatSpec with Matchers {

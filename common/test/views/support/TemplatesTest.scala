@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
 import xml.XML

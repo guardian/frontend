@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.Asset
+import com.gu.contentapi.client.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
 import scala.util.matching.Regex

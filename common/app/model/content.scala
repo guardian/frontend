@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.openplatform.contentapi.model.{
+import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
 }
 import common.{LinkCounts, LinkTo, Reference}
@@ -21,7 +21,7 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
-class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
+class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
 
@@ -190,9 +190,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def elements: Seq[Element] = delegate.elements
-      .map(imageElement ++: _)
-      .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-      .getOrElse(Nil)
+    .map(imageElement ++: _)
+    .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
+    .getOrElse(Nil)
 
   private lazy val metaDataDefaults = MetadataDefaults(this)
   private def metaDataDefault(key: String) = metaDataDefaults.getOrElse(key, false)
@@ -368,8 +368,6 @@ object SnapApiContent {
     apiUrl                      = "",
     fields                      = None,
     tags                        = Nil,
-    factboxes                   = Nil,
-    mediaAssets                 = Nil,
     elements                    = Option(Nil),
     references                  = Nil,
     isExpired                   = None
@@ -649,4 +647,7 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   )
 }
 
-case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)
+case class ApiContentWithMeta(
+  delegate: ApiContent,
+  supporting: List[Content] = Nil,
+  metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)

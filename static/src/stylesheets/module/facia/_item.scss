@@ -58,7 +58,7 @@
         }
         .item__cta--gallery,
         .item__cta--video {
-            background-color: $c-mediaAccent;
+            background-color: $c-mediaDefault;
         }
     }
     &:active {
@@ -130,15 +130,20 @@
     background-color: $c-neutral8;
 
     .linkslist__action:visited,
+    .fc-item__link:visited,
     .item__link:visited,
     .item__link:visited .item__title,
+    .fc-item__standfirst,
     .item__standfirst,
     .fromage__standfirst {
         color: $c-neutral2-contrasted;
     }
+    .fc-item__header,
     .item__title,
     .item__standfirst,
+    .fc-item__standfirst,
     .fromage__standfirst,
+    .fc-item--list-compact,
     .linkslist__action {
         @include f-headlineSans;
     }
@@ -363,7 +368,7 @@ $cta-icon-gap: 2px;
 .item__cta--video {
     width: 36px;
     height: 36px;
-    background-color: $c-mediaAccent;
+    background-color: $c-mediaDefault;
 }
 
 .item__cta__icon {

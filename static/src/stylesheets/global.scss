@@ -53,6 +53,8 @@
 @import 'module/content/_gallery';
 @import 'module/content/_gallery-lightbox';
 
+@import 'module/_crosswords';
+
 @import 'module/onward/_right-hand-most-popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
@@ -120,7 +122,7 @@
 @import 'module/facia/_tag-meta';
 
 // card additions
-@import 'module/facia-cards/_tones-images';
+@import 'module/facia-cards/_item-icons';
 
 // new FACIA CARDS code
 @import 'module/facia-cards/_l-list';
@@ -144,7 +146,7 @@
 
 @import 'icons/_global-icons-sprite';
 @import 'icons/_global-icons-svg';
-@import 'theme/_icons';
+@import 'module/icons';
 
 
 /* ==========================================================================

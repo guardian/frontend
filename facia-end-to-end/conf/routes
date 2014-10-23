@@ -18,7 +18,7 @@ GET           /logout                    controllers.OAuthLoginController.logout
 GET           /humans.txt                controllers.Assets.at(path="/public", file="humans.txt")
 GET           /assets/javascripts/*file  dev.DevAssetsController.atJavascripts(file)
 GET           /assets/stylesheets/*file  dev.DevAssetsController.atStylesheets(file)
-GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/*file              controllers.UncachedAssets.at(file)
 GET           /assets/fonts/*path        dev.DevAssetsController.atFonts(path)
 
 ##################### NOTE ############################
@@ -79,6 +79,8 @@ GET        /collection/*id/rss                                         controlle
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
 # Editionalised pages
+GET        /*path/front-index.json                                     controllers.FaciaController.renderFrontIndex(path)
+GET        /*path/collections/:id/:version.json                        controllers.FaciaController.renderFrontCollection(path, id, version)
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)
