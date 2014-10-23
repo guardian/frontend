@@ -45,7 +45,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         article.find(".fc-item__standfirst").size should be > 0
         article.findFirst("time").getAttribute("data-timestamp") should not be empty
 
-        findFirst("ul").find(".fc-item__title").size should should be > 0
+        findFirst("ul").find(".fc-item__title").size should be > 0
       }
     }
 
