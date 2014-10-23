@@ -22,7 +22,7 @@ define([
 
         this.addShowMoreButton = function () {
             $button = $.create(template(showMoreBtn, {
-                type: this.getContainerType()
+                type: this.getContainerTitle()
             }));
 
             if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
@@ -37,8 +37,8 @@ define([
             }
         };
 
-        this.getContainerType = function () {
-            return $container.parent().parent().data('link-name').replace(/-/g, ' ');
+        this.getContainerTitle = function () {
+            return $container.data('title') || '';
         };
 
         function showMore() {

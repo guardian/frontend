@@ -20,14 +20,14 @@ define([
 
         var container,
             $container,
-            containerId = 'pictures-and-video',
+            containerId = 'US news',
             sut;
 
         beforeEach(function () {
             container = bonzo.create(
-                    '<section class="container" data-link-name="' + containerId + '">' +
+                    '<section class="container">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide">' +
+                            '<div class="container__body js-hide" data-title="' + containerId + '">' +
                                 '<div class="js-hide"></div>' +
                             '</div>' +
                         '</div>' +
@@ -43,20 +43,26 @@ define([
         });
 
         it("should get section (container) id", function() {
-            expect(sut.getContainerType()).toEqual("pictures and video");
+            expect(sut.getContainerTitle()).toEqual("US news");
+        });
+
+        it("should return empty string if there is no data attribute", function() {
+            $(".container__body", $container).removeAttr("data-title");
+
+            expect(sut.getContainerTitle()).toEqual("");
         });
 
         it("should add button to the container", function() {
-            spyOn(sut, "getContainerType").and.callThrough();
+            spyOn(sut, "getContainerTitle").and.callThrough();
 
             sut.addShowMoreButton();
 
-            expect(sut.getContainerType).toHaveBeenCalled();
+            expect(sut.getContainerTitle).toHaveBeenCalled();
             expect($(".button", $container).length > 0).toBeTruthy;
-            expect($container.text()
+            expect($(".button", $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                .toEqual("More pictures and video");
+                .toEqual("More US news");
         });
 
         it("should hide button after click", function() {
