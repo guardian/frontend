@@ -12,7 +12,7 @@
         class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-        <header class="content__head tonal__head">
+        <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
@@ -34,7 +34,9 @@
 
                         <div class="content__meta-container content__meta-container--liveblog u-cf">
                             <div class="media__img meta__image">
-                                @fragments.meta.bylineImage(article)
+                                @if(article.showBylinePic) {
+                                    @fragments.meta.bylineImage(article)
+                                }
                             </div>
                             <div class="media__body meta__body">
                                 @fragments.meta.byline(article.byline, article)
