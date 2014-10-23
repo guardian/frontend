@@ -306,6 +306,13 @@
         color: $c-neutral2-contrasted;
     }
 }
+.ad-slot--fobadge.ad-slot--im {
+    .ad-slot--paid-for-badge__inner {
+        padding: $gs-baseline / 2 0 $gs-baseline;
+        border-top: 1px solid $c-neutral3;
+        border-bottom: 1px dotted $c-neutral3;
+    }
+ }
 .ad-slot--paid-for-badge--article {
     border-bottom: 1px dotted $c-neutral5;
     min-height: 135px;
