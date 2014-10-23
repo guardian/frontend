@@ -16,25 +16,8 @@
 
                 @fragments.contentMeta(image)
 
-                <div class="submeta-container submeta-container--break-at-wide">
-                    @if(image.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <div class="submeta" data-link-name="keywords">
-                            <h2 class="submeta__head">Topics</h2>
-                            @if(image.isCartoon) {
-                                @fragments.keywordList(image.keywords)
-                            } else {
-                                @fragments.keywordList(image.keywords, tone = Some("media"))
-                            }
-                        </div>
-                    }
-                    <div class="submeta" data-component="share">
-                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                        @if(image.isCartoon) {
-                            @fragments.social(image)
-                        } else {
-                            @fragments.social(image, iconModifier = "white")
-                        }
-                    </div>
+                @fragments.submeta(image)
+
                 </div>
             </div>
 

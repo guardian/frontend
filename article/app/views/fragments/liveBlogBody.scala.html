@@ -84,14 +84,7 @@
                             </div>
                         </div>
 
-                        <div class="submeta-container">
-                            <div class="submeta" data-link-name="keywords">
-                                @fragments.keywordList(article.keywords, tone = Some(article.visualTone))
-                            </div>
-                            <div class="submeta" data-component="share">
-                                @fragments.social(article)
-                            </div>
-                        </div>
+                        @fragments.submeta(article)
 
                         <div class="after-article js-after-article"></div>
 
