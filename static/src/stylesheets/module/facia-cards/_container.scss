@@ -36,6 +36,20 @@ $header-image-size-desktop: 120px;
 .fc-container__header {
     position: relative;
 
+    .fc-container[data-sponsorship] & {
+        @include mq(tablet, leftCol) {
+            float: left;
+        }
+        @include mq(tablet, desktop) {
+            width: 50%;
+            padding-right: $gs-gutter / 2;
+        }
+        @include mq(desktop, leftCol) {
+            width: 66%;
+            padding-right: $gs-gutter / 2;
+        }
+    }
+
     @include mq(leftCol) {
         float: left;
         width: $left-column;
