@@ -89,36 +89,29 @@ category: Common
 }
 
 .social-icon--facebook {
-    background-color: #3067a3;
+    background-color: $social-facebook;
     &:hover {
-        background-color: darken(#3067a3, 10%);
+        background-color: darken($social-facebook, 10%);
     }
 }
 
 .social-icon--gplus {
-    background-color: #e15440;
+    background-color: $social-gplus;
     &:hover {
-        background-color: darken(#e15440, 10%);
+        background-color: darken($social-gplus, 10%);
     }
 }
 
 .social-icon--twitter {
-    background-color: #03b3ee;
+    background-color: $social-twitter;
     &:hover {
-        background-color: darken(#03b3ee, 10%);
-    }
-}
-
-.social-icon--whatsapp {
-    background-color: #5cbe4a;
-    &:hover {
-        background-color: darken(#5cbe4a, 10%);
+        background-color: darken($social-twitter, 10%);
     }
 }
 
 .social-icon--email {
-    background-color: #767676;
+    background-color: $social-email;
     &:hover {
-        background-color: darken(#767676, 10%);
+        background-color: darken($social-email, 10%);
     }
 }
