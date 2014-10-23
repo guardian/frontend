@@ -62,8 +62,10 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__top-border {
-    border-top: 1px solid colour(neutral-4);
-    margin-top: -1px;
+    @include mq(tablet) {
+        border-top: 1px solid $c-newsAccent;
+        margin-top: -1px;
+    }
 }
 
 .discussion--lowered {
@@ -94,11 +96,13 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__heading {
     margin-bottom: 0;
-    padding-top: $gs-baseline / 3;
+    padding-top: 0;
+    border-top: 1px solid $c-newsAccent;
 
     @include mq(tablet) {
-        padding-top: $gs-baseline / 2;
+        border-top: 0;
     }
+
     @include mq(leftCol) {
         position: absolute;
         margin-left: -1 * ($left-column + $gs-gutter);
