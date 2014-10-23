@@ -41,21 +41,21 @@ define([
             });
     }
 
-    function sendEvent(config) {
+    function sendEvent() {
         require('ophan/ng', function (ophan) {
             ophan.record({
                 register: register,
-                abTestRegister: ab.getAbLoggableObject(config)
+                abTestRegister: ab.getAbLoggableObject()
             });
         });
     }
 
-    function initialise(config) {
+    function initialise() {
         mediator.on('register:begin', begin);
         mediator.on('register:end', end);
         mediator.on('register:error', error);
 
-        window.setTimeout(sendEvent.bind(config), 5000);
+        window.setTimeout(sendEvent.bind(), 5000);
     }
 
     return {

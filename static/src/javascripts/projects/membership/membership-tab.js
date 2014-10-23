@@ -1,13 +1,13 @@
 define([
-    'common/utils/$',
     'bean',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/modules/component',
     'membership/payment-form'
 ], function (
-    $,
     bean,
+    $,
     ajax,
     config,
     Component,

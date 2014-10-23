@@ -1,10 +1,10 @@
 define([
-    'common/utils/config',
     'common/utils/$',
+    'common/utils/config',
     'common/modules/component'
 ], function (
-    config,
     $,
+    config,
     Component
 ) {
     function init() {
