@@ -51,9 +51,7 @@
 
             .has-flex-wrap & {
                 @include mq(tablet) {
-                    .has-flex-wrap & {
-                        @include flex-basis(100% / $column);
-                    }
+                    @include flex-basis(100% / $column);
                 }
             }
         }
