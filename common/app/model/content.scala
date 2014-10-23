@@ -25,6 +25,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val delegate: ApiContent = apiContent.delegate
 
+  lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
+  lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
+  lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
+
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
   lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
@@ -383,9 +387,9 @@ class Snap(snapId: String,
            snapElements: List[ApiElement] = Nil
             ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
-  val snapType: Option[String] = snapMeta.flatMap(_.snapType)
-  val snapCss: Option[String] = snapMeta.flatMap(_.snapCss)
-  val snapUri: Option[String] = snapMeta.flatMap(_.snapUri)
+  override lazy val snapType: Option[String] = snapMeta.flatMap(_.snapType)
+  override lazy val snapCss: Option[String] = snapMeta.flatMap(_.snapCss)
+  override lazy val snapUri: Option[String] = snapMeta.flatMap(_.snapUri)
 
   lazy val snapUrl: Option[String] = snapMeta.flatMap(_.href)
 
