@@ -1,16 +1,14 @@
 define([
-    'bean',
-    'lodash/functions/throttle',
     'common/utils/$',
-    'common/utils/config'
+    'lodash/functions/throttle',
+    'bean'
 ], function (
-    bean,
-    throttle,
     $,
-    config
+    throttle,
+    bean
 ) {
 
-    var Search = function () {
+    var Search = function (config) {
 
         var searchLoader,
             enabled,

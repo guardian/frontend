@@ -45,24 +45,23 @@ define([
      * @param {Object=} options
      */
     var Loader = function (options) {
-        var opts = options || {},
-            page = config.page;
+        var page = (options.config && options.config.page) || config.page || {};
 
         this.pageId             = page.pageId;
         this.keywordIds         = page.keywordIds || '';
         this.section            = page.section;
         this.host               = page.ajaxUrl + '/commercial/';
         this.isbn               = page.isbn || '';
-        this.oastoken           = opts.oastoken || '';
-        this.jobs               = opts.jobIds || '';
-        this.adType             = opts.adType || 'desktop';
-        this.multiComponents    = map(opts.components || [], function (c) { return 'c=' + c; }).join('&');
-        this.capi               = map(opts.capi || [], function (t) {return 't=' + t;}).join('&');
-        this.capiTitle          = opts.capiTitle || '';
-        this.capiLinkUrl        = opts.capiLinkUrl || '';
-        this.capiAboutLinkUrl   = opts.capiAboutLinkUrl || '';
-        this.capiKeywords       = map(opts.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
-        this.logo               = opts.logo || '';
+        this.oastoken           = options.oastoken || '';
+        this.jobs               = options.jobIds || '';
+        this.adType             = options.adType || 'desktop';
+        this.multiComponents    = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
+        this.capi               = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
+        this.capiTitle          = options.capiTitle || '';
+        this.capiLinkUrl        = options.capiLinkUrl || '';
+        this.capiAboutLinkUrl   = options.capiAboutLinkUrl || '';
+        this.capiKeywords       = map(options.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
+        this.logo               = options.logo || '';
         this.components         = {
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',

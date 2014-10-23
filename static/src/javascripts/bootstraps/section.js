@@ -7,15 +7,15 @@ define([
 ) {
     var modules = {
 
-            showPopular: function () {
-                popular.render();
+            showPopular: function (config) {
+                popular.render(config);
             }
 
         },
-        ready = function () {
-            modules.showPopular();
+        ready = function (config) {
+            modules.showPopular(config);
 
-            mediator.emit('page:section:ready');
+            mediator.emit('page:section:ready', config);
         };
 
     return {

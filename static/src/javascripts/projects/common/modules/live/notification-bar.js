@@ -1,13 +1,12 @@
 define([
     'common/utils/mediator',
-    'common/modules/component'
-], function (
-    mediator,
-    component
-) {
+    'common/modules/component',
+    'lodash/objects/assign'
+], function (mediator, component, extend) {
 
-    function NotificationBar(options) {
-        this.attachTo = options.attachTo;
+    function NotificationBar(config) {
+        this.config = extend(config, this.config);
+        this.attachTo = this.config.attachTo;
         this.mediator = mediator;
     }
 

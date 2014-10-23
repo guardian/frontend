@@ -1,16 +1,14 @@
 define([
-    'lodash/collections/map',
-    'common/utils/config'
+    'lodash/collections/map'
 ], function (
-    map,
-    config
+    map
 ) {
 
     function format(keyword) {
         return keyword.replace(/[+\s]+/g, '-').toLowerCase();
     }
 
-    function get() {
+    function get(config) {
         return map(config.keywords.split(','), function (keyword) {
             return 'k=' + encodeURIComponent(format(keyword));
         }).join('&');

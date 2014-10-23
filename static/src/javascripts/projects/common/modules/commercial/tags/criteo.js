@@ -8,20 +8,22 @@ define([
     config,
     cookies,
     urlUtils
-) {
+    ) {
 
     var netId = '1476',
         cookieName = 'cto2_guardian',
         criteoUrl = '//rtax.criteo.com/delivery/rta/rta.js',
         varName = 'crtg_content';
 
-    function getSegments() {
+    function getSegments(c) {
+        c = c || config;
         var cookieValue = decodeURIComponent(cookies.get(cookieName));
-        return (config.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
+        return (c.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
     }
 
-    function load() {
-        if (config.switches.criteo) {
+    function load(c) {
+        c = c || config;
+        if (c.switches.criteo) {
             var query = urlUtils.constructQuery({
                 netid: netId,
                 cookieName: cookieName,
