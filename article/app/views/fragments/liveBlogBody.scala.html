@@ -34,7 +34,7 @@
 
                         <div class="content__meta-container content__meta-container--liveblog u-cf">
                             <div class="media__img meta__image">
-                                @if(article.showBylinePic) {
+                                @if(article.contributors.length == 1) {
                                     @fragments.meta.bylineImage(article)
                                 }
                             </div>
