@@ -28,9 +28,8 @@ define([
             'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
         },
         section,
-        init = function (opts) {
-            var c = assign(config, opts);
-            section = sectionPlacements[c.page.section] ? c.page.section : 'default';
+        init = function () {
+            section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
         load = once(function () {
             if (config.switches.audienceScienceGateway) {
