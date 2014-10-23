@@ -28,6 +28,7 @@ define([
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
+    'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky',
     'text!common/views/commercial/ad-slot.html'
 ], function (
@@ -59,6 +60,7 @@ define([
     criteo,
     userAdTargeting,
     ab,
+    geoMostPopular,
     Sticky,
     adSlotTpl
 ) {
@@ -99,7 +101,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile: '300,250|300,251|300,600'
+                    mobile: '300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
                 }
             },
             'right-small': {
@@ -172,6 +174,12 @@ define([
             },
             '300,1': function (e, $adSlot) {
                 $adSlot.addClass('u-h');
+            },
+            '300,1050': function () {
+                // remove geo most popular
+                geoMostPopular.whenRendered.then(function (geoMostPopular) {
+                    bonzo(geoMostPopular.elem).remove();
+                });
             }
         },
 
