@@ -182,7 +182,7 @@ define([
                 });
             },
             '1,1': function (event) {
-                if (e.slot.getOutOfPage()) {
+                if (event.slot.getOutOfPage()) {
                     // add page skin class to body, to be sure
                     bonzo(document.body).addClass('has-page-skin');
                 }
