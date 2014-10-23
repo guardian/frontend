@@ -479,7 +479,7 @@ h1 {
 
 .article__times {
     position: absolute;
-    top: 5px;
+    top: 3px;
     right: 5px;
     font-size: 11px;
     line-height: 12px;
@@ -702,7 +702,7 @@ button {
 
 .article__spark {
     position: absolute;
-    top: 18px;
+    top: 16px;
     right: 5px;
 }
 

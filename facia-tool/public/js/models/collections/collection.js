@@ -267,7 +267,7 @@ define([
     Collection.prototype.refreshSparklines = function() {
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
-                item.refreshSparkline();
+                item.loadSparkline();
             });
         });
     };
