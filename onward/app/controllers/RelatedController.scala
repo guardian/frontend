@@ -1,10 +1,13 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
+import layout.ContainerLayout
 import model._
 import play.api.mvc.{ RequestHeader, Controller }
 import services._
 import performance.MemcachedAction
+import slices.FixedContainers
 import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
@@ -18,8 +21,15 @@ object RelatedController extends Controller with Related with Logging with Execu
     }
   }
 
-  private def renderRelated(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(30.minutes) {
-    val html = views.html.fragments.relatedTrails(trails, "Related content", 5)
+  private def renderRelated(trails: Seq[Content])(implicit request: RequestHeader) = Cached(30.minutes) {
+    val dataId: String = "related content"
+    val displayName = Some(dataId)
+    val properties = FrontProperties.empty
+    val collection = Collection(trails.take(8), displayName)
+    val layout = ContainerLayout(FixedContainers.fixedMediumFastXII, collection, None)
+    val config = CollectionConfig.withDefaults(displayName = displayName)
+
+    val html = views.html.fragments.containers.facia_cards.container(collection, layout, 1, properties, dataId)(request, new views.support.TemplateDeduping, config)
 
     if (request.isJson) {
       JsonComponent("html" -> html)

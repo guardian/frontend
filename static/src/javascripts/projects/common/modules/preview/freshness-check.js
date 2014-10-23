@@ -1,18 +1,16 @@
 define([
-    'common/utils/$',
     'common/utils/ajax',
-    'common/utils/config',
+    'common/utils/$',
     'common/utils/mediator'
 ], function (
-    $,
     ajax,
-    config,
+    $,
     mediator
 ) {
-    return function (hash) {
+    return function (config, hash) {
 
         var rawLastModified = hash || document.location.search,
-            page = config.page,
+            page = ((config || {}).page || {}),
             lastModifiedMatch;
 
         function call(lastModified, block) {

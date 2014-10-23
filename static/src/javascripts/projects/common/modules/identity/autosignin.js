@@ -1,32 +1,35 @@
 define([
-    'bonzo',
     'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/time',
+    'bonzo',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
+    'common/utils/storage',
+    'common/modules/userPrefs',
+    'common/utils/time',
     'common/modules/ui/message'
 ],
 function(
-    bonzo,
     ajax,
-    config,
-    time,
-    id,
+    bonzo,
+    Id,
     FacebookAuthorizer,
     Profile,
+    Storage,
+    UserPrefs,
+    time,
     Message
 ) {
 
-    function AutoSignin() {
+    function AutoSignin(config) {
+        this.config = config;
         var self = this;
         self.header = document.body;
 
         this.init = function() {
 
-            if(id.shouldAutoSigninInUser()) {
-                var appId = config.page.fbAppId;
+            if( Id.shouldAutoSigninInUser() ) {
+                var appId = this.config.page.fbAppId;
 
                 var authorizer = new FacebookAuthorizer(appId);
                 authorizer.getLoginStatus();
@@ -41,19 +44,19 @@ function(
 
                 authorizer.onNotLoggedIn.then( function() {
                     var today = time.currentDate();
-                    id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
+                    Id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
                 });
 
                 authorizer.onNotAuthorized.then( function() {
                     var today = time.currentDate();
-                    id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
+                    Id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
                 });
             }
         };
 
         this.signin = function(authResponse, name) {
             ajax({
-                url: config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
+                url:self.config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
                 cache: false,
                 crossOrigin: true,
                 type: 'jsonp',
@@ -66,7 +69,7 @@ function(
                     if(response.status === 'ok') {
                         var profile = new Profile(
                             self.header,{
-                            url: config.page.idUrl
+                            url: self.config.page.idUrl
                         });
                         profile.init();
                     }
@@ -77,7 +80,7 @@ function(
         this.welcome = function(name) {
             var msg = '<p class="site-message__message">' +
                           'Welcome ' + name + ', you’re signed into the Guardian using Facebook, or ' +
-                          '<a href="' + config.page.idUrl + '/signout"/>sign out</a>.' +
+                          '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
                       '</p>';
             new Message('fbauto', { important: true }).show(msg);
         };

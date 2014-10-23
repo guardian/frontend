@@ -1,10 +1,10 @@
 define([
-    'bean',
     'qwery',
+    'bean',
     'common/utils/$'
 ], function (
-    bean,
     qwery,
+    bean,
     $
 ) {
     var Navigation = {

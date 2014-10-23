@@ -2,8 +2,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/forEach',
     'lodash/functions/debounce',
+    'lodash/collections/forEach',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -14,8 +14,8 @@ define([
     bean,
     bonzo,
     qwery,
-    forEach,
     debounce,
+    forEach,
     $,
     config,
     mediator,
@@ -58,7 +58,7 @@ define([
             };
             mostViewed.fetch(container, 'html');
         },
-        ready = function () {
+        ready = function (config) {
             LightboxGallery.init();
             blockSharing.init();
 
@@ -83,7 +83,7 @@ define([
 
             mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
-            mediator.emit('page:gallery:ready');
+            mediator.emit('page:gallery:ready', config);
             transcludeMostPopular();
         };
 

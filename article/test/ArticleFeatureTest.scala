@@ -523,7 +523,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst(".related__container").getAttribute("role") should be("complementary")
+        findFirst(".related").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
@@ -532,8 +532,7 @@ import collection.JavaConversions._
         browser.find("nav", 1).getAttribute("role") should be("navigation")
         browser.find("nav", 1).getAttribute("aria-label") should not be empty
         findFirst("#article").getAttribute("role") should be("main")
-        findFirst(".related__container").getAttribute("role") should be("complementary")
-        findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".related").getAttribute("aria-labelledby") should be("related-content-head")
       }
     }
 
@@ -544,7 +543,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".item--gallery") should have size 1
+        $(".fc-item--gallery") should have size 1
       }
 
     }

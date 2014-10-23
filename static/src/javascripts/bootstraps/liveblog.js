@@ -273,12 +273,12 @@ define([
         modules.handleUpdates();
 
         // re-use modules from article bootstrap
-        article.modules.initOpen();
+        article.modules.initOpen(config);
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
         blockSharing.init();
 
-        mediator.emit('page:liveblog:ready');
+        mediator.emit('page:liveblog:ready', config);
     }
 
     return {

@@ -1,16 +1,17 @@
 define([
-    'common/utils/config',
+    'common/modules/ui/images',
     'common/utils/mediator',
-    'common/modules/component',
-    'common/modules/ui/images'
+    'lodash/objects/assign',
+    'common/modules/component'
 ], function (
-    config,
+    images,
     mediator,
-    Component,
-    images
+    extend,
+    Component
 ) {
-    function SocialBurners() {
+    function SocialBurners(config) {
         mediator.emit('register:begin', 'social-content');
+        this.config = extend(this.config, config);
         this.endpoint = '/most-referred.json';
     }
 
@@ -26,7 +27,7 @@ define([
     };
 
     SocialBurners.prototype.error = function () {
-        mediator.emit('modules:error', 'Failed to load social burner content on page: ' + config.page.pageId + 'common/modules/onwards/related.js');
+        mediator.emit('modules:error', 'Failed to load social burner content on page: ' + this.config.page.pageId + 'common/modules/onwards/related.js');
         mediator.emit('register:error', 'social-content');
     };
 
