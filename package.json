@@ -12,7 +12,6 @@
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.6.0",
-    "grunt-contrib-imagemin": "0.8.1",
     "grunt-contrib-jshint": "0.10.0",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-sass": "0.8.1",
