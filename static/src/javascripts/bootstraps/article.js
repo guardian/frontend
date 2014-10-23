@@ -51,7 +51,7 @@ define([
             },
 
             initRightHandComponent: function () {
-                if (detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500) {
+                if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
                     geoMostPopular.render();
                 }
             }
