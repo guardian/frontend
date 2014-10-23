@@ -5,10 +5,10 @@
 define([
     'lodash/objects/assign',
     'common/utils/storage'
-], function(
-    _assign,
+], function (
+    assign,
     storage
-    ) {
+) {
 
     var history,
         summary,
@@ -17,7 +17,7 @@ define([
         maxSize = 100;
 
     function HistoryItem(item) {
-        _assign(this, item.meta);
+        assign(this, item.meta);
         this.id = item.id;
         this.timestamp = Date.now();
         this.count = 1;
@@ -46,39 +46,39 @@ define([
             summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
         }
     }
-    
+
     return {
-        reset: function() {
+        reset: function () {
             history = undefined;
             summary = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
         },
 
-        get: function() {
+        get: function () {
             history = history || storage.local.get(storageKeyHistory) || [];
             return history;
         },
 
-        getSummary: function() {
+        getSummary: function () {
             summary = summary || storage.local.get(storageKeySummary) || {sections: {}, keywords: {}};
             return summary;
         },
 
-        getSize: function() {
+        getSize: function () {
             return this.get().length;
         },
 
-        contains: function(id) {
-            return this.get().some(function(el) {
+        contains: function (id) {
+            return this.get().some(function (el) {
                 return el.id === id;
             });
         },
 
-        log: function(newItem) {
+        log: function (newItem) {
             var foundItem,
                 summary = {sections: {}, keywords: {}},
-                hist = this.get().filter(function(item) {
+                hist = this.get().filter(function (item) {
                     var found = (item.id === newItem.id);
 
                     updateSummary(summary, item);

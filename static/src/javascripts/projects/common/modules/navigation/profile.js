@@ -5,7 +5,7 @@ define([
     'common/utils/ajax',
     'common/utils/mediator',
     'common/modules/identity/api'
-], function(
+], function (
     bean,
     bonzo,
     assign,
@@ -44,11 +44,11 @@ define([
     Profile.prototype.dom = {};
 
     /** */
-    Profile.prototype.init = function() {
+    Profile.prototype.init = function () {
         this.setFragmentFromCookie();
     };
 
-    Profile.prototype.setFragmentFromCookie = function() {
+    Profile.prototype.setFragmentFromCookie = function () {
         var user = id.getUserFromCookie(),
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
@@ -63,12 +63,12 @@ define([
             }
 
             $popup.html(
-                '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">'+
-                    this.menuListItem('Comment activity', this.opts.url+'/user/id/'+ user.id)+
-                    this.menuListItem('Edit profile', this.opts.url+'/public/edit')+
-                    this.menuListItem('Email preferences', this.opts.url+'/email-prefs')+
-                    this.menuListItem('Change password', this.opts.url+'/password/change')+
-                    this.menuListItem('Sign out', this.opts.url+'/signout')+
+                '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">' +
+                    this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
+                    this.menuListItem('Edit profile', this.opts.url + '/public/edit') +
+                    this.menuListItem('Email preferences', this.opts.url + '/email-prefs') +
+                    this.menuListItem('Change password', this.opts.url + '/password/change') +
+                    this.menuListItem('Sign out', this.opts.url + '/signout') +
                 '</ul>'
             );
         } else {
@@ -78,23 +78,23 @@ define([
         this.emitLoadedEvent(user);
     };
 
-    Profile.prototype.menuListItem = function(text, url) {
-        return  '<li class="popup__item">'+
-                    '<a href="' + url + '" class="brand-bar__item--action" data-link-name="' + text + '">' + text + '</a>'+
-                '</li>';
+    Profile.prototype.menuListItem = function (text, url) {
+        return '<li class="popup__item">' +
+                   '<a href="' + url + '" class="brand-bar__item--action" data-link-name="' + text + '">' + text + '</a>' +
+               '</li>';
     };
 
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitLoadedEvent = function(user) {
+    Profile.prototype.emitLoadedEvent = function (user) {
         mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
 
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitErrorEvent = function() {
+    Profile.prototype.emitErrorEvent = function () {
         mediator.emit(Profile.CONFIG.eventName + ':error');
     };
 
