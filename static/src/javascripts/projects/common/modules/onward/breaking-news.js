@@ -7,7 +7,6 @@ define([
     'lodash/objects/assign',
     'lodash/objects/isArray',
     'common/utils/ajax',
-    'common/utils/config',
     'common/utils/storage',
     'common/modules/onward/history'
 ], function (
@@ -19,7 +18,6 @@ define([
     assign,
     isArray,
     ajax,
-    config,
     storage,
     history
 ) {
@@ -33,8 +31,8 @@ define([
         return Array.prototype.slice.call(arguments).filter(function(str) { return str;}).join('/');
     }
 
-    return function () {
-        var page = config.page,
+    return function (config) {
+        var page = (config || {}).page,
             hiddenIds = storage.local.get(storageKeyHidden) || [];
 
         if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }

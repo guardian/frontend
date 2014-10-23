@@ -1,78 +1,66 @@
 define([
     'common/utils/$',
     'lodash/arrays/zipObject',
-    'jasq'
-], function (
+    'common/modules/commercial/tags/criteo'
+], function(
     $,
-    zipObject
-) {
+    _zipObject,
+    criteo
+){
 
-
-    function retrieveParams(url) {
-        return zipObject(url.split('?').pop().split('!').shift().split('&').map(function(param) {
-            return param.split('=');
-        }));
-    }
-
-    describe('Criteo', {
-        moduleName: 'common/modules/commercial/tags/criteo',
-        mock: function () {
+    var requireStub,
+        createSwitch = function(switchValue) {
             return {
-                'common/utils/config': function () {
-                    return {
-                        switches: {
-                            criteo: true
-                        }
-                    };
+                switches: {
+                    criteo: switchValue
                 }
-            }
+            };
         },
-        specify: function () {
+        retrieveParams = function(url) {
+            return _zipObject(url.split('?').pop().split('!').shift().split('&').map(function(param) {
+                return param.split('=');
+            }));
+        };
 
-            beforeEach(function () {
-                requireStub = sinon.stub(window, 'require');
-            });
+    describe('Criteo', function() {
 
-            afterEach(function () {
-                $('.criteo-script').remove();
-                requireStub.restore();
-            });
+        beforeEach(function() {
+            requireStub = sinon.stub(window, 'require');
+        });
 
-            it('should not load if switch is off', function (criteo, deps) {
-                deps['common/utils/config'].switches.criteo = false;
+        afterEach(function() {
+            $('.criteo-script').remove();
+            requireStub.restore();
+        });
 
-                expect(criteo.load()).toBeFalsy();
-            });
+        it('should not load if switch is off', function() {
+            expect(criteo.load(createSwitch(false))).toBeFalsy();
+        });
 
-            it('should send correct "netid" param', function (criteo) {
-                criteo.load();
-                var url = requireStub.args[0][0][0];
+        it('should send correct "netid" param', function() {
+            criteo.load(createSwitch(true));
+            var url = requireStub.args[0][0][0];
+            expect(retrieveParams(url).netid).toBe('1476');
+        });
 
-                expect(retrieveParams(url).netid).toBe('1476');
-            });
+        it('should send correct "cookieName" param', function() {
+            criteo.load(createSwitch(true));
+            var url = requireStub.args[0][0][0];
+            expect(retrieveParams(url).cookieName).toBe('cto2_guardian');
+        });
 
-            it('should send correct "cookieName" param', function (criteo) {
-                criteo.load();
-                var url = requireStub.args[0][0][0];
+        it('should send correct "varName" param', function() {
+            criteo.load(createSwitch(true));
+            var url = requireStub.args[0][0][0];
+            expect(retrieveParams(url).varName).toBe('crtg_content');
+        });
 
-                expect(retrieveParams(url).cookieName).toBe('cto2_guardian');
-            });
+        it('should send a "rnd" param', function() {
+            criteo.load(createSwitch(true));
+            var url = requireStub.args[0][0][0];
+            expect(retrieveParams(url).rnd).not.toBeUndefined();
+        });
 
-            it('should send correct "varName" param', function (criteo) {
-                criteo.load();
-                var url = requireStub.args[0][0][0];
-
-                expect(retrieveParams(url).varName).toBe('crtg_content');
-            });
-
-            it('should send a "rnd" param', function (criteo) {
-                criteo.load();
-                var url = requireStub.args[0][0][0];
-
-                expect(retrieveParams(url).rnd).not.toBeUndefined();
-            });
-
-        }
     });
 
 });

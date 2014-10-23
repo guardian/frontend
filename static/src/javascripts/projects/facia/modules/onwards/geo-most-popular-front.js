@@ -3,19 +3,21 @@
  Description: replaces general most popular trails with geo based most popular on fronts.
  */
 define([
-    'qwery',
     'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'qwery',
+    'lodash/objects/assign',
+    'common/modules/component',
     'common/modules/analytics/register',
-    'common/modules/component'
+    'common/utils/mediator',
+    'common/utils/config'
 ], function (
-    qwery,
     $,
-    config,
-    mediator,
+    qwery,
+    extend,
+    Component,
     register,
-    Component
+    mediator,
+    config
     ) {
 
     function GeoMostPopularFront() {

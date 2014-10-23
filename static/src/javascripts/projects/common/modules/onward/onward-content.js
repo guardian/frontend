@@ -1,20 +1,19 @@
 define([
     'raven',
-    'common/utils/config',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
     'common/modules/component',
     'common/modules/ui/images'
 ], function (
     raven,
-    config,
     register,
     badges,
     Component,
     images
 ) {
-    function OnwardContent(context) {
+    function OnwardContent(config, context) {
         register.begin('series-content');
+        this.config = config;
         this.context = context;
         this.endpoint = '/series/' + this.config.page.seriesId + '.json?shortUrl=' + encodeURIComponent(this.config.page.shortUrl);
         this.fetch(this.context, 'html');
