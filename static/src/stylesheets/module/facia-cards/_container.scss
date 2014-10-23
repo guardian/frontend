@@ -60,6 +60,10 @@ $header-image-size-desktop: 120px;
 
     a {
         color: inherit;
+
+        &:hover {
+            color: $c-newsAccent;
+        }
     }
 }
 

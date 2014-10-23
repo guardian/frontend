@@ -1,4 +1,21 @@
-// Default Icons
+// Container Icons
+// =============================================================================
+
+.fc-container__header__title a {
+    &:after {
+        @include icon(arrow-blue-right, false);
+        content: '';
+        position: relative;
+        height: 0.7em;
+        width: 1em;
+    }
+
+    &:hover:after {
+        @include icon(arrow-light-blue-right, false);
+    }
+}
+
+// Item Icons
 // =============================================================================
 
 .fc-item__timestamp {
@@ -99,7 +116,7 @@
 }
 
 
-// Tonal Overrides
+// Item Tonal Overrides
 // =============================================================================
 
 .tone-analysis--item,
