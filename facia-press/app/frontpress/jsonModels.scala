@@ -6,6 +6,8 @@ import conf.Switches
 import model._
 import org.joda.time.DateTime
 import play.api.libs.json._
+import com.gu.contentapi.client.model.{Element => ApiElement}
+import views.support.Naked
 
 object ElementJson {
   implicit val assetFormat = Json.format[Asset]
@@ -125,10 +127,16 @@ object TrailJson {
       content.trailText,
       content.byline,
       content.delegate.safeFields,
-      content.elements.map(ElementJson.fromElement),
+      apiElementsToElements(slimElements(content)).map(ElementJson.fromElement),
       ItemMeta.fromContent(content)
     )
   }
+
+  def slimElements(content: Content): List[ApiElement] = content.trailPictureAll(5, 3).map {
+    imageContainer => imageContainer.delegate.copy(assets = Naked.elementFor(imageContainer).map(_.delegate).toList)}
+
+  def apiElementsToElements(apiElements: List[ApiElement]): List[Element] =
+    apiElements.zipWithIndex.map{case (element, index) => Element(element, index)}
 }
 
 case class TrailJson(
