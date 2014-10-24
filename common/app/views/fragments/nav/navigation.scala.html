@@ -12,7 +12,7 @@
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
+                    <nav class="navigation__container navigation__container--main" data-component="nav" role="navigation" aria-label="Guardian sections">
                     @fragments.nav.topNavigation(metaData, navigation)
                     </nav>
                     <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
@@ -20,7 +20,7 @@
                         <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
                         <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
                     </a>
-                    <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
+                    <nav class="navigation__container navigation__container--current" data-component="nav" role="navigation" aria-label="Current section">
                     @if(!Edition.isEditionFront){
                         @fragments.nav.signposting(metaData, navigation)
 

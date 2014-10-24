@@ -111,7 +111,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     position: relative;
     background: $c-top-navigation-background;
 }
-.navigation__container--first {
+.navigation__container--current {
     background: $c-top-navigation-background;
     min-height: $navigation-height;
 }
@@ -599,11 +599,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             display: table !important;
             width: 100%;
         }
-        .navigation__container--first {
+        .navigation__container--current {
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-navigation-background;
         }
-        .navigation__container--second {
+        .navigation__container--main {
             position: absolute;
             top: 0;
         }
