@@ -1,6 +1,6 @@
 @(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content">
-    <div class="monocolumn-wrapper tone-news">
+    <div class="monocolumn-wrapper">
         @renderTeamList(comp: model.Competition) = {
             <section class="team-list component" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
                 <h1 class="page-sub-header">@comp.fullName</h1>
