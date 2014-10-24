@@ -101,13 +101,14 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile: '300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
+                    mobile:  '300,1|300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
                 }
             },
             'right-small': {
                 name: 'right',
                 sizeMappings: {
-                    mobile: '300,250'
+                    mobile:  '300,250',
+                    desktop: '300,1|300,250'
                 }
             },
             im: {
@@ -127,16 +128,18 @@ define([
             },
             inline2: {
                 sizeMappings: {
-                    mobile: '300,50',
+                    mobile:             '300,50',
                     'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
+                    tablet:             '300,250',
+                    desktop:            '300,1|300,250'
                 }
             },
             inline3: {
                 sizeMappings: {
-                    mobile: '300,50',
+                    mobile:             '300,50',
                     'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
+                    tablet:             '300,250',
+                    desktop:            '300,1|300,250'
                 }
             },
             'merchandising-high': {
