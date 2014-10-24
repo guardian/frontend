@@ -8,8 +8,8 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
-    'common/modules/userPrefs',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/userPrefs'
 ], function (
     bonzo,
     qwery,
@@ -20,12 +20,16 @@ define([
     _,
     config,
     template,
-    userPrefs,
-    dfp
+    dfp,
+    userPrefs
 ) {
 
     var adNames = ['inline1', 'inline2'],
         init = function (options) {
+
+            if (!config.switches.standardAdverts) {
+                return false;
+            }
 
             var container, containerId, $adSlice, isFrontFirst,
                 opts = defaults(
@@ -41,10 +45,6 @@ define([
                 adSlices     = [],
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states');
-
-            if (!config.switches.standardAdverts) {
-                return false;
-            }
 
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
