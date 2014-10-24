@@ -14,6 +14,7 @@ trait Forms {
     override def reads(js: JsValue): JsResult[Seq[FormError]] = Json.fromJson[Map[String, Seq[String]]](js).map{
       _.toSeq.map{ case (k, v) => FormError(k, v) }
     }
+
   }
 
   implicit class Form2Cookie[A](form: Form[A]) {
@@ -37,6 +38,10 @@ trait Forms {
         formKey -> Crypto.encryptAES(formJson),
         s"$formKey-errors" -> Crypto.encryptAES(form.errorsAsJson.toString())
       ))
+    }
+
+    def toClearFlash: Flash =  {
+      Flash(Map())
     }
  }
 }
