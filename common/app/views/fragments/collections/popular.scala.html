@@ -22,7 +22,7 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                 class="@if(isTabbed){tabs__pane js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} u-cf"
+                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
                  @if(isTabbed){
                      role="tabpanel"
                      aria-labelledby="tabs-popular-@info.rowNum-tab"
@@ -43,7 +43,7 @@
             </div>
         }
 
-            <div class="facia-slice__popular-mpu js-facia-slice__item--mpu facia-slice__item--no-mpu"></div>
+            <div class="facia-slice__popular-mpu js-facia-slice-mpu-candidate facia-slice__item--mpu-candidate facia-slice__item--no-mpu"></div>
 
         @if(isTabbed) {
                 </div>
