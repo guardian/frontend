@@ -234,9 +234,9 @@ define([
                     Cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
-                    feedbackLink = config.page.edition === 'US' ?
-                        'https://www.surveymonkey.com/s/theguardian-us-edition-feedback' :
-                        'https://www.surveymonkey.com/s/theguardian-beta-feedback';
+
+                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
+                        (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
                     msg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
