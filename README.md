@@ -170,11 +170,7 @@ Now test you are up and running by hitting the following URLs:
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
-Play Framework will recompile code changes on refresh.
-
-Further information on using the Play console is available
-[here][play2-console].
-
+Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
 ##IDE setup
 You need a copy of the source code from above, if not run this command:
@@ -196,7 +192,8 @@ gen-idea
 ```
 See https://github.com/mpeltonen/sbt-idea for more info.
 
-
+Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other
+things to do.
 
 ## Troubleshooting
 
@@ -303,6 +300,13 @@ grunt csdevmode
 ```
 
 ## Useful information and hints
+
+###Play console
+
+Play Framework will recompile code changes on refresh.
+
+Further information on using the Play console is available
+[here][play2-console].
 
 ###Endpoints
 
