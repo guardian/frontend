@@ -15,8 +15,9 @@ x x x x x x x x x x x x x x x x x x x x x x x
     $image-width: $item-min-height * $media-ratio;
 
     min-height: $item-min-height;
+    padding-top: $gs-baseline/3;
     padding-left: $image-width;
-
+    border-top: 1px solid $c-neutral6;
     color: $c-neutral1;
 
     .fc-item__image-container {
@@ -31,6 +32,6 @@ x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     .fc-item__container {
-        top: 0 - .15em;
+        @include fs-headline(2, true);
     }
 }
