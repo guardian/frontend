@@ -49,10 +49,14 @@ function s_doPlugins(s) {
 //    s.events=s.apl(s.events,'event4',',',2);
 
     /* External Paid Campaign Tracking */
-    if (!s.eVar38){
-        s.eVar38=s.Util.getQueryParam('CMP');
+    if (!s.campaign){
+        s.campaign=s.getParamValue('CMP');
     }
-    s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
+    s.campaign=s.getValOnce(s.campaign,'s_campaign',0);
+
+    if (s.campaign){
+        s.eVar38=s.eVar39="D=v0";
+    }
 
     /* Users with a Daily Habit Diary */
     var dtmNow=new Date();
@@ -319,6 +323,33 @@ s.getTimeParting=new Function("h","z",""
     +"kday';if(H>=12){U='PM';H=H-12;}if(H==0){H=12;}if(D==6||D==0){W='Wee"
     +"kend';}D=da[D];tm=H+':'+M+U;tt=H+':'+((M>30)?'30':'00')+U;a=[tm,tt,"
     +"D,W];return a;}");
+
+// This is a Guardian fix to avoid using getQueryParam(), which passes through
+// hash locations,eg. example.com?CMP=campaign#example
+s.getParamValue = function(paramName) {
+	var requestIndex;
+	var params = window.location.search;
+	var separator ="&";
+	if (paramName &&
+     	params &&
+	    	(requestIndex = params.indexOf("?"),
+		     requestIndex >= 0 &&
+		     	(params = separator + params.substring(requestIndex + 1) + separator,
+				 requestIndex = params.indexOf(separator + paramName + "="),
+				 requestIndex >= 0 &&
+					(params = params.substring(requestIndex + separator.length + paramName.length + 1),
+					 requestIndex = params.indexOf(separator),
+					 requestIndex >= 0 && (params = params.substring(0, requestIndex)),
+					 params.length>0
+					)
+				)
+		    )
+		) {
+		return s.unescape(params);
+	}
+	return ""
+}
+
 
 
 /****************************** MODULES *****************************/
