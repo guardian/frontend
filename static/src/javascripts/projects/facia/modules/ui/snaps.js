@@ -72,7 +72,7 @@ define([
             '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
                 '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
             '</div>',
-            {src: el.getAttribute('data-snap-uri'), height: 250}
+            {src: el.getAttribute('data-snap-uri'), height: 300}
         ));
     }
 

@@ -35,7 +35,11 @@
             }
         }
     }
-
+    .facia-slice__item--mpu-candidate {
+        @include mq(tablet) {
+            min-height: 250 + $mpu-ad-label-height;
+        }
+    }
     .facia-slice__item--no-mpu {
         flex: 0 !important;
     }

@@ -1,12 +1,14 @@
 define([
     'bean',
     'bonzo',
+    'lodash/objects/assign',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/modules/identity/api'
 ], function(
     bean,
     bonzo,
+    assign,
     ajax,
     mediator,
     id
@@ -17,7 +19,7 @@ define([
      * @constructor
      */
     function Profile(options) {
-        this.opts = options;
+        this.opts = assign(this.opts, options);
         this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
@@ -34,7 +36,7 @@ define([
     };
 
     /** @type {Object.<string.*>} */
-    Profile.prototype.config = {
+    Profile.prototype.opts = {
         url: 'https://profile.theguardian.com'
     };
 
