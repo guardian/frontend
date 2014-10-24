@@ -289,3 +289,17 @@ $header-image-size-desktop: 120px;
     opacity: 0;
     @include transition(opacity .25s linear); // Used to fade-in new updates
 }
+
+.fc-container--media {
+    .facia-container__inner,
+    .facia-slice__item:before {
+        border-color: $c-neutral2;
+    }
+
+    .fc-container__header__title {
+        color: #ffffff;
+    }
+    .fc-item__content {
+        padding: 0 !important;
+    }
+}
