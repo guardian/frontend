@@ -306,7 +306,16 @@
         color: $c-neutral2-contrasted;
     }
 }
+.ad-slot--im {
+    @include box-sizing(border-box);
+    padding-right: $gs-gutter;
+    width: 50%;
+    max-width: $left-column-wide + $gs-gutter;
+    float: left;
+}
 .ad-slot--fobadge.ad-slot--im {
+    min-width: gs-span(2) + $gs-gutter;
+
     .ad-slot--paid-for-badge__inner {
         padding: $gs-baseline / 2 0 $gs-baseline;
         border-top: 1px solid $c-neutral3;
