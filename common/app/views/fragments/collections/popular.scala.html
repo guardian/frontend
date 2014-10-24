@@ -22,7 +22,7 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                 class="@if(isTabbed){tabs__pane js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} u-cf"
+                 class="@if(isTabbed){js-tab-@info.rowNum @if(!info.isFirst){modern-hidden}} tabs__pane u-cf"
                  @if(isTabbed){
                      role="tabpanel"
                      aria-labelledby="tabs-popular-@info.rowNum-tab"

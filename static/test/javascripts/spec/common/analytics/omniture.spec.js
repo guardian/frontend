@@ -39,7 +39,8 @@ define([
                         getQueryParam: function () { return 'test'; }
                     },
                     getValOnce: function () { return 'test'; },
-                    getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; }
+                    getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
+                    getParamValue: function() { return ''; }
                 };
                 sinon.spy(s, 't');
                 sinon.spy(s, 'tl');

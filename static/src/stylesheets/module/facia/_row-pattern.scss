@@ -27,6 +27,9 @@
         overflow: visible; // Prevents height issue in Firefox < 22
     }
 }
+.facia-slice--popular {
+    position: relative;
+}
 .facia-slice__item {
     position: relative;
 

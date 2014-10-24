@@ -138,7 +138,9 @@ define([
             },
 
             transcludePopular: function () {
-                if (!config.page.isFront) { new Popular().init(); }
+                if (!config.page.isFront) {
+                    new Popular().init();
+                }
             },
 
             transcludeOnwardContent: function () {

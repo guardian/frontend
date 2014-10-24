@@ -27,7 +27,7 @@ object JobsApi extends ExecutionContexts with Logging {
   }
 
   def parse(xml: Elem): Seq[Job] = {
-    (xml \ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
+    (xml \\ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
       job =>
         Job(
           (job \ "JobID").text.toInt,

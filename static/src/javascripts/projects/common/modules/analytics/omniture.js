@@ -245,8 +245,8 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            if (s.Util.getQueryParam('INTCMP') !== '') {
-                s.eVar50 = s.Util.getQueryParam('INTCMP');
+            if (s.getParamValue('INTCMP') !== '') {
+                s.eVar50 = s.getParamValue('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
