@@ -2,7 +2,7 @@ package conf
 
 import common.{AkkaAsync, Jobs, ExecutionContexts}
 import play.api.{Plugin, Application}
-import jobs.BlockedEmailsDomainList
+import jobs.BlockedEmailDomainList
 import scala.concurrent.duration._
 
 /**
@@ -11,8 +11,8 @@ import scala.concurrent.duration._
 class BlockedEmailDomainsPlugin(app: Application) extends Plugin with ExecutionContexts {
 
   def scheduleJobs() {
-      Jobs.schedule("BlockedEmailsRefreshJobs", "0 * * * * ?") {
-         BlockedEmailsDomainList.run()
+      Jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
+         BlockedEmailDomainList.run()
       }
   }
 
@@ -25,7 +25,7 @@ class BlockedEmailDomainsPlugin(app: Application) extends Plugin with ExecutionC
     scheduleJobs()
 
     AkkaAsync.after(5.seconds) {
-      BlockedEmailsDomainList.run()
+      BlockedEmailDomainList.run()
     }
   }
 

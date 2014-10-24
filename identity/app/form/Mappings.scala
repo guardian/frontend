@@ -6,7 +6,7 @@ import play.api.data.format.Formats._
 import play.api.i18n.Messages
 import model.Countries
 import org.scala_tools.time.Imports._
-import jobs.BlockedEmailsDomainList
+import jobs.BlockedEmailDomainList
 
 trait Mappings {
 
@@ -25,11 +25,12 @@ trait Mappings {
   val idRegEmail = text.verifying (
     Messages("error.emailDomainInvalid"),
     { value =>
+      //Let the identity API validate emails - don't try to extadct the domain from a badll formed email
       if( value.matches(EmailPattern.toString))
       {
         val EmailPattern(name, domain) = value
-        !(BlockedEmailsDomainList.getBlockedDomains.contains(domain))
-      } else { true } //Let the identity API validate emails
+        !(BlockedEmailDomainList.getBlockedDomains.contains(domain))
+      } else { true }
     }
   )
 

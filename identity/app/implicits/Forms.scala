@@ -40,7 +40,7 @@ trait Forms {
       ))
     }
 
-    def toClearFlash: Flash =  {
+    def toFlashWithDataDiscarded: Flash = {
       Flash(Map())
     }
  }
