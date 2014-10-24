@@ -299,7 +299,22 @@ $header-image-size-desktop: 120px;
     .fc-container__header__title {
         color: #ffffff;
     }
+
     .fc-item__content {
+        box-shadow: none !important;
         padding: 0 !important;
+    }
+
+    .gallery-lightbox__endslate {
+        .facia-container__inner {
+            border: 0;
+        }
+        .fc-container__header__title {
+            padding-bottom: $gs-baseline*2;
+        }
+        .fc-item__title {
+            padding-top: 0;
+            margin-top: -1 * 2px;
+        }
     }
 }

@@ -50,10 +50,6 @@ Hence why a greater depth of selector specificity is needed.
             @include mq(desktop) {
                 display: block;
             }
-            
-            .fc-container--media & {
-                display: none;
-            }
         }
     }
 }
