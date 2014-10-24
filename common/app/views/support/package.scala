@@ -601,8 +601,7 @@ object ContributorLinks {
         t.replaceFirst(tag.name,
         s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
            |  <a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link"
-           |    href="${LinkTo("/"+tag.id)}">${tag.name}</a>
-           |</span>""".stripMargin)
+           |    href="${LinkTo("/"+tag.id)}">${tag.name}</a></span>""".stripMargin)
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
