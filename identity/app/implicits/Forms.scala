@@ -14,7 +14,6 @@ trait Forms {
     override def reads(js: JsValue): JsResult[Seq[FormError]] = Json.fromJson[Map[String, Seq[String]]](js).map{
       _.toSeq.map{ case (k, v) => FormError(k, v) }
     }
-
   }
 
   implicit class Form2Cookie[A](form: Form[A]) {
