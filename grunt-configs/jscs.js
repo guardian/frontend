@@ -10,10 +10,7 @@ module.exports = function(grunt, options) {
                 src: [
                     '**/*.js',
                     '!modules/article/spacefinder.js',
-                    '!modules/discussion/activity-stream.js',
-                    '!modules/discussion/api.js',
                     '!modules/discussion/comment-box.js',
-                    '!modules/discussion/comment-count.js',
                     '!modules/discussion/comments.js',
                     '!modules/discussion/loader.js',
                     '!modules/discussion/recommend-comments.js',
@@ -29,10 +26,7 @@ module.exports = function(grunt, options) {
                     '!modules/identity/formstack.js',
                     '!modules/identity/password-strength.js',
                     '!modules/identity/public-profile.js',
-                    '!modules/identity/validation-email.js',
-                    '!modules/sport/football/football.js',
-                    '!modules/sport/football/match-info.js',
-                    '!modules/sport/football/match-list-live.js'
+                    '!modules/identity/validation-email.js'
                 ]
             }]
         },

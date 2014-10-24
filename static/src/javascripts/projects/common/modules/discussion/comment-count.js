@@ -1,33 +1,34 @@
 define([
-    'common/utils/$',
     'bonzo',
     'qwery',
     'lodash/collections/forEach',
-    'common/utils/mediator',
+    'common/utils/$',
     'common/utils/ajax',
+    'common/utils/mediator',
     'common/utils/template',
     'text!common/views/discussion/comment-count.html'
 ], function (
-    $,
     bonzo,
     qwery,
     forEach,
-    mediator,
+    $,
     ajax,
+    mediator,
     template,
     commentCountTemplate
 ) {
+
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=';
 
     function getContentIds() {
         var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
-            l = nodes.length-1,
+            l = nodes.length - 1,
             data = '';
 
-        Array.prototype.forEach.call(nodes, function(el, i) {
+        Array.prototype.forEach.call(nodes, function (el, i) {
             data += el.getAttribute(attributeName);
-            if(i < l) { data += ','; }
+            if (i < l) { data += ','; }
         });
 
         return data;
@@ -38,8 +39,8 @@ define([
     }
 
     function renderCounts(counts) {
-        counts.forEach(function(c){
-            forEach(qwery('[data-discussion-id="' + c.id +'"]'), function (node) {
+        counts.forEach(function (c) {
+            forEach(qwery('[data-discussion-id="' + c.id + '"]'), function (node) {
                 var $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                     $container,
@@ -77,8 +78,8 @@ define([
             type: 'json',
             method: 'get',
             crossOrigin: true,
-            success: function(response) {
-                if(response && response.counts) {
+            success: function (response) {
+                if (response && response.counts) {
                     renderCounts(response.counts);
                     mediator.emit('modules:commentcount:loaded', response.counts);
                 }
@@ -87,13 +88,13 @@ define([
     }
 
     function init() {
-        if(document.body.querySelector('[data-discussion-id]')) {
+        if (document.body.querySelector('[data-discussion-id]')) {
             getCommentCounts();
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(); });
-        mediator.on('modules:related:loaded', function() { getCommentCounts(); });
+        mediator.on('module:trailblock-show-more:render', function () { getCommentCounts(); });
+        mediator.on('modules:related:loaded', function () { getCommentCounts(); });
     }
 
     return {
