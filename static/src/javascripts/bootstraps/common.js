@@ -41,6 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
+    'common/modules/social/sharecount',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -91,6 +92,7 @@ define([
     Related,
     TonalComponent,
     releaseMessage,
+    sharecount,
     Dropdowns,
     fauxBlockLink,
     Fonts,
@@ -410,6 +412,11 @@ define([
                         }, 1);
                     }
                 });
+            },
+
+            initShareCounts: function() {
+                sharecount.init();
+
             }
         },
         ready = function () {
@@ -417,6 +424,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
+            modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();
             modules.showTabs();
@@ -445,6 +453,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+
 
             mediator.emit('page:common:ready');
         };

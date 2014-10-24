@@ -13,3 +13,14 @@
         @include transform(rotate(180deg));
     }
 }
+
+.commentcount2 {
+    display: block;
+    .i {
+        vertical-align: bottom;
+    }
+}
+
+.commentcount2__value {
+    display: block;
+}
