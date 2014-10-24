@@ -17,8 +17,6 @@ x x x x x x x x x x x x x x x x x x x x x x x
     min-height: $item-min-height;
     padding-left: $image-width;
 
-    color: $c-neutral1;
-
     .fc-item__image-container {
         display: block;
     }
@@ -28,9 +26,5 @@ x x x x x x x x x x x x x x x x x x x x x x x
         padding-right: $gs-gutter * .5;
         margin-left: 0 - $image-width;
         float: left;
-    }
-
-    .fc-item__container {
-        top: 0 - .15em;
     }
 }
