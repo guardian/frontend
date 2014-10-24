@@ -29,15 +29,13 @@ define([
 
     function addToShareCount(val) {
 
-        $shareCountEls.each(function(el){
-            $shareCountEls
-                .removeClass('u-h')
-                .html(sharecountTemplate)
-                .css('display', '');
+        $shareCountEls
+            .removeClass('u-h')
+            .html(sharecountTemplate)
+            .css('display', '');
 
-            $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el
-            $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]); // limited to 1 el
-        });
+        $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el
+        $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]); // limited to 1 el
 
         if (detect.isBreakpoint({min: 'tablet'})) {
             var duration = 500,
