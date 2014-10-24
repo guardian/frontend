@@ -174,6 +174,9 @@ define([
             },
             '300,1': function (e, $adSlot) {
                 $adSlot.addClass('u-h');
+                var $parent = $adSlot.parent();
+                // if in a slice, add the 'no mpu' class
+                $parent.hasClass('js-facia-slice-mpu-candidate') && $parent.addClass('facia-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular

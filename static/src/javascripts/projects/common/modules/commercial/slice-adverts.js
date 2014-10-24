@@ -32,7 +32,7 @@ define([
                     options || {},
                     {
                         containerSelector: '.container',
-                        sliceSelector: '.js-slice--ad-candidate, .js-facia-slice__item--mpu'
+                        sliceSelector: '.js-facia-slice-mpu-candidate'
                     }
                 ),
                 // get all the containers
@@ -68,7 +68,6 @@ define([
                     var adName = adNames[index],
                         $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
                     $adSlice
-                        .addClass('slice--has-ad')
                         .removeClass('facia-slice__item--no-mpu')
                         .append($adSlot);
                 })
