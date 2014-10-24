@@ -51,7 +51,7 @@ define([
                     });
                 };
                 mediator.addListeners({
-                    'modules:container:rendered' : containerShowMoreAdd,
+                    'modules:container:rendered': containerShowMoreAdd,
                     'page:front:ready': containerShowMoreAdd
                 });
             },
