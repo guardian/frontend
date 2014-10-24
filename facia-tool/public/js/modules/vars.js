@@ -13,7 +13,11 @@ define([
     var CONST = {
         editions: ['uk', 'us', 'au'],
 
-        types: dynamicContainers.concat(fixedContainers),
+        types: dynamicContainers.concat(fixedContainers).concat([
+            {name: 'nav/list'},
+            {name: 'nav/media-list'},
+            {name: 'news/most-popular'}
+        ]),
 
         typesDynamic: dynamicContainers,
 
