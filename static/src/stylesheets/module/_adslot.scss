@@ -281,7 +281,13 @@
     }
     .ad-slot--paid-for-badge__header {
         margin: 0;
+        padding-top: $gs-baseline / 2;
         font-weight: bold;
+        clear: left;
+
+        &:first-child {
+            padding-top: 0;
+        }
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__logo {
