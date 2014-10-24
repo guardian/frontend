@@ -250,7 +250,10 @@ For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number
 
 Now you should be able to compile and run. Yay.
 
+###"No route to host"
 
+If you get no route to host, it means you are not using the 1.8 jre.  Type `java -version` to check.  You may need
+to close and reopen your terminal if you installed 1.8 recently.
 
 ## Optional steps
 
