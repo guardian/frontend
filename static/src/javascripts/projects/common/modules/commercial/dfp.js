@@ -101,7 +101,8 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    mobile:  '300,1|300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
+                    mobile:  '300,1|300,250|300,251|300,600' +
+                        (config.page.edition === 'US' ? '|300,1050' : '')
                 }
             },
             'right-small': {
@@ -179,7 +180,8 @@ define([
                 $adSlot.addClass('u-h');
                 var $parent = $adSlot.parent();
                 // if in a slice, add the 'no mpu' class
-                $parent.hasClass('js-facia-slice-mpu-candidate') && $parent.addClass('facia-slice__item--no-mpu');
+                $parent.hasClass('js-facia-slice-mpu-candidate') &&
+                    $parent.addClass('facia-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular
@@ -227,7 +229,8 @@ define([
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
-            // as this is an single request call, only need to make a single display call (to the first ad slot)
+            // as this is an single request call, only need to make a single display call (to the first ad
+            // slot)
             googletag.display(keys(slots).shift());
             displayed = true;
         },
@@ -313,8 +316,12 @@ define([
                         name: definition.name || name,
                         // badges now append their index to the name
                         normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
-                        types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                        types: map((isArray(types) ? types : [types]), function (type) {
+                            return 'ad-slot--' + type;
+                        }).join(' '),
+                        sizeMappings: map(pairs(definition.sizeMappings), function (size) {
+                            return ' data-' + size[0] + '="' + size[1] + '"';
+                        }).join('')
                     })
                 );
             for (attrName in dataAttrs) {
@@ -485,7 +492,10 @@ define([
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
-                        if (typeof updatedIFrame.readyState !== 'unknown' && updatedIFrame.readyState === 'complete') {
+                        if (
+                            typeof updatedIFrame.readyState !== 'unknown'
+                                && updatedIFrame.readyState === 'complete'
+                        ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');
                         }
@@ -515,7 +525,8 @@ define([
                 .valueOf(),
                 // have we changed breakpoints
                 slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
-            return slotBreakpoint && getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
+            return slotBreakpoint &&
+                getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
