@@ -31,6 +31,7 @@ define([
 
         $shareCountEls.each(function(el){
             $shareCountEls
+                .removeClass('u-h')
                 .html(sharecountTemplate)
                 .css('display', '');
 
@@ -65,7 +66,7 @@ define([
                 method: 'get',
                 crossOrigin: true,
                 success: function(resp) {
-                    addToShareCount(resp.shares);
+                    addToShareCount(resp.shares || 0);
                 }
             });
             ajax({
@@ -74,7 +75,7 @@ define([
                 method: 'get',
                 crossOrigin: true,
                 success: function(resp) {
-                    addToShareCount(resp.count);
+                    addToShareCount(resp.count || 0);
                 }
             });
         }

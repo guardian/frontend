@@ -55,7 +55,7 @@ define([
                 if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
-                $node.css('visibility', 'visible');
+                $node.removeClass('u-h');
 
                 if ($node.attr('data-discussion-inline-upgrade') === 'true') {
                     $('.js-item__comment-count', node).append(c.count + '');
