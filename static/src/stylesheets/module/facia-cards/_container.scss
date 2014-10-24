@@ -37,7 +37,7 @@ $header-image-size-desktop: 120px;
     position: relative;
 
     .fc-container[data-sponsorship] &,
-    .facia-container[data-sponsorship] .fc-container:first-child &,{
+    .facia-container[data-sponsorship] .fc-container:first-child & {
         @include mq(tablet, leftCol) {
             float: left;
         }
