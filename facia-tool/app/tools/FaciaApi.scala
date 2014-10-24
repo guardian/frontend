@@ -1,12 +1,13 @@
 package tools
 
 import com.gu.facia.client.models.Config
+import com.gu.googleauth.UserIdentity
 import frontsapi.model.Block
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi
+
 import scala.util.Try
-import com.gu.googleauth.UserIdentity
 
 trait FaciaApiRead {
   def getSchema: Option[String]
@@ -34,16 +35,25 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     newBlock
   }
 
+  // side effects
   def publishBlock(id: String, identity: UserIdentity): Option[Block] =
     getBlock(id)
+      .flatMap(preparePublishBlock(identity))
+      .map(putBlock(id, _, identity))
+
+  // testable
+  def preparePublishBlock(identity: UserIdentity)(block: Block): Option[Block] =
+    Some(block)
       .filter(_.draft.isDefined)
+      .map(updatePublicationDateForNew)
+      .map(block => block.copy(live = block.draft.get, draft = None))
       .map(updateIdentity(_, identity))
-      .map { block => putBlock(id, block.copy(live = block.draft.get, draft = None), identity)}
 
   def discardBlock(id: String, identity: UserIdentity): Option[Block] =
     getBlock(id)
-      .map (updateIdentity(_, identity))
-      .map { block => putBlock(id, block.copy(draft = None), identity)}
+      .map(_.copy(draft = None))
+      .map(updateIdentity(_, identity))
+      .map(putBlock(id, _, identity))
 
   def archive(id: String, block: Block, update: JsValue, identity: UserIdentity): Unit = {
     val newBlock: Block = block.copy(diff = Some(update))
@@ -56,4 +66,15 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   def archiveMasterConfig(config: Config, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
 
   def updateIdentity(block: Block, identity: UserIdentity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+
+  def updatePublicationDateForNew(block: Block): Block = {
+    val liveIds = block.live.map(_.id).toSet
+    val draftsWithNewDate = block.draft.get.map {
+      draft =>
+        if (liveIds.contains(draft.id)) draft
+        else draft.copy(frontPublicationDate = DateTime.now.getMillis)
+    }
+    block.copy(draft = Some(draftsWithNewDate))
+  }
+
 }
