@@ -84,8 +84,8 @@ define([
         }
 
         bean.on(document.body, 'click', 'a', function (e) {
-            var id = e.currentTarget.href.match(/.*(#.*)/)[1];
-            if (id && $(id).hasClass('truncated-block')) {
+            var id = e.currentTarget.href.match(/.*(#.*)/);
+            if (id && $(id[1]).hasClass('truncated-block')) {
                 mediator.emit('module:liveblog:showkeyevents', true);
             }
         });
