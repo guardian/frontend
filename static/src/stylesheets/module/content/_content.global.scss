@@ -14,6 +14,18 @@
     }
 }
 
+.sharecount__heading .i {
+    @include icon(share-android);
+}
+
+.tonal--tone-media .tonal__main--tone-media,
+.tonal--tone-podcast .tonal__main--tone-podcast {
+    .sharecount__heading .i {
+        @include icon(share-android--white);
+        opacity: 0.6;
+    }
+}
+
 .commentcount2 {
     display: block;
     .i {
