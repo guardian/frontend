@@ -12,32 +12,32 @@
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
+                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
+                    @fragments.nav.topNavigation(metaData, navigation)
+                    </nav>
+                    <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
+                        <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
+                        <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
+                        <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
+                    </a>
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
-                        @if(!Edition.isEditionFront){
-                            @fragments.nav.signposting(metaData, navigation)
+                    @if(!Edition.isEditionFront){
+                        @fragments.nav.signposting(metaData, navigation)
 
-                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
-                                @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
-                                    <ul class="local-navigation">
-                                        @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item">
-                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
+                        @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                            @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
+                                <ul class="local-navigation">
+                                    @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
+                                        <li class="local-navigation__item">
+                                            <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
+                                        </li>
+                                    }
+                                </ul>
                             }
                         }
-                    </nav>
-                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation)
+                    }
                     </nav>
                 </div>
-                <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
-                    <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
-                    <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
-                    <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
-                </a>
             </div>
             <div class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>
         </div>
