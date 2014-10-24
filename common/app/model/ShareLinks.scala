@@ -26,7 +26,7 @@ trait ShareLinks { self: Content =>
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
       case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$twitter"))
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
-      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=${webTitle.urlEncoded}&amp;body=${link.urlEncoded}"))
+      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=${webTitle.urlEncoded}&body=${link.urlEncoded}"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
