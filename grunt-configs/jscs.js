@@ -10,9 +10,6 @@ module.exports = function(grunt, options) {
                 src: [
                     '**/*.js',
                     '!modules/article/spacefinder.js',
-                    '!modules/charts/doughnut.js',
-                    '!modules/charts/table-doughnut.js',
-                    '!modules/component.js',
                     '!modules/discussion/activity-stream.js',
                     '!modules/discussion/api.js',
                     '!modules/discussion/comment-box.js',
@@ -21,7 +18,6 @@ module.exports = function(grunt, options) {
                     '!modules/discussion/loader.js',
                     '!modules/discussion/recommend-comments.js',
                     '!modules/discussion/top-comments.js',
-                    '!modules/experiments/ab.js',
                     '!modules/gallery/lightbox.js',
                     '!modules/identity/account-profile.js',
                     '!modules/identity/api.js',

@@ -28,7 +28,8 @@ define([
     HighCommercialComponent
 ) {
 
-    var TESTS = [
+    var ab,
+        TESTS = [
             new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
@@ -61,10 +62,10 @@ define([
         // renamed/deleted from the backend
         var participations = getParticipations();
         forEach(keys(participations), function (k) {
-            if (typeof(config.switches['ab' + k]) === 'undefined') {
+            if (typeof (config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = some(TESTS, function(element) {
+                var testExists = some(TESTS, function (element) {
                     return element.id === k;
                 });
 
@@ -76,7 +77,7 @@ define([
     }
 
     function getActiveTests() {
-        return filter(TESTS, function(test) {
+        return filter(TESTS, function (test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
             if (expired) {
                 removeParticipation(test);
@@ -87,7 +88,7 @@ define([
     }
 
     function getExpiredTests() {
-        return filter(TESTS, function(test) {
+        return filter(TESTS, function (test) {
             return (new Date() - new Date(test.expiry)) > 0;
         });
     }
@@ -122,7 +123,7 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            some(test.variants, function(variant) {
+            some(test.variants, function (variant) {
                 if (variant.id === variantId) {
                     variant.test();
                     return true;
@@ -143,18 +144,18 @@ define([
 
         // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
         // A test population must begin from a specific value. Overlapping test ranges are permitted.
-        var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
-        var largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
-
-        // Get this browser's mvt test id.
-        var mvtCookieId = mvtCookie.getMvtValue();
+        var variantIds, testVariantId,
+            smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
+            largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
+            // Get this browser's mvt test id.
+            mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            var variantIds = map(test.variants, function(variant) {
+            variantIds = map(test.variants, function (variant) {
                 return variant.id;
             });
-            var testVariantId = mvtCookieId % variantIds.length;
+            testVariantId = mvtCookieId % variantIds.length;
 
             addParticipation(test, variantIds[testVariantId]);
 
@@ -172,23 +173,23 @@ define([
         return participation && participation.variant;
     }
 
-    var ab = {
+    ab = {
 
-        addTest: function(test) {
+        addTest: function (test) {
             TESTS.push(test);
         },
 
-        clearTests: function() {
+        clearTests: function () {
             TESTS = [];
         },
 
-        segment: function() {
-            forEach(getActiveTests(), function(test) {
+        segment: function () {
+            forEach(getActiveTests(), function (test) {
                 allocateUserToTest(test);
             });
         },
 
-        forceSegment: function(testId, variant) {
+        forceSegment: function (testId, variant) {
             _(getActiveTests())
                 .filter(function (test) {
                     return (test.id === testId);
@@ -199,13 +200,15 @@ define([
                 .valueOf();
         },
 
-        segmentUser: function() {
+        segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            var tokens, test, variant,
+                forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                var tokens = window.location.hash.replace('#ab-','').split('=');
-                var test = tokens[0], variant = tokens[1];
+                tokens = window.location.hash.replace('#ab-', '').split('=');
+                test = tokens[0];
+                variant = tokens[1];
                 ab.forceSegment(test, variant);
             } else {
                 ab.segment();
@@ -214,17 +217,17 @@ define([
             cleanParticipations();
         },
 
-        run: function() {
-            forEach(getActiveTests(), function(test) {
+        run: function () {
+            forEach(getActiveTests(), function (test) {
                 run(test);
             });
         },
 
-        isEventApplicableToAnActiveTest: function(event) {
+        isEventApplicableToAnActiveTest: function (event) {
             var participations = keys(getParticipations());
-            return some(participations, function(id) {
+            return some(participations, function (id) {
                 var listOfEventStrings = getTest(id).events;
-                return some(listOfEventStrings, function(ev) {
+                return some(listOfEventStrings, function (ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
@@ -240,7 +243,7 @@ define([
             return eventTag && _(getActiveTests())
                 .filter(function (test) {
                     var testEvents = test.events;
-                    return testEvents && some(testEvents, function(testEvent) {
+                    return testEvents && some(testEvents, function (testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
                 })
@@ -250,7 +253,7 @@ define([
                 .valueOf();
         },
 
-        getAbLoggableObject: function() {
+        getAbLoggableObject: function () {
             var abLogObject = {};
 
             try {
