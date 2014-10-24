@@ -9,6 +9,8 @@
 
 @include facia-container--layout-front;
 
+@import 'module/facia/_supporting';
+
 @import 'module/containers/_news';
 @import 'module/containers/_tag';
 
