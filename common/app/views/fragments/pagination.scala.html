@@ -27,7 +27,7 @@
 }
 
 @paginationDivider = {
-    <span class="pagination__text">&#8230;</span>
+    <span class="pagination__text">…</span>
 }
 
 @paginationExtreme(pageNo: Option[Int], dir: String, url: String) = {
@@ -57,34 +57,34 @@
     <div class="pagination u-cf">
     }
         <div class="pagination__list">
-            @if(pagination.lastPage > 5) {
-                @paginationPointer(pagination.previous, "prev", page.url)
+        @if(pagination.lastPage > 5) {
+            @paginationPointer(pagination.previous, "prev", page.url)
 
-                @if(pagination.currentPage - 2 > 1) {
-                    @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
-                }
+            @if(pagination.currentPage - 2 > 1) {
+                @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
+            }
+        }
+
+        @pagination.pages.map{ pageNum =>
+
+            @if(pageNum == pagination.currentPage) {
+                <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
+            } else {
+                <a class="button button--small button--tertiary pagination__action @actionClass"
+                data-page="@pageNum"
+                href="@paginated(page.url, pageNum)"
+                data-link-name="Pagination view page @pageNum"
+                aria-label="@ariaContext page @pageNum">@pageNum</a>
+            }
+        }
+
+        @if(pagination.lastPage > 5) {
+            @if(pagination.currentPage + 2 < pagination.lastPage) {
+                @paginationExtreme(Some(pagination.lastPage), "last", page.url)
             }
 
-            @pagination.pages.map{ pageNum =>
-
-                @if(pageNum == pagination.currentPage) {
-                    <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
-                } else {
-                    <a class="button button--small button--tertiary pagination__action @actionClass"
-                    data-page="@pageNum"
-                    href="@paginated(page.url, pageNum)"
-                    data-link-name="Pagination view page @pageNum"
-                    aria-label="@ariaContext page @pageNum">@pageNum</a>
-                }
-            }
-
-            @if(pagination.lastPage > 5) {
-                @if(pagination.currentPage + 2 < pagination.lastPage) {
-                    @paginationExtreme(Some(pagination.lastPage), "last", page.url)
-                }
-
-                @paginationPointer(pagination.next, "next", page.url)
-            }
+            @paginationPointer(pagination.next, "next", page.url)
+        }
         </div>
     </div>
 }
