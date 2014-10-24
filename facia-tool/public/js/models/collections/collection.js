@@ -201,28 +201,27 @@ define([
         });
     };
 
-    Collection.prototype.populate = function(raw) {
+    Collection.prototype.populate = function(rawCollection) {
         var self = this,
             list;
 
-        raw = raw ? raw : this.raw;
-        this.raw = raw;
+        this.raw = rawCollection || this.raw;
 
-        if (raw) {
-            this.state.hasDraft(_.isArray(raw.draft));
+        if (this.raw) {
+            this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
 
-            } else if (raw.lastUpdated !== this.state.lastUpdated()) {
-                list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
+            } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
+                list = vars.state.liveMode() ? this.raw.live : this.raw.draft || this.raw.live || [];
 
                 _.each(this.groups, function(group) {
                     group.items.removeAll();
                 });
 
                 _.each(list, function(item) {
-                    var group = _.find(self.groups, function(g) {
+                    var group = _.find(this.groups, function(g) {
                         return (parseInt((item.meta || {}).group, 10) || 0) === g.index;
                     }) || self.groups[0];
 
@@ -233,13 +232,13 @@ define([
                     );
                 });
 
-                this.state.lastUpdated(raw.lastUpdated);
+                this.state.lastUpdated(this.raw.lastUpdated);
                 this.state.count(list.length);
                 this.decorate();
             }
         }
 
-        self.setPending(false);
+        this.setPending(false);
     };
 
     Collection.prototype.closeAllArticles = function() {

@@ -25,6 +25,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val delegate: ApiContent = apiContent.delegate
 
+  lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
+  lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
+  lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
+  lazy val snapUrl: Option[String] = apiContent.metaData.flatMap(_.href).filter(_.nonEmpty)
+
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
   lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
@@ -383,12 +388,6 @@ class Snap(snapId: String,
            snapElements: List[ApiElement] = Nil
             ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
-  val snapType: Option[String] = snapMeta.flatMap(_.snapType)
-  val snapCss: Option[String] = snapMeta.flatMap(_.snapCss)
-  val snapUri: Option[String] = snapMeta.flatMap(_.snapUri)
-
-  lazy val snapUrl: Option[String] = snapMeta.flatMap(_.href)
-
   //We set this to snapId as TemplateDeduping uses this ID to dedupe
   override lazy val url: String = snapId
 
@@ -397,7 +396,7 @@ class Snap(snapId: String,
 
   //Trail implementations
   override lazy val shortUrl: String = ""
-  override lazy val headline: String = snapMeta.flatMap(_.headline).getOrElse("Link")
+  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse("Link")
 
   //Meta implementations
   override lazy val webPublicationDate = snapWebPublicationDate
