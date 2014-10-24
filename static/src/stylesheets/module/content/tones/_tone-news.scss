@@ -1,14 +1,1 @@
 @include tone-content-icons(news, 'news');
-
-.tone-news {
-    // Needed for articles that are not fully tonal
-    .commentcount i {
-        @extend %i-comment--tone-news;
-
-        @if $svg-support {
-            .svg & {
-                @extend %svg-i-comment--tone-news;
-            }
-        }
-    }
-}
