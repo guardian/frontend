@@ -234,9 +234,14 @@ define([
                     Cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
-                    feedbackLink = config.page.edition === 'US' ?
-                        'https://www.surveymonkey.com/s/theguardian-us-edition-feedback' :
-                        'https://www.surveymonkey.com/s/theguardian-beta-feedback';
+
+                    if (config.page.edition === 'US') {
+                        feedbackLink = 'https://www.surveymonkey.com/s/theguardian-us-edition-feedback';
+                    } else if (config.page.edition === 'AU') {
+                        feedbackLink = 'https://www.surveymonkey.com/s/theguardian-au-edition-feedback';
+                    } else {
+                        feedbackLink = 'https://www.surveymonkey.com/s/theguardian-uk-edition-feedback';
+                    }
 
                     msg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
