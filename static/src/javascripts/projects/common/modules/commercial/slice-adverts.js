@@ -8,8 +8,8 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
-    'common/modules/userPrefs',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/dfp',
+    'common/modules/userPrefs'
 ], function (
     bonzo,
     qwery,
@@ -20,19 +20,23 @@ define([
     _,
     config,
     template,
-    userPrefs,
-    dfp
+    dfp,
+    userPrefs
 ) {
 
     var adNames = ['inline1', 'inline2'],
         init = function (options) {
+
+            if (!config.switches.standardAdverts) {
+                return false;
+            }
 
             var container, containerId, $adSlice, isFrontFirst,
                 opts = defaults(
                     options || {},
                     {
                         containerSelector: '.container',
-                        sliceSelector: '.js-slice--ad-candidate, .js-facia-slice__item--mpu'
+                        sliceSelector: '.js-facia-slice-mpu-candidate'
                     }
                 ),
                 // get all the containers
@@ -41,10 +45,6 @@ define([
                 adSlices     = [],
                 containerGap = 1,
                 prefs        = userPrefs.get('container-states');
-
-            if (!config.switches.standardAdverts) {
-                return false;
-            }
 
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
@@ -68,7 +68,6 @@ define([
                     var adName = adNames[index],
                         $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
                     $adSlice
-                        .addClass('slice--has-ad')
                         .removeClass('facia-slice__item--no-mpu')
                         .append($adSlot);
                 })
