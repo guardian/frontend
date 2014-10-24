@@ -16,7 +16,7 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
       ("gender", comboList(genders)),
       "birthDate" -> dateMapping,
       "address" -> idAddress,
-      "billingAddress" -> idAddress
+      "billingAddress" -> optional(idAddress)
     )(AccountFormData.apply)(AccountFormData.unapply)
   }
 
@@ -53,8 +53,8 @@ case class AccountFormData(
   gender: String,
   birthDate: DateFormData,
   address: AddressFormData,
-  billingAddress: AddressFormData
-) extends UserFormData{
+  billingAddress: Option[AddressFormData]
+) extends UserFormData {
 
   def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
@@ -69,15 +69,14 @@ case class AccountFormData(
       address4 = toUpdate(address.address4, currentUser.privateFields.address4),
       postcode = toUpdate(address.postcode, currentUser.privateFields.postcode),
       country = toUpdate(address.country, currentUser.privateFields.country),
-      billingAddress1 = toUpdate(billingAddress.address1, currentUser.privateFields.billingAddress1),
-      billingAddress2 = toUpdate(billingAddress.address2, currentUser.privateFields.billingAddress2),
-      billingAddress3 = toUpdate(billingAddress.address3, currentUser.privateFields.billingAddress3),
-      billingAddress4 = toUpdate(billingAddress.address4, currentUser.privateFields.billingAddress4),
-      billingPostcode = toUpdate(billingAddress.postcode, currentUser.privateFields.billingPostcode),
-      billingCountry  = toUpdate(billingAddress.country, currentUser.privateFields.billingCountry)
+      billingAddress1 = billingAddress.flatMap(x => toUpdate(x.address1, currentUser.privateFields.billingAddress1)),
+      billingAddress2 = billingAddress.flatMap(x => toUpdate(x.address2, currentUser.privateFields.billingAddress2)),
+      billingAddress3 = billingAddress.flatMap(x => toUpdate(x.address3, currentUser.privateFields.billingAddress3)),
+      billingAddress4 = billingAddress.flatMap(x => toUpdate(x.address4, currentUser.privateFields.billingAddress4)),
+      billingPostcode = billingAddress.flatMap(x => toUpdate(x.postcode, currentUser.privateFields.postcode)),
+      billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry))
     ))
   )
-
 }
 
 object AccountFormData {
@@ -96,13 +95,12 @@ object AccountFormData {
       postcode = user.privateFields.postcode getOrElse "",
       country = user.privateFields.country getOrElse ""
     ),
-    billingAddress = AddressFormData(
-      address1 = user.privateFields.billingAddress1 getOrElse "",
-      address2 = user.privateFields.billingAddress2 getOrElse "",
-      address3 = user.privateFields.billingAddress3 getOrElse "",
-      address4 = user.privateFields.billingAddress4 getOrElse "",
-      postcode = user.privateFields.billingPostcode getOrElse "",
-      country = user.privateFields.billingCountry getOrElse ""
-    )
-  )
+    billingAddress = for {
+      address1 <- user.privateFields.billingAddress1
+      address2 <- user.privateFields.billingAddress2
+      address3 <- user.privateFields.billingAddress3
+      address4 <- user.privateFields.billingAddress4
+      postcode <- user.privateFields.postcode
+      country <- user.privateFields.country
+    } yield AddressFormData(address1, address2, address3, address4, postcode, country))
 }
