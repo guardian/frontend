@@ -56,7 +56,7 @@
     } else {
     <div class="pagination u-cf">
     }
-        <div class="u-unstyled pagination__list">
+        <div class="pagination__list">
             @if(pagination.lastPage > 5) {
                 @paginationPointer(pagination.previous, "prev", page.url)
 
@@ -68,7 +68,7 @@
             @pagination.pages.map{ pageNum =>
 
                 @if(pageNum == pagination.currentPage) {
-                    <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page">@pageNum</span>
+                    <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
                 } else {
                     <a class="button button--small button--tertiary pagination__action @actionClass"
                     data-page="@pageNum"
