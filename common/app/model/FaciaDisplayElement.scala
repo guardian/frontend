@@ -5,7 +5,10 @@ object FaciaDisplayElement {
     (trail, trail.mainVideo) match {
       case (other: Content, Some(videoElement)) if other.showMainVideo =>
         InlineVideo(videoElement, other.webTitle, EndSlateComponents.fromContent(other).toUriPath)
-      case _ => InlineImage
+      case (content: Content, _) if content.isCrossword =>
+        CrosswordSvg(content.id)
+      case _ =>
+        InlineImage
     }
   }
 
@@ -18,4 +21,7 @@ object FaciaDisplayElement {
 sealed trait FaciaDisplayElement
 
 case class InlineVideo(videoElement: VideoElement, title: String, endSlatePath: String) extends FaciaDisplayElement
+case class CrosswordSvg(id: String) extends FaciaDisplayElement {
+  def imageUrl = s"/$id.svg"
+}
 case object InlineImage extends FaciaDisplayElement

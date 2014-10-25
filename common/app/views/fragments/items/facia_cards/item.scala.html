@@ -1,7 +1,7 @@
 @(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, Content}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, CrosswordSvg, Content}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, CardStyle, ContributorLinks, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -51,6 +51,15 @@
                                 </div>
                             }
                         }
+
+                    case svg @ CrosswordSvg(id) => {
+                        <div class="fc-item__media-wrapper">
+                            <div class="fc-item__image-container">
+                                <img src="@svg.imageUrl" class="responsive-img" alt=""
+                                     role="presentation" data-crossword-id="@id" />
+                            </div>
+                        </div>
+                    }
 
                     case _ => {
                         @image(trail, inlineImage = containerIndex == 0 && index < 4)

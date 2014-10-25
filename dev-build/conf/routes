@@ -16,6 +16,10 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 
+# Crosswords
+GET         /crosswords/:crosswordType/:id.svg                                                                       controllers.CrosswordsController.thumbnail(crosswordType, id)
+GET         /crosswords/:crosswordType/:id                                                                           controllers.CrosswordsController.crossword(crosswordType, id)
+
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
