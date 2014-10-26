@@ -56,18 +56,20 @@ object CrosswordSvg {
     } getOrElse cellRect
   }
 
-  def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String]) = {
+  def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String], trim: Boolean) = {
     val Dimensions(columns, rows) = crossword.dimensions
 
     val width = columns * (BorderSize + CellSize) + BorderSize
     val height = rows * (BorderSize + CellSize) + BorderSize
 
+    val viewBoxHeight = if (trim) width * 0.6 else height
+
     <svg xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink"
-         viewBox={s"0, 0, $width, $height"}
+         viewBox={s"0, 0, $width, $viewBoxHeight"}
          preserveAspectRatio="none"
          width={boxWidth.getOrElse(width + "px")}
-         height={boxHeight.getOrElse(height + "px")}
+         height={boxHeight.getOrElse(width + "px")}
          style="font-size: 10px">
       <rect x="0" y="0" width={width.toString} height={height.toString} style="fill: #000000" />
       {

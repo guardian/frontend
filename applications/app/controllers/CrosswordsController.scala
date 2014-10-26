@@ -32,14 +32,14 @@ object CrosswordsController extends Controller with ExecutionContexts {
     withCrossword(crosswordTypeString, idString) { crossword =>
       Ok(views.html.crossword(
         new CrosswordPage(CrosswordData.fromCrossword(crossword)),
-        CrosswordSvg.apply(crossword, None, None)
+        CrosswordSvg.apply(crossword, None, None, false)
       ))
     }
   }
 
   def thumbnail(crosswordTypeString: String, idString: String) = Action.async { implicit request =>
     withCrossword(crosswordTypeString, idString) { crossword =>
-      val xml = CrosswordSvg.apply(crossword, Some("100%"), Some("100%"))
+      val xml = CrosswordSvg.apply(crossword, Some("100%"), Some("100%"), trim = true)
 
       val globalStylesheet = Static("stylesheets/global.css")
 
