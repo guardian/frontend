@@ -1,3 +1,4 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'bean',
     'bonzo',
@@ -42,7 +43,8 @@ define([
     loaderTpl,
     shareButtonTpl,
     shareButtonMobileTpl
-    ) {
+) {
+
     function GalleryLightbox() {
 
         // CONFIG

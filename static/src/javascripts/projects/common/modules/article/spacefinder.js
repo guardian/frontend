@@ -1,7 +1,36 @@
-define(['bonzo','qwery', 'common/utils/_'], function(bonzo, qwery, _) {
+/* jscs:disable disallowDanglingUnderscores */
+define([
+    'qwery',
+    'common/utils/_'
+], function (
+    qwery,
+    _
+) {
+
     // find spaces in articles for inserting ads and other inline content
 
-    var bodySelector = '.js-article__body';
+    var bodySelector = '.js-article__body',
+        // minAbove and minBelow are measured from the top of the paragraph element being tested
+        defaultRules = { // these are written for adverts
+            minAbove: 250,
+            minBelow: 300,
+            selectors: {
+                ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
+                ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
+            }
+        },
+        // test one element vs another for the given rules
+        _testElem = function (para, other, rules) {
+            var isMinAbove = para.top - other.bottom >= rules.minAbove,
+                isMinBelow = other.top - para.bottom >= rules.minBelow;
+            return isMinAbove || isMinBelow;
+        },
+        // test one element vs an array of other elements for the given rules
+        _testElems = function (para, others, rules) {
+            return _(others).every(function (other) {
+                return _testElem(para, other, rules);
+            }).valueOf();
+        };
 
     function _mapElementToDimensions(el) {
         return {
@@ -11,38 +40,14 @@ define(['bonzo','qwery', 'common/utils/_'], function(bonzo, qwery, _) {
         };
     }
 
-    // minAbove and minBelow are measured from the top of the paragraph element being tested
-    var defaultRules = { // these are written for adverts
-        minAbove: 250,
-        minBelow: 300,
-        selectors: {
-            ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
-            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
-        }
-    };
-
-    // test one element vs another for the given rules
-    var _testElem = function(para, other, rules) {
-        var isMinAbove = para.top - other.bottom >= rules.minAbove,
-            isMinBelow = other.top - para.bottom >= rules.minBelow;
-        return isMinAbove || isMinBelow;
-    };
-
-    // test one element vs an array of other elements for the given rules
-    var _testElems = function(para, others, rules) {
-        return _(others).every(function(other) {
-            return _testElem(para, other, rules);
-        }).valueOf();
-    };
-
     function _enforceRules(slots, rules, bodyHeight) {
-        var filtered = _(slots).filter(function(p) {
+        var filtered = _(slots).filter(function (p) {
             return p.top >= rules.minAbove && p.top + rules.minBelow <= bodyHeight;
         });
-        _(rules.selectors).forOwn(function(params, selector){
+        _(rules.selectors).forOwn(function (params, selector) {
             var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
 
-            filtered = filtered.filter(function(slot) {
+            filtered = filtered.filter(function (slot) {
                 return _testElems(slot, relevantElems, params);
             });
         });
@@ -56,11 +61,11 @@ define(['bonzo','qwery', 'common/utils/_'], function(bonzo, qwery, _) {
         // get all immediate children
         var bodyBottom = qwery(bodySelector)[0].offsetHeight,
             allElems = _(qwery(bodySelector + ' > *')).map(_mapElementToDimensions),
-            paraElems  = allElems.filter(function(el) {
+            paraElems  = allElems.filter(function (el) {
                 return el.element.tagName.toLowerCase() === 'p';
-            });
+            }),
+            slots = _enforceRules(paraElems, rules, bodyBottom);
 
-        var slots = _enforceRules(paraElems, rules, bodyBottom);
         return slots.length ? slots[0].element : undefined;
     }
 
