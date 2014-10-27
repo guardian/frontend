@@ -101,10 +101,14 @@ Media list item. Looks a bit like this:
 
     .fc-item__footer--vertical,
     &[class*="fc-item--has-sublinks"] .fc-item__meta {
-        margin-left: 0 - $image-width;
+        margin-left: 0 - $image-width - $mobile-media-padding;
     }
 
     &.fc-item--has-cutout {
+        .fc-item__meta {
+            margin-left: 0;
+        }
+
         .fc-item__container {
             min-height: gs-height(2) + $gs-baseline;
         }
