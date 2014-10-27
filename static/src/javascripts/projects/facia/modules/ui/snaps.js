@@ -67,14 +67,16 @@ define([
     }
 
     function injectIframe(el) {
-        var height = Math.min(Math.max(bonzo(el).offset().height || 0, 200), 400);
+        var elHeight = bonzo(el).offset().height || 0,
+            minIframeHeight = Math.ceil((bonzo(el).offset().width || 0) / 2),
+            maxIframeHeight = 400;
 
         // Wrapping iframe to fix iOS height-setting bug
         bonzo(el).html(template(
             '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
                 '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
             '</div>',
-            {src: el.getAttribute('data-snap-uri'), height: height}
+            {src: el.getAttribute('data-snap-uri'), height: Math.min(Math.max(elHeight, minIframeHeight), maxIframeHeight)}
         ));
     }
 
