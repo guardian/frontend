@@ -4,7 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'text!common/views/content/share-count.html'
-], function(
+], function (
     $,
     ajax,
     detect,
@@ -43,7 +43,7 @@ define([
                 slices     = duration / updateStep,
                 amountPerStep = val / slices,
                 currentSlice = 0,
-                interval = window.setInterval(function() {
+                interval = window.setInterval(function () {
                     incrementShareCount(amountPerStep);
                     if (++currentSlice === slices) {
                         window.clearInterval(interval);
@@ -57,13 +57,13 @@ define([
 
     function init() {
         if ($shareCountEls.length) {
-            var url = "http://www.theguardian.com/" + config.page.pageId;
+            var url = 'http://www.theguardian.com/' + config.page.pageId;
             ajax({
                 url: 'http://graph.facebook.com/' + url,
                 type: 'json',
                 method: 'get',
                 crossOrigin: true,
-                success: function(resp) {
+                success: function (resp) {
                     addToShareCount(resp.shares || 0);
                 }
             });
@@ -72,7 +72,7 @@ define([
                 type: 'jsonp',
                 method: 'get',
                 crossOrigin: true,
-                success: function(resp) {
+                success: function (resp) {
                     addToShareCount(resp.count || 0);
                 }
             });
@@ -82,5 +82,5 @@ define([
 
     return {
         init: init
-    }
+    };
 });

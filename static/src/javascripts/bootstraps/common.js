@@ -416,7 +416,7 @@ define([
                 });
             },
 
-            initShareCounts: function() {
+            initShareCounts: function () {
                 sharecount.init();
 
             }
@@ -455,7 +455,6 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
-
 
             mediator.emit('page:common:ready');
         };
