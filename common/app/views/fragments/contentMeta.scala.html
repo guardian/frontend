@@ -9,16 +9,22 @@
 }
 
 @metaBody() = {
-    <div class="js-comment-count meta__comment-count--top"></div>
     @if(!content.hasTonalHeaderByline) {
         @byline(content)
     }
     @if(!content.shouldHidePublicationDate) {
         @fragments.meta.dateline(content.webPublicationDate, secondary = true)
     }
-    <div class="js-comment-count meta__comment-count--bottom"></div>
-    <div class="submeta submeta--top" data-component="share">
-        @fragments.social(content, "top")
+    <div class="meta__extras">
+        <div class="meta__social" data-component="share">
+            @fragments.social(content, "top")
+        </div>
+        <div class="meta__numbers modern-visible">
+            <div class="u-h meta__number js-sharecount">
+            </div>
+            <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content">
+            </div>
+        </div>
     </div>
 }
 
