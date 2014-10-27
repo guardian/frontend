@@ -73,7 +73,7 @@ case class AccountFormData(
       billingAddress2 = billingAddress.flatMap(x => toUpdate(x.address2, currentUser.privateFields.billingAddress2)),
       billingAddress3 = billingAddress.flatMap(x => toUpdate(x.address3, currentUser.privateFields.billingAddress3)),
       billingAddress4 = billingAddress.flatMap(x => toUpdate(x.address4, currentUser.privateFields.billingAddress4)),
-      billingPostcode = billingAddress.flatMap(x => toUpdate(x.postcode, currentUser.privateFields.postcode)),
+      billingPostcode = billingAddress.flatMap(x => toUpdate(x.postcode, currentUser.privateFields.billingPostcode)),
       billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry))
     ))
   )
@@ -100,7 +100,7 @@ object AccountFormData {
       address2 <- user.privateFields.billingAddress2
       address3 <- user.privateFields.billingAddress3
       address4 <- user.privateFields.billingAddress4
-      postcode <- user.privateFields.postcode
-      country <- user.privateFields.country
+      postcode <- user.privateFields.billingPostcode
+      country <- user.privateFields.billingCountry
     } yield AddressFormData(address1, address2, address3, address4, postcode, country))
 }
