@@ -38,7 +38,7 @@ define([
         $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]); // limited to 1 el
 
         if (detect.isBreakpoint({min: 'tablet'})) {
-            var duration = 500,
+            var duration = 250,
                 updateStep = 25,
                 slices     = duration / updateStep,
                 amountPerStep = val / slices,
