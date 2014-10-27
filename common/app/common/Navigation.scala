@@ -143,7 +143,7 @@ trait Navigation {
   val consumeraffairs = SectionLink("money", "consumer affairs", "Consumer affairs", "/money/consumer-affairs")
 
   //Life and style
-  val lifeandstyle = SectionLink("lifeandstyle", "life", "Life & style", "/lifeandstyle")
+  val lifeandstyle = SectionLink("lifeandstyle", "lifestyle", "Lifestyle", "/lifeandstyle")
   val fashion = SectionLink("lifeandstyle", "fashion", "Fashion", "/fashion")
   val foodanddrink = SectionLink("lifeandstyle", "food", "Food", "/lifeandstyle/food-and-drink")
   val family = SectionLink("lifeandstyle", "family", "family", "/lifeandstyle/family")
