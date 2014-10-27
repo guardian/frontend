@@ -30,11 +30,11 @@ object DfpApiWrapper extends Logging {
     def fetch(soFar: Seq[T]): Seq[T] = {
       val page = fetchPage(statementBuilder.toStatement)
       val resultsSoFar = soFar ++ page.results
-      if (resultsSoFar.size < page.totalResultSetSize) {
+      if (resultsSoFar.size >= page.totalResultSetSize) {
+        resultsSoFar
+      } else {
         statementBuilder.increaseOffsetBy(SUGGESTED_PAGE_LIMIT)
         fetch(resultsSoFar)
-      } else {
-        resultsSoFar
       }
     }
 
