@@ -40,7 +40,7 @@ define([
             if (linkName) {
                 $elem.attr('title', linkName);
                 deactivateCallbacks.push(function () {
-                    $elem.attr('title', oldTitle || "");
+                    $elem.attr('title', oldTitle || '');
                 });
             }
         });
