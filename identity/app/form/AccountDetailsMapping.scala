@@ -95,22 +95,18 @@ object AccountFormData {
       postcode = user.privateFields.postcode getOrElse "",
       country = user.privateFields.country getOrElse ""
     ),
-    billingAddress = (
-      user.privateFields.billingAddress1,
-      user.privateFields.billingAddress2,
-      user.privateFields.billingAddress3,
-      user.privateFields.billingAddress4,
-      user.privateFields.billingPostcode,
-      user.privateFields.billingCountry) match {
-      case (None, None, None, None, None, None) => None
-      case (address1, address2, address3, address4, postcode, country) =>
+    billingAddress = {
+      import user.privateFields._
+      if (List(billingAddress1, billingAddress2, billingAddress3, billingAddress4, billingPostcode, billingCountry).flatten.isEmpty)
+        None
+      else
         Some(AddressFormData(
-          address1.getOrElse(""),
-          address2.getOrElse(""),
-          address3.getOrElse(""),
-          address4.getOrElse(""),
-          postcode.getOrElse(""),
-          country.getOrElse("")))
+          billingAddress1.getOrElse(""),
+          billingAddress2.getOrElse(""),
+          billingAddress3.getOrElse(""),
+          billingAddress4.getOrElse(""),
+          billingPostcode.getOrElse(""),
+          billingCountry.getOrElse("")))
     }
   )
 }
