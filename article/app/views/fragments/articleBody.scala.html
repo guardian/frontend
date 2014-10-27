@@ -1,7 +1,6 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 
 @import conf.Switches._
-@import views.support.ArticleLayout.ArticleLayout
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(model.article) { article =>
@@ -36,20 +35,7 @@
                         @BodyCleaner(article, article.body)
                     </div>
 
-
-                    <div class="submeta-container @if(!article.hasSupportingAtBottom) { submeta-container--break-at-leftcol }">
-                        @if(article.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                            <div class="submeta" data-link-name="keywords">
-                                <h2 class="submeta__head">Topics</h2>
-                                @fragments.keywordList(article.keywords)
-                            </div>
-                        }
-                        @if(!article.tooSmallForBottomSocialButtons) {
-                            <div class="submeta" data-component="share">
-                                @fragments.social(article)
-                            </div>
-                        }
-                    </div>
+                    @fragments.submeta(article)
 
                     <div class="after-article js-after-article"></div>
                 </div>
