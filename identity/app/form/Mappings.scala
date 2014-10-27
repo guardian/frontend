@@ -1,10 +1,13 @@
 package form
 
-import model.Countries
-import play.api.data.Forms._
 import play.api.data.Mapping
+import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.i18n.Messages
+import model.Countries
+import org.scala_tools.time.Imports._
+import jobs.BlockedEmailDomainList
+import conf.Switches
 
 trait Mappings {
 
@@ -17,6 +20,19 @@ trait Mappings {
   val idUrl = text verifying (
     Messages("error.url"),
     { value => value.isEmpty || UrlPattern.findFirstIn(value).isDefined }
+  )
+
+  private val EmailPattern = """(\w+)@([\w\.]+)""".r
+  val idRegEmail = text.verifying (
+    Messages("error.emailDomainInvalid"),
+    { value =>
+      //Let the identity API validate emails - don't try to extadct the domain from a badll formed email
+      if( Switches.IdentityBlockSpamEmails.isSwitchedOn && value.matches(EmailPattern.toString))
+      {
+        val EmailPattern(name, domain) = value
+        !(BlockedEmailDomainList.getBlockedDomains.contains(domain))
+      } else { true }
+    }
   )
 
   val idEmail: Mapping[String] = email

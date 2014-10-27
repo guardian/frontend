@@ -2,14 +2,16 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
+import layout.ContainerLayout
 import model._
+import slices.FixedContainers
 import views.support.{TemplateDeduping, ForceGroupsCollection, MultimediaContainer}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
-  private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
+  private val page = Page("more galleries", "inpictures", "more galleries", "more galleries")
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.withDefaults(displayName = Some("more galleries"), groups = Some(List("multimedia/gallery")))
 
@@ -34,16 +36,16 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   }
 
   private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
-    val collection = Collection(galleries)
+    val collection = Collection(galleries, Some("more galleries"))
+    val layout = ContainerLayout(FixedContainers.all("fixed/medium/slow-VI"), collection, None)
     val templateDeduping = new TemplateDeduping
 
-    val html = views.html.fragments.containers.gallery(
-      page,
-      ForceGroupsCollection.firstTwoBig(collection),
-      MultimediaContainer(),
+    val html = views.html.fragments.containers.facia_cards.container(
+      collection,
+      layout,
       1,
-      featuredSeries = featuredSeries,
-      dataId = dataId
+      FrontProperties.empty,
+      dataId
     )(request, templateDeduping, config)
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)

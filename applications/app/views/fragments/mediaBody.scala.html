@@ -93,20 +93,7 @@
 
                                 @fragments.contentMeta(media)
 
-                                @defining(media match {
-                                    case v: Video => v.standfirst.getOrElse("").length > 350
-                                    case a: Audio => a.body.getOrElse("").length > 800
-                                }) { breakIntoLeftCol =>
-                                    <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
-                                        @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                                            <div class="submeta" data-link-name="keywords">
-                                                <h2 class="submeta__head">Topics</h2>
-                                                @fragments.keywordList(media.keywords, tone = Some("media"))
-                                            </div>
-                                        }
-
-                                    </div>
-                                }
+                                @fragments.submeta(media)
                             </div>
                         </div>
                     </div>
