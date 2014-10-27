@@ -12,9 +12,13 @@ $fc-item-gutter: $gs-gutter / 4;
 
     // IE10/11 ignore boxsizing on flex-basis'd element.
     // Option is extra wrapping div or this slightly overblow selector.
-    .fc-item__content > * {
-        @include box-sizing(border-box);
-        padding-right: $gs-gutter * .75;
+    .fc-item__content {
+        position: relative;
+
+        > * {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter * .75;
+        }
     }
 
     .has-flex-wrap & {
