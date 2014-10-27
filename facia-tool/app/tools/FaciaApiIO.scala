@@ -21,7 +21,7 @@ trait FaciaApiWrite {
   def archive(id: String, block: Block, update: JsValue, identity: UserIdentity): Unit
 }
 
-object FaciaApi extends FaciaApiRead with FaciaApiWrite {
+object FaciaApiIO extends FaciaApiRead with FaciaApiWrite {
 
   def getSchema = S3FrontsApi.getSchema
   def getBlock(id: String) = for {
@@ -34,16 +34,32 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     block
   }
 
-  // TODO side effects - should be in the Controller
-  private def mutateBlock(mutator: UserIdentity => Block => Option[Block])
+  private def mutateBlock(f: UserIdentity => Block => Option[Block])
                          (id: String, identity: UserIdentity): Option[Block] =
     getBlock(id)
-      .flatMap(mutator(identity))
+      .flatMap(f(identity))
       .map(putBlock(id, _))
 
-  def publishBlock(id: String, identity: UserIdentity) = mutateBlock(preparePublishBlock)(id, identity)
+  def publishBlock(id: String, identity: UserIdentity) = mutateBlock(FaciaApi.preparePublishBlock)(id, identity)
 
-  def discardBlock(id: String, identity: UserIdentity) = mutateBlock(prepareDiscardBlock)(id, identity)
+  def discardBlock(id: String, identity: UserIdentity) = mutateBlock(FaciaApi.prepareDiscardBlock)(id, identity)
+
+  def archive(id: String, block: Block, update: JsValue, identity: UserIdentity): Unit = {
+    val newBlock: Block = block.copy(diff = Some(update))
+    S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newBlock)), identity)
+  }
+
+  def putMasterConfig(config: Config): Option[Config] = {
+    Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
+  }
+  def archiveMasterConfig(config: Config, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
+
+}
+
+/**
+ * this is the pure and unit testable stuff for the FaciaApiIO
+ */
+object FaciaApi {
 
   // testable
   def preparePublishBlock(identity: UserIdentity)(block: Block): Option[Block] =
@@ -57,16 +73,6 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     Some(block)
       .map(_.copy(draft = None))
       .map(updateIdentity(_, identity))
-
-  def archive(id: String, block: Block, update: JsValue, identity: UserIdentity): Unit = {
-    val newBlock: Block = block.copy(diff = Some(update))
-    S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newBlock)), identity)
-  }
-
-  def putMasterConfig(config: Config): Option[Config] = {
-    Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
-  }
-  def archiveMasterConfig(config: Config, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
 
   def updateIdentity(block: Block, identity: UserIdentity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 
