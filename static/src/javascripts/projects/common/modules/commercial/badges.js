@@ -1,19 +1,21 @@
 define([
-    'qwery',
     'bonzo',
+    'qwery',
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
     'text!common/views/commercial/badge.html'
 ], function (
-    qwery,
     bonzo,
+    qwery,
     once,
     $,
     config,
     template,
+    createAdSlot,
     dfp,
     badgeTpl
 ) {
@@ -46,11 +48,11 @@ define([
                 ));
             }
         },
-        createAdSlot = function (container, sponsorship, opts) {
+        renderAd = function (container, sponsorship, opts) {
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
-                $adSlot     = bonzo(dfp.createAdSlot(
+                $adSlot     = bonzo(createAdSlot(
                     name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
                 ));
 
@@ -69,7 +71,7 @@ define([
             $('.js-sponsored-front').each(function (front) {
                 var $front = bonzo(front);
 
-                createAdSlot(
+                renderAd(
                     qwery('.container', front)[0],
                     $front.data('sponsorship'),
                     {
@@ -82,7 +84,7 @@ define([
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                     var $container = bonzo(container);
 
-                    createAdSlot(
+                    renderAd(
                         container,
                         $container.data('sponsorship'),
                         {
@@ -106,7 +108,7 @@ define([
                     $container.hasClass('js-sponsored-container') &&
                     qwery('.ad-slot--paid-for-badge', container).length === 0
                 ) {
-                    $adSlot = createAdSlot(
+                    $adSlot = renderAd(
                         container,
                         $container.data('sponsorship'),
                         {

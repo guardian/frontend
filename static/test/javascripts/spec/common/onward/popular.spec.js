@@ -14,6 +14,11 @@ define([
                         }
                     };
                 },
+                'common/modules/commercial/create-ad-slot': function () {
+                    return function () {
+                        return '<div class="ad-slot"></div>';
+                    }
+                },
                 'common/modules/commercial/dfp': function () {
                     return {
                         addSlot: function () {},

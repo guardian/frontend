@@ -8,7 +8,7 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/userPrefs'
 ], function (
     bonzo,
@@ -20,7 +20,7 @@ define([
     _,
     config,
     template,
-    dfp,
+    createAdSlot,
     userPrefs
 ) {
 
@@ -66,7 +66,7 @@ define([
                 .slice(0, adNames.length)
                 .forEach(function ($adSlice, index) {
                     var adName = adNames[index],
-                        $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
+                        $adSlot = bonzo(createAdSlot(adName, 'container-inline'));
                     $adSlice
                         .removeClass('facia-slice__item--no-mpu')
                         .append($adSlot);

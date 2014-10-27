@@ -3,13 +3,13 @@ define([
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
     once,
     $,
     config,
-    dfp
+    createAdSlot
 ) {
 
     function init() {
@@ -18,7 +18,7 @@ define([
         }
 
         var containerIndex,
-            $adSlot     = bonzo(dfp.createAdSlot('merchandising-high', 'commercial-component-high')),
+            $adSlot     = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
             $containers = $('.container');
 
         if ($containers.length >= 2) {
