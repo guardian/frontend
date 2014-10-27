@@ -59,6 +59,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .has-flex-wrap {
     .fc-item {
         @include flex-display;
+        @include flex(1);
     }
 
     .fc-item__container {
@@ -93,7 +94,6 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item {
-    @include flex(1);
     background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
