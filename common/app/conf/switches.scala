@@ -320,6 +320,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
 
+  val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
+    "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
+    safeState = On, sellByDate = never)
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -424,6 +427,7 @@ object Switches extends Collections {
     FaciaToolCachedContentApiSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
+    IdentityBlockSpamEmails,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
