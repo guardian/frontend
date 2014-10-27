@@ -494,6 +494,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val body: Option[String] = delegate.safeFields.get("body")
+  override def metaData: Map[String, JsValue] = super.metaData ++ Map("isPodcast" -> JsBoolean(isPodcast))
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
