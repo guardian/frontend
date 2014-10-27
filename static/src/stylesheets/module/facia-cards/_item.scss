@@ -33,6 +33,8 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__content {
             @include flex-basis(100% - $media-width);
+            // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
+            max-width: 100% - $media-width;
         }
 
         .fc-item__footer--horizontal {
