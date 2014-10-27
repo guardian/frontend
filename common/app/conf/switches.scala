@@ -160,14 +160,18 @@ object Switches extends Collections {
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val AudienceScienceGatewaySwitch = Switch("Commercial", "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val CriteoSwitch = Switch("Commercial", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
+    safeState = Off, sellByDate = never
+  )
 
   val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
