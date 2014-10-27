@@ -99,6 +99,7 @@ trait Navigation {
 
   //Culture
   val culture = SectionLink("culture", "culture", "Culture", "/culture")
+  val arts = SectionLink("culture", "arts", "Arts", "/culture")
   val artanddesign = SectionLink("culture", "art & design", "Art & design", "/artanddesign")
   val books = SectionLink("culture", "books", "Books", "/books")
   val film = SectionLink("culture", "film", "Film", "/film")
