@@ -64,7 +64,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     var skipConfirmation = idRequest.skipConfirmation
 
     def onError(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]): Future[Result] = {
-      logger.info("++ Invalid registration request")
+      logger.info("Invalid registration request")
       formWithErrors.error("user.primaryEmailAddress") match {
         case Some(FormError("user.primaryEmailAddress", Seq("This domain is blacklisted"), _)) => {
           logger.info("Blocking registration from blacklisted domain here: %s".format(formWithErrors.data.getOrElse(emailKey," should be an email address")))
