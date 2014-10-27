@@ -12,7 +12,7 @@ import scala.collection.JavaConversions._
   it should "render gallery story package links" in goTo("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     val linkUrls = browser.$("a").getAttributes("href")
 
-    linkUrls should contain(withHost("/music/2010/sep/16/gustavo-dudamel-simon-bolivar-orchestra"))
+    linkUrls should contain(withHost("/music/2012/jun/24/simon-bolivar-dudamel-review"))
   }
 
   it should "render captions" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
