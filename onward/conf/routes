@@ -3,46 +3,46 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*path                                        dev.DevAssetsController.at(path)
+GET        /assets/*path                              dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                        conf.HealthCheck.healthcheck()
+GET        /_healthcheck                              conf.HealthCheck.healthcheck()
 
-GET        /nav.json                                            controllers.NavigationController.nav()
+GET        /nav.json                                  controllers.NavigationController.nav()
 
 # Onward public endpoints
-GET        /most-read.json                                      controllers.MostPopularController.render(path = "")
-GET        /most-read/*path.json                                controllers.MostPopularController.render(path)
-GET        /most-read-geo.json                                  controllers.MostPopularController.renderPopularGeo()
-GET        /most-read-day.json                                  controllers.MostPopularController.renderPopularDay(countryCode)
+GET        /most-read.json                            controllers.MostPopularController.render(path = "")
+GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
+GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
+GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
 
-GET        /top-stories.json                                    controllers.TopStoriesController.renderTopStories()
-GET        /top-stories/trails.json                             controllers.TopStoriesController.renderTrails()
+GET        /top-stories.json                          controllers.TopStoriesController.renderTopStories()
+GET        /top-stories/trails.json                   controllers.TopStoriesController.renderTrails()
 
-GET        /related/*path.json                                  controllers.RelatedController.render(path)
+GET        /related/*path.json                        controllers.RelatedController.render(path)
 
-GET        /popular-in-tag/*tag.json                            controllers.PopularInTag.render(tag)
+GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
-GET        /preference/platform/:platform                       controllers.ChangeViewController.render(platform, page)
-GET        /preference/edition/:edition                         controllers.ChangeEditionController.render(edition)
-GET        /preference/front-alphas/:optAction                  controllers.ChangeAlphaController.render(optAction, page)
+GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
+GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
+GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
-GET        /:mediaType/section/:sectionId/*seriesId.json        controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
-GET        /:mediaType/section/:sectionId.json                  controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
-GET        /video/most-viewed.json                              controllers.MostViewedVideoController.renderMostViewed()
-GET        /audio/most-viewed.json                              controllers.MostViewedAudioController.renderMostViewed()
-GET        /podcast/most-viewed.json                            controllers.MostViewedAudioController.renderMostViewedPodcast()
-GET        /gallery/most-viewed.json                            controllers.MostViewedGalleryController.renderMostViewed()
-GET        /video/end-slate/series/*seriesId.json               controllers.VideoEndSlateController.renderSeries(seriesId)
-GET        /video/end-slate/section/*sectionId.json             controllers.VideoEndSlateController.renderSection(sectionId)
+GET        /:mediaType/section/:sectionId/*seriesId.json   controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
+GET        /:mediaType/section/:sectionId.json             controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
+GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
+GET        /audio/most-viewed.json                    controllers.MostViewedAudioController.renderMostViewed()
+GET        /podcast/most-viewed.json                  controllers.MostViewedAudioController.renderMostViewedPodcast()
+GET        /gallery/most-viewed.json                  controllers.MostViewedGalleryController.renderMostViewed()
+GET        /video/end-slate/series/*seriesId.json     controllers.VideoEndSlateController.renderSeries(seriesId)
+GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateController.renderSection(sectionId)
 
 
 # For tests
-GET        /most-read/*path                                     controllers.MostPopularController.renderHtml(path)
-GET        /related/*path                                       controllers.RelatedController.renderHtml(path)
-GET        /top-stories                                         controllers.TopStoriesController.renderTopStoriesHtml()
-GET        /gallery/most-viewed                                 controllers.MostViewedGalleryController.renderMostViewedHtml()
+GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
+GET        /related/*path                             controllers.RelatedController.renderHtml(path)
+GET        /top-stories                               controllers.TopStoriesController.renderTopStoriesHtml()
+GET        /gallery/most-viewed                       controllers.MostViewedGalleryController.renderMostViewedHtml()
 
 # Experimental
-GET        /cards/opengraph/*path.json                          controllers.CardController.opengraph(path)
-GET        /tagged.json                                         controllers.TaggedContentController.renderJson(tag: String)
-GET        /series/*path.json                                   controllers.SeriesController.renderSeriesStories(path)
+GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
+GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
+GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)

@@ -2,303 +2,303 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                                    dev.DevAssetsController.humans()
-GET         /surveys/*file                                                                                                 dev.DevAssetsController.surveys(file)
-GET         /commercial/test-page                                                                                          controllers.commercial.CreativeTestPage.allComponents
+GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
+GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
+GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
-GET         /assets/internal/*file                                                                                         controllers.Assets.at(path="/public", file)
-GET         /assets/*path                                                                                                  dev.DevAssetsController.at(path)
+GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
+GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET         /ab.gif                                                                                                        controllers.DiagnosticsController.ab
-GET         /js.gif                                                                                                        controllers.DiagnosticsController.js
-GET         /count/$prefix<.+>.gif                                                                                         controllers.DiagnosticsController.analytics(prefix)
-GET         /counts.gif                                                                                                    controllers.DiagnosticsController.analyticsCounts()
+GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
+GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
+GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
+GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 
 # Analytics
-GET         /analytics/abtests                                                                                             controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence                                                                                          controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET         /analytics/google-referrers                                                                                    controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
-GET         /analytics/content/gallery                                                                                     controllers.admin.ContentPerformanceController.renderGalleryDashboard()
-GET         /analytics/content/liveblog                                                                                    controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
-GET         /analytics/omniture/segments/:rsid                                                                             controllers.admin.OmnitureReportController.getSegments(rsid)
-GET         /analytics/omniture/*reportName                                                                                controllers.admin.OmnitureReportController.getReport(reportName)
-GET         /analytics/commercial                                                                                          controllers.admin.CommercialController.renderCommercial()
-GET         /analytics/commercial/sponsorships                                                                             controllers.admin.CommercialController.renderSponsorships()
-GET         /analytics/commercial/pageskins                                                                                controllers.admin.CommercialController.renderPageskins()
-GET         /analytics/commercial/surging                                                                                  controllers.admin.CommercialController.renderSurgingContent()
-GET         /analytics/commercial/im-sponsorships                                                                          controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
-GET         /analytics/commercial/templates                                                                                controllers.admin.CommercialController.renderCreativeTemplates()
+GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/google-referrers                                                                              controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
+GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog                                                                              controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
+GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
+GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
+GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
+GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 
 # Discussion
-GET         /discussion/comment-counts                                                                                     controllers.CommentCountController.commentCount(shortUrls: String)
-GET         /discussion/comment-counts.json                                                                                controllers.CommentCountController.commentCountJson(shortUrls: String)
+GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
+GET         /discussion/comment-counts.json                                                                          controllers.CommentCountController.commentCountJson(shortUrls: String)
 
-GET         /discussion/comment/*id.json                                                                                   controllers.CommentsController.commentJson(id: Int)
-GET         /discussion/comment/*id                                                                                        controllers.CommentsController.comment(id: Int)
-GET         /discussion/comment-context/*commentId.json                                                                    controllers.CommentsController.commentContextJson(commentId: Int)
-GET         /discussion/$discussionKey</?p/\w+>.json                                                                       controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/$discussionKey</?p/\w+>                                                                            controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/comment/*id.json                                                                             controllers.CommentsController.commentJson(id: Int)
+GET         /discussion/comment/*id                                                                                  controllers.CommentsController.comment(id: Int)
+GET         /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJson(commentId: Int)
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
-GET         /discussion/profile/:id/search/:q.json                                                                         controllers.ProfileActivityController.profileSearch(id: String, q: String)
-GET         /discussion/profile/:id/discussions.json                                                                       controllers.ProfileActivityController.profileDiscussions(id: String)
-GET         /discussion/profile/:id/replies.json                                                                           controllers.ProfileActivityController.profileReplies(id: String)
-GET         /discussion/profile/:id/picks.json                                                                             controllers.ProfileActivityController.profilePicks(id: String)
-GET         /discussion/profile/:id/witness.json                                                                           controllers.WitnessActivityController.witnessActivity(id: String)
+GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
+GET         /discussion/profile/:id/discussions.json                                                                 controllers.ProfileActivityController.profileDiscussions(id: String)
+GET         /discussion/profile/:id/replies.json                                                                     controllers.ProfileActivityController.profileReplies(id: String)
+GET         /discussion/profile/:id/picks.json                                                                       controllers.ProfileActivityController.profilePicks(id: String)
+GET         /discussion/profile/:id/witness.json                                                                     controllers.WitnessActivityController.witnessActivity(id: String)
 
-GET         /open/cta/article/*discussionKey.json                                                                          controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 
 # Onward
-GET         /most-read.json                                                                                                controllers.MostPopularController.render(path = "")
-GET         /most-read/*path.json                                                                                          controllers.MostPopularController.render(path)
-GET         /most-read-geo.json                                                                                            controllers.MostPopularController.renderPopularGeo()
-GET         /most-read-day.json                                                                                            controllers.MostPopularController.renderPopularDay(countryCode)
+GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
+GET         /most-read/*path.json                                                                                    controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeo()
+GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDay(countryCode)
 
-GET         /top-stories.json                                                                                              controllers.TopStoriesController.renderTopStories()
-GET         /top-stories/trails.json                                                                                       controllers.TopStoriesController.renderTrails()
-GET         /related/*path.json                                                                                            controllers.RelatedController.render(path)
-GET         /popular-in-tag/*tag.json                                                                                      controllers.PopularInTag.render(tag)
+GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
+GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
+GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
+GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
-GET         /preference/platform/:platform                                                                                 controllers.ChangeViewController.render(platform, page)
-GET         /preference/edition/:edition                                                                                   controllers.ChangeEditionController.render(edition)
-GET         /preference/front-alphas/:optAction                                                                            controllers.ChangeAlphaController.render(optAction, page)
+GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
+GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
+GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
-GET         /cards/opengraph/*path.json                                                                                    controllers.CardController.opengraph(path)
-GET         /tagged.json                                                                                                   controllers.TaggedContentController.renderJson(tag: String)
+GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
+GET         /tagged.json                                                                                             controllers.TaggedContentController.renderJson(tag: String)
 
-GET         /:mediaType/section/:sectionId/*seriesId.json                                                                  controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
-GET         /:mediaType/section/:sectionId.json                                                                            controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
-GET         /video/most-viewed.json                                                                                        controllers.MostViewedVideoController.renderMostViewed()
-GET         /audio/most-viewed.json                                                                                        controllers.MostViewedAudioController.renderMostViewed()
-GET         /podcast/most-viewed.json                                                                                      controllers.MostViewedAudioController.renderMostViewedPodcast()
-GET         /gallery/most-viewed.json                                                                                      controllers.MostViewedGalleryController.renderMostViewed()
-GET         /video/end-slate/series/*seriesId.json                                                                         controllers.VideoEndSlateController.renderSeries(seriesId)
-GET         /video/end-slate/section/*sectionId.json                                                                       controllers.VideoEndSlateController.renderSection(sectionId)
+GET         /:mediaType/section/:sectionId/*seriesId.json                                                            controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
+GET         /:mediaType/section/:sectionId.json                                                                      controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
+GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
+GET         /audio/most-viewed.json                                                                                  controllers.MostViewedAudioController.renderMostViewed()
+GET         /podcast/most-viewed.json                                                                                controllers.MostViewedAudioController.renderMostViewedPodcast()
+GET         /gallery/most-viewed.json                                                                                controllers.MostViewedGalleryController.renderMostViewed()
+GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
+GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
 
 # Sport
-GET         /sport/cricket/match/:matchId.json                                                                             controllers.CricketMatchController.renderMatchIdJson(matchId)
-GET         /sport/cricket/match/:matchId                                                                                  controllers.CricketMatchController.renderMatchId(matchId)
+GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
+GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
-GET         /football/fixtures/:year/:month/:day.json                                                                      football.controllers.FixturesController.allFixturesForJson(year, month, day)
-GET         /football/fixtures/:year/:month/:day                                                                           football.controllers.FixturesController.allFixturesFor(year, month, day)
-GET         /football/fixtures                                                                                             football.controllers.FixturesController.allFixtures()
-GET         /football/fixtures.json                                                                                        football.controllers.FixturesController.allFixturesJson()
-GET         /football/:tag/fixtures/:year/:month/:day.json                                                                 football.controllers.FixturesController.tagFixturesForJson(year, month, day, tag)
-GET         /football/:tag/fixtures/:year/:month/:day                                                                      football.controllers.FixturesController.tagFixturesFor(year, month, day, tag)
-GET         /football/:tag/fixtures                                                                                        football.controllers.FixturesController.tagFixturesJson(tag)
-GET         /football/:tag/fixtures.json                                                                                   football.controllers.FixturesController.tagFixtures(tag)
+GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
+GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
+GET         /football/fixtures                                                                                       football.controllers.FixturesController.allFixtures()
+GET         /football/fixtures.json                                                                                  football.controllers.FixturesController.allFixturesJson()
+GET         /football/:tag/fixtures/:year/:month/:day.json                                                           football.controllers.FixturesController.tagFixturesForJson(year, month, day, tag)
+GET         /football/:tag/fixtures/:year/:month/:day                                                                football.controllers.FixturesController.tagFixturesFor(year, month, day, tag)
+GET         /football/:tag/fixtures                                                                                  football.controllers.FixturesController.tagFixturesJson(tag)
+GET         /football/:tag/fixtures.json                                                                             football.controllers.FixturesController.tagFixtures(tag)
 
-GET         /football/results/:year/:month/:day.json                                                                       football.controllers.ResultsController.allResultsForJson(year, month, day)
-GET         /football/results/:year/:month/:day                                                                            football.controllers.ResultsController.allResultsFor(year, month, day)
-GET         /football/results                                                                                              football.controllers.ResultsController.allResults()
-GET         /football/results.json                                                                                         football.controllers.ResultsController.allResultsJson()
-GET         /football/:tag/results/:year/:month/:day.json                                                                  football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)
-GET         /football/:tag/results/:year/:month/:day                                                                       football.controllers.ResultsController.tagResultsFor(year, month, day, tag)
-GET         /football/:tag/results                                                                                         football.controllers.ResultsController.tagResults(tag)
-GET         /football/:tag/results.json                                                                                    football.controllers.ResultsController.tagResultsJson(tag)
+GET         /football/results/:year/:month/:day.json                                                                 football.controllers.ResultsController.allResultsForJson(year, month, day)
+GET         /football/results/:year/:month/:day                                                                      football.controllers.ResultsController.allResultsFor(year, month, day)
+GET         /football/results                                                                                        football.controllers.ResultsController.allResults()
+GET         /football/results.json                                                                                   football.controllers.ResultsController.allResultsJson()
+GET         /football/:tag/results/:year/:month/:day.json                                                            football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)
+GET         /football/:tag/results/:year/:month/:day                                                                 football.controllers.ResultsController.tagResultsFor(year, month, day, tag)
+GET         /football/:tag/results                                                                                   football.controllers.ResultsController.tagResults(tag)
+GET         /football/:tag/results.json                                                                              football.controllers.ResultsController.tagResultsJson(tag)
 
-GET         /football/live                                                                                                 football.controllers.MatchDayController.liveMatches()
-GET         /football/live.json                                                                                            football.controllers.MatchDayController.liveMatchesJson()
-GET         /football/:competition/live                                                                                    football.controllers.MatchDayController.competitionMatches(competition)
-GET         /football/:competition/live.json                                                                               football.controllers.MatchDayController.competitionMatchesJson(competition)
+GET         /football/live                                                                                           football.controllers.MatchDayController.liveMatches()
+GET         /football/live.json                                                                                      football.controllers.MatchDayController.liveMatchesJson()
+GET         /football/:competition/live                                                                              football.controllers.MatchDayController.competitionMatches(competition)
+GET         /football/:competition/live.json                                                                         football.controllers.MatchDayController.competitionMatchesJson(competition)
 
-GET         /football/match-day/:year/:month/:day.json                                                                     football.controllers.MatchDayController.matchesForJson(year, month, day)
-GET         /football/match-day/:year/:month/:day                                                                          football.controllers.MatchDayController.matchesFor(year, month, day)
-GET         /football/match-day/:competition/:year/:month/:day.json                                                        football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
-GET         /football/match-day/:competition/:year/:month/:day                                                             football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET         /football/match-day/:year/:month/:day.json                                                               football.controllers.MatchDayController.matchesForJson(year, month, day)
+GET         /football/match-day/:year/:month/:day                                                                    football.controllers.MatchDayController.matchesFor(year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day.json                                                  football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day                                                       football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
 
-GET         /football/tables                                                                                               football.controllers.LeagueTableController.renderLeagueTable()
-GET         /football/tables.json                                                                                          football.controllers.LeagueTableController.renderLeagueTableJson()
-GET         /football/:competition/table                                                                                   football.controllers.LeagueTableController.renderCompetition(competition)
-GET         /football/:competition/table.json                                                                              football.controllers.LeagueTableController.renderCompetitionJson(competition)
-GET         /football/:competition/:group/table                                                                            football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
-GET         /football/:competition/:group/table.json                                                                       football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
+GET         /football/tables                                                                                         football.controllers.LeagueTableController.renderLeagueTable()
+GET         /football/tables.json                                                                                    football.controllers.LeagueTableController.renderLeagueTableJson()
+GET         /football/:competition/table                                                                             football.controllers.LeagueTableController.renderCompetition(competition)
+GET         /football/:competition/table.json                                                                        football.controllers.LeagueTableController.renderCompetitionJson(competition)
+GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
+GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
-GET         /football/:competitionTag/overview/embed                                                                       football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
-GET         /football/:competitionTag/overview                                                                             football.controllers.WallchartController.renderWallchart(competitionTag)
+GET         /football/:competitionTag/overview/embed                                                                 football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
+GET         /football/:competitionTag/overview                                                                       football.controllers.WallchartController.renderWallchart(competitionTag)
 
-GET         /football/api/match-nav/:year/:month/:day/:home/:away.json                                                     football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
-GET         /football/api/match-nav/:year/:month/:day/:home/:away                                                          football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
-GET         /football/api/match-nav/:matchId.json                                                                          football.controllers.MoreOnMatchController.moreOnJson(matchId)
-GET         /football/api/match-nav/:matchId                                                                               football.controllers.MoreOnMatchController.moreOn(matchId)
-GET         /football/api/big-match-special/:matchId.json                                                                  football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
+GET         /football/api/match-nav/:year/:month/:day/:home/:away.json                                               football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
+GET         /football/api/match-nav/:year/:month/:day/:home/:away                                                    football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
+GET         /football/api/match-nav/:matchId.json                                                                    football.controllers.MoreOnMatchController.moreOnJson(matchId)
+GET         /football/api/match-nav/:matchId                                                                         football.controllers.MoreOnMatchController.moreOn(matchId)
+GET         /football/api/big-match-special/:matchId.json                                                            football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
 
-GET         /football/competitions                                                                                         football.controllers.CompetitionListController.renderCompetitionList()
-GET         /football/competitions.json                                                                                    football.controllers.CompetitionListController.renderCompetitionListJson()
-GET         /football/teams                                                                                                football.controllers.LeagueTableController.renderTeamlist()
-GET         /football/teams.json                                                                                           football.controllers.LeagueTableController.renderTeamlistJson()
+GET         /football/competitions                                                                                   football.controllers.CompetitionListController.renderCompetitionList()
+GET         /football/competitions.json                                                                              football.controllers.CompetitionListController.renderCompetitionListJson()
+GET         /football/teams                                                                                          football.controllers.LeagueTableController.renderTeamlist()
+GET         /football/teams.json                                                                                     football.controllers.LeagueTableController.renderTeamlistJson()
 
-GET         /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>.json                                   football.controllers.MatchController.renderMatchJson(year,month,day,home,away)
-GET         /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>                                        football.controllers.MatchController.renderMatch(year,month,day,home,away)
-GET         /football/match/:matchId.json                                                                                  football.controllers.MatchController.renderMatchIdJson(matchId)
-GET         /football/match/:matchId                                                                                       football.controllers.MatchController.renderMatchId(matchId)
+GET         /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>.json                             football.controllers.MatchController.renderMatchJson(year,month,day,home,away)
+GET         /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>                                  football.controllers.MatchController.renderMatch(year,month,day,home,away)
+GET         /football/match/:matchId.json                                                                            football.controllers.MatchController.renderMatchIdJson(matchId)
+GET         /football/match/:matchId                                                                                 football.controllers.MatchController.renderMatchId(matchId)
 
-GET         /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                                             football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
-GET         /football/match-redirect/:matchId                                                                              football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
+GET         /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                                       football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
+GET         /football/match-redirect/:matchId                                                                        football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
 # Admin
 # authentication endpoints
-GET         /login                                                                                                         controllers.admin.OAuthLoginController.login
-POST        /login                                                                                                         controllers.admin.OAuthLoginController.loginAction
-GET         /oauth2callback                                                                                                controllers.admin.OAuthLoginController.oauth2Callback
-GET         /logout                                                                                                        controllers.admin.OAuthLoginController.logout
-GET         /admin                                                                                                         controllers.admin.AdminIndexController.admin()
-GET         /api/proxy/*path                                                                                               controllers.admin.Api.proxy(path, callback)
-GET         /api/tag                                                                                                       controllers.admin.Api.tag(q, callback)
-GET         /api/item/*path                                                                                                controllers.admin.Api.item(path, callback)
-GET         /json/proxy/*absUrl                                                                                            controllers.admin.Api.json(absUrl)
-GET         /ophan/pageviews/*path                                                                                         controllers.admin.OphanApiController.pageViews(path)
-GET         /ophan/pageviews                                                                                               controllers.admin.OphanApiController.platformPageViews()
-GET         /dev/switchboard                                                                                               controllers.admin.SwitchboardController.renderSwitchboard()
-POST        /dev/switchboard                                                                                               controllers.admin.SwitchboardController.save()
-GET         /metrics/loadbalancers                                                                                         controllers.admin.MetricsController.renderLoadBalancers()
-GET         /metrics/googlebot/404                                                                                         controllers.admin.MetricsController.renderGooglebot404s()
-GET         /metrics/fastly                                                                                                controllers.admin.FastlyController.renderFastly()
-GET         /metrics/errors                                                                                                controllers.admin.MetricsController.renderErrors()
-GET         /metrics/errors/4xx                                                                                            controllers.admin.MetricsController.render4XX()
-GET         /metrics/errors/5xx                                                                                            controllers.admin.MetricsController.render5XX()
-GET         /metrics/memory                                                                                                controllers.admin.MetricsController.renderMemory()
-GET         /metrics/assets                                                                                                controllers.admin.MetricsController.renderAssets()
-GET         /radiator                                                                                                      controllers.admin.RadiatorController.renderRadiator()
-GET         /radiator/pingdom                                                                                              controllers.admin.RadiatorController.pingdom()
-GET         /radiator/commit/*hash                                                                                         controllers.admin.RadiatorController.commitDetail(hash)
-GET         /troubleshoot/football                                                                                         controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
-GET         /troubleshoot/pages                                                                                            controllers.admin.TroubleshooterController.index()
-GET         /troubleshoot/test                                                                                             controllers.admin.TroubleshooterController.test(id, testPath)
-GET         /redirects                                                                                                     controllers.admin.RedirectController.redirect()
-POST        /redirect-post                                                                                                 controllers.admin.RedirectController.redirectPost()
+GET         /login                                                                                                   controllers.admin.OAuthLoginController.login
+POST        /login                                                                                                   controllers.admin.OAuthLoginController.loginAction
+GET         /oauth2callback                                                                                          controllers.admin.OAuthLoginController.oauth2Callback
+GET         /logout                                                                                                  controllers.admin.OAuthLoginController.logout
+GET         /admin                                                                                                   controllers.admin.AdminIndexController.admin()
+GET         /api/proxy/*path                                                                                         controllers.admin.Api.proxy(path, callback)
+GET         /api/tag                                                                                                 controllers.admin.Api.tag(q, callback)
+GET         /api/item/*path                                                                                          controllers.admin.Api.item(path, callback)
+GET         /json/proxy/*absUrl                                                                                      controllers.admin.Api.json(absUrl)
+GET         /ophan/pageviews/*path                                                                                   controllers.admin.OphanApiController.pageViews(path)
+GET         /ophan/pageviews                                                                                         controllers.admin.OphanApiController.platformPageViews()
+GET         /dev/switchboard                                                                                         controllers.admin.SwitchboardController.renderSwitchboard()
+POST        /dev/switchboard                                                                                         controllers.admin.SwitchboardController.save()
+GET         /metrics/loadbalancers                                                                                   controllers.admin.MetricsController.renderLoadBalancers()
+GET         /metrics/googlebot/404                                                                                   controllers.admin.MetricsController.renderGooglebot404s()
+GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
+GET         /metrics/errors                                                                                          controllers.admin.MetricsController.renderErrors()
+GET         /metrics/errors/4xx                                                                                      controllers.admin.MetricsController.render4XX()
+GET         /metrics/errors/5xx                                                                                      controllers.admin.MetricsController.render5XX()
+GET         /metrics/memory                                                                                          controllers.admin.MetricsController.renderMemory()
+GET         /metrics/assets                                                                                          controllers.admin.MetricsController.renderAssets()
+GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
+GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
+GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
+GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
+GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
+GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
+POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
 
 # Football admin
 
-GET         /admin/football                                                                                                controllers.admin.SiteController.index
-GET         /admin/football/browse                                                                                         controllers.admin.PaBrowserController.browse
-POST        /admin/football/browserRedirect                                                                                controllers.admin.PaBrowserController.browserSubstitution
-GET         /admin/football/browser/*query                                                                                 controllers.admin.PaBrowserController.browser(query)
-GET         /admin/football/player                                                                                         controllers.admin.PlayerController.playerIndex
-POST        /admin/football/player/card                                                                                    controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                                    controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
-GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                        controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
-GET         /admin/football/tables                                                                                         controllers.admin.TablesController.tablesIndex
-POST        /admin/football/tables/league                                                                                  controllers.admin.TablesController.redirectToTable
-GET         /admin/football/tables/league/:competitionId                                                                   controllers.admin.TablesController.leagueTable(competitionId: String)
-GET         /admin/football/tables/league/:competitionId/:focus                                                            controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
-GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                                 controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
-GET         /admin/football/fronts                                                                                         controllers.admin.FrontsController.index
-GET         /admin/football/fronts/live                                                                                    controllers.admin.FrontsController.matchDay
-POST        /admin/football/fronts/results/redirect                                                                        controllers.admin.FrontsController.resultsRedirect
-GET         /admin/football/fronts/results/:competition                                                                    controllers.admin.FrontsController.results(competition: String)
-POST        /admin/football/fronts/fixtures/redirect                                                                       controllers.admin.FrontsController.fixturesRedirect
-GET         /admin/football/fronts/fixtures/:competition                                                                   controllers.admin.FrontsController.fixtures(competition: String)
-POST        /admin/football/fronts/tables/redirect                                                                         controllers.admin.FrontsController.tablesRedirect
-GET         /admin/football/fronts/tables/:competition                                                                     controllers.admin.FrontsController.tables(competition: String)
-GET         /admin/football/fronts/tables/:competition/:group                                                              controllers.admin.FrontsController.groupTables(competition, group)
-POST        /admin/football/fronts/matches/redirect                                                                        controllers.admin.FrontsController.matchesRedirect
-GET         /admin/football/fronts/matches/:competitionId                                                                  controllers.admin.FrontsController.chooseMatchForComp(competitionId)
-GET         /admin/football/fronts/matches/:competitionId/:teamId                                                          controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
-GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                                controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET         /admin/football/fronts/match/:matchId                                                                          controllers.admin.FrontsController.bigMatchSpecial(matchId)
+GET         /admin/football                                                                                          controllers.admin.SiteController.index
+GET         /admin/football/browse                                                                                   controllers.admin.PaBrowserController.browse
+POST        /admin/football/browserRedirect                                                                          controllers.admin.PaBrowserController.browserSubstitution
+GET         /admin/football/browser/*query                                                                           controllers.admin.PaBrowserController.browser(query)
+GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
+POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
+GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                              controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
+GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                  controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
+GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
+POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
+GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
+GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
+GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
+GET         /admin/football/fronts                                                                                   controllers.admin.FrontsController.index
+GET         /admin/football/fronts/live                                                                              controllers.admin.FrontsController.matchDay
+POST        /admin/football/fronts/results/redirect                                                                  controllers.admin.FrontsController.resultsRedirect
+GET         /admin/football/fronts/results/:competition                                                              controllers.admin.FrontsController.results(competition: String)
+POST        /admin/football/fronts/fixtures/redirect                                                                 controllers.admin.FrontsController.fixturesRedirect
+GET         /admin/football/fronts/fixtures/:competition                                                             controllers.admin.FrontsController.fixtures(competition: String)
+POST        /admin/football/fronts/tables/redirect                                                                   controllers.admin.FrontsController.tablesRedirect
+GET         /admin/football/fronts/tables/:competition                                                               controllers.admin.FrontsController.tables(competition: String)
+GET         /admin/football/fronts/tables/:competition/:group                                                        controllers.admin.FrontsController.groupTables(competition, group)
+POST        /admin/football/fronts/matches/redirect                                                                  controllers.admin.FrontsController.matchesRedirect
+GET         /admin/football/fronts/matches/:competitionId                                                            controllers.admin.FrontsController.chooseMatchForComp(competitionId)
+GET         /admin/football/fronts/matches/:competitionId/:teamId                                                    controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
+GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                          controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
+GET         /admin/football/fronts/match/:matchId                                                                    controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
-GET         /admin/football/api/squad/:teamId                                                                              controllers.admin.PlayerController.squad(teamId: String)
+GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
-GET         /commercial/travel/offers                                                                                      controllers.commercial.TravelOffers.travelOffersLowHtml
-GET         /commercial/travel/offers.json                                                                                 controllers.commercial.TravelOffers.travelOffersLowJson
-GET         /commercial/travel/offers-high                                                                                 controllers.commercial.TravelOffers.travelOffersHighHtml
-GET         /commercial/travel/offers-high.json                                                                            controllers.commercial.TravelOffers.travelOffersHighJson
+GET         /commercial/travel/offers                                                                                controllers.commercial.TravelOffers.travelOffersLowHtml
+GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.travelOffersLowJson
+GET         /commercial/travel/offers-high                                                                           controllers.commercial.TravelOffers.travelOffersHighHtml
+GET         /commercial/travel/offers-high.json                                                                      controllers.commercial.TravelOffers.travelOffersHighJson
 
-GET         /commercial/jobs                                                                                               controllers.commercial.JobAds.jobsLowHtml
-GET         /commercial/jobs.json                                                                                          controllers.commercial.JobAds.jobsLowJson
-GET         /commercial/jobs-high                                                                                          controllers.commercial.JobAds.jobsHighHtml
-GET         /commercial/jobs-high.json                                                                                     controllers.commercial.JobAds.jobsHighJson
-GET         /commercial/jobs-v2.json                                                                                       controllers.commercial.JobAds.jobsLowJsonV2
-GET         /commercial/jobs-high-v2.json                                                                                  controllers.commercial.JobAds.jobsHighJsonV2
+GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.jobsLowHtml
+GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobsLowJson
+GET         /commercial/jobs-high                                                                                    controllers.commercial.JobAds.jobsHighHtml
+GET         /commercial/jobs-high.json                                                                               controllers.commercial.JobAds.jobsHighJson
+GET         /commercial/jobs-v2.json                                                                                 controllers.commercial.JobAds.jobsLowJsonV2
+GET         /commercial/jobs-high-v2.json                                                                            controllers.commercial.JobAds.jobsHighJsonV2
 
-GET         /commercial/masterclasses                                                                                      controllers.commercial.MasterClasses.masterclassesLowHtml
-GET         /commercial/masterclasses.json                                                                                 controllers.commercial.MasterClasses.masterclassesLowJson
-GET         /commercial/masterclasses-high                                                                                 controllers.commercial.MasterClasses.masterclassesHighHtml
-GET         /commercial/masterclasses-high.json                                                                            controllers.commercial.MasterClasses.masterclassesHighJson
+GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.masterclassesLowHtml
+GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson
+GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.masterclassesHighHtml
+GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.masterclassesHighJson
 
-GET         /commercial/soulmates/mixed                                                                                    controllers.commercial.SoulmateAds.mixedLowHtml
-GET         /commercial/soulmates/mixed.json                                                                               controllers.commercial.SoulmateAds.mixedLowJson
-GET         /commercial/soulmates/mixed-high                                                                               controllers.commercial.SoulmateAds.mixedHighHtml
-GET         /commercial/soulmates/mixed-high.json                                                                          controllers.commercial.SoulmateAds.mixedHighJson
+GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
+GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson
+GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
+GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
 
-GET         /commercial/books/bestsellers                                                                                  controllers.commercial.BookOffers.bestsellersLowHtml
-GET         /commercial/books/bestsellers.json                                                                             controllers.commercial.BookOffers.bestsellersLowJson
-GET         /commercial/books/bestsellers-medium                                                                           controllers.commercial.BookOffers.bestsellersMediumHtml
-GET         /commercial/books/bestsellers-medium.json                                                                      controllers.commercial.BookOffers.bestsellersMediumJson
-GET         /commercial/books/bestsellers-high                                                                             controllers.commercial.BookOffers.bestsellersHighHtml
-GET         /commercial/books/bestsellers-high.json                                                                        controllers.commercial.BookOffers.bestsellersHighJson
-GET         /commercial/books/book.json                                                                                    controllers.commercial.BookOffers.bestsellersSuperHighJson
-GET         /commercial/books/book                                                                                         controllers.commercial.BookOffers.bestsellersSuperHighHtml
+GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
+GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
+GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMediumHtml
+GET         /commercial/books/bestsellers-medium.json                                                                controllers.commercial.BookOffers.bestsellersMediumJson
+GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHighHtml
+GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
+GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
 
-GET         /commercial/money/bestbuys                                                                                     controllers.commercial.MoneyOffers.bestBuysLowHtml
-GET         /commercial/money/bestbuys.json                                                                                controllers.commercial.MoneyOffers.bestBuysLowJson
-GET         /commercial/money/bestbuys-high                                                                                controllers.commercial.MoneyOffers.bestBuysHighHtml
-GET         /commercial/money/bestbuys-high.json                                                                           controllers.commercial.MoneyOffers.bestBuysHighJson
-GET         /commercial/money/savings/:savingsType                                                                         controllers.commercial.MoneyOffers.savings(savingsType)
-GET         /commercial/money/current-accounts/:currentAccountType                                                         controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
-GET         /commercial/money/credit-cards/:creditCardType                                                                 controllers.commercial.MoneyOffers.creditCards(creditCardType)
-GET         /commercial/money/loans/:loanType                                                                              controllers.commercial.MoneyOffers.loans(loanType)
+GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
+GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson
+GET         /commercial/money/bestbuys-high                                                                          controllers.commercial.MoneyOffers.bestBuysHighHtml
+GET         /commercial/money/bestbuys-high.json                                                                     controllers.commercial.MoneyOffers.bestBuysHighJson
+GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
+GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
+GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
+GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 
-GET         /commercial/capi.json                                                                                          controllers.commercial.ContentApiOffers.itemsJson
-GET         /commercial/capi                                                                                               controllers.commercial.ContentApiOffers.itemsHtml
+GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
+GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
 
-GET         /commercialtools/adunits/toapprove                                                                             controllers.admin.CommercialAdUnitController.renderToApprove()
-POST        /commercialtools/adunits/toapprove                                                                             controllers.admin.CommercialAdUnitController.approve()
-GET         /admin/commercial/fluid250                                                                                     controllers.admin.CommercialController.renderFluidAds()
-GET         /commercial/multi.json                                                                                         controllers.commercial.Multi.renderMulti
+GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
+POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
+GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
+GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
 
 # dev-build only
-GET         /commercial/magento/token                                                                                      controllers.commercial.magento.AccessTokenGenerator.generate
-GET         /commercial/magento/resource                                                                                   controllers.commercial.magento.ApiSandbox.getResource(t: String)
-GET         /commercial/magento/books                                                                                      controllers.commercial.magento.ApiSandbox.getBooks(t: String)
+GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
+GET         /commercial/magento/resource                                                                             controllers.commercial.magento.ApiSandbox.getResource(t: String)
+GET         /commercial/magento/books                                                                                controllers.commercial.magento.ApiSandbox.getBooks(t: String)
 
 
 # Onward journeys
-GET         /series/*path.json                                                                                             controllers.SeriesController.renderSeriesStories(path)
+GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
 
-GET         /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                controllers.AllIndexController.on(path)
-GET         /$path<.+>/latest                                                                                              controllers.LatestIndexController.latest(path)
-GET         /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                     controllers.AllIndexController.newer(path, day, month, year)
-GET         /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                       controllers.AllIndexController.allOn(path, day, month, year)
-GET         /$path<.+>/all                                                                                                 controllers.AllIndexController.all(path)
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
+GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
 
 # Facia
-GET         /                                                                                                              controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>        controllers.FaciaController.renderFrontPressSpecial(path)
-GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                                  controllers.FaciaController.renderFrontPress(path)
-GET         /*path/lite.json                                                                                               controllers.FaciaController.renderFrontJsonLite(path)
-GET         /container/*id.json                                                                                            controllers.FaciaController.renderContainerJson(id)
+GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
+GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
+GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
+GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                           controllers.IndexController.renderTrailsJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                                controllers.IndexController.renderTrails(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                                  controllers.IndexController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                       controllers.IndexController.render(path)
-GET         /$leftSide<[^+]+>+*rightSide                                                                                   controllers.IndexController.renderCombiner(leftSide, rightSide)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
+GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Editionalised pages
-GET         /$path<[^/]+(/[^/]+)?>/rss                                                                                     controllers.FaciaController.renderFrontRss(path)
-GET         /$path<[^/]+(/[^/]+)?>.json                                                                                    controllers.FaciaController.renderFrontJson(path)
-GET         /$path<[^/]+(/[^/]+)?>                                                                                         controllers.FaciaController.renderFront(path)
+GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
+GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
+GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                          controllers.GalleryController.lightboxJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                                   controllers.GalleryController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                        controllers.GalleryController.render(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.lightboxJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                  controllers.GalleryController.render(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                                 controllers.ImageContentController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                      controllers.ImageContentController.render(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                           controllers.ImageContentController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                controllers.ImageContentController.render(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                                             controllers.MediaController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                                                  controllers.MediaController.render(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                                       controllers.MediaController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                                            controllers.MediaController.render(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                              controllers.InteractiveController.renderInteractiveJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                                   controllers.InteractiveController.renderInteractive(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
 
 # Articles
-GET         /*path.json                                                                                                    controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET         /*path                                                                                                         controllers.ArticleController.renderArticle(path)
+GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
+GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
