@@ -36,3 +36,100 @@
 .commentcount2__value {
     display: block;
 }
+
+.meta__numbers {
+    border-top: 1px dotted colour(neutral-5);
+    height: $gs-baseline * 3;
+    padding: $gs-baseline / 2 0;
+
+    @include mq(mobileLandscape, leftCol) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: 0;
+    }
+    @include mq(leftCol) {
+        border-bottom: 1px dotted colour(neutral-5);
+    }
+
+    .commentcount2__heading,
+    .sharecount__heading {
+        @include fs-textSans(1);
+        line-height: 15px;
+        height: 15px;
+        margin: 0;
+        position: relative;
+        padding-left: 18px;
+        @include mq(leftCol) {
+            padding-left: 15px;
+        }
+        .i {
+            position: absolute;
+            left: 0;
+        }
+    }
+
+    .commentcount2__value,
+    .sharecount__value {
+        // design is off font scale
+        font-family: $f-serif-headline;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .sharecount__value {
+        color: colour(neutral-1);
+    }
+
+    .sharecount__value--short {
+        display: none;
+    }
+    @include mq(leftCol, wide) {
+        .sharecount__value--full {
+            display: none;
+        }
+        .sharecount__value--short {
+            display: block;
+        }
+    }
+
+    .sharecount__heading {
+        color: colour(neutral-2);
+        .i {
+            opacity: .35;
+        }
+    }
+    .commentcount2__heading {
+        @include mq(leftCol) {
+            padding-left: 17px;
+        }
+        .i {
+            top: -1px;
+        }
+    }
+}
+
+.meta__number {
+    display: block;
+    height: 100%;
+    text-align: left;
+    float: left;
+    padding-right: ($gs-gutter / 2) + 1px;
+    padding-left: $gs-gutter / 2;
+    @include mq(leftCol, wide) {
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+
+    &:first-child {
+        padding-left: 0;
+    }
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.meta__number + .meta__number {
+    border-left: 1px solid colour(neutral-7);
+}
+
