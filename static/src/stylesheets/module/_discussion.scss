@@ -62,8 +62,10 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__top-border {
-    border-top: 1px solid colour(neutral-4);
-    margin-top: -1px;
+    @include mq(tablet) {
+        border-top: 1px solid $c-newsAccent;
+        margin-top: -1px;
+    }
 }
 
 .discussion--lowered {
@@ -94,11 +96,13 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__heading {
     margin-bottom: 0;
-    padding-top: $gs-baseline / 3;
+    padding-top: 0;
+    border-top: 1px solid $c-newsAccent;
 
     @include mq(tablet) {
-        padding-top: $gs-baseline / 2;
+        border-top: 0;
     }
+
     @include mq(leftCol) {
         position: absolute;
         margin-left: -1 * ($left-column + $gs-gutter);
@@ -203,6 +207,10 @@ $avatarPadding: $gs-gutter / 2;
     .discussion--has-top-comments & {
         border-top: 1px solid colour(neutral-4);
     }
+
+    .pagination {
+        text-align: center;
+    }
 }
 
 .discussion__toolbar-dropdown {
@@ -241,32 +249,9 @@ $avatarPadding: $gs-gutter / 2;
     }
 
     &:first-child {
-        padding-right: $gs-gutter;
-        margin-right: $gs-gutter;
+        padding-right: $gs-gutter * 3 / 4;
+        margin-right: $gs-gutter / 2;
         border-right: 1px solid colour(neutral-4);
-    }
-}
-
-.discussion__pagination .pagination {
-    width: auto;
-    line-height: $gs-baseline * 3;
-    margin: $gs-baseline 0;
-    padding: 0;
-    border: 0;
-    height: $gs-baseline * 2;
-    @include mq($until: tablet) {
-        float: none;
-        display: block;
-        clear: both;
-        border-top: 1px solid colour(neutral-4);
-    }
-    @include mq(tablet) {
-        line-height: $gs-baseline * 2;
-    }
-    .pagination__links {
-        @include mq(desktop) {
-            width: gs-span(4) - $gs-gutter;
-        }
     }
 }
 

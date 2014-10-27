@@ -1,26 +1,27 @@
 define([
-    'common/utils/detect',
-    'common/modules/experiments/ab',
-    'common/utils/storage',
-    'common/modules/identity/api',
-    'common/utils/cookies',
     'omniture',
-    'common/modules/analytics/mvt-cookie',
-    'common/modules/analytics/beacon',
-    'common/utils/pad',
+    'common/utils/config',
+    'common/utils/cookies',
+    'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
+    'common/utils/pad',
+    'common/utils/storage',
+    'common/modules/analytics/beacon',
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/ab',
+    'common/modules/identity/api'
 ], function (
-    detect,
-    ab,
-    storage,
-    id,
-    Cookies,
     s,
-    mvtCookie,
-    beacon,
+    config,
+    cookies,
+    detect,
+    mediator,
     pad,
-    mediator
+    storage,
+    beacon,
+    mvtCookie,
+    ab,
+    id
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -32,7 +33,6 @@ define([
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
-            config,
             that = this;
 
         w = w || {};
@@ -87,13 +87,13 @@ define([
             s.prop37 = 'D=v37';
 
             if (/social/.test(tag)) {
-                s.linkTrackVars += ',eVar12,prop4,prop9,prop10';
+                s.linkTrackVars   += ',eVar12,prop4,prop9,prop10';
                 s.linkTrackEvents += ',event16';
-                s.eVar12 = tag;
-                s.prop4     = config.page.keywords || '';
-                s.prop9     = config.page.contentType || '';
-                s.prop10    = config.page.tones || '';
-                s.events = s.apl(s.events, 'event16', ',');
+                s.eVar12           = tag;
+                s.prop4            = config.page.keywords || '';
+                s.prop9            = config.page.contentType || '';
+                s.prop10           = config.page.tones || '';
+                s.events           = s.apl(s.events, 'event16', ',');
             }
         };
 
@@ -116,8 +116,8 @@ define([
                 ni       = storage.session.get(NG_STORAGE_KEY),
                 platform = 'frontend',
                 // cookie used for user migration
-                guShift  = Cookies.get('GU_SHIFT'),
-                mvt      = ab.makeOmnitureTag(config, document),
+                guShift  = cookies.get('GU_SHIFT'),
+                mvt      = ab.makeOmnitureTag(document),
                 // Tag the identity of this user, which is composed of
                 // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
                 mvtId    = mvtCookie.getMvtFullId();
@@ -150,7 +150,7 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-            s.channel = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
+            s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
             s.prop4     = config.page.keywords || '';
@@ -168,8 +168,8 @@ define([
             s.eVar32    = detect.getOrientation();
 
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
-            s.prop20 = tpA[2] + ':' + tpA[1];
-            s.eVar20 = 'D=c20';
+            s.prop20    = tpA[2] + ':' + tpA[1];
+            s.eVar20    = 'D=c20';
 
             s.prop25    = config.page.blogs || '';
 
@@ -190,7 +190,7 @@ define([
 
             if (guShift) {
                 shiftValue = 'gu_shift,' + guShift + ',';
-                guView = Cookies.get('GU_VIEW');
+                guView     = cookies.get('GU_VIEW');
 
                 if (guView) {
                     shiftValue += ',' + guView;
@@ -245,8 +245,8 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            if (s.Util.getQueryParam('INTCMP') !== '') {
-                s.eVar50 = s.Util.getQueryParam('INTCMP');
+            if (s.getParamValue('INTCMP') !== '') {
+                s.eVar50 = s.getParamValue('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50, 's_intcampaign', 0);
 
@@ -282,14 +282,11 @@ define([
             s.eVar75 = config.page.wordCount || 0;
         };
 
-        this.go = function (c) {
+        this.go = function () {
             /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-            config = c; // update the module-wide config
-
             // must be set before the Omniture file is parsed
             window.s_account = config.page.omnitureAccount;
 
-            s = window.s;
             this.populatePageProperties();
             this.logView();
             mediator.emit('analytics:ready');

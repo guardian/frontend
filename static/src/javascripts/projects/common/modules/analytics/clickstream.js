@@ -37,6 +37,10 @@ define([
                     protocol = window.location.protocol;
                 }
 
+                if (url.indexOf('mailto:') === 0) {
+                    return false;
+                }
+
                 // Lack of a urlHost implies a relative url
                 return !urlHost || (urlHost === host && urlProtocol === protocol);
             },

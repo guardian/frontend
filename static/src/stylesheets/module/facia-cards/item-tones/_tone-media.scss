@@ -2,7 +2,7 @@
     $c-headline: #ffffff;
 
     @extend %tone-has-background;
-    background-color: $c-neutral1;
+    background-color: $c-mediaBackground;
 
     &,
     .fc-sublink__title {
@@ -12,7 +12,7 @@
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $c-neutral1, 80%);
+            color: mix($c-headline, $c-mediaBackground, 80%);
         }
     }
 
@@ -42,15 +42,9 @@
         color: $c-mediaDefault;
     }
 
-    @include sublink-style(podcast) {
-        .fc-sublink__kicker {
-            color: #ffffff;
-        }
-    }
-
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $c-neutral1;
+            color: $c-mediaBackground;
         }
     }
 }

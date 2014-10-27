@@ -26,10 +26,4 @@
     .fc-sublink__kicker {
         color: $c-analysisAccent;
     }
-
-    @include sublink-style(podcast) {
-        .fc-sublink__kicker {
-            color: #ffffff;
-        }
-    }
 }

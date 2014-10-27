@@ -332,17 +332,11 @@
 }
 .ad-slot--paid-for-badge--front {
     @include clearfix;
-    position: relative;
     min-height: 90px;
     z-index: auto;
 
     @include mq(tablet) {
-        margin-left: 50%;
-        padding-top: 0;
-        margin-top: -$gs-row-height;
-    }
-    @include mq(desktop) {
-        margin-left: 62%;
+        padding-left: $gs-gutter / 2;
     }
     .container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
@@ -358,6 +352,9 @@
 
             .ad-slot--commercial-component & {
                 margin-top: get-line-height(data, 3)*-2;
+            }
+            .ad-slot--commercial-component .container--commercial-capi & {
+                margin-top: get-line-height(data, 3)*-1;
             }
         }
     }
