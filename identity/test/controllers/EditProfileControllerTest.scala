@@ -50,7 +50,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     val webPage = "http://example.com/test"
 
     "with a valid CSRF request" - Fake{
-      val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
+      val fakeRequest = FakeCSRFRequest()
         .withFormUrlEncodedBody(
           "location" -> location,
           "aboutMe" -> aboutMe,
@@ -117,7 +117,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       import FakeRequestAccountData._
 
-      FakeCSRFRequest (POST, "/email-prefs")
+      FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
         ("firstName", firstName),
@@ -137,7 +137,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       import FakeRequestAccountData._
 
-      FakeCSRFRequest (POST, "/email-prefs")
+      FakeCSRFRequest ()
         .withFormUrlEncodedBody (
         ("primaryEmailAddress", primaryEmailAddress),
         ("firstName", firstName),
