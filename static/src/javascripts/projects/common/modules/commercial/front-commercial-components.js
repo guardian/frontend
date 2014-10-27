@@ -22,10 +22,10 @@ define([
             $containers = $('.container');
 
         if ($containers.length >= 2) {
+            containerIndex = 0;
+
             if ($containers.length >= 4) {
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
-            } else {
-                containerIndex = 0;
             }
 
             return $adSlot.insertAfter($containers[containerIndex]);

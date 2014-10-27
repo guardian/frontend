@@ -75,7 +75,7 @@ define([
                 }
             );
 
-            xit(
+            it(
                 'should place ad between between the 4th and 5th container if a network front',
                 function (frontCommercialComponents, deps) {
                     deps['common/utils/config'].page.contentType = 'Network Front';
