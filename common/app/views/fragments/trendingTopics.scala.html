@@ -1,12 +1,10 @@
-@(items: Seq[Content])
+@(items: Seq[model.Content], pageId: String)(implicit request: RequestHeader)
 
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
-@import com.gu.facia.client.models.CollectionConfig
-@import common.{Edition, ExecutionContexts, Logging}
 
 <section class="facia-container__inner" data-component="trending-topics">
-@defining(topTags(items).take(20)) { tags =>
+@defining(topTags(items).filterNot(_.id == pageId).take(20)) { tags =>
     @if(tags.nonEmpty) {
         <div class="submeta" data-link-name="keywords">
             <h2 class="submeta__head">Trending topics</h2>
