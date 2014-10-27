@@ -117,17 +117,19 @@
         </div>
     </article>
 
-    <div class="facia-container fc-container--media facia-container--layout-content">
-        <div class="js-media-popular tonal--@articleToneClass(media)">
-            <div class="container container--popular">
-                <div class="facia-container__inner">
-                    <h2 class="container__title">
-                        <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
-                    </h2>
+    @if(mediaType != "video") {
+        <div class="facia-container fc-container--media facia-container--layout-content">
+            <div class="js-media-popular tonal--@articleToneClass(media)">
+                <div class="container container--popular">
+                    <div class="facia-container__inner">
+                        <h2 class="container__title">
+                            <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
+                        </h2>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 @fragments.contentFooter(media, page.related, "media")
