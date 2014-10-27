@@ -168,7 +168,6 @@ object Switches extends Collections {
 
   val CriteoSwitch = Switch("Commercial", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
 
   val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
