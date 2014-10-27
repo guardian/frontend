@@ -54,7 +54,7 @@ object Edition {
     all.find(_.id == id).getOrElse(defaultEdition)
   }
 
-  def others(implicit request: RequestHeader): Seq[Edition] = Region(request).map(r =>  all).getOrElse {
+  def others(implicit request: RequestHeader): Seq[Edition] = {
     val currentEdition = Edition(request)
     others(currentEdition)
   }
