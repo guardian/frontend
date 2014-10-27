@@ -41,7 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
-    'common/modules/social/sharecount',
+    'common/modules/social/share-count',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -92,7 +92,7 @@ define([
     Related,
     TonalComponent,
     releaseMessage,
-    sharecount,
+    shareCount,
     Dropdowns,
     fauxBlockLink,
     Fonts,
@@ -417,7 +417,7 @@ define([
             },
 
             initShareCounts: function () {
-                sharecount.init();
+                shareCount.init();
 
             }
         },

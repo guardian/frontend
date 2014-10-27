@@ -9,7 +9,7 @@ define([
     ajax,
     detect,
     config,
-    sharecountTemplate
+    shareCountTemplate
 ) {
 
     var shareCount    = 0,
@@ -31,7 +31,7 @@ define([
 
         $shareCountEls
             .removeClass('u-h')
-            .html(sharecountTemplate)
+            .html(shareCountTemplate)
             .css('display', '');
 
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el
