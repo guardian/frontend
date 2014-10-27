@@ -1,11 +1,10 @@
 package form
 
-import play.api.data.Mapping
+import model.Countries
 import play.api.data.Forms._
+import play.api.data.Mapping
 import play.api.data.format.Formats._
 import play.api.i18n.Messages
-import model.Countries
-import org.scala_tools.time.Imports._
 
 trait Mappings {
 

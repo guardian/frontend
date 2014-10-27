@@ -95,12 +95,22 @@ object AccountFormData {
       postcode = user.privateFields.postcode getOrElse "",
       country = user.privateFields.country getOrElse ""
     ),
-    billingAddress = for {
-      address1 <- user.privateFields.billingAddress1
-      address2 <- user.privateFields.billingAddress2
-      address3 <- user.privateFields.billingAddress3
-      address4 <- user.privateFields.billingAddress4
-      postcode <- user.privateFields.billingPostcode
-      country <- user.privateFields.billingCountry
-    } yield AddressFormData(address1, address2, address3, address4, postcode, country))
+    billingAddress = (
+      user.privateFields.billingAddress1,
+      user.privateFields.billingAddress2,
+      user.privateFields.billingAddress3,
+      user.privateFields.billingAddress4,
+      user.privateFields.billingPostcode,
+      user.privateFields.billingCountry) match {
+      case (None, None, None, None, None, None) => None
+      case (address1, address2, address3, address4, postcode, country) =>
+        Some(AddressFormData(
+          address1.getOrElse(""),
+          address2.getOrElse(""),
+          address3.getOrElse(""),
+          address4.getOrElse(""),
+          postcode.getOrElse(""),
+          country.getOrElse("")))
+    }
+  )
 }
