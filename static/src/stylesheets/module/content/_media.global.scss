@@ -180,6 +180,9 @@
             &:nth-child(3n-2) {
                 border-right: 1px solid $c-neutral2;
             }
+            &:nth-child(1n+4) {
+                margin-bottom: 0;
+            }
         }
         @include mq(desktop) {
             &:nth-child(-n+2) {
