@@ -51,9 +51,13 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
 
   def discardBlock(id: String, identity: UserIdentity): Option[Block] =
     getBlock(id)
+      .flatMap(prepareDiscardBlock(identity))
+      .map(putBlock(id, _, identity))
+
+  def prepareDiscardBlock(identity: UserIdentity)(block: Block): Option[Block] =
+    Some(block)
       .map(_.copy(draft = None))
       .map(updateIdentity(_, identity))
-      .map(putBlock(id, _, identity))
 
   def archive(id: String, block: Block, update: JsValue, identity: UserIdentity): Unit = {
     val newBlock: Block = block.copy(diff = Some(update))
