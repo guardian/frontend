@@ -422,6 +422,20 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     isbn.isDefined || super.hasInlineMerchandise
   }
 
+  lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
+    .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+  lazy val hasSupportingAtBottom: Boolean = {
+    val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
+    var wordCount = 0
+    val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
+      wordCount += el.text.length
+      wordCount < 1500
+    }
+    val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
+    supportingEls.isDefined
+  }
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   override def metaData: Map[String, JsValue] = {

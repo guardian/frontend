@@ -341,12 +341,20 @@ $header-image-size-desktop: 120px;
         .facia-container__inner {
             border: 0;
         }
+
+        .fc-container__header {
+            width: auto;
+        }
+        
         .fc-container__header__title {
             padding-bottom: $gs-baseline*2;
         }
-        .fc-item__title {
-            padding-top: 0;
-            margin-top: -1 * 2px;
+
+        .facia-slice--qqq-q {
+            .facia-slice__item:first-child .fc-item__title {
+                padding-top: 0;
+                margin-top: -1 * 2px;
+            }
         }
     }
 }
