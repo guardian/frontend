@@ -1,23 +1,25 @@
 define([
-    'raven',
     'bonzo',
+    'raven',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/config',
     'common/modules/discussion/comment-count',
     'common/modules/ui/images',
     'common/modules/ui/relativedates'
 ], function (
-    raven,
     bonzo,
+    raven,
     $,
     ajax,
+    config,
     commentCount,
     images,
     relativeDates
 ) {
 
     return {
-        render:  function (config, options) {
+        render:  function (options) {
             var opts = options || {},
                 hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({

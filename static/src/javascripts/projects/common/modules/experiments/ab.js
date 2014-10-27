@@ -7,9 +7,9 @@ define([
     'lodash/objects/assign',
     'lodash/objects/keys',
     'common/utils/_',
-    'common/utils/storage',
-    'common/utils/mediator',
     'common/utils/config',
+    'common/utils/mediator',
+    'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component'
 ], function (
@@ -21,12 +21,12 @@ define([
     assign,
     keys,
     _,
-    store,
+    config,
     mediator,
-    globalConfig,
+    store,
     mvtCookie,
     HighCommercialComponent
-    ) {
+) {
 
     var TESTS = [
             new HighCommercialComponent()
@@ -56,12 +56,12 @@ define([
         store.local.set(participationsKey, participations);
     }
 
-    function cleanParticipations(config) {
+    function cleanParticipations() {
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
         forEach(keys(participations), function (k) {
-            if (typeof(assign({}, globalConfig, config).switches['ab' + k]) === 'undefined') {
+            if (typeof(config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
                 var testExists = some(TESTS, function(element) {
@@ -92,9 +92,9 @@ define([
         });
     }
 
-    function testCanBeRun(test, config) {
+    function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config) && !expired && isTestSwitchedOn(test, config));
+        return (test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
@@ -104,12 +104,12 @@ define([
         return (test) ? test[0] : '';
     }
 
-    function makeOmnitureTag (config) {
+    function makeOmnitureTag() {
         var participations = getParticipations(),
             tag = [];
 
         forEach(keys(participations), function (k) {
-            if (testCanBeRun(getTest(k), config)) {
+            if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
@@ -118,13 +118,13 @@ define([
     }
 
     // Finds variant in specific tests and runs it
-    function run(test, config) {
-        if (isParticipating(test) && testCanBeRun(test, config)) {
+    function run(test) {
+        if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             some(test.variants, function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(config);
+                    variant.test();
                     return true;
                 }
             });
@@ -134,10 +134,10 @@ define([
         }
     }
 
-    function allocateUserToTest(test, config) {
+    function allocateUserToTest(test) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (!testCanBeRun(test, config) || isParticipating(test)) {
+        if (!testCanBeRun(test) || isParticipating(test)) {
             return;
         }
 
@@ -163,8 +163,8 @@ define([
         }
     }
 
-    function isTestSwitchedOn(test, config) {
-        return assign({}, globalConfig, config).switches['ab' + test.id];
+    function isTestSwitchedOn(test) {
+        return config.switches['ab' + test.id];
     }
 
     function getTestVariant(testId) {
@@ -182,9 +182,9 @@ define([
             TESTS = [];
         },
 
-        segment: function(config) {
+        segment: function() {
             forEach(getActiveTests(), function(test) {
-                allocateUserToTest(test, config);
+                allocateUserToTest(test);
             });
         },
 
@@ -199,7 +199,7 @@ define([
                 .valueOf();
         },
 
-        segmentUser: function(config) {
+        segmentUser: function() {
             mvtCookie.generateMvtCookie();
 
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -208,15 +208,15 @@ define([
                 var test = tokens[0], variant = tokens[1];
                 ab.forceSegment(test, variant);
             } else {
-                ab.segment(config);
+                ab.segment();
             }
 
-            cleanParticipations(config);
+            cleanParticipations();
         },
 
-        run: function(config) {
+        run: function() {
             forEach(getActiveTests(), function(test) {
-                run(test, config);
+                run(test);
             });
         },
 
@@ -250,13 +250,13 @@ define([
                 .valueOf();
         },
 
-        getAbLoggableObject: function(config) {
+        getAbLoggableObject: function() {
             var abLogObject = {};
 
             try {
                 forEach(getActiveTests(), function (test) {
 
-                    if (isParticipating(test) && testCanBeRun(test, config)) {
+                    if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;

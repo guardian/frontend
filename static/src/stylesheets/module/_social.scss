@@ -37,7 +37,6 @@ category: Common
 
 .social {
     overflow-y: hidden;
-    height: 32px;
     margin-left: -$gs-gutter/5;
 }
 
@@ -67,31 +66,52 @@ category: Common
  */
 
 @include mq(desktop) {
-    .social-icon-wrapper {
-        opacity: .6;
 
-        &:hover,
-        &:focus {
-            opacity: 1;
-        }
-    }
+    $social-icon: (
+        width: 36px,
+        height: 36px,
+        color: $c-neutral2,
+        space-in-between: 2px
+    );
+
 }
-
-$social-icon: (
-    width: 36px,
-    height: 36px,
-    color: $c-neutral2,
-    space-in-between: 2px
-);
-
 .social-icon {
     @extend %icon-holder-circle;
-    border-color: map-get($social-icon, color);
+    border: 0;
+    width: 32px;
+    height: 32px;
 
     i {
         display: block;
-        margin-bottom: 2px;
-        margin-top: -1px;
-        margin-left: -1px;
+        background-size: 88% !important;
+        background-position: center !important;
+    }
+}
+
+.social-icon--facebook {
+    background-color: $social-facebook;
+    &:hover {
+        background-color: darken($social-facebook, 10%);
+    }
+}
+
+.social-icon--gplus {
+    background-color: $social-gplus;
+    &:hover {
+        background-color: darken($social-gplus, 10%);
+    }
+}
+
+.social-icon--twitter {
+    background-color: $social-twitter;
+    &:hover {
+        background-color: darken($social-twitter, 10%);
+    }
+}
+
+.social-icon--email {
+    background-color: $social-email;
+    &:hover {
+        background-color: darken($social-email, 10%);
     }
 }

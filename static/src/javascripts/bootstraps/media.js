@@ -198,7 +198,7 @@ define([
 
         getVastUrl: function () {
             var adUnit = config.page.adUnit,
-                custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
+                custParams = urlUtils.constructQuery(dfp.buildPageTargeting()),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime();
             return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
@@ -273,7 +273,7 @@ define([
             return vjs;
         },
 
-        initPlayer: function (config) {
+        initPlayer: function () {
 
             if (!config.switches.enhancedMediaPlayer) {
                 return;
@@ -387,7 +387,7 @@ define([
                 bonzo(player.el()).removeClass(endState);
             });
         },
-        initMoreInSection: function (config) {
+        initMoreInSection: function () {
             if (!config.isMedia || !config.page.showRelatedContent) {
                 return;
             }
@@ -407,7 +407,7 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedMedia: function (config) {
+        initMostViewedMedia: function () {
             if (!config.isMedia) {
                 return;
             }
@@ -422,12 +422,12 @@ define([
                 });
         }
     },
-    ready = function (config) {
-        modules.initPlayer(config);
-        modules.initMoreInSection(config);
-        modules.initMostViewedMedia(config);
+    ready = function () {
+        modules.initPlayer();
+        modules.initMoreInSection();
+        modules.initMostViewedMedia();
 
-        mediator.emit('page:media:ready', config);
+        mediator.emit('page:media:ready');
     };
 
     return {

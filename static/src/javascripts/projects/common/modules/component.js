@@ -139,8 +139,8 @@ define([
                 bonzo(parent)[self.manipulationType](self.elem);
                 self._ready(self.elem);
             }
-        }).fail( function () {
-           self.error();
+        }).fail(function (xmlHttpRequest) {
+            self.error(xmlHttpRequest);
         });
     };
 

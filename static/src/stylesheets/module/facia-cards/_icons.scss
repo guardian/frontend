@@ -1,4 +1,21 @@
-// Default Icons
+// Container Icons
+// =============================================================================
+
+.fc-container__header__title a {
+    &:after {
+        @include icon(arrow-blue-right, false);
+        content: '';
+        position: relative;
+        height: .7em;
+        width: 1em;
+    }
+
+    &:hover:after {
+        @include icon(arrow-light-blue-right, false);
+    }
+}
+
+// Item Icons
 // =============================================================================
 
 .fc-item__timestamp {
@@ -38,7 +55,7 @@
     }
 
     .tone-podcast--item & .fc-item__link {
-        @include icon(quote-black, false);
+        @include icon(quote-white, false);
     }
 
     .tone-feature--item & .fc-item__link {
@@ -98,7 +115,8 @@
     }
 }
 
-// Tonal Overrides
+
+// Item Tonal Overrides
 // =============================================================================
 
 .tone-analysis--item,
@@ -113,14 +131,9 @@
         @include icon(camera-black-large, false);
     }
 
-    .fc-sublink--audio {
-        .fc-sublink__link:before {
-            @include icon(volume-high-black, false);
-        }
-
-        &.tone-podcast--sublink .fc-sublink__link:before {
-            @include icon(volume-high--tone-podcast, false);
-        }
+    .fc-sublink--audio .fc-sublink__link:before,
+    .fc-sublink--audio.tone-podcast--sublink .fc-sublink__link:before {
+        @include icon(volume-high-black, false);
     }
 }
 
@@ -134,17 +147,11 @@
         @include icon(comment-white, false);
     }
 
-    &.fc-item--audio .fc-item__title:before,
-    .fc-sublink--audio .fc-item__title:before {
-        @include icon(volume-high--tone-podcast, false);
-    }
-
-    .fc-sublink--video .fc-sublink__link:before {
-        @include icon(video-icon-white, false);
-    }
-
-    .fc-sublink--gallery .fc-sublink__link:before {
-        @include icon(camera-white-large, false);
+    &.fc-item--audio .fc-item__title,
+    &.fc-sublink--audio .fc-sublink__link {
+        &:before {
+            @include icon(volume-high--tone-podcast, false);
+        }
     }
 }
 

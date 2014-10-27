@@ -50,6 +50,7 @@
     .lineitem__title {
         color: $c-neutral1;
         @include fs-header(1);
+        font-weight: 500;
         padding-top: 2px;
         margin-bottom: $gs-baseline;
     }

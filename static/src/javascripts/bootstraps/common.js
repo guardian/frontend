@@ -34,11 +34,10 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/breaking-news',
-    'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/popular',
     'common/modules/onward/onward-content',
+    'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
@@ -81,15 +80,14 @@ define([
     ab,
     id,
     AutoSignin,
-    Navigation,
+    navigation,
     Profile,
     Search,
     breakingNews,
-    GeoMostPopular,
     history,
     MoreTags,
-    Popular,
     Onward,
+    Popular,
     Related,
     TonalComponent,
     releaseMessage,
@@ -116,7 +114,7 @@ define([
 
             initialiseTopNavItems: function () {
                 var profile,
-                    search = new Search(config),
+                    search = new Search(),
                     header = document.getElementById('header');
 
                 if (header) {
@@ -132,24 +130,25 @@ define([
             },
 
             initialiseNavigation: function () {
-                Navigation.init(config);
+                navigation.init();
             },
 
             transcludeRelated: function () {
-                var r = new Related();
-                r.renderRelatedComponent(config);
+                new Related().renderRelatedComponent();
             },
 
             transcludePopular: function () {
-                if (!config.page.isFront) { new Popular().init(); }
+                if (!config.page.isFront) {
+                    new Popular().init();
+                }
             },
 
             transcludeOnwardContent: function () {
                 if ('seriesId' in config.page) {
-                    new Onward(config, qwery('.js-onward'));
+                    new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {
-                        new TonalComponent(config, c).fetch(c, 'html');
+                        new TonalComponent().fetch(c, 'html');
                     });
                 }
             },
@@ -184,22 +183,12 @@ define([
                 new Clickstream({filter: ['a', 'button']});
             },
 
-            initRightHandComponent: function () {
-                if (config.page.contentType === 'Article' &&
-                    detect.getBreakpoint() !== 'mobile' &&
-                    parseInt(config.page.wordCount, 10) > 500) {
-                    new GeoMostPopular({});
-                }
-            },
-
             logLiveStats: function () {
-                liveStats.log(config);
+                liveStats.log();
             },
 
             loadAnalytics: function () {
-                var omniture = new Omniture();
-
-                omniture.go(config);
+                new Omniture(window.s).go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
@@ -232,7 +221,7 @@ define([
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, usMsg,
+                var exitLink, msg, usMsg, feedbackLink,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
@@ -245,6 +234,9 @@ define([
                     Cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+                    feedbackLink = config.page.edition === 'US' ?
+                        'https://www.surveymonkey.com/s/theguardian-us-edition-feedback' :
+                        'https://www.surveymonkey.com/s/theguardian-beta-feedback';
 
                     msg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
@@ -258,7 +250,7 @@ define([
                         '</li>' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
                         '</li>' +
                         '</ul>';
 
@@ -269,7 +261,7 @@ define([
                         '<ul class="site-message__actions u-unstyled">' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
                         '</li>' +
                         '<li class="site-message__actions__item">' +
                         '<i class="i i-arrow-white-right"></i>' +
@@ -287,7 +279,7 @@ define([
 
             displayBreakingNews: function () {
                 if (config.switches.breakingNews) {
-                    breakingNews(config);
+                    breakingNews();
                 }
             },
 
@@ -314,7 +306,7 @@ define([
             initAutoSignin: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
-                        new AutoSignin(config).init();
+                        new AutoSignin().init();
                     }
                 });
             },
@@ -347,7 +339,7 @@ define([
                 mediator.on('page:common:ready', function () {
                     if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                         $('figure.interactive').each(function (el) {
-                            enhancer.render(el, config, mediator);
+                            enhancer.render(el, document, config, mediator);
                         });
                     }
                 });
@@ -355,7 +347,7 @@ define([
 
             startRegister: function () {
                 if (!config.page.isSSL) {
-                    register.initialise(config);
+                    register.initialise();
                 }
             },
 
@@ -376,7 +368,7 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init(config);
+                discussionApi.init();
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
                         var discussionLoader = new DiscussionLoader();
@@ -394,7 +386,7 @@ define([
             },
 
             initReleaseMessage: function () {
-                releaseMessage.init(config);
+                releaseMessage.init();
             },
 
             initOpenOverlayOnClick: function () {
@@ -453,7 +445,6 @@ define([
             modules.transcludePopular();
             modules.transcludeRelated();
             modules.transcludeOnwardContent();
-            modules.initRightHandComponent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
 

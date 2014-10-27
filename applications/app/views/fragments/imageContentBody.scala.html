@@ -28,12 +28,7 @@
                         </div>
                     }
                     <div class="submeta" data-component="share">
-                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                        @if(image.isCartoon) {
-                            @fragments.social(image)
-                        } else {
-                            @fragments.social(image, iconModifier = "white")
-                        }
+                        @fragments.social(image)
                     </div>
                 </div>
             </div>

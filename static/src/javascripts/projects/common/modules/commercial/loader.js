@@ -45,18 +45,24 @@ define([
      * @param {Object=} options
      */
     var Loader = function (options) {
-        var page = (options.config && options.config.page) || config.page || {};
+        var opts = options || {},
+            page = config.page;
 
         this.pageId             = page.pageId;
         this.keywordIds         = page.keywordIds || '';
         this.section            = page.section;
         this.host               = page.ajaxUrl + '/commercial/';
         this.isbn               = page.isbn || '';
-        this.oastoken           = options.oastoken || '';
-        this.jobs               = options.jobIds || '';
-        this.adType             = options.adType || 'desktop';
-        this.multiComponents    = map(options.components || [], function (c) { return 'c=' + c; }).join('&');
-        this.capi               = map(options.capi || [], function (t) {return 't=' + t;}).join('&');
+        this.oastoken           = opts.oastoken || '';
+        this.jobs               = opts.jobIds || '';
+        this.adType             = opts.adType || 'desktop';
+        this.multiComponents    = map(opts.components || [], function (c) { return 'c=' + c; }).join('&');
+        this.capi               = map(opts.capi || [], function (t) {return 't=' + t;}).join('&');
+        this.capiTitle          = opts.capiTitle || '';
+        this.capiLinkUrl        = opts.capiLinkUrl || '';
+        this.capiAboutLinkUrl   = opts.capiAboutLinkUrl || '';
+        this.capiKeywords       = map(opts.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
+        this.logo               = opts.logo || '';
         this.components         = {
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',
@@ -74,7 +80,7 @@ define([
             soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
             travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.getKeywords(),
+            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.capiKeywords + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
             multi:              this.host + 'multi.json?'                       + this.multiComponents
         };
         this.postLoadEvents = {

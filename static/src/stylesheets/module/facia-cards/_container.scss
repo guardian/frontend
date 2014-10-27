@@ -7,7 +7,11 @@ $header-image-size-desktop: 120px;
 
     .facia-container__inner {
         border-top: 1px solid $c-newsAccent;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 4;
+
+        @include mq(tablet) {
+            padding-top: $gs-baseline / 2;
+        }
     }
 
     &.container--first {
@@ -36,6 +40,21 @@ $header-image-size-desktop: 120px;
 .fc-container__header {
     position: relative;
 
+    .fc-container[data-sponsorship] &,
+    .facia-container[data-sponsorship] .fc-container:first-child & {
+        @include mq(tablet, leftCol) {
+            float: left;
+        }
+        @include mq(tablet, desktop) {
+            width: 50%;
+            padding-right: $gs-gutter / 2;
+        }
+        @include mq(desktop, leftCol) {
+            width: 66%;
+            padding-right: $gs-gutter / 2;
+        }
+    }
+
     @include mq(leftCol) {
         float: left;
         width: $left-column;
@@ -60,6 +79,10 @@ $header-image-size-desktop: 120px;
 
     a {
         color: inherit;
+
+        &:hover {
+            color: $c-newsAccent;
+        }
     }
 }
 
@@ -150,6 +173,10 @@ $header-image-size-desktop: 120px;
             display: inline;
         }
     }
+}
+
+.container__toggle i {
+    top: $gs-baseline / 3 * 2;
 }
 
 /**
@@ -280,9 +307,14 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-container__body {
-    padding-top: $gs-baseline / 4;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
     opacity: 1;
     @include transition(opacity .25s linear); // Used to fade-in new updates
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 4;
+    }
 }
 
 .fc-container__body--is-hidden {

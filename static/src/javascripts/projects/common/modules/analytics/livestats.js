@@ -39,10 +39,10 @@ define([
 
     return {
 
-        log: function (config) {
+        log: function () {
 
             // Also log views and sessions for each participating ab test.
-            var abValues = ab.getAbLoggableObject(config);
+            var abValues = ab.getAbLoggableObject();
 
             if (isNewSession()) {
                 abValues.type = 'session';
