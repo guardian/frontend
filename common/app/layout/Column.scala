@@ -32,7 +32,7 @@ case class Rows(colSpan: Int, columns: Int, rows: Int, itemClasses: ItemClasses)
   val numItems: Int = columns * rows
 }
 case class SplitColumn(colSpan: Int, topItemClasses: ItemClasses, bottomItemsClasses: ItemClasses) extends Column {
-  val numItems: Int = 2
+  val numItems: Int = 3
 }
 case class MPU(colSpan: Int) extends Column {
   val numItems: Int = 0
