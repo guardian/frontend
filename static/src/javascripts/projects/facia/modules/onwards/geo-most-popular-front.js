@@ -16,7 +16,7 @@ define([
     mediator,
     register,
     Component
-    ) {
+) {
 
     function GeoMostPopularFront() {
         register.begin('most-popular');

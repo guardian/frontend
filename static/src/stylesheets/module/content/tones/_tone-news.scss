@@ -12,3 +12,13 @@
         }
     }
 }
+
+.tonal--tone-news {
+    .content__head__comment-count {
+        display: none;
+    }
+
+    .tone-colour {
+        color: colour(news-main-1);
+    }
+}

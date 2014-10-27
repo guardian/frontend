@@ -6,7 +6,8 @@ define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/template',
-    'text!common/views/discussion/comment-count.html'
+    'text!common/views/discussion/comment-count.html',
+    'text!common/views/discussion/comment-count--content.html'
 ], function (
     $,
     bonzo,
@@ -15,10 +16,15 @@ define([
     mediator,
     ajax,
     template,
-    commentCountTemplate
+    commentCountTemplate,
+    commentCountContentTemplate
 ) {
     var attributeName = 'data-discussion-id',
-        countUrl = '/discussion/comment-counts.json?shortUrls=';
+        countUrl = '/discussion/comment-counts.json?shortUrls=',
+        templates = {
+            content: commentCountContentTemplate
+        },
+        defaultTemplate = commentCountTemplate;
 
     function getContentIds() {
         var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
@@ -34,7 +40,8 @@ define([
     }
 
     function getContentUrl(node) {
-        return node.getElementsByTagName('a')[0].pathname + '#comments';
+        var a = node.getElementsByTagName('a')[0];
+        return (a ? a.pathname : '') + '#comments';
     }
 
     function renderCounts(counts) {
@@ -48,6 +55,7 @@ define([
                 if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
+                $node.removeClass('u-h');
 
                 if ($node.attr('data-discussion-inline-upgrade') === 'true') {
                     $('.js-item__comment-count', node).append(c.count + '');
@@ -57,8 +65,9 @@ define([
                     // put in trail__meta, if exists
                     meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node);
                     $container = meta.length ? bonzo(meta) : $node;
+                    var format = $node.data('commentcount-format');
 
-                    $container.append(template(commentCountTemplate, {
+                    $container.append(template(templates[format] || defaultTemplate, {
                         url: getContentUrl(node),
                         count: c.count,
                         label: commentOrComments

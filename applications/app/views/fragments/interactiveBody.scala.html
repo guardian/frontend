@@ -1,9 +1,10 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
+@import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.interactive) { interactive =>
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--interactive">
-    <article class="content content--interactive tone-@interactive.visualTone @interactive match {
+    <article class="content content--interactive tonal__main tonal__main--@articleToneClass(interactive) @interactive match {
             case a if a.isAdvertisementFeature => {content--advertisement-feature}
             case s if s.isSponsored => {content--sponsored}
             case s if s.isFoundationSupported => {content--foundation-supported}

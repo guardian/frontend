@@ -16,22 +16,7 @@ define([
         types: dynamicContainers.concat(fixedContainers).concat([
             {name: 'nav/list'},
             {name: 'nav/media-list'},
-            {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
-            {name: 'news/auto'},
-            {name: 'news/headline', groups: ['standard', 'big', 'very big']},
-            {name: 'news/most-popular'},
-            {name: 'news/people'},
-            {name: 'news/small-list'},
-            {name: 'news/special'},
-            {name: 'features'},
-            {name: 'features/auto'},
-            {name: 'features/multimedia'},
-            {name: 'features/picks', groups: ['standard', 'big']},
-            {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
-            {name: 'comment/comment-and-debate'},
-            {name: 'prototype/cassoulet'},
-            {name: 'prototype/quichelorraine'},
-            {name: 'prototype/raclette'}
+            {name: 'news/most-popular'}
         ]),
 
         typesDynamic: dynamicContainers,

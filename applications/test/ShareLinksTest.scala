@@ -18,7 +18,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
         pageShares.map(_.text) should be (List("Email", "Facebook", "Twitter", "Google plus"))
         pageShares.map(_.href) should be (List(
-          "mailto:?subject=2014+Wildlife+photographer+of+the+Year&amp;body=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsbl",
+          "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsbl",
           "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsfb&ref=responsive",
           "https://twitter.com/intent/tweet?text=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fstw",
           "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsgp&amp;hl=en-GB&amp;wwc=1"))

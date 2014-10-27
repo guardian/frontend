@@ -1011,7 +1011,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
@@ -1064,9 +1064,9 @@ object SnapData {
   def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
 
   private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
-    case snap: Snap =>
-      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case content: Content =>
+        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
     case _  => Nil
   }
 }

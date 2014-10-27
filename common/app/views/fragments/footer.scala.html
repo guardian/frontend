@@ -77,11 +77,14 @@
             <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">contact us</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
 
-            <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="@if(Edition(request) == Us) {
+            <li class="colophon__item"><a data-link-name="feedback" target="_blank" href=
+            @{if(Edition(request) == Us)
                 "https://www.surveymonkey.com/s/theguardian-us-edition-feedback"
-            } else {
-                "https://www.surveymonkey.com/s/theguardian-beta-feedback"
-            }">feedback</a></li>
+            else if(Edition(request) == Au)
+                "https://www.surveymonkey.com/s/theguardian-au-edition-feedback"
+            else
+                "https://www.surveymonkey.com/s/theguardian-uk-edition-feedback"
+            }>feedback</a></li>
             <li class="colophon__item"><a data-link-name="complaints" href="http://www.theguardian.com/info/complaints-and-corrections">complaints &amp; corrections</a></li>
             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">terms &amp; conditions</a></li>
             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">privacy policy</a></li>
