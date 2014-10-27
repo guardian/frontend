@@ -3,40 +3,52 @@ package tools
 import com.gu.facia.client.models.Trail
 import com.gu.googleauth.UserIdentity
 import frontsapi.model.Block
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FreeSpec}
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class FaciaApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class FaciaApiTest extends FreeSpec with Matchers with ConfiguredTestSuite {
 
-  it should "update the published date only for a new article and retain existing article date" in {
+  "update the published date only for a new article and retain existing article date" - {
 
     val (identity: UserIdentity, block: Block) = scenarioOneLiveAnotherDraft
 
     val newBlock = FaciaApi.preparePublishBlock(identity)(block).get
 
-    newBlock.draft should be(None)
+    "no draft articles" in {
+      newBlock.draft should be(None)
+    }
 
-    withClue(s"live blocks were wrong, actual <${newBlock.live}>") {
-      val liveById = newBlock.live.groupBy(_.id)
-      liveById.getOrElse("existingId", Nil).count { case Trail(_, 0, None) => true} should be(1)
-      liveById.getOrElse("newId", Nil).count { case Trail(_, t, None) if t != 0 => true} should be(1)
-      liveById.size should be(2)
+    "had the right number of live articles" in {
+      withClue(s"actual contents were <${newBlock.live}>") {
+        newBlock.live.size should be(2)
+      }
+    }
+    "existing article should have the old date" in {
+      newBlock.live.collect { case Trail("existingId", 0, _) => true } should have('length (1))
+    }
+    "new article should have an updated timestamp" in {
+      newBlock.live.collect { case Trail("newId", t, _) if t != 0 => true } should have('length (1))
     }
 
   }
 
-  it should "discard the drafts without changing live" in {
+  "discard the drafts without changing live" - {
 
     val (identity: UserIdentity, block: Block) = scenarioOneLiveAnotherDraft
 
     val newBlock = FaciaApi.prepareDiscardBlock(identity)(block).get
 
-    newBlock.draft should be(None)
+    "no draft articles" in {
+      newBlock.draft should be(None)
+    }
 
-    withClue(s"live blocks were wrong, actual <${newBlock.live}>") {
-      val liveById = newBlock.live.groupBy(_.id)
-      liveById.getOrElse("existingId", Nil).count { case Trail(_, 0, None) => true} should be(1)
-      liveById.size should be(1)
+    "had the right number of live articles" in {
+      withClue(s"actual contents were <${newBlock.live}>") {
+        newBlock.live.size should be(1)
+      }
+    }
+    "existing article should have the old date" in {
+      newBlock.live.collect { case Trail("existingId", 0, _) => true } should have('length (1))
     }
 
   }
