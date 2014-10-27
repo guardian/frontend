@@ -50,7 +50,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     val webPage = "http://example.com/test"
 
     "with a valid CSRF request" - Fake{
-      val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
+      val fakeRequest = FakeCSRFRequest()
         .withFormUrlEncodedBody(
           "location" -> location,
           "aboutMe" -> aboutMe,
@@ -92,43 +92,132 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   }
 
   "Given the submitAccountForm method is called" - {
-    val primaryEmailAddress = "john.smith@bobmail.com"
-    val firstName = "John"
-    val secondName = "Smith"
-    val gender = "Male"
-    val address1 = "10 Downing Street"
-    val address2 = "London"
-    val address3 = ""
-    val address4 = ""
-    val postcode = "N1 9GU"
-    val country = Countries.UK
-    val billingAddress1 = "Buckingham Palace"
-    val billingAddress2 = "London"
-    val billingAddress3 = ""
-    val billingAddress4 = ""
-    val billingPostcode = "SW1A 1AA"
-    val billingCountry = Countries.UK
+    object FakeRequestAccountData {
+      val primaryEmailAddress = "john.smith@bobmail.com"
+      val firstName = "John"
+      val secondName = "Smith"
+      val gender = "Male"
+      val address1 = "10 Downing Street"
+      val address2 = "London"
+      val address3 = ""
+      val address4 = ""
+      val postcode = "N1 9GU"
+      val country = Countries.UK
+      val billingAddress1 = "Buckingham Palace"
+      val billingAddress2 = "London"
+      val billingAddress3 = ""
+      val billingAddress4 = ""
+      val billingPostcode = "SW1A 1AA"
+      val billingCountry = Countries.UK
+    }
+
+    import FakeRequestAccountData._
+
+    def createFakeRequestWithoutBillingAddress = {
+
+      import FakeRequestAccountData._
+
+      FakeCSRFRequest ()
+        .withFormUrlEncodedBody (
+        ("primaryEmailAddress", primaryEmailAddress),
+        ("firstName", firstName),
+        ("secondName", secondName),
+        ("gender", gender),
+        ("address.line1", address1),
+        ("address.line2", address2),
+        ("address.line3", address3),
+        ("address.line4", address4),
+        ("address.postcode", postcode),
+        ("address.country", country)
+      )
+
+    }
+
+    def createFakeRequestWithBillingAddress = {
+
+      import FakeRequestAccountData._
+
+      FakeCSRFRequest ()
+        .withFormUrlEncodedBody (
+        ("primaryEmailAddress", primaryEmailAddress),
+        ("firstName", firstName),
+        ("secondName", secondName),
+        ("gender", gender),
+        ("address.line1", address1),
+        ("address.line2", address2),
+        ("address.line3", address3),
+        ("address.line4", address4),
+        ("address.postcode", postcode),
+        ("address.country", country),
+        ("billingAddress.line1", billingAddress1),
+        ("billingAddress.line2", billingAddress2),
+        ("billingAddress.line3", billingAddress3),
+        ("billingAddress.line4", billingAddress4),
+        ("billingAddress.postcode", billingPostcode),
+        ("billingAddress.country", billingCountry)
+      )
+
+    }
 
     "with a valid CSRF request" - Fake{
-      val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
-        .withFormUrlEncodedBody(
-          ("primaryEmailAddress", primaryEmailAddress),
-          ("firstName", firstName),
-          ("secondName", secondName),
-          ("gender", gender),
-          ("address.line1", address1),
-          ("address.line2", address2),
-          ("address.line3", address3),
-          ("address.line4", address4),
-          ("address.postcode", postcode),
-          ("address.country", country),
-          ("billingAddress.line1", billingAddress1),
-          ("billingAddress.line2", billingAddress2),
-          ("billingAddress.line3", billingAddress3),
-          ("billingAddress.line4", billingAddress4),
-          ("billingAddress.postcode", billingPostcode),
-          ("billingAddress.country", billingCountry)
+
+      val fakeRequest = createFakeRequestWithBillingAddress
+
+      when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+        .thenReturn(Future.successful(Right(user)))
+
+      val result = controller.submitAccountForm().apply(fakeRequest)
+      Await.result(result, 1.seconds)
+
+      "then a status 200 should be returned" in {
+        status(result) should be(200)
+      }
+    }
+    "without billing address request" - Fake{
+
+      val fakeRequest = createFakeRequestWithoutBillingAddress
+
+      val updatedUser = user.copy(
+        primaryEmailAddress = primaryEmailAddress,
+        privateFields = PrivateFields(
+          firstName = Some(firstName),
+          secondName = Some(secondName),
+          gender = Some(gender),
+          address1 = Some(address1),
+          address2 = Some(address2),
+          address3 = Some(address3),
+          address4 = Some(address4),
+          postcode = Some(postcode),
+          country = Some(country)
         )
+      )
+
+      when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+        .thenReturn(Future.successful(Right(updatedUser)))
+
+      val result = controller.submitAccountForm().apply(fakeRequest)
+      Await.result(result, 1.seconds)
+
+      "then the user should be saved on the ID API" in {
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+
+        userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.firstName.value should equal(firstName)
+        userUpdate.privateFields.value.secondName.value should equal(secondName)
+        userUpdate.privateFields.value.gender.value should equal(gender)
+        userUpdate.privateFields.value.address1.value should equal(address1)
+        userUpdate.privateFields.value.address2.value should equal(address2)
+        userUpdate.privateFields.value.address3 should equal(None)
+        userUpdate.privateFields.value.address4 should equal(None)
+        userUpdate.privateFields.value.postcode.value should equal(postcode)
+        userUpdate.privateFields.value.country.value should equal(country)
+      }
+    }
+    "with billing address request" - Fake{
+
+      val fakeRequest = createFakeRequestWithBillingAddress
 
       val updatedUser = user.copy(
         primaryEmailAddress = primaryEmailAddress,
@@ -155,7 +244,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         .thenReturn(Future.successful(Right(updatedUser)))
 
       val result = controller.submitAccountForm().apply(fakeRequest)
-      Await.result(result, 10.seconds)
+      Await.result(result, 1.seconds)
 
       "then the user should be saved on the ID API" in {
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
@@ -178,10 +267,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.privateFields.value.billingAddress4 should equal(None)
         userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
         userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
-      }
-
-      "then a status 200 should be returned" in {
-        status(result) should be(200)
       }
     }
   }
