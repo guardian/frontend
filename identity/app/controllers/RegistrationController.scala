@@ -27,12 +27,13 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   val page = IdentityPage("/register", "Register", "register")
 
   private val passwordKey = "user.password"
+  private val emailKey = "user.primaryEmailAddress"
 
   val registrationForm = Form(
     Forms.tuple(
       "user.firstName" -> idFirstName,
       "user.secondName" -> idSecondName,
-      "user.primaryEmailAddress" -> idEmail,
+      emailKey -> idRegEmail,
       "user.publicFields.username" -> Forms.text,
       passwordKey -> idPassword,
       "receive_gnm_marketing" -> Forms.boolean,
@@ -64,7 +65,14 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
     def onError(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]): Future[Result] = {
       logger.info("Invalid registration request")
-      Future.successful(redirectToRegistrationPage(formWithErrors, verifiedReturnUrlAsOpt, skipConfirmation))
+      formWithErrors.error("user.primaryEmailAddress") match {
+        case Some(FormError("user.primaryEmailAddress", Seq("This domain is blacklisted"), _)) => {
+          logger.info("Blocking registration from blacklisted domain here: %s".format(formWithErrors.data.getOrElse(emailKey," should be an email address")))
+          Future.successful(redirectToRegistrationPageWithoutErrors(formWithErrors, verifiedReturnUrlAsOpt, skipConfirmation))
+        }
+        case _ =>
+          Future.successful(redirectToRegistrationPage(formWithErrors, verifiedReturnUrlAsOpt, skipConfirmation))
+      }
     }
 
     def onSuccess(form: (String, String, String, String, String, Boolean, Boolean)): Future[Result] = form match {
@@ -110,6 +118,11 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     SeeOther(routes.RegistrationController.renderForm(returnUrl, skipConfirmation).url).flashing(
       clearPassword(formWithErrors).toFlash
     )
+  )
+
+  private def redirectToRegistrationPageWithoutErrors(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)],
+                                                      returnUrl: Option[String], skipConfirmation: Option[Boolean]) = NoCache(
+    SeeOther(routes.RegistrationController.renderForm(returnUrl, skipConfirmation).url).flashing(formWithErrors.toFlashWithDataDiscarded)
   )
 
 
