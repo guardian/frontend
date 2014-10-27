@@ -68,12 +68,6 @@ $fc-item-gutter: $gs-gutter / 4;
         @include flex(1);
         width: 100%;
     }
-
-    .fc-item__content {
-        @include flex-display;
-        @include flex-direction(column);
-        @include flex-grow(1);
-    }
 }
 
 .has-no-flex-wrap {
@@ -267,9 +261,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__footer--horizontal {
     display: none;
-    .has-flex-wrap & {
-        @include align-items--end;
-    }
+
     .has-no-flex-wrap & {
         @include clearfix;
     }
