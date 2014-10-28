@@ -31,7 +31,7 @@
                     @fragments.contentMeta(article)
 
                     <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
-                        data-test-id="article-review-body">
+                        data-component="body" data-test-id="article-review-body">
                         @BodyCleaner(article, article.body)
                     </div>
 
