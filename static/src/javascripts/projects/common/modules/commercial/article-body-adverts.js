@@ -44,6 +44,10 @@ define([
                 }
             };
 
+            if (config.page.sponsorshipType === 'foundation-supported') {
+                adNames.unshift(['fobadge', ['im', 'paid-for-badge']]);
+                insertAdAtP(spacefinder.getParaWithSpace(rules));
+            }
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
