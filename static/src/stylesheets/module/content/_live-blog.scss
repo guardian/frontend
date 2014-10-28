@@ -712,7 +712,9 @@ $timeline-width: 15px;
 
 .blog__related__head {
     @include fs-header(2);
+    padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
+    border-top: 1px solid $c-neutral4;
 }
 
 .blog__related__item {
