@@ -187,14 +187,10 @@ $block-padding-right: $gs-gutter;
 .updated-time {
     @include fs-textSans(1);
     color: $c-neutral2;
-    margin: 0 $gs-gutter/2 $gs-baseline/3;
-    padding: $gs-baseline/2 0 0;
-    @include mq(tablet) {
-        position: absolute;
-        right: $gs-gutter;
-        bottom: $gs-baseline;
-        margin: 0;
-    }
+    position: absolute;
+    right: $gs-gutter;
+    bottom: $gs-baseline / 3;
+    margin: 0;
 }
 
 /* Blocks
@@ -995,25 +991,14 @@ $timeline-width: 15px;
 }
 
 .block-share--liveblog-mobile {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: $gs-baseline $gs-gutter / 4;
+    margin-left: $gs-gutter / 2;
+    margin-top: $gs-baseline / 2;
     cursor: pointer;
 }
 
 .block-share__item--mobile {
     @include mq(tablet) {
         display: none;
-    }
-
-    .i {
-        @extend %absolute-center;
-        @include icon(share-android);
-        width: 11px !important;
-        height: 11px !important;
-        padding-right: 6px;
-        opacity: .5;
     }
 }
 

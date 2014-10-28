@@ -369,10 +369,6 @@ define([
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.removeClass('gallery-lightbox--show-info');
                 },
-                'show-info': function() {
-                    this.pulseButton(this.infoBtn);
-                    this.$lightboxEl.addClass('gallery-lightbox--show-info');
-                },
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
@@ -418,7 +414,6 @@ define([
     };
 
     GalleryLightbox.prototype.show = function() {
-        blockSharing.init();
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');

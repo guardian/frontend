@@ -10,14 +10,11 @@
         <div class="{{articleType}}-lightbox__img-credit">{{credit}}</div>
         <div class="block-share block-share--{{articleType}}" data-link-name="block share">
             {{shareButtons}}
-            <label class="block-share__label" for="block-share-link-{{index}}">copy link text</label>
-            <input id="block-share-link-{{index}}" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="{{blockShortUrl}}" readonly="readonly"/>
-            <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand"><i class="i i-ellipsis-white-36"></i><span class="u-h">expand</span></button>
         </div>
-    </div>
-    <div class="block-share--{{articleType}}-mobile" data-open-overlay-on-click="share-modal-{{index}}" data-link-name="open mobile block share">
-        <div class="block-share__item block-share__item--mobile"><i class="i"></i>
-            <span class="u-h">share</span>
+        <div class="block-share--{{articleType}}-mobile" data-open-overlay-on-click="share-modal-{{index}}" data-link-name="open mobile block share">
+            <div class="block-share__item--mobile button button--small button--tone-media-variant">
+                Share
+            </div>
         </div>
     </div>
     <div id="share-modal-{{index}}" class="overlay share-modal overlay--{{articleType}} js-share-modal">

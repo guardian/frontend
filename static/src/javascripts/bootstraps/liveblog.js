@@ -195,7 +195,6 @@ define([
         handleUpdates: function () {
             mediator.on('modules:autoupdate:updates', function () {
                 modules.createTimeline();
-                blockSharing.init();
             });
         },
 
@@ -279,7 +278,6 @@ define([
         article.modules.initOpen();
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
-        blockSharing.init();
 
         mediator.emit('page:liveblog:ready');
     }

@@ -65,16 +65,12 @@
         padding-right: gs-span(2);
     }
 
-    @include mq(tablet, $until: desktop) {
-        padding-right: gs-span(3);
-    }
-
     @include mq($until: tablet) {
         padding-right: $gs-gutter * 2;
     }
 
     @include mq($until: desktop) {
-        margin-bottom: $gs-baseline * 3;
+        margin-bottom: $gs-baseline * 2;
     }
     @include mq(desktop) {
         @include fs-textSans(2, true);
@@ -224,6 +220,7 @@
 
 .block-share--gallery {
     margin-top: $gs-baseline;
+    white-space: nowrap;
     clear: both;
 
     @include mq($until: tablet) {
@@ -233,7 +230,7 @@
     @include mq(tablet, desktop) {
         position: absolute;
         top: -$gs-baseline / 3;
-        right: 0;
+        right: $gs-baseline / 2;
     }
 
     .block-share__item {
@@ -286,32 +283,9 @@
 }
 
 .block-share--gallery-mobile {
-    position: absolute;
-    top: $gs-baseline / 2;
-    right: 0;
-    padding-top: 1px;
     cursor: pointer;
     opacity: .8;
-    .block-share__item {
-        background-color: rgba(51, 51, 51, .6);
-        .i {
-            opacity: 1;
-            @include icon(share-android--white);
-        }
-    }
-
-    .gallery-lightbox & {
-        height: 44px;
-        width: 44px;
-        left: $gs-gutter/2;
-        top: $gs-baseline/2;
-        opacity: 1;
-        z-index: 10;
-        .i {
-            width: 22px !important;
-            height: 22px !important;
-        }
-    }
+    margin-top: $gs-baseline / 2;
 }
 
 .block-share--gallery {
@@ -336,17 +310,6 @@
 
     .block-share__item--expand .i {
         opacity: 1;
-    }
-}
-
-.block-share__item--mobile {
-    .gallery-lightbox & {
-        width: 44px;
-        height: 44px;
-        border: 1px solid $c-neutral4;
-        .i {
-            background-position: 2px center !important;
-        }
     }
 }
 

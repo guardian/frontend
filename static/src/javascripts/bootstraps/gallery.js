@@ -60,7 +60,6 @@ define([
         },
         ready = function () {
             LightboxGallery.init();
-            blockSharing.init();
 
             // Opens block level sharing links in the lightbox
             var galleryHash = window.location.hash,
