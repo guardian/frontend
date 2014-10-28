@@ -906,52 +906,6 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
-    val baseClasses: Seq[String] = Seq(
-      "fromage",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.trailPicture(5,3).isEmpty || imageHide){
-          "fromage--has-no-image"
-        }else{
-          "fromage--has-image"
-        },
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
-          s"fromage--imageadjust-boost"
-        }
-        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
-          s"fromage--imageadjust-hide"
-        }
-        else "item--imageadjust-default",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
-  def forSaucisson(trail: Trail): String = {
-    val baseClasses: Seq[String] = Seq(
-      "saucisson",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail) => String] = Seq(
-      (trail: Trail) =>
-        if (trail.isLive) "item--live" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
     case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
