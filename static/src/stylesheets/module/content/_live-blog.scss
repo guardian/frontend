@@ -558,7 +558,7 @@ $block-padding-right: $gs-gutter;
 
 /* Timeline
    ========================================================================== */
-$timeline-width: 14px;
+$timeline-width: 15px;
 
 .blog__timeline {
     @include mq(desktop) {
@@ -663,7 +663,7 @@ $timeline-width: 14px;
         }
 
         .timeline__item:last-child & {
-            border-left: 0;
+            border-color: transparent;
         }
     }
 }
