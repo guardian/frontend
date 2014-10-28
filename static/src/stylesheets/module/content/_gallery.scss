@@ -230,6 +230,12 @@
         display: none;
     }
 
+    @include mq(tablet, desktop) {
+        position: absolute;
+        top: -$gs-baseline / 3;
+        right: 0;
+    }
+
     .block-share__item {
         @include transition(opacity .15s linear);
         opacity: .8;
