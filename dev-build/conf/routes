@@ -72,6 +72,7 @@ GET         /:mediaType/section/:sectionId/*seriesId.json                       
 GET         /:mediaType/section/:sectionId.json                                                                      controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
 GET         /audio/most-viewed.json                                                                                  controllers.MostViewedAudioController.renderMostViewed()
+GET         /podcast/most-viewed.json                                                                                controllers.MostViewedAudioController.renderMostViewedPodcast()
 GET         /gallery/most-viewed.json                                                                                controllers.MostViewedGalleryController.renderMostViewed()
 GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
 GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)

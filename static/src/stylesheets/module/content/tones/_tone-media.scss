@@ -22,7 +22,8 @@
     padding-top: 0;
 
     .byline,
-    .content__dateline {
+    .content__dateline,
+    .meta__numbers .sharecount__heading {
         color: $c-neutral3;
     }
 
@@ -32,7 +33,8 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help,
-    .from-content-api {
+    .from-content-api,
+    .meta__numbers .sharecount__value {
         color: $c-neutral7;
     }
 
@@ -42,7 +44,10 @@
     .ad-slot--paid-for-badge--article,
     .submeta,
     .submeta-container,
-    .commentcount {
+    .commentcount,
+    .meta__numbers,
+    .meta__social,
+    .meta__number {
         border-color: $c-neutral2;
     }
 
@@ -66,4 +71,5 @@
             }
         }
     }
+
 }

@@ -5,23 +5,15 @@ Hence why a greater depth of selector specificity is needed.
 
 */
 .facia-slice--hl4-h {
-    @if $browser-supports-flexbox {
+    .has-flex & {
         @include flex-direction(row-reverse);
 
-        .facia-slice__item:first-child {
-            @include vertical-item-separator;
-        }
-
-        .facia-slice__item:last-child:before {
+        .facia-slice__item:before {
             display: none;
         }
-    }
 
-    .fc-item--half-tablet {
-        .fc-item__standfirst {
-            @include mq(tablet) {
-                display: none;
-            }
+        .fc-item--half-tablet {
+            @include vertical-item-separator;
         }
     }
 }

@@ -49,6 +49,9 @@
                                     @video(player)
                                     </div>
                                 </div>
+                                <div class="fc-item__video-fallback">
+                                    @image(trail, inlineImage = containerIndex == 0 && index < 4)
+                                </div>
                             }
                         }
 
@@ -80,11 +83,11 @@
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                    @meta(trail)
-
                     <div class="fc-item__footer--vertical" aria-hidden="true">
                         @sublinks(trail.supporting, modifierClasses)
                     </div>
+
+                    @meta(trail)
                 </div>
 
                 @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>

@@ -13,13 +13,9 @@ trait Requests {
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
-    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.headers.get("Accept").exists{ header =>
-      header.contains("application/json") ||
-      header.contains("text/javascript") ||
-      header.contains("application/javascript")
-    } || r.path.endsWith(".json")
+    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
-    lazy val isRss: Boolean = r.headers.get("Accept").exists(_.contains("application/rss+xml")) || r.path.endsWith("/rss")
+    lazy val isRss: Boolean = r.path.endsWith("/rss")
 
     lazy val isWebp: Boolean = {
       val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)

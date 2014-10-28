@@ -21,11 +21,11 @@ trait LinkTo extends Logging {
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
 
-  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
-  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
+  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
+  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, region).url
+  def apply(url: String, edition: Edition)(implicit request : RequestHeader): String = {
+    val processedUrl: String = processUrl(url, edition).url
     handleQueryStrings(processedUrl)
   }
 
@@ -33,9 +33,9 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, region: Option[Region] = None) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition, region))
-    case "/" => ProcessedUrl(homeLink(edition, region))
+  def processUrl(url: String, edition: Edition) = url match {
+    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
+    case "/" => ProcessedUrl(homeLink(edition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
     case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
@@ -56,7 +56,7 @@ trait LinkTo extends Logging {
     }
 
     val processedUrlMaybe: Option[ProcessedUrl] = urlToProcess map { url =>
-      processUrl(url, Edition(request), Region(request))
+      processUrl(url, Edition(request))
     }
 
     processedUrlMaybe match {
@@ -68,9 +68,7 @@ trait LinkTo extends Logging {
 
   private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
 
-  private def homeLink(edition: Edition, region: Option[Region]) = region.map(_.id.toLowerCase)
-    .map(urlFor(_, edition))
-    .getOrElse(urlFor("", edition))
+  private def homeLink(edition: Edition) = urlFor("", edition)
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""

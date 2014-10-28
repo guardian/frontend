@@ -10,7 +10,7 @@
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
              class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
-             data-link-name="@FaciaComponentName(config, collection)"
+             data-link-name="@{containerIndex + 1} | @FaciaComponentName(config, collection)"
              data-id="@dataId"
              @DfpAgent.sponsorshipTag(config).map { keyword =>
                  data-keywords="@keyword"

@@ -10,9 +10,11 @@ import scala.concurrent.Future
 
 object MostViewedAudioAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Seq[Audio]](Nil)
+  private val audioAgent = AkkaAgent[Seq[Audio]](Nil)
+  private val podcastAgent = AkkaAgent[Seq[Audio]](Nil)
 
-  def mostViewedAudio(): Seq[Audio] = agent()
+  def mostViewedAudio(): Seq[Audio] = audioAgent()
+  def mostViewedPodcast(): Seq[Audio] = podcastAgent()
 
   private def UrlToContentPath(url: String): String = {
     val path = new URL(url).getPath
@@ -22,7 +24,7 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
   def refresh() = {
     log.info("Refreshing most viewed audio.")
 
-    val ophanResponse = services.OphanApi.getMostViewedAudio(hours = 3, count = 12)
+    val ophanResponse = services.OphanApi.getMostViewedAudio(hours = 3, count = 100)
 
     ophanResponse.map { result =>
 
@@ -35,10 +37,14 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
-        val audio = contentSeq.toSeq.collect {
+        val allAudio = contentSeq.toSeq.collect {
           case Some(audio: Audio) => audio
         }
-        agent alter audio
+        val audio = allAudio.filter(!_.isPodcast)
+        val podcast = allAudio.filter(_.isPodcast)
+
+        audioAgent alter audio
+        podcastAgent alter podcast
       }
     }
   }

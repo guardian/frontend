@@ -1,7 +1,5 @@
 @(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-@import views.html.fragments.keywordList
-@import views.support.MostPopularTags.topTags
 @import views.support.RenderClasses
 
 @if(faciaPage.collections.nonEmpty) {
@@ -28,16 +26,7 @@
                 }
             }
 
-            <section class="facia-container__inner">
-                @defining(topTags(faciaPage.allItems).take(20)) { tags =>
-                    @if(tags.nonEmpty) {
-                        <div class="submeta" data-link-name="keywords">
-                            <h2 class="submeta__head">Trending topics</h2>
-                            @keywordList(tags, 5, "See also")
-                        </div>
-                    }
-                }
-            </section>
+            @fragments.trendingTopics(faciaPage.allItems, faciaPage.id)
 
         @if(!faciaPage.isAdvertisementFeature) {
             @fragments.commercial.commercialComponent()
