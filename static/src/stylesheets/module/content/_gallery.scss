@@ -65,13 +65,15 @@
         padding-right: gs-span(2);
     }
 
+    @include mq($until: desktop) {
+        padding-right: $gs-gutter * 10;
+        margin-bottom: $gs-baseline * 2;
+    }
+
     @include mq($until: tablet) {
         padding-right: $gs-gutter * 2;
     }
 
-    @include mq($until: desktop) {
-        margin-bottom: $gs-baseline * 2;
-    }
     @include mq(desktop) {
         @include fs-textSans(2, true);
         position: absolute;
