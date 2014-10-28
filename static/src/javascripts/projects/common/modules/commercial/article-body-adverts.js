@@ -4,14 +4,14 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder',
-    'common/modules/commercial/create-ad-slot'
+    'common/modules/commercial/dfp'
 ], function (
     once,
     $,
     config,
     detect,
     spacefinder,
-    createAdSlot
+    dfp
 ) {
 
     var ads = [],
@@ -19,7 +19,7 @@ define([
         insertAdAtP = function (para) {
             if (para) {
                 var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]))
+                    $ad    = $.create(dfp.createAdSlot(adName[0], adName[1]))
                                 .insertBefore(para);
                 ads.push($ad);
             }
