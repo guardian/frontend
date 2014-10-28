@@ -148,12 +148,4 @@ import conf.Switches.MemcachedSwitch
     status(result) should be(301)
     header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone")
   }
-
-  it should "redirect 'section tags' rss to the section page rss" in {
-    val rssRequest = TestRequest().withHeaders("Accept" -> "application/rss+xml")
-    val result = controllers.IndexController.render("sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")(rssRequest)
-    status(result) should be(301)
-    header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone/rss")
-  }
-
 }

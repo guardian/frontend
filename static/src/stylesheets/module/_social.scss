@@ -45,7 +45,7 @@ category: Common
     width: 36px;
     padding: 0 $gs-gutter/5;
 
-    @include mq(leftCol, wide) {
+    @include mq(leftCol) {
         width: 32px;
         padding-right: 0;
     }

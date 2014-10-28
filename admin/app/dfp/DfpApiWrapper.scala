@@ -6,6 +6,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder.SUGGESTED_PAGE
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
 
 object DfpApiWrapper extends Logging {
@@ -27,14 +28,14 @@ object DfpApiWrapper extends Logging {
 
   private def fetch[T](statementBuilder: StatementBuilder)(fetchPage: Statement => Page[T]): Seq[T] = {
 
-    def fetch(soFar: Seq[T]): Seq[T] = {
+    @tailrec def fetch(soFar: Seq[T]): Seq[T] = {
       val page = fetchPage(statementBuilder.toStatement)
       val resultsSoFar = soFar ++ page.results
-      if (resultsSoFar.size < page.totalResultSetSize) {
+      if (resultsSoFar.size >= page.totalResultSetSize) {
+        resultsSoFar
+      } else {
         statementBuilder.increaseOffsetBy(SUGGESTED_PAGE_LIMIT)
         fetch(resultsSoFar)
-      } else {
-        resultsSoFar
       }
     }
 
