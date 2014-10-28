@@ -18,8 +18,13 @@ Media list item. Looks a bit like this:
     $item-vertical-padding: $gs-baseline / 4;
     $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
     $image-width: $item-min-height * $media-ratio;
+    $mobile-media-padding: ($gs-baseline / 3);
 
-    min-height: $item-min-height;
+
+    min-height: $item-min-height + ($mobile-media-padding * 2);
+    @include mq(tablet) {
+        min-height: $item-min-height;
+    }
 
     .fc-item__container,
     .fc-item__content,
@@ -39,7 +44,7 @@ Media list item. Looks a bit like this:
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         position: relative;
-        padding-left: $image-width;
+        padding-left: $image-width + $mobile-media-padding;
         &:before {
             content: '';
             position: absolute;
@@ -47,6 +52,10 @@ Media list item. Looks a bit like this:
             top: 0;
             bottom: 0;
             width: $image-width;
+        }
+
+        @include mq(tablet) {
+            padding-left: $image-width;
         }
     }
 
@@ -61,9 +70,21 @@ Media list item. Looks a bit like this:
     }
 
     .fc-item__media-wrapper {
-        float: left;
+        position: absolute;
         margin-left: 0 - $image-width;
         width: $image-width;
+        margin-top: $mobile-media-padding;
+        margin-bottom: $mobile-media-padding;
+
+        @include mq(tablet) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    &[class*="fc-item--has-sublinks"] .fc-item__media-wrapper {
+        position: relative;
+        float: left;
     }
 
     &.fc-item--has-no-image,
@@ -78,11 +99,16 @@ Media list item. Looks a bit like this:
         display: none;
     }
 
-    .fc-item__footer--vertical {
-        margin-left: 0 - $image-width;
+    .fc-item__footer--vertical,
+    &[class*="fc-item--has-sublinks"] .fc-item__meta {
+        margin-left: 0 - $image-width - $mobile-media-padding;
     }
 
     &.fc-item--has-cutout {
+        .fc-item__meta {
+            margin-left: 0;
+        }
+
         .fc-item__container {
             min-height: gs-height(2) + $gs-baseline;
         }
