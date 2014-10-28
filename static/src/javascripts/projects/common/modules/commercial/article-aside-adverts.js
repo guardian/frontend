@@ -5,7 +5,7 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/create-ad-slot'
 ], function (
     qwery,
     defaults,
@@ -13,7 +13,7 @@ define([
     $,
     $css,
     config,
-    dfp
+    createAdSlot
 ) {
 
     function init(options) {
@@ -37,7 +37,7 @@ define([
         adType   = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
 
         return $(opts.adSlotContainerSelector)
-            .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
+            .append(createAdSlot(adType, 'mpu-banner-ad'));
     }
 
     return {
