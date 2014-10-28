@@ -221,9 +221,9 @@
 }
 
 //Live blog items
-.facia-slice--no-flex {
+.facia-slice--single-col {
+
     .facia-slice__item {
-        width: 100%;
         padding-bottom: 0;
 
         &:before {
@@ -234,12 +234,5 @@
     .fc-item {
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .tone-news--item {
-        .fc-item__content {
-            padding-left: 0;
-            padding-right: 0;
-        }
     }
 }

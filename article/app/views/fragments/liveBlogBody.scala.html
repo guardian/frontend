@@ -101,12 +101,13 @@
                     @if(model.related.hasStoryPackage) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
-                            <ul class="u-unstyled facia-slice facia-slice--no-flex">
+                            <ul class="u-unstyled facia-slice facia-slice--single-col">
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         Card(index, trail, None),
                                         ItemClasses(mobile = "list-media",tablet = "standard"),
                                         0,
+                                        isRow = false,
                                         isList = false
                                     )(request, CollectionConfig.emptyConfig)
                                 }
