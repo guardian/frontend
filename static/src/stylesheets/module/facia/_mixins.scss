@@ -99,12 +99,6 @@ $breakpoints: (
                     float: none;
                     margin-bottom: $gs-baseline;
                 }
-                .container--news .container__title {
-                    display: none;
-                }
-                .container--tag .container__title {
-                    display: block;
-                }
             }
         }
         @include container__meta(leftCol, desktop);
