@@ -11,23 +11,7 @@
     @config.collectionType match {
         case Some("nav/list")                   => { @containers.navlist(collection, index, dataId)(request, config) }
         case Some("nav/media-list")             => { @containers.navmedialist(collection, index, dataId)(request, config) }
-        case Some("news")                       => { @containers.news(front, collection, NewsContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(collection), NewsContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("news/headline")              => { @containers.headline(collection, HeadlineContainer(), index, dataId)(request, config) }
         case Some("news/most-popular")          => { @containers.popular(collection, PopularContainer(), index, dataId)(request, config) }
-        case Some("news/people")                => { @containers.people(collection, PeopleContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("news/small-list")            => { @containers.small_list(collection, SpecialContainer(), index, dataId)(request, config) }
-        case Some("news/special")               => { @containers.special(collection, SpecialContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("features")                   => { @containers.features(collection, FeaturesContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("features/auto")              => { @containers.featuresauto(collection, FeaturesAutoContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("features/multimedia")        => { @containers.multimedia(collection, MultimediaContainer(), index, useInlinePlayer = true, dataId = dataId)(request, templateDeduping, config) }
-        case Some("features/picks")             => { @containers.picks(collection, PicksContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("features/volumes")           => { @containers.featuresvolumes(front, collection, FeaturesVolumesContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("prototype/cassoulet")        => { @containers.cassoulet(collection, CassouletContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("prototype/quichelorraine")   => { @containers.quichelorraine(collection, QuicheLorraineContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index, dataId)(request, templateDeduping, config) }
-        case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index, dataId)(request, templateDeduping, config) }
-        case FixedContainers(containerDefinition) => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, Some(templateDeduping)), index, front.frontProperties, dataId = dataId)(request, templateDeduping, config) }
         case collectionType => {
             @DynamicContainers(collectionType, collection.items) match {
                 case Some(containerDefinition) => {
@@ -35,7 +19,7 @@
                 }
 
                 case None => {
-                    @containers.special(collection, SpecialContainer(), index, dataId)(request, templateDeduping, config)
+                    @containers.facia_cards.container(collection, ContainerLayout(FixedContainers.fixedSmallSlowIV, collection, None), index, front.frontProperties, dataId)(request, templateDeduping, config)
                 }
             }
         }
