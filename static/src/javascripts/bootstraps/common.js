@@ -41,6 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
+    'common/modules/social/share-count',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -91,6 +92,7 @@ define([
     Related,
     TonalComponent,
     releaseMessage,
+    shareCount,
     Dropdowns,
     fauxBlockLink,
     Fonts,
@@ -234,9 +236,9 @@ define([
                     Cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
-                    feedbackLink = config.page.edition === 'US' ?
-                        'https://www.surveymonkey.com/s/theguardian-us-edition-feedback' :
-                        'https://www.surveymonkey.com/s/theguardian-beta-feedback';
+
+                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
+                        (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
                     msg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
@@ -412,6 +414,11 @@ define([
                         }, 1);
                     }
                 });
+            },
+
+            initShareCounts: function () {
+                shareCount.init();
+
             }
         },
         ready = function () {
@@ -419,6 +426,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
+            modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();
             modules.showTabs();

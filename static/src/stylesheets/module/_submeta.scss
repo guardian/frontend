@@ -1,5 +1,4 @@
 .submeta-container {
-    width: 100%;
 
     .content--liveblog & {
         padding-top: $gs-baseline;
@@ -105,7 +104,8 @@
 .content--liveblog,
 .content--gallery,
 .content--media,
-.content--image {
+.content--image,
+.content--interactive {
     .submeta__head {
         @include mq($until: leftCol) {
             display: none;

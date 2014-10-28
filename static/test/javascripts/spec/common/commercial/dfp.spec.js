@@ -248,7 +248,13 @@ define([
                         name: 'right',
                         type: 'mpu-banner-ad',
                         html: '<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" ' +
-                            'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,250|300,251|300,600"></div>'
+                            'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,1|300,250|300,251|300,600"></div>'
+                    },
+                    {
+                        name: 'right-small',
+                        type: 'mpu-banner-ad',
+                        html: '<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" ' +
+                            'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,250" data-desktop="300,1|300,250"></div>'
                     },
                     {
                         name: 'im',
@@ -269,7 +275,14 @@ define([
                         type: 'inline',
                         html: '<div id="dfp-ad--inline2" class="ad-slot ad-slot--dfp ad-slot--inline2 ad-slot--inline" ' +
                             'data-link-name="ad slot inline2" data-test-id="ad-slot-inline2" data-name="inline2" data-mobile="300,50" ' +
-                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250"></div>'
+                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
+                    },
+                    {
+                        name: 'inline3',
+                        type: 'inline',
+                        html: '<div id="dfp-ad--inline3" class="ad-slot ad-slot--dfp ad-slot--inline3 ad-slot--inline" ' +
+                            'data-link-name="ad slot inline3" data-test-id="ad-slot-inline3" data-name="inline3" data-mobile="300,50" ' +
+                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
                     },
                     {
                         name: 'merchandising-high',
@@ -290,6 +303,13 @@ define([
                         type: 'paid-for-badge',
                         html: '<div id="dfp-ad--spbadge" class="ad-slot ad-slot--dfp ad-slot--spbadge ad-slot--paid-for-badge" ' +
                             'data-link-name="ad slot spbadge" data-test-id="ad-slot-spbadge" data-name="spbadge" data-mobile="140,90" ' +
+                            'data-refresh="false" data-label="false"></div>'
+                    },
+                    {
+                        name: 'fobadge',
+                        type: 'paid-for-badge',
+                        html: '<div id="dfp-ad--fobadge" class="ad-slot ad-slot--dfp ad-slot--fobadge ad-slot--paid-for-badge" ' +
+                            'data-link-name="ad slot fobadge" data-test-id="ad-slot-fobadge" data-name="fobadge" data-mobile="140,90" ' +
                             'data-refresh="false" data-label="false"></div>'
                     }
                 ].forEach(function (expectation) {

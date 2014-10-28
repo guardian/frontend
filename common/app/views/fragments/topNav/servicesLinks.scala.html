@@ -61,14 +61,6 @@
                                 <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
                             </a>
                         }
-                        @common.Region.others(request).map{ region =>
-                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@region.id"
-                                data-link-name="switch to @region.id region"
-                                href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
-                                title="Switch to the @region.id edition">
-                                <span class="u-h">switch to the </span>@region.id<span class="u-h"> edition</span>
-                            </a>
-                        }
                     </li>
                 </ul>
             </div>
@@ -105,14 +97,6 @@
                                 href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                                 title="Switch to the @edition.id edition">
                                 <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
-                            </a>
-                        }
-                        @common.Region.others(request).map{ region =>
-                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@region.id"
-                                data-link-name="switch to @region.id region"
-                                href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
-                                title="Switch to the @region.id edition">
-                                <span class="u-h">switch to the </span>@region.id<span class="u-h"> edition</span>
                             </a>
                         }
                     </li>
@@ -161,14 +145,6 @@
                                 <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
                             </a>
                         }
-                        @common.Region.others(request).map{ region =>
-                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@region.id"
-                                data-link-name="switch to @region.id region"
-                                href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
-                                title="Switch to the @region.id edition">
-                                <span class="u-h">switch to the </span>@region.id<span class="u-h"> edition</span>
-                            </a>
-                        }
                     </li>
                 </ul>
             </div>
@@ -176,12 +152,7 @@
     }
     <div class="brand-bar__item has-popup hide-on-mobile" data-component="edition">
         <a href="#guardian-edition-menu" class="brand-bar__item--action popup__toggle" data-link-name="topNav : edition" data-toggle="top-bar__popup--edition">
-        edition:
-            @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
-                @region.id
-            }.getOrElse{
-                @Edition(request).id
-            }
+        edition: @Edition(request).id
         </a>
         <ul class="popup popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>
@@ -191,16 +162,6 @@
                         href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                         title="Switch to the @edition.id edition">
                         <span class="u-h">switch to the </span>@edition.id edition
-                    </a>
-                </li>
-            }
-            @common.Region.others(request).map{ region =>
-                <li class="brand-bar__item--action">
-                    <a class="" data-edition="@region.id"
-                        data-link-name="switch to @region.id region"
-                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
-                        title="Switch to the @region.id edition">
-                        <span class="u-h">switch to the </span>@region.id edition
                     </a>
                 </li>
             }

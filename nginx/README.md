@@ -10,7 +10,7 @@ __Nginx:__
 
     # Mac
     brew install nginx
-    
+
     # Linux
     sudo apt-get install nginx
 
@@ -20,7 +20,7 @@ Add the following to your ```/etc/hosts```:
     127.0.0.1   m.thegulocal.com
 
 
-## Now run the setup script (nginx/setup.sh):
+## Now run the frontend setup script for nginx [setup.sh](nginx/setup.sh):
 
     sh setup.sh
 

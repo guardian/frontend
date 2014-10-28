@@ -489,7 +489,7 @@ import collection.JavaConversions._
       goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = "mailto:?subject=Mark+Kermode%27s+DVD+round-up&amp;body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
+        val mailShareUrl = "mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
         val fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"

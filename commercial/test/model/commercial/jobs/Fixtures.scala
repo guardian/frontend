@@ -5,7 +5,7 @@ object Fixtures {
 
   val xml =
     """
-      |<Jobs>
+      |<rootnode><Jobs>
       |  <Job>
       |    <JobID>1058606</JobID>
       |    <JobTitle>Area Management Training Programme (Graduate Area Manager)</JobTitle>
@@ -71,7 +71,7 @@ object Fixtures {
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
       |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196646/</RecruiterPageUrl>
       |  </Job>
-      |</Jobs>
+      |</Jobs></rootnode>
       | """.stripMargin
 
   val jobs = List(

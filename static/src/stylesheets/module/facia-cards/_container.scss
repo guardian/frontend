@@ -7,7 +7,11 @@ $header-image-size-desktop: 120px;
 
     .facia-container__inner {
         border-top: 1px solid $c-newsAccent;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 4;
+
+        @include mq(tablet) {
+            padding-top: $gs-baseline / 2;
+        }
     }
 
     &.container--first {
@@ -171,6 +175,10 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.container__toggle i {
+    top: $gs-baseline / 3 * 2;
+}
+
 /**
  * This for adding padding-top. On old layout container--first is taking care of this.
  * When we move to new layout container--news should be deprecated and this class should be
@@ -299,12 +307,63 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-container__body {
-    padding-top: $gs-baseline / 4;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
     opacity: 1;
     @include transition(opacity .25s linear); // Used to fade-in new updates
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 4;
+    }
 }
 
 .fc-container__body--is-hidden {
     opacity: 0;
     @include transition(opacity .25s linear); // Used to fade-in new updates
+}
+
+.fc-container--media {
+    .facia-container__inner,
+    .facia-slice__item:before {
+        border-color: $c-neutral2;
+    }
+
+    .fc-container__header__title {
+        color: #ffffff;
+    }
+
+    .fc-item__media-wrapper {
+        @include mq($until: tablet) {
+            padding-left: 0 !important;
+        }
+    }
+
+    .fc-item__content {
+        box-shadow: none !important;
+
+        @include mq(tablet) {
+            padding: 0 !important;
+        }
+    }
+}
+
+.gallery-lightbox__endslate {
+    .facia-container__inner {
+        border: 0;
+    }
+
+    .fc-container__header {
+        width: auto;
+    }
+
+    .fc-container__header__title {
+        padding-bottom: $gs-baseline*2;
+    }
+
+    .facia-slice--qqq-q {
+        .facia-slice__item:first-child .fc-item__title {
+            padding-top: 0;
+            margin-top: -1 * 2px;
+        }
+    }
 }

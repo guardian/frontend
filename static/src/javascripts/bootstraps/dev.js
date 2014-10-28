@@ -1,7 +1,10 @@
 define([
-    'socketio'
-], function (io) {
-
+    'socketio',
+    'common/modules/dev/debugObject'
+], function (
+    io,
+    debugObject
+) {
     var options = {
             reconnection: false
         },
@@ -14,7 +17,11 @@ define([
         }
     }
 
-    function init() {
+    function createGlobalDebugObject() {
+        window.GuardianDebug = debugObject;
+    }
+
+    function setUpDevMode() {
         var loc = window.location,
             domain = loc.protocol + '//' + loc.hostname,
             reloadUrl = domain + ':8005',
@@ -61,6 +68,11 @@ define([
             log('url', url);
             window.location = url;
         });
+    }
+
+    function init() {
+        createGlobalDebugObject();
+        setUpDevMode();
     }
 
     return {

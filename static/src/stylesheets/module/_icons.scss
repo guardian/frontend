@@ -21,7 +21,7 @@ blockquote.quoted:before {
 .caption--img:before {
     content: '';
     vertical-align: top;
-    margin: 1px 4px 0 0;
+    margin-top: 1px;
     @include icon(image);
 }
 

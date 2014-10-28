@@ -27,7 +27,7 @@ define([
     };
 
     MostPopular.prototype.prerender = function () {
-        this.$mpu = $('.js-facia-slice__item--mpu', this.elem)
+        this.$mpu = $('.js-facia-slice-mpu-candidate', this.elem)
             .append(dfp.createAdSlot('inline3', 'container-inline'));
     };
 

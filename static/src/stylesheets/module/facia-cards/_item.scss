@@ -12,9 +12,13 @@ $fc-item-gutter: $gs-gutter / 4;
 
     // IE10/11 ignore boxsizing on flex-basis'd element.
     // Option is extra wrapping div or this slightly overblow selector.
-    .fc-item__content > * {
-        @include box-sizing(border-box);
-        padding-right: $gs-gutter * .75;
+    .fc-item__content {
+        position: relative;
+
+        > * {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter * .75;
+        }
     }
 
     .has-flex-wrap & {
@@ -33,6 +37,8 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__content {
             @include flex-basis(100% - $media-width);
+            // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
+            max-width: 100% - $media-width;
         }
 
         .fc-item__footer--horizontal {
@@ -55,6 +61,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .has-flex-wrap {
     .fc-item {
         @include flex-display;
+        @include flex(1);
     }
 
     .fc-item__container {
@@ -62,18 +69,6 @@ $fc-item-gutter: $gs-gutter / 4;
         @include flex-display;
         @include flex(1);
         width: 100%;
-    }
-
-    .fc-item__content {
-        @include flex-display;
-        @include flex-direction(column);
-        @include flex-grow(1);
-    }
-
-    .fc-item__meta {
-        @include flex-grow(1);
-        @include flex-display;
-        @include align-items--end;
     }
 }
 
@@ -88,8 +83,13 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
 }
 
+.item--has-discussion {
+    .fc-item__content {
+        padding-bottom: $gs-baseline * 2;
+    }
+}
+
 .fc-item {
-    @include flex(1);
     background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
@@ -230,14 +230,10 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__meta {
+    position: absolute;
+    bottom: 0;
     @include fs-textSans(1);
     color: $c-neutral2;
-
-    &:after {
-        clear: left;
-        content: '';
-        display: table;
-    }
 }
 
 .fc-item__timestamp,
@@ -267,9 +263,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__footer--horizontal {
     display: none;
-    .has-flex-wrap & {
-        @include align-items--end;
-    }
+
     .has-no-flex-wrap & {
         @include clearfix;
     }

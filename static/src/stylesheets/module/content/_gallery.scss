@@ -197,11 +197,8 @@
             }
         }
 
-        .meta__comment-count--top,
-        .meta__comment-count--top .commentcount {
-            @include mq($until: tablet) {
-                display: block;
-            }
+        .meta__comment-count--top {
+            display: none;
         }
 
         .meta__comment-count--bottom {

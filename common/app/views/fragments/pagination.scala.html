@@ -1,7 +1,8 @@
 @(  page: MetaData,
     pagination: Pagination,
     actionClass: Option[String] = None,
-    showFull: Boolean = true)(implicit request: RequestHeader)
+    showFull: Boolean = true,
+    ariaContext: Option[String] = None)(implicit request: RequestHeader)
 
 @import model._
 @import common._
@@ -10,22 +11,23 @@
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     @pageNo.map { p =>
-        <li class="pagination__item pagination__item--pointer">
-            <a class="button button--small button--tertiary pagination__action--static @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)" data-link-name="Pagination view @dir">
-                @if(dir == "next") {
-                <i class="i i-arrow-right-grey"><span class="u-h">@dir.capitalize(0)</span></i>
-                } else {
-                <i class="i i-arrow-left-grey"><span class="u-h">@dir.capitalize(0)</span></i>
-                }
-            </a>
-        </li>
+        <a class="button button--small button--tertiary pagination__action--static @actionClass"
+            data-page="@p"
+            rel="@dir"
+            href="@paginated(url, p)"
+            data-link-name="Pagination view @dir"
+            aria-label="@ariaContext @dir page">
+            @if(dir == "next") {
+            <i aria-hidden="true" class="i i-arrow-right-grey"></i><span class="u-h">@dir</span>
+            } else {
+            <i aria-hidden="true" class="i i-arrow-left-grey"></i><span class="u-h">@dir</span>
+            }
+        </a>
     }
 }
 
 @paginationDivider = {
-    <li class="pagination__item">
-        <span class="pagination__text">&#8230;</span>
-    </li>
+    <span class="pagination__text">…</span>
 }
 
 @paginationExtreme(pageNo: Option[Int], dir: String, url: String) = {
@@ -33,9 +35,13 @@
         @if(dir == "last") {
             @paginationDivider
         }
-        <li class="pagination__item">
-            <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass" href="@paginated(url, p)" data-page="@p" data-link-name="Pagination view page @p">@p</a>
-        </li>
+
+        <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
+        href="@paginated(url, p)"
+        data-page="@p"
+        data-link-name="Pagination view page @p"
+        aria-label="@ariaContext @dir page">@p</a>
+
       @if(dir == "first") {
           @paginationDivider
       }
@@ -50,33 +56,35 @@
     } else {
     <div class="pagination u-cf">
     }
+        <div class="pagination__list">
+        @if(pagination.lastPage > 5) {
+            @paginationPointer(pagination.previous, "prev", page.url)
 
-        <ol class="u-unstyled pagination__list">
-            @if(pagination.lastPage > 5) {
-                @paginationPointer(pagination.previous, "prev", page.url)
+            @if(pagination.currentPage - 2 > 1) {
+                @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
+            }
+        }
 
-                @if(pagination.currentPage - 2 > 1) {
-                    @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
-                }
+        @pagination.pages.map{ pageNum =>
+
+            @if(pageNum == pagination.currentPage) {
+                <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
+            } else {
+                <a class="button button--small button--tertiary pagination__action @actionClass"
+                data-page="@pageNum"
+                href="@paginated(page.url, pageNum)"
+                data-link-name="Pagination view page @pageNum"
+                aria-label="@ariaContext page @pageNum">@pageNum</a>
+            }
+        }
+
+        @if(pagination.lastPage > 5) {
+            @if(pagination.currentPage + 2 < pagination.lastPage) {
+                @paginationExtreme(Some(pagination.lastPage), "last", page.url)
             }
 
-            @pagination.pages.map{ pageNum =>
-                <li class="pagination__item">
-                    @if(pageNum == pagination.currentPage) {
-                        <span class="button button--small button--tertiary pagination__action is-active">@pageNum</span>
-                    } else {
-                        <a class="button button--small button--tertiary pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)" data-link-name="Pagination view page @pageNum">@pageNum</a>
-                    }
-                </li>
-            }
-
-            @if(pagination.lastPage > 5) {
-                @if(pagination.currentPage + 2 < pagination.lastPage) {
-                    @paginationExtreme(Some(pagination.lastPage), "last", page.url)
-                }
-
-                @paginationPointer(pagination.next, "next", page.url)
-            }
-        </ol>
+            @paginationPointer(pagination.next, "next", page.url)
+        }
+        </div>
     </div>
 }

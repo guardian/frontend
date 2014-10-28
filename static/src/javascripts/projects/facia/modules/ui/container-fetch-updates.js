@@ -189,13 +189,14 @@ define([
             $new = $('.container__body', $.create(html));
 
         $old.addClass(hideCls);
-        $new.addClass(hideCls);
+        $new.addClass(hideCls).addClass('js-container--fc-show-more');
 
         setTimeout(function () {
             $old.replaceWith($new[0]);
 
             setTimeout(function () {
                 $new.removeClass(hideCls);
+                mediator.emit('modules:container:rendered');
                 mediator.emit('modules:containers:' + this.id + ':rendered');
             }.bind(this), 20);
         }.bind(this), 500);
