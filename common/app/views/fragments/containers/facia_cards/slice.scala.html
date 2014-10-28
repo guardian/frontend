@@ -9,7 +9,7 @@
         @column match {
             case SingleItem(colSpan, itemClasses) => {
                 @cards.headOption.map { card =>
-                    @item(card, itemClasses, containerIndex, false, colSpan)
+                    @item(card, itemClasses, containerIndex, colSpan = colSpan)
                 }
             }
 
