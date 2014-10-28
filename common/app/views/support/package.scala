@@ -683,7 +683,12 @@ object ContentLayout {
         case a: Article if !a.hasSupportingAtBottom => Some("leftcol")
         case v: Video if(v.standfirst.getOrElse("").length > 350) => Some("leftcol")
         case a: Audio if(a.body.getOrElse("").length > 800) => Some("leftcol")
-        case a: ImageContent => Some("wide")
+        case i: ImageContent => {
+          for {
+            imgContainer <- i.mainPicture
+            crop <- imgContainer.largestEditorialCrop if (crop.height / crop.width.toFloat) > 0.5
+          } yield "wide"
+        }
         case g: Gallery => Some("leftcol")
         case _ => None
       }
