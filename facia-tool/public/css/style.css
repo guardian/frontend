@@ -126,6 +126,15 @@ h1 {
     padding: 15px 0 0 0;
 }
 
+.front-priorities--extra {
+    font-size: 12px;
+    padding-top: 15px;
+}
+
+.front-priorities--extra a {
+    display: block;
+}
+
 .finder__controls {
     font-size: 10px;
     color: #666666;
