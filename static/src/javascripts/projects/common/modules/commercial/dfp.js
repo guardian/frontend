@@ -133,9 +133,14 @@ define([
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
-                // filter out hidden ads
+                // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    return $css($adSlot, 'display') !== 'none';
+                    if ($css($adSlot, 'display') === 'none') {
+                        $adSlot.remove();
+                        return false;
+                    } else {
+                        return true;
+                    }
                 })
                 .map(function ($adSlot) {
                     return [$adSlot.attr('id'), defineSlot($adSlot)];
