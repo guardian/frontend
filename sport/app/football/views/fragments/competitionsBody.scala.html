@@ -1,6 +1,6 @@
 @(competitions: Map[String, Seq[CompetitionFilter]], page: model.Page, competitionList: List[String])(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content">
-    <div class="monocolumn-wrapper tone-news">
+    <div class="monocolumn-wrapper">
 
         @renderFilter(name: String) = {
             @competitions.get(name).map{ filters =>
