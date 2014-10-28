@@ -3,9 +3,9 @@
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
     <section class="container container--special container--merchandising container--advertisement-feature container--commercial-capi">
         <div class="facia-container__inner">
-        <div class="container__border tone-news tone-accent-border"></div>
+        <div class="container__border"></div>
             <div class="container__header">
-                <h2 class="container__title tone-news">
+                <h2 class="container__title">
                     <span class="container__title__label u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
                 </h3>
             </div>
@@ -25,7 +25,7 @@
                     <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
                         @for(item <- items) {
                             <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default tone-news">
+                                <div class="item item--has-image item--imageadjust-default">
                                     <div class="item__container">
                                         <a class="item__link tone-accent-border" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
                                             <div class="item__media-wrapper">
