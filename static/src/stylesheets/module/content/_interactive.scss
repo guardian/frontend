@@ -3,6 +3,7 @@
 
     // Ensure margins don't overlay interactives
     .content__main {
+        padding: 0;
         position: relative;
         z-index: 2;
     }
