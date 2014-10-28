@@ -57,8 +57,9 @@
 .gallery2__figcaption {
     @include fs-textSans(1);
     padding-top: $gs-baseline/2;
-    overflow: hidden;
+    overflow: visible;
     max-height: 100%;
+    position: relative;
 
     @include mq(mobileLandscape, $until: tablet) {
         padding-right: gs-span(2);
@@ -68,8 +69,12 @@
         padding-right: gs-span(3);
     }
 
+    @include mq($until: tablet) {
+        padding-right: $gs-gutter * 2;
+    }
+
     @include mq($until: desktop) {
-        margin-bottom: $gs-baseline*3;
+        margin-bottom: $gs-baseline * 3;
     }
     @include mq(desktop) {
         @include fs-textSans(2, true);
@@ -279,12 +284,29 @@
 
 .block-share--gallery-mobile {
     position: absolute;
+    top: $gs-baseline / 2;
+    right: 0;
+    padding-top: 1px;
     cursor: pointer;
     opacity: .8;
     .block-share__item {
+        background-color: rgba(51, 51, 51, .6);
         .i {
             opacity: 1;
             @include icon(share-android--white);
+        }
+    }
+
+    .gallery-lightbox & {
+        height: 44px;
+        width: 44px;
+        left: $gs-gutter/2;
+        top: $gs-baseline/2;
+        opacity: 1;
+        z-index: 10;
+        .i {
+            width: 22px !important;
+            height: 22px !important;
         }
     }
 }
@@ -313,3 +335,25 @@
         opacity: 1;
     }
 }
+
+.block-share__item--mobile {
+    .gallery-lightbox & {
+        width: 44px;
+        height: 44px;
+        border: 1px solid $c-neutral4;
+        .i {
+            background-position: 2px center !important;
+        }
+    }
+}
+
+.overlay--gallery {
+    background-color: $c-neutral1;
+    .share-modal__title {
+        color: #ffffff;
+    }
+    .share-modal__close .i {
+        @include icon(close-icon-white-small);
+    }
+}
+
