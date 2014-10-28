@@ -80,7 +80,7 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .facia-slice--h14-q-q {
-    @if $browser-supports-flexbox {
+    .has-flex & {
         @include flex-direction(row-reverse);
     }
 
