@@ -18,7 +18,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
@@ -41,7 +40,6 @@ define([
     config,
     detect,
     mediator,
-    template,
     buildPageTargeting,
     geoMostPopular,
     Sticky
