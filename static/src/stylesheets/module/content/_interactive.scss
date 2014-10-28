@@ -3,7 +3,6 @@
 
     // Ensure margins don't overlay interactives
     .content__main {
-        padding-top: 0;
         position: relative;
         z-index: 2;
     }
@@ -80,7 +79,7 @@
         }
     }
     .content__meta-container {
-        margin: 0;
+        margin-left: 0;
         width: 100%;
         border-bottom: 0;
 
