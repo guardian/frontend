@@ -412,10 +412,12 @@ define([
                 return;
             }
             var mediaType = config.page.contentType.toLowerCase(),
-                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.content-footer')[0],
-                mostViewed = new Component();
-            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'prepend';
-            mostViewed.endpoint = '/' + mediaType + '/most-viewed.json';
+                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+                mostViewed = new Component(),
+                endpoint = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+
+            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
+            mostViewed.endpoint = endpoint;
             mostViewed.fetch(attachTo, 'html')
                 .then(function () {
                     images.upgrade(attachTo);

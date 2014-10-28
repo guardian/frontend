@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
 import play.api.libs.ws.{WSAuthScheme, WSResponse, WS}
-import tools.FaciaApi
+import tools.FaciaApiIO
 
 import scala.concurrent.Future
 
@@ -75,7 +75,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
   }
 
   def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
-    val maybeBlock = FaciaApi.getBlock(id)
+    val maybeBlock = FaciaApiIO.getBlock(id)
 
     ContentApiPut(
       config.`type`.getOrElse(defaultCollectionType),

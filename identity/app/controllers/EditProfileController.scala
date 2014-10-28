@@ -1,25 +1,22 @@
 package controllers
 
+import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.google.inject.{Singleton, Inject}
-import services._
-import actions.{AuthenticatedActions}
-import idapiclient.IdApiClient
-import play.api.mvc.{AnyContent, Request, Controller}
-import common.ExecutionContexts
-import utils.SafeLogging
-import model._
-import play.filters.csrf.{CSRFCheck, CSRFAddToken}
-import form._
-import scala.concurrent.Future
-import play.api.data.Form
+import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.User
-import tracking.{TrackingParams, Omniture}
-import conf.Switches._
-import play.api.libs.ws.WS
-import services.IdentityRequest
+import common.{ExecutionContexts, JsonComponent}
 import conf.Configuration
-import common.JsonComponent
+import form._
+import idapiclient.IdApiClient
+import model._
+import play.api.data.Form
+import play.api.mvc.{AnyContent, Controller, Request}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import services.{IdentityRequest, _}
+import tracking.{Omniture, TrackingParams}
+import utils.SafeLogging
+
+import scala.concurrent.Future
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,

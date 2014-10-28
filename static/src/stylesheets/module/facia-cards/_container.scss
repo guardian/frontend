@@ -332,9 +332,18 @@ $header-image-size-desktop: 120px;
         color: #ffffff;
     }
 
+    .fc-item__media-wrapper {
+        @include mq($until: tablet) {
+            padding-left: 0 !important;
+        }
+    }
+
     .fc-item__content {
         box-shadow: none !important;
-        padding: 0 !important;
+
+        @include mq(tablet) {
+            padding: 0 !important;
+        }
     }
 }
 
