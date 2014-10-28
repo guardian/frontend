@@ -14,3 +14,32 @@
     #ffffff, // $tonal__article-background
     $c-featureDefault // $tonal__article-link
 );
+
+.tonal--tone-feature {
+    // Interactives need help because their headers are not tonal
+    &.content--interactive {
+        .commentcount i {
+            @extend %i-comment--tone-feature;
+
+            @if $svg-support {
+                .svg & {
+                    @extend %svg-i-comment--tone-feature;
+                }
+            }
+        }
+
+        .tone-colour,
+        .content__section-label__link {
+            color: $c-featureDefault;
+        }
+
+        .u-underline {
+            color: $c-featureDefault;
+            border-bottom-color: rgba($c-featureDefault, .3);
+
+            &:hover {
+                border-bottom-color: rgba($c-featureDefault, .7);
+            }
+        }
+    }
+}
