@@ -37,7 +37,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
 
   private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
     val collection = Collection(galleries, Some("more galleries"))
-    val layout = ContainerLayout(FixedContainers.all("fixed/medium/slow-VI"), collection, None)
+    val layout = ContainerLayout(FixedContainers.fixedMediumSlowVI, collection, None)
     val templateDeduping = new TemplateDeduping
 
     val html = views.html.fragments.containers.facia_cards.container(
