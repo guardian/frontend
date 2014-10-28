@@ -4,7 +4,7 @@
 
 @defining(page.interactive) { interactive =>
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--interactive">
-    <article class="content content--interactive tonal__main tonal__main--@articleToneClass(interactive) @interactive match {
+    <article class="content content--interactive tonal tonal--@articleToneClass(interactive) @interactive match {
             case a if a.isAdvertisementFeature => {content--advertisement-feature}
             case s if s.isSponsored => {content--sponsored}
             case s if s.isFoundationSupported => {content--foundation-supported}
@@ -14,19 +14,21 @@
 
         @fragments.headDefault(interactive, showBadge = true)
 
-        <div class="gs-container u-cf">
-            <div class="content__main-column">
-                @fragments.contentMeta(interactive, showBadge = false)
+        <div class="content__main tonal__main tonal__main--@articleToneClass(interactive)">
+            <div class="gs-container u-cf">
+                <div class="content__main-column">
+                    @fragments.contentMeta(interactive, showBadge = false)
+                </div>
             </div>
-        </div>
 
-        <div class="gs-container" data-test-id="interactive-content-body">
-            <div class="content__main-column content__main-column--interactive">
-            @interactive.body.map { body =>
-                @HtmlFormat.raw(body)
-            }.getOrElse {
-                <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
-            }
+            <div class="gs-container" data-test-id="interactive-content-body">
+                <div class="content__main-column content__main-column--interactive">
+                @interactive.body.map { body =>
+                    @HtmlFormat.raw(body)
+                }.getOrElse {
+                    <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
+                }
+                </div>
             </div>
         </div>
     </article>
