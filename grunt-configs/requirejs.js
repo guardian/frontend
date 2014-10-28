@@ -22,6 +22,7 @@ module.exports = function(grunt, options) {
                 react:        'components/react/react',
                 reqwest:      'components/reqwest/reqwest',
                 omniture:     '../../public/javascripts/vendor/omniture',
+                socketio:     'components/socket.io-client/socket.io',
                 stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
                 // plugins
                 text:         'components/requirejs-text/text'
@@ -173,15 +174,12 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/dev',
                 out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
-                paths: {
-                    socketio: 'components/socket.io-client/socket.io'
-                }
-            },
-            exclude: [
-                'core',
-                'bootstraps/app',
-                'text'
-            ]
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
         }
     };
 };
