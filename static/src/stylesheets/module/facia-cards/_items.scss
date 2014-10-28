@@ -35,7 +35,11 @@
             }
         }
     }
-
+    .facia-slice__item--mpu-candidate {
+        @include mq(tablet) {
+            min-height: 250 + $mpu-ad-label-height;
+        }
+    }
     .facia-slice__item--no-mpu {
         flex: 0 !important;
     }
@@ -67,12 +71,6 @@
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media(3.5, 2);
-
-        .fc-item__media-wrapper {
-            margin-top: $gs-baseline / 3;
-            margin-bottom: $gs-baseline / 3;
-            padding-left: $gs-baseline / 3;
-        }
     }
 }
 
@@ -143,8 +141,14 @@
             display: block;
         }
 
-        &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline * 3;
+        &.fc-item--has-cutout {
+            .fc-item__container {
+                padding-bottom: gs-height(3) + $gs-baseline * 3;
+            }
+
+            .fc-trail__count__label {
+                display: none;
+            }
         }
 
         .fc-item__avatar__media {

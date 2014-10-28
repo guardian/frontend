@@ -1,0 +1,16 @@
+@(content: model.Content)(implicit request: RequestHeader)
+@import views.support.ContentLayout.ContentLayout
+
+<div class="submeta-container @content.submetaBreakpoint.map{ bp => submeta-container--break-at-@bp }">
+    @if(content.keywords.filterNot(_.isSectionTag).nonEmpty) {
+        <div class="submeta" data-link-name="keywords">
+            <h2 class="submeta__head">Topics</h2>
+            @fragments.keywordList(content.keywords, tone = content.tagTone)
+        </div>
+    }
+    @if(content.showBottomSocialButtons) {
+        <div class="submeta js-social--bottom" data-component="share">
+        @fragments.social(content)
+        </div>
+    }
+</div>

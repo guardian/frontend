@@ -28,10 +28,6 @@ function (
             item.id(snapId);
             defer.resolve(item);
 
-        } else if (item.meta.snapType()) {
-            item.convertToSnap();
-            defer.resolve(item);
-
         } else if (data) {
             item.id(capiId);
             populate(item, data);

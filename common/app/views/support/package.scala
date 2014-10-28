@@ -599,7 +599,9 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
+        s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+           |  <a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link"
+           |    href="${LinkTo("/"+tag.id)}">${tag.name}</a></span>""".stripMargin)
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
@@ -661,24 +663,41 @@ object OmnitureAnalyticsData {
   }
 }
 
-object ArticleLayout {
-  implicit class ArticleLayout(a: Article) {
-    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
-      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+object ContentLayout {
+  implicit class ContentLayout(content: model.Content) {
 
-    lazy val hasSupportingAtBottom: Boolean = {
-      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-      var wordCount = 0
-      val lastEls = Jsoup.parseBodyFragment(a.body).select("body > *").reverseIterator.takeWhile{ el =>
-        wordCount += el.text.length
-        wordCount < 1500
+    def showBottomSocialButtons: Boolean = {
+      content match {
+        case l: LiveBlog => true
+        case a: Article => Jsoup.parseBodyFragment(a.body).select("> *").text().length > 600
+        case i: ImageContent => false
+        case m: Media => false
+        case g: Gallery => false
+        case _ => true
       }
-      val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
-      supportingEls.isDefined
     }
 
-    lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
+    def submetaBreakpoint: Option[String] = {
+      content match {
+        case a: LiveBlog => None
+        case a: Article if !a.hasSupportingAtBottom => Some("leftcol")
+        case v: Video if(v.standfirst.getOrElse("").length > 350) => Some("leftcol")
+        case a: Audio if(a.body.getOrElse("").length > 800) => Some("leftcol")
+        case a: ImageContent => Some("wide")
+        case g: Gallery => Some("leftcol")
+        case _ => None
+      }
+    }
+
+    def tagTone: Option[String] = {
+      content match {
+        case l: LiveBlog => Some(l.visualTone)
+        case m: Media => Some("media")
+        case g: Gallery => Some("media")
+        case i: ImageContent if(!i.isCartoon) => Some("media")
+        case _ => None
+      }
+    }
   }
 }
 
@@ -992,7 +1011,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "js-snap facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 
@@ -1045,9 +1064,9 @@ object SnapData {
   def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
 
   private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
-    case snap: Snap =>
-      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case content: Content =>
+        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
     case _  => Nil
   }
 }

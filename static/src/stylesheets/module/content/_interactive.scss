@@ -99,6 +99,29 @@
                 border-top: 1px dotted $c-neutral5;
             }
         }
+
+        @include mq(desktop) {
+            .meta__social {
+                margin-right: ($gs-gutter / 2) + 2px;
+            }
+
+            .meta__extras {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            .meta__social,
+            .meta__numbers {
+                float: left;
+                position: static;
+                border: 0;
+            }
+            .meta__number {
+                border-left: 1px solid colour(neutral-5);
+                padding-left: $gs-gutter / 2;
+            }
+        }
     }
     .byline {
         @include mq(leftCol) {

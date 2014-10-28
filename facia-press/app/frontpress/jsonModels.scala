@@ -133,7 +133,11 @@ object TrailJson {
   }
 
   def slimElements(content: Content): List[ApiElement] = content.trailPictureAll(5, 3).map {
-    imageContainer => imageContainer.delegate.copy(assets = Naked.elementFor(imageContainer).map(_.delegate).toList)}
+    imageContainer =>
+      imageContainer.delegate.copy(assets =
+        Naked.elementFor(imageContainer).map(_.delegate).toList)} ++
+    content.mainVideo.map(_.delegate)
+
 
   def apiElementsToElements(apiElements: List[ApiElement]): List[Element] =
     apiElements.zipWithIndex.map{case (element, index) => Element(element, index)}

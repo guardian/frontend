@@ -1,7 +1,3 @@
-.fc-sublinks {
-    margin-top: $gs-baseline * .5;
-}
-
 .fc-sublink {
     position: relative;
     padding-top: $gs-baseline * .25;
@@ -36,25 +32,15 @@
 }
 
 @mixin fc-sublinks--horizontal {
-    .fc-item__footer--vertical {
-        display: none;
-    }
-
-    .fc-item__footer--horizontal {
-        display: block;
-        clear: both;
-    }
-
     .has-flex-wrap & {
         .fc-sublinks {
             @include flex-display;
         }
         .fc-sublink {
             @include flex(1, 1, 100%);
-            margin-right: $gs-gutter;
 
-            &:last-child {
-                margin-right: 0;
+            & + * {
+                margin-left: $gs-gutter;
             }
         }
     }
@@ -74,4 +60,17 @@
             }
         }
     }
+}
+
+@mixin fc-sublinks--below {
+    .fc-item__footer--vertical {
+        display: none;
+    }
+
+    .fc-item__footer--horizontal {
+        display: block;
+        clear: both;
+    }
+
+    @include fc-sublinks--horizontal;
 }
