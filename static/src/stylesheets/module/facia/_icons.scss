@@ -19,11 +19,11 @@
     .linkslist__item--video .linkslist__action:before {
         @extend %pseudo-icon--media;
         width: 1.2em;
-        @include icon(video-icon, false);
+        @include icon(video-icon-black, $with-width: false);
 
         .svg .container--dark-background &,
         .svg .end-slate--video & {
-            @extend %svg-i-video-icon;
+            @extend %svg-i-video-icon-white;
         }
     }
     .item--gallery .item__title:before,

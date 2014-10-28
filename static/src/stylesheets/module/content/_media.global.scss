@@ -44,11 +44,8 @@
             display: block;
             position: relative;
             width: 100%;
-            max-width: gs-span(8);
-            margin: 0 auto;
-        }
-        @include mq(tablet) {
             max-width: gs-span(9);
+            margin: $gs-baseline*2 auto 0;
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
@@ -103,6 +100,7 @@
 
         .item__container {
             margin-top: -$gs-baseline;
+            border-top: 1px solid $c-mediaDefault;
         }
     }
     .item__action {
@@ -124,7 +122,6 @@
     }
     .item__title {
         @include fs-headline(1);
-        font-weight: 500;
         text-align: left; //Required for end slate items
         @include text-clamp(3, get-line-height(headline, 1));
         height: get-line-height(headline, 1) * 3;
@@ -143,12 +140,14 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid $c-neutral2;
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;
     }
 
+    @include mq(tablet) {
+        border-top: 1px solid $c-mediaDefault;
+    }
     .most-viewed-container__header {
         height: gs-height(1) + $gs-baseline;
     }
@@ -179,9 +178,6 @@
             &:nth-child(3n-1),
             &:nth-child(3n-2) {
                 border-right: 1px solid $c-neutral2;
-            }
-            &:nth-child(1n+4) {
-                margin-bottom: 0;
             }
         }
         @include mq(desktop) {
