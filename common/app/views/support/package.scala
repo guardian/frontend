@@ -374,6 +374,15 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+object InBodyLinkDataComponentCleaner extends HtmlCleaner {
+  def clean(body: Document): Document = {
+    body.getElementsByTag("a").foreach { link =>
+      link.attr("data-component", "in-body-link")
+    }
+    body
+  }
+}
+
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
 
@@ -510,6 +519,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
             tagLink.attr("href", LinkTo(keyword.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
+            tagLink.attr("data-component", "auto-linked-tag")
             tagLink.addClass("u-underline")
             val tagLinkHtml = tagLink.toString
             val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")

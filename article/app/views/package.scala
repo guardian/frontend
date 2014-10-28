@@ -12,6 +12,7 @@ object BodyCleaner {
         InBodyElementCleaner,
         PictureCleaner(article.bodyImages),
         InBodyLinkCleaner("in body link"),
+        InBodyLinkDataComponentCleaner,
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
