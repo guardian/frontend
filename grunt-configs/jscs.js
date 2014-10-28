@@ -11,14 +11,7 @@ module.exports = function(grunt, options) {
                     '**/*.js',
                     '!modules/discussion/comment-box.js',
                     '!modules/discussion/comments.js',
-                    '!modules/discussion/loader.js',
-                    '!modules/identity/forms.js',
-                    '!modules/identity/formstack-iframe-embed.js',
-                    '!modules/identity/formstack-iframe.js',
-                    '!modules/identity/formstack.js',
-                    '!modules/identity/password-strength.js',
-                    '!modules/identity/public-profile.js',
-                    '!modules/identity/validation-email.js'
+                    '!modules/discussion/loader.js'
                 ]
             }]
         },
@@ -27,9 +20,7 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/projects/facia',
                 src: [
-                    '**/*.js',
-                    '!modules/ui/container-show-more.js',
-                    '!modules/ui/container-toggle.js'
+                    '**/*.js'
                 ]
             }]
         },
@@ -49,9 +40,7 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/projects/membership',
                 src: [
-                    '**/*.js',
-                    '!payment-form.js',
-                    '!stripe-error-messages.js'
+                    '**/*.js'
                 ]
             }]
         },
