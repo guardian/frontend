@@ -32,71 +32,13 @@ sealed trait Container {
   val tone: String
   val hasDarkBackground: Boolean = false
 }
-
-case class NewsContainer(showMore: Boolean = true) extends Container {
-  val containerType = "news"
-  val tone = "news"
-}
-case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
-  val containerType = "commentanddebate"
-  val tone = "comment"
-}
-case class FeaturesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "features"
-  val tone = "feature"
-}
-case class FeaturesVolumesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "featuresvolumes"
-  val tone = "feature"
-}
-case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
-  val containerType = "featuresauto"
-  val tone = "feature"
-}
 case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
-  val tone = "news"
-}
-case class PeopleContainer(showMore: Boolean = true) extends Container {
-  val containerType = "people"
-  val tone = "feature"
-}
-case class SpecialContainer(showMore: Boolean = true, override val hasDarkBackground: Boolean = false) extends Container {
-  val containerType = "special"
-  val tone = "news"
-}
-case class MultimediaContainer(showMore: Boolean = true) extends Container {
-  val containerType = "multimedia"
-  val tone = "media"
-  override val hasDarkBackground = true
-}
-case class SeriesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "series"
   val tone = "news"
 }
 case class MostReferredContainer(showMore: Boolean = true) extends Container {
   val containerType = "most-referred"
   val tone = "news"
-}
-case class HeadlineContainer(showMore: Boolean = true) extends Container {
-  val containerType = "headline"
-  val tone = "news"
-}
-case class PicksContainer(showMore: Boolean = true) extends Container {
-  val containerType = "picks"
-  val tone = "news"
-}
-case class CassouletContainer(showMore: Boolean = true) extends Container {
-  val containerType = "cassoulet"
-  val tone = "feature"
-}
-case class QuicheLorraineContainer(showMore: Boolean = true) extends Container {
-  val containerType = "quichelorraine"
-  val tone = "feature"
-}
-case class RacletteContainer(showMore: Boolean = true) extends Container {
-  val containerType = "raclette"
-  val tone = "feature"
 }
 
 
@@ -961,52 +903,6 @@ object GetClasses {
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
-  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
-    val baseClasses: Seq[String] = Seq(
-      "fromage",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.trailPicture(5,3).isEmpty || imageHide){
-          "fromage--has-no-image"
-        }else{
-          "fromage--has-image"
-        },
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
-          s"fromage--imageadjust-boost"
-        }
-        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
-          s"fromage--imageadjust-hide"
-        }
-        else "item--imageadjust-default",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
-  def forSaucisson(trail: Trail): String = {
-    val baseClasses: Seq[String] = Seq(
-      "saucisson",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail) => String] = Seq(
-      (trail: Trail) =>
-        if (trail.isLive) "item--live" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
