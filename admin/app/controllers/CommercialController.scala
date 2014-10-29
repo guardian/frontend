@@ -50,13 +50,26 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
     // get some example trails
     LiveContentApi.search(Edition(request))
-      .pageSize(4)
+      .pageSize(2)
       .response.map { response  =>
         response.results.map {
           Content(_)
         }
     } map { trails =>
       NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates, trails)))
+    }
+  }
+
+  def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
+    // get some example trails
+    LiveContentApi.search(Edition(request))
+      .pageSize(2)
+      .response.map { response  =>
+      response.results.map {
+        Content(_)
+      }
+    } map { trails =>
+      NoCache(Ok(views.html.commercial.sponsoredContainers(Configuration.environment.stage, trails)))
     }
   }
 }
