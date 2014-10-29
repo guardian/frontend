@@ -14,29 +14,32 @@ import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 import scala.util.{Failure, Try}
 
 object DfpDataHydrator extends Logging {
+  private var dfpSession: Option[DfpSession] = None
 
-  private lazy val dfpSession: Option[DfpSession] = try {
-    for {
-      clientId <- AdminConfiguration.dfpApi.clientId
-      clientSecret <- AdminConfiguration.dfpApi.clientSecret
-      refreshToken <- AdminConfiguration.dfpApi.refreshToken
-      appName <- AdminConfiguration.dfpApi.appName
-    } yield {
-      val credential = new OfflineCredentials.Builder()
-        .forApi(Api.DFP)
-        .withClientSecrets(clientId, clientSecret)
-        .withRefreshToken(refreshToken)
-        .build().generateCredential()
-      new DfpSession.Builder()
-        .withOAuth2Credential(credential)
-        .withApplicationName(appName)
-        .withNetworkCode(Configuration.commercial.dfpAccountId)
-        .build()
+  def resetSession() {
+    dfpSession = try {
+      for {
+        clientId <- AdminConfiguration.dfpApi.clientId
+        clientSecret <- AdminConfiguration.dfpApi.clientSecret
+        refreshToken <- AdminConfiguration.dfpApi.refreshToken
+        appName <- AdminConfiguration.dfpApi.appName
+      } yield {
+        val credential = new OfflineCredentials.Builder()
+          .forApi(Api.DFP)
+          .withClientSecrets(clientId, clientSecret)
+          .withRefreshToken(refreshToken)
+          .build().generateCredential()
+        new DfpSession.Builder()
+          .withOAuth2Credential(credential)
+          .withApplicationName(appName)
+          .withNetworkCode(Configuration.commercial.dfpAccountId)
+          .build()
+      }
+    } catch {
+      case e: Exception =>
+        log.error(s"Building DFP session failed: $e")
+        None
     }
-  } catch {
-    case e: Exception =>
-      log.error(s"Building DFP session failed: $e")
-      None
   }
 
   def loadCurrentLineItems(): Seq[GuLineItem] = dfpSession.fold(Seq[GuLineItem]()) { session =>

@@ -42,6 +42,7 @@ object DfpDataCacheJob extends ExecutionContexts {
 
   def run() {
     future {
+      DfpDataHydrator.resetSession()
       val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
 
       if (data.isValid) {
