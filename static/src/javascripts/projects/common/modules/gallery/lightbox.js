@@ -419,7 +419,7 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.show = function() {
+    GalleryLightbox.prototype.show = function () {
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
