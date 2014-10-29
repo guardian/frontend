@@ -4,6 +4,7 @@ define([
     'lodash/collections/forEach',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/formatters',
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/discussion/comment-count.html',
@@ -14,6 +15,7 @@ define([
     forEach,
     $,
     ajax,
+    formatters,
     mediator,
     template,
     commentCountTemplate,
@@ -60,7 +62,7 @@ define([
                 $node.removeClass('u-h');
 
                 if ($node.attr('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count', node).append(c.count + '');
+                    $('.js-item__comment-count', node).append(formatters.integerCommas(c.count) + '');
                     $('.js-item__comment-or-comments', node).append(commentOrComments);
                     $('.js-item__inline-comment-template', node).show('inline');
                 } else {
@@ -71,7 +73,7 @@ define([
 
                     $container.append(template(templates[format] || defaultTemplate, {
                         url: getContentUrl(node),
-                        count: c.count,
+                        count: formatters.integerCommas(c.count),
                         label: commentOrComments
                     }));
 
