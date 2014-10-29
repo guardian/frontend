@@ -1,14 +1,15 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Edition, Logging}
+import common.{Pagination, ExecutionContexts, Edition, Logging}
 import conf.{LiveContentApi, Configuration}
 import controllers.AuthLogging
 import dfp.DfpDataHydrator
-import model.{Content, NoCache}
+import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.mvc.Controller
 import tools.Store
 import views.support.TemplateDeduping
+import play.api.libs.json.{JsString, JsValue}
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
@@ -69,7 +70,13 @@ object CommercialController extends Controller with Logging with AuthLogging wit
         Content(_)
       }
     } map { trails =>
-      NoCache(Ok(views.html.commercial.sponsoredContainers(Configuration.environment.stage, trails)))
+      object CommercialPage {
+        def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
+          override def metaData: Map[String, JsValue] = super.metaData ++ List("keywordIds" -> JsString("lifeandstyle/live-better"))
+        }
+      }
+      val page = CommercialPage()
+      NoCache(Ok(views.html.commercial.sponsoredContainers(Configuration.environment.stage, page, trails)))
     }
   }
 }

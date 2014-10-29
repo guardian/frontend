@@ -1,20 +1,25 @@
-@(env: String, trails: Seq[model.Content])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(env: String, page: MetaData, trails: Seq[model.Content])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
 @import com.gu.facia.client.models.CollectionConfig
 @import layout.ContainerLayout
 @import slices.FixedContainers.fixedMediumSlowVI
 
-@main(
-    Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates"),
-    projectName = Option("facia")
-) { } {
+@main(page, projectName = Option("facia")) { } {
 
     <div class="l-side-margins l-side-margins--layout-front">
-        <div class="facia-container facia-container--layout-front">
+        <div class="facia-container facia-container--layout-front js-sponsored-front"
+            data-sponsorship="sponsored">
+            @fragments.containers.facia_cards.container(
+                Collection(trails),
+                ContainerLayout(fixedMediumSlowVI, Collection(trails), None),
+                containerIndex = 0,
+                dataId = "front"
+            )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some("Front")))
+
             @Seq(
                 Map(
                     ("type", "sponsored"),
-                    ("keyword" ,"live-better"),
+                    ("keyword" ,"ryder-cup-2014"),
                     ("title" ,"Sponsored")
                 ),
                 Map(
