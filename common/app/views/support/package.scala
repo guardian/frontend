@@ -4,6 +4,7 @@ import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
 import dfp.DfpAgent
+import layout.ContainerAndCollection
 import model._
 
 import java.net.URLEncoder._
@@ -712,7 +713,7 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagType(page: MetaData) = {
+  def getTagContainerDefinition(page: MetaData) = {
     if (page.isContributorPage) {
       slices.TagContainers.contributorTagPage
     } else if (page.keywords.nonEmpty) {
@@ -1031,6 +1032,13 @@ object GetClasses {
     }
   }
 
+  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+    forNewStyleContainer(
+      containerDefinition.config.config,
+      containerDefinition.index == 0,
+      containerDefinition.displayName.isDefined
+    )
+
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       Seq(
@@ -1054,10 +1062,9 @@ object GetClasses {
 }
 
 object LatestUpdate {
-
+  /** TODO Remove once everything uses container definition */
   def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
 }
 
 object SnapData {

@@ -1,11 +1,14 @@
-@(audios: Seq[model.Audio])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
-@import com.gu.facia.client.models.CollectionConfig
+@(audios: Seq[model.Audio])(implicit request: RequestHeader)
 
 <div class="facia-container facia-container--layout-content">
-    @fragments.containers.special(
+    @*
+
+    TODO FIX THIS IF IT'S NOT DELETED BY PATRICK
+
+    fragments.containers.special(
         Collection(audios),
         SpecialContainer(showMore = false, hasDarkBackground = true),
         containerIndex = 1,
         dataId = "audio/most-viewed"
-    )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some("Popular in audio")))
+    )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some("Popular in audio")))*@
 </div>

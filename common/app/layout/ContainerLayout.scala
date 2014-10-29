@@ -1,8 +1,7 @@
 package layout
 
-import model.{Collection, Trail}
-import slices.{RestrictTo, MobileShowMore, ContainerDefinition, Slice}
-import views.support.TemplateDeduping
+import model.Trail
+import slices.{ContainerDefinition, RestrictTo, MobileShowMore, Slice}
 
 object ContainerLayout extends implicits.Collections {
   def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], mobileShowMore: MobileShowMore): ContainerLayout = {
@@ -27,27 +26,8 @@ object ContainerLayout extends implicits.Collections {
     ContainerLayout(slices, showMore.map(_.copy(hideUpTo = Some(Desktop))))
   }
 
-  def apply(containerDefinition: ContainerDefinition,
-            collection: Collection,
-            maybeTemplateDeduping: Option[TemplateDeduping]): ContainerLayout = {
-    /** TODO move this to earlier in the process, so that we can make the de-duping a functional transformation */
-    val items = collection.items
-
-    val trails = maybeTemplateDeduping map { templateDeduping =>
-      val numItems = containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
-      val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
-      (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
-    } getOrElse items
-
-    val layout = apply(containerDefinition.slices, trails, containerDefinition.mobileShowMore)
-
-    //Cap the remaining card size to 9 only on automated collections
-    if (collection.curated.isEmpty) {
-      layout.copy(remainingCards = layout.remainingCards.take(9))
-    } else {
-      layout
-    }
-  }
+  def fromContainerDefinition(containerDefinition: ContainerDefinition, items: Seq[Trail]) =
+    apply(containerDefinition.slices, items, containerDefinition.mobileShowMore)
 }
 
 case class ContainerLayout(

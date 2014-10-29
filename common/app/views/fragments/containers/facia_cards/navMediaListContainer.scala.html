@@ -1,0 +1,22 @@
+@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+@import common.LinkTo
+@import views.html.fragments.items.elements.facia_cards.image
+@import views.html.fragments.containers.facia_cards.containerHeader
+
+@containerHeader(containerDefinition, frontProperties)
+
+<div class="container__body">
+    <div class="facia-slice-wrapper">
+        <ul class="u-unstyled facia-slice facia-slice--nav-list--media">
+        @containerDefinition.items.zipWithIndex.map { case (item, index) =>
+            <li class="facia-slice__item--nav-list">
+                <a href="@LinkTo(item)" data-link-name=" | article | @index" class="fc-item fc-item--list-compact--media">
+                    @image(item)
+                    <div class="fc-item__container">@item.headline</div>
+                </a>
+            </li>
+        }
+        </ul>
+    </div>
+</div>

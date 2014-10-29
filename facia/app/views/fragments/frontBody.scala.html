@@ -1,4 +1,4 @@
-@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader)
 
 @import views.support.RenderClasses
 
@@ -20,9 +20,9 @@
             }
             role="main">
 
-            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-                @collections.zipWithIndex.map{ case(block, index) =>
-                    @fragments.frontCollection(faciaPage, (block._1.config, block._2), collections.size, index, block._1.id)
+            @defining(faciaPage.front.containers) { collections =>
+                @collections.map{ containerDefinition =>
+                    @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                 }
             }
 
