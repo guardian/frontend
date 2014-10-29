@@ -29,7 +29,7 @@ trait ShareLinks { self: Content =>
       case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$twitter"))
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
-      case "linkedin"  => Some(ShareLink("LinkedIn", "gplus", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=$linkedin"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=$linkedin"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
@@ -39,5 +39,5 @@ trait ShareLinks { self: Content =>
 
   def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
 
-  lazy val pageShares: Seq[ShareLink] = List("email", "facebook", "twitter", "gplus").flatMap(shareLink(_, None))
+  lazy val pageShares: Seq[ShareLink] = List("email", "facebook", "twitter", "linkedin", "gplus").flatMap(shareLink(_, None))
 }
