@@ -6,6 +6,11 @@
     margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
+        width: 60%;
+        float: left;
+    }
+
+    @include mq(desktop) {
         width: 50%;
         float: left;
     }
@@ -17,11 +22,12 @@
 
     @include mq(tablet) {
         padding-left: $gs-gutter;
-        width: 50%;
+        width: 40%;
     }
 
     @include mq(desktop) {
         padding-left: $gs-gutter * 2;
+        width: 50%;
     }
 }
 
@@ -46,6 +52,7 @@
 
 .crossword__focussed-clue {
     font-style: italic;
+    margin-bottom: $gs-baseline;
 }
 
 .crossword__clue--answered {
