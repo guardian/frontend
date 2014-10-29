@@ -64,7 +64,6 @@ object DfpDataCacheJob extends ExecutionContexts {
 
         Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
       }
-      println("[[[[[ Dfp Data Cache done ]]]]]")
     }
   }
 }
