@@ -1,16 +1,24 @@
 define([
-    'common/utils/$',
     'bean',
-    'common/modules/identity/api',
-    'membership/masker',
     'stripe',
+    'common/utils/$',
     'common/utils/ajax',
-    'membership/stripe-error-messages',
-    'common/utils/config'
-], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
+    'common/utils/config',
+    'membership/masker',
+    'membership/stripe-error-messages'
+], function (
+    bean,
+    stripe,
+    $,
+    ajax,
+    config,
+    masker,
+    stripeErrorMessages
+) {
+    /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
-    function StripePaymentForm () {
+    function StripePaymentForm() {
         this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
 
         return this;
@@ -71,17 +79,18 @@ define([
 
     StripePaymentForm.prototype.stripeResponseHandler = function (status, response) {
 
-        var self = this;
+        var errorMessage, token,
+            self = this;
 
         if (response.error) {
-            var errorMessage = self.getErrorMessage(response.error);
+            errorMessage = self.getErrorMessage(response.error);
             if (errorMessage) {
                 self.handleErrors([errorMessage]);
             }
         } else {
 
             // token contains id, last4, and card type
-            var token = response.id;
+            token = response.id;
 
             ajax({
                 url: config.page.membershipUrl + '/subscription/update-card',
@@ -94,11 +103,11 @@ define([
                 data: {
                     stripeToken: token
                 }
-            }).then(function success () {
+            }).then(function success() {
                 self.stopLoader();
                 self.reset();
                 self.successCallback.apply(this, arguments);
-            }, function fail (error) {
+            }, function fail(error) {
 
                 var errorObj,
                     errorMessage;
@@ -194,13 +203,14 @@ define([
             $formElement = $(self.context);
 
         bean.on($creditCardNumberElement[0], 'keyup blur', function (e) {
-            var $creditCardNumberElement = $(e.target);
+            var validationResult,
+                $creditCardNumberElement = $(e.target);
 
             masker(' ', 4).bind(this)(e);
             self.displayCardTypeImage($creditCardNumberElement.val());
 
             if (e.type === 'blur') {
-                var validationResult = self.validateCardNumber($creditCardNumberElement);
+                validationResult = self.validateCardNumber($creditCardNumberElement);
 
                 self.manageErrors(validationResult);
             }
@@ -309,8 +319,6 @@ define([
         this.displayMonthError = $creditCardExpiryYearElement[0].selectedIndex !== 0;
     };
 
-
-
     /**
      *
      * @returns Object
@@ -353,20 +361,21 @@ define([
      */
     StripePaymentForm.prototype.isFormValid = function () {
 
-        var errors = [],
+        var profile, validationProfile, validationProfileResult,
+            errors = [],
             validationProfiles = [
                 this.validateCardNumber,
                 this.validateCVC,
                 this.validateExpiry
             ];
 
-        for (var profile in validationProfiles) {
+        for (profile in validationProfiles) {
 
-            var validationProfile = validationProfiles[profile];
+            validationProfile = validationProfiles[profile];
 
-            if (validationProfiles.hasOwnProperty(profile) && 'function' === typeof validationProfile) {
+            if (validationProfiles.hasOwnProperty(profile) && typeof validationProfile === 'function') {
 
-                var validationProfileResult = validationProfile.call(this);
+                validationProfileResult = validationProfile.call(this);
 
                 if (!validationProfileResult.isValid) {
                     errors.push(validationProfileResult);

@@ -9,7 +9,7 @@ define([
     'bean',
     'bonzo',
     'common/utils/url'
-], function(
+], function (
     $,
     bean,
     bonzo,
@@ -76,7 +76,7 @@ define([
     *   Handle click on form tabs, change history if necessary and render error
     *   message if form contains unsaved changes.
     */
-    accountProfile.prototype.handleTabsClick = function(event) {
+    accountProfile.prototype.handleTabsClick = function (event) {
         var self = this;
         if (event.target.nodeName.toLowerCase() === 'a') {
             if (self.unsavedChangesForm) {
@@ -102,8 +102,8 @@ define([
     *   TO DO: Use html5 file api to validate file size prior to upload @chrisfinch
     */
     accountProfile.prototype.bindAvatarUpload = function () {
-        var self = this;
-        var avatarForm = self.accountProfileForms.querySelector(self.classes.avatarUploadForm);
+        var self = this,
+            avatarForm = self.accountProfileForms.querySelector(self.classes.avatarUploadForm);
 
         if (avatarForm) {
             bean.on(avatarForm, 'submit', function (event) {
@@ -114,11 +114,11 @@ define([
                     self.prependErrorMessage(self.messages.noCorsError, avatarForm);
                 }
 
-                xhr.onerror = function() {
+                xhr.onerror = function () {
                     self.prependErrorMessage(self.messages.noServerError, avatarForm);
                 };
 
-                xhr.onload = function() {
+                xhr.onload = function () {
                     avatarForm.setAttribute('action', xhr.responseText);
                     avatarForm.submit();
                 };
@@ -160,18 +160,19 @@ define([
     *   a form with unsaved changes.
     */
     accountProfile.prototype.genUnsavedError = function () {
-        var errorDivStart = '<div class="form__error">',
+        var i, labelId, text,
+            errorDivStart = '<div class="form__error">',
             errorDivEnd = '</div>',
             errorSaveLink = '<a href="#" class="js-save-unsaved">Save changes</a>',
             errorMessageStart = 'Your form has unsaved changes in ';
 
-        for (var i = 0; i < this.unsavedFields.length; i++) {
-            var labelId = this.unsavedFields[i].id;
-            var text = this.accountProfileForms.querySelector('[for="'+labelId+'"]').innerHTML;
+        for (i = 0; i < this.unsavedFields.length; i++) {
+            labelId = this.unsavedFields[i].id;
+            text = this.accountProfileForms.querySelector('[for="' + labelId + '"]').innerHTML;
             errorMessageStart += '"' + text + '"';
-            if (i === this.unsavedFields.length-1) {
+            if (i === this.unsavedFields.length - 1) {
                 errorMessageStart += '. ';
-            } else if (i === this.unsavedFields.length-2) {
+            } else if (i === this.unsavedFields.length - 2) {
                 errorMessageStart += ' and ';
             } else {
                 errorMessageStart += ', ';
@@ -196,10 +197,11 @@ define([
     *   Bind keyup events on input fields and register parent form on element
     */
     accountProfile.prototype.bindInputs = function (form) {
-        var inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
+        var i, input,
+            inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
         inputs = inputs.concat(Array.prototype.slice.call(form.querySelectorAll('select')));
-        for (var i = inputs.length - 1; i >= 0; i--) {
-            var input = inputs[i];
+        for (i = inputs.length - 1; i >= 0; i--) {
+            input = inputs[i];
             input.form = form;
             if (input.type === 'select-one') {
                 input.addEventListener('change', this.onInputChange.bind(this));
