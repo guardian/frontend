@@ -208,13 +208,15 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .global-navigation__action {
     position: relative;
 
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: -$gs-gutter/4;
-        left: -$gs-gutter/4;
+    @include mq($until: tablet) {
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: -$gs-gutter/4;
+            left: -$gs-gutter/4;
+        }
     }
 }
 .local-navigation__action,
