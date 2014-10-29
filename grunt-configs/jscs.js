@@ -9,9 +9,42 @@ module.exports = function(grunt, options) {
                 cwd: 'static/src/javascripts/projects/common',
                 src: [
                     '**/*.js',
+                    '!modules/article/spacefinder.js',
+                    '!modules/charts/doughnut.js',
+                    '!modules/charts/table-doughnut.js',
+                    '!modules/component.js',
+                    '!modules/discussion/activity-stream.js',
+                    '!modules/discussion/api.js',
                     '!modules/discussion/comment-box.js',
+                    '!modules/discussion/comment-count.js',
                     '!modules/discussion/comments.js',
-                    '!modules/discussion/loader.js'
+                    '!modules/discussion/loader.js',
+                    '!modules/discussion/recommend-comments.js',
+                    '!modules/discussion/top-comments.js',
+                    '!modules/experiments/ab.js',
+                    '!modules/gallery/lightbox.js',
+                    '!modules/identity/account-profile.js',
+                    '!modules/identity/api.js',
+                    '!modules/identity/autosignin.js',
+                    '!modules/identity/facebook-authorizer.js',
+                    '!modules/identity/forms.js',
+                    '!modules/identity/formstack-iframe-embed.js',
+                    '!modules/identity/formstack-iframe.js',
+                    '!modules/identity/formstack.js',
+                    '!modules/identity/password-strength.js',
+                    '!modules/identity/public-profile.js',
+                    '!modules/identity/validation-email.js',
+                    '!modules/navigation/profile.js',
+                    '!modules/onward/breaking-news.js',
+                    '!modules/onward/history.js',
+                    '!modules/onward/tonal.js',
+                    '!modules/open/cta.js',
+                    '!modules/router.js',
+                    '!modules/sport/football/football.js',
+                    '!modules/sport/football/match-info.js',
+                    '!modules/sport/football/match-list-live.js',
+                    '!modules/ui/autoupdate.js',
+                    '!modules/ui/relativedates.js'
                 ]
             }]
         },
@@ -20,7 +53,9 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/projects/facia',
                 src: [
-                    '**/*.js'
+                    '**/*.js',
+                    '!modules/ui/container-show-more.js',
+                    '!modules/ui/container-toggle.js'
                 ]
             }]
         },
@@ -40,7 +75,9 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/projects/membership',
                 src: [
-                    '**/*.js'
+                    '**/*.js',
+                    '!payment-form.js',
+                    '!stripe-error-messages.js'
                 ]
             }]
         },

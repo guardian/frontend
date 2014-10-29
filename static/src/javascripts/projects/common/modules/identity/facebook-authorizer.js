@@ -1,9 +1,7 @@
 /*global FB:false*/
-/* jscs:disable disallowDanglingUnderscores */
-define([''], function () {
+define([''], function() {
 
-    var instance = null,
-        scriptId = 'facebook-jssdk';
+    var instance = null;
 
     function FacebookAuthorizer(appId) {
         instance = this;
@@ -57,6 +55,8 @@ define([''], function () {
         }
         return this.onConnected;
     };
+
+    var scriptId = 'facebook-jssdk';
 
     FacebookAuthorizer.prototype._handleGotLoginStatus = function (wasDirectUserAction, response) {
         this.loginStatusPending = false;
@@ -147,7 +147,7 @@ define([''], function () {
         }
     };
 
-    RepeatablePromise.prototype.reset = function () {
+    RepeatablePromise.prototype.reset = function() {
         this.args = undefined;
     };
 

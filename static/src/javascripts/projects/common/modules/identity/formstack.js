@@ -1,12 +1,12 @@
 define([
-    'bean',
-    'lodash/objects/assign',
     'common/utils/$',
+    'lodash/objects/assign',
+    'bean',
     'common/modules/identity/api'
 ], function (
-    bean,
-    assign,
     $,
+    assign,
+    bean,
     idApi
 ) {
 
@@ -61,7 +61,7 @@ define([
             }
         }, config);
 
-        self.init = function () {
+        self.init = function() {
             // User object required to populate fields
             var user = idApi.getUserOrSignIn();
 
@@ -73,25 +73,23 @@ define([
             self.postMessage('ready');
         };
 
-        self.dom = function (user) {
-            var selector, $userId, $email, html;
-
+        self.dom = function(user) {
             // Formstack generates some awful HTML, so we'll remove the CSS links,
             // loop their selectors and add our own classes instead
             dom.$form = $(config.fsSelectors.form).addClass(config.idClasses.form);
             $('link', el).remove();
 
-            for (selector in config.fsSelectors) {
+            for (var selector in config.fsSelectors) {
                 $(config.fsSelectors[selector], dom.$form).addClass(config.idClasses[selector]);
             }
 
             // Formstack also don't have capturable hidden fields,
             // so we remove ID text inputs and append hidden equivalents
-            $userId = $(config.hiddenSelectors.userId, dom.$form).remove();
-            $email = $(config.hiddenSelectors.email, dom.$form).remove();
+            var $userId = $(config.hiddenSelectors.userId, dom.$form).remove(),
+                $email = $(config.hiddenSelectors.email, dom.$form).remove(),
 
-            html = '<input type="hidden" name="' + $userId.attr('name') + '" value="' + user.id + '">'
-                 + '<input type="hidden" name="' + $email.attr('name') + '" value="' + user.primaryEmailAddress + '">';
+                html = '<input type="hidden" name="' + $userId.attr('name') + '" value="' + user.id + '">'
+                     + '<input type="hidden" name="' + $email.attr('name') + '" value="' + user.primaryEmailAddress + '">';
 
             dom.$form.append(html);
 
@@ -100,9 +98,9 @@ define([
             bean.on(dom.$form[0], 'submit', self.submit);
         };
 
-        self.submit = function () {
+        self.submit = function() {
             // TODO: FML
-            setTimeout(function () {
+            setTimeout(function() {
                 // Remove any existing errors
                 $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
                 $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
@@ -112,7 +110,7 @@ define([
                 $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
 
                 // Update character count absolute positions
-                $(config.fsSelectors.textArea, el).each(function (textarea) {
+                $(config.fsSelectors.textArea, el).each(function(textarea) {
                     bean.fire(textarea, 'keyup');
                 });
 
@@ -120,12 +118,12 @@ define([
             }, 100);
         };
 
-        self.unload = function () {
+        self.unload = function() {
             // Listen for navigation to success page
             self.postMessage('unload');
         };
 
-        self.postMessage = function (message) {
+        self.postMessage = function(message) {
             var domain = config.page.idUrl;
             window.top.postMessage(message, domain);
         };
