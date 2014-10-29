@@ -82,17 +82,23 @@ function (
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
-                    frame = $("<iframe src='/http/proxy/" + item.id() + "'/>");
+                    authedAjax.request({
+                        url: '/http/proxy/' + item.id(),
+                        type: 'GET',
+                        contentType: 'text/html'
+                    })
+                    .done(function (response) {
+                        var doc = document.createElement("div"),
+                            og = {};
 
-                    frame.appendTo('body').on('load', function() {
-                        var doc = frame.get(0).contentWindow.document,
-                            ogTitle = doc.querySelector('meta[property="og:title"]').getAttribute('content'),
-                            ogSiteName = doc.querySelector('meta[property="og:site_name"]').getAttribute('content'),
-                            headline = ogSiteName && ogTitle ? ogSiteName + " - " + ogTitle : doc.title;
+                        doc.innerHTML = response;
 
-                        item.meta.headline(headline);
-                        frame.remove();
-                    });
+                        Array.prototype.forEach.call(doc.querySelectorAll('meta[property^="og:"]'), function(tag) {
+                            og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
+                        });
+
+                        item.meta.headline(og.site_name && og.title ? og.site_name + " - " + og.title : doc.title);
+                    })
 
                     item.convertToSnap();
                 }
