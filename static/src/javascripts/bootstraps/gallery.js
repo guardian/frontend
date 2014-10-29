@@ -8,8 +8,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
-    'common/modules/gallery/lightbox',
-    'common/modules/ui/blockSharing'
+    'common/modules/gallery/lightbox'
 ], function (
     bean,
     bonzo,
@@ -20,8 +19,7 @@ define([
     config,
     mediator,
     Component,
-    LightboxGallery,
-    blockSharing
+    LightboxGallery
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -60,7 +58,6 @@ define([
         },
         ready = function () {
             LightboxGallery.init();
-            blockSharing.init();
 
             // Opens block level sharing links in the lightbox
             var galleryHash = window.location.hash,

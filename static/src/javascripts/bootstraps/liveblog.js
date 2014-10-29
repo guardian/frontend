@@ -15,7 +15,6 @@ define([
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
-    'common/modules/ui/blockSharing',
     'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
@@ -38,7 +37,6 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
-    blockSharing,
     dropdowns,
     Message,
     NotificationCounter,
@@ -195,7 +193,6 @@ define([
         handleUpdates: function () {
             mediator.on('modules:autoupdate:updates', function () {
                 modules.createTimeline();
-                blockSharing.init();
             });
         },
 
@@ -279,7 +276,6 @@ define([
         article.modules.initOpen();
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
-        blockSharing.init();
 
         mediator.emit('page:liveblog:ready');
     }
