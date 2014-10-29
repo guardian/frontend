@@ -9,9 +9,10 @@
 
 @defining(block){ case (config, collection) =>
     @config.collectionType match {
-        case Some("nav/list")                   => { @containers.navlist(collection, index, dataId)(request, config) }
-        case Some("nav/media-list")             => { @containers.navmedialist(collection, index, dataId)(request, config) }
-        case Some("news/most-popular")          => { @containers.popular(collection, PopularContainer(), index, dataId)(request, config) }
+        case Some("nav/list")                       => { @containers.navlist(collection, index, dataId)(request, config) }
+        case Some("nav/media-list")                 => { @containers.navmedialist(collection, index, dataId)(request, config) }
+        case Some("news/most-popular")              => { @containers.popular(collection, PopularContainer(), index, dataId)(request, config) }
+        case FixedContainers(containerDefinition)   => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, Some(templateDeduping)), index, front.frontProperties, dataId = dataId)(request, templateDeduping, config) }
         case collectionType => {
             @DynamicContainers(collectionType, collection.items) match {
                 case Some(containerDefinition) => {
