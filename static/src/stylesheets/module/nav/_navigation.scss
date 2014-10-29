@@ -232,6 +232,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .local-navigation__item,
 .top-navigation__item,
 .global-navigation__item {
+    text-overflow: ellipsis;
+    overflow: hidden;
     white-space: nowrap;
 }
 .top-navigation__item--current {
@@ -247,7 +249,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .local-navigation__item,
 .top-navigation__item {
-    white-space: nowrap;
     display: table-cell;
     position: relative;
     padding-right: $navigation-h-space-between-items/2;
