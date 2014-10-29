@@ -63,6 +63,10 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
+                // A snap, but not an absolute url
+                } else if (!item.id().match(/^https?:\/\//)) {
+                    err = 'Sorry, URLs must begin with http...';
+
                 // A snap, but snaps can only be created to the Clipboard
                 } else if (item.group.parentType !== 'Clipboard') {
                     err = 'Sorry, special links must be dragged to the Clipboard, initially';
@@ -70,10 +74,6 @@ function (
                 // A snap, but a link off of the tool itself
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
-
-                // A snap, but not an absolute url
-                } else if (!item.id().match(/^https?:\/\//)) {
-                    err = 'Sorry, that\'s not a valid absolute URL';
 
                 // A snap, but a link to unavailable guardian content
                 } else if (isFromGuardian && results && results.length === 0) {
