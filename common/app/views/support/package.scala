@@ -968,9 +968,9 @@ object GetClasses {
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
 
-  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
     case content: Content =>
         content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
         content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
