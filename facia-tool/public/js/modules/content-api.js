@@ -117,7 +117,11 @@ function (
 
         fetchContentByIds(ids)
         .done(function(results){
-            [].concat(results).forEach(function(result) {
+            if (!_.isArray(results)) {
+                return;
+            }
+
+            results.forEach(function(result) {
                 var icc = internalContentCode(result);
 
                 if(icc) {
