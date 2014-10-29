@@ -63,11 +63,11 @@
                             }
                         }
 
-                    case svg @ CrosswordSvg(id) => {
+                    case svg @ CrosswordSvg(_) => {
                         <div class="fc-item__media-wrapper">
                             <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                                <img src="@svg.imageUrl" class="responsive-img" alt=""
-                                     role="presentation" data-crossword-id="@id" />
+                                <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                                     role="presentation" data-crossword-id="@svg.persistenceId" />
                             </div>
                         </div>
                     }

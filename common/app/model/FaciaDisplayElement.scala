@@ -22,6 +22,8 @@ sealed trait FaciaDisplayElement
 
 case class InlineVideo(videoElement: VideoElement, title: String, endSlatePath: String) extends FaciaDisplayElement
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
+  def persistenceId = id.stripPrefix("crosswords/")
+
   def imageUrl = s"/$id.svg"
 }
 case object InlineImage extends FaciaDisplayElement
