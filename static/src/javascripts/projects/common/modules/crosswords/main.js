@@ -376,10 +376,9 @@ define([
                     }
                 };
 
-            return React.DOM.div(null,
-                FocussedClue({
-                    clueText: focussed ? focussed.clue : null
-                }),
+            return React.DOM.div({
+                    className: 'crossword__container'
+                },
                 React.DOM.div({
                     className: 'crossword__grid-wrapper'
                 },
@@ -409,6 +408,13 @@ define([
                         }
                     ))
                 ),
+                FocussedClue({
+                    clueText: focussed ? focussed.clue : null
+                }),
+                Clues({
+                    clues: this.cluesData(),
+                    focusClue: this.focusClue
+                }),
                 Controls({
                     hasSolutions: this.hasSolutions(),
                     clueInFocus: focussed,
@@ -417,10 +423,6 @@ define([
                     onCheck: this.onCheck,
                     onCheckAll: this.onCheckAll,
                     onClearAll: this.onClearAll
-                }),
-                Clues({
-                    clues: this.cluesData(),
-                    focusClue: this.focusClue
                 })
             );
         }

@@ -89,8 +89,7 @@ define([
             });
 
             return React.DOM.svg({
-                width: width,
-                height: height,
+                viewBox: '0 0 ' + width + ' ' + height,
                 className: 'crossword__grid'
             }, React.DOM.rect({
                 x: 0,
