@@ -54,7 +54,7 @@ define([
                             });
                         })), svg = qwery('svg', data)[0];
 
-                        bonzo(svg).attr('class', 'responsive-img').append(cells);
+                        bonzo(svg).append(cells);
 
                         $elem.replaceWith(svg);
                     }
