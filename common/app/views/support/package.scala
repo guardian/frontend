@@ -967,12 +967,6 @@ object GetClasses {
   }
 }
 
-object LatestUpdate {
-  /** TODO Remove once everything uses container definition */
-  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
-    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-}
-
 object SnapData {
   def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
 
