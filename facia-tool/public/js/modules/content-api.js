@@ -49,7 +49,8 @@ function (
             .done(function(results) {
                 var capiItem,
                     icc,
-                    err;
+                    err,
+                    frame;
 
                 // ContentApi item
                 if (results.length === 1) {
@@ -81,6 +82,18 @@ function (
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
+                    frame = $("<iframe src='/http/proxy/" + item.id() + "'/>");
+
+                    frame.appendTo('body').on('load', function() {
+                        var doc = frame.get(0).contentWindow.document,
+                            ogTitle = doc.querySelector('meta[property="og:title"]').getAttribute('content'),
+                            ogSiteName = doc.querySelector('meta[property="og:site_name"]').getAttribute('content'),
+                            headline = ogSiteName && ogTitle ? ogSiteName + " - " + ogTitle : doc.title;
+
+                        item.meta.headline(headline);
+                        frame.remove();
+                    });
+
                     item.convertToSnap();
                 }
 
