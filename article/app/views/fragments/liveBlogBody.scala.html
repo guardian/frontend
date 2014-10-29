@@ -5,6 +5,8 @@
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
 @import views.BodyCleaner
+@import layout.{Card, ItemClasses}
+@import views.html.fragments.items.facia_cards.item
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -99,9 +101,15 @@
                     @if(model.related.hasStoryPackage) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
-                            <ul class="u-unstyled">
-                                @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                                    @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, CollectionConfig.emptyConfig)
+                            <ul class="u-unstyled facia-slice facia-slice--single-col">
+                                @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
+                                    @item(
+                                        Card(index, trail, None),
+                                        ItemClasses(mobile = "list-media",tablet = "standard"),
+                                        0,
+                                        isRow = false,
+                                        isList = false
+                                    )(request, CollectionConfig.emptyConfig)
                                 }
                             </ul>
                         </aside>

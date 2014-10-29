@@ -38,11 +38,11 @@ define([
     function Autoupdate(opts) {
 
         var options = assign({
-            'activeClass': 'is-active',
-            'btnClass' : '.js-auto-update',
-            'manipulationType' : 'html',
-            'backoff': 1, // 1 = no backoff
-            'backoffMax': 1000 * 60 * 20 // 20 mins
+            'activeClass':      'is-active',
+            'btnClass':         '.js-auto-update',
+            'manipulationType': 'html',
+            'backoff':          1, // 1 = no backoff
+            'backoffMax':       1000 * 60 * 20 // 20 mins
         }, opts);
 
         this.unreadBlocks = 0;
@@ -66,7 +66,7 @@ define([
             '  </button>';
 
         this.view = {
-            render: function(res) {
+            render: function (res) {
                 var attachTo = options.attachTo,
                     manipulation = this.getManipulationType(),
                     date = new Date().toString(),
@@ -93,16 +93,16 @@ define([
                 $attachTo.attr('data-last-updated', date);
                 twitter.enhanceTweets();
 
-                if(this.isUpdating) {
+                if (this.isUpdating) {
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
-                } else if(this.unreadBlocks > 0) {
+                } else if (this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
             },
 
-            toggle: function(btn) {
+            toggle: function (btn) {
                 var action = btn.getAttribute('data-action');
 
                 $(options.btnClass).removeClass(options.activeClass);
@@ -111,12 +111,12 @@ define([
                 this[action]();
             },
 
-            destroy: function() {
+            destroy: function () {
                 $('.update').remove();
                 mediator.emit('modules:autoupdate:destroyed');
             },
 
-            revealNewElements: function() {
+            revealNewElements: function () {
                 var $newElements = $('.autoupdate--hidden', options.attachTo);
                 $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
 
@@ -127,13 +127,13 @@ define([
                 }
                 mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $newElements.removeClass('autoupdate--highlight');
                 }, 5000);
             }
         };
 
-        this.load = function() {
+        this.load = function () {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
@@ -142,8 +142,8 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(
-                function(response) {
-                    if(response.refreshStatus === false) {
+                function (response) {
+                    if (response.refreshStatus === false) {
                         that.off();
                         that.view.destroy();
                     } else {
@@ -154,12 +154,12 @@ define([
             );
         };
 
-        this.on = function() {
+        this.on = function () {
             this.isUpdating = true;
 
-            if(this.timeout) { window.clearTimeout(this.timeout); }
+            if (this.timeout) { window.clearTimeout(this.timeout); }
 
-            var updateLoop = function() {
+            var updateLoop = function () {
                 this.load();
                 var newDelay = detect.pageVisible() ? options.delay : this.updateDelay * options.backoff;
                 this.updateDelay = Math.min(newDelay, options.backoffMax);
@@ -169,11 +169,11 @@ define([
             updateLoop();
         };
 
-        this.off = function() {
+        this.off = function () {
             this.isUpdating = false;
         };
 
-        this.init = function() {
+        this.init = function () {
             if (config.switches && config.switches.autoRefresh !== true) {
                 return;
             }
@@ -186,8 +186,8 @@ define([
 
             detect.initPageVisibility();
 
-            mediator.on('modules:detect:pagevisibility:visible', function() {
-                if(this.isUpdating) {
+            mediator.on('modules:detect:pagevisibility:visible', function () {
+                if (this.isUpdating) {
                     this.on(); // reset backoff
                     that.view.revealNewElements();
                 }
@@ -210,11 +210,11 @@ define([
             this.view.toggle.call(this, this.btns[1]);
         };
 
-        this.setManipulationType = function(manipulation) {
+        this.setManipulationType = function (manipulation) {
             options.manipulationType = manipulation;
         };
 
-        this.getManipulationType = function() {
+        this.getManipulationType = function () {
             return options.manipulationType;
         };
     }

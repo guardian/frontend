@@ -219,3 +219,20 @@
 .fc-item--list-compact--media {
     @include fc-item--list-compact--media;
 }
+
+//Live blog items
+.facia-slice--single-col {
+
+    .facia-slice__item {
+        padding-bottom: 0;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .fc-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

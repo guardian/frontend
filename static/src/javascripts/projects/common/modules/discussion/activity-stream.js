@@ -37,6 +37,7 @@ define([
         });
     };
     ActivityStream.prototype.change = function (opts) {
+        /* jscs:disable disallowDanglingUnderscores */
         var $el = bonzo(this.elem).empty();
         this.setState('loading');
         this.setOptions(opts);

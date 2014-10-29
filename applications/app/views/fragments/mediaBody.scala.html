@@ -81,17 +81,22 @@
                                     case v: Video => {
                                         @fragments.standfirst(v)
                                     }
-                                    case a: Audio => {
-                                        @a.body.map { b =>
-                                            <div class="from-content-api">
-                                                @Html(b)
-                                            </div>
-                                        }
-                                    }
+                                    case a: Audio => { }
                                 }
                             </div>
 
                             @fragments.contentMeta(media)
+
+                            @media match {
+                                case a: Audio => {
+                                    @a.body.map { b =>
+                                        <div class="from-content-api">
+                                            @Html(b)
+                                        </div>
+                                    }
+                                }
+                                case _ => { }
+                            }
 
                             @fragments.submeta(media)
                         </div>
