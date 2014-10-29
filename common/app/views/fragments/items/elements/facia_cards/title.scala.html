@@ -24,7 +24,7 @@
         }
 
         case PodcastKicker(Some(series)) => {
-            <a href="@LinkTo(series.url)" class="fc-item__kicker">@Html(series.name)</a>
+            <a href="@LinkTo(series.url)" data-link-name="kicker" class="fc-item__kicker">@Html(series.name)</a>
         }
 
         case PodcastKicker(None) => {
@@ -36,11 +36,11 @@
         }
 
         case TagKicker(tagName, tagLink) => {
-            <a href="@LinkTo(tagLink)" class="fc-item__kicker">@Html(tagName)</a>
+            <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-item__kicker">@Html(tagName)</a>
         }
 
         case SectionKicker(sectionName, sectionLink) => {
-            <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@Html(sectionName)</a>
+            <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-item__kicker">@Html(sectionName)</a>
         }
 
         case FreeHtmlKicker(html) => {
