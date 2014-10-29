@@ -953,18 +953,6 @@ object GetClasses {
       ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
     )
   }
-
-  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val oldClasses = Seq(
-      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
-    ).flatten
-
-    RenderClasses(
-      s"container--${container.containerType}" +:
-        (commonContainerStyles(config, index == 0, hasTitle) ++
-        extraClasses ++ oldClasses): _*
-    )
-  }
 }
 
 object SnapData {
