@@ -419,13 +419,6 @@ Comments.prototype.reportComment = function(e) {
 Comments.prototype.addUser = function(user) {
     this.user = user;
 
-    // Determine user staff status
-    if (this.user && this.user.badge) {
-        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
-            return e.name === 'Staff';
-        });
-    }
-
     if (!this.isReadOnly()) {
 
         if (this.user && this.user.privateFields.canPostComment) {

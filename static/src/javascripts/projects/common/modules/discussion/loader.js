@@ -117,11 +117,16 @@ Loader.prototype.initMainComments = function() {
             this.initState();
             this.renderCommentBar();
             if (this.user) {
-                this.comments.addUser(this.user);
+                if (this.user.badge) {
+                    this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+                        return e.name === 'Staff';
+                    });
+                }
                 if (this.user.isStaff) {
                     this.removeState('not-staff');
                     this.setState('is-staff');
                 }
+                this.comments.addUser(this.user);
             }
         });
         this.getUser();
