@@ -565,7 +565,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see links to keywords")
-        $(".keyword-list a").size should be(17)
+        $(".keyword-list a").size should be(19)
       }
     }
 
