@@ -5,11 +5,11 @@
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
 define([
-    'common/utils/$',
-    'lodash/objects/assign'
-], function(
-    $,
-    assign
+    'lodash/objects/assign',
+    'common/utils/$'
+], function (
+    assign,
+    $
 ) {
     /**
      * @param {string} type
@@ -24,7 +24,7 @@ define([
      * @return {string}
      */
     function translate(v) {
-        return 'translate('+v+')';
+        return 'translate(' + v + ')';
     }
 
     /**
@@ -32,7 +32,7 @@ define([
      * @param {Object.<string, *>} o the options
      * @return {Bonzo} SVG Element
      */
-    var Doughnut = function(data, o) {
+    var Doughnut = function (data, o) {
         o = assign({
             percentCutout: 35,
             unit: '',
@@ -41,25 +41,24 @@ define([
 
         var w = o.width,
             h = o.height || w,
-            radius = Math.min(h/2, w/2),
-            cutoutRadius = radius*(o.percentCutout/100),
-            totalValue = data.reduce(function(a, b) { return { value: a.value+ b.value }; }).value,
-            halfPI = Math.PI/2,
-            doublePI = Math.PI*2,
-            c = [w/2, h/2],
+            radius = Math.min(h / 2, w / 2),
+            cutoutRadius = radius * (o.percentCutout / 100),
+            totalValue = data.reduce(function (a, b) { return { value: a.value + b.value }; }).value,
+            halfPI = Math.PI / 2,
+            doublePI = Math.PI * 2,
+            c = [w / 2, h / 2],
             center = {
-                x: w/2,
-                y: h/2
+                x: w / 2,
+                y: h / 2
             },
             $svg = $.create('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="chart chart--doughnut"></svg>')
-                .attr({ width: w, height: h, viewbox: '0 0 '+ [w, h].join(' ') });
-
-        // Segments
-        var segmentAngle, endRadius, arc, outer, inner, r, a, d, $g, $t,
+                .attr({ width: w, height: h, viewbox: '0 0 ' + [w, h].join(' ') }),
+            // Segments
+            segmentAngle, endRadius, arc, outer, inner, r, a, d, $g, $t,
             startRadius = -halfPI;
 
-        data.forEach(function(datum) {
-            segmentAngle = (datum.value/totalValue * doublePI);
+        data.forEach(function (datum) {
+            segmentAngle = (datum.value / totalValue * doublePI);
             endRadius = startRadius + segmentAngle;
             arc = ((endRadius - startRadius) % doublePI) > Math.PI ? 1 : 0;
             // TODO (jamesgorrie): functionalise
@@ -84,8 +83,8 @@ define([
                 }
             };
 
-            r = (cutoutRadius+radius)/2;
-            a = (startRadius+endRadius)/2;
+            r = (cutoutRadius + radius) / 2;
+            a = (startRadius + endRadius) / 2;
             /**
              * M: Move pointer
              * A: Outer arc
@@ -122,11 +121,11 @@ define([
             } else {
                 $t.text(datum.label);
             }
-            $t.attr({ transform: translate([(Math.cos(a)*r)+center.x, (Math.sin(a)*r)+center.y]) })
+            $t.attr({ transform: translate([(Math.cos(a) * r) + center.x, (Math.sin(a) * r) + center.y]) })
                 .appendTo($g);
 
             $g.appendTo($svg);
-            startRadius += ((datum.value/totalValue)*doublePI);
+            startRadius += ((datum.value / totalValue) * doublePI);
         });
 
         // Unit of measurement
