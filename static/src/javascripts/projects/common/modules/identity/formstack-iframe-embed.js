@@ -14,14 +14,14 @@
 */
 
 define([
-    'bean',
-    'lodash/objects/assign',
     'common/utils/$',
+    'lodash/objects/assign',
+    'bean',
     'common/modules/identity/api'
 ], function (
-    bean,
-    assign,
     $,
+    assign,
+    bean,
     idApi
 ) {
 
@@ -76,7 +76,7 @@ define([
             }
         }, config);
 
-        self.init = function () {
+        self.init = function() {
             // User object required to populate fields
             var user = idApi.getUserOrSignIn();
 
@@ -88,25 +88,23 @@ define([
             self.sendHeight();
         };
 
-        self.dom = function (user) {
-            var selector, $userId, $email, html;
-
+        self.dom = function(user) {
             // Formstack generates some awful HTML, so we'll remove the CSS links,
             // loop their selectors and add our own classes instead
             dom.$form = $(config.fsSelectors.form).addClass(config.idClasses.form);
             $('link', el).remove();
 
-            for (selector in config.fsSelectors) {
+            for (var selector in config.fsSelectors) {
                 $(config.fsSelectors[selector], dom.$form).addClass(config.idClasses[selector]);
             }
 
             // Formstack also don't have capturable hidden fields,
             // so we remove ID text inputs and append hidden equivalents
-            $userId = $(config.hiddenSelectors.userId, dom.$form).remove();
-            $email = $(config.hiddenSelectors.email, dom.$form).remove();
+            var $userId = $(config.hiddenSelectors.userId, dom.$form).remove(),
+                $email = $(config.hiddenSelectors.email, dom.$form).remove(),
 
-            html = '<input type="hidden" name="' + $userId.attr('name') + '" value="' + user.id + '">'
-                + '<input type="hidden" name="' + $email.attr('name') + '" value="' + user.primaryEmailAddress + '">';
+                html = '<input type="hidden" name="' + $userId.attr('name') + '" value="' + user.id + '">'
+                     + '<input type="hidden" name="' + $email.attr('name') + '" value="' + user.primaryEmailAddress + '">';
 
             dom.$form.append(html);
 
@@ -116,16 +114,16 @@ define([
 
             // Listen for message from top window,
             // only message we are listening for is the iframe position..
-            window.addEventListener('message', function (event) {
+            window.addEventListener('message', function(event) {
                 var message = JSON.parse(event.data);
                 if (message.iframeTop) { self.scrollToTopOfIframe(message.iframeTop); }
             }, false);
         };
 
-        self.submit = function (event) {
+        self.submit = function(event) {
             event.preventDefault();
 
-            setTimeout(function () {
+            setTimeout(function() {
                 // Remove any existing errors
                 $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
                 $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
@@ -135,7 +133,7 @@ define([
                 $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
 
                 // Update character count absolute positions
-                $(config.fsSelectors.textArea, el).each(function (textarea) {
+                $(config.fsSelectors.textArea, el).each(function(textarea) {
                     bean.fire(textarea, 'keyup');
                 });
 
@@ -153,7 +151,7 @@ define([
             self.postMessage('scroll-to', 'scroll-to', 0, top);
         };
 
-        self.unload = function () {
+        self.unload = function() {
             // Listen for navigation to success page
             self.sendHeight(true);
         };
@@ -167,7 +165,7 @@ define([
             self.postMessage('set-height', height);
         };
 
-        self.postMessage = function (type, value, x, y) {
+        self.postMessage = function(type, value, x, y) {
 
             var message = {
                 type: type,

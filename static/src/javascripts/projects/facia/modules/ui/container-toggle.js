@@ -1,24 +1,23 @@
 define([
-    'bean',
-    'bonzo',
     'common/utils/$',
+    'bonzo',
+    'bean',
     'common/modules/userPrefs'
 ], function (
-    bean,
-    bonzo,
     $,
+    bonzo,
+    bean,
     userPrefs
 ) {
 
     return function (container) {
-        /* jscs:disable disallowDanglingUnderscores */
 
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
                 '<button class="container__toggle" data-link-name="Show">'
                     + '<i class="i i-arrow-grey-large"></i>'
                     + '<span class="container__toggle__text">Hide</span>'
-                + '</button>'
+                +'</button>'
             )),
             _prefName = 'container-states',
             _toggleText = {
@@ -26,7 +25,7 @@ define([
                 displayed: 'Hide'
             },
             _state = 'displayed',
-            _updatePref = function ($container, state) {
+            _updatePref = function($container, state) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName),
                     prefValue = $container.attr('data-id');
@@ -40,7 +39,7 @@ define([
                 }
                 userPrefs.set(_prefName, prefs);
             },
-            _readPrefs = function ($container) {
+            _readPrefs = function($container) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName);
                 if (prefs && prefs[$container.attr('data-id')]) {
@@ -58,7 +57,7 @@ define([
                 .removeClass('js-container--toggle')
                 .addClass('container--has-toggle');
             // listen to event
-            bean.on(_$button[0], 'click', function () {
+            bean.on(_$button[0], 'click', function() {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                 // add/remove rolled class
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
