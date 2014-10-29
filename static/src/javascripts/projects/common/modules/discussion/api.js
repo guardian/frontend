@@ -13,20 +13,10 @@ define([
      * @type {Object}
      */
     var Api = {
-        root: null,
-        clientHeader: null
-    };
-
-    /**
-     * @param {Object.<string.*>}
-     */
-    Api.init = function () {
-        if (document.location.protocol === 'https:') {
-            Api.root = config.page.secureDiscussionApiRoot;
-        } else {
-            Api.root = config.page.discussionApiRoot;
-        }
-        Api.clientHeader = config.page.discussionApiClientHeader;
+        root: (document.location.protocol === 'https:')
+                ? config.page.secureDiscussionApiRoot
+                : config.page.discussionApiRoot,
+        clientHeader: config.page.discussionApiClientHeader
     };
 
     /**

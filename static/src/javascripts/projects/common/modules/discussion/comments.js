@@ -14,7 +14,6 @@ define([
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/identity/api',
     'common/modules/ui/relativedates'
 ], function(
     bean,
@@ -32,7 +31,6 @@ define([
     Component,
     DiscussionApi,
     CommentBox,
-    Id,
     relativedates
 ) {
 'use strict';
