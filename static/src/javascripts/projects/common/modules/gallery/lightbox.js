@@ -93,7 +93,7 @@ define([
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-        this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
+        this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
         this.resize = this.trigger.bind(this, 'resize');
         this.toggleInfo = function (e) {
             var infoPanelClick =
@@ -454,7 +454,7 @@ define([
         window.setTimeout(function () { $btn.removeClass('gallery-lightbox__button-pulse'); }, 75);
     };
 
-    GalleryLightbox.prototype._handleKeyEvents = function (e) {
+    GalleryLightbox.prototype.handleKeyEvents = function (e) {
         if (e.keyCode === 37) { // left
             this.trigger('prev');
         } else if (e.keyCode === 39) { // right
