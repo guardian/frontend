@@ -82,6 +82,8 @@ function (
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
+                    item.meta.headline('Fetching headline...');
+
                     authedAjax.request({
                         url: '/http/proxy/' + item.id(),
                         type: 'GET',
