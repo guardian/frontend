@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.{Pagination, ExecutionContexts, Edition, Logging}
+import common.{ExecutionContexts, Edition, Logging}
 import conf.{LiveContentApi, Configuration}
 import controllers.AuthLogging
 import dfp.DfpDataHydrator
