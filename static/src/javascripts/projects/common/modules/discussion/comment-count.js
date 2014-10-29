@@ -48,7 +48,8 @@ define([
     function renderCounts(counts) {
         counts.forEach(function (c) {
             forEach(qwery('[data-discussion-id="' + c.id + '"]'), function (node) {
-                var $node = bonzo(node),
+                var format,
+                    $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                     $container,
                     meta;
@@ -66,7 +67,7 @@ define([
                     // put in trail__meta, if exists
                     meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node);
                     $container = meta.length ? bonzo(meta) : $node;
-                    var format = $node.data('commentcount-format');
+                    format = $node.data('commentcount-format');
 
                     $container.append(template(templates[format] || defaultTemplate, {
                         url: getContentUrl(node),
