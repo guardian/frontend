@@ -370,7 +370,6 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init();
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
                         var discussionLoader = new DiscussionLoader();
