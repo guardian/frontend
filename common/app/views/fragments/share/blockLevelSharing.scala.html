@@ -10,11 +10,6 @@
         </a>
     }
 
-    @linkItem.map { link: model.ShareLink =>
-        <label class="block-share__label" for="block-share-link-@id">copy link text</label>
-        <input id="block-share-link-@id" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@link.href" readonly="readonly"/>
-    }
-
     <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand">
         <i class="i i-ellipsis-@if(contentType == model.GuardianContentTypes.Gallery){white-36} else {black}"></i>
         <span class="u-h">expand</span>
@@ -23,13 +18,12 @@
 </div>
 
 <div class="block-share--@contentType.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
-    <div class="block-share__item block-share__item--mobile">
-        <i class="i"></i>
-        <span class="u-h">share</span>
-    </div>
+    <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary}">
+        Share
+    </button>
 </div>
 
-<div id="share-modal-@id" class="overlay share-modal js-share-modal">
+<div id="share-modal-@id" class="overlay overlay--@contentType.toLowerCase share-modal js-share-modal">
     <div class="share-modal__content" data-link-name="mobile block share">
         <h2 class="share-modal__title">Share this post</h2>
         @shareItems.map { item: model.ShareLink =>

@@ -50,6 +50,13 @@ category: Common
         padding-right: 0;
     }
 }
+
+.social__item--whatsapp {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .social__action {
     display: block;
 }
@@ -83,6 +90,8 @@ category: Common
 
     i {
         display: block;
+        width: 100%;
+        height: 100%;
         background-size: 88% !important;
         background-position: center !important;
     }
@@ -99,6 +108,16 @@ category: Common
     background-color: $social-gplus;
     &:hover {
         background-color: darken($social-gplus, 10%);
+    }
+}
+
+.social-icon--whatsapp {
+    background-color: $social-whatsapp;
+    &:hover {
+        background-color: darken($social-whatsapp, 10%);
+    }
+    i {
+        background-size: 57% !important;
     }
 }
 

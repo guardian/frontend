@@ -72,8 +72,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case related => JsonComponent(
           "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter {
             hasExactlyTwoTeams
-          })),
-          "related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)
+          }))
         )
       }
     }

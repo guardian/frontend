@@ -1,7 +1,0 @@
-@(supporting: Video, index: Int)(implicit request: RequestHeader)
-
-<li class="linkslist__item linkslist__item--video supporting__item">
-    <a @LinkTo(supporting).map{url=>href="@url"} class="linkslist__action supporting__action" data-link-name="supporting | @{index + 1}">
-        @Html(supporting.headline)
-    </a>
-</li>

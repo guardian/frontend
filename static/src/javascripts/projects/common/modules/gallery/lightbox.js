@@ -42,7 +42,8 @@ define([
     loaderTpl,
     shareButtonTpl,
     shareButtonMobileTpl
-    ) {
+) {
+
     function GalleryLightbox() {
 
         // CONFIG
@@ -92,13 +93,13 @@ define([
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-        this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
+        this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
         this.resize = this.trigger.bind(this, 'resize');
-        this.toggleInfo = function(e) {
+        this.toggleInfo = function (e) {
             var infoPanelClick =
                 bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
                 $.ancestor(e.target, 'js-gallery-lightbox-info');
-            if (!infoPanelClick){
+            if (!infoPanelClick) {
                 this.trigger('toggle-info');
             }
         }.bind(this);
@@ -107,7 +108,7 @@ define([
             this.disableHover();
         }
 
-        bean.on(window, 'popstate', function(event) {
+        bean.on(window, 'popstate', function (event) {
             if (!event.state) {
                 this.trigger('close');
             }
@@ -116,7 +117,7 @@ define([
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
             initial: 'closed',
-            onChangeState: function(oldState, newState) {
+            onChangeState: function (oldState, newState) {
                 this.$lightboxEl
                     .removeClass('gallery-lightbox--' + oldState)
                     .addClass('gallery-lightbox--' + newState);
@@ -126,7 +127,7 @@ define([
         });
     }
 
-    GalleryLightbox.prototype.generateImgHTML = function(img, i) {
+    GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl + '?index=' + i,
             blockLongUrl = config.page.pageId + '?index=' + i,
             shareItems = [{
@@ -155,20 +156,20 @@ define([
         });
     };
 
-    GalleryLightbox.prototype.initSwipe = function() {
+    GalleryLightbox.prototype.initSwipe = function () {
 
-        var threshold, ox, dx,
+        var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
 
-        bean.on(this.$swipeContainer[0], 'touchstart', function(e) {
+        bean.on(this.$swipeContainer[0], 'touchstart', function (e) {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
             ox = e.touches[0].pageX;
             dx = 0;
         }.bind(this));
 
-        var touchMove = function(e) {
+        touchMove = function (e) {
             e.preventDefault();
-            if ( e.touches.length > 1 || e.scale && e.scale !== 1) {
+            if (e.touches.length > 1 || e.scale && e.scale !== 1) {
                 return;
             }
             dx = e.touches[0].pageX - ox;
@@ -177,7 +178,7 @@ define([
 
         bean.on(this.$swipeContainer[0], 'touchmove', _.throttle(touchMove, updateTime, {trailing: false}));
 
-        bean.on(this.$swipeContainer[0], 'touchend', function() {
+        bean.on(this.$swipeContainer[0], 'touchend', function () {
             var direction;
             if (Math.abs(dx) > threshold) {
                 direction = dx > threshold ? 1 : -1;
@@ -197,15 +198,15 @@ define([
         }.bind(this));
     };
 
-    GalleryLightbox.prototype.disableHover = function() {
+    GalleryLightbox.prototype.disableHover = function () {
         this.$lightboxEl.removeClass('gallery-lightbox--hover');
     };
 
-    GalleryLightbox.prototype.trigger = function(event, data) {
+    GalleryLightbox.prototype.trigger = function (event, data) {
         this.fsm.trigger(event, data);
     };
 
-    GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
+    GalleryLightbox.prototype.loadGalleryfromJson = function (galleryJson, startIndex) {
         this.index = startIndex;
         if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
             this.trigger('open');
@@ -214,32 +215,33 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.getImgSrc = function(imgJson, width, height) {
-        var possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
+    GalleryLightbox.prototype.getImgSrc = function (imgJson, width, height) {
+        var possibleWidths = _.filter(imagesModule.availableWidths, function (w) {
             var widthBigger = w > width,
-                calculatedHeight = (w/imgJson.ratio),
+                calculatedHeight = (w / imgJson.ratio),
                 heightBigger =  calculatedHeight > height;
             return widthBigger || heightBigger;
-        }).sort(function(a,b){ return a > b; }),
+        }).sort(function (a, b) { return a > b; }),
         chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
 
         return imgJson.src.replace('{width}', chosenWidth);
     };
 
-    GalleryLightbox.prototype.loadSurroundingImages = function(index, count) {
+    GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
 
-        var dim = this.$lightboxEl.dim();
-        _([-1,0,1]).map(function(i) { return index+i === 0 ? count - 1 : (index-1+i) % count; })
-            .each(function(i){
-                var imgSrc = this.getImgSrc(this.images[i], dim.width, dim.height),
-                    $img = bonzo(this.$images[i]);
+        var imgSrc, $img, $parent,
+            dim = this.$lightboxEl.dim();
+        _([-1, 0, 1]).map(function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; })
+            .each(function (i) {
+                imgSrc = this.getImgSrc(this.images[i], dim.width, dim.height);
+                $img = bonzo(this.$images[i]);
                 if ($img.attr('src') !== imgSrc) {
-                    var $parent = $img.parent()
+                    $parent = $img.parent()
                         .append(bonzo.create(loaderTpl));
 
                     $img.attr('src', imgSrc); // src can change with width so overwrite every time
 
-                    bean.one($img[0], 'load', function() {
+                    bean.one($img[0], 'load', function () {
                         $('.js-loader', $parent[0]).remove();
                     });
 
@@ -248,41 +250,41 @@ define([
 
     };
 
-    GalleryLightbox.prototype.translateContent = function(imgIndex, offset, duration) {
-        var px = -1 * (imgIndex-1) * this.swipeContainerWidth,
+    GalleryLightbox.prototype.translateContent = function (imgIndex, offset, duration) {
+        var px = -1 * (imgIndex - 1) * this.swipeContainerWidth,
             contentEl = this.$contentEl[0];
         contentEl.style.webkitTransitionDuration = duration + 'ms';
         contentEl.style.mozTransitionDuration = duration + 'ms';
         contentEl.style.msTransitionDuration = duration + 'ms';
         contentEl.style.transitionDuration = duration + 'ms';
-        contentEl.style.webkitTransform = 'translate(' + (px+offset) + 'px,0)' + 'translateZ(0)';
-        contentEl.style.mozTransform = 'translate(' + (px+offset) + 'px,0)';
-        contentEl.style.msTransform = 'translate(' + (px+offset) + 'px,0)';
-        contentEl.style.transform = 'translate(' + (px+offset) + 'px,0)' + 'translateZ(0)';
+        contentEl.style.webkitTransform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        contentEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
+        contentEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
+        contentEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
     };
 
     GalleryLightbox.prototype.states = {
 
         'closed': {
-            enter: function() {
+            enter: function () {
                 this.hide();
             },
-            leave: function() {
+            leave: function () {
                 this.show();
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id);
             },
             events: {
-                'open': function() {
+                'open': function () {
                     this.swipe && this.swipe.slide(this.index, 0);
                     this.state = 'image';
                 },
-                'loadJson': function(json) {
+                'loadJson': function (json) {
                     this.galleryJson = json;
                     this.images = json.images;
                     this.$countEl.text(this.images.length);
 
                     var imagesHtml = _(this.images)
-                        .map(function(img, i) { return this.generateImgHTML(img, i+1); }.bind(this))
+                        .map(function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this))
                         .join('');
 
                     this.$contentEl.html(imagesHtml);
@@ -305,7 +307,7 @@ define([
         },
 
         'image': {
-            enter: function() {
+            enter: function () {
 
                 this.swipeContainerWidth = this.$swipeContainer.dim().width;
 
@@ -323,12 +325,12 @@ define([
                 // meta
                 this.$indexEl.text(this.index);
             },
-            leave: function() {
+            leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function(interactionType) {
+                'next': function (interactionType) {
                     this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     if (this.index === this.images.length) { // last img
@@ -343,7 +345,7 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'prev': function(interactionType) {
+                'prev': function (interactionType) {
                     this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
@@ -358,67 +360,66 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'reload': function() {
+                'reload': function () {
                     this.reloadState = true;
                 },
-                'toggle-info': function() {
+                'toggle-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
-                'hide-info': function() {
+                'hide-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.removeClass('gallery-lightbox--show-info');
                 },
-                'show-info': function() {
+                'show-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.addClass('gallery-lightbox--show-info');
                 },
-                'resize': function() {
+                'resize': function () {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
                     this.translateContent(this.index, 0, 0);
                 },
-                'close': function() { this.state = 'closed'; }
+                'close': function () { this.state = 'closed'; }
             }
         },
 
         'endslate': {
-            enter: function() {
+            enter: function () {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
                 mediator.on('window:resize', this.resize);
                 imagesModule.upgrade(this.endslateEl);
             },
-            leave: function() {
+            leave: function () {
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function(interactionType) {
+                'next': function (interactionType) {
                     this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     this.index = 1;
                     this.state = 'image';
                 },
-                'prev': function(interactionType) {
+                'prev': function (interactionType) {
                     this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
                 },
-                'reload': function() {
+                'reload': function () {
                     this.reloadState = true;
                 },
-                'resize': function() {
+                'resize': function () {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.translateContent(this.$slides.length, 0, 0);
                 },
-                'close': function() { this.state = 'closed'; }
+                'close': function () { this.state = 'closed'; }
             }
         }
     };
 
-    GalleryLightbox.prototype.show = function() {
-        blockSharing.init();
+    GalleryLightbox.prototype.show = function () {
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
@@ -427,17 +428,17 @@ define([
         bean.on(document.body, 'keydown', this.handleKeyEvents);
     };
 
-    GalleryLightbox.prototype.close = function() {
+    GalleryLightbox.prototype.close = function () {
         url.hasHistorySupport ? url.back() : this.trigger('close');
     };
 
-    GalleryLightbox.prototype.hide = function() {
+    GalleryLightbox.prototype.hide = function () {
         // remove has-overlay first to show body behind lightbox then scroll and
         // close the lightbox at the same time. this way we get no scroll flicker
         var $body = bonzo(document.body);
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             if (this.bodyScrollPosition) {
                 $body.scrollTop(this.bodyScrollPosition);
             }
@@ -447,13 +448,13 @@ define([
         }.bind(this), 1);
     };
 
-    GalleryLightbox.prototype.pulseButton = function(button) {
+    GalleryLightbox.prototype.pulseButton = function (button) {
         var $btn = bonzo(button);
         $btn.addClass('gallery-lightbox__button-pulse');
-        window.setTimeout(function() { $btn.removeClass('gallery-lightbox__button-pulse'); }, 75);
+        window.setTimeout(function () { $btn.removeClass('gallery-lightbox__button-pulse'); }, 75);
     };
 
-    GalleryLightbox.prototype._handleKeyEvents = function(e) {
+    GalleryLightbox.prototype.handleKeyEvents = function (e) {
         if (e.keyCode === 37) { // left
             this.trigger('prev');
         } else if (e.keyCode === 39) { // right
@@ -471,7 +472,7 @@ define([
 
     GalleryLightbox.prototype.endslate = new Component();
 
-    GalleryLightbox.prototype.loadEndslate = function() {
+    GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {
             this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
@@ -481,7 +482,7 @@ define([
             this.endslate.ready = function () {
                 imagesModule.upgrade(this.endslateEl);
             }.bind(this);
-            this.endslate.prerender = function() {
+            this.endslate.prerender = function () {
                 bonzo(this.elem).addClass(this.componentClass);
             };
             this.endslate.fetch(qwery('.js-gallery-endslate', this.endslateEl), 'html');
@@ -493,8 +494,8 @@ define([
     };
 
     function bootstrap() {
-        var lightbox;
-        bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
+        var lightbox, galleryId, match;
+        bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
             e.preventDefault();
 
             var $el = bonzo(e.currentTarget),
@@ -508,8 +509,8 @@ define([
 
         if (config.page.contentType === 'Gallery') {
             lightbox = lightbox || new GalleryLightbox();
-            var galleryId = '/' + config.page.pageId,
-                match = /\?index=(\d+)/.exec(document.location.href);
+            galleryId = '/' + config.page.pageId;
+            match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));

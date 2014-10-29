@@ -7,11 +7,7 @@ import javax.naming.ConfigurationException
 
 
 object FakeCSRFRequest {
-  def apply(): FakeRequest[AnyContentAsEmpty.type] = {
-    addCsrf(FakeRequest("GET", "/", FakeHeaders(), AnyContentAsEmpty))
-  }
-
-  def apply(method: String, path: String): FakeRequest[AnyContentAsEmpty.type] = {
+  def apply(method: String = "GET", path: String = "/"): FakeRequest[AnyContentAsEmpty.type] = {
     addCsrf(FakeRequest(method, path, FakeHeaders(), AnyContentAsEmpty))
   }
 

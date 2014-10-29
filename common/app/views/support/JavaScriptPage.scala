@@ -42,6 +42,6 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
         case _ => false
       })),
       ("isPreview", JsBoolean(environment.isPreview))
-    ))
+    ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil))
   }
 }

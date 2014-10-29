@@ -9,7 +9,6 @@ import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import slices.Container
 import updates.FrontIndex
-import views.support.NewsContainer
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction

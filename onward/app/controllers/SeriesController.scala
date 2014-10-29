@@ -54,7 +54,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val config = CollectionConfig.withDefaults(
       apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
     )
-    
+
     val response = () => views.html.fragments.containers.facia_cards.container(
       ContainerAndCollection(
         1,

@@ -61,7 +61,7 @@
 
 }
 
-<div id="comments" class="discussion discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
+<div id="comments" class="discussion discussion--not-staff discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -72,8 +72,7 @@
                 <div class="discussion__heading">
                     <div class="container__meta modern-hidden">
                         <h2 class="container__meta__title">
-                            <a href="@LinkTo{/discussion@discussionId}" class="tone-news tone-colour"
-                            data-link-name="View all comments">View all comments &gt;</a>
+                            <a href="@LinkTo{/discussion@discussionId}" data-link-name="View all comments">View all comments &gt;</a>
                         </h2>
                     </div>
                 </div>

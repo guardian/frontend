@@ -1,15 +1,15 @@
 /*global escape:true */
 define([
+    'common/utils/ajax',
     'common/utils/atob',
     'common/utils/cookies',
     'common/utils/storage',
-    'common/utils/ajax',
     'common/modules/asyncCallMerger'
-], function(
+], function (
+    ajax,
     utilAtob,
     cookies,
     storage,
-    ajax,
     asyncCallMerger
 ) {
 
@@ -27,7 +27,7 @@ define([
     Id.idApiRoot = null;
     Id.idUrl = null;
 
-    Id.init = function(conf) {
+    Id.init = function (conf) {
         Id.idApiRoot = conf.page.idApiUrl;
         Id.idUrl = conf.page.idUrl;
     };
@@ -35,7 +35,7 @@ define([
     /**
      * Clears the caches and state, primarily for testing.
      */
-    Id.reset = function() {
+    Id.reset = function () {
         Id.getUserFromApi.reset();
         userFromCookieCache = null;
     };
@@ -56,7 +56,7 @@ define([
      *
      * @return {?Object} the user information
      */
-    Id.getUserFromCookie = function() {
+    Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
             var cookieData = cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
@@ -78,21 +78,21 @@ define([
     /**
      * @return {string}
      */
-    Id.getCookie = function() {
+    Id.getCookie = function () {
         return cookies.get(Id.cookieName);
     };
 
     /**
      * @return {boolean}
      */
-    Id.isUserLoggedIn = function() {
+    Id.isUserLoggedIn = function () {
         return Id.getUserFromCookie() !== null;
     };
 
     /**
      * @return {string}
      */
-    Id.getUrl = function() {
+    Id.getUrl = function () {
         return Id.idUrl;
     };
 
@@ -101,15 +101,15 @@ define([
      * @param {function} callback
      */
     Id.getUserFromApi = asyncCallMerger.mergeCalls(
-        function(mergingCallback) {
-            if(Id.isUserLoggedIn()) {
+        function (mergingCallback) {
+            if (Id.isUserLoggedIn()) {
                 ajax({
                     url: Id.idApiRoot + '/user/me',
                     type: 'jsonp',
                     crossOrigin: true
                 }).then(
-                    function(response) {
-                        if(response.status === 'ok') {
+                    function (response) {
+                        if (response.status === 'ok') {
                             mergingCallback(response.user);
                         } else {
                             mergingCallback(null);
@@ -142,7 +142,7 @@ define([
     /**
      * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
      */
-    Id.getUserOrSignIn = function(returnUrl) {
+    Id.getUserOrSignIn = function (returnUrl) {
         if (Id.isUserLoggedIn()) {
             return Id.getUserFromCookie();
         } else {
@@ -155,7 +155,7 @@ define([
     /**
      * Wrap window.location.href so it can be spied in unit tests
      */
-    Id.redirectTo = function(url) {
+    Id.redirectTo = function (url) {
         window.location.href = url;
     };
 
@@ -164,18 +164,18 @@ define([
      * @param {string} str
      * @return {string}
      */
-    Id.decodeBase64 = function(str) {
+    Id.decodeBase64 = function (str) {
         return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
     };
 
     /**
      * @return {Boolean}
      */
-    Id.hasUserSignedOutInTheLast24Hours = function() {
+    Id.hasUserSignedOutInTheLast24Hours = function () {
         var cookieData = cookies.get(Id.signOutCookieName);
 
-        if(cookieData) {
-            return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
+        if (cookieData) {
+            return ((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
         }
         return false;
     };
@@ -183,18 +183,18 @@ define([
     /**
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
      */
-    Id.shouldAutoSigninInUser = function() {
+    Id.shouldAutoSigninInUser = function () {
         var signedInUser = !!cookies.get(Id.cookieName),
             checkFacebook = !!storage.local.get(Id.fbCheckKey);
         return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
     };
 
-    Id.setNextFbCheckTime = function(nextFbCheckDue) {
+    Id.setNextFbCheckTime = function (nextFbCheckDue) {
         storage.local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
     };
 
     Id.emailSignup = function (listId) {
-        var endpoint = '/useremails/'+ Id.getUserFromCookie().id +'/subscriptions',
+        var endpoint = '/useremails/' + Id.getUserFromCookie().id + '/subscriptions',
             data = { 'listId': listId },
             request = ajax({
                 url: Id.idApiRoot + endpoint,
@@ -209,7 +209,7 @@ define([
         return request;
     };
 
-    Id.sendValidationEmail = function() {
+    Id.sendValidationEmail = function () {
         var endpoint = '/user/send-validation-email',
             request = ajax({
                 url: Id.idApiRoot + endpoint,

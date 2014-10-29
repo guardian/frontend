@@ -84,7 +84,7 @@ object ContainerAndCollection {
     index = 2,
     container = Fixed(FixedContainers.fixedMediumFastXII),
     config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
-    CollectionEssentials(items, Some(title), None, None, None)
+    CollectionEssentials(items take 8, Some(title), None, None, None)
   )
 }
 

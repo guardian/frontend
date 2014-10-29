@@ -3,28 +3,42 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
+    'common/utils/formatters',
+    'common/utils/template',
     'text!common/views/content/share-count.html'
 ], function (
     $,
     ajax,
     detect,
     config,
+    formatters,
+    template,
     shareCountTemplate
 ) {
 
     var shareCount    = 0,
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
-        $shortValueEls;
+        $shortValueEls,
+        tooltip = 'Facebook: {{facebook}} \nTwitter: {{twitter}}',
+        counts = {
+            facebook: 'n/a',
+            twitter: 'n/a'
+        };
 
     function incrementShareCount(amount) {
         if (amount !== 0) {
             shareCount += amount;
             var displayCount = shareCount.toFixed(0),
+                formattedDisplayCount = formatters.integerCommas(displayCount),
                 shortDisplayCount = displayCount > 10000 ? Math.round(displayCount / 1000) + 'k' : displayCount;
-            $fullValueEls.text(displayCount);
+            $fullValueEls.text(formattedDisplayCount);
             $shortValueEls.text(shortDisplayCount);
         }
+    }
+
+    function updateTooltip() {
+        $shareCountEls.attr('title', template(tooltip, counts));
     }
 
     function addToShareCount(val) {
@@ -64,7 +78,10 @@ define([
                 method: 'get',
                 crossOrigin: true,
                 success: function (resp) {
-                    addToShareCount(resp.shares || 0);
+                    var count = resp.shares || 0;
+                    counts.facebook = count;
+                    addToShareCount(count);
+                    updateTooltip();
                 }
             });
             ajax({
@@ -73,7 +90,10 @@ define([
                 method: 'get',
                 crossOrigin: true,
                 success: function (resp) {
-                    addToShareCount(resp.count || 0);
+                    var count = resp.count || 0;
+                    counts.twitter = count;
+                    addToShareCount(count);
+                    updateTooltip();
                 }
             });
         }

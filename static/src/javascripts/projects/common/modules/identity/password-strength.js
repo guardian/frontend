@@ -1,11 +1,11 @@
 define([
-    'lodash/objects/assign',
+    'bean',
     'bonzo',
-    'bean'
+    'lodash/objects/assign'
 ], function (
-    assign,
+    bean,
     bonzo,
-    bean
+    assign
 ) {
 
     function PasswordStrength(el, config) {
@@ -41,10 +41,10 @@ define([
                        '</div>',
             zxcvbn;
 
-        this.init = function() {
+        this.init = function () {
             if (!bonzo(dom.element).hasClass(config.classes.ready)) {
                 var self = this;
-                require(['js!zxcvbn'], function() {
+                require(['js!zxcvbn'], function () {
                     zxcvbn = this.zxcvbn;
                     dom.indicator = bonzo(bonzo.create(template)).insertAfter(dom.element)[0];
                     dom.label = dom.indicator.querySelector('.' + config.classes.label);
@@ -60,7 +60,7 @@ define([
             }
         };
 
-        this.checkCount = function() {
+        this.checkCount = function () {
             if (dom.element.value.length >= config.minLength) {
                 active = true;
                 bonzo(dom.indicator).removeClass('is-off');
@@ -68,7 +68,7 @@ define([
             }
         };
 
-        this.checkStrength = function() {
+        this.checkStrength = function () {
             if (active) {
                 var score = zxcvbn(dom.element.value).score,
                     label = config.text.label + ': ' + config.labels[score];

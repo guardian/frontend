@@ -177,23 +177,6 @@ define([
                 expect(googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
             });
 
-            it('should build correct page targeting', function (dfp) {
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-
-                // expected targetting
-                [
-                    ['edition', 'us'],
-                    ['se', 'happy-times'],
-                    ['ct', 'article'],
-                    ['pt', 'article'],
-                    ['p', 'ng'],
-                    ['bp', breakpoint]
-                ].forEach(function (target) {
-                        expect(googletag.pubads().setTargeting).toHaveBeenCalledWith(target[0], target[1]);
-                    });
-            });
-
             it('should define slots', function (dfp) {
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
@@ -239,94 +222,6 @@ define([
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
                 expect(window.googletag.enableServices).toHaveBeenCalled();
                 expect(window.googletag.display).toHaveBeenCalled('dfp-ad-html-slot');
-            });
-
-            describe('create ad', function (dfp) {
-
-                [
-                    {
-                        name: 'right',
-                        type: 'mpu-banner-ad',
-                        html: '<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" ' +
-                            'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,1|300,250|300,251|300,600"></div>'
-                    },
-                    {
-                        name: 'right-small',
-                        type: 'mpu-banner-ad',
-                        html: '<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" ' +
-                            'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,250" data-desktop="300,1|300,250"></div>'
-                    },
-                    {
-                        name: 'im',
-                        type: 'im',
-                        html: '<div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" ' +
-                            'data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,85" ' +
-                            'data-refresh="false" data-label="false"></div>'
-                    },
-                    {
-                        name: 'inline1',
-                        type: 'inline',
-                        html: '<div id="dfp-ad--inline1" class="ad-slot ad-slot--dfp ad-slot--inline1 ad-slot--inline" ' +
-                            'data-link-name="ad slot inline1" data-test-id="ad-slot-inline1" data-name="inline1" data-mobile="300,50|300,250" ' +
-                            'data-mobile-landscape="300,50|320,50|300,250" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
-                    },
-                    {
-                        name: 'inline2',
-                        type: 'inline',
-                        html: '<div id="dfp-ad--inline2" class="ad-slot ad-slot--dfp ad-slot--inline2 ad-slot--inline" ' +
-                            'data-link-name="ad slot inline2" data-test-id="ad-slot-inline2" data-name="inline2" data-mobile="300,50" ' +
-                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
-                    },
-                    {
-                        name: 'inline3',
-                        type: 'inline',
-                        html: '<div id="dfp-ad--inline3" class="ad-slot ad-slot--dfp ad-slot--inline3 ad-slot--inline" ' +
-                            'data-link-name="ad slot inline3" data-test-id="ad-slot-inline3" data-name="inline3" data-mobile="300,50" ' +
-                            'data-mobile-landscape="300,50|320,50" data-tablet="300,250" data-desktop="300,1|300,250"></div>'
-                    },
-                    {
-                        name: 'merchandising-high',
-                        type: 'commercial-component',
-                        html: '<div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component" ' +
-                            'data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-mobile="88,87" ' +
-                            'data-refresh="false" data-label="false"></div>'
-                    },
-                    {
-                        name: 'adbadge',
-                        type: 'paid-for-badge',
-                        html: '<div id="dfp-ad--adbadge" class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge" ' +
-                            'data-link-name="ad slot adbadge" data-test-id="ad-slot-adbadge" data-name="adbadge" data-mobile="140,90" ' +
-                            'data-refresh="false" data-label="false"></div>'
-                    },
-                    {
-                        name: 'spbadge',
-                        type: 'paid-for-badge',
-                        html: '<div id="dfp-ad--spbadge" class="ad-slot ad-slot--dfp ad-slot--spbadge ad-slot--paid-for-badge" ' +
-                            'data-link-name="ad slot spbadge" data-test-id="ad-slot-spbadge" data-name="spbadge" data-mobile="140,90" ' +
-                            'data-refresh="false" data-label="false"></div>'
-                    },
-                    {
-                        name: 'fobadge',
-                        type: 'paid-for-badge',
-                        html: '<div id="dfp-ad--fobadge" class="ad-slot ad-slot--dfp ad-slot--fobadge ad-slot--paid-for-badge" ' +
-                            'data-link-name="ad slot fobadge" data-test-id="ad-slot-fobadge" data-name="fobadge" data-mobile="140,90" ' +
-                            'data-refresh="false" data-label="false"></div>'
-                    }
-                ].forEach(function (expectation) {
-                        it('should create "' + expectation.name + '" ad slot', function (dfp) {
-                            var adSlot = dfp.createAdSlot(expectation.name, expectation.type);
-                            expect(adSlot.outerHTML).toBe(expectation.html)
-                        });
-                    });
-
-                it('should accept multiple types', function (dfp) {
-                    var types = ['paid-for-badge', 'paid-for-badge--container'],
-                        adSlot = dfp.createAdSlot('adbadge', ['paid-for-badge', 'paid-for-badge--container']);
-                    types.forEach(function (type) {
-                        expect(bonzo(adSlot).hasClass('ad-slot--' + type)).toBeTruthy();
-                    });
-                });
-
             });
 
             it('should be able to create "out of page" ad slot', function (dfp) {

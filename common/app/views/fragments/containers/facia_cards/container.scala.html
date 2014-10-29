@@ -8,7 +8,7 @@
 @defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
     <section id="@componentName"
              class="@GetClasses.forContainerDefinition(containerDefinition)"
-             data-link-name="@componentName"
+             data-link-name="@{containerDefinition.index + 1} @componentName"
              data-id="@containerDefinition.dataId"
              @DfpAgent.sponsorshipTag(containerDefinition.config.config).map { keyword =>
                  data-keywords="@keyword"

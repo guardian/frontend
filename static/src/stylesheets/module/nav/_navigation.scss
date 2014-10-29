@@ -438,6 +438,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .navigation__scroll {
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
+            white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
 
