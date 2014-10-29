@@ -2,12 +2,13 @@ define(function () {
     return {
         integerCommas: function (val) {
             var num = parseInt(val, 10),
-                digits, i;
+                digits, i, len;
             if (!isNaN(num)) {
                 digits = num.toFixed(0).split('');
-                for (i = digits.length - 1; i >= 3; i--) {
-                    if (i % 3 === 0) {
-                        digits.splice(digits.length - i, 0, ',');
+                len = digits.length;
+                for (i = digits.length - 1; i >= 1; i--) {
+                    if ((len - i) % 3 === 0) {
+                        digits.splice(i, 0, ',');
                     }
                 }
                 return digits.join('');
