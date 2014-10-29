@@ -99,6 +99,14 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
+    .u-faux-block-link & a,
+    .u-faux-block-link & abbr[title],
+    .u-faux-block-link__promote {
+        @include mq($until: desktop) {
+            z-index: initial;
+        }
+    }
+
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
@@ -234,6 +242,12 @@ $fc-item-gutter: $gs-gutter / 4;
     bottom: 0;
     @include fs-textSans(1);
     color: $c-neutral2;
+
+    a {
+        // make sure meta links always clickable,
+        // even on mobile/tablet
+        z-index: 1 !important;
+    }
 }
 
 .fc-item__timestamp,

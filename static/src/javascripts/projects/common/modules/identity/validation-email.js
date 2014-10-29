@@ -3,7 +3,7 @@ define([
     'bonzo',
     'common/utils/mediator',
     'common/modules/identity/api'
-], function(
+], function (
     bean,
     bonzo,
     mediator,
@@ -13,15 +13,16 @@ define([
     return {
         init: function () {
 
-            var resendButton = document.body.querySelector('.js-id-send-validation-email');
+            var $resendButton,
+                resendButton = document.body.querySelector('.js-id-send-validation-email');
 
             if (resendButton) {
-                var $resendButton = bonzo(resendButton);
+                $resendButton = bonzo(resendButton);
                 bean.on(resendButton, 'click', function (event) {
                     event.preventDefault();
-                    if(IdentityApi.isUserLoggedIn()) {
+                    if (IdentityApi.isUserLoggedIn()) {
                         IdentityApi.sendValidationEmail().then(
-                            function success (resp) {
+                            function success(resp) {
                                 if (resp.status === 'error') {
                                     mediator.emit('module:identity:validation-email:fail');
                                     $resendButton.innerHTML = 'An error occured, please click here to try again.';
@@ -30,7 +31,7 @@ define([
                                     $resendButton.replaceWith('<p>Sent. Please check your email and follow the link.</p>');
                                 }
                             },
-                            function fail () {
+                            function fail() {
                                 mediator.emit('module:identity:validation-email:fail');
                                 $resendButton.innerHTML = 'An error occured, please click here to try again.';
                             }
