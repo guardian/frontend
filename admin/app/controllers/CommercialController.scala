@@ -47,7 +47,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
-    val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
+    val templates = DfpDataHydrator().loadActiveUserDefinedCreativeTemplates()
     // get some example trails
     LiveContentApi.search(Edition(request))
       .pageSize(4)

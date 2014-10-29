@@ -15,7 +15,7 @@ define([
     'common/utils/preferences',
     'common/utils/url',
     'common/modules/analytics/omnitureMedia',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images'
@@ -35,7 +35,7 @@ define([
     preferences,
     urlUtils,
     OmnitureMedia,
-    dfp,
+    buildPageTargeting,
     Component,
     history,
     images
@@ -198,7 +198,7 @@ define([
 
         getVastUrl: function () {
             var adUnit = config.page.adUnit,
-                custParams = urlUtils.constructQuery(dfp.buildPageTargeting()),
+                custParams = urlUtils.constructQuery(buildPageTargeting()),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime();
             return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
@@ -412,10 +412,12 @@ define([
                 return;
             }
             var mediaType = config.page.contentType.toLowerCase(),
-                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.content-footer')[0],
-                mostViewed = new Component();
-            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'prepend';
-            mostViewed.endpoint = '/' + mediaType + '/most-viewed.json';
+                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+                mostViewed = new Component(),
+                endpoint = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+
+            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
+            mostViewed.endpoint = endpoint;
             mostViewed.fetch(attachTo, 'html')
                 .then(function () {
                     images.upgrade(attachTo);

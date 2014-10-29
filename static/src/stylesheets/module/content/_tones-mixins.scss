@@ -2,7 +2,8 @@
     $tone,
     $tonal__head-icon) {
     .tonal__head--tone-#{$tone} {
-        .commentcount i {
+        .commentcount i,
+        .commentcount2 i {
             @extend %i-comment--tone-#{$tonal__head-icon};
 
             @if $svg-support {
@@ -14,7 +15,8 @@
     }
 
     .tonal__main--tone-#{$tone} {
-        .commentcount i {
+        .commentcount i,
+        .commentcount2 i {
             @extend %i-comment--tone-#{$tone};
 
             @if $svg-support {

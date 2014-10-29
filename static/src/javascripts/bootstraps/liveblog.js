@@ -15,7 +15,6 @@ define([
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
-    'common/modules/ui/blockSharing',
     'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
@@ -38,7 +37,6 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
-    blockSharing,
     dropdowns,
     Message,
     NotificationCounter,
@@ -72,6 +70,7 @@ define([
     function createScrollTransitions() {
 
         var curBinding,
+            timeline      = qwery('.timeline')[0],
             selectedClass = 'live-blog__key-event--selected';
 
         function unselect() {
@@ -90,22 +89,24 @@ define([
             }
         });
 
-        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function (e) {
-            mediator.emit('module:liveblog:showkeyevents', true);
-            $('.dropdown--live-feed').addClass('dropdown--active');
-            var $el = bonzo(e.currentTarget),
-                eventId = $el.attr('data-event-id'),
-                title = $('.timeline__title', $el).text(),
-                targetEl = qwery('#' + eventId),
-                dim = bonzo(targetEl).offset();
-            scroller.scrollTo(dim.top, 500, 'easeOutQuint');
-            window.setTimeout(unselectOnScroll, 550);
-            bean.off(curBinding);
-            unselect();
-            $el.addClass(selectedClass);
-            url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
-            e.stop();
-        });
+        if (timeline) {
+            bean.on(timeline, 'click', '.timeline__link', function (e) {
+                mediator.emit('module:liveblog:showkeyevents', true);
+                $('.dropdown--live-feed').addClass('dropdown--active');
+                var $el = bonzo(e.currentTarget),
+                    eventId = $el.attr('data-event-id'),
+                    title = $('.timeline__title', $el).text(),
+                    targetEl = qwery('#' + eventId),
+                    dim = bonzo(targetEl).offset();
+                scroller.scrollTo(dim.top, 500, 'easeOutQuint');
+                window.setTimeout(unselectOnScroll, 550);
+                bean.off(curBinding);
+                unselect();
+                $el.addClass(selectedClass);
+                url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
+                e.stop();
+            });
+        }
     }
 
     function createKeyEventHTML(el) {
@@ -192,7 +193,6 @@ define([
         handleUpdates: function () {
             mediator.on('modules:autoupdate:updates', function () {
                 modules.createTimeline();
-                blockSharing.init();
             });
         },
 
@@ -276,7 +276,6 @@ define([
         article.modules.initOpen();
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
-        blockSharing.init();
 
         mediator.emit('page:liveblog:ready');
     }

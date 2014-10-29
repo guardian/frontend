@@ -38,5 +38,9 @@ trait Forms {
         s"$formKey-errors" -> Crypto.encryptAES(form.errorsAsJson.toString())
       ))
     }
+
+    def toFlashWithDataDiscarded: Flash = {
+      Flash(Map())
+    }
  }
 }

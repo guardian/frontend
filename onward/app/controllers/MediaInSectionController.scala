@@ -11,7 +11,7 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import views.support.{MultimediaContainer, TemplateDeduping}
+import views.support.{TemplateDeduping}
 
 object MediaInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 

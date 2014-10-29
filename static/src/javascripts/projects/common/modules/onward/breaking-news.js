@@ -30,7 +30,7 @@ define([
         container;
 
     function slashDelimit() {
-        return Array.prototype.slice.call(arguments).filter(function(str) { return str;}).join('/');
+        return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
     }
 
     return function () {
@@ -44,10 +44,10 @@ define([
             type: 'json',
             crossOrigin: true
         }).then(
-            function(resp) {
+            function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function(collection) { return isArray(collection.content) && collection.content.length; })
-                    .map(function(collection) {
+                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
+                    .map(function (collection) {
                         collection.href = collection.href.toLowerCase();
                         return collection;
                     }),
@@ -62,8 +62,8 @@ define([
                         keyword,
                         keyword.split('/')[0]
                     ]
-                    .filter(function(match) { return match; })
-                    .reduce(function(matchers, term) {
+                    .filter(function (match) { return match; })
+                    .reduce(function (matchers, term) {
                         matchers[term.toLowerCase()] = true;
                         return matchers;
                     }, {}),
@@ -71,12 +71,12 @@ define([
                     historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
 
                     articles = flatten([
-                        collections.filter(function(c) { return c.href === 'global'; }).map(function(c) { return c.content; }),
-                        collections.filter(function(c) { return pageMatchers[c.href]; }).map(function(c) { return c.content; }),
-                        collections.filter(function(c) { return historyMatchers[c.href] >= interestThreshold; }).map(function(c) { return c.content; })
+                        collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return historyMatchers[c.href] >= interestThreshold; }).map(function (c) { return c.content; })
                     ]),
 
-                    articleIds = articles.map(function(article) { return article.id; });
+                    articleIds = articles.map(function (article) { return article.id; });
 
                 if (articleIds.indexOf(page.pageId) > -1) {
                     hiddenIds.push(page.pageId);
@@ -86,11 +86,11 @@ define([
                 }
 
                 articles
-                .filter(function(article) {
+                .filter(function (article) {
                     return (hiddenIds.indexOf(article.id) === -1);
                 })
                 .slice(0, maxSimultaneousAlerts)
-                .forEach(function(article) {
+                .forEach(function (article) {
                     var $el = bonzo.create('<div class="breaking-news-item" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
                         $closer = bonzo.create('<i class="breaking-news-item__close i-close-icon-white" data-link-name="close"></i>');
 
@@ -98,7 +98,7 @@ define([
                     container = container || bonzo(document.querySelector('.js-breaking-news-placeholder'));
                     container.append($el);
 
-                    bean.on($closer[0], 'click', function() {
+                    bean.on($closer[0], 'click', function () {
                         bonzo($el).hide();
                         hiddenIds.push(article.id);
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));

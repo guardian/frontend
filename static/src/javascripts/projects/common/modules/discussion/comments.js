@@ -14,7 +14,6 @@ define([
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/identity/api',
     'common/modules/ui/relativedates'
 ], function(
     bean,
@@ -32,7 +31,6 @@ define([
     Component,
     DiscussionApi,
     CommentBox,
-    Id,
     relativedates
 ) {
 'use strict';
@@ -424,12 +422,6 @@ Comments.prototype.addUser = function(user) {
         this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
-
-        if (this.user.isStaff) {
-            $('.d-discussion', this.elem)
-                .removeClass('d-discussion--not-staff')
-                .addClass('d-discussion--is-staff');
-        }
     }
 
     if (!this.isReadOnly()) {

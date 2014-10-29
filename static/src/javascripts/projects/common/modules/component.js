@@ -1,18 +1,19 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'bean',
-    'qwery',
     'bonzo',
-    'common/utils/ajax',
+    'qwery',
     'lodash/objects/assign',
-    'lodash/objects/clone'
-], function(
+    'lodash/objects/clone',
+    'common/utils/ajax'
+], function (
     bean,
-    qwery,
     bonzo,
-    ajax,
+    qwery,
     assign,
-    clone
-    ) {
+    clone,
+    ajax
+) {
 
     /**
      * TODO (jamesgorrie):
@@ -21,7 +22,7 @@ define([
      *   Perhaps in the create method somewhere.
      * @constructor
      */
-    var Component = function() {};
+    var Component = function () {};
 
     /** @type {boolean} */
     Component.prototype.useBem = false;
@@ -85,7 +86,7 @@ define([
      * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
      * @param {Element|string=} elem (optional)
      */
-    Component.prototype.attachTo = function(elem) {
+    Component.prototype.attachTo = function (elem) {
         this.checkAttached();
         if (!elem) {
             throw new ComponentError('Need element to attach to');
@@ -99,9 +100,9 @@ define([
     /**
      * @param {Element=} parent (optional)
      */
-    Component.prototype.render = function(parent) {
+    Component.prototype.render = function (parent) {
         this.checkAttached();
-        var template = bonzo.create((this.template) ? this.template : document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
+        var template = bonzo.create((this.template) ? this.template : document.getElementById('tmpl-' + this.templateName).innerHTML)[0],
             container = parent || document.body;
 
         this.elem = template;
@@ -114,7 +115,7 @@ define([
     /**
      * Throws an error if this is already attached to the DOM
      */
-    Component.prototype.checkAttached = function() {
+    Component.prototype.checkAttached = function () {
         if (this.rendered) {
             throw new ComponentError('Already rendered');
         }
@@ -125,7 +126,7 @@ define([
      * @param {String} key
      * @return {Reqwest}
      */
-    Component.prototype.fetch = function(parent, key) {
+    Component.prototype.fetch = function (parent, key) {
         this.checkAttached();
 
         this.responseDataKey = key || this.responseDataKey;
@@ -147,12 +148,12 @@ define([
     /**
      * @return Reqwest
      */
-    Component.prototype._fetch = function() {
+    Component.prototype._fetch = function () {
         var endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint,
             opt;
 
         for (opt in this.options) {
-            endpoint = endpoint.replace(':'+ opt, this.options[opt]);
+            endpoint = endpoint.replace(':' + opt, this.options[opt]);
         }
 
         return ajax({
@@ -167,7 +168,7 @@ define([
     /**
      * This is just used to set up the component internally
      */
-    Component.prototype._ready = function(elem) {
+    Component.prototype._ready = function (elem) {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
@@ -178,7 +179,7 @@ define([
     /**
      * Used as we need for pre-prerendering
      */
-    Component.prototype._prerender = function() {
+    Component.prototype._prerender = function () {
         this.elems = {};
         this.prerender();
     };
@@ -186,22 +187,22 @@ define([
     /**
      * Check if we should auto update, if so, do so
      */
-    Component.prototype._autoupdate = function() {
+    Component.prototype._autoupdate = function () {
         var self = this;
 
         function update() {
-            self._fetch().then(function(resp) {
+            self._fetch().then(function (resp) {
                 self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
                 if (self.autoupdated) {
-                    self.t = setTimeout(update, self.updateEvery*1000);
+                    self.t = setTimeout(update, self.updateEvery * 1000);
                 }
-            }, function() {
-                self.t = setTimeout(update, self.updateEvery*1000);
+            }, function () {
+                self.t = setTimeout(update, self.updateEvery * 1000);
             });
         }
 
         if (this.autoupdated) {
-            this.t = setTimeout(update, this.updateEvery*1000);
+            this.t = setTimeout(update, this.updateEvery * 1000);
         }
     };
 
@@ -210,27 +211,26 @@ define([
      * This will help with the rendering performance that
      * we would lose if rendered then manipulated
      */
-    Component.prototype.prerender = function() {};
+    Component.prototype.prerender = function () {};
 
     /**
      * Once the render / decorate methods have been called
      * This is where you could do your event binding
      * This function is made to be overridden
      */
-    Component.prototype.ready = function() {};
+    Component.prototype.ready = function () {};
 
     /**
      * Once the render / decorate methods have been called
      * This is where you could do your error event binding
      * This function is made to be overridden
      */
-    Component.prototype.error = function() {};
-
+    Component.prototype.error = function () {};
 
     /**
      * @param {Element} elem new element
      */
-    Component.prototype.autoupdate = function(elem) {
+    Component.prototype.autoupdate = function (elem) {
         var oldElem = this.elem;
         this.elem = elem;
 
@@ -241,14 +241,14 @@ define([
     /**
      * Once we're done with it, remove event bindings etc
      */
-    Component.prototype.dispose = function() {};
+    Component.prototype.dispose = function () {};
 
     /**
      * @param {string} eventName
      * @param {Element|Function} elem if ommited which is also handler
      * @param {Function} handler
      */
-    Component.prototype.on = function(eventName, elem, handler) {
+    Component.prototype.on = function (eventName, elem, handler) {
         if (typeof elem === 'function') {
             handler = elem;
             bean.on(this.elem, eventName, handler.bind(this));
@@ -263,7 +263,7 @@ define([
      * @param {string} eventName
      * @param {Object=} args (optional)
      */
-    Component.prototype.emit = function(eventName, args) {
+    Component.prototype.emit = function (eventName, args) {
         bean.fire(this.elem, eventName, args);
     };
 
@@ -271,7 +271,7 @@ define([
      * TODO: After working on comments, wondering if this should support NodeLists
      * @param {string} elemName this corresponds to this.classes
      */
-    Component.prototype.getElem = function(elemName) {
+    Component.prototype.getElem = function (elemName) {
         if (this.elems[elemName]) { return this.elems[elemName]; }
 
         var elem = qwery(this.getClass(elemName), this.elem)[0];
@@ -285,8 +285,8 @@ define([
      * @param {boolean} sansDot
      * @return {string}
      */
-    Component.prototype.getClass = function(elemName, sansDot) {
-        var className = this.useBem ? this.componentClass +'__'+ elemName : this.classes[elemName];
+    Component.prototype.getClass = function (elemName, sansDot) {
+        var className = this.useBem ? this.componentClass + '__' + elemName : this.classes[elemName];
 
         return (sansDot ? '' : '.') + className;
     };
@@ -295,9 +295,9 @@ define([
      * @param {string} state
      * @param {string|null} elemName
      */
-    Component.prototype.setState = function(state, elemName) {
+    Component.prototype.setState = function (state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        bonzo(elem).addClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        bonzo(elem).addClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
     };
 
     /**
@@ -305,18 +305,18 @@ define([
      * @param {string|null} elemName
      * return {Boolean}
      */
-    Component.prototype.removeState = function(state, elemName) {
+    Component.prototype.removeState = function (state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        return bonzo(elem).removeClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        return bonzo(elem).removeClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
     };
 
     /**
      * @param {string} state
      * @param {string|null} elemName
      */
-    Component.prototype.toggleState = function(state, elemName) {
+    Component.prototype.toggleState = function (state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        bonzo(elem).toggleClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        bonzo(elem).toggleClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
     };
 
     /**
@@ -324,29 +324,29 @@ define([
      * @param {string|null} elemName
      * return {Boolean}
      */
-    Component.prototype.hasState = function(state, elemName) {
+    Component.prototype.hasState = function (state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        return bonzo(elem).hasClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        return bonzo(elem).hasClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
     };
 
     /**
      * @param {Object} options
      */
-    Component.prototype.setOptions = function(options) {
-        this.options = assign(clone(this.defaultOptions), this.options||{}, options);
+    Component.prototype.setOptions = function (options) {
+        this.options = assign(clone(this.defaultOptions), this.options || {}, options);
     };
 
     /**
      * Removes the event handling, leave the DOM
      */
-    Component.prototype.detach = function() {
+    Component.prototype.detach = function () {
         bean.off(this.elem);
     };
 
     /**
      * Removes all event listeners and removes the DOM elem
      */
-    Component.prototype.destroy = function() {
+    Component.prototype.destroy = function () {
         if (this.elem) {
             bonzo(this.elem).remove();
             delete this.elem;
@@ -364,7 +364,7 @@ define([
     /**
      * @param {Function} child
      */
-    Component.define = function(child) {
+    Component.define = function (child) {
         function Tmp() {}
         Tmp.prototype = Component.prototype;
         child.prototype = new Tmp();
@@ -373,7 +373,7 @@ define([
 
     /** @contructor */
     function ComponentError(message) {
-        return new Error('Component: '+ message);
+        return new Error('Component: ' + message);
     }
 
     return Component;

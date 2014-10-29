@@ -42,7 +42,7 @@ object DfpDataCacheJob extends ExecutionContexts {
 
   def run() {
     future {
-      val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
+      val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
 
       if (data.isValid) {
         val now = printLondonTime(DateTime.now())

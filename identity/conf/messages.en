@@ -10,6 +10,7 @@ error.url=Please enter a valid URL, including http://
 error.address=This line of the address is invalid.
 error.date=This date is invalid.
 error.postcode=This postcode or zipcode is invalid.
+error.emailDomainInvalid=This domain is blacklisted
 
 # default errors for edge cases
 error.required=This field is required

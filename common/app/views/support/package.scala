@@ -32,71 +32,13 @@ sealed trait Container {
   val tone: String
   val hasDarkBackground: Boolean = false
 }
-
-case class NewsContainer(showMore: Boolean = true) extends Container {
-  val containerType = "news"
-  val tone = "news"
-}
-case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
-  val containerType = "commentanddebate"
-  val tone = "comment"
-}
-case class FeaturesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "features"
-  val tone = "feature"
-}
-case class FeaturesVolumesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "featuresvolumes"
-  val tone = "feature"
-}
-case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
-  val containerType = "featuresauto"
-  val tone = "feature"
-}
 case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
-  val tone = "news"
-}
-case class PeopleContainer(showMore: Boolean = true) extends Container {
-  val containerType = "people"
-  val tone = "feature"
-}
-case class SpecialContainer(showMore: Boolean = true, override val hasDarkBackground: Boolean = false) extends Container {
-  val containerType = "special"
-  val tone = "news"
-}
-case class MultimediaContainer(showMore: Boolean = true) extends Container {
-  val containerType = "multimedia"
-  val tone = "media"
-  override val hasDarkBackground = true
-}
-case class SeriesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "series"
   val tone = "news"
 }
 case class MostReferredContainer(showMore: Boolean = true) extends Container {
   val containerType = "most-referred"
   val tone = "news"
-}
-case class HeadlineContainer(showMore: Boolean = true) extends Container {
-  val containerType = "headline"
-  val tone = "news"
-}
-case class PicksContainer(showMore: Boolean = true) extends Container {
-  val containerType = "picks"
-  val tone = "news"
-}
-case class CassouletContainer(showMore: Boolean = true) extends Container {
-  val containerType = "cassoulet"
-  val tone = "feature"
-}
-case class QuicheLorraineContainer(showMore: Boolean = true) extends Container {
-  val containerType = "quichelorraine"
-  val tone = "feature"
-}
-case class RacletteContainer(showMore: Boolean = true) extends Container {
-  val containerType = "raclette"
-  val tone = "feature"
 }
 
 
@@ -374,6 +316,15 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+object InBodyLinkDataComponentCleaner extends HtmlCleaner {
+  def clean(body: Document): Document = {
+    body.getElementsByTag("a").foreach { link =>
+      link.attr("data-component", "in-body-link")
+    }
+    body
+  }
+}
+
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
 
@@ -510,6 +461,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
             tagLink.attr("href", LinkTo(keyword.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
+            tagLink.attr("data-component", "auto-linked-tag")
             tagLink.addClass("u-underline")
             val tagLinkHtml = tagLink.toString
             val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
@@ -599,7 +551,9 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
+        s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+           |  <a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link"
+           |    href="${LinkTo("/"+tag.id)}">${tag.name}</a></span>""".stripMargin)
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
@@ -661,24 +615,41 @@ object OmnitureAnalyticsData {
   }
 }
 
-object ArticleLayout {
-  implicit class ArticleLayout(a: Article) {
-    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
-      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+object ContentLayout {
+  implicit class ContentLayout(content: model.Content) {
 
-    lazy val hasSupportingAtBottom: Boolean = {
-      val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-      var wordCount = 0
-      val lastEls = Jsoup.parseBodyFragment(a.body).select("body > *").reverseIterator.takeWhile{ el =>
-        wordCount += el.text.length
-        wordCount < 1500
+    def showBottomSocialButtons: Boolean = {
+      content match {
+        case l: LiveBlog => true
+        case a: Article => Jsoup.parseBodyFragment(a.body).select("> *").text().length > 600
+        case i: ImageContent => false
+        case m: Media => false
+        case g: Gallery => false
+        case _ => true
       }
-      val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
-      supportingEls.isDefined
     }
 
-    lazy val tooSmallForBottomSocialButtons: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 600
+    def submetaBreakpoint: Option[String] = {
+      content match {
+        case a: LiveBlog => None
+        case a: Article if !a.hasSupportingAtBottom => Some("leftcol")
+        case v: Video if(v.standfirst.getOrElse("").length > 350) => Some("leftcol")
+        case a: Audio if(a.body.getOrElse("").length > 800) => Some("leftcol")
+        case i: ImageContent if (i.mainPicture.flatMap(_.largestEditorialCrop).exists(crop => crop.height / crop.width.toFloat > 0.5)) => Some("wide")
+        case g: Gallery => Some("leftcol")
+        case _ => None
+      }
+    }
+
+    def tagTone: Option[String] = {
+      content match {
+        case l: LiveBlog => Some(l.visualTone)
+        case m: Media => Some("media")
+        case g: Gallery => Some("media")
+        case i: ImageContent if(!i.isCartoon) => Some("media")
+        case _ => None
+      }
+    }
   }
 }
 
@@ -945,52 +916,6 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
-    val baseClasses: Seq[String] = Seq(
-      "fromage",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.trailPicture(5,3).isEmpty || imageHide){
-          "fromage--has-no-image"
-        }else{
-          "fromage--has-image"
-        },
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
-          s"fromage--imageadjust-boost"
-        }
-        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
-          s"fromage--imageadjust-hide"
-        }
-        else "item--imageadjust-default",
-      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
-        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
-  def forSaucisson(trail: Trail): String = {
-    val baseClasses: Seq[String] = Seq(
-      "saucisson",
-      s"tone-${trail.visualTone}",
-      "u-faux-block-link",
-      "tone-accent-border"
-    )
-    val f: Seq[(Trail) => String] = Seq(
-      (trail: Trail) =>
-        if (trail.isLive) "item--live" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
     case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
@@ -1014,10 +939,10 @@ object GetClasses {
 
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      Seq(
-        "js-container--fetch-updates",
-        "fc-container"
-      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
+      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
+        Seq("fc-container") ++
+        commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses: _*
     )
   }
 

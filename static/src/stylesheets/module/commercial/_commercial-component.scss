@@ -187,15 +187,6 @@ $commercial-cta-diameter: (
         }
     }
 }
-.ad-slot--im {
-    padding-right: $gs-gutter;
-    width: 50%;
-    float: left;
-    @include mq(leftCol) {
-        @include box-sizing(border-box);
-        width: $left-column-wide + $gs-gutter;
-    }
-}
 .commercial {
 
     .commercial__head {

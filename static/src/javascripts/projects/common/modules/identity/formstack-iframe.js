@@ -14,9 +14,9 @@ define([
 
         var self = this;
 
-        self.init = function() {
+        self.init = function () {
             // Setup postMessage listener for events from "modules/identity/formstack"
-            bean.on(window, 'message', function(event) {
+            bean.on(window, 'message', function (event) {
                 if (event.origin === config.page.idUrl) {
                     self.onMessage(event);
                 } else {
@@ -28,13 +28,13 @@ define([
 
             // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module
-            bean.on(el, 'load', function() {
+            bean.on(el, 'load', function () {
                 self.show();
                 self.refreshHeight();
             });
         };
 
-        self.onMessage = function(event) {
+        self.onMessage = function (event) {
             switch (event.data) {
                 case 'ready':
                     self.show();
@@ -51,7 +51,7 @@ define([
             }
         };
 
-        self.refreshHeight = function(reset) {
+        self.refreshHeight = function (reset) {
             if (reset) {
                 // If a height is set on the iframe, the following calculation
                 // will be at least that height, optionally reset first
@@ -67,7 +67,7 @@ define([
             $(el).css({ 'height': height });
         };
 
-        self.show = function() {
+        self.show = function () {
             $(el).removeClass('is-hidden');
         };
 

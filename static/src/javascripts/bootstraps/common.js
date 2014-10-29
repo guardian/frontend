@@ -24,7 +24,6 @@ define([
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/discussion/api',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -41,6 +40,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/release-message',
+    'common/modules/social/share-count',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -74,7 +74,6 @@ define([
     register,
     ScrollDepth,
     userAdTargeting,
-    discussionApi,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -91,6 +90,7 @@ define([
     Related,
     TonalComponent,
     releaseMessage,
+    shareCount,
     Dropdowns,
     fauxBlockLink,
     Fonts,
@@ -368,7 +368,6 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init();
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
                         var discussionLoader = new DiscussionLoader();
@@ -412,6 +411,11 @@ define([
                         }, 1);
                     }
                 });
+            },
+
+            initShareCounts: function () {
+                shareCount.init();
+
             }
         },
         ready = function () {
@@ -419,6 +423,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
+            modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();
             modules.showTabs();

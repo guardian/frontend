@@ -56,6 +56,7 @@ define([
                         appendContainer($fixturesContainer);
                     });
                     frontCommercialComponents.init();
+
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                     expect($('#' + fixturesConfig.id + '> *:nth-child(3)').next().hasClass('ad-slot')).toBe(true);
                 }
@@ -68,8 +69,24 @@ define([
                         appendContainer($fixturesContainer);
                     });
                     frontCommercialComponents.init();
+
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                     expect($('#' + fixturesConfig.id + '> *:nth-child(1)').next().hasClass('ad-slot')).toBe(true);
+                }
+            );
+
+            it(
+                'should place ad between between the 4th and 5th container if a network front',
+                function (frontCommercialComponents, deps) {
+                    deps['common/utils/config'].page.contentType = 'Network Front';
+
+                    '12345'.split('').forEach(function () {
+                        appendContainer($fixturesContainer);
+                    });
+                    frontCommercialComponents.init();
+
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
+                    expect($('#' + fixturesConfig.id + '> *:nth-child(4)').next().hasClass('ad-slot')).toBe(true);
                 }
             );
 
@@ -77,6 +94,7 @@ define([
                 'should not display ad slot if commercial-components switch is off',
                 function (frontCommercialComponents, deps) {
                     deps['common/utils/config'].switches.commercialComponents = false;
+
                     expect(frontCommercialComponents.init()).toBe(false);
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 }
@@ -84,12 +102,14 @@ define([
 
             it('should not display ad slot if not a front', function (frontCommercialComponents, deps) {
                 deps['common/utils/config'].page.isFront = false;
+
                 expect(frontCommercialComponents.init()).toBe(false);
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
             });
 
             it('should not display ad slot if there is a page skin', function (frontCommercialComponents, deps) {
                 deps['common/utils/config'].page.hasPageSkin = true;
+
                 expect(frontCommercialComponents.init()).toBe(false);
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
             });
@@ -97,6 +117,7 @@ define([
             it('should not display ad slot if there is less than two containers', function (frontCommercialComponents) {
                 appendContainer($fixturesContainer);
                 frontCommercialComponents.init();
+
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
             });
 

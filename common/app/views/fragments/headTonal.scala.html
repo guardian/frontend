@@ -11,9 +11,6 @@
                 @fragments.meta.metaInline(content)
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @if(content.isAnalysis) {
-                        <span class="content__headline__kicker">Analysis</span>
-                    }
                     @Html(content.headline)
                 </h1>
 
@@ -39,9 +36,6 @@
                     @fragments.commercial.badge(content)
                 }
 
-                @if(content.isCommentable) {
-                    <div class="content__head__comment-count js-comment-count"></div>
-                }
             </div>
         </div>
     </div>

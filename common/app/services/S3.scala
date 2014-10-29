@@ -226,3 +226,11 @@ object S3Archive extends S3 {
  override lazy val bucket = "aws-frontend-archive"
  def getHtml(path: String) = get(path)
 }
+
+object S3Infosec extends S3 {
+  override lazy val bucket = "aws-frontend-infosec"
+  val key = "blocked-email-domains.txt"
+  def getBlockedEmailDomains = get(key)
+}
+
+
