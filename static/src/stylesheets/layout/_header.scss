@@ -37,8 +37,8 @@ $c-guardian-services-action: #ffffff;
     .logo__tagline {
         @include fs-textSans(1);
         position: absolute;
-        top: 49px;
-        left: 140px;
+        top: 47px;
+        left: 122px;
         color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
         font-weight: bold;
     }
