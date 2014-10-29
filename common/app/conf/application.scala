@@ -60,8 +60,18 @@ object ForceHttpResponseFilter extends Filter with ExecutionContexts with Result
   }
 }
 
+// this lets the CDN log the exact part of the backend this response came from
+object BackendHeaderFilter extends Filter with ExecutionContexts {
+
+  private lazy val backendHeader = "X-Gu-Backend-App" -> Configuration.environment.projectName
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    nextFilter(request).map(_.withHeaders(backendHeader))
+  }
+}
+
 object Filters {
                                      // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
                                      // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] =  ForceHttpResponseFilter :: JsonVaryHeadersFilter :: Gzipper :: Nil
+  lazy val common: List[EssentialFilter] =  ForceHttpResponseFilter :: JsonVaryHeadersFilter :: Gzipper :: BackendHeaderFilter :: Nil
 }

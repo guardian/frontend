@@ -947,10 +947,10 @@ object GetClasses {
 
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      Seq(
-        "js-container--fetch-updates",
-        "fc-container"
-      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
+      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
+        Seq("fc-container") ++
+        commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses: _*
     )
   }
 }

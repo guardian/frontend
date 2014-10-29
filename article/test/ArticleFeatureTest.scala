@@ -341,8 +341,6 @@ import collection.JavaConversions._
         Then("the ad slot placeholder is rendered")
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
-        System.out.println(adPlaceholder);
-
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-mobile") should be("300,1|88,70|728,90")
