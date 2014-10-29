@@ -52,7 +52,7 @@ function (
                     err;
 
                 // ContentApi item
-                if (results.length === 1) {
+                if (results && results.length === 1) {
                     capiItem = results[0];
                     icc = internalContentCode(capiItem);
                     if (icc) {
@@ -72,11 +72,11 @@ function (
                     err = 'Sorry, that link cannot be added to a front';
 
                 // A snap, but not an absolute url
-                } else if (!item.id().match(/^https?:\/\//) && results.length === 0) {
-                    err = 'Sorry, that\'s not a valid URL';
+                } else if (!item.id().match(/^https?:\/\//)) {
+                    err = 'Sorry, that\'s not a valid absolute URL';
 
                 // A snap, but a link to unavailable guardian content
-                } else if (isFromGuardian && results.length === 0) {
+                } else if (isFromGuardian && results && results.length === 0) {
                     err = 'Sorry, that Guardian content is unavailable';
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
@@ -117,7 +117,7 @@ function (
 
         fetchContentByIds(ids)
         .done(function(results){
-            results.forEach(function(result) {
+            [].concat(results).forEach(function(result) {
                 var icc = internalContentCode(result);
 
                 if(icc) {
@@ -162,8 +162,8 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            if (!resp.response) {
-                defer.resolve([]);
+            if (!resp.response || resp.response.status === 'error') {
+                defer.resolve();
             } else if (resp.response.content) {
                 defer.resolve([resp.response.content]);
             } else {
