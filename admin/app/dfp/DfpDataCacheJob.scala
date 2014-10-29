@@ -42,8 +42,7 @@ object DfpDataCacheJob extends ExecutionContexts {
 
   def run() {
     future {
-      DfpDataHydrator.resetSession()
-      val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
+      val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
 
       if (data.isValid) {
         val now = printLondonTime(DateTime.now())
@@ -65,6 +64,7 @@ object DfpDataCacheJob extends ExecutionContexts {
 
         Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
       }
+      println("[[[[[ Dfp Data Cache done ]]]]]")
     }
   }
 }
