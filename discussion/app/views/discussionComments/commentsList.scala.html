@@ -1,6 +1,6 @@
 @(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
 <div
-    class="d-discussion @if(isTopComments){d-discussion--top-comments} d-discussion--not-staff @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
+    class="d-discussion @if(isTopComments){d-discussion--top-comments} @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>

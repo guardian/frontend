@@ -424,12 +424,6 @@ Comments.prototype.addUser = function(user) {
         this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
-
-        if (this.user.isStaff) {
-            $('.d-discussion', this.elem)
-                .removeClass('d-discussion--not-staff')
-                .addClass('d-discussion--is-staff');
-        }
     }
 
     if (!this.isReadOnly()) {
