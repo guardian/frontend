@@ -18,9 +18,9 @@
 </div>
 
 <div class="block-share--@contentType.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
-    <div class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary}">
+    <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary}">
         Share
-    </div>
+    </button>
 </div>
 
 <div id="share-modal-@id" class="overlay overlay--@contentType.toLowerCase share-modal js-share-modal">

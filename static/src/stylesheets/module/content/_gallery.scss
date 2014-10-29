@@ -232,7 +232,11 @@
     @include mq(tablet, desktop) {
         position: absolute;
         top: -$gs-baseline / 3;
-        right: $gs-baseline / 2;
+        right: 0;
+
+        .gallery-lightbox & {
+            right: $gs-gutter / 2;
+        }
     }
 
     .block-share__item {

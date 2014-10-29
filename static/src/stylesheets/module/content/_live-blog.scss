@@ -919,74 +919,66 @@ $timeline-width: 15px;
     outline: none;
 }
 
-.block-share--liveblog .block-share__link {
-    .block-share__item--facebook {
-        border-color: $social-facebook;
-        color: $social-facebook;
-        .i { @include icon(share-facebook--blue); }
-    }
-
-    .block-share__item--twitter {
-        border-color: $social-twitter;
-        color: $social-twitter;
-        .i { @include icon(share-twitter--blue); }
-    }
-
-    .block-share__item--gplus {
-        border-color: $social-gplus;
-        color: $social-gplus;
-        .i { @include icon(share-gplus--red); }
-    }
+.block-share__item--facebook {
+    border-color: $social-facebook;
+    color: $social-facebook;
+    .i { @include icon(share-facebook--blue); }
 
     &:hover {
-        .block-share__item--facebook {
-            border-color: darken($social-facebook, 15%);
-            .i { @include icon(share-facebook--blue-dark); }
-        }
-
-        .block-share__item--twitter {
-            border-color: darken($social-twitter, 15%);
-            .i { @include icon(share-twitter--blue-dark); }
-        }
-
-        .block-share__item--gplus {
-            border-color: darken($social-gplus, 15%);
-            .i { @include icon(share-gplus--red-dark); }
-        }
+        border-color: darken($social-facebook, 15%);
+        .i { @include icon(share-facebook--blue-dark); }
     }
 }
 
-.share-modal .share-modal__link {
-    .share-modal__item--facebook {
-        background-color: $social-facebook;
-        color: #ffffff;
-        .i { @include icon(share-facebook--white); }
-    }
-
-    .share-modal__item--twitter {
-        background-color: $social-twitter;
-        color: #ffffff;
-        .i { @include icon(share-twitter--white); }
-    }
-
-    .share-modal__item--gplus {
-        background-color: $social-gplus;
-        color: #ffffff;
-        .i { @include icon(share-gplus--white); }
-    }
+.block-share__item--twitter {
+    border-color: $social-twitter;
+    color: $social-twitter;
+    .i { @include icon(share-twitter--blue); }
 
     &:hover {
-        .share-modal__item--facebook {
-            background-color: darken($social-facebook, 15%);
-        }
+        border-color: darken($social-twitter, 15%);
+        .i { @include icon(share-twitter--blue-dark); }
+    }
+}
 
-        .share-modal__item--twitter {
-            background-color: darken($social-twitter, 15%);
-        }
+.block-share__item--gplus {
+    border-color: $social-gplus;
+    color: $social-gplus;
+    .i { @include icon(share-gplus--red); }
 
-        .share-modal__item--gplus {
-            background-color: darken($social-gplus, 15%);
-        }
+    &:hover {
+        border-color: darken($social-gplus, 15%);
+        .i { @include icon(share-gplus--red-dark); }
+    }
+}
+
+.share-modal__item--facebook {
+    background-color: $social-facebook;
+    color: #ffffff;
+    .i { @include icon(share-facebook--white); }
+
+    &:hover {
+        background-color: darken($social-facebook, 15%);
+    }
+}
+
+.share-modal__item--twitter {
+    background-color: $social-twitter;
+    color: #ffffff;
+    .i { @include icon(share-twitter--white); }
+
+    &:hover {
+        background-color: darken($social-twitter, 15%);
+    }
+}
+
+.share-modal__item--gplus {
+    background-color: $social-gplus;
+    color: #ffffff;
+    .i { @include icon(share-gplus--white); }
+
+    &:hover {
+        background-color: darken($social-gplus, 15%);
     }
 }
 
