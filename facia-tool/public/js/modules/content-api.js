@@ -85,9 +85,8 @@ function (
                     item.meta.headline('Fetching headline...');
 
                     authedAjax.request({
-                        url: '/http/proxy/' + item.id(),
-                        type: 'GET',
-                        contentType: 'text/html'
+                        url: '/http/proxy/' + item.id() + (isFromGuardian ? '%3Fview=mobile' : ''),
+                        type: 'GET'
                     })
                     .done(function (response) {
                         var doc = document.createElement("div"),
@@ -99,7 +98,8 @@ function (
                             og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
                         });
 
-                        item.meta.headline(og.site_name && og.title ? og.site_name + " - " + og.title : doc.title);
+                        item.meta.headline(og.title ? (og.site_name && !isFromGuardian ? og.site_name + ' - ' : '') + og.title : doc.title);
+                        item.meta.trailText(og.description);
                     })
 
                     item.convertToSnap();
