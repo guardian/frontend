@@ -53,7 +53,7 @@ object Front extends implicits.Collections {
     import scalaz.std.list._
 
     Front(configs.zipWithIndex.toList.mapAccumL(Set.empty[TrailUrl]) { case (seen, ((config, collection), index)) =>
-      val container = Container.resolve(config.id)
+      val container = Container.fromConfig(config.config)
 
       val (newSeen, newItems) = deduplicate(seen, container, collection.items)
       (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems)))
