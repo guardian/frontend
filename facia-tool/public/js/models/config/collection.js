@@ -128,7 +128,7 @@ define([
                     {key: 'type', errMsg: 'choose a layout'}
                 ])
                 .filter(function(test) { return !fullTrim(_.result(self.meta, test.key)); })
-                .map(function(test) { return test.errMsg; })
+                .pluck('errMsg')
                 .value();
 
         if (errs.length) {
