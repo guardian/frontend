@@ -62,7 +62,7 @@ define([
                 $node.removeClass('u-h');
 
                 if ($node.attr('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count', node).append(formatters.integerCommas(c.count) + '');
+                    $('.js-item__comment-count', node).append(formatters.integerCommas(c.count));
                     $('.js-item__comment-or-comments', node).append(commentOrComments);
                     $('.js-item__inline-comment-template', node).show('inline');
                 } else {
