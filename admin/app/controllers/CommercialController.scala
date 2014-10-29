@@ -72,7 +72,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     } map { trails =>
       object CommercialPage {
         def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
-          override def metaData: Map[String, JsValue] = super.metaData ++ List("keywordIds" -> JsString("lifeandstyle/live-better"))
+          override def metaData: Map[String, JsValue] = super.metaData ++ List("keywordIds" -> JsString("live-better"))
         }
       }
       val page = CommercialPage()
