@@ -33,6 +33,15 @@ $c-guardian-services-action: #ffffff;
     i {
         display: block;
     }
+
+    .logo__tagline {
+        @include fs-textSans(2);
+        position: absolute;
+        top: 49px;
+        left: 140px;
+        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
+        font-weight: bold;
+    }
 }
 
 

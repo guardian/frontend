@@ -379,20 +379,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         }
     }
 
-    .row-of-two--boost-first .facia-slice__item:nth-child(1) {
-        @include mq(desktop, leftCol) {
-
-            .item__media-wrapper {
-                width: gs-span(4) + $gs-gutter*2;
-            }
-
-            .item__title {
-                @include fs-headline(3, true);
-            }
-        }
-    }
-
-
     @include mq($until: tablet) {
         display: none;
     }
@@ -407,6 +393,15 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
     .container__header {
         border-bottom: 1px solid $c-neutral2;
+    }
+
+    .facia-container__inner {
+        width: auto;
+    }
+
+    .fc-container__header__title {
+        color: #ffffff;
+        border-top-color: #ffffff !important;
     }
 }
 

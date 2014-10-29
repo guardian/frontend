@@ -8,7 +8,7 @@ import model.{Cached, NoCache}
 import play.api.libs.json._
 import play.api.mvc._
 import services._
-import tools.FaciaApi
+import tools.FaciaApiIO
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -58,7 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
     FaciaToolMetrics.DraftPublishCount.increment()
-    val block = FaciaApi.publishBlock(id, identity)
+    val block = FaciaApiIO.publishBlock(id, identity)
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
@@ -70,7 +70,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
-    val block = FaciaApi.discardBlock(id, identity)
+    val block = FaciaApiIO.discardBlock(id, identity)
     block.foreach { b =>
       FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
       UpdateActions.archiveDiscardBlock(id, b, identity)

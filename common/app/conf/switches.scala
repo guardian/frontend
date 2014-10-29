@@ -291,14 +291,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val IndiaRegionSwitch = Switch("Feature", "india-region",
-    "If this switch is switched on then the India region will be enabled",
-    safeState = Off,
-    // I know this is far away, but this will lie dormant for a while (other than testing) while
-    // the planets align for the rest of the project
-    sellByDate = new LocalDate(2014, 10, 30)
-  )
-
   val EnhanceTweetsSwitch = Switch("Feature", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -320,6 +312,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
 
+  val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
+    "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
+    safeState = On, sellByDate = never)
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -416,7 +411,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     EnhanceTweetsSwitch,
-    IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
@@ -424,6 +418,7 @@ object Switches extends Collections {
     FaciaToolCachedContentApiSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
+    IdentityBlockSpamEmails,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,

@@ -53,7 +53,7 @@ Full item. A 100% width version of the Three quarter item.
     }
 
     &.fc-item--has-sublinks-4:not(.fc-item--has-cutout) {
-        @include fc-sublinks--horizontal;
+        @include fc-sublinks--below;
     }
 
     &.fc-item--has-cutout {
@@ -77,7 +77,7 @@ Full item. A 100% width version of the Three quarter item.
         .fc-item__header {
             @include fs-headline(4, true);
             @include headline-boost(5);
-    
+
             @include mq(desktop) {
                 @include fs-headline(6, true);
                 @include headline-boost(7);

@@ -558,7 +558,7 @@ $block-padding-right: $gs-gutter;
 
 /* Timeline
    ========================================================================== */
-$timeline-width: 14px;
+$timeline-width: 15px;
 
 .blog__timeline {
     @include mq(desktop) {
@@ -663,7 +663,7 @@ $timeline-width: 14px;
         }
 
         .timeline__item:last-child & {
-            border-left: 0;
+            border-color: transparent;
         }
     }
 }
@@ -708,36 +708,20 @@ $timeline-width: 14px;
 .blog__related {
     width: gs-span(3);
     margin-left: gs-span(1) + $gs-gutter;
+
+    .tone-news--item {
+        .fc-item__content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 .blog__related__head {
     @include fs-header(2);
+    padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
-}
-
-.blog__related__item {
-    width: auto !important;
-    padding-bottom: 0;
-    margin-bottom: $gs-baseline*2;
-
-    .item {
-        padding: 0;
-        margin: 0;
-    }
-
-    .item__tonal-border {
-        border-color: $c-neutral4;
-    }
-
-    & + &:before, // Vertical item separator
-    .item__byline,
-    .item__meta {
-        display: none;
-    }
-
-    .item__title {
-        @include fs-headline(2);
-    }
+    border-top: 1px solid $c-neutral4;
 }
 
 /* Football components

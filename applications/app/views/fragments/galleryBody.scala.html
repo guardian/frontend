@@ -3,34 +3,34 @@
 
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
 
-    <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
-        <article class="content content--media content--gallery tonal tonal--@articleToneClass(gallery)"
-            itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
+    <article class="content content--media content--gallery tonal tonal--@articleToneClass(gallery)"
+        itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
-            @fragments.headTonal(gallery)
+        @fragments.headTonal(gallery)
 
-            <div class="content__main tonal__main tonal__main--@articleToneClass(gallery)">
-                <div class="gs-container">
-                    <div class="content__main-column content__main-column--gallery">
-                        @fragments.contentMeta(gallery)
-                        <ul class="gallery2">
-                            @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                                @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum)
-                            }
-                        </ul>
-                        @fragments.submeta(gallery)
-                    </div>
+        <div class="content__main tonal__main tonal__main--@articleToneClass(gallery)">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--gallery">
+                    @fragments.contentMeta(gallery)
+                    <ul class="gallery2">
+                        @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum)
+                        }
+                    </ul>
+                    @fragments.submeta(gallery)
                 </div>
             </div>
-        </article>
-    </div>
+        </div>
+    </article>
 
-    <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading hide-on-childrens-books-site">
-        <div class="container container--popular">
-            <div class="facia-container__inner">
-                <h2 class="container__title">
-                    <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
-                </h2>
+    <div class="gallery__most-popular facia-container fc-container--media facia-container--layout-content facia-container--default-heading hide-on-childrens-books-site">
+        <div class="js-gallery-most-popular tonal--@articleToneClass(gallery)">
+            <div class="container container--popular">
+                <div class="facia-container__inner">
+                    <h2 class="container__title">
+                        <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
+                    </h2>
+                </div>
             </div>
         </div>
     </div>

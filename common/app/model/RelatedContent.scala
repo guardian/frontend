@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.ItemResponse
+import slices.{ContainerDefinition, FixedContainers}
 
 case class RelatedContent(
   // A manually curated list of related content. You want to to favour this over `related`
@@ -10,6 +11,13 @@ case class RelatedContent(
   related: Seq[Content]
 ) {
   val hasStoryPackage: Boolean = storyPackage.nonEmpty
+  val storyPackageLayout: ContainerDefinition = storyPackage.size match {
+    case 1 => FixedContainers.fixedSmallSlowI
+    case 2 => FixedContainers.fixedSmallSlowII
+    case 3 => FixedContainers.fixedMediumSlowXIIMpu
+    case 5 => FixedContainers.fixedSmallSlowVI
+    case _ => FixedContainers.fixedMediumFastXII
+  }
 }
 
 object RelatedContent {
