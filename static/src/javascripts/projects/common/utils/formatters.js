@@ -1,6 +1,7 @@
 define(function () {
     return {
         integerCommas: function (val) {
+            // commafy integers. see formatters.spec.js for expected input/output
             var num = parseInt(val, 10),
                 digits, i, len;
             if (!isNaN(num)) {
