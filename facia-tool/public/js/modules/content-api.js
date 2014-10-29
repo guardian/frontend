@@ -49,8 +49,7 @@ function (
             .done(function(results) {
                 var capiItem,
                     icc,
-                    err,
-                    frame;
+                    err;
 
                 // ContentApi item
                 if (results.length === 1) {
@@ -88,7 +87,7 @@ function (
                         url: '/http/proxy/' + item.id() + (isFromGuardian ? '%3Fview=mobile' : ''),
                         type: 'GET'
                     })
-                    .done(function (response) {
+                    .done(function(response) {
                         var doc = document.createElement("div"),
                             og = {};
 
