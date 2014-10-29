@@ -21,6 +21,7 @@ trait ShareLinks { self: Content =>
     lazy val googlePlus = shareCampaignUrl("sgp", blockId).urlEncoded
     lazy val link = shareCampaignUrl("sbl", blockId)
     lazy val twitter = shareCampaignUrl("stw", blockId).urlEncoded
+    lazy val linkedin = shareCampaignUrl("sli", blockId).urlEncoded
     lazy val webTitleAsciiEncoding = webTitle.urlEncoded.replace("+", "%20")
 
     shareType match {
@@ -28,12 +29,13 @@ trait ShareLinks { self: Content =>
       case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$twitter"))
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "gplus", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=$linkedin"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
   }
 
-  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus").flatMap(shareLink(_, Some(blockId)))
+  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus", "linkedin").flatMap(shareLink(_, Some(blockId)))
 
   def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
 
