@@ -310,6 +310,22 @@
             }
         }
     }
+
+    .block-share__item--pinterest {
+        border-color: $c-neutral2;
+        color: $c-neutral2;
+
+        .i {
+            @include icon(share-pinterest--white);
+        }
+
+        &:hover {
+            border-color: #ffffff;
+            .i {
+                @include icon(share-pinterest--white);
+            }
+        }
+    }
 }
 
 .block-share--gallery-mobile {
