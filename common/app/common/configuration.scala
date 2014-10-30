@@ -92,6 +92,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
 
+    lazy val circuitBreakerErrorThreshold =
+      configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
+
+    lazy val circuitBreakerResetTimeout =
+      configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(20000)
+
     lazy val previewAuth: Option[Auth] = for {
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")

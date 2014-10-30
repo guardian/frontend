@@ -108,9 +108,9 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
     */
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = circuitBreakerActorSystem.scheduler,
-    maxFailures = 5,
+    maxFailures = contentApi.circuitBreakerErrorThreshold,
     callTimeout = Duration(contentApi.timeout, MILLISECONDS),
-    resetTimeout = Duration(20, SECONDS)
+    resetTimeout = Duration(contentApi.circuitBreakerResetTimeout, MILLISECONDS)
   )
 
   circuitBreaker.onOpen({
