@@ -22,7 +22,7 @@ trait ShareLinks { self: Content =>
     lazy val link = shareCampaignUrl("sbl", blockId)
     lazy val twitter = shareCampaignUrl("stw", blockId).urlEncoded
     lazy val whatsapp = shareCampaignUrl("swa", blockId)
-    lazy val webTitleAsciiEncoding = webTitle.urlEncoded.replace("+", "%20")
+    lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
 
     shareType match {
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
