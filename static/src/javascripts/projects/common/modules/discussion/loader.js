@@ -7,6 +7,7 @@ define([
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
 
@@ -26,6 +27,7 @@ define([
     _,
     ajax,
     config,
+    detect,
     mediator,
     scroller,
     DiscussionAnalytics,
@@ -87,10 +89,14 @@ Loader.prototype.initMainComments = function() {
 
     var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
+    var userPageSize = config.switches.discussionPageSize ? userPrefs.get('discussion.pagesize') : 25;
+    var pagesize = detect.isBreakpoint({min: 'tablet'}) ?  userPageSize : 10;
+
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
+        pagesize: isNaN(pagesize) ? 25 : parseInt(pagesize, 10),
         threading: threading
     });
 
@@ -142,6 +148,20 @@ Loader.prototype.initToolbar = function() {
         this.setState('loading');
         this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
+
+
+    var $pagesizeLabel = $('.js-comment-pagesize-dropdown .popup__toggle span');
+    $pagesizeLabel.text(this.comments.options.pagesize);
+    this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.pagesize = bonzo(e.currentTarget).data('pagesize');
+        $pagesizeLabel.text(this.comments.options.pagesize);
+        userPrefs.set('discussion.pagesize', this.comments.options.pagesize);
+        this.setState('loading');
+        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
+    });
+
 
     var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
     $threadingLabel.text(this.comments.options.threading);

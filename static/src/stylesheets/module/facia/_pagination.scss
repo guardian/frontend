@@ -109,6 +109,9 @@ $text-size:            14px;
             text-align: right;
         }
     }
+    .pagination__list {
+        width: auto;
+    }
 }
 
 /**
@@ -120,6 +123,9 @@ $text-size:            14px;
     margin: 0;
     color: $c-neutral2;
     border-color: transparent;
+    padding: 0 2px;
+    min-width: $gs-baseline * 2;
+    text-align: center;
 
     &.is-active {
         color: #ffffff;

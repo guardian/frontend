@@ -1,4 +1,5 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+@import conf.Switches._
 
 @sectionHeading = {
 
@@ -29,9 +30,7 @@
     <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
         <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
-
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span></span></button>
-
             <ul class="popup popup__group popup--comments-order is-off">
                 @List("newest", "oldest").map { value =>
                     <li class="popup__item">
@@ -39,13 +38,24 @@
                     </li>
                 }
             </ul>
-
         </div>
+
+        @if(DiscussionPageSizeSwitch.isSwitchedOn) {
+            <div class="discussion__toolbar-dropdown js-comment-pagesize-dropdown">
+                <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize">Show <span></span></button>
+                <ul class="popup popup__group popup--comments-pagesize is-off">
+                @List("25", "100").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-@value">@value</button>
+                    </li>
+                }
+                </ul>
+            </div>
+        }
 
 
         <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span></span></button>
-
             <ul class="popup popup__group popup--comments-threading is-off">
                 @List("collapsed", "expanded", "unthreaded").map { value =>
                     <li class="popup__item">
