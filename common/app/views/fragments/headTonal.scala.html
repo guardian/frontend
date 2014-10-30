@@ -10,6 +10,10 @@
 
                 @fragments.meta.metaInline(content)
 
+                @if(content.isAnalysis) {
+                    <div class="content__headline content__headline--kicker">Analysis</div>
+                }
+
                 <h1 class="content__headline js-score" itemprop="headline">
                     @Html(content.headline)
                 </h1>

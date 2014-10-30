@@ -210,6 +210,11 @@
     }
 }
 
+.content__headline--kicker {
+    margin-bottom: -$gs-baseline / 2;
+    padding-bottom: 0;
+}
+
 .content__head--byline-pic {
     .byline-img {
         float: right;
@@ -271,13 +276,6 @@
                 padding-right: $gs-gutter*2;
             }
         }
-    }
-}
-
-.content__headline__kicker {
-    &:after {
-        content: ' /';
-        color: fade-out($c-neutral1, .8);
     }
 }
 
