@@ -89,6 +89,7 @@ function (
                     })
                     .done(function(response) {
                         var doc = document.createElement("div"),
+                            title,
                             og = {};
 
                         doc.innerHTML = response;
@@ -97,7 +98,10 @@ function (
                             og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
                         });
 
-                        item.meta.headline(og.title ? (og.site_name && !isFromGuardian ? og.site_name + ' - ' : '') + og.title : doc.title);
+                        title = doc.querySelector('title');
+                        title = title ? title.innerHTML : undefined;
+
+                        item.meta.headline(og.title ? (og.site_name && !isFromGuardian ? og.site_name + ' - ' : '') + og.title : title);
                         item.meta.trailText(og.description);
                     })
 
