@@ -608,7 +608,6 @@
 
 .meta__social {
     border-top: 1px dotted colour(neutral-5);
-    height: $gs-baseline * 4;
-    padding: 2px 0;
+    padding: 0;
     @include box-sizing(border-box);
 }

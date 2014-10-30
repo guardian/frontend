@@ -249,41 +249,64 @@
     }
 }
 
-.block-share--gallery .block-share__link {
-
+.block-share--gallery {
     .block-share__item--facebook {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-facebook--white); }
+        .i {
+            @include icon(share-facebook--white);
+        }
+
+        &:hover {
+            .i {
+                @include icon(share-facebook--white);
+            }
+            border-color: #ffffff;
+        }
     }
 
     .block-share__item--twitter {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-twitter--white); }
+        .i {
+            @include icon(share-twitter--white);
+        }
+
+        &:hover {
+            .i {
+                @include icon(share-twitter--white);
+            }
+            border-color: #ffffff;
+        }
     }
 
     .block-share__item--gplus {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-gplus--white); }
+        .i {
+            @include icon(share-gplus--white);
+        }
+
+        &:hover {
+            .i {
+                @include icon(share-gplus--white);
+            }
+            border-color: #ffffff;
+        }
     }
 
-    &:hover {
-
-        .block-share__item--facebook {
-            border-color: #ffffff;
-            .i { @include icon(share-facebook--white); }
+    .block-share__item--linkedin {
+        border-color: $c-neutral2;
+        color: $c-neutral2;
+        .i {
+            @include icon(share-linkedin--white);
         }
 
-        .block-share__item--twitter {
+        &:hover {
+            .i {
+                @include icon(share-linkedin--white);
+            }
             border-color: #ffffff;
-            .i { @include icon(share-twitter--white); }
-        }
-
-        .block-share__item--gplus {
-            border-color: #ffffff;
-            .i { @include icon(share-gplus--white); }
         }
     }
 }

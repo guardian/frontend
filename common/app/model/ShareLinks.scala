@@ -11,7 +11,7 @@ case class ShareLink(
 
 trait ShareLinks { self: Content =>
 
-  private def shareLink(shareType: String, blockId: Option[String]): Option[ShareLink] = {
+  def shareLink(shareType: String, blockId: Option[String]): Option[ShareLink] = {
 
     def shareCampaignUrl(campaign: String, blockId: Option[String]) = {
       blockId.map { block => s"$shortUrl/$campaign#$block" } getOrElse s"$shortUrl/$campaign"
@@ -35,9 +35,9 @@ trait ShareLinks { self: Content =>
     }
   }
 
-  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus", "linkedin").flatMap(shareLink(_, Some(blockId)))
+  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus").flatMap(shareLink(_, Some(blockId)))
 
   def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
 
-  lazy val pageShares: Seq[ShareLink] = List("email", "facebook", "twitter", "linkedin", "gplus").flatMap(shareLink(_, None))
+  lazy val pageShares: Seq[ShareLink] = List("facebook", "twitter", "email", "linkedin", "gplus").flatMap(shareLink(_, None))
 }
