@@ -37,7 +37,8 @@ define([
     ) {
         var capiProps = [
                 'webUrl',
-                'webPublicationDate'],
+                'webPublicationDate',
+                'sectionName'],
 
             capiFields = [
                 'headline',
@@ -207,14 +208,16 @@ define([
                     key: 'showKickerTag',
                     editable: true,
                     singleton: 'kicker',
-                    label: 'tag kicker',
+                    label: 'kicker',
+                    labelState: 'primaryTag',
                     type: 'boolean'
                 },
                 {
                     key: 'showKickerSection',
                     editable: true,
                     singleton: 'kicker',
-                    label: 'section kicker',
+                    label: 'kicker',
+                    labelState: 'sectionName',
                     type: 'boolean'
                 },
                 {
@@ -250,7 +253,7 @@ define([
             ],
 
             rxScriptStriper = new RegExp(/<script.*/gi);
-;
+
         function Article(opts, withCapiData) {
             var self = this;
 
@@ -281,6 +284,8 @@ define([
                 'isSnap',
                 'inDynamicCollection',
                 'tone',
+                'primaryTag',
+                'sectionName',
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
@@ -357,7 +362,8 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                display;
+                display,
+                as;
 
             if (opts.type === 'boolean') {
                 display = opts.editable;
@@ -365,7 +371,9 @@ define([
                 display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
                 display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
-                return display ? opts.label : false;
+                as = opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : '');
+
+                return display ? as : false;
             } else {
                 return false;
             }
@@ -390,7 +398,7 @@ define([
             return {
                 key:    key,
 
-                label:  opts.label,
+                label:  opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
 
                 type:   opts.type,
 
@@ -497,6 +505,8 @@ define([
                 window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
             } else {
                 this.state.isLoaded(true);
+                this.state.sectionName(this.props.sectionName());
+                this.state.primaryTag(getPrimaryTag(opts));
                 this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
                 this.state.hasMainVideo(getMainMediaType(opts) === 'video');
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
@@ -638,23 +648,23 @@ define([
         };
 
         function getTone(contentApiArticle) {
-            var tone = _.findWhere(contentApiArticle.tags, {
-                type: 'tone'
-            });
+            var tone = _.findWhere(contentApiArticle.tags, {type: 'tone'});
             return tone && tone.id && tone.id.replace(/^tone\//, '');
         }
 
         function getMainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {
-                relation: 'main'
-            });
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {relation: 'main'});
             return mainElement && mainElement.type;
         }
 
+        function getPrimaryTag(contentApiArticle) {
+            var ptag = _.findWhere(contentApiArticle.tags, {type: 'series'}) ||
+                       _.findWhere(contentApiArticle.tags, {type: 'keyword'});
+            return ptag && ptag.webTitle;
+        }
+
         function getContributorImage(contentApiArticle) {
-            var contributor = _.findWhere(contentApiArticle.tags, {
-                type: 'contributor'
-            });
+            var contributor = _.findWhere(contentApiArticle.tags, {type: 'contributor'});
             return contributor && contributor.bylineLargeImageUrl;
         }
 
