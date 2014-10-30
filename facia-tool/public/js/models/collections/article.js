@@ -363,7 +363,7 @@ define([
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
                 display,
-                as;
+                label;
 
             if (opts.type === 'boolean') {
                 display = opts.editable;
@@ -371,9 +371,9 @@ define([
                 display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
                 display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
-                as = opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : '');
+                label = opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : '');
 
-                return display ? as : false;
+                return display ? label : false;
             } else {
                 return false;
             }
