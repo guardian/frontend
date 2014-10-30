@@ -46,25 +46,24 @@
                                         </div>
                                     </div>
                                 }
-                            </div>
+                            </div>                                                            f
                         }
                     </div>
 
                     @if( matchesList.nextPage.isDefined) {
                         <div class="matches-nav" data-link-name="@matchesList.pageType nav">
                             @matchesList.nextPage.map{url =>
-                                <button href="@url" class="collection__show-more football-matches__show-more js-show-more button--show-more button button--medium button--primary"
+                                <a href="@url" class="collection__show-more football-matches__show-more js-show-more button--show-more button button--medium button--primary"
                                    data-shows-more=".football-matches__day"
                                    data-puts-more-into="football-matches"
                                    data-new-url="next"
                                    data-link-name="next"
                                    title="Next page">
                                     <span class="collection__show-more__icon">
-                                        <i class="i i-plus-white"></i>
-                                        More
+                                        <i class="i i-plus-white"></i>More
                                     </span>
                                     <span class="u-h">Next</span>
-                                </button>
+                                </a>
                             }
                         </div>
                     }
