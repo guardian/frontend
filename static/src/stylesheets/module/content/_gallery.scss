@@ -258,10 +258,10 @@
         }
 
         &:hover {
+            border-color: #ffffff;
             .i {
                 @include icon(share-facebook--white);
             }
-            border-color: #ffffff;
         }
     }
 
@@ -273,10 +273,10 @@
         }
 
         &:hover {
+            border-color: #ffffff;
             .i {
                 @include icon(share-twitter--white);
             }
-            border-color: #ffffff;
         }
     }
 
@@ -288,25 +288,26 @@
         }
 
         &:hover {
+            border-color: #ffffff;
             .i {
                 @include icon(share-gplus--white);
             }
-            border-color: #ffffff;
         }
     }
 
     .block-share__item--linkedin {
         border-color: $c-neutral2;
         color: $c-neutral2;
+
         .i {
             @include icon(share-linkedin--white);
         }
 
         &:hover {
+            border-color: #ffffff;
             .i {
                 @include icon(share-linkedin--white);
             }
-            border-color: #ffffff;
         }
     }
 }
