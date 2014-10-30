@@ -38,9 +38,8 @@ object Front extends implicits.Collections {
           * being that they disappear beyond the fold, i.e., after the 'show more' button).
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => seen.contains(trail.url))
-        val orderedTrails = (notUsed ++ trails).distinctBy(_.url)
-        (seen ++ orderedTrails.take(nToTake).map(_.url), orderedTrails)
+        val notUsed = trails.filterNot(trail => seen.contains(trail.url)).distinctBy(_.url)
+        (seen ++ notUsed.take(nToTake).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */

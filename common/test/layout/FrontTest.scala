@@ -60,7 +60,7 @@ class FrontTest extends FlatSpec with Matchers {
       trailWithUrl("three")
     ))
 
-    dedupedTrails.map(_.webUrl) shouldEqual Seq("three", "one", "two")
+    dedupedTrails.map(_.webUrl) shouldEqual Seq("three")
   }
 
   it should "include items seen in a fixed container in the set of urls for further deduplication" in {
