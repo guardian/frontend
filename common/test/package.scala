@@ -102,7 +102,8 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
       withGlobal = globalSettingsOverride,
       additionalPlugins = testPlugins,
       additionalConfiguration = Map(
-        ("application.secret", "this_is_not_a_real_secret_just_for_tests")
+        ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
+        ("guardian.projectName", "test-project")
       )
   )
 }

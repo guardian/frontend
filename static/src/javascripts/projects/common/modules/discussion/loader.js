@@ -118,6 +118,10 @@ Loader.prototype.initMainComments = function() {
             this.renderCommentBar();
             if (this.user) {
                 this.comments.addUser(this.user);
+                if (this.user.isStaff) {
+                    this.removeState('not-staff');
+                    this.setState('is-staff');
+                }
             }
         });
         this.getUser();

@@ -16,15 +16,9 @@ define([
     'common/utils/$css',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/commercial/keywords',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/user-ad-targeting',
-    'common/modules/experiments/ab',
+    'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
 ], function (
@@ -44,15 +38,9 @@ define([
     $css,
     _,
     config,
-    cookies,
     detect,
     mediator,
-    keywords,
-    audienceScience,
-    audienceScienceGateway,
-    criteo,
-    userAdTargeting,
-    ab,
+    buildPageTargeting,
     geoMostPopular,
     Sticky
 ) {
@@ -220,50 +208,6 @@ define([
         },
         getSlots = function () {
             return slots;
-        },
-        /**
-         * Builds the appropriate page level targeting
-         *
-         * a      = audience science
-         * at     = adtest cookie
-         * bp     = current breakpoint
-         * ct     = content type
-         * k      = keywords
-         * p      = platform
-         * pt     = content type
-         * url    = path
-         */
-        buildPageTargeting = function () {
-
-            function encodeTargetValue(value) {
-                return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
-            }
-
-            var page        = config.page,
-                series      = parseSeries(page),
-                contentType = encodeTargetValue(page.contentType),
-                edition     = encodeTargetValue(page.edition),
-                mediaSource = encodeTargetValue(page.source);
-
-            return defaults({
-                url:     window.location.pathname,
-                edition: edition,
-                se:      series,
-                ct:      contentType,
-                pt:      contentType,
-                p:       'ng',
-                k:       parseKeywords(page.keywordIds || page.pageId),
-                su:      page.isSurging,
-                bp:      detect.getBreakpoint(),
-                a:       audienceScience.getSegments(),
-                at:      cookies.get('adtest') || cookies.get('GU_TEST') || '',
-                gdncrm:  userAdTargeting.getUserSegments(),
-                ab:      abParam(),
-                co:      parseTargets(page.authorIds),
-                bl:      parseKeywords(page.blogIds),
-                ms:      mediaSource,
-                tn:      parseTargets(page.tones)
-            }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
 
         /**
@@ -459,34 +403,9 @@ define([
 
             return mapping.build();
         },
-        abParam = function () {
-            var hchTest = ab.getParticipations().HighCommercialComponent;
-            if (hchTest) {
-                switch (hchTest.variant) {
-                    case 'control':
-                        return '1';
-                    case 'variant':
-                        return '2';
-                }
-            }
-            return '3';
-        },
         parseKeywords = function (keywords) {
-            return map((keywords || '') .split(','), function (keyword) {
+            return map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
-            });
-        },
-        parseSeries = function (page) {
-            if (page.seriesId) {
-                return page.seriesId.split('/').pop();
-            }
-            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
-        },
-        parseTargets = function (targets) {
-            var targetArray = parseKeywords(targets);
-            return map(targetArray, function (target) {
-                return keywords.format(target);
             });
         },
 
@@ -494,11 +413,10 @@ define([
          * Module
          */
         dfp = {
-            init:               once(init),
-            addSlot:            addSlot,
-            refreshSlot:        refreshSlot,
-            getSlots:           getSlots,
-            buildPageTargeting: buildPageTargeting
+            init:        once(init),
+            addSlot:     addSlot,
+            refreshSlot: refreshSlot,
+            getSlots:    getSlots
         };
 
     return dfp;

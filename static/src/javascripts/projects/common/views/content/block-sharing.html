@@ -10,25 +10,18 @@
         <div class="{{articleType}}-lightbox__img-credit">{{credit}}</div>
         <div class="block-share block-share--{{articleType}}" data-link-name="block share">
             {{shareButtons}}
-            <label class="block-share__label" for="block-share-link-{{index}}">copy link text</label>
-            <input id="block-share-link-{{index}}" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="{{blockShortUrl}}" readonly="readonly"/>
-            <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h" data-link-name="expand"><i class="i i-ellipsis-white-36"></i><span class="u-h">expand</span></button>
         </div>
-
         <div class="block-share--{{articleType}}-mobile" data-open-overlay-on-click="share-modal-{{index}}" data-link-name="open mobile block share">
-            <div class="block-share__item block-share__item--mobile"><i class="i"></i>
-                <span class="u-h">share</span>
-            </div>
-        </div>
-
-        <div id="share-modal-{{index}}" class="overlay share-modal js-share-modal">
-            <div class="share-modal__content" data-link-name="mobile block share">
-                <h2 class="share-modal__title">Share this post</h2>
-                {{shareButtonsMobile}}
-                <button class="share-modal__close js-overlay-close" data-link-name="close"><i class="i i-close-icon-dark-small"></i><span class="u-h">close</span></button>
-            </div>
-
+            <button class="block-share__item--mobile button button--small button--tone-media-variant">
+                Share
+            </button>
         </div>
     </div>
-
+    <div id="share-modal-{{index}}" class="overlay share-modal overlay--{{articleType}} js-share-modal">
+        <div class="share-modal__content" data-link-name="mobile block share">
+            <h2 class="share-modal__title">Share this post</h2>
+            {{shareButtonsMobile}}
+            <button class="share-modal__close js-overlay-close" data-link-name="close"><i class="i i-close-icon-dark-small"></i><span class="u-h">close</span></button>
+        </div>
+    </div>
 </li>

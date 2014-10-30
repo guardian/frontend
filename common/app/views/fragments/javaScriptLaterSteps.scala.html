@@ -14,22 +14,23 @@
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',
             }
+            core:                      '@Static("javascripts/core.js")',
+            facebook:                  '//connect.facebook.net/en_US/all.js',
+            foresee:                   'vendor/foresee/20141007/foresee-trigger.js',
+            googletag:                 '@{Configuration.javascript.config("googletagJsUrl")}',
+            'ophan/ng':                '@{Configuration.javascript.config("ophanJsUrl")}',
+            stripe:                    '@Static("javascripts/vendor/stripe/stripe.min.js")',
+            text:                       'text', // noop
+            zxcvbn:                    '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            'bootstraps/app':          '@Static("javascripts/bootstraps/app.js")',
+            'bootstraps/commercial':   '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/crosswords':   '@Static("javascripts/bootstraps/crosswords.js")',
+            'bootstraps/dev':          '@Static("javascripts/bootstraps/dev.js")',
+            'bootstraps/facia':        '@Static("javascripts/bootstraps/facia.js")',
             @if(Configuration.environment.isPreview) {
-                'bootstraps/preview': '@Static("javascripts/bootstraps/preview.js")',
+                'bootstraps/preview':  '@Static("javascripts/bootstraps/preview.js")',
             }
-            facebook: '//connect.facebook.net/en_US/all.js',
-            zxcvbn: '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
-            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
-            foresee: 'vendor/foresee/20141007/foresee-trigger.js',
-            googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
-            core: '@Static("javascripts/core.js")',
-            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
-            'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
-            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")',
-            'bootstraps/crosswords': '@Static("javascripts/bootstraps/crosswords.js")',
-            'stripe': '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            text: 'text' // noop
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
         }
     };
 

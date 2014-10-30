@@ -25,6 +25,8 @@
 
         @fragments.message(metaData)
 
+        <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
+
         @if(showAdverts) {
             @fragments.commercial.topBanner()
         }
@@ -35,7 +37,12 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        @body
+        <div id="maincontent">
+        @if(BreakingNewsSwitch.isSwitchedOn) {
+            <div class="js-breaking-news-placeholder breaking-news"></div>
+        }
+            @body
+        </div>
 
         @fragments.footer(metaData)
 

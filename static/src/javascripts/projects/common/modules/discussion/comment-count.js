@@ -1,24 +1,27 @@
 define([
-    'common/utils/$',
     'bonzo',
     'qwery',
     'lodash/collections/forEach',
-    'common/utils/mediator',
+    'common/utils/$',
     'common/utils/ajax',
+    'common/utils/formatters',
+    'common/utils/mediator',
     'common/utils/template',
     'text!common/views/discussion/comment-count.html',
     'text!common/views/discussion/comment-count--content.html'
 ], function (
-    $,
     bonzo,
     qwery,
     forEach,
-    mediator,
+    $,
     ajax,
+    formatters,
+    mediator,
     template,
     commentCountTemplate,
     commentCountContentTemplate
 ) {
+
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
@@ -28,12 +31,12 @@ define([
 
     function getContentIds() {
         var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
-            l = nodes.length-1,
+            l = nodes.length - 1,
             data = '';
 
-        Array.prototype.forEach.call(nodes, function(el, i) {
+        Array.prototype.forEach.call(nodes, function (el, i) {
             data += el.getAttribute(attributeName);
-            if(i < l) { data += ','; }
+            if (i < l) { data += ','; }
         });
 
         return data;
@@ -45,9 +48,10 @@ define([
     }
 
     function renderCounts(counts) {
-        counts.forEach(function(c){
-            forEach(qwery('[data-discussion-id="' + c.id +'"]'), function (node) {
-                var $node = bonzo(node),
+        counts.forEach(function (c) {
+            forEach(qwery('[data-discussion-id="' + c.id + '"]'), function (node) {
+                var format,
+                    $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                     $container,
                     meta;
@@ -58,18 +62,18 @@ define([
                 $node.removeClass('u-h');
 
                 if ($node.attr('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count', node).append(c.count + '');
+                    $('.js-item__comment-count', node).append(formatters.integerCommas(c.count));
                     $('.js-item__comment-or-comments', node).append(commentOrComments);
                     $('.js-item__inline-comment-template', node).show('inline');
                 } else {
                     // put in trail__meta, if exists
                     meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node);
                     $container = meta.length ? bonzo(meta) : $node;
-                    var format = $node.data('commentcount-format');
+                    format = $node.data('commentcount-format');
 
                     $container.append(template(templates[format] || defaultTemplate, {
                         url: getContentUrl(node),
-                        count: c.count,
+                        count: formatters.integerCommas(c.count),
                         label: commentOrComments
                     }));
 
@@ -86,8 +90,8 @@ define([
             type: 'json',
             method: 'get',
             crossOrigin: true,
-            success: function(response) {
-                if(response && response.counts) {
+            success: function (response) {
+                if (response && response.counts) {
                     renderCounts(response.counts);
                     mediator.emit('modules:commentcount:loaded', response.counts);
                 }
@@ -96,13 +100,13 @@ define([
     }
 
     function init() {
-        if(document.body.querySelector('[data-discussion-id]')) {
+        if (document.body.querySelector('[data-discussion-id]')) {
             getCommentCounts();
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(); });
-        mediator.on('modules:related:loaded', function() { getCommentCounts(); });
+        mediator.on('module:trailblock-show-more:render', function () { getCommentCounts(); });
+        mediator.on('modules:related:loaded', function () { getCommentCounts(); });
     }
 
     return {
