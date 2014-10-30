@@ -176,10 +176,10 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .always(function(results) {
+        .done(function(results) {
             if (cc === checkCount) {
-                self.capiResults(results);
-                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
+                self.capiResults(results || []);
+                self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }
         });
     };
