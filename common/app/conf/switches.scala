@@ -121,6 +121,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val PngResizingSwitch = Switch("Performance", "png-resizing",
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
+  )
+
   val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
     "If this switch is on then content will have a shorter cache time",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
