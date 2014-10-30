@@ -6,12 +6,11 @@ define([
     'membership/stripe-error-messages'
 ], function (
     PaymentForm,
-    ajax, $,
+    ajax,
+    $,
     stripe,
     stripeErrorMessages
 ) {
-
-    ajax.init({page: {ajaxUrl: ''}});
 
     describe('Payment form module', function() {
 

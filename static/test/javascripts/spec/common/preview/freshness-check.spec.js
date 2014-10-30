@@ -12,6 +12,7 @@ define([
                 'common/utils/config': function () {
                     return {
                         page: {
+                            ajaxUrl: '',
                             isContent: true,
                             pageId: 'foo/bar'
                         },
@@ -45,7 +46,6 @@ define([
                     [200, {}, '{ "status": "fresh" }']
                 );
 
-                deps['common/utils/ajax'].init({ page: {  ajaxUrl: '', edition: 'UK' } });
                 deps['common/utils/mediator'].on('modules:freshness-check:fresh', function () {
                     expect($('.preview-refresh').length).toBe(0);
                     done();
@@ -61,7 +61,6 @@ define([
                     [200, {}, '{ "status": "stale" }']
                 );
 
-                deps['common/utils/ajax'].init({ page: {  ajaxUrl: '', edition: 'UK' } });
                 deps['common/utils/mediator'].on('modules:freshness-check:stale', function () {
                     expect($('.preview-refresh').length).toBeGreaterThan(0);
                     done();
@@ -72,7 +71,6 @@ define([
 
             it("should not be called if this is not content", function (freshness, deps) {
                 deps['common/utils/config'].page.isContent = false;
-                deps['common/utils/ajax'].init({ page: {  ajaxUrl: '', edition: 'UK' } });
                 freshness('last-modified=' + lastModifiedDate).check();
 
                 expect(server.requests.length).toBe(0);
@@ -80,7 +78,6 @@ define([
 
             it("should not be called if this is not content", function (freshness, deps) {
                 deps['common/utils/config'].switches.pollPreviewForFreshContent = false;
-                deps['common/utils/ajax'].init({ page: {  ajaxUrl: '', edition: 'UK' } });
                 freshness('last-modified=' + lastModifiedDate).check();
 
                 expect(server.requests.length).toBe(0);

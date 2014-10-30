@@ -9,7 +9,7 @@ define([
     ajax,
     Storage
 ) {
-    describe('Get user data', function() {
+    xdescribe('Get user data', function() {
         var config = {
                 'page' : {
                     'idApiUrl' : "https://idapi.theguardian.com",

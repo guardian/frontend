@@ -65,8 +65,4 @@ guardian = {
     }
 };
 
-s_account = 'guardiangu-frontend,guardiangu-network';
-
-require(['common/utils/ajax'], function(ajax) {
-    ajax.init();
-});
+window.s_account = 'guardiangu-frontend,guardiangu-network';
