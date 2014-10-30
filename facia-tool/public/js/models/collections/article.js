@@ -647,25 +647,16 @@ define([
             return false;
         };
 
-        function getTone(contentApiArticle) {
-            var tone = _.findWhere(contentApiArticle.tags, {type: 'tone'});
-            return tone && tone.id && tone.id.replace(/^tone\//, '');
-        }
-
         function getMainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {relation: 'main'});
-            return mainElement && mainElement.type;
+            return _.chain(contentApiArticle.elements).where({relation: 'main'}).pluck('type').first().value();
         }
 
         function getPrimaryTag(contentApiArticle) {
-            var ptag = _.findWhere(contentApiArticle.tags, {type: 'series'}) ||
-                       _.findWhere(contentApiArticle.tags, {type: 'keyword'});
-            return ptag && ptag.webTitle;
+            return _.chain(contentApiArticle.tags).pluck('webTitle').first().value();
         }
 
         function getContributorImage(contentApiArticle) {
-            var contributor = _.findWhere(contentApiArticle.tags, {type: 'contributor'});
-            return contributor && contributor.bylineLargeImageUrl;
+            return _.chain(contentApiArticle.tags).where({type: 'contributor'}).pluck('bylineLargeImageUrl').first().value();
         }
 
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
