@@ -372,8 +372,8 @@ define([
                     if (config.page.commentable && config.switches.discussion) {
                         var discussionLoader = new DiscussionLoader();
                         discussionLoader.attachTo($('.discussion')[0]);
+                        CommentCount.init();
                     }
-                    CommentCount.init();
                 });
             },
 
