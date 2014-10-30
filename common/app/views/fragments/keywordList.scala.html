@@ -16,8 +16,8 @@
     </li>
 }
 
-@defining(keywords.take(visibleKeywords)) { shownKeywords =>
-    @defining(keywords.drop(visibleKeywords)) { hiddenKeywords =>
+@defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { shownKeywords =>
+    @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
         @if(shownKeywords.nonEmpty) {
             <ul class="keyword-list inline-list">
                 @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
