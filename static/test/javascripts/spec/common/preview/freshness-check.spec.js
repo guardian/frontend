@@ -12,7 +12,6 @@ define([
                 'common/utils/config': function () {
                     return {
                         page: {
-                            ajaxUrl: '',
                             isContent: true,
                             pageId: 'foo/bar'
                         },

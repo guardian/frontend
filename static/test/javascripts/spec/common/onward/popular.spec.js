@@ -10,7 +10,6 @@ define([
                 'common/utils/config': function () {
                     return {
                         page: {
-                            ajaxUrl: '',
                             section: 'football'
                         }
                     };

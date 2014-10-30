@@ -6,7 +6,7 @@ define([
     config
 ) {
 
-    var ajaxHost = config.page.ajaxUrl;
+    var ajaxHost = config.page.ajaxUrl || '';
 
     function ajax(params) {
         if (!params.url.match('^https?://')) {
