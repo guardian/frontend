@@ -2,12 +2,14 @@
 define([
     'common/utils/ajax',
     'common/utils/atob',
+    'common/utils/config',
     'common/utils/cookies',
     'common/utils/storage',
     'common/modules/asyncCallMerger'
 ], function (
     ajax,
     utilAtob,
+    config,
     cookies,
     storage,
     asyncCallMerger
@@ -27,9 +29,9 @@ define([
     Id.idApiRoot = null;
     Id.idUrl = null;
 
-    Id.init = function (conf) {
-        Id.idApiRoot = conf.page.idApiUrl;
-        Id.idUrl = conf.page.idUrl;
+    Id.init = function () {
+        Id.idApiRoot = config.page.idApiUrl;
+        Id.idUrl = config.page.idUrl;
     };
 
     /**
