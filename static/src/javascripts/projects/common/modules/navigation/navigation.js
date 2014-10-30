@@ -21,7 +21,7 @@ define([
         },
 
         replaceAllSectionsLink: function () {
-            $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');ocal
+            $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');
         },
 
         enableMegaNavToggle: function () {
