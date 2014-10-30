@@ -97,8 +97,7 @@ function (
     }
 
     function isFromGuardian(item) {
-        console.log(urlHost(item.id()) === 'www.theguardian.com');
-        return urlHost(item.id()) === 'www.theguardian.com';
+        return urlHost(item.id()) === vars.CONST.mainDomain;
     }
 
     function decorateFromOpenGraph(item) {

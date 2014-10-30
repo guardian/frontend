@@ -58,6 +58,8 @@ define([
             commercial: 60000 * 2 * (pageConfig.lowFrequency || 60)
         },
 
+        mainDomain:            'www.theguardian.com',
+
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
         apiSearchParams:       'show-elements=video&show-tags=tone,type,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',

@@ -1,15 +1,17 @@
 /* global _: true */
 define([
     'knockout',
-    'models/group',
+    'modules/vars',
     'modules/copied-article',
+    'models/group',
     'utils/mediator',
     'utils/deep-get',
     'utils/parse-query-params'
 ], function(
     ko,
-    Group,
+    vars,
     copiedArticle,
+    Group,
     mediator,
     deepGet,
     parseQueryParams
@@ -150,7 +152,7 @@ define([
                     if (sourceItem) {
                         sourceItem = JSON.parse(sourceItem);
 
-                    } else if ((unknownQueryParams.url || '').indexOf('http://www.theguardian.com/') === 0) {
+                    } else if ((unknownQueryParams.url || '').indexOf('http://' + vars.CONST.mainDomain) === 0) {
                         sourceItem = { id: unknownQueryParams.url };
                         sourceGroup = undefined;
 
