@@ -104,6 +104,9 @@ function (
                         item.meta.headline(og.title ? (og.site_name && !isFromGuardian ? og.site_name + ' - ' : '') + og.title : title);
                         item.meta.trailText(og.description);
                     })
+                    .fail(function() {
+                        item.meta.headline(undefined);
+                    });
 
                     item.convertToSnap();
                 }
