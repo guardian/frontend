@@ -69,6 +69,14 @@ object CollectionEssentials {
     collection.lastUpdated,
     if (collection.curated.isEmpty) Some(9) else None
   )
+
+  def fromTrails(trails: Seq[Trail]) = CollectionEssentials(
+    trails,
+    None,
+    None,
+    None,
+    None
+  )
 }
 
 case class CollectionEssentials(

@@ -1,6 +1,6 @@
 import common.CloudWatchApplicationMetrics
 import conf.Gzipper
-import dfp.DfpDataCacheLifecycle
+import dfp.{DfpAgentLifecycle, DfpDataCacheLifecycle}
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{WithFilters, Results, RequestHeader}
@@ -11,6 +11,7 @@ object Global extends WithFilters(Gzipper)
   with CloudWatchApplicationMetrics
   with Results
   with SurgingContentAgentLifecycle
+  with DfpAgentLifecycle
   with DfpDataCacheLifecycle {
 
   override lazy val applicationName = "frontend-admin"
