@@ -88,7 +88,11 @@ define([
 
         },
         ready = function () {
-            if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
+            if (
+                !userPrefs.isOff('adverts') &&
+                !config.page.shouldHideAdverts &&
+                (!config.page.isSSL || config.page.section === 'admin')
+            ) {
                 modules.commercialLoaderHelper();
                 modules.tagContainer();
                 modules.articleAsideAdverts();
