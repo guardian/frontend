@@ -118,6 +118,12 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     status(result) should be (200)
   }
 
+  it should "know which backend served the request" in {
+    val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
+    status(result) should be (200)
+    header("X-Gu-Backend-App", result).head should be ("test-project")
+  }
+
   it should "error if there is an appropriate header and it is switched on" in {
     ForceHttpResponseCodeSwitch.switchOn()
 

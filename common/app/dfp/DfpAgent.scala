@@ -117,7 +117,9 @@ trait DfpAgent {
   }
 
   def sponsorshipTag(config: CollectionConfig): Option[String] = {
-    containerSponsoredTag(config, {isSponsored(_, None)}) orElse containerSponsoredTag(config, {isAdvertisementFeature(_, None)})
+    containerSponsoredTag(config, {isSponsored(_, None)}) orElse
+      containerSponsoredTag(config, {isAdvertisementFeature(_, None)}) orElse
+      containerSponsoredTag(config, {isFoundationSupported(_, None)})
   }
 
   def getSponsor(tags: Seq[Tag]): Option[String] = tags.flatMap(tag => getSponsor(tag.id)).headOption
