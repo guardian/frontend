@@ -370,8 +370,10 @@ define([
             initDiscussion: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
-                        var discussionLoader = new DiscussionLoader();
-                        discussionLoader.attachTo($('.discussion')[0]);
+                        var el = qwery('.discussion')[0];
+                        if (el) {
+                            new DiscussionLoader().attachTo(el);
+                        }
                     }
                     CommentCount.init();
                 });
