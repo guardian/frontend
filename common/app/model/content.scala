@@ -248,7 +248,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val sectionLabelLink : String = {
     if(this.isCommentIsFree) section else tags.find(_.isKeyword) match {
-      case Some(tag) => tag.webUrl
+      case Some(tag) => tag.id
       case _ => ""
     }
   }
