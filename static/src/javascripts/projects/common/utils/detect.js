@@ -113,13 +113,25 @@ define([
         return totalTime;
     }
 
+    function isIOS() {
+        return /(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i.test(navigator.userAgent);
+    }
+
+    function isAndroid() {
+        return /Android/i.test(navigator.userAgent);
+    }
+
+    function isFireFoxOSApp() {
+        return navigator.mozApps && !window.locationbar.visible;
+    }
+
     function getConnectionSpeed(performance, connection, reportUnknown) {
 
         connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
 
         var isMobileNetwork = connection.type === 3 // connection.CELL_2G
-                  || connection.type === 4 // connection.CELL_3G
-                  || /^[23]g$/.test(connection.type), // string value in new spec
+                || connection.type === 4 // connection.CELL_3G
+                || /^[23]g$/.test(connection.type), // string value in new spec
             loadTime,
             speed;
 
@@ -318,6 +330,9 @@ define([
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
+        isIOS: isIOS,
+        isAndroid: isAndroid,
+        isFireFoxOSApp: isFireFoxOSApp,
         isBreakpoint: isBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
