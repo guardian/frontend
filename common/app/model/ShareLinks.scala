@@ -23,7 +23,6 @@ trait ShareLinks { self: Content =>
     lazy val link = shareCampaignUrl("sbl", blockId)
     lazy val twitter = shareCampaignUrl("stw", blockId).urlEncoded
     lazy val linkedin = shareCampaignUrl("sli", blockId).urlEncoded
-    lazy val pinterest = shareCampaignUrl("spi", blockId).urlEncoded
     lazy val whatsapp = shareCampaignUrl("swa", blockId)
     lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
 
@@ -34,7 +33,7 @@ trait ShareLinks { self: Content =>
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + webTitle + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
       case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=$linkedin"))
-      case "pinterest"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=$pinterest"))
+      case "pinterest"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
