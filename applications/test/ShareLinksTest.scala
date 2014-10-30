@@ -22,7 +22,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
           "https://twitter.com/intent/tweet?text=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fstw",
           "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsbl",
           "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsgp&amp;hl=en-GB&amp;wwc=1",
-          "whatsapp://send?text=%222014+Wildlife+photographer+of+the+Year%22+http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fswa"))
+          "whatsapp://send?text=%222014%20Wildlife%20photographer%20of%20the%20Year%22%20http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fswa"))
       }
     }
   }
