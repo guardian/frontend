@@ -21,8 +21,7 @@ function (
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
             capiId = urlAbsPath(item.id()),
-            data = cache.get('contentApi', capiId),
-            isFromGuardian;
+            data = cache.get('contentApi', capiId);
 
         if (snapId) {
             item.id(snapId);
@@ -34,10 +33,8 @@ function (
             defer.resolve(item);
 
         } else {
-            isFromGuardian = urlHost(item.id()) === 'www.theguardian.com';
-
             // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
-            if (isFromGuardian && capiId.match(/\+/)) {
+            if (capiId.match(/\+/) && isFromGuardian(item)) {
                 capiId = 'search?tag=' + capiId.split(/\+/).join(',') + '&';
             } else {
                 capiId += '?';
@@ -76,37 +73,14 @@ function (
                     err = 'Sorry, that link cannot be added to a front';
 
                 // A snap, but a link to unavailable guardian content
-                } else if (isFromGuardian && results && results.length === 0) {
+                } else if (results && results.length === 0 && isFromGuardian(item)) {
                     err = 'Sorry, that Guardian content is unavailable';
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
-                    item.meta.headline('Fetching headline...');
-
-                    authedAjax.request({
-                        url: '/http/proxy/' + item.id() + (isFromGuardian ? '%3Fview=mobile' : ''),
-                        type: 'GET'
-                    })
-                    .done(function(response) {
-                        var doc = document.createElement("div"),
-                            title,
-                            og = {};
-
-                        doc.innerHTML = response;
-
-                        Array.prototype.forEach.call(doc.querySelectorAll('meta[property^="og:"]'), function(tag) {
-                            og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
-                        });
-
-                        title = doc.querySelector('title');
-                        title = title ? title.innerHTML : undefined;
-
-                        item.meta.headline(og.title ? (og.site_name && !isFromGuardian ? og.site_name + ' - ' : '') + og.title : title);
-                        item.meta.trailText(og.description);
-                    })
-                    .fail(function() {
-                        item.meta.headline(undefined);
-                    });
+                    if(!item.meta.headline()) {
+                        decorateFromOpenGraph(item);
+                    }
 
                     item.convertToSnap();
                 }
@@ -120,6 +94,42 @@ function (
         }
 
         return defer.promise();
+    }
+
+    function isFromGuardian(item) {
+        console.log(urlHost(item.id()) === 'www.theguardian.com');
+        return urlHost(item.id()) === 'www.theguardian.com';
+    }
+
+    function decorateFromOpenGraph(item) {
+        var fromGuardian = isFromGuardian(item);
+
+        item.meta.headline('Fetching headline...');
+
+        authedAjax.request({
+            url: '/http/proxy/' + item.id() + (fromGuardian ? '%3Fview=mobile' : ''),
+            type: 'GET'
+        })
+        .done(function(response) {
+            var doc = document.createElement("div"),
+                title,
+                og = {};
+
+            doc.innerHTML = response;
+
+            Array.prototype.forEach.call(doc.querySelectorAll('meta[property^="og:"]'), function(tag) {
+                og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
+            });
+
+            title = doc.querySelector('title');
+            title = title ? title.innerHTML : undefined;
+
+            item.meta.headline(og.title ? (og.site_name && !fromGuardian ? og.site_name + ' - ' : '') + og.title : title);
+            item.meta.trailText(og.description);
+        })
+        .fail(function() {
+            item.meta.headline(undefined);
+        });
     }
 
     function decorateItems (articles) {
@@ -193,7 +203,9 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            if (!resp.response || resp.response.status === 'error') {
+            if (!resp.response
+                || _.intersection(['content', 'editorsPicks', 'results', 'mostViewed'], _.keys(resp.response)).length === 0
+                || resp.response.status === 'error') {
                 defer.resolve();
             } else if (resp.response.content) {
                 defer.resolve([resp.response.content]);
