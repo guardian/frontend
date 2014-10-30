@@ -211,8 +211,11 @@
 }
 
 .content__headline--kicker {
-    margin-bottom: -$gs-baseline / 2;
     padding-bottom: 0;
+
+    @include mq(leftCol) {
+        margin-bottom: -$gs-baseline / 2;
+    }
 }
 
 .content__head--byline-pic {
