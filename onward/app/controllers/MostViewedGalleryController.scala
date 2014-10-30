@@ -5,7 +5,7 @@ import common._
 import layout.ContainerLayout
 import model._
 import slices.FixedContainers
-import views.support.{TemplateDeduping, ForceGroupsCollection, MultimediaContainer}
+import views.support.{TemplateDeduping, ForceGroupsCollection}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedGalleryAgent
 

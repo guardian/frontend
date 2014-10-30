@@ -177,23 +177,6 @@ define([
                 expect(googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
             });
 
-            it('should build correct page targeting', function (dfp) {
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-
-                // expected targetting
-                [
-                    ['edition', 'us'],
-                    ['se', 'happy-times'],
-                    ['ct', 'article'],
-                    ['pt', 'article'],
-                    ['p', 'ng'],
-                    ['bp', breakpoint]
-                ].forEach(function (target) {
-                        expect(googletag.pubads().setTargeting).toHaveBeenCalledWith(target[0], target[1]);
-                    });
-            });
-
             it('should define slots', function (dfp) {
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });

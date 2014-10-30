@@ -81,6 +81,20 @@
     @include clearfix;
 }
 
+// To show skip links when user tabs over
+.skip:focus,
+.skip:active {
+    font-size: 80%;
+    display: block;
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    text-decoration: none;
+
+    position: static !important;
+    width: 100% !important;
+    height: $gs-row-height / 2 !important;
+    text-align: center;
+}
+
 
 /**
  * Responsive media (images, videos…)

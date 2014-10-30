@@ -7,7 +7,7 @@ import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import updates.{CollectionWithLayout, FrontIndex}
-import views.support.{TemplateDeduping, NewsContainer}
+import views.support.{TemplateDeduping}
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction

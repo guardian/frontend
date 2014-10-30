@@ -49,6 +49,13 @@ category: Common
         width: 32px;
     }
 }
+
+.social__item--whatsapp {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .social__action {
     display: block;
 }
@@ -104,6 +111,16 @@ category: Common
 
     .content--media & {
         display: block;
+    }
+}
+
+.social-icon--whatsapp {
+    background-color: $social-whatsapp;
+    &:hover {
+        background-color: darken($social-whatsapp, 10%);
+    }
+    i {
+        background-size: 57% !important;
     }
 }
 
