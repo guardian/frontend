@@ -152,7 +152,7 @@ define([
                     if (sourceItem) {
                         sourceItem = JSON.parse(sourceItem);
 
-                    } else if ((unknownQueryParams.url || '').indexOf('http://' + vars.CONST.mainDomain) === 0) {
+                    } else if (unknownQueryParams.url) {
                         sourceItem = { id: unknownQueryParams.url };
                         sourceGroup = undefined;
 
