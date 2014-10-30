@@ -1,7 +1,6 @@
 /* global _: true */
 define([
     'knockout',
-    'modules/vars',
     'modules/copied-article',
     'models/group',
     'utils/mediator',
@@ -9,7 +8,6 @@ define([
     'utils/parse-query-params'
 ], function(
     ko,
-    vars,
     copiedArticle,
     Group,
     mediator,
