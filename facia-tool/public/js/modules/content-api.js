@@ -52,7 +52,7 @@ function (
                     err;
 
                 // ContentApi item
-                if (results.length === 1) {
+                if (results && results.length === 1) {
                     capiItem = results[0];
                     icc = internalContentCode(capiItem);
                     if (icc) {
@@ -63,6 +63,10 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
+                // A snap, but not an absolute url
+                } else if (!item.id().match(/^https?:\/\//)) {
+                    err = 'Sorry, URLs must begin with http...';
+
                 // A snap, but snaps can only be created to the Clipboard
                 } else if (item.group.parentType !== 'Clipboard') {
                     err = 'Sorry, special links must be dragged to the Clipboard, initially';
@@ -71,12 +75,8 @@ function (
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
 
-                // A snap, but not an absolute url
-                } else if (!item.id().match(/^https?:\/\//) && results.length === 0) {
-                    err = 'Sorry, that\'s not a valid URL';
-
                 // A snap, but a link to unavailable guardian content
-                } else if (isFromGuardian && results.length === 0) {
+                } else if (isFromGuardian && results && results.length === 0) {
                     err = 'Sorry, that Guardian content is unavailable';
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
@@ -117,6 +117,10 @@ function (
 
         fetchContentByIds(ids)
         .done(function(results){
+            if (!_.isArray(results)) {
+                return;
+            }
+
             results.forEach(function(result) {
                 var icc = internalContentCode(result);
 
@@ -162,8 +166,8 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            if (!resp.response) {
-                defer.resolve([]);
+            if (!resp.response || resp.response.status === 'error') {
+                defer.resolve();
             } else if (resp.response.content) {
                 defer.resolve([resp.response.content]);
             } else {
