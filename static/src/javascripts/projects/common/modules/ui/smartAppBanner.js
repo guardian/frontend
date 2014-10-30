@@ -1,4 +1,4 @@
-    define([
+define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
