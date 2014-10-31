@@ -141,7 +141,7 @@ define([
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
-                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img.src, '700', '700'))
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
             }];
 
         return template(blockSharingTpl, {

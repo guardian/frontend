@@ -587,6 +587,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
 
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
+
   override def schemaType = Some("http://schema.org/ImageGallery")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
