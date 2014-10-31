@@ -8,7 +8,8 @@ define([
     'common/modules/article/twitter',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
-    'common/modules/ui/rhc'
+    'common/modules/ui/rhc',
+    'common/modules/ui/selectionSharing'
 ], function (
     fence,
     $,
@@ -19,7 +20,8 @@ define([
     twitter,
     geoMostPopular,
     OpenCta,
-    rhc
+    rhc,
+    selectionSharing
 ) {
 
     var modules = {
@@ -54,6 +56,10 @@ define([
                 if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
                     geoMostPopular.render();
                 }
+            },
+
+            initSelectionSharing: function () {
+                selectionSharing.init();
             }
 
         },
@@ -63,6 +69,7 @@ define([
             modules.initFence();
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
+            modules.initSelectionSharing();
 
             mediator.emit('page:article:ready');
         };

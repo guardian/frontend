@@ -42,10 +42,10 @@
     }
 
     @if(content.showBylinePic) {
-        <div class="media__img meta__image">
-            @fragments.meta.bylineImage(content)
-        </div>
         <div class="media__body meta__body">
+            <div class="media__img meta__image">
+                @fragments.meta.bylineImage(content)
+            </div>
             @metaBody()
         </div>
     } else {
