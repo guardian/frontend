@@ -8,6 +8,7 @@ define([
     'utils/strip-empty-query-params',
     'utils/as-observable-props',
     'utils/populate-observables',
+    'utils/full-trim',
     'utils/identity'
 ], function(
     ko,
@@ -18,6 +19,7 @@ define([
     stripEmptyQueryParams,
     asObservableProps,
     populateObservables,
+    fullTrim,
     identity
 ) {
     var checkCount = 0;
@@ -120,6 +122,20 @@ define([
     };
 
     Collection.prototype.save = function() {
+        var self = this,
+            errs = _.chain([
+                    {key: 'displayName', errMsg: 'enter a title'},
+                    {key: 'type', errMsg: 'choose a layout'}
+                ])
+                .filter(function(test) { return !fullTrim(_.result(self.meta, test.key)); })
+                .pluck('errMsg')
+                .value();
+
+        if (errs.length) {
+            window.alert('Oops! You must ' + errs.join(', and ') + '...');
+            return;
+        }
+
         this.state.isOpen(false);
         this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
         this.state.apiQueryStatus(undefined);
@@ -160,10 +176,10 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .always(function(results) {
+        .done(function(results) {
             if (cc === checkCount) {
-                self.capiResults(results);
-                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
+                self.capiResults(results || []);
+                self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }
         });
     };

@@ -90,6 +90,10 @@
 
     .headline-column {
         min-height: gs-height(11) - $gs-baseline;
+        max-height: gs-height(12) - $gs-baseline;
+        -webkit-column-fill: auto;
+        -moz-column-fill: auto;
+        column-fill: auto;
     }
 
     .headline-column__item {

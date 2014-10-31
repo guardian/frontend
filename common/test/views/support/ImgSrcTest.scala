@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import model.{ImageContainer, ImageAsset}
 import com.gu.contentapi.client.model.Asset
-import conf.Switches.ImageServerSwitch
+import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import conf.Configuration
 
 
@@ -46,6 +46,13 @@ class ImgSrcTest extends FlatSpec with Matchers  {
   it should "not convert the URL of the image if it is disabled" in {
     ImageServerSwitch.switchOff()
     GalleryLargeTrail.bestFor(image) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
+  }
+
+  it should "convert the URL of the image if it is a PNG" in {
+    ImageServerSwitch.switchOn()
+    PngResizingSwitch.switchOn()
+    val pngImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)), null, 0)
+    GalleryLargeTrail.bestFor(pngImage) should be (Some(s"${imageHost}/static/w-480/h-288/q-95/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png"))
   }
 
   it should "not convert the URL of the image if it is a GIF (we do not support animated GIF)" in {

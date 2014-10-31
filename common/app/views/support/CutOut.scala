@@ -32,6 +32,7 @@ case object Landscape extends Orientation
 case object Portrait extends Orientation
 
 case class CutOut(altText: String, imageUrl: String, orientation: Orientation) {
+  def getUrl = ImgSrc(imageUrl, Item300)
   def cssClass = orientation match {
     case Landscape => "image--landscape"
     case Portrait => "image--portrait"

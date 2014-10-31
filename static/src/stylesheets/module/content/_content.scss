@@ -210,6 +210,14 @@
     }
 }
 
+.content__headline--kicker {
+    padding-bottom: 0;
+
+    @include mq(leftCol) {
+        margin-bottom: -$gs-baseline / 2;
+    }
+}
+
 .content__head--byline-pic {
     .byline-img {
         float: right;
@@ -271,13 +279,6 @@
                 padding-right: $gs-gutter*2;
             }
         }
-    }
-}
-
-.content__headline__kicker {
-    &:after {
-        content: ' /';
-        color: fade-out($c-neutral1, .8);
     }
 }
 
@@ -608,7 +609,6 @@
 
 .meta__social {
     border-top: 1px dotted colour(neutral-5);
-    height: $gs-baseline * 4;
-    padding: 2px 0;
+    padding: 0;
     @include box-sizing(border-box);
 }

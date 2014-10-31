@@ -71,8 +71,12 @@
             }
 
             .content__headline--byline .tone-colour,
-            .content__headline__kicker {
+            .content__headline--kicker {
                 color: $tonal__headline-accent;
+            }
+
+            .content__headline--kicker {
+                font-weight: 200;
             }
         }
 

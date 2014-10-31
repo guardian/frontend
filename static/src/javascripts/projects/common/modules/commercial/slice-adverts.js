@@ -65,11 +65,19 @@ define([
             _(adSlices)
                 .slice(0, adNames.length)
                 .forEach(function ($adSlice, index) {
-                    var adName = adNames[index],
-                        $adSlot = bonzo(createAdSlot(adName, 'container-inline'));
+                    var adName        = adNames[index],
+                        $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('mobile-only'),
+                        $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('hide-on-mobile');
+
+                    // add a tablet+ ad to the slice
                     $adSlice
                         .removeClass('facia-slice__item--no-mpu')
-                        .append($adSlot);
+                        .append($tabletAdSlot);
+                    // add a mobile advert after the container
+                    $mobileAdSlot
+                        .insertAfter($.ancestor($adSlice[0], 'container'));
                 })
                 .valueOf();
 

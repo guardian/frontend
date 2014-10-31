@@ -2,17 +2,14 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import layout.ContainerLayout
-import model.{Collection, FrontProperties, Audio, Cached}
+import layout.{CollectionEssentials, ContainerAndCollection}
+import model.{FrontProperties, Audio, Cached}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedAudioAgent
-import slices.FixedContainers
-import views.support.TemplateDeduping
+import services.CollectionConfigWithId
+import slices.{Fixed, FixedContainers}
 
 object MostViewedAudioController extends Controller with Logging with ExecutionContexts {
-
-  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }
@@ -40,17 +37,20 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
   private def renderMostViewedAudio(audios: Seq[Audio], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
     val dataId = s"$mediaType/most-viewed"
     val displayName = Some(s"popular in $mediaType")
-    val properties = FrontProperties.empty
-    val collection = Collection(audios.take(4), displayName)
-    val layout = ContainerLayout(FixedContainers.fixedSmallSlowIV, collection, None)
     val config = CollectionConfig.withDefaults(displayName = displayName)
 
-    val html = views.html.fragments.containers.facia_cards.container(collection, layout, 1, properties, dataId)(request, new views.support.TemplateDeduping, config)
+    val html = views.html.fragments.containers.facia_cards.container(
+      ContainerAndCollection(
+        1,
+        Fixed(FixedContainers.fixedSmallSlowIV),
+        CollectionConfigWithId(dataId, config),
+        CollectionEssentials(audios take 4, displayName, None, None, None)
+      ),
+      FrontProperties.empty
+    )(request)
 
     JsonComponent(
       "html" -> html
     )
-
   }
-
 }

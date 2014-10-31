@@ -13,9 +13,12 @@ import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
 import scala.util.{Failure, Try}
 
-object DfpDataHydrator extends Logging {
+object DfpDataHydrator {
+  def apply(): DfpDataHydrator = new DfpDataHydrator()
+}
 
-  private lazy val dfpSession: Option[DfpSession] = try {
+class DfpDataHydrator extends Logging {
+  private val dfpSession: Option[DfpSession] = try {
     for {
       clientId <- AdminConfiguration.dfpApi.clientId
       clientSecret <- AdminConfiguration.dfpApi.clientSecret

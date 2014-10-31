@@ -57,20 +57,23 @@
 .gallery2__figcaption {
     @include fs-textSans(1);
     padding-top: $gs-baseline/2;
-    overflow: hidden;
+    overflow: visible;
     max-height: 100%;
+    position: relative;
 
     @include mq(mobileLandscape, $until: tablet) {
         padding-right: gs-span(2);
     }
 
-    @include mq(tablet, $until: desktop) {
-        padding-right: gs-span(3);
+    @include mq($until: desktop) {
+        padding-right: $gs-gutter * 10;
+        margin-bottom: $gs-baseline * 2;
     }
 
-    @include mq($until: desktop) {
-        margin-bottom: $gs-baseline*3;
+    @include mq($until: tablet) {
+        padding-right: $gs-gutter * 2;
     }
+
     @include mq(desktop) {
         @include fs-textSans(2, true);
         position: absolute;
@@ -219,10 +222,21 @@
 
 .block-share--gallery {
     margin-top: $gs-baseline;
+    white-space: nowrap;
     clear: both;
 
     @include mq($until: tablet) {
         display: none;
+    }
+
+    @include mq(tablet, desktop) {
+        position: absolute;
+        top: -$gs-baseline / 3;
+        right: 0;
+
+        .gallery-lightbox & {
+            right: $gs-gutter / 2;
+        }
     }
 
     .block-share__item {
@@ -235,55 +249,73 @@
     }
 }
 
-.block-share--gallery .block-share__link {
-
+.block-share--gallery {
     .block-share__item--facebook {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-facebook--white); }
+        .i {
+            @include icon(share-facebook--white);
+        }
+
+        &:hover {
+            border-color: #ffffff;
+            .i {
+                @include icon(share-facebook--white);
+            }
+        }
     }
 
     .block-share__item--twitter {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-twitter--white); }
+        .i {
+            @include icon(share-twitter--white);
+        }
+
+        &:hover {
+            border-color: #ffffff;
+            .i {
+                @include icon(share-twitter--white);
+            }
+        }
     }
 
     .block-share__item--gplus {
         border-color: $c-neutral2;
         color: $c-neutral2;
-        .i { @include icon(share-gplus--white); }
+        .i {
+            @include icon(share-gplus--white);
+        }
+
+        &:hover {
+            border-color: #ffffff;
+            .i {
+                @include icon(share-gplus--white);
+            }
+        }
     }
 
-    &:hover {
+    .block-share__item--linkedin {
+        border-color: $c-neutral2;
+        color: $c-neutral2;
 
-        .block-share__item--facebook {
-            border-color: #ffffff;
-            .i { @include icon(share-facebook--white); }
+        .i {
+            @include icon(share-linkedin--white);
         }
 
-        .block-share__item--twitter {
+        &:hover {
             border-color: #ffffff;
-            .i { @include icon(share-twitter--white); }
-        }
-
-        .block-share__item--gplus {
-            border-color: #ffffff;
-            .i { @include icon(share-gplus--white); }
+            .i {
+                @include icon(share-linkedin--white);
+            }
         }
     }
 }
 
 .block-share--gallery-mobile {
-    position: absolute;
     cursor: pointer;
     opacity: .8;
-    .block-share__item {
-        .i {
-            opacity: 1;
-            @include icon(share-android--white);
-        }
-    }
+    margin-top: $gs-baseline / 2;
 }
 
 .block-share--gallery {
@@ -310,3 +342,14 @@
         opacity: 1;
     }
 }
+
+.overlay--gallery {
+    background-color: $c-neutral1;
+    .share-modal__title {
+        color: #ffffff;
+    }
+    .share-modal__close .i {
+        @include icon(close-icon-white-small);
+    }
+}
+

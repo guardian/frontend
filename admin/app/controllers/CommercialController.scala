@@ -4,16 +4,13 @@ import common.{ExecutionContexts, Edition, Logging}
 import conf.{LiveContentApi, Configuration}
 import controllers.AuthLogging
 import dfp.DfpDataHydrator
-import model.{Content, NoCache}
+import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.mvc.Controller
 import tools.Store
-import views.support.TemplateDeduping
+import play.api.libs.json.{JsString, JsValue}
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
-
-  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
   }
@@ -47,16 +44,36 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
-    val templates = DfpDataHydrator.loadActiveUserDefinedCreativeTemplates()
+    val templates = DfpDataHydrator().loadActiveUserDefinedCreativeTemplates()
     // get some example trails
-    LiveContentApi.search(Edition(request))
-      .pageSize(4)
+    lazy val trailsFuture = LiveContentApi.search(Edition(request))
+      .pageSize(2)
       .response.map { response  =>
         response.results.map {
           Content(_)
         }
-    } map { trails =>
+    }
+    trailsFuture map { trails =>
       NoCache(Ok(views.html.commercial.templates(Configuration.environment.stage, templates, trails)))
+    }
+  }
+
+  def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
+    // get some example trails
+    lazy val trailsFuture = LiveContentApi.search(Edition(request))
+      .pageSize(2)
+      .response.map { response  =>
+      response.results.map {
+        Content(_)
+      }
+    }
+    trailsFuture map { trails =>
+      object CommercialPage {
+        def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
+          override def metaData: Map[String, JsValue] = super.metaData ++ List("keywordIds" -> JsString("live-better"))
+        }
+      }
+      NoCache(Ok(views.html.commercial.sponsoredContainers(Configuration.environment.stage, CommercialPage(), trails)))
     }
   }
 }

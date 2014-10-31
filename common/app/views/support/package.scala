@@ -4,6 +4,7 @@ import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
 import dfp.DfpAgent
+import layout.ContainerAndCollection
 import model._
 
 import java.net.URLEncoder._
@@ -316,6 +317,15 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+object InBodyLinkDataComponentCleaner extends HtmlCleaner {
+  def clean(body: Document): Document = {
+    body.getElementsByTag("a").foreach { link =>
+      link.attr("data-component", "in-body-link")
+    }
+    body
+  }
+}
+
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
 
@@ -452,6 +462,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
             tagLink.attr("href", LinkTo(keyword.url, edition))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
+            tagLink.attr("data-component", "auto-linked-tag")
             tagLink.addClass("u-underline")
             val tagLinkHtml = tagLink.toString
             val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
@@ -625,7 +636,7 @@ object ContentLayout {
         case a: Article if !a.hasSupportingAtBottom => Some("leftcol")
         case v: Video if(v.standfirst.getOrElse("").length > 350) => Some("leftcol")
         case a: Audio if(a.body.getOrElse("").length > 800) => Some("leftcol")
-        case a: ImageContent => Some("wide")
+        case i: ImageContent if (i.mainPicture.flatMap(_.largestEditorialCrop).exists(crop => crop.height / crop.width.toFloat > 0.5)) => Some("wide")
         case g: Gallery => Some("leftcol")
         case _ => None
       }
@@ -654,7 +665,7 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagType(page: MetaData) = {
+  def getTagContainerDefinition(page: MetaData) = {
     if (page.isContributorPage) {
       slices.TagContainers.contributorTagPage
     } else if (page.keywords.nonEmpty) {
@@ -927,39 +938,27 @@ object GetClasses {
     }
   }
 
+  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+    forNewStyleContainer(
+      containerDefinition.config.config,
+      containerDefinition.index == 0,
+      containerDefinition.displayName.isDefined
+    )
+
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      Seq(
-        "js-container--fetch-updates",
-        "fc-container"
-      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
+      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
+        Seq("fc-container") ++
+        commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses: _*
     )
   }
-
-  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val oldClasses = Seq(
-      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
-    ).flatten
-
-    RenderClasses(
-      s"container--${container.containerType}" +:
-        (commonContainerStyles(config, index == 0, hasTitle) ++
-        extraClasses ++ oldClasses): _*
-    )
-  }
-}
-
-object LatestUpdate {
-
-  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
-    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
 
-  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
     case content: Content =>
         content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
         content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")

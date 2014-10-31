@@ -17,7 +17,7 @@ $vjs-progress-inset-bottom: 4px;
 .gu-media-wrapper {
     background: #000000;
     -webkit-transform: translateZ(0); // fixes iOS hover bug
-    margin-bottom: $gs-baseline * 1.5;
+    margin-bottom: ($gs-baseline / 3) * 2;
 }
 .gu-media-wrapper--audio {
     background-color: $vjs-control-colour;

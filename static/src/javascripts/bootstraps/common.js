@@ -24,7 +24,6 @@ define([
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/discussion/api',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -75,7 +74,6 @@ define([
     register,
     ScrollDepth,
     userAdTargeting,
-    discussionApi,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -370,11 +368,12 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init();
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
-                        var discussionLoader = new DiscussionLoader();
-                        discussionLoader.attachTo($('.discussion')[0]);
+                        var el = qwery('.discussion')[0];
+                        if (el) {
+                            new DiscussionLoader().attachTo(el);
+                        }
                     }
                     CommentCount.init();
                 });

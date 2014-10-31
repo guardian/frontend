@@ -346,7 +346,7 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'Add link text!' : 'Loading...'),
+                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...'),
                             css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
@@ -366,7 +366,7 @@
                             <!-- /ko -->
 
                             <!-- ko if: state.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'special link'"></span>
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'link'"></span>
                             <!-- /ko -->
 
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->
