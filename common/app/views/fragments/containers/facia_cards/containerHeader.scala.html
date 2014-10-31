@@ -1,11 +1,11 @@
-@(collection: model.Collection, frontProperties: model.FrontProperties, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{ImgSrc, Item140, LatestUpdate, RenderClasses}
+@import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 @import common.Localisation
 
-@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+@defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
     <div class="fc-container__header js-container__header">
         @title.map { title =>
             @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
@@ -21,12 +21,12 @@
                         <span class="u-text-hyphenate">@Html(Localisation(title))</span>
                     }
 
-                    @if(config.showDateHeader.exists(identity)) {
+                    @if(containerDefinition.showDateHeader) {
                         @date(org.joda.time.DateTime.now())
                     }
 
-                    @if(config.showLatestUpdate.exists(identity)) {
-                        @LatestUpdate(collection, collection.items).map { updateTime =>
+                    @if(containerDefinition.showLatestUpdate) {
+                        @containerDefinition.latestUpdate.map { updateTime =>
                             @latestUpdate(updateTime)
                         }
                     }
@@ -34,7 +34,7 @@
             }
         }
         @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
-            @if(containerIndex == 0 && hasDescription){
+            @if(containerDefinition.index == 0 && hasDescription){
                 <div class="@RenderClasses(Map(
                     "fc-container__header__description" -> true,
                     "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">

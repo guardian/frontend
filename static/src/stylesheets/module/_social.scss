@@ -37,17 +37,16 @@ category: Common
 
 .social {
     overflow-y: hidden;
-    margin-left: -$gs-gutter/5;
+    height: 32px;
 }
 
 .social__item {
     float: left;
     width: 36px;
-    padding: 0 $gs-gutter/5;
+    padding: 0 3px $gs-baseline/2 0;
 
     @include mq(leftCol) {
         width: 32px;
-        padding-right: 0;
     }
 }
 
@@ -109,6 +108,10 @@ category: Common
     &:hover {
         background-color: darken($social-gplus, 10%);
     }
+
+    .content--media & {
+        display: block;
+    }
 }
 
 .social-icon--whatsapp {
@@ -128,9 +131,31 @@ category: Common
     }
 }
 
+.social-icon--linkedin {
+    background-color: $social-linkedin;
+
+    .i {
+        background-size: 49% !important;
+    }
+
+    &:hover {
+        background-color: darken($social-linkedin, 10%);
+    }
+}
+
 .social-icon--email {
     background-color: $social-email;
     &:hover {
         background-color: darken($social-email, 10%);
+    }
+}
+
+.selection-sharing {
+    position: absolute;
+    padding-top: $gs-baseline / 3;
+
+    .social__item {
+        padding: 0 $gs-gutter / 10;
+        width: 32px;
     }
 }

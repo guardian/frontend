@@ -3,7 +3,7 @@ define(['modules/vars'], function(vars) {
     function request(opts) {
         return $.ajax(
             _.extend({}, {
-                dataType: !opts.type || opts.type === 'get' ? 'json' : undefined,
+                dataType: !opts.type ? 'json' : undefined,
                 contentType: opts.data ? 'application/json' : undefined
             }, opts)
         ).fail(function(xhr) {
