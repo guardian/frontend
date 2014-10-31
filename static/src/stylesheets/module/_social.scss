@@ -149,3 +149,13 @@ category: Common
         background-color: darken($social-email, 10%);
     }
 }
+
+.selection-sharing {
+    position: absolute;
+    padding-top: $gs-baseline / 3;
+
+    .social__item {
+        padding: 0 $gs-gutter / 10;
+        width: 32px;
+    }
+}
