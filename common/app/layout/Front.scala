@@ -47,6 +47,10 @@ object Front extends implicits.Collections {
     }
   }
 
+  def deduplicateCutouts(front: Front) = {
+
+  }
+
   def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._

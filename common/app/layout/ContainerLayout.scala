@@ -2,6 +2,7 @@ package layout
 
 import model.Trail
 import slices.{ContainerDefinition, RestrictTo, MobileShowMore, Slice}
+import views.support.CutOut
 
 object ContainerLayout extends implicits.Collections {
   def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], mobileShowMore: MobileShowMore): ContainerLayout = {
@@ -12,7 +13,8 @@ object ContainerLayout extends implicits.Collections {
         mobileShowMore match {
           case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
           case _ => None
-        }
+        },
+        CutOut.fromTrail(trail)
       )
     }
 

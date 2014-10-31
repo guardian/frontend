@@ -1,22 +1,19 @@
 package layout
 
+import cards.{ListItem, CardType}
+
 object ItemClasses {
-  val showMore = ItemClasses(mobile = "list", tablet = "list")
+  val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
 }
 
-case class ItemClasses(mobile: String, tablet: String, desktop: Option[String] = None) {
+case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardType] = None) {
   /** Template helper */
-  def classes: String = s"fc-item--$mobile-mobile fc-item--$tablet-tablet" +
-    desktop.map(d => s" fc-item--$d-desktop").getOrElse("")
+  def classes: String = s"fc-item--${mobile.cssClassName}-mobile fc-item--${tablet.cssClassName}-tablet" +
+    desktop.map(d => s" fc-item--${d.cssClassName}-desktop").getOrElse("")
 
-  /** Video.JS has issues if we render too many videos on a front (even if those videos are never displayed
-    * or loaded).
-    *
-    * As such we only render the video player if there is a breakpoint on which it will be shown. This is
-    * currently determined in quite a hacky way based on the item classes.
-    */
-  def showVideoPlayer =
-    Seq("half", "three", "full", "mega-full").exists(size => classes.contains(size))
+  def allTypes = Set(mobile, tablet) ++ desktop.toSet
+
+  def showVideoPlayer = allTypes.exists(_.showVideoPlayer)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
