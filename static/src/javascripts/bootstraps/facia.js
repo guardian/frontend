@@ -13,7 +13,6 @@ define([
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-fc-show-more',
     'facia/modules/ui/container-fetch-updates',
-    'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/snaps'
 ], function (
@@ -29,7 +28,6 @@ define([
     GeoMostPopularFront,
     ContainerFcShowMore,
     containerFetchUpdates,
-    ContainerShowMore,
     ContainerToggle,
     snaps
 ) {
@@ -42,9 +40,6 @@ define([
             showContainerShowMore: function () {
                 var containerShowMoreAdd = function () {
                     var c = document;
-                    $('.js-container--show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMore();
-                    });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
                         new ContainerFcShowMore(container).addShowMoreButton();
