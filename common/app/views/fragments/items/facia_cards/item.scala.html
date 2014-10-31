@@ -68,7 +68,10 @@
                     }
                 }
 
-                <div class="fc-item__content">
+                <div class="@RenderClasses(Map(
+                    ("fc-item__content", true),
+                    ("fc-item__content--pushbottom", !trail.shouldHidePublicationDate)
+                ))">
                     <div class="@RenderClasses(Map(
                         ("fc-item__header", true),
                         ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
