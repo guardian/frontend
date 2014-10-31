@@ -23,6 +23,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/storage-stats',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-count',
@@ -74,6 +75,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    storageStats,
     userAdTargeting,
     discussionApi,
     CommentCount,
@@ -418,8 +420,8 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
-
             }
+
         },
         ready = function () {
             modules.initDiscussion();
@@ -455,6 +457,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            storageStats.run();
 
             mediator.emit('page:common:ready');
         };
