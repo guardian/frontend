@@ -30,6 +30,7 @@ trait ShareLinks { self: Content =>
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + webTitle + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
@@ -38,6 +39,6 @@ trait ShareLinks { self: Content =>
   def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus").flatMap(shareLink(_, Some(blockId)))
 
   def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
-
-  lazy val pageShares: Seq[ShareLink] = List("email", "facebook", "twitter", "gplus", "whatsapp").flatMap(shareLink(_, None))
+  protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
+  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, None))
 }
