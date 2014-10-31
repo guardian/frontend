@@ -1001,6 +1001,19 @@ $timeline-width: 15px;
     }
 }
 
+.share-modal__item--pinterest {
+    background-color: $social-pinterest;
+    color: #ffffff;
+    .i {
+        @include icon(share-pinterest--white);
+        margin-left: 6px !important;
+    }
+
+    &:hover {
+        background-color: darken($social-pinterest, 15%);
+    }
+}
+
 .block-share--liveblog-mobile {
     margin-left: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;

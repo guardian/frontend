@@ -33,7 +33,8 @@ trait ShareLinks { self: Content =>
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + webTitle + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
       case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=$linkedin"))
-      case "pinterest"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
+      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webUrl.urlEncoded}"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }

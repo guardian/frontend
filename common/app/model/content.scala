@@ -574,8 +574,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
-  override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterest", "whatsapp")
-  override protected lazy val blockShareOrder = List("facebook", "twitter", "pinterest")
+  override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
+  override protected lazy val blockShareOrder = List("facebook", "twitter", "pinterestBlock")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
