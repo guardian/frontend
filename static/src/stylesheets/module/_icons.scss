@@ -36,11 +36,11 @@ blockquote.quoted:before {
 }
 
 .item--dark .i-comment-light-grey {
-    @extend %i-comment-grey;
+    @extend %i-comment-light-grey;
 
     @if ($svg-support) {
         .svg & {
-            @extend %svg-i-comment-grey;
+            @extend %svg-i-comment-light-grey;
         }
     }
 }
