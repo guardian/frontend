@@ -1,12 +1,12 @@
-@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
+@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import model.Collection
 @import views.html.fragments.containers.facia_cards.{slice, date}
-@import views.html.fragments.keywordList
-@import views.support.MostPopularTags.topTags
-@import views.support.{GetClasses, PreviousAndNext, TemplateDeduping}
+@import views.support.{GetClasses, PreviousAndNext}
 @import common.LinkTo
 @import dfp.DfpAgent
+
+@* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section

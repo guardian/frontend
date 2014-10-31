@@ -1,0 +1,17 @@
+@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+
+@import common.Localisation
+@import views.html.fragments.containers.facia_cards.{containerHeader, slice, show_more}
+
+@containerHeader(containerDefinition, frontProperties)
+
+@for(title <- containerDefinition.displayName; containerLayout <- containerDefinition.containerLayout) {
+    <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
+         data-title="@Html(Localisation(title))">
+        @for(sliceWithCards <- containerLayout.slices) {
+            @slice(sliceWithCards, containerDefinition.index)(request, containerDefinition.config.config)
+        }
+
+        @show_more(containerLayout.remainingCards, containerDefinition.index)(request, containerDefinition.config.config)
+    </div>
+}

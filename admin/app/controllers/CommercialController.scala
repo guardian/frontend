@@ -8,13 +8,9 @@ import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.mvc.Controller
 import tools.Store
-import views.support.TemplateDeduping
 import play.api.libs.json.{JsString, JsValue}
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
-
-  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
   }
