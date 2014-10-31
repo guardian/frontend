@@ -100,7 +100,7 @@
 
                 @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
                 <div class="fc-item__avatar">
-                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@cutOut.getUrl"></div>
+                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
                 </div>
                 }
 
