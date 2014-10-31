@@ -450,7 +450,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     var wordCount = 0
     val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
       wordCount += el.text.length
-      wordCount < 1500
+      wordCount < 2000
     }
     val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
     supportingEls.isDefined
