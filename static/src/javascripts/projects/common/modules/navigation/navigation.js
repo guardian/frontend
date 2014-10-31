@@ -11,12 +11,17 @@ define([
         init: function () {
             this.addMegaNavMenu();
             this.enableMegaNavToggle();
+            this.replaceAllSectionsLink();
         },
 
         addMegaNavMenu: function () {
             var megaNav     = $('.js-transfuse'),
                 placeholder = $('.' + megaNav.attr('data-transfuse-target'));
             placeholder.html(megaNav.html());
+        },
+
+        replaceAllSectionsLink: function () {
+            $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');
         },
 
         enableMegaNavToggle: function () {

@@ -435,7 +435,8 @@ object Switches extends Collections {
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
-    PollPreviewForFreshContentSwitch
+    PollPreviewForFreshContentSwitch,
+    PngResizingSwitch
   )
 
   val httpSwitches: List[Switch] = List(
