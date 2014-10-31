@@ -11,9 +11,9 @@ define([
     'common/utils/to-array',
     // Modules
     'facia/modules/onwards/geo-most-popular-front',
-    'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-fetch-updates',
     'facia/modules/ui/container-toggle',
+    'facia/modules/ui/container-show-more',
     'facia/modules/ui/snaps'
 ], function (
     bonzo,
@@ -26,9 +26,9 @@ define([
     storage,
     toArray,
     GeoMostPopularFront,
-    ContainerShowMore,
     containerFetchUpdates,
     ContainerToggle,
+    ContainerShowMore,
     snaps
 ) {
     var modules = {

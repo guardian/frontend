@@ -1,6 +1,6 @@
 define([
-    'bonzo',
     'bean',
+    'bonzo',
     'qwery',
     'common/utils/$',
     'common/utils/template',
