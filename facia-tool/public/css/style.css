@@ -31,11 +31,11 @@ a:hover,
 }
 
 header {
-    height: 51px;
+    height: 50px;
     position: absolute;
     width: 100%;
     background: #ffffff;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    border-bottom: 1px solid #dddddd;
     z-index: 1;
     overflow: hidden;
 }
@@ -135,13 +135,17 @@ h1 {
     font-size: 10px;
     color: #666666;
     text-transform: uppercase;
-    padding: 0 0 0 4px;
 }
 
 .title {
-    font-size: 18px;
-    color: #333333;
-    padding: 0 0 0 4px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.title--clipboard {
+    margin-top: 5px;
 }
 
 .count {
@@ -216,7 +220,7 @@ h1 {
 
 .list-header__collapser {
     float: right;
-    margin: 0 6px 0 8px;
+    margin: 5px 6px 0 8px;
     opacity: 0.75;
 }
 
@@ -224,6 +228,7 @@ h1 {
     float: right;
     font-weight: normal;
     font-size: 10px;
+    line-height: 24px;
     color: #666666;
 }
 
@@ -255,8 +260,7 @@ h1 {
 }
 
 .col__inner {
-    padding: 15px 10px 15px 15px;
-    box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
+    padding: 10px 10px 15px 15px;
 }
 
 .modes {
@@ -281,7 +285,7 @@ h1 {
     display: inline-block;
     height: 35px;
     color: #999999;
-    padding: 8px 20px;
+    padding: 8px 16px;
     text-align: center;
     font-size: 14px;
     transition: background-color 0.2s;
@@ -309,9 +313,8 @@ h1 {
 }
 
 .collection {
-    padding: 0 0 3px 0;
+    padding: 0 0 5px 0;
     border-top: 1px solid #CCCCCC;
-    box-shadow: inset 0 22px 10px -25px rgba(0,0,0,0.4);
 }
 
 .collection:first-child {
@@ -324,11 +327,10 @@ h1 {
     box-sizing: border-box;
     min-height: 56px;
     overflow: hidden;
-    padding: 0 0 0 4px;
     position: relative;
     color: #999999;
     background: #ffffff;
-    border-top: 5px solid #ffffff;
+    border-top: 10px solid #ffffff;
     -webkit-transition: border-color 150ms;
        -moz-transition: border-color 150ms;
             transition: border-color 150ms;
@@ -373,10 +375,9 @@ h1 {
 
 .article .thumb {
     position: absolute;
-    top: 3px;
-    width: 75px;
-    height: 45px;
-    border-radius: 2px;
+    top: 0;
+    width: 83px;
+    height: 50px;
     background-color: #dddddd;
     background-size: auto 100%;
     background-repeat: no-repeat;
@@ -389,18 +390,17 @@ h1 {
 
 .article .thumb--cutout {
     position: absolute;
-    top: 23px;
-    left: 60px;
+    top: 22px;
+    left: 64px;
     height: 28px;
     width: 25px;
-    border-radius: 2px;
     background-size: auto 100%;
     background-repeat: no-repeat;
 }
 
 .article__content {
     display: block;
-    margin: 0 125px 0 85px;
+    margin: 0 125px 0 92px;
     min-height: 50px;
 }
 
@@ -484,8 +484,8 @@ h1 {
 
 .article__times {
     position: absolute;
-    top: 3px;
-    right: 5px;
+    top: 1px;
+    right: 4px;
     font-size: 11px;
     line-height: 12px;
 }
@@ -503,7 +503,7 @@ h1 {
 }
 
 .article__overrides {
-    margin: 0 0 10px 85px;
+    margin: 0 0 10px 92px;
     font-size: 12px;
     line-height: 14px;
 }
@@ -565,9 +565,7 @@ input[type="text"] {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 16px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 2px;
+    border-radius: 0;
     border: 1px solid #cccccc;
     background-color: #ffffff;
 }
@@ -603,9 +601,9 @@ select {
     width: 100%;
     height: 17px;
     transition: height 100ms;
-    padding: 0 2px;
+    padding: 0 4px;
     border: 0;
-    margin: 3px 0 -1px -2px;
+    margin: 2px 0 -1px -4px;
     z-index: 10;
     color: #999999;
     background: #dddddd;
@@ -666,7 +664,7 @@ select {
 
 .element {
     display: inline-block;
-    margin: 3px 0;
+    margin: 2px 0;
     width: 100%;
 }
 
@@ -707,19 +705,19 @@ button {
 
 .article__spark {
     position: absolute;
-    top: 16px;
+    top: 13px;
     right: 5px;
 }
 
 .group-name {
-    padding: 2px 0 0 0;
-    margin: 5px 0 2px 4px;
+    border-top: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    padding: 0 0 0 6px;
+    margin: 10px 0 0 0;
     font-size: 12px;
-    line-height: 12px;
-    color: #333333;
-    border-top: 1px dotted #cccccc;
+    line-height: 20px;
     text-transform: uppercase;
-    width: 143px;
+    width: 140px;
 }
 
 .search-tools {
@@ -733,7 +731,7 @@ button {
 .search-form {
     position: relative;
     height: 35px;
-    padding: 5px 0 0 4px;
+    padding-top: 10px;
 }
 
 .search-term {
@@ -767,6 +765,7 @@ button {
     float: left;
     width: 35%;
     color: #999999;
+    height: 22px;
 }
 
 .autocompleter input {
@@ -815,7 +814,7 @@ button {
     height: 30px;
 }
 
-.front-selector__age {
+.front-age {
     font-size: 12px;
     color: #CCCCCC;
     margin-left: 5px;
@@ -900,11 +899,11 @@ button {
 .article__tools {
     display: none;
     position: absolute;
-    top: 2px;
-    right: 3px;
+    top: 0;
+    right: 0;
     width: 126px;
     height: 50px;
-    background: #eeeeee;
+    background: #EEEEEE;
     z-index: 10;
 }
 
@@ -915,17 +914,15 @@ button {
 .tool--small {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #CCCCCC;
     text-align: center;
     font-size: 12px;
     line-height: 22px;
-    color: #333333;
+    color: #999999;
+    background: transparent;
     width: 62px;
-    height: 22px;
-    padding: 0;
-    opacity: 0.7;
+    height: 24px;
+    padding: 1px;
     float: right;
-    border-radius: 1px;
 }
 
 .tool--small i {
@@ -934,11 +931,6 @@ button {
 
 .tool--done {
     float: right;
-}
-
-
-.article > .closed .tool--small {
-    margin: 1px 1px 0 0;
 }
 
 .tool--small--href,
@@ -1282,11 +1274,10 @@ button {
 
 .has-playable {
     position: absolute;
-    top: 3px;
-    left: 60px;
+    top: 0;
+    left: 62px;
     background: rgba(254,254,254,.6);
-    padding: 1px 3px 1px 2px;
-    border-radius: 1px;
+    padding: 1px 3px 1px 4px;
 }
 
 /*****************************************/
