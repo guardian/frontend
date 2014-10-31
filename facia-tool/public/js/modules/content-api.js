@@ -34,7 +34,7 @@ function (
 
         } else {
             // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
-            if (capiId.match(/\+/) && isFromGuardian(item)) {
+            if (capiId.match(/\+/) && isGuardianUrl(item.id())) {
                 capiId = 'search?tag=' + capiId.split(/\+/).join(',') + '&';
             } else {
                 capiId += '?';
@@ -73,7 +73,7 @@ function (
                     err = 'Sorry, that link cannot be added to a front';
 
                 // A snap, but a link to unavailable guardian content
-                } else if (results && results.length === 0 && isFromGuardian(item)) {
+                } else if (results && results.length === 0 && isGuardianUrl(item.id())) {
                     err = 'Sorry, that Guardian content is unavailable';
 
                 // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
@@ -96,17 +96,18 @@ function (
         return defer.promise();
     }
 
-    function isFromGuardian(item) {
-        return urlHost(item.id()) === vars.CONST.mainDomain;
+    function isGuardianUrl(url) {
+        return urlHost(url) === vars.CONST.mainDomain;
     }
 
     function decorateFromOpenGraph(item) {
-        var fromGuardian = isFromGuardian(item);
+        var url = item.id(),
+            isOnSite = isGuardianUrl(url);
 
         item.meta.headline('Fetching headline...');
 
         authedAjax.request({
-            url: '/http/proxy/' + item.id() + (fromGuardian ? '%3Fview=mobile' : ''),
+            url: '/http/proxy/' + url + (isOnSite ? '%3Fview=mobile' : ''),
             type: 'GET'
         })
         .done(function(response) {
@@ -123,8 +124,11 @@ function (
             title = doc.querySelector('title');
             title = title ? title.innerHTML : undefined;
 
-            item.meta.headline(og.title ? (og.site_name && !fromGuardian ? og.site_name + ' - ' : '') + og.title : title);
+            item.meta.headline(og.title || title);
             item.meta.trailText(og.description);
+            item.meta.customKicker(isOnSite ? undefined : og.site_name || urlHost(url));
+            item.meta.showKickerCustom(true);
+            item.updateEditorsDisplay();
         })
         .fail(function() {
             item.meta.headline(undefined);
