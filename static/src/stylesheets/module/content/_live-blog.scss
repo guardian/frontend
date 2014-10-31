@@ -933,6 +933,24 @@ $timeline-width: 15px;
     }
 }
 
+.block-share__item--linkedin {
+    border-color: $social-linkedin;
+    color: $social-linkedin;
+    .i {
+        @include icon(share-linkedin--blue);
+        background-size: 58% !important;
+        background-position: center center !important;
+    }
+
+    &:hover {
+        border-color: darken($social-linkedin, 15%);
+        .i {
+            @include icon(share-linkedin--blue-dark);
+        }
+    }
+}
+
+
 .share-modal__item--facebook {
     background-color: $social-facebook;
     color: #ffffff;
