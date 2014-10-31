@@ -346,7 +346,7 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'Add link text!' : 'Loading...'),
+                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...'),
                             css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
