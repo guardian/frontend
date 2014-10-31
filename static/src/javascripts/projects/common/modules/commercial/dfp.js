@@ -80,7 +80,10 @@ define([
         ],
         callbacks = {
             '300,251': function (e, $adSlot) {
-                new Sticky($adSlot.parent()[0], { top: 12 }).init();
+                var $mpuContainer = $adSlot.parent();
+
+                $mpuContainer.next().remove();
+                new Sticky($mpuContainer[0], { top: 12 }).init();
             },
             '300,1': function (e, $adSlot) {
                 $adSlot.addClass('u-h');
