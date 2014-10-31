@@ -243,6 +243,26 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   } yield FaciaImageElement(src, width, height)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
+
+  lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
+
+  lazy val sectionLabelLink : String = {
+    if(this.isCommentIsFree) section else tags.find(_.isKeyword) match {
+      case Some(tag) => tag.id
+      case _ => ""
+    }
+  }
+
+  lazy val sectionLabelName : String = {
+    if(this.isCommentIsFree) sectionName else tags.find(_.isKeyword) match {
+      case Some(tag) => tag.webTitle
+      case _ => ""
+    }
+  }
+
+  lazy val seriesTag: Option[Tag] = {
+    if(isSeries) series.headOption else blogs.find{tag => tag.id != "commentisfree/commentisfree"}
+  }
 }
 
 object Content {
@@ -430,7 +450,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     var wordCount = 0
     val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
       wordCount += el.text.length
-      wordCount < 1500
+      wordCount < 2000
     }
     val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
     supportingEls.isDefined

@@ -283,9 +283,6 @@ $block-padding-right: $gs-gutter;
             margin-left: $block-padding-left;
         }
     }
-    .block-elements > *:last-child {
-        margin-bottom: 0;
-    }
 
     .block-elements {
 
@@ -325,7 +322,8 @@ $block-padding-right: $gs-gutter;
         /* Media
            ========================================================= */
         > .element {
-            margin: 0 0 $gs-baseline;
+            margin-left: 0;
+            margin-right: 0;
         }
         > .element-image + .element {
             margin-top: $gs-baseline*-1;
@@ -398,7 +396,6 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             margin-left: $gs-gutter/2;
             margin-right: $gs-gutter/2;
-            padding: $gs-baseline/3 0 $gs-baseline*2;
 
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;

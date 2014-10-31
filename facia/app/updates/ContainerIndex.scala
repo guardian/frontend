@@ -1,10 +1,9 @@
 package updates
 
-import layout.{Mobile, Card, ContainerLayout}
+import layout._
 import model.{Content, FaciaPage}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
-import views.support.LatestUpdate
 
 object ContainerIndexItem {
   implicit val jsonWrites = Json.writes[ContainerIndexItem]
@@ -44,11 +43,11 @@ object FrontIndex {
   implicit val jsonWrites = Json.writes[FrontIndex]
 
   def fromFaciaPage(faciaPage: FaciaPage): FrontIndex = {
-    FrontIndex((CollectionWithLayout.fromFaciaPage(faciaPage) flatMap {
-      case CollectionWithLayout(collection, config, maybeLayout) =>
+    FrontIndex((faciaPage.front.containers flatMap {
+      case cac @ ContainerAndCollection(_, _, config, _) =>
         (for {
-          layout <- maybeLayout
-          latestUpdate <- LatestUpdate(collection, collection.items)
+          layout <- cac.containerLayout
+          latestUpdate <- cac.latestUpdate
         } yield ContainerIndex.fromContainerLayout(layout, latestUpdate)).map(config.id -> _)
     }).toMap)
   }

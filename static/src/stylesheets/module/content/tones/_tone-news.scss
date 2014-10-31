@@ -1,6 +1,15 @@
 @include tone-content-icons(news, 'news');
 
 .tonal--tone-news {
+    .tonal__main {
+        .element-pullquote {
+            &:before,
+            &:after {
+                background-color: $c-newsDefault;
+            }
+        }
+    }
+
     // Interactives need help because their headers are not tonal
     &.content--interactive {
         .commentcount i {
