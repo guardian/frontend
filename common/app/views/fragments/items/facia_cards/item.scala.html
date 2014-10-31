@@ -98,10 +98,12 @@
                     @meta(trail)
                 </div>
 
-                @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
-                <div class="fc-item__avatar">
-                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@cutOut.getUrl"></div>
-                </div>
+                @if(modifierClasses.showCutOut) {
+                    @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                    <div class="fc-item__avatar">
+                        <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@cutOut.getUrl"></div>
+                    </div>
+                    }
                 }
 
                 <footer class="fc-item__footer--horizontal">

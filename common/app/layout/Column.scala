@@ -14,6 +14,8 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def allTypes = Set(mobile, tablet) ++ desktop.toSet
 
   def showVideoPlayer = allTypes.exists(_.showVideoPlayer)
+
+  def showCutOut = allTypes.exists(_.showCutOut)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
