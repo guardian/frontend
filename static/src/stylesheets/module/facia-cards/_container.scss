@@ -369,13 +369,11 @@ $header-image-size-desktop: 120px;
 }
 
 .content-footer {
-    .fc-container {
-        .fc-item__content {
-            padding-bottom: $gs-baseline * 2;
-        }
+    .fc-item__content {
+        padding-bottom: $gs-baseline * 2;
+    }
 
-        .fc-item__timestamp {
-            display: block;
-        }
+    .fc-item__timestamp {
+        display: block;
     }
 }
