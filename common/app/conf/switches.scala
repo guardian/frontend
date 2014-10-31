@@ -133,6 +133,11 @@ object Switches extends Collections {
 
   // Commercial
 
+  val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
+    "Have Admin will poll DFP to precache adserving data.",
+    safeState = On, sellByDate = never
+  )
+
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
     safeState = On, sellByDate = never
@@ -376,6 +381,7 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AjaxRelatedContentSwitch,
+    DfpCachingSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
