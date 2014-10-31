@@ -126,8 +126,12 @@ function (
 
             item.meta.headline(og.title || title);
             item.meta.trailText(og.description);
-            item.meta.customKicker(isOnSite ? undefined : og.site_name || urlHost(url));
-            item.meta.showKickerCustom(true);
+
+            if(!isOnSite) {
+                item.meta.customKicker(og.site_name || urlHost(url).replace(/^www\./, ''));
+                item.meta.showKickerCustom(true);
+            }
+
             item.updateEditorsDisplay();
         })
         .fail(function() {

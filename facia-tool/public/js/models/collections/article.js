@@ -225,6 +225,7 @@ define([
                     editable: true,
                     singleton: 'kicker',
                     label: 'custom kicker',
+                    labelMeta: 'customKicker',
                     type: 'boolean'
                 },
                 {
@@ -371,7 +372,14 @@ define([
                 display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
                 display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
-                label = opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : '');
+                label = _.chain([
+                    opts.label,
+                    _.result(this.state, opts.labelState),
+                    _.result(this.meta,  opts.labelMeta)
+                ])
+                .compact()
+                .value()
+                .join(': ');
 
                 return display ? label : false;
             } else {
