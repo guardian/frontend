@@ -1,7 +1,7 @@
 package layout
 
-import model.Trail
-import slices.{ContainerDefinition, RestrictTo, MobileShowMore, Slice}
+import model.{Content, Trail}
+import slices._
 import views.support.CutOut
 
 object ContainerLayout extends implicits.Collections {
@@ -30,6 +30,11 @@ object ContainerLayout extends implicits.Collections {
 
   def fromContainerDefinition(containerDefinition: ContainerDefinition, items: Seq[Trail]) =
     apply(containerDefinition.slices, items, containerDefinition.mobileShowMore)
+
+  def fromContainer(container: Container, items: Seq[Trail]) =
+    ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
+      case definition: ContainerDefinition => fromContainerDefinition(definition, items)
+    }
 }
 
 case class ContainerLayout(

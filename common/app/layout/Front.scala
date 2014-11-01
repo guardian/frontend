@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.client.models.{CollectionConfig, Config}
+import com.gu.facia.client.models.CollectionConfig
 import model.{Collection, Content, Trail}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
@@ -47,10 +47,6 @@ object Front extends implicits.Collections {
     }
   }
 
-  def deduplicateCutouts(front: Front) = {
-
-  }
-
   def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
@@ -59,7 +55,10 @@ object Front extends implicits.Collections {
       val container = Container.fromConfig(config.config)
 
       val (newSeen, newItems) = deduplicate(seen, container, collection.items)
-      (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems)))
+
+      val containerLayout = ContainerLayout.fromContainer(container, newItems)
+
+      (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems), containerLayout))
     }._2.filterNot(_.items.isEmpty))
   }
 }
@@ -91,6 +90,19 @@ case class CollectionEssentials(
 )
 
 object ContainerAndCollection {
+  def apply(
+    index: Int,
+    container: Container,
+    config: CollectionConfigWithId,
+    collectionEssentials: CollectionEssentials
+  ): ContainerAndCollection = ContainerAndCollection(
+    index,
+    container,
+    config,
+    collectionEssentials,
+    ContainerLayout.fromContainer(container, collectionEssentials.items)
+  )
+
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = ContainerAndCollection(
     index = 2,
     container = Fixed(FixedContainers.fixedMediumFastXII),
@@ -103,7 +115,8 @@ case class ContainerAndCollection(
   index: Int,
   container: Container,
   config: CollectionConfigWithId,
-  collectionEssentials: CollectionEssentials
+  collectionEssentials: CollectionEssentials,
+  containerLayout: Option[ContainerLayout]
 ) {
   def dataId = config.id
 
@@ -121,22 +134,6 @@ case class ContainerAndCollection(
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
     collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
-  /** Slice-based containers have a definition, which deals with layout & show more, etc. */
-  def containerDefinition = container match {
-    case Dynamic(dynamicContainer) =>
-      dynamicContainer.containerDefinitionFor(
-        collectionEssentials.items.collect({ case c: Content => c }).map(Story.fromContent)
-      )
-
-    case Fixed(containerDefinition) => Some(containerDefinition)
-
-    case _ => None
-  }
-
-  def containerLayout = containerDefinition map { definition =>
-    ContainerLayout(definition.slices, collectionEssentials.items, definition.mobileShowMore)
-  }
 
   def items = collectionEssentials.items
 
