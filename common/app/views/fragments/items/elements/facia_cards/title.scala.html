@@ -47,7 +47,5 @@
         }
     }
 } {
-    @header.url.get(request).map { url =>
-        <a href="@url" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(header.headline)</span></a>
-    }
+    <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(header.headline)</span></a>
 }
