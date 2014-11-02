@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 object ContainerIndexItem {
   implicit val jsonWrites = Json.writes[ContainerIndexItem]
 
-  def fromCard(card: Card) = card.item.id map { id =>
+  def fromCard(card: FaciaCardAndIndex) = card.item.id map { id =>
     ContainerIndexItem(
       id,
       !card.hideUpTo.exists(_ == Mobile)

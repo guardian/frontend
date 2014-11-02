@@ -2,16 +2,15 @@ package layout
 
 import com.gu.facia.client.models.CollectionConfig
 import model.Trail
-import views.support.CutOut
 
 sealed trait Breakpoint
 
 case object Mobile extends Breakpoint
 case object Desktop extends Breakpoint
 
-object Card {
+object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
-  def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = Card(
+  def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
     index,
     FaciaCard.fromTrail(trail, CollectionConfig.emptyConfig, itemClasses),
     None
@@ -19,7 +18,7 @@ object Card {
 }
 
 /** TODO refactor this to be FaciaCardAndIndex and move important stuff to FaciaCard */
-case class Card(
+case class FaciaCardAndIndex(
   index: Int,
   item: FaciaCard,
   hideUpTo: Option[Breakpoint]

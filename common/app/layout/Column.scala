@@ -72,7 +72,7 @@ object SliceWithCards {
         val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt itemsToConsume(column)
 
         val cards = itemsForColumn map { case IndexedTrail(trail, index) =>
-          Card(
+          FaciaCardAndIndex(
             index,
             FaciaCard.fromTrail(
               trail,
@@ -107,4 +107,4 @@ case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
 }
 
 
-case class ColumnAndCards(column: Column, cards: Seq[Card])
+case class ColumnAndCards(column: Column, cards: Seq[FaciaCardAndIndex])

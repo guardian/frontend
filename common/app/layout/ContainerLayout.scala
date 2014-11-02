@@ -28,7 +28,7 @@ object ContainerLayout extends implicits.Collections {
     }
 
     ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
-      Card(
+      FaciaCardAndIndex(
         index,
         FaciaCard.fromTrail(trail, config, ItemClasses.showMore),
         hideUpTo = Some(Desktop)
@@ -47,5 +47,5 @@ object ContainerLayout extends implicits.Collections {
 
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
-  remainingCards: Seq[Card]
+  remainingCards: Seq[FaciaCardAndIndex]
 )

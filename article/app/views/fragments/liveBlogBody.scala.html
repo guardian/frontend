@@ -5,7 +5,7 @@
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
 @import views.BodyCleaner
-@import layout.{Card, ItemClasses}
+@import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 
 @defining(model.article) {  article =>
@@ -104,7 +104,7 @@
                             <ul class="u-unstyled facia-slice facia-slice--single-col">
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
-                                        Card.fromTrail(trail, ItemClasses.liveBlogMore, index),
+                                        FaciaCardAndIndex.fromTrail(trail, ItemClasses.liveBlogMore, index),
                                         0,
                                         isRow = false,
                                         isList = false

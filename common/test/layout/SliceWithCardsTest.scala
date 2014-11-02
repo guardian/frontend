@@ -8,7 +8,7 @@ import org.scalatest.{Matchers, FlatSpec}
 class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   val NumberOfFixtures = 40
 
-  val cardFixtures = (1 to NumberOfFixtures) map { n => Card(n, new Trail {
+  val cardFixtures = (1 to NumberOfFixtures) map { n => FaciaCardAndIndex(n, new Trail {
 
     override def customImageCutout: Option[FaciaImageElement] = None
 
