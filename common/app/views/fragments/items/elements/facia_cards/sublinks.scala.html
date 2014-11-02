@@ -9,7 +9,7 @@
         <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
         @sublinks.zipWithIndex.map { case (link, index) =>
             <li class="@GetClasses.forSubLink(link)" data-link-name="sublinks | @{index + 1}">
-                @sublink(link, 0, 0, true)
+                @sublink(link)
             </li>
         }
         </ul>
