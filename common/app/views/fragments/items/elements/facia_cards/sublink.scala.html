@@ -1,11 +1,11 @@
-@(trail: model.Trail)(implicit request: RequestHeader)
+@(sublink: layout.Sublink)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{ItemKicker, BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
+@import views.support.{BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
 @import views.support.{CartoonKicker, TagKicker, SectionKicker, FreeHtmlKicker, RemoveOuterParaHtml}
 
 <h3 class="fc-sublink__title">
-  @ItemKicker.fromTrail(trail, None).map {
+  @sublink.kicker.map {
     case BreakingNewsKicker => {
       <span class="fc-sublink__kicker fc-sublink__live-indicator">Breaking News</span>
     }
@@ -47,9 +47,9 @@
     }
   }
 
-  @LinkTo(trail).map { url =>
+  @sublink.url.get(request).map { url =>
     <a href="@url" class="fc-sublink__link" data-link-name="article">
-      @RemoveOuterParaHtml(trail.headline)
+      @RemoveOuterParaHtml(sublink.headline)
     </a>
   }
 </h3>

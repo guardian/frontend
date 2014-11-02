@@ -4,7 +4,7 @@ import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
 import dfp.DfpAgent
-import layout.ContainerAndCollection
+import layout.{FaciaCard, Sublink, ContainerAndCollection}
 import model._
 
 import java.net.URLEncoder._
@@ -750,176 +750,47 @@ object RenderClasses {
 }
 
 object GetClasses {
+  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
+    val hasImage = item.hasImage
 
-  def forCollectionItem(trail: Trail,
-                        additionalClasses: String = ""): String = {
-    val f: Seq[(Trail) => String] = Seq(
-      (trail: Trail) => trail match {
-        case _: Gallery => "facia-slice__item--content-type-gallery"
-        case _: Video   => "facia-slice__item--content-type-video"
-        case _: Audio   => "facia-slice__item--content-type-audio"
-        case _          => ""
-      }
-    )
-    val baseClasses: Seq[String] = Seq(
-      additionalClasses,
-      "l-row__item",
-      "facia-slice__item",
-      "u-faux-block-link",
-      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
+    RenderClasses(Map(
+      ("fc-item", true),
+      ("js-fc-item", true),
+      ("fc-item--has-cutout", item.cutOut.isDefined),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
+      ("fc-item--has-no-image", !item.hasImage),
+      ("fc-item--has-image", item.hasImage),
+      ("item--has-discussion", item.discussionSettings.isCommentable),
+      ("item--has-no-discussion", !item.discussionSettings.isCommentable),
+      ("fc-item--force-image-upgrade", isFirstContainer),
+      (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
+      ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
+      ("fc-item--live", item.isLive),
+      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
+      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
+      ("item--imageadjust-hide", item.displaySettings.imageHide),
+      ("item--imageadjust-default", hasImage &&
+        !item.displaySettings.isBoosted &&
+        !item.displaySettings.imageHide)
+    ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
-  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean, numberOfSublinks: Int): String = {
-    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
-      Seq("fc-item--has-cutout")
-    } else {
-      Seq.empty
-    }
-
-    RenderClasses(
-      TrailCssClasses.toneClass(trail, "--item") +:
-        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false, numberOfSublinks) ++
-        cutOutClass): _*
-    )
-  }
-
-  def forSubLink(trail: Trail) = RenderClasses(Seq(
+  def forSubLink(sublink: Sublink) = RenderClasses(Seq(
     Some("fc-sublink"),
-    Some(TrailCssClasses.toneClass(trail, "--sublink")),
-    sublinkMediaTypeClass(trail)
+    Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
+    sublinkMediaTypeClass(sublink)
   ).flatten: _*)
 
-  def mediaTypeClass(trail: Trail) = trail match {
-    case _: Gallery => Some("fc-item--gallery")
-    case _: Video => Some("fc-item--video")
-    case _: Audio => Some("fc-item--audio")
-    case _ => None
+  def mediaTypeClass(faciaCard: FaciaCard) = faciaCard.mediaType map {
+    case layout.Gallery => "fc-item--gallery"
+    case layout.Video => "fc-item--video"
+    case layout.Audio => "fc-item--audio"
   }
 
-  def sublinkMediaTypeClass(trail: Trail) = trail match {
-    case _: Gallery => Some("fc-sublink--gallery")
-    case _: Video => Some("fc-sublink--video")
-    case _: Audio => Some("fc-sublink--audio")
-    case _ => None
-  }
-
-  def commonFcItemClasses(
-      trail: Trail,
-      isFirstContainer: Boolean,
-      forceHasImage: Boolean,
-      numberOfSublinks: Int
-  ): Seq[String] = {
-    val itemClass = mediaTypeClass(trail)
-
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5, 3).isEmpty || trail.imageHide)) {
-      "fc-item--has-no-image"
-    } else {
-      "fc-item--has-image"
-    }
-
-    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-
-    Seq(
-      "fc-item",
-      "js-fc-item",
-      imageClass,
-      discussionClass
-    ) ++ Seq(
-      itemClass,
-      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
-      if (trail.isLive) Some("fc-item--live") else None,
-      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-$numberOfSublinks") else None,
-      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
-
-      if (forceHasImage || trail.trailPicture(5, 3).nonEmpty) {
-        if (trail.isBoosted)
-          Some("item--imageadjust-boost")
-        else if (trail.imageHide)
-          Some("item--imageadjust-hide")
-        else
-          Some("item--imageadjust-default")
-      } else {
-        None
-      }
-    ).flatten ++ makeSnapClasses(trail)
-  }
-
-
-  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
-    val itemClass = trail match {
-      case _: Gallery => "item--gallery"
-      case _: Video => "item--video"
-      case _: Audio => "item--audio"
-      case _ => ""
-    }
-
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
-      "item--has-no-image"
-    } else {
-      "item--has-image"
-    }
-
-    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-
-    Seq(
-      "item",
-      imageClass,
-      discussionClass
-    ) ++ Seq(
-      itemClass,
-      if (isFirstContainer) "item--force-image-upgrade" else "",
-      if (trail.isLive) "item--live" else "",
-      if (trail.isComment && trail.hasLargeContributorImage) "item--has-cutout" else "",
-      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
-      else
-        ""
-    ) ++ makeSnapClasses(trail)
-  }
-
-  def forItem(trail: Trail,
-              firstContainer: Boolean,
-              forceHasImage: Boolean = false,
-              forceTone: Option[String] = None): String = {
-    val tone = forceTone.getOrElse(trail.visualTone)
-    val baseClasses: Seq[String] = Seq(
-      "item",
-      s"tone-${tone}"
-    )
-    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
-        case _: Gallery => "item--gallery"
-        case _: Video => "item--video"
-        case _: Audio => "item--audio"
-        case _ => ""
-      },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (firstContainer) "item--force-image-upgrade" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
-          "item--has-no-image"
-        }else{
-          "item--has-image"
-        },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
-          if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
-        } else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
-
-  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
-    case _  => Nil
+  def sublinkMediaTypeClass(sublink: Sublink) = sublink.mediaType map {
+    case layout.Gallery => "fc-sublink--gallery"
+    case layout.Video => "fc-sublink--video"
+    case layout.Audio => "fc-sublink--audio"
   }
 
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
@@ -929,9 +800,9 @@ object GetClasses {
       ("container--sponsored", DfpAgent.isSponsored(config)),
       ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
       ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
-      ("js-sponsored-container", (
-        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
-      )),
+      ("js-sponsored-container",
+        DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config)
+      ),
       ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
     ) collect {
       case (kls, true) => kls

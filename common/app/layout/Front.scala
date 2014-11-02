@@ -56,7 +56,7 @@ object Front extends implicits.Collections {
 
       val (newSeen, newItems) = deduplicate(seen, container, collection.items)
 
-      val containerLayout = ContainerLayout.fromContainer(container, newItems)
+      val containerLayout = ContainerLayout.fromContainer(container, config.config, newItems)
 
       (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems), containerLayout))
     }._2.filterNot(_.items.isEmpty))
@@ -100,7 +100,7 @@ object ContainerAndCollection {
     container,
     config,
     collectionEssentials,
-    ContainerLayout.fromContainer(container, collectionEssentials.items)
+    ContainerLayout.fromContainer(container, config.config, collectionEssentials.items)
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = ContainerAndCollection(

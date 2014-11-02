@@ -1,6 +1,9 @@
 package layout
 
 import cards.{ListItem, CardType}
+import com.gu.facia.client.models.CollectionConfig
+import slices.{MobileShowMore, RestrictTo}
+import views.support.CutOut
 
 object ItemClasses {
   val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
@@ -18,6 +21,16 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def showCutOut = allTypes.exists(_.showCutOut)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
+
+object Column {
+  def cardStyle(column: Column, index: Int) = column match {
+    case SingleItem(_, itemClasses) => Some(itemClasses)
+    case Rows(_, _, _, itemClasses) => Some(itemClasses)
+    case SplitColumn(_, top, _) if index == 0 => Some(top)
+    case SplitColumn(_, _, bottom) => Some(bottom)
+    case _ => None
+  }
+}
 
 sealed trait Column {
   def numItems: Int
@@ -46,12 +59,33 @@ object SliceWithCards {
   }
 
   /** The slice with cards assigned to columns, and the remaining cards that were not consumed */
-  def fromItems(items: Seq[Card], layout: SliceLayout): (SliceWithCards, Seq[Card]) = {
+  def fromItems(
+    items: Seq[IndexedTrail],
+    layout: SliceLayout,
+    config: CollectionConfig,
+    mobileShowMore: MobileShowMore
+  ): (SliceWithCards, Seq[IndexedTrail]) = {
     val (columns, unconsumed) = layout.columns.foldLeft((Seq.empty[ColumnAndCards], items)) {
       case ((acc, itemsRemaining), column) =>
         val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt itemsToConsume(column)
 
-        (acc :+ ColumnAndCards(column, itemsForColumn), itemsNotConsumed)
+        val cards = itemsForColumn map { case IndexedTrail(trail, index) =>
+          Card(
+            index,
+            FaciaCard.fromTrail(
+              trail,
+              config,
+              Column.cardStyle(column, index).getOrElse(ItemClasses.showMore)
+            ),
+            mobileShowMore match {
+              case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
+              case _ => None
+            },
+            CutOut.fromTrail(trail)
+          )
+        }
+
+        (acc :+ ColumnAndCards(column, cards), itemsNotConsumed)
     }
 
     (SliceWithCards(layout.cssClassName, columns), unconsumed)

@@ -1,6 +1,5 @@
 package layout
 
-import model.Trail
 import views.support.CutOut
 
 sealed trait Breakpoint
@@ -8,10 +7,12 @@ sealed trait Breakpoint
 case object Mobile extends Breakpoint
 case object Desktop extends Breakpoint
 
+/** TODO refactor this to be FaciaCardAndIndex and move important stuff to FaciaCard */
 case class Card(
   index: Int,
-  item: Trail,
+  item: FaciaCard,
   hideUpTo: Option[Breakpoint],
+  /** TODO get rid of this, it's in FaciaCard */
   cutOut: Option[CutOut]
 ) {
   def cssClasses = hideUpTo match {
