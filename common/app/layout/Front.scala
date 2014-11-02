@@ -51,14 +51,22 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
 
-    Front(configs.zipWithIndex.toList.mapAccumL(Set.empty[TrailUrl]) { case (seen, ((config, collection), index)) =>
+    Front(
+      configs.zipWithIndex.toList.mapAccumL(Set.empty[TrailUrl]
+    ) { case (seen, ((config, collection), index)) =>
       val container = Container.fromConfig(config.config)
 
       val (newSeen, newItems) = deduplicate(seen, container, collection.items)
 
       val containerLayout = ContainerLayout.fromContainer(container, config.config, newItems)
 
-      (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems), containerLayout))
+      (newSeen, ContainerAndCollection(
+        index,
+        container,
+        config,
+        collection.copy(items = newItems),
+        containerLayout
+      ))
     }._2.filterNot(_.items.isEmpty))
   }
 }

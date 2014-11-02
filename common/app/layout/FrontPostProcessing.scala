@@ -52,7 +52,7 @@ object FrontPostProcessing {
       Traverse[List] compose
       Traverse[List]
 
-  def deduplicateCutouts(front: Front) = {
+  def deduplicateCutouts(front: Front): Front = {
     val structure = getStructure(front)
 
     setStructure(front, layoutStructureTraverse.mapAccumL(structure, Set.empty[CutOut]) { (cutOutsSeen, card) =>
