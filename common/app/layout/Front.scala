@@ -112,12 +112,21 @@ object ContainerAndCollection {
     ContainerLayout.fromContainer(container, config.config, collectionEssentials.items)
   )
 
-  def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = ContainerAndCollection(
-    index = 2,
-    container = Fixed(FixedContainers.fixedMediumFastXII),
-    config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
-    CollectionEssentials(items take 8, Some(title), None, None, None)
-  )
+  def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
+    val layout: ContainerDefinition = items.size match {
+      case 1 => FixedContainers.fixedSmallSlowI
+      case 2 => FixedContainers.fixedSmallSlowII
+      case 3 => FixedContainers.fixedMediumSlowXIIMpu
+      case 5 => FixedContainers.fixedSmallSlowVI
+      case _ => FixedContainers.fixedMediumFastXII
+    }
+    ContainerAndCollection(
+      index = 2,
+      container = Fixed(layout),
+      config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
+      CollectionEssentials(items take 8, Some(title), None, None, None)
+    )
+  }
 }
 
 case class ContainerAndCollection(
