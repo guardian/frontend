@@ -7,6 +7,8 @@ import slices._
 case class IndexedTrail(trail: Trail, index: Int)
 
 object ContainerLayout extends implicits.Collections {
+  import ContainerLayoutPostProcessing.deduplicateCutOuts
+
   def apply(
       sliceDefinitions: Seq[Slice],
       items: Seq[Trail],
@@ -27,13 +29,13 @@ object ContainerLayout extends implicits.Collections {
         (slicesSoFar :+ slice, remainingTrails)
     }
 
-    ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
+    deduplicateCutOuts(ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
       FaciaCardAndIndex(
         index,
         FaciaCard.fromTrail(trail, config, ItemClasses.showMore),
         hideUpTo = Some(Desktop)
       )
-    })
+    }))
   }
 
   def fromContainerDefinition(containerDefinition: ContainerDefinition, config: CollectionConfig, items: Seq[Trail]) =
