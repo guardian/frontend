@@ -50,8 +50,9 @@ object Front extends implicits.Collections {
   def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
+    import FrontPostProcessing.deduplicateCutouts
 
-    Front(
+    deduplicateCutouts(Front(
       configs.zipWithIndex.toList.mapAccumL(Set.empty[TrailUrl]
     ) { case (seen, ((config, collection), index)) =>
       val container = Container.fromConfig(config.config)
@@ -67,7 +68,7 @@ object Front extends implicits.Collections {
         collection.copy(items = newItems),
         containerLayout
       ))
-    }._2.filterNot(_.items.isEmpty))
+    }._2.filterNot(_.items.isEmpty)))
   }
 }
 
