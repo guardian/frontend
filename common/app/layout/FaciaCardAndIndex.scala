@@ -17,7 +17,6 @@ object FaciaCardAndIndex {
   )
 }
 
-/** TODO refactor this to be FaciaCardAndIndex and move important stuff to FaciaCard */
 case class FaciaCardAndIndex(
   index: Int,
   item: FaciaCard,
