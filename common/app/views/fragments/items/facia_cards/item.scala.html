@@ -63,6 +63,10 @@
                             }
                         }
 
+                    case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+                        @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                    }
+
                     case Some(InlineImage(imageContainer)) => {
                         @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
                     }
@@ -90,9 +94,9 @@
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                    <div class="fc-item__footer--vertical" aria-hidden="true">
-                        @sublinks(item.sublinks)
-                    </div>
+                    @if(item.sublinks.nonEmpty) {
+                        <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                    }
 
                     @meta(item)
                 </div>
@@ -103,9 +107,9 @@
                     </div>
                 }
 
-                <footer class="fc-item__footer--horizontal">
-                    @sublinks(item.sublinks)
-                </footer>
+                @if(item.sublinks.nonEmpty) {
+                    <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
+                }
 
                 <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
             </div>
