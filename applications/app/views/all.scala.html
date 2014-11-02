@@ -10,7 +10,7 @@
     <div data-link-name="Front" role="main" class="facia-container facia-container--layout-front">
         @fragments.containers.index(
             Collection(index.trails),
-            ContainerLayout.fromContainerDefinition(slices.TagContainers.allTagPage, index.trails),
+            ContainerLayout.fromContainerDefinition(slices.TagContainers.allTagPage, CollectionConfig.emptyConfig, index.trails),
             0,
             index.date,
             index.page,

@@ -1,12 +1,14 @@
 package layout
 
-import cards.{ListItem, CardType}
+import cards.{Standard, MediaList, ListItem, CardType}
 import com.gu.facia.client.models.CollectionConfig
 import slices.{MobileShowMore, RestrictTo}
 import views.support.CutOut
 
 object ItemClasses {
   val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
+
+  val liveBlogMore = ItemClasses(mobile = MediaList, tablet = Standard)
 }
 
 case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardType] = None) {
@@ -80,8 +82,7 @@ object SliceWithCards {
             mobileShowMore match {
               case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
               case _ => None
-            },
-            CutOut.fromTrail(trail)
+            }
           )
         }
 

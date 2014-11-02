@@ -23,14 +23,17 @@
         }
         role="main">
 
-        @defining(getTagContainerDefinition(index.page)) { containerDefinition =>
+        @defining(
+            getTagContainerDefinition(index.page),
+            CollectionConfig.withDefaults(displayName = Some(index.page.webTitle))
+        ) { case (containerDefinition, config) =>
             @fragments.containers.tag(
                 index.page,
                 Collection(index.trails),
-                ContainerLayout.fromContainerDefinition(containerDefinition, index.trails),
+                ContainerLayout.fromContainerDefinition(containerDefinition, config, index.trails),
                 pagination = index.page.pagination,
                 dataId = index.page.id
-            )(request, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
+            )(request, config))
         }
 
         @fragments.commercial.commercialComponent()

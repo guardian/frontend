@@ -3,7 +3,6 @@ package layout
 import com.gu.facia.client.models.CollectionConfig
 import model.{Content, Trail}
 import slices._
-import views.support.CutOut
 
 case class IndexedTrail(trail: Trail, index: Int)
 
@@ -32,8 +31,7 @@ object ContainerLayout extends implicits.Collections {
       Card(
         index,
         FaciaCard.fromTrail(trail, config, ItemClasses.showMore),
-        hideUpTo = Some(Desktop),
-        CutOut.fromTrail(trail)
+        hideUpTo = Some(Desktop)
       )
     })
   }
