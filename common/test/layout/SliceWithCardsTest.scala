@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
-import model.{FaciaImageElement, Trail}
+import model.{Content, FaciaImageElement, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
@@ -14,7 +14,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
   val cardFixtures = (1 to NumberOfFixtures) map { n => IndexedTrail(new Trail {
       override def webPublicationDate: Imports.DateTime = DateTime.now
 
-      override def url: String = ""
+      override def url: String = s"$n"
 
       override def isLive: Boolean = false
 
@@ -29,7 +29,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
 
       override def headline: String = ""
 
-      override def webUrl: String = ""
+      override def webUrl: String = s"$n"
 
       override def customImageCutout: Option[FaciaImageElement] = None
     }, n)
@@ -58,7 +58,12 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         DesktopBehaviour
       )
 
-      slice.columns.map(_.cards).flatten ++ remaining shouldEqual cardFixtures
+      def idFromTrail(trail: Trail) = trail match {
+        case c: Content => Some(c.id)
+        case _ => None
+      }
+
+      slice.columns.map(_.cards).flatten.map(_.index) ++ remaining.map(_.index) shouldEqual cardFixtures.map(_.index)
     }
   }
 
