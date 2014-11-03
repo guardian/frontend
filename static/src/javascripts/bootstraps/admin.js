@@ -15,14 +15,7 @@ require([
 ) {
     require(['domReady!'], function () {
 
-        var config = {
-            page: {
-                edition: '',
-                ajaxUrl: ''
-            }
-        };
-
-        ajax.init(config);
+        ajax.setHost('');
 
         switch (window.location.pathname) {
             case '/analytics/abtests':

@@ -1,26 +1,14 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder.SUGGESTED_PAGE_LIMIT
 import com.google.api.ads.dfp.axis.v201403._
-import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
 
 object DfpApiWrapper extends Logging {
-
-  private lazy val dfpServices = new DfpServices()
-
-  private def lineItemService(session: DfpSession) = dfpServices.get(session, classOf[LineItemServiceInterface])
-  private def customFieldService(session: DfpSession) = dfpServices.get(session, classOf[CustomFieldServiceInterface])
-  private def customTargetingService(session: DfpSession) = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
-  private def inventoryService(session: DfpSession) = dfpServices.get(session, classOf[InventoryServiceInterface])
-  private def suggestedAdUnitService(session: DfpSession) = dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
-  private def placementService(session: DfpSession) = dfpServices.get(session, classOf[PlacementServiceInterface])
-  private def creativeTemplateService(session: DfpSession) = dfpServices.get(session, classOf[CreativeTemplateServiceInterface])
-  private def creativeService(session: DfpSession) = dfpServices.get(session, classOf[CreativeServiceInterface])
 
   sealed case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
@@ -63,86 +51,97 @@ object DfpApiWrapper extends Logging {
     }
   }
 
-  def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[LineItem] = {
-    val service = lineItemService(session)
+  def fetchLineItems(serviceRegistry: DfpServiceRegistry,
+                     statementBuilder: StatementBuilder): Seq[LineItem] = {
+    val service = serviceRegistry.lineItemService
     fetch(statementBuilder) { statement =>
       val page = service.getLineItemsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchCustomFields(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomField] = {
-    val service = customFieldService(session)
+  def fetchCustomFields(serviceRegistry: DfpServiceRegistry,
+                        statementBuilder: StatementBuilder): Seq[CustomField] = {
+    val service = serviceRegistry.customFieldService
     fetch(statementBuilder) { statement =>
       val page = service.getCustomFieldsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchCustomTargetingKeys(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
-    val service = customTargetingService(session)
+  def fetchCustomTargetingKeys(serviceRegistry: DfpServiceRegistry,
+                               statementBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
+    val service = serviceRegistry.customTargetingService
     fetch(statementBuilder) { statement =>
       val page = service.getCustomTargetingKeysByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchCustomTargetingValues(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
-    val service = customTargetingService(session)
+  def fetchCustomTargetingValues(serviceRegistry: DfpServiceRegistry,
+                                 statementBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
+    val service = serviceRegistry.customTargetingService
     fetch(statementBuilder) { statement =>
       val page = service.getCustomTargetingValuesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
-    val service = inventoryService(session)
+  def fetchAdUnits(serviceRegistry: DfpServiceRegistry,
+                   statementBuilder: StatementBuilder): Seq[AdUnit] = {
+    val service = serviceRegistry.inventoryService
     fetch(statementBuilder) { statement =>
       val page = service.getAdUnitsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchSuggestedAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
-    val service = suggestedAdUnitService(session)
+  def fetchSuggestedAdUnits(serviceRegistry: DfpServiceRegistry,
+                            statementBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+    val service = serviceRegistry.suggestedAdUnitService
     fetch(statementBuilder) { statement =>
       val page = service.getSuggestedAdUnitsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchPlacements(session: DfpSession, statementBuilder: StatementBuilder): Seq[Placement] = {
-    val service = placementService(session)
+  def fetchPlacements(serviceRegistry: DfpServiceRegistry,
+                      statementBuilder: StatementBuilder): Seq[Placement] = {
+    val service = serviceRegistry.placementService
     fetch(statementBuilder) { statement =>
       val page = service.getPlacementsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchCreativeTemplates(session: DfpSession, statementBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    val service = creativeTemplateService(session)
+  def fetchCreativeTemplates(serviceRegistry: DfpServiceRegistry,
+                             statementBuilder: StatementBuilder): Seq[CreativeTemplate] = {
+    val service = serviceRegistry.creativeTemplateService
     fetch(statementBuilder) { statement =>
       val page = service.getCreativeTemplatesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
-  def fetchTemplateCreatives(session: DfpSession, statementBuilder: StatementBuilder): Map[Long, Seq[TemplateCreative]] = {
-    val service = creativeService(session)
+  def fetchTemplateCreatives(serviceRegistry: DfpServiceRegistry,
+                             statementBuilder: StatementBuilder): Map[Long, Seq[TemplateCreative]] = {
+    val service = serviceRegistry.creativeService
     val creatives = fetch(statementBuilder) { statement =>
       val page = service.getCreativesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
-    creatives collect { case creative: TemplateCreative => creative} groupBy (_.getCreativeTemplateId)
+    creatives collect { case creative: TemplateCreative => creative} groupBy (_
+      .getCreativeTemplateId)
   }
 
   class DfpApprovalException(message: String) extends RuntimeException
   class DfpSessionException extends RuntimeException
 
-  def approveTheseAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Try[String] = {
+  def approveTheseAdUnits(serviceRegistry: DfpServiceRegistry,
+                          statementBuilder: StatementBuilder): Try[String] = {
     val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
 
-    val service = suggestedAdUnitService(session)
+    val service = serviceRegistry.suggestedAdUnitService
     try {
       val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
       if (result.isDefined) {

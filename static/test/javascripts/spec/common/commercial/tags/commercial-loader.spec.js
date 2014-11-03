@@ -1,10 +1,8 @@
 define([
-    'common/utils/ajax',
     'common/utils/mediator',
     'helpers/fixtures',
     'jasq'
 ], function (
-    ajax,
     mediator,
     fixtures
 ) {
@@ -75,12 +73,6 @@ define([
 
 
             it('Passes section and keyword to a travel component from the commercial server', function (CommercialComponent, deps, done) {
-                deps['common/utils/ajax'].init({
-                    page: {
-                        ajaxUrl: '',
-                        edition: 'UK'
-                    }
-                });
                 deps['common/utils/mediator'].once('modules:commercial/loader:loaded', function () {
                     expect(adSlot.innerHTML).toBe('<b>advert</b>');
                     done();
@@ -92,12 +84,6 @@ define([
 
             // OAS can inject a url in to the advert code to track clicks on the component
             it('Injects an OAS tracker URL in to the response', function (CommercialComponent, deps, done) {
-                deps['common/utils/ajax'].init({
-                    page: {
-                        ajaxUrl: '',
-                        edition: 'UK'
-                    }
-                });
                 deps['common/utils/mediator'].once('modules:commercial/loader:loaded', function () {
                     expect(adSlot.innerHTML).toBe('<b>123 - 123</b>');
                     done();
@@ -108,12 +94,6 @@ define([
             });
 
             it('Injects jobIds if specified', function (CommercialComponent, deps, done) {
-                deps['common/utils/ajax'].init({
-                    page: {
-                        ajaxUrl: '',
-                        edition: 'UK'
-                    }
-                });
                 deps['common/utils/mediator'].once('modules:commercial/loader:loaded', function () {
                     expect(adSlot.innerHTML).toBe('<b>advert</b>');
                     done();
