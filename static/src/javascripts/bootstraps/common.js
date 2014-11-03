@@ -371,12 +371,14 @@ define([
 
             initDiscussion: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.page.commentable && config.switches.discussion) {
-                        var el = qwery('.discussion')[0];
-                        if (el) {
-                            new DiscussionLoader().attachTo(el);
-                        }
+                    if (config.switches.discussion) {
                         CommentCount.init();
+                        if (config.page.commentable) {
+                            var el = qwery('.discussion')[0];
+                            if (el) {
+                                new DiscussionLoader().attachTo(el);
+                            }
+                        }
                     }
                 });
             },
