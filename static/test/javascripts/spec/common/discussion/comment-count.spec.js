@@ -2,13 +2,11 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/ajax',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'], function(
     qwery,
     $,
     mediator,
-    ajax,
     commentCount,
     testData) {
 
@@ -21,11 +19,6 @@ define([
                     + '<div class="trail" data-discussion-id="/p/3ghx3"><a href="/article/2">1</a></div>'
                     + '<div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>'
                     + '</div>';
-
-        ajax.init({page: {
-            ajaxUrl: "",
-            edition: "UK"
-        }});
 
         beforeEach(function() {
 
