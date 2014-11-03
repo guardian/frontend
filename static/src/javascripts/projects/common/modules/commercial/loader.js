@@ -36,8 +36,6 @@ define([
     Tabs
 ) {
 
-
-
     var constructQuery = function (params) {
             return _(params)
                 .pairs()
