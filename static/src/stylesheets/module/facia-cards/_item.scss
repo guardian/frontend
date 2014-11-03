@@ -168,6 +168,12 @@ $fc-item-gutter: $gs-gutter / 4;
     @include box-sizing(border-box);
 }
 
+.fc-item__content,
+.fc-item__footer--horizontal {
+    padding-left: $fc-item-gutter;
+    padding-right: $fc-item-gutter;
+}
+
 .fc-item__image-container,
 .fc-item__video-fallback {
     display: none;

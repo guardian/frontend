@@ -1,7 +1,6 @@
 .tone-feature--item {
     $c-headline: #ffffff;
 
-    @extend %tone-has-background;
     background-color: $c-featureDefault;
 
     &,
