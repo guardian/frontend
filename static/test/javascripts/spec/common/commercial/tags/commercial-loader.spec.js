@@ -48,7 +48,6 @@ define([
                 };
 
             beforeEach(function() {
-
                 // set up fake server
                 server = sinon.fakeServer.create();
                 server.autoRespond = true;
