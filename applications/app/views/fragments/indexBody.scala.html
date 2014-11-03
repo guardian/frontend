@@ -30,7 +30,7 @@
             @fragments.containers.tag(
                 index.page,
                 Collection(index.trails),
-                ContainerLayout.fromContainerDefinition(containerDefinition, config, index.trails),
+                ContainerLayout.singletonFromContainerDefinition(containerDefinition, config, index.trails),
                 pagination = index.page.pagination,
                 dataId = index.page.id
             )(request, config))

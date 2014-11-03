@@ -3,7 +3,6 @@ package layout
 import cards.{Standard, MediaList, ListItem, CardType}
 import com.gu.facia.client.models.CollectionConfig
 import slices.{MobileShowMore, RestrictTo}
-import views.support.CutOut
 
 object ItemClasses {
   val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
@@ -60,36 +59,44 @@ object SliceWithCards {
     case _: MPU => 0
   }
 
-  /** The slice with cards assigned to columns, and the remaining cards that were not consumed */
+  /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new
+    * context for creating further cards.
+    */
   def fromItems(
     items: Seq[IndexedTrail],
     layout: SliceLayout,
+    context: ContainerLayoutContext,
     config: CollectionConfig,
     mobileShowMore: MobileShowMore
-  ): (SliceWithCards, Seq[IndexedTrail]) = {
-    val (columns, unconsumed) = layout.columns.foldLeft((Seq.empty[ColumnAndCards], items)) {
-      case ((acc, itemsRemaining), column) =>
+  ): (SliceWithCards, Seq[IndexedTrail], ContainerLayoutContext) = {
+    val (columns, unconsumed, endContext) = layout.columns.foldLeft((Seq.empty[ColumnAndCards], items, context)) {
+      case ((acc, itemsRemaining, currentContext), column) =>
         val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt itemsToConsume(column)
 
-        val cards = itemsForColumn map { case IndexedTrail(trail, index) =>
-          FaciaCardAndIndex(
-            index,
-            FaciaCard.fromTrail(
-              trail,
-              config,
-              Column.cardStyle(column, index).getOrElse(ItemClasses.showMore)
-            ),
-            mobileShowMore match {
-              case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
-              case _ => None
-            }
-          )
+        val (finalContext, cards) = itemsForColumn.foldLeft((currentContext, Seq.empty[FaciaCardAndIndex])) {
+          case ((contextSoFar, accumulator), IndexedTrail(trail, index)) =>
+            val (card, contextForNext) = contextSoFar.transform(
+              FaciaCardAndIndex(
+                index,
+                FaciaCard.fromTrail(
+                  trail,
+                  config,
+                  Column.cardStyle(column, index).getOrElse(ItemClasses.showMore)
+                ),
+                mobileShowMore match {
+                  case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
+                  case _ => None
+                }
+              )
+            )
+
+            (contextForNext, accumulator :+ card)
         }
 
-        (acc :+ ColumnAndCards(column, cards), itemsNotConsumed)
+        (acc :+ ColumnAndCards(column, cards), itemsNotConsumed, finalContext)
     }
 
-    (SliceWithCards(layout.cssClassName, columns), unconsumed)
+    (SliceWithCards(layout.cssClassName, columns), unconsumed, endContext)
   }
 }
 
@@ -105,6 +112,5 @@ case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
     columnAndCards.column.colSpan
   }).sum
 }
-
 
 case class ColumnAndCards(column: Column, cards: Seq[FaciaCardAndIndex])

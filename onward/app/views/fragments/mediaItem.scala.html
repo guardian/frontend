@@ -1,5 +1,7 @@
 @(content: model.Media, index: Number)(implicit request: RequestHeader)
 
+@import views.support.GetClasses
+
 <li class="@GetClasses.forItem(content, false)">
     <div class="item__container">
         <a class="item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
