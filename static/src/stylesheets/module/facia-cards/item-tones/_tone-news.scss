@@ -1,6 +1,4 @@
 .tone-news--item {
-    @extend %tone-has-background;
-
     &.fc-item {
         background-color: $c-neutral8;
     }

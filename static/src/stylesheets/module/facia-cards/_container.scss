@@ -45,10 +45,12 @@ $header-image-size-desktop: 120px;
         @include mq(tablet, leftCol) {
             float: left;
         }
+
         @include mq(tablet, desktop) {
             width: 50%;
             padding-right: $gs-gutter / 2;
         }
+
         @include mq(desktop, leftCol) {
             width: 66%;
             padding-right: $gs-gutter / 2;
@@ -220,7 +222,6 @@ $header-image-size-desktop: 120px;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
     color: $c-neutral2;
-
     @include fs-headline(1);
 
     @include mq(leftCol) {

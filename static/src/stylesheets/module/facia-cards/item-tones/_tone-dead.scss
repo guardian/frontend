@@ -1,6 +1,4 @@
 .tone-dead--item {
-    @extend %tone-has-background;
-
     &.fc-item {
         background-color: $c-neutral7;
     }

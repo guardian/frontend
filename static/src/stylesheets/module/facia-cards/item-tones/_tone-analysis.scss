@@ -1,6 +1,4 @@
 .tone-analysis--item {
-    @extend %tone-has-background;
-
     &.fc-item {
         background-color: $c-analysisBackground;
         color: $c-analysisDefault;
