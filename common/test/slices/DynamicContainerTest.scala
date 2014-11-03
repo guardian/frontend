@@ -1,6 +1,5 @@
 package slices
 
-import cards.{MegaFull, Full}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.OptionValues._
