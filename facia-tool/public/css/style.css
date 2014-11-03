@@ -108,7 +108,7 @@ h1 {
 
 .login-form {
     position: absolute;
-    top: 11px;
+    top: 9px;
     left: 160px;
     z-index: 1;
 }
@@ -138,10 +138,10 @@ h1 {
 }
 
 .title {
-    font-size: 20px;
+    font-size: 24px;
     line-height: 24px;
-    font-weight: bold;
-    color: #000000;
+    color: #666666;
+    font-family: Georgia;
 }
 
 .title--clipboard {
@@ -230,6 +230,10 @@ h1 {
     font-size: 10px;
     line-height: 24px;
     color: #666666;
+}
+
+.list-header .tools {
+    margin: 0 10px 0 0;
 }
 
 .list-header__timings.has-concurrent-user {
@@ -540,7 +544,7 @@ h1 {
     font-size: 12px;
     color: #999999;
     float: left;
-    margin: 5px 0 0 5px;
+    margin: 6px 0 0 10px;
 }
 
 .supporting .trailText,
@@ -594,16 +598,15 @@ select {
 
 .editor {
     position: relative;
-    margin: 0 110px 0 0;
+    margin: 0 109px 0 -4px;
 }
 
 .editor textarea {
     width: 100%;
     height: 17px;
-    transition: height 100ms;
+    transition: height 50ms;
     padding: 0 4px;
     border: 0;
-    margin: 2px 0 -1px -4px;
     z-index: 10;
     color: #999999;
     background: #dddddd;
@@ -611,7 +614,7 @@ select {
 }
 
 .editor textarea.active {
-    background: #fafafa;
+    background: #eeeeee;
     color: #000000;
 }
 
@@ -664,7 +667,7 @@ select {
 
 .element {
     display: inline-block;
-    margin: 2px 0;
+    margin: 0 0 3px 0;
     width: 100%;
 }
 
@@ -822,10 +825,11 @@ button {
 
 .tool {
     display: inline-block;
+    float: left;
     padding: 0 10px;
     background: #cccccc;
     font-size: 15px;
-    line-height: 24px;
+    line-height: 27px;
     color: #ffffff;
     border: 0;
     cursor: pointer;
@@ -931,6 +935,9 @@ button {
 
 .tool--done {
     float: right;
+    width: 90px;
+    line-height: 30px;
+    text-align: center;
 }
 
 .tool--small--href,
