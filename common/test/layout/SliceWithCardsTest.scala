@@ -44,7 +44,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     forAll { (layout: SliceLayout) =>
       val (slice, remaining) = SliceWithCards.fromItems(cardFixtures, layout)
 
-      slice.columns.map(_.cards).flatten ++ remaining shouldEqual cardFixtures
+      (slice.columns.map(_.cards).flatten ++ remaining).map(_.item) shouldEqual cardFixtures.map(_.item)
     }
   }
 
