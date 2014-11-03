@@ -376,8 +376,8 @@ define([
                         if (el) {
                             new DiscussionLoader().attachTo(el);
                         }
+                        CommentCount.init();
                     }
-                    CommentCount.init();
                 });
             },
 

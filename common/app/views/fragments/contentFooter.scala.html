@@ -4,11 +4,8 @@
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
-        @if(conf.Switches.DiscussionSwitch.isSwitchedOn && content.isCommentable) {
-            <div class="js-comments" data-component="discussion">
-                @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
-            </div>
-        }
+
+        @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
         @if(!content.shouldHideAdverts) {
             <div class="facia-container facia-container--commercial">
