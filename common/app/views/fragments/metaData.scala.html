@@ -90,6 +90,10 @@
     <meta name="@key" content="@value" />
 }
 
+@item.openGraphImages.map{ case (imageUrl) =>
+    <meta property="og:image" content="@{imageUrl}" />
+}
+
 @item.pagination.map{ pagination =>
     @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url+"?page="+next)" /> }
     @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url+(if(prev != 1){"?page="+prev}else{""}))" /> }

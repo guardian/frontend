@@ -143,6 +143,19 @@ category: Common
     }
 }
 
+.social-icon--pinterest {
+    background-color: $social-pinterest;
+
+    .i {
+        background-size: 49% !important;
+        background-position: 45% center !important;
+    }
+
+    &:hover {
+        background-color: darken($social-pinterest, 10%);
+    }
+}
+
 .social-icon--email {
     background-color: $social-email;
     &:hover {

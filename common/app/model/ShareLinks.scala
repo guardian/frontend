@@ -31,14 +31,18 @@ trait ShareLinks { self: Content =>
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + webTitle + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
       case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
+      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webUrl.urlEncoded}"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
       case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
       case _ => None
     }
   }
 
-  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus").flatMap(shareLink(_, Some(blockId)))
-
-  def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
+  protected lazy val blockShareOrder = List("facebook", "twitter", "gplus")
   protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
+
+  def blockLevelShares(blockId: String): Seq[ShareLink] = blockShareOrder.flatMap(shareLink(_, Some(blockId)))
+  def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
+
   lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, None))
 }
