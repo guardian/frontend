@@ -7,19 +7,9 @@
 /*global DocumentTouch: true */
 
 define([
-    'lodash/arrays/findIndex',
-    'lodash/arrays/first',
-    'lodash/arrays/last',
-    'lodash/arrays/rest',
-    'lodash/objects/defaults',
     'common/utils/_',
     'common/utils/mediator'
 ], function (
-    findIndex,
-    first,
-    last,
-    rest,
-    defaults,
     _,
     mediator
 ) {
@@ -235,7 +225,7 @@ define([
             index;
 
         if (!includeTweakpoint) {
-            index = findIndex(breakpoints, function (b) {
+            index = _.findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
             breakpoint = _(breakpoints)
@@ -251,11 +241,11 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = defaults(
+        var c = _.defaults(
                 criteria,
                 {
-                    min: first(breakpoints).name,
-                    max: last(breakpoints).name
+                    min: _.first(breakpoints).name,
+                    max: _.last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
