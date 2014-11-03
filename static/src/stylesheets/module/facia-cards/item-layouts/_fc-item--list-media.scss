@@ -20,8 +20,8 @@ Media list item. Looks a bit like this:
     $image-width: $item-min-height * $media-ratio;
     $mobile-media-padding: ($gs-baseline / 3);
 
-
     min-height: $item-min-height + ($mobile-media-padding * 2);
+
     @include mq(tablet) {
         min-height: $item-min-height;
     }
