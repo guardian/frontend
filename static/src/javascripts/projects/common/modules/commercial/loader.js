@@ -7,10 +7,14 @@ define([
     'bonzo',
     'raven',
     'lodash/collections/map',
+    'lodash/collections/size',
+    'lodash/objects/defaults',
+    'lodash/objects/isArray',
+    'lodash/objects/pick',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
-    'common/utils/storage',
     'common/modules/component',
     'common/modules/lazyload',
     'common/modules/ui/tabs'
@@ -19,109 +23,115 @@ define([
     bonzo,
     raven,
     map,
+    size,
+    defaults,
+    isArray,
+    pick,
     $,
+    _,
     config,
     mediator,
-    storage,
     Component,
     LazyLoad,
     Tabs
 ) {
 
-    /**
-     * Loads commercial components.
-     *
-     * BEWARE that this code is depended upon by the ad server.
-     *
-     * ```
-     * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
-     *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
-     * })
-     * ```
-     *
-     * @constructor
-     * @extends Component
-     * @param {Object=} options
-     */
-    var Loader = function (options) {
-        var opts = options || {},
-            page = config.page;
+    var constructQuery = function (params) {
+            return _(params)
+                .pairs()
+                .map(function (param) {
+                    var key    = param[0],
+                        values = isArray(param[1]) ? param[1] : [param[1]];
+                    return map(values, function (value) {
+                        return [key, '=', encodeURIComponent(value)].join('');
+                    }).join('&');
+                }).join('&');
+        },
+        getKeywords = function () {
+            var keywords = (config.page.keywordIds) ?
+                map(config.page.keywordIds.split(','), function (keywordId) {
+                    return keywordId.split('/').pop();
+                }) :
+                config.page.pageId.split('/').pop();
+            return {
+                k: keywords
+            };
+        },
+        buildComponentUrl = function (url, params) {
+            // filter out empty params
+            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
+                    return isArray(v) ? v.length : v;
+                }),
+                query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
+            return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
+        },
+        /**
+         * Loads commercial components.
+         *
+         * BEWARE that this code is depended upon by the ad server.
+         *
+         * ```
+         * require(['common/modules/commercial/loader'], function (CommercialComponent) {
+         *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
+         *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
+         * })
+         * ```
+         *
+         * @constructor
+         * @extends Component
+         * @param {Object=} options
+         */
+        Loader = function (options) {
+            var opts = defaults(options || {}, {
+                    capi:             [],
+                    capiAboutLinkUrl: '',
+                    capiKeywords:     '',
+                    capiLinkUrl:      '',
+                    capiTitle:        '',
+                    components:       [],
+                    jobIds:           '',
+                    logo:             '',
+                    oastoken:         ''
+                }),
+                section = config.page.section,
+                jobs    = opts.jobIds ? opts.jobIds.split(',') : [];
 
-        this.pageId             = page.pageId;
-        this.keywordIds         = page.keywordIds || '';
-        this.section            = page.section;
-        this.host               = page.ajaxUrl + '/commercial/';
-        this.isbn               = page.isbn || '';
-        this.oastoken           = opts.oastoken || '';
-        this.jobs               = opts.jobIds || '';
-        this.adType             = opts.adType || 'desktop';
-        this.multiComponents    = map(opts.components || [], function (c) { return 'c=' + c; }).join('&');
-        this.capi               = map(opts.capi || [], function (t) {return 't=' + t;}).join('&');
-        this.capiTitle          = opts.capiTitle || '';
-        this.capiLinkUrl        = opts.capiLinkUrl || '';
-        this.capiAboutLinkUrl   = opts.capiAboutLinkUrl || '';
-        this.capiKeywords       = map(opts.capiKeywords || [], function (k) {return 'k=' + k;}).join('&');
-        this.logo               = opts.logo || '';
-        this.components         = {
-            bestbuy:            this.host + 'money/bestbuys.json',
-            bestbuyHigh:        this.host + 'money/bestbuys-high.json',
-            book:               this.host + 'books/book.json?'                  + 't=' + this.isbn,
-            books:              this.host + 'books/bestsellers.json?'           + this.getKeywords(),
-            booksMedium:        this.host + 'books/bestsellers-medium.json?'    + this.getKeywords(),
-            booksHigh:          this.host + 'books/bestsellers-high.json?'      + this.getKeywords(),
-            jobs:               this.host + 'jobs.json?'                        + [this.listToParams('t', this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
-            jobsHigh:           this.host + 'jobs-high.json?'                   + this.getKeywords(),
-            jobsV2:             this.host + 'jobs-V2.json?'                     + [this.listToParams('t', this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
-            jobsHighV2:         this.host + 'jobs-high-v2.json?'                + this.getKeywords(),
-            masterclasses:      this.host + 'masterclasses.json?'               + this.getKeywords(),
-            masterclassesHigh:  this.host + 'masterclasses-high.json?'          + this.getKeywords(),
-            soulmates:          this.host + 'soulmates/mixed.json',
-            soulmatesHigh:      this.host + 'soulmates/mixed-high.json',
-            travel:             this.host + 'travel/offers.json?'               + 's=' + this.section + '&' + this.getKeywords(),
-            travelHigh:         this.host + 'travel/offers-high.json?'          + 's=' + this.section + '&' + this.getKeywords(),
-            capi:               this.host + 'capi.json?'                        + this.capi + '&' + this.capiKeywords + '&l=' + this.logo + '&ct=' + this.capiTitle + '&cl=' + this.capiLinkUrl + '&cal=' + this.capiAboutLinkUrl,
-            multi:              this.host + 'multi.json?'                       + this.multiComponents
+            this.oastoken   = opts.oastoken;
+            this.components = {
+                bestbuy:           buildComponentUrl('money/bestbuys'),
+                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
+                book:              buildComponentUrl('books/book', { t: config.page.isbn }),
+                books:             buildComponentUrl('books/bestsellers'),
+                booksMedium:       buildComponentUrl('books/bestsellers-medium'),
+                booksHigh:         buildComponentUrl('books/bestsellers-high'),
+                jobs:              buildComponentUrl('jobs', { t: jobs }),
+                jobsHigh:          buildComponentUrl('jobs-high'),
+                jobsV2:            buildComponentUrl('jobs-V2', { t: jobs }),
+                jobsHighV2:        buildComponentUrl('jobs-high-v2'),
+                masterclasses:     buildComponentUrl('masterclasses'),
+                masterclassesHigh: buildComponentUrl('masterclasses-high'),
+                soulmates:         buildComponentUrl('soulmates/mixed'),
+                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
+                travel:            buildComponentUrl('travel/offers', { s: section }),
+                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
+                multi:             buildComponentUrl('multi', { c: opts.components }),
+                capi:              buildComponentUrl('capi', {
+                    s:   section,
+                    t:   opts.capi,
+                    k:   opts.capiKeywords.split(','),
+                    l:   opts.logo,
+                    ct:  opts.capiTitle,
+                    cl:  opts.capiLinkUrl,
+                    cal: opts.capiAboutLinkUrl
+                })
+            };
         };
-        this.postLoadEvents = {
-            books: function (el) {
-                bean.on(el, 'click', '.commercial__search__submit', function () {
-                    var str = 'merchandising-bookshop-v0_7_2014-03-12-low-' + el.querySelector('.commercial__search__input').value,
-                        val = (page.contentType) ? page.contentType + ':' + str : str;
-
-                    s.linkTrackVars = 'prop22,eVar22,eVar37,events';
-                    s.linkTrackEvents = 'event7,event37';
-                    s.events = 'event7,event37';
-                    s.prop22 = val;
-                    s.eVar22 = val;
-                    s.eVar37 = val;
-                    s.tl(true, 'o', str);
-                });
-            },
-            bestbuy: function (el) {
-                new Tabs().init(el);
-            }
-        };
-
-        return this;
-    };
 
     Component.define(Loader);
 
-    Loader.prototype.listToParams = function (param, itemArray) {
-        return map(itemArray, function (item) {
-            return param + '=' + encodeURIComponent(item);
-        }).join('&');
-    };
-
-    Loader.prototype.getKeywords = function () {
-        if (this.keywordIds) {
-            var keywords = map(this.keywordIds.split(','), function (keywordId) {
-                    return keywordId.split('/').pop();
-                });
-            return this.listToParams('k', keywords);
-        } else {
-            return 'k=' + this.pageId.split('/').pop();
+    Loader.prototype.postLoadEvents = {
+        bestbuy: function (el) {
+            new Tabs().init(el);
         }
     };
 
@@ -129,24 +139,19 @@ define([
      * @param {Element} target
      */
     Loader.prototype.load = function (name, target) {
-        var self = this,
-            url  = this.components[name];
-
         new LazyLoad({
-            url: url,
+            url: this.components[name],
             container: target,
             beforeInsert: function (html) {
                 // Currently we are replacing the OmnitureToken with nothing. This will change once
                 // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '') : html;
-            },
+                return html ? html.replace(/%OASToken%/g, this.oastoken).replace(/%OmnitureToken%/g, '') : html;
+            }.bind(this),
             success: function () {
-                if (name in self.postLoadEvents) {
-                    self.postLoadEvents[name](target);
-                }
+                this.postLoadEvents[name] && this.postLoadEvents[name](target);
 
-                mediator.emit('modules:commercial/loader:loaded');
-            }
+                mediator.emit('modules:commercial:loader:loaded');
+            }.bind(this)
         }).load();
 
         return this;

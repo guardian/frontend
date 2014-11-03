@@ -256,7 +256,7 @@ Loader.prototype.initState = function() {
 Loader.prototype.renderCommentBar = function() {
     if (this.isCommentable()) {
         this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
-        this.comments.on('first-load', this.renderCommentBox.bind(this, qwery('.js-discussion-comment-box--bottom')[0]));
+        this.renderCommentBox(qwery('.js-discussion-comment-box--bottom')[0]);
     }
 };
 

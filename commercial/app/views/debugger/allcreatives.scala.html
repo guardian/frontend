@@ -24,7 +24,7 @@ jQuery(function($) {
 
     $("#pageSkin").click(function() {
         $('body').toggleClass('has-page-skin');
-       return false; 
+       return false;
     });
 
     $(".codeContainer").hide();
@@ -158,7 +158,7 @@ jQuery(function($) {
         &lt;div class="commercial--v-high__footer"&gt;
             &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="button button--primary button--small" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
                     Buy now&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-            &lt;/a&gt;            
+            &lt;/a&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -235,7 +235,7 @@ jQuery(function($) {
 
     <div class="facia-container facia-container--layout-content facia-container--commercial">
         <h2 class="facia-container__inner test-page-head">DFP Component (Single)</h2>
-        
+
         <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
         <div class="facia-container__inner codeContainer">
             <pre><code>
@@ -868,7 +868,7 @@ jQuery(function($) {
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Soulmates</h2>
-        
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -887,9 +887,9 @@ jQuery(function($) {
             </script>
         </div>
     </div>
-    
+
     <hr/>
-    
+
     <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-multi ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -899,9 +899,24 @@ jQuery(function($) {
             </script>
         </div>
     </div>
-    
+
+    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">CAPI Component</h3>
+        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
+            <script>
+                $.getJSON(
+                    '/commercial/capi.json?s=books&t=p%2F4xv7c&t=p%2F4vc5z&k=music%2Fledzeppelin&' +
+                    'k=music%2Fpinkfloyd&l=http%3A%2F%2Fpagead2.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDjnfPJbBABGAEyCHbj_OBIEKp8&' +
+                    'ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
+                    'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
+                    function(json) { $('.dfp-ad--merchandising-capi').html(json.html); }
+                );
+            </script>
+        </div>
+    </div>
+
     <hr/>
-    
+
     <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
     <div class="facia-container facia-container--layout-content">
         <section class="container container--special container--merchandising container--advertisement-feature">
@@ -986,7 +1001,7 @@ jQuery(function($) {
             </div>
         </section>
     </div>
-    
+
     <h2 class="facia-container__inner test-page-head">Merchandising Sponsored Content</h2>
     <div class="facia-container facia-container--layout-content">
         <section class="container container--special container--merchandising container--sponsored">
@@ -1072,8 +1087,8 @@ jQuery(function($) {
         </section>
     </div>
 
-    
-    
-    
+
+
+
 </div>
 }

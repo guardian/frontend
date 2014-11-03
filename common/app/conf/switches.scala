@@ -133,6 +133,11 @@ object Switches extends Collections {
 
   // Commercial
 
+  val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
+    "Have Admin will poll DFP to precache adserving data.",
+    safeState = On, sellByDate = never
+  )
+
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
     safeState = On, sellByDate = never
@@ -242,6 +247,11 @@ object Switches extends Collections {
   val ScrollDepthSwitch = Switch("Monitoring", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
+  )
+
+  val BrowserStorageStatsSwitch = Switch("Monitoring", "storage-stats",
+    "Enables tracking of whether browser storage is available and working",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 7)
   )
 
   // Features
@@ -376,6 +386,7 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AjaxRelatedContentSwitch,
+    DfpCachingSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -399,6 +410,7 @@ object Switches extends Collections {
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
+    BrowserStorageStatsSwitch,
     ContentApiPutSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,

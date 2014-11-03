@@ -23,6 +23,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/storage-stats',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
@@ -73,6 +74,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    storageStats,
     userAdTargeting,
     CommentCount,
     DiscussionLoader,
@@ -370,10 +372,12 @@ define([
             initDiscussion: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.commentable && config.switches.discussion) {
-                        var discussionLoader = new DiscussionLoader();
-                        discussionLoader.attachTo($('.discussion')[0]);
+                        var el = qwery('.discussion')[0];
+                        if (el) {
+                            new DiscussionLoader().attachTo(el);
+                        }
+                        CommentCount.init();
                     }
-                    CommentCount.init();
                 });
             },
 
@@ -415,8 +419,12 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
 
+            gatherStorageStats: function () {
+                storageStats.gather();
             }
+
         },
         ready = function () {
             modules.initDiscussion();
@@ -452,6 +460,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.gatherStorageStats();
 
             mediator.emit('page:common:ready');
         };

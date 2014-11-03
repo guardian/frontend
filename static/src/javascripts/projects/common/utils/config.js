@@ -14,6 +14,7 @@ define([
     _,
     pad
 ) {
+
     var config = guardian.config;
 
     return extend({

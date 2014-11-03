@@ -10,25 +10,25 @@ category: Common
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share via Email</span>
-            <span class="social-icon"><i class="i-share-email i"></i></span>
+            <span class="social-icon"><i class="i-share-email--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share on Facebook</span>
-            <span class="social-icon"><i class="i-share-facebook i"></i></span>
+            <span class="social-icon"><i class="i-share-facebook--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share on Twitter</span>
-            <span class="social-icon"><i class="i-share-twitter i"></i></span>
+            <span class="social-icon"><i class="i-share-twitter--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share on Google+</span>
-            <span class="social-icon"><i class="i-share-gplus i"></i></span>
+            <span class="social-icon"><i class="i-share-gplus--white i"></i></span>
         </a>
     </li>
 </ul>
@@ -37,17 +37,16 @@ category: Common
 
 .social {
     overflow-y: hidden;
-    margin-left: -$gs-gutter/5;
+    height: 32px;
 }
 
 .social__item {
     float: left;
     width: 36px;
-    padding: 0 $gs-gutter/5;
+    padding: 0 3px $gs-baseline/2 0;
 
     @include mq(leftCol) {
         width: 32px;
-        padding-right: 0;
     }
 }
 
@@ -109,6 +108,10 @@ category: Common
     &:hover {
         background-color: darken($social-gplus, 10%);
     }
+
+    .content--media & {
+        display: block;
+    }
 }
 
 .social-icon--whatsapp {
@@ -128,9 +131,44 @@ category: Common
     }
 }
 
+.social-icon--linkedin {
+    background-color: $social-linkedin;
+
+    .i {
+        background-size: 49% !important;
+    }
+
+    &:hover {
+        background-color: darken($social-linkedin, 10%);
+    }
+}
+
+.social-icon--pinterest {
+    background-color: $social-pinterest;
+
+    .i {
+        background-size: 49% !important;
+        background-position: 45% center !important;
+    }
+
+    &:hover {
+        background-color: darken($social-pinterest, 10%);
+    }
+}
+
 .social-icon--email {
     background-color: $social-email;
     &:hover {
         background-color: darken($social-email, 10%);
+    }
+}
+
+.selection-sharing {
+    position: absolute;
+    padding-top: $gs-baseline / 3;
+
+    .social__item {
+        padding: 0 $gs-gutter / 10;
+        width: 32px;
     }
 }

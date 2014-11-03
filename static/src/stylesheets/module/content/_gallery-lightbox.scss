@@ -242,7 +242,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 
 .gallery-lightbox__btn--close .gallery-lightbox__btn-body {
-    @include icon-button(close, 44px);
+    @include icon-button(close-icon-white, 44px);
 }
 
 .gallery-lightbox__btn--next .gallery-lightbox__btn-body {

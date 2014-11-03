@@ -4,16 +4,11 @@ import common._
 import model._
 import play.api.mvc._
 import services.Index
-import views.support.TemplateDeduping
 import services.IndexPage
 import performance.MemcachedAction
 import scala.concurrent.Future.successful
 
-
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
-
-  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   // Needed as aliases for reverse routing
