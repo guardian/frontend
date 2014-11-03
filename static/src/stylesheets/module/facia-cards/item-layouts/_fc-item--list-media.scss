@@ -44,6 +44,7 @@ Media list item. Looks a bit like this:
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         position: relative;
+
         &:before {
             content: '';
             position: absolute;
@@ -92,9 +93,8 @@ Media list item. Looks a bit like this:
 
     &.fc-item--has-no-image,
     &.fc-item--has-cutout {
-        padding-left: 0;
-        &:before {
-            display: none;
+        .fc-item__container {
+            padding-left: 0;
         }
     }
 
