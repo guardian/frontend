@@ -1,22 +1,11 @@
-@(env: String, templates: Seq[dfp.GuCreativeTemplate], trails: Seq[model.Content])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(env: String, templates: Seq[dfp.GuCreativeTemplate], trails: Seq[model.Content])(implicit request: RequestHeader)
 
 @import tools.DfpLink
-@import com.gu.facia.client.models.CollectionConfig
 
 @main(
     Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates"),
     projectName = Option("facia")
 ) { } {
-
-
-    @** Example container
-    @fragments.containers.special(
-        Collection(trails),
-        new SpecialContainer,
-        containerIndex = 1,
-        dataId = template.name.replace(" ", "-")
-    )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(template.name)))
-    **@
 
     <div class="l-side-margins l-side-margins--layout-front">
         <div class="facia-container facia-container--layout-front">

@@ -1,16 +1,8 @@
 @(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
-@import com.gu.facia.client.models.Config
 @import fragments.items.facia_cards.item
 @import layout.ItemClasses
 
-@* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
- *
- * That's why this exists, but do NOT apply it to old-style containers, as they require tonal information that these
- * do not have!
- *
- * TODO use the number of columns here
- *@
 @if(cards.nonEmpty) {
     <div class="facia-slice-wrapper">
         <div class="linkslist-container">

@@ -9,8 +9,9 @@ GET        /_healthcheck                                                        
 
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
-GET        /crosswords/:crosswordType/:id.svg                                   controllers.CrosswordsController.thumbnail(crosswordType, id)
-GET        /crosswords/:crosswordType/:id                                       controllers.CrosswordsController.crossword(crosswordType, id)
+# TODO fix this
+# GET        /crosswords/:crosswordType/:id.svg                                   controllers.CrosswordsController.thumbnail(crosswordType, id)
+# GET        /crosswords/:crosswordType/:id                                       controllers.CrosswordsController.crossword(crosswordType, id)
 
 GET        /index/subjects                                                      controllers.TagIndexController.keywords()
 GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)

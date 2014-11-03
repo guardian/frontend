@@ -1,17 +1,13 @@
-define(['common/modules/lazyload', 'bonzo', 'common/utils/ajax'], function(LazyLoad, bonzo, ajax) {
+define(['common/modules/lazyload', 'bonzo'], function(LazyLoad, bonzo) {
 
     describe('Lazy Load', function() {
-        
+
         var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>')),
             server;
 
         beforeEach(function() {
             // create container
             $container.appendTo('body');
-            ajax.init({page: {
-                ajaxUrl: "",
-                edition: "UK"
-            }});
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;

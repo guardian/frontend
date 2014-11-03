@@ -4,16 +4,15 @@
 
 <div class="content__labels">
     <div class="content__section-label">
-        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(Localisation(content.sectionName.toLowerCase))</a>
+        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
     </div>
 
-    @if(content.isSeries) {
-        @content.series.headOption.map { series =>
-            <div class="content__series-label">
-                <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
-            </div>
-        }
-    } else {
+
+    @content.seriesTag.map { series =>
+        <div class="content__series-label">
+            <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
+        </div>
+    }.getOrElse{
         @if(content.isFromTheObserver ) {
             <div class="content__series-label">
                 <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
