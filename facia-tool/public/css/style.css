@@ -627,7 +627,7 @@ select {
 }
 
 .editor__length {
-    right: -2px;
+    right: -5px;
 }
 
 .editor__revert {
