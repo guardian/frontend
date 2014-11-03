@@ -1,9 +1,1 @@
-<svg width="6px" height="12px" viewBox="0 0 6 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Comments---Signed-in" transform="translate(-921.000000, -541.000000)">
-            <g id="margin-r-+-margin-l"></g>
-            <circle id="Oval-29" stroke="#BDBDBD" cx="925" cy="547" r="12"></circle>
-            <path d="M927.123288,552.25 L922.520548,547 L927.123288,541.75 L926.60274,541.236842 L920.876712,546.736842 L920.876712,547.263158 L926.60274,552.763158 L927.123288,552.25 Z" id="-3" fill="#767676"></path>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="6" height="12"><path fill="#767676" d="M6,11.5 L1.5,6 L6,0.5 L5.5,0 L0,5.75 L0,6.25 L5.5,12 L6,11.5 L6,11.5 Z"/></svg>

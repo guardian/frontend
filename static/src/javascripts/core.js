@@ -25,7 +25,7 @@ require([
     'common/utils/time',
     'common/utils/to-array',
     'common/utils/url',
-    'common/utils/userTiming',
+    'common/utils/user-timing',
 
     // shared modules
     'common/modules/commercial/badges',

@@ -40,8 +40,6 @@ define([
             });
 
             it('should render component', function (popular, deps, done) {
-                deps['common/utils/ajax'].init({ page: { ajaxUrl: '', edition: 'UK' } });
-
                 popular.render({
                     then: function () {
                         expect($('.container--popular').length).not.toBe(0);
@@ -53,7 +51,6 @@ define([
             it('should call correct most-read endpoint', function (popular, deps, done) {
                 var section = 'sport';
 
-                deps['common/utils/ajax'].init({ page: { ajaxUrl: '', edition: 'UK' } });
                 deps['common/utils/config'].page.section = section;
                 server.respondWith('/most-read/' + section + '.json', [200, {}, response]);
 
@@ -66,8 +63,6 @@ define([
             });
 
             it('should upgrade images', function (popular, deps, done) {
-                deps['common/utils/ajax'].init({ page: { ajaxUrl: '', edition: 'UK' } });
-
                 popular.render({
                     then: function () {
                         expect($('.container--popular img').length).toEqual(4);
@@ -77,7 +72,6 @@ define([
             });
 
             it('should not display container if response is empty', function (popular, deps, done) {
-                deps['common/utils/ajax'].init({ page: { ajaxUrl: '', edition: 'UK' } });
                 server.respondWith([200, {}, JSON.stringify({ faciaHtml: "\n\n\n\n   \n\n\n" })]);
 
                 popular.render({

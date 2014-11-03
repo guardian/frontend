@@ -7,7 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/ui/selectionSharing.html'
+    'text!common/views/ui/selection-sharing.html'
 ], function (
     bean,
     bonzo,
@@ -201,7 +201,7 @@ define([
             $twitterAction = $('.social__item--twitter .social__action');
             $emailAction = $('.social__item--email .social__action');
             // Set timeout ensures that any existing selection has been cleared.
-            bean.on(document.body, 'mouseup keypress keydown keyup', _.debounce(updateSelection, 50));
+            bean.on(document.body, 'mouseup mousedown keypress keydown keyup', _.debounce(updateSelection, 50));
             mediator.on('window:resize', _.throttle(updateSelection, 50));
         }
     };

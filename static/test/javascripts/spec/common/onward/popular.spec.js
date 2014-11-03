@@ -57,10 +57,6 @@ define([
                 var section = 'football';
 
                 server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "' + html + '" }']);
-                deps['common/utils/ajax'].init({page: {
-                    ajaxUrl: "",
-                    edition: "UK"
-                }});
                 deps['common/utils/mediator'].once('modules:popular:loaded', function (el) {
                     var innerHtml = el.innerHTML;
                     expect(innerHtml).toBe('popular');
