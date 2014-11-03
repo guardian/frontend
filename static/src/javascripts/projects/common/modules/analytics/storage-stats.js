@@ -6,16 +6,17 @@ define([
     config
 ) {
 
-    var testKey = 'gu.deleteMe';
+    var testKey = 'gu.deleteMe',
+        data, iterations, i, local, session;
 
     function getFunctionalityLevel(storage) {
         if (storage) {
             // good
             try {
-                var data = '1234567890';
-                var iterations = 10;
-                for (var i = 0; i < iterations; i++) {
-                    data += data+data;
+                data = '1234567890';
+                iterations = 10;
+                for (i = 0; i < iterations; i++) {
+                    data += data + data;
                 }
                 storage.setItem(testKey, data);
                 storage.removeItem(testKey);
@@ -29,10 +30,10 @@ define([
     }
 
     return {
-        run: function() {
+        run: function () {
             if (config.switches.storageStats) {
-                var local = getFunctionalityLevel(window.localStorage);
-                var session = getFunctionalityLevel(window.sessionStorage);
+                local = getFunctionalityLevel(window.localStorage);
+                session = getFunctionalityLevel(window.sessionStorage);
                 beacon.fire('/counts.gif?c=localStorage-' + local + '&c=sessionStorage-' + session);
             }
         }
