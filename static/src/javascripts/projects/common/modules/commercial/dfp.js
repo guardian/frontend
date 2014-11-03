@@ -269,8 +269,8 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var size;
-                $slot = $('#' + event.slot.getSlotId().getDomId()),
+            var size,
+                $slot = $('#' + event.slot.getSlotId().getDomId());
 
             // remove any placeholder ad content
             $('.ad-slot__content--placeholder', $slot).remove();
