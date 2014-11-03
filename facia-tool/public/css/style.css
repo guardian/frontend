@@ -72,9 +72,9 @@ header {
 
 .logo {
     float: left;
-    margin: 5px 0 0 8px;
+    margin: 5px 0 0 5px;
     width: 48px;
-    height: 45px;
+    opacity: 0.6;
 }
 
 h1 {
