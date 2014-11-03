@@ -1,9 +1,9 @@
 define([
-    'common/modules/analytics/beacon',
-    'common/utils/config'
+    'common/utils/config',
+    'common/modules/analytics/beacon'
 ], function (
-    beacon,
-    config
+    config,
+    beacon
 ) {
 
     var testKey = 'gu.deleteMe',
@@ -11,8 +11,8 @@ define([
 
     function getFunctionalityLevel(storage) {
         if (storage) {
-            // good
             try {
+                // arbitrary non-trivial chunk of data to see if it works
                 data = '1234567890';
                 iterations = 10;
                 for (i = 0; i < iterations; i++) {
@@ -30,7 +30,7 @@ define([
     }
 
     return {
-        run: function () {
+        gather: function () {
             if (config.switches.storageStats) {
                 local = getFunctionalityLevel(window.localStorage);
                 session = getFunctionalityLevel(window.sessionStorage);

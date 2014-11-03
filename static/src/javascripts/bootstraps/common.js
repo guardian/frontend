@@ -420,6 +420,10 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
+
+            gatherStorageStats: function () {
+                storageStats.gather();
             }
 
         },
@@ -457,7 +461,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
-            storageStats.run();
+            modules.gatherStorageStats();
 
             mediator.emit('page:common:ready');
         };
