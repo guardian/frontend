@@ -4,6 +4,7 @@
 @import views.html.fragments.containers.facia_cards.slice
 @import views.support.GetClasses
 @import dfp.DfpAgent
+@import slices.TagContainer
 @import views.support.FootballTagPage
 
 @* TODO consolidate with the master container template *@
@@ -11,7 +12,7 @@
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @if(collection.items.nonEmpty) {
         <section
-            class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
+            class="@GetClasses.forNewStyleContainer(TagContainer, config, false, title.nonEmpty, Seq("fc-container--first"))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@dataId"
             @DfpAgent.sponsorshipTag(config).map { keyword =>

@@ -922,7 +922,8 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(container: slices.Container, config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+
     Seq(
       ("container", true),
       ("container--first", isFirst),
@@ -932,7 +933,7 @@ object GetClasses {
       ("js-sponsored-container", (
         (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
       )),
-      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
+      ("js-container--toggle", (slices.Container.showToggle(container) && !isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
     ) collect {
       case (kls, true) => kls
     }
@@ -940,16 +941,17 @@ object GetClasses {
 
   def forContainerDefinition(containerDefinition: ContainerAndCollection) =
     forNewStyleContainer(
+      containerDefinition.container,
       containerDefinition.config.config,
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined
     )
 
-  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(container: slices.Container, config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
         Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle) ++
+        commonContainerStyles(container, config, isFirst, hasTitle) ++
         extraClasses: _*
     )
   }
