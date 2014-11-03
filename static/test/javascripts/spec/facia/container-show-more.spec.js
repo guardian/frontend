@@ -5,7 +5,7 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!facia/views/button-show-more.html',
-    'facia/modules/ui/container-fc-show-more'
+    'facia/modules/ui/container-show-more'
 ], function (
     bonzo,
     bean,
