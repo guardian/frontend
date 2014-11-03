@@ -44,7 +44,6 @@ Media list item. Looks a bit like this:
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         position: relative;
-        padding-left: $image-width + $mobile-media-padding;
         &:before {
             content: '';
             position: absolute;
@@ -54,8 +53,12 @@ Media list item. Looks a bit like this:
             width: $image-width;
         }
 
-        @include mq(tablet) {
-            padding-left: $image-width;
+        .fc-item__container {
+            padding-left: $image-width + $mobile-media-padding;
+
+            @include mq(tablet) {
+                padding-left: $image-width;
+            }
         }
     }
 
