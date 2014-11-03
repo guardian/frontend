@@ -11,32 +11,19 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     <span class="pagination__legend hide-on-mobile-inline">
         About 12,345 results for Tag Name
     </span>
-    <ol class="pagination__list u-unstyled">
-        <li class="pagination__item">
-            <a class="pagination__item-inner pagination__action" rel="next" href="#"><span class="u-h">N</span></a>
-        </li>
-        <li class="pagination__item">
-            <a class="pagination__action" href="#">3</a>
-        </li>
-        <li class="pagination__item">
-            <a class="pagination__action" href="#">4</a>
-        </li>
-        <li class="pagination__item">
-            <span class="pagination__action is-active">5</span>
-        </li>
-        <li class="pagination__item">
-            <span class="pagination__text">…</span>
-        </li>
-        <li class="pagination__item">
-            <a class="pagination__action" href="#">6</a>
-        </li>
-        <li class="pagination__item">
-            <a class="pagination__action" href="#">7</a>
-        </li>
-        <li class="pagination__item">
-            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
-        </li>
-    </ol>
+    <div class="pagination__list">
+        <a class="button button--small button--tertiary pagination__action--static" rel="prev" href="#" aria-label="prev page">
+            <i aria-hidden="true" class="i i-arrow-left-grey"></i>
+            <span class="u-h">prev</span>
+        </a>
+        <a class="button button--small button--tertiary pagination__action" href="#" aria-label="page 4">4</a>
+        <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">5</span>
+        <a class="button button--small button--tertiary pagination__action" href="#" aria-label="page 6">6</a>
+        <a class="button button--small button--tertiary pagination__action--static" rel="next" href="#" aria-label="next page">
+            <i aria-hidden="true" class="i i-arrow-right-grey"></i>
+            <span class="u-h">next</span>
+        </a>
+    </div>
 </div>
 ```
 */
@@ -86,11 +73,6 @@ $text-size:            14px;
     float: left;
 }
 
-.pagination__item {
-    display: inline-block;
-    text-align: center;
-}
-
 .discussion__toolbar {
     .pagination {
         @include mq($until: tablet) {
@@ -137,9 +119,6 @@ $text-size:            14px;
         height: $text-size;
         margin: 0;
         line-height: $text-size;
-        vertical-align: text-bottom;
+        vertical-align: middle;
     }
-}
-.pagination__text {
-    color: $c-neutral2;
 }
