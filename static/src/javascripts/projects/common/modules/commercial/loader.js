@@ -43,7 +43,7 @@ define([
                     var key    = param[0],
                         values = isArray(param[1]) ? param[1] : [param[1]];
                     return map(values, function (value) {
-                        return [key, '=', encodeURIComponent(value)].join('')
+                        return [key, '=', encodeURIComponent(value)].join('');
                     }).join('&');
                 }).join('&');
         },
@@ -55,7 +55,7 @@ define([
                 config.page.pageId.split('/').pop();
             return {
                 k: keywords
-            }
+            };
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
@@ -64,69 +64,68 @@ define([
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
             return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
-        };
+        },
+        /**
+         * Loads commercial components.
+         *
+         * BEWARE that this code is depended upon by the ad server.
+         *
+         * ```
+         * require(['common/modules/commercial/loader'], function (CommercialComponent) {
+         *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
+         *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
+         * })
+         * ```
+         *
+         * @constructor
+         * @extends Component
+         * @param {Object=} options
+         */
+        Loader = function (options) {
+            var opts = defaults(options || {}, {
+                    capi:             [],
+                    capiAboutLinkUrl: '',
+                    capiKeywords:     '',
+                    capiLinkUrl:      '',
+                    capiTitle:        '',
+                    components:       [],
+                    jobIds:           '',
+                    logo:             '',
+                    oastoken:         ''
+                }),
+                section = config.page.section,
+                jobs    = opts.jobIds ? opts.jobIds.split(',') : [];
 
-    /**
-     * Loads commercial components.
-     *
-     * BEWARE that this code is depended upon by the ad server.
-     *
-     * ```
-     * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
-     *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
-     * })
-     * ```
-     *
-     * @constructor
-     * @extends Component
-     * @param {Object=} options
-     */
-    var Loader = function (options) {
-        var opts = defaults(options || {}, {
-                capi:             [],
-                capiAboutLinkUrl: '',
-                capiKeywords:     '',
-                capiLinkUrl:      '',
-                capiTitle:        '',
-                components:       [],
-                jobIds:           '',
-                logo:             '',
-                oastoken:         ''
-            }),
-            section = config.page.section,
-            jobs    = opts.jobIds ? opts.jobIds.split(',') : [];
-
-        this.oastoken   = opts.oastoken;
-        this.components = {
-            bestbuy:           buildComponentUrl('money/bestbuys'),
-            bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-            book:              buildComponentUrl('books/book', { t: config.page.isbn }),
-            books:             buildComponentUrl('books/bestsellers'),
-            booksMedium:       buildComponentUrl('books/bestsellers-medium'),
-            booksHigh:         buildComponentUrl('books/bestsellers-high'),
-            jobs:              buildComponentUrl('jobs', { t: jobs }),
-            jobsHigh:          buildComponentUrl('jobs-high'),
-            jobsV2:            buildComponentUrl('jobs-V2', { t: jobs }),
-            jobsHighV2:        buildComponentUrl('jobs-high-v2'),
-            masterclasses:     buildComponentUrl('masterclasses'),
-            masterclassesHigh: buildComponentUrl('masterclasses-high'),
-            soulmates:         buildComponentUrl('soulmates/mixed'),
-            soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
-            travel:            buildComponentUrl('travel/offers', { s: section }),
-            travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-            multi:             buildComponentUrl('multi', { c: opts.components }),
-            capi:              buildComponentUrl('capi', {
-                s:   section,
-                t:   opts.capi,
-                k:   opts.capiKeywords.split(','),
-                l:   opts.logo,
-                ct:  opts.capiTitle,
-                cl:  opts.capiLinkUrl,
-                cal: opts.capiAboutLinkUrl
-            })
+            this.oastoken   = opts.oastoken;
+            this.components = {
+                bestbuy:           buildComponentUrl('money/bestbuys'),
+                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
+                book:              buildComponentUrl('books/book', { t: config.page.isbn }),
+                books:             buildComponentUrl('books/bestsellers'),
+                booksMedium:       buildComponentUrl('books/bestsellers-medium'),
+                booksHigh:         buildComponentUrl('books/bestsellers-high'),
+                jobs:              buildComponentUrl('jobs', { t: jobs }),
+                jobsHigh:          buildComponentUrl('jobs-high'),
+                jobsV2:            buildComponentUrl('jobs-V2', { t: jobs }),
+                jobsHighV2:        buildComponentUrl('jobs-high-v2'),
+                masterclasses:     buildComponentUrl('masterclasses'),
+                masterclassesHigh: buildComponentUrl('masterclasses-high'),
+                soulmates:         buildComponentUrl('soulmates/mixed'),
+                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
+                travel:            buildComponentUrl('travel/offers', { s: section }),
+                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
+                multi:             buildComponentUrl('multi', { c: opts.components }),
+                capi:              buildComponentUrl('capi', {
+                    s:   section,
+                    t:   opts.capi,
+                    k:   opts.capiKeywords.split(','),
+                    l:   opts.logo,
+                    ct:  opts.capiTitle,
+                    cl:  opts.capiLinkUrl,
+                    cal: opts.capiAboutLinkUrl
+                })
+            };
         };
-    };
 
     Component.define(Loader);
 
