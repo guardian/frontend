@@ -6,8 +6,8 @@ define([
     'common/utils/template',
     'text!facia/views/button-show-more.html'
 ], function (
-    bonzo,
     bean,
+    bonzo,
     qwery,
     $,
     template,
