@@ -1,12 +1,14 @@
 define([
     'reqwest',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/get-property'
 ], function (
     reqwest,
-    config
+    config,
+    getProperty
 ) {
 
-    var ajaxHost = config.page.ajaxUrl || '';
+    var ajaxHost = getProperty(config, 'page.ajaxUrl', '');
 
     function ajax(params) {
         if (!params.url.match('^https?://')) {
