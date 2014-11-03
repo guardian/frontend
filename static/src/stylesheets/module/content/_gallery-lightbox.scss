@@ -156,7 +156,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     bottom: 0;
     background-color: rgba(51, 51, 51, .9);
     padding: $gs-gutter/2;
-    padding-bottom: $gs-gutter*1.5;
+    padding-bottom: $gs-gutter;
     display: none;
 
     @include mq(tablet) {
@@ -242,7 +242,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 
 .gallery-lightbox__btn--close .gallery-lightbox__btn-body {
-    @include icon-button(close, 44px);
+    @include icon-button(close-icon-white, 44px);
 }
 
 .gallery-lightbox__btn--next .gallery-lightbox__btn-body {

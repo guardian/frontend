@@ -118,6 +118,10 @@ Loader.prototype.initMainComments = function() {
             this.renderCommentBar();
             if (this.user) {
                 this.comments.addUser(this.user);
+                if (this.user.isStaff) {
+                    this.removeState('not-staff');
+                    this.setState('is-staff');
+                }
             }
         });
         this.getUser();
@@ -252,7 +256,7 @@ Loader.prototype.initState = function() {
 Loader.prototype.renderCommentBar = function() {
     if (this.isCommentable()) {
         this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
-        this.comments.on('first-load', this.renderCommentBox.bind(this, qwery('.js-discussion-comment-box--bottom')[0]));
+        this.renderCommentBox(qwery('.js-discussion-comment-box--bottom')[0]);
     }
 };
 

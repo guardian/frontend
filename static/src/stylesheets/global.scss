@@ -88,7 +88,6 @@
 @import 'module/football/_player-card';
 @import 'module/football/_article-embeds';
 
-
 /* ==========================================================================
    Facia
    ========================================================================== */
@@ -146,6 +145,11 @@
 @import 'icons/_global-icons-svg';
 @import 'module/icons';
 
+/* ==========================================================================
+   Commercial modules
+   ========================================================================== */
+
+@import 'module/commercial/_commercial';
 
 /* ==========================================================================
    Misc
@@ -154,10 +158,3 @@
 @import 'module/_release-message';
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
-
-
-/* ==========================================================================
-   Commercial modules
-   ========================================================================== */
-
-@import 'module/commercial/_commercial';

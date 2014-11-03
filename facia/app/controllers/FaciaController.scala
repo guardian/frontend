@@ -3,15 +3,16 @@ package controllers
 import com.gu.facia.client.models.CollectionConfig
 import common._
 import front._
+import layout.{CollectionEssentials, ContainerAndCollection}
 import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
-import updates.{CollectionWithLayout, FrontIndex}
-import views.support.{TemplateDeduping, NewsContainer}
+import slices.Container
+import updates.FrontIndex
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction
-import services.ConfigAgent
+import services.{CollectionConfigWithId, ConfigAgent}
 import common.FaciaMetrics.FaciaToApplicationRedirectMetric
 import views.html.fragments.containers.facia_cards.container
 
@@ -21,8 +22,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   val frontJson: FrontJson
-
-  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def rootEditionRedirect() = editionRedirect(path = "")
   def editionRedirect(path: String) = Action{ implicit request =>
@@ -94,18 +93,25 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
-    val futureResult: Future[Result] = frontJson.get(path).map(_.map{ faciaPage =>
-      Cached(faciaPage) {
-        if (request.isRss)
-          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
-            .as("text/xml; charset=utf-8")
-        else if (request.isJson)
-          JsonFront(faciaPage)
-        else
-          Ok(views.html.front(faciaPage))
-      }
-    }.getOrElse(Cached(60)(NotFound)))
-    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    val futureResult = for {
+      maybeFaciaPage <- frontJson.get(path)
+    } yield maybeFaciaPage match {
+      case Some(faciaPage) =>
+        Cached(faciaPage) {
+          if (request.isRss)
+            Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+              .as("text/xml; charset=utf-8")
+          else if (request.isJson)
+            JsonFront(faciaPage)
+          else
+            Ok(views.html.front(faciaPage))
+        }
+
+      case None => Cached(60)(NotFound)
+    }
+
+    futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+
     futureResult
   }
 
@@ -116,8 +122,16 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
-            val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
-            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1, id)
+            val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
+
+            val containerDefinition = ContainerAndCollection(
+              1,
+              Container.fromConfig(config),
+              CollectionConfigWithId(id, config),
+              CollectionEssentials.fromCollection(collection)
+            )
+
+            val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
             if (request.isJson)
               JsonCollection(html, collection)
             else
@@ -131,14 +145,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving collection $collectionId on front $frontId")
 
     withFaciaPage(frontId) { faciaPage =>
-      val layouts = CollectionWithLayout.fromFaciaPage(faciaPage).zipWithIndex
-
-      layouts.find(_._1.config.id == collectionId) match {
-        case Some((CollectionWithLayout(collection, config, Some(containerLayout)), collectionIndex)) =>
-          /** Deduping has already occurred, so pass in an empty instance */
+      faciaPage.front.containers.find(_.config.id == collectionId) match {
+        case Some(containerDefinition) =>
           Cached(60) {
             JsonComponent(
-              "html" -> container(collection, containerLayout, collectionIndex, dataId = config.id)(request, new TemplateDeduping, config.config)
+              "html" -> container(containerDefinition, faciaPage.frontProperties)(request)
             )
           }
         case _ => NotFound

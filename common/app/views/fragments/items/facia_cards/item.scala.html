@@ -1,4 +1,4 @@
-@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, Content}
@@ -12,7 +12,15 @@
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="facia-slice__item u-faux-block-link l-row__item l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
+<li class="@RenderClasses(Map(
+        ("facia-slice__item", true),
+        ("u-faux-block-link", true),
+        ("l-row__item", isRow),
+        (s"l-row__item--span-$colSpan", isRow),
+        ("l-list__item", isList),
+        (card.cssClasses, true)
+    ))">
+
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer, Sublinks.numberOfSublinks(trail, modifierClasses)) @modifierClasses.classes @if(!isList){js-snappable}"
             @if(trail.isCommentable) {
@@ -92,7 +100,7 @@
 
                 @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
                 <div class="fc-item__avatar">
-                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
+                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@cutOut.getUrl"></div>
                 </div>
                 }
 

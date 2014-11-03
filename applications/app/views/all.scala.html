@@ -1,12 +1,21 @@
-@(index: services.IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(index: services.IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader)
 
 @import com.gu.facia.client.models.CollectionConfig
-@import views.support.{PreviousAndNext, TemplateDeduping}
+@import views.support.PreviousAndNext
+@import layout.ContainerLayout
+@import model.Collection
 
 @main(index.page, projectName = Option("facia")){  }{
 <div class="l-side-margins l-side-margins--layout-front">
     <div data-link-name="Front" role="main" class="facia-container facia-container--layout-front">
-        @fragments.containers.index(Collection(index.trails), layout.ContainerLayout(slices.TagContainers.allTagPage, model.Collection(index.trails), Some(templateDeduping)), 0, index.date, index.page, nav)(request, templateDeduping, CollectionConfig.emptyConfig)
+        @fragments.containers.index(
+            Collection(index.trails),
+            ContainerLayout.fromContainerDefinition(slices.TagContainers.allTagPage, index.trails),
+            0,
+            index.date,
+            index.page,
+            nav
+        )(request, CollectionConfig.emptyConfig)
     </div>
 </div>
 }

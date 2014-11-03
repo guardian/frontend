@@ -1,31 +1,25 @@
 define([
     'reqwest',
-    'lodash/objects/assign',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/get-property'
 ], function (
     reqwest,
-    assign,
-    globalConfig
+    config,
+    getProperty
 ) {
 
-    var makeAbsolute = function () {
-        throw new Error('AJAX has not been initialised yet');
-    };
+    var ajaxHost = getProperty(config, 'page.ajaxUrl', '');
 
     function ajax(params) {
         if (!params.url.match('^https?://')) {
-            params.url = makeAbsolute(params.url);
+            params.url = ajaxHost + params.url;
             params.crossOrigin = true;
         }
-        return ajax.reqwest(params);
+        return reqwest(params);
     }
 
-    ajax.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
-
-    ajax.init = function (config) {
-        makeAbsolute = function (url) {
-            return assign({}, globalConfig, config).page.ajaxUrl + url;
-        };
+    ajax.setHost = function (host) {
+        ajaxHost = host;
     };
 
     return ajax;

@@ -6,6 +6,7 @@ import java.net.{URLDecoder, URI}
 object Backends {
   private val all = Map(
     "static" -> new URI("http://static.guim.co.uk"),
+    "media" -> new URI("http://media.guim.co.uk"),
     "sport" -> new URI("http://sport.guim.co.uk")
   )
 

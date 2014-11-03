@@ -1,24 +1,15 @@
 @(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
-@import layout.ContainerLayout
-@import model.{Collection, FrontProperties}
+@import layout.ContainerAndCollection
 @import views.html.fragments.containers
-@import slices.{FixedContainers}
 
 @container(stories: Seq[model.Content], title: String, dataId: String) = {
-    @defining(Collection(stories.take(8), Some(title))) { collection =>
-        @containers.facia_cards.container(
-            collection,
-            ContainerLayout(related.storyPackageLayout, collection, None),
-            2,
-            FrontProperties.empty,
-            dataId = dataId
-        )(request, new views.support.TemplateDeduping, com.gu.facia.client.models.CollectionConfig.emptyConfig)
-    }
+    @containers.facia_cards.container(
+        ContainerAndCollection.forStoryPackage(dataId, stories, title)
+    )(request)
 }
 
 @defining(Seq("related") ++ (if(content.isAdvertisementFeature) Seq("container--advertisement-feature") else Nil)) { classes =>
-
     @if(related.hasStoryPackage) {
         <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
             @container(related.storyPackage, "more on this story", "more-on-this-story")
@@ -28,5 +19,4 @@
             @container(related.related, "related content", "related-content")
         </aside>
     }
-
 }

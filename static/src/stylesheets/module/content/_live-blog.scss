@@ -187,14 +187,10 @@ $block-padding-right: $gs-gutter;
 .updated-time {
     @include fs-textSans(1);
     color: $c-neutral2;
-    margin: 0 $gs-gutter/2 $gs-baseline/3;
-    padding: $gs-baseline/2 0 0;
-    @include mq(tablet) {
-        position: absolute;
-        right: $gs-gutter;
-        bottom: $gs-baseline;
-        margin: 0;
-    }
+    position: absolute;
+    right: $gs-gutter;
+    bottom: $gs-baseline / 3;
+    margin: 0;
 }
 
 /* Blocks
@@ -287,9 +283,6 @@ $block-padding-right: $gs-gutter;
             margin-left: $block-padding-left;
         }
     }
-    .block-elements > *:last-child {
-        margin-bottom: 0;
-    }
 
     .block-elements {
 
@@ -329,7 +322,8 @@ $block-padding-right: $gs-gutter;
         /* Media
            ========================================================= */
         > .element {
-            margin: 0 0 $gs-baseline;
+            margin-left: 0;
+            margin-right: 0;
         }
         > .element-image + .element {
             margin-top: $gs-baseline*-1;
@@ -402,7 +396,6 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             margin-left: $gs-gutter/2;
             margin-right: $gs-gutter/2;
-            padding: $gs-baseline/3 0 $gs-baseline*2;
 
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;
@@ -708,36 +701,20 @@ $timeline-width: 15px;
 .blog__related {
     width: gs-span(3);
     margin-left: gs-span(1) + $gs-gutter;
+
+    .tone-news--item {
+        .fc-item__content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 .blog__related__head {
     @include fs-header(2);
+    padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
-}
-
-.blog__related__item {
-    width: auto !important;
-    padding-bottom: 0;
-    margin-bottom: $gs-baseline*2;
-
-    .item {
-        padding: 0;
-        margin: 0;
-    }
-
-    .item__tonal-border {
-        border-color: $c-neutral4;
-    }
-
-    & + &:before, // Vertical item separator
-    .item__byline,
-    .item__meta {
-        display: none;
-    }
-
-    .item__title {
-        @include fs-headline(2);
-    }
+    border-top: 1px solid $c-neutral4;
 }
 
 /* Football components
@@ -923,68 +900,126 @@ $timeline-width: 15px;
     outline: none;
 }
 
-.block-share--liveblog .block-share__link,
-.share-modal .share-modal__link {
+.block-share__item--facebook {
+    border-color: $social-facebook;
+    color: $social-facebook;
+    .i { @include icon(share-facebook--blue); }
 
-    .block-share__item--facebook,
-    .share-modal__item--facebook {
-        border-color: #3b5998;
-        color: #3b5998;
-        .i { @include icon(share-facebook--blue); }
+    &:hover {
+        border-color: darken($social-facebook, 15%);
+        .i { @include icon(share-facebook--blue-dark); }
     }
+}
 
-    .block-share__item--twitter,
-    .share-modal__item--twitter {
-        border-color: #55acee;
-        color: #55acee;
-        .i { @include icon(share-twitter--blue); }
+.block-share__item--twitter {
+    border-color: $social-twitter;
+    color: $social-twitter;
+    .i { @include icon(share-twitter--blue); }
+
+    &:hover {
+        border-color: darken($social-twitter, 15%);
+        .i { @include icon(share-twitter--blue-dark); }
     }
+}
 
-    .block-share__item--gplus,
-    .share-modal__item--gplus {
-        border-color: #dd4b39;
-        color: #dd4b39;
-        .i { @include icon(share-gplus--red); }
+.block-share__item--gplus {
+    border-color: $social-gplus;
+    color: $social-gplus;
+    .i { @include icon(share-gplus--red); }
+
+    &:hover {
+        border-color: darken($social-gplus, 15%);
+        .i { @include icon(share-gplus--red-dark); }
+    }
+}
+
+.block-share__item--linkedin {
+    border-color: $social-linkedin;
+    color: $social-linkedin;
+    .i {
+        @include icon(share-linkedin--blue);
+        background-size: 58% !important;
+        background-position: center center !important;
     }
 
     &:hover {
-        .block-share__item--facebook {
-            border-color: darken(#3b5998, 15%);
-            .i { @include icon(share-facebook--blue-dark); }
-        }
-
-        .block-share__item--twitter {
-            border-color: darken(#55acee, 15%);
-            .i { @include icon(share-twitter--blue-dark); }
-        }
-
-        .block-share__item--gplus {
-            border-color: darken(#dd4b39, 15%);
-            .i { @include icon(share-gplus--red-dark); }
+        border-color: darken($social-linkedin, 15%);
+        .i {
+            @include icon(share-linkedin--blue-dark);
         }
     }
 }
 
+.block-share__item--pinterest {
+    border-color: $social-pinterest;
+    color: $social-pinterest;
+    .i {
+        @include icon(share-pinterest--red);
+        background-size: 50% !important;
+        background-position: 49% center !important;
+    }
+
+    &:hover {
+        border-color: darken($social-pinterest, 15%);
+        .i {
+            @include icon(share-pinterest--red-dark);
+        }
+    }
+}
+
+
+.share-modal__item--facebook {
+    background-color: $social-facebook;
+    color: #ffffff;
+    .i { @include icon(share-facebook--white); }
+
+    &:hover {
+        background-color: darken($social-facebook, 15%);
+    }
+}
+
+.share-modal__item--twitter {
+    background-color: $social-twitter;
+    color: #ffffff;
+    .i { @include icon(share-twitter--white); }
+
+    &:hover {
+        background-color: darken($social-twitter, 15%);
+    }
+}
+
+.share-modal__item--gplus {
+    background-color: $social-gplus;
+    color: #ffffff;
+    .i { @include icon(share-gplus--white); }
+
+    &:hover {
+        background-color: darken($social-gplus, 15%);
+    }
+}
+
+.share-modal__item--pinterest {
+    background-color: $social-pinterest;
+    color: #ffffff;
+    .i {
+        @include icon(share-pinterest--white);
+        margin-left: 6px !important;
+    }
+
+    &:hover {
+        background-color: darken($social-pinterest, 15%);
+    }
+}
+
 .block-share--liveblog-mobile {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: $gs-baseline $gs-gutter / 4;
+    margin-left: $gs-gutter / 2;
+    margin-top: $gs-baseline / 2;
     cursor: pointer;
 }
 
 .block-share__item--mobile {
     @include mq(tablet) {
         display: none;
-    }
-
-    .i {
-        @extend %absolute-center;
-        @include icon(share-android);
-        width: 11px !important;
-        height: 11px !important;
-        padding-right: 6px;
-        opacity: .5;
     }
 }
 
@@ -1035,6 +1070,7 @@ $timeline-width: 15px;
     display: block;
     text-align: center;
     position: relative;
+    border: 0;
 
     .i {
         float: left;

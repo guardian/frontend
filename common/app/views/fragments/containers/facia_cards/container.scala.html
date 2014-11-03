@@ -1,35 +1,39 @@
-@(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
-
+@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
 
 @import views.support.GetClasses
-@import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
-@import model.FaciaComponentName
+@import views.html.fragments.containers.facia_cards.{standardContainer, navListContainer, navMediaListContainer, mostPopularContainer}
+@import slices.{Dynamic, Fixed, NavList, NavMediaList, MostPopular}
 @import dfp.DfpAgent
-@import common.Localisation
 
-@defining(config.displayName.orElse(collection.displayName)) { case (title) =>
-    <section id="@FaciaComponentName(config, collection)"
-             class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
-             data-link-name="@{containerIndex + 1} | @FaciaComponentName(config, collection)"
-             data-id="@dataId"
-             @DfpAgent.sponsorshipTag(config).map { keyword =>
+@defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
+    <section id="@componentName"
+             class="@GetClasses.forContainerDefinition(containerDefinition)"
+             data-link-name="@{containerDefinition.index + 1} @componentName"
+             data-id="@containerDefinition.dataId"
+             @DfpAgent.sponsorshipTag(containerDefinition.config.config).map { keyword =>
                  data-keywords="@keyword"
              }
-             @DfpAgent.sponsorshipType(config).map { sponsorshipType =>
+             @DfpAgent.sponsorshipType(containerDefinition.config.config).map { sponsorshipType =>
                  data-sponsorship="@sponsorshipType"
              }
-             data-component="@FaciaComponentName(config, collection)">
+             data-component="@componentName">
         <div class="facia-container__inner">
-            @containerHeader(collection, frontProperties, containerIndex)
-            @title.map { title =>
-                <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
-                data-title="@Html(Localisation(title))">
-                    @for(sliceWithCards <- containerLayout.slices) {
-                        @slice(sliceWithCards, containerIndex)
-                    }
+            @containerDefinition.container match {
+                case _: Dynamic | _: Fixed => {
+                    @standardContainer(containerDefinition, frontProperties)
+                }
 
-                    @show_more(containerLayout.remainingCards, containerIndex)
-                </div>
+                case NavList => {
+                    @navListContainer(containerDefinition, frontProperties)
+                }
+
+                case NavMediaList => {
+                    @navMediaListContainer(containerDefinition, frontProperties)
+                }
+
+                case MostPopular => {
+                    @mostPopularContainer(containerDefinition, frontProperties)
+                }
             }
         </div>
     </section>

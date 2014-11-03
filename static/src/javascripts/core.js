@@ -25,11 +25,12 @@ require([
     'common/utils/time',
     'common/utils/to-array',
     'common/utils/url',
-    'common/utils/userTiming',
+    'common/utils/user-timing',
 
     // shared modules
     'common/modules/commercial/badges',
-    'common/modules/commercial/dfp',
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/component',
     'common/modules/experiments/ab',

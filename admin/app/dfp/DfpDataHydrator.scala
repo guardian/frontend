@@ -13,9 +13,13 @@ import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
 import scala.util.{Failure, Try}
 
-object DfpDataHydrator extends Logging {
+object DfpDataHydrator {
+  def apply(): DfpDataHydrator = new DfpDataHydrator()
+}
 
-  private lazy val dfpSession: Option[DfpSession] = try {
+class DfpDataHydrator extends Logging {
+
+  private val dfpSession: Option[DfpSession] = try {
     for {
       clientId <- AdminConfiguration.dfpApi.clientId
       clientSecret <- AdminConfiguration.dfpApi.clientSecret
@@ -39,7 +43,10 @@ object DfpDataHydrator extends Logging {
       None
   }
 
-  def loadCurrentLineItems(): Seq[GuLineItem] = dfpSession.fold(Seq[GuLineItem]()) { session =>
+  private val dfpServiceRegistry = dfpSession map (session => new DfpServiceRegistry(session))
+
+  def loadCurrentLineItems(): Seq[GuLineItem] =
+    dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
 
     try {
 
@@ -49,7 +56,7 @@ object DfpDataHydrator extends Logging {
         .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
         .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-      val dfpLineItems = DfpApiWrapper.fetchLineItems(session, currentLineItems)
+      val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
@@ -134,20 +141,21 @@ object DfpDataHydrator extends Logging {
     }
   }
 
-  def loadCustomFieldId(name: String): Option[Long] = dfpSession flatMap { session =>
+  def loadCustomFieldId(name: String): Option[Long] = dfpServiceRegistry flatMap {
+    serviceRegistry =>
     val statementBuilder = new StatementBuilder().where("name = :name").withBindVariableValue("name", name)
-    val field = DfpApiWrapper.fetchCustomFields(session, statementBuilder).headOption
+      val field = DfpApiWrapper.fetchCustomFields(serviceRegistry, statementBuilder).headOption
     field map (_.getId)
   }
 
-  def loadActiveDescendantAdUnits(rootName: String): Map[String, GuAdUnit] = dfpSession.fold(Map[String, GuAdUnit]()) {
-    session =>
+  def loadActiveDescendantAdUnits(rootName: String): Map[String, GuAdUnit] =
+    dfpServiceRegistry.fold(Map[String, GuAdUnit]()) { serviceRegistry =>
 
       val statementBuilder = new StatementBuilder()
         .where("status = :status")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
+      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
 
       val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
         Option(adUnit.getParentPath) exists { path =>
@@ -161,11 +169,11 @@ object DfpDataHydrator extends Logging {
       }.toMap
   }
 
-  def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = dfpSession.fold(Seq[GuAdUnit]()) {
-    session =>
+  def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
+    dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
       val statementBuilder = new StatementBuilder()
 
-      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(session, statementBuilder)
+      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(serviceRegistry, statementBuilder)
 
       val allUnits = suggestedAdUnits.map { adUnit =>
         val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
@@ -176,43 +184,48 @@ object DfpDataHydrator extends Logging {
       allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
-  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
-    session =>
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] =
+    dfpServiceRegistry.map { serviceRegistry =>
       val adUnitsList: String = adUnits.mkString(",")
 
       val statementBuilder = new StatementBuilder()
         .where(s"id in ($adUnitsList)")
 
-      DfpApiWrapper.approveTheseAdUnits(session, statementBuilder)
+      DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
   }.getOrElse(Failure(new DfpSessionException()))
 
 
-  def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
-    DfpApiWrapper.fetchCustomTargetingKeys(session, new StatementBuilder()).map { k =>
+  def loadAllCustomTargetKeys(): Map[Long, String] =
+    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
+      DfpApiWrapper.fetchCustomTargetingKeys(serviceRegistry, new StatementBuilder()).map { k =>
       k.getId.longValue() -> k.getName
     }.toMap
   }
 
-  def loadAllCustomTargetValues(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
-    DfpApiWrapper.fetchCustomTargetingValues(session, new StatementBuilder()).map { v =>
+  def loadAllCustomTargetValues(): Map[Long, String] =
+    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
+      DfpApiWrapper.fetchCustomTargetingValues(serviceRegistry, new StatementBuilder()).map { v =>
       v.getId.longValue() -> v.getName
     }.toMap
   }
 
-  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] = dfpSession.fold(Map[Long, Seq[String]]()) { session =>
-    DfpApiWrapper.fetchPlacements(session, new StatementBuilder()).map { placement =>
+  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] =
+    dfpServiceRegistry.fold(Map[Long, Seq[String]]()) { serviceRegistry =>
+      DfpApiWrapper.fetchPlacements(serviceRegistry, new StatementBuilder()).map { placement =>
       placement.getId.toLong -> placement.getTargetedAdUnitIds.toSeq
     }.toMap
   }
 
-  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] = dfpSession.fold(Seq.empty[GuCreativeTemplate]) { session =>
+  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] =
+    dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>
     val templatesQuery = new StatementBuilder()
       .where("status = :active and type = :type")
       .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
       .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
       .orderBy("name ASC")
 
-    val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(session, templatesQuery) filterNot { template =>
+      val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(serviceRegistry,
+        templatesQuery) filterNot { template =>
       val name = template.getName.toUpperCase
       name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
     }
@@ -224,7 +237,7 @@ object DfpDataHydrator extends Logging {
       .withBindVariableValue("width", "140")
       .withBindVariableValue("height", "90")
 
-    val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
+      val creatives = DfpApiWrapper.fetchTemplateCreatives(serviceRegistry, creativesQuery)
 
     dfpCreativeTemplates map { template =>
       val templateCreatives = creatives getOrElse(template.getId, Nil)

@@ -52,10 +52,10 @@ define([
                 expect(sliceAdverts).toBeDefined();
             });
 
-            it('should only create a maximum of 2 advert slots', function (sliceAdverts) {
+            it('should only create a maximum of 4 advert slots', function (sliceAdverts) {
                 sliceAdverts.init();
 
-                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(2);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(4);
             });
 
             it('should remove the "facia-slice__item--no-mpu" class', function (sliceAdverts) {
@@ -71,7 +71,9 @@ define([
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
                 expect($adSlots[0].data('name')).toEqual('inline1');
-                expect($adSlots[1].data('name')).toEqual('inline2');
+                expect($adSlots[1].data('name')).toEqual('inline1');
+                expect($adSlots[2].data('name')).toEqual('inline2');
+                expect($adSlots[3].data('name')).toEqual('inline2');
             });
 
             it('should have the correct size mappings', function (sliceAdverts) {
@@ -79,17 +81,16 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('300,50|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('300,50|320,50|300,250');
-                    expect($adSlot.data('tablet')).toEqual('300,250');
-                    expect($adSlot.data('desktop')).toEqual('300,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50|300,250');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50|300,250');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('300,50');
-                    expect($adSlot.data('mobile-landscape')).toEqual('300,50|320,50');
-                    expect($adSlot.data('tablet')).toEqual('300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
                 });
             });
 
@@ -127,6 +128,18 @@ define([
                 expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
             });
+
+            it(
+                'should add one slot for tablet, one slot for mobile after container',
+                function (sliceAdverts) {
+                    sliceAdverts.init();
+
+                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('hide-on-mobile'))
+                        .toBe(true);
+                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('mobile-only'))
+                        .toBe(true);
+                }
+            );
 
         }
     });

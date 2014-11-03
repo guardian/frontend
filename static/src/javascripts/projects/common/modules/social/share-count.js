@@ -3,6 +3,7 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
+    'common/utils/formatters',
     'common/utils/template',
     'text!common/views/content/share-count.html'
 ], function (
@@ -10,6 +11,7 @@ define([
     ajax,
     detect,
     config,
+    formatters,
     template,
     shareCountTemplate
 ) {
@@ -28,8 +30,9 @@ define([
         if (amount !== 0) {
             shareCount += amount;
             var displayCount = shareCount.toFixed(0),
+                formattedDisplayCount = formatters.integerCommas(displayCount),
                 shortDisplayCount = displayCount > 10000 ? Math.round(displayCount / 1000) + 'k' : displayCount;
-            $fullValueEls.text(displayCount);
+            $fullValueEls.text(formattedDisplayCount);
             $shortValueEls.text(shortDisplayCount);
         }
     }

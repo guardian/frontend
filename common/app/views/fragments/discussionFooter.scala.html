@@ -61,7 +61,7 @@
 
 }
 
-<div id="comments" class="discussion discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
+<div id="comments" class="discussion discussion--not-staff discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -91,7 +91,7 @@
 
                 <div class="discussion__main-comments js-discussion-main-comments"></div>
 
-                <div class="discussion__comment-box js-discussion-comment-box--bottom"></div>
+                <div class="discussion__comment-box discussion__comment-box--bottom js-discussion-comment-box--bottom"></div>
 
                 <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button">
                     <i class="i i-plus-white"></i>
