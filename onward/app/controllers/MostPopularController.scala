@@ -7,13 +7,9 @@ import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
-import views.support.{TemplateDeduping}
 import play.api.libs.json.{Json, JsArray}
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
-
-  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   val page = new Page(
     "most-read",
     "most-read",

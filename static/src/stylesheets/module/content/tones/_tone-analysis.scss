@@ -12,5 +12,5 @@
     $c-neutral2, // $tonal__standfirst-text
     $c-analysisDefault, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    $c-analysisDefault // $tonal__article-link
+    darken($c-analysisAccent, 15%) // $tonal__article-link
 );

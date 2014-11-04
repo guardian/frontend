@@ -4,6 +4,7 @@ import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
 import dfp.DfpAgent
+import layout.ContainerAndCollection
 import model._
 
 import java.net.URLEncoder._
@@ -664,7 +665,7 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagType(page: MetaData) = {
+  def getTagContainerDefinition(page: MetaData) = {
     if (page.isContributorPage) {
       slices.TagContainers.contributorTagPage
     } else if (page.keywords.nonEmpty) {
@@ -921,21 +922,33 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig,
+                                    isFirst: Boolean,
+                                    hasTitle: Boolean): Seq[String] = {
+    val isSponsored = DfpAgent.isSponsored(config)
+    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
+    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
+    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+
     Seq(
       ("container", true),
       ("container--first", isFirst),
-      ("container--sponsored", DfpAgent.isSponsored(config)),
-      ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
-      ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
-      ("js-sponsored-container", (
-        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
-      )),
-      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
+      ("container--sponsored", isSponsored),
+      ("container--advertisement-feature", isAdvertisementFeature),
+      ("container--foundation-supported", isFoundationSupported),
+      ("js-sponsored-container", isPaidFor),
+      ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
     ) collect {
       case (kls, true) => kls
     }
   }
+
+  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+    forNewStyleContainer(
+      containerDefinition.config.config,
+      containerDefinition.index == 0,
+      containerDefinition.displayName.isDefined
+    )
 
   def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
@@ -945,31 +958,12 @@ object GetClasses {
         extraClasses: _*
     )
   }
-
-  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val oldClasses = Seq(
-      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
-    ).flatten
-
-    RenderClasses(
-      s"container--${container.containerType}" +:
-        (commonContainerStyles(config, index == 0, hasTitle) ++
-        extraClasses ++ oldClasses): _*
-    )
-  }
-}
-
-object LatestUpdate {
-
-  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
-    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
 
-  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
     case content: Content =>
         content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
         content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")

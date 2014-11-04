@@ -159,16 +159,13 @@
             ).install();
 
             require([
-                'common/utils/ajax',
                 'common/modules/experiments/ab',
                 'common/modules/ui/images'
             ], function(
-                ajax,
                 ab,
                 images
             ) {
 
-                ajax.init();
                 ab.segmentUser();
                 ab.run();
                 images.upgrade();
