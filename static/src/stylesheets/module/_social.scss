@@ -119,9 +119,6 @@ category: Common
     &:hover {
         background-color: darken($social-whatsapp, 10%);
     }
-    i {
-        background-size: 57% !important;
-    }
 }
 
 .social-icon--twitter {
@@ -133,10 +130,6 @@ category: Common
 
 .social-icon--linkedin {
     background-color: $social-linkedin;
-
-    .i {
-        background-size: 49% !important;
-    }
 
     &:hover {
         background-color: darken($social-linkedin, 10%);
