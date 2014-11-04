@@ -1,0 +1,11 @@
+$rounded-icon-size: $gs-row-height - 4; // 32px
+
+.rounded-icon {
+    @include border-radius(50%);
+
+    display: inline-block;
+    text-align: center;
+    width: $rounded-icon-size;
+    height: $rounded-icon-size;
+    line-height: $rounded-icon-size + 1;
+}
