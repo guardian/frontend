@@ -21,10 +21,10 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
   def crossword(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
-      Ok(views.html.crossword(
+      Cached(60)(Ok(views.html.crossword(
         new CrosswordPage(CrosswordData.fromCrossword(crossword)),
-        CrosswordSvg.apply(crossword, None, None, false)
-      ))
+        CrosswordSvg(crossword, None, None, false)
+      )))
     }
   }
 
