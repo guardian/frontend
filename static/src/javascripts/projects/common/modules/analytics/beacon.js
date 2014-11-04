@@ -1,6 +1,10 @@
 define([
+    'lodash/collections/map',
+    'lodash/objects/isArray',
     'common/utils/config'
 ], function (
+    map,
+    isArray,
     config
 ) {
 
@@ -8,10 +12,16 @@ define([
         fire: function (path) {
             var img = new Image();
             img.src = config.page.beaconUrl + path;
+
+            return img;
         },
-        count: function (keys) {
-            keys = isArray(keys) ? keys : [keys];
-            fire('/counts.gif?')
+        counts: function (keys) {
+            var query = map(isArray(keys) ? keys : [keys], function (key) {
+                return 'c=' + key;
+            }).join('&');
+
+            return this.fire('/counts.gif?' + query);
         }
     };
+
 });

@@ -16,7 +16,7 @@ define([
             $adBlockTest = $.create('<div class="ad_unit"></div>').appendTo(document.body);
         if ($css($adBlockTest, 'display') === 'none') {
             blocked = true;
-            beacon.fire('/counts.gif?c=ads-blocked');
+            beacon.counts('ads-blocked');
         }
         $adBlockTest.remove();
 
