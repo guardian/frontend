@@ -37,7 +37,3 @@ case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
-
-/** TODO fully integrate this with the main container template and remove the tag and index templates */
-case object TagContainer extends Container
-case object IndexContainer extends Container

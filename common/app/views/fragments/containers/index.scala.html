@@ -4,14 +4,13 @@
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.support.{GetClasses, PreviousAndNext}
 @import common.LinkTo
-@import slices.IndexContainer
 @import dfp.DfpAgent
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section
-        class="@GetClasses.forNewStyleContainer(IndexContainer, config, false, webTitle.nonEmpty, Seq("fc-container--first"))"
+        class="@GetClasses.forNewStyleContainer(config, false, webTitle.nonEmpty, Seq("fc-container--first"))"
         data-link-name="all index"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
             data-keywords="@keyword"

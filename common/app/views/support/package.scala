@@ -20,7 +20,6 @@ import play.api.libs.json.{Json, JsValue, JsString, Writes}
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
-import slices.Container
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import java.util.regex.{Matcher, Pattern}
@@ -795,7 +794,7 @@ object GetClasses {
   }
 
   private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
-    val container = Container.fromConfig(config)
+    val container = slices.Container.fromConfig(config)
     val isSponsored = DfpAgent.isSponsored(config)
     val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
     val isFoundationSupported = DfpAgent.isFoundationSupported(config)
@@ -816,17 +815,16 @@ object GetClasses {
 
   def forContainerDefinition(containerDefinition: ContainerAndCollection) =
     forNewStyleContainer(
-      containerDefinition.container,
       containerDefinition.config.config,
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined
     )
 
-  def forNewStyleContainer(container: slices.Container, config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
         Seq("fc-container") ++
-        commonContainerStyles(container, config, isFirst, hasTitle) ++
+        commonContainerStyles(config, isFirst, hasTitle) ++
         extraClasses: _*
     )
   }
