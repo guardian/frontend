@@ -1,5 +1,6 @@
 package common
 
+import layout.FaciaCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
@@ -29,7 +30,8 @@ trait LinkTo extends Logging {
     handleQueryStrings(processedUrl)
   }
 
-  def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
+  def handleQueryStrings(url: String)(implicit request : RequestHeader) =
+    HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
@@ -49,22 +51,8 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
-  def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
-    val urlToProcess = trail match {
-      case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
-      case t: Trail => Option(t.url)
-    }
-
-    val processedUrlMaybe: Option[ProcessedUrl] = urlToProcess map { url =>
-      processUrl(url, Edition(request))
-    }
-
-    processedUrlMaybe match {
-      case Some(ProcessedUrl(url, true)) => """href="%s" rel="nofollow"""".format(handleQueryStrings(url))
-      case Some(ProcessedUrl(url, false)) => """href="%s"""".format(handleQueryStrings(url))
-      case None => ""
-    }
-  }
+  def apply(faciaCard: FaciaCard)(implicit request: RequestHeader): String =
+    faciaCard.url.get(request)
 
   private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
 

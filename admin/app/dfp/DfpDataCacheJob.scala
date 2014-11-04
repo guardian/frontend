@@ -1,8 +1,8 @@
 package dfp
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
 import org.joda.time.DateTime
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -10,7 +10,7 @@ import conf.Switches.DfpCachingSwitch
 
 import scala.concurrent.future
 
-object DfpDataCacheJob extends ExecutionContexts {
+object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
@@ -43,7 +43,11 @@ object DfpDataCacheJob extends ExecutionContexts {
   def run() {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
+
+        val start = System.currentTimeMillis
         val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+        val duration = System.currentTimeMillis - start
+        log.info(s"Reading DFP data took $duration ms")
 
         if (data.isValid) {
           val now = printLondonTime(DateTime.now())
@@ -74,23 +78,27 @@ object DfpDataCacheJob extends ExecutionContexts {
 trait DfpDataCacheLifecycle extends GlobalSettings {
 
   private val jobName = "DfpDataCacheJob"
-  private val every5Mins = "0 2/5 * * * ?"
+  private val every10Mins = "0 2/10 * * * ?"
 
   override def onStart(app: Application) {
     super.onStart(app)
 
-    Jobs.deschedule(jobName)
-    Jobs.schedule(jobName, every5Mins) {
-      DfpDataCacheJob.run()
-    }
+    if (!Play.isTest(app)) {
+      Jobs.deschedule(jobName)
+      Jobs.schedule(jobName, every10Mins) {
+        DfpDataCacheJob.run()
+      }
 
-    AkkaAsync {
-      DfpDataCacheJob.run()
+      AkkaAsync {
+        DfpDataCacheJob.run()
+      }
     }
   }
 
   override def onStop(app: Application) {
-    Jobs.deschedule(jobName)
+    if (!Play.isTest(app)) {
+      Jobs.deschedule(jobName)
+    }
     super.onStop(app)
   }
 }

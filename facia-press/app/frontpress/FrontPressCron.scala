@@ -45,6 +45,8 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
             AllFrontsPressLatencyMetric.recordDuration(stopWatch.elapsed)
           }
 
+          log.info(s"Succesfully pressed $path in ${stopWatch.elapsed} ms")
+
           FrontPressCronSuccess.increment()
         case Failure(error) =>
           log.warn("Error updating collection via cron", error)

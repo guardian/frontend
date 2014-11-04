@@ -10,7 +10,9 @@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section
-        class="@GetClasses.forNewStyleContainer(config, false, webTitle.nonEmpty, Seq("fc-container--first"))"
+        class="@GetClasses.forNewStyleContainer(
+            config, false, webTitle.nonEmpty, Seq("fc-container--first"), true
+        )"
         data-link-name="all index"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
             data-keywords="@keyword"

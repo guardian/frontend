@@ -62,7 +62,9 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .settings(
-      libraryDependencies += crosswordsApiClient
+      libraryDependencies += crosswordsApiClient,
+      routesImport += "bindables._",
+      routesImport += "com.gu.crosswords.api.client.models.{Type => CrosswordType}"
     )
     .aggregate(common)
 

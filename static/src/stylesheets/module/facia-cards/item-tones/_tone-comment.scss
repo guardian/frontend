@@ -24,7 +24,7 @@
         color: $c-commentDefault;
     }
 
-    @include sublink-style(live, review) {
+    @include sublink-style(live, review, media) {
         .fc-sublink__kicker {
             color: $c-commentBackground;
         }

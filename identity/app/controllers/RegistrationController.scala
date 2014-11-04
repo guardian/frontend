@@ -19,7 +19,7 @@ import form.Mappings
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      userCreationService : UserCreationService,
                                      api: IdApiClient,
-                                     idRequestParser : IdRequestParser,
+                                     idRequestParser : TorNodeLoggingIdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
@@ -57,8 +57,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   }
 
   def processForm = Action.async { implicit request =>
-    val idRequest = idRequestParser(request)
     val boundForm = registrationForm.bindFromRequest
+    val idRequest = idRequestParser(request, boundForm.data.getOrElse(emailKey,"unable to extract email from form data" ))
     val trackingData = idRequest.trackingData
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
     var skipConfirmation = idRequest.skipConfirmation
