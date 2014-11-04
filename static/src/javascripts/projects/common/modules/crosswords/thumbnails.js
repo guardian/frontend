@@ -42,10 +42,11 @@ define([
                                     top = row * 31 + 1;
                                     left = column * 31 + 1;
 
-                                    bonzo(el).attr('x', left + 15)
-                                        .attr('y', top + 19)
-                                        .attr('class', 'crossword__cell-text')
-                                        .text(enteredText);
+                                    bonzo(el).attr({
+                                        x: left + 15,
+                                        y: top + 19,
+                                        className: 'crossword__cell-text'
+                                    }).text(enteredText);
 
                                     return [el];
                                 } else {
