@@ -2,31 +2,35 @@ define([
     'bonzo',
     'qwery',
     'lodash/collections/forEach',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/tags/container',
+    'common/modules/commercial/ad-block-test',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
-    'common/modules/commercial/slice-adverts',
-    'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp',
+    'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/loader',
+    'common/modules/commercial/slice-adverts',
+    'common/modules/commercial/tags/container',
     'common/modules/userPrefs'
 ], function (
     bonzo,
     qwery,
     forEach,
+    $,
     config,
     mediator,
-    tagsContainer,
+    adBlockTest,
     articleAsideAdverts,
     articleBodyAdverts,
-    sliceAdverts,
-    frontCommercialComponents,
     badges,
     dfp,
+    frontCommercialComponents,
     CommercialLoader,
+    sliceAdverts,
+    tagsContainer,
     userPrefs
 ) {
 
@@ -84,11 +88,21 @@ define([
 
             dfp: function () {
                 dfp.init();
+            },
+
+            adBlockTest: function () {
+                adBlockTest();
             }
 
         },
         ready = function () {
-            if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
+            modules.adBlockTest();
+
+            if (
+                !userPrefs.isOff('adverts') &&
+                !config.page.shouldHideAdverts &&
+                (!config.page.isSSL || config.page.section === 'admin')
+            ) {
                 modules.commercialLoaderHelper();
                 modules.tagContainer();
                 modules.articleAsideAdverts();

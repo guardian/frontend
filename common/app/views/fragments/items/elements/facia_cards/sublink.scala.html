@@ -1,11 +1,11 @@
-@(trail: model.Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(sublink: layout.Sublink)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{ItemKicker, BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
+@import views.support.{BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
 @import views.support.{CartoonKicker, TagKicker, SectionKicker, FreeHtmlKicker, RemoveOuterParaHtml}
 
 <h3 class="fc-sublink__title">
-  @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
+  @sublink.kicker.map {
     case BreakingNewsKicker => {
       <span class="fc-sublink__kicker fc-sublink__live-indicator">Breaking News</span>
     }
@@ -23,7 +23,7 @@
     }
 
     case PodcastKicker(Some(series)) => {
-      <a href="@LinkTo(series.url)" class="fc-sublink__kicker">@Html(series.name)</a>
+      <a href="@LinkTo(series.url)" data-link-name="kicker" class="fc-sublink__kicker">@Html(series.name)</a>
     }
 
     case PodcastKicker(None) => {
@@ -35,11 +35,11 @@
     }
 
     case TagKicker(tagName, tagLink) => {
-      <a href="@LinkTo(tagLink)" class="fc-sublink__kicker">@Html(tagName)</a>
+      <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-sublink__kicker">@Html(tagName)</a>
     }
 
     case SectionKicker(sectionName, sectionLink) => {
-      <a href="@LinkTo(sectionLink)" class="fc-sublink__kicker">@Html(sectionName)</a>
+      <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-sublink__kicker">@Html(sectionName)</a>
     }
 
     case FreeHtmlKicker(html) => {
@@ -47,9 +47,7 @@
     }
   }
 
-  @LinkTo(trail).map { url =>
-    <a href="@url" class="fc-sublink__link" data-link-name="article">
-      @RemoveOuterParaHtml(trail.headline)
+    <a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">
+        @RemoveOuterParaHtml(sublink.headline)
     </a>
-  }
 </h3>

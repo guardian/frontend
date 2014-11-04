@@ -37,6 +37,11 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   override def isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
   override def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
   override def isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
+
+  def faciaUrl: Option[String] = this match {
+    case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
+    case t: Trail => Option(t.url)
+  }
 }
 
 //Facia tool values

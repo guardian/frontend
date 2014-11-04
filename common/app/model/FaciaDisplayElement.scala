@@ -1,29 +1,45 @@
 package model
 
 object FaciaDisplayElement {
-  def fromTrail(trail: Trail) = {
+  def fromTrail(trail: Trail): Option[FaciaDisplayElement] = {
     (trail, trail.mainVideo) match {
       case (other: Content, Some(videoElement)) if other.showMainVideo =>
-        InlineVideo(videoElement, other.webTitle, EndSlateComponents.fromContent(other).toUriPath)
+        Some(InlineVideo(
+          videoElement,
+          other.webTitle,
+          EndSlateComponents.fromContent(other).toUriPath,
+          InlineImage.fromTrail(trail)
+        ))
       case (content: Content, _) if content.isCrossword =>
-        CrosswordSvg(content.id)
-      case _ =>
-        InlineImage
+        Some(CrosswordSvg(content.id))
+      case _ => InlineImage.fromTrail(trail)
     }
-  }
-
-  def isVideo(trail: Trail) = fromTrail(trail) match {
-    case _: InlineVideo => true
-    case _ => false
   }
 }
 
 sealed trait FaciaDisplayElement
 
-case class InlineVideo(videoElement: VideoElement, title: String, endSlatePath: String) extends FaciaDisplayElement
+case class InlineVideo(
+  videoElement: VideoElement,
+  title: String,
+  endSlatePath: String,
+  fallBack: Option[InlineImage]
+) extends FaciaDisplayElement
+
+object InlineImage {
+  def fromTrail(trail: Trail): Option[InlineImage] = if (!trail.imageHide) {
+    trail.trailPicture(5, 3) map { picture =>
+      InlineImage(picture)
+    }
+  } else {
+    None
+  }
+}
+
+case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayElement
+
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")
 
   def imageUrl = s"/$id.svg"
 }
-case object InlineImage extends FaciaDisplayElement

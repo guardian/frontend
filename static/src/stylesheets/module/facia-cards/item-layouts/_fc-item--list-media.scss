@@ -20,8 +20,8 @@ Media list item. Looks a bit like this:
     $image-width: $item-min-height * $media-ratio;
     $mobile-media-padding: ($gs-baseline / 3);
 
-
     min-height: $item-min-height + ($mobile-media-padding * 2);
+
     @include mq(tablet) {
         min-height: $item-min-height;
     }
@@ -44,7 +44,7 @@ Media list item. Looks a bit like this:
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         position: relative;
-        padding-left: $image-width + $mobile-media-padding;
+
         &:before {
             content: '';
             position: absolute;
@@ -54,8 +54,12 @@ Media list item. Looks a bit like this:
             width: $image-width;
         }
 
-        @include mq(tablet) {
-            padding-left: $image-width;
+        .fc-item__container {
+            padding-left: $image-width + $mobile-media-padding;
+
+            @include mq(tablet) {
+                padding-left: $image-width;
+            }
         }
     }
 
@@ -89,9 +93,8 @@ Media list item. Looks a bit like this:
 
     &.fc-item--has-no-image,
     &.fc-item--has-cutout {
-        padding-left: 0;
-        &:before {
-            display: none;
+        .fc-item__container {
+            padding-left: 0;
         }
     }
 

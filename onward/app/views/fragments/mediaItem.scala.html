@@ -1,6 +1,10 @@
 @(content: model.Media, index: Number)(implicit request: RequestHeader)
 
-<li class="@GetClasses.forItem(content, false)">
+@import common.LinkTo
+@import model.{Audio, Video}
+@import views.support.Item140
+
+<li class="item">
     <div class="item__container">
         <a class="item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
             @content.trailPicture(5, 3).map{ image =>
@@ -8,7 +12,7 @@
                     <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
                 </div>
             }
-            <h4 class="item__title">@content match{
+            <h4 class="item__title">@content match {
                 case a: Audio => { @a.webTitle }
                 case v: Video => { @v.videoLinkText }
             }</h4>

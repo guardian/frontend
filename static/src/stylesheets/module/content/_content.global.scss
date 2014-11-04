@@ -2,7 +2,7 @@
     &:before,
     &:after {
         content: '';
-        @include icon(quotemark-mask);
+        @include icon(quote-mask);
         display: block !important;
     }
     &:before {

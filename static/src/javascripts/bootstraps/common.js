@@ -23,6 +23,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/storage-stats',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -74,6 +75,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    storageStats,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -371,11 +373,15 @@ define([
 
             initDiscussion: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.page.commentable && config.switches.discussion) {
-                        var discussionLoader = new DiscussionLoader();
-                        discussionLoader.attachTo($('.discussion')[0]);
+                    if (config.switches.discussion) {
+                        CommentCount.init();
+                        if (config.page.commentable) {
+                            var el = qwery('.discussion')[0];
+                            if (el) {
+                                new DiscussionLoader().attachTo(el);
+                            }
+                        }
                     }
-                    CommentCount.init();
                 });
             },
 
@@ -417,8 +423,12 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
 
+            gatherStorageStats: function () {
+                storageStats.gather();
             }
+
         },
         ready = function () {
             modules.initDiscussion();
@@ -454,6 +464,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.gatherStorageStats();
             crosswordThumbnails();
 
             mediator.emit('page:common:ready');

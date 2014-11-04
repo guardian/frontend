@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/config',
-    'common/utils/userTiming',
+    'common/utils/user-timing',
 
     'common/modules/ui/fonts',
     'common/modules/commercial/user-ad-targeting',
@@ -47,14 +47,8 @@ define([
 
     var bootstrapContext = function (featureName, boostrap) {
             raven.context(
-                {
-                    tags: {
-                        feature: featureName
-                    }
-                },
-                function () {
-                    boostrap.init();
-                }
+                { tags: { feature: featureName } },
+                boostrap.init
             );
         },
         modules = {

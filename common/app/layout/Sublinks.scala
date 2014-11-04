@@ -1,5 +1,6 @@
 package layout
 
+import cards._
 import model.Trail
 
 object InclusiveRange {
@@ -19,19 +20,14 @@ object Sublinks {
 
   val Default = unit(0)
 
-  val byClass = Map(
-    ("full", fromZero(4)),
-    ("half", fromZero(3)),
-    ("list", unit(0)),
-    ("list-media", unit(0)),
-    ("mega-full", InclusiveRange(2, 4)),
-    ("standard", fromZero(2)),
-    ("three-quarters", fromZero(3)),
-    ("three-quarters-right", fromZero(3))
-  )
-
-  def fromItemClasses(itemClasses: ItemClasses) =
-    byClass.getOrElse(itemClasses.tablet, Default)
+  def fromItemClasses(itemClasses: ItemClasses) = itemClasses.tablet match {
+    case Full => fromZero(4)
+    case Half => fromZero(3)
+    case ListItem | MediaList => unit(0)
+    case MegaFull => InclusiveRange(2, 4)
+    case Standard | Third => fromZero(2)
+    case ThreeQuarters | ThreeQuartersRight => fromZero(3)
+  }
 
   def takeSublinks(supporting: Seq[Trail], itemClasses: ItemClasses) = {
     val InclusiveRange(min, max) = fromItemClasses(itemClasses)

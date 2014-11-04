@@ -6,7 +6,7 @@ import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
 import services.IndexPage
-import views.support.{PreviousAndNext, TemplateDeduping}
+import views.support.PreviousAndNext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}
 import implicits.{ItemResponses, Dates}
@@ -32,7 +32,6 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
 
   def all(path: String) = Action.async { implicit request =>
-    implicit val dedupe = TemplateDeduping()
     val today = DateTime.now(Edition(request).timezone)
 
     loadLatest(path, today).map { _.map { index =>
@@ -42,7 +41,6 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
 
   def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
-    implicit val dedupe = TemplateDeduping()
     val edition = Edition(request)
 
     val requestedDate = dateFormat.withZoneUTC()
@@ -73,7 +71,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       }
     }.getOrElse(NotFound)}.map(Cached(300)(_))
   }
-  
+
   private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String) = olderDate.map {
     older => {
       val olderStartOfDay = older.withTimeAtStartOfDay().withZone(DateTimeZone.UTC)
@@ -108,6 +106,6 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
       None
     }
   }
-  
+
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }

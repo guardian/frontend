@@ -121,12 +121,22 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val PngResizingSwitch = Switch("Performance", "png-resizing",
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
+  )
+
   val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
     "If this switch is on then content will have a shorter cache time",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
   )
 
   // Commercial
+
+  val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
+    "Have Admin will poll DFP to precache adserving data.",
+    safeState = On, sellByDate = never
+  )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
@@ -160,15 +170,18 @@ object Switches extends Collections {
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val AudienceScienceGatewaySwitch = Switch("Commercial", "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val CriteoSwitch = Switch("Commercial", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
@@ -234,6 +247,11 @@ object Switches extends Collections {
   val ScrollDepthSwitch = Switch("Monitoring", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
+  )
+
+  val BrowserStorageStatsSwitch = Switch("Monitoring", "storage-stats",
+    "Enables tracking of whether browser storage is available and working",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 7)
   )
 
   // Features
@@ -317,6 +335,10 @@ object Switches extends Collections {
     safeState = On, sellByDate = never)
   // A/B Tests
 
+  val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
+    "If switched on, any user registrations from a known tor esit node will be logged",
+    safeState = On, sellByDate = never)
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -368,6 +390,7 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AjaxRelatedContentSwitch,
+    DfpCachingSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -391,6 +414,7 @@ object Switches extends Collections {
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
+    BrowserStorageStatsSwitch,
     ContentApiPutSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
@@ -419,6 +443,7 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     IdentityBlockSpamEmails,
+    IdentityLogRegistrationsFromTor,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
@@ -427,7 +452,8 @@ object Switches extends Collections {
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
-    PollPreviewForFreshContentSwitch
+    PollPreviewForFreshContentSwitch,
+    PngResizingSwitch
   )
 
   val httpSwitches: List[Switch] = List(

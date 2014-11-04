@@ -79,10 +79,22 @@ define([
             'breakout__script'
         ],
         callbacks = {
-            '300,251': function (e, $adSlot) {
-                new Sticky($adSlot.parent()[0], { top: 12 }).init();
+            '300,251': function (event, $adSlot) {
+                var $mpuContainer = $adSlot.parent();
+
+                $mpuContainer.next().remove();
+                new Sticky($mpuContainer[0], { top: 12 }).init();
             },
-            '300,1': function (e, $adSlot) {
+            '1,1': function (event, $adSlot) {
+                if (!event.slot.getOutOfPage()) {
+                    $adSlot.addClass('u-h');
+                    var $parent = $adSlot.parent();
+                    // if in a slice, add the 'no mpu' class
+                    $parent.hasClass('js-facia-slice-mpu-candidate') &&
+                    $parent.addClass('facia-slice__item--no-mpu');
+                }
+            },
+            '300,1': function (event, $adSlot) {
                 $adSlot.addClass('u-h');
                 var $parent = $adSlot.parent();
                 // if in a slice, add the 'no mpu' class
@@ -121,9 +133,14 @@ define([
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
-                // filter out hidden ads
+                // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    return $css($adSlot, 'display') !== 'none';
+                    if ($css($adSlot, 'display') === 'none') {
+                        $adSlot.remove();
+                        return false;
+                    } else {
+                        return true;
+                    }
                 })
                 .map(function ($adSlot) {
                     return [$adSlot.attr('id'), defineSlot($adSlot)];
@@ -169,7 +186,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);
@@ -252,8 +269,8 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId()),
-                size  = event.size.join(',');
+            var size,
+                $slot = $('#' + event.slot.getSlotId().getDomId());
 
             // remove any placeholder ad content
             $('.ad-slot__content--placeholder', $slot).remove();
@@ -263,10 +280,10 @@ define([
             } else {
                 checkForBreakout($slot);
                 addLabel($slot);
+                size  = event.size.join(',');
+                // is there a callback for this size
+                callbacks[size] && callbacks[size](event, $slot);
             }
-
-            // is there a callback for this size
-            callbacks[size] && callbacks[size](event, $slot);
         },
         addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
@@ -321,8 +338,9 @@ define([
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
                         if (
-                            typeof updatedIFrame.readyState !== 'unknown'
-                                && updatedIFrame.readyState === 'complete'
+                            updatedIFrame &&
+                            typeof updatedIFrame.readyState !== 'unknown' &&
+                            updatedIFrame.readyState === 'complete'
                         ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');

@@ -25,7 +25,7 @@
                     width: (100% / $column) * $span;
                     float: left;
 
-                    .has-flex-wrap & {
+                    .has-flex & {
                         @include flex($span);
                     }
                 }
