@@ -31,7 +31,7 @@ define([
             it('should create a cell for every letter that is filled in', function (thumbs) {
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
-                
+
                 expect(contains(letters, "H")).toBe(true);
                 expect(contains(letters, "I")).toBe(true);
                 expect(contains(letters, "R")).toBe(true);
