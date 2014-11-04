@@ -95,6 +95,18 @@ Ubuntu/Mac:
 ```
 sudo npm -g install grunt-cli
 ```
+
+###PhantomJS (headless browser for testing)
+
+Ubuntu:
+```
+sudo apt-get install phantomjs
+```
+Mac:
+```
+brew install phantomjs
+```
+
 ###Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
