@@ -70,9 +70,7 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        if (!options.isDev) {
-            grunt.task.run(['px_to_rem']);
-        }
+        grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');

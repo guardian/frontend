@@ -31,6 +31,7 @@ define([
     ContainerShowMore,
     snaps
 ) {
+
     var modules = {
 
             showSnaps: function () {

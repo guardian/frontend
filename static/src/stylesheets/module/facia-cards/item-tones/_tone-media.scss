@@ -24,8 +24,9 @@
         color: $c-mediaDefault;
     }
 
-    .fc-item__kicker:after {
-        color: fade-out($c-headline, .8);
+    .fc-item__kicker:after,
+    .fc-sublink__kicker:after {
+        color: fade-out($c-headline, .6);
     }
 
     .fc-item__standfirst,

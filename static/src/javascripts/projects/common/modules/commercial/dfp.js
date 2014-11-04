@@ -186,7 +186,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);
@@ -338,8 +338,9 @@ define([
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
                         if (
-                            typeof updatedIFrame.readyState !== 'unknown'
-                                && updatedIFrame.readyState === 'complete'
+                            updatedIFrame &&
+                            typeof updatedIFrame.readyState !== 'unknown' &&
+                            updatedIFrame.readyState === 'complete'
                         ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');

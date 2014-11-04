@@ -140,7 +140,7 @@
                 {
                     whitelistUrls: [
                         /assets\.guim\.co\.uk/,
-                        /ophan\.co\.uk/,
+                        /ophan\.co\.uk/
                     ],
                     tags: {
                         edition: config.page.edition,
@@ -148,7 +148,9 @@
                         revisionNumber: config.page.revisionNumber
                     },
                     dataCallback: function(data) {
-                        data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
+                        if (data.culprit) {
+                            data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
+                        }
                         data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
                         return data;
                     },
@@ -173,7 +175,10 @@
 
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], function(commercial) {
-                        commercial.init();
+                        raven.context(
+                            { tags: { feature: 'commercial' } },
+                            commercial.init
+                        );
                     });
                 }
 

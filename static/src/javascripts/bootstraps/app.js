@@ -47,14 +47,8 @@ define([
 
     var bootstrapContext = function (featureName, boostrap) {
             raven.context(
-                {
-                    tags: {
-                        feature: featureName
-                    }
-                },
-                function () {
-                    boostrap.init();
-                }
+                { tags: { feature: featureName } },
+                boostrap.init
             );
         },
         modules = {

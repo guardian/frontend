@@ -84,7 +84,7 @@ function s_doPlugins(s) {
     s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-//    s.prop16=s.eVar16=s.getNewRepeat(365);
+    s.prop16=s.getNewRepeat(365);
 
     /* Copy pageName into eVar7 */
 //    if (s.pageName && !s.eVar7) {

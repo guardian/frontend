@@ -64,7 +64,7 @@
 
 @if(isCommentable) {
     @if(DiscussionSwitch.isSwitchedOn) {
-        <div id="comments js-comments" class="discussion discussion--not-staff discussion--loading
+        <div id="comments" class="discussion discussion--not-staff discussion--loading js-comments
         @if(discussionClosed) {discussion--closed} else {discussion--open}
         u-cf"
         data-discussion-key="@discussionId" data-discussion-closed="@discussionClosed" data-component="discussion">

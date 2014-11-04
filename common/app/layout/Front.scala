@@ -1,10 +1,32 @@
 package layout
 
-import com.gu.facia.client.models.{CollectionConfig, Config}
+import com.gu.facia.client.models.CollectionConfig
 import model.{Collection, Content, Trail}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
+import views.support.CutOut
+import scala.Function._
+
+/** For de-duplicating cutouts */
+object ContainerLayoutContext {
+  val empty = ContainerLayoutContext(Set.empty)
+}
+
+case class ContainerLayoutContext(
+  cutOutsSeen: Set[CutOut]
+) {
+  def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
+
+  def transform(card: FaciaCardAndIndex) = {
+    val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+      card.copy(item = card.item.copy(cutOut = None))
+    } else {
+      card
+    }
+    (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
+  }
+}
 
 object Front extends implicits.Collections {
   type TrailUrl = String
@@ -16,7 +38,11 @@ object Front extends implicits.Collections {
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
     * container.
     */
-  def deduplicate(seen: Set[TrailUrl], container: Container, trails: Seq[Trail]): (Set[TrailUrl], Seq[Trail]) = {
+  def deduplicate(
+    seen: Set[TrailUrl],
+    container: Container,
+    trails: Seq[Trail]
+  ): (Set[TrailUrl], Seq[Trail]) = {
     container match {
       case Dynamic(dynamicContainer) =>
         /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
@@ -51,12 +77,33 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
 
-    Front(configs.zipWithIndex.toList.mapAccumL(Set.empty[TrailUrl]) { case (seen, ((config, collection), index)) =>
-      val container = Container.fromConfig(config.config)
+    Front(
+      configs.zipWithIndex.toList.mapAccumL(
+        (Set.empty[TrailUrl], ContainerLayoutContext.empty)
+      ) { case ((seenTrails, context), ((config, collection), index)) =>
+        val container = Container.fromConfig(config.config)
 
-      val (newSeen, newItems) = deduplicate(seen, container, collection.items)
-      (newSeen, ContainerAndCollection(index, container, config, collection.copy(items = newItems)))
-    }._2.filterNot(_.items.isEmpty))
+        val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
+
+        ContainerLayout.fromContainer(container, context, config.config, newItems) map {
+          case (containerLayout, newContext) => ((newSeen, newContext), ContainerAndCollection(
+            index,
+            container,
+            config,
+            collection.copy(items = newItems),
+            Some(containerLayout)
+          ))
+        } getOrElse {
+          ((newSeen, context), ContainerAndCollection(
+            index,
+            container,
+            config,
+            collection.copy(items = newItems),
+            None
+          ))
+        }
+      }._2.filterNot(_.items.isEmpty)
+    )
   }
 }
 
@@ -87,6 +134,24 @@ case class CollectionEssentials(
 )
 
 object ContainerAndCollection {
+  def apply(
+    index: Int,
+    container: Container,
+    config: CollectionConfigWithId,
+    collectionEssentials: CollectionEssentials
+  ): ContainerAndCollection = ContainerAndCollection(
+    index,
+    container,
+    config,
+    collectionEssentials,
+    ContainerLayout.fromContainer(
+      container,
+      ContainerLayoutContext.empty,
+      config.config,
+      collectionEssentials.items
+    ).map(_._1)
+  )
+
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     val layout: ContainerDefinition = items.size match {
       case 1 => FixedContainers.fixedSmallSlowI
@@ -108,7 +173,8 @@ case class ContainerAndCollection(
   index: Int,
   container: Container,
   config: CollectionConfigWithId,
-  collectionEssentials: CollectionEssentials
+  collectionEssentials: CollectionEssentials,
+  containerLayout: Option[ContainerLayout]
 ) {
   def dataId = config.id
 
@@ -126,22 +192,6 @@ case class ContainerAndCollection(
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
     collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
-  /** Slice-based containers have a definition, which deals with layout & show more, etc. */
-  def containerDefinition = container match {
-    case Dynamic(dynamicContainer) =>
-      dynamicContainer.containerDefinitionFor(
-        collectionEssentials.items.collect({ case c: Content => c }).map(Story.fromContent)
-      )
-
-    case Fixed(containerDefinition) => Some(containerDefinition)
-
-    case _ => None
-  }
-
-  def containerLayout = containerDefinition map { definition =>
-    ContainerLayout(definition.slices, collectionEssentials.items, definition.mobileShowMore)
-  }
 
   def items = collectionEssentials.items
 
