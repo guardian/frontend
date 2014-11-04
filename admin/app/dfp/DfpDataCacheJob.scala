@@ -78,13 +78,13 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 trait DfpDataCacheLifecycle extends GlobalSettings {
 
   private val jobName = "DfpDataCacheJob"
-  private val every5Mins = "0 2/5 * * * ?"
+  private val every10Mins = "0 2/10 * * * ?"
 
   override def onStart(app: Application) {
     super.onStart(app)
 
     Jobs.deschedule(jobName)
-    Jobs.schedule(jobName, every5Mins) {
+    Jobs.schedule(jobName, every10Mins) {
       DfpDataCacheJob.run()
     }
 
