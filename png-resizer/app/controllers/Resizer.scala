@@ -15,6 +15,7 @@ import lib.Streams._
 import lib.IntString
 import grizzled.slf4j.Logging
 import lib.Im4Java
+import lib.PngQuant
 
 object Resizer extends Controller with Logging {
   def resize(backend: String, path: String, widthString: String, qualityString: String) = Action.async {
@@ -41,12 +42,13 @@ object Resizer extends Controller with Logging {
 
                 maybeImage match {
                   case Some(image) =>
-                    val resized = Im4Java.resizeBufferedImage(image, width, quality)
+                    val resized = Im4Java.resizeBufferedImage(image, width)
+                    val compressed = PngQuant(resized, quality)
 
                     logger.info(s"Resized $uri in $resizeStopWatch")
                     PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
 
-                    Cached(Configuration.pngResizer.ttlInSeconds)(Ok(resized).as("image/png"))
+                    Cached(Configuration.pngResizer.ttlInSeconds)(Ok(compressed).as("image/png"))
 
                   case None =>
                     InternalServerError(s"Could not convert $uri to a buffered image")
