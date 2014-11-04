@@ -5,7 +5,7 @@ define([
     'models/config/persistence',
     'modules/vars',
     'modules/content-api',
-    'utils/strip-empty-query-params',
+    'utils/sanitize-api-query',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
@@ -16,7 +16,7 @@ define([
     persistence,
     vars,
     contentApi,
-    stripEmptyQueryParams,
+    sanitizeApiQuery,
     asObservableProps,
     populateObservables,
     fullTrim,
@@ -137,7 +137,7 @@ define([
         }
 
         this.state.isOpen(false);
-        this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
+        this.meta.apiQuery(sanitizeApiQuery(this.meta.apiQuery()));
         this.state.apiQueryStatus(undefined);
 
         if (vars.model.collections.indexOf(this) === -1) {
