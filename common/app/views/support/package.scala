@@ -286,6 +286,22 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
   }
 }
 
+case class CaptionShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+      body.select(".element-image").foreach { el =>
+        val blockId = el.attr("data-media-id")
+        el.addClass(blockId);
+        val shares = article.blockLevelShares(blockId)
+        val link = article.blockLevelLink(blockId)
+
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
+
+        el.append(html.toString())
+      }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }

@@ -36,7 +36,7 @@ trait ShareLinks { self: Content =>
     }
   }
 
-  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "gplus").flatMap(shareLink(_, Some(blockId)))
+  def blockLevelShares(blockId: String): Seq[ShareLink] = List("facebook", "twitter", "pinterest").flatMap(shareLink(_, Some(blockId)))
 
   def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
   protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")

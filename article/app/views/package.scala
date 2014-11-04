@@ -21,6 +21,7 @@ object BodyCleaner {
         TableEmbedComplimentaryToP,
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogShareButtons(article),
+        CaptionShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner
       )
