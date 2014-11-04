@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
@@ -25,6 +26,7 @@ define([
     bean,
     bonzo,
     qwery,
+    raven,
     debounce,
     flatten,
     uniq,
@@ -147,6 +149,9 @@ define([
                 })
                 .zipObject()
                 .valueOf();
+            if (keys(slots).length === 0) {
+                raven.captureMessage('No ad slots on page', { tags: { level: 'warn' } });
+            }
         },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
@@ -186,7 +191,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);
