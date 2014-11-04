@@ -96,7 +96,7 @@
     // if the user has changed theirs, account for it.
     if('getComputedStyle' in window) {
         baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
-        if(parseInt(baseFontSize) !== 16) {
+        if(parseInt(baseFontSize, 10) !== 16) {
             document.documentElement.style.fontSize = baseFontSize;
         }
     }
