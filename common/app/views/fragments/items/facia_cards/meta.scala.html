@@ -1,20 +1,20 @@
-@(trail: model.Trail)(implicit request: RequestHeader)
+@(item: layout.FaciaCard)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{Format, TrailCssClasses}
+@import views.support.Format
 
 <aside class="fc-item__meta">
-    @if(!trail.shouldHidePublicationDate) {
+    @item.webPublicationDate.map { date =>
     <time class="fc-item__timestamp js-item__timestamp"
-    datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-    data-timestamp="@trail.webPublicationDate.getMillis"
+    datetime="@date.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+    data-timestamp="@date.getMillis"
     data-relativeformat="short">
         <span class="fc-timestamp__text">
-            <span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")
+            <span class="u-h">Published: </span>@Format(date, "d MMM y")
         </span>
     </time>
     }
-    <a class="fc-trail__count fc-trail__count--commentcount fc-trail__count--inline-template js-item__inline-comment-template" href="@LinkTo(trail)#comments" data-link-name="Comment count">
+    <a class="fc-trail__count fc-trail__count--commentcount fc-trail__count--inline-template js-item__inline-comment-template" href="@LinkTo(item)#comments" data-link-name="Comment count">
         <span class="js-item__comment-count"></span> <span class="fc-trail__count__label js-item__comment-or-comments"></span>
     </a>
 </aside>
