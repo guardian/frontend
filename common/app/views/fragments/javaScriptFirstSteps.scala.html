@@ -90,7 +90,16 @@
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    };
+    }, baseFontSize;
+
+    // rems are calculated in the CSS assuming a 16px baseline.
+    // if the user has changed theirs, account for it.
+    if('getComputedStyle' in window) {
+        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
+        if(parseInt(baseFontSize) !== 16) {
+            document.documentElement.style.fontSize = baseFontSize;
+        }
+    }
 
     (function(isModern) {
         function cssToDOM( name ) {
@@ -130,17 +139,7 @@
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {
-            var docClass = document.documentElement.className,
-                baseFontSize;
-
-            // rems are calculated in the CSS assuming a 16px baseline.
-            // if the user has changed theirs, account for it.
-            if('getComputedStyle' in window) {
-                baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
-                if(parseInt(baseFontSize) !== 16) {
-                    document.documentElement.style.fontSize = baseFontSize;
-                }
-            }
+            var docClass = document.documentElement.className;
 
             @* http://modernizr.com/download/#-svg *@
             function hasSvgSupport() {
