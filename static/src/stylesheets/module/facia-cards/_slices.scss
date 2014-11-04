@@ -88,7 +88,9 @@ Hence why a greater depth of selector specificity is needed.
         }
 
         .fc-item--standard-tablet {
-            @include vertical-item-separator;
+            @include mq(tablet) {
+                @include vertical-item-separator;
+            }
         }
     }
 
