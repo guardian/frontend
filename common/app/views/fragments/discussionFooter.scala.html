@@ -31,7 +31,7 @@
         <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
 
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order"
-                    aria-haspopup="true" aria-owns="comments-order-popup">Order by <span></span></button>
+                    aria-haspopup="true" aria-controls="comments-order-popup">Order by <span></span></button>
 
             <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
                 @List("newest", "oldest").map { value =>
@@ -46,7 +46,7 @@
 
         <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
             <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading"
-                    aria-haspopup="true" aria-owns="comments-order-threading">Threads <span></span></button>
+                    aria-haspopup="true" aria-controls="comments-order-threading">Threads <span></span></button>
 
             <ul id="comments-order-threading" class="popup popup__group popup--comments-threading is-off">
                 @List("collapsed", "expanded", "unthreaded").map { value =>
