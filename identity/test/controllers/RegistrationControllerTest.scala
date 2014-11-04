@@ -37,6 +37,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
     .thenReturn(user)
   when(requestParser.apply(Matchers.anyObject())).thenReturn(identityRequest)
+  when(requestParser.apply(Matchers.anyObject(), Matchers.anyString())).thenReturn(identityRequest)
   when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
 
   val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService)
