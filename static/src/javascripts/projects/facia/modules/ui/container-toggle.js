@@ -19,9 +19,9 @@ define([
                 hidden: 'Show',
                 displayed: 'Hide'
             },
-            _id = _$container.attr("id"),
+            _id = _$container.attr('id'),
             _$button = bonzo(bonzo.create(
-                    '<button class="container__toggle" data-link-name="Show" aria-controls="'+ _id + '">'
+                    '<button class="container__toggle" data-link-name="Show" aria-controls="' + _id + '">'
                     + '<i class="i i-arrow-grey-large"></i>'
                     + '<span class="container__toggle__text">' + _toggleText.displayed
                         + ' <span class="u-h">section</span></span>'
@@ -68,9 +68,9 @@ define([
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
 
                 // check if element has aria attribute as not all containers are expandable
-                if (_$container.attr("aria-expanded")) {
+                if (_$container.attr('aria-expanded')) {
                     // set proper aria-expanded value
-                    _$container.attr("aria-expanded", _state === 'displayed');
+                    _$container.attr('aria-expanded', _state === 'displayed');
                 }
 
                 // data-link-name is inverted, as happens before clickstream
