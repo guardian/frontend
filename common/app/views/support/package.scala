@@ -793,7 +793,13 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(
+      config: CollectionConfig,
+      isFirst: Boolean,
+      hasTitle: Boolean,
+      disableHide: Boolean
+  ): Seq[String] = {
+    val container = slices.Container.fromConfig(config)
     val isSponsored = DfpAgent.isSponsored(config)
     val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
     val isFoundationSupported = DfpAgent.isFoundationSupported(config)
@@ -806,7 +812,8 @@ object GetClasses {
       ("container--advertisement-feature", isAdvertisementFeature),
       ("container--foundation-supported", isFoundationSupported),
       ("js-sponsored-container", isPaidFor),
-      ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
+      ("js-container--toggle",
+        !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
     ) collect {
       case (kls, true) => kls
     }
@@ -819,11 +826,17 @@ object GetClasses {
       containerDefinition.displayName.isDefined
     )
 
-  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(
+      config: CollectionConfig,
+      isFirst: Boolean,
+      hasTitle: Boolean,
+      extraClasses: Seq[String] = Nil,
+      disableHide: Boolean = false
+  ) = {
     RenderClasses(
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
         Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle) ++
+        commonContainerStyles(config, isFirst, hasTitle, disableHide) ++
         extraClasses: _*
     )
   }
