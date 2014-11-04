@@ -15,14 +15,14 @@ class IdentityJobsPlugin(app: Application) extends Plugin with ExecutionContexts
          BlockedEmailDomainList.run()
       }
 
-      Jobs.schedule("TorExitNodeRefeshJob","0 0/30  * * * ?" ) {
+      Jobs.schedule("TorExitNodeRefeshJob","0 0/30 * * * ?" ) {
          TorExitNodeList.run()
       }
   }
 
   def descheduleJobs() {
     Jobs.deschedule("BlockedEmailsRefreshJobs")
-    Jobs.deschedule("TorExitNodeRefeshJob");
+    Jobs.deschedule("TorExitNodeRefeshJob")
   }
 
   override def onStart() {
