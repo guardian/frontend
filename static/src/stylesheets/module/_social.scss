@@ -174,9 +174,9 @@ category: Common
         padding: 0 $gs-gutter / 10;
         width: 32px;
     }
+}
 
-    &.active {
-        visibility: visible;
-        opacity: 1;
-    }
+.selection-sharing.selection-sharing--active {
+    visibility: visible;
+    opacity: 1;
 }

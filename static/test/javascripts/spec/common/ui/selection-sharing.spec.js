@@ -50,7 +50,7 @@ define(['common/utils/$',
             it("should be initially hidden in the article body", function (selectionSharing) {
                 selectionSharing.init();
                 expect(qwery('.selection-sharing').length).toBe(1);
-                expect($('.selection-sharing').hasClass('active')).toBe(false);
+                expect($('.selection-sharing').hasClass('selection-sharing--active')).toBe(false);
             });
 
             it("should be visible when text is selected in the article body", function (selectionSharing) {
@@ -80,7 +80,7 @@ define(['common/utils/$',
                 // More reliable than testing a throttled event handler.
                 selectionSharing.updateSelection();
 
-                expect($('.selection-sharing').hasClass('active')).toBe(true);
+                expect($('.selection-sharing').hasClass('selection-sharing--active')).toBe(true);
             });
         }
 

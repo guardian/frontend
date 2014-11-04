@@ -76,7 +76,7 @@ define([
             $selectionSharing.css({
                 top: top + 'px',
                 left: rect.left + 'px'
-            })
+            });
 
             showSelection();
         } else {
@@ -84,15 +84,15 @@ define([
         }
     },
 
-    hideSelection = function() {
-        if ($selectionSharing.hasClass('active')) {
-            $selectionSharing.removeClass('active');
+    hideSelection = function () {
+        if ($selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.removeClass('selection-sharing--active');
         }
     },
 
-    showSelection = function() {
-        if (!$selectionSharing.hasClass('active')) {
-            $selectionSharing.addClass('active');
+    showSelection = function () {
+        if (!$selectionSharing.hasClass('selection-sharing--active')) {
+            $selectionSharing.addClass('selection-sharing--active');
         }
     },
 
