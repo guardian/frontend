@@ -20,12 +20,11 @@ object Im4Java {
     baos.toByteArray
   }
 
-  def resizeBufferedImage(image: BufferedImage, width: Int, quality: Int) = {
+  def resizeBufferedImage(image: BufferedImage, width: Int) = {
     val operation = new IMOperation
 
     operation.addImage()
     operation.resize(width)
-    operation.quality(quality)
     operation.define("png:color-type=6")  // force rgba colour, iOS does not support indexed (http://en.wikipedia.org/wiki/Portable_Network_Graphics#Color_depth)
     operation.addImage("png:-")
 
