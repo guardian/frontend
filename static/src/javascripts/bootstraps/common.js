@@ -465,7 +465,7 @@ define([
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
             modules.gatherStorageStats();
-            crosswordThumbnails();
+            crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
         };
