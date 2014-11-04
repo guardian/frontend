@@ -31,7 +31,6 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
 
 @Singleton
 class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends IdRequestParser(returnUrlVerifier)  {
-  private val emailKey = "user.primaryEmailAddress"
 
   def apply(request: RequestHeader, email: String) : IdentityRequest = {
 
