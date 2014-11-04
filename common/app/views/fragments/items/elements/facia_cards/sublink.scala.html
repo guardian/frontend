@@ -47,9 +47,7 @@
     }
   }
 
-  @sublink.url.get(request).map { url =>
-    <a href="@url" class="fc-sublink__link" data-link-name="article">
-      @RemoveOuterParaHtml(sublink.headline)
+    <a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">
+        @RemoveOuterParaHtml(sublink.headline)
     </a>
-  }
 </h3>
