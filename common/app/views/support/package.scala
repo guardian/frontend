@@ -794,7 +794,14 @@ object GetClasses {
       containerDefinition.displayName.isDefined
     )
 
-  def forContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forContainer(
+    config: CollectionConfig,
+    isFirst: Boolean,
+    hasTitle: Boolean,
+    extraClasses: Seq[String] = Nil,
+    disableHide: Boolean = false
+  ) = {
+    val container = slices.Container.fromConfig(config)
     val isSponsored = DfpAgent.isSponsored(config)
     val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
     val isFoundationSupported = DfpAgent.isFoundationSupported(config)
@@ -809,7 +816,8 @@ object GetClasses {
           ("fc-container--advertisement-feature", isAdvertisementFeature),
           ("fc-container--foundation-supported", isFoundationSupported),
           ("js-sponsored-container", isPaidFor),
-          ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
+          ("js-container--toggle",
+            !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
         ) collect {
           case (kls, true) => kls
         }) ++

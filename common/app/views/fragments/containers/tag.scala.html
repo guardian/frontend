@@ -11,7 +11,9 @@
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @if(collection.items.nonEmpty) {
         <section
-            class="@GetClasses.forContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
+            class="@GetClasses.forContainer(
+                config, false, title.nonEmpty, Seq("fc-container--first"), true
+            )"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@dataId"
             @DfpAgent.sponsorshipTag(config).map { keyword =>
