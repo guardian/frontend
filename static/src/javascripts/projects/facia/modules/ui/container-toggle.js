@@ -19,8 +19,9 @@ define([
                 hidden: 'Show',
                 displayed: 'Hide'
             },
+            _id = _$container.attr("id"),
             _$button = bonzo(bonzo.create(
-                    '<button class="container__toggle" data-link-name="Show">'
+                    '<button class="container__toggle" data-link-name="Show" aria-controls="'+ _id + '">'
                     + '<i class="i i-arrow-grey-large"></i>'
                     + '<span class="container__toggle__text">' + _toggleText.displayed
                         + '<span class="u-h">section</span></span>'
