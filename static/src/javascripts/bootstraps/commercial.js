@@ -2,8 +2,10 @@ define([
     'bonzo',
     'qwery',
     'lodash/collections/forEach',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/ad-block-test',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -17,8 +19,10 @@ define([
     bonzo,
     qwery,
     forEach,
+    $,
     config,
     mediator,
+    adBlockTest,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -84,10 +88,16 @@ define([
 
             dfp: function () {
                 dfp.init();
+            },
+
+            adBlockTest: function () {
+                adBlockTest();
             }
 
         },
         ready = function () {
+            modules.adBlockTest();
+
             if (
                 !userPrefs.isOff('adverts') &&
                 !config.page.shouldHideAdverts &&

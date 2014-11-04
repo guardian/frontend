@@ -28,7 +28,7 @@ object Metric extends Logging {
     ("sessionStorage-broken", CountMetric("sessionStorage-broken")),
     ("sessionStorage-unsupported", CountMetric("sessionStorage-unsupported")),
 
-    ("no-ad-slots", CountMetric("no-ad-slots")),
+    ("ads-blocked", CountMetric("ads-blocked")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors

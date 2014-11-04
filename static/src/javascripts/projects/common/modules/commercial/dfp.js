@@ -18,7 +18,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
@@ -41,7 +40,6 @@ define([
     config,
     detect,
     mediator,
-    beacon,
     buildPageTargeting,
     geoMostPopular,
     Sticky
@@ -149,11 +147,6 @@ define([
                 })
                 .zipObject()
                 .valueOf();
-
-            // log if there are no ad slots on the page - only reason for this really is an ad blocker
-            if (keys(slots).length === 0) {
-                beacon.fire('/counts.gif?c=no-ad-slots');
-            }
         },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
