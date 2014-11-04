@@ -20,20 +20,14 @@ object Sublinks {
 
   val Default = unit(0)
 
-  val byItemType: Map[CardType, InclusiveRange] = Map(
-    (Full, fromZero(4)),
-
-    (Half, fromZero(3)),
-    (ListItem, unit(0)),
-    (MediaList, unit(0)),
-    (MegaFull, InclusiveRange(2, 4)),
-    (Standard, fromZero(2)),
-    (ThreeQuarters, fromZero(3)),
-    (ThreeQuartersRight, fromZero(3))
-  )
-
-  def fromItemClasses(itemClasses: ItemClasses) =
-    byItemType.getOrElse(itemClasses.tablet, Default)
+  def fromItemClasses(itemClasses: ItemClasses) = itemClasses.tablet match {
+    case Full => fromZero(4)
+    case Half => fromZero(3)
+    case ListItem | MediaList => unit(0)
+    case MegaFull => InclusiveRange(2, 4)
+    case Standard | Third => fromZero(2)
+    case ThreeQuarters | ThreeQuartersRight => fromZero(3)
+  }
 
   def takeSublinks(supporting: Seq[Trail], itemClasses: ItemClasses) = {
     val InclusiveRange(min, max) = fromItemClasses(itemClasses)
