@@ -5,7 +5,8 @@ module.exports = function(grunt, options) {
             singleRun: options.singleRun,
             browserDisconnectTimeout: 10000,
             browserDisconnectTolerance: 3,
-            browserNoActivityTimeout: 15000
+            browserNoActivityTimeout: 15000,
+            reportSlowerThan: 1000
         },
         common: {
             configFile: options.testConfDir + 'common.js'
