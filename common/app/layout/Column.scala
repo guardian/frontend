@@ -73,15 +73,15 @@ object SliceWithCards {
       case ((acc, itemsRemaining, currentContext), column) =>
         val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt itemsToConsume(column)
 
-        val (finalContext, cards) = itemsForColumn.foldLeft((currentContext, Seq.empty[FaciaCardAndIndex])) {
-          case ((contextSoFar, accumulator), IndexedTrail(trail, index)) =>
+        val (finalContext, cards) = itemsForColumn.zipWithIndex.foldLeft((currentContext, Seq.empty[FaciaCardAndIndex])) {
+          case ((contextSoFar, accumulator), (IndexedTrail(trail, index), positionInColumn)) =>
             val (card, contextForNext) = contextSoFar.transform(
               FaciaCardAndIndex(
                 index,
                 FaciaCard.fromTrail(
                   trail,
                   config,
-                  Column.cardStyle(column, index).getOrElse(ItemClasses.showMore)
+                  Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)
                 ),
                 mobileShowMore match {
                   case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
