@@ -8,7 +8,7 @@ import scala.io.Source
 object TorExitNodeList extends ExecutionContexts with Logging {
 
   private val torExitNodeAgent = AkkaAgent[Set[String]](Set.empty)
-  private final val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"
+  private val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"
 
   def run() {
       log.info("Updating tor list for current list for %s".format("profile.theguardian.com") )
