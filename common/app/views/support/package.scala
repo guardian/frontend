@@ -922,17 +922,22 @@ object GetClasses {
     case _  => Nil
   }
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+  private def commonContainerStyles(config: CollectionConfig,
+                                    isFirst: Boolean,
+                                    hasTitle: Boolean): Seq[String] = {
+    val isSponsored = DfpAgent.isSponsored(config)
+    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
+    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
+    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+
     Seq(
       ("container", true),
       ("container--first", isFirst),
-      ("container--sponsored", DfpAgent.isSponsored(config)),
-      ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
-      ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
-      ("js-sponsored-container", (
-        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
-      )),
-      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
+      ("container--sponsored", isSponsored),
+      ("container--advertisement-feature", isAdvertisementFeature),
+      ("container--foundation-supported", isFoundationSupported),
+      ("js-sponsored-container", isPaidFor),
+      ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
     ) collect {
       case (kls, true) => kls
     }
