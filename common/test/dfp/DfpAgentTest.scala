@@ -51,7 +51,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("ad-feature"), sections = Nil, Some("spon2"), Nil, 4),
       Sponsorship(Seq("film"), sections = Nil, None, Nil, 5),
       Sponsorship(Seq("grundfos-partner-zone", "sustainable-business-grundfos-partner-zone"),
-        sections = Seq("sustainable-business"), None, Nil, 8)
+        sections = Seq("sustainable-business"), None, Nil, 8),
+      Sponsorship(Seq("media-network-adobe-partner-zone"), sections = Nil, None, Nil, 9)
     )
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
@@ -144,6 +145,15 @@ class DfpAgentTest extends FlatSpec with Matchers {
       "books/film?edition=au",
       "film"
     )
+
+    forEvery(apiQueries) { q =>
+      testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)
+    }
+  }
+
+  it should "be true for a partner zone container" in {
+
+    val apiQueries = Seq("media-network/adobe-partner-zone")
 
     forEvery(apiQueries) { q =>
       testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)

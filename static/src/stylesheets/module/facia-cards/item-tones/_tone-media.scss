@@ -1,7 +1,6 @@
 .tone-media--item {
     $c-headline: #ffffff;
 
-    @extend %tone-has-background;
     background-color: $c-mediaBackground;
 
     &,
@@ -16,10 +15,8 @@
         }
     }
 
-    .fc-item__content,
-    &.fc-item--has-cutout .fc-item__container,
-    &.fc-item--list-media-mobile {
-        @include box-shadow(inset 0 1px $c-mediaDefault);
+    .fc-item__container:before {
+        background-color: $c-mediaDefault;
     }
 
     .fc-item__kicker,
@@ -27,8 +24,9 @@
         color: $c-mediaDefault;
     }
 
-    .fc-item__kicker:after {
-        color: fade-out($c-headline, .8);
+    .fc-item__kicker:after,
+    .fc-sublink__kicker:after {
+        color: fade-out($c-headline, .6);
     }
 
     .fc-item__standfirst,

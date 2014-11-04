@@ -3,15 +3,16 @@ define([
     'common/utils/ajax',
     'common/utils/$',
     'stripe',
-    'membership/stripe-error-messages'
+    'membership/stripe-error-messages',
+    'text!fixtures/membership/paymentForm.fixture.html'
 ], function (
     PaymentForm,
-    ajax, $,
+    ajax,
+    $,
     stripe,
-    stripeErrorMessages
+    stripeErrorMessages,
+    paymentFormHtml
 ) {
-
-    ajax.init({page: {ajaxUrl: ''}});
 
     describe('Payment form module', function() {
 
@@ -60,28 +61,19 @@ define([
             element.dispatchEvent(event);
         }
 
-        beforeEach(function (done) {
-
-            ajax({
-                url: '/base/static/test/javascripts/fixtures/membership/paymentForm.fixture.html',
-                method: 'get',
-                success: function (resp) {
-                    paymentFormFixtureElement = $.create(resp)[0];
-                    paymentForm = new PaymentForm(guConfig);
-                    paymentForm.init(paymentFormFixtureElement);
-                    errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
-                    creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
-                    creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
-                    submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-submit-input')[0];
-                    errorMessageDisplayElement = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
-                    creditCardImageElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-image')[0];
-                    expiryMonthElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-month')[0];
-                    expiryYearElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-year')[0];
-                    now = new Date();
-                    done();
-                }
-            });
-
+        beforeEach(function () {
+            paymentFormFixtureElement = $.create(paymentFormHtml)[0];
+            paymentForm = new PaymentForm(guConfig);
+            paymentForm.init(paymentFormFixtureElement);
+            errorMessageContainer = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
+            creditCardNumberInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-number')[0];
+            creditCardVerificationCodeInputElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-cvc')[0];
+            submitButtonElement = paymentFormFixtureElement.querySelectorAll('.js-submit-input')[0];
+            errorMessageDisplayElement = paymentFormFixtureElement.querySelectorAll('.js-payment-errors')[0];
+            creditCardImageElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-image')[0];
+            expiryMonthElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-month')[0];
+            expiryYearElement = paymentFormFixtureElement.querySelectorAll('.js-credit-card-exp-year')[0];
+            now = new Date();
         });
 
         afterEach(function () {

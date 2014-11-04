@@ -54,7 +54,8 @@
                         <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                             src="@url"
                             alt="@image.altText.getOrElse("")"
-                            itemprop="contentUrl" />
+                            itemprop="contentUrl"
+                            nopin="nopin" />
 
                         <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                             alt="@image.altText.getOrElse("")"
@@ -79,7 +80,7 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing(rowNum.toString, gallery.blockLevelShares(rowNum.toString), gallery.blockLevelLink(rowNum.toString), gallery.contentType)
+                @fragments.share.blockLevelSharing(rowNum.toString, gallery.blockLevelShares(rowNum.toString), gallery.blockLevelLink(rowNum.toString), gallery.contentType, image.path)
             </div>
 
         </figure>

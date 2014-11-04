@@ -1,6 +1,6 @@
 package dfp
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
 import org.joda.time.DateTime
 import play.api.{Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
@@ -10,7 +10,7 @@ import conf.Switches.DfpCachingSwitch
 
 import scala.concurrent.future
 
-object DfpDataCacheJob extends ExecutionContexts {
+object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
@@ -43,7 +43,11 @@ object DfpDataCacheJob extends ExecutionContexts {
   def run() {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
+
+        val start = System.currentTimeMillis
         val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+        val duration = System.currentTimeMillis - start
+        log.info(s"Reading DFP data took $duration ms")
 
         if (data.isValid) {
           val now = printLondonTime(DateTime.now())

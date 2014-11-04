@@ -139,9 +139,9 @@ define([
                 'css': 'twitter',
                 'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl)
             }, {
-                'text': 'Google plus',
-                'css': 'gplus',
-                'url': encodeURI('https://plus.google.com/share?url=' + blockShortUrl)
+                'text': 'Pinterest',
+                'css': 'pinterest',
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
             }];
 
         return template(blockSharingTpl, {

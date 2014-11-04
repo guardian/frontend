@@ -1,14 +1,10 @@
 .tone-dead--item {
-    @extend %tone-has-background;
-
     &.fc-item {
         background-color: $c-neutral7;
     }
 
-    .fc-item__content,
-    &.fc-item--has-cutout .fc-item__container,
-    &.fc-item--list-media-mobile {
-        @include box-shadow(inset 0 1px $c-liveDefault);
+    .fc-item__container:before {
+        background-color: $c-liveDefault;
     }
 
     .fc-item__kicker,
