@@ -63,7 +63,7 @@
                             }
                         }
 
-                    case svg @ CrosswordSvg(_) => {
+                    case Some(svg @ CrosswordSvg(_)) => {
                         <div class="fc-item__media-wrapper">
                             <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                 <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
