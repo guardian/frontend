@@ -1,16 +1,16 @@
 define([
+    'bonzo',
+    'qwery',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'bonzo',
-    'qwery',
     'common/modules/crosswords/persistence'
 ], function (
+    bonzo,
+    qwery,
     _,
     $,
     ajax,
-    bonzo,
-    qwery,
     persistence
 ) {
     return function () {
@@ -45,7 +45,7 @@ define([
                                         bonzo(el).attr({
                                             x: left + 15,
                                             y: top + 19,
-                                            className: 'crossword__cell-text'
+                                            'class': 'crossword__cell-text'
                                         }).text(enteredText);
 
                                         return [el];
