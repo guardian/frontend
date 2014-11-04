@@ -6,6 +6,7 @@ define([
     'bonzo',
     'react',
     'common/modules/crosswords/clues',
+    'common/modules/crosswords/constants',
     'common/modules/crosswords/controls',
     'common/modules/crosswords/focussedClue',
     'common/modules/crosswords/grid',
@@ -19,6 +20,7 @@ define([
     bonzo,
     React,
     Clues,
+    constants,
     Controls,
     FocussedClue,
     Grid,
@@ -158,8 +160,8 @@ define([
             var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
 
             /** This has to be done before focus to move viewport accordingly */
-            wrapper.style.left = ((x * 32) + 1) + 'px';
-            wrapper.style.top = ((y * 32) + 1) + 'px';
+            wrapper.style.left = ((x * (constants.cellSize + constants.borderSize)) + constants.borderSize) + 'px';
+            wrapper.style.top = ((y * (constants.cellSize + constants.borderSize)) + constants.borderSize) + 'px';
 
             if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
                 this.refs.hiddenInput.getDOMNode().focus();
