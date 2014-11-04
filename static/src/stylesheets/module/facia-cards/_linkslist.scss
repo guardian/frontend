@@ -12,7 +12,7 @@
         margin-top: 0;
         width: 100%;
 
-        .facia-slice__item {
+        .fc-slice__item {
             @include mq(tablet, desktop) {
                 width: 50%;
 
@@ -61,7 +61,7 @@
         }
 
         .has-flex-wrap & {
-            .facia-slice__item {
+            .fc-slice__item {
                 @include mq(tablet) {
                     @include flex-grow(0);
                     @include flex-basis(50%);

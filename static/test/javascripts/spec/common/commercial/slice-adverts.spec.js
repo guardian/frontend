@@ -58,11 +58,11 @@ define([
                 expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(4);
             });
 
-            it('should remove the "facia-slice__item--no-mpu" class', function (sliceAdverts) {
+            it('should remove the "fc-slice__item--no-mpu" class', function (sliceAdverts) {
                 sliceAdverts.init();
 
                 $('.ad-slot', $fixtureContainer).each(function (adSlot) {
-                    expect(bonzo(adSlot).parent().hasClass('facia-slice__item--no-mpu')).toBe(false);
+                    expect(bonzo(adSlot).parent().hasClass('fc-slice__item--no-mpu')).toBe(false);
                 })
             });
 

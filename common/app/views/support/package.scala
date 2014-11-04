@@ -804,7 +804,6 @@ object GetClasses {
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
         (Seq(
           ("fc-container", true),
-          ("container", true),
           ("fc-container--first", isFirst),
           ("fc-container--sponsored", isSponsored),
           ("fc-container--advertisement-feature", isAdvertisementFeature),
