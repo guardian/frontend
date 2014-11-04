@@ -3,10 +3,12 @@ define([
     'react',
     'common/utils/_',
     'common/modules/crosswords/constants',
+    'common/modules/crosswords/helpers'
 ], function (
     React,
     _,
-    constants
+    constants,
+    helpers
 ) {
     var classSet = React.addons.classSet,
         Cell = React.createClass({
@@ -17,8 +19,8 @@ define([
 
             render: function () {
                 var innerNodes = [],
-                    top = this.props.y * (constants.cellSize + constants.borderSize) + constants.borderSize,
-                    left = this.props.x * (constants.cellSize + constants.borderSize) + constants.borderSize;
+                    top = helpers.gridSize(this.props.y),
+                    left = helpers.gridSize(this.props.x);
 
                 if (this.props.number !== undefined) {
                     innerNodes.push(
@@ -69,8 +71,8 @@ define([
 
         render: function () {
             var that = this,
-                width = this.props.columns * (constants.cellSize + constants.borderSize) + constants.borderSize,
-                height = this.props.rows * (constants.cellSize + constants.borderSize) + constants.borderSize,
+                width = helpers.gridSize(this.props.columns),
+                height = helpers.gridSize(this.props.rows),
                 cells = [];
 
             _.forEach(_.range(this.props.rows), function (y) {

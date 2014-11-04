@@ -6,7 +6,6 @@ define([
     'bonzo',
     'react',
     'common/modules/crosswords/clues',
-    'common/modules/crosswords/constants',
     'common/modules/crosswords/controls',
     'common/modules/crosswords/focussedClue',
     'common/modules/crosswords/grid',
@@ -20,7 +19,6 @@ define([
     bonzo,
     React,
     Clues,
-    constants,
     Controls,
     FocussedClue,
     Grid,
@@ -156,12 +154,26 @@ define([
             }
         },
 
+        asPercentage: function (x, y) {
+            var width = helpers.gridSize(this.columns),
+                height = helpers.gridSize(this.rows);
+
+            return {
+                x: 100 * x / width,
+                y: 100 * y / height
+            };
+        },
+
         focusHiddenInput: function (x, y) {
-            var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
+            var wrapper = this.refs.hiddenInputWrapper.getDOMNode(),
+                left = helpers.gridSize(x),
+                top = helpers.gridSize(y);
+
+            var position = this.asPercentage(left, top);
 
             /** This has to be done before focus to move viewport accordingly */
-            wrapper.style.left = ((x * (constants.cellSize + constants.borderSize)) + constants.borderSize) + 'px';
-            wrapper.style.top = ((y * (constants.cellSize + constants.borderSize)) + constants.borderSize) + 'px';
+            wrapper.style.left = position.x + '%';
+            wrapper.style.top = position.y + '%';
 
             if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
                 this.refs.hiddenInput.getDOMNode().focus();
@@ -383,7 +395,11 @@ define([
                     clueText: focussed ? focussed.clue : null
                 }),
                 React.DOM.div({
-                    className: 'crossword__grid-wrapper'
+                    className: 'crossword__grid-wrapper',
+                    style: {
+                        width: helpers.gridSize(this.columns) + 'px',
+                        height: helpers.gridSize(this.rows) + 'px'
+                    }
                 },
                     Grid({
                         rows: this.rows,
