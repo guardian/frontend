@@ -50,34 +50,14 @@ $breakpoints: (
 @mixin facia-container--layout-front {
     .facia-container--layout-front {
         @include mq(leftCol) {
-            .container__title {
-                margin-bottom: 0;
-            }
-            .container__body {
+            .fc-container__body {
                 overflow: hidden;
                 margin-left: $left-column + $gs-gutter;
-            }
-            .container--news {
-                .container__title {
-                    display: block;
-                    float: left;
-                    width: $left-column;
-                    margin-right: $gs-gutter;
-                }
-                .container__body {
-                    margin-left: 0;
-                    width: gs-span(12);
-                }
             }
         }
 
         @include mq(wide) {
-            .container__title {
-                float: left;
-                width: $left-column-wide !important;
-                margin-right: $gs-gutter;
-            }
-            .container__body {
+            .fc-container__body {
                 margin-left: $left-column-wide + $gs-gutter;
                 width: gs-span(12);
             }
@@ -90,14 +70,8 @@ $breakpoints: (
                 .facia-container__inner {
                     width: gs-span(12);
                 }
-                .container__body {
+                .fc-container__body {
                     margin-left: 0;
-                }
-                .container__title {
-                    width: auto !important;
-                    margin-right: 0;
-                    float: none;
-                    margin-bottom: $gs-baseline;
                 }
             }
         }
@@ -107,34 +81,17 @@ $breakpoints: (
 
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
-        .container--dark-background .container__border {
-            border-color: $c-neutral2;
-        }
         @include mq(leftCol) {
-            .container__title {
-                margin-bottom: 0;
-                float: left;
-                width: $left-column !important;
-                margin-right: $gs-gutter;
-            }
-            .container__body {
+            .fc-container__body {
                 overflow: hidden;
                 margin-left: $left-column + $gs-gutter;
             }
         }
 
         @include mq(wide) {
-            .container__title {
-                float: left;
-                width: $left-column-wide !important;
-                margin-right: $gs-gutter;
-            }
-            .container__body {
+            .fc-container__body {
                 margin-left: $left-column-wide + $gs-gutter;
                 width: gs-span(12);
-            }
-            .container__border {
-                margin-right: -(gs-span(1) + $gs-gutter*2);
             }
         }
         @include container__meta(leftCol, desktop);
@@ -145,15 +102,6 @@ $breakpoints: (
     .facia-container--layout-discussion {
         .container__title {
             font-weight: normal;
-        }
-    }
-}
-
-@mixin facia-container--default-heading {
-    .facia-container--default-heading {
-        .container__border,
-        .container__border.tone-accent-border {
-            border-top: 1px solid $c-neutral4;
         }
     }
 }

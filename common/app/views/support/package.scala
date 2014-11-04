@@ -765,13 +765,7 @@ object GetClasses {
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive),
-      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
-      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
-      ("item--imageadjust-hide", item.displaySettings.imageHide),
-      ("item--imageadjust-default", hasImage &&
-        !item.displaySettings.isBoosted &&
-        !item.displaySettings.imageHide)
+      ("fc-item--live", item.isLive)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -811,10 +805,10 @@ object GetClasses {
         (Seq(
           ("fc-container", true),
           ("container", true),
-          ("container--first", isFirst),
-          ("container--sponsored", isSponsored),
-          ("container--advertisement-feature", isAdvertisementFeature),
-          ("container--foundation-supported", isFoundationSupported),
+          ("fc-container--first", isFirst),
+          ("fc-container--sponsored", isSponsored),
+          ("fc-container--advertisement-feature", isAdvertisementFeature),
+          ("fc-container--foundation-supported", isFoundationSupported),
           ("js-sponsored-container", isPaidFor),
           ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
         ) collect {

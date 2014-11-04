@@ -2,6 +2,7 @@ $header-image-size-mobile: 80px;
 $header-image-size-desktop: 120px;
 
 .fc-container {
+    position: relative;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
 
@@ -14,26 +15,38 @@ $header-image-size-desktop: 120px;
         }
     }
 
-    &.container--first {
-        .facia-container__inner {
-            border: 0;
-        }
-
-        @include mq(leftCol) {
-            .fc-container__header__title {
-                border-top: 1px solid $c-newsAccent;
-                padding-top: $gs-baseline / 4;
-            }
-
-            .fc-container__body {
-                padding-top: 0;
-            }
-        }
-    }
-
     .facia-slice-wrapper {
         padding-top: 0;
         margin-top: 0;
+    }
+}
+
+.fc-container--rolled-up .fc-container--rolled-up-hide {
+    display: none;
+}
+
+.fc-container--first {
+    margin-top: 0;
+    padding-top: 0;
+
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline/2;
+    }
+    @include mq(leftCol) {
+        .fc-container__header__title {
+            border-top: 1px solid $c-newsAccent;
+            padding-top: $gs-baseline / 4;
+        }
+
+        .fc-container__body {
+            padding-top: 0;
+        }
+    }
+    @include mq(leftCol, wide) {
+        .facia-slice-wrapper:first-child {
+            padding-top: 0;
+        }
     }
 }
 
@@ -308,7 +321,7 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-container__body {
-    padding-top: $gs-baseline;
+    padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline;
     opacity: 1;
     @include transition(opacity .25s linear); // Used to fade-in new updates
@@ -316,11 +329,79 @@ $header-image-size-desktop: 120px;
     @include mq(tablet) {
         padding-top: $gs-baseline / 4;
     }
+
+    .fc-container--has-toggle & {
+        @include mq(leftCol, wide) {
+            padding-top: gs-height(1);
+        }
+    }
 }
 
 .fc-container__body--is-hidden {
     opacity: 0;
     @include transition(opacity .25s linear); // Used to fade-in new updates
+}
+
+.fc-container__toggle {
+    min-height: gs-height(1);
+    min-width: gs-span(1);
+    position: absolute;
+    top: 2px;
+    right: 0;
+    border: 0;
+    background-color: transparent;
+    @include fs-textSans(3);
+    color: #ffffff;
+
+    i {
+        @include transform(rotate(180deg));
+        position: absolute;
+        top: 13px;
+        left: 50%;
+        margin-left: -12px;
+
+        .container--rolled-up & {
+            @include transform(rotate(0));
+        }
+    }
+
+    @include mq(tablet) {
+        text-align: right;
+        color: $c-neutral2;
+
+        .facia-container--advertisement &,
+        .fc-container--advertisement-feature & {
+            border-left-width: 0;
+        }
+        &:hover,
+        &:focus {
+            color: $c-neutral1;
+        }
+        i {
+            display: none;
+        }
+        .fc-container__toggle__text {
+            display: block;
+        }
+    }
+
+    @include mq(leftCol) {
+        left: gs-span(13) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        left: gs-span(15) + $gs-gutter;
+
+        .has-page-skin & {
+            left: auto;
+        }
+    }
+}
+
+.fc-container__toggle__text {
+    display: none;
+    position: relative;
+    top: -2px;
 }
 
 .fc-container--media {
