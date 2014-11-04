@@ -32,7 +32,7 @@ object Resizer extends Controller with Logging {
             case OK =>
               logger.info(s"Resizing $uri to $width pixels wide at $quality compression")
 
-              enumerator.toByteArray map { bytes =>
+              enumerator.toByteArray flatMap { bytes =>
                 logger.info(s"Downloaded $uri in $downloadStopWatch")
                 PngResizerMetrics.downloadTime.recordDuration(downloadStopWatch.elapsed)
 
@@ -43,15 +43,15 @@ object Resizer extends Controller with Logging {
                 maybeImage match {
                   case Some(image) =>
                     val resized = Im4Java.resizeBufferedImage(image, width)
-                    val compressed = PngQuant(resized, quality)
+                    PngQuant(resized, quality) map { compressedImage =>
+                      logger.info(s"Resized $uri in $resizeStopWatch")
+                      PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
 
-                    logger.info(s"Resized $uri in $resizeStopWatch")
-                    PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
-
-                    Cached(Configuration.pngResizer.ttlInSeconds)(Ok(compressed).as("image/png"))
+                      Cached(Configuration.pngResizer.ttlInSeconds)(Ok(compressedImage).as("image/png"))
+                    }
 
                   case None =>
-                    InternalServerError(s"Could not convert $uri to a buffered image")
+                    Future.successful(InternalServerError(s"Could not convert $uri to a buffered image"))
                 }
               }
 
