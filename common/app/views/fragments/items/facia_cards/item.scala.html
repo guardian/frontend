@@ -20,7 +20,7 @@
     ))">
 
     @defining(containerIndex == 0) { case (isFirstContainer) =>
-        <div class="@GetClasses.forFaciaCard(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
+        <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
             @if(item.discussionSettings.isCommentable) {
                 @item.discussionSettings.discussionId.map{ id =>
                 data-discussion-id="@id"

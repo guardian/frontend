@@ -750,7 +750,7 @@ object RenderClasses {
 }
 
 object GetClasses {
-  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
     val hasImage = item.hasImage
 
     RenderClasses(Map(
@@ -793,37 +793,33 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
-    val isSponsored = DfpAgent.isSponsored(config)
-    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
-    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
-    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
-
-    Seq(
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", isSponsored),
-      ("container--advertisement-feature", isAdvertisementFeature),
-      ("container--foundation-supported", isFoundationSupported),
-      ("js-sponsored-container", isPaidFor),
-      ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
-    ) collect {
-      case (kls, true) => kls
-    }
-  }
-
   def forContainerDefinition(containerDefinition: ContainerAndCollection) =
-    forNewStyleContainer(
+    forContainer(
       containerDefinition.config.config,
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined
     )
 
-  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+    val isSponsored = DfpAgent.isSponsored(config)
+    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
+    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
+    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+
     RenderClasses(
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
-        Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle) ++
+        (Seq(
+          ("fc-container", true),
+          ("container", true),
+          ("container--first", isFirst),
+          ("container--sponsored", isSponsored),
+          ("container--advertisement-feature", isAdvertisementFeature),
+          ("container--foundation-supported", isFoundationSupported),
+          ("js-sponsored-container", isPaidFor),
+          ("js-container--toggle", !isFirst && hasTitle && !isPaidFor)
+        ) collect {
+          case (kls, true) => kls
+        }) ++
         extraClasses: _*
     )
   }
