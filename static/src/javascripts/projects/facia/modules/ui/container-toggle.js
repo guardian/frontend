@@ -24,7 +24,7 @@ define([
                     '<button class="container__toggle" data-link-name="Show" aria-controls="'+ _id + '">'
                     + '<i class="i i-arrow-grey-large"></i>'
                     + '<span class="container__toggle__text">' + _toggleText.displayed
-                        + '<span class="u-h">section</span></span>'
+                        + ' <span class="u-h">section</span></span>'
                     + '</button>'
             )),
             _state = 'displayed',
@@ -75,7 +75,7 @@ define([
 
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                $('.container__toggle__text', _$button[0]).html(_toggleText[_state] + '<span class="u-h">section</span>');
+                $('.container__toggle__text', _$button[0]).html(_toggleText[_state] + ' <span class="u-h">section</span>');
 
                 // hide/show the badge
                 $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
