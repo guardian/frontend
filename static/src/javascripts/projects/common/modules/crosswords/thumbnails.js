@@ -13,6 +13,11 @@ define([
     ajax,
     persistence
 ) {
+    var cellSize = 31,
+        borderSize = 1,
+        textXOffset = 15,
+        textYOffset = 19;
+
     function makeTextCells(savedState) {
         var columns = savedState.length,
             rows = savedState[0].length;
@@ -26,12 +31,12 @@ define([
 
                 if (enteredText) {
                     el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    top = row * 31 + 1;
-                    left = column * 31 + 1;
+                    top = row * cellSize + borderSize;
+                    left = column * cellSize + borderSize;
 
                     bonzo(el).attr({
-                        x: left + 15,
-                        y: top + 19,
+                        x: left + textXOffset,
+                        y: top + textYOffset,
                         'class': 'crossword__cell-text'
                     }).text(enteredText);
 
@@ -66,6 +71,10 @@ define([
     }
 
     return {
+        cellSize: cellSize,
+        borderSize: borderSize,
+        textXOffset: textXOffset,
+        textYOffset: textYOffset,
         init: init,
         makeTextCells: makeTextCells
     };
