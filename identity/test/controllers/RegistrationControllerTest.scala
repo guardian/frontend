@@ -22,7 +22,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val api = mock[IdApiClient]
-  val requestParser = mock[IdRequestParser]
+  val requestParser = mock[TorNodeLoggingIdRequestParser]
   val urlBuilder = mock[IdentityUrlBuilder]
   val userCreationService = mock[UserCreationService]
   val createdUser = mock[User]

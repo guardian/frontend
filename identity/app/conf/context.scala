@@ -2,22 +2,27 @@ package conf
 
 import common.{AkkaAsync, Jobs, ExecutionContexts}
 import play.api.{Plugin, Application}
-import jobs.BlockedEmailDomainList
+import jobs.{TorExitNodeList, BlockedEmailDomainList}
 import scala.concurrent.duration._
 
 /**
  * Created by nbennett on 21/10/14.
  */
-class BlockedEmailDomainsPlugin(app: Application) extends Plugin with ExecutionContexts {
+class IdentityJobsPlugin(app: Application) extends Plugin with ExecutionContexts {
 
   def scheduleJobs() {
       Jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
          BlockedEmailDomainList.run()
       }
+
+      Jobs.schedule("TorExitNodeRefeshJob","0 0/30  * * * ?" ) {
+         TorExitNodeList.run()
+      }
   }
 
   def descheduleJobs() {
     Jobs.deschedule("BlockedEmailsRefreshJobs")
+    Jobs.deschedule("TorExitNodeRefeshJob");
   }
 
   override def onStart() {
@@ -26,6 +31,7 @@ class BlockedEmailDomainsPlugin(app: Application) extends Plugin with ExecutionC
 
     AkkaAsync.after(5.seconds) {
       BlockedEmailDomainList.run()
+      TorExitNodeList.run()
     }
   }
 
