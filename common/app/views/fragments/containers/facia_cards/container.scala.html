@@ -16,7 +16,8 @@
              @DfpAgent.sponsorshipType(containerDefinition.config.config).map { sponsorshipType =>
                  data-sponsorship="@sponsorshipType"
              }
-             data-component="@componentName">
+             data-component="@componentName"
+             aria-expanded="true">
         <div class="facia-container__inner">
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {

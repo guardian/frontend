@@ -14,17 +14,18 @@ define([
         /* jscs:disable disallowDanglingUnderscores */
 
         var _$container = bonzo(container),
-            _$button = bonzo(bonzo.create(
-                '<button class="container__toggle" data-link-name="Show">'
-                    + '<i class="i i-arrow-grey-large"></i>'
-                    + '<span class="container__toggle__text">Hide</span>'
-                + '</button>'
-            )),
             _prefName = 'container-states',
             _toggleText = {
                 hidden: 'Show',
                 displayed: 'Hide'
             },
+            _$button = bonzo(bonzo.create(
+                    '<button class="container__toggle" data-link-name="Show">'
+                    + '<i class="i i-arrow-grey-large"></i>'
+                    + '<span class="container__toggle__text">' + _toggleText.displayed
+                        + '<span class="u-h">section</span></span>'
+                    + '</button>'
+            )),
             _state = 'displayed',
             _updatePref = function ($container, state) {
                 // update user prefs
@@ -57,18 +58,29 @@ define([
             _$container
                 .removeClass('js-container--toggle')
                 .addClass('container--has-toggle');
+
             // listen to event
             bean.on(_$button[0], 'click', function () {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
+
                 // add/remove rolled class
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
+
+                // check if element has aria attribute as not all containers are expandable
+                if (_$container.attr("aria-expanded")) {
+                    // set proper aria-expanded value
+                    _$container.attr("aria-expanded", _state === 'displayed');
+                }
+
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                $('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                $('.container__toggle__text', _$button[0]).html(_toggleText[_state] + '<span class="u-h">section</span>');
+
                 // hide/show the badge
                 $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
                 _updatePref(_$container, _state);
             });
+
             _readPrefs(_$container);
         };
 
