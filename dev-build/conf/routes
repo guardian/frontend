@@ -17,8 +17,10 @@ GET         /count/$prefix<.+>.gif                                              
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 
 # Crosswords
-GET         /crosswords/:crosswordType/:id.svg                                                                       controllers.CrosswordsController.thumbnail(crosswordType, id)
-GET         /crosswords/:crosswordType/:id                                                                           controllers.CrosswordsController.crossword(crosswordType, id)
+# NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
