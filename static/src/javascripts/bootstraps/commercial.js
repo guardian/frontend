@@ -4,14 +4,14 @@ define([
     'lodash/collections/forEach',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/tags/container',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
-    'common/modules/commercial/slice-adverts',
-    'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp',
+    'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/loader',
+    'common/modules/commercial/slice-adverts',
+    'common/modules/commercial/tags/container',
     'common/modules/userPrefs'
 ], function (
     bonzo,
@@ -19,14 +19,14 @@ define([
     forEach,
     config,
     mediator,
-    tagsContainer,
     articleAsideAdverts,
     articleBodyAdverts,
-    sliceAdverts,
-    frontCommercialComponents,
     badges,
     dfp,
+    frontCommercialComponents,
     CommercialLoader,
+    sliceAdverts,
+    tagsContainer,
     userPrefs
 ) {
 
