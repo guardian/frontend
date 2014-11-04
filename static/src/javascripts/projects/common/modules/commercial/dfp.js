@@ -150,7 +150,7 @@ define([
                 .zipObject()
                 .valueOf();
 
-            // log if there's no ad slots on the page - only reason for this really is an ad blocker
+            // log if there are no ad slots on the page - only reason for this really is an ad blocker
             if (keys(slots).length === 0) {
                 beacon.fire('/counts.gif?c=no-ad-slots');
             }
