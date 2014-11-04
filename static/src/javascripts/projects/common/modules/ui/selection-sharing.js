@@ -96,6 +96,12 @@ define([
         }
     },
 
+    onMouseDown = function (event) {
+        if (!$.ancestor(event.target, 'social__item')) {
+            hideSelection();
+        }
+    },
+
     initSelectionSharing = function () {
         // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
         // and the UI is generally fiddly on touch.
@@ -106,7 +112,7 @@ define([
             // Set timeout ensures that any existing selection has been cleared.
             bean.on(document.body, 'keypress keydown keyup', _.debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', _.debounce(updateSelection, 200));
-            bean.on(document.body, 'mousedown', _.debounce(hideSelection, 50));
+            bean.on(document.body, 'mousedown', _.debounce(onMouseDown, 50));
             mediator.on('window:resize', _.throttle(updateSelection, 50));
         }
     };
