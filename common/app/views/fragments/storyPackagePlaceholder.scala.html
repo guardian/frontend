@@ -1,11 +1,11 @@
 @(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
-@import layout.ContainerAndCollection
+@import layout.FaciaContainer
 @import views.html.fragments.containers
 
 @container(stories: Seq[model.Content], title: String, dataId: String) = {
     @containers.facia_cards.container(
-        ContainerAndCollection.forStoryPackage(dataId, stories, title)
+        FaciaContainer.forStoryPackage(dataId, stories, title)
     )(request)
 }
 

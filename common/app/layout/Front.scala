@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
+import dfp.DfpAgent
 import model.{Collection, Content, Trail}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
@@ -86,7 +87,7 @@ object Front extends implicits.Collections {
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config.config, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), ContainerAndCollection(
+          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
             index,
             container,
             config,
@@ -94,7 +95,7 @@ object Front extends implicits.Collections {
             Some(containerLayout)
           ))
         } getOrElse {
-          ((newSeen, context), ContainerAndCollection(
+          ((newSeen, context), FaciaContainer.fromConfig(
             index,
             container,
             config,
@@ -133,13 +134,13 @@ case class CollectionEssentials(
   showMoreLimit: Option[Int]
 )
 
-object ContainerAndCollection {
+object FaciaContainer {
   def apply(
     index: Int,
     container: Container,
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials
-  ): ContainerAndCollection = ContainerAndCollection(
+  ): FaciaContainer = fromConfig(
     index,
     container,
     config,
@@ -152,6 +153,25 @@ object ContainerAndCollection {
     ).map(_._1)
   )
 
+  def fromConfig(
+    index: Int,
+    container: Container,
+    config: CollectionConfigWithId,
+    collectionEssentials: CollectionEssentials,
+    containerLayout: Option[ContainerLayout]
+  ): FaciaContainer = FaciaContainer(
+    index,
+    config.id,
+    config.config.displayName orElse collectionEssentials.displayName,
+    config.config.href orElse collectionEssentials.href,
+    container,
+    collectionEssentials,
+    containerLayout,
+    config.config.showDateHeader.exists(identity),
+    config.config.showLatestUpdate.exists(identity),
+    ContainerCommercialOptions.fromConfig(config.config)
+  )
+
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     val layout: ContainerDefinition = items.size match {
       case 1 => FixedContainers.fixedSmallSlowI
@@ -160,7 +180,7 @@ object ContainerAndCollection {
       case 5 => FixedContainers.fixedSmallSlowVI
       case _ => FixedContainers.fixedMediumFastXII
     }
-    ContainerAndCollection(
+    FaciaContainer(
       index = 2,
       container = Fixed(layout),
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
@@ -169,26 +189,50 @@ object ContainerAndCollection {
   }
 }
 
-case class ContainerAndCollection(
-  index: Int,
-  container: Container,
-  config: CollectionConfigWithId,
-  collectionEssentials: CollectionEssentials,
-  containerLayout: Option[ContainerLayout]
+object ContainerCommercialOptions {
+  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
+    DfpAgent.isSponsored(config),
+    DfpAgent.isAdvertisementFeature(config),
+    DfpAgent.isFoundationSupported(config),
+    DfpAgent.sponsorshipTag(config),
+    DfpAgent.sponsorshipType(config)
+  )
+
+  val empty = ContainerCommercialOptions(
+    false,
+    false,
+    false,
+    None,
+    None
+  )
+}
+
+case class ContainerCommercialOptions(
+  isSponsored: Boolean,
+  isAdvertisementFeature: Boolean,
+  isFoundationSupported: Boolean,
+  sponsorshipTag: Option[String],
+  sponsorshipType: Option[String]
 ) {
-  def dataId = config.id
+  val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+}
 
-  def displayName = config.config.displayName orElse collectionEssentials.displayName
-
-  def href = config.config.href orElse collectionEssentials.href
+case class FaciaContainer(
+  index: Int,
+  dataId: String,
+  displayName: Option[String],
+  href: Option[String],
+  container: Container,
+  collectionEssentials: CollectionEssentials,
+  containerLayout: Option[ContainerLayout],
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean,
+  commercialOptions: ContainerCommercialOptions
+) {
 
   def faciaComponentName = displayName map { title: String =>
     title.toLowerCase.replace(" ", "-")
   } getOrElse "no-name"
-
-  def showDateHeader = config.config.showDateHeader.exists(identity)
-
-  def showLatestUpdate = config.config.showLatestUpdate.exists(identity)
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
     collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
@@ -199,5 +243,5 @@ case class ContainerAndCollection(
 }
 
 case class Front(
-  containers: Seq[ContainerAndCollection]
+  containers: Seq[FaciaContainer]
 )

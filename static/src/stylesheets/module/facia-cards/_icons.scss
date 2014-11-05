@@ -175,3 +175,13 @@
         @include icon(comment-light-pink, false);
     }
 }
+
+.tone-editorial--item {
+    .fc-item__timestamp:before {
+        @include icon(clock-light-blue, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-light-blue, false);
+    }
+}
