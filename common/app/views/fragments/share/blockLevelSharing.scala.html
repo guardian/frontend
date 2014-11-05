@@ -3,10 +3,14 @@
 <div class="block-share block-share--@contentType.toLowerCase" data-link-name="block share">
 
     @shareItems.map { item: model.ShareLink =>
-        <a class="block-share__link js-blockshare-link" href="@item.href@if(item.css == "pinterest"){&media=@imagePath}" target="_blank" data-link-name="social @item.css">
-            <div class="block-share__item block-share__item--@item.css">
-                <i class="i"></i><span class="u-h">@item.text</span>
-            </div>
+        <a class="block-share__link"
+        data-link-name="social @item.css"
+        href="@item.href@if(item.css == "pinterest"){&media=@imagePath}"
+        target="_blank">
+            <span class="u-h">@item.userMessage</span>
+            <span class="rounded-icon block-share__item block-share__item--@item.css">
+                <i class="i-share-@item.css--white i"></i>
+            </span>
         </a>
     }
 
