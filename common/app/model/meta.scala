@@ -46,7 +46,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision.take(7))),
+    ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
