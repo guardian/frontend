@@ -62,7 +62,7 @@ define([
     $,
     ajax,
     config,
-    Cookies,
+    cookies,
     detect,
     mediator,
     Url,
@@ -206,22 +206,22 @@ define([
             },
 
             cleanupCookies: function () {
-                Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
-                Cookies.cleanUpDuplicates(['GU_VIEW']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+                cookies.cleanUpDuplicates(['GU_VIEW']);
             },
 
             // opt-in to the responsive alpha
             optIn: function () {
                 var countMeIn = /#countmein/.test(window.location.hash);
                 if (countMeIn) {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    cookies.add('GU_VIEW', 'responsive', 365);
                 }
             },
 
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, usMsg, feedbackLink,
+                var exitLink, msg, compulsoryMsg, feedbackLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
@@ -231,7 +231,7 @@ define([
                     (detect.getBreakpoint() !== 'mobile')
                 ) {
                     // force the visitor in to the alpha release for subsequent visits
-                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
 
@@ -254,7 +254,7 @@ define([
                         '</li>' +
                         '</ul>';
 
-                    usMsg = '<p class="site-message__message" id="site-message__message">' +
+                    compulsoryMsg = '<p class="site-message__message" id="site-message__message">' +
                         'You’re viewing a beta release of the Guardian’s responsive website.' +
                         ' We’d love to hear what you think.' +
                         '</p>' +
@@ -269,8 +269,11 @@ define([
                         '</li>' +
                         '</ul>';
 
-                    if (config.page.edition === 'US') {
-                        releaseMessage.show(usMsg);
+                    // The shift cookie may be 'in|...', 'ignore', or 'out'.
+                    shift = cookies.get('GU_SHIFT') || '';
+
+                    if (config.page.edition === 'US' || /in\|/.test(shift)) {
+                        releaseMessage.show(compulsoryMsg);
                     } else {
                         releaseMessage.show(msg);
                     }
@@ -384,7 +387,7 @@ define([
             testCookie: function () {
                 var queryParams = Url.getUrlVars();
                 if (queryParams.test) {
-                    Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+                    cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
                 }
             },
 
