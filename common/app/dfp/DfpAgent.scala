@@ -103,7 +103,7 @@ trait DfpAgent {
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
         adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.editions.isEmpty || sponsorship.editions.contains(edition)) &&
+          sponsorship.editions.contains(edition) &&
           !sponsorship.isR2Only
       }
 

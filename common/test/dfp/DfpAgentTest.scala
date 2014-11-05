@@ -1,13 +1,13 @@
 package dfp
 
+import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfig
-import common.editions.Uk
-import common.{Edition, editions}
+import common.Edition.defaultEdition
+import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Tag
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
-import com.gu.contentapi.client.model.{ Tag => ApiTag }
 
 
 class DfpAgentTest extends FlatSpec with Matchers {
@@ -374,32 +374,33 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    testDfpAgent.isPageSkinned("business/front", Edition.defaultEdition) should be(true)
+    testDfpAgent.isPageSkinned("business/front", edition = defaultEdition) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
-    testDfpAgent.isPageSkinned("business/front", editions.Au) should be(false)
+    testDfpAgent.isPageSkinned("business/front", edition = Au) should be(false)
   }
 
   it should "be false for a front without a pageskin" in {
-    testDfpAgent.isPageSkinned("culture/front", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("culture/front", edition = defaultEdition) should be(false)
   }
 
-  it should "be true for a front with a pageskin in all editions" in {
-    testDfpAgent.isPageSkinned("music/front", Edition.defaultEdition) should be(true)
-    testDfpAgent.isPageSkinned("music/front", editions.Us) should be(true)
+  it should "be false for a front with a pageskin in no edition" in {
+    testDfpAgent.isPageSkinned("music/front", edition = defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("music/front", edition = Us) should be(false)
   }
 
   it should "be false for any content (non-front) page" in {
-    testDfpAgent.isPageSkinned("sport", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("sport", edition = defaultEdition) should be(false)
   }
 
   "production DfpAgent" should "should not recognise adtest targetted line items" in {
-    testDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("testSport/front", edition = defaultEdition) should be(false)
   }
 
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
-    notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
+    notProductionTestDfpAgent.isPageSkinned("testSport/front", edition = defaultEdition) should be(
+      true)
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
