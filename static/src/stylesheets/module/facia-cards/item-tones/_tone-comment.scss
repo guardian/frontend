@@ -4,6 +4,10 @@
         background-color: $c-commentBackground;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-analysisBackground, 7.5%);
+    }
+
     .fc-item__container:before {
         background-color: $c-commentDefault;
     }

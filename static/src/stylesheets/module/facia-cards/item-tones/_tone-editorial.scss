@@ -8,6 +8,10 @@
         color: $c-headline;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-editorialDefault, 5%);
+    }
+
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
