@@ -18,7 +18,7 @@
                           @Html(Localisation(title))
                         </a>
                     }.getOrElse {
-                        <span class="u-text-hyphenate">@Html(Localisation(title))</span>
+                        <span class="u-text-hyphenate" tabindex="0">@Html(Localisation(title))</span>
                     }
 
                     @if(containerDefinition.showDateHeader) {
