@@ -1,36 +1,82 @@
 package layout
 
-import model.Trail
-import slices.{ContainerDefinition, RestrictTo, MobileShowMore, Slice}
+import com.gu.facia.client.models.CollectionConfig
+import model.{Content, Trail}
+import slices._
+
+case class IndexedTrail(trail: Trail, index: Int)
 
 object ContainerLayout extends implicits.Collections {
-  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], mobileShowMore: MobileShowMore): ContainerLayout = {
-    val cards = items.zipWithIndex map {
-      case (trail, index) => Card(
+  def apply(
+      sliceDefinitions: Seq[Slice],
+      items: Seq[Trail],
+      initialContext: ContainerLayoutContext,
+      config: CollectionConfig,
+      mobileShowMore: MobileShowMore
+  ): (ContainerLayout, ContainerLayoutContext) = {
+    val indexedTrails = items.zipWithIndex.map((IndexedTrail.apply _).tupled)
+
+    val (slices, showMore, finalContext) = sliceDefinitions.foldLeft(
+      (Seq.empty[SliceWithCards], indexedTrails, initialContext)
+    ) {
+      case ((slicesSoFar, Nil, context), _) => (slicesSoFar, Nil, context)
+      case ((slicesSoFar, trailsForUse, context), sliceDefinition) =>
+        val (slice, remainingTrails, newContext) = SliceWithCards.fromItems(
+          trailsForUse,
+          sliceDefinition.layout,
+          context,
+          config,
+          mobileShowMore
+        )
+        (slicesSoFar :+ slice, remainingTrails, newContext)
+    }
+
+    (ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
+      FaciaCardAndIndex(
         index,
-        trail,
-        mobileShowMore match {
-          case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
-          case _ => None
-        }
+        FaciaCard.fromTrail(trail, config, ItemClasses.showMore),
+        hideUpTo = Some(Desktop)
       )
-    }
-
-    val ContainerLayout(slices, showMore) = sliceDefinitions.foldLeft(ContainerLayout(Seq.empty, cards)) {
-      case (s @ ContainerLayout(_, Nil), _) => s
-      case (ContainerLayout(slicesSoFar, cardsForUse), sliceDefinition) =>
-        val (slice, remainingCards) = SliceWithCards.fromItems(cardsForUse, sliceDefinition.layout)
-        ContainerLayout(slicesSoFar :+ slice, remainingCards)
-    }
-
-    ContainerLayout(slices, showMore.map(_.copy(hideUpTo = Some(Desktop))))
+    }), finalContext)
   }
 
-  def fromContainerDefinition(containerDefinition: ContainerDefinition, items: Seq[Trail]) =
-    apply(containerDefinition.slices, items, containerDefinition.mobileShowMore)
+  def singletonFromContainerDefinition(
+    containerDefinition: ContainerDefinition,
+    config: CollectionConfig,
+    items: Seq[Trail]
+  ) = fromContainerDefinition(
+    containerDefinition,
+    ContainerLayoutContext.empty,
+    config,
+    items
+  )._1
+
+  def fromContainerDefinition(
+      containerDefinition: ContainerDefinition,
+      containerLayoutContext: ContainerLayoutContext,
+      config: CollectionConfig,
+      items: Seq[Trail]
+  ) = apply(
+      containerDefinition.slices,
+      items,
+      containerLayoutContext,
+      config,
+      containerDefinition.mobileShowMore
+    )
+
+  def fromContainer(
+      container: Container,
+      containerLayoutContext: ContainerLayoutContext,
+      config: CollectionConfig,
+      items: Seq[Trail]
+  ) =
+    ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
+      case definition: ContainerDefinition =>
+        fromContainerDefinition(definition, containerLayoutContext, config, items)
+    }
 }
 
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
-  remainingCards: Seq[Card]
+  remainingCards: Seq[FaciaCardAndIndex]
 )

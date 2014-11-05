@@ -186,7 +186,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);

@@ -43,19 +43,19 @@ object ContainerThumbnails {
     lazy val third = (width - 2) / 3
 
     ((itemClasses.tablet match {
-      case "list-media" =>
+      case cards.MediaList =>
         Some(Rectangle(x + 1, y + 1, width * .3, height))
-      case "three-quarters" | "full" =>
+      case cards.ThreeQuarters | cards.Full =>
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
-      case "three-quarters-right" =>
+      case cards.ThreeQuartersRight =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
-      case "standard"  =>
+      case cards.Standard  =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
-      case "half"  =>
+      case cards.Half =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .7))
-      case "third" =>
+      case cards.Third =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
-      case "mega-full" =>
+      case cards.MegaFull =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .6))
       case _ =>
         None

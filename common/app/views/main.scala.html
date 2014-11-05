@@ -1,6 +1,8 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
+
 @import conf.Switches._
-@import common.Edition
+@import common.{Edition, Navigation}
+@import views.support.RenderClasses
 
 @* Identity pages use identityMain.scala.html, most of which is shared fragments,
    be sure to apply any necessary changes to non-shared code there too. *@
@@ -37,12 +39,13 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        <div id="maincontent">
+        <div id="maincontent"></div>
+
         @if(BreakingNewsSwitch.isSwitchedOn) {
             <div class="js-breaking-news-placeholder breaking-news"></div>
         }
-            @body
-        </div>
+
+        @body
 
         @fragments.footer(metaData)
 

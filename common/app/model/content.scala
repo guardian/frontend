@@ -248,10 +248,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
-    if (isCommentIsFree ||
-      DfpAgent.isSponsored(tags, Some(section)) ||
-      DfpAgent.isAdvertisementFeature(tags, Some(section)) ||
-      DfpAgent.isFoundationSupported(tags, Some(section))) {
+    if (isCommentIsFree || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
       section
     } else tags.find(_.isKeyword) match {
       case Some(tag) => tag.id

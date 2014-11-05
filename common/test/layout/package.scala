@@ -1,10 +1,24 @@
+import cards._
 import org.scalacheck.{Gen, Arbitrary}
 import Arbitrary.arbitrary
+import Gen.const
 
 package object layout {
+  val cardTypeGen: Gen[CardType] = Gen.oneOf(
+    const(MediaList),
+    const(ListItem),
+    const(Standard),
+    const(Half),
+    const(ThreeQuarters),
+    const(ThreeQuartersRight),
+    const(Full),
+    const(Third),
+    const(MegaFull)
+  )
+
   val itemLayoutGen = for {
-    cls1 <- arbitrary[String]
-    cls2 <- arbitrary[String]
+    cls1 <- cardTypeGen
+    cls2 <- cardTypeGen
   } yield ItemClasses(cls1, cls2)
 
   val singleItemGen = for {

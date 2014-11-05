@@ -2,7 +2,7 @@ package dfp
 
 import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
 import org.joda.time.DateTime
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -83,18 +83,22 @@ trait DfpDataCacheLifecycle extends GlobalSettings {
   override def onStart(app: Application) {
     super.onStart(app)
 
-    Jobs.deschedule(jobName)
-    Jobs.schedule(jobName, every10Mins) {
-      DfpDataCacheJob.run()
-    }
+    if (!Play.isTest(app)) {
+      Jobs.deschedule(jobName)
+      Jobs.schedule(jobName, every10Mins) {
+        DfpDataCacheJob.run()
+      }
 
-    AkkaAsync {
-      DfpDataCacheJob.run()
+      AkkaAsync {
+        DfpDataCacheJob.run()
+      }
     }
   }
 
   override def onStop(app: Application) {
-    Jobs.deschedule(jobName)
+    if (!Play.isTest(app)) {
+      Jobs.deschedule(jobName)
+    }
     super.onStop(app)
   }
 }
