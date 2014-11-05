@@ -86,7 +86,7 @@ object Front extends implicits.Collections {
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config.config, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), ContainerAndCollection(
+          case (containerLayout, newContext) => ((newSeen, newContext), ContainerAndCollection.fromConfig(
             index,
             container,
             config,
@@ -94,7 +94,7 @@ object Front extends implicits.Collections {
             Some(containerLayout)
           ))
         } getOrElse {
-          ((newSeen, context), ContainerAndCollection(
+          ((newSeen, context), ContainerAndCollection.fromConfig(
             index,
             container,
             config,
@@ -139,7 +139,7 @@ object ContainerAndCollection {
     container: Container,
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials
-  ): ContainerAndCollection = ContainerAndCollection(
+  ): ContainerAndCollection = fromConfig(
     index,
     container,
     config,
@@ -150,6 +150,25 @@ object ContainerAndCollection {
       config.config,
       collectionEssentials.items
     ).map(_._1)
+  )
+
+  def fromConfig(
+    index: Int,
+    container: Container,
+    config: CollectionConfigWithId,
+    collectionEssentials: CollectionEssentials,
+    containerLayout: Option[ContainerLayout]
+  ): ContainerAndCollection = ContainerAndCollection(
+    index,
+    config.id,
+    config.config.displayName orElse collectionEssentials.displayName,
+    config.config.href orElse collectionEssentials.href,
+    container,
+    config,
+    collectionEssentials,
+    containerLayout,
+    config.config.showDateHeader.exists(identity),
+    config.config.showLatestUpdate.exists(identity)
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -171,24 +190,20 @@ object ContainerAndCollection {
 
 case class ContainerAndCollection(
   index: Int,
+  dataId: String,
+  displayName: Option[String],
+  href: Option[String],
   container: Container,
   config: CollectionConfigWithId,
   collectionEssentials: CollectionEssentials,
-  containerLayout: Option[ContainerLayout]
+  containerLayout: Option[ContainerLayout],
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
 ) {
-  def dataId = config.id
-
-  def displayName = config.config.displayName orElse collectionEssentials.displayName
-
-  def href = config.config.href orElse collectionEssentials.href
 
   def faciaComponentName = displayName map { title: String =>
     title.toLowerCase.replace(" ", "-")
   } getOrElse "no-name"
-
-  def showDateHeader = config.config.showDateHeader.exists(identity)
-
-  def showLatestUpdate = config.config.showLatestUpdate.exists(identity)
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
     collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
