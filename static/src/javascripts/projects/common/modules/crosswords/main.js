@@ -167,9 +167,8 @@ define([
         focusHiddenInput: function (x, y) {
             var wrapper = this.refs.hiddenInputWrapper.getDOMNode(),
                 left = helpers.gridSize(x),
-                top = helpers.gridSize(y);
-
-            var position = this.asPercentage(left, top);
+                top = helpers.gridSize(y),
+                position = this.asPercentage(left, top);
 
             /** This has to be done before focus to move viewport accordingly */
             wrapper.style.left = position.x + '%';
