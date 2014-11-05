@@ -113,6 +113,10 @@ $fc-item-gutter: $gs-gutter / 4;
     .u-faux-block-link & a,
     .u-faux-block-link & abbr[title],
     .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
+        }
+
         @include mq($until: desktop) {
             z-index: initial;
         }
@@ -240,10 +244,6 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-top: $gs-baseline / 4;
     padding-bottom: 0;
     word-wrap: break-word;
-}
-
-.fc-item__link {
-    z-index: 0;
 }
 
 .fc-item__kicker,
