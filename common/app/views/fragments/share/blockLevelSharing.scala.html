@@ -3,7 +3,7 @@
 <div class="block-share block-share--@contentType.toLowerCase" data-link-name="block share">
 
     @shareItems.map { item: model.ShareLink =>
-        <a class="block-share__link"
+        <a class="block-share__link js-blockshare-link"
         data-link-name="social @item.css"
         href="@item.href@if(item.css == "pinterest"){&media=@imagePath}"
         target="_blank">
