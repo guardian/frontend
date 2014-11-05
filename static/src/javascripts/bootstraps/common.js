@@ -118,7 +118,6 @@ define([
                     var fileFormat     = detect.getFontFormatSupport(ua),
                         fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
 
-
                     new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
                 }
             },
@@ -248,7 +247,7 @@ define([
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, compulsoryMsg, feedbackLink, shift,
+                var exitLink, feedbackLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
