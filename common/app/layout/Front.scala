@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
+import dfp.DfpAgent
 import model.{Collection, Content, Trail}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
@@ -164,11 +165,11 @@ object ContainerAndCollection {
     config.config.displayName orElse collectionEssentials.displayName,
     config.config.href orElse collectionEssentials.href,
     container,
-    config,
     collectionEssentials,
     containerLayout,
     config.config.showDateHeader.exists(identity),
-    config.config.showLatestUpdate.exists(identity)
+    config.config.showLatestUpdate.exists(identity),
+    ContainerCommercialOptions.fromConfig(config.config)
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -188,17 +189,45 @@ object ContainerAndCollection {
   }
 }
 
+object ContainerCommercialOptions {
+  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
+    DfpAgent.isSponsored(config),
+    DfpAgent.isAdvertisementFeature(config),
+    DfpAgent.isFoundationSupported(config),
+    DfpAgent.sponsorshipTag(config),
+    DfpAgent.sponsorshipType(config)
+  )
+
+  val empty = ContainerCommercialOptions(
+    false,
+    false,
+    false,
+    None,
+    None
+  )
+}
+
+case class ContainerCommercialOptions(
+  isSponsored: Boolean,
+  isAdvertisementFeature: Boolean,
+  isFoundationSupported: Boolean,
+  sponsorshipTag: Option[String],
+  sponsorshipType: Option[String]
+) {
+  def isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+}
+
 case class ContainerAndCollection(
   index: Int,
   dataId: String,
   displayName: Option[String],
   href: Option[String],
   container: Container,
-  config: CollectionConfigWithId,
   collectionEssentials: CollectionEssentials,
   containerLayout: Option[ContainerLayout],
   showDateHeader: Boolean,
-  showLatestUpdate: Boolean
+  showLatestUpdate: Boolean,
+  commercialOptions: ContainerCommercialOptions
 ) {
 
   def faciaComponentName = displayName map { title: String =>

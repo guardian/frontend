@@ -145,7 +145,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving collection $collectionId on front $frontId")
 
     withFaciaPage(frontId) { faciaPage =>
-      faciaPage.front.containers.find(_.config.id == collectionId) match {
+      faciaPage.front.containers.find(_.dataId == collectionId) match {
         case Some(containerDefinition) =>
           Cached(60) {
             JsonComponent(
