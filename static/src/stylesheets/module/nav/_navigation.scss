@@ -774,4 +774,8 @@ $icon-close-line-h: .6em;
             }
         }
     }
+
+    @if $old-ie {
+        display: none;
+    }
 }
