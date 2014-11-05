@@ -2,13 +2,14 @@
    Masterclass component
    ========================================================================== */
 .commercial--masterclasses--v2 {
-    .commercial__title {
-        .i-commercial-brand {
-            opacity: 1;
-        }
-    }
     .commercial--tone__highlight {
         color: $c-neutral2;
+    }
+
+    .commercial__title {
+        .i-commercial-brand {
+            opacity: 1 !important;
+        }
     }
 
     /* Line items */
