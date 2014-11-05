@@ -10,7 +10,7 @@
 
 @defining(page.webTitle) { case (webTitle) =>
     <section
-        class="@GetClasses.forNewStyleContainer(
+        class="@GetClasses.forContainer(
             config, false, webTitle.nonEmpty, Seq("fc-container--first"), true
         )"
         data-link-name="all index"
@@ -21,14 +21,14 @@
             data-sponsorship="@sponsorshipType"
         }
         data-component="all index">
-        <div class="facia-container__inner">
+        <div class="fc-container__inner">
             <div class="fc-container__header js-container__header">
                 <div class="fc-container__header__title">
                     <span class="u-text-hyphenate">@Html(webTitle)</span>
                     @date(actualDate)
                 </div>
             </div>
-            <div class="container__body container--rolled-up-hide">
+            <div class="fc-container__body fc-container--rolled-up-hide">
                 @for(sliceWithCards <- containerLayout.slices) {
                     @slice(sliceWithCards, containerIndex)
                 }

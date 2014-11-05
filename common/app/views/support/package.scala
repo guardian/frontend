@@ -750,7 +750,7 @@ object RenderClasses {
 }
 
 object GetClasses {
-  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
     val hasImage = item.hasImage
 
     RenderClasses(Map(
@@ -765,13 +765,7 @@ object GetClasses {
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive),
-      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
-      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
-      ("item--imageadjust-hide", item.displaySettings.imageHide),
-      ("item--imageadjust-default", hasImage &&
-        !item.displaySettings.isBoosted &&
-        !item.displaySettings.imageHide)
+      ("fc-item--live", item.isLive)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -793,50 +787,40 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  private def commonContainerStyles(
-      config: CollectionConfig,
-      isFirst: Boolean,
-      hasTitle: Boolean,
-      disableHide: Boolean
-  ): Seq[String] = {
+  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+    forContainer(
+      containerDefinition.config.config,
+      containerDefinition.index == 0,
+      containerDefinition.displayName.isDefined
+    )
+
+  def forContainer(
+    config: CollectionConfig,
+    isFirst: Boolean,
+    hasTitle: Boolean,
+    extraClasses: Seq[String] = Nil,
+    disableHide: Boolean = false
+  ) = {
     val container = slices.Container.fromConfig(config)
     val isSponsored = DfpAgent.isSponsored(config)
     val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
     val isFoundationSupported = DfpAgent.isFoundationSupported(config)
     val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
 
-    Seq(
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", isSponsored),
-      ("container--advertisement-feature", isAdvertisementFeature),
-      ("container--foundation-supported", isFoundationSupported),
-      ("js-sponsored-container", isPaidFor),
-      ("js-container--toggle",
-        !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
-    ) collect {
-      case (kls, true) => kls
-    }
-  }
-
-  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
-    forNewStyleContainer(
-      containerDefinition.config.config,
-      containerDefinition.index == 0,
-      containerDefinition.displayName.isDefined
-    )
-
-  def forNewStyleContainer(
-      config: CollectionConfig,
-      isFirst: Boolean,
-      hasTitle: Boolean,
-      extraClasses: Seq[String] = Nil,
-      disableHide: Boolean = false
-  ) = {
     RenderClasses(
       (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
-        Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle, disableHide) ++
+        (Seq(
+          ("fc-container", true),
+          ("fc-container--first", isFirst),
+          ("fc-container--sponsored", isSponsored),
+          ("fc-container--advertisement-feature", isAdvertisementFeature),
+          ("fc-container--foundation-supported", isFoundationSupported),
+          ("js-sponsored-container", isPaidFor),
+          ("js-container--toggle",
+            !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
+        ) collect {
+          case (kls, true) => kls
+        }) ++
         extraClasses: _*
     )
   }

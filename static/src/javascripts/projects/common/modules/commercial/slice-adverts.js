@@ -36,7 +36,7 @@ define([
                     options || {},
                     {
                         containerSelector: '.container',
-                        sliceSelector: '.js-facia-slice-mpu-candidate'
+                        sliceSelector: '.js-fc-slice-mpu-candidate'
                     }
                 ),
                 // get all the containers
@@ -73,7 +73,7 @@ define([
 
                     // add a tablet+ ad to the slice
                     $adSlice
-                        .removeClass('facia-slice__item--no-mpu')
+                        .removeClass('fc-slice__item--no-mpu')
                         .append($tabletAdSlot);
                     // add a mobile advert after the container
                     $mobileAdSlot

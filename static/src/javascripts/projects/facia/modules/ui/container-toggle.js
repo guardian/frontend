@@ -15,9 +15,9 @@ define([
 
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
-                '<button class="container__toggle" data-link-name="Show">'
+                '<button class="fc-container__toggle" data-link-name="Show">'
                     + '<i class="i i-arrow-grey-large"></i>'
-                    + '<span class="container__toggle__text">Hide</span>'
+                    + '<span class="fc-container__toggle__text">Hide</span>'
                 + '</button>'
             )),
             _prefName = 'container-states',
@@ -56,15 +56,15 @@ define([
             $('.js-container__header', _$container[0]).append(_$button);
             _$container
                 .removeClass('js-container--toggle')
-                .addClass('container--has-toggle');
+                .addClass('fc-container--has-toggle');
             // listen to event
             bean.on(_$button[0], 'click', function () {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                 // add/remove rolled class
-                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
+                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                $('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                $('.fc-container__toggle__text', _$button[0]).text(_toggleText[_state]);
                 // hide/show the badge
                 $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
                 _updatePref(_$container, _state);
