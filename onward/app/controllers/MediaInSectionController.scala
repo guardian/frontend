@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfig
-import layout.{CollectionEssentials, ContainerAndCollection, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -77,7 +77,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
     implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
 
     val response = () => views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),

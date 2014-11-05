@@ -87,7 +87,7 @@ object Front extends implicits.Collections {
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config.config, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), ContainerAndCollection.fromConfig(
+          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
             index,
             container,
             config,
@@ -95,7 +95,7 @@ object Front extends implicits.Collections {
             Some(containerLayout)
           ))
         } getOrElse {
-          ((newSeen, context), ContainerAndCollection.fromConfig(
+          ((newSeen, context), FaciaContainer.fromConfig(
             index,
             container,
             config,
@@ -134,13 +134,13 @@ case class CollectionEssentials(
   showMoreLimit: Option[Int]
 )
 
-object ContainerAndCollection {
+object FaciaContainer {
   def apply(
     index: Int,
     container: Container,
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials
-  ): ContainerAndCollection = fromConfig(
+  ): FaciaContainer = fromConfig(
     index,
     container,
     config,
@@ -159,7 +159,7 @@ object ContainerAndCollection {
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
     containerLayout: Option[ContainerLayout]
-  ): ContainerAndCollection = ContainerAndCollection(
+  ): FaciaContainer = FaciaContainer(
     index,
     config.id,
     config.config.displayName orElse collectionEssentials.displayName,
@@ -180,7 +180,7 @@ object ContainerAndCollection {
       case 5 => FixedContainers.fixedSmallSlowVI
       case _ => FixedContainers.fixedMediumFastXII
     }
-    ContainerAndCollection(
+    FaciaContainer(
       index = 2,
       container = Fixed(layout),
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
@@ -217,7 +217,7 @@ case class ContainerCommercialOptions(
   def isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
 }
 
-case class ContainerAndCollection(
+case class FaciaContainer(
   index: Int,
   dataId: String,
   displayName: Option[String],
@@ -243,5 +243,5 @@ case class ContainerAndCollection(
 }
 
 case class Front(
-  containers: Seq[ContainerAndCollection]
+  containers: Seq[FaciaContainer]
 )

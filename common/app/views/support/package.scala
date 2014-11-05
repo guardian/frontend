@@ -2,7 +2,7 @@ package views.support
 
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
-import layout.{ContainerCommercialOptions, FaciaCard, Sublink, ContainerAndCollection}
+import layout.{ContainerCommercialOptions, FaciaCard, Sublink, FaciaContainer}
 import model._
 
 import java.net.URLEncoder._
@@ -791,7 +791,7 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+  def forContainerDefinition(containerDefinition: FaciaContainer) =
     forNewStyleContainer(
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0,

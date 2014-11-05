@@ -3,7 +3,7 @@ package controllers
 import com.gu.facia.client.models.CollectionConfig
 import common._
 import front._
-import layout.{CollectionEssentials, ContainerAndCollection}
+import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -124,7 +124,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Cached(60) {
             val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
 
-            val containerDefinition = ContainerAndCollection(
+            val containerDefinition = FaciaContainer(
               1,
               Container.fromConfig(config),
               CollectionConfigWithId(id, config),

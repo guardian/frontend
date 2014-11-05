@@ -45,7 +45,7 @@ object FrontIndex {
 
   def fromFaciaPage(faciaPage: FaciaPage): FrontIndex = {
     FrontIndex((faciaPage.front.containers flatMap {
-      case cac: ContainerAndCollection =>
+      case cac: FaciaContainer =>
         (for {
           layout <- cac.containerLayout
           latestUpdate <- cac.latestUpdate
