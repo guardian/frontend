@@ -1,4 +1,5 @@
 $fc-item-gutter: $gs-gutter / 4;
+$fc-hover-transition: .25s ease-out;
 
 /* Items
    ==========================================================================
@@ -81,7 +82,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__container {
     position: relative;
-    @include transition(background-color .25s ease);
+    @include transition(background-color $fc-hover-transition);
 
     &:before {
         content: '';
@@ -194,11 +195,11 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__image-container {
-    @include transition(background-color .25s ease);
+    @include transition(background-color $fc-hover-transition);
     background-color: rgba(0, 0, 0, .1);
 
     img {
-        @include transition(opacity .25s ease);
+        @include transition(opacity $fc-hover-transition);
     }
 }
 
