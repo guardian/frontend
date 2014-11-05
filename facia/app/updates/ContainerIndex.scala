@@ -45,11 +45,11 @@ object FrontIndex {
 
   def fromFaciaPage(faciaPage: FaciaPage): FrontIndex = {
     FrontIndex((faciaPage.front.containers flatMap {
-      case cac: FaciaContainer =>
+      case faciaContainer: FaciaContainer =>
         (for {
-          layout <- cac.containerLayout
-          latestUpdate <- cac.latestUpdate
-        } yield ContainerIndex.fromContainerLayout(layout, latestUpdate)).map(cac.dataId -> _)
+          layout <- faciaContainer.containerLayout
+          latestUpdate <- faciaContainer.latestUpdate
+        } yield ContainerIndex.fromContainerLayout(layout, latestUpdate)).map(faciaContainer.dataId -> _)
     }).toMap)
   }
 }
