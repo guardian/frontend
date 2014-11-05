@@ -19,9 +19,9 @@
     }
 }
 .ad-slot--not-mobile {
-     @include mq($until: tablet) {
-         display: none;
-     }
+    @include mq($until: tablet) {
+        display: none;
+    }
  }
 
 .ad-slot__label {
