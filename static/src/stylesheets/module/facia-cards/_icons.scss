@@ -177,6 +177,17 @@
     }
 }
 
+.tone-editorial--item,
+.tone-editorial--sublink {
+    .fc-item__timestamp:before {
+        @include icon(clock-light-blue, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-light-blue, false);
+    }
+}
+
 .tone-feature--item,
 .tone-feature--sublink {
     .fc-item__timestamp:before {
