@@ -124,15 +124,12 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['test:unit']);
     grunt.registerTask('coverage', function() {
-        var target = this.args.length ? ":" + this.args.join(":") : "";
+        var target = this.args.length ? ':' + this.args.join(':') : '';
         grunt.config.set('karma.options.reporters',
             grunt.config.get('karma.options.reporters').concat('coverage')
         );
         grunt.config.set('karma.options.preprocessors',
-            {
-                'static/src/javascripts/**/*.js': ['coverage'],
-                'static/public/javascripts/**/*.js': ['coverage']
-            }
+            grunt.config.get('coverage.preprocessors')
         );
         grunt.task.run('test' + target);
     });
