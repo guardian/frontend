@@ -29,6 +29,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
+  val isEditionTag = isPositive("edition")
 
   val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
