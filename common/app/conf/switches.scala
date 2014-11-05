@@ -227,6 +227,11 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+    "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = On, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -453,7 +458,8 @@ object Switches extends Collections {
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
-    PngResizingSwitch
+    PngResizingSwitch,
+    GlobalDevelopmentQualtrics
   )
 
   val httpSwitches: List[Switch] = List(
