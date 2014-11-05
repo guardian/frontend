@@ -24,8 +24,8 @@ object Im4Java {
     val operation = new IMOperation
 
     operation.addImage()
-    operation.resize(width)
-    operation.define("png:color-type=6")  // force rgba colour, iOS does not support indexed (http://en.wikipedia.org/wiki/Portable_Network_Graphics#Color_depth)
+    operation.adaptiveResize(width)
+    operation.quality(100)
     operation.addImage("png:-")
 
     apply(image, operation)
