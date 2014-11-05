@@ -60,7 +60,7 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    var adSlot = qwery('#' + fixturesConfig.id)[0].children[3];
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(3);
                     expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
@@ -74,7 +74,7 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    var adSlot = qwery('#' + fixturesConfig.id)[0].children[1];
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(1);
                     expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
@@ -90,7 +90,7 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    var adSlot = qwery('#' + fixturesConfig.id)[0].children[4];
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(4);
                     expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
