@@ -72,9 +72,9 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override def isProd = true
 
-    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty
 
-    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map.empty
   }
 
   private object notProductionTestDfpAgent extends DfpAgent {
@@ -90,9 +90,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet()
 
-    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
 
-    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty
+
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map.empty
   }
 
   def apiQuery(apiQuery: String) = {

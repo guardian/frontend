@@ -120,7 +120,10 @@ object GuAdUnit {
 }
 
 
-case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget], geoTargetsExcluded: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
+case class GuTargeting(adUnits: Seq[GuAdUnit],
+                       geoTargetsIncluded: Seq[GeoTarget],
+                       geoTargetsExcluded: Seq[GeoTarget],
+                       customTargetSets: Seq[CustomTargetSet]) {
 
   def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
 
