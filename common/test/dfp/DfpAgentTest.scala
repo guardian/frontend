@@ -1,6 +1,7 @@
 package dfp
 
 import com.gu.facia.client.models.CollectionConfig
+import common.editions.Uk
 import common.{Edition, editions}
 import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Tag
@@ -15,22 +16,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
     PageSkinSponsorship("lineItemName",
       1234L,
       Seq(s"$dfpAdUnitRoot/business/front"),
-      Seq(Country("United Kingdom", "UK")),
+      Seq(Uk),
+      Seq("United Kingdom"),
       false, false),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitRoot/music/front"),
+      Nil,
       Nil,
       false, false),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitRoot/sport"),
       Nil,
+      Nil,
       false, false),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitRoot/testSport/front"),
-      Seq(Country("United Kingdom", "UK")),
+      Seq(Uk),
+      Seq("United Kingdom"),
       false, true)
   )
 
