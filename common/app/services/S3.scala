@@ -189,10 +189,10 @@ object S3FrontsApi extends S3 {
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
   def putLivePressedJson(path: String, json: String) =
-    putPrivate(getLivePressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")
 
   def putDraftPressedJson(path: String, json: String) =
-    putPrivate(getDraftPressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
     getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
