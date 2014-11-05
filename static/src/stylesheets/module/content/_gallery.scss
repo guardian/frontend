@@ -143,15 +143,12 @@
 }
 
 .gallery2__fullscreen {
-    @include border-radius(50%);
-    top: 0;
-    right: 0;
+    top: $gs-gutter / 2;
+    right: $gs-gutter / 2;
     width: 44px;
     height: 44px;
-    display: inline-block;
     background-color: rgba(51, 51, 51, .6);
     position: absolute;
-    margin: $gs-gutter/2;
 
     .i {
         position: absolute;
