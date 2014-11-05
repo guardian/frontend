@@ -2,12 +2,16 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+    'common/utils/template',
+    'text!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,
     $,
-    userPrefs
+    userPrefs,
+    template,
+    toogleBtn
 ) {
 
     return function (container) {
@@ -20,13 +24,10 @@ define([
                 displayed: 'Hide'
             },
             _id = _$container.attr('id'),
-            _$button = bonzo(bonzo.create(
-                    '<button class="container__toggle" data-link-name="Show" aria-controls="' + _id + '">'
-                    + '<i class="i i-arrow-grey-large"></i>'
-                    + '<span class="container__toggle__text">' + _toggleText.displayed
-                        + ' <span class="u-h">section</span></span>'
-                    + '</button>'
-            )),
+            _$button = $.create(template(toogleBtn, {
+                id:   _id,
+                text: _toggleText.displayed
+            })),
             _state = 'displayed',
             _updatePref = function ($container, state) {
                 // update user prefs

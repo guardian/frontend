@@ -3,15 +3,19 @@ define([
     'common/utils/$',
     'bonzo',
     'bean',
+    'qwery',
     'common/modules/userPrefs',
-    'qwery'
+    'common/utils/template',
+    'text!facia/views/button-toggle.html'
 ], function(
     ContainerDisplayToggle,
     $,
     bonzo,
     bean,
+    qwery,
     userPrefs,
-    qwery
+    template,
+    toggleBtn
 ) {
 
     describe('Container Toggle', function() {
@@ -25,7 +29,10 @@ define([
                 var $button = $('button', $container[0]);
                 expect($container.hasClass('container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
                 expect($container.attr('aria-expanded'))[state ? 'toBeFalsy' : 'toBeTruthy']();
-                expect($button.text()).toBe(state === 'open' ? 'Hide section' : 'Show section');
+                expect($button.text()
+                    .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
+                    .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
+                    .toEqual(state === 'open' ? 'Hide section' : 'Show section');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
             };
 
