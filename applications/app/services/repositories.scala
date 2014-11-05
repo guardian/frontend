@@ -1,5 +1,7 @@
 package services
 
+import com.gu.facia.client.models.CollectionConfig
+import layout._
 import model._
 import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
@@ -8,13 +10,56 @@ import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
+import slices.{ContainerDefinition, Fixed}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
+import implicits.Dates.dateOrdering
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
+}
+
+object IndexPage {
+  def makeFront(indexPage: IndexPage) = {
+    val itemsByDay = indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
+
+    def container(numberOfItems: Int) = if (itemsByDay.keySet.size == 1) {
+      Fixed(views.support.getTagContainerDefinition(indexPage.page))
+    } else {
+      Fixed(ContainerDefinition.forNumberOfItems(numberOfItems))
+    }
+
+    val front = Front.fromConfigs(for {
+      (day, items) <- itemsByDay.toSeq.sortBy(_._1).reverse
+    } yield {
+      val collection = CollectionEssentials(
+        items,
+        /** TODO better date string format here
+          *
+          * What about datetime tag? Might need to make a proper type for this so we can case match
+          * later.
+          */
+        displayName = Some(day.toString),
+        None,
+        None,
+        None
+      )
+
+      val config = CollectionConfig.emptyConfig
+        .withContainer(container(items.length))
+
+      /** TODO what should the data ID be here? */
+      (CollectionConfigWithId(day.toString, config), collection)
+    })
+
+    val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
+
+    front.copy(containers = front.containers map { container =>
+      container.copy(commercialOptions = commercialOptions)
+    })
+  }
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],

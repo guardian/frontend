@@ -2,13 +2,12 @@ package layout
 
 import com.gu.facia.client.models.CollectionConfig
 import dfp.DfpAgent
-import model.{MetaData, Collection, Content, Trail}
+import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
 import views.support.CutOut
 import scala.Function._
-import implicits.Dates.dateOrdering
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
@@ -107,39 +106,6 @@ object Front extends implicits.Collections {
       }._2.filterNot(_.items.isEmpty)
     )
   }
-
-  def forTagPage(items: Seq[Trail]) = {
-    val itemsByDay = items.groupBy(_.webPublicationDate.toLocalDate)
-
-    val container = if (itemsByDay.keySet.size == 1) {
-      Fixed(FixedContainers.fixedMediumSlowXIIMpu)
-    } else {
-      Fixed(FixedContainers.fixedSmallSlowVI)
-    }
-
-    fromConfigs(for {
-      (day, items) <- itemsByDay.toSeq.sortBy(_._1).reverse
-    } yield {
-      val collection = CollectionEssentials(
-        items,
-        /** TODO better date string format here
-          *
-          * What about datetime tag? Might need to make a proper type for this so we can case match
-          * later.
-          */
-        displayName = Some(day.toString),
-        None,
-        None,
-        None
-      )
-
-      val config = CollectionConfig.emptyConfig
-        .withContainer(container)
-
-      /** TODO what should the data ID be here? */
-      (CollectionConfigWithId(day.toString, config), collection)
-    })
-  }
 }
 
 object CollectionEssentials {
@@ -207,16 +173,9 @@ object FaciaContainer {
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
-    val layout: ContainerDefinition = items.size match {
-      case 1 => FixedContainers.fixedSmallSlowI
-      case 2 => FixedContainers.fixedSmallSlowII
-      case 3 => FixedContainers.fixedMediumSlowXIIMpu
-      case 5 => FixedContainers.fixedSmallSlowVI
-      case _ => FixedContainers.fixedMediumFastXII
-    }
     FaciaContainer(
       index = 2,
-      container = Fixed(layout),
+      container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
       CollectionEssentials(items take 8, Some(title), None, None, None)
     )
