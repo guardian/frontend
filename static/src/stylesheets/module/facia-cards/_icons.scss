@@ -198,14 +198,3 @@
         @include icon(comment-light-pink, false);
     }
 }
-
-.tone-feature--item,
-.tone-feature--sublink {
-    .fc-item__timestamp:before {
-        @include icon(clock-light-pink, false);
-    }
-
-    .fc-trail__count:before {
-        @include icon(comment-light-pink, false);
-    }
-}
