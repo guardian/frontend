@@ -13,6 +13,8 @@ object Container extends Logging {
     ("news/most-popular", MostPopular)
   ) ++ FixedContainers.all.mapValues(Fixed.apply)
 
+  lazy private val reverseLookup = all.map(_.swap).toMap
+
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
@@ -20,6 +22,9 @@ object Container extends Logging {
     log.error(s"Could not resolve container id $id, using default container")
     default
   })
+
+  def reverseResolve(container: Container) =
+    reverseLookup.get(container)
 
   def fromConfig(collectionConfig: CollectionConfig) =
     collectionConfig.collectionType.map(resolve).getOrElse(default)
