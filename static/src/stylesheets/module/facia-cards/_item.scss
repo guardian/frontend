@@ -81,7 +81,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__container {
     position: relative;
-    @include transition(background-color 0.25s ease);
+    @include transition(background-color .25s ease);
 
     &:before {
         content: '';
@@ -126,7 +126,7 @@ $fc-item-gutter: $gs-gutter / 4;
         background-color: $c-neutral6;
 
         .fc-item__image-container {
-            background-color: #000;
+            background-color: #000000;
 
             img {
                 opacity: 0.8;
