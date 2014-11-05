@@ -2,7 +2,7 @@ package layout
 
 import com.gu.facia.client.models.CollectionConfig
 import dfp.DfpAgent
-import model.{Collection, Content, Trail}
+import model.{MetaData, Collection, Content, Trail}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
@@ -230,6 +230,14 @@ object ContainerCommercialOptions {
     DfpAgent.isFoundationSupported(config),
     DfpAgent.sponsorshipTag(config),
     DfpAgent.sponsorshipType(config)
+  )
+
+  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
+    metaData.isSponsored,
+    metaData.isAdvertisementFeature,
+    metaData.isFoundationSupported,
+    metaData.sponsor,
+    metaData.sponsorshipType
   )
 
   val empty = ContainerCommercialOptions(
