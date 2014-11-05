@@ -15,6 +15,10 @@
         }
     }
 
+    .fc-item__timestamp {
+        display: block;
+    }
+
     .fc-item__container:before {
         background-color: $c-editorialAccent;
     }
@@ -26,7 +30,7 @@
     }
 
     .fc-item__meta {
-        color: $c-neutral3;
+        color: $c-editorialAccent;
     }
 
     .fc-sublink__title:before {
