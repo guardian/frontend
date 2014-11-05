@@ -214,7 +214,7 @@ case class ContainerCommercialOptions(
   sponsorshipTag: Option[String],
   sponsorshipType: Option[String]
 ) {
-  def isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+  val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
 }
 
 case class FaciaContainer(
