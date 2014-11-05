@@ -249,11 +249,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val BrowserStorageStatsSwitch = Switch("Monitoring", "storage-stats",
-    "Enables tracking of whether browser storage is available and working",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 7)
-  )
-
   // Features
 
 
@@ -414,7 +409,6 @@ object Switches extends Collections {
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
-    BrowserStorageStatsSwitch,
     ContentApiPutSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
