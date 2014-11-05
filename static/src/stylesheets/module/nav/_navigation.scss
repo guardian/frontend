@@ -630,17 +630,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /* Toggle button
    ========================================================================== */
 
-@mixin navigation__toggle--width($width: small) {
-    @if $width == small {
-        min-width: $navigation-toggler-width;
-        padding-left: $gs-gutter + 2;
-    }
-    @if $width == wide {
-        min-width: $navigation-toggler-width-full;
-        padding-left: $gs-gutter + 12px;
-    }
-}
-
 .navigation__toggle {
     z-index: 2;
     position: absolute;
@@ -649,13 +638,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include box-sizing(border-box);
     @include fs-header(1);
     line-height: $navigation-height;
-    padding-right: $gs-gutter/2;
-    @include navigation__toggle--width(small);
+    padding: 0 $gs-gutter/2;
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    text-align: center;
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
 
@@ -674,19 +661,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     @include mq(tablet) {
-        @include navigation__toggle--width(wide);
         text-align: left;
     }
     @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
-    }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle--width(small);
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle--width(small);
-        }
     }
 }
 .navigation__toggle-label {}
@@ -712,62 +690,88 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation--expanded .navigation__toggle-label--close {
     display: inline;
 }
-@mixin navigation__toggle-burger--width($width: small) {
-    @if $width == small {
-        left: 6px;
-        width: 12px;
-    }
-    @if $width == wide {
-        left: 10px;
-        width: 16px;
-    }
+
+/**
+ * Icon navigation (mobile)
+ */
+$icon-nav-line-h: 2px;
+
+/**
+ * Hidden class for navigation icon lines.
+ */
+%icon--nav__line {
+    width: 100%;
+    height: $icon-nav-line-h;
+    background-color: rgba(#ffffff, .9);
 }
 
-.navigation__toggle-burger {
-    position: absolute;
-    top: 11px;
-    @include navigation__toggle-burger--width(small);
+/**
+ * Icon close
+ */
+$icon-close-line-h: .6em;
+
+%icon--close__line {
+    width: 100%;
+    height: $icon-close-line-h;
+    background-color: rgba(#ffffff, .9);
+}
+
+/**
+ * Mobile nav icon
+ */
+.icon--nav {
+    @extend %icon--nav__line;
+
+    width: 12px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 13px 6px 0 0;
+    position: relative;
+
+    &:before,
+    &:after {
+        content:" ";
+        position: absolute;
+    }
+
+    &:before {
+        @extend %icon--nav__line;
+
+        top: 4px;
+    }
+
+    &:after {
+        @extend %icon--nav__line;
+
+        top: 8px;
+    }
 
     @include mq(tablet) {
-        @include navigation__toggle-burger--width(wide);
+        width: 16px;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle-burger--width(small);
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle-burger--width(small);
-        }
-    }
-}
-.honest-burger {
-    display: block;
-    height: 16px;
-}
-.honest-burger i {
-    display: block;
-    border-top: 2px solid rgba(#ffffff, .9);
-    margin-top: 2px;
 
     @if not $old-ie {
-        @include transform-origin(60%);
-
         .navigation--expanded & {
-            @include transform-origin(50%);
+            height: 0;
 
-            &:nth-child(1) {
-                @include transform(translateY(rem(4px)) rotate(45deg));
+            &:before,
+            &:after {
+                content:" ";
+                position: absolute;
+                left: 0;
             }
-            &:nth-child(2) {
-                opacity: 0;
+
+            &:before {
+                @include transform(rotate(45deg));
+
+                top: 4px;
             }
-            &:nth-child(3) {
-                @include transform(translateY(rem(-4px)) rotate(-45deg));
+
+            &:after {
+                @include transform(rotate(-45deg) translate(3px, -3px));
+
+                top: 8px;
             }
-        }
-        @include mq(tablet) {
-            -webkit-transition: opacity .1s, -webkit-transform .1s ease-in;
-            transition: opacity .1s, transform .1s ease-in;
         }
     }
 }
