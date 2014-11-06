@@ -569,11 +569,3 @@ $commercial-cta-diameter: (
         }
     }
 }
-
-.container--commercial-capi .l-row__item {
-    flex: none !important;
-
-    @include mq($until: tablet) {
-        width: 50% !important;
-    }
-}
