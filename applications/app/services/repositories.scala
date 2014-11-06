@@ -18,7 +18,7 @@ import controllers.ImageContentPage
 import implicits.Dates.dateOrdering
 
 object IndexPagePagination {
-  def pageSize: Int = 20 //have a good think before changing this
+  def pageSize: Int = 50 //have a good think before changing this
 }
 
 object IndexPage {
