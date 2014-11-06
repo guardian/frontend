@@ -1,15 +1,14 @@
 @(member: model.commercial.soulmates.Member)(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-18")) { case (version, date) =>
-    <li class="lineitem lineitem__multi lineitem__soulmates u-cf">
-        <div class="commercial__multi-wrapper">
-            <div class="commercial__multi-header">
-                <span class="u-h">The Guardian</span>
-            	<h4 class="commercial__title container__title__wrapper i-soulmates-title-background">
-            	    <span class="i i--commercial i-soulmates-logo"></span>
-                    <span class="u-h">Soulmates</span>
-            	</h4>
-            </div>
+    <li class="lineitem lineitem--multi commercial--soulmates--v2 commercial--tone-soulmates">
+        <div class="commercial--multi__header">
+            <h4 class="commercial__title">
+                <span class="i i--commercial i-soulmates-logo"></span>
+                <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+            </h4>
+        </div>
+        <div class="commercial--multi__body">
             <a class="lineitem__link"
             href="@AdLink{@member.profileUrl}"
             data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">

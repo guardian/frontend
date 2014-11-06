@@ -3,10 +3,6 @@ Multi component (AKA Frankenponent)
 ========================================================================== */
 
 .commercial--v2.commercial--multi {
-    .commercial__multi-wrapper {
-        background: $c-neutral4;
-    }
-
     .container__header {
         background-color: transparent;
 
@@ -15,7 +11,7 @@ Multi component (AKA Frankenponent)
         }
     }
 
-    .commercial__multi-header {
+    .commercial--multi__header {
         padding: $gs-baseline/3 $gs-gutter/4;
 
         .commercial__title {
@@ -28,7 +24,7 @@ Multi component (AKA Frankenponent)
             }
 
             .i-holidayoffers-logo {
-                width: 94px;
+                width: 96px;
                 opacity: .8;
             }
 
@@ -53,12 +49,13 @@ Multi component (AKA Frankenponent)
         }
     }
 
-    .commercial__multi-body {
+    .commercial--multi__body {
+        background: $c-neutral4;
         padding: $gs-gutter/4 $gs-baseline/2;
         min-height: gs-height(4.5);
     }
 
-    .lineitem {
+    .lineitem--multi {
         width: auto;
         float: none;
 
@@ -96,11 +93,11 @@ Multi component (AKA Frankenponent)
             }
             width: 25%;
         }
-    }
 
-    .lineitem__image-crop {
-        width: 50%;
-        padding-bottom: 30%;
+        .lineitem__image-crop {
+            width: 50%;
+            padding-bottom: 30%;
+        }
 
         .lineitem__image {
             left: -7.5%;

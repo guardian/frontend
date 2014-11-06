@@ -8,6 +8,10 @@ $c-soulmates-high: $c-neutral1;
 .commercial--soulmates-v2 {
     background-color: $c-soulmatesBackground;
 
+    .commercial--multi__header {
+        background-color: $c-soulmates-high;
+    }
+
     @mixin c-soulmates-branding-small {
         .container__title__wrapper {
             height: 100%;
