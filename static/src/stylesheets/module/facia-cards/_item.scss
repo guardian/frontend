@@ -129,7 +129,8 @@ $fc-hover-transition: .25s ease;
         .fc-item__image-container {
             background-color: #000000;
 
-            img {
+            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+            .responsive-img {
                 opacity: .8;
             }
         }
@@ -198,7 +199,8 @@ $fc-hover-transition: .25s ease;
     @include transition(background-color $fc-hover-transition);
     background-color: rgba(0, 0, 0, .1);
 
-    img {
+    // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+    .responsive-img {
         @include transition(opacity $fc-hover-transition);
     }
 }
