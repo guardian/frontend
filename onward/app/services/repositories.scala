@@ -14,7 +14,10 @@ trait Related extends ConciergeRepository {
       Future.successful(Nil)
     } else {
 
-      val tags = excludeTags.map(t => s"-$t").mkString(",")
+      val tags: Option[String] = excludeTags match {
+        case Nil => None
+        case excluding => Some(excluding.map(t => s"-$t").mkString(","))
+      }
 
       val response = LiveContentApi.item(path, edition)
         .tag(tags)

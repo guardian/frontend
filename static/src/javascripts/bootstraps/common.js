@@ -162,7 +162,8 @@ define([
             transcludeRelated: function () {
                 var opts = {};
 
-                if (config.page.contentType.toLowerCase() === 'video') {
+                // don't want to show professional network content on videos or interactives
+                if (['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) > 0) {
                     opts.excludeTag = 'guardian-professional/guardian-professional';
                 }
                 new Related(opts).renderRelatedComponent();
