@@ -13,6 +13,17 @@
 .ad-slot--dark {
     background-color: lighten($c-mediaBackground, 2.5%);
 }
+.ad-slot--mobile {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+.ad-slot--not-mobile {
+    @include mq($until: tablet) {
+        display: none;
+    }
+ }
+
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;

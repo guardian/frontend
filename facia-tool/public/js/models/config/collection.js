@@ -9,6 +9,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/url-abs-path',
     'utils/identity'
 ], function(
     ko,
@@ -20,6 +21,7 @@ define([
     asObservableProps,
     populateObservables,
     fullTrim,
+    urlAbsPath,
     identity
 ) {
     var checkCount = 0;
@@ -136,9 +138,11 @@ define([
             return;
         }
 
-        this.state.isOpen(false);
+        this.meta.href(urlAbsPath(this.meta.href()));
         this.meta.apiQuery(sanitizeApiQuery(this.meta.apiQuery()));
+
         this.state.apiQueryStatus(undefined);
+        this.state.isOpen(false);
 
         if (vars.model.collections.indexOf(this) === -1) {
             vars.model.collections.unshift(this);

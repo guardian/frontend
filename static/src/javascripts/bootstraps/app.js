@@ -1,84 +1,51 @@
-/*global guardian:true */
 define([
-    'raven',
     'qwery',
-    'common/utils/mediator',
-    'common/utils/detect',
+    'raven',
     'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/user-timing',
-
-    'common/modules/ui/fonts',
-    'common/modules/commercial/user-ad-targeting',
-
-    'bootstraps/common',
-    'bootstraps/tag',
-    'bootstraps/section',
-    'bootstraps/football',
     'bootstraps/article',
+    'bootstraps/common',
+    'bootstraps/football',
+    'bootstraps/gallery',
     'bootstraps/liveblog',
     'bootstraps/media',
-    'bootstraps/gallery',
-    'bootstraps/identity',
     'bootstraps/profile',
-    'bootstraps/sport'
+    'bootstraps/section',
+    'bootstraps/sport',
+    'bootstraps/tag'
 ], function (
-    raven,
     qwery,
-    mediator,
-    detect,
+    raven,
     config,
+    detect,
+    mediator,
     userTiming,
-
-    Fonts,
-    userAdTargeting,
-
-    bootstrapCommon,
-    tag,
-    section,
-    football,
     article,
+    common,
+    football,
+    gallery,
     liveBlog,
     media,
-    gallery,
-    identity,
     profile,
-    sport
+    section,
+    sport,
+    tag
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
             raven.context(
                 { tags: { feature: featureName } },
-                boostrap.init
+                boostrap.init,
+                []
             );
-        },
-        modules = {
-
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
-                        f = new Fonts(fontStyleNodes, fileFormat);
-                    f.loadFromServerAndApply();
-                }
-            },
-
-            initId: function () {
-                identity.init(config);
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
-            }
         },
 
         routes = function () {
             userTiming.mark('App Begin');
 
-            modules.loadFonts(navigator.userAgent);
-            modules.initId();
-            modules.initUserAdTargeting();
-
-            bootstrapContext('common', bootstrapCommon);
+            bootstrapContext('common', common);
 
             // Front
             if (config.page.isFront) {

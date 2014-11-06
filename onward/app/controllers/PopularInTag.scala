@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import layout.{CollectionEssentials, ContainerAndCollection}
+import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
@@ -25,7 +25,7 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
     val config = CollectionConfig.withDefaults(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumFastXII),
         CollectionConfigWithId(dataId, config),

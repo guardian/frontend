@@ -7,7 +7,8 @@
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="article" data-test-id="article-root"
         class="content content--article tonal tonal--@articleToneClass(article) section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-        @if(article.isAdvertisementFeature){content--advertisement-feature}"
+        @if(article.isAdvertisementFeature){content--advertisement-feature}
+        @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         @fragments.headTonal(article)

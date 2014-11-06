@@ -106,8 +106,6 @@ define([
                 booksHigh:         buildComponentUrl('books/bestsellers-high'),
                 jobs:              buildComponentUrl('jobs', { t: jobs }),
                 jobsHigh:          buildComponentUrl('jobs-high'),
-                jobsV2:            buildComponentUrl('jobs-V2', { t: jobs }),
-                jobsHighV2:        buildComponentUrl('jobs-high-v2'),
                 masterclasses:     buildComponentUrl('masterclasses'),
                 masterclassesHigh: buildComponentUrl('masterclasses-high'),
                 soulmates:         buildComponentUrl('soulmates/mixed'),
