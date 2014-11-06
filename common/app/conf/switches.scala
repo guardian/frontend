@@ -227,6 +227,11 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+    "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -330,6 +335,10 @@ object Switches extends Collections {
     safeState = On, sellByDate = never)
   // A/B Tests
 
+  val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
+    "If switched on, any user registrations from a known tor esit node will be logged",
+    safeState = On, sellByDate = never)
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -375,6 +384,11 @@ object Switches extends Collections {
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
+
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -433,6 +447,7 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     IdentityBlockSpamEmails,
+    IdentityLogRegistrationsFromTor,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
@@ -442,7 +457,9 @@ object Switches extends Collections {
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
-    PngResizingSwitch
+    PngResizingSwitch,
+    GlobalDevelopmentQualtrics,
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

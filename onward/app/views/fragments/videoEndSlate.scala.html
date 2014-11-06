@@ -1,5 +1,7 @@
 @(videos: Seq[model.Video], componentId: String, heading: String)(implicit request: RequestHeader)
 
+@import views.support.Seq2zipWithRowInfo
+
 <div class="end-slate-container end-slate-container--video" data-component="video-end-slate-@componentId">
 
     <div class="end-slate-container__header">

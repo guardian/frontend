@@ -141,7 +141,8 @@
     padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
-        @include fs-header(3);
+        @include fs-header(4);
+        line-height: get-line-height(header, 2);
         float: none;
     }
 }

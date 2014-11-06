@@ -16,6 +16,12 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 
+# Crosswords
+# NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+
+
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
@@ -212,8 +218,6 @@ GET         /commercial/jobs                                                    
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobsLowJson
 GET         /commercial/jobs-high                                                                                    controllers.commercial.JobAds.jobsHighHtml
 GET         /commercial/jobs-high.json                                                                               controllers.commercial.JobAds.jobsHighJson
-GET         /commercial/jobs-v2.json                                                                                 controllers.commercial.JobAds.jobsLowJsonV2
-GET         /commercial/jobs-high-v2.json                                                                            controllers.commercial.JobAds.jobsHighJsonV2
 
 GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.masterclassesLowHtml
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson

@@ -28,6 +28,7 @@ require([
     'common/utils/user-timing',
 
     // shared modules
+    'common/modules/analytics/beacon',
     'common/modules/commercial/badges',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/build-page-targeting',

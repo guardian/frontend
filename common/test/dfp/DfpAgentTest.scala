@@ -1,12 +1,13 @@
 package dfp
 
+import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfig
-import common.{Edition, editions}
+import common.Edition.defaultEdition
+import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Tag
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
-import com.gu.contentapi.client.model.{ Tag => ApiTag }
 
 
 class DfpAgentTest extends FlatSpec with Matchers {
@@ -15,22 +16,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
     PageSkinSponsorship("lineItemName",
       1234L,
       Seq(s"$dfpAdUnitRoot/business/front"),
-      Seq(Country("United Kingdom", "UK")),
+      Seq(Uk),
+      Seq("United Kingdom"),
       false, false),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitRoot/music/front"),
+      Nil,
       Nil,
       false, false),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitRoot/sport"),
       Nil,
+      Nil,
       false, false),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitRoot/testSport/front"),
-      Seq(Country("United Kingdom", "UK")),
+      Seq(Uk),
+      Seq("United Kingdom"),
       false, true)
   )
 
@@ -51,7 +56,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("ad-feature"), sections = Nil, Some("spon2"), Nil, 4),
       Sponsorship(Seq("film"), sections = Nil, None, Nil, 5),
       Sponsorship(Seq("grundfos-partner-zone", "sustainable-business-grundfos-partner-zone"),
-        sections = Seq("sustainable-business"), None, Nil, 8)
+        sections = Seq("sustainable-business"), None, Nil, 8),
+      Sponsorship(Seq("media-network-adobe-partner-zone"), sections = Nil, None, Nil, 9)
     )
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
@@ -66,9 +72,9 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override def isProd = true
 
-    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty
 
-    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map.empty
   }
 
   private object notProductionTestDfpAgent extends DfpAgent {
@@ -84,9 +90,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet()
 
-    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
 
-    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty
+
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = Map.empty
   }
 
   def apiQuery(apiQuery: String) = {
@@ -144,6 +151,15 @@ class DfpAgentTest extends FlatSpec with Matchers {
       "books/film?edition=au",
       "film"
     )
+
+    forEvery(apiQueries) { q =>
+      testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)
+    }
+  }
+
+  it should "be true for a partner zone container" in {
+
+    val apiQueries = Seq("media-network/adobe-partner-zone")
 
     forEvery(apiQueries) { q =>
       testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)
@@ -358,32 +374,33 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    testDfpAgent.isPageSkinned("business/front", Edition.defaultEdition) should be(true)
+    testDfpAgent.isPageSkinned("business/front", edition = defaultEdition) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
-    testDfpAgent.isPageSkinned("business/front", editions.Au) should be(false)
+    testDfpAgent.isPageSkinned("business/front", edition = Au) should be(false)
   }
 
   it should "be false for a front without a pageskin" in {
-    testDfpAgent.isPageSkinned("culture/front", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("culture/front", edition = defaultEdition) should be(false)
   }
 
-  it should "be true for a front with a pageskin in all editions" in {
-    testDfpAgent.isPageSkinned("music/front", Edition.defaultEdition) should be(true)
-    testDfpAgent.isPageSkinned("music/front", editions.Us) should be(true)
+  it should "be false for a front with a pageskin in no edition" in {
+    testDfpAgent.isPageSkinned("music/front", edition = defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("music/front", edition = Us) should be(false)
   }
 
   it should "be false for any content (non-front) page" in {
-    testDfpAgent.isPageSkinned("sport", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("sport", edition = defaultEdition) should be(false)
   }
 
   "production DfpAgent" should "should not recognise adtest targetted line items" in {
-    testDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(false)
+    testDfpAgent.isPageSkinned("testSport/front", edition = defaultEdition) should be(false)
   }
 
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
-    notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
+    notProductionTestDfpAgent.isPageSkinned("testSport/front", edition = defaultEdition) should be(
+      true)
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {

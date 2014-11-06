@@ -12,8 +12,8 @@
     }
     .container__meta__title {
         padding-bottom: $gs-baseline/3;
+        @include fs-header(4);
         line-height: get-line-height(header, 2);
-        @include fs-header(5);
         color: guss-colour(guardian-brand-dark, $pasteup-palette);
 
         @include mq($until: tablet) {

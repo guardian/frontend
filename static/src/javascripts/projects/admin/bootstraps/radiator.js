@@ -77,7 +77,9 @@ define([
                                 type: 'json'
                         }).then(
                             function(rev) {
-                                li.innerHTML = rev.commit.author.name + " <small>(deployed by " + deployer + ")</small>";
+                                if (rev.commit) {
+                                    li.innerHTML = rev.commit.author.name + " <small>(deployed by " + deployer + ")</small>";
+                                }
                             }
                         );
                     }
