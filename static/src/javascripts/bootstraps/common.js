@@ -24,6 +24,7 @@ define([
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -78,6 +79,7 @@ define([
     register,
     ScrollDepth,
     userAdTargeting,
+    crosswordThumbnails,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -468,6 +470,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
         };
