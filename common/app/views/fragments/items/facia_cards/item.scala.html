@@ -74,10 +74,7 @@
                     case _ => { }
                 }
 
-                <div class="@RenderClasses(Map(
-                    ("fc-item__content", true),
-                    ("fc-item__content--pushbottom", !trail.shouldHidePublicationDate)
-                ))">
+                <div class="fc-item__content">
                     <div class="@RenderClasses(Map(
                         ("fc-item__header", true),
                         ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
