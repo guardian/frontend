@@ -35,7 +35,7 @@ object IndexPage {
     val front = Front.fromConfigs(for {
       (day, items) <- itemsByDay.toSeq.sortBy(_._1).reverse
     } yield {
-      val dateString = Format(day.toDateTimeAtStartOfDay, edition, "EEEE d MMMM yyyy")
+      val dateString = Format(day.toDateTimeAtStartOfDay, edition, "d MMMM yyyy")
 
       val collection = CollectionEssentials(
         items,
