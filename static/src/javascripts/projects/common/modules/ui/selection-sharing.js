@@ -31,6 +31,7 @@ define([
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
         emailHrefTemplate = 'mailto:?subject={{subject}}&body="{{selection}}" {{url}}',
+        validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main'],
 
     updateSelection = function () {
 
@@ -48,9 +49,7 @@ define([
             top = $body.scrollTop() + rect.bottom;
             twitterMessage = range.toString();
 
-            // commonAncestorContainer is buggy, can't use it here.
-            if (!$.ancestor(range.startContainer, 'js-article__body') ||
-                !$.ancestor(range.endContainer, 'js-article__body')) {
+            if (!isValidSelection(range)) {
                 hideSelection();
                 return;
             }
@@ -115,6 +114,13 @@ define([
             bean.on(document.body, 'mousedown', _.debounce(onMouseDown, 50));
             mediator.on('window:resize', _.throttle(updateSelection, 50));
         }
+    },
+
+    isValidSelection = function (range) {
+        // commonAncestorContainer is buggy, can't use it here.
+        return _.some(validAncestors, function (className) {
+            return $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className);
+        });
     };
 
     return {

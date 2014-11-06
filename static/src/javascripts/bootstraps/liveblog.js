@@ -276,6 +276,7 @@ define([
         article.modules.initOpen();
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
+        article.modules.initSelectionSharing();
 
         mediator.emit('page:liveblog:ready');
     }

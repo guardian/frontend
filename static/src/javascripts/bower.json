@@ -22,7 +22,7 @@
     "videojs-playlist-audio": "*",
     "fastclick": "guardian/fastclick#master",
     "requirejs-text": "~2.0.12",
-    "native-promise-only": "~0.7.6-a"
+    "native-promise-only": "guardian/native-promise-only#master"
   },
   "resolutions": {
     "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf",
