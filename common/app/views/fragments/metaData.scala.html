@@ -53,7 +53,7 @@
     <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(item) RSS feed" />
 }
 
-<link rel="canonical" href="@CanonicalLink(request)" />
+<link rel="canonical" href="@item.canonicalUrl.getOrElse(CanonicalLink(request))" />
 
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />

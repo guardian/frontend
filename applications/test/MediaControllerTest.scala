@@ -46,4 +46,15 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     contentAsString(result) should include("Sorry - this page has been removed.")
   }
 
+  it should "contain a canonical link pointing at the section when a 410 (gone) page is served" in {
+    val result = controllers.MediaController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
+    status(result) should be(410)
+    val resultContentAsString = contentAsString(result)
+    // these strings look a bit weird because faked requests don't include a host (hence the http:/// bit)
+    resultContentAsString should include("link rel=\"canonical\"")
+    resultContentAsString should not include("link rel=\"canonical\" href=\"http:///world/video/2008/dec/11/guantanamo-bay\"")
+    resultContentAsString should include("link rel=\"canonical\" href=\"http:///world\"")
+    resultContentAsString should include("Sorry - this page has been removed.")
+  }
+
 }

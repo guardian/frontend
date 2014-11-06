@@ -16,6 +16,8 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  lazy val canonicalUrl: Option[String] = None
+  
   // i.e. show the link back to the desktop site
   def hasClassicVersion: Boolean = !special
 
@@ -97,10 +99,11 @@ object Page {
     analyticsName: String,
     pagination: Option[Pagination] = None,
     description: Option[String] = None,
-    maybeContentType: Option[String] = None
+    maybeContentType: Option[String] = None,
+    maybeCanonicalUrl: Option[String] = None
   ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
     override lazy val contentType = maybeContentType.getOrElse("")
-
+    override lazy val canonicalUrl = maybeCanonicalUrl
     override def metaData: Map[String, JsValue] =
       super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
   }
