@@ -14,6 +14,7 @@ trait Related extends ConciergeRepository {
       Future.successful(Nil)
     } else {
 
+      // doesn't line tags being an empty string - need to explicitly pass a None
       val tags: Option[String] = excludeTags match {
         case Nil => None
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
