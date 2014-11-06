@@ -738,7 +738,7 @@ $burger-width-wide: 16px;
 
     &:before,
     &:after {
-        content: " ";
+        content: '';
         position: absolute;
     }
 
