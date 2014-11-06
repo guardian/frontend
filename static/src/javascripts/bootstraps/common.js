@@ -470,7 +470,6 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
-            modules.gatherStorageStats();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
