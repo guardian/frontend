@@ -36,6 +36,7 @@ define([
 
             showSnaps: function () {
                 snaps.init();
+                mediator.on('modules:container:rendered', snaps.init);
             },
 
             showContainerShowMore: function () {

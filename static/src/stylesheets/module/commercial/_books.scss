@@ -1,281 +1,103 @@
 /* ==========================================================================
    Books components
    ========================================================================== */
-
-$c-commercial-books-dark: #630d4c;
-
+.commercial--books--v2,
 .commercial--books {
-    padding: $comercial-comp-baseline 0;
-    .commercial__branding,
-    .commercial__head {
-        overflow: hidden;
-        position: static;
-        border: 0;
-        height: auto;
-        padding: 0;
-        margin-top: 0;
-    }
-    .commercial__branding {
-        float: left;
-    }
-    .commercial__logo {
-        margin: 0;
-        height: 24px;
-
-        .i:nth-child(2) {
-            margin-left: -4px;
-        }
-    }
-    .commercial__title {
-        margin: 0;
-    }
-    .i-bookshop-logo--bookshop {
-        margin-left: -5px;
-    }
-    .commercial__explainer {
-        clear: both;
-    }
-    .commercial__home-link {
-        float: right;
-        clear: right;
-        color: $c-commercial-books-dark;
-        bottom: 0;
-    }
-    .commercial__home-link__cta,
-    .commercial__home-link__pill {
-        background-color: $c-commercial-books-dark;
-    }
-    .commercial__body {
-        padding: 0;
-        margin-top: $gs-baseline;
-    }
-    .lineitem,
-    .highitem {
-        @include box-sizing(border-box);
-        padding: 0 0 $comercial-comp-baseline;
-    }
+    /* Line items */
     .lineitem {
-        padding: $comercial-comp-baseline 0;
-    }
-    .lineitem:first-child {
-        padding-top: 0;
-    }
-    .lineitem__meta {
-        color: $c-neutral1;
-        @include fs-textSans(1);
-    }
-    .highitem .commercial--books__buy-now-button {
-        margin-right: -($gs-gutter/2);
-    }
-    .commercial--books__price {
-        margin-top: $gs-baseline/2;
-        margin-bottom: 0;
-    }
-    .commercial--books__price__rrp,
-    .commercial--books__price__our {
-        display: block;
-        color: $c-neutral1;
-        @include fs-textSans(1);
-    }
-    .commercial--books__price__our {
-        font-weight: bold;
-    }
-    .commercial--books__buy-now-button {
-        display: inline-block;
-        background-color: #e657af;
-        border: 0;
-        color: #ffffff;
-        text-align: center;
-        float: right;
-        @include f-header;
-        @include font-size(12, 20);
-        padding: 0 $gs-gutter/2;
-        min-width: gs-span(1);
-    }
+        width: percentage(1/2);
 
-    .commercial__foot {
-        padding: 0;
-    }
+        &:nth-child(n+3) {
+            display: none;
+        }
 
-    @include mq(tablet) {
-        .commercial__body {
-            margin-top: 0;
-        }
-        .commercial__search {
-            position: relative;
-            float: none;
-            width: 100%;
-            margin-top: $gs-baseline*4;
-        }
-        .lineitem {
-            position: relative;
+        @include mq(mobileLandscape) {
             width: percentage(1/3);
-            padding: 0 $gs-gutter/2;
 
+            &:nth-child(n+3) {
+                display: block;
+            }
             &:nth-child(n+4) {
                 display: none;
             }
         }
-        .commercial--books__price {
-            width: 100%;
-        }
-        .commercial--books__price {
-            text-align: left;
-            margin-top: $gs-baseline/2;
-        }
-        .commercial--books__price__label {
-            display: inline;
-        }
-        .commercial--books__buy-now-button {
-            float: none;
-            margin-top: $comercial-comp-baseline;
-        }
-    }
-    @include mq(desktop) {
-        .lineitem {
-            width: 20%;
+
+        @include mq(desktop) {
+            width: percentage(1/5);
+            min-height: $gs-baseline*20;
 
             &:nth-child(n+4) {
                 display: block;
             }
         }
-        .commercial__head {
-            float: left;
-        }
     }
-    @include mq(wide) {
-        .commercial__head {
-            width: gs-span(4);
-        }
-    }
-    &.commercial--low {
-        .lineitem__link {
-            float: none;
-        }
-        .lineitem:first-child .lineitem__img {
-            display: block;
-        }
 
-        @include mq(tablet) {
-            .commercial__body {
-                padding-left: $gs-gutter/2;
-            }
-            .commercial__home-link {
-                position: absolute;
-            }
-            .commercial__branding {
-                float: none;
-            }
-            .commercial__head {
+    /* Line items */
+    .lineitem__image {
+        width: 80px;
+    }
+    .lineitem__title {
+        min-height: 0;
+    }
+    .lineitem__author {
+        margin-top: $gs-baseline*-1;
+        margin-bottom: $gs-baseline*1.5;
+    }
+
+    /* Line items - high relevance */
+    .commercial__relevance--high {
+        .lineitem.lineitem--high {
+            .lineitem--high__feature {
                 float: left;
-                width: gs-span(3);
+                padding-right: $gs-gutter/2;
+                padding-left: 0;
+                width: 88px;
             }
-            .commercial__foot {
-                display: none;
+            .lineitem--high__offer {
+                float: right;
+                width: calc(100% - 98px);
             }
-        }
-    }
-    &.commercial--high {
-        .highitem__details {
-            .lineitem__link {
-                width: 100%;
-            }
-        }
-        .commercial__relevance-low {
-            .lineitem__img {
-                width: 66px;
-            }
-        }
-        @include mq(tablet) {
-            .lowitem__details {
-                margin-left: 76px;
-            }
-        }
-    }
-}
-
-/* fronts */
-.facia-container--layout-front .commercial--books {
-    padding: $gs-gutter/2;
-    @include mq(leftCol) {
-        .commercial__head {
-            float: left;
-        }
-    }
-    @include mq(leftCol) {
-        .commercial__head {
-            width: gs-span(2);
-        }
-    }
-    @include mq(leftCol, wide) {
-        .commercial__title {
-            line-height: 1;
-            margin-bottom: $comercial-comp-baseline;
-        }
-        .i-bookshop-logo--bookshop {
-            margin-left: 0;
-        }
-        .commercial__search {
-            margin-top: 40px;
-        }
-    }
-    @include mq(wide) {
-        .commercial__head {
-            width: gs-span(2) + $gs-gutter;
-            margin-right: 0;
-        }
-        &.commercial--high {
-            .has-page-skin & {
-                .container__title {
-                    margin-bottom: $gs-baseline;
+            @include mq($until: tablet) {
+                .lineitem__title {
+                    padding-right: $gs-gutter*5;
                 }
-                .commercial__home-link {
-                    width: auto;
+
+                .lineitem__cta {
+                    margin-right: 0;
+                    position: absolute;
+                    top: $gs-baseline/2;
                     right: 0;
-                    left: auto;
-                    bottom: auto;
-                    top: $gs-baseline;
                 }
+            }
+        }
+    }
+
+    /* Line items - low relevance */
+    .commercial__relevance--low {
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            width: 50%;
+            float: left;
+        }
+
+        @include mq($until: tablet) {
+            .lineitem.lineitem--low {
+                padding-left: 88px + $gs-gutter/2;
+                min-height: $gs-baseline*9;
+            }
+
+            .lineitem__image {
+                float: left;
+                position: absolute;
+                left: 0;
+                top: $gs-baseline/2;
             }
         }
     }
 }
 
-/* article */
-.facia-container--layout-content .commercial--books {
-    @include mq(desktop) {
-        .commercial__head {
-            float: left;
-            width: 25%;
-            padding-right: $gs-gutter/2;
-        }
-        .commercial__body {
-            padding-left: 0;
-        }
-    }
-    @include mq(desktop, leftCol) {
-        &.commercial--high .commercial__head {
-            padding-right: 16px;
-        }
-    }
-    @include mq(leftCol) {
-        .commercial__head {
-            padding-right: 0;
-        }
-        .commercial__relevance-low .lineitem {
-            width: 50%;
-        }
-    }
-    @include mq(leftCol, $until: wide) {
-        .commercial__title {
-            line-height: 1;
-            margin-bottom: $comercial-comp-baseline;
-        }
-        .i-bookshop-logo--bookshop {
-            margin-left: 0;
-        }
-        .commercial__search {
-            margin-top: 40px;
-        }
-    }
+/* High relevance only, works for DFP book items */
+.commercial--tone-books.commercial--v-high .lineitem__image {
+    max-width: 50%;
+    margin: 0;
 }

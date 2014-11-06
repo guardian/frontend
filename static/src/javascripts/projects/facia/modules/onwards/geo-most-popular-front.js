@@ -24,8 +24,7 @@ define([
 
     Component.define(GeoMostPopularFront);
 
-    // Geo is only available via the CDN, hence hardcoded url
-    GeoMostPopularFront.prototype.endpoint = 'http://api.nextgen.guardianapps.co.uk/most-read-geo.json';
+    GeoMostPopularFront.prototype.endpoint = '/most-read-geo.json';
     GeoMostPopularFront.prototype.isNetworkFront = config.page.contentType === 'Network Front';
     GeoMostPopularFront.prototype.manipulationType = 'html';
 
