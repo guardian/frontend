@@ -1,5 +1,7 @@
 package model
 
+import conf.Switches
+
 object FaciaDisplayElement {
   def fromTrail(trail: Trail): Option[FaciaDisplayElement] = {
     (trail, trail.mainVideo) match {
@@ -10,7 +12,7 @@ object FaciaDisplayElement {
           EndSlateComponents.fromContent(other).toUriPath,
           InlineImage.fromTrail(trail)
         ))
-      case (content: Content, _) if content.isCrossword =>
+      case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(content.id))
       case _ => InlineImage.fromTrail(trail)
     }
