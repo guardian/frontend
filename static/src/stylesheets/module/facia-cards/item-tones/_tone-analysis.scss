@@ -26,4 +26,10 @@
     .fc-sublink__kicker {
         color: $c-analysisAccent;
     }
+
+    @include sublink-style(live) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
 }
