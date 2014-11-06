@@ -387,26 +387,35 @@ define([
                 bonzo(player.el()).removeClass(endState);
             });
         },
+
         initMoreInSection: function () {
             if (!config.isMedia || !config.page.showRelatedContent) {
                 return;
             }
-            var mediaType = config.page.contentType.toLowerCase(),
-                section = new Component(),
-                parentEl = $('.js-onward')[0];
 
-            section.endpoint = '/' + mediaType + '/section/' + config.page.section;
+            var mediaType = config.page.contentType.toLowerCase(),
+                section   = new Component(),
+                parentEl  = $('.js-onward')[0],
+                endpoint  = '/' + mediaType + '/section/' + config.page.section;
 
             if ('seriesId' in config.page) {
-                section.endpoint += '/' + config.page.seriesId;
+                endpoint += '/' + config.page.seriesId;
             }
 
-            section.endpoint += '.json?shortUrl=' + config.page.shortUrl;
+            endpoint += '.json?shortUrl=' + config.page.shortUrl;
+
+            // exclude professional network content from video pages
+            if (mediaType === 'video') {
+                endpoint += '&excludeTag=guardian-professional/guardian-professional';
+            }
+
+            section.endpoint = endpoint;
 
             section.fetch(parentEl).then(function () {
                 images.upgrade(parentEl);
             });
         },
+
         initMostViewedMedia: function () {
             if (!config.isMedia) {
                 return;
