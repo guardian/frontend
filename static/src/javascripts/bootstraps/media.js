@@ -9,7 +9,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/utils/deferToAnalytics',
+    'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/preferences',

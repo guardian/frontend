@@ -6,7 +6,7 @@ object CutOut {
   def fromTrail(trail: Trail): Option[CutOut] = {
     if (trail.imageCutoutReplace) {
       trail.customImageCutout map {
-        case FaciaImageElement(src, width, height) => CutOut("", src, Orientation.fromDimensions(width, height))
+        case FaciaImageElement(src, width, height) => CutOut("", ImgSrc(src, Item360), Orientation.fromDimensions(width, height))
       } orElse {
         /** We're assuming here that standard contributor images from CAPI are in landscape, as unfortunately they
           * do not come with dimensions attached.

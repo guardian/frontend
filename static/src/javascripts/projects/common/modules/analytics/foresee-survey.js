@@ -16,3 +16,4 @@ define(['common/utils/cookies'], function (Cookie) {
     };
 
 });
+di

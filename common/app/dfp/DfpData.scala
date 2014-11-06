@@ -29,6 +29,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
+  val isEditionTag = isPositive("edition")
 
   val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
@@ -119,7 +120,10 @@ object GuAdUnit {
 }
 
 
-case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget], geoTargetsExcluded: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
+case class GuTargeting(adUnits: Seq[GuAdUnit],
+                       geoTargetsIncluded: Seq[GeoTarget],
+                       geoTargetsExcluded: Seq[GeoTarget],
+                       customTargetSets: Seq[CustomTargetSet]) {
 
   def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
 

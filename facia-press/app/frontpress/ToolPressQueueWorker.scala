@@ -60,7 +60,7 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
           }
         }
 
-        log.info(s"Successfully pressed $path on $pressType after ${millisToPress}ms")
+        log.info(s"Successfully pressed $path on $pressType after $millisToPress ms")
 
       case Failure(error) =>
         pressType match {

@@ -113,6 +113,13 @@ sudo gem install bundler
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
 
+Xcode installs an old version of git `1.9.3`, if you need a newer version you can run
+```
+brew install git
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
+```
+Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
+
 ###[libpng](http://libpng.org/pub/png/libpng.html)
 
 Ubuntu:

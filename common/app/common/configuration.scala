@@ -92,6 +92,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
 
+    lazy val circuitBreakerErrorThreshold =
+      configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
+
+    lazy val circuitBreakerResetTimeout =
+      configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(20000)
+
     lazy val previewAuth: Option[Auth] = for {
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")
@@ -241,7 +247,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v5.json"
     lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v5.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v5.json"
+    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"

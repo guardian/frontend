@@ -45,10 +45,12 @@ $header-image-size-desktop: 120px;
         @include mq(tablet, leftCol) {
             float: left;
         }
+
         @include mq(tablet, desktop) {
             width: 50%;
             padding-right: $gs-gutter / 2;
         }
+
         @include mq(desktop, leftCol) {
             width: 66%;
             padding-right: $gs-gutter / 2;
@@ -73,8 +75,8 @@ $header-image-size-desktop: 120px;
 .fc-container__header__title {
     position: relative;
     padding-bottom: $gs-baseline/3;
+    @include fs-header(4);
     line-height: get-line-height(header, 2);
-    @include fs-header(5);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
 
     a {
@@ -220,7 +222,6 @@ $header-image-size-desktop: 120px;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
     color: $c-neutral2;
-
     @include fs-headline(1);
 
     @include mq(leftCol) {
@@ -365,5 +366,15 @@ $header-image-size-desktop: 120px;
             padding-top: 0;
             margin-top: -1 * 2px;
         }
+    }
+}
+
+.content-footer {
+    .fc-item__content {
+        padding-bottom: $gs-baseline * 2;
+    }
+
+    .fc-item__timestamp {
+        display: block;
     }
 }

@@ -46,7 +46,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision.take(7))),
+    ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
@@ -61,6 +61,8 @@ trait MetaData extends Tags {
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
+
+  def openGraphImages: Seq[String] = Seq()
 
   def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
@@ -256,6 +258,7 @@ trait Tags {
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
+  lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -266,6 +269,7 @@ trait Tags {
 
 object Tags {
   val Analysis = "tone/analysis"
+  val Crossword = "type/crossword"
   val Podcast = "type/podcast"
   val Editorial = "tone/editorials"
   val Cartoon = "type/cartoon"

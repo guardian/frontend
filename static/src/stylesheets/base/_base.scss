@@ -14,13 +14,6 @@ body {
     background-color: #ffffff;
 }
 
-@if $old-ie == false {
-    html,
-    body {
-        overflow-x: hidden;
-    }
-}
-
 /**
  * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
  */

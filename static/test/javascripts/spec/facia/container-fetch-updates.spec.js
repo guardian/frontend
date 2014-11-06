@@ -64,7 +64,6 @@ define([
 
             function initModule(module, deps, callback) {
                 server.respondWith('/football/front-index.json', [200, {}, JSON.stringify(index)]);
-                deps['common/utils/ajax'].init();
                 deps['common/utils/mediator'].on("modules:containers:update", callback);
                 module();
             }

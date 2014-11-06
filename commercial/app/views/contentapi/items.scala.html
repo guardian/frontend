@@ -22,9 +22,9 @@
             </div>
             <div class="container__body">
                 <div class="facia-slice-wrapper">
-                    <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                    <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m facia-slice">
                         @for(item <- items) {
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                            <li class="facia-slice__item l-row__item l-row__item--span-1">
                                 <div class="item item--has-image item--imageadjust-default">
                                     <div class="item__container">
                                         <a class="item__link tone-accent-border" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
@@ -35,7 +35,7 @@
                                             }
                                                 </div>
                                             </div>
-                                            
+
                                             <h2 class="item__title">@item.webTitle</h2>
                                             <div class="item__meta">
                                                 <time

@@ -25,9 +25,10 @@ require([
     'common/utils/time',
     'common/utils/to-array',
     'common/utils/url',
-    'common/utils/userTiming',
+    'common/utils/user-timing',
 
     // shared modules
+    'common/modules/analytics/beacon',
     'common/modules/commercial/badges',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/build-page-targeting',

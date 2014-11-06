@@ -11,13 +11,6 @@ case class RelatedContent(
   related: Seq[Content]
 ) {
   val hasStoryPackage: Boolean = storyPackage.nonEmpty
-  val storyPackageLayout: ContainerDefinition = storyPackage.size match {
-    case 1 => FixedContainers.fixedSmallSlowI
-    case 2 => FixedContainers.fixedSmallSlowII
-    case 3 => FixedContainers.fixedMediumSlowXIIMpu
-    case 5 => FixedContainers.fixedSmallSlowVI
-    case _ => FixedContainers.fixedMediumFastXII
-  }
 }
 
 object RelatedContent {

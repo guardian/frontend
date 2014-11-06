@@ -1,7 +1,10 @@
-@(env: String, page: MetaData, trails: Seq[model.Content])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(env: String, page: model.MetaData, trails: Seq[model.Content])(implicit request: RequestHeader)
 
+@import layout.CollectionEssentials
 @import com.gu.facia.client.models.CollectionConfig
-@import layout.ContainerLayout
+@import layout.FaciaContainer
+@import services.CollectionConfigWithId
+@import slices.Fixed
 @import slices.FixedContainers.fixedMediumSlowVI
 
 @main(page, projectName = Option("facia")) { } {
@@ -9,12 +12,12 @@
     <div class="l-side-margins l-side-margins--layout-front">
         <div class="facia-container facia-container--layout-front js-sponsored-front"
             data-sponsorship="sponsored">
-            @fragments.containers.facia_cards.container(
-                Collection(trails),
-                ContainerLayout(fixedMediumSlowVI, Collection(trails), None),
-                containerIndex = 0,
-                dataId = "front"
-            )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some("Front")))
+            @fragments.containers.facia_cards.container(FaciaContainer(
+                0,
+                Fixed(fixedMediumSlowVI),
+                CollectionConfigWithId("front", CollectionConfig.withDefaults(displayName = Some("Front"))),
+                CollectionEssentials.fromTrails(trails)
+            ))(request))
 
             @Seq(
                 Map(
@@ -33,12 +36,15 @@
                     ("title", "Foundation Supported")
                 )
             ).map { c =>
-                @fragments.containers.facia_cards.container(
-                    Collection(trails),
-                    ContainerLayout(fixedMediumSlowVI, Collection(trails), None),
-                    containerIndex = 1,
-                    dataId = c("type")
-                )(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(c("title")), apiQuery = Some(c("keyword"))))
+                @fragments.containers.facia_cards.container(FaciaContainer(
+                    1,
+                    Fixed(fixedMediumSlowVI),
+                    CollectionConfigWithId("type", CollectionConfig.withDefaults(
+                        displayName = Some(c("title")),
+                        apiQuery = Some(c("keyword"))
+                    )),
+                    CollectionEssentials.fromTrails(trails)
+                ))(request))
             }
         </div>
     </div>

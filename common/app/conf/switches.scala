@@ -121,12 +121,22 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val PngResizingSwitch = Switch("Performance", "png-resizing",
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
+  )
+
   val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
     "If this switch is on then content will have a shorter cache time",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
   )
 
   // Commercial
+
+  val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
+    "Have Admin will poll DFP to precache adserving data.",
+    safeState = On, sellByDate = never
+  )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
@@ -216,6 +226,11 @@ object Switches extends Collections {
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
+
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+    "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
 
   // Monitoring
 
@@ -325,6 +340,10 @@ object Switches extends Collections {
     safeState = On, sellByDate = never)
   // A/B Tests
 
+  val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
+    "If switched on, any user registrations from a known tor esit node will be logged",
+    safeState = On, sellByDate = never)
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -371,11 +390,17 @@ object Switches extends Collections {
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
 
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AjaxRelatedContentSwitch,
+    DfpCachingSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -427,6 +452,7 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     IdentityBlockSpamEmails,
+    IdentityLogRegistrationsFromTor,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
@@ -436,7 +462,10 @@ object Switches extends Collections {
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
-    PollPreviewForFreshContentSwitch
+    PollPreviewForFreshContentSwitch,
+    PngResizingSwitch,
+    GlobalDevelopmentQualtrics,
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

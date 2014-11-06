@@ -17,6 +17,8 @@ import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
 import common.S3Metrics.S3ClientExceptionsMetric
 import com.gu.googleauth.UserIdentity
+import java.util.zip.GZIPOutputStream
+import java.io._
 
 trait S3 extends Logging {
 
@@ -85,6 +87,37 @@ trait S3 extends Logging {
 
   def putPrivate(key: String, value: String, contentType: String) {
     put(key: String, value: String, contentType: String, Private)
+  }
+
+  def putPrivateGzipped(key: String, value: String, contentType: String) {
+    putGzipped(key: String, value: String, contentType: String, Private)
+  }
+
+  private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+    lazy val request = {
+      val metadata = new ObjectMetadata()
+
+      metadata.setCacheControl("no-cache,no-store")
+      metadata.setContentType(contentType)
+      metadata.setContentEncoding("gzip")
+
+      val valueAsBytes = value.getBytes("UTF-8")
+      val os = new ByteArrayOutputStream()
+      val gzippedStream = new GZIPOutputStream(os)
+      gzippedStream.write(valueAsBytes)
+      gzippedStream.flush()
+      gzippedStream.close()
+
+      new PutObjectRequest(bucket, key, new ByteArrayInputStream(os.toByteArray), metadata).withCannedAcl(accessControlList)
+    }
+
+    try {
+      client.foreach(_.putObject(request))
+    } catch {
+      case e: Exception =>
+        S3ClientExceptionsMetric.increment()
+        throw e
+    }
   }
 
   private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
@@ -156,10 +189,10 @@ object S3FrontsApi extends S3 {
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
   def putLivePressedJson(path: String, json: String) =
-    putPrivate(getLivePressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")
 
   def putDraftPressedJson(path: String, json: String) =
-    putPrivate(getDraftPressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
     getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
