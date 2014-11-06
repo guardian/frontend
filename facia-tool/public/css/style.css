@@ -1002,6 +1002,8 @@ button {
     padding-top: 2px;
 }
 
+.cnf-fronts
+
 .cfn-front__hidden-text {
     font-size: 60%;
     text-transform: uppercase;
@@ -1019,6 +1021,9 @@ button {
     cursor: pointer;
     height: 24px;
     font-weight: normal;
+    font-family: inherit;
+    font-size: 20px;
+    padding-left: 10px;
 }
 
 .cnf-front.open .title {
@@ -1159,6 +1164,7 @@ button {
 .cnf-form .tools {
     padding: 10px 0;
     clear: left;
+    height: 30px;
 }
 
 .cnf-form .api-query-status {
