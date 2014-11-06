@@ -1,7 +1,8 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
-.commercial--jobs--v2 {
+.commercial--jobs--v2,
+.commercial--jobs {
     /* Logo adjustment */
     .i-jobs-logo {
         @include mq(leftCol) {

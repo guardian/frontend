@@ -1,7 +1,8 @@
 /* ==========================================================================
    Commercial Tables
    ========================================================================== */
-.commercial--v2 {
+.commercial--v2,
+.commercial {
     .table--commercial {
         @include fs-textSans(4);
         margin-bottom: $gs-baseline;

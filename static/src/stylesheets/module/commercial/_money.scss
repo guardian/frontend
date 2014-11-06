@@ -1,7 +1,8 @@
 /* ==========================================================================
    Best Buys component
    ========================================================================== */
-.commercial--money--v2 {
+.commercial--money--v2,
+.commercial--money {
     /* Line items */
     .lineitem__meta {
         @include fs-textSans(1);
