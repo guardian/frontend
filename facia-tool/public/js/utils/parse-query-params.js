@@ -3,8 +3,9 @@ define(['utils/url-query'], function(urlQuery) {
     /**
      * Returns query params as an object.
      * @param {function} opts                  optional options
-     * @param {function} opts.predicate        fn to determine which vals get included
-     * @param {string}   opts.namespace        prefix for param keys
+     * @param {function} opts.predicateKey     fn to determine which keys get included
+     * @param {function} opts.predicateVal     fn to determine which vals get included
+     * @param {string}   opts.namespace        prefix for keys
      * @param {boolean}  opts.excludeNamespace whether to exclude or include prefixed keys
      * @param {boolean}  opts.stripNamespace   whether to strip prefix from returned object's keys
      */
@@ -24,7 +25,10 @@ define(['utils/url-query'], function(urlQuery) {
                 return kv.split('='); })
 
             .filter(function(kv) {
-                return _.isFunction(opts.predicate) ? opts.predicate(kv[1]) : true; })
+                return _.isFunction(opts.predicateKey) ? opts.predicateKey(kv[0]) : true; })
+
+            .filter(function(kv) {
+                return _.isFunction(opts.predicateVal) ? opts.predicateVal(kv[1]) : true; })
 
             .filter(function(kv) {
                 return !opts.namespace || kv[0].indexOf(opts.namespace) === nsIndex; })
