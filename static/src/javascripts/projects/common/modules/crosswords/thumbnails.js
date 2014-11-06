@@ -4,6 +4,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
+    'common/modules/crosswords/helpers',
     'common/modules/crosswords/persistence'
 ], function (
     bonzo,
@@ -11,11 +12,10 @@ define([
     _,
     $,
     ajax,
+    helpers,
     persistence
 ) {
-    var cellSize = 31,
-        borderSize = 1,
-        textXOffset = 15,
+    var textXOffset = 15,
         textYOffset = 19;
 
     function makeTextCells(savedState) {
@@ -31,8 +31,8 @@ define([
 
                 if (enteredText) {
                     el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    top = row * cellSize + borderSize;
-                    left = column * cellSize + borderSize;
+                    top = helpers.gridSize(row);
+                    left = helpers.gridSize(column);
 
                     bonzo(el).attr({
                         x: left + textXOffset,
@@ -71,10 +71,6 @@ define([
     }
 
     return {
-        cellSize: cellSize,
-        borderSize: borderSize,
-        textXOffset: textXOffset,
-        textYOffset: textYOffset,
         init: init,
         makeTextCells: makeTextCells
     };

@@ -30,7 +30,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
   def thumbnail(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
-      val xml = CrosswordSvg.apply(crossword, Some("100%"), Some("100%"), trim = true)
+      val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
       val globalStylesheet = Static("stylesheets/global.css")
 

@@ -3,12 +3,14 @@ define([
     'lodash/collections/contains',
     'lodash/collections/every',
     'lodash/collections/map',
+    'common/modules/crosswords/helpers',
     'jasq'
 ], function (
     bonzo,
     contains,
     every,
-    map
+    map,
+    helpers
 ) {
     var fixture = [
         ["", "", "", "H", ""],
@@ -46,8 +48,8 @@ define([
             });
 
             it('should not create any nodes outside of the thumbnail borders', function (thumbs) {
-                var gridWidth = fixture.length * (thumbs.cellSize + thumbs.borderSize) + thumbs.borderSize,
-                    gridHeight = fixture[0].length * (thumbs.cellSize + thumbs.borderSize) + thumbs.borderSize,
+                var gridWidth = helpers.gridSize(fixture.length),
+                    gridHeight = helpers.gridSize(fixture[0].length),
                     cells = thumbs.makeTextCells(fixture);
 
                 expect(every(cells, function (cell) {
