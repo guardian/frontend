@@ -692,28 +692,23 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 
 /**
- * Icon navigation (mobile)
+ * Burger icon
  */
 $burger-line-h: 2px;
 $burger-width-small: 12px;
 $burger-width-wide: 16px;
 
-
-
 /**
- * Hidden class for navigation icon lines.
+ * Placeholder for burger line.
  */
-%icon--nav__line {
+%burger-icon__line {
     width: 100%;
     height: $burger-line-h;
     background-color: rgba(#ffffff, .9);
 }
 
-/**
- * Mobile nav icon
- */
-.icon--nav {
-    @extend %icon--nav__line;
+.burger-icon {
+    @extend %burger-icon__line;
 
     width: $burger-width-small;
     display: inline-block;
@@ -728,13 +723,13 @@ $burger-width-wide: 16px;
     }
 
     &:before {
-        @extend %icon--nav__line;
+        @extend %burger-icon__line;
 
         top: $burger-line-h * 2;
     }
 
     &:after {
-        @extend %icon--nav__line;
+        @extend %burger-icon__line;
 
         top: $burger-line-h * 4;
     }
