@@ -3,7 +3,7 @@ package lib
 import java.io.{ByteArrayOutputStream, ByteArrayInputStream}
 import common.{ExecutionContexts, Logging}
 import org.apache.commons.io.IOUtils
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.Promise
 import scala.sys.process._
 import scala.io.Source
 
@@ -13,6 +13,9 @@ object PngQuant extends Logging with ExecutionContexts {
     val process = Process("pngquant", options)
     val baos = new ByteArrayOutputStream
     val bais = new ByteArrayInputStream(image)
+
+    val promiseOfImage = Promise[Array[Byte]]()
+
     val io = new ProcessIO (
       { in =>
         IOUtils.copy(bais, in)
@@ -21,6 +24,8 @@ object PngQuant extends Logging with ExecutionContexts {
       { out =>
         IOUtils.copy(out, baos)
         out.close()
+        baos.flush()
+        promiseOfImage.success(baos.toByteArray)
       },
       { err =>
         Source.fromInputStream(err).getLines() foreach { line =>
@@ -30,19 +35,7 @@ object PngQuant extends Logging with ExecutionContexts {
       }
     )
 
-    val runningProcess = process.run(io)
-
-    Future {
-      blocking {
-        /** Block until the process is complete
-          *
-          * TODO: is there an asynchronous library for interacting with processes?
-          */
-        runningProcess.exitValue()
-
-        baos.flush()
-        baos.toByteArray
-      }
-    }
+    process.run(io)
+    promiseOfImage.future
   }
 }
