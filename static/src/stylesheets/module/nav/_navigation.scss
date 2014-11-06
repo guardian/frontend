@@ -694,25 +694,18 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /**
  * Icon navigation (mobile)
  */
-$icon-nav-line-h: 2px;
+$burger-line-h: 2px;
+$burger-width-small: 12px;
+$burger-width-wide: 16px;
+
+
 
 /**
  * Hidden class for navigation icon lines.
  */
 %icon--nav__line {
     width: 100%;
-    height: $icon-nav-line-h;
-    background-color: rgba(#ffffff, .9);
-}
-
-/**
- * Icon close
- */
-$icon-close-line-h: .6em;
-
-%icon--close__line {
-    width: 100%;
-    height: $icon-close-line-h;
+    height: $burger-line-h;
     background-color: rgba(#ffffff, .9);
 }
 
@@ -722,10 +715,10 @@ $icon-close-line-h: .6em;
 .icon--nav {
     @extend %icon--nav__line;
 
-    width: 12px;
+    width: $burger-width-small;
     display: inline-block;
     vertical-align: top;
-    margin: 13px 6px 0 0;
+    margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
     position: relative;
 
     &:before,
@@ -737,17 +730,17 @@ $icon-close-line-h: .6em;
     &:before {
         @extend %icon--nav__line;
 
-        top: 4px;
+        top: $burger-line-h * 2;
     }
 
     &:after {
         @extend %icon--nav__line;
 
-        top: 8px;
+        top: $burger-line-h * 4;
     }
 
     @include mq(tablet) {
-        width: 16px;
+        width: $burger-width-wide;
     }
 
     @if not $old-ie {
@@ -768,7 +761,7 @@ $icon-close-line-h: .6em;
             }
 
             &:after {
-                @include transform(rotate(-45deg) translate(3px, -3px));
+                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
 
                 top: 8px;
             }
