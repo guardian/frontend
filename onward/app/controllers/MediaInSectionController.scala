@@ -73,6 +73,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
     val dataId = s"$pluralMediaType in section"
     val displayName = Some(s"more $sectionName $pluralMediaType")
+    val componentId = Some("more-media-in-section")
 
     implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
 
@@ -81,7 +82,8 @@ object MediaInSectionController extends Controller with Logging with Paging with
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails take 7, displayName, None, None, None)
+        CollectionEssentials(trails take 7, displayName, None, None, None),
+        componentId
       ),
       FrontProperties.empty
     )(request)
