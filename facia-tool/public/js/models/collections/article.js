@@ -620,10 +620,16 @@ define([
             }
         };
 
-        Article.prototype.convertToSnap = function() {
+        Article.prototype.convertToSnap = function(hasMultiContent) {
             this.state.isSnap(true);
+
             this.meta.href(this.id());
+
             this.id(snap.generateId());
+
+            if (hasMultiContent) {
+                this.meta.snapType('capi.latest');
+            }
         };
 
         Article.prototype.open = function() {

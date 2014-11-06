@@ -82,7 +82,7 @@ function (
                         decorateFromOpenGraph(item);
                     }
 
-                    item.convertToSnap();
+                    item.convertToSnap(results && results.length > 1);
                 }
 
                 if (err) {
