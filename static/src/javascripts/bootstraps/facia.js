@@ -72,11 +72,9 @@ define([
             },
 
             upgradeMostPopularToGeo: function () {
-                /* UNCOMMENT ME
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
-                */
             },
 
             fetchUpdates: function () {
