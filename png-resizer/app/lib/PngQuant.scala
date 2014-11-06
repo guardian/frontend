@@ -3,9 +3,9 @@ package lib
 import java.io.{ByteArrayOutputStream, ByteArrayInputStream}
 import common.{ExecutionContexts, Logging}
 import org.apache.commons.io.IOUtils
-import scala.concurrent.Promise
 import scala.sys.process._
 import scala.io.Source
+import scala.concurrent.{Future, blocking}
 
 object PngQuant extends Logging with ExecutionContexts {
   def apply(image: Array[Byte], quality: Int) = {
@@ -13,8 +13,6 @@ object PngQuant extends Logging with ExecutionContexts {
     val process = Process("pngquant", options)
     val baos = new ByteArrayOutputStream
     val bais = new ByteArrayInputStream(image)
-
-    val promiseOfImage = Promise[Array[Byte]]()
 
     val io = new ProcessIO (
       { in =>
@@ -25,7 +23,6 @@ object PngQuant extends Logging with ExecutionContexts {
         IOUtils.copy(out, baos)
         out.close()
         baos.flush()
-        promiseOfImage.success(baos.toByteArray)
       },
       { err =>
         Source.fromInputStream(err).getLines() foreach { line =>
@@ -35,7 +32,16 @@ object PngQuant extends Logging with ExecutionContexts {
       }
     )
 
-    process.run(io)
-    promiseOfImage.future
+    Future {
+      blocking {
+        process.run(io).exitValue() match {
+          case 0 => baos.toByteArray
+
+          case n =>
+            log.error(s"pngquant exited with $n status code")
+            throw new RuntimeException(s"pngquant exited with $n status code")
+        }
+      }
+    }
   }
 }
