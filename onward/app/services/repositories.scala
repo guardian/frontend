@@ -33,7 +33,7 @@ trait Related extends ConciergeRepository {
 
   def getPopularInTag(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[Seq[Content]] = {
 
-    val tags = (tag +: excludeTags).mkString(",-")
+    val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = LiveContentApi.search(edition)
       .tag(tags)

@@ -395,7 +395,7 @@ define([
 
             var mediaType = config.page.contentType.toLowerCase(),
                 section   = new Component(),
-                parentEl  = $('.js-onward')[0],
+                attachTo  = $('.js-onward')[0],
                 endpoint  = '/' + mediaType + '/section/' + config.page.section;
 
             if ('seriesId' in config.page) {
@@ -411,8 +411,8 @@ define([
 
             section.endpoint = endpoint;
 
-            section.fetch(parentEl).then(function () {
-                images.upgrade(parentEl);
+            section.fetch(attachTo).then(function () {
+                images.upgrade(attachTo);
             });
         },
 
@@ -420,17 +420,18 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            var mediaType = config.page.contentType.toLowerCase(),
-                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+
+            var mediaType  = config.page.contentType.toLowerCase(),
                 mostViewed = new Component(),
-                endpoint = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+                attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+                endpoint   = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
 
             mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
             mostViewed.endpoint = endpoint;
-            mostViewed.fetch(attachTo, 'html')
-                .then(function () {
-                    images.upgrade(attachTo);
-                });
+
+            mostViewed.fetch(attachTo, 'html').then(function () {
+                images.upgrade(attachTo);
+            });
         }
     },
     ready = function () {

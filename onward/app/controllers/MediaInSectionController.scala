@@ -28,12 +28,10 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
   private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-
     log.info(s"Fetching $mediaType content in section: ${sectionId}")
 
-    // Subtract the series id and potential excluded tags from the content type.
-    val excludeTags = request.queryString.get("exclude-tag").getOrElse(Nil)
-    val tags = List(Some(s"type/$mediaType"), seriesId, excludeTags).flatten.mkString(",-")
+    val excludeTags: Seq[String] = (request.queryString.get("exclude-tag").getOrElse(Nil) ++ seriesId).map(t => s"-$t")
+    val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
 
