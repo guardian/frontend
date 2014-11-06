@@ -227,6 +227,11 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+    "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -247,11 +252,6 @@ object Switches extends Collections {
   val ScrollDepthSwitch = Switch("Monitoring", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
-  )
-
-  val BrowserStorageStatsSwitch = Switch("Monitoring", "storage-stats",
-    "Enables tracking of whether browser storage is available and working",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 7)
   )
 
   // Features
@@ -414,7 +414,6 @@ object Switches extends Collections {
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
-    BrowserStorageStatsSwitch,
     ContentApiPutSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
@@ -453,7 +452,8 @@ object Switches extends Collections {
     CircuitBreakerSwitch,
     ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
-    PngResizingSwitch
+    PngResizingSwitch,
+    GlobalDevelopmentQualtrics
   )
 
   val httpSwitches: List[Switch] = List(

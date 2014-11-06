@@ -96,13 +96,14 @@ trait DfpAgent {
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+
     if (PageSkin.isValidForNextGenPageSkin(adUnitWithoutRoot)) {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
         adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
+          sponsorship.editions.contains(edition) &&
           !sponsorship.isR2Only
       }
 
