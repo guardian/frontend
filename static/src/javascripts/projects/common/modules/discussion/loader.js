@@ -89,14 +89,13 @@ Loader.prototype.initMainComments = function() {
 
     var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
-    var userPageSize = config.switches.discussionPageSize ? userPrefs.get('discussion.pagesize') : 25;
-    var pagesize = detect.isBreakpoint({min: 'tablet'}) ?  userPageSize : 10;
+    var pagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
 
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
-        pagesize: isNaN(pagesize) ? 25 : parseInt(pagesize, 10),
+        pagesize: pagesize,
         threading: threading
     });
 
@@ -112,32 +111,58 @@ Loader.prototype.initMainComments = function() {
     }.bind(this));
 
     this.setState('loading');
-    this.comments.fetchComments({comment: commentId}).then(function() {
-        this.removeState('loading');
 
-        if (!commentId && window.location.hash !== '#comments') {
-            this.setState('truncated');
+    this.on('user:loaded', function() {
+        this.initState();
+        this.renderCommentBar();
+        if (this.user) {
+            this.comments.addUser(this.user);
+
+            if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
+                var userPageSize = userPrefs.get('discussion.pagesize'),
+                    pageSize = isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
+                this.comments.options.pagesize = pageSize;
+                this.initPageSizeDropdown(pageSize);
+            }
+
+            if (this.user.isStaff) {
+                this.removeState('not-staff');
+                this.setState('is-staff');
+            }
         }
 
-        this.on('user:loaded', function() {
-            this.initState();
-            this.renderCommentBar();
-            if (this.user) {
-                this.comments.addUser(this.user);
-                if (this.user.isStaff) {
-                    this.removeState('not-staff');
-                    this.setState('is-staff');
-                }
+        this.comments.fetchComments({comment: commentId}).then(function() {
+            this.removeState('loading');
+
+            if (!commentId && window.location.hash !== '#comments') {
+                this.setState('truncated');
             }
-        });
-        this.getUser();
-    }.bind(this));
+        }.bind(this));
+
+    });
+    this.getUser();
 };
 
+Loader.prototype.initPageSizeDropdown = function(pageSize) {
+
+    var $pagesizeLabel = $('.js-comment-pagesize-dropdown .popup__toggle span');
+    $pagesizeLabel.text(pageSize);
+    this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
+        var selectedPageSize = bonzo(e.currentTarget).data('pagesize');
+        this.comments.options.pagesize = selectedPageSize;
+        $pagesizeLabel.text(selectedPageSize);
+        userPrefs.set('discussion.pagesize', selectedPageSize);
+        this.setState('loading');
+        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
+    });
+
+};
 
 Loader.prototype.initToolbar = function() {
 
-    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span');
+    var $orderLabel = $('.js-pagesize');
     $orderLabel.text(this.comments.options.order);
     this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
         this.removeState('truncated');
@@ -148,20 +173,6 @@ Loader.prototype.initToolbar = function() {
         this.setState('loading');
         this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
-
-
-    var $pagesizeLabel = $('.js-comment-pagesize-dropdown .popup__toggle span');
-    $pagesizeLabel.text(this.comments.options.pagesize);
-    this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
-        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
-        this.comments.options.pagesize = bonzo(e.currentTarget).data('pagesize');
-        $pagesizeLabel.text(this.comments.options.pagesize);
-        userPrefs.set('discussion.pagesize', this.comments.options.pagesize);
-        this.setState('loading');
-        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
-    });
-
 
     var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
     $threadingLabel.text(this.comments.options.threading);
