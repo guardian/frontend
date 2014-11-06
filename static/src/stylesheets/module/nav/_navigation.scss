@@ -10,7 +10,7 @@ $c-navigation-base: $c-neutral5;
 $navigation-height: $gs-row-height;
 
 $navigation-toggler-width: 48px;
-$navigation-toggler-width-full: 130px;
+$navigation-toggler-width-full: 128px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 $c-navigation-background-side-bar: #005182;
@@ -630,6 +630,15 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /* Toggle button
    ========================================================================== */
 
+@mixin navigation__toggle--width($width: small) {
+    @if $width == small {
+        min-width: $navigation-toggler-width;
+    }
+    @if $width == wide {
+        min-width: $navigation-toggler-width-full;
+    }
+}
+
 .navigation__toggle {
     z-index: 2;
     position: absolute;
@@ -638,11 +647,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include box-sizing(border-box);
     @include fs-header(1);
     line-height: $navigation-height;
-    padding: 0 $gs-gutter/2;
+    padding: 0 $gs-gutter / 2;
+    @include navigation__toggle--width(small);
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
+    text-align: left;
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
 
@@ -661,10 +672,19 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     @include mq(tablet) {
+        @include navigation__toggle--width(wide);
         text-align: left;
     }
     @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
+    }
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation__toggle--width(small);
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation__toggle--width(small);
+        }
     }
 }
 .navigation__toggle-label {}
@@ -756,7 +776,11 @@ $burger-width-wide: 16px;
         }
 
         @include mq(tablet) {
-            transition: transform .1s ease-in;
+            &,
+            &:before,
+            &:after {
+                transition: opacity .1s, transform .1s ease-in;
+            }
         }
     }
 
