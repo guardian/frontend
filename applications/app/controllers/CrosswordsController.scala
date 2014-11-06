@@ -3,6 +3,7 @@ package controllers
 import com.gu.crosswords.api.client.models.{Crossword, Type => CrosswordType}
 import common.ExecutionContexts
 import conf.Static
+import model.Cached
 import play.api.mvc.{Result, Action, Controller}
 import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
 import scala.concurrent.Future
@@ -20,20 +21,20 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
   def crossword(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
-      Ok(views.html.crossword(
+      Cached(60)(Ok(views.html.crossword(
         new CrosswordPage(CrosswordData.fromCrossword(crossword)),
-        CrosswordSvg.apply(crossword, None, None)
-      ))
+        CrosswordSvg(crossword, None, None, false)
+      )))
     }
   }
 
   def thumbnail(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
-      val xml = CrosswordSvg.apply(crossword, Some("100%"), Some("100%"))
+      val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
       val globalStylesheet = Static("stylesheets/global.css")
 
-      Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml")
+      Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
     }
   }
 }

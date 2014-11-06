@@ -1,43 +1,15 @@
 package dfp
 
-import common.{Edition, Logging, editions}
+import common.{Edition, Logging}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-
-
-case class Country(name: String, editionId: String)
-
-object Country {
-
-  implicit val countryWrites = new Writes[Country] {
-    def writes(country: Country): JsValue = {
-      Json.obj(
-        "name" -> country.name,
-        "editionId" -> country.editionId
-      )
-    }
-  }
-
-  implicit val countryReads: Reads[Country] = (
-    (JsPath \ "name").read[String] and
-      (JsPath \ "editionId").read[String]
-    )(Country.apply _)
-
-  def fromName(name: String) = {
-    val edition = name match {
-      case "United States" => editions.Us
-      case "Australia" => editions.Au
-      case _ => Edition.defaultEdition
-    }
-    Country(name, edition.id)
-  }
-}
 
 
 case class PageSkinSponsorship(lineItemName: String,
                                lineItemId: Long,
                                adUnits: Seq[String],
-                               countries: Seq[Country],
+                               editions: Seq[Edition],
+                               countries: Seq[String],
                                isR2Only: Boolean,
                                targetsAdTest: Boolean)
 
@@ -49,6 +21,7 @@ object PageSkinSponsorship {
         "lineItem" -> sponsorship.lineItemName,
         "lineItemId" -> sponsorship.lineItemId,
         "adUnits" -> sponsorship.adUnits,
+        "editions" -> sponsorship.editions,
         "countries" -> sponsorship.countries,
         "isR2Only" -> sponsorship.isR2Only,
         "isAdTest" -> sponsorship.targetsAdTest
@@ -60,7 +33,8 @@ object PageSkinSponsorship {
     (JsPath \ "lineItem").read[String] and
       (JsPath \ "lineItemId").read[Long] and
       (JsPath \ "adUnits").read[Seq[String]] and
-      (JsPath \ "countries").read[Seq[Country]] and
+      (JsPath \ "editions").read[Seq[Edition]] and
+      (JsPath \ "countries").read[Seq[String]] and
       (JsPath \ "isR2Only").read[Boolean] and
       (JsPath \ "isAdTest").read[Boolean]
     )(PageSkinSponsorship.apply _)

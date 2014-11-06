@@ -2,7 +2,7 @@ package model
 
 import com.gu.facia.client.models.CollectionConfig
 import common.{Edition, ExecutionContexts, Logging}
-import layout.ContainerAndCollection
+import layout.FaciaContainer
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 
@@ -89,7 +89,7 @@ object FrontProperties{
 }
 
 object FaciaComponentName {
-  /** TODO remove this once everything is using ContainerAndCollection */
+  /** TODO remove this once everything is using FaciaContainer */
   def apply(config: CollectionConfig, collection: Collection): String = {
     config.displayName.orElse(collection.displayName).map { title =>
       title.toLowerCase.replace(" ", "-")

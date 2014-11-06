@@ -1,8 +1,8 @@
 package common
 
-import play.api.mvc.RequestHeader
 import org.joda.time.DateTimeZone
-import model.MetaData
+import play.api.libs.json._
+import play.api.mvc.RequestHeader
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
@@ -64,6 +64,14 @@ object Edition {
   def others(id: String): Seq[Edition] = byId(id).map(others(_)).getOrElse(Nil)
 
   def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
+
+  implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
+    def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
+  }
+
+  implicit val editionReads: Reads[Edition] = {
+    (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
+  }
 }
 
 object Editionalise {
