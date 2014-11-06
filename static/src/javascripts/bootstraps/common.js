@@ -1,3 +1,4 @@
+/* global guardian:true */
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
@@ -7,14 +8,13 @@ define([
     'fastclick',
     'qwery',
 
-    'bootstraps/identity',
-
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/url',
 
     'common/modules/analytics/clickstream',
@@ -49,7 +49,12 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+
+    'bootstraps/identity',
+
+    'text!common/views/release-message.html',
+    'text!common/views/release-message-compulsory.html'
 ], function (
     bean,
     bonzo,
@@ -57,15 +62,14 @@ define([
     FastClick,
     qwery,
 
-    identity,
-
     $,
     ajax,
     config,
     cookies,
     detect,
     mediator,
-    Url,
+    template,
+    url,
 
     Clickstream,
     Foresee,
@@ -99,10 +103,32 @@ define([
     smartAppBanner,
     Tabs,
     Toggles,
-    userPrefs
-    ) {
+    userPrefs,
+
+    identity,
+
+    releaseMessageTpl,
+    releaseMessageCompulsoryTpl
+) {
 
     var modules = {
+
+            loadFonts: function (ua) {
+                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
+                    var fileFormat     = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+
+                    new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                }
+            },
+
+            initId: function () {
+                identity.init(config);
+            },
+
+            initUserAdTargeting: function () {
+                userAdTargeting.requestUserSegmentsFromId();
+            },
 
             initFastClick: function () {
                 new FastClick(document.body);
@@ -221,7 +247,7 @@ define([
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, compulsoryMsg, feedbackLink, shift,
+                var exitLink, feedbackLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
@@ -238,44 +264,24 @@ define([
                     feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
                         (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
-                    msg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-back"></i>' +
-                        '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                        'data-link-name="opt-out">Use current version</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                    compulsoryMsg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '</ul>';
-
                     // The shift cookie may be 'in|...', 'ignore', or 'out'.
                     shift = cookies.get('GU_SHIFT') || '';
 
                     if (config.page.edition === 'US' || /in\|/.test(shift)) {
-                        releaseMessage.show(compulsoryMsg);
+                        releaseMessage.show(template(
+                            releaseMessageCompulsoryTpl,
+                            {
+                                feedbackLink: feedbackLink
+                            }
+                        ));
                     } else {
-                        releaseMessage.show(msg);
+                        releaseMessage.show(template(
+                            releaseMessageTpl,
+                            {
+                                exitLink:     exitLink,
+                                feedbackLink: feedbackLink
+                            }
+                        ));
                     }
                 }
             },
@@ -385,7 +391,7 @@ define([
             },
 
             testCookie: function () {
-                var queryParams = Url.getUrlVars();
+                var queryParams = url.getUrlVars();
                 if (queryParams.test) {
                     cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
                 }
@@ -426,6 +432,9 @@ define([
 
         },
         ready = function () {
+            modules.loadFonts(navigator.userAgent);
+            modules.initId();
+            modules.initUserAdTargeting();
             modules.initDiscussion();
             modules.initFastClick();
             modules.testCookie();
