@@ -56,6 +56,8 @@ Show more button:
 ```
 */
 
+$base-size: $gs-baseline / 2;
+
 /**
  * 1. As on mobile devices we use Helvetica font which have a different baseline
  *    we have to change line-height depending on resolution.
@@ -70,10 +72,6 @@ Show more button:
     line-height: $button-size - 2px; /* [1] */
     border-width: 1px;
     border-style: solid;
-
-    @include mq($from: desktop) {
-        line-height: $button-size + 2px;
-    }
 
     .i {
         width: $button-size;
@@ -92,11 +90,11 @@ Show more button:
     }
 }
 @mixin button-colour(
-    $fill-colour,
-    $text-colour,
-    $hover-colour,
-    $hover-border: $hover-colour,
-    $border-color: $fill-colour
+$fill-colour,
+$text-colour,
+$hover-colour,
+$hover-border: $hover-colour,
+$border-color: $fill-colour
 ) {
     color: $text-colour;
     background-color: $fill-colour;
@@ -116,7 +114,7 @@ Show more button:
     @include fs-textSans(2);
     font-weight: bold;
     text-decoration: none;
-    @include button-height($gs-baseline * 2.5);
+    @include button-height($base-size * 5);
     // If we want to draw a circle, output a pixel value instead,
     // as older versions of WebKit do not support % in border-radius
     -webkit-border-radius: 1000px;
@@ -125,7 +123,7 @@ Show more button:
         guss-colour(news-main-2, $pasteup-palette),
         #ffffff,
         guss-colour(news-main-1, $pasteup-palette)
-     );
+    );
 
     &:hover,
     &:focus,
@@ -242,26 +240,34 @@ Show more button:
     @include button-height(44px);
 }
 .button--large {
-    @include button-height($gs-baseline * 3);
+    @include button-height($base-size * 6);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 6) + 2;
+    }
 }
 .button--medium {
-    @include button-height($gs-baseline * 2.5);
+    @include button-height($base-size * 5);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 5) + 2px;
+    }
 }
 .button--small {
-    @include button-height($gs-baseline * 2);
+    @include button-height($base-size * 4);
     @include fs-textSans(1);
-    line-height: $gs-baseline * 2 - 1px;
+    line-height: $gs-baseline * 2 - 2px;
     font-weight: bold;
 }
 .button--xsmall {
-    @include button-height($gs-baseline * 1.5);
+    @include button-height($base-size * 3);
     @include fs-textSans(1);
-    line-height: $gs-baseline * 1.5 - 1px;
+    line-height: ($base-size * 3) - 2px;
     font-weight: bold;
 }
 
-$show-more-icon-size: 24px;
-$show-more-icon-spacing: 7px;
+$show-more-icon-size: $base-size * 4;
+$show-more-icon-spacing: $base-size + 1;
 
 .button--show-more {
     position: relative;

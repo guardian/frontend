@@ -19,7 +19,6 @@ Full item. A 100% width version of the Three quarter item.
 */
 
 @mixin fc-item--full {
-
     @include fc-item--horizontal(74%); // Works out as same width as 9 col on desktop and 6.333 col on tablet to align with other items
 
     .fc-item__header {

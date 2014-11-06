@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import dfp.DfpAgent
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -247,7 +248,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
-    if(this.isCommentIsFree) section else tags.find(_.isKeyword) match {
+    if (isCommentIsFree || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
+      section
+    } else tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
     }
@@ -450,7 +453,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     var wordCount = 0
     val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
       wordCount += el.text.length
-      wordCount < 1500
+      wordCount < 2000
     }
     val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
     supportingEls.isDefined
@@ -594,7 +597,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
-  override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "gplus", "whatsapp")
+  override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
+  override protected lazy val blockShareOrder = List("facebook", "twitter", "pinterestBlock")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
@@ -605,6 +609,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   )
 
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
 
   override def schemaType = Some("http://schema.org/ImageGallery")
 

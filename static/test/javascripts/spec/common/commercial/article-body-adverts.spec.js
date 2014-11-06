@@ -73,7 +73,7 @@ define([
                     minBelow: 300,
                     selectors: {
                         ' > h2': {minAbove: 0, minBelow: 250},
-                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
                         ' .ad-slot': {minAbove: 500, minBelow: 500}
                     }
                 })

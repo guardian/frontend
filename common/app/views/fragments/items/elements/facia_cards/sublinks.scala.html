@@ -1,17 +1,14 @@
-@(supporting: Seq[model.Trail], modifierClasses: layout.ItemClasses)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(sublinks: Seq[layout.Sublink])(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards.sublink
 @import views.support.GetClasses
-@import layout.Sublinks
 
-@defining(Sublinks.takeSublinks(supporting, modifierClasses)) { sublinks =>
-    @if(sublinks.nonEmpty) {
-        <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
-        @sublinks.zipWithIndex.map { case (link, index) =>
-            <li class="@GetClasses.forSubLink(link)" data-link-name="sublinks | @{index + 1}">
-                @sublink(link, 0, 0, true)
-            </li>
-        }
-        </ul>
+@if(sublinks.nonEmpty) {
+    <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
+    @sublinks.zipWithIndex.map { case (link, index) =>
+        <li class="@GetClasses.forSubLink(link)" data-link-name="sublinks | @{index + 1}">
+            @sublink(link)
+        </li>
     }
+    </ul>
 }

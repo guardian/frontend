@@ -10,7 +10,7 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import layout.{CollectionEssentials, ContainerAndCollection, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
 import slices.{Fixed, FixedContainers}
 
 case class Series(id: String, tag: Tag, trails: Seq[Content])
@@ -56,7 +56,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     )
 
     val response = () => views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumSlowVII),
         CollectionConfigWithId(dataId, config),

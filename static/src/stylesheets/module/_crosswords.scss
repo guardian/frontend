@@ -55,13 +55,14 @@
 }
 
 .crossword__clues {
-    margin-top: 1rem;
+    margin-top: $gs-baseline;
 }
 
 .crossword__grid-wrapper {
     overflow-x: scroll;
     overflow-y: hidden;
     position: relative;
+    margin-bottom: $gs-baseline;
 }
 
 .crossword__hidden-input-wrapper {

@@ -81,16 +81,16 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('300,1|300,50|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('300,1|300,50|320,50|300,250');
-                    expect($adSlot.data('tablet')).toEqual('300,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50|300,250');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50|300,250');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('300,1|300,50');
-                    expect($adSlot.data('mobile-landscape')).toEqual('300,1|300,50|320,50');
-                    expect($adSlot.data('tablet')).toEqual('300,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
                 });
             });
 
@@ -134,9 +134,9 @@ define([
                 function (sliceAdverts) {
                     sliceAdverts.init();
 
-                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('hide-on-mobile'))
+                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                         .toBe(true);
-                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('mobile-only'))
+                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
                         .toBe(true);
                 }
             );

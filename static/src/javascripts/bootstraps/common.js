@@ -1,3 +1,4 @@
+/* global guardian:true */
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
@@ -7,14 +8,13 @@ define([
     'fastclick',
     'qwery',
 
-    'bootstraps/identity',
-
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/url',
 
     'common/modules/analytics/clickstream',
@@ -49,7 +49,12 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+
+    'bootstraps/identity',
+
+    'text!common/views/release-message.html',
+    'text!common/views/release-message-compulsory.html'
 ], function (
     bean,
     bonzo,
@@ -57,15 +62,14 @@ define([
     FastClick,
     qwery,
 
-    identity,
-
     $,
     ajax,
     config,
-    Cookies,
+    cookies,
     detect,
     mediator,
-    Url,
+    template,
+    url,
 
     Clickstream,
     Foresee,
@@ -99,10 +103,32 @@ define([
     smartAppBanner,
     Tabs,
     Toggles,
-    userPrefs
-    ) {
+    userPrefs,
+
+    identity,
+
+    releaseMessageTpl,
+    releaseMessageCompulsoryTpl
+) {
 
     var modules = {
+
+            loadFonts: function (ua) {
+                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
+                    var fileFormat     = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+
+                    new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
+                }
+            },
+
+            initId: function () {
+                identity.init(config);
+            },
+
+            initUserAdTargeting: function () {
+                userAdTargeting.requestUserSegmentsFromId();
+            },
 
             initFastClick: function () {
                 new FastClick(document.body);
@@ -206,22 +232,22 @@ define([
             },
 
             cleanupCookies: function () {
-                Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
-                Cookies.cleanUpDuplicates(['GU_VIEW']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+                cookies.cleanUpDuplicates(['GU_VIEW']);
             },
 
             // opt-in to the responsive alpha
             optIn: function () {
                 var countMeIn = /#countmein/.test(window.location.hash);
                 if (countMeIn) {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    cookies.add('GU_VIEW', 'responsive', 365);
                 }
             },
 
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, msg, usMsg, feedbackLink,
+                var exitLink, feedbackLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true});
 
@@ -231,48 +257,31 @@ define([
                     (detect.getBreakpoint() !== 'mobile')
                 ) {
                     // force the visitor in to the alpha release for subsequent visits
-                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    cookies.add('GU_VIEW', 'responsive', 365);
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
 
                     feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
                         (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
-                    msg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-back"></i>' +
-                        '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                        'data-link-name="opt-out">Use current version</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '</ul>';
+                    // The shift cookie may be 'in|...', 'ignore', or 'out'.
+                    shift = cookies.get('GU_SHIFT') || '';
 
-                    usMsg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="' + feedbackLink + '" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                    if (config.page.edition === 'US') {
-                        releaseMessage.show(usMsg);
+                    if (config.page.edition === 'US' || /in\|/.test(shift)) {
+                        releaseMessage.show(template(
+                            releaseMessageCompulsoryTpl,
+                            {
+                                feedbackLink: feedbackLink
+                            }
+                        ));
                     } else {
-                        releaseMessage.show(msg);
+                        releaseMessage.show(template(
+                            releaseMessageTpl,
+                            {
+                                exitLink:     exitLink,
+                                feedbackLink: feedbackLink
+                            }
+                        ));
                     }
                 }
             },
@@ -369,20 +378,22 @@ define([
 
             initDiscussion: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.page.commentable && config.switches.discussion) {
-                        var el = qwery('.discussion')[0];
-                        if (el) {
-                            new DiscussionLoader().attachTo(el);
+                    if (config.switches.discussion) {
+                        CommentCount.init();
+                        if (config.page.commentable) {
+                            var el = qwery('.discussion')[0];
+                            if (el) {
+                                new DiscussionLoader().attachTo(el);
+                            }
                         }
                     }
-                    CommentCount.init();
                 });
             },
 
             testCookie: function () {
-                var queryParams = Url.getUrlVars();
+                var queryParams = url.getUrlVars();
                 if (queryParams.test) {
-                    Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+                    cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
                 }
             },
 
@@ -417,10 +428,13 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
-
             }
+
         },
         ready = function () {
+            modules.loadFonts(navigator.userAgent);
+            modules.initId();
+            modules.initUserAdTargeting();
             modules.initDiscussion();
             modules.initFastClick();
             modules.testCookie();

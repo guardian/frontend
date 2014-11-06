@@ -15,7 +15,13 @@ object JobsApi extends ExecutionContexts with Logging {
 
   // url changes daily so cannot be val
   def url = {
-    val feedDate = new LocalDateTime(DateTimeZone.UTC).toString("yyyy-MM-dd")
+
+    /*
+     * Using offset time because this appears to be how the URL is constructed.
+     * With UTC time we lose the feed for 2 hours at midnight every day.
+     */
+    val feedDate = new DateTime(DateTimeZone.forOffsetHours(-2)).toString("yyyy-MM-dd")
+
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }

@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import layout.{CollectionEssentials, ContainerAndCollection}
+import layout.{CollectionEssentials, FaciaContainer}
 import model.{FrontProperties, Audio, Cached}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedAudioAgent
@@ -40,7 +40,7 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
     val config = CollectionConfig.withDefaults(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),
