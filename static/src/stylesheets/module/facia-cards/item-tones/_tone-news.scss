@@ -18,10 +18,14 @@
     .fc-sublink__byline {
         color: $c-newsDefault;
     }
-    
+
     @include sublink-style(editorial, feature, live, media, podcast) {
         .fc-sublink__kicker {
             color: #ffffff;
         }
     }
+}
+
+.tone-news--most-popular .fc-item__kicker {
+    color: $c-newsDefault
 }
