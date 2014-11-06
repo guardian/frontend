@@ -718,7 +718,7 @@ $burger-width-wide: 16px;
 
     &:before,
     &:after {
-        content:" ";
+        content: " ";
         position: absolute;
     }
 
@@ -741,13 +741,6 @@ $burger-width-wide: 16px;
     @if not $old-ie {
         .navigation--expanded & {
             height: 0;
-
-            &:before,
-            &:after {
-                content:" ";
-                position: absolute;
-                left: 0;
-            }
 
             &:before {
                 @include transform(rotate(45deg));
