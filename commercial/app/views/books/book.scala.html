@@ -1,7 +1,7 @@
 @(book: model.commercial.books.Book)(implicit request: RequestHeader)
 
 @defining(("2_0", "2014-10-14")) { case (version, date) =>
-    <li class="lineitem lineitem--multi commercial--books--v2 commercial--tone-books" itemscope itemtype="http://schema.org/Book">
+    <li class="lineitem lineitem--multi commercial--books commercial--tone-books" itemscope itemtype="http://schema.org/Book">
         <div class="commercial--multi__header">
             <h4 class="commercial__title">
                 <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
