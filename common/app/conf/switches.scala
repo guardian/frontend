@@ -385,6 +385,11 @@ object Switches extends Collections {
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
 
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -453,7 +458,8 @@ object Switches extends Collections {
     ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
-    GlobalDevelopmentQualtrics
+    GlobalDevelopmentQualtrics,
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

@@ -1,7 +1,7 @@
 @(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
 
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer}
+@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -62,6 +62,15 @@
                                 }
                             }
                         }
+
+                    case Some(svg @ CrosswordSvg(_)) => {
+                        <div class="fc-item__media-wrapper">
+                            <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                                     role="presentation" data-crossword-id="@svg.persistenceId" />
+                            </div>
+                        </div>
+                    }
 
                     case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
                         @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
