@@ -9,7 +9,7 @@ import scala.io.Source
 
 object PngQuant extends Logging with ExecutionContexts {
   def apply(image: Array[Byte], quality: Int) = {
-    val options = Seq("-q", "80", "-")
+    val options = Seq("-q", "100", "-")
     val process = Process("pngquant", options)
     val baos = new ByteArrayOutputStream
     val bais = new ByteArrayInputStream(image)
