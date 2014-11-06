@@ -406,7 +406,7 @@ define([
 
             // exclude professional network content from video pages
             if (mediaType === 'video') {
-                endpoint += '&excludeTag=guardian-professional/guardian-professional';
+                endpoint += '&exclude-tag=guardian-professional/guardian-professional';
             }
 
             section.endpoint = endpoint;

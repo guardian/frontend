@@ -31,8 +31,9 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
     log.info(s"Fetching $mediaType content in section: ${sectionId}")
 
-    // Subtract the series id and potential excludeTag from the content type.
-    val tags = List(Some(s"type/$mediaType"), seriesId, request.getQueryString("excludeTag")).flatten.mkString(",-")
+    // Subtract the series id and potential excluded tags from the content type.
+    val excludeTags = request.queryString.get("exclude-tag").getOrElse(Nil)
+    val tags = List(Some(s"type/$mediaType"), seriesId, excludeTags).flatten.mkString(",-")
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
 

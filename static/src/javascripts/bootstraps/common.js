@@ -160,7 +160,12 @@ define([
             },
 
             transcludeRelated: function () {
-                new Related().renderRelatedComponent();
+                var opts = {};
+
+                if (config.page.contentType.toLowerCase() === 'video') {
+                    opts.excludeTag = 'guardian-professional/guardian-professional';
+                }
+                new Related(opts).renderRelatedComponent();
             },
 
             transcludePopular: function () {
