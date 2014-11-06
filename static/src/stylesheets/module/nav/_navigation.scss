@@ -754,6 +754,10 @@ $burger-width-wide: 16px;
                 top: 8px;
             }
         }
+
+        @include mq(tablet) {
+            transition: transform .1s ease-in;
+        }
     }
 
     @if $old-ie {
