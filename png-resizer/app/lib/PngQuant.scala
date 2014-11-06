@@ -22,7 +22,6 @@ object PngQuant extends Logging with ExecutionContexts {
       { out =>
         IOUtils.copy(out, baos)
         out.close()
-        baos.flush()
       },
       { err =>
         Source.fromInputStream(err).getLines() foreach { line =>
@@ -35,7 +34,9 @@ object PngQuant extends Logging with ExecutionContexts {
     Future {
       blocking {
         process.run(io).exitValue() match {
-          case 0 => baos.toByteArray
+          case 0 =>
+            baos.flush()
+            baos.toByteArray
 
           case n =>
             log.error(s"pngquant exited with $n status code")
