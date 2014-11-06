@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import dfp.DfpAgent
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -247,7 +248,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
-    if(this.isCommentIsFree) section else tags.find(_.isKeyword) match {
+    if (isCommentIsFree || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
+      section
+    } else tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
     }

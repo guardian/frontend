@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import layout.{CollectionEssentials, ContainerAndCollection}
+import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
@@ -37,7 +37,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
 
   private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
     val html = views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),

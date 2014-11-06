@@ -1,6 +1,7 @@
-@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 @import common.LinkTo
+@import model.InlineImage
 @import views.html.fragments.items.elements.facia_cards.image
 @import views.html.fragments.containers.facia_cards.containerHeader
 
@@ -12,7 +13,9 @@
         @containerDefinition.items.zipWithIndex.map { case (item, index) =>
             <li class="facia-slice__item--nav-list">
                 <a href="@LinkTo(item)" data-link-name=" | article | @index" class="fc-item fc-item--list-compact--media">
-                    @image(item)
+                    @InlineImage.fromTrail(item).map { imageContainer =>
+                        @image(imageContainer.imageContainer)
+                    }
                     <div class="fc-item__container">@item.headline</div>
                 </a>
             </li>

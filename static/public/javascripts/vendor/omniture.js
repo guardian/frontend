@@ -84,7 +84,10 @@ function s_doPlugins(s) {
     s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-//    s.prop16=s.eVar16=s.getNewRepeat(365);
+    s.prop16=s.getNewRepeat(365);
+    
+    // Previous Site section
+	s.prop71 = s.getPreviousValue(s.channel,"s_prev_ch");
 
     /* Copy pageName into eVar7 */
 //    if (s.pageName && !s.eVar7) {
@@ -273,6 +276,18 @@ s.getNewRepeat=new Function("d","cn",""
     +"=0){s.c_w(cn,ct+'-New',e);return'New';}sval=s.split(cval,'-');if(ct"
     +"-sval[0]<30*60*1000&&sval[1]=='New'){s.c_w(cn,ct+'-New',e);return'N"
     +"ew';}else{s.c_w(cn,ct+'-Repeat',e);return'Repeat';}");
+    
+/*
+ * Plugin: getPreviousValue_v1.0 - return previous value of designated
+ *   variable (requires split utility)
+ */
+s.getPreviousValue=new Function("v","c","el",""
++"var s=this,t=new Date,i,j,r='';t.setTime(t.getTime()+1800000);if(el"
++"){if(s.events){i=s.split(el,',');j=s.split(s.events,',');for(x in i"
++"){for(y in j){if(i[x]==j[y]){if(s.c_r(c)) r=s.c_r(c);v?s.c_w(c,v,t)"
++":s.c_w(c,'no value',t);return r}}}}}else{if(s.c_r(c)) r=s.c_r(c);v?"
++"s.c_w(c,v,t):s.c_w(c,'no value',t);return r}");
+
 
 /**
  * getLoadTimeDim v.0.1

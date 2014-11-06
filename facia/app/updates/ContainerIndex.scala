@@ -8,10 +8,11 @@ import play.api.libs.json.Json
 object ContainerIndexItem {
   implicit val jsonWrites = Json.writes[ContainerIndexItem]
 
-  def fromCard(card: Card) = card.item match {
-    case content: Content => ContainerIndexItem(
-      content.id,
-      !card.hideUpTo.exists(_ == Mobile))
+  def fromCard(card: FaciaCardAndIndex) = card.item.id map { id =>
+    ContainerIndexItem(
+      id,
+      !card.hideUpTo.exists(_ == Mobile)
+    )
   }
 }
 
@@ -30,7 +31,7 @@ object ContainerIndex {
       card <- column.cards
     } yield ContainerIndexItem.fromCard(card)
 
-    ContainerIndex(items, (items, latestUpdate).hashCode())
+    ContainerIndex(items.flatten, (items, latestUpdate).hashCode())
   }
 }
 
@@ -44,11 +45,11 @@ object FrontIndex {
 
   def fromFaciaPage(faciaPage: FaciaPage): FrontIndex = {
     FrontIndex((faciaPage.front.containers flatMap {
-      case cac @ ContainerAndCollection(_, _, config, _) =>
+      case faciaContainer: FaciaContainer =>
         (for {
-          layout <- cac.containerLayout
-          latestUpdate <- cac.latestUpdate
-        } yield ContainerIndex.fromContainerLayout(layout, latestUpdate)).map(config.id -> _)
+          layout <- faciaContainer.containerLayout
+          latestUpdate <- faciaContainer.latestUpdate
+        } yield ContainerIndex.fromContainerLayout(layout, latestUpdate)).map(faciaContainer.dataId -> _)
     }).toMap)
   }
 }

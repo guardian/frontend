@@ -31,10 +31,12 @@ define([
     ContainerShowMore,
     snaps
 ) {
+
     var modules = {
 
             showSnaps: function () {
                 snaps.init();
+                mediator.on('modules:container:rendered', snaps.init);
             },
 
             showContainerShowMore: function () {

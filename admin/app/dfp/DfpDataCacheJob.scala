@@ -1,8 +1,8 @@
 package dfp
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
 import org.joda.time.DateTime
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -10,7 +10,7 @@ import conf.Switches.DfpCachingSwitch
 
 import scala.concurrent.future
 
-object DfpDataCacheJob extends ExecutionContexts {
+object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
@@ -43,7 +43,11 @@ object DfpDataCacheJob extends ExecutionContexts {
   def run() {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
+
+        val start = System.currentTimeMillis
         val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+        val duration = System.currentTimeMillis - start
+        log.info(s"Reading DFP data took $duration ms")
 
         if (data.isValid) {
           val now = printLondonTime(DateTime.now())
@@ -73,24 +77,39 @@ object DfpDataCacheJob extends ExecutionContexts {
 
 trait DfpDataCacheLifecycle extends GlobalSettings {
 
-  private val jobName = "DfpDataCacheJob"
-  private val every5Mins = "0 2/5 * * * ?"
+  val dayTimeJobName = "DayTime-DfpDataCacheJob"
+  val nightTimeJobName = "NightTime-DfpDataCacheJob"
+
+  val every10MinsFrom7amTo7pm = "0 2/10 7-18 * * ?"
+  val every30MinsFrom7pmTo7am = "0 2/30 19-6 * * ?"
+  val dayTimeSchedule = every10MinsFrom7amTo7pm
+  val nightTimeSchedule = every30MinsFrom7pmTo7am
 
   override def onStart(app: Application) {
     super.onStart(app)
 
-    Jobs.deschedule(jobName)
-    Jobs.schedule(jobName, every5Mins) {
-      DfpDataCacheJob.run()
+    def scheduleJob(jobName: String, schedule: String) {
+      Jobs.deschedule(jobName)
+      Jobs.schedule(jobName, schedule) {
+        DfpDataCacheJob.run()
+      }
     }
 
-    AkkaAsync {
-      DfpDataCacheJob.run()
+    if (!Play.isTest(app)) {
+      scheduleJob(dayTimeJobName, dayTimeSchedule)
+      scheduleJob(nightTimeJobName, nightTimeSchedule)
+
+      AkkaAsync {
+        DfpDataCacheJob.run()
+      }
     }
   }
 
   override def onStop(app: Application) {
-    Jobs.deschedule(jobName)
+    if (!Play.isTest(app)) {
+      Jobs.deschedule(dayTimeJobName)
+      Jobs.deschedule(nightTimeJobName)
+    }
     super.onStop(app)
   }
 }
