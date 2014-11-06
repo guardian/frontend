@@ -747,7 +747,7 @@ jQuery(function($) {
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Jobs</h2>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs.json", function( json ) {
@@ -756,29 +756,11 @@ jQuery(function($) {
             </script>
         </div>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/jobs-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-jobs-low-v2').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
+        <h3 class="facia-container__inner test-page-subhead">High relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs-high.json", function( json ) {
                 $('.dfp-ad--merchandising-jobs-high').html(json.html);
-             });
-            </script>
-        </div>
-
-        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/jobs-high-v2.json", function( json ) {
-                $('.dfp-ad--merchandising-jobs-high-v2').html(json.html);
              });
             </script>
         </div>

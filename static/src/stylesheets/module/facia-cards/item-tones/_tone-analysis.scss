@@ -4,6 +4,10 @@
         color: $c-analysisDefault;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-analysisBackground, 5%);
+    }
+
     .fc-item__container:before {
         background-color: $c-analysisAccent;
     }
