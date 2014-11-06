@@ -1,14 +1,28 @@
-define(['common/utils/cookies'], function (Cookie) {
+define([
+    'common/utils/cookies',
+    'common/utils/detect'
+], function (
+    Cookie,
+    detect
+) {
+
+    function openForesee() {
+        require(['js!foresee'], function () {});
+    }
 
     function load() {
 
-        var sample = Math.random() <= 0.05, // 5% sample rate
+        var sampleRate = detect.getBreakpoint() === 'mobile' ? 0.08 : 0.006; // 8% mobile & 0.6% >mobile
+
+        var sample = Math.random() <= sampleRate,
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
         // the Foresee code is large, we only want to load it in when necessary.
         if (!Cookie.get('GU_TEST') && (sample || hasForcedOptIn)) {
-            require(['js!foresee'], function () {});
+            openForesee();
         }
+
+        window.openForesee = openForesee;
     }
 
     return {
