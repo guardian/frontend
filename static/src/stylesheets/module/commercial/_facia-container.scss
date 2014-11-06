@@ -1,7 +1,7 @@
 /* ==========================================================================
    Commercial container layout adaptions
    ========================================================================== */
-.commercial-v2,
+.commercial--v2,
 .commercial, {
     background-color: $c-neutral6;
 
@@ -278,7 +278,7 @@
    Commercial container layout adaptions for front pages with page skins
    Update once breakpoints synced
    ========================================================================== */
-.commercial-commercial,
+.commercial--v2,
 .commercial {
     
     .has-page-skin & {
