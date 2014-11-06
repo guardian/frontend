@@ -27,7 +27,7 @@ define([
     var opts;
 
     function Related(options) {
-        opts = options;
+        opts = options || {};
     }
 
     Related.overrideUrl = '';
