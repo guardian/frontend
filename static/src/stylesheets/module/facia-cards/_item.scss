@@ -1,4 +1,5 @@
 $fc-item-gutter: $gs-gutter / 4;
+$fc-hover-transition: .25s ease;
 
 /* Items
    ==========================================================================
@@ -81,6 +82,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__container {
     position: relative;
+    @include transition(background-color $fc-hover-transition);
 
     &:before {
         content: '';
@@ -112,8 +114,29 @@ $fc-item-gutter: $gs-gutter / 4;
     .u-faux-block-link & a,
     .u-faux-block-link & abbr[title],
     .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
+        }
+
         @include mq($until: desktop) {
             z-index: initial;
+        }
+    }
+
+    .u-faux-block-link--hover {
+        background-color: $c-neutral6;
+
+        .fc-item__image-container {
+            background-color: #000000;
+
+            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+            .responsive-img {
+                opacity: .8;
+            }
+        }
+
+        .u-faux-block-link__cta {
+            text-decoration: none;
         }
     }
 
@@ -170,6 +193,16 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__footer--horizontal {
     padding-left: $fc-item-gutter;
     padding-right: $fc-item-gutter;
+}
+
+.fc-item__image-container {
+    @include transition(background-color $fc-hover-transition);
+    background-color: rgba(0, 0, 0, .1);
+
+    // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+    .responsive-img {
+        @include transition(opacity $fc-hover-transition);
+    }
 }
 
 .fc-item__image-container,
