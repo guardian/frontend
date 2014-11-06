@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices.{ContainerDefinition, Fixed}
+import views.support.Format
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -22,7 +23,7 @@ object IndexPagePagination {
 }
 
 object IndexPage {
-  def makeFront(indexPage: IndexPage) = {
+  def makeFront(indexPage: IndexPage, edition: Edition) = {
     val itemsByDay = indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
 
     def container(numberOfItems: Int) = if (itemsByDay.keySet.size == 1) {
@@ -34,14 +35,14 @@ object IndexPage {
     val front = Front.fromConfigs(for {
       (day, items) <- itemsByDay.toSeq.sortBy(_._1).reverse
     } yield {
+      val dateString = Format(day.toDateTimeAtStartOfDay, edition, "EEEE d MMMM yyyy")
+
       val collection = CollectionEssentials(
         items,
-        /** TODO better date string format here
-          *
-          * What about datetime tag? Might need to make a proper type for this so we can case match
+        /** What about datetime tag? Might need to make a proper type for this so we can case match
           * later.
           */
-        displayName = Some(day.toString),
+        displayName = Some(dateString),
         None,
         None,
         None
@@ -51,7 +52,7 @@ object IndexPage {
         .withContainer(container(items.length))
 
       /** TODO what should the data ID be here? */
-      (CollectionConfigWithId(day.toString, config), collection)
+      (CollectionConfigWithId(dateString, config), collection)
     })
 
     val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)

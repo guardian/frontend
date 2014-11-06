@@ -691,7 +691,11 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    val timezone = Edition(request).timezone
+    apply(date, Edition(request), pattern)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String): String = {
+    val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 

@@ -4,6 +4,7 @@
 @import views.html.fragments.pagination
 @import services.IndexPage
 @import model.FrontProperties.empty
+@import common.Edition
 
 <div class="l-side-margins l-side-margins--layout-front">
     <div class="@RenderClasses(Map(
@@ -36,7 +37,7 @@
         *@
 
 
-        @defining(IndexPage.makeFront(index).containers) { containers =>
+        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @fragments.containers.facia_cards.container(containerDefinition, empty)
             }
