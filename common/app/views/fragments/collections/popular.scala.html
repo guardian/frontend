@@ -6,20 +6,6 @@
 @import layout.FaciaCardHeader
 @import TrailCssClasses.articleToneClass
 
-@*
- *
- *      OI YOU!!!!
- *
- *      YES, YOU
- *
- *      If you're editing this and it's not updating and you're all like WHAT IS HAPPENING, go to 'facia.js' and
- *      comment out the body of upgradeMostPopularToGeo
- *
- *      It fetches the template from PROD (something to do with geo targeted most popular which has to happen through
- *      Fastly).
- *
- *@
-
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="facia-slice facia-slice--popular" data-link-name="most popular" data-test-id="popular-in">
         @if(isTabbed) {
