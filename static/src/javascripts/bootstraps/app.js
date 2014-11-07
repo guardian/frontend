@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/config',
-    'common/utils/userTiming',
+    'common/utils/user-timing',
 
     'common/modules/ui/fonts',
     'common/modules/commercial/user-ad-targeting',

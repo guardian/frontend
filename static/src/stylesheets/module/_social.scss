@@ -143,6 +143,19 @@ category: Common
     }
 }
 
+.social-icon--pinterest {
+    background-color: $social-pinterest;
+
+    .i {
+        background-size: 49% !important;
+        background-position: 45% center !important;
+    }
+
+    &:hover {
+        background-color: darken($social-pinterest, 10%);
+    }
+}
+
 .social-icon--email {
     background-color: $social-email;
     &:hover {
@@ -153,9 +166,17 @@ category: Common
 .selection-sharing {
     position: absolute;
     padding-top: $gs-baseline / 3;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity .15s ease);
 
     .social__item {
         padding: 0 $gs-gutter / 10;
         width: 32px;
     }
+}
+
+.selection-sharing.selection-sharing--active {
+    visibility: visible;
+    opacity: 1;
 }

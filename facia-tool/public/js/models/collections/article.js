@@ -475,7 +475,7 @@ define([
                 this.meta.imageSrcHeight,
                 {
                     maxWidth: 1000,
-                    minWidth: 500,
+                    minWidth: 400,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
                 }

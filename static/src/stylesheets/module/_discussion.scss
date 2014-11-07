@@ -85,6 +85,15 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion--disabled {
+    min-height: $gs-baseline * 4;
+}
+.discussion__disabled-msg {
+    @include fs-headline(3);
+    padding-top: $gs-baseline / 1.5;
+    color: colour(neutral-2);
+}
+
 .d-discussion {
     font-size: 14px;
 }
