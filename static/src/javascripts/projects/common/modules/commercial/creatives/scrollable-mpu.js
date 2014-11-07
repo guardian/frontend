@@ -24,7 +24,7 @@ define([
      */
     return {
 
-        init: function () {
+        run: function () {
 
             $('.' + adClass).each(function (ad) {
                 var staticImage,
