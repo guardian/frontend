@@ -14,7 +14,7 @@ object CutOut {
         for {
           contributor <- trail.contributors.find(_.contributorLargeImagePath.isDefined)
           imagePath <- contributor.contributorLargeImagePath
-        } yield CutOut(contributor.name, imagePath, Landscape)
+        } yield CutOut(contributor.name, ImgSrc(imagePath, Item360), Landscape)
       }
     } else {
       None
