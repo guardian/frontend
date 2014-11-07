@@ -121,7 +121,7 @@ Loader.prototype.initMainComments = function() {
             this.comments.addUser(this.user);
 
             var userPageSize = userPrefs.get('discussion.pagesize'),
-                pageSize = isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
+                pageSize = !userPageSize || isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
             this.initPageSizeDropdown(pageSize);
 
             if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
