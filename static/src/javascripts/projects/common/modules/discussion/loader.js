@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
 
     'common/utils/$',
     'common/utils/_',
@@ -23,6 +24,7 @@ define([
     bean,
     bonzo,
     qwery,
+    raven,
     $,
     _,
     ajax,
@@ -131,21 +133,29 @@ Loader.prototype.initMainComments = function() {
             }
         }
 
-        this.comments.fetchComments({comment: commentId}).then(function() {
-            this.removeState('loading');
+        this.comments.fetchComments({comment: commentId})
+            .then(function() {
+                this.removeState('loading');
 
-            if (!commentId && window.location.hash !== '#comments') {
-                this.setState('truncated');
-            }
-        }.bind(this));
-
+                if (!commentId && window.location.hash !== '#comments') {
+                    this.setState('truncated');
+                }
+            }.bind(this))
+            .fail(function() {
+                raven.captureMessage('Comments failed to load.', {
+                    tags: {
+                        contentType: 'comments',
+                        discussionId: this.getDiscussionId()
+                    }
+                });
+            }.bind(this));
     });
     this.getUser();
 };
 
 Loader.prototype.initPageSizeDropdown = function(pageSize) {
 
-    var $pagesizeLabel = $('.js-comment-pagesize-dropdown .popup__toggle span');
+    var $pagesizeLabel = $('.js-comment-pagesize');
     $pagesizeLabel.text(pageSize);
     this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
         this.removeState('truncated');
@@ -162,7 +172,7 @@ Loader.prototype.initPageSizeDropdown = function(pageSize) {
 
 Loader.prototype.initToolbar = function() {
 
-    var $orderLabel = $('.js-pagesize');
+    var $orderLabel = $('.js-comment-order');
     $orderLabel.text(this.comments.options.order);
     this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
         this.removeState('truncated');
@@ -174,7 +184,7 @@ Loader.prototype.initToolbar = function() {
         this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
 
-    var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
+    var $threadingLabel = $('.js-comment-threading');
     $threadingLabel.text(this.comments.options.threading);
     this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
         this.removeState('truncated');

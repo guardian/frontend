@@ -48,6 +48,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
     val dataId = "series"
+    val componentId = Some("series")
     val displayName = Some(series.tag.webTitle)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
 
@@ -60,7 +61,8 @@ object SeriesController extends Controller with Logging with Paging with Executi
         1,
         Fixed(FixedContainers.fixedMediumSlowVII),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails take 7, displayName, None, None, None)
+        CollectionEssentials(series.trails take 7, displayName, None, None, None),
+        componentId
       ),
       properties
     )(request)

@@ -30,8 +30,10 @@
     <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
         <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span class="js-pagesize"></span></button>
-            <ul class="popup popup__group popup--comments-order is-off">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order"
+                    aria-haspopup="true" aria-controls="comments-order-popup">Order by <span class="js-comment-order"></span></button>
+
+            <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
                 @List("newest", "oldest").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
@@ -42,8 +44,10 @@
 
         @if(DiscussionPageSizeSwitch.isSwitchedOn) {
             <div class="discussion__toolbar-dropdown js-comment-pagesize-dropdown sign-in-required">
-                <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize">Show <span>25</span></button>
-                <ul class="popup popup__group popup--comments-pagesize is-off">
+                <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize"
+                        aria-haspopup="true" aria-controls="comments-pagesize-popup">Show <span class="js-comment-pagesize">25</span></button>
+
+                <ul id="comments-pagesize-popup" class="popup popup__group popup--comments-pagesize is-off">
                 @List("25", "50", "100").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-@value">@value</button>
@@ -55,8 +59,10 @@
 
 
         <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span></span></button>
-            <ul class="popup popup__group popup--comments-threading is-off">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading"
+                    aria-haspopup="true" aria-controls="comments-order-threading">Threads <span class="js-comment-threading"></span></button>
+
+            <ul id="comments-order-threading" class="popup popup__group popup--comments-threading is-off">
                 @List("collapsed", "expanded", "unthreaded").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-threading="@value" data-link-name="comments-threading-@value">@value</button>
