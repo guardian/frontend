@@ -65,6 +65,7 @@ Full item. A 100% width version of the Three quarter item.
         }
 
         .fc-item__content {
+            @include flex-basis(initial);
             width: auto;
             max-width: gs-span(6);
 

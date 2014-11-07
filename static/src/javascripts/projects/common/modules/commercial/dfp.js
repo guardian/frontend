@@ -332,7 +332,7 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot[0]).each(function (iFrame) {
+            $('iframe', $slot).each(function (iFrame) {
                 // IE needs the iFrame to have loaded before we can interact with it
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {

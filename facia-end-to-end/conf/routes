@@ -54,7 +54,7 @@ GET           /config                    controllers.FaciaToolController.getConf
 
 # endpoints for proxying https
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
-GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
+GET           /api/proxy/*path           controllers.FaciaContentApiProxy.capi(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
 
 # thumbnails

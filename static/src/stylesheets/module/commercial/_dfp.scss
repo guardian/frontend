@@ -1,9 +1,11 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
-.commercial--dfp--v2 {
+.commercial--dfp--v2,
+.commercial--dfp {
     /* Single */
-    &.commercial--dfp-single--v2 {
+    &.commercial--dfp-single--v2,
+    &.commercial--dfp-single {
         .lineitem--dfp-single {
             width: 100%;
             overflow: hidden;
@@ -45,7 +47,8 @@
     }
 
     /* Multiple */
-    &.commercial--dfp-multiple--v2 {
+    &.commercial--dfp-multiple--v2,
+    &.commercial--dfp-multiple {
         .lineitem {
             width: percentage(1/2);
 
@@ -103,5 +106,13 @@
                 }
             }
         }
+    }
+}
+
+.container--commercial-capi .l-row__item {
+    flex: none !important;
+
+    @include mq($until: tablet) {
+        width: 50% !important;
     }
 }

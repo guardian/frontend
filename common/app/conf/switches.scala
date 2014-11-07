@@ -227,7 +227,7 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
@@ -324,6 +324,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
+  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -384,6 +389,11 @@ object Switches extends Collections {
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
+
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -446,6 +456,7 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
+    DiscussionPageSizeSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
@@ -453,7 +464,8 @@ object Switches extends Collections {
     ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
-    GlobalDevelopmentQualtrics
+    GlobalDevelopmentQualtrics,
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

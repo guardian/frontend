@@ -43,6 +43,11 @@ object Frontend extends Build with Prototypes {
       mappings in TestAssets ~= filterAssets
   )
 
+  val crosswordsRouting: Seq[Def.Setting[_]] = Seq(
+    routesImport += "bindables._",
+    routesImport += "com.gu.crosswords.api.client.models.{Type => CrosswordType}"
+  )
+
   private def filterAssets(testAssets: Seq[(File, String)]) = testAssets.filterNot{ case (file, fileName) =>
     // built in sbt plugins did not like the bower files
     fileName.endsWith("bower.json")
@@ -62,10 +67,9 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .settings(
-      libraryDependencies += crosswordsApiClient,
-      routesImport += "bindables._",
-      routesImport += "com.gu.crosswords.api.client.models.{Type => CrosswordType}"
+      libraryDependencies += crosswordsApiClient
     )
+    .settings(crosswordsRouting: _*)
     .aggregate(common)
 
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
@@ -148,7 +152,7 @@ object Frontend extends Build with Prototypes {
       admin,
       commercial,
       onward
-    )
+    ).settings(crosswordsRouting: _*)
 
   val faciaEndToEnd = application("facia-end-to-end")
     .dependsOn(commonWithTests)

@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import conf.Configuration
 import play.api.libs.json.{JsArray, JsString, JsValue}
-import views.support.{Contributor, ImgSrc, Item140}
+import views.support.{Contributor, ImgSrc, Item140, Item360}
 
 case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData with AdSuffixHandlingForFronts {
   lazy val name: String = webTitle
@@ -30,7 +30,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
-  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
+  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item360))
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
