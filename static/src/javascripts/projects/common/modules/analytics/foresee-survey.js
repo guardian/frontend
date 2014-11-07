@@ -7,7 +7,7 @@ define([
 ) {
 
     function openForesee() {
-        require(['js!foresee'], function () {});
+        require(['js!foresee']);
     }
 
     function load() {
@@ -21,7 +21,9 @@ define([
             openForesee();
         }
 
-        window.openForesee = openForesee;
+        if (window.guardian) {
+            window.guardian.openForesee = openForesee;
+        }
     }
 
     return {
