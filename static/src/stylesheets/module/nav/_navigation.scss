@@ -715,8 +715,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
  * Burger icon
  */
 $burger-line-h: 2px;
-$burger-width-small: 12px;
-$burger-width-wide: 16px;
+$burger-width: 16px;
 
 /**
  * Placeholder for burger line.
@@ -730,7 +729,7 @@ $burger-width-wide: 16px;
 .burger-icon {
     @extend %burger-icon__line;
 
-    width: $burger-width-small;
+    width: $burger-width;
     display: inline-block;
     vertical-align: top;
     margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
@@ -752,10 +751,6 @@ $burger-width-wide: 16px;
         @extend %burger-icon__line;
 
         top: $burger-line-h * 4;
-    }
-
-    @include mq(tablet) {
-        width: $burger-width-wide;
     }
 
     @if not $old-ie {
