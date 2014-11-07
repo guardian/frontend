@@ -16,7 +16,7 @@ define([
     containerFcShowMore
     ) {
 
-    describe('Container Show More', function() {
+    ddescribe('Container Show More', function() {
 
         var container,
             $container,
@@ -27,7 +27,7 @@ define([
             container = bonzo.create(
                     '<section class="container">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide" data-title="' + containerId + '">' +
+                            '<div class="container__body js-hide fc-show-more--hidden" data-title="' + containerId + '">' +
                                 '<div class="js-hide"></div>' +
                             '</div>' +
                         '</div>' +
@@ -65,11 +65,24 @@ define([
                 .toEqual("More US news");
         });
 
-        it("should hide button after click", function() {
+        it("should change button text", function() {
             sut.addShowMoreButton();
 
             bean.fire($('.button', $container)[0], 'click');
-            expect($('.button', $container).css('display')).toBe('none');
+            expect($('.button', $container).text()
+                .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
+                .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
+                .toEqual('Less ' + containerId);
+        });
+
+        it("should show/hide content", function() {
+            sut.addShowMoreButton();
+
+            bean.fire($('.button', $container)[0], 'click');
+            expect($container.hasClass('fc-show-more--hidden')).toBeFalsy;
+
+            bean.fire($('.button', $container)[0], 'click');
+            expect($container.hasClass('fc-show-more--hidden')).toBeTruthy;
         });
     });
 });

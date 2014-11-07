@@ -18,11 +18,22 @@ define([
             itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
             itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
             className            = 'fc-show-more--hidden',
-            $button              = null;
+            textHook             = 'js-button-text',
+            $button              = null,
+            state                = 'hidden',
+            buttonText           = {},
+            self                 = this;
 
         this.addShowMoreButton = function () {
+            var tmpTitle = this.getContainerTitle();
+
+            buttonText = {
+                'hidden'   : 'More ' + tmpTitle,
+                'displayed': 'Less ' + tmpTitle
+            };
+
             $button = $.create(template(showMoreBtn, {
-                type: this.getContainerTitle()
+                type: buttonText[state]
             }));
 
             if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
@@ -41,13 +52,18 @@ define([
             return $container.data('title') || '';
         };
 
+        this.changeButtonText = function() {
+            $('.' + textHook, $button).text(buttonText[state]);
+        };
+
         function showMore() {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
              */
-            $button.hide();
-            $container.removeClass(className);
+            $container.toggleClass(className, state === 'displayed');
+            state = (state === 'hidden') ? 'displayed' : 'hidden';
+            self.changeButtonText();
         }
     };
 });
