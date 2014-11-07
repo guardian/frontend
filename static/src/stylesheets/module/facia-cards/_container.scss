@@ -374,6 +374,17 @@ $header-image-size-desktop: 120px;
         padding-bottom: $gs-baseline * 2;
     }
 
+    /**
+     *  For the occasions where we want to show timestamp and there are comments.
+     *  In some cases this will force meta content to split to two lines for tablet view
+     *  so we need to increase the content div bottom space.
+     */
+    @include mq($from: tablet, $to: desktop) {
+        .item--has-discussion .fc-item__content {
+            padding-bottom: $gs-baseline * 3;
+        }
+    }
+
     .fc-item__timestamp {
         display: block;
     }
