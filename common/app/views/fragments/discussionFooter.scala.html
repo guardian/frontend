@@ -50,7 +50,7 @@
                 <ul id="comments-pagesize-popup" class="popup popup__group popup--comments-pagesize is-off">
                 @List("25", "50", "100").map { value =>
                     <li class="popup__item">
-                        <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-@value">@value</button>
+                        <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-pagesize-@value">@value</button>
                     </li>
                 }
                 </ul>
