@@ -8,6 +8,10 @@
         color: $c-headline;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-podcastBackground, 7.5%);
+    }
+
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
@@ -24,7 +28,8 @@
         color: $c-podcastDefault;
     }
 
-    .fc-item__kicker:after {
+    .fc-item__kicker:after,
+    .fc-sublink__kicker:after {
         color: fade-out($c-headline, .8);
     }
 
@@ -47,4 +52,8 @@
             color: $c-neutral1;
         }
     }
+}
+
+.tone-podcast--most-popular .fc-item__kicker {
+    color: $c-newsDefault;
 }

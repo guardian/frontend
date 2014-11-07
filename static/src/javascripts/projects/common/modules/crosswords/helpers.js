@@ -1,7 +1,9 @@
 define([
-    'common/utils/_'
+    'common/utils/_',
+    'common/modules/crosswords/constants'
 ], function (
-    _
+    _,
+    constants
 ) {
     function isAcross(clue) {
         return clue.direction === 'across';
@@ -93,6 +95,11 @@ define([
         });
     }
 
+    /** Can be used for width or height, as the cell height == cell width */
+    function gridSize(cells) {
+        return cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+    }
+
     return {
         isAcross: isAcross,
         otherDirection: otherDirection,
@@ -100,6 +107,7 @@ define([
         clueMapKey: clueMapKey,
         buildClueMap: buildClueMap,
         cellsForEntry: cellsForEntry,
-        entryHasCell: entryHasCell
+        entryHasCell: entryHasCell,
+        gridSize: gridSize
     };
 });

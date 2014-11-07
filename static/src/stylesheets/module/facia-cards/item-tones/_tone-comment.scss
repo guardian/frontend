@@ -4,6 +4,10 @@
         background-color: $c-commentBackground;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-commentBackground, 3%);
+    }
+
     .fc-item__container:before {
         background-color: $c-commentDefault;
     }
@@ -24,9 +28,16 @@
         color: $c-commentDefault;
     }
 
-    @include sublink-style(live, review) {
+    @include sublink-style(live, review, media) {
         .fc-sublink__kicker {
             color: $c-commentBackground;
         }
+    }
+}
+
+.tone-comment--most-popular,
+%tone-comment--most-popular {
+    .fc-item__kicker {
+        color: $c-commentDefault;
     }
 }

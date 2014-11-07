@@ -2,7 +2,7 @@ module.exports = function(grunt, options) {
     return {
         dist: {
             options: {
-                base: 10,
+                base: 16,
                 fallback: true // set to false when Opera Mini supports rem units
             },
             files: [{

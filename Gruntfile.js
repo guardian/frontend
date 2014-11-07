@@ -70,9 +70,7 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        if (!options.isDev) {
-            grunt.task.run(['px_to_rem']);
-        }
+        grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -125,6 +123,16 @@ module.exports = function (grunt) {
         grunt.task.run('karma' + target);
     });
     grunt.registerTask('test', ['test:unit']);
+    grunt.registerTask('coverage', function() {
+        var target = this.args.length ? ':' + this.args.join(':') : '';
+        grunt.config.set('karma.options.reporters',
+            grunt.config.get('karma.options.reporters').concat('coverage')
+        );
+        grunt.config.set('karma.options.preprocessors',
+            grunt.config.get('coverage.preprocessors')
+        );
+        grunt.task.run('test' + target);
+    });
 
     /**
      * Analyse tasks

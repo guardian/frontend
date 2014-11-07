@@ -23,6 +23,11 @@ object Container extends Logging {
 
   def fromConfig(collectionConfig: CollectionConfig) =
     collectionConfig.collectionType.map(resolve).getOrElse(default)
+
+  def showToggle(container: Container) = container match {
+    case NavList | NavMediaList => false
+    case _ => true
+  }
 }
 
 sealed trait Container

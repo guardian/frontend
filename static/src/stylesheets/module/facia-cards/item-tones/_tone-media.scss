@@ -8,6 +8,10 @@
         color: $c-headline;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-mediaBackground, 15%);
+    }
+
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
@@ -24,8 +28,9 @@
         color: $c-mediaDefault;
     }
 
-    .fc-item__kicker:after {
-        color: fade-out($c-headline, .8);
+    .fc-item__kicker:after,
+    .fc-sublink__kicker:after {
+        color: fade-out($c-headline, .6);
     }
 
     .fc-item__standfirst,
@@ -44,4 +49,8 @@
             color: $c-mediaBackground;
         }
     }
+}
+
+.tone-media--most-popular .fc-item__kicker {
+    color: $c-newsDefault;
 }

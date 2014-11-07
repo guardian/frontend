@@ -1,11 +1,11 @@
-@(trail: model.Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(sublink: layout.Sublink)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{ItemKicker, BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
+@import views.support.{BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
 @import views.support.{CartoonKicker, TagKicker, SectionKicker, FreeHtmlKicker, RemoveOuterParaHtml}
 
 <h3 class="fc-sublink__title">
-  @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
+  @sublink.kicker.map {
     case BreakingNewsKicker => {
       <span class="fc-sublink__kicker fc-sublink__live-indicator">Breaking News</span>
     }
@@ -47,9 +47,7 @@
     }
   }
 
-  @LinkTo(trail).map { url =>
-    <a href="@url" class="fc-sublink__link" data-link-name="article">
-      @RemoveOuterParaHtml(trail.headline)
+    <a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">
+        @RemoveOuterParaHtml(sublink.headline)
     </a>
-  }
 </h3>
