@@ -48,6 +48,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
 
+  def blockShortUrl: String = shortUrl
+  def blockWebUrl: String = webUrl
+  def blockWebTitle: String = webTitle
+
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
@@ -491,6 +495,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override lazy val contentType = GuardianContentTypes.LiveBlog
+  override protected lazy val elementShareOrder = List("facebook", "twitter", "gplus")
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary"
@@ -595,7 +600,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
   override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
-  override protected lazy val blockShareOrder = List("facebook", "twitter", "pinterestBlock")
+  override protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 

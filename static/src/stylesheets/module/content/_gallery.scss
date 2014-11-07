@@ -220,6 +220,25 @@
     }
 }
 
+.block-share--article,
+.block-share--article-mobile {
+    position: absolute;
+    right: -5px;
+    margin-top: 10px;
+
+    .element--supporting & {
+        display: none;
+    }
+
+    @include mq($until: tablet) {
+        display: none;
+    }
+
+    .element-video & {
+        margin-top: 2px;
+    }
+}
+
 .block-share--gallery {
     margin-top: $gs-baseline;
     white-space: nowrap;

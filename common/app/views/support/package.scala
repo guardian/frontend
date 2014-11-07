@@ -114,7 +114,7 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").filter { element: Element =>
@@ -122,6 +122,17 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     }.foreach { element: Element =>
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
+
+    document.getElementsByClass("element-video").foreach( element => {
+      val videoUrl = element.attr("data-canonical-url")
+      val blockId = element.attr("data-media-id")
+      val mediaPath = element.attr("data-video-poster")
+      val mediaTitle = element.attr("data-video-name")
+
+      val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(linkUrl = videoUrl, mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+
+      element.child(0).after(html.toString())
+    })
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
 
@@ -169,12 +180,12 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 }
 
-case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
   def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -182,15 +193,20 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val asset = findImageFromId(fig.attr("data-media-id"))
+        val blockId = fig.attr("data-media-id")
+        val asset = findImageFromId(blockId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+          img.attr("id", fig.attr("data-media-id"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
+
+            val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
+            img.after(html.toString())
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")
@@ -244,7 +260,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findContainerFromId(id:String): Option[ImageContainer] = {
-    contentImages.find(_.id == id)
+    article.bodyImages.find(_.id == id)
   }
 }
 
@@ -274,10 +290,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.blockLevelShares(blockId)
-        val link = article.blockLevelLink(blockId)
+        val shares = article.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
 
         el.append(html.toString())
       }
@@ -286,21 +301,24 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
   }
 }
 
-case class CaptionShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-      body.select(".element-image").foreach { el =>
-        val blockId = el.attr("data-media-id")
-        el.addClass(blockId);
-        val shares = article.blockLevelShares(blockId)
-        val link = article.blockLevelLink(blockId)
-
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
-
-        el.append(html.toString())
-      }
-    body
-  }
-}
+//case class CaptionShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+//  def clean(body: Document): Document = {
+//      body.select(".element-image").foreach { el =>
+//        el.select(".gu-image").foreach { img =>
+//          val imagePath = img.attr("src")
+//          val blockId = el.attr("data-media-id")
+//          val shares = article.blockLevelShares(blockId)
+//          val link = article.blockLevelLink(blockId)
+//
+//          val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType, Some(imagePath))
+//
+//          el.attr("id", blockId)
+//          img.after(html.toString())
+//        }
+//      }
+//    body
+//  }
+//}
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")

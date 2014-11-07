@@ -94,19 +94,33 @@ figure.element.element--showcase {
     }
 }
 
-figure.element.element--showcase,
 figure.element.element--supporting {
     figcaption {
         @include mq(leftCol) {
             background: #ffffff;
             padding-left: 0;
-            position: absolute;
             top: 100%;
             padding-top: ($gs-baseline/6)*5;
-            @include reduce-left;
+            max-width: 460px;
         }
     }
 }
+
+figure.element.element--showcase {
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline * 2;
+        border-bottom: 1px dotted $c-neutral5;
+
+        figcaption {
+            background: #ffffff;
+            padding-left: 0;
+            top: 100%;
+            padding-top: ($gs-baseline/6)*5;
+            max-width: 700px;
+        }
+    }
+}
+
 
 figure.element.element--supporting.element-tweet {
     margin-top: -$gs-baseline/2;
@@ -137,7 +151,7 @@ figure {
 }
 
 .tonal--tone-feature .media-primary.media-primary--showcase {
-    margin-left: 0;
+    margin: 0;
     z-index: 2; // Put the image on top of the left and right layout borders
     position: relative;
 
