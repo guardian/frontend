@@ -124,8 +124,8 @@ $football-crest--large: 60px;
 
 .match-summary__status--live {
     .status__time {
-        border-color: $c-newsAccent;
-        color: $c-newsAccent;
+        border-color: colour(news-accent);
+        color: colour(news-accent);
         font-weight: bold;
     }
 }

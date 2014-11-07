@@ -15,7 +15,7 @@ $navigation-toggler-width-full: 130px;
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 $c-navigation-background-side-bar: #005182;
 
-$c-signposting-action: $c-newsDefault;
+$c-signposting-action: colour(news-default);
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;

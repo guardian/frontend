@@ -4,19 +4,19 @@
     }
 
     .fc-item__container:before {
-        background-color: $c-newsAccent;
+        background-color: colour(news-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-newsDefault;
+        color: colour(news-default);
     }
 }
 
 .tone-news--sublink {
     .fc-sublink__kicker,
     .fc-sublink__byline {
-        color: $c-newsDefault;
+        color: colour(news-default);
     }
 
     @include sublink-style(editorial, feature, live, media, podcast) {
@@ -27,5 +27,5 @@
 }
 
 .tone-news--most-popular .fc-item__kicker {
-    color: $c-newsDefault;
+    color: colour(news-default);
 }

@@ -63,7 +63,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__top-border {
     @include mq(tablet) {
-        border-top: 1px solid $c-newsAccent;
+        border-top: 1px solid colour(news-accent);
         margin-top: -1px;
     }
 }
@@ -106,7 +106,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
-    border-top: 1px solid $c-newsAccent;
+    border-top: 1px solid colour(news-accent);
 
     @include mq(tablet) {
         border-top: 0;
@@ -767,7 +767,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__action {
     @include fs-textSans(1);
     display: inline-block;
-    color: $c-newsDefault;
+    color: colour(news-default);
     font-weight: bold;
     line-height: 20px;
     width: auto;
@@ -791,7 +791,7 @@ $comment-recommend-button-size: 19px;
     @include icon-button(reply-white, 18px);
     margin-right: 1px;
     display: inline-block;
-    background-color: $c-newsDefault;
+    background-color: colour(news-default);
     vertical-align: top;
 }
 

@@ -44,7 +44,7 @@ td {
 
 .table {
     background: colour(neutral-8);
-    border-top: 1px solid $c-newsAccent;
+    border-top: 1px solid colour(news-accent);
     border-collapse: inherit;
 
     th,
@@ -124,7 +124,7 @@ td {
     padding: $table-baseline*2;
     background: colour(neutral-8);
     border-bottom: 1px solid darken(colour(neutral-8), 4%);
-    border-top: 1px solid $c-newsAccent;
+    border-top: 1px solid colour(news-accent);
     font-weight: bold;
     margin-bottom: -2px;
     position: relative;

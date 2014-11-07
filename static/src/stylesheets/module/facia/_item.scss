@@ -15,7 +15,7 @@
     }
 }
 .item__tonal-border {
-    border-top: $item-top-border-height solid $c-newsAccent;
+    border-top: $item-top-border-height solid colour(news-accent);
 }
 .container--dark-background {
     @include item--hide-tone-border;
@@ -103,7 +103,7 @@
 
 .item__kicker {
     @include fs-headline(1);
-    color: $c-newsAccent;
+    color: colour(news-accent);
     margin-right: 3px;
 }
 

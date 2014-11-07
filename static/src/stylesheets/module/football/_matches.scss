@@ -21,14 +21,14 @@
     font-weight: 900;
 
     .football-match__status {
-        color: $c-newsAccent;
+        color: colour(news-accent);
     }
 }
 
 .football-match--updated {
     .football-team__score,
     .football-teams__battleline {
-        color: $c-newsAccent;
+        color: colour(news-accent);
     }
 }
 

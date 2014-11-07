@@ -63,7 +63,7 @@ $disc-avatar-size: 44px;
     }
 
     .disc-comment__recommend--open & {
-        background-color: $c-newsDefault;
+        background-color: colour(news-default);
     }
 
     .disc-comment__recommend--active & {

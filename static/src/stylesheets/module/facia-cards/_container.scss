@@ -6,7 +6,7 @@ $header-image-size-desktop: 120px;
     margin-bottom: 0;
 
     .facia-container__inner {
-        border-top: 1px solid $c-newsAccent;
+        border-top: 1px solid colour(news-accent);
         padding-top: $gs-baseline / 4;
 
         @include mq(tablet) {
@@ -21,7 +21,7 @@ $header-image-size-desktop: 120px;
 
         @include mq(leftCol) {
             .fc-container__header__title {
-                border-top: 1px solid $c-newsAccent;
+                border-top: 1px solid colour(news-accent);
                 padding-top: $gs-baseline / 4;
             }
 
@@ -83,7 +83,7 @@ $header-image-size-desktop: 120px;
         color: inherit;
 
         &:hover {
-            color: $c-newsAccent;
+            color: colour(news-accent);
         }
     }
 }

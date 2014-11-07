@@ -182,10 +182,10 @@
 
     &:hover,
     &:focus {
-        border-color: mix($c-newsDefault, colour(neutral-4), 50%);
+        border-color: mix(colour(news-default), colour(neutral-4), 50%);
     }
     &:active {
-        border-color: $c-newsAccent;
+        border-color: colour(news-accent);
     }
 }
 

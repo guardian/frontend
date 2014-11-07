@@ -279,7 +279,7 @@
 
 .tabs--identity {
     .tabs__tab--selected {
-        border-top-color: $c-newsAccent;
+        border-top-color: colour(news-accent);
     }
     .tabs__tab {
         max-width: gs-span(3);
@@ -361,7 +361,7 @@
 
         .membership-tab__update-button--muted {
             background: none;
-            color: $c-newsDefault;
+            color: colour(news-default);
 
             &:hover,
             &:focus {
@@ -369,7 +369,7 @@
                 text-decoration: underline;
             }
             &:active {
-                color: $c-newsAccent;
+                color: colour(news-accent);
             }
         }
 
@@ -464,7 +464,7 @@
                 background-color: colour(neutral-2);
             }
             .change-summary__panel-label--target {
-                background-color: $c-newsAccent;
+                background-color: colour(news-accent);
             }
         }
 
