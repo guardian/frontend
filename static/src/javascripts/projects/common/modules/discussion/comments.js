@@ -7,7 +7,6 @@ define([
 
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
 
@@ -24,7 +23,6 @@ define([
 
     $,
     ajax,
-    detect,
     mediator,
     scroller,
 
@@ -166,7 +164,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var queryParams = {
         orderBy: options.order || this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        pageSize: options.pagesize || this.options.pagesize || 25,
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 

@@ -8,6 +8,7 @@ define([
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
 
@@ -28,6 +29,7 @@ define([
     _,
     ajax,
     config,
+    detect,
     mediator,
     scroller,
     DiscussionAnalytics,
@@ -89,10 +91,13 @@ Loader.prototype.initMainComments = function() {
 
     var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
+    var pagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
+
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
+        pagesize: pagesize,
         threading: threading
     });
 
@@ -108,40 +113,67 @@ Loader.prototype.initMainComments = function() {
     }.bind(this));
 
     this.setState('loading');
-    this.comments.fetchComments({comment: commentId}).then(function() {
-        this.removeState('loading');
 
-        if (!commentId && window.location.hash !== '#comments') {
-            this.setState('truncated');
+    this.on('user:loaded', function() {
+        this.initState();
+        this.renderCommentBar();
+        if (this.user) {
+            this.comments.addUser(this.user);
+
+            var userPageSize = userPrefs.get('discussion.pagesize'),
+                pageSize = isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
+            this.initPageSizeDropdown(pageSize);
+
+            if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
+                this.comments.options.pagesize = pageSize;
+            }
+
+            if (this.user.isStaff) {
+                this.removeState('not-staff');
+                this.setState('is-staff');
+            }
         }
 
-        this.on('user:loaded', function() {
-            this.initState();
-            this.renderCommentBar();
-            if (this.user) {
-                this.comments.addUser(this.user);
-                if (this.user.isStaff) {
-                    this.removeState('not-staff');
-                    this.setState('is-staff');
-                }
-            }
-        });
-        this.getUser();
+        this.comments.fetchComments({comment: commentId})
+            .then(function() {
+                this.removeState('loading');
 
-    }.bind(this)).fail(function() {
-        raven.captureMessage('Comments failed to load.', {
-            tags: {
-                contentType: 'comments',
-                discussionId: this.getDiscussionId()
-            }
-        });
-    }.bind(this));
+                if (!commentId && window.location.hash !== '#comments') {
+                    this.setState('truncated');
+                }
+            }.bind(this))
+            .fail(function() {
+                raven.captureMessage('Comments failed to load.', {
+                    tags: {
+                        contentType: 'comments',
+                        discussionId: this.getDiscussionId()
+                    }
+                });
+            }.bind(this));
+    });
+    this.getUser();
 };
 
+Loader.prototype.initPageSizeDropdown = function(pageSize) {
+
+    var $pagesizeLabel = $('.js-comment-pagesize');
+    $pagesizeLabel.text(pageSize);
+    this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
+        this.removeState('truncated');
+        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
+        var selectedPageSize = bonzo(e.currentTarget).data('pagesize');
+        this.comments.options.pagesize = selectedPageSize;
+        $pagesizeLabel.text(selectedPageSize);
+        userPrefs.set('discussion.pagesize', selectedPageSize);
+        this.setState('loading');
+        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
+    });
+
+};
 
 Loader.prototype.initToolbar = function() {
 
-    var $orderLabel = $('.js-comment-order-dropdown .popup__toggle span');
+    var $orderLabel = $('.js-comment-order');
     $orderLabel.text(this.comments.options.order);
     this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
         this.removeState('truncated');
@@ -153,7 +185,7 @@ Loader.prototype.initToolbar = function() {
         this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
     });
 
-    var $threadingLabel = $('.js-comment-threading-dropdown .popup__toggle span');
+    var $threadingLabel = $('.js-comment-threading');
     $threadingLabel.text(this.comments.options.threading);
     this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
         this.removeState('truncated');
