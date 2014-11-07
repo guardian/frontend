@@ -2,7 +2,6 @@
 Multi component (AKA Frankenponent)
 ========================================================================== */
 
-.commercial--v2.commercial--multi,
 .commercial.commercial--multi {
     .commercial__multi-wrapper {
         background: $c-neutral4;
@@ -21,6 +20,7 @@ Multi component (AKA Frankenponent)
         padding: $gs-baseline/3 $gs-gutter/4;
 
         .commercial__title {
+            text-align: left;
             min-height: $gs-baseline * 2.5;
 
             .i-guardian-logo-commercial,
@@ -56,9 +56,16 @@ Multi component (AKA Frankenponent)
     }
 
     .commercial--multi__body {
+        position: relative;
         background: $c-neutral4;
-        padding: $gs-gutter/4 $gs-baseline/2;
-        min-height: gs-height(4.5);
+        padding: $gs-gutter/4 $gs-baseline/2 $gs-baseline * 3;
+        min-height: gs-height(4);
+    }
+
+    .commercial--tone-soulmates {
+        .commercial--multi__body {
+            background: transparent;
+        }
     }
 
     .lineitem--multi {
@@ -116,6 +123,11 @@ Multi component (AKA Frankenponent)
             right: auto;
             width: auto;
             height: 100%;
+        }
+
+        .lineitem__cta {
+            position: absolute;
+            bottom: $gs-baseline/2;
         }
     }
 }

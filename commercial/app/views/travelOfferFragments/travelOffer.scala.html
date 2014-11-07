@@ -1,26 +1,28 @@
 @(travelOffer: model.commercial.travel.TravelOffer)(implicit request: RequestHeader)
 
-<li class="lineitem lineitem--multi commercial--travel--v2 commercial--tone-travel">
-    <div class="commercial--multi__header">
-        <h4 class="commercial__title">
-            <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-hybrid-travel-visit-all">
-                <i class="i i-guardian-logo-commercial"></i><i class="i i-holidayoffers-logo i-commercial-brand"></i>
-                <span class="u-h">The Guardian</span> <span class="u-h">Holiday Offers</span>
+<li class="lineitem lineitem--multi">
+    <div class="commercial--travel--v2 commercial--tone-travel">
+        <div class="commercial--multi__header">
+            <h4 class="commercial__title">
+                <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-hybrid-travel-visit-all">
+                    <i class="i i-guardian-logo-commercial"></i><i class="i i-holidayoffers-logo i-commercial-brand"></i>
+                    <span class="u-h">The Guardian</span> <span class="u-h">Holiday Offers</span>
+                </a>
+            </h4>
+        </div>
+        <div class="commercial--multi__body">
+            <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
+                <div class="lineitem__image-crop">
+                    <img class="lineitem__image" src="@travelOffer.imageUrl" alt="" />
+                </div>
+                <h4 class="lineitem__title">@travelOffer.title</h4>
+                <div class="lineitem__offer">
+                    <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
+                </div>
             </a>
-        </h4>
-    </div>
-    <div class="commercial--multi__body">
-        <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
-            <div class="lineitem__image-crop">
-                <img class="lineitem__image" src="@travelOffer.imageUrl" alt="" />
-            </div>
-            <h4 class="lineitem__title">@travelOffer.title</h4>
-            <div class="lineitem__offer">
-                <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
-            </div>
-        </a>
-        <a class="lineitem__cta button button--primary button--small" href="@AdLink{@travelOffer.offerUrl}">
-            Book now<i class="i i-arrow-white-right i-right"></i>
-        </a>
+            <a class="lineitem__cta button button--primary button--small" href="@AdLink{@travelOffer.offerUrl}">
+                Book now<i class="i i-arrow-white-right i-right"></i>
+            </a>
+        </div>
     </div>
 </li>
