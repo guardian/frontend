@@ -22,8 +22,9 @@
     }
 }
 
-.tone-analysis--sublink {
-    .fc-sublink__kicker {
+.tone-analysis--sublink,
+.tone-analysis--most-popular {
+    .fc-item__kicker {
         color: $c-analysisAccent;
     }
 
