@@ -127,9 +127,15 @@ Loader.prototype.initMainComments = function() {
             }
         });
         this.getUser();
+
     }.bind(this)).fail(function() {
-        raven.captureMessage("Comments failed to load.", {tags: { contentType: "comments" }});
-    });
+        raven.captureMessage("Comments failed to load.", {
+            tags: {
+                contentType: "comments",
+                discussionId: this.getDiscussionId()
+            }
+        });
+    }.bind(this));
 };
 
 
