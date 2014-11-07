@@ -4,18 +4,14 @@ define([
     'bonzo',
     'bean',
     'qwery',
-    'common/modules/userPrefs',
-    'common/utils/template',
-    'text!facia/views/button-toggle.html'
+    'common/modules/userPrefs'
 ], function(
     ContainerDisplayToggle,
     $,
     bonzo,
     bean,
     qwery,
-    userPrefs,
-    template,
-    toggleBtn
+    userPrefs
 ) {
 
     describe('Container Toggle', function() {
