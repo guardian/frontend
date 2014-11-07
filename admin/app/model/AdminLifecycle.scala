@@ -4,6 +4,7 @@ import commercial.TravelOffersCacheJob
 import conf.Configuration
 import football.feed.MatchDayRecorder
 import play.api.GlobalSettings
+import services.EmailService
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
 import jobs._
@@ -98,6 +99,7 @@ trait AdminLifecycle extends GlobalSettings {
   override def onStop(app: play.api.Application) {
     descheduleJobs()
     CloudWatch.shutdown()
+    EmailService.shutdown()
     super.onStop(app)
   }
 }
