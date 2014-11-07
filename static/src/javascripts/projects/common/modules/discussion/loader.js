@@ -120,11 +120,12 @@ Loader.prototype.initMainComments = function() {
         if (this.user) {
             this.comments.addUser(this.user);
 
+            var userPageSize = userPrefs.get('discussion.pagesize'),
+                pageSize = isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
+            this.initPageSizeDropdown(pageSize);
+
             if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
-                var userPageSize = userPrefs.get('discussion.pagesize'),
-                    pageSize = isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
                 this.comments.options.pagesize = pageSize;
-                this.initPageSizeDropdown(pageSize);
             }
 
             if (this.user.isStaff) {
