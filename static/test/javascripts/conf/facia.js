@@ -4,4 +4,4 @@ module.exports = function(config) {
         { pattern: 'static/test/javascripts/spec/facia/**/*.js', included: false }
     );
     config.set(settings);
-}
+};

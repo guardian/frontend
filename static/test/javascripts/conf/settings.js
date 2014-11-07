@@ -38,6 +38,15 @@ module.exports = function(config) {
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
         browsers: ['PhantomJS'],
         captureTimeout: 60000,
-        singleRun: false
+        singleRun: false,
+        coverageReporter: {
+            reporters: [
+                {
+                    type: 'html',
+                    dir: 'tmp/coverage/'
+                },
+                {type: 'text-summary'}
+            ]
+        }
     };
 };
