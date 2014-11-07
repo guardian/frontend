@@ -5,7 +5,7 @@
 .match-stats__caption {
     @include fs-textSans(4);
     margin-bottom: $gs-baseline/6;
-    color: $c-neutral1;
+    color: colour(neutral-1);
     font-weight: 400;
     text-align: left;
     width: 100%;
@@ -76,7 +76,7 @@
 
 .goal-attempts__off-target--home,
 .goal-attempts__on-target--home {
-    background-color: $c-neutral1;
+    background-color: colour(neutral-1);
     float: left;
 }
 .goal-attempts__off-target--away,
@@ -120,7 +120,7 @@
 }
 
 .bar-fight__bar--home {
-    background-color: $c-neutral1;
+    background-color: colour(neutral-1);
     border-right: 2px solid #ffffff;
     text-align: left;
 }
@@ -134,7 +134,7 @@
     .goal-attempts__label--on-target-home,
     .goal-attempts__off-target--home,
     .goal-attempts__on-target--home {
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
 }
 
@@ -144,7 +144,7 @@
     .goal-attempts__label--on-target-away,
     .goal-attempts__off-target--away,
     .goal-attempts__on-target--away {
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
 }
 
@@ -167,13 +167,13 @@
 
 .match-stats--darken-away {
     .chart__arc:first-of-type .chart__label {
-        fill: $c-neutral1;
+        fill: colour(neutral-1);
     }
 }
 
 .match-stats--darken-home {
     .chart__arc:last-of-type .chart__label {
-        fill: $c-neutral1;
+        fill: colour(neutral-1);
     }
 }
 
@@ -286,13 +286,13 @@
 }
 
 .item-divider {
-    border-top: 1px solid $c-neutral7;
+    border-top: 1px solid colour(neutral-7);
     padding-top: $gs-baseline/3;
 }
 
 .section-divider {
     @include fs-header(1);
-    border-bottom: 1px solid $c-neutral7;
+    border-bottom: 1px solid colour(neutral-7);
     padding-top: ($gs-baseline/3)*2;
     padding-bottom: $gs-baseline;
 }

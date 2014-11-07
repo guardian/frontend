@@ -3,7 +3,7 @@
 @include tone-content(
     podcast, // $tone
     $c-podcastBackground, // $tonal__header-background
-    $c-neutral6, // $tonal__header-text
+    colour(neutral-6), // $tonal__header-text
     $c-podcastDefault, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
@@ -29,8 +29,8 @@
     }
 
     .button--tone-media {
-        background-color: $c-neutral2;
-        border-color: $c-neutral2;
+        background-color: colour(neutral-2);
+        border-color: colour(neutral-2);
     }
 
     .button--tertiary {

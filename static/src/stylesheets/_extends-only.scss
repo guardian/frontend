@@ -33,7 +33,7 @@
     display: block;
     width: 30px;
     height: 30px;
-    border: 1px solid $c-neutral1;
+    border: 1px solid colour(neutral-1);
     padding: 0;
     @include border-radius(50%);
     @include box-sizing(content-box); // Force proper sizing on button elements
@@ -44,7 +44,7 @@
     &:focus,
     &:hover {
         text-decoration: none;
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
 }
 %u-unstyled {

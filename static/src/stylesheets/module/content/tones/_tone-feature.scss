@@ -3,12 +3,12 @@
 @include tone-content(
     feature, // $tone
     $c-featureDefault, // $tonal__header-background
-    $c-neutral6, // $tonal__header-text
-    $c-featureAccent, // $tonal__header-link
+    colour(neutral-6), // $tonal__header-text
+    $c-featureMute, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-featureAccent, // $tonal__headline-accent
-    $c-featureAccent2, // $tonal__standfirst-background
+    $c-featureMute, // $tonal__headline-accent
+    $c-featureAccent, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background

@@ -26,19 +26,19 @@
 
 .ad-slot__label {
     height: $mpu-ad-label-height;
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
     margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $c-neutral5;
-    color: $c-neutral2-contrasted;
+    border-top: 1px solid colour(neutral-5);
+    color: colour(neutral-2-contrasted);
     text-align: right;
     @include box-sizing(border-box);
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 
     .ad-slot--dark & {
-        color: $c-neutral3;
-        border-top-color: $c-neutral2;
+        color: colour(neutral-3);
+        border-top-color: colour(neutral-2);
         background-color: transparent;
     }
 }
@@ -50,8 +50,8 @@
     background-color: #f0f0f0;
 }
 .top-banner-ad-container--desktop {
-    background-color: $c-neutral8;
-    border-bottom: 2px solid $c-neutral4;
+    background-color: colour(neutral-8);
+    border-bottom: 2px solid colour(neutral-4);
     display: none;
 
     @include mq(tablet) {
@@ -146,7 +146,7 @@
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
 
     @include mq(tablet) {
         width: 300px;
@@ -179,11 +179,11 @@
     }
 }
 .ad-slot--liveblog-inline {
-    background-color: $c-neutral6;
+    background-color: colour(neutral-6);
 
     .ad-slot__label {
-        color: $c-neutral2;
-        border-top-color: $c-neutral3;
+        color: colour(neutral-2);
+        border-top-color: colour(neutral-3);
     }
 }
 .ad-slot--mpu-banner-ad {
@@ -199,9 +199,9 @@
 .ad-slot--sponsored {
     min-height: 250px;
     @include box-sizing(border-box);
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
     overflow: hidden;
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid colour(neutral-5);
     padding-top: $gs-baseline/2;
 
     .ad-slot--gallery-inline &,
@@ -220,7 +220,7 @@
     min-height: gs-height(2);
     padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
     margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid $c-neutral5;
+    border-bottom: 1px solid colour(neutral-5);
 }
 .ad-slot--sponsored__image {
     position: absolute;
@@ -230,7 +230,7 @@
 .ad-slot--sponsored__article,
 .ad-slot--sponsored__label,
 .ad-slot--sponsored__help {
-    color: $c-neutral2;
+    color: colour(neutral-2);
 }
 .ad-slot--sponsored__article {
     @include f-headlineSans;
@@ -288,7 +288,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help {
         @include fs-textSans(1);
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
     .ad-slot--paid-for-badge__header {
         margin: 0;
@@ -320,7 +320,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        color: $c-neutral2-contrasted;
+        color: colour(neutral-2-contrasted);
     }
 }
 .ad-slot--im {
@@ -335,17 +335,17 @@
 
     .ad-slot--paid-for-badge__inner {
         padding: $gs-baseline / 2 0 $gs-baseline;
-        border-top: 1px solid $c-neutral3;
-        border-bottom: 1px dotted $c-neutral3;
+        border-top: 1px solid colour(neutral-3);
+        border-bottom: 1px dotted colour(neutral-3);
     }
  }
 .ad-slot--paid-for-badge--article {
-    border-bottom: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted colour(neutral-5);
     min-height: 135px;
 
     @include mq(leftCol) {
         border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted colour(neutral-5);
     }
 }
 .ad-slot--paid-for-badge--live-blog {
@@ -356,7 +356,7 @@
 .ad-slot--paid-for-badge--interactive {
     min-width: 140px;
     min-height: 135px;
-    border-top: 1px dotted $c-neutral5;
+    border-top: 1px dotted colour(neutral-5);
 
     @include mq(tablet) {
         float: right;

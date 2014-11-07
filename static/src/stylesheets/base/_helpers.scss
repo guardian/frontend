@@ -177,12 +177,12 @@
 .u-underline,
 %u-underline {
     text-decoration: none !important;
-    border-bottom: 1px solid $c-neutral4;
+    border-bottom: 1px solid colour(neutral-4);
     @include transition(border-color .15s ease-out);
 
     &:hover,
     &:focus {
-        border-color: mix($c-newsDefault, $c-neutral4, 50%);
+        border-color: mix($c-newsDefault, colour(neutral-4), 50%);
     }
     &:active {
         border-color: $c-newsAccent;

@@ -28,7 +28,7 @@
     }
 
     &.tone-feature:before {
-        background: $c-featureAccent;
+        background: $c-featureMute;
     }
     &.tone-comment:before {
         background: $c-commentAccent;
@@ -66,18 +66,18 @@
     @extend %u-unstyled;
 }
 .linkslist__item {
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid colour(neutral-5);
 
     &.show-more--hidden {
         display: none;
     }
     .container--dark-background & {
-        border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
+        border-top-color: mix(#ffffff, lighten(colour(neutral-1), 8%), 50%);
     }
 }
 .linkslist__action {
     position: relative;
-    color: $c-neutral1;
+    color: colour(neutral-1);
     display: block;
     @include fs-headline(2);
     margin-top: $gs-baseline/4;
@@ -88,10 +88,10 @@
         margin-bottom: get-font-size(headline, 1);
     }
     &:visited {
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
     &:active {
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
 }
 

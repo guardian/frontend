@@ -113,7 +113,7 @@ $header-image-size-desktop: 120px;
 .fc-container__header__description {
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -221,13 +221,13 @@ $header-image-size-desktop: 120px;
     right: 0;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-headline(1);
 
     @include mq(leftCol) {
         position: static;
         margin-top: ($gs-baseline / 3) * 5;
-        border-top: 1px dotted $c-neutral3;
+        border-top: 1px dotted colour(neutral-3);
         padding-top: $gs-baseline / 4;
     }
 
@@ -326,7 +326,7 @@ $header-image-size-desktop: 120px;
 .fc-container--media {
     .facia-container__inner,
     .facia-slice__item:before {
-        border-color: $c-neutral2;
+        border-color: colour(neutral-2);
     }
 
     .fc-container__header__title {

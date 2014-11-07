@@ -12,9 +12,9 @@ $player-card-avatar: (
  **/
 .player-card {
     padding: $gs-baseline $gs-gutter/2;
-    background: $c-neutral8;
+    background: colour(neutral-8);
     border-top: 1px solid $c-sportMid;
-    color: $c-neutral1;
+    color: colour(neutral-1);
 }
 
 .player-card__image-container {
@@ -69,7 +69,7 @@ $player-card-avatar: (
 }
 .player-card__stat-value {
     @include fs-textSans(2);
-    border-top: 1px solid $c-neutral3;
+    border-top: 1px solid colour(neutral-3);
     font-weight: bold;
     padding-left: 85%;
     text-align: right;

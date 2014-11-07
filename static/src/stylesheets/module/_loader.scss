@@ -43,7 +43,7 @@ $pamplemousse-dot-smallscale: .45;
         @include transform(scale($pamplemousse-dot-smallscale));
         @include animation(pulsate 2s ease-in-out infinite);
         display: block;
-        background-color: $c-neutral2;
+        background-color: colour(neutral-2);
         border-radius: 100px;
     }
 }

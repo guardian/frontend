@@ -3,7 +3,7 @@
    ========================================================================== */
 .commercial--v2,
 .commercial, {
-    background-color: $c-neutral6;
+    background-color: colour(neutral-6);
 
     .facia-container__inner--commercial {
         position: relative;
@@ -61,7 +61,7 @@
     }
 
     .container__header {
-        background-color: $c-neutral2;
+        background-color: colour(neutral-2);
         height: 100%;
         padding-top: 0;
 

@@ -49,7 +49,7 @@
 
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $c-neutral1;
+            color: colour(neutral-1);
         }
     }
 }
