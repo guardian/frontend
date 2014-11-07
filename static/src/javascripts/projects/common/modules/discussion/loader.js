@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
 
     'common/utils/$',
     'common/utils/_',
@@ -22,6 +23,7 @@ define([
     bean,
     bonzo,
     qwery,
+    raven,
     $,
     _,
     ajax,
@@ -125,6 +127,14 @@ Loader.prototype.initMainComments = function() {
             }
         });
         this.getUser();
+
+    }.bind(this)).fail(function() {
+        raven.captureMessage('Comments failed to load.', {
+            tags: {
+                contentType: 'comments',
+                discussionId: this.getDiscussionId()
+            }
+        });
     }.bind(this));
 };
 

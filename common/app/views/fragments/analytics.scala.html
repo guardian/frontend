@@ -59,7 +59,7 @@
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
 
-@if(page.section == "global-development" || page.section == "world" && GlobalDevelopmentQualtrics.isSwitchedOn) {
+@if((page.section == "global-development" || page.section == "world") && GlobalDevelopmentQualtrics.isSwitchedOn) {
     <!--BEGIN QUALTRICS SITE INTERCEPT-->
     <script type='text/javascript'>
     (function(){var g=function(e,h,f,g){

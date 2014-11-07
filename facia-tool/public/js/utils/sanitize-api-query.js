@@ -1,5 +1,11 @@
 /* global _: true */
-define(['utils/parse-query-params'], function(parseQueryParams) {
+define([
+    'utils/parse-query-params',
+    'utils/identity'
+], function(
+    parseQueryParams,
+    identity
+) {
     return function (url) {
         var bits = (url + '').split('?');
 
@@ -9,7 +15,10 @@ define(['utils/parse-query-params'], function(parseQueryParams) {
         } else {
             return _.initial(bits).concat(
                 _.map(
-                    parseQueryParams(url, {predicate: function(str) { return str;}}),
+                    parseQueryParams(url, {
+                        predicateKey: function(key) { return key !== 'api-key'; },
+                        predicateVal: identity
+                    }),
                     function(val, key) { return key + '=' + val; }
                 ).join('&')
             ).join('?');

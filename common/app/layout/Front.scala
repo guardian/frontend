@@ -92,7 +92,8 @@ object Front extends implicits.Collections {
             container,
             config,
             collection.copy(items = newItems),
-            Some(containerLayout)
+            Some(containerLayout),
+            None
           ))
         } getOrElse {
           ((newSeen, context), FaciaContainer.fromConfig(
@@ -100,6 +101,7 @@ object Front extends implicits.Collections {
             container,
             config,
             collection.copy(items = newItems),
+            None,
             None
           ))
         }
@@ -139,7 +141,8 @@ object FaciaContainer {
     index: Int,
     container: Container,
     config: CollectionConfigWithId,
-    collectionEssentials: CollectionEssentials
+    collectionEssentials: CollectionEssentials,
+    componentId: Option[String] = None
   ): FaciaContainer = fromConfig(
     index,
     container,
@@ -150,7 +153,8 @@ object FaciaContainer {
       ContainerLayoutContext.empty,
       config.config,
       collectionEssentials.items
-    ).map(_._1)
+    ).map(_._1),
+    componentId
   )
 
   def fromConfig(
@@ -158,12 +162,14 @@ object FaciaContainer {
     container: Container,
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
-    containerLayout: Option[ContainerLayout]
+    containerLayout: Option[ContainerLayout],
+    componentId: Option[String]
   ): FaciaContainer = FaciaContainer(
     index,
     config.id,
     config.config.displayName orElse collectionEssentials.displayName,
     config.config.href orElse collectionEssentials.href,
+    componentId,
     container,
     collectionEssentials,
     containerLayout,
@@ -177,7 +183,8 @@ object FaciaContainer {
       index = 2,
       container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
-      CollectionEssentials(items take 8, Some(title), None, None, None)
+      collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
+      componentId = None
     )
   }
 }
@@ -223,6 +230,7 @@ case class FaciaContainer(
   dataId: String,
   displayName: Option[String],
   href: Option[String],
+  componentId: Option[String],
   container: Container,
   collectionEssentials: CollectionEssentials,
   containerLayout: Option[ContainerLayout],
@@ -231,9 +239,11 @@ case class FaciaContainer(
   commercialOptions: ContainerCommercialOptions
 ) {
 
-  def faciaComponentName = displayName map { title: String =>
-    title.toLowerCase.replace(" ", "-")
-  } getOrElse "no-name"
+  def faciaComponentName = componentId getOrElse {
+    displayName map { title: String =>
+      title.toLowerCase.replace(" ", "-")
+    } getOrElse "no-name"
+  }
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
     collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
