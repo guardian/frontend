@@ -22,8 +22,15 @@
     }
 }
 
-.tone-analysis--sublink {
-    .fc-sublink__kicker {
+.tone-analysis--sublink,
+.tone-analysis--most-popular {
+    .fc-item__kicker {
         color: $c-analysisAccent;
+    }
+
+    @include sublink-style(live) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }
