@@ -129,9 +129,9 @@ Loader.prototype.initMainComments = function() {
         this.getUser();
 
     }.bind(this)).fail(function() {
-        raven.captureMessage("Comments failed to load.", {
+        raven.captureMessage('Comments failed to load.', {
             tags: {
-                contentType: "comments",
+                contentType: 'comments',
                 discussionId: this.getDiscussionId()
             }
         });
