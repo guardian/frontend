@@ -113,7 +113,7 @@
 /* Fronts */
 
 .facia-container--layout-front .commercial--capi,
-.fc-container--layout-front .commercial--capi{
+.fc-container--layout-front .commercial--capi {
     @include mq(leftCol) {
         @include c-capi-leftCol;
 
