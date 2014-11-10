@@ -387,41 +387,51 @@ define([
                 bonzo(player.el()).removeClass(endState);
             });
         },
+
         initMoreInSection: function () {
             if (!config.isMedia || !config.page.showRelatedContent) {
                 return;
             }
-            var mediaType = config.page.contentType.toLowerCase(),
-                section = new Component(),
-                parentEl = $('.js-onward')[0];
 
-            section.endpoint = '/' + mediaType + '/section/' + config.page.section;
+            var mediaType = config.page.contentType.toLowerCase(),
+                section   = new Component(),
+                attachTo  = $('.js-onward')[0],
+                endpoint  = '/' + mediaType + '/section/' + config.page.section;
 
             if ('seriesId' in config.page) {
-                section.endpoint += '/' + config.page.seriesId;
+                endpoint += '/' + config.page.seriesId;
             }
 
-            section.endpoint += '.json?shortUrl=' + config.page.shortUrl;
+            endpoint += '.json?shortUrl=' + config.page.shortUrl;
 
-            section.fetch(parentEl).then(function () {
-                images.upgrade(parentEl);
+            // exclude professional network content from video pages
+            if (mediaType === 'video') {
+                endpoint += '&exclude-tag=guardian-professional/guardian-professional';
+            }
+
+            section.endpoint = endpoint;
+
+            section.fetch(attachTo).then(function () {
+                images.upgrade(attachTo);
             });
         },
+
         initMostViewedMedia: function () {
             if (!config.isMedia) {
                 return;
             }
-            var mediaType = config.page.contentType.toLowerCase(),
-                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+
+            var mediaType  = config.page.contentType.toLowerCase(),
                 mostViewed = new Component(),
-                endpoint = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
+                attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
+                endpoint   = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
 
             mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
             mostViewed.endpoint = endpoint;
-            mostViewed.fetch(attachTo, 'html')
-                .then(function () {
-                    images.upgrade(attachTo);
-                });
+
+            mostViewed.fetch(attachTo, 'html').then(function () {
+                images.upgrade(attachTo);
+            });
         }
     },
     ready = function () {

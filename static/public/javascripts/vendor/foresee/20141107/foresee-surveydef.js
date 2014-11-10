@@ -22,7 +22,7 @@ FSR.surveydefs = [
             when: 'later'
         },
         criteria: {
-            sp: 20,
+            sp: 100,
             lf: 1
         },
         include: {
@@ -39,7 +39,7 @@ FSR.surveydefs = [
             when: 'later'
         },
         criteria: {
-            sp: 20,
+            sp: 100,
             lf: 1
         },
         include: {

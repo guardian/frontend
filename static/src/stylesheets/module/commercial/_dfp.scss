@@ -1,10 +1,8 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
-.commercial--dfp--v2,
 .commercial--dfp {
     /* Single */
-    &.commercial--dfp-single--v2,
     &.commercial--dfp-single {
         .lineitem--dfp-single {
             width: 100%;
@@ -47,7 +45,6 @@
     }
 
     /* Multiple */
-    &.commercial--dfp-multiple--v2,
     &.commercial--dfp-multiple {
         .lineitem {
             width: percentage(1/2);
