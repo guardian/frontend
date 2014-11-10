@@ -2,6 +2,7 @@ $header-image-size-mobile: 80px;
 $header-image-size-desktop: 120px;
 
 .fc-container {
+    @include clearfix;
     position: relative;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
