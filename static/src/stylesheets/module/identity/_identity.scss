@@ -49,7 +49,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid $c-neutral7;
+    border-top: 1px solid colour(neutral-7);
     @include box-sizing(border-box);
     margin: (($gs-baseline/3)*5) 0;
     padding-top: (($gs-baseline/3)*5) - 1;
@@ -228,7 +228,7 @@
 .user-profile__web-page {
     display: block;
     @include fs-textSans(1);
-    color: $c-neutral2-contrasted;
+    color: colour(neutral-2-contrasted);
     font-weight: normal;
 }
 .user-profile__web-page {
@@ -279,7 +279,7 @@
 
 .tabs--identity {
     .tabs__tab--selected {
-        border-top-color: $c-newsAccent;
+        border-top-color: colour(news-accent);
     }
     .tabs__tab {
         max-width: gs-span(3);
@@ -361,7 +361,7 @@
 
         .membership-tab__update-button--muted {
             background: none;
-            color: $c-newsDefault;
+            color: colour(news-default);
 
             &:hover,
             &:focus {
@@ -369,7 +369,7 @@
                 text-decoration: underline;
             }
             &:active {
-                color: $c-newsAccent;
+                color: colour(news-accent);
             }
         }
 
@@ -391,13 +391,13 @@
         @include fs-header(3);
         padding: 15px 0 15px 4px;
         margin: 32px 0 15px;
-        border-top: 1px solid $c-commentAccent;
-        border-bottom: 1px solid $c-commentAccent;
+        border-top: 1px solid colour(comment-accent);
+        border-bottom: 1px solid colour(comment-accent);
     }
 
     .change-summary__heading {
         @include fs-header(3);
-        border-top: 1px solid $c-neutral4;
+        border-top: 1px solid colour(neutral-4);
         padding: 15px 0 20px;
         margin-top: $gs-gutter*2;
     }
@@ -438,7 +438,7 @@
         justify-content: space-between;
 
         .change-summary__panel {
-            background-color: $c-neutral8;
+            background-color: colour(neutral-8);
             margin-top: 30px;
 
             @include mq(tablet) {
@@ -461,17 +461,17 @@
             }
 
             .change-summary__panel-label--current {
-                background-color: $c-neutral2;
+                background-color: colour(neutral-2);
             }
             .change-summary__panel-label--target {
-                background-color: $c-newsAccent;
+                background-color: colour(news-accent);
             }
         }
 
         .change-summary__header {
             height: 57px;
-            border-top: 1px solid $c-neutral4;
-            border-bottom: 1px solid $c-neutral4;
+            border-top: 1px solid colour(neutral-4);
+            border-bottom: 1px solid colour(neutral-4);
 
             .change-summary__tier-icon {
                 display: inline-block;
@@ -624,7 +624,7 @@
 
 @include keyframes('updated') {
     0% {
-        background-color: $c-brandLightBlue;
+        background-color: colour(guardian-brand-light);
         color: #ffffff;
     }
     100% {
@@ -640,7 +640,7 @@
     margin-top: $gs-baseline*2;
 }
 .email-subscription {
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid colour(neutral-5);
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 }
@@ -688,7 +688,7 @@
 }
 .email-subscription__button {
     @include fs-textSans(2);
-    background: $c-brandBlue;
+    background: colour(guardian-brand);
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -700,6 +700,6 @@
     }
 
     .email-subscription--subscribed & {
-        background: $c-neutral2-contrasted;
+        background: colour(neutral-2-contrasted);
     }
 }

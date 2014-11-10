@@ -15,7 +15,7 @@
     }
 }
 .item__tonal-border {
-    border-top: $item-top-border-height solid $c-newsAccent;
+    border-top: $item-top-border-height solid colour(news-accent);
 }
 .container--dark-background {
     @include item--hide-tone-border;
@@ -31,20 +31,20 @@
 .item__link:visited .item__title,
 .linkslist__action:visited {
     .container--dark-background & {
-        color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
+        color: mix(#ffffff, lighten(colour(neutral-1), 4%), 80%);
     }
 }
 .item__link {
-    color: $c-neutral1;
+    color: colour(neutral-1);
 
     &:visited {
         &,
         .item__title {
-            color: $c-neutral2;
+            color: colour(neutral-2);
         }
     }
     &:active {
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
     &:hover,
     &:focus {
@@ -54,11 +54,11 @@
             text-decoration: underline;
         }
         .item__cta {
-            background-color: rgba($c-neutral2, 1);
+            background-color: rgba(colour(neutral-2), 1);
         }
         .item__cta--gallery,
         .item__cta--video {
-            background-color: $c-mediaDefault;
+            background-color: colour(media-default);
         }
     }
     &:active {
@@ -103,14 +103,14 @@
 
 .item__kicker {
     @include fs-headline(1);
-    color: $c-newsAccent;
+    color: colour(news-accent);
     margin-right: 3px;
 }
 
 .item__kicker--live,
 .item__kicker--breaking-news {
     color: #ffffff;
-    background-color: $c-liveDefault;
+    background-color: colour(live-default);
     @include fs-textSans(1);
     display: inline-block;
     padding: 0 3px;
@@ -127,7 +127,7 @@
 }
 .facia-container--advertisement-feature,
 .container--advertisement-feature {
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
 
     .linkslist__action:visited,
     .fc-item__link:visited,
@@ -136,7 +136,7 @@
     .fc-item__standfirst,
     .item__standfirst,
     .fromage__standfirst {
-        color: $c-neutral2-contrasted;
+        color: colour(neutral-2-contrasted);
     }
     .fc-item__header,
     .item__title,
@@ -227,7 +227,7 @@
     &:active,
     &:focus {
         .container--dark-background & {
-            color: mix(#ffffff, $c-neutral1, 70%);
+            color: mix(#ffffff, colour(neutral-1), 70%);
         }
     }
 }
@@ -239,7 +239,7 @@
     margin-left: .1em;
     margin-right: .1em;
     border-left: 1px solid currentColor;
-    color: $c-neutral3;
+    color: colour(neutral-3);
 
     .item__title & {
         display: inline-block;
@@ -247,10 +247,10 @@
 }
 .item__standfirst,
 .item__meta {
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     .container--dark-background & {
-        color: $c-neutral4;
+        color: colour(neutral-4);
     }
 }
 .item__standfirst {
@@ -295,7 +295,7 @@
             color: inherit;
 
             .container--dark-background & {
-                color: $c-neutral4;
+                color: colour(neutral-4);
             }
         }
         i {
@@ -320,7 +320,7 @@
     }
 }
 .item__support__title {
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-textSans(1);
 }
 .item__support__item {}
@@ -332,7 +332,7 @@
     height: ($gs-baseline/3)*11;
     top: ($gs-baseline/3)*2;
     left: $gs-gutter/2.5;
-    background-color: rgba($c-neutral2, .7);
+    background-color: rgba(colour(neutral-2), .7);
     z-index: 2;
     @include border-radius(50%);
 
@@ -368,7 +368,7 @@ $cta-icon-gap: 2px;
 .item__cta--video {
     width: 36px;
     height: 36px;
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
 }
 
 .item__cta__icon {
@@ -389,7 +389,7 @@ $cta-icon-gap: 2px;
 .item--dark {
     .item__container,
     .item__meta {
-        background-color: $c-neutral1;
+        background-color: colour(neutral-1);
     }
     .item__title {
         padding-left: 7px;
@@ -405,7 +405,7 @@ $cta-icon-gap: 2px;
         color: #ffffff;
     }
     .item__title-type {
-        color: $c-commentAccent;
+        color: colour(comment-accent);
         display: block;
     }
     .item__standfirst {

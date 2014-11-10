@@ -1,31 +1,31 @@
 .tone-analysis--item {
     &.fc-item {
-        background-color: $c-analysisBackground;
-        color: $c-analysisDefault;
+        background-color: colour(analysis-background);
+        color: colour(analysis-default);
     }
 
     .u-faux-block-link--hover {
-        background-color: darken($c-analysisBackground, 5%);
+        background-color: darken(colour(analysis-background), 5%);
     }
 
     .fc-item__container:before {
-        background-color: $c-analysisAccent;
+        background-color: colour(analysis-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-analysisAccent;
+        color: colour(analysis-accent);
     }
 
     .fc-item__meta {
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
 }
 
 .tone-analysis--sublink,
 .tone-analysis--most-popular {
     .fc-item__kicker {
-        color: $c-analysisAccent;
+        color: colour(analysis-accent);
     }
 
     @include sublink-style(live) {

@@ -5,7 +5,7 @@
         .element-pullquote {
             &:before,
             &:after {
-                background-color: $c-newsDefault;
+                background-color: colour(news-default);
             }
         }
     }
