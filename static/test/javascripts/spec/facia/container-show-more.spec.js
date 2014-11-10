@@ -58,7 +58,7 @@ define([
             sut.addShowMoreButton();
 
             expect(sut.getContainerTitle).toHaveBeenCalled();
-            expect($(".button", $container).length > 0).toBeTruthy;
+            expect($(".button", $container).length > 0).toBeTruthy();
             expect($(".button", $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
@@ -79,10 +79,28 @@ define([
             sut.addShowMoreButton();
 
             bean.fire($('.button', $container)[0], 'click');
-            expect($container.hasClass('fc-show-more--hidden')).toBeFalsy;
+            expect($('.container__body', $container).hasClass('fc-show-more--hidden')).toBeFalsy();
 
             bean.fire($('.button', $container)[0], 'click');
-            expect($container.hasClass('fc-show-more--hidden')).toBeTruthy;
+            expect($('.container__body', $container).hasClass('fc-show-more--hidden')).toBeTruthy();
+        });
+
+        it("should change the button state", function() {
+            sut.addShowMoreButton();
+
+            var $button = $('.button', $container);
+
+            console.log($button.hasClass("button--primary"));
+
+            expect($button.hasClass("button--primary")).toBeTruthy();
+            expect($button.attr("data-link-name")).toEqual("More " + containerId);
+            expect($('.i', $button).hasClass("i-plus-white")).toBeTruthy();
+
+            bean.fire($('.button', $container)[0], 'click');
+
+            expect($button.hasClass("button--tertiary")).toBeTruthy();
+            expect($button.attr("data-link-name")).toEqual("Less " + containerId);
+            expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
         });
     });
 });
