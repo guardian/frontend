@@ -235,20 +235,29 @@ define([
                 },
                 {
                     key: 'snapType',
+                    editable: true,
                     requiresState: 'isSnap',
+                    possibleValues: [
+                        { key: 'document', label: "iframed document"},
+                        { key: 'fragment', label: "html fragment"},
+                        { key: 'json.html', label: "html fragment as jsonp"},
+                        { key: 'latest', label: "latest item fomr Capi"}
+                    ],
                     label: 'snap type',
                     type: 'text'
                 },
                 {
-                    key: 'snapCss',
+                    key: 'snapUri',
+                    editable: true,
                     requiresState: 'isSnap',
-                    label: 'snap CSS class',
+                    label: 'snap URL',
                     type: 'text'
                 },
                 {
-                    key: 'snapUri',
+                    key: 'snapCss',
+                    editable: true,
                     requiresState: 'isSnap',
-                    label: 'snap source',
+                    label: 'snap CSS class',
                     type: 'text'
                 }
             ],
@@ -623,14 +632,13 @@ define([
         Article.prototype.convertToSnap = function(hasMultiContent) {
             this.state.isSnap(true);
 
-            this.id(snap.generateId());
+            if (hasMultiContent && !this.meta.snapType()) {
+                this.meta.snapType('latest');
+                this.meta.snapUri(urlAbsPath(this.id()));
+            }
 
             this.meta.href(this.id());
-
-            if (hasMultiContent && !this.meta.snapType()) {
-                this.meta.snapType('capi-latest');
-                this.meta.snapUri(this.id());
-            }
+            this.id(snap.generateId());
         };
 
         Article.prototype.open = function() {
