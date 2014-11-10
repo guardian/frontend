@@ -200,7 +200,7 @@
 
 .home-stat {
     @include box-sizing(border-box);
-    background-color: $c-sportHome;
+    background-color: colour(sport-home);
     border-right: 5px solid #ffffff;
     height: 15px;
     width: 100%;
@@ -208,7 +208,7 @@
 
 .away-stat {
     @include box-sizing(border-box);
-    background-color: $c-sportAway;
+    background-color: colour(sport-away);
     height: 15px;
 }
 
@@ -247,7 +247,7 @@
     float: left;
     width: 49.5%;
     margin-bottom: $gs-baseline;
-    border-bottom: 5px solid $c-sportHome;
+    border-bottom: 5px solid colour(sport-home);
     padding-bottom: $gs-baseline/3;
 }
 
@@ -256,7 +256,7 @@
     width: 49.5%;
     text-align: right;
     margin-bottom: $gs-baseline;
-    border-bottom: 5px solid $c-sportAway;
+    border-bottom: 5px solid colour(sport-away);
     padding-bottom: $gs-baseline/3;
 }
 
@@ -278,7 +278,7 @@
     font-style: normal;
     line-height: 1;
     color: #ffffff;
-    background-color: $c-sportBright;
+    background-color: colour(sport-bright);
 
     abbr {
         border-bottom: 0 !important;

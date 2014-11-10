@@ -4,11 +4,11 @@
 }
 
 .crossword__cell--highlighted {
-    fill: lighten($c-crosswordAccent1, 10%);
+    fill: lighten(colour(crossword-accent1), 10%);
 }
 
 .crossword__cell--focussed {
-    fill: $c-crosswordAccent1;
+    fill: colour(crossword-accent1);
 }
 
 .crossword__cell-number {
@@ -43,7 +43,7 @@
 }
 
 .crossword__clue--selected {
-    background-color: $c-crosswordAccent1;
+    background-color: colour(crossword-accent1);
 }
 
 .crossword__clue--answered {
