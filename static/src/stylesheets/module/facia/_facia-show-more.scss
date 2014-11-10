@@ -1,8 +1,15 @@
 $icon-collection-size: 20px;
 
 .collection__show-more {
+    margin-top: $gs-baseline;
+
     .i {
         width: $icon-collection-size;
         height: $icon-collection-size;
     }
+
+    .fc-show-more--hidden & {
+        margin-top: 0;
+    }
+
 }
