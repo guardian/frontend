@@ -35,7 +35,7 @@ define([
                 opts = defaults(
                     options || {},
                     {
-                        containerSelector: '.container',
+                        containerSelector: '.fc-container',
                         sliceSelector: '.js-fc-slice-mpu-candidate'
                     }
                 ),
