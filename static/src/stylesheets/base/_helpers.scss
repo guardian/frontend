@@ -6,21 +6,27 @@
     @include u-h;
 }
 
+.hide-until-tablet {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+}
+
 .hide-until-leftcol {
     @include mq($until: leftCol) {
-        @include u-h;
+        display: none !important;
     }
 }
 
 .hide-until-wide {
     @include mq($until: wide) {
-        @include u-h;
+        display: none !important;
     }
 }
 
 .hide-from-leftcol {
     @include mq(leftCol) {
-        @include u-h;
+        display: none !important;
     }
 }
 

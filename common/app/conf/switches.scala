@@ -227,7 +227,7 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val GlobalDevelopmentQualtrics = Switch("Commercial", "golbal-development-qualtrics",
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
@@ -321,6 +321,11 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
+  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
@@ -451,6 +456,7 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
+    DiscussionPageSizeSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,

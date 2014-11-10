@@ -24,6 +24,7 @@ object Im4Java {
     val operation = new IMOperation
 
     operation.addImage()
+    operation.sharpen(1.0)
     operation.resize(width)
     operation.quality(100)
     operation.addImage("png:-")
