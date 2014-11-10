@@ -40,6 +40,7 @@ $c-soulmates-high: $c-neutral1;
         }
         .commercial__explainer {
             @include fs-header(1);
+            line-height: 1;
             color: $c-soulmates-high;
             position: absolute;
             bottom: 0;
