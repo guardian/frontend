@@ -201,8 +201,7 @@ $vjs-progress-inset-bottom: 4px;
         transition-delay: .5s;
     }
 
-    .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
-    .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .gu-media-wrapper:hover .vjs-mousemoved &,
     .vjs-paused.vjs-has-started & {
         bottom: 0;
         @include transition(bottom 0s);
