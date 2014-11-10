@@ -123,21 +123,26 @@
     <script type="text/html" id="template_editor">
         <!-- ko if: displayEditor -->
             <!-- ko if: type === 'text' -->
-                <div class="editor">
+                <div class="editor" data-bind="css: {'with-label': showLabel}">
+
+                    <!-- ko if: showLabel -->
+                        <span class="editor__label" data-bind="text: label"></span>
+                    <!-- /ko -->
+
                     <textarea data-bind="
                         click: open,
                         clickBubble: false,
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...',
+                            placeholder: (showLabel ? '' : field() || label) + '...',
                             title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
                         textInput: overrideOrVal"></textarea>
 
-                    <!-- ko if: hasFocus() -->
+                    <!-- ko if: hasFocus -->
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
                             text: length"></span>
@@ -149,8 +154,8 @@
             <!-- /ko -->
 
             <!-- ko if: type === 'choice' -->
-                <div class="editor">
-                    <span class="editor__label" data-bind="text: label"></span>:
+                <div class="editor with-label">
+                    <span class="editor__label" data-bind="text: label"></span>
                     <select data-bind="options: choices, value: overrideOrVal, optionsText: 'label', optionsValue: 'val'"></select>
                 </div>
             <!-- /ko -->

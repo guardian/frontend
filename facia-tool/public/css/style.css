@@ -599,6 +599,7 @@ select {
 .editor {
     position: relative;
     margin: 0 109px 0 -4px;
+    overflow: hidden;
 }
 
 .editor textarea {
@@ -613,13 +614,27 @@ select {
     resize: none;
 }
 
+.editor.with-label textarea {
+    width: 70%;
+    float: left;
+}
+
 .editor textarea.active {
     background: #eeeeee;
     color: #000000;
 }
 
+.editor select {
+    margin-bottom: 2px;
+}
+
 .editor__label {
+    font-size: 12px;
     margin-left: 4px;
+    width: 100px;
+    float: left;
+    margin-top: 2px;
+    color: #666666;
 }
 
 .editor__revert,

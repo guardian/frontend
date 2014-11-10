@@ -238,27 +238,30 @@ define([
                     editable: true,
                     requiresState: 'isSnap',
                     label: 'snap type',
+                    showLabel: true,
                     type: 'choice',
                     choices: [
                         { val: 'link',      label: 'special link'},
-                        { val: 'latest',    label: 'latest from ContentApi'},
-                        { val: 'document',  label: 'iframe\'d document'},
-                        { val: 'fragment',  label: 'html fragment'},
-                        { val: 'json.html', label: 'jsonp\'d html fragment'}
+                        { val: 'latest',    label: 'latest ContentApi item'},
+                        { val: 'document',  label: 'embed iframe'},
+                        { val: 'fragment',  label: 'embed html'},
+                        { val: 'json.html', label: 'embed html (jsonp)'}
                     ]
                 },
                 {
                     key: 'snapUri',
                     editable: true,
                     requiresState: 'isSnap',
-                    label: 'snap target URL',
+                    label: 'snap target',
+                    showLabel: true,
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
                     editable: true,
                     requiresState: 'isSnap',
-                    label: 'snap CSS class',
+                    label: 'snap class',
+                    showLabel: true,
                     type: 'text'
                 }
             ],
@@ -417,6 +420,8 @@ define([
                 key: key,
 
                 label: opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
+
+                showLabel: opts.showLabel,
 
                 type: opts.type,
 
