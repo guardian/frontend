@@ -65,7 +65,7 @@ define([
         return getMediaType(player) + ':' + eventName;
     }
 
-    function ophanRecord (id, event, player) {
+    function ophanRecord(id, event, player) {
         if (id) {
             require('ophan/ng', function (ophan) {
                 var eventObject = {};
@@ -78,7 +78,7 @@ define([
         }
     }
 
-    function initOphanTracking (player, mediaId) {
+    function initOphanTracking(player, mediaId) {
         EVENTS.concat(QUARTILES.map(function (q) {
             return 'play:' + q;
         })).forEach(function (event) {
@@ -88,11 +88,11 @@ define([
         });
     }
 
-    function initOmnitureTracking (player) {
+    function initOmnitureTracking(player) {
         new OmnitureMedia(player).init();
     }
 
-    function bindPrerollEvents (player) {
+    function bindPrerollEvents(player) {
         var events = {
             end: function () {
                 player.trigger(constructEventName('preroll:end', player));
@@ -125,7 +125,7 @@ define([
         });
     }
 
-    function bindContentEvents (player) {
+    function bindContentEvents(player) {
         var events = {
             end: function () {
                 player.trigger(constructEventName('content:end', player));
@@ -164,7 +164,7 @@ define([
         events.ready();
     }
 
-    function beaconError (err) {
+    function beaconError(err) {
         if (err && 'message' in err) {
             raven.captureException(new Error(err.message), {
                 tags: {
@@ -175,7 +175,7 @@ define([
         }
     }
 
-    function handleInitialMediaError (player) {
+    function handleInitialMediaError(player) {
         var err = player.error();
         if (err !== null) {
             beaconError(err);
@@ -184,13 +184,13 @@ define([
         return false;
     }
 
-    function bindErrorHandler (player) {
+    function bindErrorHandler(player) {
         player.on('error', function (e) {
             beaconError(e);
         });
     }
 
-    function getVastUrl () {
+    function getVastUrl() {
         var adUnit = config.page.adUnit,
             custParams = urlUtils.constructQuery(buildPageTargeting()),
             encodedCustParams = encodeURIComponent(custParams),
@@ -199,7 +199,7 @@ define([
                 'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
     }
 
-    function adCountdown () {
+    function adCountdown() {
         var player = this,
             tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
                   ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
@@ -222,7 +222,7 @@ define([
         this.one(constructEventName('preroll:play', player), events.init.bind(player));
     }
 
-    function fullscreener () {
+    function fullscreener() {
         var player = this,
             clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
             events = {
@@ -243,7 +243,7 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
-    function initLoadingSpinner (player) {
+    function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML =
             '<div class="pamplemousse">' +
             '<div class="pamplemousse__pip"><i></i></div>' +
@@ -252,7 +252,7 @@ define([
             '</div>';
     }
 
-    function createVideoPlayer (el, options) {
+    function createVideoPlayer(el, options) {
         var player;
 
         options.techOrder = ['html5', 'flash'];
@@ -267,7 +267,7 @@ define([
         return player;
     }
 
-    function initPlayer () {
+    function initPlayer() {
 
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
@@ -356,7 +356,7 @@ define([
         });
     }
 
-    function initEndSlate (player, endSlatePath) {
+    function initEndSlate(player, endSlatePath) {
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
@@ -373,7 +373,7 @@ define([
         });
     }
 
-    function initMoreInSection () {
+    function initMoreInSection() {
         if (!config.isMedia || !config.page.showRelatedContent) {
             return;
         }
@@ -401,7 +401,7 @@ define([
         });
     }
 
-    function initMostViewedMedia () {
+    function initMostViewedMedia() {
         if (!config.isMedia) {
             return;
         }
@@ -419,7 +419,7 @@ define([
         });
     }
 
-    function ready () {
+    function ready() {
         if (config.switches.enhancedMediaPlayer) {
             require('bootstraps/video-player', initPlayer);
         }
