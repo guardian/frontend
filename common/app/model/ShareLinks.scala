@@ -9,11 +9,7 @@ case class ShareLink (
   href: String
 )
 
-trait ShareLinks {
-
-  def blockShortUrl: String
-  def blockWebUrl: String
-  def blockWebTitle: String
+trait ShareLinks { self: Content =>
 
   private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, linkUrl: String, title: String): Option[ShareLink] = {
 
@@ -26,7 +22,7 @@ trait ShareLinks {
     lazy val link = shareCampaignUrl("sbl", elementId)
     lazy val twitter = shareCampaignUrl("stw", elementId).urlEncoded
     lazy val whatsapp = shareCampaignUrl("swa", elementId)
-    lazy val webTitleAsciiEncoding = blockWebTitle.encodeURIComponent
+    lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
 
     shareType match {
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
@@ -45,8 +41,8 @@ trait ShareLinks {
   protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
   protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
 
-  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, linkUrl: String = blockShortUrl, title: String = blockWebTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, linkUrl, title))
+  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, linkUrl: String = shortUrl, title: String = webTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, linkUrl, title))
 
-  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, linkUrl = blockShortUrl, title = blockWebTitle))
+  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, linkUrl = shortUrl, title = webTitle))
 }
 

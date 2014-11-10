@@ -48,10 +48,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
 
-  def blockShortUrl: String = shortUrl
-  def blockWebUrl: String = webUrl
-  def blockWebTitle: String = webTitle
-
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
