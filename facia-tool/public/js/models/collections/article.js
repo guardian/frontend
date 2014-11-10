@@ -623,12 +623,13 @@ define([
         Article.prototype.convertToSnap = function(hasMultiContent) {
             this.state.isSnap(true);
 
-            this.meta.href(this.id());
-
             this.id(snap.generateId());
 
-            if (hasMultiContent) {
+            this.meta.href(this.id());
+
+            if (hasMultiContent && !this.meta.snapType()) {
                 this.meta.snapType('capi.latest');
+                this.meta.snapUri(this.id());
             }
         };
 
