@@ -16,8 +16,8 @@ define([
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
                 '<button class="fc-container__toggle" data-link-name="Show">'
-                    + '<i class="i i-arrow-grey-large"></i>'
-                    + '<span class="fc-container__toggle__text">Hide</span>'
+                + '<i class="i i-arrow-grey-large"></i>'
+                + '<span class="fc-container__toggle__text">Hide</span>'
                 + '</button>'
             )),
             _prefName = 'container-states',

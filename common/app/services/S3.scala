@@ -108,6 +108,8 @@ trait S3 extends Logging {
       gzippedStream.flush()
       gzippedStream.close()
 
+      metadata.setContentLength(os.size())
+
       new PutObjectRequest(bucket, key, new ByteArrayInputStream(os.toByteArray), metadata).withCannedAcl(accessControlList)
     }
 

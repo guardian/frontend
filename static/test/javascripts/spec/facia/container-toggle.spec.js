@@ -20,7 +20,7 @@ define([
             $container,
             containerId = 'uk/culture/regular-stories',
             storageId = 'container-states',
-            // helper assertion method
+        // helper assertion method
             assertState = function($container, state) {
                 var $button = $('button', $container[0]);
                 expect($container.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
@@ -31,10 +31,10 @@ define([
         beforeEach(function(){
             container = bonzo.create(
                 '<section class="fc-container js-container--toggle" data-id="' + containerId + '">' +
-                    '<div class="fc-container__header js-container__header">' +
-                        '<h2>A container</h2>' +
-                    '</div>' +
-                    '<div class="ad-slot--paid-for-badge"></div>' +
+                '<div class="fc-container__header js-container__header">' +
+                '<h2>A container</h2>' +
+                '</div>' +
+                '<div class="ad-slot--paid-for-badge"></div>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
