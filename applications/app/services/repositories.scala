@@ -8,7 +8,6 @@ import model.Section
 import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices.{ContainerDefinition, Fixed}
@@ -25,64 +24,27 @@ object IndexPagePagination {
 
 object IndexPage {
   def makeFront(indexPage: IndexPage, edition: Edition) = {
-    def localDateFor(content: Content) =
-      content.webPublicationDate.withZone(edition.timezone).toLocalDate
+    val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
-    val front = (for {
-      grouping <- IndexPageGrouping.fromContent(indexPage.trails)
-    } yield {
-      val grouped = grouping match {
-        case ByDay =>
-          indexPage.trails.groupBy(localDateFor)
+    val front = Front.fromConfigsAndContainers(grouped map {
+      case grouping =>
+        val collection = CollectionEssentials(
+          grouping.items,
+          /** What about datetime tag? Might need to make a proper type for this so we can case match
+            * later.
+            */
+          displayName = Some(grouping.dateString),
+          None,
+          None,
+          None
+        )
 
-        case ByMonth =>
-          indexPage.trails.groupBy(localDateFor(_).withDayOfMonth(1))
+        val config = CollectionConfig.emptyConfig
 
-        case ByYear =>
-          indexPage.trails.groupBy(localDateFor(_).withDayOfYear(1))
-      }
-
-      Front.fromConfigsAndContainers(grouped.toSeq.sortBy(_._1).reverse map {
-        case (day, items) =>
-          val dateString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(grouping.dateFormatString))
-
-          val collection = CollectionEssentials(
-            items,
-            /** What about datetime tag? Might need to make a proper type for this so we can case match
-              * later.
-              */
-            displayName = Some(dateString),
-            None,
-            None,
-            None
-          )
-
-          val config = CollectionConfig.emptyConfig
-
-          /** TODO what should the data ID be here? */
-          ((CollectionConfigWithId(dateString, config), collection),
-            Fixed(ContainerDefinition.forNumberOfItems(items.length)))
-      })
-    }) getOrElse {
-      val collection = CollectionEssentials(
-        indexPage.trails,
-        /** What about datetime tag? Might need to make a proper type for this so we can case match
-          * later.
-          */
-        displayName = indexPage.page.title,
-        None,
-        None,
-        None
-      )
-
-      val config = CollectionConfig.emptyConfig
-
-      /** TODO what should the data ID be here? */
-      Front.fromConfigsAndContainers(
-        Seq(((CollectionConfigWithId(indexPage.page.id, config), collection),
-          Fixed(views.support.getTagContainerDefinition(indexPage.page)))
-      ))
-    }
+        /** TODO what should the data ID be here? */
+        ((CollectionConfigWithId(grouping.dateString, config), collection),
+          Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
+    })
 
     val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
 
