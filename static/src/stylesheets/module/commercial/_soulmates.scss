@@ -42,7 +42,6 @@ $c-soulmates-high: $c-neutral1;
             @include fs-header(1);
             color: $c-soulmates-high;
             position: absolute;
-            top: 20px;
             bottom: 0;
             left: $gs-gutter * 8;
             width: auto;
