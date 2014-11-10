@@ -427,7 +427,7 @@ define([
         initMostViewedMedia();
 
         mediator.emit('page:media:ready');
-    };
+    }
 
     return {
         init: ready
