@@ -18,14 +18,14 @@
     margin-bottom: $gs-baseline;
 
     @include mq($until: desktop) {
-        border-top: 1px dotted colour(media-background-accent);
+        border-top: 1px dotted colour(media-mute);
         padding-top: $gs-baseline;
 
         &:first-child {
             border-top: 0;
         }
         &:last-child {
-            border-bottom: 1px dotted colour(media-background-accent);
+            border-bottom: 1px dotted colour(media-mute);
         }
         .gallery2__item--advert + & {
         }

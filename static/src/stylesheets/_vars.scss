@@ -94,53 +94,53 @@ $frontend-palette: (
     comment-accent:         guss-colour(comment-main-2, $pasteup-palette),
     comment-background:     guss-colour(comment-support-2, $pasteup-palette),
 
-    live-default: guss-colour(live-main-1, $pasteup-palette),
-    live-accent: guss-colour(live-main-2, $pasteup-palette),
-    live-mute: guss-colour(features-support-3, $pasteup-palette),
+    live-default:           guss-colour(live-main-1, $pasteup-palette),
+    live-accent:            guss-colour(live-main-2, $pasteup-palette),
+    live-mute:              guss-colour(features-support-3, $pasteup-palette),
 
-    media-default: guss-colour(multimedia-main-2, $pasteup-palette),
-    media-background: guss-colour(multimedia-main-1, $pasteup-palette),
-    media-background-accent: guss-colour(multimedia-support-4, $pasteup-palette),
+    media-default:          guss-colour(multimedia-main-2, $pasteup-palette),
+    media-background:       guss-colour(multimedia-main-1, $pasteup-palette),
+    media-mute:             guss-colour(multimedia-support-4, $pasteup-palette),
 
-    podcast-default: guss-colour(news-support-1, $pasteup-palette),
-    podcast-background: guss-colour(multimedia-support-4, $pasteup-palette),
+    podcast-default:        guss-colour(news-support-1, $pasteup-palette),
+    podcast-background:     guss-colour(multimedia-support-4, $pasteup-palette),
 
-    review-accent: guss-colour(comment-support-3, $pasteup-palette),
-    review-background: guss-colour(comment-support-1, $pasteup-palette),
+    review-accent:          guss-colour(comment-support-3, $pasteup-palette),
+    review-background:      guss-colour(comment-support-1, $pasteup-palette),
 
-    editorial-default: guss-colour(news-main-1, $pasteup-palette),
-    editorial-accent: guss-colour(news-support-1, $pasteup-palette),
+    editorial-default:      guss-colour(news-main-1, $pasteup-palette),
+    editorial-accent:       guss-colour(news-support-1, $pasteup-palette),
 
-    crossword-accent1: guss-colour(multimedia-support-1, $pasteup-palette),
-    crossword-accent2: guss-colour(comment-support-2, $pasteup-palette),
+    crossword-accent1:      guss-colour(multimedia-support-1, $pasteup-palette),
+    crossword-accent2:      guss-colour(comment-support-2, $pasteup-palette),
 
     // Football
     // =============================================================================
 
-    sport-bright: #70d2e6,
-    sport-mid: guss-colour(guardian-brand, $pasteup-palette),
-    sport-dark: #003f64,
+    sport-bright:           #70d2e6,
+    sport-mid:              guss-colour(guardian-brand, $pasteup-palette),
+    sport-dark:             #003f64,
 
-    sport-home: #70d2e6,
-    sport-away: #003f64,
+    sport-home:             #70d2e6,
+    sport-away:             #003f64,
 
     // Stati
     // =============================================================================
 
-    status-positive: #6ca843,
-    status-neutral: guss-colour(neutral-2, $pasteup-palette),
-    status-negative: #da1d1d,
+    status-positive:        #6ca843,
+    status-neutral:         guss-colour(neutral-2, $pasteup-palette),
+    status-negative:        #da1d1d,
 
     // Social
     // =============================================================================
 
-    social-email: #767676,
-    social-facebook: #3067a3,
-    social-twitter: #03b3ee,
-    social-gplus: #e15440,
-    social-whatsapp: #59cb3f,
-    social-linkedin: #0071a1,
-    social-pinterest: #b9252c
+    social-email:           #767676,
+    social-facebook:        #3067a3,
+    social-twitter:         #03b3ee,
+    social-gplus:           #e15440,
+    social-whatsapp:        #59cb3f,
+    social-linkedin:        #0071a1,
+    social-pinterest:       #b9252c
 
 );
 
