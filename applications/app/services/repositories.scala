@@ -16,7 +16,8 @@ import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
-import implicits.Dates.dateOrdering
+import implicits.Dates._
+import common.JodaTime._
 
 object IndexPagePagination {
   def pageSize: Int = 50 //have a good think before changing this
@@ -24,39 +25,59 @@ object IndexPagePagination {
 
 object IndexPage {
   def makeFront(indexPage: IndexPage, edition: Edition) = {
-    val itemsByDay = indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
-    val itemsByMonth = indexPage.trails.groupBy(_.webPublicationDate.monthOfYear())
-
-    val averageItemsPerDay = itemsByDay.values.map(_.length).sum.toDouble / itemsByDay.size
-
-    def container(numberOfItems: Int) = if (itemsByDay.keySet.size == 1) {
-      Fixed(views.support.getTagContainerDefinition(indexPage.page))
-    } else {
-      Fixed(ContainerDefinition.forNumberOfItems(numberOfItems))
-    }
-
-    val front = Front.fromConfigs(for {
-      (day, items) <- itemsByDay.toSeq.sortBy(_._1).reverse
+    val front = (for {
+      grouping <- IndexPageGrouping.fromContent(indexPage.trails)
     } yield {
-      val dateString = Format(day.toDateTimeAtStartOfDay, edition, "d MMMM yyyy")
+      val grouped = grouping match {
+        case ByDay =>
+          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
 
+        case ByMonth =>
+          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate.withDayOfMonth(1))
+
+        case ByYear =>
+          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate.withDayOfYear(1))
+      }
+
+      Front.fromConfigs(grouped.toSeq.sortBy(_._1).reverse map {
+        case (day, items) =>
+          val dateString = Format(day.toDateTimeAtStartOfDay, edition, grouping.dateFormatString)
+
+          val collection = CollectionEssentials(
+            items,
+            /** What about datetime tag? Might need to make a proper type for this so we can case match
+              * later.
+              */
+            displayName = Some(dateString),
+            None,
+            None,
+            None
+          )
+
+          val config = CollectionConfig.emptyConfig
+            .withContainer(Fixed(ContainerDefinition.forNumberOfItems(items.length)))
+
+          /** TODO what should the data ID be here? */
+          (CollectionConfigWithId(dateString, config), collection)
+      })
+    }) getOrElse {
       val collection = CollectionEssentials(
-        items,
+        indexPage.trails,
         /** What about datetime tag? Might need to make a proper type for this so we can case match
           * later.
           */
-        displayName = Some(dateString),
+        displayName = indexPage.page.title,
         None,
         None,
         None
       )
 
       val config = CollectionConfig.emptyConfig
-        .withContainer(container(items.length))
+        .withContainer(Fixed(views.support.getTagContainerDefinition(indexPage.page)))
 
       /** TODO what should the data ID be here? */
-      (CollectionConfigWithId(dateString, config), collection)
-    })
+      Front.fromConfigs(Seq((CollectionConfigWithId(indexPage.page.id, config), collection)))
+    }
 
     val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
 
