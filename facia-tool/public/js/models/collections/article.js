@@ -241,7 +241,7 @@ define([
                         { key: 'document', label: "iframed document"},
                         { key: 'fragment', label: "html fragment"},
                         { key: 'json.html', label: "html fragment as jsonp"},
-                        { key: 'latest', label: "latest item fomr Capi"}
+                        { key: 'latest', label: "latest item from Capi"}
                     ],
                     label: 'snap type',
                     type: 'text'
