@@ -4,11 +4,11 @@ $icon-collection-size: 80%;
 .collection__show-more:focus,
 .collection__show-more:active {
     margin-top: $gs-baseline;
-    border: 1px solid guss-colour(guardian-brand-light, $pasteup-palette);
-    color: guss-colour(guardian-brand, $pasteup-palette);
+    border: 1px solid colour(guardian-brand-light);
+    color: colour(guardian-brand);
 
     &:hover {
-        border-color: guss-colour(guardian-brand-dark, $pasteup-palette);
+        border-color: colour(guardian-brand-dark);
     }
 
     .i {
