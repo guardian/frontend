@@ -286,7 +286,7 @@ $fc-hover-transition: .25s ease;
     position: absolute;
     bottom: 0;
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     a {
         // make sure meta links always clickable,

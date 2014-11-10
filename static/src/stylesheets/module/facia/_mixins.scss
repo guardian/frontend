@@ -141,10 +141,10 @@ $breakpoints: (
         left: 0;
         width: 1px;
         height: 100%;
-        border-left: 1px solid $c-neutral5;
+        border-left: 1px solid colour(neutral-5);
 
         .container--dark-background & {
-            border-left-color: lighten($c-neutral1, 16%);
+            border-left-color: lighten(colour(neutral-1), 16%);
         }
     }
 }

@@ -74,10 +74,10 @@
 .facia-container--advertisement-feature,
 .fc-container--advertisement-feature,
 .container--advertisement-feature {
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
 
     .fc-container__inner {
-        border-top: 1px solid $c-neutral4;
+        border-top: 1px solid colour(neutral-4);
     }
 
     .fc-item,
@@ -86,7 +86,7 @@
     }
 
     .fc-container__header__title {
-        color: $c-neutral1;
+        color: colour(neutral-1);
     }
 
     .fc-item__image-container {
@@ -98,7 +98,7 @@
     .fc-item__standfirst,
     .item__link:visited,
     .item__link:visited .item__title {
-        color: $c-neutral2-contrasted;
+        color: colour(neutral-2-contrasted);
     }
     .fc-item__header,
     .fc-item__title,
