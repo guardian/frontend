@@ -4,13 +4,13 @@
     dead, // $tone
     #ffffff, // $tonal__header-background
     colour(neutral-2), // $tonal__header-text
-    $c-liveDefault, // $tonal__header-link
+    colour(live-default), // $tonal__header-link
     400, // $tonal__headline-weight
     colour(neutral-1), // $tonal__headline-colour
-    $c-liveDefault, // $tonal__headline-accent
+    colour(live-default), // $tonal__headline-accent
     colour(neutral-6), // $tonal__standfirst-background
-    $c-mediaBackgroundAccent, // $tonal__standfirst-text
-    $c-liveDefault, // $tonal__standfirst-link
+    colour(media-background-accent), // $tonal__standfirst-text
+    colour(live-default), // $tonal__standfirst-link
     colour(neutral-8), // $tonal__article-background
-    $c-liveDefault // $tonal__article-link
+    colour(live-default) // $tonal__article-link
 );

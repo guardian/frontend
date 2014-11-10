@@ -107,7 +107,7 @@ $vjs-progress-inset-bottom: 4px;
         background-color: rgba(51, 51, 51, .8);
 
         .gu-media-wrapper:hover & {
-            background-color: $c-mediaDefault;
+            background-color: colour(media-default);
         }
 
         &:before {
@@ -341,7 +341,7 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-play-progress {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     z-index: 2;
 
     .gu-media-wrapper--podcast & {
@@ -383,7 +383,7 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-volume-level {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
 
     .gu-media-wrapper--podcast & {
         background-color: $c-podcastDefault;
@@ -392,7 +392,7 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-handle {
     position: absolute;
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     height: 11px;
     width: 2px;
 
@@ -517,7 +517,7 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-overlay__duration {
         text-align: left;
-        color: $c-mediaDefault;
+        color: colour(media-default);
         @include fs-headline(3);
         padding: 0 $gs-gutter/2 $gs-baseline*2;
 

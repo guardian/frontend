@@ -85,7 +85,7 @@
 .gallery-launch-cta {
     @include fs-bodyCopy(1);
     line-height: 16px;
-    background-color: $c-mediaBackground;
+    background-color: colour(media-background);
     color: colour(neutral-7) !important;
     position: absolute;
     top: 0;

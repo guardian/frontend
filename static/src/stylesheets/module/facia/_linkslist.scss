@@ -34,7 +34,7 @@
         background: colour(comment-accent);
     }
     &.tone-media:before {
-        background: $c-mediaDefault;
+        background: colour(media-default);
     }
 
     &.show-more--hidden {

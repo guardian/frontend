@@ -11,7 +11,7 @@
     }
 }
 .ad-slot--dark {
-    background-color: lighten($c-mediaBackground, 2.5%);
+    background-color: lighten(colour(media-background), 2.5%);
 }
 .ad-slot--mobile {
     @include mq(tablet) {

@@ -91,17 +91,17 @@ $frontend-palette: (
     comment-accent:         guss-colour(comment-main-2, $pasteup-palette),
     comment-background:     guss-colour(comment-support-2, $pasteup-palette),
 
-    
+    live-default: guss-colour(live-main-1, $pasteup-palette),
+    live-accent: guss-colour(live-main-2, $pasteup-palette),
+    live-mute: guss-colour(features-support-3, $pasteup-palette),
+
+    media-default: guss-colour(multimedia-main-2, $pasteup-palette),
+    media-background: guss-colour(multimedia-main-1, $pasteup-palette),
+    media-background-accent: guss-colour(multimedia-support-4, $pasteup-palette),
+
+
 
 );
-
-$c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
-$c-liveAccent: guss-colour(live-main-2, $pasteup-palette);
-$c-liveMute: guss-colour(features-support-3, $pasteup-palette);
-
-$c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
-$c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
-$c-mediaBackgroundAccent: guss-colour(multimedia-support-4, $pasteup-palette);
 
 $c-podcastDefault: guss-colour(news-support-1, $pasteup-palette);
 $c-podcastBackground: guss-colour(multimedia-support-4, $pasteup-palette);

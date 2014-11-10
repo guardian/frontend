@@ -18,14 +18,14 @@
     margin-bottom: $gs-baseline;
 
     @include mq($until: desktop) {
-        border-top: 1px dotted $c-mediaBackgroundAccent;
+        border-top: 1px dotted colour(media-background-accent);
         padding-top: $gs-baseline;
 
         &:first-child {
             border-top: 0;
         }
         &:last-child {
-            border-bottom: 1px dotted $c-mediaBackgroundAccent;
+            border-bottom: 1px dotted colour(media-background-accent);
         }
         .gallery2__item--advert + & {
         }
@@ -116,7 +116,7 @@
 .gallery2__img-container {
     position: relative;
     display: block;
-    background-color: lighten($c-mediaBackground, 2.5%);
+    background-color: lighten(colour(media-background), 2.5%);
 }
 
 .gallery2__img {
@@ -168,7 +168,7 @@
 
     @include mq(desktop) {
         .gallery2__img-container:hover & {
-            background-color: $c-mediaDefault;
+            background-color: colour(media-default);
 
             .i-expand-black {
                 display: inline-block;

@@ -211,7 +211,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__live-indicator {
-    color: $c-liveDefault;
+    color: colour(live-default);
 
     .blog__live-icon {
         display: inline-block;
@@ -223,7 +223,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__breaking-indicator {
-    color: $c-liveDefault;
+    color: colour(live-default);
 }
 
 .fc-item__header {
