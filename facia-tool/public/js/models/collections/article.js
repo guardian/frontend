@@ -89,7 +89,7 @@ define([
                     editable: true,
                     omitForSupporting: true,
                     requiresState: 'isSnap',
-                    label: 'snap URL',
+                    label: 'special link URL',
                     type: 'text'
                 },
                 {
@@ -237,20 +237,21 @@ define([
                     key: 'snapType',
                     editable: true,
                     requiresState: 'isSnap',
-                    possibleValues: [
-                        { key: 'document', label: "iframed document"},
-                        { key: 'fragment', label: "html fragment"},
-                        { key: 'json.html', label: "html fragment as jsonp"},
-                        { key: 'latest', label: "latest item fomr Capi"}
-                    ],
                     label: 'snap type',
-                    type: 'text'
+                    type: 'choice',
+                    choices: [
+                        { val: 'link',      label: 'special link'},
+                        { val: 'latest',    label: 'latest from ContentApi'},
+                        { val: 'document',  label: 'iframe\'d document'},
+                        { val: 'fragment',  label: 'html fragment'},
+                        { val: 'json.html', label: 'jsonp\'d html fragment'}
+                    ]
                 },
                 {
                     key: 'snapUri',
                     editable: true,
                     requiresState: 'isSnap',
-                    label: 'snap URL',
+                    label: 'snap target URL',
                     type: 'text'
                 },
                 {
@@ -413,15 +414,17 @@ define([
             }
 
             return {
-                key:    key,
+                key: key,
 
-                label:  opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
+                label: opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
 
-                type:   opts.type,
+                type: opts.type,
 
-                meta:   meta,
+                choices: opts.choices,
 
-                field:  field,
+                meta: meta,
+
+                field: field,
 
                 revert: function() { meta(undefined); },
 

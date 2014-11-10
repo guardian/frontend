@@ -148,6 +148,13 @@
                 </div>
             <!-- /ko -->
 
+            <!-- ko if: type === 'choice' -->
+                <div class="editor">
+                    <span class="editor__label" data-bind="text: label"></span>:
+                    <select data-bind="options: choices, value: overrideOrVal, optionsText: 'label', optionsValue: 'val'"></select>
+                </div>
+            <!-- /ko -->
+
             <!-- ko if: type === 'boolean' -->
                 <span data-bind="
                     click: toggle,

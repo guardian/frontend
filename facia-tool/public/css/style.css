@@ -618,6 +618,10 @@ select {
     color: #000000;
 }
 
+.editor__label {
+    margin-left: 4px;
+}
+
 .editor__revert,
 .editor__length {
     position: absolute;
