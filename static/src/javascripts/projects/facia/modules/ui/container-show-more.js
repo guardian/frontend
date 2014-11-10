@@ -56,16 +56,23 @@ define([
             $('.' + textHook, $button).text(buttonText[state]);
         };
 
+        this.changeButtonState = function() {
+            $button.attr('data-link-name', buttonText[state]);
+            $button.toggleClass('button--primary', state !== 'displayed');
+            $button.toggleClass('button--tertiary', state === 'displayed');
+            $('.i', $button).toggleClass('i-plus-white', state !== 'displayed');
+            $('.i', $button).toggleClass('i-minus-blue', state === 'displayed');
+        };
+
         function showMore() {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
              */
             $container.toggleClass(className, state === 'displayed');
-            $button.toggleClass('button--primary', state === 'displayed');
-            $button.toggleClass('button--tertiary', state !== 'displayed');
             state = (state === 'hidden') ? 'displayed' : 'hidden';
             self.changeButtonText();
+            self.changeButtonState();
         }
     };
 });

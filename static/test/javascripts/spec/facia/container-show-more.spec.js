@@ -16,7 +16,7 @@ define([
     containerFcShowMore
     ) {
 
-    ddescribe('Container Show More', function() {
+    describe('Container Show More', function() {
 
         var container,
             $container,

@@ -1,7 +1,15 @@
-$icon-collection-size: 20px;
+$icon-collection-size: 80%;
 
-.collection__show-more {
+.collection__show-more,
+.collection__show-more:focus,
+.collection__show-more:active {
     margin-top: $gs-baseline;
+    border: 1px solid guss-colour(guardian-brand-light, $pasteup-palette);
+    color: guss-colour(guardian-brand, $pasteup-palette);
+
+    &:hover {
+        border-color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    }
 
     .i {
         width: $icon-collection-size;
@@ -10,6 +18,8 @@ $icon-collection-size: 20px;
 
     .fc-show-more--hidden & {
         margin-top: 0;
+        border: 0;
+        color: #ffffff;
     }
 
 }
