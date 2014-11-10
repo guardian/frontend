@@ -531,8 +531,8 @@ case object HalfHalf2 extends Slice {
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = Standard,
-          tablet = MediaList
+          mobile = MediaList,
+          tablet = Half
         )
       )
     )

@@ -8,6 +8,7 @@ import model.Section
 import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices.{ContainerDefinition, Fixed}
@@ -25,23 +26,26 @@ object IndexPagePagination {
 
 object IndexPage {
   def makeFront(indexPage: IndexPage, edition: Edition) = {
+    def localDateFor(content: Content) =
+      content.webPublicationDate.withZone(edition.timezone).toLocalDate
+
     val front = (for {
       grouping <- IndexPageGrouping.fromContent(indexPage.trails)
     } yield {
       val grouped = grouping match {
         case ByDay =>
-          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
+          indexPage.trails.groupBy(localDateFor)
 
         case ByMonth =>
-          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate.withDayOfMonth(1))
+          indexPage.trails.groupBy(localDateFor(_).withDayOfMonth(1))
 
         case ByYear =>
-          indexPage.trails.groupBy(_.webPublicationDate.toLocalDate.withDayOfYear(1))
+          indexPage.trails.groupBy(localDateFor(_).withDayOfYear(1))
       }
 
       Front.fromConfigs(grouped.toSeq.sortBy(_._1).reverse map {
         case (day, items) =>
-          val dateString = Format(day.toDateTimeAtStartOfDay, edition, grouping.dateFormatString)
+          val dateString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(grouping.dateFormatString))
 
           val collection = CollectionEssentials(
             items,
@@ -53,6 +57,8 @@ object IndexPage {
             None,
             None
           )
+
+          println(items.length, ContainerDefinition.forNumberOfItems(items.length))
 
           val config = CollectionConfig.emptyConfig
             .withContainer(Fixed(ContainerDefinition.forNumberOfItems(items.length)))

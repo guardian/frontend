@@ -37,6 +37,7 @@ object Container extends Logging {
 
 sealed trait Container
 
+/** Container whose layout is determined by the groups trails are assigned to in the tool. */
 case class Dynamic(get: DynamicContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
