@@ -628,7 +628,7 @@ define([
             this.meta.href(this.id());
 
             if (hasMultiContent && !this.meta.snapType()) {
-                this.meta.snapType('capi.latest');
+                this.meta.snapType('capi-latest');
                 this.meta.snapUri(this.id());
             }
         };
