@@ -14,7 +14,10 @@ define([
     'common/modules/commercial/loader',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/tags/container',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+
+    // modules for creatives - need to be included so they're available
+    'common/modules/commercial/creatives/scrollable-mpu'
 ], function (
     bonzo,
     qwery,

@@ -15,7 +15,8 @@ object RelatedController extends Controller with Related with Logging with Execu
   def renderHtml(path: String) = render(path)
   def render(path: String) = MemcachedAction { implicit request =>
     val edition = Edition(request)
-    related(edition, path) map {
+    val excludeTags = request.queryString.get("exclude-tag").getOrElse(Nil)
+    related(edition, path, excludeTags) map {
       case Nil => JsonNotFound()
       case trails => renderRelated(trails.sortBy(-_.webPublicationDate.getMillis))
     }
