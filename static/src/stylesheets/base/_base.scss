@@ -65,7 +65,7 @@ body:after {
 }
 
 .dateline {
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-textSans(2);
 
     @include mq(tablet) {
@@ -79,7 +79,7 @@ body:after {
 
 .relative-timestamp {
     display: block;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     margin: 0;
 }
 

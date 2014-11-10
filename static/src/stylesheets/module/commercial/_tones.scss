@@ -44,7 +44,7 @@
     guss-colour(news-support-2, $pasteup-palette),
     guss-colour(news-main-2, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -64,8 +64,8 @@
     guss-colour(news-main-2, $pasteup-palette),
     guss-colour(news-main-1, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
-    $c-neutral1
+    colour(neutral-6),
+    colour(neutral-1)
 );
 
 /* .commercial--tone-live */
@@ -74,7 +74,7 @@
     guss-colour(live-main-1, $pasteup-palette),
     guss-colour(live-support-1, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -84,7 +84,7 @@
     guss-colour(news-support-2, $pasteup-palette),
     guss-colour(news-main-1, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -94,7 +94,7 @@
     guss-colour(news-support-4, $pasteup-palette),
     guss-colour(news-main-1, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -104,7 +104,7 @@
     guss-colour(features-main-1, $pasteup-palette),
     guss-colour(features-main-2, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -113,8 +113,8 @@
     masterclasses,
     guss-colour(multimedia-main-1, $pasteup-palette),
     guss-colour(multimedia-main-2, $pasteup-palette),
-    $c-neutral1,
-    $c-neutral6,
+    colour(neutral-1),
+    colour(neutral-6),
     guss-colour(multimedia-main-2, $pasteup-palette)
 );
 
@@ -124,7 +124,7 @@
     guss-colour(maps-support-3, $pasteup-palette),
     guss-colour(maps-support-4, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -134,7 +134,7 @@
     guss-colour(features-main-1, $pasteup-palette),
     guss-colour(features-support-4, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -144,7 +144,7 @@
     guss-colour(news-main-2, $pasteup-palette),
     guss-colour(news-support-2, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );
 
@@ -154,6 +154,6 @@
     guss-colour(maps-main-1, $pasteup-palette),
     guss-colour(maps-support-2, $pasteup-palette),
     #ffffff,
-    $c-neutral6,
+    colour(neutral-6),
     #ffffff
 );

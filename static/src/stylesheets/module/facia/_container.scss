@@ -11,7 +11,7 @@ $header-image-size-desktop: 120px;
 
 .fc-container__inner,
 .facia-container__inner {
-    border-top: 1px solid $c-newsAccent;
+    border-top: 1px solid colour(news-accent);
     padding-top: $gs-baseline / 4;
 
     @include mq(tablet) {
@@ -33,7 +33,7 @@ $header-image-size-desktop: 120px;
     }
     @include mq(leftCol) {
         .fc-container__header__title {
-            border-top: 1px solid $c-newsAccent;
+            border-top: 1px solid colour(news-accent);
             padding-top: $gs-baseline / 4;
         }
 
@@ -105,7 +105,7 @@ $header-image-size-desktop: 120px;
         color: inherit;
 
         &:hover {
-            color: $c-newsAccent;
+            color: colour(news-accent);
         }
     }
 }
@@ -135,7 +135,7 @@ $header-image-size-desktop: 120px;
 .fc-container__header__description {
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -243,13 +243,13 @@ $header-image-size-desktop: 120px;
     right: 0;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-headline(1);
 
     @include mq(leftCol) {
         position: static;
         margin-top: ($gs-baseline / 3) * 5;
-        border-top: 1px dotted $c-neutral3;
+        border-top: 1px dotted colour(neutral-3);
         padding-top: $gs-baseline / 4;
     }
 
@@ -377,7 +377,7 @@ $header-image-size-desktop: 120px;
 
     @include mq(tablet) {
         text-align: right;
-        color: $c-neutral2;
+        color: colour(neutral-2);
 
         .fc-container--advertisement &,
         .fc-container--advertisement-feature & {
@@ -385,7 +385,7 @@ $header-image-size-desktop: 120px;
         }
         &:hover,
         &:focus {
-            color: $c-neutral1;
+            color: colour(neutral-1);
         }
         i {
             display: none;
@@ -417,7 +417,7 @@ $header-image-size-desktop: 120px;
 .fc-container--media {
     .fc-container__inner,
     .fc-slice__item:before {
-        border-color: $c-neutral2;
+        border-color: colour(neutral-2);
     }
 
     .fc-container__header__title {

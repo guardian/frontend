@@ -109,7 +109,7 @@ $fc-hover-transition: .25s ease;
     margin-right: $gs-gutter * .5;
 
     a {
-        color: $c-neutral1;
+        color: colour(neutral-1);
         color: inherit;
     }
 
@@ -126,7 +126,7 @@ $fc-hover-transition: .25s ease;
     }
 
     .u-faux-block-link--hover {
-        background-color: $c-neutral6;
+        background-color: colour(neutral-6);
 
         .fc-item__image-container {
             background-color: #000000;
@@ -145,7 +145,7 @@ $fc-hover-transition: .25s ease;
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-neutral1, #ffffff, 80%);
+            color: mix(colour(neutral-1), #ffffff, 80%);
         }
     }
 
@@ -214,7 +214,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__live-indicator {
-    color: $c-liveDefault;
+    color: colour(live-default);
 
     .blog__live-icon {
         display: inline-block;
@@ -226,7 +226,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__breaking-indicator {
-    color: $c-liveDefault;
+    color: colour(live-default);
 }
 
 .fc-item__header,
@@ -259,7 +259,7 @@ $fc-hover-transition: .25s ease;
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: fade-out($c-neutral1, .8);
+        color: fade-out(colour(neutral-1), .8);
     }
 
     &:hover:after {
@@ -274,7 +274,7 @@ $fc-hover-transition: .25s ease;
 .fc-item__standfirst {
     @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     display: none;
 
     .fc-item--has-boosted-title & {

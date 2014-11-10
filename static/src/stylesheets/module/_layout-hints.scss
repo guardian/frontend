@@ -25,7 +25,7 @@
     @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @if ($svg-support) {
         &:before {
