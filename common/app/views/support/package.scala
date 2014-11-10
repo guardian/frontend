@@ -734,7 +734,7 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = {
     val canonicalUrl: Option[String] = {
-      val sectionEx = """^(http[s]?:\/\/#HOST#\/)(\w*)(\/\w*)?(\/\d{4}\/[.*[^\?]]*)(\?.*)*""".replace("#HOST#", request.host).r
+      val sectionEx = """^(http[s]?:\/\/#HOST#\/)([^\/]*)(\/.+)?(\/\d{4}\/[.*[^\?]]*)(\?.*)*""".replace("#HOST#", request.host).r
       val defaultCanonicalLink = CanonicalLink(request)
       sectionEx.findFirstMatchIn(defaultCanonicalLink) map {
         case matched if matched.group(1) != null && matched.group(2) != null => {
