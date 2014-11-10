@@ -62,6 +62,8 @@ define([
              * DOM nodes.
              */
             $container.toggleClass(className, state === 'displayed');
+            $button.toggleClass('button--primary', state === 'displayed');
+            $button.toggleClass('button--tertiary', state !== 'displayed');
             state = (state === 'hidden') ? 'displayed' : 'hidden';
             self.changeButtonText();
         }
