@@ -421,7 +421,10 @@ define([
 
     function ready() {
         if (config.switches.enhancedMediaPlayer) {
-            require('bootstraps/video-player', initPlayer);
+            require('bootstraps/video-player', raven.wrap(
+                { tags: { feature: 'media' } },
+                initPlayer
+            ));
         }
         initMoreInSection();
         initMostViewedMedia();
