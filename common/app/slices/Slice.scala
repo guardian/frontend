@@ -513,6 +513,32 @@ case object HalfHalf extends Slice {
   )
 }
 
+/** Same as above, but doesn't give two large standard items on mobile view. Good for when you just need a container
+  * that supports two items, but you don't want it to be given an extreme treatment on mobile, i.e., in the story
+  * package and on tag page containers.
+  */
+case object HalfHalf2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "h-h",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = Half
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList
+        )
+      )
+    )
+  )
+}
+
 /* .___________________________________.
  * |         ##########################|
  * |         ##########################|
