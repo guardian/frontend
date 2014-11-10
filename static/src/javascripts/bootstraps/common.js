@@ -165,7 +165,7 @@ define([
                 var opts = {};
 
                 // don't want to show professional network content on videos or interactives
-                if (['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) > 0) {
+                if (config.page.contentType && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) > 0) {
                     opts.excludeTag = 'guardian-professional/guardian-professional';
                 }
                 new Related(opts).renderRelatedComponent();
