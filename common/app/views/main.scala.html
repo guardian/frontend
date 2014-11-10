@@ -39,12 +39,13 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        <div id="maincontent">
+        <div id="maincontent" tabindex="0"></div>
+
         @if(BreakingNewsSwitch.isSwitchedOn) {
             <div class="js-breaking-news-placeholder breaking-news"></div>
         }
-            @body
-        </div>
+
+        @body
 
         @fragments.footer(metaData)
 

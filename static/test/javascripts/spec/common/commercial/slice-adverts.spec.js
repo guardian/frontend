@@ -134,9 +134,9 @@ define([
                 function (sliceAdverts) {
                     sliceAdverts.init();
 
-                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('hide-on-mobile'))
+                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                         .toBe(true);
-                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('mobile-only'))
+                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
                         .toBe(true);
                 }
             );

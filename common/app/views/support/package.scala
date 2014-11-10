@@ -1,10 +1,8 @@
 package views.support
 
-import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
-import dfp.DfpAgent
-import layout.{FaciaCard, Sublink, ContainerAndCollection}
+import layout.{ContainerCommercialOptions, FaciaCard, Sublink, FaciaContainer}
 import model._
 
 import java.net.URLEncoder._
@@ -787,42 +785,49 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+  def forContainerDefinition(containerDefinition: FaciaContainer) =
     forContainer(
-      containerDefinition.config.config,
+      containerDefinition.showLatestUpdate,
       containerDefinition.index == 0,
-      containerDefinition.displayName.isDefined
+      containerDefinition.displayName.isDefined,
+      containerDefinition.commercialOptions,
+      Some(containerDefinition.container)
     )
+
+
+  def forTagContainer(hasTitle: Boolean) = forContainer(
+    showLatestUpdate = false,
+    isFirst = true,
+    hasTitle,
+    ContainerCommercialOptions.empty,
+    None,
+    Nil,
+    disableHide = true
+  )
 
   def forContainer(
-    config: CollectionConfig,
-    isFirst: Boolean,
-    hasTitle: Boolean,
-    extraClasses: Seq[String] = Nil,
-    disableHide: Boolean = false
+      showLatestUpdate: Boolean,
+      isFirst: Boolean,
+      hasTitle: Boolean,
+      commercialOptions: ContainerCommercialOptions,
+      container: Option[slices.Container] = None,
+      extraClasses: Seq[String] = Nil,
+      disableHide: Boolean = false
   ) = {
-    val container = slices.Container.fromConfig(config)
-    val isSponsored = DfpAgent.isSponsored(config)
-    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
-    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
-    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
-
-    RenderClasses(
-      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
-        (Seq(
-          ("fc-container", true),
-          ("fc-container--first", isFirst),
-          ("fc-container--sponsored", isSponsored),
-          ("fc-container--advertisement-feature", isAdvertisementFeature),
-          ("fc-container--foundation-supported", isFoundationSupported),
-          ("js-sponsored-container", isPaidFor),
-          ("js-container--toggle",
-            !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
-        ) collect {
-          case (kls, true) => kls
-        }) ++
-        extraClasses: _*
-    )
+    RenderClasses((Seq(
+      ("js-container--fetch-updates", showLatestUpdate),
+      ("fc-container", true),
+      ("container", true),
+      ("container--first", isFirst),
+      ("container--sponsored", commercialOptions.isSponsored),
+      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("js-sponsored-container", commercialOptions.isPaidFor),
+      ("js-container--toggle",
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
+    ) collect {
+      case (kls, true) => kls
+    }) ++ extraClasses: _*)
   }
 }
 

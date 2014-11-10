@@ -77,17 +77,27 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
 trait DfpDataCacheLifecycle extends GlobalSettings {
 
-  private val jobName = "DfpDataCacheJob"
-  private val every10Mins = "0 2/10 * * * ?"
+  val dayTimeJobName = "DayTime-DfpDataCacheJob"
+  val nightTimeJobName = "NightTime-DfpDataCacheJob"
+
+  val every10MinsFrom7amTo7pm = "0 2/10 7-18 * * ?"
+  val every30MinsFrom7pmTo7am = "0 2/30 19-6 * * ?"
+  val dayTimeSchedule = every10MinsFrom7amTo7pm
+  val nightTimeSchedule = every30MinsFrom7pmTo7am
 
   override def onStart(app: Application) {
     super.onStart(app)
 
-    if (!Play.isTest(app)) {
+    def scheduleJob(jobName: String, schedule: String) {
       Jobs.deschedule(jobName)
-      Jobs.schedule(jobName, every10Mins) {
+      Jobs.schedule(jobName, schedule) {
         DfpDataCacheJob.run()
       }
+    }
+
+    if (!Play.isTest(app)) {
+      scheduleJob(dayTimeJobName, dayTimeSchedule)
+      scheduleJob(nightTimeJobName, nightTimeSchedule)
 
       AkkaAsync {
         DfpDataCacheJob.run()
@@ -97,7 +107,8 @@ trait DfpDataCacheLifecycle extends GlobalSettings {
 
   override def onStop(app: Application) {
     if (!Play.isTest(app)) {
-      Jobs.deschedule(jobName)
+      Jobs.deschedule(dayTimeJobName)
+      Jobs.deschedule(nightTimeJobName)
     }
     super.onStop(app)
   }

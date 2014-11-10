@@ -67,9 +67,9 @@ define([
                 .forEach(function ($adSlice, index) {
                     var adName        = adNames[index],
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('mobile-only'),
+                            .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
-                            .addClass('hide-on-mobile');
+                            .addClass('ad-slot--not-mobile');
 
                     // add a tablet+ ad to the slice
                     $adSlice

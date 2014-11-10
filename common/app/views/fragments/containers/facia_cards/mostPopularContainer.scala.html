@@ -1,4 +1,4 @@
-@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 @import common.LinkTo
 @import model.MostPopular
@@ -28,6 +28,6 @@
         Nil
     )
 )){ popular =>
-    @fragments.collections.popular(popular, containerDefinition.config.config)
+    @fragments.collections.popular(popular)
 }
 </div>

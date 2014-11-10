@@ -8,6 +8,10 @@
         color: $c-headline;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-featureDefault, 5%);
+    }
+
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
@@ -56,4 +60,8 @@
             color: $c-featureMute;
         }
     }
+}
+
+.tone-feature--most-popular .fc-item__kicker {
+    color: $c-featureDefault;
 }
