@@ -1,8 +1,7 @@
 /* ==========================================================================
    Commercial container layout adaptions
    ========================================================================== */
-.commercial--v2,
-.commercial, {
+.commercial {
     background-color: colour(neutral-6);
 
     .facia-container__inner--commercial {
@@ -196,7 +195,7 @@
         &:hover,
         &:focus,
         &:active {
-            outline: none;
+            outline: none;$c-neutral6
         }
     }
 
@@ -273,12 +272,10 @@
     }
 }
 
-
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
    Update once breakpoints synced
    ========================================================================== */
-.commercial--v2,
 .commercial {
     
     .has-page-skin & {

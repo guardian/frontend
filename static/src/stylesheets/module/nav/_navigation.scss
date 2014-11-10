@@ -10,7 +10,7 @@ $c-navigation-base: colour(neutral-5);
 $navigation-height: $gs-row-height;
 
 $navigation-toggler-width: 48px;
-$navigation-toggler-width-full: 130px;
+$navigation-toggler-width-full: 128px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 $c-navigation-background-side-bar: #005182;
@@ -633,11 +633,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 @mixin navigation__toggle--width($width: small) {
     @if $width == small {
         min-width: $navigation-toggler-width;
-        padding-left: $gs-gutter + 2;
     }
     @if $width == wide {
         min-width: $navigation-toggler-width-full;
-        padding-left: $gs-gutter + 12px;
     }
 }
 
@@ -649,13 +647,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include box-sizing(border-box);
     @include fs-header(1);
     line-height: $navigation-height;
-    padding-right: $gs-gutter/2;
+    padding: 0 $gs-gutter / 2;
     @include navigation__toggle--width(small);
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    text-align: center;
+    text-align: left;
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
 
@@ -712,62 +710,76 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation--expanded .navigation__toggle-label--close {
     display: inline;
 }
-@mixin navigation__toggle-burger--width($width: small) {
-    @if $width == small {
-        left: 6px;
-        width: 12px;
-    }
-    @if $width == wide {
-        left: 10px;
-        width: 16px;
-    }
+
+/**
+ * Burger icon
+ */
+$burger-line-h: 2px;
+$burger-width: 16px;
+
+/**
+ * Placeholder for burger line.
+ */
+%burger-icon__line {
+    width: 100%;
+    height: $burger-line-h;
+    background-color: rgba(#ffffff, .9);
 }
 
-.navigation__toggle-burger {
-    position: absolute;
-    top: 11px;
-    @include navigation__toggle-burger--width(small);
+.burger-icon {
+    @extend %burger-icon__line;
 
-    @include mq(tablet) {
-        @include navigation__toggle-burger--width(wide);
+    width: $burger-width;
+    display: inline-block;
+    vertical-align: top;
+    margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
+    position: relative;
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle-burger--width(small);
+
+    &:before {
+        @extend %burger-icon__line;
+
+        top: $burger-line-h * 2;
     }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle-burger--width(small);
-        }
+
+    &:after {
+        @extend %burger-icon__line;
+
+        top: $burger-line-h * 4;
     }
-}
-.honest-burger {
-    display: block;
-    height: 16px;
-}
-.honest-burger i {
-    display: block;
-    border-top: 2px solid rgba(#ffffff, .9);
-    margin-top: 2px;
 
     @if not $old-ie {
-        @include transform-origin(60%);
-
         .navigation--expanded & {
-            @include transform-origin(50%);
+            height: 0;
 
-            &:nth-child(1) {
-                @include transform(translateY(rem(4px)) rotate(45deg));
+            &:before {
+                @include transform(rotate(45deg));
+
+                top: 4px;
             }
-            &:nth-child(2) {
-                opacity: 0;
-            }
-            &:nth-child(3) {
-                @include transform(translateY(rem(-4px)) rotate(-45deg));
+
+            &:after {
+                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
+
+                top: 8px;
             }
         }
+
         @include mq(tablet) {
-            -webkit-transition: opacity .1s, -webkit-transform .1s ease-in;
-            transition: opacity .1s, transform .1s ease-in;
+            &,
+            &:before,
+            &:after {
+                transition: opacity .1s, transform .1s ease-in;
+            }
         }
+    }
+
+    @if $old-ie {
+        display: none;
     }
 }
