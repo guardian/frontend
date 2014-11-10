@@ -31,7 +31,7 @@
         background: colour(feature-mute);
     }
     &.tone-comment:before {
-        background: $c-commentAccent;
+        background: colour(comment-accent);
     }
     &.tone-media:before {
         background: $c-mediaDefault;

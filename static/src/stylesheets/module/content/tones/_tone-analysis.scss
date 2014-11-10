@@ -4,13 +4,13 @@
     analysis, // $tone
     colour(neutral-7), // $tonal__header-background
     colour(neutral-2), // $tonal__header-text
-    $c-analysisDefault, // $tonal__header-link
+    colour(analysis-default), // $tonal__header-link
     400, // $tonal__headline-weight
-    $c-analysisDefault, // $tonal__headline-colour
-    $c-analysisAccent, // $tonal__headline-accent
+    colour(analysis-default), // $tonal__headline-colour
+    colour(analysis-accent), // $tonal__headline-accent
     colour(neutral-8), // $tonal__standfirst-background
     colour(neutral-2), // $tonal__standfirst-text
-    $c-analysisDefault, // $tonal__standfirst-link
+    colour(analysis-default), // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken($c-analysisAccent, 15%) // $tonal__article-link
+    darken(colour(analysis-accent), 15%) // $tonal__article-link
 );

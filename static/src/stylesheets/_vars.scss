@@ -73,24 +73,27 @@ $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgi
 
 
 $frontend-palette: (
-    neutral-2-contrasted:  darken(guss-colour(neutral-2, $pasteup-palette), 3%),
+    neutral-2-contrasted:   darken(guss-colour(neutral-2, $pasteup-palette), 3%),
 
-    news-default:       guss-colour(news-main-1, $pasteup-palette),
-    news-accent:        guss-colour(news-main-2, $pasteup-palette),
+    news-default:           guss-colour(news-main-1, $pasteup-palette),
+    news-accent:            guss-colour(news-main-2, $pasteup-palette),
 
-    feature-default:    guss-colour(features-support-1, $pasteup-palette),
-    feature-accent:     guss-colour(features-main-2, $pasteup-palette),
-    feature-mute:       guss-colour(features-support-3, $pasteup-palette)
+    feature-default:        guss-colour(features-support-1, $pasteup-palette),
+    feature-accent:         guss-colour(features-main-2, $pasteup-palette),
+    feature-mute:           guss-colour(features-support-3, $pasteup-palette),
+
+    analysis-default:       guss-colour(news-main-1, $pasteup-palette),
+    analysis-accent:        guss-colour(news-main-2, $pasteup-palette),
+    analysis-mute:          guss-colour(comment-support-2, $pasteup-palette),
+    analysis-background:    guss-colour(neutral-7, $pasteup-palette),
+
+    comment-default:        guss-colour(comment-support-4, $pasteup-palette),
+    comment-accent:         guss-colour(comment-main-2, $pasteup-palette),
+    comment-background:     guss-colour(comment-support-2, $pasteup-palette),
+
+    
+
 );
-
-$c-analysisDefault: guss-colour(news-main-1, $pasteup-palette);
-$c-analysisAccent: guss-colour(news-main-2, $pasteup-palette);
-$c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
-$c-analysisBackground: guss-colour(neutral-7, $pasteup-palette);
-
-$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);
-$c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
-$c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 
 $c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
 $c-liveAccent: guss-colour(live-main-2, $pasteup-palette);

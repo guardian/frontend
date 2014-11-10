@@ -2,7 +2,7 @@
 
 @include tone-content(
     editorial, // $tone
-    $c-commentBackground, // $tonal__header-background
+    colour(comment-background), // $tonal__header-background
     colour(neutral-2), // $tonal__header-text
     colour(guardian-brand), // $tonal__header-link
     200, // $tonal__headline-weight

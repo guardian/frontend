@@ -47,7 +47,7 @@ $disc-avatar-size: 44px;
     margin-right: $gs-gutter/4;
 
     .disc-comment__recommend--active & {
-        color: $c-commentDefault;
+        color: colour(comment-default);
     }
 }
 .disc-comment__recommend-button {
@@ -67,7 +67,7 @@ $disc-avatar-size: 44px;
     }
 
     .disc-comment__recommend--active & {
-        background-color: $c-commentDefault;
+        background-color: colour(comment-default);
     }
 }
 
