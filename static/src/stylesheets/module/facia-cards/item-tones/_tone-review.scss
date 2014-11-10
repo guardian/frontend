@@ -1,7 +1,7 @@
 .tone-review--item {
     $c-headline: #ffffff;
 
-    background-color: $c-reviewBackground;
+    background-color: colour(review-background);
 
     &,
     .fc-sublink__title {
@@ -9,23 +9,23 @@
     }
 
     .u-faux-block-link--hover {
-        background-color: darken($c-reviewBackground, 7.5%);
+        background-color: darken(colour(review-background), 7.5%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $c-reviewBackground, 80%);
+            color: mix($c-headline, colour(review-background), 80%);
         }
     }
 
     .fc-item__container:before {
-        background-color: $c-reviewAccent;
+        background-color: colour(review-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-reviewAccent;
+        color: colour(review-accent);
     }
 
     .fc-item__kicker:after,
@@ -44,16 +44,16 @@
 
 .tone-review--sublink {
     .fc-sublink__kicker {
-        color: $c-reviewAccent;
+        color: colour(review-accent);
     }
 
     @include sublink-style(analysis, comment, dead, letters, news) {
         .fc-sublink__kicker {
-            color: $c-reviewBackground;
+            color: colour(review-background);
         }
     }
 }
 
 .tone-review--most-popular .fc-item__kicker {
-    color: $c-reviewBackground;
+    color: colour(review-background);
 }

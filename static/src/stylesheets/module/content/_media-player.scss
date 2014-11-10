@@ -345,7 +345,7 @@ $vjs-progress-inset-bottom: 4px;
     z-index: 2;
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
@@ -386,7 +386,7 @@ $vjs-progress-inset-bottom: 4px;
     background-color: colour(media-default);
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
@@ -397,7 +397,7 @@ $vjs-progress-inset-bottom: 4px;
     width: 2px;
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
@@ -522,7 +522,7 @@ $vjs-progress-inset-bottom: 4px;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
 
         .gu-media-wrapper--podcast & {
-            color: $c-podcastDefault;
+            color: colour(podcast-default);
         }
     }
 }

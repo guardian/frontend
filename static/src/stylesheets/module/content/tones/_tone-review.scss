@@ -2,17 +2,17 @@
 
 @include tone-content(
     review, // $tone
-    darken($c-reviewBackground, 10%), // $tonal__header-background
+    darken(colour(review-background), 10%), // $tonal__header-background
     colour(neutral-6), // $tonal__header-text
-    $c-reviewAccent, // $tonal__header-link
+    colour(review-accent), // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-reviewAccent, // $tonal__headline-accent
-    $c-reviewBackground, // $tonal__standfirst-background
+    colour(review-accent), // $tonal__headline-accent
+    colour(review-background), // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken($c-reviewBackground, 10%) // $tonal__article-link
+    darken(colour(review-background), 10%) // $tonal__article-link
 );
 
 .tonal--tone-review {

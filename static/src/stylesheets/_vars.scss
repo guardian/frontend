@@ -99,15 +99,13 @@ $frontend-palette: (
     media-background: guss-colour(multimedia-main-1, $pasteup-palette),
     media-background-accent: guss-colour(multimedia-support-4, $pasteup-palette),
 
+    podcast-default: guss-colour(news-support-1, $pasteup-palette),
+    podcast-background: guss-colour(multimedia-support-4, $pasteup-palette),
 
+    review-accent: guss-colour(comment-support-3, $pasteup-palette),
+    review-background: guss-colour(comment-support-1, $pasteup-palette)
 
 );
-
-$c-podcastDefault: guss-colour(news-support-1, $pasteup-palette);
-$c-podcastBackground: guss-colour(multimedia-support-4, $pasteup-palette);
-
-$c-reviewAccent: guss-colour(comment-support-3, $pasteup-palette);
-$c-reviewBackground: guss-colour(comment-support-1, $pasteup-palette);
 
 $c-editorialDefault: guss-colour(news-main-1, $pasteup-palette);
 $c-editorialAccent: guss-colour(news-support-1, $pasteup-palette);
