@@ -81,7 +81,7 @@
 }
 .goal-attempts__off-target--away,
 .goal-attempts__on-target--away {
-    background-color: $c-statusNeutral;
+    background-color: colour(status-neutral);
     float: right;
     text-align: right;
 }
@@ -111,7 +111,7 @@
     @include fs-header(2);
     line-height: $gs-baseline*1.5;
     padding: $gs-baseline/4 ($gs-gutter/4)+3 0;
-    background-color: $c-statusNeutral;
+    background-color: colour(status-neutral);
     color: #ffffff;
     font-weight: bold;
     float: left;

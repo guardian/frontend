@@ -97,16 +97,16 @@ category: Common
 }
 
 .social-icon--facebook {
-    background-color: $social-facebook;
+    background-color: colour(social-facebook);
     &:hover {
-        background-color: darken($social-facebook, 10%);
+        background-color: darken(colour(social-facebook), 10%);
     }
 }
 
 .social-icon--gplus {
-    background-color: $social-gplus;
+    background-color: colour(social-gplus);
     &:hover {
-        background-color: darken($social-gplus, 10%);
+        background-color: darken(colour(social-gplus), 10%);
     }
 
     .content--media & {
@@ -115,9 +115,9 @@ category: Common
 }
 
 .social-icon--whatsapp {
-    background-color: $social-whatsapp;
+    background-color: colour(social-whatsapp);
     &:hover {
-        background-color: darken($social-whatsapp, 10%);
+        background-color: darken(colour(social-whatsapp), 10%);
     }
     i {
         background-size: 57% !important;
@@ -125,26 +125,26 @@ category: Common
 }
 
 .social-icon--twitter {
-    background-color: $social-twitter;
+    background-color: colour(social-twitter);
     &:hover {
-        background-color: darken($social-twitter, 10%);
+        background-color: darken(colour(social-twitter), 10%);
     }
 }
 
 .social-icon--linkedin {
-    background-color: $social-linkedin;
+    background-color: colour(social-linkedin);
 
     .i {
         background-size: 49% !important;
     }
 
     &:hover {
-        background-color: darken($social-linkedin, 10%);
+        background-color: darken(colour(social-linkedin), 10%);
     }
 }
 
 .social-icon--pinterest {
-    background-color: $social-pinterest;
+    background-color: colour(social-pinterest);
 
     .i {
         background-size: 49% !important;
@@ -152,14 +152,14 @@ category: Common
     }
 
     &:hover {
-        background-color: darken($social-pinterest, 10%);
+        background-color: darken(colour(social-pinterest), 10%);
     }
 }
 
 .social-icon--email {
-    background-color: $social-email;
+    background-color: colour(social-email);
     &:hover {
-        background-color: darken($social-email, 10%);
+        background-color: darken(colour(social-email), 10%);
     }
 }
 

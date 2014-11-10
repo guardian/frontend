@@ -73,6 +73,7 @@ $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgi
 
 
 $frontend-palette: (
+
     neutral-2-contrasted:   darken(guss-colour(neutral-2, $pasteup-palette), 3%),
 
     // Tones
@@ -122,18 +123,27 @@ $frontend-palette: (
     sport-dark: #003f64,
 
     sport-home: #70d2e6,
-    sport-away: #003f64
+    sport-away: #003f64,
+
+    // Stati
+    // =============================================================================
+
+    status-positive: #6ca843,
+    status-neutral: guss-colour(neutral-2, $pasteup-palette),
+    status-negative: #da1d1d,
+
+    // Social
+    // =============================================================================
+
+    social-email: #767676,
+    social-facebook: #3067a3,
+    social-twitter: #03b3ee,
+    social-gplus: #e15440,
+    social-whatsapp: #59cb3f,
+    social-linkedin: #0071a1,
+    social-pinterest: #b9252c
 
 );
-
-
-// Stati
-// =============================================================================
-
-$c-statusPositive: #6ca843;
-$c-statusNeutral: colour(neutral-2);
-$c-statusNegative: #da1d1d;
-
 
 // MPU
 // =============================================================================
@@ -158,15 +168,3 @@ $content-top-padding: $gs-baseline / 1.5;
 $vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;
-
-
-// Social colours
-// =============================================================================
-
-$social-email: #767676;
-$social-facebook: #3067a3;
-$social-twitter: #03b3ee;
-$social-gplus: #e15440;
-$social-whatsapp: #59cb3f;
-$social-linkedin: #0071a1;
-$social-pinterest: #b9252c;
