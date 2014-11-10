@@ -25,6 +25,9 @@ object IndexPagePagination {
 object IndexPage {
   def makeFront(indexPage: IndexPage, edition: Edition) = {
     val itemsByDay = indexPage.trails.groupBy(_.webPublicationDate.toLocalDate)
+    val itemsByMonth = indexPage.trails.groupBy(_.webPublicationDate.monthOfYear())
+
+    val averageItemsPerDay = itemsByDay.values.map(_.length).sum.toDouble / itemsByDay.size
 
     def container(numberOfItems: Int) = if (itemsByDay.keySet.size == 1) {
       Fixed(views.support.getTagContainerDefinition(indexPage.page))
