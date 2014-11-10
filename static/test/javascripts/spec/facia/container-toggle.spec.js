@@ -3,15 +3,15 @@ define([
     'common/utils/$',
     'bonzo',
     'bean',
-    'common/modules/userPrefs',
-    'qwery'
+    'qwery',
+    'common/modules/userPrefs'
 ], function(
     ContainerDisplayToggle,
     $,
     bonzo,
     bean,
-    userPrefs,
-    qwery
+    qwery,
+    userPrefs
 ) {
 
     describe('Container Toggle', function() {
@@ -24,13 +24,17 @@ define([
             assertState = function($container, state) {
                 var $button = $('button', $container[0]);
                 expect($container.hasClass('container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
-                expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
+                expect($container.attr('aria-expanded'))[state ? 'toBeFalsy' : 'toBeTruthy']();
+                expect($button.text()
+                    .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
+                    .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
+                    .toEqual(state === 'open' ? 'Hide section' : 'Show section');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
             };
 
         beforeEach(function(){
             container = bonzo.create(
-                '<section class="container js-container--toggle" data-id="' + containerId + '">' +
+                '<section id="' + containerId + '" class="container js-container--toggle" data-id="' + containerId + '">' +
                     '<div class="container__header js-container__header">' +
                         '<h2>A container</h2>' +
                     '</div>' +
@@ -103,6 +107,12 @@ define([
             userPrefs.set(storageId, prefs);
             new ContainerDisplayToggle(container).addToggle();
             assertState($container, 'closed');
+        });
+
+        it('should add aria attributes', function() {
+            new ContainerDisplayToggle(container).addToggle();
+            var $button = $('button', container);
+            expect($button.attr('aria-controls')).toEqual($container.attr('id'));
         });
 
         describe('Commercial Badge', function(){
