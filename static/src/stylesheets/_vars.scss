@@ -127,9 +127,9 @@ $frontend-palette: (
     // Stati
     // =============================================================================
 
-    status-positive:        #6ca843,
+    status-positive:        guss-colour(success, $pasteup-palette),
     status-neutral:         guss-colour(neutral-2, $pasteup-palette),
-    status-negative:        #da1d1d,
+    status-negative:        guss-colour(error, $pasteup-palette),
 
     // Social
     // =============================================================================
