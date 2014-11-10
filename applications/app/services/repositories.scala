@@ -58,8 +58,6 @@ object IndexPage {
             None
           )
 
-          println(items.length, ContainerDefinition.forNumberOfItems(items.length))
-
           val config = CollectionConfig.emptyConfig
             .withContainer(Fixed(ContainerDefinition.forNumberOfItems(items.length)))
 
