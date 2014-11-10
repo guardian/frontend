@@ -817,11 +817,11 @@ object GetClasses {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", commercialOptions.isSponsored),
-      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
-      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container", true),
+      ("fc-container--first", isFirst),
+      ("fc-container--sponsored", commercialOptions.isSponsored),
+      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

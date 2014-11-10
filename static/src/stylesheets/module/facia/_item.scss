@@ -80,7 +80,8 @@ $fc-hover-transition: .25s ease;
     }
 }
 
-.fc-item__container {
+.fc-item__container,
+.item__container {
     position: relative;
     @include transition(background-color $fc-hover-transition);
 
@@ -101,7 +102,8 @@ $fc-hover-transition: .25s ease;
     }
 }
 
-.fc-item {
+.fc-item,
+.item {
     background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
@@ -179,7 +181,8 @@ $fc-hover-transition: .25s ease;
 */
 
 // Wraps all media elements
-.fc-item__media-wrapper {
+.fc-item__media-wrapper,
+.item__media-wrapper {
     @include box-sizing(border-box);
     position: relative;
 }
@@ -226,7 +229,8 @@ $fc-hover-transition: .25s ease;
     color: $c-liveDefault;
 }
 
-.fc-item__header {
+.fc-item__header,
+.item__title {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .5em;

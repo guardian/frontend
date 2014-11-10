@@ -9,7 +9,8 @@ $breakpoints: (
 );
 
 @mixin fc-container-head-common {
-    .fc-container__inner {
+    .fc-container__inner,
+    .facia-container__inner {
         overflow: hidden;
         position: relative;
         margin-left: $gs-gutter / 2;
@@ -82,14 +83,16 @@ $breakpoints: (
 @mixin fc-container--layout-content {
     .fc-container--layout-content {
         @include mq(leftCol) {
-            .fc-container__body {
+            .fc-container__body,
+            .container__body {
                 overflow: hidden;
                 margin-left: $left-column + $gs-gutter;
             }
         }
 
         @include mq(wide) {
-            .fc-container__body {
+            .fc-container__body,
+            .container__body {
                 margin-left: $left-column-wide + $gs-gutter;
                 width: gs-span(12);
             }
