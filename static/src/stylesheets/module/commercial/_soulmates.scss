@@ -3,7 +3,7 @@
    ========================================================================== */
 $c-soulmatesBackground: #f5f3e7;
 $c-soulmatesBorder: #e6e1c3;
-$c-soulmates-high: $c-neutral1;
+$c-soulmates-high: colour(neutral-1);
 
 .commercial--soulmates {
     background-color: $c-soulmatesBackground;
@@ -193,7 +193,7 @@ $c-soulmates-high: $c-neutral1;
         .commercial__cta {
             position: static;
             margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
-            @include button-colour(transparent, #ffffff, transparent, #ffffff, $c-neutral2);
+            @include button-colour(transparent, #ffffff, transparent, #ffffff, colour(neutral-2));
             width: gs-span(2) - $gs-gutter;
             display: block;
         }
