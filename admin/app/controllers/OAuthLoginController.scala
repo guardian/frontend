@@ -15,16 +15,6 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
-  val googleAuthConfig: Option[GoogleAuthConfig] = AdminConfiguration.oauthCredentials.map { cred =>
-    GoogleAuthConfig(
-      cred.oauthClientId,     // The client ID from the dev console
-      cred.oauthSecret,       // The client secret from the dev console
-      cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
-      // that configured in the developer console)
-      Some("guardian.co.uk"), // Google App domain to restrict login
-      None
-    )
-  }
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
@@ -36,7 +26,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    googleAuthConfig.map { config =>
+    conf.GoogleAuth.config.map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
@@ -52,7 +42,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    googleAuthConfig.map { config =>
+    conf.GoogleAuth.config.map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>
           Future.successful(Redirect(routes.OAuthLoginController.login())

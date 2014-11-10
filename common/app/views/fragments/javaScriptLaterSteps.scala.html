@@ -16,7 +16,7 @@
             }
             core:                      '@Static("javascripts/core.js")',
             facebook:                  '//connect.facebook.net/en_US/all.js',
-            foresee:                   'vendor/foresee/20141007/foresee-trigger.js',
+            foresee:                   'vendor/foresee/20141107/foresee-trigger.js',
             googletag:                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                '@{Configuration.javascript.config("ophanJsUrl")}',
             stripe:                    '@Static("javascripts/vendor/stripe/stripe.min.js")',
@@ -177,7 +177,8 @@
                     require(['bootstraps/commercial'], function(commercial) {
                         raven.context(
                             { tags: { feature: 'commercial' } },
-                            commercial.init
+                            commercial.init,
+                            []
                         );
                     });
                 }

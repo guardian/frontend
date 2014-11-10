@@ -3,7 +3,6 @@ package model.diagnostics.analytics
 import java.util.concurrent.atomic.AtomicLong
 
 import common.Logging
-import conf.Switches
 
 object Metric extends Logging {
 
@@ -13,20 +12,11 @@ object Metric extends Logging {
 
   lazy val namespace = "Diagnostics"
 
-  lazy val switch = Switches.BrowserStorageStatsSwitch // remove *Storage-* metrics when this switch is removed
   lazy val metrics = Map(
 
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
-
-    // for BrowserStorageStatsSwitch work only
-    ("localStorage-supported", CountMetric("localStorage-supported")),
-    ("localStorage-broken", CountMetric("localStorage-broken")),
-    ("localStorage-unsupported", CountMetric("localStorage-unsupported")),
-    ("sessionStorage-supported", CountMetric("sessionStorage-supported")),
-    ("sessionStorage-broken", CountMetric("sessionStorage-broken")),
-    ("sessionStorage-unsupported", CountMetric("sessionStorage-unsupported")),
 
     ("ads-blocked", CountMetric("ads-blocked")),
 

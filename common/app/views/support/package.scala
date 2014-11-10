@@ -1,10 +1,8 @@
 package views.support
 
-import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
-import dfp.DfpAgent
-import layout.{FaciaCard, Sublink, ContainerAndCollection}
+import layout.{ContainerCommercialOptions, FaciaCard, Sublink, FaciaContainer}
 import model._
 
 import java.net.URLEncoder._
@@ -127,7 +125,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
+        .addClass("js-gu-media gu-media gu-media--video")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
@@ -793,52 +791,48 @@ object GetClasses {
     case layout.Audio => "fc-sublink--audio"
   }
 
-  private def commonContainerStyles(
-      config: CollectionConfig,
-      isFirst: Boolean,
-      hasTitle: Boolean,
-      disableHide: Boolean
-  ): Seq[String] = {
-    val container = slices.Container.fromConfig(config)
-    val isSponsored = DfpAgent.isSponsored(config)
-    val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(config)
-    val isFoundationSupported = DfpAgent.isFoundationSupported(config)
-    val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
-
-    Seq(
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", isSponsored),
-      ("container--advertisement-feature", isAdvertisementFeature),
-      ("container--foundation-supported", isFoundationSupported),
-      ("js-sponsored-container", isPaidFor),
-      ("js-container--toggle",
-        !disableHide && slices.Container.showToggle(container) && !isFirst && hasTitle && !isPaidFor)
-    ) collect {
-      case (kls, true) => kls
-    }
-  }
-
-  def forContainerDefinition(containerDefinition: ContainerAndCollection) =
+  def forContainerDefinition(containerDefinition: FaciaContainer) =
     forNewStyleContainer(
-      containerDefinition.config.config,
+      containerDefinition.showLatestUpdate,
       containerDefinition.index == 0,
-      containerDefinition.displayName.isDefined
+      containerDefinition.displayName.isDefined,
+      containerDefinition.commercialOptions,
+      Some(containerDefinition.container)
     )
 
+  def forTagContainer(hasTitle: Boolean) = forNewStyleContainer(
+    showLatestUpdate = false,
+    isFirst = true,
+    hasTitle,
+    ContainerCommercialOptions.empty,
+    None,
+    Nil,
+    disableHide = true
+  )
+
   def forNewStyleContainer(
-      config: CollectionConfig,
+      showLatestUpdate: Boolean,
       isFirst: Boolean,
       hasTitle: Boolean,
+      commercialOptions: ContainerCommercialOptions,
+      container: Option[slices.Container] = None,
       extraClasses: Seq[String] = Nil,
       disableHide: Boolean = false
   ) = {
-    RenderClasses(
-      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
-        Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle, disableHide) ++
-        extraClasses: _*
-    )
+    RenderClasses((Seq(
+      ("js-container--fetch-updates", showLatestUpdate),
+      ("fc-container", true),
+      ("container", true),
+      ("container--first", isFirst),
+      ("container--sponsored", commercialOptions.isSponsored),
+      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("js-sponsored-container", commercialOptions.isPaidFor),
+      ("js-container--toggle",
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
+    ) collect {
+      case (kls, true) => kls
+    }) ++ extraClasses: _*)
   }
 }
 

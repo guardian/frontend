@@ -1,7 +1,7 @@
-@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.Localisation
-@import views.html.fragments.containers.facia_cards.{containerHeader, slice, show_more}
+@import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore}
 
 @containerHeader(containerDefinition, frontProperties)
 
@@ -12,6 +12,6 @@
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @show_more(containerLayout.remainingCards, containerDefinition.index)
+        @showMore(containerLayout.remainingCards, containerDefinition.index)
     </div>
 }

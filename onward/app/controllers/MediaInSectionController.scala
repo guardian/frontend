@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfig
-import layout.{CollectionEssentials, ContainerAndCollection, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -30,8 +30,8 @@ object MediaInSectionController extends Controller with Logging with Paging with
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching $mediaType content in section: ${sectionId}")
 
-    // Subtract the series id from the content type.
-    val tags = List(Some(s"type/$mediaType"), seriesId).flatten.mkString(",-")
+    val excludeTags: Seq[String] = (request.queryString.get("exclude-tag").getOrElse(Nil) ++ seriesId).map(t => s"-$t")
+    val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
 
@@ -73,15 +73,17 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
     val dataId = s"$pluralMediaType in section"
     val displayName = Some(s"more $sectionName $pluralMediaType")
+    val componentId = Some("more-media-in-section")
 
     implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
 
     val response = () => views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails take 7, displayName, None, None, None)
+        CollectionEssentials(trails take 7, displayName, None, None, None),
+        componentId
       ),
       FrontProperties.empty
     )(request)
