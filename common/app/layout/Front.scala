@@ -74,16 +74,14 @@ object Front extends implicits.Collections {
     }
   }
 
-  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+  def fromConfigsAndContainers(configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)]) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
 
     Front(
       configs.zipWithIndex.toList.mapAccumL(
         (Set.empty[TrailUrl], ContainerLayoutContext.empty)
-      ) { case ((seenTrails, context), ((config, collection), index)) =>
-        val container = Container.fromConfig(config.config)
-
+      ) { case ((seenTrails, context), (((config, collection), container), index)) =>
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config.config, newItems) map {
@@ -107,6 +105,10 @@ object Front extends implicits.Collections {
         }
       }._2.filterNot(_.items.isEmpty)
     )
+  }
+
+  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+    fromConfigsAndContainers(configs.zipWith({ case (config, _) => Container.fromConfig(config.config) }))
   }
 }
 

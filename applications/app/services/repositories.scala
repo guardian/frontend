@@ -12,7 +12,6 @@ import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices.{ContainerDefinition, Fixed}
-import views.support.Format
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -43,7 +42,7 @@ object IndexPage {
           indexPage.trails.groupBy(localDateFor(_).withDayOfYear(1))
       }
 
-      Front.fromConfigs(grouped.toSeq.sortBy(_._1).reverse map {
+      Front.fromConfigsAndContainers(grouped.toSeq.sortBy(_._1).reverse map {
         case (day, items) =>
           val dateString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(grouping.dateFormatString))
 
@@ -59,10 +58,10 @@ object IndexPage {
           )
 
           val config = CollectionConfig.emptyConfig
-            .withContainer(Fixed(ContainerDefinition.forNumberOfItems(items.length)))
 
           /** TODO what should the data ID be here? */
-          (CollectionConfigWithId(dateString, config), collection)
+          ((CollectionConfigWithId(dateString, config), collection),
+            Fixed(ContainerDefinition.forNumberOfItems(items.length)))
       })
     }) getOrElse {
       val collection = CollectionEssentials(
@@ -77,10 +76,12 @@ object IndexPage {
       )
 
       val config = CollectionConfig.emptyConfig
-        .withContainer(Fixed(views.support.getTagContainerDefinition(indexPage.page)))
 
       /** TODO what should the data ID be here? */
-      Front.fromConfigs(Seq((CollectionConfigWithId(indexPage.page.id, config), collection)))
+      Front.fromConfigsAndContainers(
+        Seq(((CollectionConfigWithId(indexPage.page.id, config), collection),
+          Fixed(views.support.getTagContainerDefinition(indexPage.page)))
+      ))
     }
 
     val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
