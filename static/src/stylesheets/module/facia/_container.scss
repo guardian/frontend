@@ -20,6 +20,10 @@ $header-image-size-desktop: 120px;
     .fc-container & {
         border-top: 1px solid colour(news-accent);
     }
+
+    .ad-slot & {
+        padding-top: 0;
+    }
 }
 
 .fc-container--rolled-up .fc-container--rolled-up-hide {
