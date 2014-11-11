@@ -38,7 +38,7 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@EditionalisedSections.otherPagesFor(item).map{ link =>
+@EditionalisedSections.otherPagesFor(request).map{ link =>
     <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.lang" />
 }
 
