@@ -11,7 +11,10 @@
             .lineitem__image {
                 margin-right: $gs-gutter/2;
                 max-width: $gs-gutter*11;
-                float: left;
+
+                @include mq(mobileLandscape) {
+                    float: left;
+                }
             }
 
             .lineitem--dfp-single__offer {
@@ -111,14 +114,5 @@
 
     @include mq($until: tablet) {
         width: 50% !important;
-    }
-}
-.container--commercial-capi-single {
-    .container__header {
-        position: relative;
-        background-color: transparent;
-    }
-    .container__body {
-        padding: 0;
     }
 }

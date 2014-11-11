@@ -1,7 +1,7 @@
 @(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for container--advertisement-feature container--commercial-capi-single">
+    <section class="fc-container fc-container--paid-for container--advertisement-feature container--commercial-capi-single commercial commercial--dfp commercial--dfp-single">
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h3 class="fc-container__header__title">
@@ -20,20 +20,16 @@
                 </div>
             </div>
             <div class="fc-container__body">
-                <div>
-                    <div>
-                        <div>
-                            <a href="@AdLink{@item.webUrl}">
-                                @item.mainPicture.map{ picture =>
-                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" /> }
-                                }
-                                <h4>@item.webTitle</h4>
-                                @item.trailText.map { trailText =>
-                                    <p>@Html(trailText)</p>
-                                }
-                            </a>
-                        </div>
-                    </div>
+                <div class="lineitem--dfp-single">
+                    <a href="@AdLink{@item.webUrl}">
+                        @item.mainPicture.map{ picture =>
+                            @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                        }
+                        <h4 class="lineitem__title">@item.webTitle</h4>
+                        @item.trailText.map { trailText =>
+                            <p class="lineitem__desc">@Html(trailText)</p>
+                        }
+                    </a>
                 </div>
             </div>
         </div>

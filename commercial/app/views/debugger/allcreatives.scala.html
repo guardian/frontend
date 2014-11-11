@@ -7,6 +7,7 @@ jQuery(function($) {
     $("#switchFronts").click(function() {
         $('.l-side-margins').removeClass("l-side-margins--layout-content").addClass("l-side-margins--layout-front");
         $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
+        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
         $('#switchArticles').removeClass('current');
         $('#article').slideUp();
         $(this).addClass('current');
@@ -16,6 +17,7 @@ jQuery(function($) {
     $("#switchArticles").click(function() {
         $('.l-side-margins').removeClass("l-side-margins--layout-front").addClass("l-side-margins--layout-content");
         $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
+        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
         $('#switchFronts').removeClass('current');
         $('#article').slideDown();
         $(this).addClass('current');
@@ -44,8 +46,6 @@ jQuery(function($) {
     });
 });
 </script>
-<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
-<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
 <style>
     pre {
         font-size: 11px;
