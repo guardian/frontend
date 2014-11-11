@@ -35,7 +35,8 @@ $breakpoints: (
             }
         }
     }
-    .fc-container__inner--full-span {
+    .fc-container__inner--full-span,
+    .facia-container__inner--full-span {
         @each $breakpoint, $container-width in $breakpoints {
             @include mq($breakpoint) {
                 width: $container-width + ($gs-gutter * 2);

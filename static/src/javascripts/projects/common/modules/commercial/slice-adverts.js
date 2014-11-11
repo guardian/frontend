@@ -77,7 +77,7 @@ define([
                         .append($tabletAdSlot);
                     // add a mobile advert after the container
                     $mobileAdSlot
-                        .insertAfter($.ancestor($adSlice[0], 'container'));
+                        .insertAfter($.ancestor($adSlice[0], 'fc-container'));
                 })
                 .valueOf();
 
