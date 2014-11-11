@@ -15,7 +15,6 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import conf.Switches.ContentCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -170,20 +169,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-  private lazy val defaultCacheTime = {
-    if (isLive) 5
-    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
-    else 900
-  }
-
-  private lazy val fastCacheTime = {
+  override lazy val cacheSeconds = {
     if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 10
     else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 30
     else 300
   }
-
-  override lazy val cacheSeconds = if (ContentCacheTimeSwitch.isSwitchedOn) fastCacheTime else defaultCacheTime
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
@@ -619,8 +610,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "article",
-    "article:published_time" -> webPublicationDate.toString(),
-    "article:modified_time" -> lastModified.toString(),
+    "article:published_time" -> webPublicationDate.toString,
+    "article:modified_time" -> lastModified.toString,
     "article:section" -> sectionName,
     "article:tag" -> keywords.map(_.name).mkString(","),
     "article:author" -> contributors.map(_.webUrl).mkString(",")
@@ -645,7 +636,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> JsNumber(img.width.toFloat / img.height)
+          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble)
         ))
       }
     }

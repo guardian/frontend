@@ -13,7 +13,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   "Cached" should "cache live content for 5 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
-    Switches.ContentCacheTimeSwitch.switchOff()
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
@@ -24,7 +23,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
   }
 
-  it should "cache content less than 1 hour old for 1 minute" in {
+  it should "cache content less than 1 hour old for 10 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
@@ -33,10 +32,10 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=10, stale-while-revalidate=1, stale-if-error=864000")
   }
 
-  it should "cache older content for 15 minutes" in {
+  it should "cache older content for 5 minutes" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val modifiedLongAgo = DateTime.now - 25.hours
@@ -45,7 +44,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=900, stale-while-revalidate=90, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=300, stale-while-revalidate=30, stale-if-error=864000")
   }
 
   it should "cache other things for 1 minute" in {
@@ -76,7 +75,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=120, stale-while-revalidate=12, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=20, stale-while-revalidate=2, stale-if-error=864000")
   }
 
   it should "have at least 1 second stale-while-revalidate" in {
