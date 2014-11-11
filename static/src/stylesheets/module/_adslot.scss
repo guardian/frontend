@@ -386,7 +386,8 @@
             .ad-slot--commercial-component & {
                 margin-top: get-line-height(data, 3)*-2;
             }
-            .ad-slot--commercial-component .container--commercial-capi & {
+            .ad-slot--commercial-component .container--commercial-capi &,
+            .ad-slot--commercial-component .container--commercial-capi-single & {
                 margin-top: get-line-height(data, 3)*-1;
             }
         }

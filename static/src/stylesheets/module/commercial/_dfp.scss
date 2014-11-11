@@ -113,3 +113,12 @@
         width: 50% !important;
     }
 }
+.container--commercial-capi-single {
+    .container__header {
+        position: relative;
+        background-color: transparent;
+    }
+    .container__body {
+        padding: 0;
+    }
+}

@@ -678,6 +678,27 @@ jQuery(function($) {
 
     <hr/>
 
+    <div class="fc-container fc-container--layout-content">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Single)</a>
+            </h2>
+        </div>
+        <div class="ad-slot ad-slot--commercial-component dfp-ad--merchandising-capi-single">
+            <script>
+                $.getJSON(
+                    '/commercial/capi-single.json?s=books&t=p%2F4xv7c&k=music%2Fpinkfloyd&' +
+                    'l=http%3A%2F%2Fpagead2.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDjnfPJbBABGAEyCHbj_OBIEKp8&' +
+                    'ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
+                    'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
+                    function(json) { $('.dfp-ad--merchandising-capi-single').html(json.html); }
+                );
+            </script>
+        </div>
+    </div>
+
+    <hr />
+
         <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
         <div class="facia-container fc-container--layout-content">
             <section class="container container--special container--merchandising container--advertisement-feature">
