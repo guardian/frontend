@@ -97,8 +97,8 @@ define([
             it('should have at least one non-advert containers between advert containers', function (sliceAdverts) {
                 sliceAdverts.init();
 
-                expect(qwery('.container-first .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
             it('should not not display ad slot if standard-adverts switch is off', function (sliceAdverts, deps) {
@@ -112,21 +112,21 @@ define([
                 deps['common/utils/config'].page.pageId = 'uk';
                 sliceAdverts.init();
 
-                expect(qwery('.container-first .ad-slot', $fixtureContainer).length).toBe(0);
-                expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
+                expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
             it('should not add ad to container if it is closed', function (sliceAdverts) {
                 var containerId = '9cd2-e508-2bc1-5afd',
                     prefs       = {};
                 prefs[containerId] = 'closed';
-                $('.container-first', $fixtureContainer).attr('data-id', containerId);
+                $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
                 userPrefs.set('container-states', prefs);
                 sliceAdverts.init();
 
-                expect(qwery('.container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                expect(qwery('.container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
+                expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
             });
 
             it(
@@ -134,9 +134,9 @@ define([
                 function (sliceAdverts) {
                     sliceAdverts.init();
 
-                    expect($('.container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
+                    expect($('.fc-container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                         .toBe(true);
-                    expect($('.container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
+                    expect($('.fc-container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
                         .toBe(true);
                 }
             );
