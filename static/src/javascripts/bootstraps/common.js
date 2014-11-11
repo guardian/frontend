@@ -162,10 +162,11 @@ define([
             },
 
             transcludeRelated: function () {
-                var opts = {};
+                var opts = {},
+                    contentType = config.page.contentType || '';
 
                 // don't want to show professional network content on videos or interactives
-                if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) > 0) {
+                if ('contentType' in config.page && ['video', 'interactive'].indexOf(contentType.toLowerCase()) >= 0) {
                     opts.excludeTag = 'guardian-professional/guardian-professional';
                 }
                 new Related(opts).renderRelatedComponent();
