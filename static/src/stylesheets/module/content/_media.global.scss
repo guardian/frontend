@@ -134,10 +134,20 @@
             content: '';
             margin-right: $gs-gutter/5;
             height: 10px;
+            width: 16px;
         }
     }
 }
 
+
+
+.items--video .item__title:before {
+    @include icon(video-icon, false);
+}
+
+.items--audio .item__title:before {
+    @include icon(volume-high--tone-media, false);
+}
 
 /* Most viewed container
    ========================================================================== */

@@ -37,5 +37,12 @@ import scala.collection.JavaConversions._
     alternateLinks should be (empty)
   }
 
+  it should "not add alternate pages to 'all' pages for a section" in goTo("/business/1929/oct/24/all") { browser =>
+    import browser._
+
+    val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
+    alternateLinks should be (empty)
+  }
+
   private def toPath(url: String) = new URI(url).getPath
 }

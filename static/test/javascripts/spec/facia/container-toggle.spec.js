@@ -3,15 +3,15 @@ define([
     'common/utils/$',
     'bonzo',
     'bean',
-    'qwery',
-    'common/modules/userPrefs'
+    'common/modules/userPrefs',
+    'qwery'
 ], function(
     ContainerDisplayToggle,
     $,
     bonzo,
     bean,
-    qwery,
-    userPrefs
+    userPrefs,
+    qwery
 ) {
 
     describe('Container Toggle', function() {
@@ -20,25 +20,21 @@ define([
             $container,
             containerId = 'uk/culture/regular-stories',
             storageId = 'container-states',
-            // helper assertion method
+        // helper assertion method
             assertState = function($container, state) {
                 var $button = $('button', $container[0]);
-                expect($container.hasClass('container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
-                expect($container.attr('aria-expanded'))[state ? 'toBeFalsy' : 'toBeTruthy']();
-                expect($button.text()
-                    .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
-                    .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                    .toEqual(state === 'open' ? 'Hide section' : 'Show section');
+                expect($container.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
+                expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
             };
 
         beforeEach(function(){
             container = bonzo.create(
-                '<section id="' + containerId + '" class="container js-container--toggle" data-id="' + containerId + '">' +
-                    '<div class="container__header js-container__header">' +
-                        '<h2>A container</h2>' +
-                    '</div>' +
-                    '<div class="ad-slot--paid-for-badge"></div>' +
+                '<section class="fc-container js-container--toggle" data-id="' + containerId + '">' +
+                '<div class="fc-container__header js-container__header">' +
+                '<h2>A container</h2>' +
+                '</div>' +
+                '<div class="ad-slot--paid-for-badge"></div>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
@@ -61,7 +57,7 @@ define([
 
         it('should add "container--has-toggle" class to container', function() {
             new ContainerDisplayToggle(container).addToggle();
-            expect($container.hasClass('container--has-toggle')).toBeTruthy();
+            expect($container.hasClass('fc-container--has-toggle')).toBeTruthy();
         });
 
         it('should delete old storage key', function() {
@@ -73,7 +69,7 @@ define([
 
         it('should add button to the container\'s header', function() {
             new ContainerDisplayToggle(container).addToggle();
-            expect(qwery('.js-container__header .container__toggle', container).length).toBe(1);
+            expect(qwery('.js-container__header .fc-container__toggle', container).length).toBe(1);
         });
 
         it('initial state should be open', function() {
@@ -107,12 +103,6 @@ define([
             userPrefs.set(storageId, prefs);
             new ContainerDisplayToggle(container).addToggle();
             assertState($container, 'closed');
-        });
-
-        it('should add aria attributes', function() {
-            new ContainerDisplayToggle(container).addToggle();
-            var $button = $('button', container);
-            expect($button.attr('aria-controls')).toEqual($container.attr('id'));
         });
 
         describe('Commercial Badge', function(){

@@ -7,7 +7,7 @@
 @import TrailCssClasses.articleToneClass
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="facia-slice facia-slice--popular" data-link-name="most popular" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs u-cf">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
@@ -43,7 +43,7 @@
             </div>
         }
 
-            <div class="facia-slice__popular-mpu js-facia-slice-mpu-candidate facia-slice__item--mpu-candidate facia-slice__item--no-mpu"></div>
+            <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
 
         @if(isTabbed) {
                 </div>
