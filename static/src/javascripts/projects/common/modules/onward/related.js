@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'raven',
     'lodash/arrays/intersection',
     'common/utils/$',
     'common/utils/config',
@@ -13,7 +12,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    raven,
     intersection,
     $,
     config,

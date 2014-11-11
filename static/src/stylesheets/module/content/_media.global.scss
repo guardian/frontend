@@ -52,7 +52,7 @@
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
-            border-left: 1px solid $c-neutral2;
+            border-left: 1px solid colour(neutral-2);
         }
     }
     .content__secondary-column--video {
@@ -108,7 +108,7 @@
     .item__action {
         display: block;
         padding-top: $gs-baseline;
-        color: $c-neutral5;
+        color: colour(neutral-5);
 
         &:hover,
         &:focus {
@@ -116,7 +116,7 @@
         }
         &:visited,
         &:active {
-            color: darken($c-neutral5, 20%);
+            color: darken(colour(neutral-5), 20%);
         }
     }
     .item__img {
@@ -143,7 +143,7 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid $c-neutral2;
+    border-top: 1px solid colour(neutral-2);
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;
@@ -165,7 +165,7 @@
     .item {
         @include mq($until: tablet) {
             &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
+                border-right: 1px solid colour(neutral-2);
             }
         }
         @include mq(tablet, desktop) {
@@ -178,7 +178,7 @@
             }
             &:nth-child(3n-1),
             &:nth-child(3n-2) {
-                border-right: 1px solid $c-neutral2;
+                border-right: 1px solid colour(neutral-2);
             }
             &:nth-child(1n+4) {
                 margin-bottom: 0;
@@ -191,7 +191,7 @@
                 }
             }
             &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
+                border-right: 1px solid colour(neutral-2);
             }
             &:nth-child(n+5) {
                 margin-bottom: 0;
