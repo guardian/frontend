@@ -12,7 +12,7 @@ define([
 
     function load() {
 
-        var sampleRate = detect.getBreakpoint() === 'mobile' ? 0.08 : 0.006, // 8% mobile & 0.6% >mobile
+        var sampleRate = detect.getBreakpoint() === 'mobile' ? 0.03 : 0.003, // 3% mobile & 0.3% >mobile
             sample = Math.random() <= sampleRate,
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
