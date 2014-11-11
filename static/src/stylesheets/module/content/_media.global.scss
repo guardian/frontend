@@ -91,21 +91,40 @@
 /* Media item
    ========================================================================== */
 
-.items--media {
-    .item {
-        position: relative;
-        float: left;
-        width: 50%;
-        @include box-sizing(border-box);
-        margin-bottom: $gs-baseline*2;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+.fc-item--media {
+    position: relative;
+    float: left;
+    width: 50%;
+    @include box-sizing(border-box);
+    margin-bottom: $gs-baseline*2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
 
-        .item__container {
-            margin-top: -$gs-baseline;
+    &.fc-item {
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    &:nth-child(2n) {
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid colour(neutral-2);
         }
     }
-    .item__action {
+
+    .fc-item__container {
+        margin-top: -$gs-baseline;
+    }
+
+    .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
         color: colour(neutral-5);
@@ -119,10 +138,10 @@
             color: darken(colour(neutral-5), 20%);
         }
     }
-    .item__img {
+    .fc-item__img {
         margin-bottom: $gs-baseline/3;
     }
-    .item__title {
+    .fc-item__title {
         @include fs-headline(1);
         font-weight: 500;
         text-align: left; //Required for end slate items
@@ -141,11 +160,11 @@
 
 
 
-.items--video .item__title:before {
+.items--video .fc-item__title:before {
     @include icon(video-icon, false);
 }
 
-.items--audio .item__title:before {
+.items--audio .fc-item__title:before {
     @include icon(volume-high--tone-media, false);
 }
 
