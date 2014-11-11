@@ -202,7 +202,8 @@ $vjs-progress-inset-bottom: 4px;
     }
 
     .gu-media-wrapper:hover .vjs-mousemoved &,
-    .vjs-paused.vjs-has-started & {
+    .vjs-paused.vjs-has-started &,
+    &:hover {
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
