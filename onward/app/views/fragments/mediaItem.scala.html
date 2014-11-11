@@ -8,7 +8,7 @@
     <div class="fc-item__container">
         <a class="fc-item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
             @content.trailPicture(5, 3).map{ image =>
-                <div class="fc--item__img u-responsive-ratio">
+                <div class="fc-item__img u-responsive-ratio">
                     <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
                 </div>
             }
