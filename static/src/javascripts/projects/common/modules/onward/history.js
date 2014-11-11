@@ -61,7 +61,7 @@ define([
 
         }
 
-        return summary
+        return summary;
     }
 
     function addItemAndUpdateSummary(itemsSoFar, itemToAdd) {
