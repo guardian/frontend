@@ -191,7 +191,7 @@
     margin-left: -$gs-gutter/2;
     margin-right: -$gs-gutter/2;
 
-    .media-item {
+    .item {
         @include mq($until: tablet) {
             &:nth-child(odd) {
                 border-right: 1px solid colour(neutral-2);
@@ -227,7 +227,7 @@
             }
         }
     }
-    .media-item__title {
+    .item__title {
         @include text-clamp(3, get-line-height(headline, 1));
         height: get-line-height(headline, 1) * 3;
     }
