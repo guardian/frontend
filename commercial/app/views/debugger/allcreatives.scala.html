@@ -658,9 +658,13 @@ jQuery(function($) {
         </div>
     </div>
 
+    <hr/>
+
     <div class="fc-container fc-container--layout-content">
         <div class="fc-container__inner">
-            <h2 class="test-page-head">CAPI component</h2>
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CAPI component</a>
+            </h2>
         </div>
 
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
@@ -676,25 +680,30 @@ jQuery(function($) {
         </div>
     </div>
 
-    <hr/>
-
     <div class="fc-container fc-container--layout-content">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
                 <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Single)</a>
             </h2>
         </div>
-        <div class="ad-slot ad-slot--commercial-component dfp-ad--merchandising-capi-single">
-            <script>
-                $.getJSON(
-                    '/commercial/capi-single.json?s=books&t=p%2F4xv7c&k=music%2Fpinkfloyd&' +
-                    'l=http%3A%2F%2Fpagead2.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDjnfPJbBABGAEyCHbj_OBIEKp8&' +
-                    'ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
-                    'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
-                    function(json) { $('.dfp-ad--merchandising-capi-single').html(json.html); }
-                );
-            </script>
-        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-single"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        t: ['p/4xv7c'],
+                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        ct: 'Led Zeppelin special',
+                        cl: 'http://theguardian.com/music/ledzeppelin',
+                        cal: 'http://theguardian.com/about',
+                        k: 'music/pinkfloyd'
+                    }).init('capiSingle', document.querySelector('[data-name="merchandising-capi-single"]'));
+                });
+            });
+        });
+        </script>
     </div>
 
     <hr />

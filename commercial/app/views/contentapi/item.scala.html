@@ -21,13 +21,13 @@
             </div>
             <div class="fc-container__body">
                 <div class="lineitem--dfp-single">
-                    <a href="@AdLink{@item.webUrl}">
+                    <a href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
                         @item.mainPicture.map{ picture =>
                             @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                         }
-                        <h4 class="lineitem__title">@item.webTitle</h4>
+                        <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
                         @item.trailText.map { trailText =>
-                            <p class="lineitem__desc">@Html(trailText)</p>
+                            <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
                         }
                     </a>
                 </div>
