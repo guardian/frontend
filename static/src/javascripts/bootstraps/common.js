@@ -308,14 +308,17 @@ define([
 
             logReadingHistory: function () {
                 mediator.on('page:common:ready', function () {
+                    var oldItems, items, newItem;
                     if (config.page.contentType !== 'Network Front') {
-                        history.log({
-                            id: '/' + config.page.pageId,
-                            meta: {
-                                section: config.page.section,
-                                keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
-                            }
-                        });
+
+                        newItem = history.preparePage(config.page);
+
+                        oldItems = history.impure.get();
+
+                        items = history.getUpdatedHistory(newItem, oldItems, Date.now(), history.maxSize);
+
+                        history.impure.set(items.recentPages, items.summary);
+
                     }
                 });
             },

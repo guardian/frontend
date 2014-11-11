@@ -66,7 +66,9 @@ define([
                         return matchers;
                     }, {}),
 
-                    historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
+                    summary = history.impure.getSummary(),
+
+                    historyMatchers = assign({}, assign(history.getSectionCounts(summary), history.getLeadKeywordCounts(summary))),
 
                     articles = flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
