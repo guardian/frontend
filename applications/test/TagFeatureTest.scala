@@ -55,14 +55,14 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       goTo("/sport/cycling") { browser =>
         import browser._
 
-        val linksOnFirstPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        val linksOnFirstPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
         linksOnFirstPage.size should be > 10
         findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=2")
         findByRel($("link"), "prev") should be (None)
 
         Then("I should be able to navigate to the 'next' page")
         findFirst(".pagination").findFirst("[rel=next]").click()
-        val linksOnNextPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        val linksOnNextPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
         linksOnNextPage.size should be > 10
 
         findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=3")
@@ -75,7 +75,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
         And("I should be able to navigate to the 'previous' page")
         findFirst(".pagination").findFirst("[rel=prev]").click()
-        val linksOnPreviousPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        val linksOnPreviousPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
         linksOnPreviousPage should equal (linksOnFirstPage)
       }
     }
