@@ -52,7 +52,7 @@ trait Store extends Logging with Dates {
 
   def getDfpSponsoredTags() =
     S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
-  def getDfpAdvertisementTags() =
+  def getDfpAdFeatureTags() =
     S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
   def getDfpFoundationSupportedTags() =
     S3.get(dfpFoundationSupportedTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
