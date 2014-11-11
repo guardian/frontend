@@ -28,7 +28,7 @@ define([
             var tmpTitle = this.getContainerTitle();
 
             buttonText = {
-                'hidden'   : 'More ' + tmpTitle,
+                'hidden': 'More ' + tmpTitle,
                 'displayed': 'Less ' + tmpTitle
             };
 
@@ -52,11 +52,11 @@ define([
             return $container.data('title') || '';
         };
 
-        this.changeButtonText = function() {
+        this.changeButtonText = function () {
             $('.' + textHook, $button).text(buttonText[state]);
         };
 
-        this.changeButtonState = function() {
+        this.changeButtonState = function () {
             $button.attr('data-link-name', buttonText[state]);
             $button.toggleClass('button--primary', state !== 'displayed');
             $button.toggleClass('button--tertiary', state === 'displayed');
