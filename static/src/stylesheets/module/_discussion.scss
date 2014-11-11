@@ -9,7 +9,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion {
     margin-bottom: $gs-baseline * 2;
-    min-height: $gs-baseline * 2;
+    min-height: $gs-baseline * 16;
 
     .pagination_legend {
         display: none !important; // overriding .hide-on-mobile-inline
@@ -354,9 +354,11 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__avatar-wrapper,
 .d-comment-box__avatar-wrapper {
-    float: left;
     margin-right: ($gs-gutter / 5) * 2;
     margin-top: $gs-baseline / 6;
+    @include mq($until: leftCol) {
+        float: left;
+    }
 }
 
 .d-comment-box__avatar-wrapper .user-avatar__image {
@@ -371,7 +373,6 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    padding-right: $gs-gutter * 2.5;
     @include box-sizing(border-box);
 }
 
