@@ -356,9 +356,16 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment-box__avatar-wrapper {
     margin-right: ($gs-gutter / 5) * 2;
     margin-top: $gs-baseline / 6;
+}
+
+.d-comment-box__avatar-wrapper {
     @include mq($until: leftCol) {
         float: left;
     }
+}
+
+.d-comment__avatar-wrapper {
+    float: left;
 }
 
 .d-comment-box__avatar-wrapper .user-avatar__image {
