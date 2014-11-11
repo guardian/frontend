@@ -57,11 +57,11 @@ define([
         };
 
         this.changeButtonState = function () {
-            $button.attr('data-link-name', buttonText[state]);
-            $button.toggleClass('button--primary', state !== 'displayed');
-            $button.toggleClass('button--tertiary', state === 'displayed');
-            $('.i', $button).toggleClass('i-plus-white', state !== 'displayed');
-            $('.i', $button).toggleClass('i-minus-blue', state === 'displayed');
+            $button.attr('data-link-name', buttonText[state])
+                .toggleClass('button--primary', state !== 'displayed')
+                .toggleClass('button--tertiary', state === 'displayed');
+            $('.i', $button).toggleClass('i-plus-white', state !== 'displayed')
+                .toggleClass('i-minus-blue', state === 'displayed');
         };
 
         function showMore() {
