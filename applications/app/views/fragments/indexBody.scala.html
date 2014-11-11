@@ -36,14 +36,17 @@
         </div>
         *@
 
-
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @fragments.containers.facia_cards.container(containerDefinition, empty)
             }
         }
 
-        @index.page.pagination.map { paginate => @pagination(index.page, paginate) }
+        @index.page.pagination.map { paginate =>
+            <div class="facia-container__inner">
+                @pagination(index.page, paginate)
+            </div>
+        }
 
         @fragments.trendingTopics(index.trails, index.page.id)
 
