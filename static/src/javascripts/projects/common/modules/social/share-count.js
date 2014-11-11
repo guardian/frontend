@@ -98,7 +98,7 @@ define([
                     updateTooltip();
                 });
             } catch (e) {
-                raven.captureException(e, {
+                raven.captureException(new Error('Error retrieving share counts (' + e.message + ')'), {
                     tags: {
                         feature: 'share-count'
                     }
