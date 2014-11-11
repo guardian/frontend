@@ -17,6 +17,7 @@ import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
 import implicits.Dates._
 import common.JodaTime._
+import common.Seqs._
 
 object IndexPagePagination {
   def pageSize: Int = 50 //have a good think before changing this
@@ -48,9 +49,20 @@ object IndexPage {
 
     val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
 
-    front.copy(containers = front.containers map { container =>
+    val withCommercialOptions = front.copy(containers = front.containers map { container =>
       container.copy(commercialOptions = commercialOptions)
     })
+
+    indexPage.page match {
+      case tag: Tag =>
+        withCommercialOptions.copy(containers = withCommercialOptions.containers.mapHead({ container =>
+          container.copy(
+            customHeader = Some(FaciaContainerHeader.fromTagPage(tag))
+          )
+        }))
+
+      case _ => withCommercialOptions
+    }
   }
 }
 

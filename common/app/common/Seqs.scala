@@ -9,5 +9,10 @@ object Seqs {
     def reverseSorted(implicit ordering: Ordering[A]) = as.sorted(ordering.reverse)
 
     def countWhile(f: A => Boolean) = as.takeWhile(f).length
+
+    def mapHead[B](f: A => A) = as match {
+      case h :: t => f(h) :: t
+      case Nil => Nil
+    }
   }
 }

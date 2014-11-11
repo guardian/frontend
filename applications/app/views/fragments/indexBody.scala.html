@@ -23,19 +23,6 @@
         }
         role="main">
 
-        @** TODO This should appear in the first container
-        <div class="fc-container__header js-container__header">
-            @FootballTagPage(page).asOpt.map{ footballTagPage =>
-                @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
-            }.getOrElse{
-                @title.map { title =>
-                    @fragments.containers.elements.tagMeta(None, collection.href, page.description, title, page.isContributorPage)
-                }
-            }
-            @fragments.contributor(page)
-        </div>
-        *@
-
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @fragments.containers.facia_cards.container(containerDefinition, empty)
