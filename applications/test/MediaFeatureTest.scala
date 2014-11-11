@@ -33,6 +33,15 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
+    scenario("Have correct canonical url when 410") {
+      Given("I am on a video page")
+      goTo("world/video/2008/dec/11/guantanamo-bay") { browser =>
+        import browser._
+
+        findFirst("link[rel='canonical']").getAttribute("href") should endWith ("/world")
+      }
+    }
+
     scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         browser.findFirst(".byline").getText should be ("Ben Child and Henry Barnes, theguardian.com")

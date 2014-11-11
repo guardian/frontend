@@ -733,25 +733,14 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = {
-    val canonicalUrl: Option[String] = {
-      val sectionEx = """^(http[s]?:\/\/#HOST#\/)([^\/]*)(\/.+)?(\/\d{4}\/[.*[^\?]]*)(\?.*)*""".replace("#HOST#", request.host).r
-      val defaultCanonicalLink = CanonicalLink(request)
-      sectionEx.findFirstMatchIn(defaultCanonicalLink) map {
-        case matched if matched.group(1) != null && matched.group(2) != null => {
-          val base = matched.group(1)
-          val section = matched.group(2)
-          val params = if (matched.group(5) == null) "" else matched.group(5)
-          s"$base$section$params"
-        }
-      }
-    }
+    val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
     model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
   }
 
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
     case _ => result
   }
 }
