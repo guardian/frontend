@@ -1,15 +1,14 @@
 $icon-collection-size: 80%;
 
-.collection__show-more,
-.collection__show-more:focus,
-.collection__show-more:active {
+.collection__show-more {
     display: block;
     clear: both;
     margin-top: $gs-baseline;
     border: 1px solid colour(guardian-brand-light);
     color: colour(guardian-brand);
 
-    &:hover {
+    &:hover,
+    &:focus     {
         border-color: colour(guardian-brand-dark);
     }
 
