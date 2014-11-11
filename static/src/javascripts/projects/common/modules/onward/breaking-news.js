@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'raven',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
     'lodash/objects/assign',
@@ -13,7 +12,6 @@ define([
 ], function (
     bean,
     bonzo,
-    raven,
     flatten,
     intersection,
     assign,
