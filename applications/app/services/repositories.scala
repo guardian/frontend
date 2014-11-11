@@ -29,21 +29,12 @@ object IndexPage {
 
     val front = Front.fromConfigsAndContainers(grouped map {
       case grouping =>
-        val collection = CollectionEssentials(
-          grouping.items,
-          /** What about datetime tag? Might need to make a proper type for this so we can case match
-            * later.
-            */
-          displayName = Some(grouping.dateString),
-          None,
-          None,
-          None
+        val collection = CollectionEssentials.fromTrails(
+          grouping.items
         )
 
-        val config = CollectionConfig.emptyConfig
-
         /** TODO what should the data ID be here? */
-        ((CollectionConfigWithId(grouping.dateString, config), collection),
+        ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig), collection),
           Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
     })
 
@@ -53,11 +44,21 @@ object IndexPage {
       container.copy(commercialOptions = commercialOptions)
     })
 
+
+
     indexPage.page match {
       case tag: Tag =>
-        withCommercialOptions.copy(containers = withCommercialOptions.containers.mapHead({ container =>
+        val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
+          if (index == 0) {
+            FaciaContainerHeader.fromTagPage(tag, headline)
+          } else {
+            LoneDateHeadline(headline)
+          }
+        }
+
+        withCommercialOptions.copy(containers = withCommercialOptions.containers.zip(headers).map({ case (container, header) =>
           container.copy(
-            customHeader = Some(FaciaContainerHeader.fromTagPage(tag))
+            customHeader = Some(header)
           )
         }))
 

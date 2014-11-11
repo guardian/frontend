@@ -5,7 +5,8 @@
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 @import fragments.containers.elements.{footballTeamHeader, tagMeta}
 @import common.Localisation
-@import layout.{FootballTeamHeader, TagMetaDataHeader, ContributorMetaDataHeader}
+@import layout.{FootballTeamHeader, TagMetaDataHeader, ContributorMetaDataHeader, LoneDateHeadline}
+@import fragments.containers.facia_cards.dateHeadline
 
 @containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
@@ -15,11 +16,15 @@
             }
 
             case tag: TagMetaDataHeader => {
-                @tagMeta(tag.displayName, tag.href, tag.description, false)
+                @tagMeta(tag.displayName, tag.href, tag.description, tag.dateHeadline, false)
             }
 
             case tag: ContributorMetaDataHeader => {
-                @tagMeta(tag.displayName, tag.href, tag.description, true)
+                @tagMeta(tag.displayName, tag.href, tag.description, tag.dateHeadline, true)
+            }
+
+            case dateHeader: LoneDateHeadline => {
+                @dateHeadline(dateHeader.get)
             }
         }
     </div>

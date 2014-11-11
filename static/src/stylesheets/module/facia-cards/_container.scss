@@ -165,6 +165,10 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.fc-date-headline {
+    @include fs-headline(2);
+}
+
 .fc-today__sub {
     @include mq(leftCol) {
         display: block;

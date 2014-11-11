@@ -1,5 +1,6 @@
-@(displayName: String, href: String, description: Option[String], isContributorsPage: Boolean = false)(implicit request: RequestHeader)
+@(displayName: String, href: String, description: Option[String], headline: layout.DateHeadline, isContributorsPage: Boolean = false)(implicit request: RequestHeader)
 
+@import fragments.containers.facia_cards.dateHeadline
 @import common.Localisation
 
 <div class="container__meta">
@@ -11,4 +12,6 @@
             <dd class="container__meta__item hide-on-mobile">@Html(desc)</dd>
         }
     </dl>
+
+    @dateHeadline(headline)
 </div>

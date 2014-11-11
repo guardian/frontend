@@ -1,11 +1,10 @@
 package services
 
 import implicits.Collections
+import layout.{MonthHeadline, DayHeadline, DateHeadline}
 import model.Content
-import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, LocalDate}
 import implicits.Dates._
-import common.JodaTime._
 import common.Maps.RichMapSeq
 
 case class TrailAndDate(trail: Content, date: LocalDate)
@@ -36,16 +35,15 @@ object IndexPageGrouping extends Collections {
 }
 
 sealed trait IndexPageGrouping {
-  val dateFormatString: String
   val day: LocalDate
   val items: Seq[Content]
-  def dateString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateFormatString))
+  def dateHeadline: DateHeadline
 }
 
 case class Day(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override val dateFormatString: String = "d MMMM yyyy"
+  override def dateHeadline: DateHeadline = DayHeadline(day)
 }
 
 case class Month(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override val dateFormatString: String = "MMMM yyyy"
+  override def dateHeadline: DateHeadline = MonthHeadline(day)
 }

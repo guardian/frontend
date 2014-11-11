@@ -1,8 +1,11 @@
 @(header: layout.FootballTeamHeader)(implicit request: RequestHeader)
 
 @import views.support.RenderClasses
+@import fragments.containers.facia_cards.dateHeadline
 
 <div class="fc-container__header__title">@header.displayName</div>
+
+@dateHeadline(header.dateHeadline)
 
 <div class="@RenderClasses(Map(
     "fc-container__header__description" -> header.footballBadgeUrl.isEmpty,
