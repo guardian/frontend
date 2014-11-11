@@ -27,11 +27,16 @@ object EmailService extends ExecutionContexts with Logging {
            to: Seq[String],
            cc: Seq[String] = Nil,
            subject: String,
-           body: String): Future[SendEmailResult] = {
+           textBody: String,
+           htmlBody: Option[String] = None): Future[SendEmailResult] = {
+
+    val body = htmlBody.foldLeft(new Body().withText(new Content().withData(textBody))) {
+      case (soFar, html) => soFar.withHtml(new Content().withData(html))
+    }
 
     val message = new Message()
       .withSubject(new Content().withData(subject))
-      .withBody(new Body().withText(new Content().withData(body)))
+      .withBody(body)
 
     val request = new SendEmailRequest()
       .withSource(from)
