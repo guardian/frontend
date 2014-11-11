@@ -92,9 +92,8 @@
    Facia
    ========================================================================== */
 
-@include facia-container--layout-content;
-@include facia-container--layout-discussion;
-@include facia-container--default-heading;
+@include fc-container--layout-content;
+@include fc-container--layout-discussion;
 
 @import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
@@ -105,17 +104,16 @@
 @import 'module/facia/_tag-meta';
 
 // card additions
-@import 'module/facia-cards/_icons';
+@import 'module/facia/_icons';
 
-// new FACIA CARDS code
-@import 'module/facia-cards/_l-list';
-@import 'module/facia-cards/_container';
-@import 'module/facia-cards/_slices';
-@import 'module/facia-cards/_sublinks';
-@import 'module/facia-cards/_item';
-@import 'module/facia-cards/_items';
-@import 'module/facia-cards/_linkslist';
-@import 'module/facia-cards/_tones';
+@import 'module/facia/_l-list';
+@import 'module/facia/_container';
+@import 'module/facia/_slices';
+@import 'module/facia/_sublinks';
+@import 'module/facia/_item';
+@import 'module/facia/_items';
+@import 'module/facia/_linkslist';
+@import 'module/facia/_tones';
 
 /* ==========================================================================
    Experiments

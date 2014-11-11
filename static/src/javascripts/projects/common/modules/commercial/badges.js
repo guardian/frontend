@@ -72,7 +72,7 @@ define([
                 var $front = bonzo(front);
 
                 renderAd(
-                    qwery('.container', front)[0],
+                    qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
                         sponsor: $front.data('sponsor')

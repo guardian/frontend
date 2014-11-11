@@ -1,14 +1,24 @@
+.fc-slice {
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(tablet) {
+        overflow: visible; // Prevents height issue in Firefox < 22
+    }
+}
+
 /*
 
 This file is to be used only for manual overrides of item defaults at a slice level.
 Hence why a greater depth of selector specificity is needed.
 
 */
-.facia-slice--hl4-h {
+.fc-slice--hl4-h {
     .has-flex & {
         @include flex-direction(row-reverse);
 
-        .facia-slice__item:before {
+        .fc-slice__item:before {
             display: none;
         }
 
@@ -18,7 +28,7 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--h-ql4-ql4 {
+.fc-slice--h-ql4-ql4 {
     .fc-item--half-tablet {
         .fc-item__standfirst {
             @include mq(tablet, desktop) {
@@ -28,7 +38,7 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--h-q-q {
+.fc-slice--h-q-q {
     .fc-item--half-tablet {
         .fc-item__standfirst {
             @include mq(tablet) {
@@ -46,7 +56,7 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--h-q_ql2-ql4 {
+.fc-slice--h-q_ql2-ql4 {
     .fc-item--half-tablet {
         .fc-item__standfirst {
             @include mq(tablet) {
@@ -56,7 +66,7 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--q-qqq {
+.fc-slice--q-qqq {
     .fc-item--list-mobile {
         @include mq($until: tablet) {
             .fc-item__header {
@@ -78,8 +88,8 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 // reduce type size on q-q-q-q slice if it follows another slice in the same container
-.facia-slice-wrapper + .facia-slice-wrapper {
-    .facia-slice--q-q-q-q {
+.fc-slice-wrapper + .fc-slice-wrapper {
+    .fc-slice--q-q-q-q {
         .fc-item--standard-tablet {
             .fc-item__header {
                 @include mq(tablet) {
@@ -90,11 +100,11 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--h14-q-q {
+.fc-slice--h14-q-q {
     .has-flex & {
         @include flex-direction(row-reverse);
 
-        .facia-slice__item:before {
+        .fc-slice__item:before {
             display: none;
         }
 
@@ -118,10 +128,10 @@ Hence why a greater depth of selector specificity is needed.
  * Bespoke MPU slice stylings
  */
 
-.facia-slice--tl-tl-mpu {
+.fc-slice--tl-tl-mpu {
     @include mq(tablet, $until: desktop) {
-        > .facia-slice__item {
-            .facia-slice__item:before {
+        > .fc-slice__item {
+            .fc-slice__item:before {
                 border: 0;
             }
 
@@ -129,10 +139,10 @@ Hence why a greater depth of selector specificity is needed.
                 @include flex(1);
                 width: 50%;
 
-                .facia-slice__item {
+                .fc-slice__item {
                     @include flex-basis(100%);
                 }
-                .facia-slice__item:nth-child(5) {
+                .fc-slice__item:nth-child(5) {
                     padding-bottom: $gs-baseline;
                 }
             }
@@ -143,9 +153,9 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--t-tl-mpu {
+.fc-slice--t-tl-mpu {
     @include mq(tablet, $until: desktop) {
-        > .facia-slice__item {
+        > .fc-slice__item {
             width: 25% !important;
 
             &:last-child {
@@ -156,8 +166,8 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice--popular {
-    .facia-slice__item:before {
+.fc-slice--popular {
+    .fc-slice__item:before {
         display: none;
     }
 
@@ -166,21 +176,21 @@ Hence why a greater depth of selector specificity is needed.
     }
 
     @include mq(tablet) {
-        .facia-slice__popular-mpu {
+        .fc-slice__popular-mpu {
             position: absolute;
             max-width: 320px;
         }
     }
 
     @include mq(tablet, desktop) {
-        .facia-slice__popular-mpu {
+        .fc-slice__popular-mpu {
             bottom: 0;
             right: 0;
         }
     }
 
     @include mq(desktop) {
-        .facia-slice__popular-mpu {
+        .fc-slice__popular-mpu {
             top: $gs-baseline;
             right: -($gs-gutter / 2);
         }
@@ -195,7 +205,7 @@ Hence why a greater depth of selector specificity is needed.
  * Commercial Nav lists
  */
 
-.facia-slice--nav-list {
+.fc-slice--nav-list {
     $alley: $gs-gutter * .5;
 
     @include mq($until: tablet) {
@@ -211,12 +221,12 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.facia-slice__item--nav-list {
+.fc-slice__item--nav-list {
     display: inline-block;
     width: 100%;
 }
 
-.facia-slice--nav-list--media {
+.fc-slice--nav-list--media {
     $alley: $gs-gutter * .5;
 
     @include mq($until: tablet) {

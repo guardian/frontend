@@ -46,7 +46,10 @@ define([
                 }
             };
 
-            if (config.page.sponsorshipType === 'foundation-supported') {
+            if (
+                config.page.sponsorshipType === 'foundation-supported' &&
+                    config.page.isInappropriateForSponsorship === false
+            ) {
                 adNames.unshift(['fobadge', ['im', 'paid-for-badge']]);
                 // more lenient rules for foundation badge
                 foBadgeRules = cloneDeep(rules);

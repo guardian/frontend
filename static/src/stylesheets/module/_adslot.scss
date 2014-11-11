@@ -435,13 +435,13 @@
         }
     }
 }
-.facia-container--sponsored .container:first-child,
-.facia-container--advertisement-feature .container:first-child,
-.facia-container--foundation-supported .container:first-child,
-.container--sponsored,
-.container--advertisement-feature,
-.container--foundation-supported {
-    .container__header + .container__body {
+.fc-container--sponsored .fc-container:first-child,
+.fc-container--advertisement-feature .fc-container:first-child,
+.fc-container--foundation-supported .fc-container:first-child,
+.fc-container--sponsored,
+.fc-container--advertisement-feature,
+.fc-container--foundation-supported {
+    .fc-container__header + .fc-container__body {
         margin-top: 104px;
 
         @include mq(tablet) {
