@@ -11,6 +11,7 @@ import conf.Configuration.aws.mandatoryCredentials
 
 import scala.collection.JavaConversions._
 import scala.concurrent.{Future, Promise}
+import scala.language.implicitConversions
 import scala.util.Try
 
 object EmailService extends ExecutionContexts with Logging {
@@ -43,7 +44,7 @@ object EmailService extends ExecutionContexts with Logging {
       .withDestination(new EmailDestination().withToAddresses(to).withCcAddresses(cc))
       .withMessage(message)
 
-    val futureResponse = javaFuture2ScalaFuture(client.sendEmailAsync(request))
+    val futureResponse = client.sendEmailAsync(request)
 
     futureResponse recoverWith {
       case e: Exception =>
@@ -57,7 +58,7 @@ object EmailService extends ExecutionContexts with Logging {
    http://stackoverflow.com/questions/17215421/scala-concurrent-future-wrapper-for-java-util
    -concurrent-future
    */
-  private def javaFuture2ScalaFuture[T](jFuture: JFuture[T]): Future[T] = {
+  private implicit def javaFuture2ScalaFuture[T](jFuture: JFuture[T]): Future[T] = {
     val promise = Promise[T]()
     new Thread(new Runnable {
       def run() {

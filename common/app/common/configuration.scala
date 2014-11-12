@@ -263,8 +263,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
 
-    lazy val adOpsTeam = configuration.getStringProperty("ad.ops.team.email")
-    lazy val adTechTeam = configuration.getStringProperty("ad.tech.team.email")
+    lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
+    lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
   }
 
   object open {
