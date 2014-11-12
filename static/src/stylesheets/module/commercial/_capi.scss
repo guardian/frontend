@@ -84,6 +84,12 @@
         color: colour(neutral-1);
     }
 
+    .fc-item__container {
+        &:before {
+            display: none;
+        }
+    }
+
     .fc-item__image-container {
         display: block;
     }
