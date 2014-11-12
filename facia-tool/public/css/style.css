@@ -433,8 +433,7 @@ h1 {
     word-wrap: break-word;
     color: #999999;
     font-size: 12px;
-    line-height: 14px;
-    margin: -2px 0;
+    margin: 0 0 -2px 0;
 }
 
 .article__ammends p,
@@ -450,22 +449,25 @@ h1 {
 .article__ammends .label {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    text-transform: uppercase;
-    padding-right: 3px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #CCCCCC;
 }
 
 .article__ammends .label--draft {
-    font-weight: bold;
     color: #ffc107;
 }
 
 .article__ammends .label--takedown {
-    font-weight: bold;
     color: #DD4B39;
 }
 
 .article__ammends .label--snap {
-    font-weight: bold;
+    color: #46c430;
+}
+
+.article__ammends .label--snap-uri {
+    text-transform: lowercase;
     color: #999999;
 }
 
@@ -612,11 +614,6 @@ select {
     color: #999999;
     background: #dddddd;
     resize: none;
-}
-
-.editor.with-label textarea {
-    width: 70%;
-    float: left;
 }
 
 .editor textarea.active {

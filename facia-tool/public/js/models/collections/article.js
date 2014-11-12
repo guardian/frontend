@@ -12,6 +12,8 @@ define([
     'utils/snap',
     'utils/human-time',
     'utils/validate-image-src',
+    'utils/identity',
+    'utils/is-guardian-url',
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
@@ -30,6 +32,8 @@ define([
         snap,
         humanTime,
         validateImageSrc,
+        identity,
+        isGuardianUrl,
         copiedArticle,
         authedAjax,
         contentApi,
@@ -58,6 +62,7 @@ define([
                 {
                     key: 'headline',
                     editable: true,
+                    ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
                     maxLength: 90
@@ -65,6 +70,7 @@ define([
                 {
                     key: 'trailText',
                     editable: true,
+                    ifState: 'enableContentOverrides',
                     omitForSupporting: true,
                     label: 'trail text',
                     type: 'text'
@@ -72,7 +78,8 @@ define([
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
+                    ifState: 'enableContentOverrides',
+                    if: 'showByline',
                     omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
@@ -80,15 +87,33 @@ define([
                 {
                     key: 'customKicker',
                     editable: true,
-                    requires: 'showKickerCustom',
+                    if: 'showKickerCustom',
                     label: 'custom kicker',
                     type: 'text'
                 },
                 {
+                    key: 'isSnap',
+                    label: 'is a snap',
+                    type: 'boolean'
+                },
+                {
+                    key: 'snapUri',
+                    label: 'snap target',
+                    type: 'text'
+                },
+                {
+                    key: 'snapType',
+                    label: 'snap type',
+                    type: 'text'
+                },
+                {
+                    key: 'snapCss',
+                    label: 'snap class',
+                    type: 'text'
+                },
+                {
                     key: 'href',
-                    editable: true,
-                    omitForSupporting: true,
-                    requiresState: 'isSnap',
+                    ifState: 'isSnap',
                     label: 'special link URL',
                     type: 'text'
                 },
@@ -96,20 +121,20 @@ define([
                     key: 'imageSrc',
                     editable: true,
                     omitForSupporting: true,
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcWidth',
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image width',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcHeight',
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image height',
                     type: 'text'
                 },
@@ -117,20 +142,20 @@ define([
                     key: 'imageCutoutSrc',
                     editable: true,
                     omitForSupporting: true,
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcWidth',
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image width',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcHeight',
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image height',
                     type: 'text'
                 },
@@ -145,7 +170,7 @@ define([
                     key: 'isBoosted',
                     editable: true,
                     omitForSupporting: true,
-                    requiresState: 'inDynamicCollection',
+                    ifState: 'inDynamicCollection',
                     label: 'boost',
                     type: 'boolean'
                 },
@@ -153,7 +178,7 @@ define([
                     key: 'showMainVideo',
                     editable: true,
                     omitForSupporting: true,
-                    requiresState: 'hasMainVideo',
+                    ifState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
@@ -227,42 +252,6 @@ define([
                     label: 'custom kicker',
                     labelMeta: 'customKicker',
                     type: 'boolean'
-                },
-                {
-                    key: 'isSnap',
-                    label: 'is a snap',
-                    type: 'boolean'
-                },
-                {
-                    key: 'snapType',
-                    editable: true,
-                    requiresState: 'isSnap',
-                    label: 'snap type',
-                    showLabel: true,
-                    type: 'choice',
-                    choices: [
-                        { val: 'link',      label: 'special link'},
-                        { val: 'latest',    label: 'latest ContentApi item'},
-                        { val: 'document',  label: 'embed iframe'},
-                        { val: 'fragment',  label: 'embed html'},
-                        { val: 'json.html', label: 'embed html (jsonp)'}
-                    ]
-                },
-                {
-                    key: 'snapUri',
-                    editable: true,
-                    requiresState: 'isSnap',
-                    label: 'snap target',
-                    showLabel: true,
-                    type: 'text'
-                },
-                {
-                    key: 'snapCss',
-                    editable: true,
-                    requiresState: 'isSnap',
-                    label: 'snap class',
-                    showLabel: true,
-                    type: 'text'
                 }
             ],
 
@@ -282,6 +271,7 @@ define([
             this.fields = asObservableProps(capiFields);
 
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
+
             populateObservables(this.meta, opts.meta);
 
             this.metaDefaults = {};
@@ -291,6 +281,7 @@ define([
             this.uneditable = opts.uneditable;
 
             this.state = asObservableProps([
+                'enableContentOverrides',
                 'underDrag',
                 'isOpen',
                 'isLoaded',
@@ -305,6 +296,7 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
+            this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
             this.state.isSnap(!!snap.validateId(opts.id));
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
 
@@ -354,6 +346,8 @@ define([
 
             if (withCapiData) {
                 this.addCapiData(opts)
+            } else {
+                this.updateEditorsDisplay();
             }
         }
 
@@ -421,11 +415,7 @@ define([
 
                 label: opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
 
-                showLabel: opts.showLabel,
-
                 type: opts.type,
-
-                choices: opts.choices,
 
                 meta: meta,
 
@@ -440,9 +430,9 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
 
-                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+                    display = display && (opts.ifState ? self.state[opts.ifState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
                     return display;
@@ -460,7 +450,7 @@ define([
                     meta(!meta());
 
                    _.chain(all)
-                    .filter(function(editor) { return editor.requires === key; })
+                    .filter(function(editor) { return editor.if === key; })
                     .first(1)
                     .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
@@ -549,7 +539,7 @@ define([
 
         Article.prototype.updateEditorsDisplay = function() {
             if (!this.uneditable) {
-                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(identity));
             }
         }
 
@@ -637,16 +627,80 @@ define([
             }
         };
 
-        Article.prototype.convertToSnap = function(hasMultiContent) {
+        Article.prototype.convertToSnapId = function() {
+            this.id(snap.generateId());
             this.state.isSnap(true);
+        };
 
-            if (hasMultiContent && !this.meta.snapType()) {
-                this.meta.snapType('latest');
-                this.meta.snapUri(urlAbsPath(this.id()));
+        Article.prototype.convertToLinkSnap = function() {
+            if (!this.meta.headline()) {
+                this.decorateFromOpenGraph();
             }
 
-            this.meta.href(this.id());
-            this.id(snap.generateId());
+            this.meta.snapType('link');
+            this.meta.snapUri(this.id());
+
+            this.state.enableContentOverrides(true);
+
+            this.convertToSnapId();
+            this.updateEditorsDisplay();
+        }
+
+        Article.prototype.convertToLatestSnap = function(kicker) {
+            this.meta.snapType('latest');
+            this.meta.snapUri(urlAbsPath(this.id()));
+
+            this.meta.showKickerCustom(true);
+            this.meta.customKicker(kicker);
+
+            this.meta.headline(undefined);
+            this.meta.trailText(undefined);
+            this.meta.byline(undefined);
+
+            this.state.enableContentOverrides(false);
+
+            this.convertToSnapId();
+            this.updateEditorsDisplay();
+        };
+
+        Article.prototype.decorateFromOpenGraph = function() {
+            var self = this,
+                url = this.id(),
+                isOnSite = isGuardianUrl(url);
+
+            this.meta.headline('Fetching headline...');
+
+            authedAjax.request({
+                url: '/http/proxy/' + url + (isOnSite ? '%3Fview=mobile' : ''),
+                type: 'GET'
+            })
+            .done(function(response) {
+                var doc = document.createElement("div"),
+                    title,
+                    og = {};
+
+                doc.innerHTML = response;
+
+                Array.prototype.forEach.call(doc.querySelectorAll('meta[property^="og:"]'), function(tag) {
+                    og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
+                });
+
+                title = doc.querySelector('title');
+                title = title ? title.innerHTML : undefined;
+
+                self.meta.headline(og.title || title);
+                self.meta.trailText(og.description);
+
+                if(!isOnSite) {
+                    self.meta.customKicker(og.site_name || urlHost(url).replace(/^www\./, ''));
+                    self.meta.showKickerCustom(true);
+                }
+
+                self.updateEditorsDisplay();
+            })
+            .fail(function() {
+                self.meta.headline(undefined);
+            });
         };
 
         Article.prototype.open = function() {

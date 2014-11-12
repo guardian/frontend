@@ -85,7 +85,7 @@ define([
         model.createSnap = function() {
             var blank = new Article();
 
-            blank.convertToSnap();
+            blank.convertToSnapId();
             model.clipboard.items.unshift(blank);
             _.defer(updateScrollables);
         };
