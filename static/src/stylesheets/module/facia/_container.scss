@@ -459,7 +459,7 @@ $header-image-size-desktop: 120px;
      *  In some cases this will force meta content to split to two lines for tablet view
      *  so we need to increase the content div bottom space.
      */
-    @include mq($to: desktop) {
+    @include mq($until: desktop) {
         .item--has-discussion .fc-item__content {
             padding-bottom: $gs-baseline * 3;
         }
