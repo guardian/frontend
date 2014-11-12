@@ -117,9 +117,6 @@ $breakpoints: (
         @include mq($halfWidthBreakpoint) {
             padding-top: $gs-baseline/2;
         }
-        @include mq($halfWidthBreakpoint, $leftColumn) {
-            max-width: 50%;
-        }
         @include mq($leftColumn) {
             margin-bottom: 0;
             float: left;

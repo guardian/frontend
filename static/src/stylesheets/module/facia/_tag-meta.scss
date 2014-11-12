@@ -1,4 +1,5 @@
-//TODO This and the corresonding templates in discussion must be refatcored to new fc- containers
+//TODO This and the corresponding templates in discussion must be refactored to new fc-containers
+
 .container__meta {
     @include mq(tablet) {
         margin-bottom: $gs-baseline;
@@ -28,5 +29,18 @@
         margin: 0;
         @include fs-headline(2);
         color: colour(neutral-2);
+
+        @include mq(leftCol) {
+            border-top: 1px dotted colour(neutral-5);
+            /** TODO find where this is defined and fix it in the right place */
+            margin-top: $gs-baseline !important;
+            padding-top: $gs-baseline / 3;
+
+            .has-page-skin & {
+                border-top: 0;
+                margin-top: 0;
+                padding-top: 0;
+            }
+        }
     }
 }

@@ -9,9 +9,9 @@
             @Localisation(displayName)
         </dt>
         @description.map { desc =>
-            <dd class="container__meta__item hide-on-mobile">@Html(desc)</dd>
+            <dd class="container__meta__item">@Html(desc)</dd>
         }
     </dl>
 
-    @dateHeadline(headline)
+    @dateHeadline(headline, true)
 </div>
