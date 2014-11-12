@@ -77,6 +77,10 @@ define([
         }
     }
 
+    function setMode(mode) {
+        store = storage[mode];
+    }
+
     setPrefs(window.location);
 
     return {
@@ -88,6 +92,7 @@ define([
         removeSwitch: removeSwitch,
         isOn: isOn,
         isOff: isOff,
-        setPrefs: setPrefs
+        setPrefs: setPrefs,
+        setMode: setMode
     };
 });

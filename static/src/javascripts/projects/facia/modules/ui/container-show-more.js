@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'common/modules/userPrefs',
     'common/utils/$',
     'common/utils/template',
     'text!facia/views/button-show-more.html'
@@ -9,6 +10,7 @@ define([
     bean,
     bonzo,
     qwery,
+    userPrefs,
     $,
     template,
     showMoreBtn
@@ -21,8 +23,11 @@ define([
             textHook             = 'js-button-text',
             $button              = null,
             state                = 'hidden',
+            prefName             = 'section-states',
             buttonText           = {},
             self                 = this;
+
+        userPrefs.setMode("session");
 
         this.addShowMoreButton = function () {
             var tmpTitle = this.getContainerTitle();
@@ -46,6 +51,8 @@ define([
                     .removeClass('js-container--fc-show-more');
                 bean.on($button[0], 'click', showMore);
             }
+
+            this.readPrefs($container);
         };
 
         this.getContainerTitle = function () {
@@ -64,6 +71,29 @@ define([
                 .toggleClass('i-minus-blue', state === 'displayed');
         };
 
+        this.updatePref = function ($container, state) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName),
+                prefValue = $container.attr('data-id');
+            if (state !== 'displayed') {
+                delete prefs[prefValue];
+            } else {
+                if (!prefs) {
+                    prefs = {};
+                }
+                prefs[prefValue] = 'more';
+            }
+            userPrefs.set(prefName, prefs);
+        };
+
+        this.readPrefs = function ($container) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName);
+            if (prefs && prefs[$container.attr('data-id')]) {
+                bean.fire($button[0], 'click');
+            }
+        };
+
         function showMore() {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
@@ -73,6 +103,8 @@ define([
             state = (state === 'hidden') ? 'displayed' : 'hidden';
             self.changeButtonText();
             self.changeButtonState();
+
+            self.updatePref($container, state);
         }
     };
 });
