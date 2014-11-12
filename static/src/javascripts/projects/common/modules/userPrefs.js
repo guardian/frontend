@@ -7,8 +7,6 @@ define([
     var storagePrefix = 'gu.prefs.',
         store         = null;
 
-    setMode('local');
-
     function set(name, value) {
         store.set(storagePrefix + name, value);
     }
@@ -85,6 +83,7 @@ define([
         store = storage[mode];
     }
 
+    setMode('local');
     setPrefs(window.location);
 
     return {
