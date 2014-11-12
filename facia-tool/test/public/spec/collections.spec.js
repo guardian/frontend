@@ -1,73 +1,56 @@
-/* global curl: true */
 define([
-    'models/collections/main',
-    'fixtures/one-front-config',
-    'mock-switches',
-    'mock-search',
+    'test/utils/async-it',
+    'test/utils/drag',
     'mock-collection',
-    'utils/query-params',
-    'text!views/collections.scala.html',
-    'utils/mediator'
+    'test/utils/edit-actions'
 ], function(
-    CollectionsEditor,
-    fixConfig,
-    mockSwitches,
-    mockSearch,
+    it,
+    drag,
     mockCollection,
-    queryParams,
-    templateCollections,
-    mediator
+    editAction
 ){
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    var testArticle = {
-        apiUrl: '/capi',
-        id: 'politics/uk/2014/nov/07/i-won-the-elections',
-        webPublicationDate: '2014-11-07T14:45:00Z',
-        webTitle: 'I won the elections',
-        webUrl: 'http://theguardian.com/uk',
-        fields: {
-            headline: 'I won the elections',
-            thumbnail: '/thumbnail',
-            internalContentCode: "1234567890"
-        }
-    };
-    var collections = {
-        latest: {
-            lastUpdated: yesterday.toISOString(),
-            live: [{
-                id: 'politics/uk/2014/nov/07/i-won-the-elections',
-                frontPublicationDate: 1415193273347
-            }],
-            updatedBy: 'Test'
-        }
-    };
-
-    mockSearch.latest([testArticle]);
-    mockSearch.set({
-        'politics/uk/2014/nov/07/i-won-the-elections': {
-            response: {
-                results: [testArticle]
-            }
-        }
-    });
-    mockCollection.set(collections);
-
-    document.body.innerHTML += templateCollections;
-    queryParams.set({
-        front: 'uk'
-    });
-
     describe('Collections', function () {
         it('displays the correct timing', function (done) {
-            new CollectionsEditor().init();
-            mediator.on('mock:search', _.after(2, function () {
-                expect(
-                    $('.list-header__timings').text().replace(/\s+/g, ' ')
-                ).toMatch('1 day ago by Test');
+            expect(
+                $('.list-header__timings').text().replace(/\s+/g, ' ')
+            ).toMatch('1 day ago by Test');
+            done();
+        });
+
+        it('adds items', function (done) {
+            // The first article from the latest
+            var firstArticle = document.querySelector('.latest-articles .article');
+            var secondArticle = document.querySelector('.latest-articles .article:nth-child(2)');
+            var thirdArticle = document.querySelector('.latest-articles .article:nth-child(3)');
+            // The first group in the second collection
+            var firstGroup = document.querySelector('.collection:nth-child(2) .droppable');
+
+            editAction(function () {
+                drag.drop(firstGroup, new drag.Article(firstArticle));
+
+                return {
+                    sport: {
+                        live: [{
+                            id: 'internal/one',
+                            webPublicationDate: (new Date()).toISOString(),
+                            meta: {
+                                group: 3
+                            }
+                        }]
+                    }
+                };
+            }).then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('Update');
+                expect(request.data.update.after).toEqual(false);
+                expect(request.data.update.draft).toEqual(true);
+                expect(request.data.update.live).toEqual(false);
+                expect(request.data.update.id).toEqual('sport');
+                expect(request.data.update.item).toEqual('internal-code/content/1');
+                expect(request.data.update.itemMeta.group).toEqual('3');
                 done();
-            }));
+            });
+
         });
     });
 });
