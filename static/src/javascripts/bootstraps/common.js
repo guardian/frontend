@@ -308,17 +308,8 @@ define([
 
             logReadingHistory: function () {
                 mediator.on('page:common:ready', function () {
-                    var oldItems, items, newItem;
                     if (config.page.contentType !== 'Network Front') {
-
-                        newItem = history.preparePage(config.page);
-
-                        oldItems = history.impure.get();
-
-                        items = history.getUpdatedHistory(newItem, oldItems, Date.now(), history.maxSize);
-
-                        history.impure.set(items.recentPages, items.summary);
-
+                        history.log(config.page);
                     }
                 });
             },

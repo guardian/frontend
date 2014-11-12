@@ -66,7 +66,7 @@ define([
                         return matchers;
                     }, {}),
 
-                    summary = history.impure.getSummary(),
+                    summary = history.getSummary(),
 
                     historyMatchers = assign({}, assign(history.getSectionCounts(summary), history.getLeadKeywordCounts(summary))),
 
