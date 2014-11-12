@@ -1,10 +1,17 @@
 package layout
 
-import model.Tag
+import model.{Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
 object FaciaContainerHeader {
+  def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = TagMetaDataHeader(
+    sectionPage.webTitle,
+    sectionPage.url,
+    sectionPage.description,
+    dateHeadline
+  )
+
   def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline): FaciaContainerHeader = {
     if (tagPage.isFootballTeam) {
       FootballTeamHeader(
@@ -60,6 +67,7 @@ case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 
 sealed trait DateHeadline {
   val dateFormatString: String
+
   val dateTimeFormatString: String
 
   val day: LocalDate

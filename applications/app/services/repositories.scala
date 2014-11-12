@@ -44,27 +44,26 @@ object IndexPage {
       container.copy(commercialOptions = commercialOptions)
     })
 
-
-
-    indexPage.page match {
-      case tag: Tag =>
-        val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
-          if (index == 0) {
-            FaciaContainerHeader.fromTagPage(tag, headline)
-          } else {
+    val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
+      if (index == 0) {
+        indexPage.page match {
+          case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
+          case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case _ =>
+            // should never happen
             LoneDateHeadline(headline)
-          }
         }
-
-        withCommercialOptions.copy(containers = withCommercialOptions.containers.zip(headers).map({ case (container, header) =>
-          container.copy(
-            customHeader = Some(header),
-            customClasses = Some(Seq("fc-container--tag"))
-          )
-        }))
-
-      case _ => withCommercialOptions
+      } else {
+        LoneDateHeadline(headline)
+      }
     }
+
+    withCommercialOptions.copy(containers = withCommercialOptions.containers.zip(headers).map({ case (container, header) =>
+      container.copy(
+        customHeader = Some(header),
+        customClasses = Some(Seq("fc-container--tag"))
+      )
+    }))
   }
 }
 
