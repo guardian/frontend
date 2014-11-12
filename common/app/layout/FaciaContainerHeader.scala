@@ -5,16 +5,17 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
 object FaciaContainerHeader {
-  def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = TagMetaDataHeader(
+  def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
     sectionPage.webTitle,
     sectionPage.url,
+    None,
     sectionPage.description,
     dateHeadline
   )
 
   def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline): FaciaContainerHeader = {
     if (tagPage.isFootballTeam) {
-      FootballTeamHeader(
+      MetaDataHeader(
         tagPage.webTitle,
         tagPage.url,
         tagPage.getFootballBadgeUrl,
@@ -22,16 +23,18 @@ object FaciaContainerHeader {
         dateHeadline
       )
     } else if (tagPage.isContributor) {
-      ContributorMetaDataHeader(
+      MetaDataHeader(
         tagPage.webTitle,
         tagPage.url,
+        tagPage.contributorImagePath,
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
         dateHeadline
       )
     } else {
-      TagMetaDataHeader(
+      MetaDataHeader(
         tagPage.webTitle,
         tagPage.url,
+        None,
         tagPage.description,
         dateHeadline
       )
@@ -41,24 +44,10 @@ object FaciaContainerHeader {
 
 sealed trait FaciaContainerHeader
 
-case class FootballTeamHeader(
+case class MetaDataHeader(
   displayName: String,
   href: String,
-  footballBadgeUrl: Option[String],
-  description: Option[String],
-  dateHeadline: DateHeadline
-) extends FaciaContainerHeader
-
-case class TagMetaDataHeader(
-  displayName: String,
-  href: String,
-  description: Option[String],
-  dateHeadline: DateHeadline
-) extends FaciaContainerHeader
-
-case class ContributorMetaDataHeader(
-  displayName: String,
-  href: String,
+  imageUrl: Option[String],
   description: Option[String],
   dateHeadline: DateHeadline
 ) extends FaciaContainerHeader

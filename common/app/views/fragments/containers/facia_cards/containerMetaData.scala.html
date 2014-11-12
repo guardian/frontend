@@ -1,0 +1,17 @@
+@(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
+
+@import fragments.containers.facia_cards.dateHeadline
+@import common.Localisation
+
+<div class="container__meta">
+    <dl class="container__meta__description">
+        <dt class="container__meta__title">
+        @Localisation(metaDataHeader.displayName)
+        </dt>
+        @metaDataHeader.description.map { desc =>
+            <dd class="container__meta__item">@Html(desc)</dd>
+        }
+    </dl>
+
+    @dateHeadline(metaDataHeader.dateHeadline, true)
+</div>

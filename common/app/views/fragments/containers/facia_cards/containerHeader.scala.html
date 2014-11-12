@@ -3,24 +3,16 @@
 @import common.LinkTo
 @import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
-@import fragments.containers.elements.{footballTeamHeader, tagMeta}
+@import fragments.containers.facia_cards.containerMetaData
 @import common.Localisation
-@import layout.{FootballTeamHeader, TagMetaDataHeader, ContributorMetaDataHeader, LoneDateHeadline}
+@import layout.{MetaDataHeader, LoneDateHeadline}
 @import fragments.containers.facia_cards.dateHeadline
 
 @containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
         @customHeader match {
-            case header: FootballTeamHeader => {
-                @footballTeamHeader(header)
-            }
-
-            case tag: TagMetaDataHeader => {
-                @tagMeta(tag.displayName, tag.href, tag.description, tag.dateHeadline, false)
-            }
-
-            case tag: ContributorMetaDataHeader => {
-                @tagMeta(tag.displayName, tag.href, tag.description, tag.dateHeadline, true)
+            case metaDataHeader: MetaDataHeader => {
+                @containerMetaData(metaDataHeader)
             }
 
             case dateHeader: LoneDateHeadline => {
