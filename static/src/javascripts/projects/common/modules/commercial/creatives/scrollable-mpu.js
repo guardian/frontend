@@ -10,7 +10,7 @@ define([
 
     var adClass          = 'js-scrollable-mpu',
         updateBgPosition = function ($ad) {
-            $ad.css('background-position', $ad.offset().left + 'px 0');
+            $ad.css('background-position', $ad.offset().left + 'px 100%');
         };
 
     /**
