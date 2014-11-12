@@ -2,63 +2,77 @@
     $tone,
     $tonal__header-background,
     $tonal__header-text,
-    $tonal__standfirst-background,
-    $tonal__standfirst-text,
+    $tonal__trailtext-background,
+    $tonal__trailtext-text,
     $tonal__border-top,
     $tonal__comment-text,
     $tonal__kicker-text
 ){
-  .content-card.tonal--tone-#{$tone} {
+    .content-card.tonal--tone-#{$tone} {
 
-    border-top-color: colour($tonal__border-top);
-    .content-card__header {
-        background: colour($tonal__header-background);
-        color: colour($tonal__header-text);
+        border-top-color: colour($tonal__border-top);
+            .content-card__header {
+                background: colour($tonal__header-background);
+                color: colour($tonal__header-text);
+        }
+
+        .content-card__trailtext {
+            background: colour($tonal__trailtext-background);
+            color: colour($tonal__trailtext-text)
+        }
+
+        .content-card__byline {
+            color: colour($tonal__kicker-text);
+        }
+
+        .stars{
+            margin-top: $gs-baseline / 4;
+            margin-bottom: $gs-baseline / 4;
+            padding-left: $gs-gutter/2;
+        }
     }
-
-    .content-card__standfirst {
-        background: colour($tonal__standfirst-background);
-        color: colour($tonal__standfirst-text)
-    }
-
-    .content-card__byline {
-        color: colour($tonal__kicker-text);
-    }
-
-  }
 }
 
 @include tone-content-card(news, neutral-7, neutral-1, neutral-7, neutral-2, news-accent, neutral-2, news-default);
 @include tone-content-card(feature, features-support-1, neutral-8, features-main-2, neutral-7, features-main-1, neutral-2, news-default);
 @include tone-content-card(comment, neutral-7, neutral-1, comment-main-2, neutral-8, comment-main-2, neutral-8, comment-main-2);
 @include tone-content-card(editorial, neutral-7, neutral-1, guardian-brand, neutral-8, guardian-brand, neutral-8, neutral-7);
-@include tone-content-card(live, live-main-1, neutral-8,  live-main-2, neutral-7, live-main-1, neutral-8, neutral-7);
+@include tone-content-card(live, live-main-1, neutral-8, live-main-2, neutral-7, live-main-1, neutral-8, neutral-7);
+@include tone-content-card(review, multimedia-main-1, neutral-8, multimedia-support-4, neutral-8, multimedia-main-1, multimedia-main-2, multimedia-main-1);
 
 .content-card__header {
-  padding-bottom: $gs-baseline;
+    padding-bottom: $gs-baseline;
 }
 
 
 .content-card__title {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
+    @include stars();
+
+    .stars {
+        .star__item {
+            vertical-align: bottom;
+        }
+    }
 }
 
+
 .content-card__byline {
-  @include fs-header(3);
-  padding-left: $gs-gutter / 2;
-  padding-right: $gs-gutter;
+    @include fs-header(3);
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter;
 }
 
 
 .content-card {
-  border-top: 2px solid transparent;
-  display: block;
-  position: relative;
-  overflow: hidden;
+    border-top: 2px solid transparent;
+    display: block;
+    position: relative;
+    overflow: hidden;
 }
 
-.content-card__standfirst {
+.content-card__trailtext {
   padding-left: $gs-gutter / 2;
   padding-bottom: $gs-baseline;
   padding-right: $gs-gutter * 6;
@@ -80,21 +94,21 @@
 }
 
 .content-card__live {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 
 .content-card__live-icon {
-  $size: 12px;
-  display: inline-block;
-  content: '';
-  background-color: #ffffff;
-  width: $size;
-  height: $size;
-  margin-bottom: -1px;
-  margin-right: 3px;
-  @include border-radius(50%);
-  @include animation(live-pulse 1s infinite);
+    $size: 12px;
+    display: inline-block;
+    content: '';
+    background-color: #ffffff;
+    width: $size;
+    height: $size;
+    margin-bottom: -1px;
+    margin-right: 3px;
+    @include border-radius(50%);
+    @include animation(live-pulse 1s infinite);
 }
 
 
