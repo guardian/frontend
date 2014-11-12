@@ -155,8 +155,7 @@
     }
 }
 
-.tone-media--item,
-.tone-media--sublink {
+.tone-media--item {
     .fc-item__timestamp:before {
         @include icon(clock-grey, false);
     }
@@ -167,7 +166,7 @@
 }
 
 .tone-live--item,
-.tone-live--sublink {
+.tone-feature--item {
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
@@ -177,13 +176,12 @@
     }
 }
 
-.tone-feature--item,
-.tone-feature--sublink {
+.tone-editorial--item {
     .fc-item__timestamp:before {
-        @include icon(clock-light-pink, false);
+        @include icon(clock-light-blue, false);
     }
 
     .fc-trail__count:before {
-        @include icon(comment-light-pink, false);
+        @include icon(comment-light-blue, false);
     }
 }

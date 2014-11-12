@@ -1,5 +1,7 @@
 package slices
 
+import model.Content
+
 object ContainerDefinition {
   val DefaultCards = 6
 
@@ -7,6 +9,15 @@ object ContainerDefinition {
     slices,
     RestrictTo(6)
   )
+
+  def fromContainer(container: Container, items: Seq[Content]) = container match {
+    case Dynamic(dynamicContainer) =>
+      dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+
+    case Fixed(containerDefinition) => Some(containerDefinition)
+
+    case _ => None
+  }
 }
 
 sealed trait MobileShowMore

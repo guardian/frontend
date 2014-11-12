@@ -4,6 +4,10 @@
         color: $c-analysisDefault;
     }
 
+    .u-faux-block-link--hover {
+        background-color: darken($c-analysisBackground, 5%);
+    }
+
     .fc-item__container:before {
         background-color: $c-analysisAccent;
     }
@@ -18,8 +22,15 @@
     }
 }
 
-.tone-analysis--sublink {
-    .fc-sublink__kicker {
+.tone-analysis--sublink,
+.tone-analysis--most-popular {
+    .fc-item__kicker {
         color: $c-analysisAccent;
+    }
+
+    @include sublink-style(live) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
     }
 }

@@ -186,7 +186,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);
@@ -332,14 +332,15 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot[0]).each(function (iFrame) {
+            $('iframe', $slot).each(function (iFrame) {
                 // IE needs the iFrame to have loaded before we can interact with it
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
                         if (
-                            typeof updatedIFrame.readyState !== 'unknown'
-                                && updatedIFrame.readyState === 'complete'
+                            updatedIFrame &&
+                            typeof updatedIFrame.readyState !== 'unknown' &&
+                            updatedIFrame.readyState === 'complete'
                         ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');

@@ -4,11 +4,7 @@
 /**
  * Default typography settings, to be included as soon as possible in the HTML
  * 1. Make type rendering look crisper
- * 2. Set baseline font size to 10px
- * 3. Fixes an IE11 bug where rouding with % would create scaling issues  
- *    See http://bit.ly/1g4X0bX — thanks @7studio and @dawitti
- * 4. Set default text size back to 16px (at default zoom level)
- * 5. Set relative line spacing to 1.5 (16px * 1.5 = 24px)
+ * 2. Set relative line spacing to 1.5 (16px * 1.5 = 24px)
  *
  * @param {String} $font-family ($f-serif-text) - Default global font
  *
@@ -22,12 +18,9 @@
             font-family: $font-family;
             -moz-osx-font-smoothing: grayscale; /* 1 */
             -webkit-font-smoothing: antialiased; /* 1 */
-            font-size: 62.5%; /* 2 */
-            font-size: calc(1em * .625); /* 3 */
         }
         body {
-            font-size: 1.6em; /* 4 */
-            line-height: 1.5; /* 5 */
+            line-height: 1.5; /* 2 */
         }
     }
 }

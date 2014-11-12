@@ -2,7 +2,7 @@
 
 @import layout.CollectionEssentials
 @import com.gu.facia.client.models.CollectionConfig
-@import layout.ContainerAndCollection
+@import layout.FaciaContainer
 @import services.CollectionConfigWithId
 @import slices.Fixed
 @import slices.FixedContainers.fixedMediumSlowVI
@@ -12,7 +12,7 @@
     <div class="l-side-margins l-side-margins--layout-front">
         <div class="facia-container facia-container--layout-front js-sponsored-front"
             data-sponsorship="sponsored">
-            @fragments.containers.facia_cards.container(ContainerAndCollection(
+            @fragments.containers.facia_cards.container(FaciaContainer(
                 0,
                 Fixed(fixedMediumSlowVI),
                 CollectionConfigWithId("front", CollectionConfig.withDefaults(displayName = Some("Front"))),
@@ -36,7 +36,7 @@
                     ("title", "Foundation Supported")
                 )
             ).map { c =>
-                @fragments.containers.facia_cards.container(ContainerAndCollection(
+                @fragments.containers.facia_cards.container(FaciaContainer(
                     1,
                     Fixed(fixedMediumSlowVI),
                     CollectionConfigWithId("type", CollectionConfig.withDefaults(

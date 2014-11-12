@@ -1,4 +1,4 @@
-@(containerDefinition: layout.ContainerAndCollection, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import views.support.{ImgSrc, Item140, RenderClasses}
@@ -18,7 +18,7 @@
                           @Html(Localisation(title))
                         </a>
                     }.getOrElse {
-                        <span class="u-text-hyphenate">@Html(Localisation(title))</span>
+                        <span class="u-text-hyphenate" tabindex="0">@Html(Localisation(title))</span>
                     }
 
                     @if(containerDefinition.showDateHeader) {

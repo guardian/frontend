@@ -13,14 +13,6 @@
 
     <div class="front-selector">
         <select data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
-        <span class="front-selector__age" data-bind="visible: frontAge">
-            live page refreshed <span data-bind="text: frontAge"></span>
-            <!-- ko if: alertFrontIsStale -->
-                <span class="tools">
-                    <a class="tool" data-bind="click: pressLiveFront">refresh it</a>
-                </span>
-            <!-- /ko -->
-        </span>
     </div>
 
     <div class="left-col">
@@ -38,10 +30,8 @@
         </div>
 
         <div class="col__inner scrollable">
+            <div class="title title--clipboard">clipboard</div>
             <div class="clipboard" data-bind="with: clipboard">
-               <div class="title">
-                    Clipboard
-                </div>
                 <div class="droppable" data-bind="
                     makeDropabble: true,
                     click: pasteItem,
@@ -55,7 +45,7 @@
                     <a><i class="icon-remove" data-bind="click: reset"></i></a>
                 </div>
 
-                <div class="title">Latest</div>
+                <div class="title">latest</div>
 
                 <div class="search-form">
                     <div class="search-term">
@@ -114,6 +104,15 @@
                 attr: { href: previewUrl },
                 text: liveMode() ? 'View live' : 'Preview draft',
                 visible: front"></a>
+
+            <span class="front-age" data-bind="visible: frontAge">
+               refreshed <span data-bind="text: frontAge"></span>
+                <!-- ko if: alertFrontIsStale -->
+                    <span class="tools">
+                        <a data-bind="click: pressLiveFront">Refresh it</a>
+                    </span>
+                <!-- /ko -->
+            </span>
         </div>
 
         <div class="col__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
@@ -241,7 +240,7 @@
 
     <script type="text/html" id="template_groups">
         <!-- ko if: name -->
-        <div class="group-name" data-bind="text: name"></div>
+            <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
             makeDropabble: true,

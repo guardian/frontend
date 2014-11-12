@@ -1,7 +1,8 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset, Content => ApiContent}
 import model._
+import org.joda.time.DateTime
 import org.scalatest.{ Matchers, FlatSpec }
 import xml.XML
 import common.editions.Uk
@@ -57,7 +58,7 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   "PictureCleaner" should "correctly format inline pictures" in {
 
-    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(bodyImages)).body.trim)
+    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
 
     val figures = (body \\ "figure").toList
 
@@ -262,13 +263,34 @@ class TemplatesTest extends FlatSpec with Matchers {
     ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString, "height" -> height.toString))
   }
 
-  val bodyImages: List[ImageElement] = List(
-    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),0),
-    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),0),
-    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),0),
-    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),0),
-    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))),0)
+  val testImages: List[ApiElement] = List(
+    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),
+    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),
+    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),
+    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),
+    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700)))
   )
+
+//  val bodyImages: List[Element] = List(
+//    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),0),
+//    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),0),
+//    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),0),
+//    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),0),
+//    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))),0)
+//  )
+
+  val testContent = new Article(ApiContentWithMeta(ApiContent(
+    "foo/2012/jan/07/bar",
+    None,
+    None,
+    None,
+    "Some article",
+    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    Some(Map("shortUrl" -> "http://gu.com/p/439az")),
+    Nil,
+    elements = Some(testImages)
+  )))
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>

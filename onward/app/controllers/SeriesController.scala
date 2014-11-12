@@ -10,7 +10,7 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import layout.{CollectionEssentials, ContainerAndCollection, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
 import slices.{Fixed, FixedContainers}
 
 case class Series(id: String, tag: Tag, trails: Seq[Content])
@@ -48,6 +48,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
     val dataId = "series"
+    val componentId = Some("series")
     val displayName = Some(series.tag.webTitle)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
 
@@ -56,11 +57,12 @@ object SeriesController extends Controller with Logging with Paging with Executi
     )
 
     val response = () => views.html.fragments.containers.facia_cards.container(
-      ContainerAndCollection(
+      FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumSlowVII),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails take 7, displayName, None, None, None)
+        CollectionEssentials(series.trails take 7, displayName, None, None, None),
+        componentId
       ),
       properties
     )(request)
