@@ -7,7 +7,7 @@
     <div class="end-slate-container__header">
         <h3 class="end-slate-container__heading">@heading</h3>
     </div>
-    <ul class="u-cf u-unstyled end-slate end-slate--video items--media items--video" data-link-name="end slate">
+    <ul class="u-cf u-unstyled end-slate end-slate--video l-row items--video" data-link-name="end slate">
         @videos.zipWithRowInfo.map{ case (video, row) =>
             @fragments.mediaItem(video, row.rowNum)
         }
