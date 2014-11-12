@@ -93,8 +93,6 @@
 
 .fc-item--media {
     position: relative;
-    float: left;
-    width: 50%;
     @include box-sizing(border-box);
     margin-bottom: $gs-baseline*2;
     padding-left: $gs-gutter/2;
@@ -106,7 +104,7 @@
         margin-right: 0;
     }
 
-    &:nth-child(2n) {
+    + .fc-item{
         &:before {
             content: '';
             display: block;
@@ -124,6 +122,10 @@
         margin-top: -$gs-baseline;
     }
 
+    .fc-item__image-container {
+        display: block;
+    }
+
     .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
@@ -138,9 +140,7 @@
             color: darken(colour(neutral-5), 20%);
         }
     }
-    .fc-item__img {
-        margin-bottom: $gs-baseline/3;
-    }
+
     .fc-item__title {
         @include fs-headline(1);
         font-weight: 500;
@@ -191,43 +191,38 @@
     margin-left: -$gs-gutter/2;
     margin-right: -$gs-gutter/2;
 
-    .item {
+    .fc-item--media {
+        float: left;
+        width: 50%;
+
         @include mq($until: tablet) {
-            &:nth-child(odd) {
-                border-right: 1px solid colour(neutral-2);
+            &:nth-child(odd):before {
+                display: none;
             }
         }
+
         @include mq(tablet, desktop) {
             width: 33.3%;
 
-            &:nth-child(-n+3) {
-                .item__container {
-                    border-top: 0;
-                }
+            &:nth-child(4n):before {
+                display: none;
             }
-            &:nth-child(3n-1),
-            &:nth-child(3n-2) {
-                border-right: 1px solid colour(neutral-2);
-            }
+
             &:nth-child(1n+4) {
                 margin-bottom: 0;
             }
         }
+
         @include mq(desktop) {
-            &:nth-child(-n+2) {
-                .item__container {
-                    border-top: 0;
-                }
-            }
-            &:nth-child(odd) {
-                border-right: 1px solid colour(neutral-2);
+            &:nth-child(odd):before {
+                display: none;
             }
             &:nth-child(n+5) {
                 margin-bottom: 0;
             }
         }
     }
-    .item__title {
+    .fc-item__title {
         @include text-clamp(3, get-line-height(headline, 1));
         height: get-line-height(headline, 1) * 3;
     }
@@ -249,7 +244,7 @@
             margin-bottom: 0;
         }
     }
-    .item:nth-child(4) {
+    .fc-item:nth-child(4) {
         @include mq(tablet, desktop) {
             display: none;
         }
