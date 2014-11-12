@@ -35,7 +35,7 @@ $header-image-size-desktop: 120px;
     padding-top: 0;
 
     .fc-container__inner {
-        border: 0 !important;
+        border: 0;
     }
 
     @include mq(tablet) {

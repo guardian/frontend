@@ -3,7 +3,6 @@
 @import common.LinkTo
 @import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
-@import fragments.containers.facia_cards.containerMetaData
 @import common.Localisation
 @import layout.{MetaDataHeader, LoneDateHeadline}
 @import fragments.containers.facia_cards.dateHeadline
@@ -12,11 +11,11 @@
     <div class="fc-container__header js-container__header">
         @customHeader match {
             case metaDataHeader: MetaDataHeader => {
-                @containerMetaData(metaDataHeader)
+                @dateHeadline(metaDataHeader.dateHeadline)
             }
 
             case dateHeader: LoneDateHeadline => {
-                @dateHeadline(dateHeader.get, false)
+                @dateHeadline(dateHeader.get)
             }
         }
     </div>

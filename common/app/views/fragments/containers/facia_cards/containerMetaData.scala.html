@@ -1,6 +1,5 @@
 @(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
 
-@import fragments.containers.facia_cards.dateHeadline
 @import common.Localisation
 
 <div class="index-page-header">
@@ -13,6 +12,4 @@
     @metaDataHeader.image.map { image =>
         <div class="index-page-header__picture"><img src="@image.url" /></div>
     }
-
-    @dateHeadline(metaDataHeader.dateHeadline, true)
 </div>

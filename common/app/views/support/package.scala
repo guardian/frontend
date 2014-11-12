@@ -792,7 +792,7 @@ object GetClasses {
   def forContainerDefinition(containerDefinition: FaciaContainer) =
     forContainer(
       containerDefinition.showLatestUpdate,
-      containerDefinition.index == 0,
+      containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
       Some(containerDefinition.container),

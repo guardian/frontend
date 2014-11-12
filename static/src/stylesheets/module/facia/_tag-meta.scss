@@ -29,18 +29,5 @@
         margin: 0;
         @include fs-headline(2);
         color: colour(neutral-2);
-
-        @include mq(leftCol) {
-            border-top: 1px dotted colour(neutral-5);
-            /** TODO find where this is defined and fix it in the right place */
-            margin-top: $gs-baseline !important;
-            padding-top: $gs-baseline / 3;
-
-            .has-page-skin & {
-                border-top: 0;
-                margin-top: 0;
-                padding-top: 0;
-            }
-        }
     }
 }
