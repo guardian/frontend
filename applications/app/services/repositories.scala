@@ -38,12 +38,6 @@ object IndexPage {
           Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
     })
 
-    val commercialOptions = ContainerCommercialOptions.fromMetaData(indexPage.page)
-
-    val withCommercialOptions = front.copy(containers = front.containers map { container =>
-      container.copy(commercialOptions = commercialOptions)
-    })
-
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
       if (index == 0) {
         indexPage.page match {
@@ -58,7 +52,7 @@ object IndexPage {
       }
     }
 
-    withCommercialOptions.copy(containers = withCommercialOptions.containers.zip(headers).map({ case (container, header) =>
+    front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       container.copy(
         customHeader = Some(header),
         customClasses = Some(Seq("fc-container--tag"))
