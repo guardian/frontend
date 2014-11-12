@@ -29,6 +29,23 @@ define(['modules/droppable'], function (
         }));
     }
 
+    function start (element, target, source) {
+        droppable.listeners.dragstart(element, new Event({
+            target: target,
+            dataTransfer: {
+                setData: function (what, value) {
+                    source[what] = value;
+                }
+            }
+        }));
+    }
+
+    function leave (element, target, source) {
+        droppable.listeners.dragleave(element, new Event({
+            target: target
+        }));
+    }
+
     function createDroppable (element) {
         return {
             drop: function (target, source) {
@@ -36,6 +53,12 @@ define(['modules/droppable'], function (
             },
             dragover: function (target, source) {
                 over(element, target, source);
+            },
+            dragstart: function (target, source) {
+                start(element, target, source);
+            },
+            dragleave: function (target, source) {
+                leave(element, target, source);
             }
         };
     }

@@ -21,7 +21,7 @@ define([
 
         it('adds items', function (done) {
 
-            insertInEmptyGroup
+            insertInEmptyGroup()
             .then(function (request) {
                 expect(request.url).toEqual('/edits');
                 expect(request.data.type).toEqual('Update');
@@ -33,7 +33,8 @@ define([
                 expect(request.data.update.itemMeta.group).toEqual('3');
 
                 return insertAfterAnArticle();
-            }).then(function (request) {
+            })
+            .then(function (request) {
                 expect(request.url).toEqual('/edits');
                 expect(request.data.type).toEqual('Update');
                 expect(request.data.update.after).toEqual(true);
@@ -44,8 +45,9 @@ define([
                 expect(!!request.data.update.itemMeta).toEqual(false);
                 expect(request.data.update.position).toEqual('internal-code/content/1');
 
-                return insertOnTopOfTheList;
-            }).then(function (request) {
+                return insertOnTopOfTheList();
+            })
+            .then(function (request) {
                 expect(request.url).toEqual('/edits');
                 expect(request.data.type).toEqual('Update');
                 expect(request.data.update.after).toEqual(false);
@@ -55,7 +57,52 @@ define([
                 expect(request.data.update.item).toEqual('internal-code/content/3');
                 expect(!!request.data.update.itemMeta).toEqual(false);
                 expect(request.data.update.position).toEqual('internal-code/content/1');
-            });
+
+                return insertMetadataOnTopOfTheList();
+            })
+            .then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('Update');
+                expect('after' in request.data.update).toEqual(false);
+                expect(request.data.update.draft).toEqual(true);
+                expect(request.data.update.live).toEqual(false);
+                expect(request.data.update.id).toEqual('latest');
+                expect(request.data.update.item).toEqual('internal-code/content/3');
+                expect(request.data.update.itemMeta.isBreaking).toEqual(true);
+                expect(request.data.update.position).toEqual('internal-code/content/3');
+
+                return moveFirstItemBelow();
+            })
+            .then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('Update');
+                expect(request.data.update.after).toEqual(false);
+                expect(request.data.update.draft).toEqual(true);
+                expect(request.data.update.live).toEqual(false);
+                expect(request.data.update.id).toEqual('latest');
+                expect(request.data.update.item).toEqual('internal-code/content/3');
+                expect(request.data.update.itemMeta.isBreaking).toEqual(true);
+                expect(request.data.update.position).toEqual('internal-code/content/2');
+
+                return moveToAnotherCategory();
+            })
+            .then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('UpdateAndRemove');
+                expect(request.data.update.after).toEqual(false);
+                expect(request.data.update.draft).toEqual(true);
+                expect(request.data.update.live).toEqual(false);
+                expect(request.data.update.id).toEqual('sport');
+                expect(request.data.update.item).toEqual('internal-code/content/3');
+                expect(request.data.update.itemMeta.isBreaking).toEqual(true);
+                expect(request.data.update.itemMeta.group).toEqual('3');
+                expect(request.data.update.position).toEqual('internal-code/content/1');
+                expect(request.data.remove.draft).toEqual(true);
+                expect(request.data.remove.live).toEqual(false);
+                expect(request.data.remove.id).toEqual('latest');
+                expect(request.data.remove.item).toEqual('internal-code/content/3');
+            })
+            .then(done);
 
             function insertInEmptyGroup () {
                 return editAction(function () {
@@ -66,7 +113,6 @@ define([
                         sport: {
                             draft: [{
                                 id: 'internal-code/content/1',
-                                webPublicationDate: (new Date()).toISOString(),
                                 meta: {
                                     group: 3
                                 }
@@ -80,18 +126,17 @@ define([
                 return editAction(function () {
                     var latestNews = dom.droppableCollection(1);
                     var latestDropTarget = drag.droppable(latestNews);
+                    var sourceArticle = new drag.Article(dom.latestArticle(2));
                     // Drop an article on the collection means adding it to the end
-                    latestDropTarget.dragover(latestNews, new drag.Article(dom.latestArticle(2)));
-                    latestDropTarget.drop(latestNews, new drag.Article(dom.latestArticle(2)));
+                    latestDropTarget.dragover(latestNews, sourceArticle);
+                    latestDropTarget.drop(latestNews, sourceArticle);
 
                     return {
                         latest: {
                             draft: [{
-                                id: 'internal-code/content/1',
-                                webPublicationDate: (new Date()).toISOString()
+                                id: 'internal-code/content/1'
                             }, {
-                                id: 'internal-code/content/2',
-                                webPublicationDate: (new Date()).toISOString()
+                                id: 'internal-code/content/2'
                             }]
                         }
                     };
@@ -104,25 +149,127 @@ define([
                     var latestNews = dom.droppableCollection(1);
                     var latestDropTarget = drag.droppable(latestNews);
                     var firstArticleInLatest = dom.articleInside(latestNews, 1);
+                    var sourceArticle = new drag.Article(dom.latestArticle(3));
                     // Drop an article on the collection means adding it to the end
-                    latestDropTarget.dragover(firstArticleInLatest, new drag.Article(dom.latestArticle(3)));
-                    latestDropTarget.drop(firstArticleInLatest, new drag.Article(dom.latestArticle(3)));
+                    latestDropTarget.dragover(firstArticleInLatest, sourceArticle);
+                    latestDropTarget.drop(firstArticleInLatest, sourceArticle);
+
+                    return {
+                        latest: {
+                            draft: [{
+                                id: 'internal-code/content/3'
+                            }, {
+                                id: 'internal-code/content/1'
+                            }, {
+                                id: 'internal-code/content/2'
+                            }]
+                        }
+                    };
+                });
+            }
+
+            function insertMetadataOnTopOfTheList () {
+                return editAction(function () {
+                    var latestNews = dom.droppableCollection(1);
+                    var firstArticleInLatest = dom.articleInside(latestNews, 1);
+
+                    click(firstArticleInLatest);
+                    click(firstArticleInLatest.querySelector('.editor--boolean--isBreaking'));
+                    click(firstArticleInLatest.querySelector('.tool--done'));
 
                     return {
                         latest: {
                             draft: [{
                                 id: 'internal-code/content/3',
-                                webPublicationDate: (new Date()).toISOString()
+                                meta: {
+                                    isBreaking: true
+                                }
                             }, {
-                                id: 'internal-code/content/1',
-                                webPublicationDate: (new Date()).toISOString()
+                                id: 'internal-code/content/1'
                             }, {
-                                id: 'internal-code/content/2',
-                                webPublicationDate: (new Date()).toISOString()
+                                id: 'internal-code/content/2'
                             }]
                         }
                     };
                 });
+            }
+
+            function moveFirstItemBelow () {
+                return editAction(function () {
+                    // Drop an article in the first position
+                    var latestNews = dom.droppableCollection(1);
+                    var latestDropTarget = drag.droppable(latestNews);
+                    var firstArticleInLatest = dom.articleInside(latestNews, 1);
+                    var thirdArticleInLatest = dom.articleInside(latestNews, 3);
+                    var sourceArticle = new drag.Article(firstArticleInLatest);
+                    // Drop an article on the collection means adding it to the end
+                    latestDropTarget.dragstart(firstArticleInLatest, sourceArticle);
+                    latestDropTarget.dragover(thirdArticleInLatest, sourceArticle);
+                    latestDropTarget.drop(thirdArticleInLatest, sourceArticle);
+
+                    return {
+                        latest: {
+                            draft: [{
+                                id: 'internal-code/content/1'
+                            }, {
+                                id: 'internal-code/content/3',
+                                meta: {
+                                    isBreaking: true
+                                }
+                            }, {
+                                id: 'internal-code/content/2'
+                            }]
+                        }
+                    };
+                });
+            }
+
+            function moveToAnotherCategory () {
+                return editAction(function () {
+                    // The item with meta data is now in position two
+                    var latestNews = dom.droppableCollection(1);
+                    var latestDropTarget = drag.droppable(latestNews);
+                    var itemWithMeta = dom.articleInside(latestNews, 2);
+                    var sportDropGroup = dom.droppableGroup(2, 1);
+                    var sportDropTarget = drag.droppable(sportDropGroup);
+                    var articleAlreadyThere = dom.articleInside(sportDropGroup, 1);
+                    var sourceArticle = new drag.Article(itemWithMeta);
+                    // Move it to the sport category
+                    latestDropTarget.dragstart(itemWithMeta, sourceArticle);
+                    latestDropTarget.dragleave(itemWithMeta, sourceArticle);
+                    sportDropTarget.dragover(articleAlreadyThere, sourceArticle);
+                    sportDropTarget.drop(articleAlreadyThere, sourceArticle);
+
+                    return {
+                        latest: {
+                            draft: [{
+                                id: 'internal-code/content/1'
+                            }, {
+                                id: 'internal-code/content/2'
+                            }]
+                        },
+                        sport: {
+                            draft: [{
+                                id: 'internal-code/content/3',
+                                meta: {
+                                    isBreaking: true,
+                                    group: 3
+                                }
+                            }, {
+                                id: 'internal-code/content/1',
+                                meta: {
+                                    group: 3
+                                }
+                            }]
+                        }
+                    };
+                });
+            }
+
+            function click (element) {
+                var evt = document.createEvent('Events');
+                evt.initEvent('click', true, false);
+                element.dispatchEvent(evt);
             }
         });
     });
