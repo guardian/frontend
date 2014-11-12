@@ -8,7 +8,6 @@
                 "fc-container--layout-front" -> true,
                 "fc-container--sponsored" -> faciaPage.isSponsored,
                 "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
-                "fc-container--foundation-supported" -> faciaPage.isFoundationSupported,
                 "js-sponsored-front" -> (faciaPage.isSponsored || faciaPage.isAdvertisementFeature || faciaPage.isFoundationSupported)))"
             data-link-name="Front | @request.path"
             @faciaPage.sponsor.map { sponsor =>
