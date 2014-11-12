@@ -91,6 +91,8 @@ trait DfpAgent {
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
   def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isFoundationSupported(_, None)})
 
+  def isProd = environment.isProd
+
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
@@ -105,7 +107,7 @@ trait DfpAgent {
           !sponsorship.isR2Only
       }
 
-      if (environment.isProd) {
+      if (isProd) {
         pageSkinSponsorships.exists { sponsorship =>
           targetsAdUnitAndMatchesTheEdition(sponsorship) && !sponsorship.targetsAdTest
         }

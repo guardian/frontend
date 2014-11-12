@@ -8,6 +8,7 @@ import services.EmailService
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
 import jobs._
+import conf.Configuration.environment
 
 trait AdminLifecycle extends GlobalSettings {
 
@@ -65,6 +66,12 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
+
+    if (environment.isProd) {
+      Jobs.schedule("AdsStatusEmailJob", "0 0 9 ? * MON-FRI") {
+        AdsStatusEmailJob.run()
+      }
+    }
   }
 
   private def descheduleJobs() {
@@ -81,6 +88,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FrontPressJobHighFrequency")
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
+    Jobs.deschedule("AdsStatusEmailJob")
   }
 
   override def onStart(app: play.api.Application) {
