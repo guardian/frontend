@@ -3,15 +3,16 @@
 @import fragments.containers.facia_cards.dateHeadline
 @import common.Localisation
 
-<div class="container__meta">
-    <dl class="container__meta__description">
-        <dt class="container__meta__title">
-        @Localisation(metaDataHeader.displayName)
-        </dt>
-        @metaDataHeader.description.map { desc =>
-            <dd class="container__meta__item">@Html(desc)</dd>
-        }
-    </dl>
+<div class="index-page-header">
+    <h1 class="index-page-header__title">@Localisation(metaDataHeader.displayName)</h1>
+
+    @metaDataHeader.description.map { desc =>
+        <div class="index-page-header__description">@Html(desc)</div>
+    }
+
+    @metaDataHeader.imageUrl.map { url =>
+        <div class="index-page-header__picture"><img src="@url" /></div>
+    }
 
     @dateHeadline(metaDataHeader.dateHeadline, true)
 </div>
