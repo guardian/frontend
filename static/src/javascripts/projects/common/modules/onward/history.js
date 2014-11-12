@@ -34,29 +34,31 @@ define([
     }
 
     function Summary() {
-        this.section = {};
+        this.sections = {};
         this.series = {};
-        this.leadKeyword = {};
-        this.leadAuthor = {};
-        this.leadBlog = {};
+        this.keywords = {};
+        this.authors = {};
+        this.blogs = {};
     }
 
-    function updateSummaryTypeFromIdName(idName, summary) {
-        var nameCount = summary[idName[0]] || [idName[1], 0];
+    function updateSummaryTypeFromIdName(idNameMap, summary) {
+        var id = idNameMap[0][0],
+            name = idNameMap[0][1],
+            nameCount = summary[id] || [name, 0];
 
         nameCount[1] = nameCount[1] + 1;
-        nameCount[0] = idName[1];
-        summary[idName[0]] = nameCount;
+        nameCount[0] = name;
+        summary[id] = nameCount;
 
         return summary;
     }
 
     function updateSummaryFromAllMeta(metaList, summary) {
-        var metaType, idName;
+        var metaType, idNameMap;
 
         for (metaType in metaList) {
-            idName = metaList[metaType];
-            summary[metaType] = updateSummaryTypeFromIdName(idName, summary[metaType]);
+            idNameMap = metaList[metaType];
+            summary[metaType] = updateSummaryTypeFromIdName(idNameMap, summary[metaType]);
         }
 
         return summary;
@@ -113,13 +115,13 @@ define([
         return {
             id: page.pageId,
             meta: omit({
-                section: [page.section, page.sectionName],
-                series: [page.seriesId, page.series],
-                leadKeyword: [getHead(page.keywordIds), getHead(page.keywords)],
-                leadAuthor: [getHead(page.authorIds), getHead(page.author)],
-                leadBlog: [getHead(page.blogIds), getHead(page.blogs)]
-            }, function (pair) {
-                return !pair[0] || !pair[1];
+                sections: [[page.section, page.sectionName]],
+                series: [[page.seriesId, page.series]],
+                keywords: [[getHead(page.keywordIds), getHead(page.keywords)]],
+                authors: [[getHead(page.authorIds), getHead(page.author)]],
+                blogs: [[getHead(page.blogIds), getHead(page.blogs)]]
+            }, function (list) {
+                return !list[0][0] || !list[0][1];
             })
         };
     }
@@ -166,11 +168,11 @@ define([
         getHistory: getHistory,
 
         getSectionCounts: function (summary) {
-            return getCountsMap('section', summary);
+            return getCountsMap('sections', summary);
         },
 
         getLeadKeywordCounts: function (summary) {
-            return getCountsMap('leadKeyword', summary);
+            return getCountsMap('keywords', summary);
         },
 
         pageHasBeenSeen: function (pageId) {

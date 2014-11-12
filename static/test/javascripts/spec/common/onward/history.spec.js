@@ -50,9 +50,9 @@ define([
     }
 
     // basic item
-    var newItem1 = {id: 'a', meta: { section: ['s','sn'], leadKeyword: ['k', 'kn']} };
+    var newItem1 = {id: 'a', meta: { sections: [['s','sn']], keywords: [['k', 'kn']]} };
     // different article, and note that the display names are different from the previous IDs
-    var newItem2 = {id: 'a2', meta: { section: ['s','sn2'], leadKeyword: ['k', 'kn2']} };
+    var newItem2 = {id: 'a2', meta: { sections: [['s','sn2']], keywords: [['k', 'kn2']]} };
 
     describe('updateSummaryTypeFromIdName', function() {
 
@@ -63,7 +63,7 @@ define([
 
             var expectedSummary = {id: ['name', 1]};
 
-            var newSummary = hist.test.updateSummaryTypeFromIdName(['id', 'name'], summary);
+            var newSummary = hist.test.updateSummaryTypeFromIdName([['id', 'name']], summary);
 
             expect(newSummary).toSameProps(expectedSummary);
         });
@@ -73,8 +73,8 @@ define([
 
             var expectedSummary = {id: ['name2', 2]};
 
-            var intermediate = hist.test.updateSummaryTypeFromIdName(['id','name'], summary);
-            var newSummary = hist.test.updateSummaryTypeFromIdName(['id','name2'], intermediate);
+            var intermediate = hist.test.updateSummaryTypeFromIdName([['id','name']], summary);
+            var newSummary = hist.test.updateSummaryTypeFromIdName([['id','name2']], intermediate);
 
             expect(newSummary).toSameProps(expectedSummary);
         });
@@ -88,9 +88,9 @@ define([
         it("should add the things when they are set normally", function () {
             var summary = new hist.test.Summary();
 
-            var expectedSummary = {section: {id: ['name', 1]}, leadKeyword: {kid: ['kname', 1]}};
+            var expectedSummary = {sections: {id: ['name', 1]}, keywords: {kid: ['kname', 1]}};
 
-            var newSummary = hist.test.updateSummaryFromAllMeta({section: ['id','name'], leadKeyword: ['kid', 'kname']}, summary);
+            var newSummary = hist.test.updateSummaryFromAllMeta({sections: [['id','name']], keywords: [['kid', 'kname']]}, summary);
 
             expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
 
@@ -107,24 +107,13 @@ define([
 
         });
 
-        //it("should not add when they aren't known", function () {
-        //    var summary = new hist.test.Summary();
-        //
-        //    var expectedSummary = {};
-        //
-        //    var newSummary = hist.test.updateSummaryFromAllMeta({unknownShouldntBeAdded: ['id','name']}, summary);
-        //
-        //    expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
-        //
-        //});
-
         it("should increment when a tag is reused, and update the name", function () {
             var summary = new hist.test.Summary();
 
-            var expectedSummary = {section: {id: ['name2', 2]}, leadKeyword: {kid: ['kname', 1], anotherkid: ['anotherkname', 1]}};
+            var expectedSummary = {sections: {id: ['name2', 2]}, keywords: {kid: ['kname', 1], anotherkid: ['anotherkname', 1]}};
 
-            var intermediate = hist.test.updateSummaryFromAllMeta({section: ['id','name2'], leadKeyword: ['kid', 'kname']}, summary);
-            var newSummary = hist.test.updateSummaryFromAllMeta({section: ['id','name2'], leadKeyword: ['anotherkid', 'anotherkname']}, intermediate);
+            var intermediate = hist.test.updateSummaryFromAllMeta({sections: [['id','name2']], keywords: [['kid', 'kname']]}, summary);
+            var newSummary = hist.test.updateSummaryFromAllMeta({sections: [['id','name2']], keywords: [['anotherkid', 'anotherkname']]}, intermediate);
 
             expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
 
@@ -139,8 +128,8 @@ define([
         it('should store the first article correctly', function() {
             var oldItems = [];
 
-            var expectedSummary = {section: {s: ['sn', 1]}, leadKeyword: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 1, timestamp: 123, meta: { section: ['s','sn'], leadKeyword: ['k', 'kn']}};
+            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
+            var expectedRecent0 = {id: 'a', count: 1, timestamp: 123, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
 
             var result = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10);
 
@@ -152,8 +141,8 @@ define([
         it('should not store the first article twice but should update the timestamp', function() {
             var oldItems = [];
 
-            var expectedSummary = {section: {s: ['sn', 1]}, leadKeyword: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 2, timestamp: 124, meta: { section: ['s','sn'], leadKeyword: ['k', 'kn']}};
+            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
+            var expectedRecent0 = {id: 'a', count: 2, timestamp: 124, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
 
             var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
             var result = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 10);
@@ -166,9 +155,9 @@ define([
         it('should store the second article correctly', function() {
             var oldItems = [];
 
-            var expectedSummary = {section: {s: ['sn2', 2]}, leadKeyword: {k: ['kn2', 2]}, count: 2};
-            var expectedRecent0 = {id: 'a2', count: 1, timestamp: 124, meta: { section: ['s','sn2'], leadKeyword: ['k', 'kn2']}};
-            var expectedRecent1 = {id: 'a', count: 1, timestamp: 123, meta: { section: ['s','sn'], leadKeyword: ['k', 'kn']}};
+            var expectedSummary = {sections: {s: ['sn2', 2]}, keywords: {k: ['kn2', 2]}, count: 2};
+            var expectedRecent0 = {id: 'a2', count: 1, timestamp: 124, meta: { sections: [['s','sn2']], keywords: [['k', 'kn2']]}};
+            var expectedRecent1 = {id: 'a', count: 1, timestamp: 123, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
 
             var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
             var result = hist.test.getUpdatedHistory(newItem2, afterFirst, 124, 10);
@@ -182,8 +171,8 @@ define([
         it('should lose the oldest article when the limit is exceeded', function() {
             var oldItems = [];
 
-            var expectedSummary = {section: {s: ['sn', 1]}, leadKeyword: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 1, timestamp: 124, meta: { section: ['s','sn'], leadKeyword: ['k', 'kn']}};
+            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
+            var expectedRecent0 = {id: 'a', count: 1, timestamp: 124, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
 
             var afterFirst = hist.test.getUpdatedHistory(newItem2, oldItems, 123, 1).recentPages;
             var preResult = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 1);
@@ -207,8 +196,8 @@ define([
     var item = {
             id:"p/3jbcb",
             meta: {
-                section: ["foobar", 'name'],
-                leadKeyword: ['foo', 'fooName']
+                sections: [["foobar", 'name']],
+                keywords: [['foo', 'fooName']]
             }
         };
 
@@ -224,10 +213,10 @@ define([
         });
 
         it('should set history to local storage', function () {
-            hist.test.set([item], {leadKeyword: 'testing'});
+            hist.test.set([item], {keywords: 'testing'});
 
             expect(hist.getHistory()[0].id).toEqual(item.id);
-            expect(hist.getSummary().leadKeyword).toEqual('testing');
+            expect(hist.getSummary().keywords).toEqual('testing');
         });
 
     });
@@ -260,7 +249,7 @@ define([
             var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
             var result = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 10);
 
-            expect(hist.test.pageInHistory(newItem1.id, result.recentPages)).toBeTruthy();
+            expect(hist.test.pageInHistory(newItem1.id, result.recentPages)).toBe(true);
         });
 
         it('pageInHistory if its in there once should be false', function () {
@@ -269,7 +258,7 @@ define([
             var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
             var result = hist.test.getUpdatedHistory(newItem2, afterFirst, 124, 10);
 
-            expect(hist.test.pageInHistory(newItem1.id, result.recentPages)).toBeFalsy();
+            expect(hist.test.pageInHistory(newItem1.id, result.recentPages)).toBe(false);
         });
 
     });
@@ -307,9 +296,9 @@ define([
                     // no series (so series is missing completely)
                     // no blogs (so blogs is empty)
                     // has a section, keywords, authors
-                    section: ['commentisfree', 'Comment is free'],
-                    leadKeyword: ['politics/ukip', 'UK Independence party (Ukip)'],
-                    leadAuthor: ['profile/johnharris', 'John Harris']
+                    sections: [['commentisfree', 'Comment is free']],
+                    keywords: [['politics/ukip', 'UK Independence party (Ukip)']],
+                    authors: [['profile/johnharris', 'John Harris']]
                 }
             });
         });
