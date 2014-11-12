@@ -12,7 +12,7 @@ object Container extends Logging {
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
   ) ++ FixedContainers.all.mapValues(Fixed.apply)
-  
+
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
@@ -32,7 +32,6 @@ object Container extends Logging {
 
 sealed trait Container
 
-/** Container whose layout is determined by the groups trails are assigned to in the tool. */
 case class Dynamic(get: DynamicContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
 case object NavList extends Container
