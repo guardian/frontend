@@ -58,7 +58,8 @@ object IndexPage {
 
         withCommercialOptions.copy(containers = withCommercialOptions.containers.zip(headers).map({ case (container, header) =>
           container.copy(
-            customHeader = Some(header)
+            customHeader = Some(header),
+            customClasses = Some(Seq("fc-container--tag"))
           )
         }))
 

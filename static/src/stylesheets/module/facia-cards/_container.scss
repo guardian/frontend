@@ -37,6 +37,10 @@ $header-image-size-desktop: 120px;
     }
 }
 
+.fc-container .facia-container__inner {
+    border-top: 1px solid colour(neutral-5);
+}
+
 .fc-container__header {
     position: relative;
 
@@ -166,6 +170,8 @@ $header-image-size-desktop: 120px;
 }
 
 .fc-date-headline {
+    color: colour(neutral-1);
+
     @include fs-headline(2);
 }
 

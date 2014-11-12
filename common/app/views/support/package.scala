@@ -801,7 +801,8 @@ object GetClasses {
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
-      Some(containerDefinition.container)
+      Some(containerDefinition.container),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty)
     )
 
   def forTagContainer(hasTitle: Boolean) = forNewStyleContainer(

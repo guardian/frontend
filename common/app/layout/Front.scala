@@ -178,6 +178,7 @@ object FaciaContainer {
     config.config.showDateHeader.exists(identity),
     config.config.showLatestUpdate.exists(identity),
     ContainerCommercialOptions.fromConfig(config.config),
+    None,
     None
   )
 
@@ -240,7 +241,8 @@ case class FaciaContainer(
   showDateHeader: Boolean,
   showLatestUpdate: Boolean,
   commercialOptions: ContainerCommercialOptions,
-  customHeader: Option[FaciaContainerHeader]
+  customHeader: Option[FaciaContainerHeader],
+  customClasses: Option[Seq[String]]
 ) {
 
   def faciaComponentName = componentId getOrElse {

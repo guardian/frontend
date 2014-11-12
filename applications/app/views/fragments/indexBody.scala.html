@@ -5,10 +5,12 @@
 @import services.IndexPage
 @import model.FrontProperties.empty
 @import common.Edition
+@import fragments.containers.facia_cards.container
 
 <div class="l-side-margins l-side-margins--layout-front">
     <div class="@RenderClasses(Map(
             "facia-container" -> true,
+            "facia-container--tag-page" -> true,
             "facia-container--layout-front" -> true,
             "facia-container--sponsored" -> index.page.isSponsored,
             "facia-container--advertisement-feature" -> index.page.isAdvertisementFeature,
@@ -25,7 +27,7 @@
 
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
-                @fragments.containers.facia_cards.container(containerDefinition, empty)
+                @container(containerDefinition, empty)
             }
         }
 
