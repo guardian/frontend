@@ -10,7 +10,8 @@ $breakpoints: (
 
 @mixin fc-container-head-common {
     .fc-container__inner,
-    .facia-container__inner {
+    .facia-container__inner,
+    .fc-container__pagination {
         overflow: hidden;
         position: relative;
         margin-left: $gs-gutter / 2;
