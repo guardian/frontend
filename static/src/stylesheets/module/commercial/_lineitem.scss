@@ -57,6 +57,7 @@
     .lineitem__desc {
         @include fs-headline(1);
         color: colour(neutral-2);
+        display: block !important;
     }
     .lineitem__meta {
         color: colour(neutral-2);

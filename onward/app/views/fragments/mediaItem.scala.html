@@ -4,15 +4,15 @@
 @import model.{Audio, Video}
 @import views.support.Item140
 
-<li class="item">
-    <div class="item__container">
-        <a class="item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
+<li class="fc-item fc-item--media">
+    <div class="fc-item__container">
+        <a class="fc-item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
             @content.trailPicture(5, 3).map{ image =>
-                <div class="item__img u-responsive-ratio">
+                <div class="fc-item__img u-responsive-ratio">
                     <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
                 </div>
             }
-            <h4 class="item__title">@content match {
+            <h4 class="fc-item__title">@content match {
                 case a: Audio => { @a.webTitle }
                 case v: Video => { @v.videoLinkText }
             }</h4>

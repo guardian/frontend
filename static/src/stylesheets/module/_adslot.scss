@@ -382,13 +382,6 @@
 
         @include mq(mobile, $until: leftCol) {
             margin-top: get-line-height(data, 3)*-1;
-
-            .ad-slot--commercial-component & {
-                margin-top: get-line-height(data, 3)*-2;
-            }
-            .ad-slot--commercial-component .container--commercial-capi & {
-                margin-top: get-line-height(data, 3)*-1;
-            }
         }
     }
 
@@ -423,25 +416,19 @@
             .ad-slot--paid-for-badge__link {
                 float: right;
             }
-            &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height(data, 3)*-2;
-            }
-            &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height(data, 3)*-1;
-            }
         }
         .has-page-skin .container--has-toggle & {
             margin-right: gs-span(1);
         }
     }
 }
-.facia-container--sponsored .container:first-child,
-.facia-container--advertisement-feature .container:first-child,
-.facia-container--foundation-supported .container:first-child,
-.container--sponsored,
-.container--advertisement-feature,
-.container--foundation-supported {
-    .container__header + .container__body {
+.fc-container--sponsored .fc-container:first-child,
+.fc-container--advertisement-feature .fc-container:first-child,
+.fc-container--foundation-supported .fc-container:first-child,
+.fc-container--sponsored,
+.fc-container--advertisement-feature,
+.fc-container--foundation-supported {
+    .fc-container__header + .fc-container__body {
         margin-top: 104px;
 
         @include mq(tablet) {
