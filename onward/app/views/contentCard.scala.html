@@ -1,0 +1,11 @@
+@(content: model.Content)(implicit request: RequestHeader)
+<html>
+      <head>
+          <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
+          <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+      </head>
+      <body width="30%">
+          @fragments.contentCardBody(content)
+      </body>
+
+</html>

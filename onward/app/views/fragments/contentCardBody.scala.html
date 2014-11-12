@@ -1,0 +1,43 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+
+@import views.support.{ImgSrc, Item140}
+@import views.support.TrailCssClasses.toneClass
+@import model.Tag
+
+    <a class="content-card tonal tonal--@toneClass(content) @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl">
+        @if(content.isVideo  || content.isGallery) {
+            @content.trailPicture(5, 3).map { image =>
+               <div class="content-card__media-wrapper ">
+                   <div class="content-card__image-container u-responsive-ratio js-image-upgrade" data-src="@Item140.bestFor(image)">
+               </div>
+            }
+        }
+        <div class="content-card__header @if(content.isVideo){ content-card__header--video}@if(content.isAudio){ content-card__header--audio} @if(content.isGallery){ content-card__header--gallery}">
+            <h1 class="content-card__title">
+                @if(content.isLive) {<span class="content-card__live"><span class="content-card__live-icon"></span>LIVE</span> }
+                @content.headline
+            </h1>
+            @if(content.isComment) {
+                <div class="content-card__byline">
+                 - @content.contributors.map { tag => @tag.name }.mkString(", ")
+                </div>
+            }
+        </div>
+        <div class="content-card__standfirst">
+            @content.standfirst.map { standfirst => @Html(standfirst) }
+        </div>
+        @if(content.isComment) {
+            @content.contributors.headOption.map { profile =>
+                @profile.contributorLargeImagePath.map{ image =>
+                    <div class="content-card__byline-img">
+                        <img class="content-card__byline-img__img" src="@image" alt="@profile.name" />
+                    </div>
+                }
+            }
+        }
+        @if(!content.isLiveBlog) {
+            <div class="u-h meta__number" data-discussion-id="@content.discussionId"/>
+        }
+    </a>
+

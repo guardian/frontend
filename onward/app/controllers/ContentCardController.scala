@@ -1,0 +1,40 @@
+package controllers
+
+import play.api.mvc.{RequestHeader, Action, Controller}
+import common.{Edition, ExecutionContexts, Logging}
+import implicits.Requests
+import model.Content
+import scala.concurrent.Future
+import com.gu.contentapi.client.model.ItemResponse
+import conf.LiveContentApi
+import common.`package`._
+import com.gu.contentapi.client.model.ItemResponse
+
+object ContentCardController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
+
+  def renderHtml(path: String) = render(path)
+
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map { series =>
+      series.map(renderContent).getOrElse(NotFound)
+    }
+  }
+
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[Content]] = {
+    val edition = Edition(request)
+    log.info(s"Fetching article: $path for edition: ${edition.id}:")
+
+    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
+      .showFields("all")
+      .showElements("all")
+      .response
+
+    response.map { response => response.content.map(Content(_))  }
+  }
+
+  private def renderContent(content: Content)(implicit request: RequestHeader) = {
+     val jsonResponse = () => views.html.fragments.contentCardBody(content)(request)
+     val htmlResponse = () => views.html.contentCard(content)(request)
+     renderFormat(htmlResponse, jsonResponse, 900)
+  }
+}
