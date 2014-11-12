@@ -1,7 +1,7 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 @import views.support.TrailCssClasses.articleToneClass
 
-<div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+<div class="l-side-margins l-side-margins--media">
 
     <article class="content content--media content--gallery tonal tonal--@articleToneClass(gallery)"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">

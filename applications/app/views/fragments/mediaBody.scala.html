@@ -5,7 +5,7 @@
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
-<div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+<div class="l-side-margins l-side-margins--media">
 
     <article class="content content--media content--media--@mediaType tonal tonal--@articleToneClass(media) @if(media.body.nonEmpty) {content--has-body}"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
@@ -139,7 +139,7 @@
     }
 </div>
 
-<div class="l-side-margins l-side-margins--layout-content">
+<div class="l-side-margins">
     @fragments.contentFooter(media, page.related, "media")
 
     }
