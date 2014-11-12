@@ -405,7 +405,7 @@ $header-image-size-desktop: 120px;
 
 .fc-container--media {
     .fc-container__inner,
-    .fc-slice__item:before {
+    .fc-slice__item+.fc-slice__item:before {
         border-color: colour(neutral-2);
     }
 
