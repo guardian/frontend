@@ -7,7 +7,7 @@ define([
 ) {
     var allArticles = [{
         apiUrl: '/capi',
-        id: 'internal/one',
+        id: 'article/one',
         webPublicationDate: dates.justNow.toISOString(),
         webTitle: 'I won the elections',
         webUrl: 'http://theguardian.com/uk',
@@ -18,7 +18,7 @@ define([
         }
     }, {
         apiUrl: '/capi',
-        id: 'internal/two',
+        id: 'article/two',
         webPublicationDate: dates.yesterday.toISOString(),
         webTitle: 'It\'s raining right now',
         webUrl: 'http://theguardian.com/uk',
@@ -29,7 +29,7 @@ define([
         }
     }, {
         apiUrl: '/capi',
-        id: 'internal/three',
+        id: 'article/three',
         webPublicationDate: dates.minutesAgo.toISOString(),
         webTitle: 'Went for a coffee',
         webUrl: 'http://theguardian.com/uk',
@@ -40,7 +40,7 @@ define([
         }
     }, {
         apiUrl: '/capi',
-        id: 'internal/four',
+        id: 'article/four',
         webPublicationDate: dates.lastWeek.toISOString(),
         webTitle: 'Santa Claus is a real thing',
         webUrl: 'http://theguardian.com/uk',
@@ -51,7 +51,7 @@ define([
         }
     }, {
         apiUrl: '/capi',
-        id: 'internal/five',
+        id: 'article/five',
         webPublicationDate: dates.lastMonth.toISOString(),
         webTitle: 'Nothing happened for once',
         webUrl: 'http://theguardian.com/uk',
@@ -65,7 +65,7 @@ define([
     mockSearch.latest(allArticles);
     var mockData = {};
     for (var i = 0; i < allArticles.length; i += 1) {
-        mockData[allArticles[i].id] = {
+        mockData['internal-code/content/' + allArticles[i].fields.internalContentCode] = {
             response: {
                 results: [allArticles[i]],
                 status: 'ok'

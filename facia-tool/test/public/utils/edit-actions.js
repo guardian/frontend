@@ -1,9 +1,7 @@
 define([
-    'mock-collection',
-    'utils/mediator'
+    'mock-collection'
 ], function (
-    mockCollection,
-    mediator
+    mockCollection
 ) {
     return function (action) {
         var lastRequest, desiredAnswer;
@@ -16,26 +14,16 @@ define([
             },
             onAfterComplete: function () {
                 $.mockjax.clear(interceptor);
-                resolve();
+                deferred.resolve(lastRequest);
             }
         });
-        mediator.once('mock:collection', function () {
-            resolve();
-        });
-        mediator.once('mock:search', function () {
-            resolve();
-        });
         var deferred = new $.Deferred();
-
-        // After an edit there's a collection refresh, wait for both
-        // The refresh is either a /collection or a /search
-        var resolve = _.after(2, _.once(function () {
-            deferred.resolve(lastRequest);
-        }));
-
         desiredAnswer = action();
 
         // Soon after an edit, there'll be a call to refresh the collection
+        for (var name in desiredAnswer) {
+            desiredAnswer[name].lastUpdated = (new Date()).toISOString();
+        }
         mockCollection.set(desiredAnswer);
 
         return deferred.promise();

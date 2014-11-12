@@ -9,7 +9,7 @@ define([
         latest: {
             lastUpdated: dates.yesterday.toISOString(),
             live: [{
-                id: 'internal/one',
+                id: 'internal-code/content/1',
                 frontPublicationDate: dates.yesterday.getTime()
             }],
             updatedBy: 'Test'
