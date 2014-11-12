@@ -1,7 +1,6 @@
 package services
 
-import java.util.concurrent.{Future => JFuture}
-
+import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.regions.Region.getRegion
 import com.amazonaws.regions.Regions.EU_WEST_1
 import com.amazonaws.services.simpleemail._
@@ -12,7 +11,7 @@ import conf.Configuration.aws.mandatoryCredentials
 import scala.collection.JavaConversions._
 import scala.concurrent.{Future, Promise}
 import scala.language.implicitConversions
-import scala.util.Try
+import scala.util.{Failure, Success}
 
 object EmailService extends ExecutionContexts with Logging {
 
@@ -44,7 +43,7 @@ object EmailService extends ExecutionContexts with Logging {
       .withDestination(new EmailDestination().withToAddresses(to).withCcAddresses(cc))
       .withMessage(message)
 
-    val futureResponse = client.sendEmailAsync(request)
+    val futureResponse = client.sendAsyncEmail(request)
 
     futureResponse recoverWith {
       case e: Exception =>
@@ -54,18 +53,23 @@ object EmailService extends ExecutionContexts with Logging {
     }
   }
 
-  /*
-   http://stackoverflow.com/questions/17215421/scala-concurrent-future-wrapper-for-java-util
-   -concurrent-future
-   */
-  private implicit def javaFuture2ScalaFuture[T](jFuture: JFuture[T]): Future[T] = {
-    val promise = Promise[T]()
-    new Thread(new Runnable {
-      def run() {
-        promise.complete(Try(jFuture.get))
+
+  private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsyncClient) {
+
+    def sendAsyncEmail(request: SendEmailRequest): Future[SendEmailResult] = {
+      val promise = Promise[SendEmailResult]()
+
+      val handler = new AsyncHandler[SendEmailRequest, SendEmailResult] {
+        override def onSuccess(request: SendEmailRequest, result: SendEmailResult): Unit =
+          promise.complete(Success(result))
+        override def onError(exception: Exception): Unit =
+          promise.complete(Failure(exception))
       }
-    }).start()
-    promise.future
+
+      client.sendEmailAsync(request, handler)
+
+      promise.future
+    }
   }
 
 }
