@@ -104,26 +104,3 @@
         @include f-headlineSans;
     }
 }
-
-/* Fronts */
-
-.facia-container--layout-front .commercial--capi,
-.fc-container--layout-front .commercial--capi {
-    @include mq(leftCol) {
-        @include c-capi-leftCol;
-
-        .commercial__head {
-            width: gs-span(2);
-            margin-right: $gs-gutter;
-        }
-    }
-}
-
-/* Articles */
-
-.facia-container--layout-content .commercial--capi,
-.fc-container--layout-content .commercial--capi {
-    @include mq(leftCol) {
-        @include c-capi-leftCol;
-    }
-}
