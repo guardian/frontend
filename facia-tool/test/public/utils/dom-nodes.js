@@ -1,24 +1,35 @@
 define(function () {
+    function collection (index) {
+        return document.querySelectorAll('.collection')[index - 1];
+    }
     function droppableCollection (index) {
-        return document.querySelectorAll('.collection')[index - 1].querySelector('.droppable');
+        return collection(index).querySelector('.droppable');
     }
 
-    function droppableGroup (collection, index) {
-        return document.querySelectorAll('.collection')[collection - 1].querySelectorAll('.droppable')[index - 1];
+    function droppableGroup (collectionIndex, index) {
+        return collection(collectionIndex).querySelectorAll('.droppable')[index - 1];
     }
 
     function latestArticle (index) {
-        return document.querySelector('.latest-articles .article:nth-child(' + (index || 1) + ')');
+        return articleInside(document.querySelector('.latest-articles'), index);
     }
 
     function articleInside (root, index) {
         return root.querySelector('.article:nth-child(' + (index || 1) + ')');
     }
 
+    function click (element) {
+        var evt = document.createEvent('Events');
+        evt.initEvent('click', true, false);
+        element.dispatchEvent(evt);
+    }
+
     return {
+        collection: collection,
         droppableCollection: droppableCollection,
         droppableGroup: droppableGroup,
         latestArticle: latestArticle,
-        articleInside: articleInside
+        articleInside: articleInside,
+        click: click
     };
 });

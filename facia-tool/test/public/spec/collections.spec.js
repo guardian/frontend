@@ -3,12 +3,14 @@ define([
     'test/utils/drag',
     'mock-collection',
     'test/utils/edit-actions',
+    'test/utils/publish-actions',
     'test/utils/dom-nodes'
 ], function(
     it,
     drag,
     mockCollection,
     editAction,
+    publishAction,
     dom
 ){
     describe('Collections', function () {
@@ -19,7 +21,7 @@ define([
             done();
         });
 
-        it('adds items', function (done) {
+        it('/edits', function (done) {
 
             insertInEmptyGroup()
             .then(function (request) {
@@ -101,6 +103,21 @@ define([
                 expect(request.data.remove.live).toEqual(false);
                 expect(request.data.remove.id).toEqual('latest');
                 expect(request.data.remove.item).toEqual('internal-code/content/3');
+
+                return removeItemFromGroup();
+            })
+            .then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('Remove');
+                expect(request.data.remove.draft).toEqual(true);
+                expect(request.data.remove.live).toEqual(false);
+                expect(request.data.remove.id).toEqual('sport');
+                expect(request.data.remove.item).toEqual('internal-code/content/1');
+
+                return publishLatestChanges();
+            })
+            .then(function (collection) {
+                expect(collection).toEqual('latest');
             })
             .then(done);
 
@@ -173,9 +190,9 @@ define([
                     var latestNews = dom.droppableCollection(1);
                     var firstArticleInLatest = dom.articleInside(latestNews, 1);
 
-                    click(firstArticleInLatest);
-                    click(firstArticleInLatest.querySelector('.editor--boolean--isBreaking'));
-                    click(firstArticleInLatest.querySelector('.tool--done'));
+                    dom.click(firstArticleInLatest);
+                    dom.click(firstArticleInLatest.querySelector('.editor--boolean--isBreaking'));
+                    dom.click(firstArticleInLatest.querySelector('.tool--done'));
 
                     return {
                         latest: {
@@ -266,10 +283,32 @@ define([
                 });
             }
 
-            function click (element) {
-                var evt = document.createEvent('Events');
-                evt.initEvent('click', true, false);
-                element.dispatchEvent(evt);
+            function removeItemFromGroup () {
+                return editAction(function () {
+                    var sportNews = dom.droppableGroup(2, 1);
+                    var articleToRemove = dom.articleInside(sportNews, 2);
+
+                    dom.click(articleToRemove.querySelector('.tool--small--remove'));
+
+                    return {
+                        sport: {
+                            draft: [{
+                                id: 'internal-code/content/3',
+                                meta: {
+                                    isBreaking: true,
+                                    group: 3
+                                }
+                            }]
+                        }
+                    };
+                });
+            }
+
+            function publishLatestChanges () {
+                return publishAction(function () {
+                    var launchButton = dom.collection(1).querySelector('.draft-publish');
+                    dom.click(launchButton);
+                });
             }
         });
     });
