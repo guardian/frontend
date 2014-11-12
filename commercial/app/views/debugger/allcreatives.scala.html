@@ -7,6 +7,7 @@ jQuery(function($) {
     $("#switchFronts").click(function() {
         $('.l-side-margins').removeClass("l-side-margins--layout-content").addClass("l-side-margins--layout-front");
         $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
+        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
         $('#switchArticles').removeClass('current');
         $('#article').slideUp();
         $(this).addClass('current');
@@ -16,6 +17,7 @@ jQuery(function($) {
     $("#switchArticles").click(function() {
         $('.l-side-margins').removeClass("l-side-margins--layout-front").addClass("l-side-margins--layout-content");
         $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
+        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
         $('#switchFronts').removeClass('current');
         $('#article').slideDown();
         $(this).addClass('current');
@@ -44,8 +46,6 @@ jQuery(function($) {
     });
 });
 </script>
-<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
-<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
 <style>
     pre {
         font-size: 11px;
@@ -658,9 +658,13 @@ jQuery(function($) {
         </div>
     </div>
 
+    <hr/>
+
     <div class="fc-container fc-container--layout-content">
         <div class="fc-container__inner">
-            <h2 class="test-page-head">CAPI component</h2>
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CAPI component</a>
+            </h2>
         </div>
 
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
@@ -676,7 +680,33 @@ jQuery(function($) {
         </div>
     </div>
 
-    <hr/>
+    <div class="fc-container fc-container--layout-content">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Single)</a>
+            </h2>
+        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-single"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        t: ['p/4xv7c'],
+                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        ct: 'Led Zeppelin special',
+                        cl: 'http://theguardian.com/music/ledzeppelin',
+                        cal: 'http://theguardian.com/about',
+                        k: 'music/pinkfloyd'
+                    }).init('capiSingle', document.querySelector('[data-name="merchandising-capi-single"]'));
+                });
+            });
+        });
+        </script>
+    </div>
+
+    <hr />
 
         <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
         <div class="facia-container fc-container--layout-content">

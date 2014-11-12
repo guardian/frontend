@@ -11,7 +11,10 @@
             .lineitem__image {
                 margin-right: $gs-gutter/2;
                 max-width: $gs-gutter*11;
-                float: left;
+
+                @include mq(mobileLandscape) {
+                    float: left;
+                }
             }
 
             .lineitem--dfp-single__offer {
