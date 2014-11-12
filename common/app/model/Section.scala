@@ -27,7 +27,8 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "keywords" -> JsString(webTitle),
     "keywordIds" -> JsString(keywordIds.mkString(",")),
-    "content-type" -> JsString("Section")
+    "contentType" -> JsString("Section"),
+    "sectionName" -> JsString(delegate.webTitle)
   )
 
   override lazy val isSponsored: Boolean = keywordIds exists (DfpAgent.isSponsored(_, Some(id)))

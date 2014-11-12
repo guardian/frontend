@@ -31,7 +31,8 @@ case class FaciaPage(id: String,
   lazy val faciaPageMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(webTitle.capitalize),
     "keywordIds" -> JsString(keywordIds.mkString(",")),
-    "contentType" -> JsString(contentType)
+    "contentType" -> JsString(contentType),
+    "sectionName" -> JsString(seoData.webTitle)
   )
 
   val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
