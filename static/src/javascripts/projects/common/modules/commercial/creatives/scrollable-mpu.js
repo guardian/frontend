@@ -17,7 +17,11 @@ define([
          * TODO: rather blunt instrument this - due to the fact *most* mobile devices have a crappy onscroll
          * implementation, i.e. it only fires on scroll end
          */
-        badOnScroll = detect.isIOS() || detect.isAndroid();
+        badOnScroll = detect.isIOS() || detect.isAndroid(),
+        updateStyle = function (ad, backgroundImageOrigin) {
+            var backgroundPositionY = window.pageYOffset + backgroundImageOrigin;
+            ad.style.backgroundPosition = '0 ' + backgroundPositionY + 'px';
+        };
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
@@ -27,16 +31,15 @@ define([
         run: function () {
 
             $('.' + adClass).each(function (ad) {
-                var staticImage,
+                var backgroundImageOrigin,
                     $ad = bonzo(ad);
 
                 if (badOnScroll) {
-                    staticImage = $ad.data('static-image');
-                    $ad.css('background-image', staticImage);
+                    $ad.css('background-image', $ad.data('static-image'));
                 } else {
-                    mediator.on('window:scroll', function () {
-                        ad.style.backgroundPosition = '0 ' + window.pageYOffset + 'px';
-                    });
+                    backgroundImageOrigin = bonzo.viewport().height - $ad.offset().top - $ad.offset().height;
+                    updateStyle(ad, backgroundImageOrigin);
+                    mediator.on('window:scroll', updateStyle.bind(null, ad, backgroundImageOrigin));
                 }
                 $ad.removeClass(adClass);
             });
