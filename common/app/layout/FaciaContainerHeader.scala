@@ -4,10 +4,20 @@ import model.{Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
+sealed trait FaciaHeaderImageType
+
+case object ContributorCutOutImage extends FaciaHeaderImageType
+case object ContributorCircleImage extends FaciaHeaderImageType
+case object FootballBadge extends FaciaHeaderImageType
+
+case class FaciaHeaderImage(
+  url: String,
+  imageType: FaciaHeaderImageType
+)
+
 object FaciaContainerHeader {
   def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
     sectionPage.webTitle,
-    sectionPage.url,
     None,
     sectionPage.description,
     dateHeadline
@@ -17,23 +27,21 @@ object FaciaContainerHeader {
     if (tagPage.isFootballTeam) {
       MetaDataHeader(
         tagPage.webTitle,
-        tagPage.url,
-        tagPage.getFootballBadgeUrl,
+        tagPage.getFootballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
         tagPage.description,
         dateHeadline
       )
     } else if (tagPage.isContributor) {
       MetaDataHeader(
         tagPage.webTitle,
-        tagPage.url,
-        tagPage.contributorImagePath,
+        tagPage.contributorLargeImagePath.map(FaciaHeaderImage(_, ContributorCutOutImage)) orElse
+          tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
         dateHeadline
       )
     } else {
       MetaDataHeader(
         tagPage.webTitle,
-        tagPage.url,
         None,
         tagPage.description,
         dateHeadline
@@ -46,8 +54,7 @@ sealed trait FaciaContainerHeader
 
 case class MetaDataHeader(
   displayName: String,
-  href: String,
-  imageUrl: Option[String],
+  image: Option[FaciaHeaderImage],
   description: Option[String],
   dateHeadline: DateHeadline
 ) extends FaciaContainerHeader
