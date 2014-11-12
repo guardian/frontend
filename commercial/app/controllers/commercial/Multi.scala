@@ -36,9 +36,9 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
             views.html.masterClasses.masterClass(masterclass)
           }
         case "soulmates" =>
-          SoulmatesAggregatingAgent.sampleMembers(segment).headOption map { member =>
-            views.html.soulmateFragments.soulmate(member)
-          }
+          val members = SoulmatesAggregatingAgent.sampleMembers(segment).take(2)
+          if (members.size < 2) None
+          else Some(views.html.soulmateFragments.soulmates(members))
         case _ => None
       }
 
