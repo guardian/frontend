@@ -25,9 +25,9 @@
                     <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
-                                <div class="fc-item fc-item--has-image tone-news--item">
+                                <div class="fc-item fc-item--has-image fc-item--has-discussion tone-news--item">
                                     <div class="fc-item__container">
-                                        <a class="fc-item__link tone-accent-border" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
+                                        <div class="fc-item__content">
                                             <div class="fc-item__media-wrapper">
                                                 <div class="fc-item__image-container u-responsive-ratio">
                                             @item.mainPicture.map{ picture =>
@@ -43,15 +43,17 @@
                                                     datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
                                                     data-timestamp="@item.webPublicationDate.getMillis"
                                                     data-relativeformat="short">
-                                                    <i class="i i-clock-light-grey"></i>
                                                     <span class="timestamp__text">
                                                         <span class="u-h">Published: </span>
                                                         @Format(item.webPublicationDate, "d MMM y")
                                                     </span>
                                                 </time>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
+                                    <a href="@AdLink{@item.webUrl}" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle" tabindex="-1">
+                                        @item.webTitle
+                                    </a>
                                 </div>
                             </li>
                         }

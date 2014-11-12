@@ -460,7 +460,7 @@ $header-image-size-desktop: 120px;
      *  so we need to increase the content div bottom space.
      */
     @include mq($until: desktop) {
-        .item--has-discussion .fc-item__content {
+        .fc-item--has-discussion .fc-item__content {
             padding-bottom: $gs-baseline * 3;
         }
     }
