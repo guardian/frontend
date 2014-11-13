@@ -113,8 +113,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         .showFields(showFieldsWithBodyQuery)
         .pageSize(1)
         .response
-        .map(_.results.headOption)
-        .map(_.map(id -> _))
+        .map(_.results.headOption.map(id -> _))
     }
     .map(_.flatten)
     .map(_.toMap)
