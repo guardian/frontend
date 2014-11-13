@@ -48,7 +48,8 @@ function (
             .done(function(results, resultsTitle) {
                 var capiItem,
                     icc,
-                    err;
+                    err,
+                    latestSnapMsg = 'Click OK to create a { ' + vars.CONST.latestSnapPrefix + resultsTitle + ' } item, or Cancel to just create a link...';
 
                 // ContentApi item
                 if (results && results.length === 1) {
@@ -83,14 +84,10 @@ function (
                     item.convertToSnapId();
 
                 // A snap, of type 'latest', ie.  where the target is a Guardian tag/section page.
-                } else if (results && results.length > 1) {
-                    if (window.confirm('Click OK to create a "Latest from ' + resultsTitle + '" item, or Cancel to just create a link...')) {
-                        item.convertToLatestSnap(resultsTitle);
-                    } else {
-                        item.convertToLinkSnap();
-                    }
+                } else if (results && results.length > 1 && window.confirm(latestSnapMsg)) {
+                    item.convertToLatestSnap(resultsTitle);
 
-                // A snap, of default type 'link'.
+                    // A snap, of default type 'link'.
                 } else {
                     item.convertToLinkSnap();
                 }

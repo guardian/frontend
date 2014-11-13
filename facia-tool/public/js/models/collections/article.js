@@ -651,7 +651,7 @@ define([
             this.meta.snapUri(urlAbsPath(this.id()));
 
             this.meta.showKickerCustom(true);
-            this.meta.customKicker('Latest from ' + kicker);
+            this.meta.customKicker(vars.CONST.latestSnapPrefix + kicker);
 
             this.meta.headline(undefined);
             this.meta.trailText(undefined);
