@@ -84,9 +84,11 @@ function (
 
                 // A snap, of type 'latest', ie.  where the target is a Guardian tag/section page.
                 } else if (results && results.length > 1) {
-                    window.confirm('Click OK for a "latest from ' + urlAbsPath(item.id()) + '" item, or Cancel for a simple link...') ?
-                        item.convertToLatestSnap(resultsTitle) :
+                    if (window.confirm('Click OK to create a "Latest from ' + resultsTitle + '" item, or Cancel to just create a link...')) {
+                        item.convertToLatestSnap(resultsTitle);
+                    } else {
                         item.convertToLinkSnap();
+                    }
 
                 // A snap, of default type 'link'.
                 } else {

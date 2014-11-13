@@ -345,8 +345,7 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            visible: state.enableContentOverrides,
-                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...'),
+                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
                             css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
