@@ -103,47 +103,82 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     )
   }
 
+  def getSnapLatest(collectionItems: Seq[Trail]): Future[Map[String, com.gu.contentapi.client.model.Content]] = {
+    val latestSnapSearches: Seq[String] = collectionItems
+      .filter(c => c.meta.exists(_.snapType.exists(_ == "latest")))
+      .flatMap(c => c.meta.flatMap(_.snapUri))
+
+    Future.traverse(latestSnapSearches) { id =>
+      LiveContentApi.item(id, Edition.defaultEdition)
+        .showFields(showFieldsWithBodyQuery)
+        .response
+        .map(_.results.headOption)
+        .map(_.map(id -> _))
+    }
+    .map(_.flatten)
+    .map(_.toMap)
+  }
+
   def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {
-    val itemIds: Seq[TrailId]  =
+    val latestSnaps: Future[Map[String, com.gu.contentapi.client.model.Content]] = getSnapLatest(collectionItems)
+
+    val itemIds: Seq[TrailId] =
       (collectionItems.map(_.id) ++ collectionItems.flatMap(retrieveSupportingLinks).map(_.id))
         .map(TrailId)
         .filterNot(t => Snap.isSnap(t.get))
 
-    batchGetContentApiItems(itemIds, edition) map { items =>
-      collectionItems flatMap { collectionItem =>
-        val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+    batchGetContentApiItems(itemIds, edition) flatMap { items =>
+      latestSnaps map { ls =>
+        collectionItems flatMap { collectionItem =>
+          val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+            if (collectionItem.isSnap) {
+              if (collectionItem.meta.exists(_.snapType.exists(_ == "latest")))
+                None
+              else
+                Some(new Snap(
+                  collectionItem.id,
+                  Nil,
+                  collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
+                  collectionItem.meta
+                ))
+            } else {
+              items.get(TrailId(collectionItem.id)) map { item =>
+                Content(
+                  item,
+                  Nil,
+                  collectionItem.meta
+                )
+              }
+            }
+          })
+
           if (collectionItem.isSnap) {
-            Some(new Snap(
-              collectionItem.id,
-              Nil,
-              collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
-              collectionItem.meta
-            ))
+            if (collectionItem.meta.exists(_.snapType.exists(_ == "latest")))
+              ls.get(collectionItem.meta.flatMap(_.snapUri).getOrElse("")).map { item =>
+                SnapLatest(
+                  item.id,
+                  Nil, //No Supporting for a latest   snap
+                  new DateTime(collectionItem.frontPublicationDate),
+                  collectionItem.meta,
+                  item.elements.getOrElse(Nil),
+                  item.safeFields
+                )
+              }
+            else
+              Some(new Snap(
+                collectionItem.id,
+                supporting,
+                new DateTime(collectionItem.frontPublicationDate),
+                collectionItem.meta
+              ))
           } else {
             items.get(TrailId(collectionItem.id)) map { item =>
-              Content(
+              validateContent(Content(
                 item,
-                Nil,
+                supporting,
                 collectionItem.meta
-              )
+              ))
             }
-          }
-        })
-
-        if (collectionItem.isSnap) {
-          Some(new Snap(
-            collectionItem.id,
-            supporting,
-            new DateTime(collectionItem.frontPublicationDate),
-            collectionItem.meta
-          ))
-        } else {
-          items.get(TrailId(collectionItem.id)) map { item =>
-            validateContent(Content(
-              item,
-              supporting,
-              collectionItem.meta
-            ))
           }
         }
       }

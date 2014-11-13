@@ -292,47 +292,58 @@ object Content {
 
   def apply(delegate: ApiContent): Content = apply(ApiContentWithMeta(delegate))
 
-  def fromPressedJson(json: JsValue): Option[Content] = {
-    val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
-    val itemId: String = (json \ "id").as[String]
-    if (Snap.isSnap(itemId)) {
-      val snapMeta: Option[TrailMetaData] = (json \ "meta").asOpt[TrailMetaData]
+  def fromPressedJson(contentJson: JsValue): Option[Content] = {
+    val contentFields: Option[Map[String, String]] = (contentJson \ "safeFields").asOpt[Map[String, String]]
+    val itemId: String = (contentJson \ "id").as[String]
+    val snapMeta: Option[TrailMetaData] = (contentJson \ "meta").asOpt[TrailMetaData]
+    if (snapMeta.flatMap(_.snapType).exists(_ == "latest")) {
       Option(
-        new Snap(
+        new SnapLatest(
           snapId = itemId,
-          snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+          snapSupporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
-          (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
+           (contentJson \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
           snapMeta = snapMeta,
-          snapElements = parseElements(json)
+          snapElements = parseElements(contentJson),
+          contentFields.getOrElse(Map.empty)
         )
       )
-    }
-    else {
+    } else if (Snap.isSnap(itemId)) {
+       Option(
+         new Snap(
+           snapId = itemId,
+           snapSupporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+             .flatMap(Content.fromPressedJson),
+           (contentJson \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
+           snapMeta = snapMeta,
+           snapElements = parseElements(contentJson)
+         )
+       )
+     } else {
       Option(
         Content(ApiContentWithMeta(
           ApiContent(
             itemId,
-            sectionId = (json \ "sectionId").asOpt[String],
-            sectionName = (json \ "sectionName").asOpt[String],
-            webPublicationDateOption = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)),
-            webTitle = (json \ "safeFields" \ "headline").as[String],
-            webUrl = (json \ "webUrl").as[String],
+            sectionId = (contentJson \ "sectionId").asOpt[String],
+            sectionName = (contentJson \ "sectionName").asOpt[String],
+            webPublicationDateOption = (contentJson \ "webPublicationDate").asOpt[Long].map(new DateTime(_)),
+            webTitle = (contentJson \ "safeFields" \ "headline").as[String],
+            webUrl = (contentJson \ "webUrl").as[String],
             apiUrl = "",
-            elements = Option(parseElements(json)),
+            elements = Option(parseElements(contentJson)),
             fields = contentFields,
-            tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
+            tags = (contentJson \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
           ),
-          supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+          supporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
-          metaData = (json \ "meta").asOpt[TrailMetaData]
+          metaData = (contentJson \ "meta").asOpt[TrailMetaData]
         )
         )
       )
     }
   }
 
-  private def parseElements(json: JsValue): List[ApiElement] = {
+  def parseElements(json: JsValue): List[ApiElement] = {
     (json \ "elements").asOpt[List[JsValue]].map(_.map{ elementJson =>
       ApiElement(
         (elementJson \ "id").as[String],
@@ -401,7 +412,10 @@ object SnapApiContent {
     isExpired                   = None
   )
 
-  def apply(snapElements: List[ApiElement]): ApiContent = apply().copy(elements = Some(snapElements))
+  def apply(snapElements: List[ApiElement], fields: Option[Map[String, String]] = None): ApiContent =
+    apply()
+      .copy(elements = Some(snapElements))
+      .copy(fields = fields)
 }
 
 class Snap(snapId: String,
@@ -427,6 +441,26 @@ class Snap(snapId: String,
 
 object Snap {
   def isSnap(id: String): Boolean = id.startsWith("snap/")
+}
+
+case class SnapLatest(snapId: String,
+                      snapSupporting: List[Content],
+                      snapWebPublicationDate: DateTime,
+                      snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
+                      snapElements: List[ApiElement] = Nil,
+                      fields: Map[String, String])
+  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields)), supporting = snapSupporting, metaData = snapMeta)) {
+
+  override lazy val id: String = snapId
+  override lazy val url: String = s"/$snapId"
+  override val title: Option[String] = Some("Latest Snap")
+  override lazy val headline: String = fields.getOrElse("headline", "Headline")
+  override lazy val customKicker: Option[String] =
+    Some(
+      s"""<a href="/${snapMeta.flatMap(m => m.snapUri).getOrElse("")}">
+         |${snapMeta.flatMap(_.customKicker).getOrElse("Headline")}
+         |</a>""".stripMargin)
+  override lazy val showKickerCustom: Boolean = true
 }
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
