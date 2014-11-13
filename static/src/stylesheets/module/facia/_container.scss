@@ -453,26 +453,6 @@ $header-image-size-desktop: 120px;
     }
 }
 
-.gallery-lightbox__endslate {
-    .fc-container__inner {
-        border: 0;
-    }
-
-    .fc-container__header {
-        width: auto;
-    }
-
-    .fc-container__header__title {
-        padding-bottom: $gs-baseline*2;
-    }
-
-    .fc-slice--qqq-q {
-        .fc-slice__item:first-child .fc-item__title {
-            padding-top: 0;
-            margin-top: -1 * 2px;
-        }
-    }
-}
 
 .content-footer {
     .fc-item__content {
