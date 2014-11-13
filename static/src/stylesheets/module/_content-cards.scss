@@ -48,6 +48,12 @@
 @include tone-content-card(podcast, multimedia-main-1, neutral-8, multimedia-main-1, neutral-8, multimedia-main-1, neutral-1, multimedia-support-1);
 @include tone-content-card(media, multimedia-main-1, neutral-8, multimedia-main-1, neutral-8, multimedia-main-1, neutral-1, multimedia-main-1);
 
+.content-card {
+    border-top: 1px solid transparent;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
 
 .content-card.tonal--tone-podcast,
 .content-card.tonal--tone-gallery,
@@ -84,20 +90,18 @@
         }
     }
 
-  .content-card__image-container {
-      width: 100%;
-  }
+    .content-card__image-container {
+        width: 100%;
+    }
 
-  .content-card__header {
-      padding-top: $gs-baseline;
-  }
+    .content-card__header {
+        padding-top: $gs-baseline;
+    }
 }
-
 
 .content-card__header {
     padding-bottom: $gs-baseline;
 }
-
 
 .content-card__title {
     @include fs-header(3);
@@ -111,25 +115,16 @@
     }
 }
 
-
 .content-card__byline {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter;
 }
 
-
-.content-card {
-    border-top: 1px solid transparent;
-    display: block;
-    position: relative;
-    overflow: hidden;
-}
-
 .content-card__trailtext {
-  padding-left: $gs-gutter / 2;
-  padding-bottom: $gs-baseline;
-  padding-right: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
+    padding-bottom: $gs-baseline;
+    padding-right: $gs-gutter / 2;
 }
 
 .content-card--byline-pic {
@@ -149,14 +144,11 @@
     .content-card__trailtext {
         padding-right: $gs-gutter * 6;
     }
-
-
 }
 
 .content-card__live {
     font-weight: bold;
 }
-
 
 .content-card__live-icon {
     $size: 12px;
