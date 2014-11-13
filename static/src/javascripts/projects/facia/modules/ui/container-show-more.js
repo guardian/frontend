@@ -2,17 +2,17 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/modules/userPrefs',
     'common/utils/$',
     'common/utils/template',
+    'common/modules/userPrefs',
     'text!facia/views/button-show-more.html'
 ], function (
     bean,
     bonzo,
     qwery,
-    userPrefs,
     $,
     template,
+    userPrefs,
     showMoreBtn
 ) {
     return function (container) {
@@ -71,7 +71,7 @@ define([
 
         this.updatePref = function ($container, state) {
             // update user prefs
-            var prefs = userPrefs.get(prefName, 'session'),
+            var prefs = userPrefs.get(prefName, { type: 'session' }),
                 prefValue = $container.attr('data-id');
             if (state !== 'displayed') {
                 delete prefs[prefValue];
@@ -81,12 +81,12 @@ define([
                 }
                 prefs[prefValue] = 'more';
             }
-            userPrefs.set(prefName, prefs, 'session');
+            userPrefs.set(prefName, prefs, { type: 'session' });
         };
 
         this.readPrefs = function ($container) {
             // update user prefs
-            var prefs = userPrefs.get(prefName, 'session');
+            var prefs = userPrefs.get(prefName, { type: 'session' });
             if (prefs && prefs[$container.attr('data-id')]) {
                 bean.fire($button[0], 'click');
             }
