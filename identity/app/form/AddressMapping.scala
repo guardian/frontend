@@ -1,8 +1,8 @@
 package form
 
-import play.api.i18n.Messages
-import play.api.data.Forms._
 import model.Countries
+import play.api.data.Forms._
+import play.api.i18n.Messages
 
 trait AddressMapping extends Mappings{
 
@@ -19,11 +19,8 @@ trait AddressMapping extends Mappings{
     ("line4", idAddressLine),
     ("postcode", textField),
     ("country", idCountry)
-  )(AddressFormData.apply)(AddressFormData.unapply) verifying(
-    "error.postcode",
-    { address => address.isValidPostcodeOrZipcode
-    }
-  )
+  )(AddressFormData.apply)(AddressFormData.unapply) verifying
+    ("error.postcode", address => address.isValidPostcodeOrZipcode)
 }
 
 case class AddressFormData(
@@ -50,6 +47,6 @@ case class AddressFormData(
    private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$""".r
 
   private lazy val isValidUkPostcode = {
-      postcode.isEmpty || PostcodePattern.findFirstIn(postcode).isDefined
+      postcode.isEmpty || PostcodePattern.findFirstIn(postcode.toUpperCase).isDefined
   }
 }
