@@ -49,7 +49,7 @@ function (
                 var capiItem,
                     icc,
                     err,
-                    latestSnapMsg = 'Click OK to create a { ' + vars.CONST.latestSnapPrefix + resultsTitle + ' } item, or Cancel to just create a link...';
+                    convertSnapMsg = 'Click OK to create a { ' + vars.CONST.latestSnapPrefix + resultsTitle + ' } item, or Cancel to just create a link...';
 
                 // ContentApi item
                 if (results && results.length === 1) {
@@ -81,10 +81,10 @@ function (
 
                 // A snap, that's setting it's own type, ie via dragged-in query params
                 } else if (item.meta.snapType()) {
-                    item.convertToSnapId();
+                    item.convertToSnap();
 
                 // A snap, of type 'latest', ie.  where the target is a Guardian tag/section page.
-                } else if (results && results.length > 1 && window.confirm(latestSnapMsg)) {
+                } else if (results && results.length > 1 && window.confirm(convertSnapMsg)) {
                     item.convertToLatestSnap(resultsTitle);
 
                     // A snap, of default type 'link'.
