@@ -491,3 +491,66 @@ $header-image-size-desktop: 120px;
     border-top: 0 !important;
 }
 
+
+
+
+.index-page-header {
+    border-top: 1px solid colour(news-accent);
+    padding-top: $gs-baseline / 2;
+    margin-top: $gs-baseline;
+}
+
+.index-page-header__title {
+    display: block;
+    float: left;
+    line-height: get-line-height(header, 2);
+    width: 100%;
+    margin-right: $gs-gutter;
+
+    &,
+    a {
+        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    }
+
+    @include fs-header(4);
+    @include mq(leftCol) {
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
+}
+
+.index-page-header__description {
+    float: left;
+    color: colour(neutral-2);
+
+    @include fs-headline(2);
+}
+
+.index-page-header__picture {
+    display: table-cell;
+    margin: 0 $gs-gutter 0 0;
+    overflow: hidden;
+    float: left;
+
+    @include mq(leftCol) {
+        float: none;
+        display: block;
+        margin: 0 0 $gs-baseline;
+    }
+
+    img {
+        display: block;
+        height: $header-image-size-mobile;
+
+        @include mq(desktop) {
+            height: $header-image-size-desktop;
+        }
+    }
+}
