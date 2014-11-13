@@ -143,7 +143,7 @@ Loader.prototype.initMainComments = function() {
                 }
             }.bind(this))
             .fail(function(err) {
-                var reportMsg = 'Comments failed to load: ' + 'status' in err ? err.status : '';
+                var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
                 raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
