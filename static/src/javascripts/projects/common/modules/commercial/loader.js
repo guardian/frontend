@@ -124,10 +124,7 @@ define([
                     l:   opts.logo,
                     ct:  opts.capiTitle,
                     cl:  opts.capiLinkUrl,
-                    clt: opts.capiButtonText, 
-                    cal: opts.capiAboutLinkUrl,
-                    rmd: opts.capiReadMoreUrl,
-                    rmt: opts.capiReadMoreText
+                    cal: opts.capiAboutLinkUrl
                 })
             };
         };
