@@ -142,9 +142,10 @@ Loader.prototype.initMainComments = function() {
                     this.setState('truncated');
                 }
             }.bind(this))
-            .fail(function(err) {
-                var msg = 'Comments failed to load.' + ('statusText' in err ? ' ' + err.statusText : '');
-                raven.captureMessage(msg, {
+            .fail(function(err, msg) {
+                var reportMsg = 'Comments failed to load: ' + msg;
+                console.log(reportMsg + " / " + err.statusText);
+                raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
                         discussionId: this.getDiscussionId(),
