@@ -9,6 +9,7 @@ import com.gu.contentapi.client.model.ItemResponse
 import conf.LiveContentApi
 import common.`package`._
 import com.gu.contentapi.client.model.ItemResponse
+import play.twirl.api.HtmlFormat
 
 object ContentCardController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
@@ -26,6 +27,7 @@ object ContentCardController extends Controller with Paging with Logging with Ex
 
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
       .showFields("all")
+      .showTags("all")
       .showElements("all")
       .response
 
@@ -33,7 +35,17 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-     val jsonResponse = () => views.html.fragments.contentCardBody(content)(request)
+     print("Compiled")
+     if ( content.isGallery ) {
+       print("It's a gallery")
+     }
+    def contentResponse: HtmlFormat.Appendable = {
+      if ( !content.isGallery)
+        views.html.fragments.contentCardBody(content)(request)
+      else
+        views.html.fragments.galleryContentCard(content)(request)
+    }
+     val jsonResponse = () => contentResponse
      val htmlResponse = () => views.html.contentCard(content)(request)
      renderFormat(htmlResponse, jsonResponse, 900)
   }

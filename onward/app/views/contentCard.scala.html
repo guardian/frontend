@@ -3,9 +3,14 @@
       <head>
           <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
           <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+          <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts.css")" />
       </head>
       <body width="30%">
-          @fragments.contentCardBody(content)
+          @if( content.isGallery ) {
+              @fragments.galleryContentCard(content)
+          } else {
+              @fragments.contentCardBody(content)
+          }
       </body>
 
 </html>
