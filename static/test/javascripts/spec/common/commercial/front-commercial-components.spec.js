@@ -35,7 +35,7 @@ define([
                     fixtures: []
                 },
                 appendContainer = function ($fixturesContainer) {
-                    $fixturesContainer.append('<div class="container"></div>');
+                    $fixturesContainer.append('<div class="fc-container"></div>');
                 },
                 $fixturesContainer;
 

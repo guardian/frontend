@@ -5,7 +5,7 @@
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
-<div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+<div class="l-side-margins l-side-margins--media">
 
     <article class="content content--media content--media--@mediaType tonal tonal--@articleToneClass(media) @if(media.body.nonEmpty) {content--has-body}"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
@@ -123,13 +123,15 @@
     </article>
 
     @if(mediaType != "video") {
-        <div class="facia-container fc-container--media facia-container--layout-content">
+        <div class="fc-container fc-container--media">
             <div class="js-media-popular tonal--@articleToneClass(media)">
-                <div class="container container--popular">
-                    <div class="facia-container__inner">
-                        <h2 class="container__title">
-                            <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
-                        </h2>
+                <div class="fc-container fc-container--popular">
+                    <div class="fc-container__inner">
+                        <div class="fc-container__header">
+                            <h2 class="fc-container__header__title">
+                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,7 +139,7 @@
     }
 </div>
 
-<div class="l-side-margins l-side-margins--layout-content">
+<div class="l-side-margins">
     @fragments.contentFooter(media, page.related, "media")
 
     }

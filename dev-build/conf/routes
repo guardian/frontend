@@ -251,6 +251,8 @@ GET         /commercial/money/loans/:loanType                                   
 
 GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
+GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffers.itemJson
+GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffers.itemHtml
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()

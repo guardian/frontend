@@ -748,7 +748,7 @@ object RenderClasses {
 }
 
 object GetClasses {
-  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
     val hasImage = item.hasImage
 
     RenderClasses(Map(
@@ -758,18 +758,12 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("item--has-discussion", item.discussionSettings.isCommentable),
-      ("item--has-no-discussion", !item.discussionSettings.isCommentable),
+      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
+      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive),
-      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
-      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
-      ("item--imageadjust-hide", item.displaySettings.imageHide),
-      ("item--imageadjust-default", hasImage &&
-        !item.displaySettings.isBoosted &&
-        !item.displaySettings.imageHide)
+      ("fc-item--live", item.isLive)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -792,7 +786,7 @@ object GetClasses {
   }
 
   def forContainerDefinition(containerDefinition: FaciaContainer) =
-    forNewStyleContainer(
+    forContainer(
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined,
@@ -800,7 +794,8 @@ object GetClasses {
       Some(containerDefinition.container)
     )
 
-  def forTagContainer(hasTitle: Boolean) = forNewStyleContainer(
+
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
@@ -810,7 +805,7 @@ object GetClasses {
     disableHide = true
   )
 
-  def forNewStyleContainer(
+  def forContainer(
       showLatestUpdate: Boolean,
       isFirst: Boolean,
       hasTitle: Boolean,
@@ -822,11 +817,11 @@ object GetClasses {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", commercialOptions.isSponsored),
-      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
-      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container", true),
+      ("fc-container--first", isFirst),
+      ("fc-container--sponsored", commercialOptions.isSponsored),
+      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

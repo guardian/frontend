@@ -1,4 +1,5 @@
 .container.container--popular {
+    margin-bottom: 0;
 
     .most-viewed-no-js i {
         @include rotate(-90deg);
@@ -6,9 +7,6 @@
     }
     #most-popular-head {
         display: none;
-    }
-    .facia-container--layout-content & {
-        margin-bottom: 0;
     }
     .content-footer--media & {
         margin-top: $gs-baseline;

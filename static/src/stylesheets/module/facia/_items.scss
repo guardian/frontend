@@ -17,31 +17,37 @@
 @import 'item-layouts/fc-item--mega-full';
 
 // overrides of current slices
-.fc-container {
-    .facia-slice__item {
-        padding-bottom: 0;
 
-        .has-flex & {
-            @include flex-display;
-        }
+.fc-slice__item {
+    position: relative;
+    padding-bottom: 0;
+    margin-bottom: $gs-baseline;
 
-        &.l-list__item {
-            margin-bottom: 0;
-            padding-bottom: $gs-baseline;
+    + .fc-slice__item {
+        @include vertical-item-separator;
+    }
 
-            &:last-child {
-                padding-bottom: 0;
-            }
+    .has-flex & {
+        @include flex-display;
+    }
+
+    &.l-list__item {
+        margin-bottom: 0;
+        padding-bottom: $gs-baseline;
+
+        &:last-child {
+            padding-bottom: 0;
         }
     }
-    .facia-slice__item--mpu-candidate {
-        @include mq(tablet) {
-            min-height: 250 + $mpu-ad-label-height;
-        }
+}
+
+.fc-slice__item--mpu-candidate {
+    @include mq(tablet) {
+        min-height: 250 + $mpu-ad-label-height;
     }
-    .facia-slice__item--no-mpu {
-        flex: 0 !important;
-    }
+}
+.fc-slice__item--no-mpu {
+    flex: 0 !important;
 }
 
 // new Facia Cards styles
@@ -214,9 +220,9 @@
 }
 
 //Live blog items
-.facia-slice--single-col {
+.fc-slice--single-col {
 
-    .facia-slice__item {
+    .fc-slice__item {
         padding-bottom: 0;
 
         &:before {
