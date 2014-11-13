@@ -40,6 +40,7 @@ define([
 
         afterEach(function () {
             sut = null;
+            sessionStorage.clear();
         });
 
         it("should get section (container) id", function() {
@@ -72,7 +73,7 @@ define([
             expect($('.button', $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                .toEqual('Less ' + containerId);
+                .toEqual('Fewer ' + containerId);
         });
 
         it("should show/hide content", function() {
@@ -90,8 +91,6 @@ define([
 
             var $button = $('.button', $container);
 
-            console.log($button.hasClass("button--primary"));
-
             expect($button.hasClass("button--primary")).toBeTruthy();
             expect($button.attr("data-link-name")).toEqual("More " + containerId);
             expect($('.i', $button).hasClass("i-plus-white")).toBeTruthy();
@@ -99,7 +98,7 @@ define([
             bean.fire($('.button', $container)[0], 'click');
 
             expect($button.hasClass("button--tertiary")).toBeTruthy();
-            expect($button.attr("data-link-name")).toEqual("Less " + containerId);
+            expect($button.attr("data-link-name")).toEqual("Fewer " + containerId);
             expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
         });
     });

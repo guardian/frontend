@@ -27,14 +27,12 @@ define([
             buttonText           = {},
             self                 = this;
 
-        userPrefs.setMode("session");
-
         this.addShowMoreButton = function () {
             var tmpTitle = this.getContainerTitle();
 
             buttonText = {
                 'hidden': 'More ' + tmpTitle,
-                'displayed': 'Less ' + tmpTitle
+                'displayed': 'Fewer ' + tmpTitle
             };
 
             $button = $.create(template(showMoreBtn, {
@@ -73,7 +71,7 @@ define([
 
         this.updatePref = function ($container, state) {
             // update user prefs
-            var prefs = userPrefs.get(prefName),
+            var prefs = userPrefs.get(prefName, 'session'),
                 prefValue = $container.attr('data-id');
             if (state !== 'displayed') {
                 delete prefs[prefValue];
@@ -83,12 +81,12 @@ define([
                 }
                 prefs[prefValue] = 'more';
             }
-            userPrefs.set(prefName, prefs);
+            userPrefs.set(prefName, prefs, 'session');
         };
 
         this.readPrefs = function ($container) {
             // update user prefs
-            var prefs = userPrefs.get(prefName);
+            var prefs = userPrefs.get(prefName, 'session');
             if (prefs && prefs[$container.attr('data-id')]) {
                 bean.fire($button[0], 'click');
             }

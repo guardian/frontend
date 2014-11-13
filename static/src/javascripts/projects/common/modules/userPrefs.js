@@ -5,38 +5,50 @@ define([
 ) {
 
     var storagePrefix = 'gu.prefs.',
-        store         = null;
+        store         = {
+            'local': storage.local,
+            'session': storage.session
+        };
 
-    function set(name, value) {
-        store.set(storagePrefix + name, value);
+
+    function set(name, value, opts) {
+        opts = opts || 'local';
+        store[opts].set(storagePrefix + name, value);
     }
 
-    function get(name) {
-        return store.get(storagePrefix + name);
+    function get(name, opts) {
+        opts = opts || 'local';
+        return store[opts].get(storagePrefix + name);
     }
 
-    function remove(name) {
-        store.remove(storagePrefix + name);
+    function remove(name, opts) {
+        opts = opts || 'local';
+        store[opts].remove(storagePrefix + name);
     }
 
-    function switchOn(name) {
-        store.set(storagePrefix + 'switch.' + name, true);
+    function switchOn(name, opts) {
+        opts = opts || 'local';
+        store[opts].set(storagePrefix + 'switch.' + name, true);
     }
 
-    function switchOff(name) {
-        store.set(storagePrefix + 'switch.' + name, false);
+    function switchOff(name, opts) {
+        opts = opts || 'local';
+        store[opts].set(storagePrefix + 'switch.' + name, false);
     }
 
-    function removeSwitch(name) {
-        store.remove(storagePrefix + 'switch.' + name);
+    function removeSwitch(name, opts) {
+        opts = opts || 'local';
+        store[opts].remove(storagePrefix + 'switch.' + name);
     }
 
-    function isOn(name) {
-        return store.get(storagePrefix + 'switch.' + name) === true;
+    function isOn(name, opts) {
+        opts = opts || 'local';
+        return store[opts].get(storagePrefix + 'switch.' + name) === true;
     }
 
-    function isOff(name) {
-        return store.get(storagePrefix + 'switch.' + name) === false;
+    function isOff(name, opts) {
+        opts = opts || 'local';
+        return store[opts].get(storagePrefix + 'switch.' + name) === false;
     }
 
     function isNumeric(str) {
@@ -77,13 +89,6 @@ define([
         }
     }
 
-    function setMode(mode) {
-        mode = mode || 'local';
-
-        store = storage[mode];
-    }
-
-    setMode('local');
     setPrefs(window.location);
 
     return {
@@ -95,7 +100,6 @@ define([
         removeSwitch: removeSwitch,
         isOn: isOn,
         isOff: isOff,
-        setPrefs: setPrefs,
-        setMode: setMode
+        setPrefs: setPrefs
     };
 });
