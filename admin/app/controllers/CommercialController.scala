@@ -21,7 +21,7 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
   def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
     val sponsoredTags = Store.getDfpSponsoredTags()
-    val advertisementTags = Store.getDfpAdvertisementTags()
+    val advertisementTags = Store.getDfpAdFeatureTags()
     val foundationSupportedTags = Store.getDfpFoundationSupportedTags()
 
     NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags, foundationSupportedTags)))

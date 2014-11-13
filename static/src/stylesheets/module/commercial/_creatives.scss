@@ -2,6 +2,6 @@
     display: block;
     height: 250px;
     @include box-sizing(border-box);
-    border: 1px solid #dfdfdf;
-    background: fixed none 0 0 repeat;
+    border: 1px solid colour(neutral-5);
+    background: none 0 0 repeat;
 }

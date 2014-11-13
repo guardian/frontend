@@ -5,8 +5,8 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import conf.Configuration
 import conf.Configuration.commercial._
+import conf.Configuration.environment
 import model.Tag
 import model.`package`.frontKeywordIds
 import play.api.{Application, GlobalSettings}
@@ -91,7 +91,7 @@ trait DfpAgent {
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
   def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isFoundationSupported(_, None)})
 
-  def isProd = !Configuration.environment.isNonProd
+  def isProd = environment.isProd
 
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 

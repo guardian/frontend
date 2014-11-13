@@ -142,11 +142,13 @@ Loader.prototype.initMainComments = function() {
                     this.setState('truncated');
                 }
             }.bind(this))
-            .fail(function() {
-                raven.captureMessage('Comments failed to load.', {
+            .fail(function(err) {
+                var msg = 'Comments failed to load.' + ('statusText' in err ? ' ' + err.statusText : '');
+                raven.captureMessage(msg, {
                     tags: {
                         contentType: 'comments',
-                        discussionId: this.getDiscussionId()
+                        discussionId: this.getDiscussionId(),
+                        status: 'status' in err ? err.status : ''
                     }
                 });
             }.bind(this));
