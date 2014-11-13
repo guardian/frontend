@@ -125,22 +125,28 @@
 .content-card__trailtext {
   padding-left: $gs-gutter / 2;
   padding-bottom: $gs-baseline;
-  padding-right: $gs-gutter * 6;
+  padding-right: $gs-gutter / 2;
 }
 
 .content-card--byline-pic {
     .content-card__byline-img {
         float: right;
-        height: $gs-baseline * 9.5;
+        height: $gs-baseline * 11.5;
         z-index: 2;
         position: absolute;
         bottom: 0;
         right: 0;
     }
 
-  .content-card__byline-img__img {
+    .content-card__byline-img__img {
         height: 100%;
     }
+
+    .content-card__trailtext {
+        padding-right: $gs-gutter * 6;
+    }
+
+
 }
 
 .content-card__live {
