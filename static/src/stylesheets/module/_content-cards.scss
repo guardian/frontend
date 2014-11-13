@@ -55,6 +55,10 @@
     overflow: hidden;
 }
 
+.content-card:hover {
+    text-decoration: none;
+}
+
 .content-card.tonal--tone-podcast,
 .content-card.tonal--tone-gallery,
 .content-card.tonal--tone-audio {
