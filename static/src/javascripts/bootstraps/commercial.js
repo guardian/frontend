@@ -17,6 +17,7 @@ define([
     'common/modules/userPrefs',
 
     // modules for creatives - need to be included so they're available
+    'common/modules/commercial/creatives/branded-component',
     'common/modules/commercial/creatives/scrollable-mpu'
 ], function (
     bonzo,

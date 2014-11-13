@@ -5,3 +5,30 @@
     border: 1px solid colour(neutral-5);
     background: none 0 0 repeat;
 }
+.creative--branded-component {
+    padding-left: $gs-gutter/2;
+    border-left: 1px solid colour(neutral-5);
+
+    .creative__inner {
+        padding-top: $gs-baseline/2;
+        border-top: 2px solid colour(guardian-brand);
+    }
+    .creative__marque {
+        display: block;
+        @include border-radius(18px);
+        background-color: colour(guardian-brand);
+    }
+    .creative__marque-title {
+        margin-left: 2px;
+        text-transform: lowercase;
+        color: colour(maps-support-3);
+        @include fs-header(2);
+    }
+    .creative__title {
+        @include fs-headline(5);
+    }
+    .creative__text {
+        @include fs-textSans(4);
+        color: colour(neutral-2);
+    }
+}
