@@ -503,8 +503,12 @@ $header-image-size-desktop: 100px;
     @include fs-headline(2);
 }
 
-.fc-container--tag .fc-container__inner {
-    border-top: 1px solid colour(neutral-5);
+.fc-container--tag {
+    padding-bottom: 0;
+
+    .fc-container__inner {
+        border-top: 1px solid colour(neutral-5);
+    }
 }
 
 .fc-trending-topics {
