@@ -161,7 +161,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
                   new DateTime(collectionItem.frontPublicationDate),
                   collectionItem.meta,
                   item.elements.getOrElse(Nil),
-                  item.safeFields
+                  item.safeFields,
+                  item.tags.map(Tag(_))
                 )
               }
             else

@@ -399,7 +399,9 @@ object SnapApiContent {
     isExpired                   = None
   )
 
-  def apply(snapElements: List[ApiElement], fields: Option[Map[String, String]] = None): ApiContent =
+  def apply(snapElements: List[ApiElement],
+            fields: Option[Map[String, String]] = None,
+            tags: List[Tag] = Nil): ApiContent =
     apply()
       .copy(elements = Some(snapElements))
       .copy(fields = fields)
@@ -435,8 +437,9 @@ case class SnapLatest(snapId: String,
                       snapWebPublicationDate: DateTime,
                       snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
                       snapElements: List[ApiElement] = Nil,
-                      fields: Map[String, String])
-  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields)), supporting = snapSupporting, metaData = snapMeta)) {
+                      fields: Map[String, String],
+                      snapTags: List[Tag])
+  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields), snapTags), supporting = snapSupporting, metaData = snapMeta)) {
 
   override lazy val id: String = snapId
   override lazy val url: String = s"/$snapId"
