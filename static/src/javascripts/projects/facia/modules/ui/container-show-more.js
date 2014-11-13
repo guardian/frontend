@@ -32,7 +32,7 @@ define([
 
             buttonText = {
                 'hidden': 'More ' + tmpTitle,
-                'displayed': 'Fewer ' + tmpTitle
+                'displayed': 'Less'
             };
 
             $button = $.create(template(showMoreBtn, {

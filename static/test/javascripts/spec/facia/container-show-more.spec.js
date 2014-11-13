@@ -74,7 +74,7 @@ define([
             expect($('.button', $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                .toEqual('Fewer ' + containerId);
+                .toEqual('Less');
         });
 
         it("should show/hide content", function() {
@@ -99,7 +99,7 @@ define([
             bean.fire($('.button', $container)[0], 'click');
 
             expect($button.hasClass("button--tertiary")).toBeTruthy();
-            expect($button.attr("data-link-name")).toEqual("Fewer " + containerId);
+            expect($button.attr("data-link-name")).toEqual("Less");
             expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
         });
 
