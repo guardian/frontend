@@ -514,10 +514,7 @@ $header-image-size-desktop: 100px;
 
 .index-page-header__title {
     display: block;
-    float: left;
     line-height: get-line-height(header, 2);
-    width: auto;
-    margin-right: $gs-gutter;
 
     &,
     a {
@@ -526,23 +523,34 @@ $header-image-size-desktop: 100px;
 
     @include fs-header(4);
     @include mq(leftCol) {
+        float: left;
         width: $left-column;
+        margin-right: $gs-gutter;
     }
 
     @include mq(wide) {
         width: $left-column-wide;
 
         .has-page-skin & {
-            width: auto;
+            float: none;
         }
     }
 }
 
 .index-page-header__description {
     color: colour(neutral-2);
-    float: left;
 
     @include fs-headline(2);
+
+    @include mq(leftCol) {
+        float: left;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: none;
+        }
+    }
 
     @include mq(tablet, desktop) {
         width: 50%;
@@ -556,6 +564,7 @@ $header-image-size-desktop: 100px;
 .index-page-header__picture {
     overflow: hidden;
     float: right;
+    margin-bottom: $gs-baseline / 2;
 
     img {
         display: block;
