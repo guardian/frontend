@@ -109,7 +109,7 @@ figure.element.element--supporting {
 figure.element.element--showcase {
     @include mq(leftCol) {
         padding-bottom: $gs-baseline * 2;
-        border-bottom: 1px dotted colour(neutral5);
+        border-bottom: 1px dotted colour(neutral-5);
 
         figcaption {
             background: #ffffff;
