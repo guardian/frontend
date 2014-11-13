@@ -54,6 +54,10 @@
         @include side-margins-position(gs-span(16));
 
         .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            width: gs-span(12) + ($gs-gutter*2);
+
             &:before,
             &:after {
                 display: none;
@@ -61,16 +65,6 @@
         }
     }
 }
-.l-side-margins--layout-front {
-    @include mq(wide) {
-        .has-page-skin & {
-            margin-left: auto;
-            margin-right: auto;
-            width: gs-span(12) + ($gs-gutter*2);
-        }
-    }
-}
-
 .l-side-margins--media {
     @include mq(desktop) {
         &:after,

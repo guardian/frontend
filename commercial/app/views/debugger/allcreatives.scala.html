@@ -5,8 +5,6 @@
 <script>
 jQuery(function($) {
     $("#switchFronts").click(function() {
-        $('.l-side-margins').removeClass("l-side-margins--layout-content").addClass("l-side-margins--layout-front");
-        $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
         $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
         $('#switchArticles').removeClass('current');
         $('#article').slideUp();
@@ -15,8 +13,6 @@ jQuery(function($) {
     });
 
     $("#switchArticles").click(function() {
-        $('.l-side-margins').removeClass("l-side-margins--layout-front").addClass("l-side-margins--layout-content");
-        $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
         $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
         $('#switchFronts').removeClass('current');
         $('#article').slideDown();
@@ -660,7 +656,7 @@ jQuery(function($) {
 
     <hr/>
 
-    <div class="fc-container fc-container--layout-content">
+    <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
                 <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CAPI component</a>
@@ -680,7 +676,7 @@ jQuery(function($) {
         </div>
     </div>
 
-    <div class="fc-container fc-container--layout-content">
+    <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
                 <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Single)</a>
@@ -712,7 +708,7 @@ jQuery(function($) {
     <hr />
 
         <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
-        <div class="facia-container fc-container--layout-content">
+        <div class="facia-container">
             <section class="container container--special container--merchandising container--advertisement-feature">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
@@ -797,7 +793,7 @@ jQuery(function($) {
         </div>
 
         <h2 class="facia-container__inner test-page-head">Merchandising Sponsored Content</h2>
-        <div class="facia-container fc-container--layout-content">
+        <div class="facia-container">
             <section class="container container--special container--merchandising container--sponsored">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>

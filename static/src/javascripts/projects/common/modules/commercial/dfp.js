@@ -298,28 +298,34 @@ define([
         },
         breakoutIFrame = function (iFrame) {
             /* jshint evil: true */
-            var iFrameBody    = iFrame.contentDocument.body,
-                $iFrameParent = bonzo(iFrame).parent();
+            var shouldRemoveIFrame = false,
+                $iFrame            = bonzo(iFrame),
+                iFrameBody         = iFrame.contentDocument.body,
+                $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach (breakoutClasses, function (breakoutClass) {
-                    var $breakout = $('.' + breakoutClass, iFrameBody);
-                    if ($breakout.length) {
-                        // remove the iframe before breaking out
-                        bonzo(iFrame).remove();
-                        if ($breakout[0].nodeName.toLowerCase() === 'script') {
+                forEach(breakoutClasses, function (breakoutClass) {
+                    $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
+                        var $breakoutEl = bonzo(breakoutEl);
+
+                        if (breakoutClass === 'breakout__script') {
                             // evil, but we own the returning js snippet
-                            eval($breakout.html());
+                            eval($breakoutEl.html());
                         } else {
-                            $iFrameParent.append($breakout.html());
+                            $iFrameParent.append($breakoutEl.html());
+
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
                                     bonzo(responsiveAd).addClass('ad--responsive--open');
                                 }, 50);
                             });
                         }
-                    }
+                        shouldRemoveIFrame = true;
+                    });
                 });
+            }
+            if (shouldRemoveIFrame) {
+                $iFrame.remove();
             }
         },
         /**
@@ -337,10 +343,11 @@ define([
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
+
                         if (
                             updatedIFrame &&
-                            typeof updatedIFrame.readyState !== 'unknown' &&
-                            updatedIFrame.readyState === 'complete'
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
                         ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');
