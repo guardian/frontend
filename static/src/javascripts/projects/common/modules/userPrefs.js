@@ -10,7 +10,6 @@ define([
             'session': storage.session
         };
 
-
     function set(name, value, opts) {
         opts = opts || 'local';
         store[opts].set(storagePrefix + name, value);
