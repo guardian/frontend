@@ -483,7 +483,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("inBodyInternalLinkCount", JsNumber(linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(shouldHideAdverts)),
-      ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise))
+      ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise)),
+      ("lightboxImages", lightbox)
     ) ++ bookReviewIsbn
   }
 

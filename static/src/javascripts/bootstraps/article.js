@@ -9,7 +9,8 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
-    'common/modules/ui/selection-sharing'
+    'common/modules/ui/selection-sharing',
+    'common/modules/gallery/lightbox'
 ], function (
     fence,
     $,
@@ -21,7 +22,8 @@ define([
     geoMostPopular,
     OpenCta,
     rhc,
-    selectionSharing
+    selectionSharing,
+    lightbox
 ) {
 
     var modules = {
@@ -60,6 +62,13 @@ define([
 
             initSelectionSharing: function () {
                 selectionSharing.init();
+            },
+
+            initLightbox: function () {
+                 if ("lightboxImages" in config.page) {
+                    console.log("one");
+                    lightbox.init();
+                }
             }
 
         },
@@ -70,6 +79,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
+            modules.initLightbox();
 
             mediator.emit('page:article:ready');
         };
