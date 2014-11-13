@@ -17,11 +17,11 @@ case class FaciaHeaderImage(
   imageType: FaciaHeaderImageType
 ) {
   def cssClasses = Seq(
-    "index-page-header__picture",
+    "index-page-header__image-wrapper",
     imageType match {
-      case ContributorCircleImage => "index-page-header__picture--contributor-circle"
-      case ContributorCutOutImage => "index-page-header__picture--contributor-cut-out"
-      case FootballBadge => "index-page-header__picture--football-badge"
+      case ContributorCircleImage => "index-page-header__image-wrapper--contributor-circle"
+      case ContributorCutOutImage => "index-page-header__image-wrapper--contributor-cut-out"
+      case FootballBadge => "index-page-header__image-wrapper--football-badge"
     }
   )
 }

@@ -7,7 +7,7 @@
     <div class="index-page-header__content">
         @metaDataHeader.image.map { image =>
             <div class="@RenderClasses(image.cssClasses: _*)">
-                <img role="presentation" src="@image.url" />
+                <img class="index-page-header__image" role="presentation" src="@image.url" />
             </div>
         }
 

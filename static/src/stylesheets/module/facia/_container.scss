@@ -579,21 +579,21 @@ $header-image-size-desktop: 100px;
     }
 }
 
-.index-page-header__picture {
+.index-page-header__image-wrapper {
     overflow: hidden;
     float: right;
+}
 
-    img {
-        display: block;
-        float: right;
-        height: $header-image-size-mobile;
+.index-page-header__image {
+    display: block;
+    float: right;
+    height: $header-image-size-mobile;
 
-        @include mq(desktop) {
-            height: $header-image-size-desktop;
-        }
+    @include mq(desktop) {
+        height: $header-image-size-desktop;
     }
 }
 
-.index-page-header__picture--contributor-circle {
+.index-page-header__image-wrapper--contributor-circle {
     @include border-radius(50%);
 }
