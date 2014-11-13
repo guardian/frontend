@@ -33,11 +33,10 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Have correct canonical url when 410") {
+    scenario("Have correct canonical url when 410 encountered") {
       Given("I am on a video page")
-      goTo("world/video/2008/dec/11/guantanamo-bay") { browser =>
+      goTo("/world/video/2008/dec/11/guantanamo-bay") { browser =>
         import browser._
-
         findFirst("link[rel='canonical']").getAttribute("href") should endWith ("/world")
       }
     }
