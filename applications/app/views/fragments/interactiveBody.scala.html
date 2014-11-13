@@ -3,7 +3,7 @@
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.interactive) { interactive =>
-<div class="l-side-margins l-side-margins--layout-content l-side-margins--interactive">
+<div class="l-side-margins">
     <article class="content content--interactive tonal tonal--@articleToneClass(interactive) @interactive match {
             case a if a.isAdvertisementFeature => {content--advertisement-feature}
             case s if s.isSponsored => {content--sponsored}

@@ -84,6 +84,12 @@
         color: colour(neutral-1);
     }
 
+    .fc-item__container {
+        &:before {
+            display: none;
+        }
+    }
+
     .fc-item__image-container {
         display: block;
     }
@@ -102,28 +108,5 @@
     .item__title,
     .linkslist__action {
         @include f-headlineSans;
-    }
-}
-
-/* Fronts */
-
-.facia-container--layout-front .commercial--capi,
-.fc-container--layout-front .commercial--capi {
-    @include mq(leftCol) {
-        @include c-capi-leftCol;
-
-        .commercial__head {
-            width: gs-span(2);
-            margin-right: $gs-gutter;
-        }
-    }
-}
-
-/* Articles */
-
-.facia-container--layout-content .commercial--capi,
-.fc-container--layout-content .commercial--capi {
-    @include mq(leftCol) {
-        @include c-capi-leftCol;
     }
 }

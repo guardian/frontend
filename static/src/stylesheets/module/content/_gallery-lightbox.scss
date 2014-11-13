@@ -371,6 +371,10 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     margin: 0 auto;
     margin-top: gs-height(1);
 
+    &.fc-container {
+        display: block;
+    }
+
     @include mq(leftCol) {
         width: gs-span(12) + $gs-gutter*2;
 
