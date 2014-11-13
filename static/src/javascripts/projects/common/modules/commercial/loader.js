@@ -87,6 +87,9 @@ define([
                     capiAboutLinkUrl: '',
                     capiKeywords:     '',
                     capiLinkUrl:      '',
+                    capiButtonText:   '',
+                    capiReadMoreUrl:  '',
+                    capiReadMoreText: '',
                     capiTitle:        '',
                     components:       [],
                     jobIds:           '',
@@ -121,7 +124,10 @@ define([
                     l:   opts.logo,
                     ct:  opts.capiTitle,
                     cl:  opts.capiLinkUrl,
-                    cal: opts.capiAboutLinkUrl
+                    clt: opts.capiButtonText, 
+                    cal: opts.capiAboutLinkUrl,
+                    rmd: opts.capiReadMoreUrl,
+                    rmt: opts.capiReadMoreText
                 })
             };
         };
