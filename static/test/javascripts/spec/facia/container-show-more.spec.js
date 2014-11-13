@@ -99,7 +99,7 @@ define([
             bean.fire($('.button', $container)[0], 'click');
 
             expect($button.hasClass("button--tertiary")).toBeTruthy();
-            expect($button.attr("data-link-name")).toEqual("Less");
+            expect($button.attr("data-link-name")).toEqual("Less " + containerId);
             expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
         });
 

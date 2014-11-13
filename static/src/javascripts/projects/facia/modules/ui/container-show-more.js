@@ -32,7 +32,7 @@ define([
 
             buttonText = {
                 'hidden': 'More ' + tmpTitle,
-                'displayed': 'Less'
+                'displayed': 'Less ' + tmpTitle,
             };
 
             $button = $.create(template(showMoreBtn, {
@@ -58,7 +58,7 @@ define([
         };
 
         this.changeButtonText = function () {
-            $('.' + textHook, $button).text(buttonText[state]);
+            $('.' + textHook, $button).text((state === 'hidden') ? buttonText[state] : buttonText[state].split(' ')[0]);
         };
 
         this.changeButtonState = function () {
