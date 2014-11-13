@@ -6,14 +6,25 @@ import org.joda.time.format.DateTimeFormat
 
 sealed trait FaciaHeaderImageType
 
+/** TODO fancy cut out version */
 case object ContributorCutOutImage extends FaciaHeaderImageType
+
 case object ContributorCircleImage extends FaciaHeaderImageType
 case object FootballBadge extends FaciaHeaderImageType
 
 case class FaciaHeaderImage(
   url: String,
   imageType: FaciaHeaderImageType
-)
+) {
+  def cssClasses = Seq(
+    "index-page-header__picture",
+    imageType match {
+      case ContributorCircleImage => "index-page-header__picture--contributor-circle"
+      case ContributorCutOutImage => "index-page-header__picture--contributor-cut-out"
+      case FootballBadge => "index-page-header__picture--football-badge"
+    }
+  )
+}
 
 object FaciaContainerHeader {
   def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
@@ -34,8 +45,7 @@ object FaciaContainerHeader {
     } else if (tagPage.isContributor) {
       MetaDataHeader(
         tagPage.webTitle,
-        tagPage.contributorLargeImagePath.map(FaciaHeaderImage(_, ContributorCutOutImage)) orElse
-          tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
+        tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
         dateHeadline
       )

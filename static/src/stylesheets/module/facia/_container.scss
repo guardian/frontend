@@ -589,3 +589,7 @@ $header-image-size-desktop: 100px;
         }
     }
 }
+
+.index-page-header__picture--contributor-circle {
+    @include border-radius(50%);
+}

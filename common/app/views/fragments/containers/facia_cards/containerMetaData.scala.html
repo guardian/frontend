@@ -1,23 +1,13 @@
 @(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
 
 @import common.Localisation
-@import layout.ContributorCircleImage
+@import views.support.RenderClasses
 
 <div class="index-page-header">
     <div class="index-page-header__content">
         @metaDataHeader.image.map { image =>
-            <div class="index-page-header__picture">
-                @image.imageType match {
-                    case ContributorCircleImage => {
-                        <div class="profile__img">
-                            <img src="@image.url" />
-                        </div>
-                    }
-
-                    case _ => {
-                        <img src="@image.url" />
-                    }
-                }
+            <div class="@RenderClasses(image.cssClasses: _*)">
+                <img src="@image.url" />
             </div>
         }
 
