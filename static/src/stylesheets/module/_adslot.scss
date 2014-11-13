@@ -385,7 +385,7 @@
         }
     }
 
-    @mixin comm-paid-logo-placement {
+    @include mq(leftCol) {
         clear: left;
         padding: 0;
         margin: 0;
@@ -397,13 +397,6 @@
             float: none;
             margin-top: $gs-row-height/4;
         }
-    }
-
-    @include mq(leftCol) {
-        .l-side-margins--layout-content .ad-slot--commercial-component & {
-            @include comm-paid-logo-placement;
-        }
-        @include comm-paid-logo-placement;
     }
 
     @include mq(wide) {

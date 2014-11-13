@@ -3,9 +3,8 @@
 @import views.support.RenderClasses
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="l-side-margins l-side-margins--layout-front">
+    <div class="l-side-margins">
         <div class="@RenderClasses(Map(
-                "fc-container--layout-front" -> true,
                 "fc-container--sponsored" -> faciaPage.isSponsored,
                 "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
                 "js-sponsored-front" -> (faciaPage.isSponsored || faciaPage.isAdvertisementFeature || faciaPage.isFoundationSupported)))"

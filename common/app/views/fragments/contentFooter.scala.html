@@ -1,6 +1,6 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
-<div class="content-footer @if(cssClass){ content-footer--@cssClass } fc-container--layout-content">
+<div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
 

@@ -7,6 +7,15 @@ $header-image-size-desktop: 120px;
     position: relative;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
+
+    @include mq(wide) {
+        .has-page-skin & {
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            width: gs-span(12) + ($gs-gutter*2);
+        }
+    }
 }
 
 .fc-container__inner,
@@ -15,6 +24,11 @@ $header-image-size-desktop: 120px;
 
     @include mq(tablet) {
         padding-top: $gs-baseline / 2;
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            width: gs-span(12);
+        }
     }
 
     .fc-container & {
@@ -327,6 +341,17 @@ $header-image-size-desktop: 120px;
 
     @include mq(tablet) {
         padding-top: $gs-baseline / 4;
+    }
+    @include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+        width: gs-span(12);
+
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
 
     .fc-container--has-toggle & {
