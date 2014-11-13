@@ -123,13 +123,15 @@
     </article>
 
     @if(mediaType != "video") {
-        <div class="facia-container fc-container--media facia-container--layout-content">
+        <div class="fc-container fc-container--media fc-container--layout-content">
             <div class="js-media-popular tonal--@articleToneClass(media)">
-                <div class="container container--popular">
-                    <div class="facia-container__inner">
-                        <h2 class="container__title">
-                            <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
-                        </h2>
+                <div class="fc-container fc-container--popular">
+                    <div class="fc-container__inner">
+                        <div class="fc-container__header">
+                            <h2 class="fc-container__header__title">
+                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,36 +1,36 @@
 .tone-comment--item,
 %tone-comment--item {
     &.fc-item {
-        background-color: $c-commentBackground;
+        background-color: colour(comment-background);
     }
 
     .u-faux-block-link--hover {
-        background-color: darken($c-commentBackground, 3%);
+        background-color: darken(colour(comment-background), 3%);
     }
 
     .fc-item__container:before {
-        background-color: $c-commentDefault;
+        background-color: colour(comment-default);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-commentDefault;
+        color: colour(comment-default);
     }
 
     .fc-item__meta {
-        background-color: fade-out($c-commentBackground, .5);
+        background-color: fade-out(colour(comment-background), .5);
     }
 }
 
 .tone-comment--sublink,
 %tone-comment--sublink {
     .fc-sublink__kicker {
-        color: $c-commentDefault;
+        color: colour(comment-default);
     }
 
     @include sublink-style(live, review, media) {
         .fc-sublink__kicker {
-            color: $c-commentBackground;
+            color: colour(comment-background);
         }
     }
 }
@@ -38,6 +38,6 @@
 .tone-comment--most-popular,
 %tone-comment--most-popular {
     .fc-item__kicker {
-        color: $c-commentDefault;
+        color: colour(comment-default);
     }
 }

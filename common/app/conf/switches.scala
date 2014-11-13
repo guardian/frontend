@@ -126,11 +126,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
-    "If this switch is on then content will have a shorter cache time",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
-  )
-
   // Commercial
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
@@ -461,7 +456,6 @@ object Switches extends Collections {
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,

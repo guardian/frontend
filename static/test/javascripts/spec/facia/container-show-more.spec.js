@@ -27,7 +27,7 @@ define([
             container = bonzo.create(
                     '<section class="container">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide" data-title="' + containerId + '">' +
+                            '<div class="container__body js-hide fc-show-more--hidden" data-title="' + containerId + '">' +
                                 '<div class="js-hide"></div>' +
                             '</div>' +
                         '</div>' +
@@ -58,18 +58,49 @@ define([
             sut.addShowMoreButton();
 
             expect(sut.getContainerTitle).toHaveBeenCalled();
-            expect($(".button", $container).length > 0).toBeTruthy;
+            expect($(".button", $container).length > 0).toBeTruthy();
             expect($(".button", $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
                 .toEqual("More US news");
         });
 
-        it("should hide button after click", function() {
+        it("should change button text", function() {
             sut.addShowMoreButton();
 
             bean.fire($('.button', $container)[0], 'click');
-            expect($('.button', $container).css('display')).toBe('none');
+            expect($('.button', $container).text()
+                .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
+                .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
+                .toEqual('Less ' + containerId);
+        });
+
+        it("should show/hide content", function() {
+            sut.addShowMoreButton();
+
+            bean.fire($('.button', $container)[0], 'click');
+            expect($('.container__body', $container).hasClass('fc-show-more--hidden')).toBeFalsy();
+
+            bean.fire($('.button', $container)[0], 'click');
+            expect($('.container__body', $container).hasClass('fc-show-more--hidden')).toBeTruthy();
+        });
+
+        it("should change the button state", function() {
+            sut.addShowMoreButton();
+
+            var $button = $('.button', $container);
+
+            console.log($button.hasClass("button--primary"));
+
+            expect($button.hasClass("button--primary")).toBeTruthy();
+            expect($button.attr("data-link-name")).toEqual("More " + containerId);
+            expect($('.i', $button).hasClass("i-plus-white")).toBeTruthy();
+
+            bean.fire($('.button', $container)[0], 'click');
+
+            expect($button.hasClass("button--tertiary")).toBeTruthy();
+            expect($button.attr("data-link-name")).toEqual("Less " + containerId);
+            expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
         });
     });
 });

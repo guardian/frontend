@@ -52,7 +52,7 @@
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
-            border-left: 1px solid $c-neutral2;
+            border-left: 1px solid colour(neutral-2);
         }
     }
     .content__secondary-column--video {
@@ -91,24 +91,45 @@
 /* Media item
    ========================================================================== */
 
-.items--media {
-    .item {
-        position: relative;
-        float: left;
-        width: 50%;
-        @include box-sizing(border-box);
-        margin-bottom: $gs-baseline*2;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+.fc-item--media {
+    position: relative;
+    @include box-sizing(border-box);
+    margin-bottom: $gs-baseline*2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
 
-        .item__container {
-            margin-top: -$gs-baseline;
+    &.fc-item {
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    + .fc-item {
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid colour(neutral-2);
         }
     }
-    .item__action {
+
+    .fc-item__container {
+        margin-top: -$gs-baseline;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
-        color: $c-neutral5;
+        color: colour(neutral-5);
 
         &:hover,
         &:focus {
@@ -116,13 +137,11 @@
         }
         &:visited,
         &:active {
-            color: darken($c-neutral5, 20%);
+            color: darken(colour(neutral-5), 20%);
         }
     }
-    .item__img {
-        margin-bottom: $gs-baseline/3;
-    }
-    .item__title {
+
+    .fc-item__title {
         @include fs-headline(1);
         font-weight: 500;
         text-align: left; //Required for end slate items
@@ -134,16 +153,26 @@
             content: '';
             margin-right: $gs-gutter/5;
             height: 10px;
+            width: 16px;
         }
     }
 }
 
 
+
+.items--video .fc-item__title:before {
+    @include icon(video-icon, false);
+}
+
+.items--audio .fc-item__title:before {
+    @include icon(volume-high--tone-media, false);
+}
+
 /* Most viewed container
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid $c-neutral2;
+    border-top: 1px solid colour(neutral-2);
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;
@@ -162,43 +191,38 @@
     margin-left: -$gs-gutter/2;
     margin-right: -$gs-gutter/2;
 
-    .item {
+    .fc-item--media {
+        float: left;
+        width: 50%;
+
         @include mq($until: tablet) {
-            &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
+            &:nth-child(odd):before {
+                display: none;
             }
         }
+
         @include mq(tablet, desktop) {
             width: 33.3%;
 
-            &:nth-child(-n+3) {
-                .item__container {
-                    border-top: 0;
-                }
+            &:nth-child(4n):before {
+                display: none;
             }
-            &:nth-child(3n-1),
-            &:nth-child(3n-2) {
-                border-right: 1px solid $c-neutral2;
-            }
+
             &:nth-child(1n+4) {
                 margin-bottom: 0;
             }
         }
+
         @include mq(desktop) {
-            &:nth-child(-n+2) {
-                .item__container {
-                    border-top: 0;
-                }
-            }
-            &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
+            &:nth-child(odd):before {
+                display: none;
             }
             &:nth-child(n+5) {
                 margin-bottom: 0;
             }
         }
     }
-    .item__title {
+    .fc-item__title {
         @include text-clamp(3, get-line-height(headline, 1));
         height: get-line-height(headline, 1) * 3;
     }
@@ -220,7 +244,7 @@
             margin-bottom: 0;
         }
     }
-    .item:nth-child(4) {
+    .fc-item:nth-child(4) {
         @include mq(tablet, desktop) {
             display: none;
         }

@@ -1,21 +1,21 @@
 .tone-dead--item {
     &.fc-item {
-        background-color: $c-neutral7;
+        background-color: colour(neutral-7);
     }
 
     .fc-item__container:before {
-        background-color: $c-liveDefault;
+        background-color: colour(live-default);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-liveAccent;
+        color: colour(live-accent);
     }
 }
 
 .tone-dead--sublink {
     .fc-sublink__kicker {
-        color: $c-liveAccent;
+        color: colour(live-accent);
     }
 
     @include sublink-style(editorial, feature, live, media, podcast, review) {
@@ -26,5 +26,5 @@
 }
 
 .tone-dead--most-popular .fc-item__kicker {
-    color: $c-liveAccent;
+    color: colour(live-accent);
 }

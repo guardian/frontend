@@ -50,7 +50,7 @@
     overflow: hidden;
 }
 
-@mixin faux-bullet-point($color: $c-neutral3, $right-space: 2px) {
+@mixin faux-bullet-point($color: colour(neutral-3), $right-space: 2px) {
     &:before {
         display: inline-block;
         content: '';
@@ -243,14 +243,23 @@
     }
 }
 
-@mixin column-rule($style: 1px solid $c-neutral5) {
+@mixin column-rule($style: 1px solid colour(neutral-5)) {
     -webkit-column-rule: $style;
     -moz-column-rule: $style;
     column-rule: $style;
 }
 
-@function colour($color, $pallet: $pasteup-palette) {
-    @return guss-colour($color, $pallet);
+@function colour($color) {
+    @if map-has-key($frontend-palette, $color) {
+        @return map-get($frontend-palette, $color);
+    } @else {
+        @if map-has-key($pasteup-palette, $color) {
+            @return guss-colour($color, $pasteup-palette);
+        } @else {
+            @warn "#{$color} not found in either frontend or pasteup palette";
+            @return false;
+        }
+    }
 }
 
 @mixin absolute-center {

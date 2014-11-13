@@ -1,7 +1,7 @@
 .tone-media--item {
     $c-headline: #ffffff;
 
-    background-color: $c-mediaBackground;
+    background-color: colour(media-background);
 
     &,
     .fc-sublink__title {
@@ -9,23 +9,23 @@
     }
 
     .u-faux-block-link--hover {
-        background-color: darken($c-mediaBackground, 15%);
+        background-color: darken(colour(media-background), 15%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $c-mediaBackground, 80%);
+            color: mix($c-headline, colour(media-background), 80%);
         }
     }
 
     .fc-item__container:before {
-        background-color: $c-mediaDefault;
+        background-color: colour(media-default);
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $c-mediaDefault;
+        color: colour(media-default);
     }
 
     .fc-item__kicker:after,
@@ -35,22 +35,22 @@
 
     .fc-item__standfirst,
     .fc-item__meta {
-        color: $c-neutral3;
+        color: colour(neutral-3);
     }
 }
 
 .tone-media--sublink {
     .fc-sublink__kicker {
-        color: $c-mediaDefault;
+        color: colour(media-default);
     }
 
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $c-mediaBackground;
+            color: colour(media-background);
         }
     }
 }
 
 .tone-media--most-popular .fc-item__kicker {
-    color: $c-newsDefault;
+    color: colour(news-default);
 }

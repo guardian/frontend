@@ -2,7 +2,7 @@
 // If you have other styles, but would like to maintain the functionality,
 // just apply .dropdown
 .dropdown-styled {
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid colour(neutral-4);
     position: relative;
 
     .dropdown__toggle,
@@ -24,17 +24,17 @@
 
     .dropdown__button {
         padding: $gs-baseline/2 0 $gs-baseline*1.5;
-        color: $c-neutral1;
+        color: colour(neutral-1);
         text-align: left;
 
         .control {
-            border-color: $c-neutral5;
+            border-color: colour(neutral-5);
             float: right;
             position: relative;
         }
 
         .i {
-            background-color: $c-neutral2;
+            background-color: colour(neutral-2);
             right: 0;
             position: absolute;
         }

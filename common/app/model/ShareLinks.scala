@@ -11,15 +11,15 @@ case class ShareLink (
 
 trait ShareLinks { self: Content =>
 
-  private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, linkUrl: String, title: String): Option[ShareLink] = {
+  private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
     def shareCampaignUrl(campaign: String, elementId: Option[String]) = {
-      elementId.map { block => s"$linkUrl/$campaign#$block" } getOrElse s"$linkUrl/$campaign"
+      elementId.map { block => s"$shortLinkUrl/$campaign#$block" } getOrElse s"$shortLinkUrl/$campaign"
     }
 
     lazy val facebook = shareCampaignUrl("sfb", elementId).urlEncoded
     lazy val googlePlus = shareCampaignUrl("sgp", elementId).urlEncoded
-    lazy val link = shareCampaignUrl("sbl", elementId)
+    lazy val link = shareCampaignUrl("sbl", elementId).urlEncoded
     lazy val twitter = shareCampaignUrl("stw", elementId).urlEncoded
     lazy val whatsapp = shareCampaignUrl("swa", elementId)
     lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
@@ -29,11 +29,10 @@ trait ShareLinks { self: Content =>
       case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${title.urlEncoded}&url=$twitter"))
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
-      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${linkUrl.urlEncoded}"))
-      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${linkUrl.urlEncoded}"))
-      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${linkUrl.urlEncoded}"))
-      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${linkUrl.urlEncoded}&media=${mediaPath.getOrElse("").urlEncoded}"))
-      case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
+      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${shortLinkUrl.urlEncoded}"))
+      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webLinkUrl.urlEncoded}"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${webLinkUrl.urlEncoded}&media=${mediaPath.getOrElse("").urlEncoded}"))
       case _ => None
     }
   }
@@ -41,8 +40,8 @@ trait ShareLinks { self: Content =>
   protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
   protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
 
-  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, linkUrl: String = shortUrl, title: String = webTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, linkUrl, title))
+  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String = shortUrl, webLinkUrl: String = webUrl, title: String = webTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, shortLinkUrl, webLinkUrl, title))
 
-  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, linkUrl = shortUrl, title = webTitle))
+  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, shortLinkUrl = shortUrl, webLinkUrl = webUrl, title = webTitle))
 }
 

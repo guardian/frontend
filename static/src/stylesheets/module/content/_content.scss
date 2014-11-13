@@ -107,14 +107,14 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: $c-neutral5;
+        color: colour(neutral-5);
     }
 }
 
 .content__labels {
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted colour(neutral-5);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -155,7 +155,7 @@
     }
 
     .content__series-label__link {
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
 }
 
@@ -163,7 +163,7 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
+    border-top: 1px dotted colour(neutral-5) !important; // Disable tone colour
 }
 
 .content__headline {
@@ -185,7 +185,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $c-neutral1;
+            color: colour(neutral-1);
         }
     }
 
@@ -284,7 +284,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -323,7 +323,7 @@
             content: counter(li)'.';
             counter-increment: li;
             @include fs-header(1);
-            color: $c-neutral3;
+            color: colour(neutral-3);
 
             @include mq(tablet) {
                 @include fs-header(3, true);
@@ -336,7 +336,7 @@
 
 .content__dateline {
     position: relative;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include box-sizing(border-box);
     @include fs-textSans(1);
     padding-top: $gs-baseline / 6;
@@ -361,7 +361,7 @@
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted colour(neutral-5);
     }
 
     @include mq(wide) {
@@ -378,7 +378,7 @@
     margin: $gs-baseline/2 0;
     overflow: hidden;
     @include border-radius(50%);
-    background-color: $c-neutral7;
+    background-color: colour(neutral-7);
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
     -webkit-transform: translateZ(0);
@@ -411,8 +411,8 @@
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted $c-neutral5;
-    border-bottom: 1px dotted $c-neutral5;
+    border-top: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted colour(neutral-5);
 
     @include mq(leftCol) {
         position: absolute;
@@ -471,7 +471,7 @@
     @include fs-bodyHeading(1);
     padding-top: $gs-baseline/3;
     line-height: 20px;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
@@ -483,7 +483,7 @@
         clear: both;
         margin-bottom: 0;
         padding-right: 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted colour(neutral-5);
         @include box-sizing(border-box);
         min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
@@ -564,21 +564,21 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted $c-neutral5;
+            border-top: 1px dotted colour(neutral-5);
         }
     }
 
 }
 
 .content--advertisement-feature {
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
 
     .content__standfirst,
     .content__dateline,
     .caption--main,
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
-        color: $c-neutral2-contrasted;
+        color: colour(neutral-2-contrasted);
     }
     .content__headline,
     .content__standfirst {
@@ -600,7 +600,7 @@
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid colour(neutral-4);
 }
 
 .meta__extras {

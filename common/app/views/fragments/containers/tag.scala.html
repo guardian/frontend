@@ -21,7 +21,7 @@
                 data-sponsorship="@sponsorshipType"
             }
             data-component="@FaciaComponentName(config, collection)">
-            <div class="facia-container__inner">
+            <div class="fc-container__inner">
                 <div class="fc-container__header js-container__header">
                     @FootballTagPage(page).asOpt.map{ footballTagPage =>
                         @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
@@ -32,7 +32,7 @@
                     }
                     @fragments.contributor(page)
                 </div>
-                <div class="container__body container--rolled-up-hide">
+                <div class="fc-container__body fc-container--rolled-up-hide">
                     @for(sliceWithCards <- containerLayout.slices) {
                         @slice(sliceWithCards, 0)
                     }
