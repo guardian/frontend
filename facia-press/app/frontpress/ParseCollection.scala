@@ -111,6 +111,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     Future.traverse(latestSnapSearches) { id =>
       LiveContentApi.item(id, Edition.defaultEdition)
         .showFields(showFieldsWithBodyQuery)
+        .pageSize(1)
         .response
         .map(_.results.headOption)
         .map(_.map(id -> _))
