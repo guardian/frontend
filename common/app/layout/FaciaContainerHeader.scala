@@ -57,7 +57,9 @@ case class MetaDataHeader(
   image: Option[FaciaHeaderImage],
   description: Option[String],
   dateHeadline: DateHeadline
-) extends FaciaContainerHeader
+) extends FaciaContainerHeader {
+  def hasDescriptionInfo = description.isDefined || image.isDefined
+}
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 

@@ -1,15 +1,29 @@
 @(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
 
 @import common.Localisation
+@import layout.ContributorCircleImage
 
 <div class="index-page-header">
-    <h1 class="index-page-header__title">@Localisation(metaDataHeader.displayName)</h1>
+    <div class="index-page-header__content">
+        <h1 class="index-page-header__title">@Localisation(metaDataHeader.displayName)</h1>
+        @metaDataHeader.description.map { desc =>
+            <div class="index-page-header__description">@Html(desc)</div>
+        }
 
-    @metaDataHeader.description.map { desc =>
-        <div class="index-page-header__description">@Html(desc)</div>
-    }
+        @metaDataHeader.image.map { image =>
+            <div class="index-page-header__picture">
+                @image.imageType match {
+                    case ContributorCircleImage => {
+                        <div class="profile__img">
+                            <img src="@image.url" />
+                        </div>
+                    }
 
-    @metaDataHeader.image.map { image =>
-        <div class="index-page-header__picture"><img src="@image.url" /></div>
-    }
+                    case _ => {
+                        <img src="@image.url" />
+                    }
+                }
+            </div>
+        }
+    </div>
 </div>

@@ -1,5 +1,5 @@
 $header-image-size-mobile: 80px;
-$header-image-size-desktop: 120px;
+$header-image-size-desktop: 100px;
 
 .fc-container,
 .facia-container {
@@ -500,11 +500,23 @@ $header-image-size-desktop: 120px;
     margin-top: $gs-baseline;
 }
 
+.index-page-header__content {
+    width: 100%;
+
+    @include mq(wide) {
+        width: $left-column-wide + $gs-gutter + gs-span(12);
+
+        .has-page-skin {
+            width: 100%;
+        }
+    }
+}
+
 .index-page-header__title {
     display: block;
     float: left;
     line-height: get-line-height(header, 2);
-    width: 100%;
+    width: auto;
     margin-right: $gs-gutter;
 
     &,
@@ -521,32 +533,33 @@ $header-image-size-desktop: 120px;
         width: $left-column-wide;
 
         .has-page-skin & {
-            width: 100%;
+            width: auto;
         }
     }
 }
 
 .index-page-header__description {
-    float: left;
     color: colour(neutral-2);
+    float: left;
 
     @include fs-headline(2);
+
+    @include mq(tablet, desktop) {
+        width: 50%;
+    }
+
+    @include mq(desktop) {
+        width: 66%;
+    }
 }
 
 .index-page-header__picture {
-    display: table-cell;
-    margin: 0 $gs-gutter 0 0;
     overflow: hidden;
-    float: left;
-
-    @include mq(leftCol) {
-        float: none;
-        display: block;
-        margin: 0 0 $gs-baseline;
-    }
+    float: right;
 
     img {
         display: block;
+        float: right;
         height: $header-image-size-mobile;
 
         @include mq(desktop) {
