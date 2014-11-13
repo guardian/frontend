@@ -104,7 +104,7 @@ define([
     }
 
     function isIOS() {
-        return /(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i.test(navigator.userAgent);
+        return /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
     }
 
     function isAndroid() {

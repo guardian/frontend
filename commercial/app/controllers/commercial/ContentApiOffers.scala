@@ -10,15 +10,15 @@ import scala.concurrent.Future
 
 object ContentApiOffers extends Controller with ExecutionContexts {
 
-  private def renderItems(format: Format) = MemcachedAction { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
     val optKeyword = request.queryString get "k" map (_.head)
-    
+
     val optLogo = request.queryString get "l" map (_.head)
-    
+
     val optCapiTitle = request.queryString get "ct" map (_.head)
-    
+
     val optCapiLink = request.queryString get "cl" map (_.head)
-    
+
     val optCapiAbout = request.queryString get "cal" map (_.head)
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
@@ -33,12 +33,18 @@ object ContentApiOffers extends Controller with ExecutionContexts {
     futureContents map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
-        format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+        if (isMulti) {
+          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+        } else {
+          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+        }
       }
     }
   }
 
-  def itemsHtml = renderItems(htmlFormat)
+  def itemsHtml = renderItems(htmlFormat, true)
+  def itemsJson = renderItems(jsonFormat, true)
 
-  def itemsJson = renderItems(jsonFormat)
+  def itemHtml = renderItems(htmlFormat, false)
+  def itemJson = renderItems(jsonFormat, false)
 }

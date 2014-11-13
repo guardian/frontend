@@ -64,7 +64,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "facia" => "facia.css"
         case "identity" => "identity.css"
         case "football" => "football.css"
-        case "commercial" => "commercial.css"
         case "index" => "index.css"
         case _ => "content.css"
       }

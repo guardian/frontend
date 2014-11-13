@@ -40,6 +40,7 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  lazy val isInappropriateForSponsorship: Boolean = false
 
   def isSurging: Seq[Int] = Seq(0)
 

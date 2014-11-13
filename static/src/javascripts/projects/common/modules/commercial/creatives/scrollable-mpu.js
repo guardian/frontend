@@ -1,11 +1,9 @@
 define([
-    'bean',
     'bonzo',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    bean,
     bonzo,
     $,
     detect,
@@ -14,10 +12,13 @@ define([
 
     var adClass = 'js-scrollable-mpu',
         /**
-         * TODO: rather blunt instrument this - due to the fact *most* mobile devices have a crappy onscroll
-         * implementation, i.e. it only fires on scroll end
+         * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
+         * background-attachment - need to make this more granular
          */
-        badOnScroll = detect.isIOS() || detect.isAndroid();
+        limitedBgAttachment = detect.isIOS() || detect.isAndroid(),
+        updateBgPosition    = function ($ad) {
+            $ad.css('background-position', $ad.offset().left + 'px 100%');
+        };
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
@@ -25,19 +26,23 @@ define([
     return {
 
         run: function () {
-
             $('.' + adClass).each(function (ad) {
                 var staticImage,
                     $ad = bonzo(ad);
 
-                if (badOnScroll) {
+                if (limitedBgAttachment) {
                     staticImage = $ad.data('static-image');
                     $ad.css('background-image', staticImage);
                 } else {
-                    mediator.on('window:scroll', function () {
-                        ad.style.backgroundPosition = '0 ' + window.pageYOffset + 'px';
+                    $ad.css('background-attachment', 'fixed');
+                    // update bg position
+                    updateBgPosition($ad);
+                    // to be safe, also update on window resize
+                    mediator.on('window:resize', function () {
+                        updateBgPosition($ad);
                     });
                 }
+
                 $ad.removeClass(adClass);
             });
 

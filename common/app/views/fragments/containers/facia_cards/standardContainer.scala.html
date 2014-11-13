@@ -6,7 +6,7 @@
 @containerHeader(containerDefinition, frontProperties)
 
 @for(containerLayout <- containerDefinition.containerLayout) {
-    <div class="container__body fc-container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
+    <div class="fc-container__body fc-container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))">
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index)

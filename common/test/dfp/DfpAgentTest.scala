@@ -18,25 +18,29 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Seq(s"$dfpAdUnitRoot/business/front"),
       Seq(Uk),
       Seq("United Kingdom"),
-      false, false),
+      isR2Only = false,
+      targetsAdTest = false),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitRoot/music/front"),
       Nil,
       Nil,
-      false, false),
+      isR2Only = false,
+      targetsAdTest = false),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitRoot/sport"),
       Nil,
       Nil,
-      false, false),
+      isR2Only = false,
+      targetsAdTest = false),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitRoot/testSport/front"),
       Seq(Uk),
       Seq("United Kingdom"),
-      false, true)
+      isR2Only = false,
+      targetsAdTest = true)
   )
 
   private def toTag(tagType: String, tagId: String, sectionId: Option[String] = None): Tag = {
