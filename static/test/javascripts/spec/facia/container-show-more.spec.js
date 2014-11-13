@@ -27,7 +27,8 @@ define([
             container = bonzo.create(
                     '<section class="container">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide fc-show-more--hidden" data-title="' + containerId + '">' +
+                            '<div class="container__body js-hide fc-show-more--hidden" ' +
+                                'data-title="' + containerId + '" data-id="' + containerId + '">' +
                                 '<div class="js-hide"></div>' +
                             '</div>' +
                         '</div>' +
@@ -100,6 +101,16 @@ define([
             expect($button.hasClass("button--tertiary")).toBeTruthy();
             expect($button.attr("data-link-name")).toEqual("Fewer " + containerId);
             expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
+        });
+
+        it("should store the state in sessionStorage", function() {
+            var result = '{"value":{"' + containerId + '":"more"}}';
+
+            sut.addShowMoreButton();
+
+            bean.fire($('.button', $container)[0], 'click');
+
+            expect(window.sessionStorage.getItem('gu.prefs.section-states')).toEqual(result);
         });
     });
 });
