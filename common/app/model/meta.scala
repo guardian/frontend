@@ -3,7 +3,16 @@ package model
 import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
-import play.api.libs.json.{JsBoolean, JsValue, JsString}
+import play.api.libs.json._
+
+object SummaryData {
+  implicit val jsonFormat = Json.format[SummaryData]
+
+  val defaultWeight = 10
+  val frontWeight = defaultWeight * 5
+}
+
+case class SummaryData(id: String, displayName: String, `type`: String, weight: BigDecimal, parentDisplayName: Option[String])
 
 trait MetaData extends Tags {
   def id: String
@@ -53,8 +62,11 @@ trait MetaData extends Tags {
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
     ("hasClassicVersion", JsBoolean(hasClassicVersion)),
-    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("summary", Json.toJson(summary))
   )
+
+  def summary: Seq[SummaryData] = Seq()
 
   def openGraph: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",

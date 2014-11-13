@@ -24,6 +24,10 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
 
   override lazy val rssPath = Some(s"/$id/rss")
 
+  override def summary: Seq[SummaryData] = {
+    Seq(SummaryData(id, webTitle, "section", SummaryData.frontWeight, None))
+  }
+
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "keywords" -> JsString(webTitle),
     "keywordIds" -> JsString(keywordIds.mkString(",")),

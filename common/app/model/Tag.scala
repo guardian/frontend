@@ -1,10 +1,10 @@
 package model
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
+import com.gu.contentapi.client.model.{Podcast, Tag => ApiTag}
 import common.{Pagination, Reference}
 import conf.Configuration
 import play.api.libs.json.{JsArray, JsString, JsValue}
-import views.support.{Contributor, ImgSrc, Item140, Item360}
+import views.support.{Contributor, ImgSrc, Item140}
 
 case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData with AdSuffixHandlingForFronts {
   lazy val name: String = webTitle
@@ -62,6 +62,21 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val analyticsName = s"GFE:$section:$name"
 
   override lazy val rssPath = Some(s"/$id/rss")
+
+  override def summary: Seq[SummaryData] = {
+    val keywordSummary = SummaryData(
+        id,
+        name,
+        tagType,
+        SummaryData.frontWeight,
+        delegate.sectionName
+      )
+    val sectionSummaryOption = for {
+      sectionId <- delegate.sectionId
+      sectionName <- delegate.sectionName
+    } yield SummaryData(sectionId, sectionName, "section", SummaryData.defaultWeight, None)
+    Seq(Some(keywordSummary), sectionSummaryOption).flatten
+  }
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     ("keywords", JsString(name)),
