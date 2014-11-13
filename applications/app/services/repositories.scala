@@ -34,7 +34,9 @@ object IndexPage {
         )
 
         /** TODO what should the data ID be here? */
-        ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig), collection),
+        ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+          displayName = Some(grouping.dateHeadline.displayString)
+        )), collection),
           Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
     }, ContainerLayoutContext(Set.empty, hideCutOuts = true))
 
