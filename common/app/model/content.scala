@@ -296,19 +296,7 @@ object Content {
     val contentFields: Option[Map[String, String]] = (contentJson \ "safeFields").asOpt[Map[String, String]]
     val itemId: String = (contentJson \ "id").as[String]
     val snapMeta: Option[TrailMetaData] = (contentJson \ "meta").asOpt[TrailMetaData]
-    if (snapMeta.flatMap(_.snapType).exists(_ == "latest")) {
-      Option(
-        new SnapLatest(
-          snapId = itemId,
-          snapSupporting = (contentJson \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-            .flatMap(Content.fromPressedJson),
-           (contentJson \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
-          snapMeta = snapMeta,
-          snapElements = parseElements(contentJson),
-          contentFields.getOrElse(Map.empty)
-        )
-      )
-    } else if (Snap.isSnap(itemId)) {
+    if (Snap.isSnap(itemId)) {
        Option(
          new Snap(
            snapId = itemId,
