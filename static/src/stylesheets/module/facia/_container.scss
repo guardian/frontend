@@ -521,7 +521,7 @@ $header-image-size-desktop: 100px;
 
 .index-page-header {
     border-top: 1px solid colour(news-accent);
-    padding-top: $gs-baseline / 2;
+    padding: $gs-baseline / 2 0;
     margin-top: $gs-baseline;
 }
 
@@ -589,7 +589,6 @@ $header-image-size-desktop: 100px;
 .index-page-header__picture {
     overflow: hidden;
     float: right;
-    margin-bottom: $gs-baseline / 2;
 
     img {
         display: block;
