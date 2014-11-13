@@ -7,7 +7,7 @@
     $tonal__border-top,
     $tonal__comment-text,
     $tonal__kicker-text
-){
+) {
     .content-card.tonal--tone-#{$tone} {
 
         border-top-color: colour($tonal__border-top);
@@ -19,7 +19,7 @@
 
         .content-card__trailtext {
             background: colour($tonal__trailtext-background);
-            color: colour($tonal__trailtext-text)
+            color: colour($tonal__trailtext-text);
         }
 
         .content-card__byline {
@@ -27,11 +27,11 @@
         }
 
         .content-card__kicker {
-            background:  colour($tonal__header-background);
+            background: colour($tonal__header-background);
             color: colour($tonal__kicker-text);
         }
 
-        .stars{
+        .stars {
             margin-top: $gs-baseline / 4;
             margin-bottom: $gs-baseline / 4;
             padding-left: $gs-gutter/2;
@@ -62,19 +62,19 @@
 .content-card.tonal--tone-podcast,
 .content-card.tonal--tone-gallery,
 .content-card.tonal--tone-audio {
-   .content-card__title {
-    &:before {
-        content: '';
-        height:( $gs-baseline / 4 ) * 5;
-        width: ( $gs-baseline / 3 ) * 5;
+    .content-card__title {
+        &:before {
+            content: '';
+            height: ($gs-baseline / 4) * 5;
+            width: ($gs-baseline / 3) * 5;
+        }
     }
-  }
 }
 
 .content-card.tonal--tone-podcast {
     .content-card__title {
         &:before {
-           @include icon(volume-high--tone-podcast, false);
+            @include icon(volume-high--tone-podcast, false);
         }
     }
 }
