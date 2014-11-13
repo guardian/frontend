@@ -6,13 +6,6 @@
 @import model.Tag
 
     <a class="content-card tonal tonal--@toneClass(content)@if(content.isAudio){ tonal--tone-audio}@if(content.hasTonalHeaderByline && content.hasLargeContributorImage){ content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl">
-        @if(content.isVideo  || content.isGallery) {
-            @content.trailPicture(5, 3).map { image =>
-               <div class="content-card__media-wrapper ">
-                   <div class="content-card__image-container u-responsive-ratio js-image-upgrade" data-src="@Item140.bestFor(image)">
-               </div>
-            }
-        }
         <div class="content-card__header">
             <h1 class="content-card__title">
                 @if(content.isLive) {<span class="content-card__live"><span class="content-card__live-icon"></span>LIVE</span> }
@@ -23,7 +16,7 @@
             </h1>
             @if(content.isComment) {
                 <div class="content-card__byline">
-                 - @content.contributors.map { tag => @tag.name }.mkString(", ")
+                 - @content.contributors.map { tag => @Html(tag.name) }.mkString(", ")
                 </div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }

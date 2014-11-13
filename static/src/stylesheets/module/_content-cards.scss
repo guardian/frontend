@@ -11,9 +11,10 @@
     .content-card.tonal--tone-#{$tone} {
 
         border-top-color: colour($tonal__border-top);
-            .content-card__header {
-                background: colour($tonal__header-background);
-                color: colour($tonal__header-text);
+
+        .content-card__header {
+            background: colour($tonal__header-background);
+            color: colour($tonal__header-text);
         }
 
         .content-card__trailtext {
@@ -48,10 +49,11 @@
 @include tone-content-card(media, multimedia-main-1, neutral-8, multimedia-main-1, neutral-8, multimedia-main-1, neutral-1, multimedia-main-1);
 
 
-.content-card.tonal--tone-podcast {
+.content-card.tonal--tone-podcast,
+.content-card.tonal--tone-gallery,
+.content-card.tonal--tone-audio {
    .content-card__title {
     &:before {
-        @include icon(volume-high--tone-podcast, false);
         content: '';
         height:( $gs-baseline / 4 ) * 5;
         width: ( $gs-baseline / 3 ) * 5;
@@ -59,26 +61,28 @@
   }
 }
 
-.content-card.tonal--tone-audio {
-  .content-card__title {
-    &:before {
-      @include icon(volume-high--tone-media, false);
-      content: '';
-      height:( $gs-baseline / 4 ) * 5;
-      width: ( $gs-baseline / 3 ) * 5;
+.content-card.tonal--tone-podcast {
+    .content-card__title {
+        &:before {
+           @include icon(volume-high--tone-podcast, false);
+        }
     }
-  }
+}
+
+.content-card.tonal--tone-audio {
+    .content-card__title {
+        &:before {
+            @include icon(volume-high--tone-media, false);
+        }
+    }
 }
 
 .content-card.tonal--tone-gallery {
-  .content-card__title {
-    &:before {
-      @include icon(camera-yellow-large, false);
-      content: '';
-      height:( $gs-baseline / 4 ) * 5;
-      width: ( $gs-baseline / 3 ) * 5;
+    .content-card__title {
+        &:before {
+            @include icon(camera-yellow-large, false);
+        }
     }
-  }
 
   .content-card__image-container {
       width: 100%;
@@ -116,7 +120,7 @@
 
 
 .content-card {
-    border-top: 2px solid transparent;
+    border-top: 1px solid transparent;
     display: block;
     position: relative;
     overflow: hidden;
@@ -131,7 +135,7 @@
 .content-card--byline-pic {
     .content-card__byline-img {
         float: right;
-        height: $gs-baseline * 11.5;
+        height: $gs-baseline * 9.5;
         z-index: 2;
         position: absolute;
         bottom: 0;
