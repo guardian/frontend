@@ -29,7 +29,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
   lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
   lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
-  lazy val snapUrl: Option[String] = apiContent.metaData.flatMap(_.href).filter(_.nonEmpty)
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
@@ -400,7 +399,9 @@ object SnapApiContent {
     isExpired                   = None
   )
 
-  def apply(snapElements: List[ApiElement], fields: Option[Map[String, String]] = None): ApiContent =
+  def apply(snapElements: List[ApiElement],
+            fields: Option[Map[String, String]] = None,
+            tags: List[Tag] = Nil): ApiContent =
     apply()
       .copy(elements = Some(snapElements))
       .copy(fields = fields)
@@ -436,8 +437,9 @@ case class SnapLatest(snapId: String,
                       snapWebPublicationDate: DateTime,
                       snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
                       snapElements: List[ApiElement] = Nil,
-                      fields: Map[String, String])
-  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields)), supporting = snapSupporting, metaData = snapMeta)) {
+                      fields: Map[String, String],
+                      snapTags: List[Tag])
+  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields), snapTags), supporting = snapSupporting, metaData = snapMeta)) {
 
   override lazy val id: String = snapId
   override lazy val url: String = s"/$snapId"

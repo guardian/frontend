@@ -157,11 +157,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
               ls.get(collectionItem.meta.flatMap(_.snapUri).getOrElse("")).map { item =>
                 SnapLatest(
                   item.id,
-                  Nil, //No Supporting for a latest   snap
+                  Nil, //No Supporting for a latest snap
                   new DateTime(collectionItem.frontPublicationDate),
                   collectionItem.meta,
                   item.elements.getOrElse(Nil),
-                  item.safeFields
+                  item.safeFields,
+                  item.tags.map(Tag(_))
                 )
               }
             else
