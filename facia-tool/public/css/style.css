@@ -621,19 +621,6 @@ select {
     color: #000000;
 }
 
-.editor select {
-    margin-bottom: 2px;
-}
-
-.editor__label {
-    font-size: 12px;
-    margin-left: 4px;
-    width: 100px;
-    float: left;
-    margin-top: 2px;
-    color: #666666;
-}
-
 .editor__revert,
 .editor__length {
     position: absolute;

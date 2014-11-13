@@ -92,26 +92,6 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'isSnap',
-                    label: 'is a snap',
-                    type: 'boolean'
-                },
-                {
-                    key: 'snapUri',
-                    label: 'snap target',
-                    type: 'text'
-                },
-                {
-                    key: 'snapType',
-                    label: 'snap type',
-                    type: 'text'
-                },
-                {
-                    key: 'snapCss',
-                    label: 'snap class',
-                    type: 'text'
-                },
-                {
                     key: 'href',
                     ifState: 'isSnap',
                     label: 'special link URL',
@@ -252,6 +232,26 @@ define([
                     label: 'custom kicker',
                     labelMeta: 'customKicker',
                     type: 'boolean'
+                },
+                {
+                    key: 'isSnap',
+                    label: 'is a snap',
+                    type: 'boolean'
+                },
+                {
+                    key: 'snapUri',
+                    label: 'snap target',
+                    type: 'text'
+                },
+                {
+                    key: 'snapType',
+                    label: 'snap type',
+                    type: 'text'
+                },
+                {
+                    key: 'snapCss',
+                    label: 'snap class',
+                    type: 'text'
                 }
             ],
 
@@ -627,9 +627,10 @@ define([
             }
         };
 
-        Article.prototype.convertToSnapId = function() {
+        Article.prototype.convertToSnap = function() {
             this.id(snap.generateId());
             this.state.isSnap(true);
+            this.updateEditorsDisplay();
         };
 
         Article.prototype.convertToLinkSnap = function() {
@@ -640,10 +641,7 @@ define([
             this.meta.snapType('link');
             this.meta.snapUri(this.id());
 
-            this.state.enableContentOverrides(true);
-
-            this.convertToSnapId();
-            this.updateEditorsDisplay();
+            this.convertToSnap();
         }
 
         Article.prototype.convertToLatestSnap = function(kicker) {
@@ -659,8 +657,7 @@ define([
 
             this.state.enableContentOverrides(false);
 
-            this.convertToSnapId();
-            this.updateEditorsDisplay();
+            this.convertToSnap();
         };
 
         Article.prototype.decorateFromOpenGraph = function() {
