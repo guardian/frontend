@@ -5,11 +5,6 @@
 
 <div class="index-page-header">
     <div class="index-page-header__content">
-        <h1 class="index-page-header__title">@Localisation(metaDataHeader.displayName)</h1>
-        @metaDataHeader.description.map { desc =>
-            <div class="index-page-header__description">@Html(desc)</div>
-        }
-
         @metaDataHeader.image.map { image =>
             <div class="index-page-header__picture">
                 @image.imageType match {
@@ -24,6 +19,11 @@
                     }
                 }
             </div>
+        }
+
+        <h1 class="index-page-header__title">@Localisation(metaDataHeader.displayName)</h1>
+        @metaDataHeader.description.map { desc =>
+            <div class="index-page-header__description">@Html(desc)</div>
         }
     </div>
 </div>
