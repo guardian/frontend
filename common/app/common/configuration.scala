@@ -53,6 +53,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
+    lazy val isProd = stage == "prod"
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
 
     lazy val isPreview = projectName == "preview"
@@ -263,6 +264,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
       lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
+
+    lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
+    lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
   }
 
   object open {
