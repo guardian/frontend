@@ -35,10 +35,6 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-     print("Compiled")
-     if ( content.isGallery ) {
-       print("It's a gallery")
-     }
     def contentResponse: HtmlFormat.Appendable = {
       if ( !content.isGallery)
         views.html.fragments.contentCardBody(content)(request)
