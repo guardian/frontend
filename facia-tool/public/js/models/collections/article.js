@@ -93,7 +93,6 @@ define([
                 },
                 {
                     key: 'href',
-                    ifState: 'isSnap',
                     label: 'special link URL',
                     type: 'text'
                 },
@@ -234,11 +233,6 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'isSnap',
-                    label: 'is a snap',
-                    type: 'boolean'
-                },
-                {
                     key: 'snapUri',
                     label: 'snap target',
                     type: 'text'
@@ -286,7 +280,6 @@ define([
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
-                'isSnap',
                 'inDynamicCollection',
                 'tone',
                 'primaryTag',
@@ -297,7 +290,6 @@ define([
                 'sparkUrl']);
 
             this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
-            this.state.isSnap(!!snap.validateId(opts.id));
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
 
             this.frontPublicationDate = opts.frontPublicationDate;
@@ -629,7 +621,6 @@ define([
 
         Article.prototype.convertToSnap = function() {
             this.id(snap.generateId());
-            this.state.isSnap(true);
             this.updateEditorsDisplay();
         };
 

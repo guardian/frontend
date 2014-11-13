@@ -345,8 +345,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
-                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
+                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
+                            css: {'is-empty': meta.snapType() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -364,8 +364,9 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: state.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || meta.snapType() || 'snap'"></span>
+                            <!-- ko if: meta.snapType -->
+                                <span class="label label--snap">snap: </span>
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || meta.snapType()"></span>
                                 <span class="label label--snap-uri" data-bind="text: meta.snapUri"></span>
                             <!-- /ko -->
 

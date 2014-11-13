@@ -144,7 +144,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.state.isSnap(); })
+            .filter(function(article) { return !article.meta.snapType(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });

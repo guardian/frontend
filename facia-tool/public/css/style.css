@@ -450,7 +450,6 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-weight: bold;
-    text-transform: capitalize;
     color: #CCCCCC;
 }
 

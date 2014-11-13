@@ -68,7 +68,7 @@ define([
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
-        latestSnapPrefix: 'Latest from ',
+        latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 
