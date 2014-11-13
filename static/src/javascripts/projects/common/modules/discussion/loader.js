@@ -142,14 +142,17 @@ Loader.prototype.initMainComments = function() {
                     this.setState('truncated');
                 }
             }.bind(this))
-            .fail(function(err, msg) {
-                var reportMsg = 'Comments failed to load: ' + msg;
-                console.log(reportMsg + " / " + err.statusText);
+            .fail(function(err) {
+                var reportMsg = 'Comments failed to load: ' + err.status;
+                console.log(err);
                 raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
                         discussionId: this.getDiscussionId(),
-                        status: 'status' in err ? err.status : ''
+                        status: 'status' in err ? err.status : '',
+                        readyState: err.readyState,
+                        response: err.response,
+                        statusText: err.statusText
                     }
                 });
             }.bind(this));
