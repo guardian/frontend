@@ -29,7 +29,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
   lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
   lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
-  lazy val snapUrl: Option[String] = apiContent.metaData.flatMap(_.href).filter(_.nonEmpty)
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
