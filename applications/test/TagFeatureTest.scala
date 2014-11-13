@@ -15,7 +15,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       goTo("/technology/askjack") { browser =>
         val trails = browser.$(".fc-item__container")
-        trails.length should be(19)
+        trails.length should be >= 19
       }
     }
   }
