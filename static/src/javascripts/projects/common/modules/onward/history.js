@@ -3,103 +3,190 @@
  Description: Gets and sets users reading history
  */
 define([
+    'lodash/arrays/zip',
+    'lodash/collections/reduceRight',
     'lodash/objects/assign',
+    'lodash/objects/mapValues',
+    'lodash/objects/omit',
+    'common/utils/_',
     'common/utils/storage'
 ], function (
+    zip,
+    reduceRight,
     assign,
+    mapValues,
+    omit,
+    _,
     storage
 ) {
 
-    var history,
-        summary,
+    var historyCache,
+        summaryCache,
         storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
+        storageKeySummary = storageKeyHistory + '.summary',
         maxSize = 100;
 
-    function HistoryItem(item) {
-        assign(this, item.meta);
-        this.id = item.id;
-        this.timestamp = Date.now();
+    function HistoryItem(item, now) {
+        assign(this, item);
+        this.timestamp = now;
         this.count = 1;
         return this;
     }
 
-    function setHistory(data) {
-        history = data;
-        return storage.local.set(storageKeyHistory, data);
+    function Summary() {
+        this.sections = {};
+        this.series = {};
+        this.keywords = {};
+        this.authors = {};
+        this.blogs = {};
     }
 
-    function setSummary(data) {
-        summary = data;
-        return storage.local.set(storageKeySummary, data);
+    function updateSummaryTypeFromIdName(idNameMap, summary) {
+        var id = idNameMap[0][0],
+            name = idNameMap[0][1],
+            nameCount = summary[id] || [name, 0];
+
+        nameCount[1] = nameCount[1] + 1;
+        nameCount[0] = name;
+        summary[id] = nameCount;
+
+        return summary;
     }
 
-    function updateSummary(summary, meta) {
-        var section = meta.section,
-            keyword = (meta.keywords || [])[0];
+    function updateSummaryFromAllMeta(metaList, summary) {
+        var metaType, idNameMap;
 
-        if (section) {
-            summary.sections[section] = (summary.sections[section] || 0) + 1;
+        for (metaType in metaList) {
+            idNameMap = metaList[metaType];
+            summary[metaType] = updateSummaryTypeFromIdName(idNameMap, summary[metaType]);
         }
 
-        if (keyword) {
-            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
-        }
+        return summary;
+    }
+
+    function addItemAndUpdateSummary(itemsSoFar, itemToAdd) {
+        itemsSoFar.recentPages.unshift(itemToAdd);
+        itemsSoFar.summary = updateSummaryFromAllMeta(itemToAdd.meta, itemsSoFar.summary);
+
+        return itemsSoFar;
+    }
+
+    function getUpdatedHistory(newItem, oldItems, now, maxSize) {
+        var items = reduceRight(oldItems, function (items, item) {
+            if (item.id === newItem.id) {
+                items.currentItem.count = items.currentItem.count + item.count;
+            } else if (item.meta) { // only add non legacy items with a meta block
+                items = addItemAndUpdateSummary(items, item);
+            }
+
+            return items;
+        }, {
+            currentItem: new HistoryItem(newItem, now),
+            recentPages: [],
+            summary: new Summary()
+        });
+
+        addItemAndUpdateSummary(items, items.currentItem);
+        delete items.currentItem;
+
+        items.recentPages = items.recentPages.slice(0, maxSize);
+        items.summary.count = items.recentPages.length;
+        return items;
+    }
+
+    function getCountsMap(metaName, summary) {
+        return mapValues(summary[metaName], function (nameCount) {
+            return nameCount[1];
+        });
+    }
+
+    function pageInHistory(pageId, history) {
+        var foundItem = _.find(history, function (historyItem) {
+            return (historyItem.id === pageId);
+        });
+        return foundItem.count > 1;
+    }
+
+    function getHead(csString) {
+        return csString && ((csString + '').split(',')[0]);
+    }
+
+    function preparePage(page) {
+        return {
+            id: page.pageId,
+            meta: omit({
+                sections: [[page.section, page.sectionName]],
+                series: [[page.seriesId, page.series]],
+                keywords: [[getHead(page.keywordIds), getHead(page.keywords)]],
+                authors: [[getHead(page.authorIds), getHead(page.author)]],
+                blogs: [[getHead(page.blogIds), getHead(page.blogs)]]
+            }, function (list) {
+                return !list[0][0] || !list[0][1];
+            })
+        };
+    }
+
+    function getSummary() {
+        summaryCache = summaryCache || storage.local.get(storageKeySummary) || new Summary();
+        return summaryCache;
+    }
+
+    function getHistory() {
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
+    }
+
+    function set(history, summary) {
+        historyCache = history;
+        storage.local.set(storageKeyHistory, history);
+        summaryCache = summary;
+        storage.local.set(storageKeySummary, summary);
     }
 
     return {
-        reset: function () {
-            history = undefined;
-            summary = undefined;
-            storage.local.remove(storageKeyHistory);
-            storage.local.remove(storageKeySummary);
-        },
 
-        get: function () {
-            history = history || storage.local.get(storageKeyHistory) || [];
-            return history;
-        },
+        test: {
+            Summary: Summary,
+            updateSummaryTypeFromIdName: updateSummaryTypeFromIdName,
+            updateSummaryFromAllMeta: updateSummaryFromAllMeta,
+            getUpdatedHistory: getUpdatedHistory,
+            preparePage: preparePage,
+            set: set,
+            pageInHistory: pageInHistory,
 
-        getSummary: function () {
-            summary = summary || storage.local.get(storageKeySummary) || {sections: {}, keywords: {}};
-            return summary;
-        },
-
-        getSize: function () {
-            return this.get().length;
-        },
-
-        contains: function (id) {
-            return this.get().some(function (el) {
-                return el.id === id;
-            });
-        },
-
-        log: function (newItem) {
-            var foundItem,
-                summary = {sections: {}, keywords: {}},
-                hist = this.get().filter(function (item) {
-                    var found = (item.id === newItem.id);
-
-                    updateSummary(summary, item);
-                    foundItem = found ? item : foundItem;
-                    return !found;
-                });
-
-            if (foundItem) {
-                foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
-                hist.unshift(foundItem);
-            } else {
-                updateSummary(summary, newItem.meta);
-                hist.unshift(new HistoryItem(newItem));
-                hist = hist.slice(0, maxSize);
+            reset: function () {
+                historyCache = undefined;
+                summaryCache = undefined;
+                storage.local.remove(storageKeyHistory);
+                storage.local.remove(storageKeySummary);
             }
 
-            summary.count = hist.length;
+        },
 
-            setSummary(summary);
-            setHistory(hist);
+        getSummary: getSummary,
+
+        getHistory: getHistory,
+
+        getSectionCounts: function (summary) {
+            return getCountsMap('sections', summary);
+        },
+
+        getLeadKeywordCounts: function (summary) {
+            return getCountsMap('keywords', summary);
+        },
+
+        pageHasBeenSeen: function (pageId) {
+            return pageInHistory(pageId, getHistory());
+        },
+
+        log: function (page) {
+            var newItem = preparePage(page),
+                oldItems = getHistory(),
+                items = getUpdatedHistory(newItem, oldItems, Date.now(), maxSize);
+
+            set(items.recentPages, items.summary);
+
         }
+
     };
 });
