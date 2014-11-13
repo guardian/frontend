@@ -114,6 +114,17 @@ define([
                 expect(request.data.remove.id).toEqual('sport');
                 expect(request.data.remove.item).toEqual('internal-code/content/1');
 
+                return addSublinkInArticle();
+            })
+            .then(function (request) {
+                expect(request.url).toEqual('/edits');
+                expect(request.data.type).toEqual('Update');
+                expect(request.data.update.draft).toEqual(true);
+                expect(request.data.update.live).toEqual(false);
+                expect(request.data.update.id).toEqual('latest');
+                expect(request.data.update.item).toEqual('internal-code/content/2');
+                expect(request.data.update.itemMeta.supporting[0].id).toEqual('internal-code/content/5');
+
                 return publishLatestChanges();
             })
             .then(function (collection) {
@@ -297,6 +308,36 @@ define([
                                 meta: {
                                     isBreaking: true,
                                     group: 3
+                                }
+                            }]
+                        }
+                    };
+                });
+            }
+
+            function addSublinkInArticle () {
+                return editAction(function () {
+                    var latestNews = dom.droppableCollection(1);
+                    var articleWithSublink = dom.articleInside(latestNews, 2);
+                    dom.click(articleWithSublink);
+
+                    var supportingLinkElement = articleWithSublink.querySelector('.supporting .droppable');
+                    var supportingDropTarget = drag.droppable(supportingLinkElement);
+                    var lastNewArticle = dom.latestArticle(5);
+                    var sublink = new drag.Article(lastNewArticle);
+                    supportingDropTarget.drop(supportingLinkElement, sublink);
+                    dom.click(articleWithSublink.querySelector('.tool--done'));
+
+                    return {
+                        latest: {
+                            draft: [{
+                                id: 'internal-code/content/1'
+                            }, {
+                                id: 'internal-code/content/2',
+                                meta: {
+                                    supporting: [{
+                                        id: 'internal-code/content/5'
+                                    }]
                                 }
                             }]
                         }
