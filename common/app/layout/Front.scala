@@ -11,21 +11,26 @@ import scala.Function._
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty)
+  val empty = ContainerLayoutContext(Set.empty, false)
 }
 
 case class ContainerLayoutContext(
-  cutOutsSeen: Set[CutOut]
+  cutOutsSeen: Set[CutOut],
+  hideCutOuts: Boolean
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
   def transform(card: FaciaCardAndIndex) = {
-    val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-      card.copy(item = card.item.copy(cutOut = None))
+    if (hideCutOuts) {
+      (card.copy(item = card.item.copy(cutOut = None)), this)
     } else {
-      card
+      val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+        card.copy(item = card.item.copy(cutOut = None))
+      } else {
+        card
+      }
+      (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
     }
-    (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
   }
 }
 
@@ -74,13 +79,16 @@ object Front extends implicits.Collections {
     }
   }
 
-  def fromConfigsAndContainers(configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)]) = {
+  def fromConfigsAndContainers(
+      configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)],
+      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
+  ) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
 
     Front(
       configs.zipWithIndex.toList.mapAccumL(
-        (Set.empty[TrailUrl], ContainerLayoutContext.empty)
+        (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 

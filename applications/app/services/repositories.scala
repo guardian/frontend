@@ -36,7 +36,7 @@ object IndexPage {
         /** TODO what should the data ID be here? */
         ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig), collection),
           Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
-    })
+    }, ContainerLayoutContext(Set.empty, hideCutOuts = true))
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
       if (index == 0) {
