@@ -45,6 +45,7 @@ object IndexPage {
         indexPage.page match {
           case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
           case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case page: Page => FaciaContainerHeader.fromPage(page, headline)
           case _ =>
             // should never happen
             LoneDateHeadline(headline)

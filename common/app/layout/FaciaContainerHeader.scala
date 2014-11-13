@@ -1,6 +1,6 @@
 package layout
 
-import model.{Section, Tag}
+import model.{Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
@@ -33,6 +33,15 @@ object FaciaContainerHeader {
     sectionPage.description,
     dateHeadline
   )
+
+  def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
+    MetaDataHeader(
+      page.webTitle,
+      None,
+      None,
+      dateHeadline
+    )
+  }
 
   def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline): FaciaContainerHeader = {
     if (tagPage.isFootballTeam) {
