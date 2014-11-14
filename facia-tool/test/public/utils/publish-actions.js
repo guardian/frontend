@@ -17,6 +17,7 @@ define(function () {
             }
         });
         action();
+        jasmine.clock().tick(100);
 
         return deferred.promise();
     };

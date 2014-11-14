@@ -9,6 +9,7 @@ define('mock-config', ['utils/mediator'], function (
 
     $.mockjax({
         url: '/config',
+        type: 'get',
         response: function (req) {
             this.responseText = mockResponse;
         },
@@ -20,6 +21,10 @@ define('mock-config', ['utils/mediator'], function (
     return {
         set: function (response) {
             mockResponse = response;
+        },
+        update: function (response) {
+            _.extend(mockResponse.fronts, response.fronts);
+            _.extend(mockResponse.collections, response.collections);
         }
     };
 });

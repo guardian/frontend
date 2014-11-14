@@ -6,7 +6,6 @@ define([
     dates
 ) {
     var allArticles = [{
-        apiUrl: '/capi',
         id: 'article/one',
         webPublicationDate: dates.justNow.toISOString(),
         webTitle: 'I won the elections',
@@ -17,7 +16,6 @@ define([
             internalContentCode: '1'
         }
     }, {
-        apiUrl: '/capi',
         id: 'article/two',
         webPublicationDate: dates.yesterday.toISOString(),
         webTitle: 'It\'s raining right now',
@@ -28,7 +26,6 @@ define([
             internalContentCode: '2'
         }
     }, {
-        apiUrl: '/capi',
         id: 'article/three',
         webPublicationDate: dates.minutesAgo.toISOString(),
         webTitle: 'Went for a coffee',
@@ -39,7 +36,6 @@ define([
             internalContentCode: '3'
         }
     }, {
-        apiUrl: '/capi',
         id: 'article/four',
         webPublicationDate: dates.lastWeek.toISOString(),
         webTitle: 'Santa Claus is a real thing',
@@ -50,7 +46,6 @@ define([
             internalContentCode: '4'
         }
     }, {
-        apiUrl: '/capi',
         id: 'article/five',
         webPublicationDate: dates.lastMonth.toISOString(),
         webTitle: 'Nothing happened for once',

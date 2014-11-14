@@ -15,3 +15,4 @@ curl.config({
 });
 
 $.mockjaxSettings.logging = false;
+$.mockjaxSettings.responseTime = 50;

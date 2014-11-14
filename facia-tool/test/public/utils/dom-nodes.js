@@ -24,12 +24,22 @@ define(function () {
         element.dispatchEvent(evt);
     }
 
+    function selector (query) {
+        return document.querySelector(query);
+    }
+
+    function type (where, what) {
+        $(where).val(what).change();
+    }
+
     return {
         collection: collection,
         droppableCollection: droppableCollection,
         droppableGroup: droppableGroup,
         latestArticle: latestArticle,
         articleInside: articleInside,
-        click: click
+        click: click,
+        $: selector,
+        type: type
     };
 });

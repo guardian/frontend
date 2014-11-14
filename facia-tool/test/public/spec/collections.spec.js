@@ -1,12 +1,12 @@
 define([
-    'test/utils/async-it',
+    'test/utils/async-test',
     'test/utils/drag',
     'mock-collection',
     'test/utils/edit-actions',
     'test/utils/publish-actions',
     'test/utils/dom-nodes'
 ], function(
-    it,
+    test,
     drag,
     mockCollection,
     editAction,
@@ -14,14 +14,14 @@ define([
     dom
 ){
     describe('Collections', function () {
-        it('displays the correct timing', function (done) {
+        test('collections', 'displays the correct timing', function (done) {
             expect(
                 $('.list-header__timings').text().replace(/\s+/g, ' ')
             ).toMatch('1 day ago by Test');
             done();
         });
 
-        it('/edits', function (done) {
+        test('collections', '/edits', function (done) {
 
             insertInEmptyGroup()
             .then(function (request) {
@@ -86,7 +86,7 @@ define([
                 expect(request.data.update.itemMeta.isBreaking).toEqual(true);
                 expect(request.data.update.position).toEqual('internal-code/content/2');
 
-                return moveToAnotherCategory();
+                return moveToAnotherCollections();
             })
             .then(function (request) {
                 expect(request.url).toEqual('/edits');
@@ -152,12 +152,12 @@ define([
 
             function insertAfterAnArticle () {
                 return editAction(function () {
-                    var latestNews = dom.droppableCollection(1);
-                    var latestDropTarget = drag.droppable(latestNews);
+                    var firstCollection = dom.droppableCollection(1);
+                    var collectionDropTarget = drag.droppable(firstCollection);
                     var sourceArticle = new drag.Article(dom.latestArticle(2));
                     // Drop an article on the collection means adding it to the end
-                    latestDropTarget.dragover(latestNews, sourceArticle);
-                    latestDropTarget.drop(latestNews, sourceArticle);
+                    collectionDropTarget.dragover(firstCollection, sourceArticle);
+                    collectionDropTarget.drop(firstCollection, sourceArticle);
 
                     return {
                         latest: {
@@ -174,13 +174,13 @@ define([
             function insertOnTopOfTheList () {
                 return editAction(function () {
                     // Drop an article in the first position
-                    var latestNews = dom.droppableCollection(1);
-                    var latestDropTarget = drag.droppable(latestNews);
-                    var firstArticleInLatest = dom.articleInside(latestNews, 1);
+                    var firstCollection = dom.droppableCollection(1);
+                    var collectionDropTarget = drag.droppable(firstCollection);
+                    var firstArticleInLatest = dom.articleInside(firstCollection, 1);
                     var sourceArticle = new drag.Article(dom.latestArticle(3));
                     // Drop an article on the collection means adding it to the end
-                    latestDropTarget.dragover(firstArticleInLatest, sourceArticle);
-                    latestDropTarget.drop(firstArticleInLatest, sourceArticle);
+                    collectionDropTarget.dragover(firstArticleInLatest, sourceArticle);
+                    collectionDropTarget.drop(firstArticleInLatest, sourceArticle);
 
                     return {
                         latest: {
@@ -198,8 +198,8 @@ define([
 
             function insertMetadataOnTopOfTheList () {
                 return editAction(function () {
-                    var latestNews = dom.droppableCollection(1);
-                    var firstArticleInLatest = dom.articleInside(latestNews, 1);
+                    var firstCollection = dom.droppableCollection(1);
+                    var firstArticleInLatest = dom.articleInside(firstCollection, 1);
 
                     dom.click(firstArticleInLatest);
                     dom.click(firstArticleInLatest.querySelector('.editor--boolean--isBreaking'));
@@ -225,15 +225,15 @@ define([
             function moveFirstItemBelow () {
                 return editAction(function () {
                     // Drop an article in the first position
-                    var latestNews = dom.droppableCollection(1);
-                    var latestDropTarget = drag.droppable(latestNews);
-                    var firstArticleInLatest = dom.articleInside(latestNews, 1);
-                    var thirdArticleInLatest = dom.articleInside(latestNews, 3);
+                    var firstCollection = dom.droppableCollection(1);
+                    var collectionDropTarget = drag.droppable(firstCollection);
+                    var firstArticleInLatest = dom.articleInside(firstCollection, 1);
+                    var thirdArticleInLatest = dom.articleInside(firstCollection, 3);
                     var sourceArticle = new drag.Article(firstArticleInLatest);
                     // Drop an article on the collection means adding it to the end
-                    latestDropTarget.dragstart(firstArticleInLatest, sourceArticle);
-                    latestDropTarget.dragover(thirdArticleInLatest, sourceArticle);
-                    latestDropTarget.drop(thirdArticleInLatest, sourceArticle);
+                    collectionDropTarget.dragstart(firstArticleInLatest, sourceArticle);
+                    collectionDropTarget.dragover(thirdArticleInLatest, sourceArticle);
+                    collectionDropTarget.drop(thirdArticleInLatest, sourceArticle);
 
                     return {
                         latest: {
@@ -252,19 +252,19 @@ define([
                 });
             }
 
-            function moveToAnotherCategory () {
+            function moveToAnotherCollections () {
                 return editAction(function () {
                     // The item with meta data is now in position two
-                    var latestNews = dom.droppableCollection(1);
-                    var latestDropTarget = drag.droppable(latestNews);
-                    var itemWithMeta = dom.articleInside(latestNews, 2);
+                    var firstCollection = dom.droppableCollection(1);
+                    var collectionDropTarget = drag.droppable(firstCollection);
+                    var itemWithMeta = dom.articleInside(firstCollection, 2);
                     var sportDropGroup = dom.droppableGroup(2, 1);
                     var sportDropTarget = drag.droppable(sportDropGroup);
                     var articleAlreadyThere = dom.articleInside(sportDropGroup, 1);
                     var sourceArticle = new drag.Article(itemWithMeta);
-                    // Move it to the sport category
-                    latestDropTarget.dragstart(itemWithMeta, sourceArticle);
-                    latestDropTarget.dragleave(itemWithMeta, sourceArticle);
+                    // Move it to the sport collection
+                    collectionDropTarget.dragstart(itemWithMeta, sourceArticle);
+                    collectionDropTarget.dragleave(itemWithMeta, sourceArticle);
                     sportDropTarget.dragover(articleAlreadyThere, sourceArticle);
                     sportDropTarget.drop(articleAlreadyThere, sourceArticle);
 

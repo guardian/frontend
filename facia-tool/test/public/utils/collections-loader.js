@@ -17,17 +17,38 @@ define([
     templateCollections,
     mediator
 ){
-    var deferred = $.Deferred();
+    return function () {
+        var deferred = $.Deferred();
 
-    document.body.innerHTML += templateCollections.replace(/\@[^\n]+\n/g, '');
-    queryParams.set({
-        front: 'uk'
-    });
-    new CollectionsEditor().init();
-    // Number 2 is because we wait for two search, latest and the only
-    // article in the collection.
-    mediator.on('mock:search', _.after(2, _.once(function () {
-        deferred.resolve();
-    })));
-    return deferred.promise();
+        document.body.innerHTML += templateCollections.replace(/\@[^\n]+\n/g, '');
+        queryParams.set({
+            front: 'uk'
+        });
+
+        // Mock the time
+        jasmine.clock().install();
+        new CollectionsEditor().init();
+
+        // Number 2 is because we wait for two search, latest and the only
+        // article in the collection.
+        mediator.on('mock:search', _.after(2, _.once(function () {
+            deferred.resolve();
+        })));
+
+        // The first tick is for the configuration to be loaded
+        jasmine.clock().tick(100);
+        // The second tick is for the collections to be leaded
+        jasmine.clock().tick(300);
+
+        function unload () {
+            jasmine.clock().uninstall();
+            var container = document.querySelector('.alert').parentNode;
+            document.body.removeChild(container);
+        }
+
+        return {
+            loader: deferred.promise(),
+            unload: unload
+        };
+    };
 });

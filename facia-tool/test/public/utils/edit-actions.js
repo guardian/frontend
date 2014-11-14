@@ -26,6 +26,9 @@ define([
         }
         mockCollection.set(desiredAnswer);
 
+        // This action triggers a network request, advance time
+        jasmine.clock().tick(100);
+
         return deferred.promise();
     };
 });

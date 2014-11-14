@@ -4,6 +4,9 @@ define(['modules/droppable'], function (
     function Article (element) {
         this.Text = element.querySelector('a').getAttribute('href');
     }
+    function Collection (element) {
+        this.Text = element.querySelector('a').getAttribute('href');
+    }
 
     function Event (extend) {
         this.preventDefault = function () {};
@@ -65,6 +68,7 @@ define(['modules/droppable'], function (
 
     return {
         Article: Article,
+        Collection: Collection,
         droppable: createDroppable
     };
 });
