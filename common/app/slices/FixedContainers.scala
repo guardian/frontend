@@ -55,7 +55,7 @@ object FixedContainers {
   val indexPageMpuII = slices(TTMpu)
   val indexPageMpuIV = slices(TTlMpu)
   val indexPageMpuVI = slices(TlTlMpu)
-  val indexPageMpuXII = fixedMediumSlowXIIMpu
+  val indexPageMpuIX = fixedMediumSlowXIIMpu
 
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(Full)),

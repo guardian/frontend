@@ -33,7 +33,7 @@ object IndexPage {
     case 2 => Some(FixedContainers.indexPageMpuII)
     case 4 => Some(FixedContainers.indexPageMpuIV)
     case 6 => Some(FixedContainers.indexPageMpuVI)
-    case n if n >= 12 => Some(FixedContainers.indexPageMpuXII)
+    case n if n >= 9 => Some(FixedContainers.indexPageMpuIX)
     case _ => None
   }
 
