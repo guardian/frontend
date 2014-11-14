@@ -9,7 +9,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion {
     margin-bottom: $gs-baseline * 2;
-    min-height: $gs-baseline * 2;
+    min-height: $gs-baseline * 16;
 
     .pagination_legend {
         display: none !important; // overriding .hide-on-mobile-inline
@@ -63,7 +63,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__top-border {
     @include mq(tablet) {
-        border-top: 1px solid $c-newsAccent;
+        border-top: 1px solid colour(news-accent);
         margin-top: -1px;
     }
 }
@@ -106,7 +106,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
-    border-top: 1px solid $c-newsAccent;
+    border-top: 1px solid colour(news-accent);
 
     @include mq(tablet) {
         border-top: 0;
@@ -255,10 +255,10 @@ $avatarPadding: $gs-gutter / 2;
         margin: 0 $gs-gutter / 6 0 $gs-gutter / 4;
     }
 
-    &:first-child {
-        padding-right: $gs-gutter / 2;
-        margin-right: $gs-gutter / 2;
-        border-right: 1px solid colour(neutral-4);
+    &:not(:first-child) {
+        padding-left: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
+        border-left: 1px solid colour(neutral-4);
     }
 }
 
@@ -354,9 +354,18 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__avatar-wrapper,
 .d-comment-box__avatar-wrapper {
-    float: left;
     margin-right: ($gs-gutter / 5) * 2;
     margin-top: $gs-baseline / 6;
+}
+
+.d-comment-box__avatar-wrapper {
+    @include mq($until: leftCol) {
+        float: left;
+    }
+}
+
+.d-comment__avatar-wrapper {
+    float: left;
 }
 
 .d-comment-box__avatar-wrapper .user-avatar__image {
@@ -371,7 +380,6 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    padding-right: $gs-gutter * 2.5;
     @include box-sizing(border-box);
 }
 
@@ -419,7 +427,7 @@ $avatarPadding: $gs-gutter / 2;
     }
 
     a {
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
     .i-comment-anchor {
         display: none;
@@ -495,10 +503,6 @@ $avatarPadding: $gs-gutter / 2;
     font-family: $f-sans-serif-text;
     @include font-size(14, 20);
     margin-bottom: $gs-baseline * 2 / 3;
-
-    br {
-        display: none;
-    }
 
     p {
         margin-top: $gs-baseline * 2 / 3;
@@ -596,7 +600,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-show-more-replies {
-    border-top: 1px dotted $c-neutral5;
+    border-top: 1px dotted colour(neutral-5);
     padding: $gs-baseline 0;
     @include fs-textSans(2);
 
@@ -619,11 +623,11 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__comment-removed {
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     margin-top: $gs-baseline / 1.5;
 
     a {
-        color: $c-brandLightBlue;
+        color: colour(guardian-brand-light);
     }
 }
 
@@ -767,7 +771,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__action {
     @include fs-textSans(1);
     display: inline-block;
-    color: $c-newsDefault;
+    color: colour(news-default);
     font-weight: bold;
     line-height: 20px;
     width: auto;
@@ -791,7 +795,7 @@ $comment-recommend-button-size: 19px;
     @include icon-button(reply-white, 18px);
     margin-right: 1px;
     display: inline-block;
-    background-color: $c-newsDefault;
+    background-color: colour(news-default);
     vertical-align: top;
 }
 
@@ -821,7 +825,7 @@ $comment-recommend-button-size: 19px;
     bottom: 1px;
     margin: 0 ($gs-gutter / 5) * 2;
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     vertical-align: bottom;
 }
 
@@ -843,7 +847,7 @@ $comment-recommend-button-size: 19px;
     width: gs-span(4);
     color: colour(neutral-1);
     padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid $c-neutral6;
+    border: 2px solid colour(neutral-6);
     background: #ffffff;
 }
 .d-report-comment__label,
@@ -976,7 +980,7 @@ $comment-recommend-button-size: 19px;
 
     .comment__inner {
         @include box-sizing(border-box);
-        background-color: $c-neutral7;
+        background-color: colour(neutral-7);
         display: inline-block;
         padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
         max-width: $right-column;
@@ -995,8 +999,8 @@ $comment-recommend-button-size: 19px;
             border: solid transparent;
             height: 0;
             width: 0;
-            border-color: rgba($c-neutral7, 0);
-            border-top-color: $c-neutral7;
+            border-color: rgba(colour(neutral-7), 0);
+            border-top-color: colour(neutral-7);
             border-width: 30px;
             left: 23px;
             margin-left: -30px;
@@ -1079,7 +1083,7 @@ $comment-recommend-button-size: 19px;
 .d-discussion__error {
     margin-top: ($gs-baseline / 3) * 2;
     @include fs-textSans(4);
-    color: $c-error;
+    color: colour(error);
 
     .d-discussion__error-text {
         display: inline-block;
@@ -1089,7 +1093,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__error-meta {
-    color: $c-neutral2;
+    color: colour(neutral-2);
 }
 
 .d-comment-box--response {
@@ -1120,11 +1124,11 @@ $comment-recommend-button-size: 19px;
 .d-bar {
     margin-bottom: ($gs-baseline / 3) * 4;
     @include fs-textSans(4);
-    color: $c-neutral2;
+    color: colour(neutral-2);
 }
 .d-comment-box__body {
     @include box-sizing(border-box);
-    border: 1px solid $c-neutral3;
+    border: 1px solid colour(neutral-3);
     height: 50px;
     margin: ($gs-baseline / 3) * 2 0;
     padding: ($gs-baseline / 3) * 2 $gs-gutter / 2;
@@ -1160,7 +1164,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--invalid {
     .d-comment-box__body {
-        border-color: $c-error;
+        border-color: colour(error);
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
@@ -1182,12 +1186,12 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-textSans(1);
-    color: $c-neutral1;
+    color: colour(neutral-1);
 }
 .d-comment-box__hide-preview,
 .d-comment-box__preview {
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     font-weight: bold;
 }
 .d-comment-box__hide-preview {
@@ -1238,7 +1242,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__cancel {
     display: none;
     bottom: $gs-baseline;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     .d-comment-box--expanded &,
     .d-comment-box--response & {
@@ -1255,11 +1259,11 @@ $comment-recommend-button-size: 19px;
     margin-top: ($gs-baseline / 3) * 8;
 
     .clamp-fade {
-        @include simple-gradient(transparent, $c-neutral7);
+        @include simple-gradient(transparent, colour(neutral-7));
     }
     .clamp-fade__content {
-        border-top: 1px solid $c-neutral3;
-        background: $c-neutral7;
+        border-top: 1px solid colour(neutral-3);
+        background: colour(neutral-7);
     }
 }
 .d-comment-box__preview-spout,
@@ -1269,13 +1273,13 @@ $comment-recommend-button-size: 19px;
     width: 0;
     height: 0;
     border-right: 16px solid transparent;
-    border-bottom: 16px solid $c-neutral7;
+    border-bottom: 16px solid colour(neutral-7);
     margin-left: $gs-gutter * 2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
     padding: $gs-baseline $gs-gutter;
-    background-color: $c-neutral7;
+    background-color: colour(neutral-7);
     @include fs-textSans(4);
 
     .d-comment-box__hide-parent {
@@ -1312,7 +1316,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__preview-block {
     display: block;
-    background-color: $c-neutral7;
+    background-color: colour(neutral-7);
     padding: $gs-baseline $gs-gutter;
 }
 .d-comment-box__preview-body {
@@ -1343,8 +1347,8 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-quote,
 .d-comment-box__formatting-link {
     display: inline-block;
-    border: 1px solid $c-neutral5;
-    color: $c-neutral2;
+    border: 1px solid colour(neutral-5);
+    color: colour(neutral-2);
     text-align: center;
     cursor: pointer;
     @include fs-textSans(2);
@@ -1354,6 +1358,6 @@ $comment-recommend-button-size: 19px;
     line-height: 17px;
 
     &:hover {
-        border-color: $c-brandBlue;
+        border-color: colour(guardian-brand);
     }
 }

@@ -12,7 +12,8 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
 
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
-    getPopularInTag(edition, tag) map {
+    val excludeTags = request.queryString.get("exclude-tag").getOrElse(Nil)
+    getPopularInTag(edition, tag, excludeTags) map {
       case Nil => JsonNotFound()
       case trails => renderPopularInTag(trails)
     }

@@ -125,7 +125,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
+        .addClass("js-gu-media gu-media gu-media--video")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
@@ -732,11 +732,15 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = {
+    val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
+    model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
+  }
+
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
     case _ => result
   }
 }
@@ -748,7 +752,7 @@ object RenderClasses {
 }
 
 object GetClasses {
-  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
     val hasImage = item.hasImage
 
     RenderClasses(Map(
@@ -758,18 +762,12 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("item--has-discussion", item.discussionSettings.isCommentable),
-      ("item--has-no-discussion", !item.discussionSettings.isCommentable),
+      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
+      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive),
-      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
-      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
-      ("item--imageadjust-hide", item.displaySettings.imageHide),
-      ("item--imageadjust-default", hasImage &&
-        !item.displaySettings.isBoosted &&
-        !item.displaySettings.imageHide)
+      ("fc-item--live", item.isLive)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -792,7 +790,7 @@ object GetClasses {
   }
 
   def forContainerDefinition(containerDefinition: FaciaContainer) =
-    forNewStyleContainer(
+    forContainer(
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0,
       containerDefinition.displayName.isDefined,
@@ -800,7 +798,8 @@ object GetClasses {
       Some(containerDefinition.container)
     )
 
-  def forTagContainer(hasTitle: Boolean) = forNewStyleContainer(
+
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
@@ -810,7 +809,7 @@ object GetClasses {
     disableHide = true
   )
 
-  def forNewStyleContainer(
+  def forContainer(
       showLatestUpdate: Boolean,
       isFirst: Boolean,
       hasTitle: Boolean,
@@ -822,11 +821,11 @@ object GetClasses {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", commercialOptions.isSponsored),
-      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
-      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container", true),
+      ("fc-container--first", isFirst),
+      ("fc-container--sponsored", commercialOptions.isSponsored),
+      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

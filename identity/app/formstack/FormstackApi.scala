@@ -1,19 +1,19 @@
 package formstack
 
-import com.google.inject.{Singleton, Inject}
-import idapiclient.IdDispatchAsyncHttpClient
-import utils.SafeLogging
-import net.liftweb.json._
-import client.connection.HttpResponse
-import scala.concurrent.Future
-import client.{Error, Response}
-import com.gu.identity.model.LiftJsonConfig
 import client.parser.JodaJsonSerializer
+import client.{Error, Response}
+import com.google.inject.{Inject, Singleton}
+import com.gu.identity.model.LiftJsonConfig
 import common.ExecutionContexts
 import conf.Configuration
+import net.liftweb.json._
+import utils.SafeLogging
+import scala.concurrent.Future
+
+
 
 @Singleton
-class FormstackApi @Inject()(httpClient: IdDispatchAsyncHttpClient) extends ExecutionContexts with SafeLogging {
+class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionContexts with SafeLogging {
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -24,9 +24,8 @@ class FormstackApi @Inject()(httpClient: IdDispatchAsyncHttpClient) extends Exec
 
   def checkForm(formstackForm: FormstackForm): Future[Response[FormstackForm]] = {
 
-    httpClient.GET(formstackUrl(formstackForm.formId), Iterable("oauth_token" -> Configuration.formstack.oAuthToken)) map {
-      case Left(errors) => Left(errors)
-      case Right(HttpResponse(body, statusCode, _)) => {
+    httpClient.GET(formstackUrl(formstackForm.formId), Seq("oauth_token" -> Configuration.formstack.oAuthToken)) map {
+      case FormstackHttpResponse(body, statusCode, _) => {
         statusCode match {
           case 200 => {
             logger.trace("Formstack API returned 200 for reference lookup")

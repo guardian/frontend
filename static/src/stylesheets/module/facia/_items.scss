@@ -1,0 +1,237 @@
+@mixin headline-boost($size) {
+    .fc-item--has-boosted-title & {
+        @include fs-headline($size, true);
+    }
+}
+
+@import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--third';
+@import 'item-layouts/fc-item--half';
+@import 'item-layouts/fc-item--three-quarters';
+@import 'item-layouts/fc-item--three-quarters-right';
+@import 'item-layouts/fc-item--list';
+@import 'item-layouts/fc-item--list-compact';
+@import 'item-layouts/fc-item--list-compact--media';
+@import 'item-layouts/fc-item--list-media';
+@import 'item-layouts/fc-item--full';
+@import 'item-layouts/fc-item--mega-full';
+
+// overrides of current slices
+
+.fc-slice__item {
+    position: relative;
+    padding-bottom: 0;
+    margin-bottom: $gs-baseline;
+
+    + .fc-slice__item {
+        @include vertical-item-separator;
+    }
+
+    .has-flex & {
+        @include flex-display;
+    }
+
+    &.l-list__item {
+        margin-bottom: 0;
+        padding-bottom: $gs-baseline;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.fc-slice__item--mpu-candidate {
+    @include mq(tablet) {
+        min-height: 250 + $mpu-ad-label-height;
+    }
+}
+.fc-slice__item--no-mpu {
+    flex: 0 !important;
+}
+
+// new Facia Cards styles
+.fc-item--list-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--list;
+    }
+}
+
+.fc-item--list-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
+    }
+}
+
+.fc-item--list-compact-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
+
+        .fc-item__header {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.fc-item--list-media-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--list-media(3.5, 2);
+    }
+}
+
+.fc-item--list-media-tablet {
+    @include mq(tablet) {
+        @include fc-item--list-media;
+    }
+}
+
+.fc-item--standard-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--standard;
+
+        &.fc-item--has-cutout {
+            .fc-item__header,
+            .fc-sublinks {
+                padding-right: 33%;
+            }
+        }
+
+        &[class*="fc-item--has-sublinks"] {
+            .has-flex-wrap &.fc-item--has-cutout {
+                .fc-item__header {
+                    padding-right: 0;
+                }
+
+                .fc-sublinks {
+                    min-height: gs-height(3) + $gs-baseline;
+                }
+            }
+        }
+
+        .vjs-big-play-button > span {
+            @include video-play-button-size($vjs-small-button-size);
+
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+        }
+    }
+}
+
+.fc-item--standard-tablet {
+    @include mq(tablet) {
+        @include fc-item--standard;
+
+        .fc-item__header {
+            @include mq($until: desktop) {
+                @include fs-headline(2, true);
+                @include headline-boost(3);
+            }
+        }
+
+        &[class*="fc-item--has-sublinks"] {
+            .fc-item__standfirst,
+            .fc-item__media-wrapper {
+                display: none;
+            }
+        }
+
+        &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
+            display: block;
+        }
+
+        &.fc-item--has-cutout {
+            .fc-item__container {
+                padding-bottom: gs-height(3) + $gs-baseline * 3;
+            }
+
+            .fc-trail__count__label {
+                display: none;
+            }
+        }
+
+        .fc-item__avatar__media {
+            right: -40%;
+        }
+    }
+
+    @include mq(desktop) {
+        &.fc-item--has-cutout .fc-item__container {
+            padding-bottom: gs-height(3) + $gs-baseline  * 2;
+        }
+
+        .fc-item__avatar__media {
+            right: -20%;
+        }
+
+        .fc-item__avatar {
+            height: gs-height(4);
+        }
+    }
+}
+
+.fc-item--third-tablet {
+    @include mq(tablet) {
+        @include fc-item--third;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--three-quarters-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters;
+    }
+}
+
+.fc-item--three-quarters-right-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters-right;
+    }
+}
+
+.fc-item--full-tablet {
+    @include mq(tablet) {
+        @include fc-item--full;
+
+        .fc-sublink:nth-child(n+5) {
+            display: none;
+        }
+    }
+}
+
+.fc-item--mega-full-tablet {
+    @include mq(tablet) {
+        @include fc-item--mega-full;
+    }
+}
+
+// Commercial items
+.fc-item--list-compact {
+    @include fc-item--list-compact;
+}
+
+.fc-item--list-compact--media {
+    @include fc-item--list-compact--media;
+}
+
+//Live blog items
+.fc-slice--single-col {
+
+    .fc-slice__item {
+        padding-bottom: 0;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .fc-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

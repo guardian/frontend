@@ -1,0 +1,25 @@
+@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship])
+
+@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty){
+No known targeting problems.
+} else {
+There are some targeting problems:
+
+@if(pageskinsWithoutEditions.nonEmpty) {
+These pageskins have no edition set:
+@for(pageskin <- pageskinsWithoutEditions){
+    @{pageskin.lineItemId}: @{pageskin.lineItemName}
+}
+
+See https://frontend.gutools.co.uk/analytics/commercial/pageskins
+}
+@if(geotargetedAdFeatures.nonEmpty) {
+These ad feature logos are geotargeted:
+@for(adFeature <- geotargetedAdFeatures){
+    @{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}
+}
+
+See https://frontend.gutools.co.uk/analytics/commercial/sponsorships
+}
+
+}

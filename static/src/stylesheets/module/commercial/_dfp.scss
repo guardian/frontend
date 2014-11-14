@@ -1,10 +1,8 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
-.commercial--dfp--v2,
 .commercial--dfp {
     /* Single */
-    &.commercial--dfp-single--v2,
     &.commercial--dfp-single {
         .lineitem--dfp-single {
             width: 100%;
@@ -13,7 +11,10 @@
             .lineitem__image {
                 margin-right: $gs-gutter/2;
                 max-width: $gs-gutter*11;
-                float: left;
+
+                @include mq(mobileLandscape) {
+                    float: left;
+                }
             }
 
             .lineitem--dfp-single__offer {
@@ -25,7 +26,7 @@
             .lineitem--dfp-single__cta {
                 @include box-sizing(border-box);
                 margin-left: $gs-gutter/2;
-                border-left: 1px solid $c-neutral4;
+                border-left: 1px solid colour(neutral-4);
                 padding-left: $gs-gutter/2;
                 float: left;
                 position: absolute;
@@ -47,7 +48,6 @@
     }
 
     /* Multiple */
-    &.commercial--dfp-multiple--v2,
     &.commercial--dfp-multiple {
         .lineitem {
             width: percentage(1/2);

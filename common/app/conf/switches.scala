@@ -126,11 +126,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
-    "If this switch is on then content will have a shorter cache time",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
-  )
-
   // Commercial
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
@@ -324,6 +319,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
+  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -451,11 +451,11 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
+    DiscussionPageSizeSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,

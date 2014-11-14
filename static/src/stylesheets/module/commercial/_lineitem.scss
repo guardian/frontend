@@ -1,7 +1,6 @@
 /* ==========================================================================
    Line items
    ========================================================================== */
-.commercial--v2,
 .commercial {
     .lineitems {
         padding: 0;
@@ -12,7 +11,7 @@
         @include box-sizing(border-box);
         list-style-type: none;
         padding: 0 $gs-gutter/2;
-        border-left: 1px solid $c-neutral4;
+        border-left: 1px solid colour(neutral-4);
         position: relative;
         float: left;
 
@@ -49,7 +48,7 @@
         }
     }
     .lineitem__title {
-        color: $c-neutral1;
+        color: colour(neutral-1);
         @include fs-header(1);
         font-weight: 500;
         padding-top: 2px;
@@ -57,18 +56,19 @@
     }
     .lineitem__desc {
         @include fs-headline(1);
-        color: $c-neutral2;
+        color: colour(neutral-2);
+        display: block !important;
     }
     .lineitem__meta {
-        color: $c-neutral2;
+        color: colour(neutral-2);
         @include fs-textSans(2);
         margin-bottom: $gs-baseline/2;
     }
     .lineitem__meta__highlight {
-        color: $c-brandBlue;
+        color: colour(guardian-brand);
     }
     .lineitem__meta__strong {
-        color: $c-neutral1;
+        color: colour(neutral-1);
         font-weight: bold;
     }
 
@@ -98,7 +98,7 @@
         @include mq($until: tablet) {
             width: 100%;
             border-left: 0;
-            border-top: 1px solid $c-neutral3;
+            border-top: 1px solid colour(neutral-3);
             padding: $gs-baseline/2 0;
             position: relative;
 
@@ -117,7 +117,7 @@
             padding: 0 $gs-gutter/2;
 
             &:first-child {
-                border-left: 1px solid $c-neutral4;
+                border-left: 1px solid colour(neutral-4);
             }
         }
     }

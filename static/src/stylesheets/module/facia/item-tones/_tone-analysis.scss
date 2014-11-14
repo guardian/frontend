@@ -1,0 +1,36 @@
+.tone-analysis--item {
+    &.fc-item {
+        background-color: colour(analysis-background);
+        color: colour(analysis-default);
+    }
+
+    .u-faux-block-link--hover {
+        background-color: darken(colour(analysis-background), 5%);
+    }
+
+    .fc-item__container:before {
+        background-color: colour(analysis-accent);
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        color: colour(analysis-accent);
+    }
+
+    .fc-item__meta {
+        color: colour(neutral-2);
+    }
+}
+
+.tone-analysis--sublink,
+.tone-analysis--most-popular {
+    .fc-item__kicker {
+        color: colour(analysis-accent);
+    }
+
+    @include sublink-style(live) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}

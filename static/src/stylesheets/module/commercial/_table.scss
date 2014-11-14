@@ -14,16 +14,16 @@
     }
 
     .table--commercial__head {
-        color: $c-neutral2;
+        color: colour(neutral-2);
 
         .table--commercial__row {
-            border-top: 1px solid $c-neutral3;
+            border-top: 1px solid colour(neutral-3);
         }
     }
 
     .table--commercial__body {
         .table--commercial__row {
-            border-top: 1px solid $c-neutral5;
+            border-top: 1px solid colour(neutral-5);
         }
 
         th.table--commercial__cell {
