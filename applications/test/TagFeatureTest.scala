@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import services.IndexPagePagination
 import collection.JavaConversions._
 import conf.Switches
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
@@ -15,7 +16,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       goTo("/technology/askjack") { browser =>
         val trails = browser.$(".fc-item__container")
-        trails.length should be(35)
+        trails.length should be(IndexPagePagination.pageSize)
       }
     }
   }
