@@ -16,6 +16,10 @@ object ItemKicker {
     def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
 
     trail.customKicker match {
+      case Some(kicker)
+        if trail.snapType.exists(_ == "latest") &&
+          trail.showKickerCustom &&
+          trail.snapUri.isDefined => Some(FreeHtmlKickerWithLink(kicker, trail.snapUri.get))
       case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
       case _ => if (trail.showKickerTag && maybeTag.isDefined) {
         tagKicker
@@ -68,4 +72,5 @@ case class PodcastKicker(series: Option[Series]) extends ItemKicker
 case class TagKicker(name: String, url: String) extends ItemKicker
 case class SectionKicker(name: String, url: String) extends ItemKicker
 case class FreeHtmlKicker(body: String) extends ItemKicker
+case class FreeHtmlKickerWithLink(body: String, url: String) extends ItemKicker
 
