@@ -11,12 +11,12 @@
 
     .creative__inner {
         padding-top: $gs-baseline/2;
-        border-top: 2px solid colour(guardian-brand);
+        border-top: 2px solid colour(guardian-brand-dark);
     }
     .creative__marque {
         display: block;
         @include border-radius(18px);
-        background-color: colour(guardian-brand);
+        background-color: colour(guardian-brand-dark);
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -30,5 +30,68 @@
     .creative__text {
         @include fs-textSans(4);
         color: colour(neutral-2);
+    }
+}
+.creative--branded-component-soulmates {
+    padding-left: 0;
+
+    .creative__inner {
+        border-top: 0;
+        margin-left: $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2;
+        background-color: #f5f3e7;
+
+        &:before {
+            @extend %i-soulmates-trill;
+            @extend %svg-i-soulmates-trill;
+            content: "";
+            display: block;
+            margin: $gs-baseline auto 0;
+        }
+    }
+    .creative__title,
+    .creative__text {
+        &:before {
+            content: "";
+            display: block;
+            height: 1px;
+            width: gs-span(1);
+            margin: 0 auto $gs-baseline;
+            background-color: black;
+        }
+    }
+    .creative__title {
+        margin: $gs-baseline $gs-gutter*2 0;
+        @include fs-header(5);
+        text-align: center;
+    }
+    .creative__text {
+        margin: $gs-baseline 0 0;
+    }
+    .creative__link-wrapper {
+        margin-top: $gs-baseline;
+        text-align: center;
+    }
+    .creative__link {
+        @include fs-header(3);
+        color: black;
+    }
+    .creative__link__button {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        position: relative;
+        top: 4px;
+        margin-left: $gs-gutter/2;
+        @include border-radius(11px);
+        background-color: black;
+    }
+    .soulmates-logo {
+        height: gs-height(1);
+        margin: gs-height(2) auto 0;
+        padding-top: $gs-baseline*3;
+    }
+    .soulmates-logo__title {
+        text-align: center;
     }
 }
