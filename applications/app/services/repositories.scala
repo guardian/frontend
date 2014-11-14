@@ -10,7 +10,7 @@ import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
-import slices.{ContainerDefinition, Fixed}
+import slices._
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -18,27 +18,49 @@ import controllers.ImageContentPage
 import implicits.Dates._
 import common.JodaTime._
 import common.Seqs._
+import scalaz.syntax.traverse._
+import scalaz.std.list._
+import Function.const
 
 object IndexPagePagination {
   def pageSize: Int = 50 //have a good think before changing this
 }
 
+case class MpuState(injected: Boolean)
+
 object IndexPage {
+  def containerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
+    case 4 => Some(FixedContainers.indexPageMpuIV)
+    case 6 => Some(FixedContainers.indexPageMpuVI)
+    case _ => None
+  }
+
   def makeFront(indexPage: IndexPage, edition: Edition) = {
     val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
-    val front = Front.fromConfigsAndContainers(grouped map {
-      case grouping =>
+    val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
+      case (mpuState, grouping) =>
         val collection = CollectionEssentials.fromTrails(
           grouping.items
         )
 
+        val (container, newMpuState) = containerWithMpu(grouping.items.length).filter(const(!mpuState.injected)) map { mpuContainer =>
+          (mpuContainer, mpuState.copy(injected = true))
+        } getOrElse {
+          (ContainerDefinition.forNumberOfItems(grouping.items.length), mpuState)
+        }
+
         /** TODO what should the data ID be here? */
-        ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+        (newMpuState, ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
           displayName = Some(grouping.dateHeadline.displayString)
         )), collection),
-          Fixed(ContainerDefinition.forNumberOfItems(grouping.items.length)))
-    }, ContainerLayoutContext(Set.empty, hideCutOuts = true))
+          Fixed(container)))
+    }._2.toSeq
+
+    val front = Front.fromConfigsAndContainers(
+      containerDefinitions,
+      ContainerLayoutContext(Set.empty, hideCutOuts = true)
+    )
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
       if (index == 0) {
