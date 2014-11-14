@@ -5,7 +5,7 @@ import java.util.UUID
 import model.Content
 import org.joda.time.{LocalDate, DateTimeZone, DateTime}
 import org.scalatest.{Matchers, FlatSpec}
-import contentapi.Helpers.emptyApiContent
+import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
 
 class IndexPageGroupingTest extends FlatSpec with Matchers {
