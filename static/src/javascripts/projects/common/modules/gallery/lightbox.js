@@ -504,7 +504,12 @@ define([
                 parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             lightbox = lightbox || new GalleryLightbox();
-            lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
+
+            if (config.page.contentType === 'Gallery') {
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
+            } else if (config.page.contentType === 'Article') {
+                lightbox.loadGalleryfromJson(config.page.lightboxImages, galleryIndex);
+            }
         });
 
         if (config.page.contentType === 'Gallery') {
@@ -523,7 +528,7 @@ define([
             match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(config.page.LightboxImages, parseInt(match[1], 10));
+                lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
             }
         }
     }

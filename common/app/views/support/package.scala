@@ -190,18 +190,22 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
   def cleanStandardPictures(body: Document): Document = {
-    body.getElementsByTag("figure").foreach { fig =>
+
+    val elements = body.getElementsByTag("figure").view.zipWithIndex
+
+    elements foreach { case(fig, index) =>
       if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
         val blockId = fig.attr("data-media-id")
         val asset = findImageFromId(blockId)
+        val linkIndex = (index+1).toString
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
-          img.attr("id", fig.attr("data-media-id"))
+          img.attr("id", linkIndex)
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
@@ -211,6 +215,9 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
               val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
               img.after(html.toString())
             }
+
+            img.wrap("<a href='" + article.url + "?index=" + linkIndex + "' class='gallery2__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+            img.after("<span class='gallery2__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")

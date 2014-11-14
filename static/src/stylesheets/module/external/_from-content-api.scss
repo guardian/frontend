@@ -170,6 +170,7 @@ figure {
     &.element {
         margin-top: ($gs-baseline/3)*4;
         margin-bottom: $gs-baseline*2;
+        position: relative;
     }
     &.img--landscape,
     &.img--portrait {
