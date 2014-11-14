@@ -143,12 +143,15 @@ Loader.prototype.initMainComments = function() {
                 }
             }.bind(this))
             .fail(function(err) {
-                var msg = 'Comments failed to load.' + ('statusText' in err ? ' ' + err.statusText : '');
-                raven.captureMessage(msg, {
+                var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
+                raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
                         discussionId: this.getDiscussionId(),
-                        status: 'status' in err ? err.status : ''
+                        status: 'status' in err ? err.status : '',
+                        readyState: 'readyState' in err ? err.readyState : '',
+                        response: 'response' in err ? err.response : '',
+                        statusText: 'status' in err ? err.statusText : ''
                     }
                 });
             }.bind(this));

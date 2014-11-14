@@ -20,6 +20,12 @@ object ContentApiOffers extends Controller with ExecutionContexts {
     val optCapiLink = request.queryString get "cl" map (_.head)
 
     val optCapiAbout = request.queryString get "cal" map (_.head)
+    
+    val optCapiButtonText = request.queryString get "clt" map (_.head)
+    
+    val optCapiReadMoreUrl = request.queryString get "rmd" map (_.head)
+    
+    val optCapiReadMoreText = request.queryString get "rmt" map (_.head)
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
       Lookup.latestContentByKeyword(keyword, 4)
@@ -36,7 +42,7 @@ object ContentApiOffers extends Controller with ExecutionContexts {
         if (isMulti) {
           format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText))
         }
       }
     }

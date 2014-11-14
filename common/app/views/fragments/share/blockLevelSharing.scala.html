@@ -1,6 +1,6 @@
 @(id: String, shareItems: Seq[model.ShareLink], contentType: String)
 
-<div class="block-share block-share--@contentType.toLowerCase" data-link-name="block share">
+<div class="block-share block-share--@contentType.toLowerCase hide-on-mobile" data-link-name="block share">
 
     @shareItems.map { item: model.ShareLink =>
         <a class="block-share__link js-blockshare-link" href="@item.href" target="_blank" data-link-name="social @item.css">
@@ -19,14 +19,14 @@
 
 @if(contentType != "Article") {
     <div class="block-share--@contentType.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
-        <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary}">
+        <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary} mobile-only">
             Share
         </button>
     </div>
 
     <div id="share-modal-@id" class="overlay overlay--@contentType.toLowerCase share-modal js-share-modal">
         <div class="share-modal__content" data-link-name="mobile block share">
-            <h2 class="share-modal__title">Share this post</h2>
+            <div class="share-modal__title">Share this post</div>
             @shareItems.map { item: model.ShareLink =>
                 <a class="share-modal__link" href="@item.href" target="_blank" data-link-name="social @item.css">
                     <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">

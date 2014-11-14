@@ -9,13 +9,13 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
   feature("Tag Series, Blogs and Contributors Pages trail size") {
 
-    scenario("Tag Series, Blogs and Contributors pages should show at least 19 trails (includes leadContent if present)") {
+    scenario("Tag Series, Blogs and Contributors pages should show 50 trails (includes leadContent if present)") {
 
       Given("I visit a tag page")
 
       goTo("/technology/askjack") { browser =>
         val trails = browser.$(".fc-item__container")
-        trails.length should be(19)
+        trails.length should be(50)
       }
     }
   }
@@ -29,7 +29,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       goTo("/profile/jemimakiss") { browser =>
         Then("I should see her profile image")
-        val profileImage = browser.findFirst(".profile__img img")
+        val profileImage = browser.findFirst("[data-test-id=header-image]")
         profileImage.getAttribute("src") should endWith(s"42593747/Jemima-Kiss.jpg")
       }
     }
@@ -55,28 +55,30 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       goTo("/sport/cycling") { browser =>
         import browser._
 
-        val linksOnFirstPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
-        linksOnFirstPage.size should be > 10
+        val cardsOnFirstPage = browser.find("[data-test-id=facia-card]")
+        val dataIdsOnFirstPage = cardsOnFirstPage.map(_.getAttribute("data-id")).toSet
+        cardsOnFirstPage.size should be > 10
         findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=2")
         findByRel($("link"), "prev") should be (None)
 
         Then("I should be able to navigate to the 'next' page")
         findFirst(".pagination").findFirst("[rel=next]").click()
-        val linksOnNextPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
-        linksOnNextPage.size should be > 10
+        val cardsOnNextPage = browser.find("[data-test-id=facia-card]")
+        val dataIdsOnNextPage = cardsOnNextPage.map(_.getAttribute("data-id"))
+        cardsOnNextPage.size should be > 10
 
         findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=3")
         findByRel($("link"), "prev").head.getAttribute("href") should endWith ("/sport/cycling")
 
-        linksOnNextPage.foreach( linksOnFirstPage should not contain _ )
+        dataIdsOnFirstPage intersect dataIdsOnNextPage.toSet should be(Set.empty)
 
         And("The title should reflect the page number")
         findFirst("title").getText should include ("| Page 2 of")
 
         And("I should be able to navigate to the 'previous' page")
         findFirst(".pagination").findFirst("[rel=prev]").click()
-        val linksOnPreviousPage = findFirst(".fc-container__body").find("a").map(_.getAttribute("href"))
-        linksOnPreviousPage should equal (linksOnFirstPage)
+        val cardsOnPreviousPage = browser.find("[data-test-id=facia-card]")
+        cardsOnPreviousPage.map(_.getAttribute("data-id")).toSet should be(dataIdsOnFirstPage)
       }
     }
   }

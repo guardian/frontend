@@ -6,10 +6,6 @@
     cursor: pointer;
 }
 
-.block-share__label {
-    @include u-h;
-}
-
 .block-share__item {
     display: block;
     border: 1px solid colour(neutral-3);
@@ -23,15 +19,6 @@
         width: 100% !important;
         height: 100% !important;
     }
-}
-
-.block-share__item--link {
-    width: gs-span(1) + $gs-gutter * 2;
-    @include fs-textSans(1);
-    font-size: 10px;
-    padding: 0 $gs-gutter / 2;
-    color: colour(neutral-2);
-    outline: none;
 }
 
 .block-share__item--facebook {
@@ -151,12 +138,6 @@
     cursor: pointer;
 }
 
-.block-share__item--mobile {
-    @include mq(tablet) {
-        display: none;
-    }
-}
-
 .block-share__item--expand {
     overflow: visible;
     position: relative;
@@ -196,6 +177,7 @@
     color: colour(neutral-2);
     text-align: center;
     margin-bottom: $gs-baseline * 3;
+    font-weight: bold;
 }
 
 .share-modal__item {
@@ -248,9 +230,6 @@
     margin-left: gs-span(1) + $gs-gutter;
     margin-top: $gs-baseline;
     clear: both;
-    @include mq($until: tablet) {
-        display: none;
-    }
 }
 
 // Gallery
@@ -259,10 +238,6 @@
     margin-top: $gs-baseline;
     white-space: nowrap;
     clear: both;
-
-    @include mq($until: tablet) {
-        display: none;
-    }
 
     @include mq(tablet, desktop) {
         position: absolute;
@@ -282,9 +257,7 @@
             opacity: 1;
         }
     }
-}
 
-.block-share--gallery {
     .block-share__item--facebook {
         border-color: colour(neutral-2);
         color: colour(neutral-2);
@@ -361,15 +334,7 @@
             }
         }
     }
-}
 
-.block-share--gallery-mobile {
-    cursor: pointer;
-    opacity: .8;
-    margin-top: $gs-baseline / 2;
-}
-
-.block-share--gallery {
     .block-share__item--expand {
         border-color: colour(neutral-2);
 
@@ -394,6 +359,12 @@
     }
 }
 
+.block-share--gallery-mobile {
+    cursor: pointer;
+    opacity: .8;
+    margin-top: $gs-baseline / 2;
+}
+
 .overlay--gallery {
     background-color: colour(neutral-1);
     .share-modal__title {
@@ -413,11 +384,7 @@
     margin-top: ($gs-baseline/3)*2;
 
     .element--supporting & {
-        display: none;
-    }
-
-    @include mq($until: tablet) {
-        display: none;
+        display: none !important;
     }
 
     .element-video & {
