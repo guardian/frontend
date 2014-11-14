@@ -1,20 +1,95 @@
 package services
 
+import com.gu.facia.client.models.CollectionConfig
+import layout._
 import model._
-import conf.{InlineRelatedContentSwitch, LiveContentApi}
+import conf.{Switches, InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
+import slices._
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
+import implicits.Dates._
+import common.JodaTime._
+import common.Seqs._
+import scalaz.syntax.traverse._
+import scalaz.std.list._
+import Function.const
 
 object IndexPagePagination {
-  def pageSize: Int = 20 //have a good think before changing this
+  def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
+    35
+  } else {
+    20
+  }
+}
+
+case class MpuState(injected: Boolean)
+
+object IndexPage {
+  def containerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
+    case 2 => Some(FixedContainers.indexPageMpuII)
+    case 4 => Some(FixedContainers.indexPageMpuIV)
+    case 6 => Some(FixedContainers.indexPageMpuVI)
+    case n if n >= 9 => Some(FixedContainers.indexPageMpuIX)
+    case _ => None
+  }
+
+  def makeFront(indexPage: IndexPage, edition: Edition) = {
+    val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
+
+    val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
+      case (mpuState, grouping) =>
+        val collection = CollectionEssentials.fromTrails(
+          grouping.items
+        )
+
+        val (container, newMpuState) = containerWithMpu(grouping.items.length).filter(const(!mpuState.injected)) map { mpuContainer =>
+          (mpuContainer, mpuState.copy(injected = true))
+        } getOrElse {
+          (ContainerDefinition.forNumberOfItems(grouping.items.length), mpuState)
+        }
+
+        (newMpuState, ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+          displayName = Some(grouping.dateHeadline.displayString)
+        )), collection),
+          Fixed(container)))
+    }._2.toSeq
+
+    val front = Front.fromConfigsAndContainers(
+      containerDefinitions,
+      ContainerLayoutContext(Set.empty, hideCutOuts = true)
+    )
+
+    val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
+      if (index == 0) {
+        indexPage.page match {
+          case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
+          case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case page: Page => FaciaContainerHeader.fromPage(page, headline)
+          case _ =>
+            // should never happen
+            LoneDateHeadline(headline)
+        }
+      } else {
+        LoneDateHeadline(headline)
+      }
+    }
+
+    front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
+      container.copy(
+        customHeader = Some(header),
+        customClasses = Some(Seq("fc-container--tag")),
+        hideToggle = true
+      )
+    }))
+  }
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],

@@ -2,7 +2,7 @@ package layout
 
 import com.gu.facia.client.models.CollectionConfig
 import dfp.DfpAgent
-import model.{Collection, Content, Trail}
+import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
@@ -11,21 +11,26 @@ import scala.Function._
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty)
+  val empty = ContainerLayoutContext(Set.empty, false)
 }
 
 case class ContainerLayoutContext(
-  cutOutsSeen: Set[CutOut]
+  cutOutsSeen: Set[CutOut],
+  hideCutOuts: Boolean
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
   def transform(card: FaciaCardAndIndex) = {
-    val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-      card.copy(item = card.item.copy(cutOut = None))
+    if (hideCutOuts) {
+      (card.copy(item = card.item.copy(cutOut = None)), this)
     } else {
-      card
+      val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+        card.copy(item = card.item.copy(cutOut = None))
+      } else {
+        card
+      }
+      (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
     }
-    (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
   }
 }
 
@@ -74,16 +79,17 @@ object Front extends implicits.Collections {
     }
   }
 
-  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+  def fromConfigsAndContainers(
+      configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)],
+      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
+  ) = {
     import scalaz.syntax.traverse._
     import scalaz.std.list._
 
     Front(
       configs.zipWithIndex.toList.mapAccumL(
-        (Set.empty[TrailUrl], ContainerLayoutContext.empty)
-      ) { case ((seenTrails, context), ((config, collection), index)) =>
-        val container = Container.fromConfig(config.config)
-
+        (Set.empty[TrailUrl], initialContext)
+      ) { case ((seenTrails, context), (((config, collection), container), index)) =>
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
         ContainerLayout.fromContainer(container, context, config.config, newItems) map {
@@ -107,6 +113,10 @@ object Front extends implicits.Collections {
         }
       }._2.filterNot(_.items.isEmpty)
     )
+  }
+
+  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+    fromConfigsAndContainers(configs.zipWith({ case (config, _) => Container.fromConfig(config.config) }))
   }
 }
 
@@ -175,20 +185,16 @@ object FaciaContainer {
     containerLayout,
     config.config.showDateHeader.exists(identity),
     config.config.showLatestUpdate.exists(identity),
-    ContainerCommercialOptions.fromConfig(config.config)
+    ContainerCommercialOptions.fromConfig(config.config),
+    None,
+    None,
+    false
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
-    val layout: ContainerDefinition = items.size match {
-      case 1 => FixedContainers.fixedSmallSlowI
-      case 2 => FixedContainers.fixedSmallSlowII
-      case 3 => FixedContainers.fixedMediumSlowXIIMpu
-      case 5 => FixedContainers.fixedSmallSlowVI
-      case _ => FixedContainers.fixedMediumFastXII
-    }
     FaciaContainer(
       index = 2,
-      container = Fixed(layout),
+      container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
@@ -203,6 +209,14 @@ object ContainerCommercialOptions {
     DfpAgent.isFoundationSupported(config),
     DfpAgent.sponsorshipTag(config),
     DfpAgent.sponsorshipType(config)
+  )
+
+  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
+    metaData.isSponsored,
+    metaData.isAdvertisementFeature,
+    metaData.isFoundationSupported,
+    metaData.sponsor,
+    metaData.sponsorshipType
   )
 
   val empty = ContainerCommercialOptions(
@@ -235,7 +249,10 @@ case class FaciaContainer(
   containerLayout: Option[ContainerLayout],
   showDateHeader: Boolean,
   showLatestUpdate: Boolean,
-  commercialOptions: ContainerCommercialOptions
+  commercialOptions: ContainerCommercialOptions,
+  customHeader: Option[FaciaContainerHeader],
+  customClasses: Option[Seq[String]],
+  hideToggle: Boolean
 ) {
 
   def faciaComponentName = componentId getOrElse {

@@ -12,4 +12,8 @@ object Maps {
         case (k, v) => (f(k), v)
       }).toMap
   }
+
+  implicit class RichMapSeq[A, B](map: Map[A, Seq[B]]) {
+    def meanFrequency = map.values.map(_.length.toDouble).sum / map.size
+  }
 }
