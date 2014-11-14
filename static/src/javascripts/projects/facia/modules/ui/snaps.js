@@ -19,11 +19,15 @@ define([
     relativeDates,
     FootballSnaps
 ) {
+    var clientProcessedTypes = ['document', 'fragment', 'json.html'];
 
     function init() {
         var snaps = toArray($('.js-snappable.js-snap'))
+                .filter(function (el) {
+                    var snapType = el.getAttribute('data-snap-type');
+                    return snapType && clientProcessedTypes.indexOf(snapType) > -1;
+                });
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); })
-                .filter(function (el) { return el.getAttribute('data-snap-type'); });
 
         snaps.forEach(fetchSnap);
 
