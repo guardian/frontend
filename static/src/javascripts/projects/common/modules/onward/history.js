@@ -4,6 +4,8 @@
  */
 define([
     'lodash/arrays/zip',
+    'lodash/collections/contains',
+    'lodash/collections/filter',
     'lodash/collections/reduceRight',
     'lodash/objects/assign',
     'lodash/objects/mapValues',
@@ -12,6 +14,8 @@ define([
     'common/utils/storage'
 ], function (
     zip,
+    contains,
+    filter,
     reduceRight,
     assign,
     mapValues,
@@ -33,32 +37,44 @@ define([
         return this;
     }
 
-    function Summary() {
-        this.sections = {};
-        this.series = {};
-        this.keywords = {};
-        this.authors = {};
-        this.blogs = {};
-    }
+    /**
+     * {
+            "id": "lifeandstyle/food-and-drink",
+            "displayName": "Food & drink2",
+            "type": "keyword",
+            "weight": 50,
+            "parentDisplayName": "Life and style2"
+        }
+     {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50, "Life and style"]
+            }
+     * @param tag
+     * @param summary
+     * @param multiplier
+     * @returns {*}
+     */
+    function updateSummaryTypeFromIdName(tag, summary, multiplier) {
+        var tagType,
+            nameCount,
+            oldWeight;
 
-    function updateSummaryTypeFromIdName(idNameMap, summary) {
-        var id = idNameMap[0][0],
-            name = idNameMap[0][1],
-            nameCount = summary[id] || [name, 0];
+        tagType = (tag.type == 'faciaPage' && summary[tag.id]) ? summary[tag.id][1] : tag.type;
+        oldWeight = summary[tag.id] ? summary[tag.id][2] : 0;
+        nameCount = [tag.displayName, tagType, oldWeight + (tag.weight * multiplier)];
+        if (tag.parentDisplayName) {
+            nameCount.push(tag.parentDisplayName);
+        }
 
-        nameCount[1] = nameCount[1] + 1;
-        nameCount[0] = name;
-        summary[id] = nameCount;
+        summary[tag.id] = nameCount;
 
         return summary;
     }
 
-    function updateSummaryFromAllMeta(metaList, summary) {
-        var metaType, idNameMap;
+    function updateSummaryFromAllMeta(summaryIncrement, summary, multiplier) {
+        var i;
 
-        for (metaType in metaList) {
-            idNameMap = metaList[metaType];
-            summary[metaType] = updateSummaryTypeFromIdName(idNameMap, summary[metaType]);
+        for (i = 0; i < summaryIncrement.length; i++) {
+            summary = updateSummaryTypeFromIdName(summaryIncrement[i], summary, multiplier);
         }
 
         return summary;
@@ -66,7 +82,7 @@ define([
 
     function addItemAndUpdateSummary(itemsSoFar, itemToAdd) {
         itemsSoFar.recentPages.unshift(itemToAdd);
-        itemsSoFar.summary = updateSummaryFromAllMeta(itemToAdd.meta, itemsSoFar.summary);
+        itemsSoFar.summary = updateSummaryFromAllMeta(itemToAdd.summary, itemsSoFar.summary, itemToAdd.countRepeatVisits ? itemToAdd.count : 1);
 
         return itemsSoFar;
     }
@@ -75,7 +91,7 @@ define([
         var items = reduceRight(oldItems, function (items, item) {
             if (item.id === newItem.id) {
                 items.currentItem.count = items.currentItem.count + item.count;
-            } else if (item.meta) { // only add non legacy items with a meta block
+            } else if (item.summary) { // only add non legacy items with a summary block
                 items = addItemAndUpdateSummary(items, item);
             }
 
@@ -83,21 +99,38 @@ define([
         }, {
             currentItem: new HistoryItem(newItem, now),
             recentPages: [],
-            summary: new Summary()
+            summary: {}
         });
 
         addItemAndUpdateSummary(items, items.currentItem);
         delete items.currentItem;
 
         items.recentPages = items.recentPages.slice(0, maxSize);
-        items.summary.count = items.recentPages.length;
+        //items.summary.count = items.recentPages.length;
         return items;
     }
 
-    function getCountsMap(metaName, summary) {
-        return mapValues(summary[metaName], function (nameCount) {
-            return nameCount[1];
-        });
+    /**
+     * summary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50 * 2, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10 * 2]
+            }
+     * @param types
+     * @param summary
+     * @returns {*}
+     */
+    function getCountsMap(types, summary) {
+        // filter by type and add id -> weight to a map
+        var id,
+            countsMap = {};
+
+        for (id in summary) {
+            if (contains(types, summary[id][1])) {
+                countsMap[id] = summary[id][2];
+            }
+        }
+
+        return countsMap;
     }
 
     function pageInHistory(pageId, history) {
@@ -107,27 +140,16 @@ define([
         return foundItem.count > 1;
     }
 
-    function getHead(csString) {
-        return csString && ((csString + '').split(',')[0]);
-    }
-
     function preparePage(page) {
         return {
             id: page.pageId,
-            meta: omit({
-                sections: [[page.section, page.sectionName]],
-                series: [[page.seriesId, page.series]],
-                keywords: [[getHead(page.keywordIds), getHead(page.keywords)]],
-                authors: [[getHead(page.authorIds), getHead(page.author)]],
-                blogs: [[getHead(page.blogIds), getHead(page.blogs)]]
-            }, function (list) {
-                return !list[0][0] || !list[0][1];
-            })
+            countRepeatVisits: page.isFront,
+            summary: page.summary
         };
     }
 
     function getSummary() {
-        summaryCache = summaryCache || storage.local.get(storageKeySummary) || new Summary();
+        summaryCache = summaryCache || storage.local.get(storageKeySummary) || {};
         return summaryCache;
     }
 
@@ -146,7 +168,6 @@ define([
     return {
 
         test: {
-            Summary: Summary,
             updateSummaryTypeFromIdName: updateSummaryTypeFromIdName,
             updateSummaryFromAllMeta: updateSummaryFromAllMeta,
             getUpdatedHistory: getUpdatedHistory,
@@ -168,11 +189,7 @@ define([
         getHistory: getHistory,
 
         getSectionCounts: function (summary) {
-            return getCountsMap('sections', summary);
-        },
-
-        getLeadKeywordCounts: function (summary) {
-            return getCountsMap('keywords', summary);
+            return getCountsMap(['section', 'keyword'], summary);
         },
 
         pageHasBeenSeen: function (pageId) {

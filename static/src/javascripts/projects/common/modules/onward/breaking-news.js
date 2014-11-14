@@ -23,7 +23,7 @@ define([
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
-        interestThreshold = 5,
+        interestThreshold = 5 * 10,
         maxSimultaneousAlerts = 1,
         container;
 
@@ -68,7 +68,7 @@ define([
 
                     summary = history.getSummary(),
 
-                    historyMatchers = assign({}, assign(history.getSectionCounts(summary), history.getLeadKeywordCounts(summary))),
+                    historyMatchers = history.getSectionCounts(summary),
 
                     articles = flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),

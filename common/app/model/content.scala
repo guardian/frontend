@@ -151,7 +151,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
         SummaryData.defaultWeight,
         if (tag.tagType == "keyword") Some(tag.sectionName) else None
       )
-    SummaryData(section, sectionName, "section", SummaryData.defaultWeight, None) +: tagsSummary
+    val keywordOthers = tagsSummary.groupBy(_.`type` == "keyword")
+    val leadKeyword = keywordOthers.getOrElse(true, Seq[SummaryData]()).headOption
+    val otherTags = keywordOthers.getOrElse(false, Seq[SummaryData]())
+    val tagsWithOneKeywordOnly: Seq[SummaryData] = Seq(leadKeyword.toSeq, otherTags).flatten
+    SummaryData(section, sectionName, "section", SummaryData.defaultWeight, None) +: tagsWithOneKeywordOnly
   }
 
   // Meta Data used by plugins on the page

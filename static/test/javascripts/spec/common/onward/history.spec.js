@@ -50,31 +50,109 @@ define([
     }
 
     // basic item
-    var newItem1 = {id: 'a', meta: { sections: [['s','sn']], keywords: [['k', 'kn']]} };
+    var newItem1 = {id: 'a', countRepeatVisits: true, "summary": [
+        {
+            "id": "lifeandstyle/food-and-drink",
+            "displayName": "Food & drink",
+            "type": "keyword",
+            "weight": 50,
+            "parentDisplayName": "Life and style"
+        },
+        {
+            "id": "lifeandstyle",
+            "displayName": "Life and style",
+            "type": "section",
+            "weight": 10
+        }
+    ] };
+    var nonDuplicatableItem1 = assign(assign({}, newItem1), {countRepeatVisits: false});
     // different article, and note that the display names are different from the previous IDs
-    var newItem2 = {id: 'a2', meta: { sections: [['s','sn2']], keywords: [['k', 'kn2']]} };
+    var newItem2 = {id: 'a2', countRepeatVisits: true, "summary": [
+        {
+            "id": "lifeandstyle/food-and-drink",
+            "displayName": "Food & drink2",
+            "type": "keyword",
+            "weight": 50,
+            "parentDisplayName": "Life and style2"
+        },
+        {
+            "id": "lifeandstyle",
+            "displayName": "Life and style2",
+            "type": "section",
+            "weight": 10
+        }
+    ] };
+
+    // faciaPage means we don't know whether it's a tag or section yet
+    var faciaPage = {id: 'a3', countRepeatVisits: true, "summary": [
+        {
+            "id": "lifeandstyle",
+            "displayName": "Life and style",
+            "type": "faciaPage",
+            "weight": 10
+        }
+    ] };
 
     describe('updateSummaryTypeFromIdName', function() {
 
+        /*
+         * this method should take a summary increment block and the existing summary and either add the whole item afresh
+         * or sum the weights if it's already there.
+         * If the type is faciaPage it should be overridden
+         */
+
         beforeEach(addObjectMatcher);
 
-        it("should add a first section to the summary", function () {
+        it("should add a first section to the summary with a parent and handle parentDisplayName and multiplier", function () {
             var summary = {};
 
-            var expectedSummary = {id: ['name', 1]};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 2 * 50, "Life and style"]
+            };
 
-            var newSummary = hist.test.updateSummaryTypeFromIdName([['id', 'name']], summary);
+            var newSummary = hist.test.updateSummaryTypeFromIdName(newItem1.summary[0], summary, 2);
 
             expect(newSummary).toSameProps(expectedSummary);
         });
 
-        it("should increment in the summary and update the name", function () {
+        it("should sum the weights of a section and update the name", function () {
             var summary = {};
 
-            var expectedSummary = {id: ['name2', 2]};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink2", "keyword", 100, "Life and style2"]
+            };
 
-            var intermediate = hist.test.updateSummaryTypeFromIdName([['id','name']], summary);
-            var newSummary = hist.test.updateSummaryTypeFromIdName([['id','name2']], intermediate);
+            var intermediate = hist.test.updateSummaryTypeFromIdName(newItem1.summary[0], summary, 1);
+
+            var newSummary = hist.test.updateSummaryTypeFromIdName(newItem2.summary[0], intermediate, 1);
+
+            expect(newSummary).toSameProps(expectedSummary);
+        });
+
+        it("should supersede faciaPage with section and handle no parentDisplayName", function () {
+            var summary = {};
+
+            var expectedSummary = {
+                'lifeandstyle': ["Life and style", "section", 20]
+            };
+
+            var intermediate = hist.test.updateSummaryTypeFromIdName(faciaPage.summary[0], summary, 1);
+
+            var newSummary = hist.test.updateSummaryTypeFromIdName(newItem1.summary[1], intermediate, 1);
+
+            expect(newSummary).toSameProps(expectedSummary);
+        });
+
+        it("should supersede faciaPage with section (reverse order)", function () {
+            var summary = {};
+
+            var expectedSummary = {
+                'lifeandstyle': ["Life and style", "section", 20]
+            };
+
+            var intermediate = hist.test.updateSummaryTypeFromIdName(newItem1.summary[1], summary, 1);
+
+            var newSummary = hist.test.updateSummaryTypeFromIdName(faciaPage.summary[0], intermediate, 1);
 
             expect(newSummary).toSameProps(expectedSummary);
         });
@@ -85,38 +163,17 @@ define([
 
         beforeEach(addObjectMatcher);
 
-        it("should add the things when they are set normally", function () {
-            var summary = new hist.test.Summary();
+        it("should add all of the items to the summary", function () {
+            var summary = {};
 
-            var expectedSummary = {sections: {id: ['name', 1]}, keywords: {kid: ['kname', 1]}};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10]
+            };
 
-            var newSummary = hist.test.updateSummaryFromAllMeta({sections: [['id','name']], keywords: [['kid', 'kname']]}, summary);
+            var newSummary = hist.test.updateSummaryFromAllMeta(newItem1.summary, summary, 1);
 
-            expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
-
-        });
-
-        it("should not add when they're not set", function () {
-            var summary = new hist.test.Summary();
-
-            var expectedSummary = {};
-
-            var newSummary = hist.test.updateSummaryFromAllMeta({}, summary);
-
-            expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
-
-        });
-
-        it("should increment when a tag is reused, and update the name", function () {
-            var summary = new hist.test.Summary();
-
-            var expectedSummary = {sections: {id: ['name2', 2]}, keywords: {kid: ['kname', 1], anotherkid: ['anotherkname', 1]}};
-
-            var intermediate = hist.test.updateSummaryFromAllMeta({sections: [['id','name2']], keywords: [['kid', 'kname']]}, summary);
-            var newSummary = hist.test.updateSummaryFromAllMeta({sections: [['id','name2']], keywords: [['anotherkid', 'anotherkname']]}, intermediate);
-
-            expect(newSummary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
-
+            expect(newSummary).toSameProps(expectedSummary);
         });
 
     });
@@ -128,62 +185,98 @@ define([
         it('should store the first article correctly', function() {
             var oldItems = [];
 
-            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 1, timestamp: 123, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10]
+            };
+
+            var expectedRecent0 = assign({count: 1, timestamp: 123}, newItem1);
 
             var result = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10);
 
-            expect(result.summary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
+            expect(result.summary).toSameProps(expectedSummary);
             expect(result.recentPages.length).toBe(1);
             expect(result.recentPages[0]).toSameProps(expectedRecent0);
         });
 
-        it('should not store the first article twice but should update the timestamp', function() {
+        it('should bring back the lower item to the top when its readded', function() {
             var oldItems = [];
 
-            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 2, timestamp: 124, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50 * 3, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10 * 3]
+            };
+
+            var expectedRecent0 = assign({count: 2, timestamp: 125}, newItem1);
+            var expectedRecent1 = assign({count: 1, timestamp: 124}, newItem2);
 
             var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
-            var result = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 10);
+            var afterSecond = hist.test.getUpdatedHistory(newItem2, afterFirst, 124, 10).recentPages;
+            var result = hist.test.getUpdatedHistory(newItem1, afterSecond, 125, 10);
 
-            expect(result.summary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
-            expect(result.recentPages.length).toBe(1);
-            expect(result.recentPages[0]).toSameProps(expectedRecent0);
-        });
-
-        it('should store the second article correctly', function() {
-            var oldItems = [];
-
-            var expectedSummary = {sections: {s: ['sn2', 2]}, keywords: {k: ['kn2', 2]}, count: 2};
-            var expectedRecent0 = {id: 'a2', count: 1, timestamp: 124, meta: { sections: [['s','sn2']], keywords: [['k', 'kn2']]}};
-            var expectedRecent1 = {id: 'a', count: 1, timestamp: 123, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
-
-            var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
-            var result = hist.test.getUpdatedHistory(newItem2, afterFirst, 124, 10);
-
-            expect(result.summary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
+            expect(result.summary).toSameProps(expectedSummary);
             expect(result.recentPages.length).toBe(2);
             expect(result.recentPages[0]).toSameProps(expectedRecent0);
             expect(result.recentPages[1]).toSameProps(expectedRecent1);
         });
 
-        it('should lose the oldest article when the limit is exceeded', function() {
+        it('should not store the first article twice but should update the timestamp and double the weight when enabled', function() {
             var oldItems = [];
 
-            var expectedSummary = {sections: {s: ['sn', 1]}, keywords: {k: ['kn', 1]}, count: 1};
-            var expectedRecent0 = {id: 'a', count: 1, timestamp: 124, meta: { sections: [['s','sn']], keywords: [['k', 'kn']]}};
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50 * 2, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10 * 2]
+            };
 
-            var afterFirst = hist.test.getUpdatedHistory(newItem2, oldItems, 123, 1).recentPages;
-            var preResult = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 1);
-            // because the trim happens afterwards, the summary will actually have an extra one, so relogging it to forget about that
-            var result = hist.test.getUpdatedHistory(newItem1, preResult, 124, 1);
+            var expectedRecent0 = assign({count: 2, timestamp: 124}, newItem1);
 
-            expect(result.summary).toSameProps(assign(new hist.test.Summary(), expectedSummary));
+            var afterFirst = hist.test.getUpdatedHistory(newItem1, oldItems, 123, 10).recentPages;
+            var result = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 10);
+
+            expect(result.summary).toSameProps(expectedSummary);
             expect(result.recentPages.length).toBe(1);
             expect(result.recentPages[0]).toSameProps(expectedRecent0);
         });
 
+        it('should not store the first article twice but should update the timestamp and dont double the weight when disabled', function() {
+            var oldItems = [];
+
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10]
+            };
+
+            var expectedRecent0 = assign({count: 2, timestamp: 124}, nonDuplicatableItem1);
+
+            var afterFirst = hist.test.getUpdatedHistory(nonDuplicatableItem1, oldItems, 123, 10).recentPages;
+            var result = hist.test.getUpdatedHistory(nonDuplicatableItem1, afterFirst, 124, 10);
+
+            expect(result.summary).toSameProps(expectedSummary);
+            expect(result.recentPages.length).toBe(1);
+            expect(result.recentPages[0]).toSameProps(expectedRecent0);
+        });
+
+        it('should lose the oldest article when the limit is exceeded', function() {
+            var oldItems = [];
+
+            var expectedSummary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50 * 2, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10 * 2]
+            };
+
+            var expectedRecent0 = assign({count: 2, timestamp: 125}, newItem1);
+
+            var afterFirst = hist.test.getUpdatedHistory(newItem2, oldItems, 123, 1).recentPages;
+            var afterSecond = hist.test.getUpdatedHistory(newItem1, afterFirst, 124, 1).recentPages;
+                // because the trim happens afterwards, the summary will actually have an extra one, so relogging it to forget about that
+            var result = hist.test.getUpdatedHistory(newItem1, afterSecond, 125, 1);
+
+            expect(result.summary).toSameProps(expectedSummary);
+            expect(result.recentPages.length).toBe(1);
+            expect(result.recentPages[0]).toSameProps(expectedRecent0);
+        });
+
+        // do we need a test for bring to the beginning?
 
     });
 
@@ -221,26 +314,18 @@ define([
 
     });
 
-    describe('history processing functions', function() {
+    describe('history processing functions', function () {
 
         beforeEach(addObjectMatcher);
 
         it('getSectionCounts should set the section count in the summary, once per article', function () {
             var oldItems = [];
 
-            var afterFirst = hist.test.getUpdatedHistory(item, oldItems, 123, 10).recentPages;
-            var result = hist.test.getUpdatedHistory(item, afterFirst, 124, 10);
+            var afterFirst = hist.test.getUpdatedHistory(nonDuplicatableItem1, oldItems, 123, 10).recentPages;
+            var result = hist.test.getUpdatedHistory(nonDuplicatableItem1, afterFirst, 124, 10);
 
-            expect(hist.getSectionCounts(result.summary).foobar).toEqual(1);
-        });
-
-        it('getLeadKeywordCounts should set the first keyword\'s count in the summary, once per article', function () {
-            var oldItems = [];
-
-            var afterFirst = hist.test.getUpdatedHistory(item, oldItems, 123, 10).recentPages;
-            var result = hist.test.getUpdatedHistory(item, afterFirst, 124, 10);
-
-            expect(hist.getLeadKeywordCounts(result.summary).foo).toEqual(1);
+            expect(hist.getSectionCounts(result.summary).lifeandstyle).toEqual(10);
+            expect(hist.getSectionCounts(result.summary)['lifeandstyle/food-and-drink']).toEqual(50);
         });
 
         it('pageInHistory if its in there twice should be true', function () {
@@ -272,7 +357,7 @@ define([
 
         it('should return a blank summary if one is not set', function () {
 
-            expect(hist.getSummary()).toSameProps(new hist.test.Summary());
+            expect(hist.getSummary()).toSameProps({});
         });
 
         it('should return a blank history if one is not set', function () {
@@ -292,14 +377,8 @@ define([
 
             expect(preparedPage).toSameProps({
                 id: 'commentisfree/2014/oct/08/clacton-byelection-parties-defiance-coast-strood-ukip',
-                meta: {
-                    // no series (so series is missing completely)
-                    // no blogs (so blogs is empty)
-                    // has a section, keywords, authors
-                    sections: [['commentisfree', 'Comment is free']],
-                    keywords: [['politics/ukip', 'UK Independence party (Ukip)']],
-                    authors: [['profile/johnharris', 'John Harris']]
-                }
+                countRepeatVisits: true,
+                summary: configPage.summary
             });
         });
 
