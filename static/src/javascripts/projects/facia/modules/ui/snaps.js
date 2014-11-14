@@ -26,8 +26,8 @@ define([
                 .filter(function (el) {
                     var snapType = el.getAttribute('data-snap-type');
                     return snapType && clientProcessedTypes.indexOf(snapType) > -1;
-                });
-                .filter(function (el) { return el.getAttribute('data-snap-uri'); })
+                })
+                .filter(function (el) { return el.getAttribute('data-snap-uri'); });
 
         snaps.forEach(fetchSnap);
 
