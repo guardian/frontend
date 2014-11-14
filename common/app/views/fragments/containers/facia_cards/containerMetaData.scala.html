@@ -1,0 +1,19 @@
+@(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
+
+@import common.Localisation
+@import views.support.RenderClasses
+
+<div class="index-page-header">
+    <div class="index-page-header__content">
+        @metaDataHeader.image.map { image =>
+            <div class="@RenderClasses(image.cssClasses: _*)">
+                <img class="index-page-header__image" data-test-id="header-image" role="presentation" src="@image.url" />
+            </div>
+        }
+
+        <h1 class="index-page-header__title" data-test-id="header-title">@Localisation(metaDataHeader.displayName)</h1>
+        @metaDataHeader.description.map { desc =>
+            <div class="index-page-header__description">@Html(desc)</div>
+        }
+    </div>
+</div>

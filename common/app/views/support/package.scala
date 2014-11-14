@@ -691,7 +691,11 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    val timezone = Edition(request).timezone
+    apply(date, Edition(request), pattern)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String): String = {
+    val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
@@ -753,8 +757,6 @@ object RenderClasses {
 
 object GetClasses {
   def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
-    val hasImage = item.hasImage
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -792,12 +794,13 @@ object GetClasses {
   def forContainerDefinition(containerDefinition: FaciaContainer) =
     forContainer(
       containerDefinition.showLatestUpdate,
-      containerDefinition.index == 0,
+      containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
-      Some(containerDefinition.container)
+      Some(containerDefinition.container),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      disableHide = containerDefinition.hideToggle
     )
-
 
   def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,

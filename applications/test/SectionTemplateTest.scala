@@ -8,7 +8,7 @@ import scala.collection.JavaConversions._
 @DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render front title" in goTo("/uk-news") { browser =>
-    browser.$(".container__meta__title").first.getText should be ("UK news")
+    browser.$("[data-test-id=header-title]").first.getText should be ("UK news")
   }
 
   it should "add alternate pages to editionalised sections for /uk/culture" in goTo("/uk/culture") { browser =>
