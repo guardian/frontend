@@ -763,3 +763,28 @@ case object TTlMpu extends Slice {
     )
   )
 }
+
+case object TTMpu extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "t-t-mpu",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Third
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Third
+        )
+      ),
+      MPU(
+        colSpan = 1
+      )
+    )
+  )
+}

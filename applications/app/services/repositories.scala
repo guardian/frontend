@@ -30,8 +30,10 @@ case class MpuState(injected: Boolean)
 
 object IndexPage {
   def containerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
+    case 2 => Some(FixedContainers.indexPageMpuII)
     case 4 => Some(FixedContainers.indexPageMpuIV)
     case 6 => Some(FixedContainers.indexPageMpuVI)
+    case n if n >= 12 => Some(FixedContainers.indexPageMpuXII)
     case _ => None
   }
 
