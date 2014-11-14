@@ -58,7 +58,8 @@ object IndexPage {
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       container.copy(
         customHeader = Some(header),
-        customClasses = Some(Seq("fc-container--tag"))
+        customClasses = Some(Seq("fc-container--tag")),
+        hideToggle = true
       )
     }))
   }

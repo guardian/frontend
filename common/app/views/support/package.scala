@@ -753,8 +753,6 @@ object RenderClasses {
 
 object GetClasses {
   def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
-    val hasImage = item.hasImage
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -796,9 +794,9 @@ object GetClasses {
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
       Some(containerDefinition.container),
-      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty)
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      disableHide = containerDefinition.hideToggle
     )
-
 
   def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,

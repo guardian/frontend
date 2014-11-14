@@ -187,7 +187,8 @@ object FaciaContainer {
     config.config.showLatestUpdate.exists(identity),
     ContainerCommercialOptions.fromConfig(config.config),
     None,
-    None
+    None,
+    false
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -250,7 +251,8 @@ case class FaciaContainer(
   showLatestUpdate: Boolean,
   commercialOptions: ContainerCommercialOptions,
   customHeader: Option[FaciaContainerHeader],
-  customClasses: Option[Seq[String]]
+  customClasses: Option[Seq[String]],
+  hideToggle: Boolean
 ) {
 
   def faciaComponentName = componentId getOrElse {
