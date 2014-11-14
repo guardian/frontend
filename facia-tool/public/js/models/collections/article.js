@@ -594,6 +594,14 @@ define([
         };
 
         Article.prototype.save = function() {
+
+            // legacy-snaps
+            if (this.meta.href()) {
+                this.meta.snapType('link');
+                this.meta.snapUri(this.meta.href());
+                this.meta.href(undefined);
+            }
+
             if (!this.group.parent) {
                 return;
             }

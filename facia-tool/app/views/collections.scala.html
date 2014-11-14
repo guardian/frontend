@@ -370,6 +370,12 @@
                                 <span class="label label--snap-uri" data-bind="text: meta.snapUri"></span>
                             <!-- /ko -->
 
+                            <!-- legacy-snaps -->
+                            <!-- ko if: meta.href -->
+                                <span class="label label--snap">snap: NEEDS UPGRADE!</span>
+                                <span class="label label--snap-uri" data-bind="text: meta.href"></span>
+                            <!-- /ko -->
+
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->
                                 <span class="has-sublinks">
                                     <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>

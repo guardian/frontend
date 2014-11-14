@@ -136,7 +136,7 @@ function (
                     cache.put('contentApi', icc, result);
 
                     _.filter(articles, function(article) {
-                        return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
+                        return article.id() === icc;
                     }).forEach(function(article) {
                         populate(article, result);
                     });
@@ -144,6 +144,9 @@ function (
             });
 
            _.chain(articles)
+            // legacy-snaps
+            .filter(function(article) { return !article.meta.href(); })
+
             .filter(function(article) { return !article.meta.snapType(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
