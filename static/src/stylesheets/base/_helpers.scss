@@ -6,21 +6,27 @@
     @include u-h;
 }
 
+.hide-until-tablet {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+}
+
 .hide-until-leftcol {
     @include mq($until: leftCol) {
-        @include u-h;
+        display: none !important;
     }
 }
 
 .hide-until-wide {
     @include mq($until: wide) {
-        @include u-h;
+        display: none !important;
     }
 }
 
 .hide-from-leftcol {
     @include mq(leftCol) {
-        @include u-h;
+        display: none !important;
     }
 }
 
@@ -81,6 +87,20 @@
     @include clearfix;
 }
 
+// To show skip links when user tabs over
+.skip:focus,
+.skip:active {
+    font-size: 80%;
+    display: block;
+    color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    text-decoration: none;
+
+    position: static !important;
+    width: 100% !important;
+    height: $gs-row-height / 2 !important;
+    text-align: center;
+}
+
 
 /**
  * Responsive media (images, videos…)
@@ -96,6 +116,7 @@
     object,
     embed,
     iframe,
+    svg,
     video { // 2
         width: 100%;
         height: 100%;
@@ -156,15 +177,15 @@
 .u-underline,
 %u-underline {
     text-decoration: none !important;
-    border-bottom: 1px solid $c-neutral4;
+    border-bottom: 1px solid colour(neutral-4);
     @include transition(border-color .15s ease-out);
 
     &:hover,
     &:focus {
-        border-color: mix($c-newsDefault, $c-neutral4, 50%);
+        border-color: mix(colour(news-default), colour(neutral-4), 50%);
     }
     &:active {
-        border-color: $c-newsAccent;
+        border-color: colour(news-accent);
     }
 }
 

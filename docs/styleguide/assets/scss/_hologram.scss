@@ -7,7 +7,7 @@
     padding: $gs-baseline;
 
     &:before {
-        color: $c-neutral2;
+        color: colour(neutral-2);
         @include fs-data(4);
         text-transform: uppercase;
         padding: 0 0 $gs-baseline 0;
@@ -18,8 +18,8 @@
 
 .exampleOutput {
     background-image:
-        linear-gradient(45deg, fade-out($c-neutral8, 0.25) 25%, transparent 25%, transparent 75%, fade-out($c-neutral8, 0.25) 75%, fade-out($c-neutral8, 0.25)),
-        linear-gradient(45deg, fade-out($c-neutral8, 0.25) 25%, transparent 25%, transparent 75%, fade-out($c-neutral8, 0.25) 75%, fade-out($c-neutral8, 0.25));
+        linear-gradient(45deg, fade-out(colour(neutral-8), 0.25) 25%, transparent 25%, transparent 75%, fade-out(colour(neutral-8), 0.25) 75%, fade-out(colour(neutral-8), 0.25)),
+        linear-gradient(45deg, fade-out(colour(neutral-8), 0.25) 25%, transparent 25%, transparent 75%, fade-out(colour(neutral-8), 0.25) 75%, fade-out(colour(neutral-8), 0.25));
     background-size: 44px 44px;
     background-position: 0 0, 22px 22px;
 
@@ -39,7 +39,7 @@
 }
 
 .codeBlock {
-    background-color: fade-out($c-neutral7, 0.25);
+    background-color: fade-out(colour(neutral-7), 0.25);
     overflow: auto;
 
     &:before {

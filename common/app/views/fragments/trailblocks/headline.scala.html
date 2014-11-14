@@ -2,11 +2,6 @@
 
 <ul class="u-unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @trail match {
-            case g: Gallery => { @fragments.trails.gallery(g, info.rowNum) }
-            case other => {
-                @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
-            }
-        }
+        @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
     }
 </ul>

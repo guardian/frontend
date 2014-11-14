@@ -41,7 +41,8 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
         case c: Content if c.shouldHideAdverts => true
         case _ => false
       })),
-      ("isPreview", JsBoolean(environment.isPreview))
-    ))
+      ("isPreview", JsBoolean(environment.isPreview)),
+      ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship))
+    ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil))
   }
 }

@@ -1,4 +1,4 @@
-@(page: model.MetaData, collection: model.Collection, containerLayout: layout.ContainerLayout, pagination: Option[common.Pagination] = None, dataId: String)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
+@(page: model.MetaData, collection: model.Collection, containerLayout: layout.ContainerLayout, pagination: Option[common.Pagination] = None, dataId: String)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import model.FaciaComponentName
 @import views.html.fragments.containers.facia_cards.slice
@@ -6,11 +6,12 @@
 @import dfp.DfpAgent
 @import views.support.FootballTagPage
 
-@defining(config.displayName.orElse(collection.displayName)) { title =>
+@* TODO consolidate with the master container template *@
 
+@defining(config.displayName.orElse(collection.displayName)) { title =>
     @if(collection.items.nonEmpty) {
         <section
-            class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first"))"
+            class="@GetClasses.forTagContainer(title.nonEmpty)"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@dataId"
             @DfpAgent.sponsorshipTag(config).map { keyword =>
@@ -20,7 +21,7 @@
                 data-sponsorship="@sponsorshipType"
             }
             data-component="@FaciaComponentName(config, collection)">
-            <div class="facia-container__inner">
+            <div class="fc-container__inner">
                 <div class="fc-container__header js-container__header">
                     @FootballTagPage(page).asOpt.map{ footballTagPage =>
                         @fragments.containers.elements.footballTeamHeader(footballTagPage, collection)
@@ -31,7 +32,7 @@
                     }
                     @fragments.contributor(page)
                 </div>
-                <div class="container__body container--rolled-up-hide">
+                <div class="fc-container__body fc-container--rolled-up-hide">
                     @for(sliceWithCards <- containerLayout.slices) {
                         @slice(sliceWithCards, 0)
                     }

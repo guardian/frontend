@@ -1,15 +1,12 @@
-@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader)
 
 @import views.support.RenderClasses
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="l-side-margins l-side-margins--layout-front">
+    <div class="l-side-margins">
         <div class="@RenderClasses(Map(
-                "facia-container" -> true,
-                "facia-container--layout-front" -> true,
-                "facia-container--sponsored" -> faciaPage.isSponsored,
-                "facia-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
-                "facia-container--foundation-supported" -> faciaPage.isFoundationSupported,
+                "fc-container--sponsored" -> faciaPage.isSponsored,
+                "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
                 "js-sponsored-front" -> (faciaPage.isSponsored || faciaPage.isAdvertisementFeature || faciaPage.isFoundationSupported)))"
             data-link-name="Front | @request.path"
             @faciaPage.sponsor.map { sponsor =>
@@ -20,9 +17,9 @@
             }
             role="main">
 
-            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-                @collections.zipWithIndex.map{ case(block, index) =>
-                    @fragments.frontCollection(faciaPage, (block._1.config, block._2), collections.size, index, block._1.id)
+            @defining(faciaPage.front.containers) { collections =>
+                @collections.map{ containerDefinition =>
+                    @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                 }
             }
 

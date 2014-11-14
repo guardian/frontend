@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/modules/component',
     'common/utils/mediator',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp'
 ], function (
     qwery,
@@ -11,6 +12,7 @@ define([
     config,
     Component,
     mediator,
+    createAdSlot,
     dfp
 ) {
 
@@ -27,13 +29,13 @@ define([
     };
 
     MostPopular.prototype.prerender = function () {
-        this.$mpu = $('.js-facia-slice-mpu-candidate', this.elem)
-            .append(dfp.createAdSlot('inline3', 'container-inline'));
+        this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
+            .append(createAdSlot('inline3', 'container-inline'));
     };
 
     MostPopular.prototype.ready = function () {
         dfp.addSlot($('.ad-slot', this.$mpu));
-        this.$mpu.removeClass('facia-slice__item--no-mpu');
+        this.$mpu.removeClass('fc-slice__item--no-mpu');
         mediator.emit('modules:popular:loaded', this.elem);
         mediator.emit('register:end', 'popular-in-section');
     };

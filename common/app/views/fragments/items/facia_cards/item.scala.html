@@ -1,40 +1,43 @@
-@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
 
-@import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, Content}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, CardStyle, ContributorLinks, CutOut}
+@import model.InlineImage
+@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import Function.const
-@import layout.Sublinks
 
-@defining((card.item, card.index)) { case (trail, index) =>
+@defining((card.item, card.index)) { case (item, index) =>
 
-<li class="facia-slice__item u-faux-block-link l-row__item l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
-    @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer, Sublinks.numberOfSublinks(trail, modifierClasses)) @modifierClasses.classes @if(!isList){js-snappable}"
-            @if(trail.isCommentable) {
-                @trail.discussionId.map{ id =>
+<li class="@RenderClasses(Map(
+        ("fc-slice__item", true),
+        ("u-faux-block-link", true),
+        ("l-row__item", isRow),
+        (s"l-row__item--span-$colSpan", isRow),
+        ("l-list__item", isList),
+        (card.cssClasses, true)
+    ))">
+
+    @defining(containerIndex == 0) { case (isFirstContainer) =>
+        <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
+            @if(item.discussionSettings.isCommentable) {
+                @item.discussionSettings.discussionId.map{ id =>
                 data-discussion-id="@id"
                 }
-                data-discussion-closed="@trail.isClosedForComments"
+                data-discussion-closed="@item.discussionSettings.isClosedForComments"
                 data-discussion-inline-upgrade="true"
             }
-            data-link-name="@CardStyle(trail).toneString | @{index + 1}"
-            @trail match {
-                case content: Content => {
-                    data-id="@content.id"
-                }
-                case _ => {}
+            data-link-name="@item.cardStyle.toneString | @{index + 1}"
+            @item.id.map { id =>
+                data-id="@id"
             }
             data-item-visibility="@card.visibilityDataAttribute"
-            @SnapData(trail)>
+            @item.snapStuff.dataAttributes>
 
             <div class="fc-item__container">
-                @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) if modifierClasses.showVideoPlayer => {
+                @item.displayElement match {
+                    case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
                         @defining(VideoPlayer(
                             videoElement,
                             Video640,
@@ -49,58 +52,75 @@
                                     @video(player)
                                     </div>
                                 </div>
-                                <div class="fc-item__video-fallback">
-                                    @image(trail, inlineImage = containerIndex == 0 && index < 4)
-                                </div>
+                                @fallback.map { fallbackImage =>
+                                    <div class="fc-item__video-fallback">
+                                        @image(
+                                            fallbackImage.imageContainer,
+                                            inlineImage = containerIndex == 0 && index < 4
+                                        )
+                                    </div>
+                                }
                             }
                         }
 
-                    case _ => {
-                        @image(trail, inlineImage = containerIndex == 0 && index < 4)
+                    case Some(svg @ CrosswordSvg(_)) => {
+                        <div class="fc-item__media-wrapper">
+                            <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                                     role="presentation" data-crossword-id="@svg.persistenceId" />
+                            </div>
+                        </div>
                     }
+
+                    case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+                        @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                    }
+
+                    case Some(InlineImage(imageContainer)) => {
+                        @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                    }
+
+                    case _ => { }
                 }
 
                 <div class="fc-item__content">
                     <div class="@RenderClasses(Map(
                         ("fc-item__header", true),
-                        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
+                        ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
                     ))">
-                        @title(trail, index, containerIndex, false)
-                        @trail match {
-                            case content: model.Content => {
-                                @content.byline.filter(const(content.showByline)).map { byline =>
-                                    <div class="fc-item__byline">
-                                        @ContributorLinks(Html(byline), content.contributors)
-                                    </div>
-                                }
-                                @starRating(content)
-                            }
-                            case _ => {}
+                        @title(item.header, index, containerIndex)
+
+                        @item.byline.map { byline =>
+                            <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
+                        }
+
+                        @item.starRating.map { rating =>
+                            @starRating(rating)
                         }
                     </div>
 
-                    @trail.trailText.map { text =>
+                    @item.trailText.map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                    <div class="fc-item__footer--vertical" aria-hidden="true">
-                        @sublinks(trail.supporting, modifierClasses)
+                    @if(item.sublinks.nonEmpty) {
+                        <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                    }
+
+                    @meta(item)
+                </div>
+
+                @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                    <div class="fc-item__avatar">
+                        <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
                     </div>
-
-                    @meta(trail)
-                </div>
-
-                @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
-                <div class="fc-item__avatar">
-                    <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
-                </div>
                 }
 
-                <footer class="fc-item__footer--horizontal">
-                    @sublinks(trail.supporting, modifierClasses)
-                </footer>
+                @if(item.sublinks.nonEmpty) {
+                    <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
+                }
 
-                <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+                <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
             </div>
         </div>
     }

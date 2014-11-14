@@ -7,14 +7,12 @@ define([
 
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
 
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
-    'common/modules/identity/api',
     'common/modules/ui/relativedates'
 ], function(
     bean,
@@ -25,14 +23,12 @@ define([
 
     $,
     ajax,
-    detect,
     mediator,
     scroller,
 
     Component,
     DiscussionApi,
     CommentBox,
-    Id,
     relativedates
 ) {
 'use strict';
@@ -168,7 +164,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var queryParams = {
         orderBy: options.order || this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        pageSize: options.pagesize || this.options.pagesize || 25,
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
@@ -424,12 +420,6 @@ Comments.prototype.addUser = function(user) {
         this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
-
-        if (this.user.isStaff) {
-            $('.d-discussion', this.elem)
-                .removeClass('d-discussion--not-staff')
-                .addClass('d-discussion--is-staff');
-        }
     }
 
     if (!this.isReadOnly()) {

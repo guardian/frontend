@@ -1,0 +1,7 @@
+.creative--scrollable-mpu {
+    display: block;
+    height: 250px;
+    @include box-sizing(border-box);
+    border: 1px solid colour(neutral-5);
+    background: none 0 0 repeat;
+}

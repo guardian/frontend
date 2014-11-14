@@ -1,15 +1,19 @@
 define([
+    'raven',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
+    'common/utils/formatters',
     'common/utils/template',
     'text!common/views/content/share-count.html'
 ], function (
+    raven,
     $,
     ajax,
     detect,
     config,
+    formatters,
     template,
     shareCountTemplate
 ) {
@@ -28,8 +32,9 @@ define([
         if (amount !== 0) {
             shareCount += amount;
             var displayCount = shareCount.toFixed(0),
+                formattedDisplayCount = formatters.integerCommas(displayCount),
                 shortDisplayCount = displayCount > 10000 ? Math.round(displayCount / 1000) + 'k' : displayCount;
-            $fullValueEls.text(displayCount);
+            $fullValueEls.text(formattedDisplayCount);
             $shortValueEls.text(shortDisplayCount);
         }
     }
@@ -69,30 +74,37 @@ define([
     function init() {
         if ($shareCountEls.length) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
-            ajax({
-                url: 'http://graph.facebook.com/' + url,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true,
-                success: function (resp) {
+            try {
+                ajax({
+                    url: 'http://graph.facebook.com/' + url,
+                    type: 'json',
+                    method: 'get',
+                    crossOrigin: true
+                }).then(function (resp) {
                     var count = resp.shares || 0;
                     counts.facebook = count;
                     addToShareCount(count);
                     updateTooltip();
-                }
-            });
-            ajax({
-                url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + url,
-                type: 'jsonp',
-                method: 'get',
-                crossOrigin: true,
-                success: function (resp) {
+                });
+                ajax({
+                    url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + url,
+                    type: 'jsonp',
+                    method: 'get',
+                    crossOrigin: true
+                }).then(function (resp) {
                     var count = resp.count || 0;
                     counts.twitter = count;
                     addToShareCount(count);
                     updateTooltip();
-                }
-            });
+                });
+            } catch (e) {
+                raven.captureException(new Error('Error retrieving share counts (' + e.message + ')'), {
+                    tags: {
+                        feature: 'share-count'
+                    }
+                });
+            }
+
         }
 
     }

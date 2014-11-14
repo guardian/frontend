@@ -5,9 +5,11 @@ define([
     'models/config/persistence',
     'modules/vars',
     'modules/content-api',
-    'utils/strip-empty-query-params',
+    'utils/sanitize-api-query',
     'utils/as-observable-props',
     'utils/populate-observables',
+    'utils/full-trim',
+    'utils/url-abs-path',
     'utils/identity'
 ], function(
     ko,
@@ -15,9 +17,11 @@ define([
     persistence,
     vars,
     contentApi,
-    stripEmptyQueryParams,
+    sanitizeApiQuery,
     asObservableProps,
     populateObservables,
+    fullTrim,
+    urlAbsPath,
     identity
 ) {
     var checkCount = 0;
@@ -120,9 +124,25 @@ define([
     };
 
     Collection.prototype.save = function() {
-        this.state.isOpen(false);
-        this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
+        var self = this,
+            errs = _.chain([
+                    {key: 'displayName', errMsg: 'enter a title'},
+                    {key: 'type', errMsg: 'choose a layout'}
+                ])
+                .filter(function(test) { return !fullTrim(_.result(self.meta, test.key)); })
+                .pluck('errMsg')
+                .value();
+
+        if (errs.length) {
+            window.alert('Oops! You must ' + errs.join(', and ') + '...');
+            return;
+        }
+
+        this.meta.href(urlAbsPath(this.meta.href()));
+        this.meta.apiQuery(sanitizeApiQuery(this.meta.apiQuery()));
+
         this.state.apiQueryStatus(undefined);
+        this.state.isOpen(false);
 
         if (vars.model.collections.indexOf(this) === -1) {
             vars.model.collections.unshift(this);
@@ -160,10 +180,10 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .always(function(results) {
+        .done(function(results) {
             if (cc === checkCount) {
-                self.capiResults(results);
-                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
+                self.capiResults(results || []);
+                self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }
         });
     };

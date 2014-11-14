@@ -121,12 +121,17 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
-    "If this switch is on then content will have a shorter cache time",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
+  val PngResizingSwitch = Switch("Performance", "png-resizing",
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
   )
 
   // Commercial
+
+  val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
+    "Have Admin will poll DFP to precache adserving data.",
+    safeState = On, sellByDate = never
+  )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
@@ -160,15 +165,18 @@ object Switches extends Collections {
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val AudienceScienceGatewaySwitch = Switch("Commercial", "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val CriteoSwitch = Switch("Commercial", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
+    safeState = Off, sellByDate = never
+  )
 
   val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
@@ -213,6 +221,11 @@ object Switches extends Collections {
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
+
+  val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
+    "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
 
   // Monitoring
 
@@ -306,6 +319,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
+  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -316,6 +334,10 @@ object Switches extends Collections {
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On, sellByDate = never)
   // A/B Tests
+
+  val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
+    "If switched on, any user registrations from a known tor esit node will be logged",
+    safeState = On, sellByDate = never)
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
@@ -363,11 +385,17 @@ object Switches extends Collections {
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
 
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AjaxRelatedContentSwitch,
+    DfpCachingSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -419,15 +447,19 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     IdentityBlockSpamEmails,
+    IdentityLogRegistrationsFromTor,
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
+    DiscussionPageSizeSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    ContentCacheTimeSwitch,
-    PollPreviewForFreshContentSwitch
+    PollPreviewForFreshContentSwitch,
+    PngResizingSwitch,
+    GlobalDevelopmentQualtrics,
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

@@ -14,6 +14,11 @@ define([
                         }
                     };
                 },
+                'common/modules/commercial/create-ad-slot': function () {
+                    return function () {
+                        return '<div class="ad-slot"></div>';
+                    }
+                },
                 'common/modules/commercial/dfp': function () {
                     return {
                         addSlot: function () {},
@@ -52,10 +57,6 @@ define([
                 var section = 'football';
 
                 server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "' + html + '" }']);
-                deps['common/utils/ajax'].init({page: {
-                    ajaxUrl: "",
-                    edition: "UK"
-                }});
                 deps['common/utils/mediator'].once('modules:popular:loaded', function (el) {
                     var innerHtml = el.innerHTML;
                     expect(innerHtml).toBe('popular');

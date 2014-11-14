@@ -34,14 +34,18 @@
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
     @if(showBadge) {
-        @fragments.commercial.badge(content)
+        @* on articles, foundation supported badges go inline *@
+        @content match {
+            case a: Article if a.isFoundationSupported => { }
+            case c => { @fragments.commercial.badge(c) }
+        }
     }
 
     @if(content.showBylinePic) {
-        <div class="media__img meta__image">
-            @fragments.meta.bylineImage(content)
-        </div>
         <div class="media__body meta__body">
+            <div class="media__img meta__image">
+                @fragments.meta.bylineImage(content)
+            </div>
             @metaBody()
         </div>
     } else {

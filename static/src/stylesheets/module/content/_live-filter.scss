@@ -14,10 +14,10 @@
 
     .popup__toggle.is-active:after {
         border-top: 0;
-        border-bottom: $popup-toggle-arrow-size solid $c-neutral2;
+        border-bottom: $popup-toggle-arrow-size solid colour(neutral-2);
     }
     .popup__toggle:after {
-        border-top: $popup-toggle-arrow-size solid $c-neutral2;
+        border-top: $popup-toggle-arrow-size solid colour(neutral-2);
         border-bottom: 0;
         display: inline-block;
     }
@@ -45,7 +45,7 @@
 }
 .live-toggler__label {
     padding-left: 0;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     display: inline-block;
     @include font-size(get-font-size(textSans, 2));
     @include f-textSans;
@@ -56,7 +56,7 @@
     line-height: $gs-row-height;
 
     .popup__action {
-        color: $c-neutral1;
+        color: colour(neutral-1);
         text-align: left;
     }
     .popup__action:hover {
@@ -78,7 +78,7 @@
         width: 32px;
         height: 24px;
         line-height: 13px;
-        background-color: $c-neutral2;
+        background-color: colour(neutral-2);
         color: #ffffff;
         font-weight: bold;
         @include border-radius(50%);
@@ -90,5 +90,5 @@
 }
 
 .live-toggler--on .live-toggle__value {
-    background-color: $c-liveDefault;
+    background-color: colour(live-default);
 }

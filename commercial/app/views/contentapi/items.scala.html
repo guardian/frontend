@@ -1,13 +1,13 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="container container--special container--merchandising container--advertisement-feature container--commercial-capi">
-        <div class="facia-container__inner">
+    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi">
+        <div class="fc-container__inner">
         <div class="container__border"></div>
-            <div class="container__header">
-                <h2 class="container__title">
-                    <span class="container__title__label u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
-                </h3>
+            <div class="fc-container__header">
+                <h2 class="fc-container__header__title">
+                    <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                </h2>
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
@@ -20,38 +20,40 @@
                     }
                 </div>
             </div>
-            <div class="container__body">
-                <div class="facia-slice-wrapper">
-                    <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+            <div class="fc-container__body">
+                <div class="fc-slice-wrapper">
+                    <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default">
-                                    <div class="item__container">
-                                        <a class="item__link tone-accent-border" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
+                            <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                <div class="fc-item fc-item--has-image fc-item--has-discussion tone-news--item">
+                                    <div class="fc-item__container">
+                                        <div class="fc-item__content">
+                                            <div class="fc-item__media-wrapper">
+                                                <div class="fc-item__image-container u-responsive-ratio">
                                             @item.mainPicture.map{ picture =>
                                                 @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                                             }
                                                 </div>
                                             </div>
-                                            
-                                            <h2 class="item__title">@item.webTitle</h2>
-                                            <div class="item__meta">
+
+                                            <h2 class="fc-item__title">@item.webTitle</h2>
+                                            <div class="fc-item__meta">
                                                 <time
-                                                    class="item__timestamp js-item__timestamp"
+                                                    class="fc-item__timestamp js-item__timestamp"
                                                     datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
                                                     data-timestamp="@item.webPublicationDate.getMillis"
                                                     data-relativeformat="short">
-                                                    <i class="i i-clock-light-grey"></i>
                                                     <span class="timestamp__text">
                                                         <span class="u-h">Published: </span>
                                                         @Format(item.webPublicationDate, "d MMM y")
                                                     </span>
                                                 </time>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
+                                    <a href="@AdLink{@item.webUrl}" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle" tabindex="-1">
+                                        @item.webTitle
+                                    </a>
                                 </div>
                             </li>
                         }

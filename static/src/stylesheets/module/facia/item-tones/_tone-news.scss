@@ -1,0 +1,31 @@
+.tone-news--item {
+    &.fc-item {
+        background-color: colour(neutral-8);
+    }
+
+    .fc-item__container:before {
+        background-color: colour(news-accent);
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        color: colour(news-default);
+    }
+}
+
+.tone-news--sublink {
+    .fc-sublink__kicker,
+    .fc-sublink__byline {
+        color: colour(news-default);
+    }
+
+    @include sublink-style(editorial, feature, live, media, podcast) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}
+
+.tone-news--most-popular .fc-item__kicker {
+    color: colour(news-default);
+}

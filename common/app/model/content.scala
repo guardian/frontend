@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import dfp.DfpAgent
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -14,7 +15,6 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import conf.Switches.ContentCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -73,7 +73,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
-  lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
+  override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -169,20 +169,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-  private lazy val defaultCacheTime = {
-    if (isLive) 5
-    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
-    else 900
-  }
-
-  private lazy val fastCacheTime = {
+  override lazy val cacheSeconds = {
     if (isLive) 5
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 10
     else if (lastModified > DateTime.now(lastModified.getZone) - 24.hours) 30
     else 300
   }
-
-  override lazy val cacheSeconds = if (ContentCacheTimeSwitch.isSwitchedOn) fastCacheTime else defaultCacheTime
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
@@ -243,6 +235,28 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   } yield FaciaImageElement(src, width, height)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
+
+  lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
+
+  lazy val sectionLabelLink : String = {
+    if (isCommentIsFree || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
+      section
+    } else tags.find(_.isKeyword) match {
+      case Some(tag) => tag.id
+      case _ => ""
+    }
+  }
+
+  lazy val sectionLabelName : String = {
+    if(this.isCommentIsFree) sectionName else tags.find(_.isKeyword) match {
+      case Some(tag) => tag.webTitle
+      case _ => ""
+    }
+  }
+
+  lazy val seriesTag: Option[Tag] = {
+    if(isSeries) series.headOption else blogs.find{tag => tag.id != "commentisfree/commentisfree"}
+  }
 }
 
 object Content {
@@ -430,7 +444,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     var wordCount = 0
     val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
       wordCount += el.text.length
-      wordCount < 1500
+      wordCount < 2000
     }
     val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
     supportingEls.isDefined
@@ -574,6 +588,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
+  override protected lazy val pageShareOrder = List("facebook", "twitter", "email", "pinterestPage", "gplus", "whatsapp")
+  override protected lazy val blockShareOrder = List("facebook", "twitter", "pinterestBlock")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
@@ -585,6 +601,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
 
+  override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
+
   override def schemaType = Some("http://schema.org/ImageGallery")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
@@ -592,8 +610,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "article",
-    "article:published_time" -> webPublicationDate.toString(),
-    "article:modified_time" -> lastModified.toString(),
+    "article:published_time" -> webPublicationDate.toString,
+    "article:modified_time" -> lastModified.toString,
     "article:section" -> sectionName,
     "article:tag" -> keywords.map(_.name).mkString(","),
     "article:author" -> contributors.map(_.webUrl).mkString(",")
@@ -618,7 +636,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> JsNumber(img.width.toFloat / img.height)
+          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble)
         ))
       }
     }
@@ -634,6 +652,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
 object Gallery {
   def apply(delegate: ApiContent): Gallery = new Gallery(ApiContentWithMeta(delegate))
+
 }
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {

@@ -1,7 +1,7 @@
 package views.support
 
 import model.{Content, MetaData, ImageContainer, ImageAsset}
-import conf.Switches.ImageServerSwitch
+import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
@@ -66,6 +66,7 @@ object Item120 extends Profile(Some(120), None)
 object Item140 extends Profile(Some(140), None)
 object Item220 extends Profile(Some(220), None)
 object Item300 extends Profile(Some(300), None)
+object Item360 extends Profile(Some(360), None)
 object Item460 extends Profile(Some(460), None)
 object Item620 extends Profile(Some(620), None)
 object Item640 extends Profile(Some(640), None)
@@ -89,6 +90,7 @@ object Profile {
     Item140,
     Item220,
     Item300,
+    Item360,
     Item460,
     Item620,
     Item640,
@@ -109,7 +111,7 @@ object ImgSrc {
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
 
-    val supportedImages = Seq(".jpg", ".jpeg")
+    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Seq(".jpg", ".jpeg", ".png") else Seq(".jpg", ".jpeg")
     val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
     hostPrefixMapping.get(uri.getHost)

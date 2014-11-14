@@ -1,16 +1,17 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@(index: services.IndexPage)(implicit request: RequestHeader)
 
+@import layout.ContainerLayout
+@import views.support.getTagContainerDefinition
 @import model.Collection
 @import views.support.RenderClasses
 @import com.gu.facia.client.models.CollectionConfig
 
-<div class="l-side-margins l-side-margins--layout-front">
+<div class="l-side-margins">
     <div class="@RenderClasses(Map(
-            "facia-container" -> true,
-            "facia-container--layout-front" -> true,
-            "facia-container--sponsored" -> index.page.isSponsored,
-            "facia-container--advertisement-feature" -> index.page.isAdvertisementFeature,
-            "facia-container--foundation-supported" -> index.page.isFoundationSupported,
+            "fc-container" -> true,
+            "fc-container--sponsored" -> index.page.isSponsored,
+            "fc-container--advertisement-feature" -> index.page.isAdvertisementFeature,
+            "fc-container--foundation-supported" -> index.page.isFoundationSupported,
             "js-sponsored-front" -> (index.page.isSponsored || index.page.isAdvertisementFeature || index.page.isFoundationSupported)))"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>
@@ -21,8 +22,17 @@
         }
         role="main">
 
-        @defining(getTagType(index.page)) { tagPage =>
-            @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(tagPage, model.Collection(index.trails), Some(templateDeduping)), pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
+        @defining(
+            getTagContainerDefinition(index.page),
+            CollectionConfig.withDefaults(displayName = Some(index.page.webTitle))
+        ) { case (containerDefinition, config) =>
+            @fragments.containers.tag(
+                index.page,
+                Collection(index.trails),
+                ContainerLayout.singletonFromContainerDefinition(containerDefinition, config, index.trails),
+                pagination = index.page.pagination,
+                dataId = index.page.id
+            )(request, config)
         }
 
         @fragments.commercial.commercialComponent()

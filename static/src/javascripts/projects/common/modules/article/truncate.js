@@ -54,7 +54,7 @@ define([
 
             $.create(
                 '<button class="u-button-reset button button--large button--show-more liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">' +
-                    '<i class="i i-plus-white-small"></i>' +
+                    '<i class="i i-plus-white"></i>' +
                     viewUpdatesLabel +
                 '</button>'
             ).each(function (el) {

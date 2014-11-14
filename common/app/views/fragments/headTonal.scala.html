@@ -1,5 +1,7 @@
 @(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
+
 @import views.support.TrailCssClasses.articleToneClass
+@import views.support.ContributorLinks
 
 <header class="content__head tonal__head tonal__head--@articleToneClass(content)
     @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
@@ -11,9 +13,6 @@
                 @fragments.meta.metaInline(content)
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @if(content.isAnalysis) {
-                        <span class="content__headline__kicker">Analysis</span>
-                    }
                     @Html(content.headline)
                 </h1>
 
@@ -32,7 +31,7 @@
                 }
 
                 @content.starRating.map { s =>
-                    @fragments.items.elements.starRating(content)
+                    @fragments.items.elements.starRating(s)
                 }
 
                 @if(showBadge) {

@@ -1,9 +1,11 @@
 define([
+    'bonzo',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'jasq'
 ], function (
+    bonzo,
     qwery,
     $,
     fixtures
@@ -33,7 +35,7 @@ define([
                     fixtures: []
                 },
                 appendContainer = function ($fixturesContainer) {
-                    $fixturesContainer.append('<div class="container"></div>');
+                    $fixturesContainer.append('<div class="fc-container"></div>');
                 },
                 $fixturesContainer;
 
@@ -58,7 +60,8 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    expect($('#' + fixturesConfig.id + '> *:nth-child(3)').next().hasClass('ad-slot')).toBe(true);
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(3);
+                    expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
 
@@ -71,7 +74,8 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    expect($('#' + fixturesConfig.id + '> *:nth-child(1)').next().hasClass('ad-slot')).toBe(true);
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(1);
+                    expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
 
@@ -86,7 +90,8 @@ define([
                     frontCommercialComponents.init();
 
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                    expect($('#' + fixturesConfig.id + '> *:nth-child(4)').next().hasClass('ad-slot')).toBe(true);
+                    var adSlot = $('#' + fixturesConfig.id + ' > *').get(4);
+                    expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 }
             );
 

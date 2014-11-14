@@ -1,5 +1,6 @@
 package common
 
+import layout.FaciaCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
@@ -20,6 +21,7 @@ trait LinkTo extends Logging {
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
+  private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -29,7 +31,8 @@ trait LinkTo extends Logging {
     handleQueryStrings(processedUrl)
   }
 
-  def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
+  def handleQueryStrings(url: String)(implicit request : RequestHeader) =
+    HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
@@ -49,24 +52,15 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
-  def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
-    val urlToProcess = trail match {
-      case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
-      case t: Trail => Option(t.url)
-    }
+  def apply(faciaCard: FaciaCard)(implicit request: RequestHeader): String =
+    faciaCard.url.get(request)
 
-    val processedUrlMaybe: Option[ProcessedUrl] = urlToProcess map { url =>
-      processUrl(url, Edition(request))
-    }
+  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(clean(path), edition)}"
 
-    processedUrlMaybe match {
-      case Some(ProcessedUrl(url, true)) => """href="%s" rel="nofollow"""".format(handleQueryStrings(url))
-      case Some(ProcessedUrl(url, false)) => """href="%s"""".format(handleQueryStrings(url))
-      case None => ""
-    }
+  private def clean(path: String) = path match {
+    case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
+    case _ => path
   }
-
-  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
 
   private def homeLink(edition: Edition) = urlFor("", edition)
 

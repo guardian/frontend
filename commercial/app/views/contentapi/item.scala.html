@@ -1,0 +1,55 @@
+@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String])(implicit request: RequestHeader)
+
+@defining(("1_0", "2014-08-14")) { case (version, date) =>
+    <section class="fc-container fc-container--paid-for container--advertisement-feature commercial commercial--dfp commercial--dfp-single">
+        <div class="fc-container__inner">
+            <div class="fc-container__header">
+                <h3 class="fc-container__header__title">
+                    <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                </h3>
+            </div>
+            <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                <div class="ad-slot--paid-for-badge__inner">
+                    <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
+                    <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
+                        @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
+                    </a>
+                    @for(aboutLinkUrl <- optCapiAbout) {
+                        <a href="@aboutLinkUrl" class="ad-slot--paid-for-badge__help">About this content</a>
+                    }
+                </div>
+            </div>
+            <div class="fc-container__body">
+                <div class="lineitems">
+                    <div class="lineitem lineitem--dfp-single">
+                        <div class="lineitem--dfp-single__offer">
+                            <a href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
+                                @item.mainPicture.map{ picture =>
+                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                }
+                                <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
+                                @item.trailText.map { trailText =>
+                                    <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
+                                }
+                                @for(buttonText <- optCapiButtonText) {
+                                    <a href="@AdLink{@item.webUrl}" class="lineitem__cta button button--tertiary button--small">
+                                        @buttonText
+                                        <i class="i i-arrow-black-right i-right"></i>
+                                    </a>
+                                }
+                            </a>
+                        </div>
+                        <div class="lineitem--dfp-single__cta hide-on-mobile">
+                            @for(moreButton <- optCapiReadMoreText) {
+                                <a href="@for(moreUrl <- optCapiReadMoreUrl) {@moreUrl}" class="commercial__cta button button--primary button--large">
+                                    @moreButton
+                                    <i class="i i-arrow-white-right i-right"></i>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

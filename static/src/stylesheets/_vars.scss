@@ -14,6 +14,7 @@ $old-ie:      false !default;
 $svg-support: true !default;
 $browser-supports-columns: not $old-ie !default;
 $browser-supports-flexbox: true !default;
+$guss-rem-baseline: 16px;
 
 
 // Layout dimensions
@@ -67,84 +68,81 @@ $guss-column-rule: none;
 $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
 
 
-// Colours
+// Colours (access these through the colour($name) mixin)
 // =============================================================================
 
-$c-brandBlue: guss-colour(guardian-brand, $pasteup-palette);
-$c-brandLightBlue: guss-colour(guardian-brand-light, $pasteup-palette);
-$c-error: guss-colour(error, $pasteup-palette);
-$c-success: guss-colour(success, $pasteup-palette);
+$frontend-palette: (
 
-$c-neutral1: guss-colour(neutral-1, $pasteup-palette);
-$c-neutral2: guss-colour(neutral-2, $pasteup-palette);
-// Enhance contrast of grey text on light grey background
-$c-neutral2-contrasted: darken($c-neutral2, 3%);
-$c-neutral3: guss-colour(neutral-3, $pasteup-palette);
-$c-neutral4: guss-colour(neutral-4, $pasteup-palette);
-$c-neutral5: guss-colour(neutral-5, $pasteup-palette);
-$c-neutral6: guss-colour(neutral-6, $pasteup-palette);
-$c-neutral7: guss-colour(neutral-7, $pasteup-palette);
-$c-neutral8: guss-colour(neutral-8, $pasteup-palette);
+    neutral-2-contrasted:   darken(guss-colour(neutral-2, $pasteup-palette), 3%),
 
-// Tones
-// =============================================================================
+    // Tones
+    // =============================================================================
 
-$c-newsDefault: guss-colour(news-main-1, $pasteup-palette);
-$c-newsAccent: guss-colour(news-main-2, $pasteup-palette);
+    news-default:           guss-colour(news-main-1, $pasteup-palette),
+    news-accent:            guss-colour(news-main-2, $pasteup-palette),
 
-$c-featureDefault: guss-colour(features-support-1, $pasteup-palette);
-$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
-$c-featureAccent2: guss-colour(features-main-2, $pasteup-palette);
-$c-featureMute: guss-colour(features-support-3, $pasteup-palette);
+    feature-default:        guss-colour(features-support-1, $pasteup-palette),
+    feature-accent:         guss-colour(features-main-2, $pasteup-palette),
+    feature-mute:           guss-colour(features-support-3, $pasteup-palette),
 
-$c-analysisDefault: guss-colour(news-main-1, $pasteup-palette);
-$c-analysisAccent: guss-colour(news-main-2, $pasteup-palette);
-$c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
-$c-analysisBackground: guss-colour(neutral-7, $pasteup-palette);
+    analysis-default:       guss-colour(news-main-1, $pasteup-palette),
+    analysis-accent:        guss-colour(news-main-2, $pasteup-palette),
+    analysis-mute:          guss-colour(comment-support-2, $pasteup-palette),
+    analysis-background:    guss-colour(neutral-7, $pasteup-palette),
 
-$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);
-$c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
-$c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
+    comment-default:        guss-colour(comment-support-4, $pasteup-palette),
+    comment-accent:         guss-colour(comment-main-2, $pasteup-palette),
+    comment-background:     guss-colour(comment-support-2, $pasteup-palette),
 
-$c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
-$c-liveAccent: guss-colour(live-main-2, $pasteup-palette);
-$c-liveMute: guss-colour(features-support-3, $pasteup-palette);
+    live-default:           guss-colour(live-main-1, $pasteup-palette),
+    live-accent:            guss-colour(live-main-2, $pasteup-palette),
+    live-mute:              guss-colour(features-support-3, $pasteup-palette),
 
-$c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
-$c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
-$c-mediaBackgroundAccent: guss-colour(multimedia-support-4, $pasteup-palette);
+    media-default:          guss-colour(multimedia-main-2, $pasteup-palette),
+    media-background:       guss-colour(multimedia-main-1, $pasteup-palette),
+    media-mute:             guss-colour(multimedia-support-4, $pasteup-palette),
 
-$c-podcastDefault: guss-colour(news-support-1, $pasteup-palette);
-$c-podcastBackground: guss-colour(multimedia-support-4, $pasteup-palette);
+    podcast-default:        guss-colour(news-support-1, $pasteup-palette),
+    podcast-background:     guss-colour(multimedia-support-4, $pasteup-palette),
 
-$c-reviewAccent: guss-colour(comment-support-3, $pasteup-palette);
-$c-reviewBackground: guss-colour(comment-support-1, $pasteup-palette);
+    review-accent:          guss-colour(comment-support-3, $pasteup-palette),
+    review-background:      guss-colour(comment-support-1, $pasteup-palette),
 
-$c-editorialDefault: guss-colour(news-main-1, $pasteup-palette);
-$c-editorialAccent: guss-colour(news-support-1, $pasteup-palette);
+    editorial-default:      guss-colour(news-main-1, $pasteup-palette),
+    editorial-accent:       guss-colour(news-support-1, $pasteup-palette),
 
-$c-crosswordAccent1: guss-colour(multimedia-support-1, $pasteup-palette);
-$c-crosswordAccent2: guss-colour(comment-support-2, $pasteup-palette);
+    crossword-accent1:      guss-colour(multimedia-support-1, $pasteup-palette),
+    crossword-accent2:      guss-colour(comment-support-2, $pasteup-palette),
 
+    // Football
+    // =============================================================================
 
-// Football
-// =============================================================================
+    sport-bright:           #70d2e6,
+    sport-mid:              guss-colour(guardian-brand, $pasteup-palette),
+    sport-dark:             #003f64,
 
-$c-sportBright: #70d2e6;
-$c-sportMid: guss-colour(guardian-brand, $pasteup-palette);
-$c-sportDark: #003f64;
+    sport-home:             #70d2e6,
+    sport-away:             #003f64,
 
-$c-sportHome: $c-sportBright;
-$c-sportAway: $c-sportDark;
+    // Stati
+    // =============================================================================
 
+    status-positive:        guss-colour(success, $pasteup-palette),
+    status-neutral:         guss-colour(neutral-2, $pasteup-palette),
+    status-negative:        guss-colour(error, $pasteup-palette),
 
-// Stati
-// =============================================================================
+    // Social
+    // =============================================================================
 
-$c-statusPositive: #6ca843;
-$c-statusNeutral: $c-neutral2;
-$c-statusNegative: #da1d1d;
+    social-email:           #767676,
+    social-facebook:        #3067a3,
+    social-twitter:         #03b3ee,
+    social-gplus:           #e15440,
+    social-whatsapp:        #59cb3f,
+    social-linkedin:        #0071a1,
+    social-pinterest:       #b9252c
 
+);
 
 // MPU
 // =============================================================================
@@ -169,12 +167,3 @@ $content-top-padding: $gs-baseline / 1.5;
 $vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;
-
-
-// Social colours
-// =============================================================================
-
-$social-email: #767676;
-$social-facebook: #3067a3;
-$social-twitter: #03b3ee;
-$social-gplus: #e15440;

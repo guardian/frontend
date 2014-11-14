@@ -2,33 +2,35 @@
 
 @include tone-content(
     podcast, // $tone
-    $c-podcastBackground, // $tonal__header-background
-    $c-neutral6, // $tonal__header-text
-    $c-podcastDefault, // $tonal__header-link
+    colour(podcast-background), // $tonal__header-background
+    colour(neutral-6), // $tonal__header-text
+    colour(podcast-default), // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $c-podcastDefault, // $tonal__headline-accent
-    $c-podcastBackground, // $tonal__standfirst-background
+    colour(podcast-default), // $tonal__headline-accent
+    colour(podcast-background), // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $c-podcastBackground, // $tonal__article-background
-    $c-podcastDefault // $tonal__article-link
+    colour(podcast-background), // $tonal__article-background
+    colour(podcast-default) // $tonal__article-link
 );
 
 .tonal--tone-podcast .tonal__main--tone-podcast {
+    padding-top: 0;
+
     .from-content-api {
         a,
         .u-underline {
             &:active {
-                color: $c-podcastDefault;
-                border-color: $c-podcastDefault;
+                color: colour(podcast-default);
+                border-color: colour(podcast-default);
             }
         }
     }
 
     .button--tone-media {
-        background-color: $c-neutral2;
-        border-color: $c-neutral2;
+        background-color: colour(neutral-2);
+        border-color: colour(neutral-2);
     }
 
     .button--tertiary {

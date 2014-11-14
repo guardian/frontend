@@ -7,6 +7,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     $,
     config,
     mediator,
+    createAdSlot,
     dfp
 ) {
 
@@ -91,7 +93,7 @@ define([
                     var displaySlot = adSlotNames.length,
                         // add the first ad slot we haven't already
                         $adSlot = displaySlot ?
-                            bonzo(dfp.createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
+                            bonzo(createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
                             // otherwise get the ad furthest down the page
                             $('.js-liveblog-body .ad-slot')
                                 .last()

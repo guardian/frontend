@@ -148,6 +148,7 @@ var
 
     if (tech) {
       snapshot.nativePoster = tech.poster;
+      snapshot.style = tech.getAttribute('style');
     }
 
     return snapshot;
@@ -211,6 +212,11 @@ var
     if (snapshot.nativePoster) {
       tech.poster = snapshot.nativePoster;
     }
+
+    if ('style' in snapshot) {
+      // overwrite all css style properties to restore state precisely
+      tech.setAttribute('style', snapshot.style || '');
+    }
     
     // with a custom ad display or burned-in ads, the content player state
     // hasn't been modified and so no restoration is required
@@ -225,19 +231,6 @@ var
         // safari requires a call to `load` to pick up a changed source
         player.load();
         player.one('loadedmetadata', tryToResume);
-    }
-  },
-
-  /**
-   * Remove all element level styles from the tech element. Some Adblockers
-   * use !important element level styles to hide the tech when they detect
-   * an advert as the src.
-   * @param {object} player The videojs player object
-   */
-  removeAdblockStyles = function(player) {
-    var tech = player.el().querySelector('.vjs-tech');
-    if (tech) {
-      tech.setAttribute('style', '');
     }
   },
 
@@ -414,7 +407,6 @@ var
             },
             leave: function() {
               removeClass(player.el(), 'vjs-ad-playing');
-              removeAdblockStyles(player);
               restorePlayerSnapshot(player, this.snapshot);
             },
             events: {

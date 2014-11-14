@@ -3,6 +3,7 @@ package model
 import common.{Edition, NavItem}
 import conf.Configuration
 import dfp.DfpAgent
+import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId
 
@@ -10,6 +11,10 @@ case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
                      collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+
+  lazy val front = Front.fromConfigs(collections map { case (config, collection) =>
+    (config, CollectionEssentials.fromCollection(collection))
+  })
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection

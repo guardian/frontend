@@ -100,7 +100,7 @@
     }
 
     &.quoted {
-        color: $c-neutral2;
+        color: colour(neutral-2);
         margin-left: $gs-gutter * 1.5;
     }
 }
@@ -140,7 +140,7 @@
 
 .caption {
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
 }
 
 .caption--main {
@@ -166,33 +166,20 @@ figure {
     img {
         display: block;
     }
-    &.img {
+    &.img,
+    &.element {
         margin-top: ($gs-baseline/3)*4;
-        margin-bottom: ($gs-baseline/3)*5;
-
-        @include mq(tablet) {
-            margin-bottom: ($gs-baseline/2)*5;
-        }
+        margin-bottom: $gs-baseline*2;
     }
     &.img--landscape,
     &.img--portrait {
         figcaption {
             padding-top: ($gs-baseline/6)*4;
-
-            @include mq(wide) {
-                padding-top: ($gs-baseline/6)*5;
-            }
         }
     }
     &.img--inline {
         margin: 5px $gs-gutter 6px 0;
     }
-}
-
-.figure.img--extended,
-.element-video {
-    margin-top: ($gs-baseline/3)*4;
-    margin-bottom: ($gs-baseline/3)*4;
 }
 
 p + figure,
@@ -213,7 +200,7 @@ figure.element--thumbnail + h2 {
         @include fs-bodyCopy(1);
 
         a {
-            color: $c-neutral2;
+            color: colour(neutral-2);
 
             &:hover,
             &:focus,
@@ -255,7 +242,7 @@ figure.element--thumbnail + h2 {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken($c-neutral8, 4%);
+        background-color: darken(colour(neutral-8), 4%);
     }
 }
 
@@ -317,7 +304,7 @@ figure.element--thumbnail + h2 {
         font-style: normal;
 
         p {
-            color: $c-neutral2;
+            color: colour(neutral-2);
             margin-bottom: 0;
             @include fs-headline(4);
             @include mq(tablet) {
@@ -330,16 +317,16 @@ figure.element--thumbnail + h2 {
     }
     cite {
         font-style: normal;
-        color: $c-neutral2;
+        color: colour(neutral-2);
         @include fs-bodyHeading(2);
 
         a,
         a:visited {
-            border-bottom: 1px solid $c-neutral4;
+            border-bottom: 1px solid colour(neutral-4);
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid $c-neutral2;
+                border-bottom: 1px solid colour(neutral-2);
             }
         }
     }

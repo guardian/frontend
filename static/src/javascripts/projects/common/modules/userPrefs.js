@@ -1,42 +1,55 @@
 define([
+    'lodash/objects/defaults',
     'common/utils/storage'
 ], function (
+    defaults,
     storage
 ) {
 
     var storagePrefix = 'gu.prefs.',
-        store = storage.local;
+        store         = {
+            'local': storage.local,
+            'session': storage.session
+        };
 
-    function set(name, value) {
-        store.set(storagePrefix + name, value);
+    function set(name, value, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        store[opts.type].set(storagePrefix + name, value);
     }
 
-    function get(name) {
-        return store.get(storagePrefix + name);
+    function get(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        return store[opts.type].get(storagePrefix + name);
     }
 
-    function remove(name) {
-        store.remove(storagePrefix + name);
+    function remove(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        store[opts.type].remove(storagePrefix + name);
     }
 
-    function switchOn(name) {
-        store.set(storagePrefix + 'switch.' + name, true);
+    function switchOn(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        store[opts.type].set(storagePrefix + 'switch.' + name, true);
     }
 
-    function switchOff(name) {
-        store.set(storagePrefix + 'switch.' + name, false);
+    function switchOff(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        store[opts.type].set(storagePrefix + 'switch.' + name, false);
     }
 
-    function removeSwitch(name) {
-        store.remove(storagePrefix + 'switch.' + name);
+    function removeSwitch(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        store[opts.type].remove(storagePrefix + 'switch.' + name);
     }
 
-    function isOn(name) {
-        return store.get(storagePrefix + 'switch.' + name) === true;
+    function isOn(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        return store[opts.type].get(storagePrefix + 'switch.' + name) === true;
     }
 
-    function isOff(name) {
-        return store.get(storagePrefix + 'switch.' + name) === false;
+    function isOff(name, options) {
+        var opts = defaults(options || {}, { type: 'local' });
+        return store[opts.type].get(storagePrefix + 'switch.' + name) === false;
     }
 
     function isNumeric(str) {

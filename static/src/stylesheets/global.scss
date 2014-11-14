@@ -88,49 +88,29 @@
 @import 'module/football/_player-card';
 @import 'module/football/_article-embeds';
 
-
 /* ==========================================================================
    Facia
    ========================================================================== */
 
-@include facia-container--layout-content;
-@include facia-container--layout-discussion;
-@include facia-container--default-heading;
-
-@import 'module/facia/_icons';
 @import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
 
-@import 'module/containers/_features';
-@import 'module/containers/_featuresauto';
-@import 'module/containers/_featuresvolumes';
-@import 'module/containers/_special';
-@import 'module/containers/_cassoulet';
-@import 'module/containers/_quichelorraine';
-@import 'module/containers/_raclette';
-@import 'module/containers/_commentanddebate';
-@import 'module/containers/_people';
 @import 'module/containers/_popular';
-@import 'module/containers/_multimedia';
-@import 'module/containers/_series';
-@import 'module/containers/_headline';
-@import 'module/containers/_picks';
 
 @import 'module/facia/snaps/_football';
 @import 'module/facia/_tag-meta';
 
 // card additions
-@import 'module/facia-cards/_icons';
+@import 'module/facia/_icons';
 
-// new FACIA CARDS code
-@import 'module/facia-cards/_l-list';
-@import 'module/facia-cards/_container';
-@import 'module/facia-cards/_slices';
-@import 'module/facia-cards/_sublinks';
-@import 'module/facia-cards/_item';
-@import 'module/facia-cards/_items';
-@import 'module/facia-cards/_linkslist';
-@import 'module/facia-cards/_tones';
+@import 'module/facia/_l-list';
+@import 'module/facia/_container';
+@import 'module/facia/_slices';
+@import 'module/facia/_sublinks';
+@import 'module/facia/_item';
+@import 'module/facia/_items';
+@import 'module/facia/_linkslist';
+@import 'module/facia/_tones';
 
 /* ==========================================================================
    Experiments
@@ -146,6 +126,11 @@
 @import 'icons/_global-icons-svg';
 @import 'module/icons';
 
+/* ==========================================================================
+   Commercial modules
+   ========================================================================== */
+
+@import 'module/commercial/_commercial';
 
 /* ==========================================================================
    Misc
@@ -154,10 +139,3 @@
 @import 'module/_release-message';
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
-
-
-/* ==========================================================================
-   Commercial modules
-   ========================================================================== */
-
-@import 'module/commercial/_commercial';
