@@ -13,6 +13,7 @@ $c-popup-bg: colour(neutral-8);
 $control-offset: 36 + $gs-gutter/2;
 
 .popup {
+    display: none;
     @include box-sizing(border-box);
     position: absolute;
     left: 0;
@@ -42,6 +43,10 @@ $control-offset: 36 + $gs-gutter/2;
             right: 0;
         }
     }
+}
+
+.popup--open {
+    display: block;
 }
 
 .popup__group {
