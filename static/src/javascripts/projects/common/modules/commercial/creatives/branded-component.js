@@ -38,14 +38,15 @@ define([
     return {
 
         run: function (type) {
-            var templateConfig = templates[type];
+            var templateConfig = templates[type],
+                $rightHandCol  = $('.content__secondary-column');
 
-            if (!templateConfig) {
+            if (!templateConfig || $rightHandCol.css('display') === 'none') {
                 return false;
             }
 
             $.create(template(templateConfig.template, templateConfig.config))
-                .appendTo(qwery('.content__secondary-column')[0]);
+                .appendTo($rightHandCol);
 
             // assumption - this will always be targeted to the 88x87 slot
             $('#dfp-ad--merchandising-high').css('display', 'none');
