@@ -28,11 +28,11 @@ define([
         if ($popupEl.length) {
             popups.push($popupEl[0]);
 
-            bean.on(control, 'click', function(e){
+            bean.on(control, 'click', function (e) {
                 e.preventDefault();
                 var isOpen = $control.hasClass('is-active'),
                     addOrRemove = isOpen ? 'removeClass' : 'addClass';
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     $control[addOrRemove]('is-active');
                     $popupEl[addOrRemove]('popup--open');
                 }, 0);
