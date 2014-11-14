@@ -99,6 +99,7 @@
     padding-right: $gs-gutter/2;
 
     &.fc-item {
+        width: 25%;
         background-color: transparent;
         margin-left: 0;
         margin-right: 0;
@@ -157,8 +158,6 @@
         }
     }
 }
-
-
 
 .items--video .fc-item__title:before {
     @include icon(video-icon, false);

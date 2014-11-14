@@ -66,7 +66,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     ("keywords", JsString(name)),
     ("keywordIds", JsString(id)),
-    ("content-type", JsString("Tag")),
+    ("contentType", JsString("Tag")),
     ("references", JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
   )
 

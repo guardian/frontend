@@ -4,48 +4,64 @@
 @import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 @import common.Localisation
+@import layout.{MetaDataHeader, LoneDateHeadline}
+@import fragments.containers.facia_cards.dateHeadline
 
-@defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
+@containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
-        @title.map { title =>
-            @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
-                <div class="@RenderClasses(Map(
-                    "fc-container__header__title" -> true,
-                    "tone-comment" -> isContributor,
-                    "tone-colour" -> isContributor))">
-                    @href.map { href =>
-                        <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
-                          @Html(Localisation(title))
-                        </a>
-                    }.getOrElse {
-                        <span class="u-text-hyphenate" tabindex="0">@Html(Localisation(title))</span>
-                    }
-
-                    @if(containerDefinition.showDateHeader) {
-                        @date(org.joda.time.DateTime.now())
-                    }
-
-                    @if(containerDefinition.showLatestUpdate) {
-                        @containerDefinition.latestUpdate.map { updateTime =>
-                            @latestUpdate(updateTime)
-                        }
-                    }
-                </div>
+        @customHeader match {
+            case metaDataHeader: MetaDataHeader => {
+                @dateHeadline(metaDataHeader.dateHeadline)
             }
-        }
-        @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
-            @if(containerDefinition.index == 0 && hasDescription){
-                <div class="@RenderClasses(Map(
-                    "fc-container__header__description" -> true,
-                    "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
-                    @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
-                        <div class="fc-container__header__image media__img">
-                            <img src="@url" alt="@title" />
-                        </div>
-                    }
-                    @frontProperties.onPageDescription.map(Html(_))
-                </div>
+
+            case dateHeader: LoneDateHeadline => {
+                @dateHeadline(dateHeader.get)
             }
         }
     </div>
+}.getOrElse {
+    @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
+        <div class="fc-container__header js-container__header">
+            @title.map { title =>
+                @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                    <div class="@RenderClasses(Map(
+                        "fc-container__header__title" -> true,
+                        "tone-comment" -> isContributor,
+                        "tone-colour" -> isContributor))">
+                        @href.map { href =>
+                        <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
+                        @Html(Localisation(title))
+                        </a>
+                        }.getOrElse {
+                            <span class="u-text-hyphenate" tabindex="0">@Html(Localisation(title))</span>
+                        }
+
+                        @if(containerDefinition.showDateHeader) {
+                            @date(org.joda.time.DateTime.now())
+                        }
+
+                        @if(containerDefinition.showLatestUpdate) {
+                            @containerDefinition.latestUpdate.map { updateTime =>
+                                @latestUpdate(updateTime)
+                            }
+                        }
+                    </div>
+                }
+            }
+            @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
+                @if(containerDefinition.index == 0 && hasDescription){
+                    <div class="@RenderClasses(Map(
+                        "fc-container__header__description" -> true,
+                        "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
+                        @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                            <div class="fc-container__header__image media__img">
+                                <img src="@url" alt="@title" />
+                            </div>
+                        }
+                        @frontProperties.onPageDescription.map(Html(_))
+                    </div>
+                }
+            }
+        </div>
+    }
 }

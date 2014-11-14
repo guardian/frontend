@@ -42,8 +42,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   it should "display an expired message for expired content" in {
     val result = controllers.MediaController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
-    status(result) should be(410)
+    status(result) should be(200)
     contentAsString(result) should include("Sorry - this page has been removed.")
   }
-
 }

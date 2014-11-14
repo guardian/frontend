@@ -1,5 +1,5 @@
 $header-image-size-mobile: 80px;
-$header-image-size-desktop: 120px;
+$header-image-size-desktop: 100px;
 
 .fc-container,
 .facia-container {
@@ -49,7 +49,7 @@ $header-image-size-desktop: 120px;
     padding-top: 0;
 
     .fc-container__inner {
-        border: 0 !important;
+        border: 0;
     }
 
     @include mq(tablet) {
@@ -144,7 +144,7 @@ $header-image-size-desktop: 120px;
     @include mq(leftCol) {
         float: none;
         display: block;
-        margin: $gs-baseline * 2 0 $gs-baseline;
+        margin: 0 0 $gs-baseline;
     }
 
     img {
@@ -473,4 +473,107 @@ $header-image-size-desktop: 120px;
     .fc-item__timestamp {
         display: block;
     }
+}
+
+.fc-date-headline {
+    color: colour(neutral-1);
+    display: block;
+    padding-bottom: $gs-baseline / 2;
+
+    @include fs-headline(2);
+}
+
+.fc-container--tag {
+    padding-bottom: 0;
+
+    .fc-container__inner {
+        border-top: 1px solid colour(neutral-5);
+    }
+}
+
+.fc-trending-topics {
+    border-top: 0 !important;
+}
+
+.index-page-header {
+    border-top: 1px solid colour(news-accent);
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
+    margin-top: $gs-baseline;
+}
+
+.index-page-header__content {
+    width: 100%;
+
+    @include mq(wide) {
+        width: $left-column-wide + $gs-gutter + gs-span(12);
+
+        .has-page-skin {
+            width: 100%;
+        }
+    }
+}
+
+.index-page-header__title {
+    display: block;
+    line-height: get-line-height(header, 2);
+
+    &,
+    a {
+        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    }
+
+    @include fs-header(4);
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+
+        .has-page-skin & {
+            float: none;
+        }
+    }
+}
+
+.index-page-header__description {
+    color: colour(neutral-2);
+
+    @include fs-headline(2);
+
+    @include mq(leftCol) {
+        float: left;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: none;
+        }
+    }
+
+    @include mq(tablet) {
+        width: 50%;
+    }
+}
+
+.index-page-header__image-wrapper {
+    overflow: hidden;
+    float: right;
+}
+
+.index-page-header__image {
+    display: block;
+    float: right;
+    height: $header-image-size-mobile;
+
+    @include mq(desktop) {
+        height: $header-image-size-desktop;
+    }
+}
+
+.index-page-header__image-wrapper--contributor-circle {
+    @include border-radius(50%);
 }
