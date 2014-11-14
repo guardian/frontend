@@ -64,4 +64,7 @@ trait FaciaFields {
   def showQuotedHeadline: Boolean = false
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
+
+  def snapType: Option[String]
+  def snapUri: Option[String]
 }
