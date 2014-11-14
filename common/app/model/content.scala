@@ -425,7 +425,7 @@ object Snap {
   def isSnap(id: String): Boolean = id.startsWith("snap/")
 }
 
-case class SnapLatest(snapId: String,
+case class SnapLatest(articleId: String,
                       snapSupporting: List[Content],
                       snapWebPublicationDate: DateTime,
                       snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
@@ -434,16 +434,8 @@ case class SnapLatest(snapId: String,
                       snapTags: List[Tag])
   extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields), snapTags), supporting = snapSupporting, metaData = snapMeta)) {
 
-  override lazy val id: String = snapId
-  override lazy val url: String = s"/$snapId"
-  override val title: Option[String] = Some("Latest Snap")
-  override lazy val headline: String = fields.getOrElse("headline", "Headline")
-  override lazy val customKicker: Option[String] =
-    Some(
-      s"""<a href="/${snapMeta.flatMap(m => m.snapUri).getOrElse("")}">
-         |${snapMeta.flatMap(_.customKicker).getOrElse("Headline")}
-         |</a>""".stripMargin)
-  override lazy val showKickerCustom: Boolean = true
+  override lazy val id: String = articleId
+  override lazy val url: String = s"/$articleId"
 }
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
