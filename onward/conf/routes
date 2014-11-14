@@ -38,8 +38,6 @@ GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateC
 GET         /card/*path.json                                    controllers.ContentCardController.render(path)
 GET         /card/*path                                         controllers.ContentCardController.renderHtml(path)
 
-
-
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
 GET        /related/*path                             controllers.RelatedController.renderHtml(path)

@@ -30,12 +30,6 @@
             background: colour($tonal__header-background);
             color: colour($tonal__kicker-text);
         }
-
-        .stars {
-            margin-top: $gs-baseline / 4;
-            margin-bottom: $gs-baseline / 4;
-            padding-left: $gs-gutter/2;
-        }
     }
 }
 
@@ -53,6 +47,12 @@
     display: block;
     position: relative;
     overflow: hidden;
+
+    .stars {
+        margin-top: $gs-baseline / 4;
+        margin-bottom: $gs-baseline / 4;
+        padding-left: $gs-gutter/2;
+    }
 }
 
 .content-card:hover {
