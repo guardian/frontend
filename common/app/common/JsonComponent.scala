@@ -64,7 +64,7 @@ object JsonComponent extends Results with implicits.Requests {
   // otherwise they get overwritten by the Gzip Filter
   private def resultFor(request: RequestHeader, json: String): Result = jsonp(request, json)
     .getOrElse(Ok(json).as(JSON))
-  
+
   // TODO we probably want to kill off JsonP - I do not think we intend to use it again
   private def jsonp(request: RequestHeader, json: String): Option[Result] = request.getQueryString("callback").map{
     case ValidCallback(callback) => Ok(s"$callback($json);").as(withCharset("application/javascript"))
@@ -78,7 +78,7 @@ object JsonNotFound {
 
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
-  def apply()(implicit request: RequestHeader): Result = jsonp(request).orElse(cors(request)).getOrElse(NotFound)
+  def apply()(implicit request: RequestHeader): Result = jsonp(request).getOrElse(NotFound)
 
   // TODO we probably want to kill off JsonP - I do not think we intend to use it again
   private def jsonp(request: RequestHeader) = request.getQueryString("callback").map {
