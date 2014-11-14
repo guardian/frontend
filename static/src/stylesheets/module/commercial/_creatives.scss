@@ -43,7 +43,7 @@
 
         &:before {
             @extend %i-soulmates-trill;
-            @extend %svg-i-soulmates-trill;
+            @extend %svg-i-soulmates-trill !optional;
             content: "";
             display: block;
             margin: $gs-baseline auto 0;
