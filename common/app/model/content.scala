@@ -438,7 +438,7 @@ case class SnapLatest(articleId: String,
   override lazy val id: String = articleId
   override lazy val url: String = s"/$articleId"
 
-  override val tags: Seq[Tag] = snapTags
+  override lazy val tags: Seq[Tag] = snapTags
 }
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
