@@ -368,6 +368,10 @@
     min-height: 90px;
     z-index: auto;
 
+    .index-page & {
+        min-height: 0;
+    }
+
     @include mq(tablet) {
         padding-left: $gs-gutter / 2;
     }

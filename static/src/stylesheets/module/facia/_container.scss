@@ -597,3 +597,8 @@ $header-image-size-desktop: 100px;
 .index-page-header__image-wrapper--contributor-circle {
     @include border-radius(50%);
 }
+
+.index-page::before {
+    content: '';
+    display: table;
+}
