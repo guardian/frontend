@@ -191,20 +191,19 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def cleanStandardPictures(body: Document): Document = {
 
-    val elements = body.getElementsByTag("figure").view.zipWithIndex
-
-    elements foreach { case(fig, index) =>
+    body.getElementsByTag("figure").foreach { fig =>
       if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
         val blockId = fig.attr("data-media-id")
         val asset = findImageFromId(blockId)
-        val linkIndex = (index+1).toString
 
-        fig.getElementsByTag("img").foreach { img =>
+        val images = body.getElementsByTag("img").view.zipWithIndex
+        images foreach { case (img, index) =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+          val linkIndex = (index+1).toString
           img.attr("id", linkIndex)
 
           asset.map { image =>
@@ -289,14 +288,14 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
       body.select(".block").foreach { el =>
         val id = el.id()
         el.select(".block-time.published-time time").foreach { time =>
-            val datetime = DateTime.parse(time.attr("datetime"))
-            val hhmm = Format(datetime, "HH:mm")
-            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
-            time.attr("data-relativeformat", "med")
-            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
-            if (datetime.isAfter(DateTime.now().minusDays(5))) {
-              time.addClass("js-timestamp")
-            }
+          val datetime = DateTime.parse(time.attr("datetime"))
+          val hhmm = Format(datetime, "HH:mm")
+          time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+          time.attr("data-relativeformat", "med")
+          time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+          if (datetime.isAfter(DateTime.now().minusDays(5))) {
+            time.addClass("js-timestamp")
+          }
         }
       }
     }
@@ -399,22 +398,22 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
 
     /**
      * We moved some R1 HTML files from subdomains to www.theguardian.com.
-    * This means we broke some of the <a href="...">'s in the HTML.
-    *
-    * Here's how this works :-
-    *
-    * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
-    *       - Downcase the old subdomain paths.
-    *
-    * 2. /Film_Page/0,,594132,00.html -> /film/Film_Page/0,,594132,00.html
-    *       - Prefix the current section to any links without a path in them.
-    *
-    * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
-    *       - The /Guardian path is an alias for the root (www), so we just remove it.
-    *
-    * 4. http://...
-    *       - Ignore any links that contain a full URL.
-    */
+     * This means we broke some of the <a href="...">'s in the HTML.
+     *
+     * Here's how this works :-
+     *
+     * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
+     *       - Downcase the old subdomain paths.
+     *
+     * 2. /Film_Page/0,,594132,00.html -> /film/Film_Page/0,,594132,00.html
+     *       - Prefix the current section to any links without a path in them.
+     *
+     * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
+     *       - The /Guardian path is an alias for the root (www), so we just remove it.
+     *
+     * 4. http://...
+     *       - Ignore any links that contain a full URL.
+     */
 
     // #1
     href match {
@@ -430,7 +429,7 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
     links.filter(_.attr("href") startsWith "/") // #4
-    .foreach(link => link.attr("href", FixR1Link(link.attr("href"), section)))
+      .foreach(link => link.attr("href", FixR1Link(link.attr("href"), section)))
 
     body
   }
@@ -586,7 +585,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-        s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+          s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
            |  <a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link"
            |    href="${LinkTo("/"+tag.id)}">${tag.name}</a></span>""".stripMargin)
     }
@@ -849,14 +848,14 @@ object GetClasses {
   )
 
   def forContainer(
-      showLatestUpdate: Boolean,
-      isFirst: Boolean,
-      hasTitle: Boolean,
-      commercialOptions: ContainerCommercialOptions,
-      container: Option[slices.Container] = None,
-      extraClasses: Seq[String] = Nil,
-      disableHide: Boolean = false
-  ) = {
+                    showLatestUpdate: Boolean,
+                    isFirst: Boolean,
+                    hasTitle: Boolean,
+                    commercialOptions: ContainerCommercialOptions,
+                    container: Option[slices.Container] = None,
+                    extraClasses: Seq[String] = Nil,
+                    disableHide: Boolean = false
+                    ) = {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
@@ -879,7 +878,7 @@ object SnapData {
 
   private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
     case content: Content =>
-        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
         content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
     case _  => Nil
   }
