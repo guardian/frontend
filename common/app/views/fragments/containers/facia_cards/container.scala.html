@@ -15,7 +15,7 @@
     }
     <section id="@componentName"
              class="@GetClasses.forContainerDefinition(containerDefinition)"
-             data-link-name="@{containerDefinition.index + 1} @componentName"
+             data-link-name="@{containerDefinition.index + 1} | @componentName"
              data-id="@containerDefinition.dataId"
              @containerDefinition.commercialOptions.sponsorshipTag.map { keyword =>
                  data-keywords="@keyword"
