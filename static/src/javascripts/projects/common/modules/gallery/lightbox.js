@@ -512,23 +512,15 @@ define([
             }
         });
 
-        if (config.page.contentType === 'Gallery') {
-            lightbox = lightbox || new GalleryLightbox();
-            galleryId = '/' + config.page.pageId;
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch lightbox at that index
-                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
-            }
-        }
-        // COMBINE THESE
-        if (config.page.contentType === 'Article') {
-            lightbox = lightbox || new GalleryLightbox();
-            galleryId = '/' + config.page.pageId;
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch lightbox at that index
-                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+        lightbox = lightbox || new GalleryLightbox();
+        galleryId = '/' + config.page.pageId;
+        match = /\?index=(\d+)/.exec(document.location.href);
+        if (match) { // index specified so launch lightbox at that index
+            url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+            if(config.page.contentType === 'Article') {
                 lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
+            } else if (config.page.contentType === 'Gallery') {
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
             }
         }
     }
