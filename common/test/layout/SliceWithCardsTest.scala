@@ -32,7 +32,11 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
       override def webUrl: String = s"$n"
 
       override def customImageCutout: Option[FaciaImageElement] = None
-    }, n)
+
+    override def snapType: Option[String] = None
+
+    override def snapUri: Option[String] = None
+  }, n)
   }
 
   "a slice" should "consume as many items as the columns it aggregates consume" in {
