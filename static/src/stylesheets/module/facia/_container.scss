@@ -18,6 +18,10 @@ $header-image-size-desktop: 100px;
     }
 }
 
+.fc-container--outbrain {
+    background-color: colour(neutral-8);
+}
+
 .fc-container__inner,
 .facia-container__inner {
     padding-top: $gs-baseline / 4;
