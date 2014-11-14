@@ -104,7 +104,7 @@ define([
     RelativeDates,
     smartAppBanner,
     Tabs,
-    Toggles,
+    toggles,
     userPrefs,
 
     identity,
@@ -195,10 +195,8 @@ define([
             },
 
             showToggles: function () {
-                var toggles = new Toggles();
-                toggles.init(document);
                 mediator.on('page:common:ready', function () {
-                    toggles.reset();
+                    toggles.init();
                     Dropdowns.init();
                 });
             },

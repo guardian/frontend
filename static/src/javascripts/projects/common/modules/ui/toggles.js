@@ -1,66 +1,53 @@
 define([
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/utils/$'
 ], function (
     bean,
-    bonzo
+    bonzo,
+    $
 ) {
 
-    var Toggles = function () {
+    var popups = [],
+        controls = [];
 
-        var self = this,
-            controls,
-            readyClass = 'js-toggle-ready';
-
-        this.init = function () {
-            controls = document.body.querySelectorAll('[data-toggle]');
-            Array.prototype.forEach.call(controls, function (control) {
-                if (!bonzo(control).hasClass(readyClass)) {
-                    var target = self.getTarget(control);
-                    if (target) {
-                        control.toggleTarget = target;
-                        bonzo(control).addClass(readyClass);
-                        bean.add(control, 'click', function (e) {
-                            e.preventDefault();
-                            self.toggle(control, controls);
-                        });
-                    }
-                }
-            });
-        };
-
-        this.reset = function () {
-            Array.prototype.forEach.call(controls, self.close);
-        };
-    };
-
-    Toggles.prototype.toggle = function (control, controls) {
-        var self = this;
-        Array.prototype.forEach.call(controls, function (c) {
-            if (c === control) {
-                self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c);
-            } else {
-                self.close(c);
-            }
-        });
-    };
-
-    Toggles.prototype.getTarget = function (control) {
-        var targetClass = bonzo(control).data('toggle');
-        if (targetClass) {
-            return document.body.querySelector('.' + targetClass);
+    function closeAllPopups(e) {
+        if (!e || !$.ancestor(e.target, 'popup--persistent')) {
+            bonzo(popups).removeClass('popup--open');
+            bonzo(controls).removeClass('is-active');
         }
-    };
+    }
 
-    Toggles.prototype.open = function (c) {
-        bonzo(c).addClass('is-active');
-        bonzo(c.toggleTarget).removeClass('is-off');
-    };
+    function initOne(control) {
+        controls.push(control);
 
-    Toggles.prototype.close = function (c) {
-        bonzo(c).removeClass('is-active');
-        bonzo(c.toggleTarget).addClass('is-off');
-    };
+        var popupClass = bonzo(control).data('toggle'),
+            $popupEl = $(popupClass ? '.' + popupClass : ''),
+            $control = bonzo(control);
 
-    return Toggles;
+        if ($popupEl.length) {
+            popups.push($popupEl[0]);
+
+            bean.on(control, 'click', function(e){
+                e.preventDefault();
+                var isOpen = $control.hasClass('is-active'),
+                    addOrRemove = isOpen ? 'removeClass' : 'addClass';
+                window.setTimeout(function() {
+                    $control[addOrRemove]('is-active');
+                    $popupEl[addOrRemove]('popup--open');
+                }, 0);
+            });
+        }
+    }
+
+    function init() {
+        $('[data-toggle]').each(initOne);
+        bean.on(document.body, 'click', closeAllPopups);
+    }
+
+    return {
+        init: init,
+        initOne: initOne,
+        closeAllPopups: closeAllPopups
+    };
 });

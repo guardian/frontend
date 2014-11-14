@@ -165,7 +165,6 @@ Loader.prototype.initPageSizeDropdown = function(pageSize) {
     $pagesizeLabel.text(pageSize);
     this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
         this.removeState('truncated');
-        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
         var selectedPageSize = bonzo(e.currentTarget).data('pagesize');
         this.comments.options.pagesize = selectedPageSize;
         $pagesizeLabel.text(selectedPageSize);
@@ -182,7 +181,6 @@ Loader.prototype.initToolbar = function() {
     $orderLabel.text(this.comments.options.order);
     this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
         this.removeState('truncated');
-        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
         this.comments.options.order = bonzo(e.currentTarget).data('order');
         $orderLabel.text(this.comments.options.order);
         userPrefs.set('discussion.order', this.comments.options.order);
@@ -194,7 +192,6 @@ Loader.prototype.initToolbar = function() {
     $threadingLabel.text(this.comments.options.threading);
     this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
         this.removeState('truncated');
-        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
         this.comments.options.threading = bonzo(e.currentTarget).data('threading');
         $threadingLabel.text(this.comments.options.threading);
         userPrefs.set('discussion.threading', this.comments.options.threading);
