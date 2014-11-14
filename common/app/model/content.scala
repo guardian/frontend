@@ -417,6 +417,8 @@ class Snap(snapId: String,
   //We set this to snapId as TemplateDeduping uses this ID to dedupe
   override lazy val url: String = snapId
 
+  lazy val href = snapMeta.flatMap(_.href)
+
   //Sorting is done via id
   override lazy val id: String = snapId
 
