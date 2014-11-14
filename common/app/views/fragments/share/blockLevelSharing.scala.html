@@ -26,7 +26,7 @@
 
     <div id="share-modal-@id" class="overlay overlay--@contentType.toLowerCase share-modal js-share-modal">
         <div class="share-modal__content" data-link-name="mobile block share">
-            <h2 class="share-modal__title">Share this post</h2>
+            <div class="share-modal__title">Share this post</div>
             @shareItems.map { item: model.ShareLink =>
                 <a class="share-modal__link" href="@item.href" target="_blank" data-link-name="social @item.css">
                     <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
