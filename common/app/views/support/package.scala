@@ -131,7 +131,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         if(!shortUrl.isEmpty) {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
-          element.child(0).after(html.toString())
+          element.getElementsByClass("gu-media-wrapper").first().after(html.toString())
         }
       })
     }

@@ -101,7 +101,7 @@ figure.element.element--supporting {
             padding-left: 0;
             top: 100%;
             padding-top: ($gs-baseline/3)*2;
-            max-width: 460px;
+            max-width: gs-span(6);
         }
     }
 }
@@ -115,7 +115,7 @@ figure.element.element--showcase {
             background: #ffffff;
             padding-left: 0;
             top: 100%;
-            max-width: 700px;
+            max-width: gs-span(9);
         }
     }
 }
