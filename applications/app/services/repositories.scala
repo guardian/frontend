@@ -23,7 +23,7 @@ import scalaz.std.list._
 import Function.const
 
 object IndexPagePagination {
-  def pageSize: Int = 50 //have a good think before changing this
+  def pageSize: Int = 35 //have a good think before changing this
 }
 
 case class MpuState(injected: Boolean)
