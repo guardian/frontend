@@ -383,7 +383,9 @@
     right: -$gs-gutter/4;
     margin-top: ($gs-baseline/3)*2;
 
-    .element--supporting & {
+    .element--supporting &,
+    .element--thumbnail &
+    {
         display: none !important;
     }
 
