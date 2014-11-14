@@ -2,7 +2,7 @@ package model
 
 import common.`package`._
 
-case class ShareLink(
+case class ShareLink (
   text: String,
   css: String,
   userMessage: String,
@@ -11,38 +11,37 @@ case class ShareLink(
 
 trait ShareLinks { self: Content =>
 
-  private def shareLink(shareType: String, blockId: Option[String]): Option[ShareLink] = {
+  private def shareLink(shareType: String, elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String, webLinkUrl: String, title: String): Option[ShareLink] = {
 
-    def shareCampaignUrl(campaign: String, blockId: Option[String]) = {
-      blockId.map { block => s"$shortUrl/$campaign#$block" } getOrElse s"$shortUrl/$campaign"
+    def shareCampaignUrl(campaign: String, elementId: Option[String]) = {
+      elementId.map { block => s"$shortLinkUrl/$campaign#$block" } getOrElse s"$shortLinkUrl/$campaign"
     }
 
-    lazy val facebook = shareCampaignUrl("sfb", blockId).urlEncoded
-    lazy val googlePlus = shareCampaignUrl("sgp", blockId).urlEncoded
-    lazy val link = shareCampaignUrl("sbl", blockId)
-    lazy val twitter = shareCampaignUrl("stw", blockId).urlEncoded
-    lazy val whatsapp = shareCampaignUrl("swa", blockId)
+    lazy val facebook = shareCampaignUrl("sfb", elementId).urlEncoded
+    lazy val googlePlus = shareCampaignUrl("sgp", elementId).urlEncoded
+    lazy val link = shareCampaignUrl("sbl", elementId).urlEncoded
+    lazy val twitter = shareCampaignUrl("stw", elementId).urlEncoded
+    lazy val whatsapp = shareCampaignUrl("swa", elementId)
     lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
 
     shareType match {
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
-      case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${webTitle.urlEncoded}&url=$twitter"))
+      case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${title.urlEncoded}&url=$twitter"))
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
-      case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + webTitle + "\" " + whatsapp).encodeURIComponent}"""))
-      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=${link.urlEncoded}"))
-      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
-      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webUrl.urlEncoded}"))
-      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${webTitle.urlEncoded}&url=${webUrl.urlEncoded}"))
-      case "link"     => Some(ShareLink("Link", "link", "Copy and Paste", link))
+      case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
+      case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
+      case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${shortLinkUrl.urlEncoded}"))
+      case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webLinkUrl.urlEncoded}"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${webLinkUrl.urlEncoded}&media=${mediaPath.getOrElse("").urlEncoded}"))
       case _ => None
     }
   }
 
-  protected lazy val blockShareOrder = List("facebook", "twitter", "gplus")
+  protected lazy val elementShareOrder = List("facebook", "twitter", "pinterestBlock")
   protected lazy val pageShareOrder = List("facebook", "twitter", "email", "linkedin", "gplus", "whatsapp")
 
-  def blockLevelShares(blockId: String): Seq[ShareLink] = blockShareOrder.flatMap(shareLink(_, Some(blockId)))
-  def blockLevelLink(blockId: String): Option[ShareLink] = shareLink("link", Some(blockId))
+  def elementShares(elementId: Option[String] = None, mediaPath: Option[String] = None, shortLinkUrl: String = shortUrl, webLinkUrl: String = webUrl, title: String = webTitle): Seq[ShareLink] = elementShareOrder.flatMap(shareLink(_, elementId, mediaPath, shortLinkUrl, webLinkUrl, title))
 
-  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, None))
+  lazy val pageShares: Seq[ShareLink] = pageShareOrder.flatMap(shareLink(_, shortLinkUrl = shortUrl, webLinkUrl = webUrl, title = webTitle))
 }
+
