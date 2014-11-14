@@ -19,7 +19,7 @@ object ItemKicker {
       case Some(kicker)
         if trail.snapType.exists(_ == "latest") &&
           trail.showKickerCustom &&
-          trail.snapUri.isDefined => Some(FreeHtmlKickerWithLink(kicker, trail.snapUri.get))
+          trail.snapUri.isDefined => Some(FreeHtmlKickerWithLink(kicker, s"/${trail.snapUri.get}"))
       case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
       case _ => if (trail.showKickerTag && maybeTag.isDefined) {
         tagKicker
