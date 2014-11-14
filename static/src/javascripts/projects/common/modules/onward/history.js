@@ -58,7 +58,7 @@ define([
             nameCount,
             oldWeight;
 
-        tagType = (tag.type == 'faciaPage' && summary[tag.id]) ? summary[tag.id][1] : tag.type;
+        tagType = (tag.type === 'faciaPage' && summary[tag.id]) ? summary[tag.id][1] : tag.type;
         oldWeight = summary[tag.id] ? summary[tag.id][2] : 0;
         nameCount = [tag.displayName, tagType, oldWeight + (tag.weight * multiplier)];
         if (tag.parentDisplayName) {
