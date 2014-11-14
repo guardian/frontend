@@ -1,12 +1,10 @@
 define([
-    'raven',
     'common/utils/config',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
     'common/modules/component',
     'common/modules/ui/images'
 ], function (
-    raven,
     config,
     register,
     badges,

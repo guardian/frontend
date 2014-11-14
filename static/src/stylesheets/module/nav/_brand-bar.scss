@@ -1,5 +1,5 @@
 .brand-bar {
-    background-color: $c-brandBlue;
+    background-color: colour(guardian-brand);
     line-height: 0;
     @include box-sizing(border-box);
     padding-left: $gs-gutter * .25;

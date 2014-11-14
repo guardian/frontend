@@ -52,9 +52,9 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__group-header {
     @include fs-textSans(2);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     padding: $gs-baseline/2 $gs-gutter/2;
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid colour(neutral-4);
     padding-bottom: 0;
     margin: 0;
 
@@ -165,7 +165,7 @@ $control-offset: 36 + $gs-gutter/2;
     .brand-bar__item--action:hover {
         display: block;
         white-space: nowrap;
-        color: $c-neutral1;
+        color: colour(neutral-1);
         line-height: $gs-baseline * 3;
     }
 

@@ -2,10 +2,9 @@
 Multi component (AKA Frankenponent)
 ========================================================================== */
 
-.commercial--v2.commercial--multi,
 .commercial.commercial--multi {
     .commercial__multi-wrapper {
-        background: $c-neutral4;
+        background: colour(neutral-4);
         padding: 0 $gs-gutter/4 $gs-baseline/2;
     }
     

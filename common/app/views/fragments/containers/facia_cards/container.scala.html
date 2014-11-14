@@ -15,8 +15,9 @@
              @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
                  data-sponsorship="@sponsorshipType"
              }
-             data-component="@componentName">
-        <div class="facia-container__inner">
+             data-component="@componentName"
+             aria-expanded="true">
+        <div class="fc-container__inner">
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {
                     @standardContainer(containerDefinition, frontProperties)

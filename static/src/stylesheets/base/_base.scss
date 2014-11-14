@@ -14,6 +14,13 @@ body {
     background-color: #ffffff;
 }
 
+@if $old-ie == false {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
 /**
  * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
  */
@@ -58,7 +65,7 @@ body:after {
 }
 
 .dateline {
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-textSans(2);
 
     @include mq(tablet) {
@@ -72,7 +79,7 @@ body:after {
 
 .relative-timestamp {
     display: block;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     margin: 0;
 }
 

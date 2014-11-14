@@ -25,7 +25,7 @@
     @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @if ($svg-support) {
         &:before {
@@ -139,6 +139,7 @@ figure {
 // Articles can have the feature tone applied, but it's not always primary tone
 .has-feature-showcase-picture .media-primary.media-primary--showcase {
     margin-left: 0;
+    margin-right: 0;
     z-index: 2; // Put the image on top of the left and right layout borders
     position: relative;
 

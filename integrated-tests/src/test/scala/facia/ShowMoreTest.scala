@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
   "Facia containers" should "have show more functionality" in {
 
-    go to theguardian("/technology")
+    go to theguardian("/uk")
 
     withClue("Should show the 'show more' button") {
       first("[data-test-id='show-more']").isDisplayed should be (true)
@@ -25,5 +25,12 @@ import org.scalatest.{FlatSpec, Matchers}
       hiddenItem.isDisplayed should be(true)
     }
 
+    withClue("Should hide items once cta is clicked again") {
+      val hiddenItem = first(".js-hide")
+
+      clickOn(first("[data-test-id='show-more']"))
+
+      hiddenItem.isDisplayed should be(false)
+    }
   }
 }

@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'raven',
     'lodash/arrays/intersection',
     'common/utils/$',
     'common/utils/config',
@@ -13,7 +12,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    raven,
     intersection,
     $,
     config,
@@ -24,7 +22,10 @@ define([
     images
 ) {
 
-    function Related() {
+    var opts;
+
+    function Related(options) {
+        opts = options || {};
     }
 
     Related.overrideUrl = '';
@@ -82,6 +83,10 @@ define([
                 container.setAttribute('data-component', componentName);
 
                 relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
+
+                if (opts.excludeTag) {
+                    relatedUrl += '?exclude-tag=' + opts.excludeTag;
+                }
 
                 new LazyLoad({
                     url: relatedUrl,

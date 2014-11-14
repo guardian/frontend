@@ -8,13 +8,20 @@ import feed.MostReadAgent
 import conf.Switches.RelatedContentSwitch
 
 trait Related extends ConciergeRepository {
-  def related(edition: Edition, path: String): Future[Seq[Content]] = {
+  def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[Seq[Content]] = {
 
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(Nil)
     } else {
 
+      // doesn't like "tag" being an empty string - need to explicitly pass a None
+      val tags: Option[String] = excludeTags match {
+        case Nil => None
+        case excluding => Some(excluding.map(t => s"-$t").mkString(","))
+      }
+
       val response = LiveContentApi.item(path, edition)
+        .tag(tags)
         .showRelated(true)
         .response
 
@@ -28,10 +35,12 @@ trait Related extends ConciergeRepository {
     }
   }
 
-  def getPopularInTag(edition: Edition, tag: String): Future[Seq[Content]] = {
+  def getPopularInTag(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[Seq[Content]] = {
+
+    val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = LiveContentApi.search(edition)
-      .tag(tag)
+      .tag(tags)
       .pageSize(50)
       .response
 

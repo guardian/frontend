@@ -1,11 +1,31 @@
+//TODO This and the corresonding templates in discussion must be refatcored to new fc- containers
 .container__meta {
+    padding-top: $gs-baseline/2;
+
     @include mq(tablet) {
         margin-bottom: $gs-baseline;
     }
+    @include mq(desktop) {
+        padding-top: $gs-baseline/2;
+    }
+    @include mq(desktop, leftCol) {
+        max-width: 50%;
+    }
+    @include mq(leftCol) {
+        margin-bottom: 0;
+        float: left;
+        clear: left;
+        width: $left-column !important;
+        margin-right: $gs-gutter;
+    }
+    @include mq(wide) {
+        width: $left-column-wide !important;
+    }
+
     .container__meta__label {
         @include fs-header(3);
         line-height: get-line-height(header, 2) !important;
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
     .container__meta__description {
         margin: 0;
@@ -26,6 +46,6 @@
     .container__meta__item {
         margin: 0;
         @include fs-headline(2);
-        color: $c-neutral2;
+        color: colour(neutral-2);
     }
 }

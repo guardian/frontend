@@ -18,7 +18,8 @@ object GoogleAuth {
       cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
       // that configured in the developer console)
       Some("guardian.co.uk"), // Google App domain to restrict login
-      Some(maxAuthAge)
+      Some(maxAuthAge),
+      enforceValidity = false
     )
   }
 
