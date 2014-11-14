@@ -408,7 +408,7 @@ class Snap(snapId: String,
   //We set this to snapId as TemplateDeduping uses this ID to dedupe
   override lazy val url: String = snapId
 
-  //TODO: Remove href after we move away from href in favour of snapUri
+  //TODO: legacy-snaps: Remove href after we move away from href in favour of snapUri
   lazy val href = snapMeta.flatMap(_.href)
 
   //Sorting is done via id
