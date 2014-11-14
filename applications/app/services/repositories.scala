@@ -52,7 +52,6 @@ object IndexPage {
           (ContainerDefinition.forNumberOfItems(grouping.items.length), mpuState)
         }
 
-        /** TODO what should the data ID be here? */
         (newMpuState, ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
           displayName = Some(grouping.dateHeadline.displayString)
         )), collection),
