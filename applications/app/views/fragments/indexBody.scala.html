@@ -9,10 +9,10 @@
 
 <div class="l-side-margins">
     <div class="@RenderClasses(Map(
-            "fc-container--sponsored" -> index.page.isSponsored,
-            "fc-container--advertisement-feature" -> index.page.isAdvertisementFeature,
-            "fc-container--foundation-supported" -> index.page.isFoundationSupported,
-            "js-sponsored-front" -> (index.page.isSponsored || index.page.isAdvertisementFeature || index.page.isFoundationSupported)))"
+        "js-sponsored-front" -> (index.page.isSponsored ||
+            index.page.isAdvertisementFeature ||
+            index.page.isFoundationSupported))
+        )"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>
             data-sponsor="@sponsor"
