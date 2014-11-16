@@ -1,0 +1,15 @@
+{
+  "name": "frontend-static-public-flash",
+  "version": "0.1.0 ",
+  "dependencies": {
+    "mediaelement": "~2.16.1",
+    "video-js-swf": "guardian/video-js-swf#595e8e59e7891d9b5ed0eae10db839e1c92ef95d"
+  },
+  "install": {
+    "path": "components",
+    "sources": {
+      "mediaelement": "bower_components/mediaelement/build/flashmediaelement.swf",
+      "video-js-swf": "bower_components/video-js-swf/dist/video-js.swf"
+    }
+  }
+}

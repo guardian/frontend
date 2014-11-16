@@ -152,7 +152,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         .addClass("js-gu-media gu-media gu-media--video")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
-      val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
+      val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
 
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
