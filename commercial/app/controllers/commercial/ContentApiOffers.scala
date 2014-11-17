@@ -8,28 +8,29 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object ContentApiOffers extends Controller with ExecutionContexts {
+object ContentApiOffers extends Controller with ExecutionContexts with implicits.Requests {
 
   private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
-    val optKeyword = request.queryString get "k" map (_.head)
 
-    val optLogo = request.queryString get "l" map (_.head)
+    val optKeyword = request.getParameter("k")
 
-    val optCapiTitle = request.queryString get "ct" map (_.head)
+    val optLogo = request.getParameter("l")
 
-    val optCapiLink = request.queryString get "cl" map (_.head)
+    val optCapiTitle = request.getParameter("ct")
 
-    val optCapiAbout = request.queryString get "cal" map (_.head)
-    
-    val optCapiButtonText = request.queryString get "clt" map (_.head)
-    
-    val optCapiReadMoreUrl = request.queryString get "rmd" map (_.head)
-    
-    val optCapiReadMoreText = request.queryString get "rmt" map (_.head)
-    
-    val optCapiAdFeature = request.queryString get "af" map (_.head)
-    
-    val optCapiSupportedBy = request.queryString get "sb" map (_.head)
+    val optCapiLink = request.getParameter("cl")
+
+    val optCapiAbout = request.getParameter("cal")
+
+    val optCapiButtonText = request.getParameter("clt")
+
+    val optCapiReadMoreUrl = request.getParameter("rmd")
+
+    val optCapiReadMoreText = request.getParameter("rmt")
+
+    val optCapiAdFeature = request.getParameter("af")
+
+    val optCapiSupportedBy = request.getParameter("sb")
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
       Lookup.latestContentByKeyword(keyword, 4)
@@ -52,9 +53,9 @@ object ContentApiOffers extends Controller with ExecutionContexts {
     }
   }
 
-  def itemsHtml = renderItems(htmlFormat, true)
-  def itemsJson = renderItems(jsonFormat, true)
+  def itemsHtml = renderItems(htmlFormat, isMulti = true)
+  def itemsJson = renderItems(jsonFormat, isMulti = true)
 
-  def itemHtml = renderItems(htmlFormat, false)
-  def itemJson = renderItems(jsonFormat, false)
+  def itemHtml = renderItems(htmlFormat, isMulti = false)
+  def itemJson = renderItems(jsonFormat, isMulti = false)
 }
