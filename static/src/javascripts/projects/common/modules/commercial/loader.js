@@ -114,6 +114,7 @@ define([
                 travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
                 multi:             buildComponentUrl('multi', { c: opts.components }),
                 capiSingle:        buildComponentUrl('capi-single', defaults(options, { s: section })),
+                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(options, { s: section })),
                 capi:              buildComponentUrl('capi', {
                     s:   section,
                     t:   opts.capi,

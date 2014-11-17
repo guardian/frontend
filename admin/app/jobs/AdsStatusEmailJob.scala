@@ -1,21 +1,30 @@
 package jobs
 
+import common.Logging
 import conf.Configuration.commercial._
+import conf.Switches
+import conf.Switches.AdsStatusEmailDebugSwitch
 import dfp.{PageSkinSponsorship, Sponsorship}
 import services.EmailService
 import tools.Store
 
-object AdsStatusEmailJob {
+object AdsStatusEmailJob extends Logging {
 
   private val subject = "NGW Ad Targeting Status"
 
   def run(): Unit = {
+    log.info("Starting AdsStatusEmailJob")
+
     for {
       from <- adTechTeam
       to <- adOpsTeam
       cc <- adTechTeam
     } yield {
-      EmailService.send(from, Seq(to), Seq(cc), subject, textBody)
+      if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
+        EmailService.send(from, to = Seq(from), subject = "SES Test", textBody = "Please ignore")
+      } else {
+        EmailService.send(from, Seq(to), Seq(cc), subject, textBody)
+      }
     }
   }
 

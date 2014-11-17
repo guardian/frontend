@@ -36,6 +36,8 @@ GET         /analytics/commercial/pageskins                                     
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
 GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
+GET         /analytics/commercial/sponsored-containers                                                               controllers.admin.CommercialController.sponsoredContainers()
+
 
 # Discussion
 GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
@@ -251,6 +253,8 @@ GET         /commercial/capi.json                                               
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
 GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffers.itemJson
 GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffers.itemHtml
+GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffers.itemJson
+GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffers.itemHtml
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()

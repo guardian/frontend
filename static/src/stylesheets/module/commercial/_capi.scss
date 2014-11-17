@@ -71,6 +71,15 @@
     }
 }
 
+.container--merchandising-feature {
+    background-color: transparent;
+    
+    .fc-container__inner {
+        padding-top: $gs-baseline/2;
+        border-top: 1px solid colour(neutral-4);
+    }
+}
+
 .facia-container--advertisement-feature,
 .fc-container--advertisement-feature,
 .container--advertisement-feature {
