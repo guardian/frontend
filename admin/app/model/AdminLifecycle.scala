@@ -1,15 +1,15 @@
 package model
 
 import commercial.TravelOffersCacheJob
+import common.{AkkaAsync, Jobs}
+import conf.Configuration
+import conf.Configuration.environment
 import conf.Switches.AdsStatusEmailDebugSwitch
-import conf.{Switches, Configuration}
 import football.feed.MatchDayRecorder
+import jobs._
 import play.api.GlobalSettings
 import services.EmailService
-import tools.{LoadBalancer, CloudWatch}
-import common.{AkkaAsync, Jobs}
-import jobs._
-import conf.Configuration.environment
+import tools.{CloudWatch, LoadBalancer}
 
 trait AdminLifecycle extends GlobalSettings {
 
@@ -74,10 +74,8 @@ trait AdminLifecycle extends GlobalSettings {
       }
     }
 
-    if (environment.isProd && AdsStatusEmailDebugSwitch.isSwitchedOn) {
-      Jobs.schedule("AdsStatusEmailDebugJob", "0 5 9-18 ? * MON-FRI") {
-        AdsStatusEmailJob.run()
-      }
+    if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
+      AdsStatusEmailJob.run()
     }
 
   }
@@ -97,7 +95,6 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
     Jobs.deschedule("AdsStatusEmailJob")
-    Jobs.deschedule("AdsStatusEmailDebugJob")
   }
 
   override def onStart(app: play.api.Application) {
