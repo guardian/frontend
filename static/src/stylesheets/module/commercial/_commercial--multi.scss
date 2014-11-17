@@ -57,7 +57,7 @@ Multi component (AKA Frankenponent)
 
     .commercial--multi__body {
         position: relative;
-        background: $c-neutral4;
+        background: colour(neutral-4);
         padding: $gs-gutter/4 $gs-baseline/2 $gs-baseline * 3;
         min-height: gs-height(4);
     }
