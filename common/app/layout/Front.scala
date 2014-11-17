@@ -40,6 +40,10 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
+  // Dream on.
+  def participatesInDeduplication(trail: Trail) =
+    !trail.snapType.exists(_ == "latest")
+
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
     * container.
@@ -70,7 +74,8 @@ object Front extends implicits.Collections {
           * being that they disappear beyond the fold, i.e., after the 'show more' button).
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => seen.contains(trail.url)).distinctBy(_.url)
+        val notUsed = trails.filterNot(trail => participatesInDeduplication(trail) && seen.contains(trail.url))
+          .distinctBy(_.url)
         (seen ++ notUsed.take(nToTake).map(_.url), notUsed)
 
       case _ =>
