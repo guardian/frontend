@@ -45,6 +45,12 @@ object Switches extends Collections {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
+    "If this switch is on then we will request more items for larger tag pages",
+    safeState = Off,
+    sellByDate = never
+  )
+
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
@@ -124,11 +130,6 @@ object Switches extends Collections {
   val PngResizingSwitch = Switch("Performance", "png-resizing",
     "If this switch is on png images will be resized via the png-resizing server",
     safeState = Off, sellByDate = never
-  )
-
-  val ContentCacheTimeSwitch = Switch("Performance", "content-cache-time",
-    "If this switch is on then content will have a shorter cache time",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 15)
   )
 
   // Commercial
@@ -396,6 +397,7 @@ object Switches extends Collections {
   )
 
   val all: List[Switch] = List(
+    TagPageSizeSwitch,
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
@@ -461,7 +463,6 @@ object Switches extends Collections {
     FootballFeedRecorderSwitch,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
-    ContentCacheTimeSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,

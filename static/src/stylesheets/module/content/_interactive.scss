@@ -18,7 +18,7 @@
         width: 100%;
         margin-left: 0;
         margin-bottom: $gs-baseline/2;
-        border-bottom: 1px dotted $c-neutral5;
+        border-bottom: 1px dotted colour(neutral-5);
     }
     .content__section-label,
     .content__series-label {
@@ -86,7 +86,7 @@
 
         @include mq(leftCol) {
             position: relative;
-            border-top: 1px dotted $c-neutral5;
+            border-top: 1px dotted colour(neutral-5);
         }
         .commentcount {
             top: $gs-baseline / 3;
@@ -96,7 +96,7 @@
                 position: static;
                 padding-top: $gs-baseline / 3;
                 margin-bottom: $gs-baseline;
-                border-top: 1px dotted $c-neutral5;
+                border-top: 1px dotted colour(neutral-5);
             }
         }
 

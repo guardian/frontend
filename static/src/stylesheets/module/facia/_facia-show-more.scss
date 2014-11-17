@@ -1,8 +1,25 @@
-$icon-collection-size: 20px;
+$icon-collection-size: 80%;
 
 .collection__show-more {
+    display: block;
+    clear: both;
+    margin-top: $gs-baseline;
+    border: 1px solid colour(guardian-brand-light);
+    color: colour(guardian-brand);
+
+    &:hover,
+    &:focus {
+        border-color: colour(guardian-brand-dark);
+    }
+
     .i {
         width: $icon-collection-size;
         height: $icon-collection-size;
+    }
+
+    .fc-show-more--hidden & {
+        margin-top: 0;
+        border: 0;
+        color: #ffffff;
     }
 }

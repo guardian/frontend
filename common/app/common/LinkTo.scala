@@ -21,6 +21,7 @@ trait LinkTo extends Logging {
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
+  private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -47,14 +48,20 @@ trait LinkTo extends Logging {
   }
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
+    //TODO: legacy-snaps: Remove href after we move away from href in favour of snapUri
+    case snap: Snap => snap.snapUri.filter(_.nonEmpty).orElse(snap.href).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
 
   def apply(faciaCard: FaciaCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
 
-  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
+  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(clean(path), edition)}"
+
+  private def clean(path: String) = path match {
+    case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
+    case _ => path
+  }
 
   private def homeLink(edition: Edition) = urlFor("", edition)
 

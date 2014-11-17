@@ -112,7 +112,7 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").filter { element: Element =>
@@ -121,11 +121,26 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
+    if(!article.isLiveBlog) {
+      document.getElementsByClass("element-video").foreach( element => {
+        val shortUrl = element.attr("data-short-url")
+        val webUrl = element.attr("data-canonical-url")
+        val blockId = element.attr("data-media-id")
+        val mediaPath = element.attr("data-video-poster")
+        val mediaTitle = element.attr("data-video-name")
+
+        if(!shortUrl.isEmpty) {
+          val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+          element.child(0).after(html.toString())
+        }
+      })
+    }
+
     document.getElementsByClass("gu-video").foreach { element: Element =>
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
+        .addClass("js-gu-media gu-media gu-media--video")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
@@ -167,12 +182,12 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 }
 
-case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
   def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -180,15 +195,22 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val asset = findImageFromId(fig.attr("data-media-id"))
+        val blockId = fig.attr("data-media-id")
+        val asset = findImageFromId(blockId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+          img.attr("id", fig.attr("data-media-id"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
+
+            if(!article.isLiveBlog) {
+              val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
+              img.after(html.toString())
+            }
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")
@@ -205,8 +227,16 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
             })
           }
         }
-        fig.getElementsByTag("figcaption").foreach { figcaption =>
 
+        val getFigCaption = fig.getElementsByTag("figcaption")
+        val getGuVideo = fig.getElementsByClass("gu-media-wrapper--video")
+
+        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
+        if (getFigCaption.length < 1 && getGuVideo.length > 0) {
+          fig.addClass("fig-extra-margin")
+        }
+
+        getFigCaption.foreach { figcaption =>
           // content api/ tools sometimes pops a &nbsp; in the blank field
           if (!figcaption.hasText || figcaption.text().length < 2) {
             figcaption.remove()
@@ -242,7 +272,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findContainerFromId(id:String): Option[ImageContainer] = {
-    contentImages.find(_.id == id)
+    article.bodyImages.find(_.id == id)
   }
 }
 
@@ -272,10 +302,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.blockLevelShares(blockId)
-        val link = article.blockLevelLink(blockId)
+        val shares = article.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
 
         el.append(html.toString())
       }
@@ -691,7 +720,11 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    val timezone = Edition(request).timezone
+    apply(date, Edition(request), pattern)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String): String = {
+    val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
@@ -732,11 +765,15 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = {
+    val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
+    model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
+  }
+
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
     case _ => result
   }
 }
@@ -748,9 +785,7 @@ object RenderClasses {
 }
 
 object GetClasses {
-  def forFaciaCard(item: FaciaCard, isFirstContainer: Boolean) = {
-    val hasImage = item.hasImage
-
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -758,18 +793,12 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("item--has-discussion", item.discussionSettings.isCommentable),
-      ("item--has-no-discussion", !item.discussionSettings.isCommentable),
+      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
+      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive),
-      /** TODO are these used? Image is no longer outputted if it's hidden, see if we can remove imagehide. */
-      ("item--imageadjust-boost", hasImage && item.displaySettings.isBoosted),
-      ("item--imageadjust-hide", item.displaySettings.imageHide),
-      ("item--imageadjust-default", hasImage &&
-        !item.displaySettings.isBoosted &&
-        !item.displaySettings.imageHide)
+      ("fc-item--live", item.isLive)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -792,15 +821,17 @@ object GetClasses {
   }
 
   def forContainerDefinition(containerDefinition: FaciaContainer) =
-    forNewStyleContainer(
+    forContainer(
       containerDefinition.showLatestUpdate,
-      containerDefinition.index == 0,
+      containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
-      Some(containerDefinition.container)
+      Some(containerDefinition.container),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      disableHide = containerDefinition.hideToggle
     )
 
-  def forTagContainer(hasTitle: Boolean) = forNewStyleContainer(
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
@@ -810,7 +841,7 @@ object GetClasses {
     disableHide = true
   )
 
-  def forNewStyleContainer(
+  def forContainer(
       showLatestUpdate: Boolean,
       isFirst: Boolean,
       hasTitle: Boolean,
@@ -822,11 +853,11 @@ object GetClasses {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", commercialOptions.isSponsored),
-      ("container--advertisement-feature", commercialOptions.isAdvertisementFeature),
-      ("container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container", true),
+      ("fc-container--first", isFirst),
+      ("fc-container--sponsored", commercialOptions.isSponsored),
+      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

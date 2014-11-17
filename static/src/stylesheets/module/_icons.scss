@@ -23,6 +23,13 @@ blockquote.quoted:before {
     vertical-align: top;
     margin-top: 1px;
     @include icon(image);
+
+    .element-video & {
+        @include icon(video-icon-black);
+        width: 16px !important;
+        height: 12px !important;
+        margin-top: $gs-baseline/6;
+    }
 }
 
 // Quotes

@@ -115,21 +115,19 @@
     text-align: left;
     float: left;
     padding-right: ($gs-gutter / 2) + 1px;
-    padding-left: $gs-gutter / 2;
+
     @include mq(leftCol, wide) {
         padding-right: 6px;
-        padding-left: 6px;
-    }
-
-    &:first-child {
-        padding-left: 0;
     }
     &:last-child {
         padding-right: 0;
     }
 }
 
-.meta__number + .meta__number {
+.meta__number:not(.u-h) + .meta__number {
     border-left: 1px solid colour(neutral-7);
+    padding-left: $gs-gutter / 2;
+    @include mq(leftCol, wide) {
+        padding-left: 6px;
+    }
 }
-

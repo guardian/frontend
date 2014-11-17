@@ -78,17 +78,4 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     contentAsString(result) should be("""success({"html":"hello world","refreshStatus":false});""")
   }
-
-  it should "add the cross origin headers" in {
-
-    val request = FakeRequest("GET", "http://foo.bar.com/test.json")
-      .withHeaders("Host" -> "foo.bar.com")
-      .withHeaders("Accept" -> "application/json")
-      .withHeaders("Origin" -> "http://www.theorigin.com")
-    val result = JsonComponent(Html("<p>hello</p>"))(request)
-
-    result.header.headers.get("Access-Control-Allow-Origin") should be (Some("*"))
-    result.header.headers.get("Access-Control-Allow-Origin") should be (Some("*"))
-    result.header.headers.get("Access-Control-Allow-Headers") should be (Some("GET,POST,X-Requested-With"))
-  }
 }

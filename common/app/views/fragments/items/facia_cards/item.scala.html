@@ -11,7 +11,7 @@
 @defining((card.item, card.index)) { case (item, index) =>
 
 <li class="@RenderClasses(Map(
-        ("facia-slice__item", true),
+        ("fc-slice__item", true),
         ("u-faux-block-link", true),
         ("l-row__item", isRow),
         (s"l-row__item--span-$colSpan", isRow),
@@ -20,7 +20,7 @@
     ))">
 
     @defining(containerIndex == 0) { case (isFirstContainer) =>
-        <div class="@GetClasses.forFaciaCard(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
+        <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
             @if(item.discussionSettings.isCommentable) {
                 @item.discussionSettings.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -33,6 +33,7 @@
                 data-id="@id"
             }
             data-item-visibility="@card.visibilityDataAttribute"
+            data-test-id="facia-card"
             @item.snapStuff.dataAttributes>
 
             <div class="fc-item__container">

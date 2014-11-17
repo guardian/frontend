@@ -51,7 +51,7 @@
                     padding: 0;
                 }
                 .lineitem--high__offer {
-                    @include simple-gradient(rgba($c-neutral1, 0), $c-neutral1);
+                    @include simple-gradient(rgba(colour(neutral-1), 0), colour(neutral-1));
                     float: none;
                     width: auto;
                     position: absolute;
@@ -65,7 +65,7 @@
                     margin-bottom: 0;
                 }
                 .lineitem__meta {
-                    color: $c-neutral3;
+                    color: colour(neutral-3);
                 }
                 .lineitem__cta {
                     position: absolute;

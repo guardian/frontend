@@ -1,418 +1,364 @@
+$fc-item-gutter: $gs-gutter / 4;
+$fc-hover-transition: .25s ease;
+
+/* Items
+   ==========================================================================
+*/
+
+@mixin fc-item--horizontal($media-width, $media-align: right) {
+    .fc-item__image-container {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter * .25;
+    }
+
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content {
+        position: relative;
+
+        > * {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter * .75;
+        }
+    }
+
+    .has-flex-wrap & {
+        .fc-item__container {
+            @include flex-wrap(wrap);
+            @if $media-align == right {
+                @include flex-direction(row-reverse);
+            } @else {
+                @include flex-direction(row);
+            }
+        }
+
+        .fc-item__media-wrapper {
+            @include flex-basis($media-width);
+        }
+
+        .fc-item__content {
+            @include flex-basis(100% - $media-width);
+            // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
+            max-width: 100% - $media-width;
+        }
+
+        .fc-item__footer--horizontal {
+            @include flex-basis(100%);
+        }
+    }
+
+    .has-no-flex-wrap & {
+        .fc-item__media-wrapper {
+            width: $media-width;
+            float: $media-align;
+        }
+
+        .fc-item__content {
+            width: 100% - $media-width;
+        }
+    }
+}
+
+.has-flex-wrap {
+    .fc-item {
+        @include flex-display;
+        @include flex(1);
+    }
+
+    .fc-item__container {
+        @include flex-direction(column);
+        @include flex-display;
+        @include flex(1);
+        width: 100%;
+    }
+}
+
+.has-no-flex-wrap {
+    .fc-item {
+        display: block;
+        @include clearfix;
+    }
+}
+
+.fc-item__container,
+.item__container {
+    position: relative;
+    @include transition(background-color $fc-hover-transition);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        z-index: 2;
+    }
+}
+
+.fc-item--has-discussion {
+    .fc-item__content {
+        padding-bottom: $gs-baseline * 2;
+    }
+}
+
+.fc-item,
 .item {
-    @include box-sizing(border-box);
-    display: block;
-    @include clearfix;
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
-    margin-bottom: $gs-baseline/2;
+    background-color: #ffffff;
+    margin-left: $gs-gutter * .5;
+    margin-right: $gs-gutter * .5;
 
-    .stars {
-        margin-top: $gs-baseline * .25;
+    a {
+        color: colour(neutral-1);
+        color: inherit;
+    }
 
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 1.25;
+    .u-faux-block-link & a,
+    .u-faux-block-link & abbr[title],
+    .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
         }
-    }
-}
-.item__tonal-border {
-    border-top: $item-top-border-height solid $c-newsAccent;
-}
-.container--dark-background {
-    @include item--hide-tone-border;
-}
-.item__link,
-.item__title,
-.linkslist__action {
-    .container--dark-background & {
-        color: #ffffff;
-    }
-}
-.item__link:visited,
-.item__link:visited .item__title,
-.linkslist__action:visited {
-    .container--dark-background & {
-        color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
-    }
-}
-.item__link {
-    color: $c-neutral1;
 
-    &:visited {
-        &,
-        .item__title {
-            color: $c-neutral2;
+        @include mq($until: desktop) {
+            z-index: initial;
         }
     }
-    &:active {
-        color: $c-neutral1;
-    }
-    &:hover,
-    &:focus {
-        text-decoration: none;
 
-        .u-faux-block-link__cta {
-            text-decoration: underline;
+    .u-faux-block-link--hover {
+        background-color: colour(neutral-6);
+
+        .fc-item__image-container {
+            background-color: #000000;
+
+            // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+            .responsive-img {
+                opacity: .8;
+            }
         }
-        .item__cta {
-            background-color: rgba($c-neutral2, 1);
-        }
-        .item__cta--gallery,
-        .item__cta--video {
-            background-color: $c-mediaDefault;
-        }
-    }
-    &:active {
+
         .u-faux-block-link__cta {
             text-decoration: none;
         }
     }
-}
-.item__video-container {
-    margin-top: 4px;
 
-    // No margin for Raclette
-    .l-row--items-3 & {
-        margin-top: 0;
-    }
-}
-.item__image-container {
-    margin-top: 4px;
-
-    .js-off & {
-        display: none;
-    }
-}
-
-.item__media-wrapper,
-.item__image-container {
-    display: none;
-}
-.item__media-wrapper {
-    position: relative;
-}
-.item--has-image {
-    .item__media-wrapper,
-    .item__image-container {
-        display: block;
-
-        .js-off & {
-            display: none !important;
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix(colour(neutral-1), #ffffff, 80%);
         }
     }
+
+    // This is a temp fix until we completely remove tone-colour from fc-item
+    .tone-colour,
+    .tone-colour:hover,
+    .tone-colour:active,
+    .tone-colour:visited {
+        color: inherit;
+    }
+
+    @include stars();
+
+    .stars {
+        margin-bottom: 0;
+
+        .star__item {
+            vertical-align: bottom;
+        }
+    }
+
+    .gu-media-wrapper {
+        margin-bottom: 0;
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-x-small-button-size);
+    }
 }
 
-.item__kicker {
-    @include fs-headline(1);
-    color: $c-newsAccent;
-    margin-right: 3px;
-}
+/* Item elements
+   ==========================================================================
+*/
 
-.item__kicker--live,
-.item__kicker--breaking-news {
-    color: #ffffff;
-    background-color: $c-liveDefault;
-    @include fs-textSans(1);
-    display: inline-block;
-    padding: 0 3px;
+// Wraps all media elements
+.fc-item__media-wrapper,
+.item__media-wrapper {
+    @include box-sizing(border-box);
     position: relative;
-    top: -2px;
-    font-weight: bold;
-    text-transform: uppercase;
 }
 
-.item--sport-stats .competition-table h3,
-.item__title,
-.item__standfirst {
-    @include f-headline;
+// Wraps all non-media content
+.fc-item__content {
+    @include box-sizing(border-box);
 }
-.facia-container--advertisement-feature,
-.container--advertisement-feature {
-    background-color: $c-neutral8;
 
-    .linkslist__action:visited,
-    .fc-item__link:visited,
-    .item__link:visited,
-    .item__link:visited .item__title,
-    .fc-item__standfirst,
-    .item__standfirst,
-    .fromage__standfirst {
-        color: $c-neutral2-contrasted;
-    }
-    .fc-item__header,
-    .item__title,
-    .item__standfirst,
-    .fc-item__standfirst,
-    .fromage__standfirst,
-    .fc-item--list-compact,
-    .linkslist__action {
-        @include f-headlineSans;
+.fc-item__content,
+.fc-item__footer--horizontal {
+    padding-left: $fc-item-gutter;
+    padding-right: $fc-item-gutter;
+}
+
+.fc-item__image-container {
+    @include transition(background-color $fc-hover-transition);
+    background-color: rgba(0, 0, 0, .1);
+
+    // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
+    .responsive-img {
+        @include transition(opacity $fc-hover-transition);
     }
 }
 
+.fc-item__image-container,
+.fc-item__video-fallback {
+    display: none;
+}
+
+.fc-item__live-indicator {
+    color: colour(live-default);
+
+    .blog__live-icon {
+        display: inline-block;
+        margin: 0;
+        margin-right: .2em;
+        height: .7em;
+        width: .7em;
+    }
+}
+
+.fc-item__breaking-indicator {
+    color: colour(live-default);
+}
+
+.fc-item__header,
 .item__title {
-    position: relative;
-    padding-top: $gs-baseline/6;
-    @include fs-headline(2, true);
+    @include fs-headline(3);
+    font-weight: 500;
+    padding-bottom: .5em;
+
+    .fc-item--has-boosted-title & {
+        @include fs-headline(4, true);
+    }
+}
+
+.fc-item__title,
+.fc-item__byline,
+.fc-item__kicker {
+    font: inherit;
+    line-height: inherit;
+}
+
+.fc-item__title {
+    padding-top: $gs-baseline / 4;
+    padding-bottom: 0;
     word-wrap: break-word;
+}
 
-    .i-quote-orange {
-        float: left;
-        margin-right: $gs-gutter/5;
-        position: relative;
-        top: 1px;
-        width: 1.1em;
-        height: 1em;
-        background-size: contain;
+.fc-item__kicker,
+.fc-sublink__kicker {
+    &:after {
+        content: '/';
+        display: inline-block;
+        margin-left: .2em;
+        color: fade-out(colour(neutral-1), .8);
+    }
 
-        // This is a scalable icon,
-        // it will only work if SVG is active
-        @include show-only-if-svg-is-supported;
+    &:hover:after {
+        text-decoration: none;
     }
 }
 
-// This is for when the accompanying media element is a video and the h2/h3
-// element is displaying to the left of the video - the h2/h3 should show
-// inline, otherwise the link stretches over the video, preventing the user
-// from clicking the play button. It should NOT, however, display inline
-// otherwise, as it messes up padding, etc.
-.row-of-two--boost-first .item__title--inline-video,
-.row-of-two--boost-second .item__title--inline-video {
-    display: inline;
-}
-
-.item__header--inline-video {
-    @include mq(desktop) {
-        margin-top: 2px;
-    }
-}
-
-.item__media-wrapper .gu-media-wrapper {
+.fc-item__byline {
     margin-bottom: 0;
 }
 
-.item--video,
-.item--gallery {
-    .item__title .i {
-        display: none;
-    }
-}
-.l-row--items-4 {
-    @include mq($until: tablet) {
-        .item__title--has-icon-mobile {
-            padding-left: 30px;
-        }
-    }
-    .item--video,
-    .item--gallery {
-        .item__title .i {
-            display: block;
-            position: absolute;
-            top: 4px;
-            left: 0;
-        }
-        @include mq(tablet) {
-            .item__title .i {
-                display: none;
-            }
-        }
-    }
-}
-.item__byline {
-    @include fs-headline(3);
-    margin-bottom: $gs-baseline/3;
-}
-.item__tag {
-    &,
-    &:hover,
-    &:active,
-    &:focus {
-        .container--dark-background & {
-            color: mix(#ffffff, $c-neutral1, 70%);
-        }
-    }
-}
-.item__tag-separator {
+.fc-item__standfirst {
+    @include fs-headline(1);
+    padding-bottom: get-line-height(bodyCopy, 1);
+    color: colour(neutral-2);
     display: none;
-    position: relative;
-    bottom: -.03em; // Slightly better alignment in Headline 3
-    height: .8em;
-    margin-left: .1em;
-    margin-right: .1em;
-    border-left: 1px solid currentColor;
-    color: $c-neutral3;
 
-    .item__title & {
-        display: inline-block;
+    .fc-item--has-boosted-title & {
+        display: none !important;
     }
 }
-.item__standfirst,
-.item__meta {
-    color: $c-neutral2;
 
-    .container--dark-background & {
-        color: $c-neutral4;
-    }
-}
-.item__standfirst {
-    display: none;
-    margin: $gs-baseline 0 0;
-    font-size: 14px;
-    line-height: 18px;
-
-    p {
-        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
-    }
-}
-.item__meta {
+.fc-item__meta {
     position: absolute;
     bottom: 0;
     @include fs-textSans(1);
+    color: colour(neutral-2);
 
-    .item__timestamp,
-    .trail__count {
-        position: relative;
-        float: left;
-
-        i {
-            margin: 0;
-            position: absolute;
-        }
-    }
-    .item__timestamp {
-        min-width: 50px - $gs-gutter/2 - 14px;
-        padding-right: $gs-gutter/2;
-        padding-left: 14px;
-
-        i {
-            left: 0;
-            top: 3px;
-        }
-    }
-    .trail__count {
-        a {
-            padding-left: 18px;
-            line-height: inherit;
-            color: inherit;
-
-            .container--dark-background & {
-                color: $c-neutral4;
-            }
-        }
-        i {
-            top: 3px; // Aligns well with system sans-serif font
-            left: 0;
-
-            @include mq(desktop) {
-                top: 1px // Align with Text Sans 1;
-            }
-        }
-    }
-    .trail__count--inline-template {
-        display: none;
+    a {
+        // make sure meta links always clickable,
+        // even on mobile/tablet
+        z-index: 1 !important;
     }
 }
-.item__support {
+
+.fc-item__timestamp,
+.fc-trail__count {
+    position: relative;
+    float: left;
+    margin-bottom: $gs-baseline / 4;
+}
+
+.fc-item__timestamp {
     display: none;
-    margin-top: $gs-baseline*2;
+    margin-right: 1em;
+}
 
-    .item--support-show & {
-        display: block;
+.fc-trail__count--inline-template {
+    display: none;
+}
+
+.fc-item--has-cutout .fc-item__media-wrapper {
+    // We never want to show the media and the cutout at the same time, hence the important
+    display: none !important;
+}
+
+.fc-item__footer--vertical {
+    clear: left;
+}
+
+.fc-item__footer--horizontal {
+    display: none;
+
+    .has-no-flex-wrap & {
+        @include clearfix;
     }
 }
-.item__support__title {
-    color: $c-neutral2;
-    @include fs-textSans(1);
-}
-.item__support__item {}
-.item__support__action {}
 
-.item__cta {
+.fc-item__avatar {
     position: absolute;
-    width: ($gs-baseline/3)*11;  //44px
-    height: ($gs-baseline/3)*11;
-    top: ($gs-baseline/3)*2;
-    left: $gs-gutter/2.5;
-    background-color: rgba($c-neutral2, .7);
-    z-index: 2;
-    @include border-radius(50%);
-
-    i {
-        position: absolute;
-        top: 30%;
-        left: 30%;
-    }
-    p {
-        width: 0;
-        height: 0;
-        text-indent: -999em;
-    }
-}
-
-$video-cta-icon: (
-    width: 12px,
-    height: 16px,
-);
-$cta-icon-gap: 2px;
-
-.item__media-wrapper--has-icon {
-    .item__cta {
-        position: absolute;
-        top: $gs-baseline/3;
-        left: $gs-baseline/3;
-    }
-    .i {
-        position: relative;
-        margin-bottom: $cta-icon-gap;
-    }
-}
-.item__cta--video {
-    width: 36px;
-    height: 36px;
-    background-color: $c-mediaDefault;
-}
-
-.item__cta__icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
     overflow: hidden;
-    font-size: 0;
-
-    .item__cta--video & {
-        width: map-get($video-cta-icon, width);
-        height: map-get($video-cta-icon, height);
-        // don't want icon to be exactly in the middle
-        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
-        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
-    }
+    width: 100%;
+    bottom: 0;
+    right: 0;
 }
-.item--dark {
-    .item__container,
-    .item__meta {
-        background-color: $c-neutral1;
+
+.fc-item__avatar__media {
+    position: absolute;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+
+    .responsive-img {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
     }
-    .item__title {
-        padding-left: 7px;
-        padding-right: 7px;
-    }
-    .item__link:visited {
-        .item__title {
-            color: #9c9c9c; //Darkest we can go to pass accessiblity
+
+    &.image--portrait {
+        top: 0;
+        height: auto;
+        width: 80%;
+
+        .responsive-img {
+            position: absolute;
+            height: auto;
+            width: 100%;
+            bottom: auto;
         }
-    }
-    .item__link,
-    .item__title {
-        color: #ffffff;
-    }
-    .item__title-type {
-        color: $c-commentAccent;
-        display: block;
-    }
-    .item__standfirst {
-        color: #9c9c9c;
-    }
-    .item__meta {
-        padding-left: 7px;
-        color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }

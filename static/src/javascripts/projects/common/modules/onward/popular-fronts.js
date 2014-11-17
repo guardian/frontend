@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'raven',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -9,7 +8,6 @@ define([
     'common/modules/ui/relativedates'
 ], function (
     bonzo,
-    raven,
     $,
     ajax,
     config,

@@ -59,3 +59,5 @@ GET        /commercial/multi.json                                    controllers
 # Content API offers
 GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemsJson
 GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml
+GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffers.itemJson
+GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffers.itemHtml

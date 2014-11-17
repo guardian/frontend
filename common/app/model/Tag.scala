@@ -30,7 +30,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
-  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item360))
+  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
@@ -66,7 +66,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     ("keywords", JsString(name)),
     ("keywordIds", JsString(id)),
-    ("content-type", JsString("Tag")),
+    ("contentType", JsString("Tag")),
     ("references", JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
   )
 
