@@ -71,10 +71,17 @@
     }
 }
 
+.container--merchandising-feature {
+    background-color: transparent;
+    
+    .fc-container__inner {
+        padding-top: $gs-baseline/2;
+    }
+}
+
 .facia-container--advertisement-feature,
 .fc-container--advertisement-feature,
-.container--advertisement-feature,
-.container--merchandising-feature
+.container--advertisement-feature
  {
     background-color: colour(neutral-8);
 
