@@ -76,7 +76,7 @@ define([
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
-                    url: 'http://graph.facebook.com/' + url,
+                    url: '//graph.facebook.com/' + url,
                     type: 'json',
                     method: 'get',
                     crossOrigin: true
@@ -87,7 +87,7 @@ define([
                     updateTooltip();
                 });
                 ajax({
-                    url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + url,
+                    url: '//urls.api.twitter.com/1/urls/count.json?url=' + url,
                     type: 'jsonp',
                     method: 'get',
                     crossOrigin: true
