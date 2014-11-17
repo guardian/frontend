@@ -48,6 +48,10 @@ class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
         )
       )
     )
+
+    override def snapType: Option[String] = None
+
+    override def snapUri: Option[String] = None
   }
 
   "ItemKicker" should "prefer item level tag kicker to collection level section kicker" in {

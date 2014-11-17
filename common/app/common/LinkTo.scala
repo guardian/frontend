@@ -48,7 +48,8 @@ trait LinkTo extends Logging {
   }
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
+    //TODO: legacy-snaps: Remove href after we move away from href in favour of snapUri
+    case snap: Snap => snap.snapUri.filter(_.nonEmpty).orElse(snap.href).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
 

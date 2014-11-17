@@ -171,10 +171,20 @@ figure {
         margin-top: ($gs-baseline/3)*4;
         margin-bottom: $gs-baseline*2;
     }
-    &.img--landscape,
-    &.img--portrait {
+    &.img {
+        position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
+            @include mq(tablet) {
+                max-width: gs-span(6);
+            }
+        }
+    }
+    &.element-video {
+        figcaption {
+            @include mq(tablet) {
+                max-width: gs-span(6);
+            }
         }
     }
     &.img--inline {

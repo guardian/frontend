@@ -3,7 +3,7 @@ package services
 import com.gu.facia.client.models.CollectionConfig
 import layout._
 import model._
-import conf.{InlineRelatedContentSwitch, LiveContentApi}
+import conf.{Switches, InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
@@ -23,7 +23,11 @@ import scalaz.std.list._
 import Function.const
 
 object IndexPagePagination {
-  def pageSize: Int = 50 //have a good think before changing this
+  def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
+    35
+  } else {
+    20
+  }
 }
 
 case class MpuState(injected: Boolean)

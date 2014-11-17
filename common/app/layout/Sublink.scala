@@ -27,7 +27,8 @@ case object Audio extends MediaType
 object EditionalisedLink {
   def fromTrail(trail: Trail) = EditionalisedLink {
     trail match {
-      case snap: Snap if snap.snapUrl.exists(_.nonEmpty) => snap.snapUrl.get
+      case snap: Snap if snap.snapUri.exists(_.nonEmpty) => snap.snapUri.get
+      case snap: Snap if snap.href.exists(_.nonEmpty) => snap.href.get
       case _ => trail.url
     }
   }

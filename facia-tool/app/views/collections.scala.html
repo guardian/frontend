@@ -130,14 +130,14 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...',
+                            placeholder: field() || (label + '...'),
                             title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
                         textInput: overrideOrVal"></textarea>
 
-                    <!-- ko if: hasFocus() -->
+                    <!-- ko if: hasFocus -->
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
                             text: length"></span>
@@ -345,8 +345,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...'),
-                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
+                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
+                            css: {'is-empty': meta.snapType() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -364,8 +364,16 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: state.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'link'"></span>
+                            <!-- ko if: meta.snapType -->
+                                <span class="label label--snap">snap: </span>
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || meta.snapType()"></span>
+                                <span class="label label--snap-uri" data-bind="text: meta.snapUri"></span>
+                            <!-- /ko -->
+
+                            <!-- legacy-snaps -->
+                            <!-- ko if: meta.href -->
+                                <span class="label label--snap">snap: NEEDS UPGRADE!</span>
+                                <span class="label label--snap-uri" data-bind="text: meta.href"></span>
                             <!-- /ko -->
 
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->
