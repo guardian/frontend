@@ -166,6 +166,18 @@
         display: none;
     }
 
+    .element--thumbnail & {
+        width: 22px;
+        height: 22px;
+        margin: $gs-gutter/4;
+
+        .i-expand-black,
+        .i-expand-white {
+            width: 50%;
+            height: 50%;
+        }
+    }
+
     @include mq(desktop) {
         .gallery2__img-container:hover & {
             background-color: colour(media-default);

@@ -47,7 +47,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site';
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType != "Article";
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -128,16 +128,16 @@ define([
     }
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
-        var blockShortUrl = config.page.shortUrl + '?index=' + i,
-            blockLongUrl = config.page.pageId + '?index=' + i,
+        var blockShortUrl = config.page.shortUrl,
+            blockLongUrl = config.page.pageId,
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockLongUrl + '&ref=responsive')
+                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockShortUrl + '/sfb' + '#' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl)
+                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl + '/stw' + '#' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',

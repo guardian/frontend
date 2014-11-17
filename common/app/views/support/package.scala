@@ -191,7 +191,9 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def cleanStandardPictures(body: Document): Document = {
 
-    body.getElementsByTag("figure").foreach { fig =>
+    val imageFigures = body.getElementsByClass("element-image").view.zipWithIndex
+
+    imageFigures foreach { case (fig, index) =>
       if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
@@ -199,8 +201,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
         val blockId = fig.attr("data-media-id")
         val asset = findImageFromId(blockId)
 
-        val images = body.getElementsByTag("img").view.zipWithIndex
-        images foreach { case (img, index) =>
+        fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val linkIndex = (index+1).toString
@@ -211,12 +212,11 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             img.attr("width", s"${image.width}")
 
             if(!article.isLiveBlog) {
-              val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
+              val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(linkIndex), image.url), article.contentType)
               img.after(html.toString())
+              img.wrap("<a href='" + article.url + "?index=" + linkIndex + "' class='gallery2__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+              img.after("<span class='gallery2__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
-
-            img.wrap("<a href='" + article.url + "?index=" + linkIndex + "' class='gallery2__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-            img.after("<span class='gallery2__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")
