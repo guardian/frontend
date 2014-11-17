@@ -39,7 +39,7 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   override def isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
 
   def faciaUrl: Option[String] = this match {
-    case snap: Snap => snap.snapUri.filter(_.nonEmpty)
+    case snap: Snap => snap.snapHref.filter(_.nonEmpty)
     case t: Trail => Option(t.url)
   }
 }

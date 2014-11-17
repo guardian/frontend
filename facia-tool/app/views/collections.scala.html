@@ -365,14 +365,13 @@
                             <!-- /ko -->
 
                             <!-- ko if: meta.snapType -->
-                                <span class="label label--snap">snap: </span>
+                                <span class="label label--snap">snap</span>
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || meta.snapType()"></span>
                                 <span class="label label--snap-uri" data-bind="text: meta.snapUri"></span>
                             <!-- /ko -->
 
-                            <!-- legacy-snaps -->
                             <!-- ko if: meta.href -->
-                                <span class="label label--snap">snap: NEEDS UPGRADE!</span>
+                                <span class="label label--snap">url</span>
                                 <span class="label label--snap-uri" data-bind="text: meta.href"></span>
                             <!-- /ko -->
 

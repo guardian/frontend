@@ -594,14 +594,6 @@ define([
         };
 
         Article.prototype.save = function() {
-
-            // legacy-snaps
-            if (this.meta.href()) {
-                this.meta.snapType('link');
-                this.meta.snapUri(this.meta.href());
-                this.meta.href(undefined);
-            }
-
             if (!this.group.parent) {
                 return;
             }
@@ -628,6 +620,7 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
+            this.meta.href(this.id());
             this.id(snap.generateId());
             this.updateEditorsDisplay();
         };
@@ -638,7 +631,6 @@ define([
             }
 
             this.meta.snapType('link');
-            this.meta.snapUri(this.id());
 
             this.convertToSnap();
         }
