@@ -1,14 +1,12 @@
 define([
     'bean',
     'bonzo',
-    'qwery',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage'
 ], function (
     bean,
     bonzo,
-    qwery,
     $,
     mediator,
     storage
@@ -39,6 +37,7 @@ define([
         run: function () {
 
             var closedHeight = calculateHeight('closed'),
+                $button      = $('.ad-exp__close-button'),
                 $ad          = $('.ad-exp--expand').css('height', closedHeight);
 
             $('.ad-exp-collapse__slide').css('height', closedHeight);
@@ -47,8 +46,8 @@ define([
                 mediator.on('window:scroll', listener.bind(null, $ad));
             }
 
-            bean.on(qwery('.ad-exp__close-button')[0], 'click', function () {
-                $('.ad-exp__close-button').toggleClass('button-spin');
+            bean.on($button[0], 'click', function () {
+                $button.toggleClass('button-spin');
                 $ad.css('height', calculateHeight(isClosed ? 'open' : 'closed'));
                 isClosed = !isClosed;
             });

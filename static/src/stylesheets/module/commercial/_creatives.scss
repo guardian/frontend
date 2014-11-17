@@ -92,7 +92,7 @@
     }
 }
 
-.creative--expandable{
+.creative--expandable {
     margin-bottom: 10px;
 
     .ad-slot__label--wrapper {
@@ -126,8 +126,8 @@
         top: 0;
         right: 0;
         @include border-radius(100px);
-        border: 1px solid white;
-        background-color: black;
+        border: 1px solid #ffffff;
+        background-color: #000000;
         margin: 5px;
         padding: 0;
         z-index: 3;
@@ -150,7 +150,7 @@
     }
     .ad-exp-collapse__slide {
         position: absolute;
-        top : 0;
+        top: 0;
         width: 100%;
         z-index: 2;
     }
