@@ -196,6 +196,10 @@ object Switches extends Collections {
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
 
+  val KruxSwitch = Switch("Commercial", "krux",
+    "Enable Krux Control Tag",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
+
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
@@ -436,6 +440,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    KruxSwitch,
     RemarketingSwitch,
     OutbrainSwitch,
     DiagnosticsLogging,
