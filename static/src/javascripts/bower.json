@@ -14,8 +14,9 @@
     "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
     "videojs": "videojs/video.js#85730d7a1bda3305c830978d28e7f136354dc82b",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#89e82ee615c6766d7f4bd6035c301b8a19793698",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
     "videojs-vast": "0.1.9",
+    "vast-client-js": "1.1.2",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
@@ -25,7 +26,7 @@
     "native-promise-only": "guardian/native-promise-only#master"
   },
   "resolutions": {
-    "videojs-contrib-ads": "89e82ee615c6766d7f4bd6035c301b8a19793698",
+    "videojs-contrib-ads": "af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
     "videojs": "85730d7a1bda3305c830978d28e7f136354dc82b"
   },
   "install": {
@@ -47,6 +48,7 @@
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
       "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
       "videojs-vast": "bower_components/videojs-vast/videojs.vast.js",
+      "vast-client-js": "bower_components/vast-client-js/vast-client.js",
       "native-promise-only": "bower_components/native-promise-only/lib/npo.src.js"
     }
   }
