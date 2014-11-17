@@ -40,6 +40,10 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
+  // Dream on.
+  def participatesInDeduplication(trail: Trail) =
+    !trail.snapType.exists(_ == "latest")
+
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
     * container.
@@ -58,20 +62,20 @@ object Front extends implicits.Collections {
         dynamicContainer.containerDefinitionFor(
           trails.collect({ case content: Content => content }).map(Story.fromContent)
         ) map { containerDefinition =>
-          (seen ++ trails.map(_.url).take(itemsVisible(containerDefinition)), trails)
+          (seen ++ trails
+            .map(_.url)
+            .take(itemsVisible(containerDefinition)), trails)
         } getOrElse {
           (seen, trails)
         }
 
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
-          *
-          * If any items in the container have appeared previously, they're shoved to the end of the container (the idea
-          * being that they disappear beyond the fold, i.e., after the 'show more' button).
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => seen.contains(trail.url)).distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).map(_.url), notUsed)
+        val notUsed = trails.filterNot(trail => participatesInDeduplication(trail) && seen.contains(trail.url))
+          .distinctBy(_.url)
+        (seen ++ notUsed.filter(participatesInDeduplication).take(nToTake).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
