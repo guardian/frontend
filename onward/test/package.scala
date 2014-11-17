@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.Suites
+import controllers.ReverseContentCardController
 
 class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
@@ -14,7 +15,9 @@ class OnwardTestSuite extends Suites (
   new RelatedFeatureTest,
   new SeriesControllerTest,
   new TopStoriesControllerTest,
-  new VideoInSectionTest ) with SingleServerSuite {
+  new VideoInSectionTest,
+  new ContentCardControllerTest
+) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 }
