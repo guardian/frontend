@@ -6,6 +6,7 @@ define('mock-collection', ['utils/mediator'], function (
     $.mockjax({
         url: /collection\/(.+)/,
         urlParams: ['collection'],
+        type: 'get',
         response: function (req) {
             this.responseText = all[req.urlParams.collection];
         },

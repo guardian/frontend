@@ -14,6 +14,7 @@ module.exports = function(config) {
         {pattern: 'test/public/config.js', included: true},
         {pattern: 'test/public/spec/**/*', included: false},
         {pattern: 'test/public/mocks/*.js', included: true},
+        {pattern: 'test/public/utils/**/*.js', included: false},
         {pattern: 'test/public/fixtures/*.js', included: false},
         {pattern: 'test/public/test-main.js', included: true}
     ],

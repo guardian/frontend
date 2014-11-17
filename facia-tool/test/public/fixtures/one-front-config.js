@@ -6,7 +6,7 @@ define([
     mockConfig.set({
         fronts: {
             uk: {
-                collections: ['latest'],
+                collections: ['latest', 'sport'],
                 description: 'Broken news',
                 title: 'UK',
                 priority: 'test'
@@ -14,7 +14,11 @@ define([
         },
         collections: {
             'latest': {
-                displayName: 'politics'
+                displayName: 'Latest News'
+            },
+            'sport': {
+                displayName: 'Sport',
+                groups: ['short', 'tall', 'grande', 'venti']
             }
         }
     });
