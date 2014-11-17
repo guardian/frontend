@@ -1,4 +1,6 @@
-@(member: model.commercial.soulmates.Member)(implicit request: RequestHeader)
+@(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
+@import views.support.AdLink
+@import conf.Configuration
 
 @defining(("1_0", "2014-08-18")) { case (version, date) =>
     <li class="lineitem lineitem--multi">
@@ -9,6 +11,7 @@
                     <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
                 </h4>
             </div>
+            @for(member <- members) {
             <div class="commercial--multi__body">
                 <a class="lineitem__link"
                 href="@AdLink{@member.profileUrl}"
@@ -25,6 +28,7 @@
                     Find a Soulmate<i class="i i-arrow-white-right i-right"></i>
                 </a>
             </div>
+            }
         </div>
     </li>
 }
