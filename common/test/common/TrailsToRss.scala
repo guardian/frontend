@@ -22,9 +22,9 @@ class TrailsToRssTest extends FlatSpec with Matchers {
     ((rss \ "channel" \ "item").size) should be(2)
   }
 
-  "TrailsToRss" should "clean invalid XML characters" in {
+  "TrailsToRss" should "not strip valid Unicode characters from XML" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
-    ((rss \\ "item" \\ "title" )(1).text) should be("hello")
+    ((rss \\ "item" \\ "title" )(1).text) should be("hello …")
   }
 
   "TrailsToRss" should "should include published date and byline" in {
