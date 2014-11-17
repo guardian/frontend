@@ -198,7 +198,7 @@ object Switches extends Collections {
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
-    safeState = Off, sellByDate = never)
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
 
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
