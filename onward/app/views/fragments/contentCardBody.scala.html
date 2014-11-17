@@ -27,7 +27,7 @@
         <div class="content-card__standfirst">
            @content.standfirst.map{ standFirst => @Html(standFirst)}
         </div>
-        @if(content.isComment) {
+        @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
             @content.contributors.headOption.map { profile =>
                 @profile.contributorLargeImagePath.map{ image =>
                     <div class="content-card__byline-img">
