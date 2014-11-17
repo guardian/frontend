@@ -44,19 +44,14 @@ object ContentCardController extends Controller with Paging with Logging with Ex
       else
         views.html.fragments.galleryContentCard(content)(request)
     }
-     //val jsonResponse = () => contentResponse
-     //val htmlResponse = () => views.html.contentCard(content)(request)
-     //renderFormat(htmlResponse, jsonResponse, 900)
 
-
-     if (!request.isJson) Cached(900) {Ok(views.html.contentCard(content)(request))}
-     else Cached(900) {
-       JsonComponent(
-          "html" -> contentResponse,
-          "refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn)
-       )
-
-     }
+    if (!request.isJson) Cached(900) {Ok(views.html.contentCard(content)(request))}
+    else Cached(900) {
+      JsonComponent(
+         "html" -> contentResponse,
+         "refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn)
+      )
+    }
 
   }
 }
