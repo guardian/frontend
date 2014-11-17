@@ -30,6 +30,8 @@ object EmailService extends ExecutionContexts with Logging {
            textBody: String,
            htmlBody: Option[String] = None): Future[SendEmailResult] = {
 
+    log.info(s"Sending email from $from to $to about $subject")
+
     val body = htmlBody.foldLeft(new Body().withText(new Content().withData(textBody))) {
       case (soFar, html) => soFar.withHtml(new Content().withData(html))
     }
