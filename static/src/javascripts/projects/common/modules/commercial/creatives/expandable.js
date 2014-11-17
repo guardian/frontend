@@ -3,24 +3,34 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/storage'
 ], function (
     bean,
     bonzo,
     qwery,
     $,
-    mediator
+    mediator,
+    storage
 ) {
 
-    var $ad,
-        isClosed = true,
+    var isClosed        = true,
+        calculateHeight = function (state) {
+            return state === 'open' ?
+                Math.min(bonzo.viewport().height * 2 / 3, 600) :
+                Math.min(bonzo.viewport().height / 3, 300);
+        },
         listener = function ($ad) {
+            // expires in 1 week
+            var week = 1000 * 60 * 60 * 24 * 7,
+                adExpandedHeight = calculateHeight('open');
+            storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
             isClosed = false;
-            var adExpandedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
+
             if ((window.pageYOffset + bonzo.viewport().height) > ($ad.offset().top + adExpandedHeight)) {
+                $('.ad-exp__close-button').toggleClass('button-spin');
                 $ad.css('height', adExpandedHeight);
                 mediator.off('window:scroll', listener);
-                $('.ad-exp__close-button').toggleClass('button-spin');
             }
         };
 
@@ -28,19 +38,19 @@ define([
 
         run: function () {
 
-            $ad = $('.ad-exp--expand');
+            var closedHeight = calculateHeight('closed'),
+                $ad          = $('.ad-exp--expand').css('height', closedHeight);
 
-            $ad.css('height', Math.min(bonzo.viewport().height / 3, 300));
-            $('.ad-exp-collapse__slide').css('height', Math.min(bonzo.viewport().height / 3, 300));
+            $('.ad-exp-collapse__slide').css('height', closedHeight);
 
-            mediator.on('window:scroll', listener.bind($ad));
+            if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
+                mediator.on('window:scroll', listener.bind(null, $ad));
+            }
 
             bean.on(qwery('.ad-exp__close-button')[0], 'click', function () {
-                var height = isClosed ? Math.min(bonzo.viewport().height * 2 / 3, 600) : Math.min(bonzo.viewport().height / 3, 300);
                 $('.ad-exp__close-button').toggleClass('button-spin');
-                $ad.css('height', height);
-                $('.ad-exp-collapse__slide').css('height', Math.min(bonzo.viewport().height / 3, 300));
-                isClosed = isClosed ? false : true;
+                $ad.css('height', calculateHeight(isClosed ? 'open' : 'closed'));
+                isClosed = !isClosed;
             });
 
         }

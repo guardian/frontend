@@ -96,20 +96,13 @@
     margin-bottom: 10px;
 
     .ad-slot__label--wrapper {
-        @include mq(tablet) {
+        @include mq($until: tablet) {
             width: auto;
         }
     }
     .ad-slot__label {
         text-align: left;
     }
-    .facia-container__inner {
-         @include mq(tablet) {
-             width: 100%;
-             margin-left: 0;
-             margin-right: 0;
-         }
-     }
     .ad-exp--expand {
         height: 0;
         position: relative;
@@ -121,6 +114,12 @@
         height: 100%;
         position: relative;
         background-color: #f3f3f3;
+
+        @include mq($until: tablet) {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
     .ad-exp__close-button {
         position: absolute;
@@ -136,13 +135,18 @@
         width: 32px;
         @include transform(rotate(45deg));
         @include transition(all 1s ease);
-    }
-    .ad-exp__close-button:focus {
-        outline-color: transparent;
-        outline-style: none;
-    }
-    .ad-exp__close-button.button-spin {
-        @include transform(rotate(360deg));
+
+        @include mq(tablet) {
+            right: 20px;
+        }
+
+        &:focus {
+            outline-color: transparent;
+            outline-style: none;
+        }
+        &.button-spin {
+            @include transform(rotate(360deg));
+        }
     }
     .ad-exp-collapse__slide {
         position: absolute;
@@ -155,23 +159,27 @@
         right: 0;
         width: 35%;
         height: 100%;
-        background: contain 100% 90% no-repeat;
+        background: 100% 90% no-repeat;
+        background-size: contain;
     }
     .ad-exp-collapse__slide.slide-1 .ad-exp__cta {
         position: absolute;
         left: 5%;
         width: 90%;
         height: 100%;
-        background: contain 0 10% no-repeat;
+        background: 0 10% no-repeat;
+        background-size: contain;
     }
     .ad-exp-collapse__slide.slide-1 {
-        background: #f3f3f3 none contain 0 100% repeat-x;
+        background: #f3f3f3 0 100% repeat-x;
+        background-size: contain;
     }
     .ad-exp-collapse__slide.slide-2 {
         top: auto;
         bottom: 0;
         z-index: 1;
-        background: contain 50% 100% repeat-x;
+        background: 50% 100% repeat-x;
+        background-size: contain;
     }
     .ad-exp-collapse__slide.slide-2 .ad-exp__text-1 {
         position: absolute;
@@ -181,7 +189,8 @@
         padding: 0 20px;
         width: 100%;
         height: 100%;
-        background: contain 50% 100% no-repeat;
+        background: 50% 100% no-repeat;
+        background-size: contain;
     }
 
     @include mq(mobileLandscape) {
@@ -196,11 +205,6 @@
             width: 100%;
             height: 100%;
             position: absolute;
-        }
-    }
-    @include mq(tablet) {
-        .ad-exp__close-button {
-            right: 20px;
         }
     }
     @include mq(desktop) {
