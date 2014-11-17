@@ -38,10 +38,12 @@
     display: block;
     position: relative;
     overflow: hidden;
+    @include stars($margin-top: $gs-baseline / 4, $margin-bottom: $gs-baseline / 4);
     .stars {
-        margin-top: $gs-baseline / 4;
-        margin-bottom: $gs-baseline / 4;
         padding-left: $gs-gutter/2;
+        .star__item {
+            vertical-align: bottom;
+        }
     }
 }
 
@@ -68,15 +70,8 @@
 .content-card__title {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
-    @include stars();
     line-height: 24px !important;
     font-weight: bold !important;
-
-    .stars {
-        .star__item {
-            vertical-align: bottom;
-        }
-    }
 }
 
 .content-card__byline {
