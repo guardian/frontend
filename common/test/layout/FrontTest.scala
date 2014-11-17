@@ -4,26 +4,27 @@ import model.{ApiContentWithMeta, Content}
 import org.scalatest.{Matchers, FlatSpec}
 import slices._
 import com.gu.contentapi.client.model.{Content => ApiContent}
+import contentapi.FixtureTemplates.emptyApiContent
 
 class FrontTest extends FlatSpec with Matchers {
   def trailWithUrl(theUrl: String) = new Content(ApiContentWithMeta(
-    ApiContent(
-      "",
-      None,
-      None,
-      None,
-      "",
-      "",
-      "",
-      None,
-      Nil,
-      None
-    ),
+    emptyApiContent,
     Nil
   )) {
     override lazy val url: String = theUrl
 
     override lazy val webUrl: String = theUrl
+  }
+
+  def dreamSnapWithUrl(theUrl: String) = new Content(ApiContentWithMeta(
+    emptyApiContent,
+    Nil
+  )) {
+    override lazy val url: String = theUrl
+
+    override lazy val webUrl: String = theUrl
+
+    override lazy val snapType: Option[String] = Some("latest")
   }
 
   "itemsVisible" should "return a correct count of items visible (not behind 'show more')" in {
@@ -131,5 +132,21 @@ class FrontTest extends FlatSpec with Matchers {
     ))
 
     nowSeen shouldEqual Set("one", "two")
+  }
+
+  it should "not deduplicate dream snaps" in {
+    val (_, dedupedTrails) = Front.deduplicate(Set("one", "two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
+      dreamSnapWithUrl("one")
+    ))
+
+    dedupedTrails.map(_.webUrl) shouldEqual Seq("one")
+  }
+
+  it should "not include dream snaps in the seen urls" in {
+    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedMediumFastXI), Seq(
+      dreamSnapWithUrl("one")
+    ))
+
+    nowSeen shouldEqual Set()
   }
 }
