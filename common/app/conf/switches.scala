@@ -196,6 +196,10 @@ object Switches extends Collections {
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
 
+  val KruxSwitch = Switch("Commercial", "krux",
+    "Enable Krux Control Tag",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
+
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
@@ -230,6 +234,11 @@ object Switches extends Collections {
 
   val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
+  val AdsStatusEmailDebugSwitch = Switch("Commercial", "ads-status-debug",
+    "If this switch is on, ads status emails will be in debug mode.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
@@ -431,6 +440,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    KruxSwitch,
     RemarketingSwitch,
     OutbrainSwitch,
     DiagnosticsLogging,
@@ -466,6 +476,7 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
+    AdsStatusEmailDebugSwitch,
     CrosswordSvgThumbnailsSwitch
   )
 
