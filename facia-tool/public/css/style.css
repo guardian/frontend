@@ -600,7 +600,6 @@ select {
 .editor {
     position: relative;
     margin: 0 109px 0 -4px;
-    overflow: hidden;
 }
 
 .editor textarea {
