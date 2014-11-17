@@ -28,6 +28,12 @@ class TrailsToRssTest extends FlatSpec with Matchers {
     (rss \\ "item" \\ "title" )(1).text should be("hello …")
   }
 
+  it should "strip invalid Unicode characters from XML" in {
+    isWellFormedXML(TrailsToRss(Option("foo"), Seq(
+      TestTrail("h", customTitle = Some("\0LOL"))
+    ))(request)) shouldBe true
+  }
+
   "TrailsToRss" should "escape special XML characters" in {
     isWellFormedXML(TrailsToRss(Option("foo"), Seq(
       TestTrail("c", customTitle = Some("TV & Radio")),

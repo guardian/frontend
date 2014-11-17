@@ -15,6 +15,10 @@ import collection.JavaConversions._
 
 object TrailsToRss extends implicits.Collections {
 
+  def stripInvalidXMLCharacters(s: String) = {
+    s.replaceAll("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]", "")
+  }
+
   def apply(metaData: MetaData, trails: Seq[Trail])(implicit request: RequestHeader): String =
     TrailsToRss(Some(metaData.webTitle), trails, Some(metaData.url), metaData.description)
 
@@ -63,7 +67,7 @@ object TrailsToRss extends implicits.Collections {
           case _ => ""
         }
       val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
-      description.setValue(standfirst + intro + readMore)
+      description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
       val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
@@ -77,7 +81,7 @@ object TrailsToRss extends implicits.Collections {
         i.mimeType.map(image.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.map(d => { imageMetadata.setDescription(d) })
+        i.caption.map({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
         i.credit.map{ creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
@@ -96,7 +100,7 @@ object TrailsToRss extends implicits.Collections {
 
       // Entry
       val entry = new SyndEntryImpl
-      entry.setTitle(trail.linkText)
+      entry.setTitle(stripInvalidXMLCharacters(trail.linkText))
       entry.setLink(trail.webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
