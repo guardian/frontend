@@ -39,7 +39,7 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   override def isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
 
   def faciaUrl: Option[String] = this match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
+    case snap: Snap => snap.snapUri.filter(_.nonEmpty)
     case t: Trail => Option(t.url)
   }
 }
@@ -64,4 +64,7 @@ trait FaciaFields {
   def showQuotedHeadline: Boolean = false
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
+
+  def snapType: Option[String]
+  def snapUri: Option[String]
 }

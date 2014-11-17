@@ -12,6 +12,8 @@ define([
     'utils/snap',
     'utils/human-time',
     'utils/validate-image-src',
+    'utils/identity',
+    'utils/is-guardian-url',
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
@@ -30,6 +32,8 @@ define([
         snap,
         humanTime,
         validateImageSrc,
+        identity,
+        isGuardianUrl,
         copiedArticle,
         authedAjax,
         contentApi,
@@ -58,6 +62,7 @@ define([
                 {
                     key: 'headline',
                     editable: true,
+                    ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
                     maxLength: 90
@@ -65,6 +70,7 @@ define([
                 {
                     key: 'trailText',
                     editable: true,
+                    ifState: 'enableContentOverrides',
                     omitForSupporting: true,
                     label: 'trail text',
                     type: 'text'
@@ -72,7 +78,8 @@ define([
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
+                    ifState: 'enableContentOverrides',
+                    if: 'showByline',
                     omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
@@ -80,36 +87,33 @@ define([
                 {
                     key: 'customKicker',
                     editable: true,
-                    requires: 'showKickerCustom',
+                    if: 'showKickerCustom',
                     label: 'custom kicker',
                     type: 'text'
                 },
                 {
                     key: 'href',
-                    editable: true,
-                    omitForSupporting: true,
-                    requiresState: 'isSnap',
-                    label: 'snap URL',
+                    label: 'special link URL',
                     type: 'text'
                 },
                 {
                     key: 'imageSrc',
                     editable: true,
                     omitForSupporting: true,
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcWidth',
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image width',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcHeight',
-                    requires: 'imageReplace',
+                    if: 'imageReplace',
                     label: 'replacement image height',
                     type: 'text'
                 },
@@ -117,20 +121,20 @@ define([
                     key: 'imageCutoutSrc',
                     editable: true,
                     omitForSupporting: true,
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcWidth',
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image width',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcHeight',
-                    requires: 'imageCutoutReplace',
+                    if: 'imageCutoutReplace',
                     label: 'replacement cutout image height',
                     type: 'text'
                 },
@@ -145,7 +149,7 @@ define([
                     key: 'isBoosted',
                     editable: true,
                     omitForSupporting: true,
-                    requiresState: 'inDynamicCollection',
+                    ifState: 'inDynamicCollection',
                     label: 'boost',
                     type: 'boolean'
                 },
@@ -153,7 +157,7 @@ define([
                     key: 'showMainVideo',
                     editable: true,
                     omitForSupporting: true,
-                    requiresState: 'hasMainVideo',
+                    ifState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
@@ -229,26 +233,18 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'isSnap',
-                    label: 'is a snap',
-                    type: 'boolean'
+                    key: 'snapUri',
+                    label: 'snap target',
+                    type: 'text'
                 },
                 {
                     key: 'snapType',
-                    requiresState: 'isSnap',
                     label: 'snap type',
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
-                    requiresState: 'isSnap',
-                    label: 'snap CSS class',
-                    type: 'text'
-                },
-                {
-                    key: 'snapUri',
-                    requiresState: 'isSnap',
-                    label: 'snap source',
+                    label: 'snap class',
                     type: 'text'
                 }
             ],
@@ -269,6 +265,7 @@ define([
             this.fields = asObservableProps(capiFields);
 
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
+
             populateObservables(this.meta, opts.meta);
 
             this.metaDefaults = {};
@@ -278,11 +275,11 @@ define([
             this.uneditable = opts.uneditable;
 
             this.state = asObservableProps([
+                'enableContentOverrides',
                 'underDrag',
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
-                'isSnap',
                 'inDynamicCollection',
                 'tone',
                 'primaryTag',
@@ -292,7 +289,7 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
-            this.state.isSnap(!!snap.validateId(opts.id));
+            this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
 
             this.frontPublicationDate = opts.frontPublicationDate;
@@ -341,6 +338,8 @@ define([
 
             if (withCapiData) {
                 this.addCapiData(opts)
+            } else {
+                this.updateEditorsDisplay();
             }
         }
 
@@ -404,15 +403,15 @@ define([
             }
 
             return {
-                key:    key,
+                key: key,
 
-                label:  opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
+                label: opts.label + (opts.labelState ? ': ' + _.result(this.state, opts.labelState) : ''),
 
-                type:   opts.type,
+                type: opts.type,
 
-                meta:   meta,
+                meta: meta,
 
-                field:  field,
+                field: field,
 
                 revert: function() { meta(undefined); },
 
@@ -423,9 +422,9 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
 
-                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+                    display = display && (opts.ifState ? self.state[opts.ifState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
                     return display;
@@ -443,7 +442,7 @@ define([
                     meta(!meta());
 
                    _.chain(all)
-                    .filter(function(editor) { return editor.requires === key; })
+                    .filter(function(editor) { return editor.if === key; })
                     .first(1)
                     .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
@@ -532,7 +531,7 @@ define([
 
         Article.prototype.updateEditorsDisplay = function() {
             if (!this.uneditable) {
-                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(identity));
             }
         }
 
@@ -595,6 +594,14 @@ define([
         };
 
         Article.prototype.save = function() {
+
+            // legacy-snaps
+            if (this.meta.href()) {
+                this.meta.snapType('link');
+                this.meta.snapUri(this.meta.href());
+                this.meta.href(undefined);
+            }
+
             if (!this.group.parent) {
                 return;
             }
@@ -621,9 +628,75 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.state.isSnap(true);
-            this.meta.href(this.id());
             this.id(snap.generateId());
+            this.updateEditorsDisplay();
+        };
+
+        Article.prototype.convertToLinkSnap = function() {
+            if (!this.meta.headline()) {
+                this.decorateFromOpenGraph();
+            }
+
+            this.meta.snapType('link');
+            this.meta.snapUri(this.id());
+
+            this.convertToSnap();
+        }
+
+        Article.prototype.convertToLatestSnap = function(kicker) {
+            this.meta.snapType('latest');
+            this.meta.snapUri(urlAbsPath(this.id()));
+
+            this.meta.showKickerCustom(true);
+            this.meta.customKicker(vars.CONST.latestSnapPrefix + kicker);
+
+            this.meta.headline(undefined);
+            this.meta.trailText(undefined);
+            this.meta.byline(undefined);
+
+            this.state.enableContentOverrides(false);
+
+            this.convertToSnap();
+        };
+
+        Article.prototype.decorateFromOpenGraph = function() {
+            var self = this,
+                url = this.id(),
+                isOnSite = isGuardianUrl(url);
+
+            this.meta.headline('Fetching headline...');
+
+            authedAjax.request({
+                url: '/http/proxy/' + url + (isOnSite ? '%3Fview=mobile' : ''),
+                type: 'GET'
+            })
+            .done(function(response) {
+                var doc = document.createElement("div"),
+                    title,
+                    og = {};
+
+                doc.innerHTML = response;
+
+                Array.prototype.forEach.call(doc.querySelectorAll('meta[property^="og:"]'), function(tag) {
+                    og[tag.getAttribute('property').replace(/^og\:/, '')] = tag.getAttribute('content');
+                });
+
+                title = doc.querySelector('title');
+                title = title ? title.innerHTML : undefined;
+
+                self.meta.headline(og.title || title);
+                self.meta.trailText(og.description);
+
+                if(!isOnSite) {
+                    self.meta.customKicker(og.site_name || urlHost(url).replace(/^www\./, ''));
+                    self.meta.showKickerCustom(true);
+                }
+
+                self.updateEditorsDisplay();
+            })
+            .fail(function() {
+                self.meta.headline(undefined);
+            });
         };
 
         Article.prototype.open = function() {

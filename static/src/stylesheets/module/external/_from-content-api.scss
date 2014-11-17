@@ -172,8 +172,8 @@ figure {
         margin-bottom: $gs-baseline*2;
         position: relative;
     }
-    &.img--landscape,
-    &.img--portrait {
+    &.img {
+        position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
             @include mq(tablet) {

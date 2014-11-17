@@ -1,17 +1,28 @@
 @(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, foundationSupportedTags: dfp.SponsorshipReport)
 @import tools.DfpLink
 
-@listItem(sponsorship: dfp.Sponsorship) = {
-    <li style="padding-bottom:15px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+@listItem(sponsorship: dfp.Sponsorship, flagCountries: Boolean = false) = {
+    <li>@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
         @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
         @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
-        @if(sponsorship.countries.nonEmpty){<br /><small>geotargeted to @{sponsorship.countries.mkString(", ")}</small>}
+        @if(sponsorship.countries.nonEmpty && flagCountries) {
+            <br /><small><span class="flagged">
+                geotargeted to @{sponsorship.countries.mkString(", ")}</span></small>
+        } else {
+            @if(sponsorship.countries.nonEmpty) {
+                <br /><small> geotargeted to @{sponsorship.countries.mkString(", ")}</small>
+            }
+        }
     </li>
 }
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+    <style type="text/css">
+        li { padding-bottom:15px; }
+        .flagged { color:red; }
+    </style>
 
 <h1>Content Sponsorships:</h1>
 
@@ -44,7 +55,7 @@
 <h3>Advertisement Feature Tags</h3>
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
 <ol>
-    @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship)}
+    @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship, flagCountries=true)}
 </ol>
 
 <h3>Foundation Supported Tags</h3>
