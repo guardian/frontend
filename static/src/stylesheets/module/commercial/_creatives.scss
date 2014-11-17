@@ -93,7 +93,7 @@
 }
 
 .creative--expandable {
-    margin-bottom: 10px;
+    margin-bottom: $gs-baseline;
 
     .ad-slot__label--wrapper {
         @include mq($until: tablet) {
@@ -113,7 +113,6 @@
     .ad-exp--expand .facia-container__inner {
         height: 100%;
         position: relative;
-        background-color: #f3f3f3;
 
         @include mq($until: tablet) {
             width: 100%;
@@ -137,7 +136,7 @@
         @include transition(all 1s ease);
 
         @include mq(tablet) {
-            right: 20px;
+            right: $gs-gutter;
         }
 
         &:focus {
