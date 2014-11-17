@@ -28,7 +28,8 @@ object ContentCardController extends Controller with Paging with Logging with Ex
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showFields("all")
+      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating")
+      //.showFields("all")
       .showTags("all")
       .showElements("all")
       .response

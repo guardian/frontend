@@ -1,4 +1,4 @@
-@each $tone-name, $header-background, $header-text, $trailtext-background, $trailtext-text, $border-top, $comment-text, $kicker-text in
+@each $tone-name, $header-background, $header-text, $standfirst-background, $standfirst-text, $border-top, $comment-text, $kicker-text in
   (news, neutral-7, neutral-1, neutral-7, neutral-2, news-accent, neutral-2, news-default),
   (feature, features-support-1, neutral-8, features-main-2, neutral-7, features-main-1, neutral-2, news-default),
   (comment, neutral-7, neutral-1, comment-main-2, neutral-8, comment-main-2, neutral-8, comment-main-2),
@@ -17,9 +17,9 @@
             color: colour($header-text);
         }
 
-        .content-card__trailtext {
-            background: colour($trailtext-background);
-            color: colour($trailtext-text);
+        .content-card__standfirst {
+            background: colour($standfirst-background);
+            color: colour($standfirst-text);
         }
 
         .content-card__byline {
@@ -85,7 +85,7 @@
     padding-right: $gs-gutter;
 }
 
-.content-card__trailtext {
+.content-card__standfirst {
     padding-left: $gs-gutter / 2;
     padding-bottom: $gs-baseline;
     padding-right: $gs-gutter / 2;
@@ -105,7 +105,7 @@
         height: 100%;
     }
 
-    .content-card__trailtext {
+    .content-card__standfirst {
         padding-right: $gs-gutter * 6;
     }
 }

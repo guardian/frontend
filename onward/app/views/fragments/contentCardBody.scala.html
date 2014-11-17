@@ -5,6 +5,9 @@
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 
+    @if(content.hasTonalHeaderByline){<!-- Tonal -->}
+    @if(content.hasLargeContributorImage){<!-- Image -->}
+
     <a class="content-card tonal tonal--@toneClass(content) @if(content.isAudio){ fc-item--audio} @if(content.isPodcast){ tone-podcast--item} @if(content.hasTonalHeaderByline && content.hasLargeContributorImage){ content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl" target="_blank">
         <div class="content-card__header fc-item__header">
             <h1 class="content-card__title fc-item__title">
@@ -16,13 +19,13 @@
             </h1>
             @if(content.isComment) {
                 <div class="content-card__byline">
-                 - @content.contributors.map { tag => @Html(tag.name) }.mkString(", ")
+                 - @content.byline.map { byline => @Html(byline) }
                 </div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
-        <div class="content-card__trailtext">
-           @content.trailText.map { trail => @Html(trail)}
+        <div class="content-card__standfirst">
+           @content.standfirst.map{ standFirst => @Html(standFirst)}
         </div>
         @if(content.isComment) {
             @content.contributors.headOption.map { profile =>
