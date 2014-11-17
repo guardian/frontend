@@ -129,15 +129,14 @@ define([
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl,
-            blockLongUrl = config.page.pageId,
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockShortUrl + '/sfb' + '#' + i)
+                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl + '/stw' + '#' + i)
+                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
