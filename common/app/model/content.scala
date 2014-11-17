@@ -646,7 +646,12 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
   ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map { case (image, index) =>
-    image.path.map(s"twitter:image$index:src" ->)
+    image.path.map( i =>
+      if(i.startsWith("//")){
+        s"twitter:image$index:src" -> s"http:$i"
+      } else {
+        s"twitter:image$index:src" -> i
+      })
   }.flatten
 
   lazy val lightbox: JsObject = {
