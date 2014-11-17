@@ -74,8 +74,10 @@ trait AdminLifecycle extends GlobalSettings {
       }
     }
 
-    if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
-      AdsStatusEmailJob.run()
+    Jobs.schedule("AdsStatusEmailJob", "0 5/10 9-18 ? * MON-FRI") {
+      if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
+        AdsStatusEmailJob.run()
+      }
     }
 
   }
