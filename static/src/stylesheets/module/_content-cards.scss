@@ -61,38 +61,6 @@
     }
 }
 
-.content-card.tonal--tone-podcast {
-    .content-card__title {
-        &:before {
-            @include icon(volume-high--tone-podcast, false);
-        }
-    }
-}
-
-.content-card.tonal--tone-audio {
-    .content-card__title {
-        &:before {
-            @include icon(volume-high--tone-media, false);
-        }
-    }
-}
-
-.content-card.tonal--tone-gallery {
-    .content-card__title {
-        &:before {
-            @include icon(camera-yellow-large, false);
-        }
-    }
-
-    .content-card__image-container {
-        width: 100%;
-    }
-
-    .content-card__header {
-        padding-top: $gs-baseline;
-    }
-}
-
 .content-card__header {
     padding-bottom: $gs-baseline;
 }
@@ -101,6 +69,8 @@
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
     @include stars();
+    line-height: 24px !important;
+    font-weight: bold !important;
 
     .stars {
         .star__item {

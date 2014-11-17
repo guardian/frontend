@@ -5,9 +5,9 @@
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 
-    <a class="content-card tonal tonal--@toneClass(content)@if(content.isAudio){ tonal--tone-audio}@if(content.hasTonalHeaderByline && content.hasLargeContributorImage){ content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl" target="_blank">
-        <div class="content-card__header">
-            <h1 class="content-card__title">
+    <a class="content-card tonal tonal--@toneClass(content) @if(content.isAudio){ fc-item--audio} @if(content.isPodcast){ tone-podcast--item} @if(content.hasTonalHeaderByline && content.hasLargeContributorImage){ content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl" target="_blank">
+        <div class="content-card__header fc-item__header">
+            <h1 class="content-card__title fc-item__title">
                 @if(content.isLive) {<span class="content-card__live"><span class="content-card__live-icon"></span>LIVE</span> }
                 @if(content.isPodcast) {
                     @content.seriesTag.map { series => <span class="content-card__kicker"> @series.webTitle / </span> }
