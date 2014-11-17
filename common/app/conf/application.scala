@@ -19,7 +19,7 @@ object Gzipper extends GzipFilter(
   shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
 )
 
-object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
+object JsonHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -28,9 +28,22 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
     nextFilter(request).map{ result =>
       if (request.isJson) {
         import result.header.headers
+
         // Accept-Encoding Vary field will be set by Gzipper
         val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
-        result.withHeaders("Vary" -> vary)
+        val resultWithVary = result.withHeaders("Vary" -> vary)
+
+        // Set CORS headers on all outgoin JSON requests
+        request.headers.get("Origin") match {
+          case None => resultWithVary
+          case Some(requestOrigin) =>
+            resultWithVary.withHeaders(
+              "Access-Control-Allow-Origin" -> Configuration.ajax.corsOrigins.find(_ == requestOrigin).getOrElse("*"),
+              "Access-Control-Allow-Credentials" -> "true",
+              "Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"
+            )
+        }
+
       } else {
         result
       }
@@ -73,5 +86,5 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
 object Filters {
                                      // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
                                      // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] =  ForceHttpResponseFilter :: JsonVaryHeadersFilter :: Gzipper :: BackendHeaderFilter :: Nil
+  lazy val common: List[EssentialFilter] =  ForceHttpResponseFilter :: JsonHeadersFilter :: Gzipper :: BackendHeaderFilter :: Nil
 }

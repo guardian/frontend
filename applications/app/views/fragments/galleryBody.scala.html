@@ -82,7 +82,7 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing(rowNum.toString, gallery.blockLevelShares(rowNum.toString), gallery.blockLevelLink(rowNum.toString), gallery.contentType, image.path)
+                @fragments.share.blockLevelSharing(rowNum.toString, gallery.elementShares(Some(rowNum.toString), image.path), gallery.contentType)
             </div>
 
         </figure>

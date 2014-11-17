@@ -35,17 +35,13 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
 
       item.content.map { apiContent =>
         val gallery = model.Content(apiContent)
-        val blockShares = gallery.blockLevelShares("2")
-        val linkShare = gallery.blockLevelLink("2")
+        val elementShares = gallery.elementShares(Some("2"))
 
-        linkShare.map(_.text).getOrElse("") should be ("Link")
-        linkShare.map(_.href).getOrElse("") should be ("http://gu.com/p/42jcb/sbl#2")
-
-        blockShares.map(_.text) should be (List("Facebook", "Twitter", "Pinterest"))
-        blockShares.map(_.href) should be (List(
+        elementShares.map(_.text) should be (List("Facebook", "Twitter", "Pinterest"))
+        elementShares.map(_.href) should be (List(
           "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsfb%232&ref=responsive",
           "https://twitter.com/intent/tweet?text=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fstw%232",
-          "http://www.pinterest.com/pin/create/button/?description=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year"))
+          "http://www.pinterest.com/pin/create/button/?description=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year&media="))
       }
     }
   }

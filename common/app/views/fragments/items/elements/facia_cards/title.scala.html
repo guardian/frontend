@@ -42,6 +42,10 @@
             <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-item__kicker">@Html(sectionName)</a>
         }
 
+        case FreeHtmlKickerWithLink(html, link) => {
+            <a href="@LinkTo(link)" data-link-name="kicker" class="fc-item__kicker">@Html(html)</a>
+        }
+
         case FreeHtmlKicker(html) => {
             <span class="fc-item__kicker">@Html(html)</span>
         }
