@@ -11,24 +11,26 @@
                     <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
                 </h4>
             </div>
-            @for(member <- members) {
             <div class="commercial--multi__body">
-                <a class="lineitem__link"
-                href="@AdLink{@member.profileUrl}"
-                data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">
-                    <div class="lineitem__image-crop">
-                        <img class="lineitem__image lineitem__image-portrait" src="@member.profilePhoto" alt="" />
-                    </div>
-                    <h4 class="lineitem__title">@member.username</h4>
-                    <div class="lineitem__offer">
-                        <p class="lineitem__meta">@member.age, @member.location</p>
-                    </div>
-                </a>
+                <div class="lineitem__links">
+                @for(member <- members) {
+                    <a class="lineitem__link"
+                    href="@AdLink{@member.profileUrl}"
+                    data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">
+                        <div class="lineitem__image-crop">
+                            <img class="lineitem__image lineitem__image-portrait" src="@member.profilePhoto" alt="" />
+                        </div>
+                        <h4 class="lineitem__title">@member.username</h4>
+                        <div class="lineitem__offer">
+                            <p class="lineitem__meta">@member.age, @member.location</p>
+                        </div>
+                    </a>
+                }
+                </div>
                 <a class="lineitem__cta button button--primary button--small button--tone-media" href="@AdLink{@Configuration.commercial.soulmates_url}">
                     Find a Soulmate<i class="i i-arrow-white-right i-right"></i>
                 </a>
             </div>
-            }
         </div>
     </li>
 }

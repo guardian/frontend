@@ -62,12 +62,6 @@ Multi component (AKA Frankenponent)
         min-height: gs-height(4);
     }
 
-    .commercial--tone-soulmates {
-        .commercial--multi__body {
-            background: transparent;
-        }
-    }
-
     .lineitem--multi {
         width: auto;
         float: none;
@@ -126,8 +120,29 @@ Multi component (AKA Frankenponent)
         }
 
         .lineitem__cta {
+            clear: left;
             position: absolute;
             bottom: $gs-baseline/2;
+        }
+    }
+
+    // Soulmates overrides
+    .commercial--soulmates {
+        .commercial--multi__body {
+            background: transparent;
+        }
+        .lineitem__links {
+            clear: both;
+            overflow: hidden;
+        }
+        .lineitem__link {
+            float: left;
+            width: 45%;
+            padding-right: 5%;
+        }
+        .lineitem__image-crop {
+            width: 100%;
+            padding-bottom: 100%;
         }
     }
 }
