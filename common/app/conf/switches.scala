@@ -407,7 +407,7 @@ object Switches extends Collections {
 
   val ContainerUpdatesSwitch = Switch("Facia", "container-updates",
     "Enables js detection that containers have updated since page load",
-    safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
   val all: List[Switch] = List(
