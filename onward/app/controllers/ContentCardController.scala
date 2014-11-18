@@ -44,9 +44,8 @@ object ContentCardController extends Controller with Paging with Logging with Ex
     if (!request.isJson) Cached(900) {Ok(views.html.contentCard(content)(request))}
     else Cached(900) {
       JsonComponent(
-         "html" -> contentResponse,
+         "html" -> contentResponse
       )
     }
-
   }
 }
