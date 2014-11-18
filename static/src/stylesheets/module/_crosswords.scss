@@ -50,7 +50,7 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__clue--selected {
-    color: darken($c-crosswordAccent2, 15%);
+    color: darken(colour(crosswordAccent2), 15%);
 }
 
 .crossword__focussed-clue {
@@ -79,11 +79,11 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__cell--highlighted {
-    fill: lighten($c-crosswordAccent2, 30%);
+    fill: lighten(colour(crosswordAccent2), 30%);
 }
 
 .crossword__cell--focussed {
-    fill: lighten($c-crosswordAccent2, 10%);
+    fill: lighten(colour(crosswordAccent2), 10%);
 }
 
 .crossword__cell-number {
@@ -107,7 +107,7 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__cell-text--error {
-    fill: darken($c-error, 20%);
+    fill: darken(colour(error), 20%);
     opacity: 0;
 }
 
