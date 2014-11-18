@@ -56,11 +56,10 @@ jQuery(function($) {
         display: block;
     }
     .test-page-head {
-        font-size: 2rem;
+        font-size: 1.25rem;
     }
     .test-page-subhead {
-        font-size: 1.4rem;
-        margin: 1em 0;
+        font-size: 0.875rem;
     }
     .facia-switch {
         font-family: sans-serif;
@@ -645,6 +644,8 @@ jQuery(function($) {
     <hr/>
 
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Multi-component</h2>
+
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-multi ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/multi.json?c=travel&c=masterclasses&c=books&c=soulmates", function( json ) {
