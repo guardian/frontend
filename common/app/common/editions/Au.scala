@@ -11,7 +11,6 @@ import common.NavItem
 object Au extends Edition(
   id = "AU",
   displayName = "Australia edition",
-  shortName = "Australia",
   DateTimeZone.forID("Australia/Sydney"),
   lang = "en-au"
 )

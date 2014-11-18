@@ -156,7 +156,7 @@
         <a href="#guardian-edition-menu" class="brand-bar__item--action popup__toggle"
            data-link-name="topNav : edition" data-toggle="top-bar__popup--edition"
            aria-haspopup="true" aria-controls="guardian-edition-menu">
-        edition: @Edition(request).shortName
+        @Edition(request).displayName
         </a>
         <ul class="popup popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>

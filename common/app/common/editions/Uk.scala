@@ -6,7 +6,6 @@ import org.joda.time.DateTimeZone
 object Uk extends Edition(
   id = "UK",
   displayName = "UK edition",
-  shortName = "UK",
   timezone = DateTimeZone.forID("Europe/London"),
   lang = "en-gb"){
 
