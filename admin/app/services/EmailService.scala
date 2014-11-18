@@ -47,7 +47,10 @@ object EmailService extends ExecutionContexts with Logging {
 
     val futureResponse = client.sendAsyncEmail(request)
 
-    futureResponse recoverWith {
+    futureResponse map { response =>
+      log.info(s"Sent message ID ${response.getMessageId}")
+      response
+    } recoverWith {
       case e: Exception =>
         val cause = e.getCause
         log.error(s"Email send failed: ${cause.getMessage}")
