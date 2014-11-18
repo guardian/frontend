@@ -32,7 +32,7 @@ define([
                       edition: "UK"
                   },
                   switches: {
-                      autoRefresh: true
+                      containerUpdates: true
                   }
               },
               'text!common/views/ui/updates.html' : updatesTpl,
