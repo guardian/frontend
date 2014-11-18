@@ -79,15 +79,27 @@ define([
             'breakout__script'
         ],
         callbacks = {
-            '300,251': function (e, $adSlot) {
-                new Sticky($adSlot.parent()[0], { top: 12 }).init();
+            '300,251': function (event, $adSlot) {
+                var $mpuContainer = $adSlot.parent();
+
+                $mpuContainer.next().remove();
+                new Sticky($mpuContainer[0], { top: 12 }).init();
             },
-            '300,1': function (e, $adSlot) {
+            '1,1': function (event, $adSlot) {
+                if (!event.slot.getOutOfPage()) {
+                    $adSlot.addClass('u-h');
+                    var $parent = $adSlot.parent();
+                    // if in a slice, add the 'no mpu' class
+                    $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                    $parent.addClass('fc-slice__item--no-mpu');
+                }
+            },
+            '300,1': function (event, $adSlot) {
                 $adSlot.addClass('u-h');
                 var $parent = $adSlot.parent();
                 // if in a slice, add the 'no mpu' class
-                $parent.hasClass('js-facia-slice-mpu-candidate') &&
-                    $parent.addClass('facia-slice__item--no-mpu');
+                $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                    $parent.addClass('fc-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular
@@ -121,9 +133,14 @@ define([
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
-                // filter out hidden ads
+                // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    return $css($adSlot, 'display') !== 'none';
+                    if ($css($adSlot, 'display') === 'none') {
+                        $adSlot.remove();
+                        return false;
+                    } else {
+                        return true;
+                    }
                 })
                 .map(function ($adSlot) {
                     return [$adSlot.attr('id'), defineSlot($adSlot)];
@@ -169,7 +186,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push(setListeners);
@@ -252,8 +269,8 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId()),
-                size  = event.size.join(',');
+            var size,
+                $slot = $('#' + event.slot.getSlotId().getDomId());
 
             // remove any placeholder ad content
             $('.ad-slot__content--placeholder', $slot).remove();
@@ -263,10 +280,10 @@ define([
             } else {
                 checkForBreakout($slot);
                 addLabel($slot);
+                size  = event.size.join(',');
+                // is there a callback for this size
+                callbacks[size] && callbacks[size](event, $slot);
             }
-
-            // is there a callback for this size
-            callbacks[size] && callbacks[size](event, $slot);
         },
         addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
@@ -281,28 +298,34 @@ define([
         },
         breakoutIFrame = function (iFrame) {
             /* jshint evil: true */
-            var iFrameBody    = iFrame.contentDocument.body,
-                $iFrameParent = bonzo(iFrame).parent();
+            var shouldRemoveIFrame = false,
+                $iFrame            = bonzo(iFrame),
+                iFrameBody         = iFrame.contentDocument.body,
+                $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach (breakoutClasses, function (breakoutClass) {
-                    var $breakout = $('.' + breakoutClass, iFrameBody);
-                    if ($breakout.length) {
-                        // remove the iframe before breaking out
-                        bonzo(iFrame).remove();
-                        if ($breakout[0].nodeName.toLowerCase() === 'script') {
+                forEach(breakoutClasses, function (breakoutClass) {
+                    $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
+                        var $breakoutEl = bonzo(breakoutEl);
+
+                        if (breakoutClass === 'breakout__script') {
                             // evil, but we own the returning js snippet
-                            eval($breakout.html());
+                            eval($breakoutEl.html());
                         } else {
-                            $iFrameParent.append($breakout.html());
+                            $iFrameParent.append($breakoutEl.html());
+
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
                                     bonzo(responsiveAd).addClass('ad--responsive--open');
                                 }, 50);
                             });
                         }
-                    }
+                        shouldRemoveIFrame = true;
+                    });
                 });
+            }
+            if (shouldRemoveIFrame) {
+                $iFrame.remove();
             }
         },
         /**
@@ -315,14 +338,16 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot[0]).each(function (iFrame) {
+            $('iframe', $slot).each(function (iFrame) {
                 // IE needs the iFrame to have loaded before we can interact with it
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
+
                         if (
-                            typeof updatedIFrame.readyState !== 'unknown'
-                                && updatedIFrame.readyState === 'complete'
+                            updatedIFrame &&
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
                         ) {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');

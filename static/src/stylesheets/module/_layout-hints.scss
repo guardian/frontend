@@ -25,7 +25,7 @@
     @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @if ($svg-support) {
         &:before {
@@ -94,19 +94,32 @@ figure.element.element--showcase {
     }
 }
 
-figure.element.element--showcase,
 figure.element.element--supporting {
     figcaption {
         @include mq(leftCol) {
             background: #ffffff;
             padding-left: 0;
-            position: absolute;
             top: 100%;
-            padding-top: ($gs-baseline/6)*5;
-            @include reduce-left;
+            padding-top: ($gs-baseline/3)*2;
+            max-width: gs-span(6);
         }
     }
 }
+
+figure.element.element--showcase {
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline * 2;
+        border-bottom: 1px dotted colour(neutral-5);
+
+        figcaption {
+            background: #ffffff;
+            padding-left: 0;
+            top: 100%;
+            max-width: gs-span(9);
+        }
+    }
+}
+
 
 figure.element.element--supporting.element-tweet {
     margin-top: -$gs-baseline/2;
@@ -136,8 +149,10 @@ figure {
     @include deport-left;
 }
 
-.tonal--tone-feature .media-primary.media-primary--showcase {
+// Articles can have the feature tone applied, but it's not always primary tone
+.has-feature-showcase-picture .media-primary.media-primary--showcase {
     margin-left: 0;
+    margin-right: 0;
     z-index: 2; // Put the image on top of the left and right layout borders
     position: relative;
 

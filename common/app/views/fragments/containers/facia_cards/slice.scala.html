@@ -1,45 +1,45 @@
-@(slice: layout.SliceWithCards, containerIndex: Int)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(slice: layout.SliceWithCards, containerIndex: Int)(implicit request: RequestHeader)
 
 @import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
 @import views.html.fragments.items.facia_cards.item
 
-<div class="facia-slice-wrapper">
-    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols facia-slice facia-slice--@slice.cssClassName">
+<div class="fc-slice-wrapper">
+    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols fc-slice fc-slice--@slice.cssClassName">
     @for(ColumnAndCards(column, cards) <- slice.columns) {
         @column match {
-            case SingleItem(colSpan, itemClasses) => {
+            case SingleItem(colSpan, _) => {
                 @cards.headOption.map { card =>
-                    @item(card, itemClasses, containerIndex, colSpan = colSpan)
+                    @item(card, containerIndex, colSpan = colSpan)
                 }
             }
 
-            case Rows(colSpan, columns, rows, itemClasses) => {
-                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
+            case Rows(colSpan, columns, rows, _) => {
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
                     <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                         @if(cards.nonEmpty) {
                             @cards.map{ card =>
-                                @item(card, itemClasses, containerIndex, isList = true)
+                                @item(card, containerIndex, isList = true)
                             }
                         }
                     </ul>
                 </li>
             }
 
-            case SplitColumn(colSpan, topItemClasses, bottomItemsClasses) => {
-                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
+            case SplitColumn(colSpan, _, _) => {
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
                     <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
                         @cards.headOption.map { card =>
-                            @item(card, topItemClasses, containerIndex, isList = true)
+                            @item(card, containerIndex, isList = true)
                         }
                         @cards.tail.map { card =>
-                            @item(card, bottomItemsClasses, containerIndex, isList = true)
+                            @item(card, containerIndex, isList = true)
                         }
                     </ul>
                 </li>
             }
 
             case MPU(colSpan) => {
-                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan js-facia-slice-mpu-candidate facia-slice__item--mpu-candidate facia-slice__item--no-mpu"></li>
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></li>
             }
         }
     }

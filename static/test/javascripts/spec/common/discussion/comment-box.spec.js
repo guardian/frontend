@@ -1,6 +1,5 @@
 define([
     'common/modules/identity/api',
-    'common/utils/ajax',
     'bean',
     'helpers/fixtures',
     'fixtures/discussion/discussion',
@@ -9,7 +8,6 @@ define([
     'common/modules/discussion/comment-box'
 ], function(
     Id,
-    ajax,
     bean,
     fixtures,
     discussionJson,
@@ -71,12 +69,6 @@ define([
             reqwestReturn = {
                 'then': function() {}
             };
-
-        // setup
-        ajax.init({page: {
-            ajaxUrl: '',
-            edition: 'UK'
-        }});
 
         // rerender the button each time
         beforeEach(function() {

@@ -280,10 +280,7 @@
 		/*configurable=*/false
 	);
 
-	builtInProp(
-		Promise,"prototype",PromisePrototype,
-		/*configurable=*/false
-	);
+	Promise.prototype = PromisePrototype;
 
 	// built-in "brand" to signal an "uninitialized" promise
 	builtInProp(PromisePrototype,"__NPO__",0,

@@ -16,6 +16,8 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  lazy val canonicalUrl: Option[String] = None
+  
   // i.e. show the link back to the desktop site
   def hasClassicVersion: Boolean = !special
 
@@ -38,6 +40,7 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  lazy val isInappropriateForSponsorship: Boolean = false
 
   def isSurging: Seq[Int] = Seq(0)
 
@@ -46,7 +49,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision.take(7))),
+    ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
@@ -61,6 +64,8 @@ trait MetaData extends Tags {
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
+
+  def openGraphImages: Seq[String] = Seq()
 
   def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
@@ -95,10 +100,11 @@ object Page {
     analyticsName: String,
     pagination: Option[Pagination] = None,
     description: Option[String] = None,
-    maybeContentType: Option[String] = None
+    maybeContentType: Option[String] = None,
+    maybeCanonicalUrl: Option[String] = None
   ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
     override lazy val contentType = maybeContentType.getOrElse("")
-
+    override lazy val canonicalUrl = maybeCanonicalUrl
     override def metaData: Map[String, JsValue] =
       super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
   }
@@ -256,6 +262,7 @@ trait Tags {
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
+  lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -266,6 +273,7 @@ trait Tags {
 
 object Tags {
   val Analysis = "tone/analysis"
+  val Crossword = "type/crossword"
   val Podcast = "type/podcast"
   val Editorial = "tone/editorials"
   val Cartoon = "type/cartoon"

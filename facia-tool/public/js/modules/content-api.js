@@ -4,8 +4,9 @@ define([
     'modules/authed-ajax',
     'modules/cache',
     'utils/internal-content-code',
-    'utils/url-host',
     'utils/url-abs-path',
+    'utils/identity',
+    'utils/is-guardian-url',
     'utils/snap'
 ],
 function (
@@ -13,16 +14,16 @@ function (
     authedAjax,
     cache,
     internalContentCode,
-    urlHost,
     urlAbsPath,
+    identity,
+    isGuardianUrl,
     snap
 ){
     function validateItem (item) {
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
             capiId = urlAbsPath(item.id()),
-            data = cache.get('contentApi', capiId),
-            isFromGuardian;
+            data = cache.get('contentApi', capiId);
 
         if (snapId) {
             item.id(snapId);
@@ -34,10 +35,8 @@ function (
             defer.resolve(item);
 
         } else {
-            isFromGuardian = urlHost(item.id()) === 'www.theguardian.com';
-
             // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
-            if (isFromGuardian && capiId.match(/\+/)) {
+            if (capiId.match(/\+/) && isGuardianUrl(item.id())) {
                 capiId = 'search?tag=' + capiId.split(/\+/).join(',') + '&';
             } else {
                 capiId += '?';
@@ -46,13 +45,14 @@ function (
             capiId += vars.CONST.apiSearchParams;
 
             fetchContent(capiId)
-            .done(function(results) {
+            .done(function(results, resultsTitle) {
                 var capiItem,
                     icc,
-                    err;
+                    err,
+                    convertSnapMsg = 'Click OK to create a { ' + vars.CONST.latestSnapPrefix + resultsTitle + ' } item, or Cancel to just create a link...';
 
                 // ContentApi item
-                if (results.length === 1) {
+                if (results && results.length === 1) {
                     capiItem = results[0];
                     icc = internalContentCode(capiItem);
                     if (icc) {
@@ -63,6 +63,10 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
+                // A snap, but not an absolute url
+                } else if (!item.id().match(/^https?:\/\//)) {
+                    err = 'Sorry, URLs must begin with http...';
+
                 // A snap, but snaps can only be created to the Clipboard
                 } else if (item.group.parentType !== 'Clipboard') {
                     err = 'Sorry, special links must be dragged to the Clipboard, initially';
@@ -71,17 +75,21 @@ function (
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
 
-                // A snap, but not an absolute url
-                } else if (!item.id().match(/^https?:\/\//) && results.length === 0) {
-                    err = 'Sorry, that\'s not a valid URL';
-
                 // A snap, but a link to unavailable guardian content
-                } else if (isFromGuardian && results.length === 0) {
+                } else if (results && results.length === 0 && isGuardianUrl(item.id())) {
                     err = 'Sorry, that Guardian content is unavailable';
 
-                // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
-                } else {
+                // A snap, that's setting it's own type, ie via dragged-in query params
+                } else if (item.meta.snapType()) {
                     item.convertToSnap();
+
+                // A snap, of type 'latest', ie.  where the target is a Guardian tag/section page.
+                } else if (results && results.length > 1 && window.confirm(convertSnapMsg)) {
+                    item.convertToLatestSnap(resultsTitle);
+
+                    // A snap, of default type 'link'.
+                } else {
+                    item.convertToLinkSnap();
                 }
 
                 if (err) {
@@ -117,6 +125,10 @@ function (
 
         fetchContentByIds(ids)
         .done(function(results){
+            if (!_.isArray(results)) {
+                return;
+            }
+
             results.forEach(function(result) {
                 var icc = internalContentCode(result);
 
@@ -124,7 +136,7 @@ function (
                     cache.put('contentApi', icc, result);
 
                     _.filter(articles, function(article) {
-                        return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
+                        return article.id() === icc;
                     }).forEach(function(article) {
                         populate(article, result);
                     });
@@ -132,7 +144,10 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.state.isSnap(); })
+            // legacy-snaps
+            .filter(function(article) { return !article.meta.href(); })
+
+            .filter(function(article) { return !article.meta.snapType(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
@@ -162,20 +177,33 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            if (!resp.response) {
-                defer.resolve([]);
+            if (!resp.response
+                || _.intersection(['content', 'editorsPicks', 'results', 'mostViewed'], _.keys(resp.response)).length === 0
+                || resp.response.status === 'error') {
+                defer.resolve();
             } else if (resp.response.content) {
-                defer.resolve([resp.response.content]);
+                defer.resolve([resp.response.content], getTagOrSectionTitle(resp.response));
             } else {
-                defer.resolve(_.chain(['editorsPicks', 'results', 'mostViewed'])
+                defer.resolve(
+                   _.chain(['editorsPicks', 'results', 'mostViewed'])
                     .filter(function(key) { return _.isArray(resp.response[key]); })
                     .map(function(key) { return resp.response[key]; })
                     .flatten()
-                    .value());
+                    .value(),
+                    getTagOrSectionTitle(resp.response)
+                );
             }
         });
 
         return defer.promise();
+    }
+
+    function getTagOrSectionTitle(response) {
+        return _.chain([response.tag, response.section])
+            .filter(identity)
+            .pluck('webTitle')
+            .first()
+            .value();
     }
 
     function fetchMetaForPath(path) {

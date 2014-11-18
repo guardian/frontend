@@ -5,11 +5,11 @@
 @import views.support.TrailCssClasses.articleToneClass
 @import com.gu.facia.client.models.CollectionConfig
 @import views.BodyCleaner
-@import layout.{Card, ItemClasses}
+@import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 
 @defining(model.article) {  article =>
-<div class="l-side-margins l-side-margins--layout-content">
+<div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
@@ -101,15 +101,14 @@
                     @if(model.related.hasStoryPackage) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
-                            <ul class="u-unstyled facia-slice facia-slice--single-col">
+                            <ul class="u-unstyled fc-slice fc-slice--single-col">
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
-                                        Card(index, trail, None),
-                                        ItemClasses(mobile = "list-media",tablet = "standard"),
+                                        FaciaCardAndIndex.fromTrail(trail, ItemClasses.liveBlogMore, index),
                                         0,
                                         isRow = false,
                                         isList = false
-                                    )(request, CollectionConfig.emptyConfig)
+                                    )(request)
                                 }
                             </ul>
                         </aside>

@@ -1,5 +1,6 @@
 define([
     'lodash/functions/once',
+    'lodash/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -7,6 +8,7 @@ define([
     'common/modules/commercial/create-ad-slot'
 ], function (
     once,
+    cloneDeep,
     $,
     config,
     detect,
@@ -26,10 +28,14 @@ define([
         },
         init = function () {
 
-            var breakpoint, rules;
+            var breakpoint, rules, lenientRules;
 
             // is the switch off, or not an article, or a live blog
-            if (!config.switches.standardAdverts || config.page.contentType !== 'Article' || config.page.isLiveBlog) {
+            if (
+                !config.switches.standardAdverts ||
+                    config.page.contentType !== 'Article' ||
+                    config.page.isLiveBlog
+            ) {
                 return false;
             }
 
@@ -39,18 +45,25 @@ define([
                 minBelow: 300,
                 selectors: {
                     ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
                     ' .ad-slot': {minAbove: 500, minBelow: 500}
                 }
-            };
+            },
+            lenientRules = cloneDeep(rules);
 
-            if (config.page.sponsorshipType === 'foundation-supported') {
+            // more lenient rules, closer to the top start of the article
+            lenientRules.minAbove = 300;
+
+            if (
+                config.page.sponsorshipType === 'foundation-supported' &&
+                    config.page.isInappropriateForSponsorship === false
+            ) {
                 adNames.unshift(['fobadge', ['im', 'paid-for-badge']]);
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
             }
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
             }
             insertAdAtP(spacefinder.getParaWithSpace(rules));
 

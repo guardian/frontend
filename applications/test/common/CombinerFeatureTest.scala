@@ -14,7 +14,7 @@ import collection.JavaConversions._
 
       goTo("/world/iraq+tone/comment") { browser =>
         import browser._
-        val trails = $(".facia-slice__item")
+        val trails = $(".fc-slice__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 1
       }
@@ -26,9 +26,9 @@ import collection.JavaConversions._
 
       goTo("/science+technology/apple") { browser =>
         import browser._
-        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
-        findFirst(".container__meta__title").getText.toLowerCase should be ("science + apple")
+        findFirst("[data-test-id=header-title]").getText.toLowerCase should be ("science + apple")
         trails.length should be > 10
       }
     }
@@ -39,7 +39,7 @@ import collection.JavaConversions._
 
       goTo("/books/jkrowling+harrypotter") { browser =>
         import browser._
-        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 10
       }
@@ -51,7 +51,7 @@ import collection.JavaConversions._
 
       goTo("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
         import browser._
-        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 5
       }

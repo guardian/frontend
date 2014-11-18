@@ -35,8 +35,8 @@ define([
                 opts = defaults(
                     options || {},
                     {
-                        containerSelector: '.container',
-                        sliceSelector: '.js-facia-slice-mpu-candidate'
+                        containerSelector: '.fc-container',
+                        sliceSelector: '.js-fc-slice-mpu-candidate'
                     }
                 ),
                 // get all the containers
@@ -65,11 +65,19 @@ define([
             _(adSlices)
                 .slice(0, adNames.length)
                 .forEach(function ($adSlice, index) {
-                    var adName = adNames[index],
-                        $adSlot = bonzo(createAdSlot(adName, 'container-inline'));
+                    var adName        = adNames[index],
+                        $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('ad-slot--mobile'),
+                        $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('ad-slot--not-mobile');
+
+                    // add a tablet+ ad to the slice
                     $adSlice
-                        .removeClass('facia-slice__item--no-mpu')
-                        .append($adSlot);
+                        .removeClass('fc-slice__item--no-mpu')
+                        .append($tabletAdSlot);
+                    // add a mobile advert after the container
+                    $mobileAdSlot
+                        .insertAfter($.ancestor($adSlice[0], 'fc-container'));
                 })
                 .valueOf();
 

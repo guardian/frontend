@@ -1,4 +1,5 @@
 define([
+    'raven',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
@@ -7,6 +8,7 @@ define([
     'common/utils/template',
     'text!common/views/content/share-count.html'
 ], function (
+    raven,
     $,
     ajax,
     detect,
@@ -72,30 +74,37 @@ define([
     function init() {
         if ($shareCountEls.length) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
-            ajax({
-                url: 'http://graph.facebook.com/' + url,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true,
-                success: function (resp) {
+            try {
+                ajax({
+                    url: 'https://graph.facebook.com/' + url,
+                    type: 'json',
+                    method: 'get',
+                    crossOrigin: true
+                }).then(function (resp) {
                     var count = resp.shares || 0;
                     counts.facebook = count;
                     addToShareCount(count);
                     updateTooltip();
-                }
-            });
-            ajax({
-                url: 'http://urls.api.twitter.com/1/urls/count.json?url=' + url,
-                type: 'jsonp',
-                method: 'get',
-                crossOrigin: true,
-                success: function (resp) {
+                });
+                ajax({
+                    url: 'https://urls.api.twitter.com/1/urls/count.json?url=' + url,
+                    type: 'jsonp',
+                    method: 'get',
+                    crossOrigin: true
+                }).then(function (resp) {
                     var count = resp.count || 0;
                     counts.twitter = count;
                     addToShareCount(count);
                     updateTooltip();
-                }
-            });
+                });
+            } catch (e) {
+                raven.captureException(new Error('Error retrieving share counts (' + e.message + ')'), {
+                    tags: {
+                        feature: 'share-count'
+                    }
+                });
+            }
+
         }
 
     }

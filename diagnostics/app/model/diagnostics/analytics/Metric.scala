@@ -1,7 +1,8 @@
 package model.diagnostics.analytics
 
-import common.Logging
 import java.util.concurrent.atomic.AtomicLong
+
+import common.Logging
 
 object Metric extends Logging {
 
@@ -16,6 +17,8 @@ object Metric extends Logging {
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
+
+    ("ads-blocked", CountMetric("ads-blocked")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors

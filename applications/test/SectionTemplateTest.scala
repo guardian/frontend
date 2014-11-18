@@ -8,7 +8,7 @@ import scala.collection.JavaConversions._
 @DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render front title" in goTo("/uk-news") { browser =>
-    browser.$(".container__meta__title").first.getText should be ("UK news")
+    browser.$("[data-test-id=header-title]").first.getText should be ("UK news")
   }
 
   it should "add alternate pages to editionalised sections for /uk/culture" in goTo("/uk/culture") { browser =>
@@ -31,6 +31,13 @@ import scala.collection.JavaConversions._
   }
 
   it should "not add alternate pages to non editionalised sections" in goTo("/books") { browser =>
+    import browser._
+
+    val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
+    alternateLinks should be (empty)
+  }
+
+  it should "not add alternate pages to 'all' pages for a section" in goTo("/business/1929/oct/24/all") { browser =>
     import browser._
 
     val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")

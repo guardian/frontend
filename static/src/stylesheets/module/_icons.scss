@@ -23,6 +23,13 @@ blockquote.quoted:before {
     vertical-align: top;
     margin-top: 1px;
     @include icon(image);
+
+    .element-video & {
+        @include icon(video-icon-black);
+        width: 16px !important;
+        height: 12px !important;
+        margin-top: $gs-baseline/6;
+    }
 }
 
 // Quotes
@@ -32,15 +39,15 @@ blockquote.quoted:before {
     left: 0;
     @include transform(scale(.8));
     @include transform-origin(0);
-    @include icon(quote-marks);
+    @include icon(quote-grey);
 }
 
 .item--dark .i-comment-light-grey {
-    @extend %i-comment-grey;
+    @extend %i-comment-light-grey;
 
     @if ($svg-support) {
         .svg & {
-            @extend %svg-i-comment-grey;
+            @extend %svg-i-comment-light-grey;
         }
     }
 }

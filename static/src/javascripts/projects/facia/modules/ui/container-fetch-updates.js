@@ -186,7 +186,7 @@ define([
     Container.prototype.render = function (html) {
         var hideCls = 'fc-container__body--is-hidden',
             $old = $('.fc-container__body', this.elem),
-            $new = $('.container__body', $.create(html));
+            $new = $('.fc-container__body', $.create(html));
 
         $old.addClass(hideCls);
         $new.addClass(hideCls).addClass('js-container--fc-show-more');

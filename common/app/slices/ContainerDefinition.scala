@@ -1,5 +1,12 @@
 package slices
 
+import model.Content
+
+sealed trait MobileShowMore
+
+case object DesktopBehaviour extends MobileShowMore
+case class RestrictTo(items: Int) extends MobileShowMore
+
 object ContainerDefinition {
   val DefaultCards = 6
 
@@ -7,12 +14,25 @@ object ContainerDefinition {
     slices,
     RestrictTo(6)
   )
+
+  def fromContainer(container: Container, items: Seq[Content]) = container match {
+    case Dynamic(dynamicContainer) =>
+      dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+
+    case Fixed(containerDefinition) => Some(containerDefinition)
+
+    case _ => None
+  }
+
+  /** Fixed container that looks good for the number of items provided */
+  def forNumberOfItems(n: Int) = n match {
+    case 1 => FixedContainers.fixedSmallSlowI
+    case 2 => ContainerDefinition.ofSlices(HalfHalf2)
+    case 3 => FixedContainers.fixedMediumSlowXIIMpu
+    case 5 => FixedContainers.fixedSmallSlowVI
+    case _ => FixedContainers.fixedMediumFastXII
+  }
 }
-
-sealed trait MobileShowMore
-
-case object DesktopBehaviour extends MobileShowMore
-case class RestrictTo(items: Int) extends MobileShowMore
 
 case class ContainerDefinition(
   slices: Seq[Slice],

@@ -1,4 +1,5 @@
-@(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+@(isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+@import conf.Switches._
 
 @sectionHeading = {
 
@@ -29,24 +30,39 @@
     <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
         <div class="discussion__toolbar-dropdown js-comment-order-dropdown">
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order"
+                    aria-haspopup="true" aria-controls="comments-order-popup">Order by <span class="js-comment-order"></span></button>
 
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-order">Order by <span></span></button>
-
-            <ul class="popup popup__group popup--comments-order is-off">
+            <ul id="comments-order-popup" class="popup popup__group popup--comments-order is-off">
                 @List("newest", "oldest").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-order="@value" data-link-name="comments-@value">@value</button>
                     </li>
                 }
             </ul>
-
         </div>
+
+        @if(DiscussionPageSizeSwitch.isSwitchedOn) {
+            <div class="discussion__toolbar-dropdown hide-until-tablet js-comment-pagesize-dropdown sign-in-required">
+                <button class="u-button-reset popup__toggle" data-toggle="popup--comments-pagesize"
+                        aria-haspopup="true" aria-controls="comments-pagesize-popup">Show <span class="js-comment-pagesize">25</span></button>
+
+                <ul id="comments-pagesize-popup" class="popup popup__group popup--comments-pagesize is-off">
+                @List("25", "50", "100").map { value =>
+                    <li class="popup__item">
+                        <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-pagesize-@value">@value</button>
+                    </li>
+                }
+                </ul>
+            </div>
+        }
 
 
         <div class="discussion__toolbar-dropdown js-comment-threading-dropdown">
-            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading">Threads <span></span></button>
+            <button class="u-button-reset popup__toggle" data-toggle="popup--comments-threading"
+                    aria-haspopup="true" aria-controls="comments-order-threading">Threads <span class="js-comment-threading"></span></button>
 
-            <ul class="popup popup__group popup--comments-threading is-off">
+            <ul id="comments-order-threading" class="popup popup__group popup--comments-threading is-off">
                 @List("collapsed", "expanded", "unthreaded").map { value =>
                     <li class="popup__item">
                         <button class="u-button-reset popup__action" data-threading="@value" data-link-name="comments-threading-@value">@value</button>
@@ -61,49 +77,70 @@
 
 }
 
-<div id="comments" class="discussion discussion--not-staff discussion--loading discussion--@if(discussionClosed){closed} else {open} u-cf"
-    data-discussion-key="@discussionId"
-    data-discussion-closed="@discussionClosed">
+@if(isCommentable) {
+    @if(DiscussionSwitch.isSwitchedOn) {
+        <div id="comments" class="discussion discussion--not-staff discussion--loading js-comments
+        @if(discussionClosed) {discussion--closed} else {discussion--open}
+        u-cf"
+        data-discussion-key="@discussionId" data-discussion-closed="@discussionClosed" data-component="discussion">
 
-    <div class="discussion__top-border gs-container">
-        <div class="content__main-column">
+            <div class="discussion__top-border gs-container">
+                <div class="content__main-column">
 
-            <div class="modern-hidden">
-                <div class="discussion__heading">
-                    <div class="container__meta modern-hidden">
-                        <h2 class="container__meta__title">
-                            <a href="@LinkTo{/discussion@discussionId}" data-link-name="View all comments">View all comments &gt;</a>
-                        </h2>
+                    <div class="modern-hidden">
+                        <div class="discussion__heading">
+                            <div class="container__meta modern-hidden">
+                                <h2 class="container__meta__title">
+                                    <a href="@LinkTo {/discussion@discussionId}" data-link-name="View all comments">
+                                        View all comments &gt;</a>
+                                </h2>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="modern-visible">
+                        @sectionHeading
+
+                        <div class="discussion__comment-box js-discussion-comment-box--top"></div>
+
+                        <div class="discussion__top-comments js-discussion-top-comments"></div>
+
+                        @toolbar
+
+                        <div class="preload-msg discussion__loader">Loading comments… <a href=@{
+                            s"/discussion/$discussionId"
+                        } class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
+
+                        <div class="discussion__main-comments js-discussion-main-comments"></div>
+
+                        <div class="discussion__comment-box discussion__comment-box--bottom js-discussion-comment-box--bottom"></div>
+
+                        <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button">
+                            <i class="i i-plus-white"></i>
+                            View more comments
+                        </button>
+
+                        <script type="text/template" id="tmpl-comment-box">
+                        @fragments.commentBox()
+                        </script>
+
+                    </div>
+
                 </div>
             </div>
-
-            <div class="modern-visible">
-                @sectionHeading
-
-                <div class="discussion__comment-box js-discussion-comment-box--top"></div>
-
-                <div class="discussion__top-comments js-discussion-top-comments"></div>
-
-                @toolbar
-
-                <div class="preload-msg discussion__loader">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
-
-                <div class="discussion__main-comments js-discussion-main-comments"></div>
-
-                <div class="discussion__comment-box js-discussion-comment-box--bottom"></div>
-
-                <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button">
-                    <i class="i i-plus-white"></i>
-                    View more comments
-                </button>
-
-                <script type="text/template" id="tmpl-comment-box">
-                    @fragments.commentBox()
-                </script>
-
-            </div>
-
         </div>
-    </div>
-</div>
+    } else {
+        <div class="discussion discussion--disabled">
+            <div class="discussion__top-border gs-container">
+                <div class="content__main-column">
+                    <div class="discussion__heading">
+                        <div class="container__meta">
+                            <h2 class="container__meta__title">Comments</h2>
+                        </div>
+                    </div>
+                    <div class="discussion__disabled-msg">Discussion is currently unavailable.</div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -4,6 +4,8 @@ import idapiclient.TrackingData
 import play.api.mvc.RequestHeader
 import com.google.inject.{Inject, Singleton}
 import utils.RemoteAddress
+import jobs.TorExitNodeList
+import conf.Switches
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
@@ -24,6 +26,23 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
       ip,
       skipConfirmation
     )
+  }
+}
+
+@Singleton
+class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends IdRequestParser(returnUrlVerifier)  {
+
+  def apply(request: RequestHeader, email: String) : IdentityRequest = {
+
+    clientIp(request) match {
+      case Some(ip) => {
+        if (Switches.IdentityLogRegistrationsFromTor.isSwitchedOn && TorExitNodeList.getTorExitNodes.contains(ip)) {
+          log.info(s"Attempted registration from know tor exit node: $ip email: $email")
+        }
+      }
+      case _ =>
+    }
+    super.apply(request)
   }
 }
 

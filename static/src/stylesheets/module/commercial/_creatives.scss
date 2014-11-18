@@ -1,0 +1,92 @@
+.creative--scrollable-mpu {
+    display: block;
+    height: 250px;
+    @include box-sizing(border-box);
+    border: 1px solid colour(neutral-5);
+    background: none 0 0 repeat;
+}
+.creative--branded-component {
+    padding-left: $gs-gutter/2;
+    border-left: 1px solid colour(neutral-5);
+
+    .creative__inner {
+        padding-top: $gs-baseline/2;
+        border-top: 2px solid colour(guardian-brand-dark);
+    }
+    .creative__marque {
+        display: block;
+        @include border-radius(18px);
+        background-color: colour(guardian-brand-dark);
+    }
+    .creative__marque-title {
+        margin-left: 2px;
+        text-transform: lowercase;
+        color: colour(maps-support-3);
+        @include fs-header(2);
+    }
+    .creative__title {
+        @include fs-headline(5);
+    }
+    .creative__text {
+        @include fs-textSans(4);
+        color: colour(neutral-2);
+    }
+}
+.creative--branded-component-soulmates {
+    padding-left: 0;
+
+    .creative__inner {
+        border-top: 0;
+        margin-left: $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2;
+        background-color: #f5f3e7;
+
+        &:before {
+            @extend %i-soulmates-trill;
+            @extend %svg-i-soulmates-trill !optional;
+            content: '';
+            display: block;
+            margin: $gs-baseline auto 0;
+        }
+    }
+    .creative__title,
+    .creative__text {
+        &:before {
+            content: '';
+            display: block;
+            height: 1px;
+            width: gs-span(1);
+            margin: 0 auto $gs-baseline;
+            background-color: #000000;
+        }
+    }
+    .creative__title {
+        margin: $gs-baseline $gs-gutter*2 0;
+        @include fs-header(5);
+        text-align: center;
+    }
+    .creative__text {
+        margin: $gs-baseline 0 0;
+    }
+    .creative__link-wrapper {
+        margin-top: $gs-baseline;
+        text-align: center;
+    }
+    .creative__link {
+        @include fs-header(3);
+        color: #000000;
+    }
+    .creative__link__button {
+        margin-left: $gs-gutter/3;
+        background-color: #000000;
+        border: 0;
+    }
+    .soulmates-logo {
+        height: gs-height(1);
+        margin: gs-height(2) auto 0;
+        padding-top: $gs-baseline*3;
+    }
+    .soulmates-logo__title {
+        text-align: center;
+    }
+}

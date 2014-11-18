@@ -17,7 +17,11 @@ $vjs-progress-inset-bottom: 4px;
 .gu-media-wrapper {
     background: #000000;
     -webkit-transform: translateZ(0); // fixes iOS hover bug
-    margin-bottom: $gs-baseline * 1.5;
+    margin-bottom: ($gs-baseline / 3) * 2;
+
+    .element--supporting & {
+        margin-bottom: 0;
+    }
 }
 .gu-media-wrapper--audio {
     background-color: $vjs-control-colour;
@@ -107,7 +111,7 @@ $vjs-progress-inset-bottom: 4px;
         background-color: rgba(51, 51, 51, .8);
 
         .gu-media-wrapper:hover & {
-            background-color: $c-mediaDefault;
+            background-color: colour(media-default);
         }
 
         &:before {
@@ -118,7 +122,7 @@ $vjs-progress-inset-bottom: 4px;
             height: 0;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $c-neutral7;
+            border-color: transparent transparent transparent colour(neutral-7);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
             top: 50%;
             left: 0;
@@ -201,10 +205,9 @@ $vjs-progress-inset-bottom: 4px;
         transition-delay: .5s;
     }
 
-    .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
-    .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .gu-media-wrapper:hover .vjs-mousemoved &,
     .vjs-paused.vjs-has-started &,
-    .gu-media--show-controls-at-start.vjs-paused & {
+    &:hover {
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
@@ -272,7 +275,7 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-duration {
-    color: $c-neutral3;
+    color: colour(neutral-3);
 }
 
 .vjs-fullscreen-control {
@@ -343,11 +346,11 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-play-progress {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     z-index: 2;
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
@@ -373,7 +376,7 @@ $vjs-progress-inset-bottom: 4px;
         content: '';
         display: block;
         width: 100%;
-        background-color: $c-neutral7;
+        background-color: colour(neutral-7);
     }
 }
 
@@ -385,21 +388,21 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-volume-level {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
 .vjs-volume-handle {
     position: absolute;
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     height: 11px;
     width: 2px;
 
     .gu-media-wrapper--podcast & {
-        background-color: $c-podcastDefault;
+        background-color: colour(podcast-default);
     }
 }
 
@@ -519,12 +522,12 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-overlay__duration {
         text-align: left;
-        color: $c-mediaDefault;
+        color: colour(media-default);
         @include fs-headline(3);
         padding: 0 $gs-gutter/2 $gs-baseline*2;
 
         .gu-media-wrapper--podcast & {
-            color: $c-podcastDefault;
+            color: colour(podcast-default);
         }
     }
 }
@@ -579,8 +582,8 @@ $vjs-progress-inset-bottom: 4px;
     width: 100%;
     height: $gs-baseline*2;
     padding: $gs-baseline/3 0 0 $gs-gutter/4;
-    background-color: rgba($c-neutral1, .8);
-    border-top: 1px solid $c-neutral2;
+    background-color: rgba(colour(neutral-1), .8);
+    border-top: 1px solid colour(neutral-2);
     color: #ffffff;
     text-align: left;
     @include fs-textSans(1);
@@ -608,7 +611,7 @@ $vjs-progress-inset-bottom: 4px;
     margin: auto;
     @include box-sizing(border-box);
     background-color: rgba(25, 25, 25, .8);
-    color: $c-neutral7;
+    color: colour(neutral-7);
     top: $gs-baseline*4;
     padding-left: $gs-gutter/4;
     padding-right: $gs-gutter/4;
@@ -659,7 +662,7 @@ $vjs-progress-inset-bottom: 4px;
             margin-bottom: 0;
 
             &:nth-child(-n+3) {
-                border-right: 1px solid $c-neutral2;
+                border-right: 1px solid colour(neutral-2);
             }
         }
         .item__headline {
@@ -676,7 +679,7 @@ $vjs-progress-inset-bottom: 4px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten($c-neutral1, 16%);
+    border-top: 1px solid lighten(colour(neutral-1), 16%);
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -691,6 +694,6 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 .podcast-meta__item__link {
-    color: $c-neutral7;
+    color: colour(neutral-7);
     @include fs-textSans(1);
 }

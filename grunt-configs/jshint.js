@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
     return {
         options: {
-            jshintrc: './resources/jshint_conf.json'
+            jshintrc: './static/src/javascripts/.jshintrc'
         },
         self: [
             'Gruntfile.js'

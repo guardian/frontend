@@ -21,10 +21,6 @@ GET        /commercial/jobs.json                                     controllers
 GET        /commercial/jobs-high                                     controllers.commercial.JobAds.jobsHighHtml
 GET        /commercial/jobs-high.json                                controllers.commercial.JobAds.jobsHighJson
 
-GET        /commercial/jobs-v2.json                                  controllers.commercial.JobAds.jobsLowJsonV2
-GET        /commercial/jobs-high-v2.json                             controllers.commercial.JobAds.jobsHighJsonV2
-
-
 # Masterclasses
 GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.masterclassesLowHtml
 GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.masterclassesLowJson
@@ -63,3 +59,7 @@ GET        /commercial/multi.json                                    controllers
 # Content API offers
 GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemsJson
 GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml
+GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffers.itemJson
+GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffers.itemHtml
+GET        /commercial/capi-single-merch.json                        controllers.commercial.ContentApiOffers.itemJson
+GET        /commercial/capi-single-merch                             controllers.commercial.ContentApiOffers.itemHtml

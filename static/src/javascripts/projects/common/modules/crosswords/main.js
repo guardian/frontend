@@ -154,12 +154,25 @@ define([
             }
         },
 
+        asPercentage: function (x, y) {
+            var width = helpers.gridSize(this.columns),
+                height = helpers.gridSize(this.rows);
+
+            return {
+                x: 100 * x / width,
+                y: 100 * y / height
+            };
+        },
+
         focusHiddenInput: function (x, y) {
-            var wrapper = this.refs.hiddenInputWrapper.getDOMNode();
+            var wrapper = this.refs.hiddenInputWrapper.getDOMNode(),
+                left = helpers.gridSize(x),
+                top = helpers.gridSize(y),
+                position = this.asPercentage(left, top);
 
             /** This has to be done before focus to move viewport accordingly */
-            wrapper.style.left = ((x * 32) + 1) + 'px';
-            wrapper.style.top = ((y * 32) + 1) + 'px';
+            wrapper.style.left = position.x + '%';
+            wrapper.style.top = position.y + '%';
 
             if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
                 this.refs.hiddenInput.getDOMNode().focus();
@@ -380,7 +393,11 @@ define([
                     className: 'crossword__container'
                 },
                 React.DOM.div({
-                    className: 'crossword__grid-wrapper'
+                    className: 'crossword__grid-wrapper',
+                    style: {
+                        width: helpers.gridSize(this.columns) + 'px',
+                        height: helpers.gridSize(this.rows) + 'px'
+                    }
                 },
                     Grid({
                         rows: this.rows,

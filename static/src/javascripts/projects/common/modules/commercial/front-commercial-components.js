@@ -19,7 +19,7 @@ define([
 
         var containerIndex,
             $adSlot     = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
-            $containers = $('.container');
+            $containers = $('.fc-container');
 
         if ($containers.length >= 2) {
             containerIndex = 0;

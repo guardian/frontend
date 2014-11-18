@@ -1,9 +1,8 @@
 package views.support
 
-import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
-import dfp.DfpAgent
+import layout.{ContainerCommercialOptions, FaciaCard, Sublink, FaciaContainer}
 import model._
 
 import java.net.URLEncoder._
@@ -113,7 +112,7 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").filter { element: Element =>
@@ -122,11 +121,26 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
+    if(!article.isLiveBlog) {
+      document.getElementsByClass("element-video").foreach( element => {
+        val shortUrl = element.attr("data-short-url")
+        val webUrl = element.attr("data-canonical-url")
+        val blockId = element.attr("data-media-id")
+        val mediaPath = element.attr("data-video-poster")
+        val mediaTitle = element.attr("data-video-name")
+
+        if(!shortUrl.isEmpty) {
+          val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+          element.child(0).after(html.toString())
+        }
+      })
+    }
+
     document.getElementsByClass("gu-video").foreach { element: Element =>
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
+        .addClass("js-gu-media gu-media gu-media--video")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
@@ -168,12 +182,12 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 }
 
-case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
   def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -181,15 +195,22 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val asset = findImageFromId(fig.attr("data-media-id"))
+        val blockId = fig.attr("data-media-id")
+        val asset = findImageFromId(blockId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+          img.attr("id", fig.attr("data-media-id"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
+
+            if(!article.isLiveBlog) {
+              val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
+              img.after(html.toString())
+            }
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")
@@ -206,8 +227,16 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
             })
           }
         }
-        fig.getElementsByTag("figcaption").foreach { figcaption =>
 
+        val getFigCaption = fig.getElementsByTag("figcaption")
+        val getGuVideo = fig.getElementsByClass("gu-media-wrapper--video")
+
+        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
+        if (getFigCaption.length < 1 && getGuVideo.length > 0) {
+          fig.addClass("fig-extra-margin")
+        }
+
+        getFigCaption.foreach { figcaption =>
           // content api/ tools sometimes pops a &nbsp; in the blank field
           if (!figcaption.hasText || figcaption.text().length < 2) {
             figcaption.remove()
@@ -243,7 +272,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findContainerFromId(id:String): Option[ImageContainer] = {
-    contentImages.find(_.id == id)
+    article.bodyImages.find(_.id == id)
   }
 }
 
@@ -273,10 +302,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.blockLevelShares(blockId)
-        val link = article.blockLevelLink(blockId)
+        val shares = article.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
 
         el.append(html.toString())
       }
@@ -664,7 +692,7 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagType(page: MetaData) = {
+  def getTagContainerDefinition(page: MetaData) = {
     if (page.isContributorPage) {
       slices.TagContainers.contributorTagPage
     } else if (page.keywords.nonEmpty) {
@@ -692,7 +720,11 @@ object `package` extends Formats {
 
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    val timezone = Edition(request).timezone
+    apply(date, Edition(request), pattern)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String): String = {
+    val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
@@ -733,11 +765,15 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = {
+    val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
+    model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
+  }
+
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
     case _ => result
   }
 }
@@ -749,227 +785,92 @@ object RenderClasses {
 }
 
 object GetClasses {
-
-  def forCollectionItem(trail: Trail,
-                        additionalClasses: String = ""): String = {
-    val f: Seq[(Trail) => String] = Seq(
-      (trail: Trail) => trail match {
-        case _: Gallery => "facia-slice__item--content-type-gallery"
-        case _: Video   => "facia-slice__item--content-type-video"
-        case _: Audio   => "facia-slice__item--content-type-audio"
-        case _          => ""
-      }
-    )
-    val baseClasses: Seq[String] = Seq(
-      additionalClasses,
-      "l-row__item",
-      "facia-slice__item",
-      "u-faux-block-link",
-      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
+  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
+    RenderClasses(Map(
+      ("fc-item", true),
+      ("js-fc-item", true),
+      ("fc-item--has-cutout", item.cutOut.isDefined),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
+      ("fc-item--has-no-image", !item.hasImage),
+      ("fc-item--has-image", item.hasImage),
+      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
+      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
+      ("fc-item--force-image-upgrade", isFirstContainer),
+      (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
+      ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
+      ("fc-item--live", item.isLive)
+    ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
-  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean, numberOfSublinks: Int): String = {
-    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
-      Seq("fc-item--has-cutout")
-    } else {
-      Seq.empty
-    }
-
-    RenderClasses(
-      TrailCssClasses.toneClass(trail, "--item") +:
-        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false, numberOfSublinks) ++
-        cutOutClass): _*
-    )
-  }
-
-  def forSubLink(trail: Trail) = RenderClasses(Seq(
+  def forSubLink(sublink: Sublink) = RenderClasses(Seq(
     Some("fc-sublink"),
-    Some(TrailCssClasses.toneClass(trail, "--sublink")),
-    sublinkMediaTypeClass(trail)
+    Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
+    sublinkMediaTypeClass(sublink)
   ).flatten: _*)
 
-  def mediaTypeClass(trail: Trail) = trail match {
-    case _: Gallery => Some("fc-item--gallery")
-    case _: Video => Some("fc-item--video")
-    case _: Audio => Some("fc-item--audio")
-    case _ => None
+  def mediaTypeClass(faciaCard: FaciaCard) = faciaCard.mediaType map {
+    case layout.Gallery => "fc-item--gallery"
+    case layout.Video => "fc-item--video"
+    case layout.Audio => "fc-item--audio"
   }
 
-  def sublinkMediaTypeClass(trail: Trail) = trail match {
-    case _: Gallery => Some("fc-sublink--gallery")
-    case _: Video => Some("fc-sublink--video")
-    case _: Audio => Some("fc-sublink--audio")
-    case _ => None
+  def sublinkMediaTypeClass(sublink: Sublink) = sublink.mediaType map {
+    case layout.Gallery => "fc-sublink--gallery"
+    case layout.Video => "fc-sublink--video"
+    case layout.Audio => "fc-sublink--audio"
   }
 
-  def commonFcItemClasses(
-      trail: Trail,
-      isFirstContainer: Boolean,
-      forceHasImage: Boolean,
-      numberOfSublinks: Int
-  ): Seq[String] = {
-    val itemClass = mediaTypeClass(trail)
-
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5, 3).isEmpty || trail.imageHide)) {
-      "fc-item--has-no-image"
-    } else {
-      "fc-item--has-image"
-    }
-
-    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-
-    Seq(
-      "fc-item",
-      "js-fc-item",
-      imageClass,
-      discussionClass
-    ) ++ Seq(
-      itemClass,
-      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
-      if (trail.isLive) Some("fc-item--live") else None,
-      if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-$numberOfSublinks") else None,
-      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
-
-      if (forceHasImage || trail.trailPicture(5, 3).nonEmpty) {
-        if (trail.isBoosted)
-          Some("item--imageadjust-boost")
-        else if (trail.imageHide)
-          Some("item--imageadjust-hide")
-        else
-          Some("item--imageadjust-default")
-      } else {
-        None
-      }
-    ).flatten ++ makeSnapClasses(trail)
-  }
-
-
-  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
-    val itemClass = trail match {
-      case _: Gallery => "item--gallery"
-      case _: Video => "item--video"
-      case _: Audio => "item--audio"
-      case _ => ""
-    }
-
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
-      "item--has-no-image"
-    } else {
-      "item--has-image"
-    }
-
-    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-
-    Seq(
-      "item",
-      imageClass,
-      discussionClass
-    ) ++ Seq(
-      itemClass,
-      if (isFirstContainer) "item--force-image-upgrade" else "",
-      if (trail.isLive) "item--live" else "",
-      if (trail.isComment && trail.hasLargeContributorImage) "item--has-cutout" else "",
-      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
-      else
-        ""
-    ) ++ makeSnapClasses(trail)
-  }
-
-  def forItem(trail: Trail,
-              firstContainer: Boolean,
-              forceHasImage: Boolean = false,
-              forceTone: Option[String] = None): String = {
-    val tone = forceTone.getOrElse(trail.visualTone)
-    val baseClasses: Seq[String] = Seq(
-      "item",
-      s"tone-${tone}"
+  def forContainerDefinition(containerDefinition: FaciaContainer) =
+    forContainer(
+      containerDefinition.showLatestUpdate,
+      containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
+      containerDefinition.displayName.isDefined,
+      containerDefinition.commercialOptions,
+      Some(containerDefinition.container),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      disableHide = containerDefinition.hideToggle
     )
-    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
-        case _: Gallery => "item--gallery"
-        case _: Video => "item--video"
-        case _: Audio => "item--audio"
-        case _ => ""
-      },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (firstContainer) "item--force-image-upgrade" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
-          "item--has-no-image"
-        }else{
-          "item--has-image"
-        },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
-          if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
-        } else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
-  }
 
-  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case content: Content => "js-snap facia-snap" +: content.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
-    case _  => Nil
-  }
+  def forTagContainer(hasTitle: Boolean) = forContainer(
+    showLatestUpdate = false,
+    isFirst = true,
+    hasTitle,
+    ContainerCommercialOptions.empty,
+    None,
+    Nil,
+    disableHide = true
+  )
 
-  private def commonContainerStyles(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
-    Seq(
-      ("container", true),
-      ("container--first", isFirst),
-      ("container--sponsored", DfpAgent.isSponsored(config)),
-      ("container--advertisement-feature", DfpAgent.isAdvertisementFeature(config)),
-      ("container--foundation-supported", DfpAgent.isFoundationSupported(config)),
-      ("js-sponsored-container", (
-        (DfpAgent.isSponsored(config) || DfpAgent.isAdvertisementFeature(config) || DfpAgent.isFoundationSupported(config))
-      )),
-      ("js-container--toggle", (!isFirst && hasTitle && !(DfpAgent.isAdvertisementFeature(config) || DfpAgent.isSponsored(config))))
+  def forContainer(
+      showLatestUpdate: Boolean,
+      isFirst: Boolean,
+      hasTitle: Boolean,
+      commercialOptions: ContainerCommercialOptions,
+      container: Option[slices.Container] = None,
+      extraClasses: Seq[String] = Nil,
+      disableHide: Boolean = false
+  ) = {
+    RenderClasses((Seq(
+      ("js-container--fetch-updates", showLatestUpdate),
+      ("fc-container", true),
+      ("fc-container", true),
+      ("fc-container--first", isFirst),
+      ("fc-container--sponsored", commercialOptions.isSponsored),
+      ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
+      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("js-sponsored-container", commercialOptions.isPaidFor),
+      ("js-container--toggle",
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
     ) collect {
       case (kls, true) => kls
-    }
+    }) ++ extraClasses: _*)
   }
-
-  def forNewStyleContainer(config: CollectionConfig, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
-    RenderClasses(
-      (if (config.showLatestUpdate.exists(identity)) Some("js-container--fetch-updates") else None).toSeq ++
-        Seq("fc-container") ++
-        commonContainerStyles(config, isFirst, hasTitle) ++
-        extraClasses: _*
-    )
-  }
-
-  def forContainer(container: Container, config: CollectionConfig, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val oldClasses = Seq(
-      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
-    ).flatten
-
-    RenderClasses(
-      s"container--${container.containerType}" +:
-        (commonContainerStyles(config, index == 0, hasTitle) ++
-        extraClasses ++ oldClasses): _*
-    )
-  }
-}
-
-object LatestUpdate {
-
-  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
-    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
-
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
 
-  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
     case content: Content =>
         content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
         content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")

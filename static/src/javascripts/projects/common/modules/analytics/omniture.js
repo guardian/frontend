@@ -175,7 +175,7 @@ define([
 
             s.prop14    = config.page.buildNumber || '';
 
-            s.prop60    = navigator.mozApps && !window.locationbar.visible ? 'firefoxosapp' : null;
+            s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
 
             s.prop19     = platform;
             s.eVar19     = platform;

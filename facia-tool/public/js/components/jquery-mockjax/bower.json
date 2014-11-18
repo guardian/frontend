@@ -1,0 +1,14 @@
+{
+  "name": "jquery-mockjax",
+  "version": "1.6.1",
+  "main": ["jquery.mockjax.js"],
+  "ignore": [
+    ".editorconfig",
+    ".gitignore",
+    ".jshintrc",
+    "*.md",
+    "*.json",
+    "lib",
+    "test"
+  ]
+}

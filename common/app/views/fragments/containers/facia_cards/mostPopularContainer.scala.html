@@ -1,0 +1,33 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+@import common.LinkTo
+@import model.MostPopular
+
+<div class="fc-container__header js-container__header">
+    @containerDefinition.displayName.map { title =>
+        <h2 class="fc-container__header__title">
+            @containerDefinition.href.map { href =>
+            <a data-link-name="section heading" href="@LinkTo{/@href}">popular</a>
+            }.getOrElse{
+                popular
+            }
+        </h2>
+    }
+</div>
+
+<div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
+@defining(Seq(
+    MostPopular(
+        containerDefinition.displayName.getOrElse("popular"),
+        "popular",
+        containerDefinition.contentItems.slice(0, 10)
+    ),
+    MostPopular(
+        "across the guardian",
+        "popular",
+        Nil
+    )
+)){ popular =>
+    @fragments.collections.popular(popular)
+}
+</div>

@@ -34,7 +34,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 300,
+        maxFronts: 500,
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
@@ -58,13 +58,17 @@ define([
             commercial: 60000 * 2 * (pageConfig.lowFrequency || 60)
         },
 
+        mainDomain:            'www.theguardian.com',
+
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-elements=video&show-tags=tone,type,contributor&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
+        apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
 
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
+
+        latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 

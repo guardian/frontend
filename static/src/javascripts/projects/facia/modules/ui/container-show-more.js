@@ -3,67 +3,106 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/template',
+    'common/modules/userPrefs',
     'text!facia/views/button-show-more.html'
 ], function (
     bean,
     bonzo,
     qwery,
     $,
-    detect,
-    mediator,
     template,
+    userPrefs,
     showMoreBtn
 ) {
-    /** TODO: Remove this once the new Facia Cards work is complete. See container-fc-show-more.js for its replacement.
-      */
     return function (container) {
-        /* jscs:disable disallowDanglingUnderscores */
+        var $container           = bonzo(container),
+            itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
+            itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
+            className            = 'fc-show-more--hidden',
+            textHook             = 'js-button-text',
+            $button              = null,
+            state                = 'hidden',
+            prefName             = 'section-states',
+            buttonText           = {},
+            self                 = this;
 
-        this._$container = bonzo(container);
+        this.addShowMoreButton = function () {
+            var tmpTitle = this.getContainerTitle();
 
-        this._items = [];
+            buttonText = {
+                'hidden': 'More ' + tmpTitle,
+                'displayed': 'Less ' + tmpTitle
+            };
 
-        this._showCount = (detect.getBreakpoint() === 'mobile') ? 8 : 1000000; // Show everything at once on multi column layouts
+            $button = $.create(template(showMoreBtn, {
+                type: buttonText[state]
+            }));
 
-        this._className = 'show-more--hidden';
-
-        this._$button = $.create(template(showMoreBtn));
-
-        this._renderButton = function () {
-            this._$button
-                .addClass('tone-' + (this._$container.attr('data-tone') || 'news'))
-                .insertAfter(this._$container);
-            // override button icons
-            if (this._$container.hasClass('container--show-more-dark')) {
-                var buttonIcons = $('.i', this._$button);
-                $(buttonIcons.get(0)).removeClass('i-plus-white-mask').addClass('i-plus-neutral1-mask');
-                $(buttonIcons.get(1)).removeClass('i-plus-white').addClass('i-plus-neutral1');
-            }
-            bean.on(this._$button[0], 'click', this.showMore.bind(this));
-            mediator.emit('modules:containerShowMore:renderButton', this);
-        };
-
-        this._removeButton = function () {
-            // listen to the clickstream, as happens later, before removing
-            mediator.on('module:clickstream:click', function (clickSpec) {
-                if (qwery(clickSpec.target)[0] === this._$button[0]) {
-                    this._$button.remove();
+            if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
+                if (!itemsHiddenOnDesktop) {
+                    $container.addClass('fc-show-more--mobile-only');
                 }
-            }.bind(this));
+
+                $container.addClass(className)
+                    .append($button)
+                    .removeClass('js-container--fc-show-more');
+                bean.on($button[0], 'click', showMore);
+            }
+
+            this.readPrefs($container);
         };
 
-        this.showMore = function () {
-            this._removeButton();
-            this._$container.removeClass(this._className);
+        this.getContainerTitle = function () {
+            return $container.data('title') || '';
         };
 
-        this.addShowMore = function () {
-            this._$container.addClass(this._className);
-            this._renderButton();
-            this._$container.removeClass('js-container--show-more');
+        this.changeButtonText = function () {
+            $('.' + textHook, $button).text((state === 'hidden') ? buttonText[state] : buttonText[state].split(' ')[0]);
         };
+
+        this.changeButtonState = function () {
+            $button.attr('data-link-name', buttonText[state])
+                .toggleClass('button--primary', state !== 'displayed')
+                .toggleClass('button--tertiary', state === 'displayed');
+            $('.i', $button).toggleClass('i-plus-white', state !== 'displayed')
+                .toggleClass('i-minus-blue', state === 'displayed');
+        };
+
+        this.updatePref = function ($container, state) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName, { type: 'session' }),
+                prefValue = $container.attr('data-id');
+            if (state !== 'displayed') {
+                delete prefs[prefValue];
+            } else {
+                if (!prefs) {
+                    prefs = {};
+                }
+                prefs[prefValue] = 'more';
+            }
+            userPrefs.set(prefName, prefs, { type: 'session' });
+        };
+
+        this.readPrefs = function ($container) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName, { type: 'session' });
+            if (prefs && prefs[$container.attr('data-id')]) {
+                bean.fire($button[0], 'click');
+            }
+        };
+
+        function showMore() {
+            /**
+             * Do not remove: it should retain context for the click stream module, which recurses upwards through
+             * DOM nodes.
+             */
+            $container.toggleClass(className, state === 'displayed');
+            state = (state === 'hidden') ? 'displayed' : 'hidden';
+            self.changeButtonText();
+            self.changeButtonState();
+
+            self.updatePref($container, state);
+        }
     };
 });

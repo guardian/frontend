@@ -5,10 +5,10 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import com.gu.facia.client.models.CollectionConfig
 import common._
-import conf.Configuration
-import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpInlineMerchandisingTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
-import model.Tag
 import conf.Configuration.commercial._
+import conf.Configuration.environment
+import model.Tag
+import model.`package`.frontKeywordIds
 import play.api.{Application, GlobalSettings}
 import services.S3
 
@@ -24,11 +24,15 @@ trait DfpAgent {
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  private def containerSponsoredTag(config: CollectionConfig, p: String => Boolean): Option[String] = {
+  private def containerSponsoredTag(config: CollectionConfig,
+                                    p: String => Boolean): Option[String] = {
+    val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
+
     config.apiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
-      val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
-      tokens find p
+      val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
+      val possibleKeywords = tokens filterNot stopWords.contains flatMap frontKeywordIds
+      possibleKeywords find p
     }
   }
 
@@ -87,18 +91,19 @@ trait DfpAgent {
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
   def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isFoundationSupported(_, None)})
 
-  def isProd = !Configuration.environment.isNonProd
+  def isProd = environment.isProd
 
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+
     if (PageSkin.isValidForNextGenPageSkin(adUnitWithoutRoot)) {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
         adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
+          sponsorship.editions.contains(edition) &&
           !sponsorship.isR2Only
       }
 
@@ -117,7 +122,9 @@ trait DfpAgent {
   }
 
   def sponsorshipTag(config: CollectionConfig): Option[String] = {
-    containerSponsoredTag(config, {isSponsored(_, None)}) orElse containerSponsoredTag(config, {isAdvertisementFeature(_, None)})
+    containerSponsoredTag(config, {isSponsored(_, None)}) orElse
+      containerSponsoredTag(config, {isAdvertisementFeature(_, None)}) orElse
+      containerSponsoredTag(config, {isFoundationSupported(_, None)})
   }
 
   def getSponsor(tags: Seq[Tag]): Option[String] = tags.flatMap(tag => getSponsor(tag.id)).headOption

@@ -1,10 +1,14 @@
 /* jshint newcap: false */
 define([
+    'react',
     'common/utils/_',
-    'react'
+    'common/modules/crosswords/constants',
+    'common/modules/crosswords/helpers'
 ], function (
+    React,
     _,
-    React
+    constants,
+    helpers
 ) {
     var classSet = React.addons.classSet,
         Cell = React.createClass({
@@ -15,14 +19,14 @@ define([
 
             render: function () {
                 var innerNodes = [],
-                    top = this.props.y * 32 + 1,
-                    left = this.props.x * 32 + 1;
+                    top = helpers.gridSize(this.props.y),
+                    left = helpers.gridSize(this.props.x);
 
                 if (this.props.number !== undefined) {
                     innerNodes.push(
                         React.DOM.text({
                             x: left + 1,
-                            y: top + 8,
+                            y: top + constants.numberSize + 1,
                             key: 'number',
                             className: 'crossword__cell-number'
                         }, this.props.number)
@@ -31,8 +35,8 @@ define([
 
                 if (this.props.value !== undefined) {
                     innerNodes.push(React.DOM.text({
-                        x: left + 31 / 2,
-                        y: top + 31 / 2 + 5,
+                        x: left + constants.cellSize / 2,
+                        y: top + (constants.cellSize + constants.entrySize) / 2,
                         key: 'entry',
                         className: classSet({
                             'crossword__cell-text': true,
@@ -47,8 +51,8 @@ define([
                     React.DOM.rect({
                         x: left,
                         y: top,
-                        width: 31,
-                        height: 31,
+                        width: constants.cellSize,
+                        height: constants.cellSize,
                         className: classSet({
                             'crossword__cell': true,
                             'crossword__cell--focussed': this.props.isFocussed,
@@ -67,8 +71,8 @@ define([
 
         render: function () {
             var that = this,
-                width = this.props.columns * 32 + 1,
-                height = this.props.rows * 32 + 1,
+                width = helpers.gridSize(this.props.columns),
+                height = helpers.gridSize(this.props.rows),
                 cells = [];
 
             _.forEach(_.range(this.props.rows), function (y) {

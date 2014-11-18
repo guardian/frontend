@@ -16,7 +16,7 @@
             }
             core:                      '@Static("javascripts/core.js")',
             facebook:                  '//connect.facebook.net/en_US/all.js',
-            foresee:                   'vendor/foresee/20141007/foresee-trigger.js',
+            foresee:                   'vendor/foresee/20141107/foresee-trigger.js',
             googletag:                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                '@{Configuration.javascript.config("ophanJsUrl")}',
             stripe:                    '@Static("javascripts/vendor/stripe/stripe.min.js")',
@@ -140,7 +140,7 @@
                 {
                     whitelistUrls: [
                         /assets\.guim\.co\.uk/,
-                        /ophan\.co\.uk/,
+                        /ophan\.co\.uk/
                     ],
                     tags: {
                         edition: config.page.edition,
@@ -148,7 +148,9 @@
                         revisionNumber: config.page.revisionNumber
                     },
                     dataCallback: function(data) {
-                        data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
+                        if (data.culprit) {
+                            data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
+                        }
                         data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
                         return data;
                     },
@@ -159,16 +161,13 @@
             ).install();
 
             require([
-                'common/utils/ajax',
                 'common/modules/experiments/ab',
                 'common/modules/ui/images'
             ], function(
-                ajax,
                 ab,
                 images
             ) {
 
-                ajax.init();
                 ab.segmentUser();
                 ab.run();
                 images.upgrade();
@@ -176,7 +175,11 @@
 
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], function(commercial) {
-                        commercial.init();
+                        raven.context(
+                            { tags: { feature: 'commercial' } },
+                            commercial.init,
+                            []
+                        );
                     });
                 }
 

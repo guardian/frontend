@@ -32,10 +32,10 @@
 
                 <li class="form-field form-field--email-validation">
                     @if(user.statusFields.userEmailValidated.getOrElse(false)){
-                        <i class="i i-id-ok"></i>
+                        <i class="i i-status-ok"></i>
                         <p class="form__note">Your email address has been validated.</p>
                     }else{
-                        <i class="i i-id-alert"></i>
+                        <i class="i i-status-alert"></i>
                         <p class="form__note">
                             Please confirm your email address to post comments.<br />
                             <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>
@@ -100,7 +100,7 @@
 
     <fieldset class="fieldset">
         <div class="fieldset__heading">
-            <h2 class="form__heading">Address information</h2>
+            <h2 class="form__heading">Delivery address</h2>
         </div>
 
         <div class="fieldset__fields">

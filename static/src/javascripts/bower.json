@@ -14,18 +14,18 @@
     "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
     "videojs": "4.8.3",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#e477f283d4cdf5f720f95e458451a027143d52bf",
-    "videojs-vast": "0.1.8",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
+    "videojs-vast": "0.1.9",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
     "fastclick": "guardian/fastclick#master",
     "requirejs-text": "~2.0.12",
-    "native-promise-only": "~0.7.6-a"
+    "native-promise-only": "guardian/native-promise-only#master"
   },
   "resolutions": {
-    "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf",
+    "videojs-contrib-ads": "af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
     "videojs": "4.8.3"
   },
   "install": {

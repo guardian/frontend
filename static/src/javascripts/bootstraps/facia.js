@@ -11,10 +11,9 @@ define([
     'common/utils/to-array',
     // Modules
     'facia/modules/onwards/geo-most-popular-front',
-    'facia/modules/ui/container-fc-show-more',
     'facia/modules/ui/container-fetch-updates',
-    'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
+    'facia/modules/ui/container-show-more',
     'facia/modules/ui/snaps'
 ], function (
     bonzo,
@@ -27,27 +26,25 @@ define([
     storage,
     toArray,
     GeoMostPopularFront,
-    ContainerFcShowMore,
     containerFetchUpdates,
-    ContainerShowMore,
     ContainerToggle,
+    ContainerShowMore,
     snaps
 ) {
+
     var modules = {
 
             showSnaps: function () {
                 snaps.init();
+                mediator.on('modules:container:rendered', snaps.init);
             },
 
             showContainerShowMore: function () {
                 var containerShowMoreAdd = function () {
                     var c = document;
-                    $('.js-container--show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMore();
-                    });
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        new ContainerFcShowMore(container).addShowMoreButton();
+                        new ContainerShowMore(container).addShowMoreButton();
                     });
                 };
                 mediator.addListeners({
