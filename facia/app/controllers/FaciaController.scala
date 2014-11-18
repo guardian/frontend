@@ -74,7 +74,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def redirectToEditionalisedVersion(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(Found(LinkTo(Editionalise(s"/$path", request))))
+    successful(Cached(60)(Found(LinkTo(Editionalise(s"/$path", request)))))
   }
 
   private def withFaciaPage(path: String)(f: FaciaPage => Result): Future[Result] = {
