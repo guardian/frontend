@@ -28,8 +28,7 @@ object ContentCardController extends Controller with Paging with Logging with Ex
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText")
-      //.showFields("all")
+      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
       .showTags("all")
       .showElements("all")
       .response
@@ -38,12 +37,7 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-    def contentResponse: HtmlFormat.Appendable = {
-      if ( !content.isGallery)
-        views.html.fragments.contentCardBody(content)(request)
-      else
-        views.html.fragments.galleryContentCard(content)(request)
-    }
+    def contentResponse: HtmlFormat.Appendable = views.html.fragments.contentCardBody(content)(request)
 
     if (!request.isJson) Cached(900) {Ok(views.html.contentCard(content)(request))}
     else Cached(900) {

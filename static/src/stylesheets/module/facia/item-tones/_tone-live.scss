@@ -30,6 +30,7 @@
     }
 
     .fc-item__kicker:after,
+    .item__kicker:after,
     .fc-sublink__kicker:after {
         color: fade-out($c-headline, .8);
     }

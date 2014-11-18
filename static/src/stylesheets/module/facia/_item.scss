@@ -230,6 +230,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__header,
+.item__header,
 .item__title {
     @include fs-headline(3);
     font-weight: 500;
@@ -242,7 +243,9 @@ $fc-hover-transition: .25s ease;
 
 .fc-item__title,
 .fc-item__byline,
-.fc-item__kicker {
+.fc-item__kicker,
+.item__kicker,
+.item__title {
     font: inherit;
     line-height: inherit;
 }
@@ -254,6 +257,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__kicker,
+.item__kicker,
 .fc-sublink__kicker {
     &:after {
         content: '/';

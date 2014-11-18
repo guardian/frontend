@@ -19,13 +19,15 @@
         }
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .item__container:before {
         background-color: colour(editorial-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
-    .fc-item__standfirst {
+    .fc-item__standfirst,
+    .item__standfirst {
         color: colour(editorial-accent);
     }
 
