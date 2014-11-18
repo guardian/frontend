@@ -8,6 +8,7 @@ import common.NavItem
 object Us extends Edition(
   id = "US",
   displayName = "US edition",
+  shortName = "US",
   timezone = DateTimeZone.forID("America/New_York"),
   lang = "en-us"
 ) with QueryDefaults {

@@ -8,6 +8,7 @@ import play.api.mvc.RequestHeader
 abstract class Edition(
     val id: String,
     val displayName: String,
+    val shortName: String,
     val timezone: DateTimeZone,
     val lang: String
   ) extends Navigation {
@@ -26,7 +27,7 @@ object Edition {
     editions.Uk,
     editions.Us,
     editions.Au
-  )
+  ) 
 
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
