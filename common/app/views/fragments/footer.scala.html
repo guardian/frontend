@@ -76,12 +76,19 @@
         }
             <li class="colophon__item"><a data-link-name="all topics" href="http://www.theguardian.com/index/subjects/a">all topics</a></li>
             <li class="colophon__item"><a data-link-name="all contributors" href="http://www.theguardian.com/index/contributors">all contributors</a></li>
-            <li class="colophon__item"><a data-link-name="info" href="http://www.theguardian.com/info">info and resources</a></li>
+            <li class="colophon__item"><a data-link-name="info" href=
+            @{if(Edition(request) == Us)
+                "http://www.theguardian.com/info/about-guardian-us"
+            else
+                "http://www.theguardian.com/info"
+            }>info and resources</a></li>
             <li class="colophon__item"><a data-link-name="contact" href="
             @{if(Edition(request) == Au)
                 "http://www.theguardian.com/info/2013/may/26/contact-guardian-australia"
+            else if(Edition(request) == Us)
+                "http://www.theguardian.com/info/about-guardian-us/contact"
             else
-                @LinkTo("/help/contact-us")
+                LinkTo("/help/contact-us")
             }">contact us</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
 
