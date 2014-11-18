@@ -43,6 +43,11 @@ Multi component (AKA Frankenponent)
                 opacity: .8;
             }
 
+            .i-jobs-logo {
+                width: 32px;
+                opacity: .8;
+            }
+
             &.i-soulmates-title-background {
                 height: 56px;
                 text-align: right;
@@ -59,7 +64,7 @@ Multi component (AKA Frankenponent)
         position: relative;
         background: colour(neutral-4);
         padding: $gs-gutter/4 $gs-baseline/2 $gs-baseline * 3;
-        min-height: gs-height(4);
+        min-height: gs-height(4.5);
     }
 
     .lineitem--multi {
@@ -101,22 +106,12 @@ Multi component (AKA Frankenponent)
             width: 25%;
         }
 
-        .lineitem__image-crop {
-            width: 50%;
-            padding-bottom: 30%;
-        }
-
         .lineitem__image {
-            left: -7.5%;
-            right: -7.5%;
-            width: 115%;
+            max-height: 70px;
         }
 
         .lineitem__image-portrait {
-            left: 0;
-            right: auto;
             width: auto;
-            height: 100%;
         }
 
         .lineitem__cta {
@@ -131,18 +126,16 @@ Multi component (AKA Frankenponent)
         .commercial--multi__body {
             background: transparent;
         }
+
         .lineitem__links {
             clear: both;
             overflow: hidden;
         }
+
         .lineitem__link {
             float: left;
             width: 45%;
             padding-right: 5%;
-        }
-        .lineitem__image-crop {
-            width: 100%;
-            padding-bottom: 100%;
         }
     }
 }

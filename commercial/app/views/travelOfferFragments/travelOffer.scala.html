@@ -1,7 +1,7 @@
 @(travelOffer: model.commercial.travel.TravelOffer)(implicit request: RequestHeader)
 
 <li class="lineitem lineitem--multi">
-    <div class="commercial--travel--v2 commercial--tone-travel">
+    <div class="commercial--travel commercial--tone-travel">
         <div class="commercial--multi__header">
             <h4 class="commercial__title">
                 <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-hybrid-travel-visit-all">
@@ -12,9 +12,7 @@
         </div>
         <div class="commercial--multi__body">
             <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
-                <div class="lineitem__image-crop">
-                    <img class="lineitem__image" src="@travelOffer.imageUrl" alt="" />
-                </div>
+                <img class="lineitem__image" src="@travelOffer.imageUrl" alt=""/>
                 <h4 class="lineitem__title">@travelOffer.title</h4>
                 <div class="lineitem__offer">
                     <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>
