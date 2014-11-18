@@ -5,10 +5,15 @@ import play.api.mvc.RequestHeader
 
 object EditionalisedSections {
 
-  val sections = Seq(
+  private val sections = Seq(
     "", // network front
-    "commentisfree", "culture", "business", "money", "sport",
-    "sustainable-business"
+    "business",
+    "commentisfree",
+    "culture",
+    "money",
+    "sport",
+    "sustainable-business",
+    "technology"
   )
 
   def isEditionalised(id: String) = sections.contains(id)
