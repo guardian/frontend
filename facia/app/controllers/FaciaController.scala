@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.facia.client.models.CollectionConfig
 import common._
+import common.editions.EditionalisedSections
 import front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -15,6 +16,7 @@ import performance.MemcachedAction
 import services.{CollectionConfigWithId, ConfigAgent}
 import common.FaciaMetrics.FaciaToApplicationRedirectMetric
 import views.html.fragments.containers.facia_cards.container
+import scala.concurrent.Future.successful
 
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
@@ -23,6 +25,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJson: FrontJson
 
+  // TODO - these should not be separate endpoints
+  // see comment in routes file...
   def rootEditionRedirect() = editionRedirect(path = "")
   def editionRedirect(path: String) = Action{ implicit request =>
 
@@ -36,6 +40,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
     Cached(60)(Redirect(redirectPath))
   }
+
+
 
   def applicationsRedirect(path: String)(implicit request : RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
@@ -59,10 +65,16 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
+    if (EditionalisedSections.isEditionalised(path))
+      redirectToEditionalisedVersion(path)
+    else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
+  }
+
+  def redirectToEditionalisedVersion(path: String)(implicit request: RequestHeader): Future[Result] = {
+    successful(Found(LinkTo(Editionalise(s"/$path", request))))
   }
 
   private def withFaciaPage(path: String)(f: FaciaPage => Result): Future[Result] = {
