@@ -33,9 +33,10 @@ define([
             this.$button.toggleClass('button-spin');
             this.$ad.css('height', this.openedHeight);
             this.isClosed = false;
-            mediator.off('window:scroll', this.listener);
+
+            return true;
         }
-    },
+    };
 
     Creative.prototype.create = function () {
         var $expandable = $.create(template(expandableTpl, this.templateParams));

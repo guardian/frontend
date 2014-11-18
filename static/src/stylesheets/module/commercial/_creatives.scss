@@ -94,6 +94,8 @@
 }
 
 .creative--expandable {
+    $expandable-colour: #f3f3f3;
+
     margin-bottom: $gs-baseline;
 
     .ad-slot__label--wrapper {
@@ -107,7 +109,7 @@
     .ad-exp--expand {
         height: 0;
         position: relative;
-        background-color: #f3f3f3;
+        background-color: $expandable-colour;
         overflow: hidden;
         @include transition(height 1s);
     }
@@ -171,7 +173,7 @@
         background-size: contain;
     }
     .ad-exp-collapse__slide.slide-1 {
-        background: #f3f3f3 0 100% repeat-x;
+        background: $expandable-colour 0 100% repeat-x;
         background-size: contain;
     }
     .ad-exp-collapse__slide.slide-2 {

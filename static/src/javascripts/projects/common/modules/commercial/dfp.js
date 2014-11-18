@@ -306,23 +306,25 @@ define([
             if (iFrameBody) {
                 forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
-                        var $breakoutEl = bonzo(breakoutEl);
+                        var creativeConfig,
+                            $breakoutEl     = bonzo(breakoutEl),
+                            breakoutContent = $breakoutEl.html();
 
                         if (breakoutClass === 'breakout__script') {
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
-                                var creativeConfig = JSON.parse($breakoutEl.html());
+                                creativeConfig = JSON.parse(breakoutContent);
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
                                         new Creative($slot, creativeConfig.args).create();
                                     });
                             } else {
                                 // evil, but we own the returning js snippet
-                                eval($breakoutEl.html());
+                                eval(breakoutContent);
                             }
 
                         } else {
-                            $iFrameParent.append($breakoutEl.html());
+                            $iFrameParent.append(breakoutContent);
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
