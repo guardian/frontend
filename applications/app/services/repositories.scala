@@ -244,6 +244,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
 
+object Index extends Index
+
 trait ImageQuery extends ConciergeRepository {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
