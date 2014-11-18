@@ -6,13 +6,11 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 .crossword__grid-wrapper {
     position: relative;
     margin-bottom: $gs-baseline;
+    width: 100%;
+    height: auto;
+    display: block;
 
     @include mq(tablet) {
-        width: 60%;
-        float: left;
-    }
-
-    @include mq(desktop) {
         width: $crossword-native-size;
         float: left;
     }
@@ -20,17 +18,15 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 
 .crossword__clues {
     @include box-sizing(border-box);
-    float: right;
+    display: block;
 
     @include mq(tablet) {
         padding-left: $gs-gutter;
-        width: 40%;
         margin-left: $crossword-native-size;
     }
 
     @include mq(desktop) {
-        padding-left: $gs-gutter * 2;
-        width: 50%;
+        @include flex-display;
     }
 }
 
@@ -41,6 +37,15 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 .crossword__clues-list {
     margin: 0;
     margin-bottom: $gs-baseline;
+}
+
+.crossword__clues--across,
+.crossword__clues--down {
+    @include mq(desktop) {
+        width: 50%;
+        float: left;
+        padding-left: $gs-gutter;
+    }
 }
 
 .crossword__clue,
@@ -54,8 +59,9 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__focussed-clue {
-    font-style: italic;
     margin-bottom: $gs-baseline;
+    color: darken(colour(crosswordAccent2), 15%);
+    font-style: italic;
 }
 
 .crossword__clue--answered {
@@ -63,15 +69,19 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__controls {
-    float: left;
+    display: block;
+    margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        float: left;
+        clear: both;
+    }
 }
 
 .crossword__grid {
     width: 100%;
     height: auto;
 }
-
-
 
 .crossword__cell {
     cursor: pointer;
@@ -88,11 +98,7 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 
 .crossword__cell-number {
     font-family: $f-sans-serif-text;
-    font-size: 12px;
-
-    @include mq(tablet) {
-        font-size: 8px;
-    }
+    font-size: 8px;
 }
 
 .crossword__cell-text {
