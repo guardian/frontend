@@ -4,6 +4,7 @@
   (comment, neutral-7, neutral-1, comment-main-2, neutral-8, comment-main-2, neutral-8, comment-main-2),
   (editorial, neutral-7, neutral-1, guardian-brand, neutral-8, guardian-brand, neutral-8, neutral-7),
   (live, live-main-1, neutral-8, live-main-2, neutral-7, live-main-1, neutral-8, neutral-7),
+  (dead, live-main-1, neutral-8, live-main-2, neutral-7, live-main-1, neutral-8, neutral-7),
   (review, multimedia-main-1, neutral-8, multimedia-support-4, neutral-8, multimedia-main-1, multimedia-main-2, multimedia-main-1),
   (podcast, multimedia-main-1, neutral-8, multimedia-main-1, neutral-8, multimedia-main-1, neutral-1, multimedia-support-1),
   (media, multimedia-main-1, neutral-8, multimedia-main-1, neutral-8, multimedia-main-1, neutral-1, multimedia-main-1) {
@@ -106,17 +107,4 @@
 
 .content-card__live {
     font-weight: bold;
-}
-
-.content-card__live-icon {
-    $size: 12px;
-    display: inline-block;
-    content: '';
-    background-color: #ffffff;
-    width: $size;
-    height: $size;
-    margin-bottom: -1px;
-    margin-right: 3px;
-    @include border-radius(50%);
-    @include animation(live-pulse 1s infinite);
 }
