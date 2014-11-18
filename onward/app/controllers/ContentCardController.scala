@@ -5,13 +5,9 @@ import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import implicits.Requests
 import model.{Cached, Content}
 import scala.concurrent.Future
-import com.gu.contentapi.client.model.ItemResponse
 import conf.LiveContentApi
-import common.`package`._
 import com.gu.contentapi.client.model.ItemResponse
 import play.twirl.api.HtmlFormat
-import conf.Switches._
-import play.api.libs.json.Json.toJson
 
 object ContentCardController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
@@ -49,7 +45,6 @@ object ContentCardController extends Controller with Paging with Logging with Ex
     else Cached(900) {
       JsonComponent(
          "html" -> contentResponse,
-         "refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn)
       )
     }
 

@@ -97,6 +97,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val EmbededContentCardSwitch = Switch("Performance", "embed-content-card",
+    "If this switch is turned off then content card embeds will not be shown. Turn off to help handle exceptional load.",
+     safeState = On, sellByDate = never
+  )
+
   val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
     "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
     safeState = On, sellByDate = never
@@ -410,6 +415,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    EmbededContentCardSwitch,
     AjaxRelatedContentSwitch,
     DfpCachingSwitch,
     CommercialSwitch,
