@@ -3,57 +3,62 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/template',
+    'text!common/views/commercial/creatives/expandable.html'
 ], function (
     bean,
     bonzo,
     $,
     mediator,
-    storage
+    storage,
+    template,
+    expandableTpl
 ) {
 
-    var isClosed        = true,
-        calculateHeight = function (state) {
-            return state === 'open' ?
-                Math.min(bonzo.viewport().height * 2 / 3, 600) :
-                Math.min(bonzo.viewport().height / 3, 300);
-        },
-        listener = function ($ad) {
+    var Creative = function ($adSlot, args) {
+        this.$adSlot        = $adSlot;
+        this.templateParams = args[0];
+        this.isClosed       = true;
+        this.closedHeight   = Math.min(bonzo.viewport().height / 3, 300);
+        this.openedHeight   = Math.min(bonzo.viewport().height * 2 / 3, 600);
+    };
+
+    Creative.prototype.listener = function () {
+        if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
             // expires in 1 week
-            var week = 1000 * 60 * 60 * 24 * 7,
-                adExpandedHeight = calculateHeight('open');
+            var week = 1000 * 60 * 60 * 24 * 7;
+
             storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
-            isClosed = false;
+            this.$button.toggleClass('button-spin');
+            this.$ad.css('height', this.openedHeight);
+            this.isClosed = false;
+            mediator.off('window:scroll', this.listener);
+        }
+    },
 
-            if ((window.pageYOffset + bonzo.viewport().height) > ($ad.offset().top + adExpandedHeight)) {
-                $('.ad-exp__close-button').toggleClass('button-spin');
-                $ad.css('height', adExpandedHeight);
-                mediator.off('window:scroll', listener);
-            }
-        };
+    Creative.prototype.create = function () {
+        var $expandable = $.create(template(expandableTpl, this.templateParams));
 
-    return {
+        this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
+        this.$button = $('.ad-exp__close-button', $expandable);
 
-        run: function () {
+        $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
 
-            var closedHeight = calculateHeight('closed'),
-                $button      = $('.ad-exp__close-button'),
-                $ad          = $('.ad-exp--expand').css('height', closedHeight);
+        $expandable.appendTo(this.$adSlot);
 
-            $('.ad-exp-collapse__slide').css('height', closedHeight);
-
-            if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
-                mediator.on('window:scroll', listener.bind(null, $ad));
-            }
-
-            bean.on($button[0], 'click', function () {
-                $button.toggleClass('button-spin');
-                $ad.css('height', calculateHeight(isClosed ? 'open' : 'closed'));
-                isClosed = !isClosed;
-            });
-
+        if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
+            mediator.on('window:scroll', this.listener.bind(this));
         }
 
+        bean.on(this.$button[0], 'click', function () {
+            this.$button.toggleClass('button-spin');
+            this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
+            this.isClosed = !this.isClosed;
+        }.bind(this));
+
     };
+
+    return Creative;
 
 });

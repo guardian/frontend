@@ -296,7 +296,7 @@ define([
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
-        breakoutIFrame = function (iFrame) {
+        breakoutIFrame = function (iFrame, $slot) {
             /* jshint evil: true */
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
@@ -309,8 +309,18 @@ define([
                         var $breakoutEl = bonzo(breakoutEl);
 
                         if (breakoutClass === 'breakout__script') {
-                            // evil, but we own the returning js snippet
-                            eval($breakoutEl.html());
+                            // new way of passing data from DFP
+                            if ($breakoutEl.attr('type') === 'application/json') {
+                                var creativeConfig = JSON.parse($breakoutEl.html());
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name])
+                                    .then(function (Creative) {
+                                        new Creative($slot, creativeConfig.args).create();
+                                    });
+                            } else {
+                                // evil, but we own the returning js snippet
+                                eval($breakoutEl.html());
+                            }
+
                         } else {
                             $iFrameParent.append($breakoutEl.html());
 
@@ -349,12 +359,12 @@ define([
                                 typeof updatedIFrame.readyState !== 'unknown' &&
                                 updatedIFrame.readyState === 'complete'
                         ) {
-                            breakoutIFrame(updatedIFrame);
+                            breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');
                         }
                     });
                 } else {
-                    breakoutIFrame(iFrame);
+                    breakoutIFrame(iFrame, $slot);
                 }
             });
         },
