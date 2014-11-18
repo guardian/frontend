@@ -1,36 +1,38 @@
 @(masterClass: model.commercial.masterclasses.MasterClass)(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <li class="lineitem lineitem__multi commercial--tone-masterclasses">
-        <div class="commercial__multi-wrapper">
-            <div class="commercial__multi-header">
-            	<h4 class="commercial__title">
+    <li class="lineitem lineitem--multi">
+        <div class="commercial--masterclasses commercial--tone-masterclasses">
+            <div class="commercial--multi__header">
+                <h4 class="commercial__title">
                     <a href="@AdLink{@Configuration.commercial.masterclasses_url}"
                     data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-visit-site">
-                        <i class="i i-marque-36"></i><i class="i i-masterclasses-logo i-commercial-brand"></i>
+                        <i class="i i-guardian-logo-commercial"></i><i class="i i-masterclasses-logo i-commercial-brand"></i>
                         <span class="u-h">The Guardian</span> <span class="u-h">Masterclasses</span>
                     </a>
                 </h4>
             </div>
-            <a class="lineitem__link"
-            href="@AdLink{@masterClass.eventBriteEvent.guardianUrl}"
-            data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name">
-                <div class="lineitem__image-crop">
-                    @masterClass.mainPicture.map{ picture =>
-                        @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                    }
-                </div>
-                <h4 class="lineitem__title">@masterClass.eventBriteEvent.name</h4>
-                <div class="lineitem__offer">
-                    <p class="lineitem__meta">@masterClass.eventBriteEvent.readableDate</p>
-                    <p class="lineitem__meta">@masterClass.eventBriteEvent.venue.description | @masterClass.eventBriteEvent.displayPrice</p>
-                </div>
-            </a>
-            <a class="lineitem__cta button button--primary button--small"
-            href="@AdLink{@masterClass.eventBriteEvent.guardianUrl}"
-            data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name-book-now">
-                Book now<i class="i i-arrow-black-right i-right"></i>
-            </a>
+            <div class="commercial--multi__body">
+                <a class="lineitem__link"
+                href="@AdLink{@masterClass.eventBriteEvent.guardianUrl}"
+                data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name">
+                    <div class="lineitem__image-crop">
+                        @masterClass.mainPicture.map{ picture =>
+                            @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                        }
+                    </div>
+                    <h4 class="lineitem__title">@masterClass.eventBriteEvent.name</h4>
+                    <p class="lineitem__meta">
+                        <span class="lineitem__meta__strong">@masterClass.eventBriteEvent.readableDate &#20; <span class="commercial--tone__highlight">@masterClass.eventBriteEvent.displayPrice</span></span><br/>
+                        @masterClass.eventBriteEvent.venue.description
+                    </p>
+                </a>
+                <a class="lineitem__cta button button--primary button--small"
+                href="@AdLink{@masterClass.eventBriteEvent.guardianUrl}"
+                data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name-book-now">
+                    Book now<i class="i i-arrow-black-right i-right"></i>
+                </a>
+            </div>
         </div>
     </li>
 }

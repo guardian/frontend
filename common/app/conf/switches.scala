@@ -97,6 +97,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val EmbededContentCardSwitch = Switch("Performance", "embed-content-card",
+    "If this switch is turned off then content card embeds will not be shown. Turn off to help handle exceptional load.",
+     safeState = On, sellByDate = never
+  )
+
   val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
     "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
     safeState = On, sellByDate = never
@@ -196,6 +201,10 @@ object Switches extends Collections {
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
 
+  val KruxSwitch = Switch("Commercial", "krux",
+    "Enable Krux Control Tag",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
+
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
@@ -230,6 +239,11 @@ object Switches extends Collections {
 
   val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
+  val AdsStatusEmailDebugSwitch = Switch("Commercial", "ads-status-debug",
+    "If this switch is on, ads status emails will be in debug mode.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
@@ -401,6 +415,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    EmbededContentCardSwitch,
     AjaxRelatedContentSwitch,
     DfpCachingSwitch,
     CommercialSwitch,
@@ -431,6 +446,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    KruxSwitch,
     RemarketingSwitch,
     OutbrainSwitch,
     DiagnosticsLogging,
@@ -466,6 +482,7 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
+    AdsStatusEmailDebugSwitch,
     CrosswordSvgThumbnailsSwitch
   )
 

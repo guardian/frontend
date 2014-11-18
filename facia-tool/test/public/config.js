@@ -9,9 +9,10 @@ curl.config({
         omniture:      'omniture.js',
         views:         '../../app/views',
         css:           '../css',
-        fixtures:      '../../test/public/fixtures'
+        test:          '../../test/public'
     },
     pluginPath: 'components/curl/src/curl/plugin'
 });
 
 $.mockjaxSettings.logging = false;
+$.mockjaxSettings.responseTime = 50;

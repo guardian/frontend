@@ -6,15 +6,20 @@
 @import play.api.libs.json.Json
 
 @defining(Edition(request)) { edition =>
-{
-    "page": @Html(Json.stringify(JavaScriptPage(item).get)),
-    "switches" : { @{Html(conf.Switches.all.map{ switch =>
-            if(conf.Switches.httpSwitches.contains(switch))
-                s""""${CamelCase.fromHyphenated(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
-            else
-                s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""
-        }.mkString(","))}
-    },
-    "modules": { }
-}
+    {
+        "page": @Html(Json.stringify(JavaScriptPage(item).get)),
+        "switches" : { @{Html(conf.Switches.all.map{ switch =>
+                if(conf.Switches.httpSwitches.contains(switch))
+                    s""""${CamelCase.fromHyphenated(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
+                else
+                    s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""
+            }.mkString(","))}
+        },
+        "modules": { },
+        "images": {
+            "commercial": {
+                "brandedComponentJobs": "@Static("images/commercial/branded-component-jobs.png")"
+            }
+        }
+    }
 }

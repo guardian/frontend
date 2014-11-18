@@ -1,11 +1,18 @@
 @charset 'UTF-8';
 
 /* ==========================================================================
+   Icons
+   ========================================================================== */
+@import '../../icons/_commercial-icons-sprite';
+@import '../../icons/_commercial-icons-svg';
+
+/* ==========================================================================
    .commercial
    ========================================================================== */
 
 /* Common */
 @import '_commercial--v-high';
+@import '_commercial--multi';
 @import '_facia-container';
 @import '_lineitem';
 @import '_table';
@@ -19,17 +26,10 @@
 @import '_jobs';
 @import '_masterclasses';
 @import '_money';
+@import '_soulmates';
 @import '_travel';
 @import '_dfp';
-@import '_soulmates';
 @import '_capi';
-@import '_multi';
 
 /* Creative styles */
 @import '_creatives';
-
-/* ==========================================================================
-   Icons
-   ========================================================================== */
-@import '../../icons/_commercial-icons-sprite';
-@import '../../icons/_commercial-icons-svg';

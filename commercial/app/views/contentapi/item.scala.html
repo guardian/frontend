@@ -1,7 +1,7 @@
-@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String])(implicit request: RequestHeader)
+@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optCapiAdFeature: Option[String], optCapiSupportedBy: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for container--advertisement-feature commercial commercial--dfp commercial--dfp-single">
+    <section class="fc-container fc-container--paid-for @for(adFeature <- optCapiAdFeature) {@adFeature} commercial commercial--dfp commercial--dfp-single">
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h3 class="fc-container__header__title">
@@ -10,7 +10,7 @@
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
-                    <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
+                    <h3 class="ad-slot--paid-for-badge__header">@for(broughtBy <- optCapiSupportedBy) {@broughtBy}</h3>
                     <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
                         @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
                     </a>
@@ -24,8 +24,14 @@
                     <div class="lineitem lineitem--dfp-single">
                         <div class="lineitem--dfp-single__offer">
                             <a href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
-                                @item.mainPicture.map{ picture =>
-                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                @FaciaDisplayElement.fromTrail(item) match {
+                                    case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+                                        @Item300.bestFor(fallbackImage.imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                    }
+                                    case Some(InlineImage(imageContainer)) => {
+                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                    }
+                                    case _ => { }
                                 }
                                 <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
                                 @item.trailText.map { trailText =>

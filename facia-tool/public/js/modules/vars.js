@@ -34,7 +34,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 300,
+        maxFronts: 500,
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },

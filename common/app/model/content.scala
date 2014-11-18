@@ -28,6 +28,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val snapType: Option[String] = apiContent.metaData.flatMap(_.snapType).filter(_.nonEmpty)
   lazy val snapCss: Option[String] = apiContent.metaData.flatMap(_.snapCss).filter(_.nonEmpty)
   lazy val snapUri: Option[String]  = apiContent.metaData.flatMap(_.snapUri).filter(_.nonEmpty)
+  lazy val snapHref: Option[String] = apiContent.metaData.flatMap(_.href).filter(_.nonEmpty)
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
@@ -254,7 +255,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val seriesTag: Option[Tag] = {
-    if(isSeries) series.headOption else blogs.find{tag => tag.id != "commentisfree/commentisfree"}
+    blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
 }
 
@@ -646,7 +647,12 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
   ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map { case (image, index) =>
-    image.path.map(s"twitter:image$index:src" ->)
+    image.path.map( i =>
+      if(i.startsWith("//")){
+        s"twitter:image$index:src" -> s"http:$i"
+      } else {
+        s"twitter:image$index:src" -> i
+      })
   }.flatten
 
   lazy val lightbox: JsObject = {

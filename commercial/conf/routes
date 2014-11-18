@@ -61,3 +61,5 @@ GET        /commercial/capi.json                                     controllers
 GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml
 GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffers.itemJson
 GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffers.itemHtml
+GET        /commercial/capi-single-merch.json                        controllers.commercial.ContentApiOffers.itemJson
+GET        /commercial/capi-single-merch                             controllers.commercial.ContentApiOffers.itemHtml

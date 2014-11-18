@@ -30,6 +30,8 @@ object EmailService extends ExecutionContexts with Logging {
            textBody: String,
            htmlBody: Option[String] = None): Future[SendEmailResult] = {
 
+    log.info(s"Sending email from $from to $to about $subject")
+
     val body = htmlBody.foldLeft(new Body().withText(new Content().withData(textBody))) {
       case (soFar, html) => soFar.withHtml(new Content().withData(html))
     }
@@ -45,7 +47,10 @@ object EmailService extends ExecutionContexts with Logging {
 
     val futureResponse = client.sendAsyncEmail(request)
 
-    futureResponse recoverWith {
+    futureResponse map { response =>
+      log.info(s"Sent message ID ${response.getMessageId}")
+      response
+    } recoverWith {
       case e: Exception =>
         val cause = e.getCause
         log.error(s"Email send failed: ${cause.getMessage}")
