@@ -26,7 +26,8 @@ private object ItemOrRedirect extends ItemResponses with Logging {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
     itemPath match {
       case Some(itemPath) if needsRedirect(itemPath) =>
-        val itemPathWithQueryString = itemPath + paramString(request)
+        val itemPathWithQueryString =
+          itemPath + (if (request.path.endsWith("/all")) "/all" else "") + paramString(request)
         Right(Found(itemPathWithQueryString))
       case _ => Left(item)
     }
