@@ -329,7 +329,7 @@ h1 {
 .article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    min-height: 56px;
+    min-height: 61px;
     overflow: hidden;
     position: relative;
     color: #999999;
@@ -382,7 +382,7 @@ h1 {
     top: 0;
     width: 83px;
     height: 50px;
-    background-color: #dddddd;
+    background-color: #cccccc;
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position-x: right;
@@ -508,7 +508,7 @@ h1 {
 }
 
 .article__overrides {
-    margin: 0 0 10px 92px;
+    margin: 0 0 0 92px;
     font-size: 12px;
     line-height: 14px;
 }
@@ -936,7 +936,7 @@ button {
 
 .tool--done {
     float: right;
-    width: 90px;
+    width: 83px;
     line-height: 30px;
     text-align: center;
 }
