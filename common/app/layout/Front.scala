@@ -271,6 +271,11 @@ case class FaciaContainer(
   def items = collectionEssentials.items
 
   def contentItems = items collect { case c: Content => c }
+
+  /*def dateLink: Option[String] = customHeader map {
+    case MetaDataHeader(_, _, _, dateHeadline) =>
+    case LoneDateHeadline(dateHeadline) =>
+  }*/
 }
 
 case class Front(
