@@ -25,17 +25,26 @@
                     <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
-                                <div class="fc-item fc-item--has-image fc-item--has-discussion tone-news--item">
+                                <div class="fc-item fc-item--has-image fc-item--has-discussion @item match {
+                                        case _: Video => { fc-item--video }
+                                        case _: Audio => { fc-item--audio }
+                                        case _: Gallery => { fc-item--gallery }
+                                        case _ => { }
+                                    } @item match {
+                                        case _: Video | _: Audio | _: Gallery => { tone-media--item }
+                                        case _ => { tone-news--item }
+                                    }">
                                     <div class="fc-item__container">
-                                        <div class="fc-item__content">
-                                            <div class="fc-item__media-wrapper">
-                                                <div class="fc-item__image-container u-responsive-ratio">
-                                            @item.mainPicture.map{ picture =>
-                                                @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                        @FaciaDisplayElement.fromTrail(item) match {
+                                            case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+                                                @fragments.items.elements.facia_cards.image(fallbackImage.imageContainer, true)
                                             }
-                                                </div>
-                                            </div>
-
+                                            case Some(InlineImage(imageContainer)) => {
+                                                @fragments.items.elements.facia_cards.image(imageContainer, true)
+                                            }
+                                            case _ => { }
+                                        }
+                                        <div class="fc-item__content">
                                             <h2 class="fc-item__title">@item.webTitle</h2>
                                             <div class="fc-item__meta">
                                                 <time

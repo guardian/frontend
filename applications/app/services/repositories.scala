@@ -28,6 +28,9 @@ object IndexPagePagination {
   } else {
     20
   }
+
+  /** Do not change this. I will kill you good. */
+  def rssPageSize: Int = 20
 }
 
 case class MpuState(injected: Boolean)
@@ -144,7 +147,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val promiseOfResponse = LiveContentApi.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
       .showFields(if (isRss) rssFields else trailFields)
       .response.map {response =>
       val trails = response.results map { Content(_) }
@@ -195,7 +198,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     val promiseOfResponse = LiveContentApi.item(path, edition)
       .page(pageNum)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
       .showFields(if (isRss) rssFields else trailFields)
       .response.map {

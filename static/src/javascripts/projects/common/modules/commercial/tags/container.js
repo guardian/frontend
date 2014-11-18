@@ -12,7 +12,8 @@ define([
     'common/modules/commercial/tags/effective-measure',
     'common/modules/commercial/tags/imrworldwide',
     'common/modules/commercial/tags/media-math',
-    'common/modules/commercial/tags/remarketing'
+    'common/modules/commercial/tags/remarketing',
+    'common/modules/commercial/tags/krux'
 ], function (
     defaults,
     config,
@@ -24,7 +25,8 @@ define([
     effectiveMeasure,
     imrWorldwide,
     mediaMath,
-    remarketing
+    remarketing,
+    krux
 ) {
 
     function init() {
@@ -50,6 +52,7 @@ define([
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
+        krux.load();
     }
 
     return {
