@@ -111,11 +111,11 @@ $frontend-palette: (
     editorial-default:      guss-colour(news-main-1, $pasteup-palette),
     editorial-accent:       guss-colour(news-support-1, $pasteup-palette),
 
-$c-crosswordAccent1: guss-colour(multimedia-support-1, $pasteup-palette);
-$c-crosswordAccent2: guss-colour(news-main-2, $pasteup-palette);
+    crosswordAccent1:       guss-colour(multimedia-support-1, $pasteup-palette),
+    crosswordAccent2:       guss-colour(news-main-2, $pasteup-palette),
 
-// Football
-// =============================================================================
+    // Football
+    // =============================================================================
 
     sport-bright:           #70d2e6,
     sport-mid:              guss-colour(guardian-brand, $pasteup-palette),
@@ -132,7 +132,7 @@ $c-crosswordAccent2: guss-colour(news-main-2, $pasteup-palette);
     status-negative:        guss-colour(error, $pasteup-palette),
 
     // Social
-// =============================================================================
+    // =============================================================================
 
     social-email:           #767676,
     social-facebook:        #3067a3,
