@@ -11,11 +11,11 @@
     <div class="fc-container__header js-container__header">
         @customHeader match {
             case metaDataHeader: MetaDataHeader => {
-                @dateHeadline(metaDataHeader.dateHeadline)
+                @dateHeadline(metaDataHeader.dateHeadline, containerDefinition.dateLink)
             }
 
             case dateHeader: LoneDateHeadline => {
-                @dateHeadline(dateHeader.get)
+                @dateHeadline(dateHeader.get, containerDefinition.dateLink)
             }
         }
     </div>

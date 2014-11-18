@@ -89,7 +89,8 @@ object IndexPage {
       container.copy(
         customHeader = Some(header),
         customClasses = Some(Seq("fc-container--tag")),
-        hideToggle = true
+        hideToggle = true,
+        dateLinkPath = Some(s"/${indexPage.page.id}")
       )
     }))
   }
