@@ -64,7 +64,7 @@ define([
             var containerId = this.meta.type();
 
             if (/^(fixed|dynamic)\//.test(containerId)) {
-                return "/thumbnails/" + containerId + ".svg";
+                return '/thumbnails/' + containerId + '.svg';
             } else {
                 return null;
             }
