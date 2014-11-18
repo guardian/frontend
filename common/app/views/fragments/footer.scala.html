@@ -61,6 +61,7 @@
             <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">jobs</a></li>
             <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SOULMATES">soulmates</a></li>
             <li class="colophon__item"><a data-link-name="uk : footer : masterclasses" href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_FOOTER_UK_GU_MASTERCLASSES">masterclasses</a></li>
+            <li class="colophon__item"><a data-link-name="uk : footer : info and resources" target="_blank" href="http://www.theguardian.com/info">info and resources</a></li>
             <li class="colophon__item"><a data-link-name="uk : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-uk-edition-feedback">feedback</a></li>
             <li class="colophon__item"><a data-link-name="uk : footer : contact us" target="_blank" href="@LinkTo("/help/contact-us")">contact us</a></li>
             <li class="colophon__item"><a data-link-name="uk : footer : subscribe" target="_blank" href="http://subscribe.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SUBSCRIBE">subscribe</a></li>
@@ -68,6 +69,7 @@
 
         @if(Edition(request) == Us) {
             <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">jobs</a></li>
+            <li class="colophon__item"><a data-link-name="us : footer : info and resources" target="_blank" href="http://www.theguardian.com/info/about-guardian-us">info and resources</a></li>
             <li class="colophon__item"><a data-link-name="us : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-us-edition-feedback">feedback</a></li>
             <li class="colophon__item"><a data-link-name="us : footer : contact us" target="_blank" href="http://www.theguardian.com/info/about-guardian-us/contact">contact us</a></li>
             <li class="colophon__item"><a data-link-name="us : footer : subscribe" target="_blank" href="http://subscribe.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_SUBSCRIBE">subscribe</a></li>
@@ -75,6 +77,7 @@
 
         @if(Edition(request) == Au) {
             <li class="colophon__item"><a data-link-name="au : footer : about us" href="http://www.theguardian.com/info/about-guardian-australia">about us</a></li>
+            <li class="colophon__item"><a data-link-name="au : footer : info and resources" target="_blank" href="http://www.theguardian.com/info">info and resources</a></li>
             <li class="colophon__item"><a data-link-name="au : footer : advertising" href="http://www.theguardian.com/advertising/guardian-australia-advertising">advertising</a></li>
             <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="http://www.theguardian.com/info/2014/aug/11/guardian-australia-vacancies">vacancies</a></li>
             <li class="colophon__item"><a data-link-name="au : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">jobs</a></li>
@@ -85,12 +88,6 @@
         }
             <li class="colophon__item"><a data-link-name="all topics" href="http://www.theguardian.com/index/subjects/a">all topics</a></li>
             <li class="colophon__item"><a data-link-name="all contributors" href="http://www.theguardian.com/index/contributors">all contributors</a></li>
-            <li class="colophon__item"><a data-link-name="info" href=
-            @{if(Edition(request) == Us)
-                "http://www.theguardian.com/info/about-guardian-us"
-            else
-                "http://www.theguardian.com/info"
-            }>info and resources</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
             <li class="colophon__item"><a data-link-name="complaints" href="http://www.theguardian.com/info/complaints-and-corrections">complaints &amp; corrections</a></li>
             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">terms &amp; conditions</a></li>
