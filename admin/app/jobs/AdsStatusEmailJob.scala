@@ -1,8 +1,8 @@
 package jobs
 
 import common.Logging
+import conf.Configuration
 import conf.Configuration.commercial._
-import conf.Switches
 import conf.Switches.AdsStatusEmailDebugSwitch
 import dfp.{PageSkinSponsorship, Sponsorship}
 import services.EmailService
@@ -14,6 +14,9 @@ object AdsStatusEmailJob extends Logging {
 
   def run(): Unit = {
     log.info("Starting AdsStatusEmailJob")
+
+    log.info(s"stage: ${Configuration.environment.stage}")
+    log.info(s"isProd: ${Configuration.environment.isProd}")
 
     for {
       from <- adTechTeam
