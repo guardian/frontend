@@ -424,6 +424,7 @@ define([
                 displayEditor: ko.computed(function() {
                     var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
 
+                    display = display && (self.state.enableContentOverrides() || key === 'customKicker');
                     display = display && (opts.ifState ? self.state[opts.ifState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
@@ -701,7 +702,15 @@ define([
                     this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
                 }
                 this.state.isOpen(true);
-                mediator.emit('ui:open', this.meta.headline, this);
+                mediator.emit(
+                    'ui:open',
+                    _.chain(this.editors())
+                     .filter(function(editor) { return editor.type === 'text' && editor.displayEditor(); })
+                     .map(function(editor) { return editor.meta; })
+                     .first()
+                     .value(),
+                    this
+                );
             } else {
                 mediator.emit('ui:open');
             }
