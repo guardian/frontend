@@ -81,7 +81,8 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__container,
-.cc-item__container {
+.cc-item__container,
+.item__container {
     position: relative;
     @include transition(background-color $fc-hover-transition);
 
