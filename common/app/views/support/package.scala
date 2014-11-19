@@ -868,14 +868,14 @@ object GetClasses {
   )
 
   def forContainer(
-    showLatestUpdate: Boolean,
-    isFirst: Boolean,
-    hasTitle: Boolean,
-    commercialOptions: ContainerCommercialOptions,
-    container: Option[slices.Container] = None,
-    extraClasses: Seq[String] = Nil,
-    disableHide: Boolean = false
-    ) = {
+      showLatestUpdate: Boolean,
+      isFirst: Boolean,
+      hasTitle: Boolean,
+      commercialOptions: ContainerCommercialOptions,
+      container: Option[slices.Container] = None,
+      extraClasses: Seq[String] = Nil,
+      disableHide: Boolean = false
+  ) = {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
