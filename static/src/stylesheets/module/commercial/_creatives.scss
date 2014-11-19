@@ -9,10 +9,21 @@
 .creative--branded-component {
     padding-left: $gs-gutter/2;
     border-left: 1px solid colour(neutral-5);
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
     .creative__inner {
         padding-top: $gs-baseline/2;
         border-top: 2px solid colour(guardian-brand-dark);
+
+        @include mq($from: desktop) {
+            width: gs-span(3);
+        }
+
+        @include mq($from: wide) {
+            margin-right: gs-span(1);
+        }
     }
     .creative__marque {
         display: block;
@@ -26,23 +37,18 @@
         @include fs-header(2);
     }
     .creative__title {
-        @include fs-headline(5);
-        //@include fs-header;
-        //@include font-size(24, 24);
+        @include f-headline;
+        @include font-size(28, 28);
     }
     .creative__text {
-        @include fs-textSans(4);
-        /*@include fs-header;
-        @include font-size(20, 18);*/
+        @include f-textSans;
+        @include font-size(14, 18);
         color: colour(neutral-2);
     }
 }
 
 .creative--branded-component-soulmates {
     padding-left: 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
 
     @include mq(wide) {
         right: auto;
