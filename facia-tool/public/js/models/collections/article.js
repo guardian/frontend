@@ -586,14 +586,14 @@ define([
                     obj = obj || {};
                     obj[p[0]] = p[1];
                     return obj;
-                }, undefined)
+                }, {})
                 .value();
 
             if (this.group.parentType === 'Collection') {
-                (cleanMeta || {}).group = this.group.index + '';
+                cleanMeta.group = this.group.index + '';
             }
 
-            return cleanMeta;
+            return _.isEmpty(cleanMeta) ? undefined : cleanMeta;
         };
 
         Article.prototype.save = function() {
