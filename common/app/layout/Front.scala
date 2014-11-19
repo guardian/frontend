@@ -8,6 +8,7 @@ import services.CollectionConfigWithId
 import slices._
 import views.support.CutOut
 import scala.Function._
+import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
@@ -178,29 +179,26 @@ object FaciaContainer {
     collectionEssentials: CollectionEssentials,
     containerLayout: Option[ContainerLayout],
     componentId: Option[String]
-  ): FaciaContainer = {
-      // rather vague definition of whether this is a popular container
-      val isPopular = config.config.apiQuery.exists { q =>
-        q.contains("show-most-viewed=true") && q.contains("hide-recent-content=true")
-      }
-      FaciaContainer(
-        index,
-        config.id,
-        config.config.displayName orElse collectionEssentials.displayName,
-        config.config.href orElse collectionEssentials.href,
-        componentId,
-        container,
-        collectionEssentials,
-        containerLayout,
-        config.config.showDateHeader.exists(identity),
-        config.config.showLatestUpdate.exists(identity),
-        // popular containers should never be sponsored
-        if (isPopular) ContainerCommercialOptions.empty else ContainerCommercialOptions.fromConfig(config.config),
-        None,
-        None,
-        false
-      )
-  }
+  ): FaciaContainer = FaciaContainer(
+    index,
+    config.id,
+    config.config.displayName orElse collectionEssentials.displayName,
+    config.config.href orElse collectionEssentials.href,
+    componentId,
+    container,
+    collectionEssentials,
+    containerLayout,
+    config.config.showDateHeader.exists(identity),
+    config.config.showLatestUpdate.exists(identity),
+    // popular containers should never be sponsored
+    container match {
+      case MostPopular => ContainerCommercialOptions.empty
+      case _ => ContainerCommercialOptions.fromConfig(config.config)
+    },
+    None,
+    None,
+    false
+  )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     FaciaContainer(
