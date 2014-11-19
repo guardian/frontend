@@ -143,7 +143,7 @@ define([
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
             }];
 
-        return template(blockSharingTpl, {
+        return template(blockSharingTpl.replace(/^\s+|\s+$/gm,''), {
             articleType: 'gallery',
             count: this.images.length,
             index: i,
