@@ -62,7 +62,9 @@ define([
             // Opens block level sharing links in the lightbox
             var galleryHash = window.location.hash,
                 lightbox = new LightboxGallery.GalleryLightbox(),
-                hashIndex;
+                hashIndex,
+                parsedGalleryIndex,
+                galleryIndex;
 
             // Temporary if statement for a few weeks to allow us to switch to prefixed block-ids
             if (galleryHash.indexOf('#img-') !== -1) {
@@ -70,8 +72,9 @@ define([
             } else {
                 hashIndex = galleryHash.substr(1);
             }
-            var parsedGalleryIndex = parseInt(hashIndex, 10),
-                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+
+            parsedGalleryIndex = parseInt(hashIndex, 10);
+            galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex; // 1-based index
             if (galleryHash) {
                 lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
             }
