@@ -20,7 +20,7 @@
 
 @header = {
     <div class="cc-item__header"><h1 class="cc-item__title"><a class="cc-item__link">@kicker@content.headline</a></h1>
-        @if(content.visualTone == "comment") {
+        @if(!content.isMedia && content.visualTone == "comment") {
             <div class="cc-item__byline">
                 - @content.byline.map { byline => @Html(byline) }
             </div>
