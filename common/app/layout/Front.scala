@@ -8,6 +8,7 @@ import services.CollectionConfigWithId
 import slices._
 import views.support.CutOut
 import scala.Function._
+import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
@@ -189,7 +190,11 @@ object FaciaContainer {
     containerLayout,
     config.config.showDateHeader.exists(identity),
     config.config.showLatestUpdate.exists(identity),
-    ContainerCommercialOptions.fromConfig(config.config),
+    // popular containers should never be sponsored
+    container match {
+      case MostPopular => ContainerCommercialOptions.empty
+      case _ => ContainerCommercialOptions.fromConfig(config.config)
+    },
     None,
     None,
     false
