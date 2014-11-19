@@ -167,15 +167,20 @@
     }
 
     .element--thumbnail & {
-        width: 22px;
-        height: 22px;
+        width: 33px;
+        height: 33px;
         margin: $gs-gutter/4;
+        display: none;
 
         .i-expand-black,
         .i-expand-white {
             width: 50%;
             height: 50%;
         }
+    }
+    
+    .element--thumbnail:hover & {
+        display: block;
     }
 
     @include mq(desktop) {
