@@ -178,22 +178,29 @@ object FaciaContainer {
     collectionEssentials: CollectionEssentials,
     containerLayout: Option[ContainerLayout],
     componentId: Option[String]
-  ): FaciaContainer = FaciaContainer(
-    index,
-    config.id,
-    config.config.displayName orElse collectionEssentials.displayName,
-    config.config.href orElse collectionEssentials.href,
-    componentId,
-    container,
-    collectionEssentials,
-    containerLayout,
-    config.config.showDateHeader.exists(identity),
-    config.config.showLatestUpdate.exists(identity),
-    ContainerCommercialOptions.fromConfig(config.config),
-    None,
-    None,
-    false
-  )
+  ): FaciaContainer = {
+      // rather vague definition of whether this is a popular container
+      val isPopular = config.config.apiQuery.exists { q =>
+        q.contains("show-most-viewed=true") && q.contains("hide-recent-content=true")
+      }
+      FaciaContainer(
+        index,
+        config.id,
+        config.config.displayName orElse collectionEssentials.displayName,
+        config.config.href orElse collectionEssentials.href,
+        componentId,
+        container,
+        collectionEssentials,
+        containerLayout,
+        config.config.showDateHeader.exists(identity),
+        config.config.showLatestUpdate.exists(identity),
+        // popular containers should never be sponsored
+        if (isPopular) ContainerCommercialOptions.empty else ContainerCommercialOptions.fromConfig(config.config),
+        None,
+        None,
+        false
+      )
+  }
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     FaciaContainer(
