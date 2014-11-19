@@ -1,6 +1,6 @@
 .tone-analysis--item {
     &.fc-item,
-    &.item--content-card {
+    &.cc-item {
         background-color: colour(analysis-background);
         color: colour(analysis-default);
     }
@@ -10,12 +10,12 @@
     }
 
     .fc-item__container:before,
-    .item__container:before {
+    .cc-item__container:before {
         background-color: colour(analysis-accent);
     }
 
     .fc-item__kicker,
-    .item__kicker,
+    .cc-item__kicker,
     .fc-item__byline {
         color: colour(analysis-accent);
     }

@@ -24,19 +24,19 @@
     }
 
     .fc-item__kicker,
-    .item__kicker,
+    .cc-item__kicker,
     .fc-item__byline {
         color: colour(podcast-default);
     }
 
     .fc-item__kicker:after,
-    .item__kicker:after,
+    .cc-item__kicker:after,
     .fc-sublink__kicker:after {
         color: fade-out($c-headline, .8);
     }
 
     .fc-item__standfirst,
-    .item__standfirst, {
+    .cc-item__standfirst {
         color: $c-headline;
     }
 

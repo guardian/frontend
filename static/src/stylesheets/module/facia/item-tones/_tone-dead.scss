@@ -1,11 +1,11 @@
 .tone-dead--item {
     &.fc-item,
-    &.item--content-card {
+    &.cc-item {
         background-color: colour(neutral-7);
     }
 
     .fc-item__container:before,
-    .item__container:before {
+    .cc-item__container:before {
         background-color: colour(live-default);
     }
 

@@ -1,7 +1,7 @@
 .tone-comment--item,
 %tone-comment--item {
     &.fc-item,
-    &.item--content-card {
+    &.cc-item {
         background-color: colour(comment-background);
     }
 
@@ -10,14 +10,14 @@
     }
 
     .fc-item__container:before,
-    .item__container:before {
+    .cc-item__container:before {
         background-color: colour(comment-default);
     }
 
     .fc-item__kicker,
-    .item__kicker,
+    .cc-item__kicker,
     .fc-item__byline,
-    .item__byline {
+    .cc-item__byline {
         color: colour(comment-default);
     }
 

@@ -81,7 +81,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__container,
-.item__container {
+.cc-item__container {
     position: relative;
     @include transition(background-color $fc-hover-transition);
 
@@ -230,8 +230,8 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__header,
-.item__header,
-.item__title {
+.item__title,
+.cc-item__header {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .5em;
@@ -244,8 +244,9 @@ $fc-hover-transition: .25s ease;
 .fc-item__title,
 .fc-item__byline,
 .fc-item__kicker,
-.item__kicker,
-.item__title {
+.cc-item__byline,
+.cc-item__title,
+.cc-item__kicker {
     font: inherit;
     line-height: inherit;
 }
@@ -257,8 +258,8 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__kicker,
-.item__kicker,
-.fc-sublink__kicker {
+.fc-sublink__kicker,
+.cc-item__kicker {
     &:after {
         content: '/';
         display: inline-block;

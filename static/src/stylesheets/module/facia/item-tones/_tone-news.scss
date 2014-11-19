@@ -1,10 +1,10 @@
 .tone-news--item {
     &.fc-item,
-    &.item {
+    &.cc-item {
         background-color: colour(neutral-8);
     }
 
-    .item__container:before,
+    .cc-item__container:before,
     .fc-item__container:before {
         background-color: colour(news-accent);
     }

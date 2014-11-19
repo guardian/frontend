@@ -6,47 +6,46 @@
 @import model.Tag
 @import views.support.RenderClasses
 
-<div class="content-card item item--content-card @toneClass(content)--item @RenderClasses(Map(
-    "item--video" -> content.isVideo,
-    "item--gallery" -> content.isGallery,
-    "item--audio" -> content.isAudio,
-    "content-card--byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
+@kicker = {
+    @if(content.isAnalysis) {
+        <span class="cc-item__kicker">Analysis</span>
+    }
+    @if(content.isLiveBlog && content.isLive) {
+        <span class="cc-item__kicker"><span class="cc-item__live"><span class="live-pulse-icon"></span>Live</span></span>
+    }
+    @if(content.isPodcast) {
+        @content.seriesTag.map { series => <span class="cc-item__kicker">@series.webTitle</span> }
+    }
+}
+
+@header = {
+    <div class="cc-item__header"><h1 class="cc-item__title"><a class="cc-item__link">@kicker@content.headline</a></h1>
+        @if(content.visualTone == "comment") {
+            <div class="cc-item__byline">
+                - @content.byline.map { byline => @Html(byline) }
+            </div>
+        }
+        @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
+    </div>
+}
+
+<div class="cc-item @toneClass(content)--item @RenderClasses(Map(
+    "cc-item--video" -> content.isVideo,
+    "cc-item--gallery" -> content.isGallery,
+    "cc-item--audio" -> content.isAudio,
+    "cc-item--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
     ))"
     data-link-name="content-card" data-component="content-card">
 
-    <div class="item__container">
-
+    <div class="cc-item__container">
         @if(content.isGallery) {
             @content.trailPicture(5, 3).map { image =>
-                <img class="item__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
+                <img class="cc-item__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
             }
         }
-
-        <div class="item__header">
-            <h1 class="item__title">
-                <a class="item__link">
-                    @if(content.isAnalysis) {
-                        <span class="item__kicker">Analysis</span>
-                    }
-                    @if(content.isLiveBlog && content.isLive) {
-                        <span class="item__kicker"><span class="item__live"><span class="live-pulse-icon"></span>Live</span></span>
-                    }
-                    @if(content.isPodcast) {
-                        @content.seriesTag.map { series => <span class="item__kicker">@series.webTitle</span> }
-                    }
-                    @content.headline
-                </a>
-            </h1>
-            @if(content.isComment) {
-                <div class="item__byline">
-                 - @content.byline.map { byline => @Html(byline) }
-                </div>
-            }
-            @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
-        </div>
-
+        @header
         @if(!content.isGallery) {
-            <div class="item__standfirst u-cf">
+            <div class="cc-item__standfirst u-cf">
             @if(content.isLiveBlog){
                 @content.trailText.map{ trailText => @Html(trailText) }
             } else {
@@ -58,8 +57,8 @@
             @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                 @content.contributors.headOption.map { profile =>
                     @profile.contributorLargeImagePath.map{ image =>
-                        <div class="content-card__byline-img">
-                            <img class="content-card__byline-img__img" src="@image" alt="@profile.name" />
+                        <div class="cc-item__byline-img">
+                            <img class="cc-item__byline-img__img" src="@image" alt="@profile.name" />
                         </div>
                     }
                 }
@@ -68,6 +67,6 @@
         }
     </div>
 
-    <a class="item__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
+    <a class="cc-item__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
 </div>
 
