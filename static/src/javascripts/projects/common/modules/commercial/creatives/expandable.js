@@ -29,6 +29,7 @@ define([
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
+            // TODO - needs to have a creative-specific id
             storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
             this.$button.toggleClass('button-spin');
             this.$ad.css('height', this.openedHeight);
