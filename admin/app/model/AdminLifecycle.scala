@@ -74,8 +74,10 @@ trait AdminLifecycle extends GlobalSettings {
       }
     }
 
-    if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
-      AdsStatusEmailJob.run()
+    Jobs.schedule("AdsStatusEmailDebugJob", "0 5/10 9-18 ? * MON-FRI") {
+      if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
+        AdsStatusEmailJob.run()
+      }
     }
 
   }
@@ -95,6 +97,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
     Jobs.deschedule("AdsStatusEmailJob")
+    Jobs.deschedule("AdsStatusEmailDebugJob")
   }
 
   override def onStart(app: play.api.Application) {

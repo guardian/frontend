@@ -1,0 +1,34 @@
+@(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
+@import views.support.AdLink
+@import conf.Configuration
+
+@defining(("1_0", "2014-08-18")) { case (version, date) =>
+    <li class="lineitem lineitem--multi">
+        <div class="commercial--soulmates commercial--tone-soulmates">
+            <div class="commercial--multi__header">
+                <h4 class="commercial__title">
+                    <span class="i i--commercial i-soulmates-logo"></span>
+                    <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+                </h4>
+            </div>
+            <div class="commercial--multi__body">
+                <div class="lineitem__links">
+                @for(member <- members) {
+                    <a class="lineitem__link"
+                    href="@AdLink{@member.profileUrl}"
+                    data-link-name="merchandising-soulmates-v@{version}_@{date}-@{member.username}">
+                        <img class="lineitem__image lineitem__image-portrait" src="@member.profilePhoto" alt="" />
+                        <h4 class="lineitem__title">@member.username</h4>
+                        <div class="lineitem__offer">
+                            <p class="lineitem__meta">@member.age, @member.location</p>
+                        </div>
+                    </a>
+                }
+                </div>
+                <a class="lineitem__cta button button--primary button--small button--tone-media" href="@AdLink{@Configuration.commercial.soulmates_url}">
+                    Find a Soulmate<i class="i i-arrow-white-right i-right"></i>
+                </a>
+            </div>
+        </div>
+    </li>
+}
