@@ -559,33 +559,35 @@ define([
 
         Article.prototype.getMeta = function() {
             var self = this,
-                cleanMeta = _.chain(self.meta)
-                    .pairs()
-                    // execute any knockout values:
-                    .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
-                    // trim and sanitize strings:
-                    .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                    // reject vals that are equivalent to their defaults (if set)
-                    .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
-                    // reject vals that are equivalent to the fields (if any) that they're overwriting:
-                    .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
-                    // convert numbers to strings:
-                    .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
-                    // recurse into supporting links
-                    .map(function(p) {
-                        return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
-                            return item.get();
-                        }) : p[1]];
-                    })
-                    // drop empty arrays:
-                    .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                    // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
-                    .reduce(function(obj, p) {
-                        obj = obj || {};
-                        obj[p[0]] = p[1];
-                        return obj;
-                    }, undefined)
-                    .value();
+                cleanMeta;
+
+            cleanMeta = _.chain(self.meta)
+                .pairs()
+                // execute any knockout values:
+                .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
+                // trim and sanitize strings:
+                .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
+                // reject vals that are equivalent to their defaults (if set)
+                .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
+                // reject vals that are equivalent to the fields (if any) that they're overwriting:
+                .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // convert numbers to strings:
+                .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
+                // recurse into supporting links
+                .map(function(p) {
+                    return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
+                        return item.get();
+                    }) : p[1]];
+                })
+                // drop empty arrays:
+                .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
+                .reduce(function(obj, p) {
+                    obj = obj || {};
+                    obj[p[0]] = p[1];
+                    return obj;
+                }, undefined)
+                .value();
 
             if (this.group.parentType === 'Collection') {
                 (cleanMeta || {}).group = this.group.index + '';
