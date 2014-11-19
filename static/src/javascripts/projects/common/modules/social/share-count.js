@@ -87,7 +87,7 @@ define([
                     updateTooltip();
                 });
                 ajax({
-                    url: 'https://urls.api.twitter.com/1/urls/count.json?url=' + url,
+                    url: 'https://cdn.api.twitter.com/1/urls/count.json?url=' + url,
                     type: 'jsonp',
                     method: 'get',
                     crossOrigin: true
