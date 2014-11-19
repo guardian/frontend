@@ -65,21 +65,21 @@ define([
             },
 
             initLightbox: function () {
-                 if ('lightboxImages' in config.page) {
+                if ('lightboxImages' in config.page) {
                     lightbox.init();
 
-                     // Opens block level sharing links in the lightbox
-                     var galleryHash = window.location.hash,
-                         newLightbox = new lightbox.GalleryLightbox(),
-                         hashIndex = galleryHash.substr(1),
-                         parsedGalleryIndex = parseInt(hashIndex, 10),
-                         galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
-                     if (galleryHash) {
-                         newLightbox.loadGalleryfromJson(config.page.lightboxImages, galleryIndex);
-                     }
+                    // Opens block level sharing links in the lightbox
+                    var galleryHash = window.location.hash,
+                    newLightbox = new lightbox.GalleryLightbox(),
+                    hashIndex = galleryHash.substr(1),
+                    parsedGalleryIndex = parseInt(hashIndex, 10),
+                    galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+
+                    if (galleryHash) {
+                        newLightbox.loadGalleryfromJson(config.page.lightboxImages, galleryIndex);
+                    }
                 }
             }
-
         },
 
         ready = function () {
