@@ -16,22 +16,7 @@
                       apiName: 'require',
                       paths: {
                           core:                      '@Static("javascripts/core.js")',
-                          facebook:                  '//connect.facebook.net/en_US/all.js',
-                          foresee:                   'vendor/foresee/20141107/foresee-trigger.js',
-                          googletag:                 '@{Configuration.javascript.config("googletagJsUrl")}',
-                          'ophan/ng':                '@{Configuration.javascript.config("ophanJsUrl")}',
-                          stripe:                    '@Static("javascripts/vendor/stripe/stripe.min.js")',
-                          text:                       'text', // noop
-                          zxcvbn:                    '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
-                          'bootstraps/app':          '@Static("javascripts/bootstraps/app.js")',
-                          'bootstraps/commercial':   '@Static("javascripts/bootstraps/commercial.js")',
-                          'bootstraps/crosswords':   '@Static("javascripts/bootstraps/crosswords.js")',
-                          'bootstraps/dev':          '@Static("javascripts/bootstraps/dev.js")',
-                          'bootstraps/facia':        '@Static("javascripts/bootstraps/facia.js")',
-                              @if(Configuration.environment.isPreview) {
-                                  'bootstraps/preview':  '@Static("javascripts/bootstraps/preview.js")',
-                              }
-                          'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
+                          'bootstraps/dev':          '@Static("javascripts/bootstraps/dev.js")'
                       }
                   };
 
