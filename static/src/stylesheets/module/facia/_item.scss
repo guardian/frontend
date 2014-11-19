@@ -102,17 +102,6 @@ $fc-hover-transition: .25s ease;
     }
 }
 
-.fc-item.fc-item--video {
-
-    a {
-        z-index: 0;
-    }
-
-    .u-faux-block-link__promote {
-        z-index: 1;
-    }
-}
-
 .fc-item,
 .item {
     background-color: #ffffff;
@@ -133,6 +122,20 @@ $fc-hover-transition: .25s ease;
 
         @include mq($until: desktop) {
             z-index: initial;
+        }
+    }
+
+    /**
+     * The z-index: initial trick above is not working on the webkit browsers.
+     * The only way how to make it work is to play with the z-index.
+     */
+    &.fc-item--video {
+        a {
+            z-index: 0;
+        }
+
+        .u-faux-block-link__promote {
+            z-index: 1;
         }
     }
 
