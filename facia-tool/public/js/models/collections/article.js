@@ -571,7 +571,7 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                // reject vals that are equivalent to their defaults (if set) OR are falsey
+                // reject vals that are equivalent to their defaults (if set)
                 .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
