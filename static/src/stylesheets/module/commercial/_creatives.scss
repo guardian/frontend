@@ -93,7 +93,7 @@
             top: 0;
             left: $gs-gutter/2;
             z-index: -1;
-            background-color: #70BACF;
+            background-color: #70bacf;
             transform: rotate(-2deg);
 
             @include mq($from: desktop, $until: wide) {
