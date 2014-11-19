@@ -102,6 +102,17 @@ $fc-hover-transition: .25s ease;
     }
 }
 
+.fc-item.fc-item--video {
+
+    a {
+        z-index: 0;
+    }
+
+    .u-faux-block-link__promote {
+        z-index: 1;
+    }
+}
+
 .fc-item,
 .item {
     background-color: #ffffff;
