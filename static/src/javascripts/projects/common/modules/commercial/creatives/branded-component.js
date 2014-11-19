@@ -26,7 +26,6 @@ define([
         membership: {
             template: brandedComponentMembershipTpl,
             config:   {
-                imgUrl: config.images.commercial.brandedComponentJobs
             }
         },
         soulmates: {

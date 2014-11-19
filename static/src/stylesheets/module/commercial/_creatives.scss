@@ -18,7 +18,7 @@
         border-top: 2px solid colour(guardian-brand-dark);
 
         @include mq($from: desktop) {
-            width: gs-span(3);
+            width: gs-span(3)-$gs-gutter;
         }
 
         @include mq($from: wide) {
@@ -27,8 +27,6 @@
     }
     .creative__marque {
         display: block;
-        @include border-radius(18px);
-        background-color: colour(guardian-brand-dark);
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -38,12 +36,30 @@
     }
     .creative__title {
         @include f-headline;
-        @include font-size(28, 28);
+        @include font-size(24, 28);
     }
     .creative__text {
         @include f-textSans;
         @include font-size(14, 18);
         color: colour(neutral-2);
+    }
+
+    &.jobs {
+        .creative__inner {
+            border-top: 2px solid colour(news-support-2);
+        }
+        .creative__marque-title {
+            color: colour(news-support-2);
+        }
+    }
+
+    &.membership {
+        .creative__inner {
+            border-top: 2px solid colour(news-accent);
+        }
+        .creative__marque-title {
+            color: colour(news-accent);
+        }
     }
 }
 
@@ -109,7 +125,7 @@
         }
     }
     .creative__title {
-        margin: $gs-baseline $gs-gutter*2 0;
+        margin: $gs-baseline 0 0;
         @include f-header;
         @include font-size(24, 24);
         text-align: center;
