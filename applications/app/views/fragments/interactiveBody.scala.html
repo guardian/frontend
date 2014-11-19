@@ -4,12 +4,14 @@
 
 @defining(page.interactive) { interactive =>
 <div class="l-side-margins">
-    <article class="content content--interactive tonal tonal--@articleToneClass(interactive) @interactive match {
-            case a if a.isAdvertisementFeature => {content--advertisement-feature}
-            case s if s.isSponsored => {content--sponsored}
-            case s if s.isFoundationSupported => {content--foundation-supported}
-            case _ => { }
-        }"
+    <article class="@RenderClasses(
+            Map(
+                "content--advertisement-feature" -> interactive.isAdvertisementFeature,
+                "content--sponsored" -> interactive.isSponsored,
+                "content--foundation-supported" -> interactive.isFoundationSupported
+            ),
+            "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
+        )"
         itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
         @fragments.headDefault(interactive, showBadge = true)
