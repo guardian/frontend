@@ -389,57 +389,52 @@ define([
                     }
                 };
 
-            return React.DOM.div(null,
-                FocussedClue({
-                    clueText: focussed ? focussed.clue : null
-                }),
-                React.DOM.div({
-                    className: 'crossword__grid-wrapper',
-                    style: {
-                        width: helpers.gridSize(this.columns) + 'px',
-                        height: helpers.gridSize(this.rows) + 'px'
-                    }
-                },
-                    Grid({
-                        rows: this.rows,
-                        columns: this.columns,
-                        cells: this.state.grid,
-                        setCellValue: this.setCellValue,
-                        onSelect: this.onSelect,
-                        isHighlighted: isHighlighted,
-                        focussedCell: this.state.cellInFocus,
-                        ref: 'grid'
-                    }),
-                    React.DOM.div({
-                        className: 'crossword__hidden-input-wrapper',
-                        ref: 'hiddenInputWrapper'
-                    },
-                        React.DOM.input({
-                            type: 'text',
-                            className: 'crossword__hidden-input',
-                            ref: 'hiddenInput',
-                            maxLength: '1',
-                            onKeyDown: this.onKeyDown,
-                            value: this.hiddenInputValue(),
-                            onClick: this.onClickHiddenInput,
-                            autoComplete: 'off'
-                        }
-                    ))
-                ),
-                Controls({
-                    hasSolutions: this.hasSolutions(),
-                    clueInFocus: focussed,
-                    onCheat: this.onCheat,
-                    onSolution: this.onSolution,
-                    onCheck: this.onCheck,
-                    onCheckAll: this.onCheckAll,
-                    onClearAll: this.onClearAll
-                }),
-                Clues({
-                    clues: this.cluesData(),
-                    focusClue: this.focusClue
-                })
-            );
+            return React.DOM.div({
+                className: 'crossword__container'
+            },
+            FocussedClue({
+                clueText: focussed ? focussed.clue : null
+            }),
+            React.DOM.div({
+                className: 'crossword__grid-wrapper'
+            },
+            Grid({
+                rows: this.rows,
+                columns: this.columns,
+                cells: this.state.grid,
+                setCellValue: this.setCellValue,
+                onSelect: this.onSelect,
+                isHighlighted: isHighlighted,
+                focussedCell: this.state.cellInFocus,
+                ref: 'grid'
+            }),
+            React.DOM.div({
+                className: 'crossword__hidden-input-wrapper',
+                ref: 'hiddenInputWrapper'
+            },
+            React.DOM.input({
+                type: 'text',
+                className: 'crossword__hidden-input',
+                ref: 'hiddenInput',
+                maxLength: '1',
+                onKeyDown: this.onKeyDown,
+                value: this.hiddenInputValue(),
+                onClick: this.onClickHiddenInput,
+                autoComplete: 'off'
+            }))),
+            Controls({
+                hasSolutions: this.hasSolutions(),
+                clueInFocus: focussed,
+                onCheat: this.onCheat,
+                onSolution: this.onSolution,
+                onCheck: this.onCheck,
+                onCheckAll: this.onCheckAll,
+                onClearAll: this.onClearAll
+            }),
+            Clues({
+                clues: this.cluesData(),
+                focusClue: this.focusClue
+            }));
         }
     });
 
