@@ -424,6 +424,7 @@ define([
                 displayEditor: ko.computed(function() {
                     var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
 
+                    display = display && (self.state.enableContentOverrides() || key === 'customKicker');
                     display = display && (opts.ifState ? self.state[opts.ifState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
@@ -570,7 +571,7 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                // reject vals that are equivalent to their defaults (if set) OR are falsey
+                // reject vals that are equivalent to their defaults (if set)
                 .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
@@ -701,7 +702,15 @@ define([
                     this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
                 }
                 this.state.isOpen(true);
-                mediator.emit('ui:open', this.meta.headline, this);
+                mediator.emit(
+                    'ui:open',
+                    _.chain(this.editors())
+                     .filter(function(editor) { return editor.type === 'text' && editor.displayEditor(); })
+                     .map(function(editor) { return editor.meta; })
+                     .first()
+                     .value(),
+                    this
+                );
             } else {
                 mediator.emit('ui:open');
             }
