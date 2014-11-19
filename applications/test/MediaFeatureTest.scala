@@ -67,5 +67,14 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         media.findFirst("[itemprop=headline]").getAttribute("content") should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
       }
     }
+
+    scenario("Twitter cards should appear in video article meta data") {
+      goTo("/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video") { browser =>
+        import browser._
+        findFirst("meta[name='twitter:site']").getAttribute("content") should be("@guardian")
+        findFirst("meta[name='twitter:app:url:googleplay']").getAttribute("content") should be("guardian://www.theguardian.com/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video")
+        findFirst("meta[name='twitter:card']").getAttribute("content") should be("summary_large_image")
+      }
+    }
   }
 }
