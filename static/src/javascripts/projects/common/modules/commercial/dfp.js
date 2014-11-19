@@ -316,7 +316,7 @@ define([
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
-                                        new Creative($slot, creativeConfig.args).create();
+                                        new Creative($slot, creativeConfig.params).create();
                                     });
                             } else {
                                 // evil, but we own the returning js snippet
