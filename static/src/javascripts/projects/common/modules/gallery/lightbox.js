@@ -47,7 +47,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType != "Article";
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
