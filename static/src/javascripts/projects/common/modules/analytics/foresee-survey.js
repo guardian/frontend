@@ -1,10 +1,10 @@
 define([
-    'common/utils/cookies',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect'
 ], function (
-    Cookie,
     config,
+    Cookie,
     detect
 ) {
 
