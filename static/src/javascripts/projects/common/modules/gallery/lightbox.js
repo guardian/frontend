@@ -493,7 +493,15 @@ define([
     };
 
     function bootstrap() {
-        var lightbox, galleryId, match;
+        var lightbox,
+            galleryId,
+            match,
+            galleryHash = window.location.hash,
+            hashIndex,
+            parsedGalleryIndex,
+            galleryIndex,
+            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'];
+
         bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
             e.preventDefault();
 
@@ -504,24 +512,27 @@ define([
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             lightbox = lightbox || new GalleryLightbox();
 
-            if (config.page.contentType === 'Gallery') {
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
-            } else if (config.page.contentType === 'Article') {
-                lightbox.loadGalleryfromJson(config.page.lightboxImages, galleryIndex);
-            }
+            lightbox.loadGalleryfromJson(images, galleryIndex);
         });
 
-        if (config.page.contentType === 'Gallery') {
+        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article') {
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                if (config.page.contentType === 'Article') {
-                    lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
-                } else if (config.page.contentType === 'Gallery') {
-                    lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
+                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
+            } else if (galleryHash) {
+                // Temporary if statement for a few weeks to allow us to switch to prefixed block-ids
+                if (galleryHash.indexOf('#img-') !== -1) {
+                    hashIndex = galleryHash.substr(5);
+                } else {
+                    hashIndex = galleryHash.substr(1);
                 }
+
+                parsedGalleryIndex = parseInt(hashIndex, 10);
+                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex; // 1-based index
+                lightbox.loadGalleryfromJson(images, galleryIndex);
             }
         }
     }

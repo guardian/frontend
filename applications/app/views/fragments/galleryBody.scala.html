@@ -41,7 +41,7 @@
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int) = {
 
-    <li id="@{"img-" + rowNum.toString}" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
+    <li id="img-@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             @ImgSrc.imager(gallery.imageContainer(rowNum - 1), GalleryUpgradedImage).map { imgSrc =>
