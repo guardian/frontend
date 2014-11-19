@@ -27,21 +27,61 @@
     }
     .creative__title {
         @include fs-headline(5);
+        //@include fs-header;
+        //@include font-size(24, 24);
     }
     .creative__text {
         @include fs-textSans(4);
+        /*@include fs-header;
+        @include font-size(20, 18);*/
         color: colour(neutral-2);
     }
 }
 
 .creative--branded-component-soulmates {
     padding-left: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    @include mq(wide) {
+        right: auto;
+    }
 
     .creative__inner {
         border-top: 0;
         margin-left: $gs-gutter/2;
-        padding: $gs-baseline/2 $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2 0;
         background-color: #f5f3e7;
+        width: gs-span(3);
+
+        @include box-sizing(border-box);
+
+        @include mq($from: desktop, $until: wide) {
+            width: gs-span(3)-$gs-gutter;
+            margin-right: 10px;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            width: gs-span(3);
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: $gs-gutter/2;
+            z-index: -1;
+            background-color: #70BACF;
+            transform: rotate(-2deg);
+
+            @include mq($from: desktop, $until: wide) {
+                width: gs-span(3)-$gs-gutter;
+            }
+
+            @include mq(wide) {
+                right: auto;
+            }
+        }
 
         &:before {
             @extend %i-soulmates-trill;
@@ -64,10 +104,12 @@
     }
     .creative__title {
         margin: $gs-baseline $gs-gutter*2 0;
-        @include fs-header(5);
+        @include f-header;
+        @include font-size(24, 24);
         text-align: center;
     }
     .creative__text {
+        @include font-size(14, 18);
         margin: $gs-baseline 0 0;
     }
     .creative__link-wrapper {
@@ -87,6 +129,9 @@
         height: gs-height(1);
         margin: gs-height(2) auto 0;
         padding-top: $gs-baseline*3;
+        background-size: 100%;
+        width: auto;
+
     }
     .soulmates-logo__title {
         text-align: center;
