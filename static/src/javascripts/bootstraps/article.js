@@ -71,7 +71,7 @@ define([
                     // Opens block level sharing links in the lightbox
                     var galleryHash = window.location.hash,
                     newLightbox = new lightbox.GalleryLightbox(),
-                    hashIndex = galleryHash.substr(1),
+                    hashIndex = galleryHash.substr(5),
                     parsedGalleryIndex = parseInt(hashIndex, 10),
                     galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
 

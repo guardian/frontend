@@ -41,7 +41,7 @@
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int) = {
 
-    <li id="@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
+    <li id="@{"img-" + rowNum.toString}" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             @ImgSrc.imager(gallery.imageContainer(rowNum - 1), GalleryUpgradedImage).map { imgSrc =>
@@ -82,7 +82,7 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing(rowNum.toString, gallery.elementShares(Some(rowNum.toString), image.path), gallery.contentType)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.elementShares(Some("img-" + rowNum.toString), image.path), gallery.contentType)
             </div>
 
         </figure>

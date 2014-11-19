@@ -248,14 +248,15 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
     val imageElements = body.getElementsByClass("element-image").view.zipWithIndex
     imageElements foreach { case (fig, index) =>
       val linkIndex = (index+1).toString
-      fig.attr("id", linkIndex)
+      val hashSuffix = "img-" + linkIndex
+      fig.attr("id", hashSuffix )
       val mediaId = fig.attr("data-media-id")
       val asset = findImageFromId(mediaId)
 
       fig.getElementsByTag("img").foreach { img =>
         asset.map { image =>
           if(!article.isLiveBlog) {
-            val html = views.html.fragments.share.blockLevelSharing(linkIndex, article.elementShares(Some(linkIndex), image.url), article.contentType)
+            val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), image.url), article.contentType)
             img.after(html.toString())
 
             img.wrap("<a href='" + article.url + "?index=" + linkIndex + "' class='gallery2__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")

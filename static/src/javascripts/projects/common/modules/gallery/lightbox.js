@@ -132,11 +132,11 @@ define([
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#' + i)
+                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#' + i)
+                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
@@ -511,15 +511,17 @@ define([
             }
         });
 
-        lightbox = lightbox || new GalleryLightbox();
-        galleryId = '/' + config.page.pageId;
-        match = /\?index=(\d+)/.exec(document.location.href);
-        if (match) { // index specified so launch lightbox at that index
-            url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-            if (config.page.contentType === 'Article') {
-                lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
-            } else if (config.page.contentType === 'Gallery') {
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
+        if (config.page.contentType === 'Gallery') {
+            lightbox = lightbox || new GalleryLightbox();
+            galleryId = '/' + config.page.pageId;
+            match = /\?index=(\d+)/.exec(document.location.href);
+            if (match) { // index specified so launch lightbox at that index
+                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+                if (config.page.contentType === 'Article') {
+                    lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
+                } else if (config.page.contentType === 'Gallery') {
+                    lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
+                }
             }
         }
     }
