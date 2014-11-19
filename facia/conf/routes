@@ -12,6 +12,8 @@ GET        /_agentcontents                                             controlle
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
 
 # Editionalised redirects
+# TODO we should get rid of these. we should not have to add these manually here as routes
+# everything is in place for the fronts, we just have to figure out what to do with RSS
 GET        /                                                           controllers.FaciaController.rootEditionRedirect()
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 

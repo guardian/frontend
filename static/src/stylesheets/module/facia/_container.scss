@@ -44,6 +44,12 @@ $header-image-size-desktop: 100px;
     }
 }
 
+.has-page-skin .fc-container__pagination {
+    @include mq(wide) {
+        width: gs-span(12);
+    }
+}
+
 .fc-container--rolled-up .fc-container--rolled-up-hide {
     display: none;
 }
