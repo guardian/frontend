@@ -81,6 +81,11 @@
     }
 }
 
+.content__hr--top {
+    border-top: 1px dotted colour(neutral-5);
+    padding-top: 5px;
+}
+
 .content__secondary-column {
     position: absolute;
     top: 0;

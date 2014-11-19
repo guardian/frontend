@@ -31,6 +31,10 @@
 
                     @fragments.contentMeta(article)
 
+                    @if(article.visualTone == "news" && !article.hasMainEmbed && article.elements("main").isEmpty) {
+                        <div class="content__hr--top"></div>
+                    }
+
                     <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.isReview){reviewBody} else {articleBody}"
                         data-test-id="article-review-body">
                         @BodyCleaner(article, article.body)
