@@ -14,7 +14,7 @@ import play.api.test.Helpers._
       status(result) should be(200)
   }
 
-  it should "return JSONP when callback is suppl;ed" in {
+  it should "return JSONP when callback is supplied" in {
       val fakeRequest = FakeRequest(GET, s"/embed/card/${article}?callback=${callbackName}")
           .withHeaders("host" -> "localhost:9000")
 
