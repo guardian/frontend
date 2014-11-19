@@ -129,6 +129,7 @@ define([
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl,
+            trimRE = /^\s+|\s+$/gm,
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
@@ -143,7 +144,7 @@ define([
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
             }];
 
-        return template(blockSharingTpl.replace(/^\s+|\s+$/gm,''), {
+        return template(blockSharingTpl.replace(trimRE,''), {
             articleType: 'gallery',
             count: this.images.length,
             index: i,
@@ -516,7 +517,7 @@ define([
         match = /\?index=(\d+)/.exec(document.location.href);
         if (match) { // index specified so launch lightbox at that index
             url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-            if(config.page.contentType === 'Article') {
+            if (config.page.contentType === 'Article') {
                 lightbox.loadGalleryfromJson(config.page.lightboxImages, parseInt(match[1], 10));
             } else if (config.page.contentType === 'Gallery') {
                 lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
