@@ -1328,9 +1328,6 @@ button {
         right: inherit;
         left: 0;
     }
-    .scrollable {
-        overflow-y: inherit
-    }
 }
 
 @media (max-width: 550px) {

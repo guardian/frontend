@@ -296,7 +296,7 @@ define([
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
-        breakoutIFrame = function (iFrame) {
+        breakoutIFrame = function (iFrame, $slot) {
             /* jshint evil: true */
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
@@ -306,13 +306,25 @@ define([
             if (iFrameBody) {
                 forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
-                        var $breakoutEl = bonzo(breakoutEl);
+                        var creativeConfig,
+                            $breakoutEl     = bonzo(breakoutEl),
+                            breakoutContent = $breakoutEl.html();
 
                         if (breakoutClass === 'breakout__script') {
-                            // evil, but we own the returning js snippet
-                            eval($breakoutEl.html());
+                            // new way of passing data from DFP
+                            if ($breakoutEl.attr('type') === 'application/json') {
+                                creativeConfig = JSON.parse(breakoutContent);
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name])
+                                    .then(function (Creative) {
+                                        new Creative($slot, creativeConfig.args).create();
+                                    });
+                            } else {
+                                // evil, but we own the returning js snippet
+                                eval(breakoutContent);
+                            }
+
                         } else {
-                            $iFrameParent.append($breakoutEl.html());
+                            $iFrameParent.append(breakoutContent);
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
@@ -349,12 +361,12 @@ define([
                                 typeof updatedIFrame.readyState !== 'unknown' &&
                                 updatedIFrame.readyState === 'complete'
                         ) {
-                            breakoutIFrame(updatedIFrame);
+                            breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');
                         }
                     });
                 } else {
-                    breakoutIFrame(iFrame);
+                    breakoutIFrame(iFrame, $slot);
                 }
             });
         },

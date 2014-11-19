@@ -2,7 +2,7 @@
 @import tools.DfpLink
 
 @listItem(sponsorship: dfp.Sponsorship, flagCountries: Boolean = false) = {
-    <li>@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+    <li class="lineItem">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
         @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
         @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
         @if(sponsorship.countries.nonEmpty && flagCountries) {
@@ -19,20 +19,17 @@
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
-    <style type="text/css">
-        li { padding-bottom:15px; }
-        .flagged { color:red; }
-    </style>
 
 <h1>Content Sponsorships:</h1>
 
 <h4>Criteria</h4>
 <p>Pages will be sponsored if you set up a LineItem in DFP with the following parameters:</p>
 <ol>
-  <li>Targets a <em>slot</em> of either:
+  <li>Targets a <em>slot</em> of one of:
     <ul>
       <li>adbadge</li>
       <li>spbadge</li>
+      <li>fobadge</li>
     </ul>
   </li>
   <li>Targets a <em>tag</em> of either:
