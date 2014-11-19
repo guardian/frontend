@@ -197,6 +197,7 @@ object FaciaContainer {
     },
     None,
     None,
+    false,
     false
   )
 
@@ -261,7 +262,8 @@ case class FaciaContainer(
   commercialOptions: ContainerCommercialOptions,
   customHeader: Option[FaciaContainerHeader],
   customClasses: Option[Seq[String]],
-  hideToggle: Boolean
+  hideToggle: Boolean,
+  showTimestamps: Boolean
 ) {
 
   def faciaComponentName = componentId getOrElse {
