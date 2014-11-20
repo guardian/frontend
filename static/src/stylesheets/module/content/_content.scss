@@ -81,17 +81,26 @@
     }
 }
 
+.content__hr {
+    border: 0;
+    margin: 0;
+    border-top: 1px dotted colour(neutral-5);
+    padding-top: 5px;
+}
+
 .content__secondary-column {
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
     width: gs-span(4);
 
     @include mq($until: desktop) {
         display: none;
+    }
+    .section-football & {
+        overflow: hidden; // quick hackfix for overflowing right hand components
     }
 }
 
@@ -571,8 +580,10 @@
 }
 
 .content--advertisement-feature {
-    background-color: colour(neutral-8);
-
+    &.content--article,
+    &.content--interactive {
+        background-color: colour(neutral-8);
+    }
     .content__standfirst,
     .content__dateline,
     .caption--main,

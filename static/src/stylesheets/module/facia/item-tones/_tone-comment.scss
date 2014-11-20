@@ -1,6 +1,7 @@
 .tone-comment--item,
 %tone-comment--item {
-    &.fc-item {
+    &.fc-item,
+    &.cc-item {
         background-color: colour(comment-background);
     }
 
@@ -8,12 +9,15 @@
         background-color: darken(colour(comment-background), 3%);
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .cc-item__container:before {
         background-color: colour(comment-default);
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .cc-item__kicker,
+    .fc-item__byline,
+    .cc-item__byline {
         color: colour(comment-default);
     }
 

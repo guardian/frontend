@@ -88,7 +88,7 @@
     color: colour(neutral-7);
     margin-bottom: 0;
 
-    > strong {
+    > strong:first-child {
         display: block;
         @include fs-headline(2);
         margin-bottom: $gs-baseline/2;
