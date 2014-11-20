@@ -33,12 +33,10 @@
         @include fs-header(2);
     }
     .creative__title {
-        @include f-headline;
-        @include font-size(24, 28);
+        @include fs-headline(4);
     }
     .creative__text {
-        @include f-textSans;
-        @include font-size(14, 18);
+        @include fs-textSans(3);
         color: colour(neutral-2);
     }
 }
@@ -129,12 +127,10 @@
     }
     .creative__title {
         margin: $gs-baseline 0 0;
-        @include f-header;
-        @include font-size(24, 24);
+        @include fs-header(5);
         text-align: center;
     }
     .creative__text {
-        @include font-size(14, 18);
         margin: $gs-baseline 0 0;
     }
     .creative__link-wrapper {
