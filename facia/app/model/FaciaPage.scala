@@ -11,6 +11,25 @@ case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
                      collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+  /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
+    * content.
+    *
+    * There are fronts that exist in Facia but have no equivalent tag or section page, which is why we need to make
+    * this check.
+    */
+  def allPath: Option[String] = {
+    val tagAndSectionIds = for {
+      (_, collection) <- collections
+      item <- collection.items
+      id <- item.section +: item.tags.map(_.id)
+    } yield id
+
+    if (tagAndSectionIds contains id) {
+      Some(s"$id/all")
+    } else {
+      None
+    }
+  }
 
   lazy val front = Front.fromConfigs(collections map { case (config, collection) =>
     (config, CollectionEssentials.fromCollection(collection))
