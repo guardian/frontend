@@ -12,18 +12,16 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    box-sizing: border-box;
+    width: gs-span(3)+$gs-gutter/2;
+
+    @include mq($from: wide) {
+        left: -$gs-gutter/2;
+    }
 
     .creative__inner {
         padding-top: $gs-baseline/2;
         border-top: 2px solid colour(guardian-brand-dark);
-
-        @include mq($from: desktop) {
-            width: gs-span(3)-$gs-gutter;
-        }
-
-        @include mq($from: wide) {
-            margin-right: gs-span(1);
-        }
     }
     .creative__marque {
         display: block;
@@ -43,27 +41,32 @@
         @include font-size(14, 18);
         color: colour(neutral-2);
     }
+}
 
-    &.jobs {
-        .creative__inner {
-            border-top: 2px solid colour(news-support-2);
-        }
-        .creative__marque-title {
-            color: colour(news-support-2);
-        }
+.creative--jobs {
+    .creative__inner {
+        border-color: colour(news-support-2);
     }
+    .creative__marque-title {
+        color: colour(news-support-2);
+    }
+}
 
-    &.membership {
-        .creative__inner {
-            border-top: 2px solid colour(news-accent);
-        }
-        .creative__marque-title {
-            color: colour(news-accent);
-        }
+.creative--membership {
+    .creative__inner {
+        border-color: colour(news-accent);
+    }
+    .creative__marque-title {
+        color: colour(news-accent);
     }
 }
 
 .creative--branded-component-soulmates {
+    // Initialize colour variables
+    $bg-colour: #f5f3e7;
+    $rotated-bg-colour: #70bacf;
+
+    border-left: 0;
     padding-left: 0;
 
     @include mq(wide) {
@@ -74,14 +77,14 @@
         border-top: 0;
         margin-left: $gs-gutter/2;
         padding: $gs-baseline/2 $gs-gutter/2 0;
-        background-color: #f5f3e7;
+        background-color: $bg-colour;
         width: gs-span(3);
 
         @include box-sizing(border-box);
 
         @include mq($from: desktop, $until: wide) {
             width: gs-span(3)-$gs-gutter;
-            margin-right: 10px;
+            margin-right: $gs-gutter/2;
         }
 
         &:after {
@@ -93,7 +96,7 @@
             top: 0;
             left: $gs-gutter/2;
             z-index: -1;
-            background-color: #70bacf;
+            background-color: $rotated-bg-colour;
             transform: rotate(-2deg);
 
             @include mq($from: desktop, $until: wide) {
