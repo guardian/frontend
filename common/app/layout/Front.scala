@@ -202,7 +202,8 @@ object FaciaContainer {
     },
     None,
     None,
-    false
+    false,
+    None
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -266,7 +267,8 @@ case class FaciaContainer(
   commercialOptions: ContainerCommercialOptions,
   customHeader: Option[FaciaContainerHeader],
   customClasses: Option[Seq[String]],
-  hideToggle: Boolean
+  hideToggle: Boolean,
+  dateLinkPath: Option[String]
 ) {
 
   def faciaComponentName = componentId getOrElse {
@@ -281,6 +283,19 @@ case class FaciaContainer(
   def items = collectionEssentials.items
 
   def contentItems = items collect { case c: Content => c }
+
+  def dateLink: Option[String] = {
+    val maybeDateHeadline = customHeader map {
+      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case LoneDateHeadline(dateHeadline) => dateHeadline
+    }
+
+    for {
+      path <- dateLinkPath
+      dateHeadline <- maybeDateHeadline
+      urlFragment <- dateHeadline.urlFragment
+    } yield s"$path/$urlFragment/all"
+  }
 }
 
 case class Front(

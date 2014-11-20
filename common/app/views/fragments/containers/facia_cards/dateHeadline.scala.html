@@ -1,3 +1,8 @@
-@(dateHeadline: layout.DateHeadline)
+@(dateHeadline: layout.DateHeadline, maybeLinkPath: Option[String])(implicit requestHeader: RequestHeader)
 
-<time datetime="@dateHeadline.dateTimeString" class="fc-date-headline">@dateHeadline.displayString</time>
+@import common.LinkTo
+@import views.html.support.MaybeLink
+
+@MaybeLink(maybeLinkPath.map(LinkTo(_)), dataLinkName = s"date header | ${dateHeadline.dateTimeString}") {
+    <time datetime="@dateHeadline.dateTimeString" class="fc-date-headline">@dateHeadline.displayString</time>
+}
