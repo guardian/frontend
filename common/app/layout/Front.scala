@@ -25,12 +25,17 @@ case class ContainerLayoutContext(
     if (hideCutOuts) {
       (card.copy(item = card.item.copy(cutOut = None)), this)
     } else {
-      val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-        card.copy(item = card.item.copy(cutOut = None))
+      // Latest snaps are sometimes used to promote journalists, and the cut out should always show on these snaps.
+      if (card.item.snapStuff.snapType == LatestSnap) {
+        (card, this)
       } else {
-        card
+        val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+          card.copy(item = card.item.copy(cutOut = None))
+        } else {
+          card
+        }
+        (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
       }
-      (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
     }
   }
 }
