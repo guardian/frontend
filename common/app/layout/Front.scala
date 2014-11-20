@@ -25,12 +25,17 @@ case class ContainerLayoutContext(
     if (hideCutOuts) {
       (card.copy(item = card.item.copy(cutOut = None)), this)
     } else {
-      val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-        card.copy(item = card.item.copy(cutOut = None))
+      // Latest snaps are sometimes used to promote journalists, and the cut out should always show on these snaps.
+      if (card.item.snapStuff.snapType == LatestSnap) {
+        (card, this)
       } else {
-        card
+        val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+          card.copy(item = card.item.copy(cutOut = None))
+        } else {
+          card
+        }
+        (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
       }
-      (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
     }
   }
 }
@@ -198,7 +203,8 @@ object FaciaContainer {
     None,
     None,
     false,
-    false
+    false,
+    None
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -263,7 +269,8 @@ case class FaciaContainer(
   customHeader: Option[FaciaContainerHeader],
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
-  showTimestamps: Boolean
+  showTimestamps: Boolean,
+  dateLinkPath: Option[String]
 ) {
   def transformCards(f: FaciaCard => FaciaCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
@@ -283,6 +290,19 @@ case class FaciaContainer(
   def contentItems = items collect { case c: Content => c }
 
   def withTimeStamps = transformCards(_.withTimeStamp)
+
+  def dateLink: Option[String] = {
+    val maybeDateHeadline = customHeader map {
+      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case LoneDateHeadline(dateHeadline) => dateHeadline
+    }
+
+    for {
+      path <- dateLinkPath
+      dateHeadline <- maybeDateHeadline
+      urlFragment <- dateHeadline.urlFragment
+    } yield s"$path/$urlFragment/all"
+  }
 }
 
 case class Front(

@@ -1,6 +1,7 @@
 @(page: MatchPage)(implicit request: RequestHeader)
-@import support._
-@import FootballHelpers._
+
+@import views.support._
+@import views.FootballHelpers._
 @import feed._
 
 @defining((page.lineUp.homeTeam, page.lineUp.awayTeam, page.lineUp, TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam))){ case (home, away, lineUp, teamColours) =>

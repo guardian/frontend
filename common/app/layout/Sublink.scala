@@ -106,19 +106,30 @@ case class DisplaySettings(
   imageHide: Boolean
 )
 
+sealed trait SnapType
+
+case object LatestSnap extends SnapType
+case object OtherSnap extends SnapType
+
 object SnapStuff {
   def fromTrail(trail: Trail) = SnapStuff(
     SnapData(trail),
     trail match {
       case c: Content => c.snapCss
       case _ => None
+    },
+    if (trail.snapType.exists(_ == "latest")) {
+      LatestSnap
+    } else {
+      OtherSnap
     }
   )
 }
 
 case class SnapStuff(
   dataAttributes: String,
-  snapCss: Option[String]
+  snapCss: Option[String],
+  snapType: SnapType
 ) {
   def cssClasses = Seq(
     "js-snap",

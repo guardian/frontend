@@ -107,7 +107,7 @@ $block-padding-right: $gs-gutter;
     font-weight: bold;
 }
 
-.blog__live-icon {
+.live-pulse-icon {
     $size: 12px;
     display: inline-block;
     content: '';
@@ -146,7 +146,7 @@ $block-padding-right: $gs-gutter;
         font-weight: bold;
     }
 
-    .blog__live-icon--red {
+    .live-pulse-icon--red {
         $size: 12px;
         display: inline-block;
         content: '';

@@ -55,11 +55,6 @@ define([
 
             metaFields = [
                 {
-                    key: 'group',
-                    label: 'importance group',
-                    type: 'text'
-                },
-                {
                     key: 'headline',
                     editable: true,
                     ifState: 'enableContentOverrides',
@@ -563,9 +558,10 @@ define([
         };
 
         Article.prototype.getMeta = function() {
-            var self = this;
+            var self = this,
+                cleanMeta;
 
-            return _.chain(self.meta)
+            cleanMeta = _.chain(self.meta)
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
@@ -590,8 +586,14 @@ define([
                     obj = obj || {};
                     obj[p[0]] = p[1];
                     return obj;
-                }, undefined)
+                }, {})
                 .value();
+
+            if (this.group.parentType === 'Collection') {
+                cleanMeta.group = this.group.index + '';
+            }
+
+            return _.isEmpty(cleanMeta) ? undefined : cleanMeta;
         };
 
         Article.prototype.save = function() {

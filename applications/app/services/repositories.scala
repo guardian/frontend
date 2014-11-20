@@ -95,7 +95,8 @@ object IndexPage {
         customHeader = Some(header),
         customClasses = Some(Seq("fc-container--tag")),
         hideToggle = true,
-        showTimestamps = true
+        showTimestamps = true,
+        dateLinkPath = Some(s"/${indexPage.page.id}")
       ).transformCards({ card =>
         card.copy(timeStampDisplay = Some(timeStampDisplay))
       })
@@ -251,6 +252,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
+
+object Index extends Index
 
 trait ImageQuery extends ConciergeRepository {
 
