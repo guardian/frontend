@@ -84,7 +84,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(trails take 7, displayName, None, None, None),
         componentId
-      ),
+      ).withTimeStamps,
       FrontProperties.empty
     )(request)
     renderFormat(response, response, 1)

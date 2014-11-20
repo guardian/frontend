@@ -208,7 +208,7 @@ object FaciaContainer {
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
-    ).transformCards(_.withTimeStamp)
+    ).withTimeStamps
   }
 }
 
@@ -281,6 +281,8 @@ case class FaciaContainer(
   def items = collectionEssentials.items
 
   def contentItems = items collect { case c: Content => c }
+
+  def withTimeStamps = transformCards(_.withTimeStamp)
 }
 
 case class Front(
