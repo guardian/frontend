@@ -96,10 +96,8 @@ $fc-hover-transition: .25s ease;
     }
 }
 
-.fc-item--has-discussion {
-    .fc-item__content {
-        padding-bottom: $gs-baseline * 2;
-    }
+.fc-item--has-metadata .fc-item__content {
+    padding-bottom: $gs-baseline * 2;
 }
 
 .fc-item,

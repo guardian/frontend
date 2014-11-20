@@ -799,12 +799,11 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
-      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive)
+      ("fc-item--live", item.isLive),
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 

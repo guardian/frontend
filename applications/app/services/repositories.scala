@@ -97,7 +97,7 @@ object IndexPage {
         hideToggle = true,
         showTimestamps = true
       ).transformCards({ card =>
-        card.copy(timeStampDisplay = timeStampDisplay)
+        card.copy(timeStampDisplay = Some(timeStampDisplay))
       })
     }))
   }

@@ -205,7 +205,7 @@ object FaciaCard {
       MediaType.fromTrail(trail),
       DisplaySettings.fromTrail(trail),
       trail.isLive,
-      DateOrTimeAgo
+      None
     )
   }
 }
@@ -230,7 +230,7 @@ case class FaciaCard(
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
   isLive: Boolean,
-  timeStampDisplay: FaciaCardTimestamp
+  timeStampDisplay: Option[FaciaCardTimestamp]
 ) {
 
   def isVideo = displayElement match {
