@@ -1,5 +1,6 @@
 .tone-analysis--item {
-    &.fc-item {
+    &.fc-item,
+    &.cc-item {
         background-color: colour(analysis-background);
         color: colour(analysis-default);
     }
@@ -8,11 +9,13 @@
         background-color: darken(colour(analysis-background), 5%);
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .cc-item__container:before {
         background-color: colour(analysis-accent);
     }
 
     .fc-item__kicker,
+    .cc-item__kicker,
     .fc-item__byline {
         color: colour(analysis-accent);
     }
