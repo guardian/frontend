@@ -1,8 +1,8 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/collections/map',
     'lodash/arrays/intersection',
+    'lodash/collections/map',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -13,8 +13,8 @@ define([
 ], function (
     bonzo,
     qwery,
-    map,
     intersection,
+    map,
     $,
     config,
     mediator,
