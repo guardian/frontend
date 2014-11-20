@@ -1020,7 +1020,7 @@ button {
 
 .cnf-front .title {
     cursor: pointer;
-    height: 24px;
+    min-height: 24px;
     font-weight: normal;
     font-family: inherit;
     font-size: 20px;

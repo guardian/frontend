@@ -29,7 +29,7 @@
                 css: {active: !latestArticles.showingDrafts()}">Live content</a>
         </div>
 
-        <div class="col__inner scrollable">
+        <div class="col__inner">
             <div class="title title--clipboard">clipboard</div>
             <div class="clipboard" data-bind="with: clipboard">
                 <div class="droppable" data-bind="
@@ -38,6 +38,9 @@
                     css: {underDrag: underDrag},
                     template: {name: 'template_article', foreach: items}"></div>
             </div>
+        </div>
+
+        <div class="col__inner scrollable">
 
             <div data-bind="with: latestArticles">
                 <div class="search-tools">
