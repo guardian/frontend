@@ -77,33 +77,14 @@
         padding: $gs-baseline/2 $gs-gutter/2 0;
         background-color: $bg-colour;
         width: gs-span(3);
+        position: relative;
+        z-index: 1;
 
         @include box-sizing(border-box);
 
         @include mq($from: desktop, $until: wide) {
             width: gs-span(3)-$gs-gutter;
             margin-right: $gs-gutter/2;
-        }
-
-        &:after {
-            content: '';
-            display: block;
-            width: gs-span(3);
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: $gs-gutter/2;
-            z-index: -1;
-            background-color: $rotated-bg-colour;
-            transform: rotate(-2deg);
-
-            @include mq($from: desktop, $until: wide) {
-                width: gs-span(3)-$gs-gutter;
-            }
-
-            @include mq(wide) {
-                right: auto;
-            }
         }
 
         &:before {
@@ -156,6 +137,26 @@
     }
     .soulmates-logo__title {
         text-align: center;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: gs-span(3);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: $gs-gutter/2;
+        background-color: $rotated-bg-colour;
+        transform: rotate(-2deg);
+
+        @include mq($from: desktop, $until: wide) {
+            width: gs-span(3)-$gs-gutter;
+        }
+
+        @include mq(wide) {
+            right: auto;
+        }
     }
 }
 
