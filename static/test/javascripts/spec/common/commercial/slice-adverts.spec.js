@@ -81,16 +81,16 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50|300,250');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,50|300,250');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,50|320,50|300,250');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,1|300,50');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,1|300,50|320,50');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,50');
+                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,50|320,50');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
                 });
             });
 
