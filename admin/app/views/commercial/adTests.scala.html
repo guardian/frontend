@@ -1,0 +1,41 @@
+@(env: String, timestamp: Option[String], lineItems: Seq[dfp.GuLineItem])
+    @import tools.DfpLink
+
+    @admin_main("Ad Tests", env, isAuthed = true) {
+
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+        <style>
+        th, td {
+        padding: 10px 80px 10px 10px;
+        }
+        .has_cookie {
+        margin: 30px;
+        font-size: 18px;
+        color: green;
+        }
+        .hasnt_cookie {
+        margin: 30px ;
+        font-size: 18px;
+        color: blue;
+        }
+        .cookie {
+        font-size: 16px;
+        }
+        </style>
+
+        <h1>Current Ad Tests</h1>
+        <p>Last updated: @timestamp</p>
+
+        <p id="cookie_status"></p>
+        <p><button id="clear_cookie">Clear browser test cookie</button></p>
+
+        <table>
+            <thead><tr><th>Cookie</th><th>Line item</th></tr></thead>
+            @for(lineItem <- lineItems) {
+                <tr>
+                    <td align="right"><a href="#" class="cookie">@{lineItem.targeting.adTestValue}</a></td>
+                    <td>@{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>)</td>
+                </tr>
+            }
+        </table>
+    }
