@@ -195,7 +195,7 @@
     }
 }
 
-.fc-item--full-media-75-tablet {
+.fc-item--full-media-50-tablet {
     @include mq(tablet) {
         @include fc-item--full-media-50;
 
