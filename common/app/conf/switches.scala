@@ -97,7 +97,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val EmbededContentCardSwitch = Switch("Performance", "embed-content-card",
+  val EmbeddedContentCardSwitch = Switch("Performance", "embedded-content-card",
     "If this switch is turned off then content card embeds will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
   )
@@ -410,12 +410,17 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ContainerUpdatesSwitch = Switch("Facia", "container-updates",
+    "Enables js detection that containers have updated since page load",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   val all: List[Switch] = List(
     TagPageSizeSwitch,
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    EmbededContentCardSwitch,
+    EmbeddedContentCardSwitch,
     AjaxRelatedContentSwitch,
     DfpCachingSwitch,
     CommercialSwitch,
@@ -483,7 +488,8 @@ object Switches extends Collections {
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
     AdsStatusEmailDebugSwitch,
-    CrosswordSvgThumbnailsSwitch
+    CrosswordSvgThumbnailsSwitch,
+    ContainerUpdatesSwitch
   )
 
   val httpSwitches: List[Switch] = List(

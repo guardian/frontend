@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc.{RequestHeader, Action, Controller}
 import common.{JsonComponent, Edition, ExecutionContexts, Logging}
 import implicits.Requests
-import model.{Cached, Content}
+import model.{NoCache, Cached, Content}
 import scala.concurrent.Future
 import conf.LiveContentApi
 import com.gu.contentapi.client.model.ItemResponse
@@ -14,8 +14,8 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   def renderHtml(path: String) = render(path)
 
   def render(path: String) = Action.async { implicit request =>
-    lookup(path) map { series =>
-      series.map(renderContent).getOrElse(NotFound)
+    lookup(path) map { content =>
+      content.map(renderContent).getOrElse(NotFound)
     }
   }
 
@@ -24,8 +24,7 @@ object ContentCardController extends Controller with Paging with Logging with Ex
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText")
-      //.showFields("all")
+      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
       .showTags("all")
       .showElements("all")
       .response
@@ -34,14 +33,9 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-    def contentResponse: HtmlFormat.Appendable = {
-      if ( !content.isGallery)
-        views.html.fragments.contentCardBody(content)(request)
-      else
-        views.html.fragments.galleryContentCard(content)(request)
-    }
+    def contentResponse: HtmlFormat.Appendable = views.html.fragments.contentCardBody(content)(request)
 
-    if (!request.isJson) Cached(900) {Ok(views.html.contentCard(content)(request))}
+    if (!request.isJson) NoCache(Ok(views.html.contentCard(content)(request)))
     else Cached(900) {
       JsonComponent(
          "html" -> contentResponse

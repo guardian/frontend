@@ -4,41 +4,68 @@
 @import views.support.{ImgSrc, Item140}
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
+@import views.support.RenderClasses
 
+@kicker = {
+    @if(content.isAnalysis) {
+        <span class="cc-item__kicker">Analysis</span>
+    }
+    @if(content.isLiveBlog && content.isLive) {
+        <span class="cc-item__kicker"><span class="cc-item__live"><span class="live-pulse-icon"></span>Live</span></span>
+    }
+    @if(content.isPodcast) {
+        @content.seriesTag.map { series => <span class="cc-item__kicker">@series.webTitle</span> }
+    }
+}
 
-    <a class="content-card tonal tonal--@toneClass(content)@if(content.isAudio){ fc-item--audio}@if(content.isPodcast){ tone-podcast--item}@if(content.hasTonalHeaderByline && content.hasLargeContributorImage){ content-card--byline-pic}" data-link-name="content-card" data-component="content-card" href="@content.webUrl" target="_blank">
-        <div class="content-card__header fc-item__header">
-            <h1 class="content-card__title fc-item__title">
-                @if(content.isLiveBlog) {<span class="content-card__live"><span class="live-pulse-icon"></span>LIVE</span> }
-                @if(content.isPodcast) {
-                    @content.seriesTag.map { series => <span class="content-card__kicker"> @series.webTitle / </span> }
-                }
-                @content.headline
-            </h1>
-            @if(content.isComment) {
-                <div class="content-card__byline">
-                 - @content.byline.map { byline => @Html(byline) }
+<div class="cc-item @toneClass(content)--item @RenderClasses(Map(
+    "cc-item--video" -> content.isVideo,
+    "cc-item--gallery" -> content.isGallery,
+    "cc-item--audio" -> content.isAudio,
+    "cc-item--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
+    ))"
+    data-link-name="content-card" data-component="content-card">
+
+    <div class="cc-item__container">
+        @if(content.isGallery) {
+            @content.trailPicture(5, 3).map { image =>
+                <img class="cc-item__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
+            }
+        }
+
+        <div class="cc-item__header">
+            <h1 class="cc-item__title"><a class="cc-item__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
+            @if(!content.isMedia && content.visualTone == "comment") {
+                <div class="cc-item__byline">
+                    - @content.byline.map { byline => @Html(byline) }
                 </div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
-        <div class="content-card__standfirst">
-          @if(content.isLiveBlog){
-             @content.trailText.map{ trailText => @Html(trailText) }
-          } else {
-              @content.standfirst.map { standFirst => @Html(standFirst)}
-          }
-        </div>
-        @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
-            @content.contributors.headOption.map { profile =>
-                @profile.contributorLargeImagePath.map{ image =>
-                    <div class="content-card__byline-img">
-                        <img class="content-card__byline-img__img" src="@image" alt="@profile.name" />
-                    </div>
+
+        @if(!content.isGallery) {
+            <div class="cc-item__standfirst u-cf">
+            @if(content.isLiveBlog){
+                @content.trailText.map{ trailText => @Html(trailText) }
+            } else {
+                <div>
+                @content.standfirst.map { standfirst => @Html(standfirst) }
+                </div>
+            }
+            </div>
+            @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
+                @content.contributors.headOption.map { profile =>
+                    @profile.contributorLargeImagePath.map{ image =>
+                        <div class="cc-item__byline-img">
+                            <img class="cc-item__byline-img__img" src="@image" alt="@profile.name" />
+                        </div>
+                    }
                 }
             }
+            @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
         }
+    </div>
 
-        <div class="u-h meta__number" data-discussion-id="@content.discussionId"/>
-    </a>
+    <a class="cc-item__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
+</div>
 
