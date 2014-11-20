@@ -1,7 +1,6 @@
 package test
 
 import org.scalatest.Suites
-import controllers.ReverseContentCardController
 
 class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
