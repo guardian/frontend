@@ -18,17 +18,6 @@
     }
 }
 
-@header = {
-    <div class="cc-item__header"><h1 class="cc-item__title"><a class="cc-item__link">@kicker@content.headline</a></h1>
-        @if(!content.isMedia && content.visualTone == "comment") {
-            <div class="cc-item__byline">
-                - @content.byline.map { byline => @Html(byline) }
-            </div>
-        }
-        @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
-    </div>
-}
-
 <div class="cc-item @toneClass(content)--item @RenderClasses(Map(
     "cc-item--video" -> content.isVideo,
     "cc-item--gallery" -> content.isGallery,
@@ -43,7 +32,17 @@
                 <img class="cc-item__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
             }
         }
-        @header
+
+        <div class="cc-item__header">
+            <h1 class="cc-item__title"><a class="cc-item__link">@Html(kicker.toString.trim)@content.headline</a></h1>
+            @if(!content.isMedia && content.visualTone == "comment") {
+                <div class="cc-item__byline">
+                    - @content.byline.map { byline => @Html(byline) }
+                </div>
+            }
+            @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
+        </div>
+
         @if(!content.isGallery) {
             <div class="cc-item__standfirst u-cf">
             @if(content.isLiveBlog){
