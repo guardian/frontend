@@ -88,7 +88,7 @@ define([
 
                 if (opts.excludeTags) {
                     relatedUrl += '?' + map(opts.excludeTags, function (tag) {
-                        return 'exclude-tag=' + tag
+                        return 'exclude-tag=' + tag;
                     }).join('&');
                 }
 
