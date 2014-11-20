@@ -103,13 +103,12 @@ object IndexPage {
         dateLinkPath = Some(s"/${indexPage.page.id}")
       ).transformCards({ card =>
         card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
-          kicker = card.kicker flatMap {
-            case ReviewKicker if isReviewPage => None
-            case CartoonKicker if isCartoonPage => None
-            case otherKicker => Some(otherKicker)
-          }
-        )
+          timeStampDisplay = Some(timeStampDisplay)
+        ).setKicker(card.header.kicker flatMap {
+          case ReviewKicker if isReviewPage => None
+          case CartoonKicker if isCartoonPage => None
+          case otherKicker => Some(otherKicker)
+        })
       })
     }))
   }
