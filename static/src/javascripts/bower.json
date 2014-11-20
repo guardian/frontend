@@ -13,10 +13,10 @@
     "react": "0.11.2",
     "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
-    "videojs": "videojs/video.js#85730d7a1bda3305c830978d28e7f136354dc82b",
+    "videojs": "4.9.0",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
-    "videojs-vast": "0.1.9",
-    "vast-client-js": "1.1.2",
+    "videojs-vast": "guardian/videojs-vast-plugin#d5df74926b78e3558a941273eeb803ac3e763cf0",
+    "vast-client-js": "guardian/vast-client-js#79a3102455eb8acc6b677424e6e556fb354131d4",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
@@ -27,7 +27,7 @@
   },
   "resolutions": {
     "videojs-contrib-ads": "af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
-    "videojs": "85730d7a1bda3305c830978d28e7f136354dc82b"
+    "videojs": "4.9.0"
   },
   "install": {
     "path": "components",
