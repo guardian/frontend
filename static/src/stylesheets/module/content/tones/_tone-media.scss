@@ -47,7 +47,7 @@
     .commentcount,
     .meta__numbers,
     .meta__social,
-    .meta__number {
+    .meta__number:not(u-h) + .meta__number {
         border-color: colour(neutral-2);
     }
 

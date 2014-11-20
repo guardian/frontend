@@ -24,3 +24,11 @@
     margin-bottom: 0;
     margin-left: 10px;
 }
+
+.flagged {
+    color: red;
+}
+
+.lineItem {
+    padding-bottom: 20px;
+}

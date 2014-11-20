@@ -1,0 +1,16 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+
+@import views.support.{ImgSrc, Item620}
+@import views.support.TrailCssClasses.toneClass
+
+<a class="content-card tonal tonal--@toneClass(content) fc-item--gallery"  data-link-name="content-card" data-component="content-card" href="@content.webUrl" target="_blank">
+    @content.trailPicture(5, 3).map { image =>
+            <img class="content-card__image-container js-image-upgrade" src="@Item620.bestFor(image)"/>
+    }
+    <div class="content-card__header fc-item__header">
+        <h1 class="content-card__title fc-item__title">
+            @content.headline
+        </h1>
+    </div>
+</a>

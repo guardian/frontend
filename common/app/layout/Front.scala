@@ -8,6 +8,7 @@ import services.CollectionConfigWithId
 import slices._
 import views.support.CutOut
 import scala.Function._
+import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
@@ -24,12 +25,17 @@ case class ContainerLayoutContext(
     if (hideCutOuts) {
       (card.copy(item = card.item.copy(cutOut = None)), this)
     } else {
-      val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-        card.copy(item = card.item.copy(cutOut = None))
+      // Latest snaps are sometimes used to promote journalists, and the cut out should always show on these snaps.
+      if (card.item.snapStuff.snapType == LatestSnap) {
+        (card, this)
       } else {
-        card
+        val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
+          card.copy(item = card.item.copy(cutOut = None))
+        } else {
+          card
+        }
+        (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
       }
-      (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
     }
   }
 }
@@ -189,10 +195,15 @@ object FaciaContainer {
     containerLayout,
     config.config.showDateHeader.exists(identity),
     config.config.showLatestUpdate.exists(identity),
-    ContainerCommercialOptions.fromConfig(config.config),
+    // popular containers should never be sponsored
+    container match {
+      case MostPopular => ContainerCommercialOptions.empty
+      case _ => ContainerCommercialOptions.fromConfig(config.config)
+    },
     None,
     None,
-    false
+    false,
+    None
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
@@ -256,7 +267,8 @@ case class FaciaContainer(
   commercialOptions: ContainerCommercialOptions,
   customHeader: Option[FaciaContainerHeader],
   customClasses: Option[Seq[String]],
-  hideToggle: Boolean
+  hideToggle: Boolean,
+  dateLinkPath: Option[String]
 ) {
 
   def faciaComponentName = componentId getOrElse {
@@ -271,6 +283,19 @@ case class FaciaContainer(
   def items = collectionEssentials.items
 
   def contentItems = items collect { case c: Content => c }
+
+  def dateLink: Option[String] = {
+    val maybeDateHeadline = customHeader map {
+      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case LoneDateHeadline(dateHeadline) => dateHeadline
+    }
+
+    for {
+      path <- dateLinkPath
+      dateHeadline <- maybeDateHeadline
+      urlFragment <- dateHeadline.urlFragment
+    } yield s"$path/$urlFragment/all"
+  }
 }
 
 case class Front(

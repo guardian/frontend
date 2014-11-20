@@ -188,7 +188,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__img-caption {
-    > strong {
+    > strong:first-child {
         display: block;
         @include fs-headline(3);
         margin-top: 2px;

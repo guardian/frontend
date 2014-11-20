@@ -173,6 +173,10 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
               </object>""")
 
       })
+
+      findVideoApiElement(mediaId).foreach( videoElement => {
+        element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
+      })
     }
 
     document.getElementsByClass("element-witness--main").foreach { element: Element =>
@@ -185,6 +189,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
+
+  def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
 case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
@@ -779,7 +785,7 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
+  def apply(classes: Map[String, Boolean], extraClasses: String*): String = apply((classes.filter(_._2).keys ++ extraClasses).toSeq:_*)
 
   def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }

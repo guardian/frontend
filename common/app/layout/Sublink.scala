@@ -106,19 +106,30 @@ case class DisplaySettings(
   imageHide: Boolean
 )
 
+sealed trait SnapType
+
+case object LatestSnap extends SnapType
+case object OtherSnap extends SnapType
+
 object SnapStuff {
   def fromTrail(trail: Trail) = SnapStuff(
     SnapData(trail),
     trail match {
       case c: Content => c.snapCss
       case _ => None
+    },
+    if (trail.snapType.exists(_ == "latest")) {
+      LatestSnap
+    } else {
+      OtherSnap
     }
   )
 }
 
 case class SnapStuff(
   dataAttributes: String,
-  snapCss: Option[String]
+  snapCss: Option[String],
+  snapType: SnapType
 ) {
   def cssClasses = Seq(
     "js-snap",
@@ -154,13 +165,22 @@ object FaciaCard {
       case _ => None
     }
 
+    val maybeKicker = ItemKicker.fromTrail(trail, Some(config))
+
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (for {
+      kicker <- maybeKicker
+      kickerText <- ItemKicker.kickerText(kicker)
+      byline <- trail.byline
+    } yield kickerText contains byline) getOrElse false
+
     FaciaCard(
       content.map(_.id),
       trail.headline,
       FaciaCardHeader.fromTrail(trail, Some(config)),
-      content.flatMap(getByline),
+      content.flatMap(getByline).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(trail),
-      ItemKicker.fromTrail(trail, Some(config)),
+      maybeKicker,
       CutOut.fromTrail(trail),
       CardStyle(trail),
       cardTypes,
