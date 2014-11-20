@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'qwery',
+    'lodash/collections/map',
     'lodash/arrays/intersection',
     'common/utils/$',
     'common/utils/config',
@@ -12,6 +13,7 @@ define([
 ], function (
     bonzo,
     qwery,
+    map,
     intersection,
     $,
     config,
@@ -84,8 +86,10 @@ define([
 
                 relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
 
-                if (opts.excludeTag) {
-                    relatedUrl += '?exclude-tag=' + opts.excludeTag;
+                if (opts.excludeTags) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                        return 'exclude-tag=' + tag
+                    }).join('&');
                 }
 
                 new LazyLoad({
