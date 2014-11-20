@@ -497,10 +497,8 @@ define([
             galleryId,
             match,
             galleryHash = window.location.hash,
-            hashIndex,
-            parsedGalleryIndex,
-            galleryIndex,
-            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'];
+            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'],
+            res;
 
         bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
             e.preventDefault();
@@ -523,9 +521,9 @@ define([
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
             } else {
-                var res = /^#(img-)?(\d)+$/.exec(galleryHash);
+                res = /^#(?:img-)?(\d)+$/.exec(galleryHash);
                 if (res) {
-                    lightbox.loadGalleryfromJson(images, parseInt(res[2],10));
+                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
                 }
             }
         }
