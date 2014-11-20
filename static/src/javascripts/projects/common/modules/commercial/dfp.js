@@ -91,15 +91,8 @@ define([
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
                     $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
+                        $parent.addClass('fc-slice__item--no-mpu');
                 }
-            },
-            '300,1': function (event, $adSlot) {
-                $adSlot.addClass('u-h');
-                var $parent = $adSlot.parent();
-                // if in a slice, add the 'no mpu' class
-                $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular
