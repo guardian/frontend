@@ -315,7 +315,7 @@ define([
 
                 this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
 
-                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '#img-' + this.index, true);
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
@@ -507,7 +507,7 @@ define([
 
             var $el = bonzo(e.currentTarget),
                 galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split('?index='),
+                galleryHrefParts = galleryHref.split('#img-'),
                 parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             lightbox = lightbox || new GalleryLightbox();

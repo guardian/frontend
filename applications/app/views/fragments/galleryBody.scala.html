@@ -49,7 +49,7 @@
                 @GalleryInitialImage.bestFor(gallery.imageContainer(rowNum - 1)).map { url =>
 
                     <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                        href="@LinkTo{@gallery.url?index=@rowNum}"
+                        href="@LinkTo{@gallery.url#img-@rowNum}"
                         data-src="@imgSrc"
                         data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
