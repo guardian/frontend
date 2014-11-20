@@ -677,6 +677,36 @@ jQuery(function($) {
         </div>
     </div>
 
+
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Multi)</a>
+            </h2>
+        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-multi"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        capi: ['p/4xv7c','','',''],
+                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        capiTitle: 'Pink Floyd special',
+                        capiLinkUrl: 'http://theguardian.com/music/ledzeppelin',
+                        capiAboutLinkUrl: 'http://theguardian.com/about',
+                        capiKeywords: 'music/pinkfloyd'
+                    }).init('capi', document.querySelector('[data-name="merchandising-capi-multi"]'));
+                });
+            });
+        });
+        </script>
+    </div>
+
+
+
+
     <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
