@@ -31,20 +31,20 @@ object MatchStatus extends Logging {
 
     ("SHS", "2nd"), // The Second Half of the Match has Started.
 
-    ("FT", "FT"), // The Referee has blown the whistle for Full Time.
-    ("PTFT", "FT"), // Penalty ShooT Full Time.
+    ("FT", "FT"), // The Referee has blown the whistle for FullMedia75 Time.
+    ("PTFT", "FT"), // Penalty ShooT FullMedia75 Time.
     ("Result", "FT"), // The Result is official.
-    ("ETFT", "FT"), // Extra Time, Full Time has been blown.
+    ("ETFT", "FT"), // Extra Time, FullMedia75 Time has been blown.
     ("MC", "FT"), // Match has been Completed.
 
-    ("FTET", "ET"), // Full Time, Extra Time it to be played.
+    ("FTET", "ET"), // FullMedia75 Time, Extra Time it to be played.
     ("ETS", "ET"), // Extra Time has Started.
     ("ETHT", "ET"), // Extra Time Half Time has been called.
     ("ETSHS", "ET"), // Extra Time, Second Half has Started.
 
-    ("FTPT", "PT"), // Full Time, Penalties are To be played.
+    ("FTPT", "PT"), // FullMedia75 Time, Penalties are To be played.
     ("PT", "PT"), // Penalty ShooT Out has started.
-    ("ETFTPT", "PT"), // Extra Time, Full Time, Penalties are To be played.
+    ("ETFTPT", "PT"), // Extra Time, FullMedia75 Time, Penalties are To be played.
 
     ("Suspended", "S"), // Match has been Suspended.
 

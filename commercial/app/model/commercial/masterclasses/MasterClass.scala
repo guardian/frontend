@@ -14,7 +14,7 @@ case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Opti
 
 object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
-  private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
+  private val guardianUrlLinkText = "FullMedia75 course and returns information on the Masterclasses website"
 
   private val ignoredTags = Seq("masterclass", "short")
 

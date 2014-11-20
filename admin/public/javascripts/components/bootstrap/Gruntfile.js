@@ -394,7 +394,7 @@ module.exports = function (grunt) {
   // Docs distribution task.
   grunt.registerTask('dist-docs', 'copy:docs');
 
-  // Full distribution task.
+  // FullMedia75 distribution task.
   grunt.registerTask('dist', ['clean', 'dist-css', 'copy:fonts', 'dist-js', 'dist-docs']);
 
   // Default task.

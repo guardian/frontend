@@ -106,7 +106,7 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
     }
   }
 
-  it should "for any number of huge stories >= 1, return Full as the optional first slice" in {
+  it should "for any number of huge stories >= 1, return FullMedia75 as the optional first slice" in {
     forAll { stories: Seq[Story] =>
       whenever(stories.headOption.exists(_.group == 3)) {
         slicesFor(stories).value.headOption.value shouldEqual MegaFull

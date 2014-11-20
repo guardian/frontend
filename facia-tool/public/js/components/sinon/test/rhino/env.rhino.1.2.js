@@ -43,7 +43,7 @@ Envjs.appName      = "Resig/20070309 PilotFish/1.2.13";
 Envjs.version = "1.6";//?
 Envjs.revision = '';
 /*
- * Envjs core-env.1.2.13 
+ * Envjs core-env.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -93,7 +93,7 @@ Envjs.NONE = 3;
  */
 Envjs.lineSource = function(e){};
 
-    
+
 /**
  * TODO: used in ./event/eventtarget.js
  * @param {Object} event
@@ -342,12 +342,12 @@ Envjs.setCookie = function(url, cookie){
         attrs = cookie.split(";");
     else
         return;
-    
+
     //for now the strategy is to simply create a json object
     //and post it to a file in the .cookies.js file.  I hate parsing
-    //dates so I decided not to implement support for 'expires' 
+    //dates so I decided not to implement support for 'expires'
     //(which is deprecated) and instead focus on the easier 'max-age'
-    //(which succeeds 'expires') 
+    //(which succeeds 'expires')
     cookie = {};//keyword properties of the cookie
     cookie['domain'] = url.hostname;
     cookie['path'] = url.path||'/';
@@ -379,7 +379,7 @@ Envjs.setCookie = function(url, cookie){
         }
     }
     if(!('max-age' in cookie)){
-        //it's a transient cookie so it only lasts as long as 
+        //it's a transient cookie so it only lasts as long as
         //the window.location remains the same (ie in-memory cookie)
         __mergeCookie__(Envjs.cookies.temporary, cookie, properties);
     }else{
@@ -420,7 +420,7 @@ Envjs.getCookies = function(url){
             }catch(e){
                 //fail gracefully
                 //console.log('%s', e);
-            }   
+            }
             if(persisted){
                 __extend__(Envjs.cookies.persistent, persisted);
             }
@@ -431,14 +431,14 @@ Envjs.getCookies = function(url){
     }
     var temporary = __cookieString__(Envjs.cookies.temporary, url),
         persistent =  __cookieString__(Envjs.cookies.persistent, url);
-    //console.log('temporary cookies: %s', temporary);  
-    //console.log('persistent cookies: %s', persistent);  
+    //console.log('temporary cookies: %s', temporary);
+    //console.log('persistent cookies: %s', persistent);
     return  temporary + persistent;
 };
 
 function __cookieString__(cookies, url) {
     var cookieString = "",
-        domain, 
+        domain,
         path,
         name,
         i=0;
@@ -452,9 +452,9 @@ function __cookieString__(cookies, url) {
                 if (path == "/" || url.path.indexOf(path) > -1) {
                     for (name in cookies[domain][path]) {
                         // console.log('cookie domain path name %s', name);
-                        cookieString += 
+                        cookieString +=
                             ((i++ > 0)?'; ':'') +
-                            name + "=" + 
+                            name + "=" +
                             cookies[domain][path][name].value;
                     }
                 }
@@ -479,7 +479,7 @@ function __mergeCookie__(target, cookie, properties){
             "secure":cookie.secure,
             "max-age":cookie['max-age'],
             "date-created":now,
-            "expiration":(cookie['max-age']===0) ? 
+            "expiration":(cookie['max-age']===0) ?
                 0 :
                 now + cookie['max-age']
         };
@@ -498,14 +498,14 @@ function __mergeCookie__(target, cookie, properties){
 
     See http://www.JSON.org/js.html
 
-   
+
     This code should be minified before deployment.
     See http://javascript.crockford.com/jsmin.html
 
     USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
     NOT CONTROL.
 */
-try{ JSON; }catch(e){ 
+try{ JSON; }catch(e){
 JSON = function () {
 
     function f(n) {
@@ -548,7 +548,7 @@ JSON = function () {
 
 
     function quote(string) {
-        
+
         escapeable.lastIndex = 0;
         return escapeable.test(string) ?
             '"' + string.replace(escapeable, function (a) {
@@ -592,7 +592,7 @@ JSON = function () {
         case 'null':
 
             return String(value);
-            
+
         case 'object':
 
             if (!value) {
@@ -608,7 +608,7 @@ JSON = function () {
                 for (i = 0; i < length; i += 1) {
                     partial[i] = str(i, value) || 'null';
                 }
-                
+
                 v = partial.length === 0 ? '[]' :
                     gap ? '[\n' + gap +
                             partial.join(',\n' + gap) + '\n' +
@@ -708,7 +708,7 @@ JSON = function () {
 test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
 replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
 replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-        
+
                 j = eval('(' + text + ')');
 
                 return typeof reviver === 'function' ?
@@ -1250,7 +1250,7 @@ Envjs.platform       = "Rhino";
 Envjs.revision       = "1.7.0.rc2";
 
 /*
- * Envjs rhino-env.1.2.13 
+ * Envjs rhino-env.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -1455,9 +1455,9 @@ Envjs.writeToTempFile = function(text, suffix){
  */
 Envjs.readFromFile = function( url ){
     var fileReader = new java.io.FileReader(
-        new java.io.File( 
+        new java.io.File(
             new java.net.URI( url )));
-            
+
     var stringwriter = new java.io.StringWriter(),
         buffer = java.lang.reflect.Array.newInstance(java.lang.Character.TYPE, 1024),
         length;
@@ -1469,7 +1469,7 @@ Envjs.readFromFile = function( url ){
     stringwriter.close();
     return stringwriter.toString()+"";
 };
-    
+
 
 /**
  * Used to delete a local file
@@ -1601,7 +1601,7 @@ Envjs.connection = function(xhr, responseHandler, data){
         contentEncoding = connection.getContentEncoding() || "utf-8";
         instream = null;
         responseXML = null;
-        
+
         try{
             //console.log('contentEncoding %s', contentEncoding);
             if( contentEncoding.equalsIgnoreCase("gzip") ||
@@ -1634,7 +1634,7 @@ Envjs.connection = function(xhr, responseHandler, data){
 
         outstream.close();
         instream.close();
-        
+
         if(binary){
             xhr.responseText = new String(outstream.toByteArray(), 'UTF-8') + '';
         }else{
@@ -1746,7 +1746,7 @@ var Console,
     console;
 
 /*
- * Envjs console.1.2.13 
+ * Envjs console.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -2013,16 +2013,16 @@ function appendNode(node, html)
 //CLOSURE_END
 }());
 /*
- * Envjs dom.1.2.13 
+ * Envjs dom.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
- * 
+ *
  * Parts of the implementation were originally written by:\
  * and Jon van Noort   (jon@webarcana.com.au) \
- * and David Joham     (djoham@yahoo.com)",\ 
+ * and David Joham     (djoham@yahoo.com)",\
  * and Scott Severtson
- * 
+ *
  * This file simply provides the global definitions we need to \
  * be able to correctly implement to core browser DOM interfaces."
  */
@@ -2053,7 +2053,7 @@ var Attr,
 
 
 /*
- * Envjs dom.1.2.13 
+ * Envjs dom.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -3721,10 +3721,10 @@ __extend__(Text.prototype,{
 });
 
 /**
- * @class CDATASection 
- *      CDATA sections are used to escape blocks of text containing 
+ * @class CDATASection
+ *      CDATA sections are used to escape blocks of text containing
  *      characters that would otherwise be regarded as markup.
- *      The only delimiter that is recognized in a CDATA section is 
+ *      The only delimiter that is recognized in a CDATA section is
  *      the "\]\]\>" string that ends the CDATA section
  * @extends Text
  * @param  ownerDocument : The Document object associated with this node.
@@ -4759,28 +4759,28 @@ __extend__(Range.prototype, {
 
     },
     setEnd: function(refNode, offset){//throws RangeException
-    
+
     },
     setStartBefore: function(refNode){//throws RangeException
-    
+
     },
     setStartAfter: function(refNode){//throws RangeException
-    
+
     },
     setEndBefore: function(refNode){//throws RangeException
-    
+
     },
     setEndAfter: function(refNode){//throws RangeException
-    
+
     },
     collapse: function(toStart){//throws RangeException
-    
+
     },
     selectNode: function(refNode){//throws RangeException
-    
+
     },
     selectNodeContents: function(refNode){//throws RangeException
-    
+
     },
     compareBoundaryPoints: function(how, sourceRange){
 
@@ -4817,7 +4817,7 @@ Range.START_TO_START                 = 0;
 Range.START_TO_END                   = 1;
 Range.END_TO_END                     = 2;
 Range.END_TO_START                   = 3;
-  
+
 /*
  * Forward declarations
  */
@@ -5111,7 +5111,7 @@ __extend__(DOMParser.prototype,{
             e4;
 
         // The following are e4x directives.
-        // Full spec is here:
+        // FullMedia75 spec is here:
         // http://www.ecma-international.org/publications/standards/Ecma-357.htm
         //
         // that is pretty gross, so checkout this summary
@@ -5283,7 +5283,7 @@ var Event,
     //among other things like general profiling
     Aspect;
 /*
- * Envjs event.1.2.13 
+ * Envjs event.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -5324,7 +5324,7 @@ function __setArray__( target, array ) {
 }
 /**
  * Borrowed with love from:
- * 
+ *
  * jQuery AOP - jQuery plugin to add features of aspect-oriented programming (AOP) to jQuery.
  * http://jquery-aop.googlecode.com/
  *
@@ -5366,7 +5366,7 @@ function __setArray__( target, array ) {
 		else if (advice.type == _around) {
 			aspect = function() {
 				var invocation = { object: this, args: arguments };
-				return advice.value.apply(invocation.object, [{ arguments: invocation.args, method: method, proceed : 
+				return advice.value.apply(invocation.object, [{ arguments: invocation.args, method: method, proceed :
 					function() {
 						return old.apply(invocation.object, invocation.args);
 					}
@@ -5374,7 +5374,7 @@ function __setArray__( target, array ) {
 			};
 		}
 
-		aspect.unweave = function() { 
+		aspect.unweave = function() {
 			source[method] = old;
 			pointcut = source = aspect = old = null;
 		};
@@ -5410,7 +5410,7 @@ function __setArray__( target, array ) {
 			if (advices.length == 0)
 				throw 'No method: ' + pointcut.method;
 
-		} 
+		}
 		else
 		{
 			// Return as an array of one element
@@ -5421,10 +5421,10 @@ function __setArray__( target, array ) {
 
 	};
 
-	Aspect = 
+	Aspect =
 	{
 		/**
-		 * Creates an advice after the defined point-cut. The advice will be executed after the point-cut method 
+		 * Creates an advice after the defined point-cut. The advice will be executed after the point-cut method
 		 * has completed execution successfully, and will receive one parameter with the result of the execution.
 		 * This function returns an array of weaved aspects (Function).
 		 *
@@ -5436,7 +5436,7 @@ function __setArray__( target, array ) {
 		 *
 		 * @name after
 		 * @param Map pointcut Definition of the point-cut to apply the advice. A point-cut is the definition of the object/s and method/s to be weaved.
-		 * @option Object target Target object to be weaved. 
+		 * @option Object target Target object to be weaved.
 		 * @option String method Name of the function to be weaved. Regex are supported, but not on built-in objects.
 		 * @param Function advice Function containing the code that will get called after the execution of the point-cut. It receives one parameter
 		 *                        with the result of the point-cut's execution.
@@ -5450,7 +5450,7 @@ function __setArray__( target, array ) {
 		},
 
 		/**
-		 * Creates an advice before the defined point-cut. The advice will be executed before the point-cut method 
+		 * Creates an advice before the defined point-cut. The advice will be executed before the point-cut method
 		 * but cannot modify the behavior of the method, or prevent its execution.
 		 * This function returns an array of weaved aspects (Function).
 		 *
@@ -5462,7 +5462,7 @@ function __setArray__( target, array ) {
 		 *
 		 * @name before
 		 * @param Map pointcut Definition of the point-cut to apply the advice. A point-cut is the definition of the object/s and method/s to be weaved.
-		 * @option Object target Target object to be weaved. 
+		 * @option Object target Target object to be weaved.
 		 * @option String method Name of the function to be weaved. Regex are supported, but not on built-in objects.
 		 * @param Function advice Function containing the code that will get called before the execution of the point-cut.
 		 *
@@ -5481,20 +5481,20 @@ function __setArray__( target, array ) {
 		 * This function returns an array of weaved aspects (Function).
 		 *
 		 * @example jQuery.aop.around( {target: window, method: 'MyGlobalMethod'}, function(invocation) {
-		 *                alert('# of Arguments: ' + invocation.arguments.length); 
-		 *                return invocation.proceed(); 
+		 *                alert('# of Arguments: ' + invocation.arguments.length);
+		 *                return invocation.proceed();
 		 *          } );
 		 * @result Array<Function>
 		 *
-		 * @example jQuery.aop.around( {target: String, method: 'indexOf'}, function(invocation) { 
-		 *                alert('Searching: ' + invocation.arguments[0] + ' on: ' + this); 
-		 *                return invocation.proceed(); 
+		 * @example jQuery.aop.around( {target: String, method: 'indexOf'}, function(invocation) {
+		 *                alert('Searching: ' + invocation.arguments[0] + ' on: ' + this);
+		 *                return invocation.proceed();
 		 *          } );
 		 * @result Array<Function>
 		 *
 		 * @example jQuery.aop.around( {target: window, method: /Get(\d+)/}, function(invocation) {
-		 *                alert('Executing ' + invocation.method); 
-		 *                return invocation.proceed(); 
+		 *                alert('Executing ' + invocation.method);
+		 *                return invocation.proceed();
 		 *          } );
 		 * @desc Matches all global methods starting with 'Get' and followed by a number.
 		 * @result Array<Function>
@@ -5502,7 +5502,7 @@ function __setArray__( target, array ) {
 		 *
 		 * @name around
 		 * @param Map pointcut Definition of the point-cut to apply the advice. A point-cut is the definition of the object/s and method/s to be weaved.
-		 * @option Object target Target object to be weaved. 
+		 * @option Object target Target object to be weaved.
 		 * @option String method Name of the function to be weaved. Regex are supported, but not on built-in objects.
 		 * @param Function advice Function containing the code that will get called around the execution of the point-cut. This advice will be called with one
 		 *                        argument containing one function '.proceed()', the collection of arguments '.arguments', and the matched method name '.method'.
@@ -5528,9 +5528,9 @@ function __setArray__( target, array ) {
 		 *
 		 * @name introduction
 		 * @param Map pointcut Definition of the point-cut to apply the advice. A point-cut is the definition of the object/s and method/s to be weaved.
-		 * @option Object target Target object to be weaved. 
+		 * @option Object target Target object to be weaved.
 		 * @option String method Name of the function to be weaved.
-		 * @param Function advice Function containing the code that will be executed on the point-cut. 
+		 * @param Function advice Function containing the code that will be executed on the point-cut.
 		 *
 		 * @type Array<Function>
 		 * @cat Plugins/General
@@ -5539,7 +5539,7 @@ function __setArray__( target, array ) {
 		{
 			return weave( pointcut, { type: _intro, value: advice } );
 		},
-		
+
 		/**
 		 * Configures global options.
 		 *
@@ -5841,7 +5841,7 @@ var $onblur,
 
 /**
  * @name MouseEvent
- * @w3c:domlevel 2 
+ * @w3c:domlevel 2
  * @uri http://www.w3.org/TR/2000/REC-DOM-Level-2-Events-20001113/events.html
  */
 MouseEvent = function(options) {
@@ -5888,7 +5888,7 @@ __extend__(MouseEvent.prototype,{
         return this._relatedTarget;
     },
     initMouseEvent: function(type, bubbles, cancelable, windowObject, detail,
-            screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, 
+            screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey,
             metaKey, button, relatedTarget){
         this.initUIEvent(type, bubbles, cancelable, windowObject, detail);
         this._screenX = screenX;
@@ -6136,23 +6136,23 @@ __extend__(Document.prototype, DocumentEvent.prototype);
 }());
 
 /*
- * Envjs timer.1.2.13 
+ * Envjs timer.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
- * 
+ *
  * Parts of the implementation were originally written by:\
  * Steven Parkes
- * 
+ *
  * requires Envjs.wait, Envjs.sleep, Envjs.WAIT_INTERVAL
  */
 var setTimeout,
     clearTimeout,
     setInterval,
     clearInterval;
-    
+
 /*
- * Envjs timer.1.2.13 
+ * Envjs timer.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -6470,7 +6470,7 @@ var HTMLDocument,
     __loadLink__;
 
 /*
- * Envjs html.1.2.13 
+ * Envjs html.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -6983,7 +6983,7 @@ Aspect.around({
                             console.log('error loading html element %s %e', node, e.toString());
                         }
                         break;
-        
+
                     case 'link':
                         if (node.href && node.href.length > 0) {
                             __loadLink__(node, node.href);
@@ -7151,7 +7151,7 @@ var __removeNamedMap__ = function(target, node) {
         delete target[nodename];
     }
 };
-    
+
 /**
  * @name HTMLEvents
  * @w3c:domlevel 2
@@ -7309,7 +7309,7 @@ var __scroll__ = function(element){
 
 /**
  * @name KeyboardEvents
- * @w3c:domlevel 2 
+ * @w3c:domlevel 2
  * @uri http://www.w3.org/TR/2000/REC-DOM-Level-2-Events-20001113/events.html
  */
 var KeyboardEvents= function(){};
@@ -7327,14 +7327,14 @@ KeyboardEvents.prototype = {
 
 
 var __registerKeyboardEventAttrs__ = function(elm){
-    if(elm.hasAttribute('onkeydown')){ 
-        elm.addEventListener('keydown', elm.onkeydown, false); 
+    if(elm.hasAttribute('onkeydown')){
+        elm.addEventListener('keydown', elm.onkeydown, false);
     }
-    if(elm.hasAttribute('onkeypress')){ 
-        elm.addEventListener('keypress', elm.onkeypress, false); 
+    if(elm.hasAttribute('onkeypress')){
+        elm.addEventListener('keypress', elm.onkeypress, false);
     }
-    if(elm.hasAttribute('onkeyup')){ 
-        elm.addEventListener('keyup', elm.onkeyup, false); 
+    if(elm.hasAttribute('onkeyup')){
+        elm.addEventListener('keyup', elm.onkeyup, false);
     }
     return elm;
 };
@@ -7362,7 +7362,7 @@ var  __keyup__ = function(element){
 
 /**
  * @name MaouseEvents
- * @w3c:domlevel 2 
+ * @w3c:domlevel 2
  * @uri http://www.w3.org/TR/2000/REC-DOM-Level-2-Events-20001113/events.html
  */
 var MouseEvents= function(){};
@@ -7387,30 +7387,30 @@ MouseEvents.prototype = {
     },
     onmouseup: function(event){
         __eval__(this.getAttribute('onmouseup')||'', this);
-    }  
+    }
 };
 
 var __registerMouseEventAttrs__ = function(elm){
-    if(elm.hasAttribute('onclick')){ 
-        elm.addEventListener('click', elm.onclick, false); 
+    if(elm.hasAttribute('onclick')){
+        elm.addEventListener('click', elm.onclick, false);
     }
-    if(elm.hasAttribute('ondblclick')){ 
-        elm.addEventListener('dblclick', elm.ondblclick, false); 
+    if(elm.hasAttribute('ondblclick')){
+        elm.addEventListener('dblclick', elm.ondblclick, false);
     }
-    if(elm.hasAttribute('onmousedown')){ 
-        elm.addEventListener('mousedown', elm.onmousedown, false); 
+    if(elm.hasAttribute('onmousedown')){
+        elm.addEventListener('mousedown', elm.onmousedown, false);
     }
-    if(elm.hasAttribute('onmousemove')){ 
-        elm.addEventListener('mousemove', elm.onmousemove, false); 
+    if(elm.hasAttribute('onmousemove')){
+        elm.addEventListener('mousemove', elm.onmousemove, false);
     }
-    if(elm.hasAttribute('onmouseout')){ 
-        elm.addEventListener('mouseout', elm.onmouseout, false); 
+    if(elm.hasAttribute('onmouseout')){
+        elm.addEventListener('mouseout', elm.onmouseout, false);
     }
-    if(elm.hasAttribute('onmouseover')){ 
-        elm.addEventListener('mouseover', elm.onmouseover, false); 
+    if(elm.hasAttribute('onmouseover')){
+        elm.addEventListener('mouseover', elm.onmouseover, false);
     }
-    if(elm.hasAttribute('onmouseup')){ 
-        elm.addEventListener('mouseup', elm.onmouseup, false); 
+    if(elm.hasAttribute('onmouseup')){
+        elm.addEventListener('mouseup', elm.onmouseup, false);
     }
     return elm;
 };
@@ -7419,42 +7419,42 @@ var __registerMouseEventAttrs__ = function(elm){
 var  __click__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("click", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
 var  __mousedown__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("mousedown", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
 var  __mouseup__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("mouseup", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
 var  __mouseover__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("mouseover", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
 var  __mousemove__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("mousemove", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
 var  __mouseout__ = function(element){
     var event = new Event('MouseEvents');
     event.initEvent("mouseout", true, true, null, 0,
-                0, 0, 0, 0, false, false, false, 
+                0, 0, 0, 0, false, false, false,
                 false, null, null);
     element.dispatchEvent(event);
 };
@@ -10112,7 +10112,7 @@ HTMLElement.registerSetAttribute('SELECT', 'name',
 /**
  * HTML 5: 4.6.22 The span element
  * http://dev.w3.org/html5/spec/Overview.html#the-span-element
- * 
+ *
  */
 HTMLSpanElement = function(ownerDocument) {
     HTMLElement.apply(this, arguments);
@@ -10778,7 +10778,7 @@ var CSS2Properties,
 ;
 
 /*
- * Envjs css.1.2.13 
+ * Envjs css.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -11380,9 +11380,9 @@ HTMLElement.prototype.setAttribute = function(name, value) {
 var XMLParser = {},
     HTMLParser = {};
 
-    
+
 /*
- * Envjs parser.1.2.13 
+ * Envjs parser.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -12064,7 +12064,7 @@ var __clearFragmentCache__ = function(){
 
 /**
  * @name Document
- * @w3c:domlevel 2 
+ * @w3c:domlevel 2
  * @uri http://www.w3.org/TR/2000/REC-DOM-Level-2-Events-20001113/events.html
  */
 __extend__(Document.prototype, {
@@ -12083,7 +12083,7 @@ __extend__(Document.prototype, {
             this._readonly = false;
 
             XMLParser.parseDocument(xmlString, this);
-            
+
             Envjs.wait(-1);
         } catch (e) {
             //$error(e);
@@ -12319,22 +12319,22 @@ __extend__(HTMLElement.prototype,{
 //CLOSURE_END
 }());
 /*
- * Envjs xhr.1.2.13 
+ * Envjs xhr.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
- * 
+ *
  * Parts of the implementation originally written by Yehuda Katz.
- * 
- * This file simply provides the global definitions we need to 
- * be able to correctly implement to core browser (XML)HTTPRequest 
+ *
+ * This file simply provides the global definitions we need to
+ * be able to correctly implement to core browser (XML)HTTPRequest
  * interfaces.
  */
 var Location,
     XMLHttpRequest;
 
 /*
- * Envjs xhr.1.2.13 
+ * Envjs xhr.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License
@@ -13105,7 +13105,7 @@ XMLHttpRequest.prototype = {
                     }else{
                         //Envjs.warn('response XML does not appear to be xml');
                     }
-                    
+
                     try{
                         cookie = _this.getResponseHeader('SET-COOKIE');
                         if(cookie){
@@ -13200,7 +13200,7 @@ var Window,
 
 
 /*
- * Envjs window.1.2.13 
+ * Envjs window.1.2.13
  * Pure JavaScript Browser Environment
  * By John Resig <http://ejohn.org/> and the Envjs Team
  * Copyright 2008-2010 John Resig, under the MIT License

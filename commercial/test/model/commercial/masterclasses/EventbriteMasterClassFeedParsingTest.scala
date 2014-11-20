@@ -16,7 +16,7 @@ import test.ConfiguredTestSuite
                             |            "capacity" : 18,
                             |            "category" : "seminars,conferences",
                             |            "created" : "2013-02-15 09:50:35",
-                            |            "description" : "<p>Whole bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></p>",
+                            |            "description" : "<p>Whole bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>FullMedia75 course and returns information on the Masterclasses website</a></p>",
                             |            "end_date" : "2013-04-21 17:00:00",
                             |            "id" : 1323241,
                             |            "link_color" : "EE6600",
@@ -78,7 +78,7 @@ import test.ConfiguredTestSuite
                             |            "capacity" : 0,
                             |            "category" : "",
                             |            "created" : "2013-04-18 02:27:38",
-                            |            "description" : "<p><a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></p>",
+                            |            "description" : "<p><a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>FullMedia75 course and returns information on the Masterclasses website</a></p>",
                             |            "end_date" : "2013-05-28 16:00:00",
                             |            "id" : 1231412,
                             |            "link_color" : "EE6600",
@@ -196,9 +196,9 @@ import test.ConfiguredTestSuite
 
   "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(rawEventBriteFeed)
-  
+
     val events: Seq[JsValue] = EventbriteApi.extractEventsFromFeed(eventBriteFeed)
-    
+
     events.size should be (3)
   }
 }

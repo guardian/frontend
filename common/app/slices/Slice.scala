@@ -554,7 +554,7 @@ case object Full extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.Full
+          tablet = cards.FullMedia75
         )
       )
     )
@@ -576,7 +576,7 @@ case object MegaFull extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.MegaFull
+          tablet = cards.FullMedia100
         )
       )
     )
