@@ -27,6 +27,7 @@ define([
 
         // Mock the time
         jasmine.clock().install();
+        fixArticles.reset();
         new CollectionsEditor().init();
 
         // Number 2 is because we wait for two search, latest and the only

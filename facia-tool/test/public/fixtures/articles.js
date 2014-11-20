@@ -57,15 +57,22 @@ define([
         }
     }];
 
-    mockSearch.latest(allArticles);
-    var mockData = {};
-    for (var i = 0; i < allArticles.length; i += 1) {
-        mockData['internal-code/content/' + allArticles[i].fields.internalContentCode] = {
-            response: {
-                results: [allArticles[i]],
-                status: 'ok'
-            }
-        };
+    function reset() {
+        mockSearch.latest(allArticles);
+        var mockData = {};
+        for (var i = 0; i < allArticles.length; i += 1) {
+            mockData['internal-code/content/' + allArticles[i].fields.internalContentCode] = {
+                response: {
+                    results: [allArticles[i]],
+                    status: 'ok'
+                }
+            };
+        }
+        mockSearch.set(mockData);
     }
-    mockSearch.set(mockData);
+
+    reset();
+    return {
+        reset: reset
+    };
 });
