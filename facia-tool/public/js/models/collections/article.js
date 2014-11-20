@@ -17,7 +17,8 @@ define([
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
-    'models/group'
+    'models/group',
+    'utils/url-host'
 ],
     function (
         vars,
@@ -37,7 +38,8 @@ define([
         copiedArticle,
         authedAjax,
         contentApi,
-        Group
+        Group,
+        urlHost
     ) {
         var capiProps = [
                 'webUrl',
@@ -74,7 +76,7 @@ define([
                     key: 'byline',
                     editable: true,
                     ifState: 'enableContentOverrides',
-                    if: 'showByline',
+                    'if': 'showByline',
                     omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
@@ -82,7 +84,7 @@ define([
                 {
                     key: 'customKicker',
                     editable: true,
-                    if: 'showKickerCustom',
+                    'if': 'showKickerCustom',
                     label: 'custom kicker',
                     type: 'text'
                 },
@@ -95,20 +97,20 @@ define([
                     key: 'imageSrc',
                     editable: true,
                     omitForSupporting: true,
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcWidth',
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image width',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcHeight',
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image height',
                     type: 'text'
                 },
@@ -116,20 +118,20 @@ define([
                     key: 'imageCutoutSrc',
                     editable: true,
                     omitForSupporting: true,
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcWidth',
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image width',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcHeight',
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image height',
                     type: 'text'
                 },
@@ -332,7 +334,7 @@ define([
             }
 
             if (withCapiData) {
-                this.addCapiData(opts)
+                this.addCapiData(opts);
             } else {
                 this.updateEditorsDisplay();
             }
@@ -417,7 +419,7 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
+                    var display = opts['if'] ? _.some(all, function(editor) { return editor.key === opts['if'] && self.meta[editor.key](); }) : true;
 
                     display = display && (self.state.enableContentOverrides() || key === 'customKicker');
                     display = display && (opts.ifState ? self.state[opts.ifState]() : true);
@@ -432,13 +434,13 @@ define([
                         .filter(function(editor) { return editor.singleton === opts.singleton; })
                         .filter(function(editor) { return editor.key !== key; })
                         .pluck('key')
-                        .each(function(key) { self.meta[key](false) })
+                        .each(function(key) { self.meta[key](false); });
                     }
 
                     meta(!meta());
 
                    _.chain(all)
-                    .filter(function(editor) { return editor.if === key; })
+                    .filter(function(editor) { return editor['if'] === key; })
                     .first(1)
                     .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
@@ -460,7 +462,7 @@ define([
                     },
                     owner: self
                 })
-            }
+            };
         };
 
         Article.prototype.validateImageMain = function() {
@@ -474,7 +476,7 @@ define([
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
                 }
-            )
+            );
         };
 
         Article.prototype.validateImageCutout = function() {
@@ -486,7 +488,7 @@ define([
                     maxWidth: 1000,
                     minWidth: 400
                 }
-            )
+            );
         };
 
         Article.prototype.addCapiData = function(opts) {
@@ -529,7 +531,7 @@ define([
             if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(identity));
             }
-        }
+        };
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
@@ -636,7 +638,7 @@ define([
             this.meta.snapType('link');
 
             this.convertToSnap();
-        }
+        };
 
         Article.prototype.convertToLatestSnap = function(kicker) {
             this.meta.snapType('latest');
@@ -666,7 +668,7 @@ define([
                 type: 'GET'
             })
             .done(function(response) {
-                var doc = document.createElement("div"),
+                var doc = document.createElement('div'),
                     title,
                     og = {};
 
@@ -757,11 +759,11 @@ define([
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
             }
-        };
+        }
 
         function undefineObservables() {
-            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
-        };
+            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); });
+        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;
@@ -793,7 +795,7 @@ define([
                     if (keyCode === 9) {
                         e.preventDefault();
                         formField = bindingContext.$rawData;
-                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === 'text' && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
                         mediator.emit('ui:open', formFields[nextIndex].meta, self);
                     }
