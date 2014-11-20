@@ -6,6 +6,7 @@ import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId
+import scala.language.postfixOps
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
@@ -24,10 +25,18 @@ case class FaciaPage(id: String,
       id <- item.section +: item.tags.map(_.id)
     } yield id
 
-    if (tagAndSectionIds contains id) {
-      Some(s"$id/all")
-    } else {
-      None
+    val idWithoutEdition = id.split("/").toList match {
+      case maybeEdition :: rest if Edition.byId(maybeEdition).isDefined => Some(rest.mkString("/"))
+      case _ => None
+    }
+
+    val validIds = Set(
+      Some(id),
+      idWithoutEdition
+    ).flatten
+
+    tagAndSectionIds.find(validIds contains) map { id =>
+      s"$id/all"
     }
   }
 
