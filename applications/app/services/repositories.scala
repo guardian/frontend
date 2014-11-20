@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices._
+import views.support.{ReviewKicker, TagKicker, CartoonKicker}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -45,6 +46,9 @@ object IndexPage {
   }
 
   def makeFront(indexPage: IndexPage, edition: Edition) = {
+    val isCartoonPage = indexPage.isTagWithId("type/cartoon")
+    val isReviewPage = indexPage.isTagWithId("tone/reviews")
+
     val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
@@ -98,14 +102,27 @@ object IndexPage {
         showTimestamps = true,
         dateLinkPath = Some(s"/${indexPage.page.id}")
       ).transformCards({ card =>
-        card.copy(timeStampDisplay = Some(timeStampDisplay))
+        card.copy(
+          timeStampDisplay = Some(timeStampDisplay),
+          kicker = card.kicker flatMap {
+            case ReviewKicker if isReviewPage => None
+            case CartoonKicker if isCartoonPage => None
+            case otherKicker => Some(otherKicker)
+          }
+        )
       })
     }))
   }
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now)
+                     date: DateTime = DateTime.now) {
+  def isTagWithId(id: String) = page match {
+    case tag: Tag => tag.id == id
+
+    case _ => false
+  }
+}
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
