@@ -3,13 +3,15 @@
   "version": "0.1.0 ",
   "dependencies": {
     "mediaelement": "~2.16.1",
-    "video-js-swf": "guardian/video-js-swf#595e8e59e7891d9b5ed0eae10db839e1c92ef95d"
+    "video-js-swf" : "videojs/video-js-swf#4c0f3450e3df8632647e326dbff9d7a6ade1d9a8",
+    "video-js-vpaid": "guardian/video-js-vpaid"
   },
   "install": {
     "path": "components",
     "sources": {
       "mediaelement": "bower_components/mediaelement/build/flashmediaelement.swf",
-      "video-js-swf": "bower_components/video-js-swf/dist/video-js.swf"
+      "video-js-swf": "bower_components/video-js-swf/dist/video-js.swf",
+      "video-js-vpaid": "bower_components/video-js-vpaid/dist/video-js.swf"
     }
   }
 }

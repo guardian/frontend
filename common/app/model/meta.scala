@@ -56,7 +56,8 @@ trait MetaData extends Tags {
     ("isSurging", JsString(isSurging.mkString(","))),
     ("hasClassicVersion", JsBoolean(hasClassicVersion)),
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
-    ("videoJsSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
   )
 
   def openGraph: Map[String, String] = Map(
