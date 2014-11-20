@@ -265,6 +265,9 @@ case class FaciaContainer(
   hideToggle: Boolean,
   showTimestamps: Boolean
 ) {
+  def transformCards(f: FaciaCard => FaciaCard) = copy(
+    containerLayout = containerLayout.map(_.transformCards(f))
+  )
 
   def faciaComponentName = componentId getOrElse {
     displayName map { title: String =>

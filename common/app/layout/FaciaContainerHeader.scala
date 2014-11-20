@@ -80,6 +80,13 @@ case class MetaDataHeader(
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 
+object DateHeadline {
+  def cardTimestampDisplay(dateHeadline: DateHeadline) = dateHeadline match {
+    case _: DayHeadline => TimeTimestamp
+    case _: MonthHeadline => DateTimestamp
+  }
+}
+
 sealed trait DateHeadline {
   val dateFormatString: String
 
