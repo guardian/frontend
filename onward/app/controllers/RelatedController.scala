@@ -34,7 +34,7 @@ object RelatedController extends Controller with Related with Logging with Execu
         Fixed(FixedContainers.fixedMediumFastXII),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(trails take 8, displayName, None, None, None)
-      ),
+      ).withTimeStamps,
       properties
     )(request)
 

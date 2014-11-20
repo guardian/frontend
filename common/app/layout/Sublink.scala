@@ -154,6 +154,28 @@ case class FaciaCardHeader(
   url: EditionalisedLink
 )
 
+sealed trait FaciaCardTimestamp {
+  val javaScriptUpdate: Boolean
+
+  val formatString: String
+}
+
+// By default a date string, but uses JavaScript to update to a human readable string like '22h' meaning 22 hours ago
+case object DateOrTimeAgo extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = true
+  override val formatString: String = "d MMM y"
+}
+
+case object DateTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "d MMM y"
+}
+
+case object TimeTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "h:mm aa"
+}
+
 object FaciaCard {
   private def getByline(content: Content) = content.byline.filter(const(content.showByline)) map { byline =>
     Byline(byline, content.contributors)
@@ -193,7 +215,8 @@ object FaciaCard {
       trail.trailText,
       MediaType.fromTrail(trail),
       DisplaySettings.fromTrail(trail),
-      trail.isLive
+      trail.isLive,
+      None
     )
   }
 }
@@ -217,7 +240,8 @@ case class FaciaCard(
   trailText: Option[String],
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
-  isLive: Boolean
+  isLive: Boolean,
+  timeStampDisplay: Option[FaciaCardTimestamp]
 ) {
 
   def isVideo = displayElement match {
@@ -230,4 +254,6 @@ case class FaciaCard(
     case Some(InlineImage(_)) => true
     case _ => false
   }
+
+  def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 }

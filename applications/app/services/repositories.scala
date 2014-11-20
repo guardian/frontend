@@ -21,6 +21,7 @@ import common.Seqs._
 import scalaz.syntax.traverse._
 import scalaz.std.list._
 import Function.const
+import DateHeadline.cardTimestampDisplay
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -29,7 +30,6 @@ object IndexPagePagination {
     20
   }
 
-  /** Do not change this. I will kill you good. */
   def rssPageSize: Int = 20
 }
 
@@ -86,12 +86,20 @@ object IndexPage {
     }
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
+      val timeStampDisplay = header match {
+        case MetaDataHeader(_, _, _, dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+      }
+
       container.copy(
         customHeader = Some(header),
         customClasses = Some(Seq("fc-container--tag")),
         hideToggle = true,
+        showTimestamps = true,
         dateLinkPath = Some(s"/${indexPage.page.id}")
-      )
+      ).transformCards({ card =>
+        card.copy(timeStampDisplay = Some(timeStampDisplay))
+      })
     }))
   }
 }

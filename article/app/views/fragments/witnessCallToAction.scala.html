@@ -1,5 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
+@import common.LinkTo
+
 @if(content.allowUserGeneratedContent) {
     @content.witnessAssignment.map{ assignmentId =>
         @defining(s"https://witness.theguardian.com/assignment/$assignmentId#contribute"){ assignmentUrl =>

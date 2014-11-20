@@ -45,7 +45,7 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(audios take 4, displayName, None, None, None)
-      ),
+      ).withTimeStamps,
       FrontProperties.empty
     )(request)
 
