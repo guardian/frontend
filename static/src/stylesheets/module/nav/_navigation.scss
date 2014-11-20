@@ -459,6 +459,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         display: table-cell;
     }
     .top-navigation {
+        overflow: hidden;
+
         @include mq(navigationBreakOnTwoLevels) {
             @include box-sizing(border-box);
             position: absolute;
