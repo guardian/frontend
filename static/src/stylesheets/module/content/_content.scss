@@ -86,12 +86,14 @@
     top: 0;
     right: 0;
     height: 100%;
-    overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
     width: gs-span(4);
 
     @include mq($until: desktop) {
         display: none;
+    }
+    .section-football & {
+        overflow: hidden; // quick hackfix for overflowing right hand components
     }
 }
 
