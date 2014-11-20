@@ -81,9 +81,14 @@
     }
 }
 
-.content__hr--top {
+.content__hr {
+    border: 0;
+    margin: 0;
     border-top: 1px dotted colour(neutral-5);
     padding-top: 5px;
+    @include mq($until: leftCol) {
+        display: none;
+    }
 }
 
 .content__secondary-column {
