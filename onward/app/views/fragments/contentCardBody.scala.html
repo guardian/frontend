@@ -34,7 +34,7 @@
         }
 
         <div class="cc-item__header">
-            <h1 class="cc-item__title"><a class="cc-item__link">@Html(kicker.toString.trim) @content.headline</a></h1>
+            <h1 class="cc-item__title"><a class="cc-item__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
             @if(!content.isMedia && content.visualTone == "comment") {
                 <div class="cc-item__byline">
                     - @content.byline.map { byline => @Html(byline) }
