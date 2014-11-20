@@ -5111,7 +5111,7 @@ __extend__(DOMParser.prototype,{
             e4;
 
         // The following are e4x directives.
-        // FullMedia75 spec is here:
+        // Full spec is here:
         // http://www.ecma-international.org/publications/standards/Ecma-357.htm
         //
         // that is pretty gross, so checkout this summary

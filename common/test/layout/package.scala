@@ -12,6 +12,7 @@ package object layout {
     const(ThreeQuarters),
     const(ThreeQuartersRight),
     const(FullMedia75),
+    const(FullMedia50),
     const(Third),
     const(FullMedia100)
   )
