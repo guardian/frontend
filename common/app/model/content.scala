@@ -139,6 +139,24 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
+  override def summary: Seq[SummaryData] = {
+    val tagsSummary = for {
+      tag <- tags
+      if Set("keyword", "contributor", "series", "blog").contains(tag.tagType)
+    } yield SummaryData(
+        tag.id,
+        tag.name,
+        tag.tagType,
+        SummaryData.defaultWeight,
+        if (tag.tagType == "keyword") Some(tag.sectionName) else None
+      )
+    val keywordOthers = tagsSummary.groupBy(_.`type` == "keyword")
+    val leadKeyword = keywordOthers.getOrElse(true, Seq[SummaryData]()).headOption
+    val otherTags = keywordOthers.getOrElse(false, Seq[SummaryData]())
+    val tagsWithOneKeywordOnly: Seq[SummaryData] = Seq(leadKeyword.toSeq, otherTags).flatten
+    SummaryData(section, sectionName, "section", SummaryData.defaultWeight, None) +: tagsWithOneKeywordOnly
+  }
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, JsValue] = {

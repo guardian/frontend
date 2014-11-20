@@ -27,6 +27,11 @@ case class FaciaPage(id: String,
 
   override lazy val isFront = true
 
+  override def summary: Seq[SummaryData] = {
+    // faciaPage could actually be a tag or section but we don't know (on this request)
+    Seq(SummaryData(id, webTitle, "faciaPage", SummaryData.frontWeight, None))
+  }
+
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
   lazy val faciaPageMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(webTitle.capitalize),

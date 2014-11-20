@@ -3,103 +3,207 @@
  Description: Gets and sets users reading history
  */
 define([
+    'lodash/arrays/zip',
+    'lodash/collections/contains',
+    'lodash/collections/filter',
+    'lodash/collections/reduceRight',
     'lodash/objects/assign',
+    'lodash/objects/mapValues',
+    'lodash/objects/omit',
+    'common/utils/_',
     'common/utils/storage'
 ], function (
+    zip,
+    contains,
+    filter,
+    reduceRight,
     assign,
+    mapValues,
+    omit,
+    _,
     storage
 ) {
 
-    var history,
-        summary,
+    var historyCache,
+        summaryCache,
         storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
+        storageKeySummary = storageKeyHistory + '.summary',
         maxSize = 100;
 
-    function HistoryItem(item) {
-        assign(this, item.meta);
-        this.id = item.id;
-        this.timestamp = Date.now();
+    function HistoryItem(item, now) {
+        assign(this, item);
+        this.timestamp = now;
         this.count = 1;
         return this;
     }
 
-    function setHistory(data) {
-        history = data;
-        return storage.local.set(storageKeyHistory, data);
-    }
+    /**
+     * {
+            "id": "lifeandstyle/food-and-drink",
+            "displayName": "Food & drink2",
+            "type": "keyword",
+            "weight": 50,
+            "parentDisplayName": "Life and style2"
+        }
+     {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50, "Life and style"]
+            }
+     * @param tag
+     * @param summary
+     * @param multiplier
+     * @returns {*}
+     */
+    function updateSummaryTypeFromIdName(tag, summary, multiplier) {
+        var tagType,
+            nameCount,
+            oldWeight;
 
-    function setSummary(data) {
-        summary = data;
-        return storage.local.set(storageKeySummary, data);
-    }
-
-    function updateSummary(summary, meta) {
-        var section = meta.section,
-            keyword = (meta.keywords || [])[0];
-
-        if (section) {
-            summary.sections[section] = (summary.sections[section] || 0) + 1;
+        tagType = (tag.type === 'faciaPage' && summary[tag.id]) ? summary[tag.id][1] : tag.type;
+        oldWeight = summary[tag.id] ? summary[tag.id][2] : 0;
+        nameCount = [tag.displayName, tagType, oldWeight + (tag.weight * multiplier)];
+        if (tag.parentDisplayName) {
+            nameCount.push(tag.parentDisplayName);
         }
 
-        if (keyword) {
-            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
+        summary[tag.id] = nameCount;
+
+        return summary;
+    }
+
+    function updateSummaryFromAllMeta(summaryIncrement, summary, multiplier) {
+        var i;
+
+        for (i = 0; i < summaryIncrement.length; i++) {
+            summary = updateSummaryTypeFromIdName(summaryIncrement[i], summary, multiplier);
         }
+
+        return summary;
+    }
+
+    function addItemAndUpdateSummary(itemsSoFar, itemToAdd) {
+        itemsSoFar.recentPages.unshift(itemToAdd);
+        itemsSoFar.summary = updateSummaryFromAllMeta(itemToAdd.summary, itemsSoFar.summary, itemToAdd.countRepeatVisits ? itemToAdd.count : 1);
+
+        return itemsSoFar;
+    }
+
+    function getUpdatedHistory(newItem, oldItems, now, maxSize) {
+        var items = reduceRight(oldItems, function (items, item) {
+            if (item.id === newItem.id) {
+                items.currentItem.count = items.currentItem.count + item.count;
+            } else if (item.summary) { // only add non legacy items with a summary block
+                items = addItemAndUpdateSummary(items, item);
+            }
+
+            return items;
+        }, {
+            currentItem: new HistoryItem(newItem, now),
+            recentPages: [],
+            summary: {}
+        });
+
+        addItemAndUpdateSummary(items, items.currentItem);
+        delete items.currentItem;
+
+        items.recentPages = items.recentPages.slice(0, maxSize);
+        //items.summary.count = items.recentPages.length;
+        return items;
+    }
+
+    /**
+     * summary = {
+                'lifeandstyle/food-and-drink': ["Food & drink", "keyword", 50 * 2, "Life and style"],
+                'lifeandstyle': ["Life and style", "section", 10 * 2]
+            }
+     * @param types
+     * @param summary
+     * @returns {*}
+     */
+    function getCountsMap(types, summary) {
+        // filter by type and add id -> weight to a map
+        var id,
+            countsMap = {};
+
+        for (id in summary) {
+            if (contains(types, summary[id][1])) {
+                countsMap[id] = summary[id][2];
+            }
+        }
+
+        return countsMap;
+    }
+
+    function pageInHistory(pageId, history) {
+        var foundItem = _.find(history, function (historyItem) {
+            return (historyItem.id === pageId);
+        });
+        return foundItem.count > 1;
+    }
+
+    function preparePage(page) {
+        return {
+            id: page.pageId,
+            countRepeatVisits: page.isFront,
+            summary: page.summary
+        };
+    }
+
+    function getSummary() {
+        summaryCache = summaryCache || storage.local.get(storageKeySummary) || {};
+        return summaryCache;
+    }
+
+    function getHistory() {
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
+    }
+
+    function set(history, summary) {
+        historyCache = history;
+        storage.local.set(storageKeyHistory, history);
+        summaryCache = summary;
+        storage.local.set(storageKeySummary, summary);
     }
 
     return {
-        reset: function () {
-            history = undefined;
-            summary = undefined;
-            storage.local.remove(storageKeyHistory);
-            storage.local.remove(storageKeySummary);
-        },
 
-        get: function () {
-            history = history || storage.local.get(storageKeyHistory) || [];
-            return history;
-        },
+        test: {
+            updateSummaryTypeFromIdName: updateSummaryTypeFromIdName,
+            updateSummaryFromAllMeta: updateSummaryFromAllMeta,
+            getUpdatedHistory: getUpdatedHistory,
+            preparePage: preparePage,
+            set: set,
+            pageInHistory: pageInHistory,
 
-        getSummary: function () {
-            summary = summary || storage.local.get(storageKeySummary) || {sections: {}, keywords: {}};
-            return summary;
-        },
-
-        getSize: function () {
-            return this.get().length;
-        },
-
-        contains: function (id) {
-            return this.get().some(function (el) {
-                return el.id === id;
-            });
-        },
-
-        log: function (newItem) {
-            var foundItem,
-                summary = {sections: {}, keywords: {}},
-                hist = this.get().filter(function (item) {
-                    var found = (item.id === newItem.id);
-
-                    updateSummary(summary, item);
-                    foundItem = found ? item : foundItem;
-                    return !found;
-                });
-
-            if (foundItem) {
-                foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
-                hist.unshift(foundItem);
-            } else {
-                updateSummary(summary, newItem.meta);
-                hist.unshift(new HistoryItem(newItem));
-                hist = hist.slice(0, maxSize);
+            reset: function () {
+                historyCache = undefined;
+                summaryCache = undefined;
+                storage.local.remove(storageKeyHistory);
+                storage.local.remove(storageKeySummary);
             }
 
-            summary.count = hist.length;
+        },
 
-            setSummary(summary);
-            setHistory(hist);
+        getSummary: getSummary,
+
+        getHistory: getHistory,
+
+        getSectionCounts: function (summary) {
+            return getCountsMap(['section', 'keyword'], summary);
+        },
+
+        pageHasBeenSeen: function (pageId) {
+            return pageInHistory(pageId, getHistory());
+        },
+
+        log: function (page) {
+            var newItem = preparePage(page),
+                oldItems = getHistory(),
+                items = getUpdatedHistory(newItem, oldItems, Date.now(), maxSize);
+
+            set(items.recentPages, items.summary);
+
         }
+
     };
 });
