@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/modules/video/vpaid'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     buildPageTargeting,
     Component,
     history,
-    images
+    images,
+    vpaid
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -251,7 +253,7 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = ['html5', 'flash'];
+        options.techOrder = ['vpaid', 'html5', 'flash'];
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
@@ -265,8 +267,13 @@ define([
 
     function initPlayer() {
 
-        if (config.page.videoJsSwf) {
-            videojs.options.flash.swf = config.page.videoJsSwf;
+        // When possible, use our CDN instead of a third party (zencoder).
+        if (config.page.videoJsFlashSwf) {
+            videojs.options.flash.swf = config.page.videoJsFlashSwf;
+        }
+        if (config.page.videoJsVpaidSwf) {
+            vpaid.init(videojs);
+            videojs.options.vpaid = {swf : config.page.videoJsVpaidSwf};
         }
 
         videojs.plugin('adCountdown', adCountdown);
