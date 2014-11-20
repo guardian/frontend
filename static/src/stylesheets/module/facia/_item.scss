@@ -173,7 +173,7 @@ $fc-hover-transition: .25s ease;
     }
 
     .vjs-big-play-button > span {
-        @include video-play-button-size($vjs-x-small-button-size);
+        @include video-play-button-size($vjs-small-button-size);
     }
 }
 
