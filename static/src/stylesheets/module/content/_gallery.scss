@@ -166,6 +166,23 @@
         display: none;
     }
 
+    .element--thumbnail & {
+        width: 33px;
+        height: 33px;
+        margin: $gs-baseline/3 $gs-gutter/5;
+        display: none;
+
+        .i-expand-black,
+        .i-expand-white {
+            width: 50%;
+            height: 50%;
+        }
+    }
+
+    .element--thumbnail:hover & {
+        display: block;
+    }
+
     @include mq(desktop) {
         .gallery2__img-container:hover & {
             background-color: colour(media-default);

@@ -44,7 +44,7 @@
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int) = {
 
-    <li id="@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
+    <li id="img-@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             @ImgSrc.imager(gallery.imageContainer(rowNum - 1), GalleryUpgradedImage).map { imgSrc =>
@@ -52,7 +52,7 @@
                 @GalleryInitialImage.bestFor(gallery.imageContainer(rowNum - 1)).map { url =>
 
                     <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                        href="@LinkTo{@gallery.url?index=@rowNum}"
+                        href="@LinkTo{@gallery.url#img-@rowNum}"
                         data-src="@imgSrc"
                         data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
@@ -85,7 +85,7 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing(rowNum.toString, gallery.elementShares(Some(rowNum.toString), image.path), gallery.contentType)
+                @fragments.share.blockLevelSharing("img-" + rowNum.toString, gallery.elementShares(Some("img-" + rowNum.toString), image.path), gallery.contentType)
             </div>
 
         </figure>
