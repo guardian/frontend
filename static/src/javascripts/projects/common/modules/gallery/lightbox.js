@@ -522,7 +522,7 @@ define([
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
-            } else if (galleryHash) {
+            } else if (galleryHash.indexOf('#img-') !== -1 || !isNaN(galleryHash.substr(1))) {
                 // Temporary if statement for a few weeks to allow us to switch to prefixed block-ids
                 if (galleryHash.indexOf('#img-') !== -1) {
                     hashIndex = galleryHash.substr(5);

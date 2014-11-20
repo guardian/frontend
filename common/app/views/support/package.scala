@@ -134,8 +134,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           element.child(0).after(html.toString())
 
           // add extra margin if there is no caption to fit the share buttons
-          val getFigCaption = element.getElementsByTag("figcaption")
-          if(getFigCaption.length < 1) {
+          val figcaption = element.getElementsByTag("figcaption")
+          if(figcaption.length < 1) {
             element.addClass("fig-extra-margin")
           }
         } else {
@@ -244,18 +244,17 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   }
 
   def addSharesAndFullscreen(body: Document): Document = {
+    if(!article.isLiveBlog) {
+      val imageElements = body.getElementsByClass("element-image").view.zipWithIndex
+      imageElements foreach { case (fig, index) =>
+        val linkIndex = (index + 1).toString
+        val hashSuffix = "img-" + linkIndex
+        fig.attr("id", hashSuffix)
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
-    val imageElements = body.getElementsByClass("element-image").view.zipWithIndex
-    imageElements foreach { case (fig, index) =>
-      val linkIndex = (index+1).toString
-      val hashSuffix = "img-" + linkIndex
-      fig.attr("id", hashSuffix )
-      val mediaId = fig.attr("data-media-id")
-      val asset = findImageFromId(mediaId)
-
-      fig.getElementsByTag("img").foreach { img =>
-        asset.map { image =>
-          if(!article.isLiveBlog) {
+        fig.getElementsByTag("img").foreach { img =>
+          asset.map { image =>
             val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), image.url), article.contentType)
             img.after(html.toString())
 
@@ -263,13 +262,13 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             img.after("<span class='gallery2__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
           }
         }
-      }
 
-      val getFigCaption = fig.getElementsByTag("figcaption")
+        val figcaption = fig.getElementsByTag("figcaption")
 
-      //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
-      if (getFigCaption.length < 1) {
-        fig.addClass("fig-extra-margin")
+        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
+        if (figcaption.length < 1) {
+          fig.addClass("fig-extra-margin")
+        }
       }
     }
     body
