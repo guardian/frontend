@@ -208,7 +208,7 @@ object FaciaContainer {
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
-    )
+    ).transformCards(_.withTimeStamp)
   }
 }
 

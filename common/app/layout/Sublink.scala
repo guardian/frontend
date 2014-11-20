@@ -243,4 +243,6 @@ case class FaciaCard(
     case Some(InlineImage(_)) => true
     case _ => false
   }
+
+  def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 }

@@ -82,6 +82,6 @@ case class ContainerLayout(
 ) {
   def transformCards(f: FaciaCard => FaciaCard) = copy(
     slices = slices.map(_.transformCards(f)),
-    remainingCards.map(cardAndIndex => cardAndIndex.copy(item = f(cardAndIndex.item)))
+    remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
   )
 }

@@ -1,6 +1,7 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 
 @import conf.Switches._
+@import views.BodyCleaner
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(model.article) { article =>

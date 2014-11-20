@@ -833,8 +833,7 @@ object GetClasses {
       containerDefinition.commercialOptions,
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
-      disableHide = containerDefinition.hideToggle,
-      showTimestamps = containerDefinition.showTimestamps
+      disableHide = containerDefinition.hideToggle
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -845,8 +844,7 @@ object GetClasses {
     ContainerCommercialOptions.empty,
     None,
     Nil,
-    disableHide = true,
-    showTimestamps = false
+    disableHide = true
   )
 
   def forContainer(
@@ -856,8 +854,7 @@ object GetClasses {
       commercialOptions: ContainerCommercialOptions,
       container: Option[slices.Container] = None,
       extraClasses: Seq[String] = Nil,
-      disableHide: Boolean = false,
-      showTimestamps: Boolean = false
+      disableHide: Boolean = false
   ) = {
     RenderClasses((Seq(
       ("js-container--fetch-updates", showLatestUpdate),
@@ -867,7 +864,6 @@ object GetClasses {
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
-      ("fc-container--with-timestamps", showTimestamps),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
