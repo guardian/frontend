@@ -55,15 +55,24 @@ define([
             return React.DOM.div({
                 className: 'crossword__clues'
             },
-                React.DOM.h3({
-                    className: headerClass
-                }, 'Across'),
-                React.DOM.ol(null, cluesByDirection('across')),
-                React.DOM.h3({
-                    className: headerClass
-                }, 'Down'),
-                React.DOM.ol(null, cluesByDirection('down'))
-            );
+            React.DOM.div({
+                className: 'crossword__clues--across'
+            },
+            React.DOM.h3({
+                className: headerClass
+            }, 'Across'),
+            React.DOM.ol({
+                className: 'crossword__clues-list'
+            }, cluesByDirection('across'))),
+            React.DOM.div({
+                className: 'crossword__clues--down'
+            },
+            React.DOM.h3({
+                className: headerClass
+            }, 'Down'),
+            React.DOM.ol({
+                className: 'crossword__clues-list'
+            }, cluesByDirection('down'))));
         }
     });
 });

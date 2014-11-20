@@ -16,12 +16,12 @@ define([
     expandableTpl
 ) {
 
-    var Creative = function ($adSlot, args) {
-        this.$adSlot        = $adSlot;
-        this.templateParams = args[0];
-        this.isClosed       = true;
-        this.closedHeight   = Math.min(bonzo.viewport().height / 3, 300);
-        this.openedHeight   = Math.min(bonzo.viewport().height * 2 / 3, 600);
+    var Creative = function ($adSlot, params) {
+        this.$adSlot      = $adSlot;
+        this.params       = params;
+        this.isClosed     = true;
+        this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
+        this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
     };
 
     Creative.prototype.listener = function () {
@@ -29,6 +29,7 @@ define([
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
+            // TODO - needs to have a creative-specific id
             storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
             this.$button.toggleClass('button-spin');
             this.$ad.css('height', this.openedHeight);
@@ -39,7 +40,7 @@ define([
     };
 
     Creative.prototype.create = function () {
-        var $expandable = $.create(template(expandableTpl, this.templateParams));
+        var $expandable = $.create(template(expandableTpl, this.params));
 
         this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
         this.$button = $('.ad-exp__close-button', $expandable);

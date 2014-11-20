@@ -3,7 +3,12 @@
 
 <div class="l-side-margins l-side-margins--media">
 
-    <article class="content content--media content--gallery tonal tonal--@articleToneClass(gallery)"
+    <article class="@RenderClasses(
+            Map(
+                "content--advertisement-feature" -> gallery.isAdvertisementFeature
+            ),
+            "content", "content--media", "content--gallery", "tonal", s"tonal--${articleToneClass(gallery)}"
+        )"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headTonal(gallery)

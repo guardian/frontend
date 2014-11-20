@@ -340,12 +340,17 @@
     }
  }
 .ad-slot--paid-for-badge--article {
+    padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted colour(neutral-5);
     min-height: 135px;
 
     @include mq(leftCol) {
+        min-height: 0;
         border-bottom-width: 0;
         border-top: 1px dotted colour(neutral-5);
+    }
+    .content--media--video & {
+        min-height: 0;
     }
 }
 .ad-slot--paid-for-badge--live-blog {

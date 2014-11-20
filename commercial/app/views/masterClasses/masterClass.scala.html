@@ -16,11 +16,9 @@
                 <a class="lineitem__link"
                 href="@AdLink{@masterClass.eventBriteEvent.guardianUrl}"
                 data-link-name="merchandising-hybrid-masterclasses-v@{version}_@{date}-class-@masterClass.eventBriteEvent.name">
-                    <div class="lineitem__image-crop">
-                        @masterClass.mainPicture.map{ picture =>
-                            @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                        }
-                    </div>
+                    @masterClass.mainPicture.map{ picture =>
+                        @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                    }
                     <h4 class="lineitem__title">@masterClass.eventBriteEvent.name</h4>
                     <p class="lineitem__meta">
                         <span class="lineitem__meta__strong">@masterClass.eventBriteEvent.readableDate &#20; <span class="commercial--tone__highlight">@masterClass.eventBriteEvent.displayPrice</span></span><br/>

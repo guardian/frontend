@@ -81,6 +81,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__container,
+.cc-item__container,
 .item__container {
     position: relative;
     @include transition(background-color $fc-hover-transition);
@@ -172,7 +173,7 @@ $fc-hover-transition: .25s ease;
     }
 
     .vjs-big-play-button > span {
-        @include video-play-button-size($vjs-x-small-button-size);
+        @include video-play-button-size($vjs-small-button-size);
     }
 }
 
@@ -216,7 +217,7 @@ $fc-hover-transition: .25s ease;
 .fc-item__live-indicator {
     color: colour(live-default);
 
-    .blog__live-icon {
+    .live-pulse-icon {
         display: inline-block;
         margin: 0;
         margin-right: .2em;
@@ -230,7 +231,8 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__header,
-.item__title {
+.item__title,
+.cc-item__header {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .5em;
@@ -242,7 +244,10 @@ $fc-hover-transition: .25s ease;
 
 .fc-item__title,
 .fc-item__byline,
-.fc-item__kicker {
+.fc-item__kicker,
+.cc-item__byline,
+.cc-item__title,
+.cc-item__kicker {
     font: inherit;
     line-height: inherit;
 }
@@ -254,7 +259,8 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__kicker,
-.fc-sublink__kicker {
+.fc-sublink__kicker,
+.cc-item__kicker {
     &:after {
         content: '/';
         display: inline-block;
