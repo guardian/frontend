@@ -55,7 +55,8 @@
                   height: media_file.height,
                   apiFramework: media_files[i].apiFramework,
                   bitrate: media_files[i].bitrate,
-                  adParameters: creative.adParameters
+                  adParameters: creative.adParameters,
+                  duration: creative.duration
                 });
               }
             }

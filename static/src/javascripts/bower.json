@@ -15,7 +15,7 @@
     "enhancer": "0.1.1",
     "videojs": "4.9.0",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#af69a79e52b95a2c997e9c76a4a0e92db9a1b4a3",
-    "videojs-vast": "guardian/videojs-vast-plugin#d5df74926b78e3558a941273eeb803ac3e763cf0",
+    "videojs-vast": "guardian/videojs-vast-plugin#17833c2504fa52b9affe914e62f8fc217e910a12",
     "vast-client-js": "guardian/vast-client-js#79a3102455eb8acc6b677424e6e556fb354131d4",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "~1.1.0",
