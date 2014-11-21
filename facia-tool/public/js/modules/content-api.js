@@ -229,11 +229,71 @@ function (
         return defer.promise();
     }
 
+    function dateYyyymmdd() {
+        var d = new Date();
+        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
+    }
+
+    function fetchLatest (options) {
+        var url = vars.CONST.apiSearchBase + '/',
+            propName, term;
+
+        options = _.extend({
+            article: '',
+            term: '',
+            filter: '',
+            filterType: '',
+            page: 1,
+            pageSize: vars.CONST.searchPageSize || 25,
+            isDraft: true
+        }, options);
+        term = options.term;
+
+        if (options.article) {
+            term = options.article;
+            propName = 'content';
+            url += term + '?' + vars.CONST.apiSearchParams;
+        } else {
+            term = encodeURIComponent(term.trim().replace(/ +/g,' AND '));
+            propName = 'results';
+            url += 'search?' + vars.CONST.apiSearchParams;
+            url += options.isDraft ?
+                '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+                '&content-set=web-live&order-by=newest';
+            url += '&page-size=' + options.pageSize;
+            url += '&page=' + options.page;
+            url += term ? '&q=' + term : '';
+            url += options.filter ? '&' + options.filterType + '=' + encodeURIComponent(options.filter) : '';
+        }
+
+        var deferred = new $.Deferred();
+        authedAjax.request({
+            url: url
+        }).then(function(data) {
+            var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
+
+            if (!term && !rawArticles.length) {
+                deferred.reject(new Error('Sorry, the Content API is not currently returning content'));
+            } else {
+                deferred.resolve(_.extend({}, data.response, {
+                    results: _.filter(rawArticles, function(opts) {
+                        return opts.fields && opts.fields.headline;
+                    })
+                }));
+            }
+        }, function (xhr) {
+            deferred.reject(new Error('Content API error (' + xhr.status + '). Content is currently unavailable'));
+        });
+
+        return deferred.promise();
+    }
+
     return {
         fetchContent: fetchContent,
         fetchMetaForPath: fetchMetaForPath,
         decorateItems: decorateItems,
-        validateItem:  validateItem
+        validateItem:  validateItem,
+        fetchLatest: fetchLatest
     };
 
 });
