@@ -717,27 +717,37 @@ jQuery(function($) {
             require(['bootstraps/commercial'], function(core) {
                 require(['common/modules/commercial/loader'], function(CommercialComponent) {
                     new CommercialComponent({
-//                        oastoken: '%%CLICK_URL_ESC%%',
-//                        capi: ['p/4xv7c','','',''],
-//                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-//                        capiTitle: 'Pink Floyd special',
-//                        capiLinkUrl: 'http://theguardian.com/music/ledzeppelin',
-//                        capiAboutLinkUrl: 'http://theguardian.com/about',
-//                        capiKeywords: 'music/pinkfloyd',
-//                        af: 'container--merchandising-feature',
-//                        sb: 'Brought to you by Austin:'
+                        
+                        // Exisiting template fields
+                        // oastoken: '%%CLICK_URL_ESC%%',
+                        // capi: ['[%url1%]','[%url2%]','[%url3%]','[%url4%]'],
+                        // logo: '[%Logo%]',
+                        // capiTitle: '[%Title%]',
+                        // capiLinkUrl: '[%Linkdestination%]',
+                        // capiAboutLinkUrl: '[%Aboutthiscontentlink%]',
+                        // capiKeywords: '[%Targetingkeywords%]'
                         
                         
+                        // Test data for existing template fields
                         oastoken: '%%CLICK_URL_ESC%%',
+                        capi: ['p/4xv7c','','',''],
+                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        capiTitle: 'Pink Floyd special',
+                        capiLinkUrl: 'http://theguardian.com/music/pinkfloyd',
+                        capiAboutLinkUrl: 'http://theguardian.com/about',
+                        capiKeywords: 'music/pinkfloyd',
+                        // This ensure it gets correct colours & fonts as per existing
+                        af: 'container--advertisement-feature',
+
+                        // Test data with extra fields, template needs to be updated to reflect new field names.
+                        // Uncommented can be doubled up in DFP.
+                        // oastoken: '%%CLICK_URL_ESC%%',
                         t: ['p/43akg','p/43945'],
-                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                        ct: 'Pink Floyd special',
-                        cl: 'http://theguardian.com/music/pinkfloyd',
-//                        clt: 'Readmore link text',
-                        cal: 'http://theguardian.com/about',
+                        // l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        // ct: 'Pink Floyd special',
+                        // cl: 'http://theguardian.com/music/pinkfloyd',
+                        // cal: 'http://theguardian.com/about',
                         k: 'music/pinkfloyd',
-//                        rmd: 'www.theguardina.com',
-//                        rmt: 'See more over here',
                         sb: 'Sponsored by:',
                         af: 'container--merchandising-feature'
                     }).init('capi', document.querySelector('[data-name="merchandising-capi-multi"]'));
