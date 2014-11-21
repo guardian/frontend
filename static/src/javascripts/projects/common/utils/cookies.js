@@ -44,9 +44,7 @@ define([
 
     function add(name, value, daysToLive) {
 
-        var expires = new Date(),
-            cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';',
-            domain = getShortDomain();
+        var expires = new Date();
 
         if (daysToLive) {
             expires.setDate(expires.getDate() + daysToLive);
@@ -55,11 +53,8 @@ define([
             expires.setDate(1);
         }
 
-        if (domain !== 'localhost') {
-            cookie += 'domain=' + getShortDomain() + ';';
-        }
-
-        getDocument().cookie = cookie;
+        getDocument().cookie =
+            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
     function addForMinutes(name, value, minutesToLive) {
