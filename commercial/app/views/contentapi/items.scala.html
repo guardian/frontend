@@ -1,13 +1,13 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi">
+    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi" data-link-name="merchandising | capi | multiple">
         <div class="fc-container__inner">
         <div class="container__border"></div>
             <div class="fc-container__header">
                 <h2 class="fc-container__header__title">
                     @optCapiLink.map { linkUrl =>
-                        <a href="@linkUrl" class="fc-container__header__link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                        <a href="@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
                     }.getOrElse {
                         <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
                     }
