@@ -44,7 +44,9 @@ define([
 
     function add(name, value, daysToLive) {
 
-        var expires = new Date();
+        var expires = new Date(),
+            cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';',
+            domain = getShortDomain();
 
         if (daysToLive) {
             expires.setDate(expires.getDate() + daysToLive);
@@ -53,8 +55,6 @@ define([
             expires.setDate(1);
         }
 
-        var cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';';
-        var domain = getShortDomain();
         if (domain !== 'localhost') {
             cookie += 'domain=' + getShortDomain() + ';';
         }
