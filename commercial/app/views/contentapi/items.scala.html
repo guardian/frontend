@@ -6,7 +6,11 @@
         <div class="container__border"></div>
             <div class="fc-container__header">
                 <h2 class="fc-container__header__title">
-                    <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    @optCapiLink.map { linkUrl =>
+                        <a href="@linkUrl" class="fc-container__header__link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                    }.getOrElse {
+                        <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    }
                 </h2>
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
