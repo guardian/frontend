@@ -49,11 +49,13 @@ $c-soulmates-high: colour(neutral-1);
             }
         }
 
-        .has-page-skin & {
-            .svg & {
-                width: gs-span(2);
-                height: $gs-baseline*2.5;
-                padding-top: $gs-baseline*2;
+        @include mq(wide) {
+            .has-page-skin & {
+                .svg & {
+                    width: gs-span(2);
+                    height: $gs-baseline*2.5;
+                    padding-top: $gs-baseline*2;
+                }
             }
         }
     }
@@ -75,9 +77,8 @@ $c-soulmates-high: colour(neutral-1);
                 height: 21px;
             }
         }
-
-        .has-page-skin & {
-            .svg & {
+        @include mq(wide) {
+            .has-page-skin & {
                 width: 86px;
                 height: 18px;
             }
@@ -106,13 +107,15 @@ $c-soulmates-high: colour(neutral-1);
             width: gs-span(2);
         }
 
-        .has-page-skin & {
-            color: $c-soulmates-high;
-            position: absolute;
-            bottom: 0;
-            left: $gs-gutter * 8;
-            margin-bottom: $gs-baseline*(2/3);
-            width: auto;
+        @include mq(wide) {
+            .has-page-skin & {
+                color: $c-soulmates-high;
+                position: absolute;
+                bottom: 0;
+                left: $gs-gutter * 8;
+                margin-bottom: $gs-baseline*(2/3);
+                width: auto;
+            }
         }
     }
 
@@ -126,8 +129,10 @@ $c-soulmates-high: colour(neutral-1);
             margin: $gs-baseline auto;
         }
 
-        .has-page-skin & {
-            display: none;
+        @include mq(wide) {
+            .has-page-skin & {
+                display: none;
+            }
         }
     }
 
