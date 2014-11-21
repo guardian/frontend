@@ -32,6 +32,9 @@ define([
                 config:   {}
             }
         },
+        /**
+         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027767
+         */
         BrandedComponent = function ($adSlot, params) {
             this.$adSlot = $adSlot;
             this.params  = params;
