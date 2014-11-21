@@ -285,7 +285,7 @@
                 <div class="article__overrides"
                     data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
-                <div data-bind="if: group.parentType !== 'Article' && !meta.snapType()">
+                <div data-bind="if: state.enableContentOverrides() && group.parentType !== 'Article'">
                     <div class="supporting" data-bind="with: meta.supporting">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -293,7 +293,7 @@
                             css: {underDrag: underDrag},
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
-                    <span class="supporting-message">Drop sublinks above</span>
+                    <span class="supporting-message">Drop content above</span>
                 </div>
 
                 <div class="tools">
