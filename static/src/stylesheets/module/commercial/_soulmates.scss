@@ -48,7 +48,7 @@ $c-soulmates-high: colour(neutral-1);
                 height: $gs-baseline*2.5;
             }
         }
-        
+
         .has-page-skin & {
             .svg & {
                 width: gs-span(2);
@@ -137,6 +137,7 @@ $c-soulmates-high: colour(neutral-1);
             float: left;
             width: gs-span(6) + $gs-gutter;
         }
+
         @include mq(desktop) {
             width: gs-span(9) + $gs-gutter;
         }
