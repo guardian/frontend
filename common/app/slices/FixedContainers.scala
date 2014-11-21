@@ -42,12 +42,13 @@ object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
   //TODO: Temporary vals for content until we refactor
-  val fixedSmallSlowI = slices(Full)
+  val fixedSmallSlowI = slices(FullMedia75)
   val fixedSmallSlowII = slices(HalfHalf)
   val fixedSmallSlowIV = slices(QuarterQuarterQuarterQuarter)
   val fixedSmallSlowVI = slices(TTTL4)
   val fixedMediumSlowVI = slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter)
   val fixedMediumSlowVII = slices(HalfQQ, QuarterQuarterQuarterQuarter)
+  val fixedMediumSlowVIII = slices(TTMpu, TlTlTl)
   val fixedMediumSlowXIIMpu = slices(TTT, TlTlMpu)
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
@@ -58,7 +59,7 @@ object FixedContainers {
   val indexPageMpuIX = fixedMediumSlowXIIMpu
 
   val all: Map[String, ContainerDefinition] = Map(
-    ("fixed/small/slow-I", slices(Full)),
+    ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-II", slices(HalfHalf)),
     ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", fixedSmallSlowIV),
@@ -70,6 +71,7 @@ object FixedContainers {
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),
     ("fixed/medium/slow-VI", fixedMediumSlowVI),
     ("fixed/medium/slow-VII", fixedMediumSlowVII),
+    ("fixed/medium/slow-VIII", fixedMediumSlowVIII),
     ("fixed/medium/slow-XII-mpu", fixedMediumSlowXIIMpu),
     ("fixed/medium/fast-XI", fixedMediumFastXI),
     ("fixed/medium/fast-XII", fixedMediumFastXII),

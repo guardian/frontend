@@ -1,4 +1,4 @@
-@(items: Seq[model.Content], pageId: String)(implicit request: RequestHeader)
+@(items: Seq[model.Content], pageId: String, allPath: Option[String] = None)(implicit request: RequestHeader)
 
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
@@ -7,8 +7,8 @@
 @defining(topTags(items).filterNot(_.id == pageId).take(20)) { tags =>
     @if(tags.nonEmpty) {
         <div class="submeta" data-link-name="keywords">
-            <h2 class="submeta__head">Trending topics</h2>
-            @keywordList(tags, 5, "See also")
+            <h2 class="submeta__head">Topics</h2>
+            @keywordList(tags, 5, "See also", allPath = allPath)
         </div>
     }
 }
