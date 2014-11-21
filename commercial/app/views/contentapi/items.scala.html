@@ -25,7 +25,7 @@
                     <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
-                                <div class="fc-item fc-item--has-image fc-item--has-discussion @item match {
+                                <div class="fc-item fc-item--has-image fc-item--has-metadata @item match {
                                         case _: Video => { fc-item--video }
                                         case _: Audio => { fc-item--audio }
                                         case _: Gallery => { fc-item--gallery }
