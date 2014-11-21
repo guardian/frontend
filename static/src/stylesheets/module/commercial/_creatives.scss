@@ -9,6 +9,15 @@
 .creative--branded-component {
     padding-left: $gs-gutter/2;
     border-left: 1px solid colour(neutral-5);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    width: gs-span(3)+$gs-gutter/2;
+
+    @include mq($from: wide) {
+        left: -$gs-gutter/2;
+    }
 
     .creative__inner {
         padding-top: $gs-baseline/2;
@@ -16,8 +25,6 @@
     }
     .creative__marque {
         display: block;
-        @include border-radius(18px);
-        background-color: colour(guardian-brand-dark);
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -26,22 +33,59 @@
         @include fs-header(2);
     }
     .creative__title {
-        @include fs-headline(5);
+        @include fs-headline(4);
     }
     .creative__text {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
         color: colour(neutral-2);
     }
 }
 
+.creative--jobs {
+    .creative__inner {
+        border-color: colour(news-support-2);
+    }
+    .creative__marque-title {
+        color: colour(news-support-2);
+    }
+}
+
+.creative--membership {
+    .creative__inner {
+        border-color: colour(news-accent);
+    }
+    .creative__marque-title {
+        color: colour(news-accent);
+    }
+}
+
 .creative--branded-component-soulmates {
+    // Initialize colour variables
+    $bg-colour: #f5f3e7;
+    $rotated-bg-colour: #70bacf;
+
+    border-left: 0;
     padding-left: 0;
+
+    @include mq(wide) {
+        right: auto;
+    }
 
     .creative__inner {
         border-top: 0;
         margin-left: $gs-gutter/2;
-        padding: $gs-baseline/2 $gs-gutter/2;
-        background-color: #f5f3e7;
+        padding: $gs-baseline/2 $gs-gutter/2 0;
+        background-color: $bg-colour;
+        width: gs-span(3);
+        position: relative;
+        z-index: 1;
+
+        @include box-sizing(border-box);
+
+        @include mq($from: desktop, $until: wide) {
+            width: gs-span(3)-$gs-gutter;
+            margin-right: $gs-gutter/2;
+        }
 
         &:before {
             @extend %i-soulmates-trill;
@@ -63,7 +107,7 @@
         }
     }
     .creative__title {
-        margin: $gs-baseline $gs-gutter*2 0;
+        margin: $gs-baseline 0 0;
         @include fs-header(5);
         text-align: center;
     }
@@ -87,9 +131,32 @@
         height: gs-height(1);
         margin: gs-height(2) auto 0;
         padding-top: $gs-baseline*3;
+        background-size: 100%;
+        width: auto;
+
     }
     .soulmates-logo__title {
         text-align: center;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: gs-span(3);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: $gs-gutter/2;
+        background-color: $rotated-bg-colour;
+        transform: rotate(-2deg);
+
+        @include mq($from: desktop, $until: wide) {
+            width: gs-span(3)-$gs-gutter;
+        }
+
+        @include mq(wide) {
+            right: auto;
+        }
     }
 }
 

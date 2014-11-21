@@ -31,9 +31,8 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   def renderJson(path: String) = render(path)
   def renderRss(path: String) = render(path)
 
-  def render(path: String) = MemcachedAction{ implicit request =>
+  def render(path: String) = MemcachedAction { implicit request =>
     path match {
-
       //if this is a section tag e.g. football/football
       case TagPattern(left, right) if left == right => successful(redirect(left, request.isRss))
 

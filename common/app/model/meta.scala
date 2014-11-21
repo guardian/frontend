@@ -17,7 +17,7 @@ trait MetaData extends Tags {
   def rssPath: Option[String] = None
 
   lazy val canonicalUrl: Option[String] = None
-  
+
   // i.e. show the link back to the desktop site
   def hasClassicVersion: Boolean = !special
 
@@ -109,6 +109,21 @@ object Page {
       super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
   }
 }
+
+class TagCombiner(
+  id: String,
+  val leftTag: Tag,
+  val rightTag: Tag,
+  override val pagination: Option[Pagination] = None
+) extends Page(
+  id,
+  leftTag.section,
+  s"${leftTag.name} + ${rightTag.name}",
+  s"GFE:${leftTag.section}:${leftTag.name} + ${rightTag.name}",
+  pagination,
+  Some(GuardianContentTypes.TagIndex)
+)
+
 
 trait Elements {
 

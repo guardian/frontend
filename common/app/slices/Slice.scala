@@ -540,13 +540,36 @@ case object HalfHalf2 extends Slice {
 }
 
 /* .___________________________________.
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * `-----------------------------------'
+ */
+case object FullMedia50 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "f",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = cards.FullMedia50
+        )
+      )
+    )
+  )
+}
+
+/* .___________________________________.
  * |         ##########################|
  * |         ##########################|
  * |         ##########################|
  * |         ##########################|
  * `-----------------------------------'
  */
-case object Full extends Slice {
+case object FullMedia75 extends Slice {
   val layout = SliceLayout(
     cssClassName = "f",
     columns = Seq(
@@ -554,7 +577,7 @@ case object Full extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.Full
+          tablet = cards.FullMedia75
         )
       )
     )
@@ -568,7 +591,7 @@ case object Full extends Slice {
  * |                                   |
  * `-----------------------------------'
  */
-case object MegaFull extends Slice {
+case object FullMedia100 extends Slice {
   val layout = SliceLayout(
     cssClassName = "mf",
     columns = Seq(
@@ -576,7 +599,7 @@ case object MegaFull extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.MegaFull
+          tablet = cards.FullMedia100
         )
       )
     )

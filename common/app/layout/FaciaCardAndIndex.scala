@@ -33,4 +33,6 @@ case class FaciaCardAndIndex(
     case Some(Desktop) => "hidden"
     case _ => "all"
   }
+
+  def transformCard(f: FaciaCard => FaciaCard) = copy(item = f(item))
 }

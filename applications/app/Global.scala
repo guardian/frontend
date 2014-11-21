@@ -5,9 +5,10 @@ import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
-import services.IndexListingsLifecycle
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
+  with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with DfpAgentLifecycle

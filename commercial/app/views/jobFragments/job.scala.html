@@ -12,12 +12,9 @@
             </div>
             <div class="commercial--multi__body">
                 <a class="lineitem__link" href="@AdLink{@job.listingUrl}">
-                    <img class="lineitem__image" src="@job.recruiterLogoUrl" alt=""/>
+                    <img class="lineitem__image" src="@job.recruiterLogoUrl" alt="@job.recruiterName" title="@job.recruiterName"/>
                     <h4 class="lineitem__title">@job.title</h4>
-                    <p class="lineitem__meta">
-                        <span class="commercial--tone__highlight">@job.recruiterName</span><br/>
-                        @job.locationDescription - @job.shortSalaryDescription
-                    </p>
+                    <p class="lineitem__meta">@job.locationDescription - @job.shortSalaryDescription</p>
                 </a>
                 <a class="lineitem__cta button button--primary button--small" href="@AdLink{@job.recruiterPageUrl}">
                     Apply now <i class="i i-arrow-white-right i-right"></i>

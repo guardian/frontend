@@ -26,7 +26,7 @@ object ContainerDefinition {
 
   /** Fixed container that looks good for the number of items provided */
   def forNumberOfItems(n: Int) = n match {
-    case 1 => FixedContainers.fixedSmallSlowI
+    case 1 => ContainerDefinition.ofSlices(FullMedia50)
     case 2 => ContainerDefinition.ofSlices(HalfHalf2)
     case 3 => FixedContainers.fixedMediumSlowXIIMpu
     case 5 => FixedContainers.fixedSmallSlowVI

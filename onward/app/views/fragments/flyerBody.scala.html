@@ -8,35 +8,35 @@
 
 @kicker = {
     @if(content.isAnalysis) {
-        <span class="cc-item__kicker">Analysis</span>
+        <span class="flyer__kicker">Analysis</span>
     }
     @if(content.isLiveBlog && content.isLive) {
-        <span class="cc-item__kicker"><span class="cc-item__live"><span class="live-pulse-icon"></span>Live</span></span>
+        <span class="flyer__kicker"><span class="flyer__live"><span class="live-pulse-icon"></span>Live</span></span>
     }
     @if(content.isPodcast) {
-        @content.seriesTag.map { series => <span class="cc-item__kicker">@series.webTitle</span> }
+        @content.seriesTag.map { series => <span class="flyer__kicker">@series.webTitle</span> }
     }
 }
 
-<div class="cc-item @toneClass(content)--item @RenderClasses(Map(
-    "cc-item--video" -> content.isVideo,
-    "cc-item--gallery" -> content.isGallery,
-    "cc-item--audio" -> content.isAudio,
-    "cc-item--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
+<div class="flyer @toneClass(content)--item @RenderClasses(Map(
+    "flyer--video" -> content.isVideo,
+    "flyer--gallery" -> content.isGallery,
+    "flyer--audio" -> content.isAudio,
+    "flyer--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
     ))"
     data-link-name="content-card" data-component="content-card">
 
-    <div class="cc-item__container">
+    <div class="flyer__container">
         @if(content.isGallery) {
             @content.trailPicture(5, 3).map { image =>
-                <img class="cc-item__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
+                <img class="flyer__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
             }
         }
 
-        <div class="cc-item__header">
-            <h1 class="cc-item__title"><a class="cc-item__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
+        <div class="flyer__header">
+            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
             @if(!content.isMedia && content.visualTone == "comment") {
-                <div class="cc-item__byline">
+                <div class="flyer__byline">
                     - @content.byline.map { byline => @Html(byline) }
                 </div>
             }
@@ -44,7 +44,7 @@
         </div>
 
         @if(!content.isGallery) {
-            <div class="cc-item__standfirst u-cf">
+            <div class="flyer__standfirst u-cf">
             @if(content.isLiveBlog){
                 @content.trailText.map{ trailText => @Html(trailText) }
             } else {
@@ -56,8 +56,8 @@
             @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                 @content.contributors.headOption.map { profile =>
                     @profile.contributorLargeImagePath.map{ image =>
-                        <div class="cc-item__byline-img">
-                            <img class="cc-item__byline-img__img" src="@image" alt="@profile.name" />
+                        <div class="flyer__byline-img">
+                            <img class="flyer__byline-img__img" src="@image" alt="@profile.name" />
                         </div>
                     }
                 }
@@ -66,6 +66,6 @@
         }
     </div>
 
-    <a class="cc-item__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
+    <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
 </div>
 

@@ -1,6 +1,8 @@
 /*
 
-Mega full item, only used in nuclear situations.
+Full width item with 100% width image.
+
+Only to be used in nuclear situations.
 
 ***********************************************************************************************
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -19,7 +21,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 
 */
 
-@mixin fc-item--mega-full {
+@mixin fc-item--full-media-100 {
     .fc-item__image-container {
         display: block;
         padding-bottom: 40%;

@@ -5,9 +5,19 @@
 
 <html class="svg">
       <head>
-          <link rel="stylesheet" data-reload="head.content" type="text/css" href="@Static("stylesheets/head.content.css")" />
-          <link rel="stylesheet" data-reload="global" type="text/css" href="@Static("stylesheets/global.css")" />
           <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts.css")" />
+
+
+          @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+              <link rel="stylesheet" data-reload="head.flyers" type="text/css" href="@Static("stylesheets/head.flyers.css")" />
+          } else {
+              <style>
+              @Html(Static.css.head(Some("flyers")))
+              body {
+                margin: 0;
+              }
+              </style>
+          }
 
           @if(play.Play.isDev()) {
               <script type="text/javascript">
@@ -33,6 +43,6 @@
 
       </head>
       <body width="30%">
-          @fragments.contentCardBody(content)
+          @fragments.flyerBody(content)
       </body>
 </html>

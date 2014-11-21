@@ -12,7 +12,11 @@
         </div>
         <div class="commercial--multi__body">
             <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
-                <img class="lineitem__image" src="@travelOffer.imageUrl" alt=""/>
+                <div class="lineitem__image-right">
+                    <div class="lineitem__image-crop">
+                        <img class="lineitem__image" src="@travelOffer.imageUrl" alt=""/>
+                    </div>
+                </div>
                 <h4 class="lineitem__title">@travelOffer.title</h4>
                 <div class="lineitem__offer">
                     <p class="lineitem__meta">@travelOffer.durationInWords from <span class="lineitem__price">£@travelOffer.fromPrice</span></p>

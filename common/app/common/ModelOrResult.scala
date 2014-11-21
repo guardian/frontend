@@ -18,7 +18,7 @@ object ModelOrResult extends Results with Logging {
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
-private object ItemOrRedirect extends ItemResponses with Logging{
+private object ItemOrRedirect extends ItemResponses with Logging {
 
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
@@ -26,7 +26,8 @@ private object ItemOrRedirect extends ItemResponses with Logging{
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
     itemPath match {
       case Some(itemPath) if needsRedirect(itemPath) =>
-        val itemPathWithQueryString = itemPath + paramString(request)
+        val itemPathWithQueryString =
+          itemPath + (if (request.path.endsWith("/all")) "/all" else "") + paramString(request)
         Right(Found(itemPathWithQueryString))
       case _ => Left(item)
     }
@@ -34,7 +35,7 @@ private object ItemOrRedirect extends ItemResponses with Logging{
 
   private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
     // redirect if itemPath is not the same as request's, and this isn't a JSON or RSS request
-    itemPath != request.path && !(request.isJson || request.isRss)
+    itemPath != request.path && s"$itemPath/all" != request.path && !(request.isJson || request.isRss)
   }
 }
 

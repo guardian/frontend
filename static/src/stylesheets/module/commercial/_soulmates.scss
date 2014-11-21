@@ -119,10 +119,6 @@ $c-soulmates-high: colour(neutral-1);
             text-decoration: underline;
         }
     }
-    .lineitem__meta {
-        font-size: 11px;
-        line-height: 11px;
-    }
     .commercial__search {
         position: static;
         @include box-sizing(border-box);
@@ -222,11 +218,12 @@ $c-soulmates-high: colour(neutral-1);
 
             .commercial__explainer {
                 left: $gs-gutter * 7.5;
+                top: $gs-baseline;
             }
 
             .commercial__head {
                 position: relative;
-                width: auto;
+                width: auto !important;
                 float: none;
             }
             .commercial__cta {

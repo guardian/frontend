@@ -17,7 +17,9 @@
                 class="lineitem__link"
                 data-link-name="merchandising-hybrid-book-v@{version}_@{date}-@book.title">
                     @book.jacketUrl.map { url =>
-                        <img class="lineitem__image lineitem__image-portrait" itemprop="image" src="@url" alt="" />
+                        <div class="lineitem__image-right">
+                            <img class="lineitem__image lineitem__image-portrait" itemprop="image" src="@url" alt="" />
+                        </div>
                     }
                     <h4 class="lineitem__title" itemprop="name">@book.title</h4>
                     <div class="lineitem__offer">

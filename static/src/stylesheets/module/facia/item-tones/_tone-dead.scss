@@ -1,11 +1,11 @@
 .tone-dead--item {
     &.fc-item,
-    &.cc-item {
+    &.flyer {
         background-color: colour(neutral-7);
     }
 
     .fc-item__container:before,
-    .cc-item__container:before {
+    .flyer__container:before {
         background-color: colour(live-default);
     }
 

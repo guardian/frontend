@@ -5,7 +5,7 @@ import scala.concurrent.Future
 import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
-import services.IndexPage
+import services.{Index, ConfigAgent, IndexPage}
 import views.support.PreviousAndNext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}
@@ -31,16 +31,18 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
     Cached(300)(MovedPermanently(s"/$path/all"))
   }
 
-  def all(path: String) = Action.async { implicit request =>
-    val today = DateTime.now(Edition(request).timezone)
+  def all(path: String) = Action.async { request =>
+    val edition = Edition(request)
 
-    loadLatest(path, today).map { _.map { index =>
-      val yesterday = today.minusDays(1)
-      Ok(views.html.all(index, PreviousAndNext(Some(s"/$path/${urlFormat(yesterday)}/all"), None)))
-    }.getOrElse(NotFound)}.map(Cached(300)(_))
+    if (ConfigAgent.shouldServeFront(path) || ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
+      IndexController.render(path)(request)
+    } else {
+      /** No front exists, so 'all' is the same as the tag page - redirect there */
+      Future.successful(Cached(300)(MovedPermanently(s"/$path")))
+    }
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
+  def allOn(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
     val edition = Edition(request)
 
     val requestedDate = dateFormat.withZoneUTC()

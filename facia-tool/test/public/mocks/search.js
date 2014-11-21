@@ -15,16 +15,18 @@ define('mock-search', ['utils/mediator'], function (
         }
     };
     var allArticles = {};
+    var lastRequest;
 
     $.mockjax({
         url: /\/api\/proxy\/search\?(.+)/,
         urlParams: ['queryString'],
         response: function (req) {
-            var urlParams = parse(req.urlParams.queryString);
-            if (!urlParams.ids) {
+            lastRequest = req;
+            req.urlParams = parse(req.urlParams.queryString);
+            if (!req.urlParams.ids) {
                 this.responseText = latestArticles;
             } else {
-                var response = allArticles[urlParams.ids];
+                var response = allArticles[req.urlParams.ids];
                 if (!response) {
                     response = {
                         status: 'fail'
@@ -34,7 +36,7 @@ define('mock-search', ['utils/mediator'], function (
             }
         },
         onAfterComplete: function () {
-            mediator.emit('mock:search');
+            mediator.emit('mock:search', lastRequest);
         }
     });
 

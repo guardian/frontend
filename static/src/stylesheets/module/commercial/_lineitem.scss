@@ -4,7 +4,7 @@
 .commercial {
     .lineitems {
         padding: 0;
-        margin: 0 $gs-gutter*-.5;
+        margin: 0;
         overflow: hidden;
     }
     .lineitem {
@@ -17,6 +17,11 @@
 
         &:first-child {
             border-left: 0;
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
         }
     }
     .lineitem--v-high {
@@ -52,7 +57,7 @@
         @include fs-header(1);
         font-weight: 500;
         padding-top: 2px;
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline/2;
     }
     .lineitem__desc {
         @include fs-headline(1);
@@ -61,7 +66,7 @@
     }
     .lineitem__meta {
         color: colour(neutral-2);
-        @include fs-textSans(2);
+        @include fs-textSans(1);
         margin-bottom: $gs-baseline/2;
     }
     .lineitem__meta__highlight {

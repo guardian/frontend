@@ -29,7 +29,7 @@
                 css: {active: !latestArticles.showingDrafts()}">Live content</a>
         </div>
 
-        <div class="col__inner scrollable">
+        <div class="col__inner">
             <div class="title title--clipboard">clipboard</div>
             <div class="clipboard" data-bind="with: clipboard">
                 <div class="droppable" data-bind="
@@ -38,6 +38,9 @@
                     css: {underDrag: underDrag},
                     template: {name: 'template_article', foreach: items}"></div>
             </div>
+        </div>
+
+        <div class="col__inner scrollable">
 
             <div data-bind="with: latestArticles">
                 <div class="search-tools">
@@ -252,9 +255,9 @@
     <script type="text/html" id="template_search_controls">
         <div class="finder__controls">
             Page <span data-bind="text: page"></span>
-            <a data-bind="click: pageNext">next</a>
-            <a data-bind="click: pagePrev, visible: page() > 1">prev</a>
-            <a data-bind="click: refresh,  visible: page() > 2">top</a>
+            <a data-bind="click: pageNext, visible: showNext()">next</a>
+            <a data-bind="click: pagePrev, visible: showPrev()">prev</a>
+            <a data-bind="click: refresh,  visible: showTop()">top</a>
         </div>
     </script>
 
@@ -285,7 +288,7 @@
                 <div class="article__overrides"
                     data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
-                <div data-bind="if: group.parentType !== 'Article' && !meta.snapType()">
+                <div data-bind="if: state.enableContentOverrides() && group.parentType !== 'Article'">
                     <div class="supporting" data-bind="with: meta.supporting">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -293,7 +296,7 @@
                             css: {underDrag: underDrag},
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
-                    <span class="supporting-message">Drop sublinks above</span>
+                    <span class="supporting-message">Drop content above</span>
                 </div>
 
                 <div class="tools">

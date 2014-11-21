@@ -25,9 +25,7 @@ define([
         },
         membership: {
             template: brandedComponentMembershipTpl,
-            config:   {
-                imgUrl: config.images.commercial.brandedComponentJobs
-            }
+            config:   {}
         },
         soulmates: {
             template: brandedComponentSoulmatesTpl,
@@ -37,7 +35,7 @@ define([
 
     return {
 
-        run: function (type) {
+        run: function (type, clickMacro) {
             var templateConfig = templates[type],
                 $rightHandCol  = $('.content__secondary-column');
 
@@ -45,8 +43,14 @@ define([
                 return false;
             }
 
-            $.create(template(templateConfig.template, templateConfig.config))
-                .appendTo($rightHandCol);
+            templateConfig.config.clickMacro = clickMacro;
+
+            if ($rightHandCol.dim().height > 1000 && config.page.section !== 'football') {
+
+                $.create(template(templateConfig.template, templateConfig.config))
+                    .appendTo($rightHandCol);
+
+            }
 
             // assumption - this will always be targeted to the 88x87 slot
             $('#dfp-ad--merchandising-high').css('display', 'none');
