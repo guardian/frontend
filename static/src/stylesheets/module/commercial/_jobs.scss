@@ -16,19 +16,12 @@
         width: 100px;
 
         @include mq(tablet) {
-            width: 150px;
+            max-width: 150px;
         }
 
         @include mq(desktop) {
             width: auto;
             height: 60px;
-        }
-    }
-
-    @include mq($from: tablet, $until:desktop) {
-        .lineitem__image {
-            width: 100%;
-            @include box-sizing(border-box);
         }
     }
 
