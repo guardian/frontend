@@ -115,7 +115,7 @@ define([
                 multi:             buildComponentUrl('multi', { c: opts.components }),
                 capiSingle:        buildComponentUrl('capi-single', defaults(options, { s: section })),
                 capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(options, { s: section })),
-                capi:              buildComponentUrl('capi', {
+                capi:              buildComponentUrl('capi', defaults(options, {
                     s:   section,
                     t:   opts.capi,
                     k:   opts.capiKeywords.split(','),
@@ -123,7 +123,7 @@ define([
                     ct:  opts.capiTitle,
                     cl:  opts.capiLinkUrl,
                     cal: opts.capiAboutLinkUrl
-                })
+                }))
             };
         };
 

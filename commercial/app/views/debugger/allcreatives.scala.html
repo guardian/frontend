@@ -664,17 +664,44 @@ jQuery(function($) {
             </h2>
         </div>
 
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON(
-                    '/commercial/capi.json?s=books&t=p%2F43b2q&t=p%2F43945&k=music%2Fledzeppelin&' +
-                    'k=music%2Fpinkfloyd&l=http%3A%2F%2Fpagead2.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDjnfPJbBABGAEyCHbj_OBIEKp8&' +
-                    'ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
-                    'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
-                    function(json) { $('.dfp-ad--merchandising-capi').html(json.html); }
-                );
-            </script>
-        </div>
+
+
+                <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi"></div>
+                    <script>
+                    require(['core'], function(core) {
+                        require(['bootstraps/commercial'], function(core) {
+                            require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                                new CommercialComponent({
+            //                        oastoken: '%%CLICK_URL_ESC%%',
+            //                        capi: ['p/4xv7c','','',''],
+            //                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+            //                        capiTitle: 'Pink Floyd special',
+            //                        capiLinkUrl: 'http://theguardian.com/music/ledzeppelin',
+            //                        capiAboutLinkUrl: 'http://theguardian.com/about',
+            //                        capiKeywords: 'music/pinkfloyd',
+            //                        af: 'container--merchandising-feature',
+            //                        sb: 'Brought to you by Austin:'
+                    
+                    
+                                    oastoken: '%%CLICK_URL_ESC%%',
+                                    t: ['p/43b2q','p/43945'],
+                                    l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                    ct: 'Led Zeppelin special',
+                                    cl: 'http://theguardian.com/music/ledzeppelin',
+            //                        clt: 'Readmore link text',
+                                    cal: 'http://theguardian.com/about',
+                                    k: 'music/ledzeppelin',
+            //                        rmd: 'www.theguardina.com',
+            //                        rmt: 'See more over here',
+                                    sb: 'Brought to you by:',
+                                    af: 'fc-container--advertisement-feature'
+                                }).init('capi', document.querySelector('[data-name="merchandising-capi"]'));
+                            });
+                        });
+                    });
+                    </script>
+                
+ 
     </div>
 
 
@@ -690,13 +717,29 @@ jQuery(function($) {
             require(['bootstraps/commercial'], function(core) {
                 require(['common/modules/commercial/loader'], function(CommercialComponent) {
                     new CommercialComponent({
+//                        oastoken: '%%CLICK_URL_ESC%%',
+//                        capi: ['p/4xv7c','','',''],
+//                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+//                        capiTitle: 'Pink Floyd special',
+//                        capiLinkUrl: 'http://theguardian.com/music/ledzeppelin',
+//                        capiAboutLinkUrl: 'http://theguardian.com/about',
+//                        capiKeywords: 'music/pinkfloyd',
+//                        af: 'container--merchandising-feature',
+//                        sb: 'Brought to you by Austin:'
+                        
+                        
                         oastoken: '%%CLICK_URL_ESC%%',
-                        capi: ['p/4xv7c','','',''],
-                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                        capiTitle: 'Pink Floyd special',
-                        capiLinkUrl: 'http://theguardian.com/music/ledzeppelin',
-                        capiAboutLinkUrl: 'http://theguardian.com/about',
-                        capiKeywords: 'music/pinkfloyd'
+                        t: ['p/43akg','p/43945'],
+                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        ct: 'Pink Floyd special',
+                        cl: 'http://theguardian.com/music/pinkfloyd',
+//                        clt: 'Readmore link text',
+                        cal: 'http://theguardian.com/about',
+                        k: 'music/pinkfloyd',
+//                        rmd: 'www.theguardina.com',
+//                        rmt: 'See more over here',
+                        sb: 'Sponsored by:',
+                        af: 'container--merchandising-feature'
                     }).init('capi', document.querySelector('[data-name="merchandising-capi-multi"]'));
                 });
             });
@@ -704,7 +747,7 @@ jQuery(function($) {
         </script>
     </div>
 
-
+    <hr/>
 
 
     <div class="fc-container">
