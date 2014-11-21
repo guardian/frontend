@@ -6,10 +6,9 @@ import model._
 import conf._
 import play.api.libs.json._
 import play.api.mvc.{ Controller, Action }
-import pa.FootballMatch
+import pa.{LineUpTeam, FootballMatch, LineUp}
 import org.joda.time.format.DateTimeFormat
 import feed._
-import pa.LineUp
 import implicits.{ Requests, Football }
 import scala.concurrent.Future
 
@@ -17,6 +16,14 @@ import scala.concurrent.Future
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
+
+  def teamHasStats(team: LineUpTeam) =
+    ( team.corners, team.offsides, team.shotsOn, team.shotsOff) match {
+      case (0,0,0,0) => false
+      case _ => true
+    }
+
+  lazy val hasPaStats: Boolean = teamHasStats( lineUp.homeTeam ) && teamHasStats( lineUp.awayTeam )
 
   override lazy val id = MatchUrl(theMatch)
   override lazy val section = "football"
@@ -46,6 +53,7 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
   def renderMatch(year: String, month: String, day: String, home: String, away: String) =
+
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
         val date = dateFormat.parseDateTime(year + month + day).toLocalDate
