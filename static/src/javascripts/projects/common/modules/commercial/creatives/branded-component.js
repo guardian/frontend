@@ -45,7 +45,7 @@ define([
 
             templateConfig.config.clickMacro = clickMacro;
 
-            if ($rightHandCol.dim().height > 1300 && config.page.section !== 'football') {
+            if ($rightHandCol.dim().height > 1600 && config.page.section !== 'football') {
 
                 $.create(template(templateConfig.template, templateConfig.config))
                     .appendTo($rightHandCol);
