@@ -127,6 +127,10 @@ define([
 
                 if (sourceObject) {
                     this.el_.vjs_setProperty('adParameters', sourceObject.adParameters);
+                    this.el_.vjs_setProperty('duration', sourceObject.duration);
+                    this.el_.vjs_setProperty('bitrate', sourceObject.bitrate);
+                    this.el_.vjs_setProperty('width', sourceObject.bitrate);
+                    this.el_.vjs_setProperty('height', sourceObject.bitrate);
                 }
             }
 
