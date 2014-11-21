@@ -23,21 +23,6 @@ $c-soulmates-high: colour(neutral-1);
                 background-size: cover;
             }
         }
-        .container__title {
-            padding-bottom: 0;
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
-
-            @include mq(mobileLandscape) {
-                padding-left: $gs-gutter;
-                padding-right: $gs-gutter;
-            }
-
-            @include mq(phablet) {
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
         .commercial__title {
             text-align: center;
             min-height: 0;
@@ -48,17 +33,13 @@ $c-soulmates-high: colour(neutral-1);
             color: $c-soulmates-high;
             position: absolute;
             bottom: 0;
-            left: $gs-gutter * 8;
+            left: $gs-gutter * 7.5;
             width: auto;
             padding: 0;
-            margin: $gs-baseline 0 0;
+            text-align: center;
 
-            @include mq(phablet) {
-                left: $gs-gutter * 7;
-            }
-
-            @include mq(leftCol) {
-                left: 0;
+            @include mq(mobileLandscape) {
+                left: $gs-gutter * 8;
             }
         }
         .i-soulmates-logo {
@@ -76,14 +57,13 @@ $c-soulmates-high: colour(neutral-1);
     .lineitems {
         @include mq(tablet) {
             float: left;
-            width: gs-span(6) + $gs-gutter/2;
+            width: gs-span(6) + $gs-gutter;
         }
         @include mq(desktop) {
-            width: gs-span(9) + $gs-gutter/2;
+            width: gs-span(9) + $gs-gutter;
         }
     }
     .lineitem {
-        text-align: center;
         width: 50%;
         min-width: 96px;
         border-color: $c-soulmatesBorder;
@@ -125,19 +105,19 @@ $c-soulmates-high: colour(neutral-1);
         width: auto;
         float: none;
         margin-top: $gs-baseline;
-        
+
         @include mq(tablet) {
             margin-top: 0;
             float: right;
-            width: gs-span(3) - $gs-gutter/2;
+            width: gs-span(3);
         }
     }
     .search__dropdown {
         display: block;
-        border-top: 1px solid $c-soulmatesBorder;
+        border-bottom: 1px solid $c-soulmatesBorder;
         overflow: hidden;
         @include fs-textSans(2);
-        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
         margin-top: $gs-baseline/2;
 
         &:first-child {
@@ -156,27 +136,34 @@ $c-soulmates-high: colour(neutral-1);
     .commercial__cta {
         display: none;
     }
-    @include mq(leftCol) {
-        .container__body {
-            padding-left: 0;
+    .container__header__inner {
+        padding-bottom: 0;
+        border-bottom: 1px solid $c-soulmatesBorder;
+
+        @include mq(leftCol) {
+            padding: 0;
+            border-bottom: 0;
         }
+    }
+
+    @include mq(leftCol) {
         .container__title {
-            width: gs-span(2) + $gs-gutter*2.5 !important;
-            margin-right: 0;
             float: left;
         }
         .container__title__wrapper {
-            width: gs-span(2) + $gs-gutter*1.5;
-            margin-bottom: 0;
+            width: gs-span(2) + $gs-gutter;
             padding-top: $gs-baseline*3;
             padding-bottom: 0;
+
+            @include mq(wide) {
+                margin-left: $gs-gutter;
+                margin-right: 0;
+            }
         }
         .commercial__explainer {
             position: static;
             color: #ffffff;
-            width: gs-span(2)-$gs-gutter;
-            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5;
-            margin-top: $gs-baseline;
+            margin: $gs-baseline*1.5 auto;
         }
         .i-soulmates-logo {
             .svg & {
@@ -194,7 +181,6 @@ $c-soulmates-high: colour(neutral-1);
             position: static;
             margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
             @include button-colour(transparent, #ffffff, transparent, #ffffff, colour(neutral-2));
-            width: gs-span(2) - $gs-gutter;
             display: block;
         }
     }
@@ -213,18 +199,14 @@ $c-soulmates-high: colour(neutral-1);
             width: gs-span(2) + $gs-gutter;
         }
         .has-page-skin & {
-            padding-left: $gs-gutter;
             @include c-soulmates-branding-small;
-
-            .commercial__explainer {
-                left: $gs-gutter * 7.5;
-            }
 
             .commercial__head {
                 position: relative;
                 width: auto;
                 float: none;
             }
+
             .commercial__cta {
                 display: none;
             }

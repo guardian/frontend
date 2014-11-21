@@ -274,10 +274,8 @@
 
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
-   Update once breakpoints synced
    ========================================================================== */
 .commercial {
-    
     .has-page-skin & {
         @include mq(wide) {
             .container__header__inner,
