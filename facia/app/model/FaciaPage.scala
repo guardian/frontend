@@ -36,7 +36,7 @@ case class FaciaPage(id: String,
     ).flatten
 
     tagAndSectionIds.find(validIds contains) map { id =>
-      s"$id/all"
+      s"/$id/all"
     }
   }
 
