@@ -162,11 +162,13 @@ define([
             },
 
             transcludeRelated: function () {
-                var opts = {};
+                var opts = {
+                    excludeTags: ['tone/advertisement-features']
+                };
 
                 // don't want to show professional network content on videos or interactives
                 if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
-                    opts.excludeTag = 'guardian-professional/guardian-professional';
+                    opts.excludeTags.push('guardian-professional/guardian-professional');
                 }
                 new Related(opts).renderRelatedComponent();
             },
