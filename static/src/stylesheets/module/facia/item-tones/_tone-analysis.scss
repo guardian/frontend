@@ -1,6 +1,6 @@
 .tone-analysis--item {
     &.fc-item,
-    &.cc-item {
+    &.flyer {
         background-color: colour(analysis-background);
         color: colour(analysis-default);
     }
@@ -10,12 +10,12 @@
     }
 
     .fc-item__container:before,
-    .cc-item__container:before {
+    .flyer__container:before {
         background-color: colour(analysis-accent);
     }
 
     .fc-item__kicker,
-    .cc-item__kicker,
+    .flyer__kicker,
     .fc-item__byline {
         color: colour(analysis-accent);
     }

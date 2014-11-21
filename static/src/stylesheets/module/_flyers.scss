@@ -1,10 +1,10 @@
-.cc-item__byline {
+.flyer__byline {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter;
 }
 
-.cc-item {
+.flyer {
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -21,33 +21,33 @@
     }
 }
 
-.cc-item__title {
+.flyer__title {
     padding: 0;
 }
 
-.cc-item__header {
+.flyer__header {
     padding: $gs-baseline / 4 $gs-gutter / 4;
     padding-bottom: $gs-baseline;
 }
 
-.cc-item__standfirst {
+.flyer__standfirst {
     @include fs-headline(1);
     padding: $gs-baseline / 4 $gs-gutter / 4;
 }
 
-.cc-item__link {
+.flyer__link {
     text-decoration: none;
 }
 
-.cc-item__live {
+.flyer__live {
     font-weight: normal;
 }
 
-.cc-item__gallery-img {
+.flyer__gallery-img {
     width: 100%;
 }
 
-.cc-item__byline-img {
+.flyer__byline-img {
     height: $gs-baseline * 9.5;
     z-index: 2;
     position: absolute;
@@ -55,13 +55,13 @@
     right: 0;
 }
 
-.cc-item--has-byline-pic {
+.flyer--has-byline-pic {
 
-    .cc-item__byline-img__img {
+    .flyer__byline-img__img {
         height: 100%;
     }
 
-    .cc-item__standfirst {
+    .flyer__standfirst {
         padding-right: $gs-gutter * 6;
         min-height: $gs-baseline * 5;
     }

@@ -9,7 +9,7 @@ import conf.LiveContentApi
 import com.gu.contentapi.client.model.ItemResponse
 import play.twirl.api.HtmlFormat
 
-object ContentCardController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
+object FlyerController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
   def renderHtml(path: String) = render(path)
 
@@ -33,9 +33,9 @@ object ContentCardController extends Controller with Paging with Logging with Ex
   }
 
   private def renderContent(content: Content)(implicit request: RequestHeader) = {
-    def contentResponse: HtmlFormat.Appendable = views.html.fragments.contentCardBody(content)(request)
+    def contentResponse: HtmlFormat.Appendable = views.html.fragments.flyerBody(content)(request)
 
-    if (!request.isJson) NoCache(Ok(views.html.contentCard(content)(request)))
+    if (!request.isJson) NoCache(Ok(views.html.flyer(content)(request)))
     else Cached(900) {
       JsonComponent(
          "html" -> contentResponse

@@ -13,7 +13,7 @@
     }
 
     .fc-item__link,
-    .cc-item__link,
+    .flyer__link,
     .fc-sublink__link {
         &:visited {
             color: mix($c-headline, colour(media-background), 80%);
@@ -21,24 +21,24 @@
     }
 
     .fc-item__container:before,
-    .cc-item__container:before {
+    .flyer__container:before {
         background-color: colour(media-default);
     }
 
     .fc-item__kicker,
-    .cc-item__kicker,
+    .flyer__kicker,
     .fc-item__byline {
         color: colour(media-default);
     }
 
     .fc-item__kicker:after,
-    .cc-item__kicker:after,
+    .flyer__kicker:after,
     .fc-sublink__kicker:after {
         color: fade-out($c-headline, .6);
     }
 
     .fc-item__standfirst,
-    .cc-item__standfirst,
+    .flyer__standfirst,
     .fc-item__meta {
         color: colour(neutral-3);
     }
