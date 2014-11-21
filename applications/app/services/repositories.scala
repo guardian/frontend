@@ -119,6 +119,9 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   def isTagWithId(id: String) = page match {
     case tag: Tag => tag.id == id
 
+    case combiner: TagCombiner =>
+      combiner.leftTag.id == id || combiner.rightTag.id == id
+
     case _ => false
   }
 }
@@ -182,15 +185,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
           //we can use .head here as the query is guaranteed to return the 2 tags
           val tag1 = findTag(head, firstTag)
           val tag2 = findTag(head, secondTag)
-          val pageName = s"${tag1.name} + ${tag2.name}"
-          val page = Page(
-            s"$leftSide+$rightSide",
-            tag1.section,
-            pageName,
-            s"GFE:${tag1.section}:$pageName",
-            pagination = pagination(response),
-            maybeContentType = Some(GuardianContentTypes.TagIndex)
-          )
+
+          val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
 
           Left(IndexPage(page, trails))
       }
