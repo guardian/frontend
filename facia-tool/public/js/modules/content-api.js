@@ -67,9 +67,9 @@ function (
                 } else if (!item.id().match(/^https?:\/\//)) {
                     err = 'Sorry, URLs must begin with http...';
 
-                // A snap, but snaps can only be created in Draft mode, or on the Clipboard
-                } else if (vars.model.liveMode() && item.group.parentType !== 'Clipboard') {
-                    err = 'Sorry, special links cannot be dropped onto a Live front';
+                // A snap, but snaps can only be created to the Clipboard
+                } else if (item.group.parentType !== 'Clipboard') {
+                    err = 'Sorry, special links must be dragged to the Clipboard, initially';
 
                 // A snap, but a link off of the tool itself
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
