@@ -35,13 +35,15 @@ define([
 
     return {
 
-        run: function (type) {
+        run: function (type, clickMacro) {
             var templateConfig = templates[type],
                 $rightHandCol  = $('.content__secondary-column');
 
             if (!templateConfig || $rightHandCol.css('display') === 'none') {
                 return false;
             }
+
+            templateConfig.config.clickMacro = clickMacro;
 
             if ($rightHandCol.dim().height > 1000 && config.page.section !== 'football') {
 
