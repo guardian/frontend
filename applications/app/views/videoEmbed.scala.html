@@ -2,11 +2,18 @@
 
 @import model.{Video, VideoPlayer}
 @import views.support.{Video640}
+@import conf.Static
+@import conf.Configuration
 
 <!DOCTYPE html>
 <html lang="en-GB">
     <head>
-        <title>page.title</title>
+        <title>@page.title</title>
+        <style>
+            * { margin: 0; padding: 0; }
+            figure { margin: 0 !important; }
+        </style>
+        <link rel="stylesheet" href="@Static("stylesheets/media-player.css")"/>
     </head>
     <body>
 
@@ -55,6 +62,36 @@
                         ))
                     }
                 </figure>
+
+                <script>
+                    var docClass = document.documentElement.className;
+
+                    function hasSvgSupport() {
+                        var ns = {'svg': 'http://www.w3.org/2000/svg'};
+                        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+                    }
+
+                    if (hasSvgSupport()) {
+                        docClass += 'svg';
+                    }
+
+                    document.documentElement.className = docClass;
+
+                    var curl = {
+                        baseUrl: '@{Configuration.assets.path}javascripts',
+                        apiName: 'require',
+                        paths: {
+                            core: '@Static("javascripts/core.js")',
+                            'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")'
+                        }
+                    };
+
+                    @Html(Static.js.curl)
+
+                    require(['bootstraps/video-embed'], function(bootstrap) {
+                        bootstrap.init();
+                    });
+                </script>
 
             }
 

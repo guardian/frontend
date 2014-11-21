@@ -159,6 +159,29 @@ module.exports = function(grunt, options) {
                 preserveLicenseComments: false
             }
         },
+        videoEmbed : {
+            options: {
+                name: 'bootstraps/video-embed',
+                out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
+                paths: {
+                    qwery:        'components/qwery/qwery',
+                    common:       'projects/common',
+                    bean:         'components/bean/bean',
+                    bonzo:        'components/bonzo/bonzo',
+                    lodash:       'components/lodash-amd',
+                    videojs:      'components/videojs/video'
+                },
+                shim: {
+                    videojs: {
+                        exports: 'videojs'
+                    }
+                },
+                wrapShim: true,
+                optimize: 'none',
+                generateSourceMaps: true,
+                preserveLicenseComments: false
+            }
+        },
         preview: {
             options: {
                 name: 'bootstraps/preview',
