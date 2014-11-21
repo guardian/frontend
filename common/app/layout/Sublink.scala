@@ -154,6 +154,28 @@ case class FaciaCardHeader(
   url: EditionalisedLink
 )
 
+sealed trait FaciaCardTimestamp {
+  val javaScriptUpdate: Boolean
+
+  val formatString: String
+}
+
+// By default a date string, but uses JavaScript to update to a human readable string like '22h' meaning 22 hours ago
+case object DateOrTimeAgo extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = true
+  override val formatString: String = "d MMM y"
+}
+
+case object DateTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "d MMM y"
+}
+
+case object TimeTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "h:mm aa"
+}
+
 object FaciaCard {
   private def getByline(content: Content) = content.byline.filter(const(content.showByline)) map { byline =>
     Byline(byline, content.contributors)
@@ -180,7 +202,6 @@ object FaciaCard {
       FaciaCardHeader.fromTrail(trail, Some(config)),
       content.flatMap(getByline).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(trail),
-      maybeKicker,
       CutOut.fromTrail(trail),
       CardStyle(trail),
       cardTypes,
@@ -193,7 +214,8 @@ object FaciaCard {
       trail.trailText,
       MediaType.fromTrail(trail),
       DisplaySettings.fromTrail(trail),
-      trail.isLive
+      trail.isLive,
+      None
     )
   }
 }
@@ -204,7 +226,6 @@ case class FaciaCard(
   header: FaciaCardHeader,
   byline: Option[Byline],
   displayElement: Option[FaciaDisplayElement],
-  kicker: Option[ItemKicker],
   cutOut: Option[CutOut],
   cardStyle: CardStyle,
   cardTypes: ItemClasses,
@@ -217,8 +238,10 @@ case class FaciaCard(
   trailText: Option[String],
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
-  isLive: Boolean
+  isLive: Boolean,
+  timeStampDisplay: Option[FaciaCardTimestamp]
 ) {
+  def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
     case Some(InlineVideo(_, _, _, _)) => true
@@ -230,4 +253,6 @@ case class FaciaCard(
     case Some(InlineImage(_)) => true
     case _ => false
   }
+
+  def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 }

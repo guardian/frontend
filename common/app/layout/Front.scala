@@ -203,6 +203,7 @@ object FaciaContainer {
     None,
     None,
     false,
+    false,
     None
   )
 
@@ -213,7 +214,7 @@ object FaciaContainer {
       config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
-    )
+    ).withTimeStamps
   }
 }
 
@@ -268,8 +269,12 @@ case class FaciaContainer(
   customHeader: Option[FaciaContainerHeader],
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
+  showTimestamps: Boolean,
   dateLinkPath: Option[String]
 ) {
+  def transformCards(f: FaciaCard => FaciaCard) = copy(
+    containerLayout = containerLayout.map(_.transformCards(f))
+  )
 
   def faciaComponentName = componentId getOrElse {
     displayName map { title: String =>
@@ -283,6 +288,8 @@ case class FaciaContainer(
   def items = collectionEssentials.items
 
   def contentItems = items collect { case c: Content => c }
+
+  def withTimeStamps = transformCards(_.withTimeStamp)
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader map {

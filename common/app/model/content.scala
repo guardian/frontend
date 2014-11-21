@@ -472,6 +472,29 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     supportingEls.isDefined
   }
 
+  lazy val lightbox: JsObject = {
+    val imageContainers = bodyImages
+    val imageJson = imageContainers.map{ imgContainer =>
+      imgContainer.largestEditorialCrop.map { img =>
+        JsObject(Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble),
+          "role" -> JsString(img.role.toString)
+        ))
+      }
+    }
+    JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "images" -> JsArray(imageJson.flatten)
+    ))
+  }
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   override def metaData: Map[String, JsValue] = {
@@ -483,7 +506,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("inBodyInternalLinkCount", JsNumber(linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(shouldHideAdverts)),
-      ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise))
+      ("hasInlineMerchandise", JsBoolean(hasInlineMerchandise)),
+      ("lightboxImages", lightbox)
     ) ++ bookReviewIsbn
   }
 

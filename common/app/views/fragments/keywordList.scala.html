@@ -1,4 +1,4 @@
-@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags", tone: Option[String] = None)(implicit request: RequestHeader)
+@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags", tone: Option[String] = None, allPath: Option[String] = None)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import model.Tag
@@ -18,8 +18,16 @@
 
 @defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { shownKeywords =>
     @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
-        @if(shownKeywords.nonEmpty) {
+        @if(shownKeywords.nonEmpty || allPath.nonEmpty) {
             <ul class="keyword-list inline-list">
+                @allPath.map { path =>
+                    <li class="inline-list__item">
+                        <a href="@LinkTo(path)"
+                           data-link-name="all"
+                           class="button button--small button--tag button--secondary">All today's stories</a>
+                    </li>
+                }
+
                 @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
                     @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
                 }

@@ -162,11 +162,13 @@ define([
             },
 
             transcludeRelated: function () {
-                var opts = {};
+                var opts = {
+                    excludeTags: ['tone/advertisement-features']
+                };
 
                 // don't want to show professional network content on videos or interactives
                 if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
-                    opts.excludeTag = 'guardian-professional/guardian-professional';
+                    opts.excludeTags.push('guardian-professional/guardian-professional');
                 }
                 new Related(opts).renderRelatedComponent();
             },
@@ -405,6 +407,15 @@ define([
                 }
             },
 
+            adTestCookie: function () {
+                var queryParams = url.getUrlVars();
+                if (queryParams.adtest === 'clear') {
+                    cookies.remove('adtest');
+                } else if (queryParams.adtest) {
+                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+                }
+            },
+
             initReleaseMessage: function () {
                 releaseMessage.init();
             },
@@ -446,6 +457,7 @@ define([
             modules.initDiscussion();
             modules.initFastClick();
             modules.testCookie();
+            modules.adTestCookie();
             modules.windowEventListeners();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();

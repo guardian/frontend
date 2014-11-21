@@ -104,7 +104,11 @@
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
-                                        FaciaCardAndIndex.fromTrail(trail, ItemClasses.liveBlogMore, index),
+                                        FaciaCardAndIndex.fromTrail(
+                                            trail,
+                                            ItemClasses.liveBlogMore,
+                                            index
+                                        ).transformCard(_.withTimeStamp),
                                         0,
                                         isRow = false,
                                         isList = false

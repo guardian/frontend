@@ -103,7 +103,7 @@ define([
                 live:     vars.state.liveMode(),
                 draft:   !vars.state.liveMode(),
                 itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-            }
+            };
 
             remove = sourceGroup && sourceGroup.parentType === 'Collection' && (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
             remove = remove ? remover(sourceGroup, id) : undefined;
@@ -133,7 +133,7 @@ define([
             article.meta.imageReplace(true);
             article.meta.imageSrc(opts.mediaItem.file);
         } else {
-            window.alert('You can only drop media into an opened article')
+            window.alert('You can only drop media into an opened article');
         }
     }
 

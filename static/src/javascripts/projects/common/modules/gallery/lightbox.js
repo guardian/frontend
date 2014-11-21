@@ -47,7 +47,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site';
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -128,23 +128,22 @@ define([
     }
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
-        var blockShortUrl = config.page.shortUrl + '?index=' + i,
-            blockLongUrl = config.page.pageId + '?index=' + i,
+        var blockShortUrl = config.page.shortUrl,
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'url': encodeURI('https://www.facebook.com/sharer/sharer.php?u=' + blockLongUrl + '&ref=responsive')
+                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'url': encodeURI('https://twitter.com/intent/tweet?text=' + config.page.webTitle + '&url=' + blockShortUrl)
+                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
             }];
 
-        return template(blockSharingTpl, {
+        return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
             articleType: 'gallery',
             count: this.images.length,
             index: i,
@@ -316,7 +315,7 @@ define([
 
                 this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
 
-                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '#img-' + this.index, true);
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
@@ -494,26 +493,38 @@ define([
     };
 
     function bootstrap() {
-        var lightbox, galleryId, match;
+        var lightbox,
+            galleryId,
+            match,
+            galleryHash = window.location.hash,
+            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'],
+            res;
+
         bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
             e.preventDefault();
 
             var $el = bonzo(e.currentTarget),
                 galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split('?index='),
+                galleryHrefParts = galleryHref.split('#img-'),
                 parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             lightbox = lightbox || new GalleryLightbox();
-            lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
+
+            lightbox.loadGalleryfromJson(images, galleryIndex);
         });
 
-        if (config.page.contentType === 'Gallery') {
+        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article') {
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
+                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
+            } else {
+                res = /^#(?:img-)?(\d)+$/.exec(galleryHash);
+                if (res) {
+                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
+                }
             }
         }
     }
