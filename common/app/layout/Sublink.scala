@@ -202,7 +202,6 @@ object FaciaCard {
       FaciaCardHeader.fromTrail(trail, Some(config)),
       content.flatMap(getByline).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(trail),
-      maybeKicker,
       CutOut.fromTrail(trail),
       CardStyle(trail),
       cardTypes,
@@ -227,7 +226,6 @@ case class FaciaCard(
   header: FaciaCardHeader,
   byline: Option[Byline],
   displayElement: Option[FaciaDisplayElement],
-  kicker: Option[ItemKicker],
   cutOut: Option[CutOut],
   cardStyle: CardStyle,
   cardTypes: ItemClasses,
@@ -243,6 +241,7 @@ case class FaciaCard(
   isLive: Boolean,
   timeStampDisplay: Option[FaciaCardTimestamp]
 ) {
+  def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
     case Some(InlineVideo(_, _, _, _)) => true
