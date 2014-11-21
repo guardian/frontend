@@ -82,21 +82,24 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
     val report = Store.getDfpLineItemsReport() flatMap (Json.parse(_).asOpt[LineItemReport])
 
-    val adTestLineItems =
-      report.map(_.lineItems).getOrElse(Nil) filter (_.targeting.hasAdTestTargetting)
+    val lineItemsByAdTest =
+      report.map(_.lineItems).getOrElse(Nil)
+        .filter(_.targeting.hasAdTestTargetting)
+        .groupBy(_.targeting.adTestValue.get)
 
-    val (hasNumericTestValue, hasStringTestValue) = adTestLineItems partition { lineItem =>
+    val (hasNumericTestValue, hasStringTestValue) =
+      lineItemsByAdTest partition { case (testValue, _) =>
       def isNumber(s: String) = s forall Character.isDigit
-      isNumber(lineItem.targeting.adTestValue.get)
+        isNumber(testValue)
     }
 
-    val sortedAdTestLineItems = {
-      hasNumericTestValue.sortBy(_.targeting.adTestValue.map(_.toInt)) ++
-        hasStringTestValue.sortBy(_.targeting.adTestValue)
+    val sortedGroups = {
+      hasNumericTestValue.toSeq.sortBy { case (testValue, _) => testValue.toInt} ++
+        hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue}
     }
 
     NoCache(Ok(views.html.commercial.adTests(
-      environment.stage, report.map(_.timestamp), sortedAdTestLineItems
+      environment.stage, report.map(_.timestamp), sortedGroups
     )))
   }
 

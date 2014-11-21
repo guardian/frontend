@@ -12,17 +12,21 @@ define([
         trackingCookieName = 'adtest_tracker';
 
     function status() {
-        var trackingCookie = cookies.get(trackingCookieName);
+        var trackingCookieValue = cookies.get(trackingCookieName);
 
-        if (trackingCookie == null) {
+        $('.cookie_row').removeClass('selected');
+
+        if (trackingCookieValue == null) {
             $('#cookie_status')
                 .text('Your browser has no test cookie set.')
                 .addClass('hasnt_cookie');
             $('#clear_cookie').hide();
         } else {
             $('#cookie_status')
-                .text('Your browser has test cookie \'' + trackingCookie + '\' set.')
+                .text('Your browser has test cookie \'' + trackingCookieValue + '\' set.')
                 .addClass('has_cookie');
+
+            $('#cookie_' + trackingCookieValue).addClass('selected');
         }
     }
 
@@ -46,7 +50,7 @@ define([
         var ifrm = createIframe();
 
         bean.on(document, 'click', '.cookie', function (event) {
-            var cookieValue = event.srcElement.text;
+            var cookieValue = event.srcElement.value;
             setCookie(ifrm, cookieValue);
             cookies.add(trackingCookieName, cookieValue, 10);
             $('#clear_cookie').show();
