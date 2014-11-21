@@ -23,10 +23,10 @@ define([
                     parentEl = options['parentEl'],
 
                 // Create a temporary element to be replaced by swf object
-                    placeHolder = this.el_ = vjs.createEl('div', { id: player.id() + '_temp_flash' }),
+                    placeHolder = this.el_ = vjs.createEl('div', { id: player.id() + '_temp_vpaid' }),
 
                 // Generate ID for swf object
-                    objId = player.id() + '_flash_api',
+                    objId = player.id() + '_vpaid_api',
 
                 // Store player options in local var for optimization
                 // TODO: switch to using player methods instead of options
@@ -221,7 +221,7 @@ define([
         /* Flash Support Testing -------------------------------------------------------- */
 
         vjs.Vpaid.isSupported = function () {
-            return vjs.Flash.version()[0] >= 10;
+            return vjs.Vpaid.version()[0] >= 10;
         };
 
         vjs.Vpaid.canPlaySource = function (srcObj) {
@@ -255,7 +255,7 @@ define([
                 // reference player on tech element
                 el['player'] = player;
                 // check that the flash object is really ready
-                vjs.Flash['checkReady'](player.tech);
+                vjs.Vpaid['checkReady'](player.tech);
             }
         };
 
@@ -274,7 +274,7 @@ define([
             } else {
                 // wait longer
                 setTimeout(function () {
-                    vjs.Flash['checkReady'](tech);
+                    vjs.Vpaid['checkReady'](tech);
                 }, 50);
             }
         };
@@ -288,7 +288,7 @@ define([
         // Log errors from the swf
         vjs.Vpaid['onError'] = function (swfID, err) {
             var player = vjs.el(swfID)['player'];
-            var msg = 'FLASH: ' + err;
+            var msg = 'Vpaid: ' + err;
 
             if (err == 'srcnotfound') {
                 player.error({ code: 4, message: msg });
