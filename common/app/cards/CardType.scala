@@ -4,7 +4,7 @@ sealed trait CardType {
   val cssClassName: String
 
   def showVideoPlayer = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | Full | MegaFull => true
+    case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }
 
@@ -39,12 +39,16 @@ case object ThreeQuartersRight extends CardType {
   override val cssClassName: String = "three-quarters-right"
 }
 
-case object Full extends CardType {
-  override val cssClassName: String = "full"
+case object FullMedia50 extends CardType {
+  override val cssClassName: String = "full-media-50"
 }
 
-case object MegaFull extends CardType {
-  override val cssClassName: String = "mega-full"
+case object FullMedia75 extends CardType {
+  override val cssClassName: String = "full-media-75"
+}
+
+case object FullMedia100 extends CardType {
+  override val cssClassName: String = "full-media-100"
 }
 
 case object Third extends CardType {

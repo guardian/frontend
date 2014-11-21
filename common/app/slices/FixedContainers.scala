@@ -42,7 +42,7 @@ object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
   //TODO: Temporary vals for content until we refactor
-  val fixedSmallSlowI = slices(Full)
+  val fixedSmallSlowI = slices(FullMedia75)
   val fixedSmallSlowII = slices(HalfHalf)
   val fixedSmallSlowIV = slices(QuarterQuarterQuarterQuarter)
   val fixedSmallSlowVI = slices(TTTL4)
@@ -59,7 +59,7 @@ object FixedContainers {
   val indexPageMpuIX = fixedMediumSlowXIIMpu
 
   val all: Map[String, ContainerDefinition] = Map(
-    ("fixed/small/slow-I", slices(Full)),
+    ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-II", slices(HalfHalf)),
     ("fixed/small/slow-III", slices(HalfQQ)),
     ("fixed/small/slow-IV", fixedSmallSlowIV),
