@@ -111,7 +111,7 @@ $c-soulmates-high: colour(neutral-1);
             position: absolute;
             bottom: 0;
             left: $gs-gutter * 8;
-            margin: $gs-baseline/2 auto;
+            margin-bottom: $gs-baseline*(2/3);
             width: auto;
         }
     }
@@ -188,6 +188,10 @@ $c-soulmates-high: colour(neutral-1);
         white-space: pre;
         overflow: hidden;
         margin-bottom: 0;
+    }
+
+    .lineitem__meta {
+        line-height: 1;
     }
 
     /* Search form */
