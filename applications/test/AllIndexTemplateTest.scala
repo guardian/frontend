@@ -16,6 +16,6 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     url() should endWith("/world/2014/oct/02/all")
 
     $("[rel=prev]").first.click()
-    url() should endWith("/world/2014/sep/30/all")
+    url() should endWith("/world/2014/oct/01/all")
   }
 }
