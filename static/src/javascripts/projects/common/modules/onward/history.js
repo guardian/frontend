@@ -3,10 +3,10 @@
  Description: Gets and sets users reading history
  */
 define([
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/storage'
 ], function (
-    assign,
+    _,
     storage
 ) {
 
@@ -14,11 +14,18 @@ define([
         summary,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        maxSize = 100;
+        maxSize = 100,
+        taxonomy = [
+            {tid: "section",    tname: "sectionName"},
+            {tid: "keywordIds", tname: "keywords"},
+            {tid: "authorIds",  tname: "author"},
+            {tid: "seriesId",   tname: "series"},
+            {tid: "blogIds",    tname: "blogs"}
+        ];
+
 
     function HistoryItem(item) {
-        assign(this, item.meta);
-        this.id = item.id;
+        _.assign(this, item);
         this.timestamp = Date.now();
         this.count = 1;
         return this;
@@ -34,17 +41,31 @@ define([
         return storage.local.set(storageKeySummary, data);
     }
 
-    function updateSummary(summary, meta) {
-        var section = meta.section,
-            keyword = (meta.keywords || [])[0];
+    function incrementSummaryTags(summary, tags) {
+        tags.forEach(function(t) {
+            var sTag = summary[t];
 
-        if (section) {
-            summary.sections[section] = (summary.sections[section] || 0) + 1;
-        }
+            if (sTag) {
+                sTag = [sTag[0] + 1, sTag[1]];
+            }
+        });
+    }
 
-        if (keyword) {
-            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
-        }
+    function addTagToSummary(summary, tid, tname) {
+        var sTag = summary[tid];
+
+        summary[tid] = [sTag ? sTag[0] + 1 : 1, tname];
+    }
+
+    function firstCsv(str) {
+        return (str || '').split(',')[0];
+    }
+
+    function collapseTag(t) {
+        t = t.replace(/^(uk|us|au)\//, '');
+        t = t.split('/');
+        t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
+        return t.join('/');
     }
 
     return {
@@ -61,7 +82,7 @@ define([
         },
 
         getSummary: function () {
-            summary = summary || storage.local.get(storageKeySummary) || {sections: {}, keywords: {}};
+            summary = summary || storage.local.get(storageKeySummary) || {};
             return summary;
         },
 
@@ -75,31 +96,61 @@ define([
             });
         },
 
-        log: function (newItem) {
+        log: function (pageConfig) {
             var foundItem,
-                summary = {sections: {}, keywords: {}},
-                hist = this.get().filter(function (item) {
-                    var found = (item.id === newItem.id);
+                summary = this.getSummary(),
 
-                    updateSummary(summary, item);
+                pageId = '/' + pageConfig.pageId,
+                pageTags = _.chain(taxonomy)
+                    .reduce(function(tags, tag) {
+                        var tid = firstCsv(pageConfig[tag.tid]),
+                            tname = tid && firstCsv(pageConfig[tag.tname]);
+
+                        if (tid && tname) {
+                            tid = collapseTag(tid);
+                            tags[tid] = true;
+                            addTagToSummary(summary, tid, tname);
+                        }
+                        return tags;
+                    }, {})
+                    .keys()
+                    .value(),
+
+                historyTags = {},
+                history = this.get().filter(function (item) {
+                    var found = (item.id === pageId);
+
+                    incrementSummaryTags(summary, item.tags);
+
                     foundItem = found ? item : foundItem;
+
+                    item.tags.forEach(function(t) {
+                        historyTags[t] = true;}
+                    );
+
                     return !found;
                 });
+
+            _.assign(historyTags, pageTags);
+
+            _.each(_.keys(summary), function(t) {
+                if (!historyTags[t]) {
+                    delete summary[t];
+                }
+            });
+
+            setSummary(summary);
 
             if (foundItem) {
                 foundItem.count = (foundItem.count || 0) + 1;
                 foundItem.timestamp = Date.now();
-                hist.unshift(foundItem);
+                history.unshift(foundItem);
             } else {
-                updateSummary(summary, newItem.meta);
-                hist.unshift(new HistoryItem(newItem));
-                hist = hist.slice(0, maxSize);
+                history.unshift(new HistoryItem({id: pageId, tags: pageTags}));
+                history = history.slice(0, maxSize);
             }
 
-            summary.count = hist.length;
-
-            setSummary(summary);
-            setHistory(hist);
+            setHistory(history);
         }
     };
 });
