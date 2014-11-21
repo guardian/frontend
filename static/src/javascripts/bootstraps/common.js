@@ -407,6 +407,15 @@ define([
                 }
             },
 
+            adTestCookie: function () {
+                var queryParams = url.getUrlVars();
+                if (queryParams.adtest === 'clear') {
+                    cookies.remove('adtest');
+                } else if (queryParams.adtest) {
+                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+                }
+            },
+
             initReleaseMessage: function () {
                 releaseMessage.init();
             },
@@ -448,6 +457,7 @@ define([
             modules.initDiscussion();
             modules.initFastClick();
             modules.testCookie();
+            modules.adTestCookie();
             modules.windowEventListeners();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();
