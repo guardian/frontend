@@ -67,7 +67,7 @@ object IndexPage {
 
     val front = Front.fromConfigsAndContainers(
       containerDefinitions,
-      ContainerLayoutContext(Set.empty, hideCutOuts = true)
+      ContainerLayoutContext(Set.empty, hideCutOuts = indexPage.page.isContributorPage)
     )
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
@@ -98,7 +98,10 @@ object IndexPage {
         showTimestamps = true,
         dateLinkPath = Some(s"/${indexPage.page.id}")
       ).transformCards({ card =>
-        card.copy(timeStampDisplay = Some(timeStampDisplay))
+        card.copy(
+          timeStampDisplay = Some(timeStampDisplay),
+          byline = if (indexPage.page.isContributorPage) None else card.byline
+        )
       })
     }))
   }
