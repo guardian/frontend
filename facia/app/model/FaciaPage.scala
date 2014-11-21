@@ -32,7 +32,7 @@ case class FaciaPage(id: String,
 
     val validIds = Set(
       Some(id),
-      idWithoutEdition
+      idWithoutEdition.filter(_.nonEmpty)
     ).flatten
 
     tagAndSectionIds.find(validIds contains) map { id =>
