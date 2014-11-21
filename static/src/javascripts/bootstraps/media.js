@@ -50,8 +50,7 @@ define([
         ];
 
     function getMediaType(player) {
-        var mediaEl = player && _.isFunction(player.el) ? player.el().children[0] : undefined;
-        return mediaEl ? mediaEl.tagName.toLowerCase() : 'video';
+        return player.guMediaType;
     }
 
     function shouldAutoPlay(player) {
@@ -285,6 +284,8 @@ define([
                     preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                 }),
                 mouseMoveIdle;
+
+            player.guMediaType = mediaType;
 
             //Location of this is important
             handleInitialMediaError(player);
