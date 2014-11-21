@@ -105,7 +105,7 @@ define([
                     page: self.page(),
                     pageSize: pageSize,
                     filter: self.filter(),
-                    filterType: self.filterType()
+                    filterType: self.filterType().param
                 };
 
                 var term = self.term();
