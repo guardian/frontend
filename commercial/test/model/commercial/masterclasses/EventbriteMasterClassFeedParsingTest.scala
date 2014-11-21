@@ -196,9 +196,9 @@ import test.ConfiguredTestSuite
 
   "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(rawEventBriteFeed)
-
+  
     val events: Seq[JsValue] = EventbriteApi.extractEventsFromFeed(eventBriteFeed)
-
+    
     events.size should be (3)
   }
 }
