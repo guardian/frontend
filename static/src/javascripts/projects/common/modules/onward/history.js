@@ -21,11 +21,11 @@ define([
         storageKeyPopular = 'gu.trace.popular',
         maxSize = 100,
         taxonomy = [
-            {tid: "section",    tname: "sectionName"},
-            {tid: "keywordIds", tname: "keywords"},
-            {tid: "authorIds",  tname: "author"},
-            {tid: "seriesId",   tname: "series"},
-            {tid: "blogIds",    tname: "blogs"}
+            {tid: 'section',    tname: 'sectionName'},
+            {tid: 'keywordIds', tname: 'keywords'},
+            {tid: 'authorIds',  tname: 'author'},
+            {tid: 'seriesId',   tname: 'series'},
+            {tid: 'blogIds',    tname: 'blogs'}
         ];
 
     function HistoryItem(item) {
@@ -56,7 +56,7 @@ define([
             summaryCache = {
                 start: now,
                 tags: {}
-            }
+            };
         }
 
         return summaryCache;
@@ -70,7 +70,7 @@ define([
         var summary = getSummary(),
             start = summary.start,
             startNew = now - forgetAfterPeriods,
-            updateBy = startNew - start
+            updateBy = startNew - start;
 
         if(updateBy > 0) {
             summary.start = startNew;
@@ -86,7 +86,7 @@ define([
                 } else {
                     summary.tags[tid] = [sTag[0], ticks];
                 }
-            })
+            });
         }
     }
 
