@@ -13,7 +13,7 @@ define([
     var periodUnitInMs = 60000,
         forgetAfterPeriods = 5,
 
-        now = periodUnits(Date.now()),
+        now =  Math.floor(Date.now() / periodUnitInMs),
         historyCache,
         summaryCache,
         storageKeyHistory = 'gu.trace',
@@ -62,9 +62,6 @@ define([
         return summaryCache;
     }
 
-    function periodUnits(n) {
-        return Math.floor(n / periodUnitInMs);
-    }
 
     function purgeSummary() {
         var summary = getSummary(),
