@@ -87,20 +87,18 @@ define([
     }
 
     function mostPopular() {
-        var popular = _.chain(getSummary().tags)
-            .map(function (sTag, tid) {
-               return {
-                   id: tid,
-                   name: sTag[0],
-                   rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
-               };
-            })
-            .sortBy(function (tag) { return tag.rank * -1; })
-            .first(10)
-            .map(function (tag) { return [tag.id, tag.name]; })
-            .value();
-
-        return popular;
+                return _.chain(getSummary().tags)
+                    .map(function (sTag, tid) {
+                       return {
+                           id: tid,
+                           name: sTag[0],
+                           rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
+                       };
+                    })
+                    .sortBy(function (tag) { return tag.rank * -1; })
+                    .first(10)
+                    .map(function (tag) { return [tag.id, tag.name]; })
+                    .value();
     }
 
     function updateSummary(tid, tname) {
