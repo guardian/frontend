@@ -10,15 +10,15 @@ define([
     storage
 ) {
 
-    var periodUnitInMs = 60000, // 1 min
-        forgetAfterPeriods = 5,
+    var periodUnitInMs = 86400000, // 1 day
+        forgetAfterPeriods = 50,
 
         now =  Math.floor(Date.now() / periodUnitInMs),
         historyCache,
         summaryCache,
-        storageKeyHistory = 'gu.trace',
-        storageKeySummary = 'gu.trace.summary',
-        storageKeyPopular = 'gu.trace.popular',
+        storageKeyHistory = 'gu.history',
+        storageKeySummary = 'gu.history.summary',
+        storageKeyPopular = 'gu.history.popular',
         maxSize = 100,
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
