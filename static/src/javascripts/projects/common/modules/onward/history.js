@@ -87,7 +87,7 @@ define([
     }
 
     function mostPopular() {
-        var mostPopular = _.chain(getSummary().tags)
+        var popular = _.chain(getSummary().tags)
             .map(function (sTag, tid) {
                return {
                    id: tid,
@@ -100,7 +100,7 @@ define([
             .map(function (tag) { return [tag.id, tag.name]; })
             .value();
 
-        return mostPopular;
+        return popular;
     }
 
     function updateSummary(tid, tname) {
