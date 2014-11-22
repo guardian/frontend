@@ -10,10 +10,15 @@ define([
     storage
 ) {
 
-    var history,
-        summary,
-        storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
+    var periodUnitInMs = 60000,
+        forgetAfterPeriods = 5,
+
+        now = periodUnits(Date.now()),
+        historyCache,
+        summaryCache,
+        storageKeyHistory = 'gu.trace',
+        storageKeySummary = 'gu.trace.summary',
+        storageKeyPopular = 'gu.trace.popular',
         maxSize = 100,
         taxonomy = [
             {tid: "section",    tname: "sectionName"},
@@ -23,7 +28,6 @@ define([
             {tid: "blogIds",    tname: "blogs"}
         ];
 
-
     function HistoryItem(item) {
         _.assign(this, item);
         this.timestamp = Date.now();
@@ -31,30 +35,82 @@ define([
         return this;
     }
 
-    function setHistory(data) {
-        history = data;
+    function saveHistory(data) {
+        historyCache = data;
         return storage.local.set(storageKeyHistory, data);
     }
 
-    function setSummary(data) {
-        summary = data;
-        return storage.local.set(storageKeySummary, data);
+    function saveSummary() {
+        saveFavourites();
+        return storage.local.set(storageKeySummary, summaryCache);
     }
 
-    function incrementSummaryTags(summary, tags) {
-        tags.forEach(function(t) {
-            var sTag = summary[t];
+    function saveFavourites() {
+        return storage.local.set(storageKeyPopular, mostPopular());
+    }
 
-            if (sTag) {
-                sTag = [sTag[0] + 1, sTag[1]];
+    function getSummary() {
+        summaryCache = summaryCache || storage.local.get(storageKeySummary);
+
+        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.start)) {
+            summaryCache = {
+                start: now,
+                tags: {}
             }
-        });
+        }
+
+        return summaryCache;
     }
 
-    function addTagToSummary(summary, tid, tname) {
-        var sTag = summary[tid];
+    function periodUnits(n) {
+        return Math.floor(n / periodUnitInMs);
+    }
 
-        summary[tid] = [sTag ? sTag[0] + 1 : 1, tname];
+    function purgeSummary() {
+        var summary = getSummary(),
+            start = summary.start,
+            startNew = now - forgetAfterPeriods,
+            updateBy = startNew - start
+
+        if(updateBy > 0) {
+            summary.start = startNew;
+
+            _.each(summary.tags, function(sTag, tid) {
+                var ticks = _.chain(sTag[1])
+                    .map(function(n) { return n - updateBy; })
+                    .filter(function(n) { return n >= 0; })
+                    .value();
+
+                if (ticks.length === 0) {
+                    delete summary.tags[tid];
+                } else {
+                    summary.tags[tid] = [sTag[0], ticks];
+                }
+            })
+        }
+    }
+
+    function mostPopular() {
+        return _.chain(getSummary().tags)
+            .map(function(sTag, tid) {
+               return {
+                   id: tid,
+                   name: sTag[0],
+                   rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
+               };
+            })
+            .sortBy(function(tag) { return tag.rank * -1; })
+            .first(10)
+            .map(function(tag) { return [tag.id, tag.name]; })
+            .value();
+    }
+
+    function updateSummary(tid, tname) {
+        var summary = getSummary(),
+            ctid = collapseTag(tid),
+            sTag = summary.tags[ctid];
+
+        summary.tags[ctid] = [tname, sTag ? sTag[1].concat(now - summary.start) : [0]];
     }
 
     function firstCsv(str) {
@@ -70,21 +126,18 @@ define([
 
     return {
         reset: function () {
-            history = undefined;
-            summary = undefined;
+            historyCache = undefined;
+            summaryCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
         },
 
         get: function () {
-            history = history || storage.local.get(storageKeyHistory) || [];
-            return history;
+            historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+            return historyCache;
         },
 
-        getSummary: function () {
-            summary = summary || storage.local.get(storageKeySummary) || {};
-            return summary;
-        },
+        getSummary: getSummary,
 
         getSize: function () {
             return this.get().length;
@@ -97,60 +150,49 @@ define([
         },
 
         log: function (pageConfig) {
-            var foundItem,
-                summary = this.getSummary(),
+            var pageId = '/' + pageConfig.pageId,
+                history,
+                foundItem;
 
-                pageId = '/' + pageConfig.pageId,
-                pageTags = _.chain(taxonomy)
-                    .reduce(function(tags, tag) {
-                        var tid = firstCsv(pageConfig[tag.tid]),
-                            tname = tid && firstCsv(pageConfig[tag.tname]);
+            // Update history
 
-                        if (tid && tname) {
-                            tid = collapseTag(tid);
-                            tags[tid] = true;
-                            addTagToSummary(summary, tid, tname);
-                        }
-                        return tags;
-                    }, {})
-                    .keys()
-                    .value(),
+            history = this.get().filter(function (item) {
+                var found = (item.id === pageId);
 
-                historyTags = {},
-                history = this.get().filter(function (item) {
-                    var found = (item.id === pageId);
-
-                    incrementSummaryTags(summary, item.tags);
-
-                    foundItem = found ? item : foundItem;
-
-                    item.tags.forEach(function(t) {
-                        historyTags[t] = true;}
-                    );
-
-                    return !found;
-                });
-
-            _.assign(historyTags, pageTags);
-
-            _.each(_.keys(summary), function(t) {
-                if (!historyTags[t]) {
-                    delete summary[t];
-                }
+                foundItem = found ? item : foundItem;
+                return !found;
             });
-
-            setSummary(summary);
 
             if (foundItem) {
                 foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
+                foundItem.timestamp = now;
                 history.unshift(foundItem);
             } else {
-                history.unshift(new HistoryItem({id: pageId, tags: pageTags}));
+                history.unshift(new HistoryItem({id: pageId}));
                 history = history.slice(0, maxSize);
             }
 
-            setHistory(history);
+            saveHistory(history);
+
+            // Update summary
+
+            purgeSummary();
+
+            _.chain(taxonomy)
+                .reduce(function(tags, tag) {
+                    var tid = firstCsv(pageConfig[tag.tid]),
+                        tname = tid && firstCsv(pageConfig[tag.tname]);
+
+                    if (tid && tname) {
+                        tags[collapseTag(tid)] = tname;
+                    }
+                    return tags;
+                }, {})
+                .each(function(tname, tid) {
+                    updateSummary(tid, tname);
+                });
+
+            saveSummary();
         }
     };
 });
