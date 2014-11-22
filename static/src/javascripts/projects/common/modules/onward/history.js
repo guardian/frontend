@@ -87,7 +87,7 @@ define([
     }
 
     function mostPopular() {
-                return _.chain(getSummary().tags)
+        return _.chain(getSummary().tags)
                     .map(function (sTag, tid) {
                        return {
                            id: tid,
