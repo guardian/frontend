@@ -23,9 +23,7 @@ define([
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
-            {tid: 'authorIds',  tname: 'author'},
-            {tid: 'seriesId',   tname: 'series'},
-            {tid: 'blogIds',    tname: 'blogs'}
+            {tid: 'seriesId',   tname: 'series'}
         ];
 
     function HistoryItem(item) {
@@ -40,13 +38,12 @@ define([
         return storage.local.set(storageKeyHistory, data);
     }
 
-    function saveSummary() {
-        savePopular();
-        return storage.local.set(storageKeySummary, summaryCache);
+    function saveSummary(summary) {
+        return storage.local.set(storageKeySummary, summary);
     }
 
-    function savePopular() {
-        return storage.local.set(storageKeyPopular, mostPopular());
+    function savePopular(summary) {
+        return storage.local.set(storageKeyPopular, mostPopular(summary));
     }
 
     function getSummary() {
@@ -64,49 +61,54 @@ define([
 
     function pruneSummary() {
         var summary = getSummary(),
-            start = summary.start,
-            startNew = now - forgetAfterPeriods,
-            updateBy = startNew - start;
+            newStart = now - forgetAfterPeriods,
+            updateBy;
 
-        if (updateBy > 0) {
-            summary.start = startNew;
+        if (newStart > summary.start) {
+            updateBy = newStart - summary.start;
+            summary.start = newStart;
 
             _.each(summary.tags, function (sTag, tid) {
-                var ticks = _.chain(sTag[1])
-                    .map(function (n) { return n - updateBy; })
-                    .filter(function (n) { return n >= 0; })
-                    .value();
+                var ticks = _.reduce(sTag[1], function (ticks, count, sinceStart) {
+                        var newSinceStart = parseInt(sinceStart, 10) - updateBy;
 
-                if (ticks.length === 0) {
+                        if (newSinceStart > 0) {
+                            ticks[newSinceStart] = count;
+                        }
+                        return ticks;
+                    }, {});
+
+                if (_.isEmpty(ticks)) {
                     delete summary.tags[tid];
                 } else {
                     summary.tags[tid] = [sTag[0], ticks];
                 }
             });
+
+            if (_.isEmpty(summary.tags)) {
+                summary.start = now;
+            }
         }
+
+        return summary;
     }
 
-    function mostPopular() {
-        return _.chain(getSummary().tags)
+    function mostPopular(summary) {
+        return _.chain(summary.tags)
             .map(function (sTag, tid) {
                 return {
                     id: tid,
                     name: sTag[0],
-                    rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
+                    rank: _.reduce(sTag[1], function (rank, count, sinceStart) {
+                        return rank + (count * (1 + parseInt(sinceStart, 10)));
+                    }, 0)
                 };
             })
-            .sortBy(function (tag) { return tag.rank * -1; })
-            .first(10)
+            .sortBy('rank')
+            .last(10)
+            .reverse()
             .map(function (tag) { return [tag.id, tag.name]; })
             .value();
-    }
-
-    function updateSummary(tid, tname) {
-        var summary = getSummary(),
-            ctid = collapseTag(tid),
-            sTag = summary.tags[ctid];
-
-        summary.tags[ctid] = [tname, sTag ? sTag[1].concat(now - summary.start) : [0]];
     }
 
     function firstCsv(str) {
@@ -149,9 +151,9 @@ define([
         log: function (pageConfig) {
             var pageId = '/' + pageConfig.pageId,
                 history,
-                foundItem;
-
-            // Update history
+                summary,
+                foundItem,
+                sinceStart;
 
             history = this.get().filter(function (item) {
                 var found = (item.id === pageId);
@@ -159,7 +161,6 @@ define([
                 foundItem = found ? item : foundItem;
                 return !found;
             });
-
             if (foundItem) {
                 foundItem.count = (foundItem.count || 0) + 1;
                 foundItem.timestamp = now;
@@ -168,13 +169,10 @@ define([
                 history.unshift(new HistoryItem({id: pageId}));
                 history = history.slice(0, maxSize);
             }
-
             saveHistory(history);
 
-            // Update summary
-
-            pruneSummary();
-
+            summary = pruneSummary();
+            sinceStart = now - summary.start;
             _.chain(taxonomy)
                 .reduce(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
@@ -186,10 +184,17 @@ define([
                     return tags;
                 }, {})
                 .each(function (tname, tid) {
-                    updateSummary(tid, tname);
-                });
+                    var sTag = summary.tags[tid],
+                        ticks = sTag && sTag[1] || {};
 
-            saveSummary();
+                    ticks[sinceStart] = (ticks[sinceStart] || 0) + 1;
+
+                    if (!sTag) {
+                        summary.tags[tid] = [tname, ticks];
+                    }
+                });
+            saveSummary(summary);
+            savePopular(summary);
         }
     };
 });
