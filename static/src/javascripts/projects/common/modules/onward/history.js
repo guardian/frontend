@@ -10,7 +10,7 @@ define([
     storage
 ) {
 
-    var periodUnitInMs = 60000,
+    var periodUnitInMs = 60000, // 1 min
         forgetAfterPeriods = 5,
 
         now =  Math.floor(Date.now() / periodUnitInMs),
@@ -41,11 +41,11 @@ define([
     }
 
     function saveSummary() {
-        saveFavourites();
+        savePopular();
         return storage.local.set(storageKeySummary, summaryCache);
     }
 
-    function saveFavourites() {
+    function savePopular() {
         return storage.local.set(storageKeyPopular, mostPopular());
     }
 
@@ -62,7 +62,7 @@ define([
         return summaryCache;
     }
 
-    function purgeSummary() {
+    function pruneSummary() {
         var summary = getSummary(),
             start = summary.start,
             startNew = now - forgetAfterPeriods,
@@ -126,6 +126,7 @@ define([
             summaryCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
+            storage.local.remove(storageKeyPopular);
         },
 
         get: function () {
@@ -172,7 +173,7 @@ define([
 
             // Update summary
 
-            purgeSummary();
+            pruneSummary();
 
             _.chain(taxonomy)
                 .reduce(function (tags, tag) {
