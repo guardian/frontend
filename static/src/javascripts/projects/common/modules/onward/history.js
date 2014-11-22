@@ -62,7 +62,6 @@ define([
         return summaryCache;
     }
 
-
     function purgeSummary() {
         var summary = getSummary(),
             start = summary.start,
@@ -88,7 +87,7 @@ define([
     }
 
     function mostPopular() {
-        return _.chain(getSummary().tags)
+        var mostPopular = _.chain(getSummary().tags)
             .map(function (sTag, tid) {
                return {
                    id: tid,
@@ -100,6 +99,8 @@ define([
             .first(10)
             .map(function (tag) { return [tag.id, tag.name]; })
             .value();
+
+        return mostPopular;
     }
 
     function updateSummary(tid, tname) {
