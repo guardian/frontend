@@ -69,13 +69,13 @@ define([
             startNew = now - forgetAfterPeriods,
             updateBy = startNew - start;
 
-        if(updateBy > 0) {
+        if (updateBy > 0) {
             summary.start = startNew;
 
-            _.each(summary.tags, function(sTag, tid) {
+            _.each(summary.tags, function (sTag, tid) {
                 var ticks = _.chain(sTag[1])
-                    .map(function(n) { return n - updateBy; })
-                    .filter(function(n) { return n >= 0; })
+                    .map(function (n) { return n - updateBy; })
+                    .filter(function (n) { return n >= 0; })
                     .value();
 
                 if (ticks.length === 0) {
@@ -89,16 +89,16 @@ define([
 
     function mostPopular() {
         return _.chain(getSummary().tags)
-            .map(function(sTag, tid) {
+            .map(function (sTag, tid) {
                return {
                    id: tid,
                    name: sTag[0],
                    rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
                };
             })
-            .sortBy(function(tag) { return tag.rank * -1; })
+            .sortBy(function (tag) { return tag.rank * -1; })
             .first(10)
-            .map(function(tag) { return [tag.id, tag.name]; })
+            .map(function (tag) { return [tag.id, tag.name]; })
             .value();
     }
 
@@ -176,7 +176,7 @@ define([
             purgeSummary();
 
             _.chain(taxonomy)
-                .reduce(function(tags, tag) {
+                .reduce(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
                         tname = tid && firstCsv(pageConfig[tag.tname]);
 
@@ -185,7 +185,7 @@ define([
                     }
                     return tags;
                 }, {})
-                .each(function(tname, tid) {
+                .each(function (tname, tid) {
                     updateSummary(tid, tname);
                 });
 
