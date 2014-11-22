@@ -89,11 +89,11 @@ define([
     function mostPopular() {
         return _.chain(getSummary().tags)
             .map(function (sTag, tid) {
-               return {
-                   id: tid,
-                   name: sTag[0],
-                   rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
-               };
+                return {
+                    id: tid,
+                    name: sTag[0],
+                    rank: _.reduce(sTag[1], function (rank, n) { return rank + n; }, 0)
+                };
             })
             .sortBy(function (tag) { return tag.rank * -1; })
             .first(10)
