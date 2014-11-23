@@ -189,7 +189,7 @@ define([
                 .each(function (tname, tid) {
                     var sTag = summary.tags[tid],
                         ticks = sTag && sTag[1],
-                        tick = ticks && _.find(ticks, function(tick) { return tick[0] === sinceStart; });
+                        tick = ticks && _.find(ticks, function (tick) { return tick[0] === sinceStart; });
 
                     if (tick) {
                         tick[1] = tick[1] + 1;
