@@ -194,7 +194,7 @@ define([
                     if (tick) {
                         tick[1] = tick[1] + 1;
                     } else if (ticks) {
-                        ticks.unshift([sinceStart, 1])
+                        ticks.unshift([sinceStart, 1]);
                     } else {
                         summary.tags[tid] = [tname, [[sinceStart, 1]]];
                     }
