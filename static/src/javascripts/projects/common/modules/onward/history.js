@@ -3,9 +3,11 @@
  Description: Gets and sets users reading history
  */
 define([
+    'bonzo',
     'common/utils/_',
     'common/utils/storage'
 ], function (
+    bonzo,
     _,
     storage
 ) {
@@ -16,6 +18,7 @@ define([
         now =  Math.floor(Date.now() / periodUnitInMs),
         historyCache,
         summaryCache,
+        popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
         storageKeyPopular = 'gu.history.popular',
@@ -43,7 +46,7 @@ define([
     }
 
     function savePopular(summary) {
-        return storage.local.set(storageKeyPopular, mostPopular(summary));
+        return storage.local.set(storageKeyPopular, calculatePopuar(summary));
     }
 
     function getSummary() {
@@ -93,7 +96,7 @@ define([
         return summary;
     }
 
-    function mostPopular(summary) {
+    function calculatePopuar(summary) {
         return _.chain(summary.tags)
             .map(function (sTag, tid) {
                 return {
@@ -136,7 +139,10 @@ define([
             return historyCache;
         },
 
-        getSummary: getSummary,
+        getPopular: function () {
+            popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
+            return popularCache;
+        },
 
         getSize: function () {
             return this.get().length;

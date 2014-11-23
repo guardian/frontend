@@ -1,0 +1,9 @@
+.history-nav {
+  @include gs-container;
+
+  @include mq(wide) {
+    .has-page-skin & {
+      width: gs-span(12) + ($gs-gutter*2);
+    }
+  }
+}
