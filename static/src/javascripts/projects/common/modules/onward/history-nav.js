@@ -11,14 +11,14 @@ define([
     history,
     template
 ) {
-    function init () {
+    function init() {
         var container = document.querySelector('.js-history-nav-placeholder'),
             popular = history.getPopular();
 
         if (container && popular) {
             bonzo(container).html(
                 '<ul class="local-navigation">' +
-                    popular.map(function(tag) {
+                    popular.map(function (tag) {
                         return template(
                             '<li class="local-navigation__item">' +
                                '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : history : {{name}}">{{name}}</a>' +
