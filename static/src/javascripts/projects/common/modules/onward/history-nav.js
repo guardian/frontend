@@ -17,7 +17,7 @@ define([
 
         if (container && popular) {
             bonzo(container).html(
-                '<ul class="local-navigation">' +
+                '<ul class="history-nav">' +
                     popular.map(function (tag) {
                         return template(
                             '<li class="local-navigation__item">' +

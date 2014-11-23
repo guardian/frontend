@@ -1,5 +1,7 @@
 .history-nav {
     @include gs-container;
+    background: #FFFFFF;
+    margin: 8px auto;
 
     @include mq(wide) {
         .has-page-skin & {
