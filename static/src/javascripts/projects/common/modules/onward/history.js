@@ -97,8 +97,7 @@ define([
         return _.chain(summary.tags)
             .map(function (sTag, tid) {
                 return {
-                    id: tid,
-                    name: sTag[0],
+                    idAndName: [tid, sTag[0]],
                     rank: _.reduce(sTag[1], function (rank, tick) {
                         return rank + (tick[1] * (tick[0] + 1));
                     }, 0)
@@ -107,7 +106,7 @@ define([
             .sortBy('rank')
             .last(10)
             .reverse()
-            .map(function (tag) { return [tag.id, tag.name]; })
+            .pluck('idAndName')
             .value();
     }
 
