@@ -3,11 +3,9 @@
  Description: Gets and sets users reading history
  */
 define([
-    'bonzo',
     'common/utils/_',
     'common/utils/storage'
 ], function (
-    bonzo,
     _,
     storage
 ) {
@@ -29,7 +27,6 @@ define([
 
     function HistoryItem(item) {
         _.assign(this, item);
-        this.timestamp = Date.now();
         this.count = 1;
         return this;
     }
@@ -172,7 +169,6 @@ define([
             });
             if (foundItem) {
                 foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
                 history.unshift(foundItem);
             } else {
                 history.unshift(new HistoryItem({id: pageId}));
