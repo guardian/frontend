@@ -14,6 +14,7 @@ object EditionalisedSections {
     "business",
     "commentisfree",
     "culture",
+    "media",
     "money",
     "sport",
     "sustainable-business",
