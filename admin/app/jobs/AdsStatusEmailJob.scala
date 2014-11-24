@@ -1,9 +1,7 @@
 package jobs
 
 import common.Logging
-import conf.Configuration
 import conf.Configuration.commercial._
-import conf.Switches.AdsStatusEmailDebugSwitch
 import dfp.{PageSkinSponsorship, Sponsorship}
 import services.EmailService
 import tools.Store
@@ -15,19 +13,12 @@ object AdsStatusEmailJob extends Logging {
   def run(): Unit = {
     log.info("Starting AdsStatusEmailJob")
 
-    log.info(s"stage: ${Configuration.environment.stage}")
-    log.info(s"isProd: ${Configuration.environment.isProd}")
-
     for {
       from <- adTechTeam
       to <- adOpsTeam
       cc <- adTechTeam
     } yield {
-      if (AdsStatusEmailDebugSwitch.isSwitchedOn) {
-        EmailService.send(from, to = Seq(from), subject = "SES Test", textBody = "Please ignore")
-      } else {
         EmailService.send(from, Seq(to), Seq(cc), subject, textBody)
-      }
     }
   }
 
