@@ -14,7 +14,7 @@
         <span class="flyer__kicker"><span class="flyer__live"><span class="live-pulse-icon"></span>Live</span></span>
     }
     @if(content.isPodcast) {
-        @content.seriesTag.map { series => <span class="flyer__kicker">@series.webTitle</span> }
+        @content.blogOrSeriesTag.map { series => <span class="flyer__kicker">@series.webTitle</span> }
     }
 }
 
