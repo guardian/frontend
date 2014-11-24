@@ -139,9 +139,15 @@ case class SnapStuff(
 }
 
 object FaciaCardHeader {
-  def fromTrail(trail: Trail, config: Option[CollectionConfig]) = FaciaCardHeader(
-    trail.showQuotedHeadline,
+  def fromTrail(trail: Trail, config: Option[CollectionConfig]) = fromTrailAndKicker(
+    trail,
     ItemKicker.fromTrail(trail, config),
+    config
+  )
+
+  def fromTrailAndKicker(trail: Trail, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
+    trail.showQuotedHeadline,
+    itemKicker,
     trail.headline,
     EditionalisedLink.fromTrail(trail)
   )
@@ -181,13 +187,19 @@ object FaciaCard {
     Byline(byline, content.contributors)
   }
 
-  def fromTrail(trail: Trail, config: CollectionConfig, cardTypes: ItemClasses) = {
+  def fromTrail(trail: Trail, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
     val content = trail match {
       case c: Content => Some(c)
       case _ => None
     }
 
-    val maybeKicker = ItemKicker.fromTrail(trail, Some(config))
+    val maybeKicker = ItemKicker.fromTrail(trail, Some(config)) orElse {
+      if (showSeriesAndBlogKickers) {
+        ItemKicker.seriesOrBlogKicker(trail)
+      } else {
+        None
+      }
+    }
 
     /** If the kicker contains the byline, don't display it */
     val suppressByline = (for {
@@ -199,7 +211,7 @@ object FaciaCard {
     FaciaCard(
       content.map(_.id),
       trail.headline,
-      FaciaCardHeader.fromTrail(trail, Some(config)),
+      FaciaCardHeader.fromTrailAndKicker(trail, maybeKicker, Some(config)),
       content.flatMap(getByline).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(trail),
       CutOut.fromTrail(trail),

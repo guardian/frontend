@@ -1,6 +1,5 @@
 package layout
 
-import com.gu.facia.client.models.CollectionConfig
 import model.{Content, Trail}
 import slices._
 
@@ -11,7 +10,7 @@ object ContainerLayout extends implicits.Collections {
       sliceDefinitions: Seq[Slice],
       items: Seq[Trail],
       initialContext: ContainerLayoutContext,
-      config: CollectionConfig,
+      config: ContainerDisplayConfig,
       mobileShowMore: MobileShowMore
   ): (ContainerLayout, ContainerLayoutContext) = {
     val indexedTrails = items.zipWithIndex.map((IndexedTrail.apply _).tupled)
@@ -25,8 +24,9 @@ object ContainerLayout extends implicits.Collections {
           trailsForUse,
           sliceDefinition.layout,
           context,
-          config,
-          mobileShowMore
+          config.collectionConfigWithId.config,
+          mobileShowMore,
+          config.showSeriesAndBlogKickers
         )
         (slicesSoFar :+ slice, remainingTrails, newContext)
     }
@@ -34,7 +34,12 @@ object ContainerLayout extends implicits.Collections {
     (ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
       FaciaCardAndIndex(
         index,
-        FaciaCard.fromTrail(trail, config, ItemClasses.showMore),
+        FaciaCard.fromTrail(
+          trail,
+          config.collectionConfigWithId.config,
+          ItemClasses.showMore,
+          config.showSeriesAndBlogKickers
+        ),
         hideUpTo = Some(Desktop)
       )
     }), finalContext)
@@ -42,7 +47,7 @@ object ContainerLayout extends implicits.Collections {
 
   def singletonFromContainerDefinition(
     containerDefinition: ContainerDefinition,
-    config: CollectionConfig,
+    config: ContainerDisplayConfig,
     items: Seq[Trail]
   ) = fromContainerDefinition(
     containerDefinition,
@@ -54,7 +59,7 @@ object ContainerLayout extends implicits.Collections {
   def fromContainerDefinition(
       containerDefinition: ContainerDefinition,
       containerLayoutContext: ContainerLayoutContext,
-      config: CollectionConfig,
+      config: ContainerDisplayConfig,
       items: Seq[Trail]
   ) = apply(
       containerDefinition.slices,
@@ -67,7 +72,7 @@ object ContainerLayout extends implicits.Collections {
   def fromContainer(
       container: Container,
       containerLayoutContext: ContainerLayoutContext,
-      config: CollectionConfig,
+      config: ContainerDisplayConfig,
       items: Seq[Trail]
   ) =
     ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
