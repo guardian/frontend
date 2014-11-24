@@ -42,7 +42,7 @@ define([
 
     BrandedComponent.prototype.create = function () {
         var templateConfig = templates[this.params.type],
-            $rightHandCol  = $('.content__secondary-column');
+            $rightHandCol  = $('.js-secondary-column');
 
         if (
             !templateConfig ||
