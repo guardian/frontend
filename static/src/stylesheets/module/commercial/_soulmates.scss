@@ -17,10 +17,12 @@ $c-soulmates-high: colour(neutral-1);
     }
 
     .container__header__inner {
-        padding: $gs-baseline/2 0 0 $gs-baseline/2;
+        padding: $gs-baseline/2 $gs-gutter/2 0;
         border-bottom: 1px solid $c-soulmatesBorder;
 
         @include mq(leftCol) {
+            padding-left: 0;
+            padding-right: 0;
             border-bottom: 0;
         }
     }
