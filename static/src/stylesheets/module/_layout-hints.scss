@@ -96,10 +96,8 @@ figure.element.element--showcase {
 }
 
 figure.element.element--supporting {
-    @include mq(desktop) {
-        figcaption {
-            max-width: gs-span(3);
-        }
+    figcaption {
+        padding-top: ($gs-baseline/3)*2;
     }
     @include mq(leftCol) {
         padding-bottom: $gs-baseline * 2;
@@ -109,15 +107,6 @@ figure.element.element--supporting {
             background: #ffffff;
             padding-left: 0;
             top: 100%;
-            padding-top: ($gs-baseline/3)*2;
-            max-width: gs-span(3);
-        }
-    }
-    @include mq(wide) {
-        max-width: gs-span(4);
-
-        figcaption {
-            padding-right: $gs-gutter/2;
         }
     }
 }
@@ -128,7 +117,6 @@ figure.element.element--showcase {
             background: #ffffff;
             padding-left: 0;
             top: 100%;
-            max-width: gs-span(9);
         }
     }
 }
