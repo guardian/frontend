@@ -14,7 +14,11 @@ define([
                             isSurging:   true,
                             source: 'ITN',
                             tones: 'News',
-                            authorIds: 'profile/gabrielle-chan'
+                            authorIds: 'profile/gabrielle-chan',
+                            sponsorshipType: 'advertisement-features',
+                            seriesId: 'film/series/filmweekly',
+                            pageId: 'film/series/filmweekly',
+                            keywordIds: 'uk-news/prince-charles-letters,uk/uk,uk/prince-charles,uk/monarchy'
                         },
                         switches: {
                             audienceScienceGateway: true
@@ -70,13 +74,29 @@ define([
                 expect(pageTargeting.su).toBe(true);
                 expect(pageTargeting.co).toEqual(['gabrielle-chan']);
                 expect(pageTargeting.ms).toBe('itn');
-                expect(pageTargeting.tn).toEqual(['news']);
+                expect(pageTargeting.tn).toEqual(['news', 'advertisement-features']);
+            });
+
+            it('should set correct edition param', function (buildPageTargeting) {
+                expect(buildPageTargeting().edition).toBe('us');
+            });
+
+            it('should set correct se param', function (buildPageTargeting) {
+                expect(buildPageTargeting().se).toBe('filmweekly');
+            });
+
+            it('should use pageId if no seriesId', function (buildPageTargeting, deps) {
+                deps['common/utils/config'].seriesId = null;
+
+                expect(buildPageTargeting().se).toBe('filmweekly');
+            });
+
+            it('should set correct k param', function (buildPageTargeting, deps) {
+                expect(buildPageTargeting().k).toEqual(['prince-charles-letters', 'uk', 'prince-charles', 'monarchy']);
             });
 
             it('should set correct ab param', function (buildPageTargeting) {
-                var pageTargeting = buildPageTargeting();
-
-                expect(pageTargeting.ab).toBe('1');
+                expect(buildPageTargeting().ab).toBe('1');
             });
 
             it('should set correct criteo params', function (buildPageTargeting) {
