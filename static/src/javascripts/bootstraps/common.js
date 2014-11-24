@@ -261,7 +261,8 @@ define([
 
                 var exitLink, feedbackLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
-                    releaseMessage = new Message('alpha', {pinOnHide: true});
+                    releaseMessage = new Message('alpha', {pinOnHide: true}),
+                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' + (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
                 if (
                     config.switches.releaseMessage &&
@@ -273,22 +274,12 @@ define([
 
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
 
-                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
-                        (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
-
                     // The shift cookie may be 'in|...', 'ignore', or 'out'.
                     shift = cookies.get('GU_SHIFT') || '';
 
                     if (config.page.edition === 'US' || /in\|/.test(shift)) {
                         releaseMessage.show(template(
                             releaseMessageCompulsoryTpl,
-                            {
-                                feedbackLink: feedbackLink
-                            }
-                        ));
-                    } else if (config.page.edition === 'AU' &&  config.page.section === 'commentisfree') {
-                        releaseMessage.show(template(
-                            releaseMessageLaunchedTpl,
                             {
                                 feedbackLink: feedbackLink
                             }
@@ -302,7 +293,14 @@ define([
                             }
                         ));
                     }
-                }
+                } else if (config.page.edition === 'AU' &&  config.page.section === 'commentisfree') {
+                    releaseMessage.show(template(
+                        releaseMessageLaunchedTpl,
+                        {
+                            feedbackLink: feedbackLink
+                        }
+                    ));
+                } 
             },
 
             displayBreakingNews: function () {
