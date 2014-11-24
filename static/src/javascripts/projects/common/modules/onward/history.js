@@ -150,6 +150,12 @@ define([
             });
         },
 
+        isRevisit: function (pageId) {
+            return (_.find(this.get(), function (page) {
+                return (page.id === pageId);
+            }) || {}).count > 1;
+        },
+
         log: function (pageConfig) {
             var pageId = '/' + pageConfig.pageId,
                 history,
