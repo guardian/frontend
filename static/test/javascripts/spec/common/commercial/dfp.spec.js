@@ -246,15 +246,7 @@ define([
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 });
 
-                it('should use pageId if no keywords ', function (dfp, deps) {
-                    deps['common/utils/config'].page.keywordIds = undefined;
-                    dfp.init();
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['uk']);
-                });
-
             });
-
 
             describe('labelling', function (dfp) {
 

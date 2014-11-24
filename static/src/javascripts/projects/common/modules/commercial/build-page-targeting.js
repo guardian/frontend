@@ -1,6 +1,7 @@
 define([
     'lodash/arrays/compact',
     'lodash/collections/map',
+    'lodash/objects/isArray',
     'lodash/objects/merge',
     'lodash/objects/pick',
     'lodash/utilities/identity',
@@ -16,6 +17,7 @@ define([
 ], function (
     compact,
     map,
+    isArray,
     merge,
     pick,
     identity,
@@ -31,7 +33,7 @@ define([
 ) {
 
     var formatTarget = function (target) {
-            return target ? keywords.format(target).replace(/&/g, 'and').replace(/'/g, '') : '';
+            return target ? keywords.format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
         },
         getSeries = function (page) {
             if (page.seriesId) {
@@ -42,9 +44,15 @@ define([
             return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
         },
         parseId = function (id) {
+            if (!id) {
+                return null;
+            }
             return keywords.format(id.split('/').pop());
         },
         parseIds = function (ids) {
+            if (!ids) {
+                return null;
+            }
             return map((ids || '').split(','), function (id) {
                 return parseId(id);
             });
@@ -64,17 +72,15 @@ define([
 
     return function () {
         var page        = config.page,
-            series      = getSeries(page),
             contentType = formatTarget(page.contentType),
-            mediaSource = formatTarget(page.source),
             pageTargets = merge({
                 url:     window.location.pathname,
-                edition: page.edition.toLowerCase(),
-                se:      series,
+                edition: page.edition && page.edition.toLowerCase(),
+                se:      getSeries(page),
                 ct:      contentType,
                 pt:      contentType,
                 p:       'ng',
-                k:       parseIds(page.keywordIds || page.pageId),
+                k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 su:      page.isSurging,
                 bp:      detect.getBreakpoint(),
                 a:       audienceScience.getSegments(),
@@ -83,12 +89,18 @@ define([
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
-                ms:      mediaSource,
-                tn:      compact(parseIds(page.tones).concat([config.page.sponsorshipType]))
+                ms:      formatTarget(page.source),
+                tn:      compact([config.page.sponsorshipType].concat(parseIds(page.tones)))
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
 
         // filter out empty values
-        return pick(pageTargets, identity);
+        return pick(pageTargets, function (target) {
+            if (isArray(target)) {
+                return target.length > 0;
+            } else {
+                return target;
+            }
+        });
     };
 
 });
