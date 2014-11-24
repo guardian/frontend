@@ -6,7 +6,7 @@ import model.Trail
 object CardStyle {
   def isExternalLink(trail: Trail): Boolean = (for {
     snapType <- trail.snapType
-    href <- trail.snapUri
+    href <- trail.faciaUrl
   } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
 
   def apply(trail: Trail): CardStyle = {
