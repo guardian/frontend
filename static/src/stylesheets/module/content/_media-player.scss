@@ -114,6 +114,10 @@ $vjs-progress-inset-bottom: 4px;
             background-color: colour(media-default);
         }
 
+        /**
+         * As arrow is made by using borders we need to use magic numbers
+         * to be able to position it to the center of the button circle.
+         */
         &:before {
             content: '';
             position: absolute;
@@ -125,9 +129,9 @@ $vjs-progress-inset-bottom: 4px;
             border-color: transparent transparent transparent colour(neutral-7);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
             top: 50%;
-            left: 0;
-            margin-top: -.9em;
-            margin-left: 2.2em;
+            left: 50%;
+            margin-top: -.9em; /* [1] */
+            margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 @include border-radius(.2em);
