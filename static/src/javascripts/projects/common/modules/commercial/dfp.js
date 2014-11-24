@@ -91,15 +91,8 @@ define([
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
                     $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
+                        $parent.addClass('fc-slice__item--no-mpu');
                 }
-            },
-            '300,1': function (event, $adSlot) {
-                $adSlot.addClass('u-h');
-                var $parent = $adSlot.parent();
-                // if in a slice, add the 'no mpu' class
-                $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular
@@ -316,7 +309,7 @@ define([
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
-                                        new Creative($slot, creativeConfig.args).create();
+                                        new Creative($slot, creativeConfig.params).create();
                                     });
                             } else {
                                 // evil, but we own the returning js snippet

@@ -25,7 +25,7 @@ blockquote.quoted:before {
     @include icon(image);
 
     .element-video & {
-        @include icon(video-icon-black);
+        @include icon(video-icon-grey);
         width: 16px !important;
         height: 12px !important;
         margin-top: $gs-baseline/6;

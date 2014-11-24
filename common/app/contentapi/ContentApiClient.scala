@@ -19,6 +19,7 @@ import ExecutionContexts.{executionContext => implicitExecutionContext}
 trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
   val trailFields = List(
+    "byline",
     "headline",
     "trail-text",
     "liveBloggingNow",

@@ -18,15 +18,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
   val insignificantParams = Seq(
     "view",
     "_edition", //allows us to spoof edition in tests
-    "k", // keywords in commercial component requests
-    "s", // section in commercial component requests
     "c", // used for counts in the Diagnostics server
-    "seg", // user segments in commercial component requests
     "build", // used by Forsee surveys
-    "google_console", // two params for dfp console
-    "googfc",
     "shortUrl", // Used by series component in onwards journeys
-    "t", // specific item targetting
     "switchesOn", // turn switches on for non-prod, http requests
     "switchesOff", // turn switches off for non-prod, http requests
     "test", // used for integration tests
@@ -37,7 +31,17 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "oauth_verifier" // for generating Magento tokens for bookshop service
   )
 
-  val allowedParams = CanonicalLink.significantParams ++ insignificantParams
+  val commercialParams = Seq(
+    "adtest", // used to set ad-test cookie from admin domain
+    "google_console", // two params for dfp console
+    "googfc",
+    "k", // keywords in commercial component requests
+    "s", // section in commercial component requests
+    "seg", // user segments in commercial component requests
+    "t" // specific item targetting
+  )
+
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
 
   override def onRouteRequest(request: RequestHeader) = {
 

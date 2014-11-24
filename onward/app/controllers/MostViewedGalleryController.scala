@@ -42,7 +42,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(galleries, Some("more galleries"), None, None, None)
-      ),
+      ).withTimeStamps,
       FrontProperties.empty
     )(request)
 

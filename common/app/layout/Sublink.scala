@@ -106,19 +106,30 @@ case class DisplaySettings(
   imageHide: Boolean
 )
 
+sealed trait SnapType
+
+case object LatestSnap extends SnapType
+case object OtherSnap extends SnapType
+
 object SnapStuff {
   def fromTrail(trail: Trail) = SnapStuff(
     SnapData(trail),
     trail match {
       case c: Content => c.snapCss
       case _ => None
+    },
+    if (trail.snapType.exists(_ == "latest")) {
+      LatestSnap
+    } else {
+      OtherSnap
     }
   )
 }
 
 case class SnapStuff(
   dataAttributes: String,
-  snapCss: Option[String]
+  snapCss: Option[String],
+  snapType: SnapType
 ) {
   def cssClasses = Seq(
     "js-snap",
@@ -143,6 +154,28 @@ case class FaciaCardHeader(
   url: EditionalisedLink
 )
 
+sealed trait FaciaCardTimestamp {
+  val javaScriptUpdate: Boolean
+
+  val formatString: String
+}
+
+// By default a date string, but uses JavaScript to update to a human readable string like '22h' meaning 22 hours ago
+case object DateOrTimeAgo extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = true
+  override val formatString: String = "d MMM y"
+}
+
+case object DateTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "d MMM y"
+}
+
+case object TimeTimestamp extends FaciaCardTimestamp {
+  override val javaScriptUpdate: Boolean = false
+  override val formatString: String = "h:mm aa"
+}
+
 object FaciaCard {
   private def getByline(content: Content) = content.byline.filter(const(content.showByline)) map { byline =>
     Byline(byline, content.contributors)
@@ -154,13 +187,21 @@ object FaciaCard {
       case _ => None
     }
 
+    val maybeKicker = ItemKicker.fromTrail(trail, Some(config))
+
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (for {
+      kicker <- maybeKicker
+      kickerText <- ItemKicker.kickerText(kicker)
+      byline <- trail.byline
+    } yield kickerText contains byline) getOrElse false
+
     FaciaCard(
       content.map(_.id),
       trail.headline,
       FaciaCardHeader.fromTrail(trail, Some(config)),
-      content.flatMap(getByline),
+      content.flatMap(getByline).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(trail),
-      ItemKicker.fromTrail(trail, Some(config)),
       CutOut.fromTrail(trail),
       CardStyle(trail),
       cardTypes,
@@ -173,7 +214,8 @@ object FaciaCard {
       trail.trailText,
       MediaType.fromTrail(trail),
       DisplaySettings.fromTrail(trail),
-      trail.isLive
+      trail.isLive,
+      None
     )
   }
 }
@@ -184,7 +226,6 @@ case class FaciaCard(
   header: FaciaCardHeader,
   byline: Option[Byline],
   displayElement: Option[FaciaDisplayElement],
-  kicker: Option[ItemKicker],
   cutOut: Option[CutOut],
   cardStyle: CardStyle,
   cardTypes: ItemClasses,
@@ -197,8 +238,10 @@ case class FaciaCard(
   trailText: Option[String],
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
-  isLive: Boolean
+  isLive: Boolean,
+  timeStampDisplay: Option[FaciaCardTimestamp]
 ) {
+  def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
     case Some(InlineVideo(_, _, _, _)) => true
@@ -210,4 +253,6 @@ case class FaciaCard(
     case Some(InlineImage(_)) => true
     case _ => false
   }
+
+  def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 }

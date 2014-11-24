@@ -45,7 +45,7 @@ object ContainerThumbnails {
     ((itemClasses.tablet match {
       case cards.MediaList =>
         Some(Rectangle(x + 1, y + 1, width * .3, height))
-      case cards.ThreeQuarters | cards.Full =>
+      case cards.ThreeQuarters | cards.FullMedia75 =>
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
       case cards.ThreeQuartersRight =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
@@ -55,7 +55,7 @@ object ContainerThumbnails {
         Some(Rectangle(x + 1, y + 1, width - 2, height * .7))
       case cards.Third =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
-      case cards.MegaFull =>
+      case cards.FullMedia100 =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .6))
       case _ =>
         None

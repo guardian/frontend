@@ -1,53 +1,56 @@
 define([
-    'bonzo',
     'common/utils/$',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/template',
+    'text!common/views/commercial/creatives/scrollable-mpu.html'
 ], function (
-    bonzo,
     $,
     detect,
-    mediator
+    mediator,
+    template,
+    scrollableMpuTpl
 ) {
-
-    var adClass = 'js-scrollable-mpu',
-        /**
-         * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
-         * background-attachment - need to make this more granular
-         */
-        limitedBgAttachment = detect.isIOS() || detect.isAndroid(),
-        updateBgPosition    = function ($ad) {
-            $ad.css('background-position', $ad.offset().left + 'px 100%');
-        };
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
      */
-    return {
+    var ScrollableMpu = function ($adSlot, params) {
+        this.$adSlot = $adSlot;
+        this.params  = params;
+    };
 
-        run: function () {
-            $('.' + adClass).each(function (ad) {
-                var staticImage,
-                    $ad = bonzo(ad);
+    /**
+     * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
+     * background-attachment - need to make this more granular
+     */
+    ScrollableMpu.hasBgAttachmentFixed = !detect.isIOS() && !detect.isAndroid();
 
-                if (limitedBgAttachment) {
-                    staticImage = $ad.data('static-image');
-                    $ad.css('background-image', staticImage);
-                } else {
-                    $ad.css('background-attachment', 'fixed');
-                    // update bg position
-                    updateBgPosition($ad);
-                    // to be safe, also update on window resize
-                    mediator.on('window:resize', function () {
-                        updateBgPosition($ad);
-                    });
-                }
+    ScrollableMpu.prototype.updateBgPosition = function () {
+        this.$scrollableMpu.css('background-position', this.$scrollableMpu.offset().left + 'px 100%');
 
-                $ad.removeClass(adClass);
-            });
+    };
 
+    ScrollableMpu.prototype.create = function () {
+        var templateOptions = {
+            clickMacro:       this.params.clickMacro,
+            destination:      this.params.destination,
+            image:            ScrollableMpu.hasBgAttachmentFixed ? this.params.image : this.params.staticImage,
+            trackingPixelImg: this.params.trackingPixel ?
+                '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
+        };
+        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+
+        if (ScrollableMpu.hasBgAttachmentFixed) {
+            this.$scrollableMpu.css('background-attachment', 'fixed');
+            // update bg position
+            this.updateBgPosition();
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
 
     };
+
+    return ScrollableMpu;
 
 });

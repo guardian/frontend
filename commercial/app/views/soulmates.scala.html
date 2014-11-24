@@ -5,24 +5,25 @@
 @defining(("2_2", "2014-03-28")) { case (version, date) =>
     <div class="commercial commercial--soulmates commercial--tone-soulmates commercial--low" role="complementary">
         <div class="facia-container__inner--commercial">
-            <div class="commercial__head container__title container__header__inner">
 
-                <div class="container__title__wrapper i--commercial i-soulmates-title-background">
-                    <span class="u-h">The Guardian</span>
-                    <h3 class="commercial__title">
-                        <span class="i i--commercial i-soulmates-logo"></span>
-                        <span class="u-h">Soulmates</span>
-                    </h3>
-                    <p class="commercial__explainer">Meet someone <em>worth</em> meeting</p>
-                    <a href="@AdLink{@Configuration.commercial.soulmates_url}"
-                        class="commercial__cta button button--secondary"
-                        data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
-                        Join now <i class="i i-arrow-white-right i-right"></i>
-                    </a>
+            <div class="container__header">
+                <div class="container__header__inner">
+                    <div class="i-soulmates-title-background">
+                        <h3 class="commercial__title">
+                            <span class="i i--commercial i-soulmates-logo"></span>
+                            <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
+                        </h3>
+                        <p class="commercial__explainer">Meet someone <em>worth</em> meeting</p>
+                        <a class="commercial__cta button button--tertiary" href="@AdLink{@Configuration.commercial.soulmates_url}" data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
+                            <i class="i i-arrow-white-right i-right"></i>
+                            <span class="commercial__cta__label">Join now</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="commercial__body container__body">
-                <ul class="u-unstyled lineitems">
+
+            <div class="container__body">
+                <ul class="lineitems">
                     @members.map { member =>
                         <li class="lineitem">
                             <a class="lineitem__link"

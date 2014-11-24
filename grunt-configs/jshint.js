@@ -28,11 +28,10 @@ module.exports = function(grunt, options) {
         faciaTool: {
             files: [{
                 expand: true,
-                cwd: 'facia-tool/public/javascripts/',
+                cwd: 'facia-tool/public/js/',
                 src: [
                     '**/*.js',
-                    '!components/**',
-                    '!omniture.js'
+                    '!components/**'
                 ]
             }]
         },

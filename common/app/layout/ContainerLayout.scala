@@ -79,4 +79,9 @@ object ContainerLayout extends implicits.Collections {
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
   remainingCards: Seq[FaciaCardAndIndex]
-)
+) {
+  def transformCards(f: FaciaCard => FaciaCard) = copy(
+    slices = slices.map(_.transformCards(f)),
+    remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
+  )
+}

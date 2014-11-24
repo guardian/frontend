@@ -17,7 +17,8 @@ define([
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
-    'models/group'
+    'models/group',
+    'utils/url-host'
 ],
     function (
         vars,
@@ -37,7 +38,8 @@ define([
         copiedArticle,
         authedAjax,
         contentApi,
-        Group
+        Group,
+        urlHost
     ) {
         var capiProps = [
                 'webUrl',
@@ -54,11 +56,6 @@ define([
                 'thumbnail'],
 
             metaFields = [
-                {
-                    key: 'group',
-                    label: 'importance group',
-                    type: 'text'
-                },
                 {
                     key: 'headline',
                     editable: true,
@@ -79,7 +76,7 @@ define([
                     key: 'byline',
                     editable: true,
                     ifState: 'enableContentOverrides',
-                    if: 'showByline',
+                    'if': 'showByline',
                     omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
@@ -87,7 +84,7 @@ define([
                 {
                     key: 'customKicker',
                     editable: true,
-                    if: 'showKickerCustom',
+                    'if': 'showKickerCustom',
                     label: 'custom kicker',
                     type: 'text'
                 },
@@ -100,20 +97,20 @@ define([
                     key: 'imageSrc',
                     editable: true,
                     omitForSupporting: true,
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcWidth',
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image width',
                     type: 'text'
                 },
                 {
                     key: 'imageSrcHeight',
-                    if: 'imageReplace',
+                    'if': 'imageReplace',
                     label: 'replacement image height',
                     type: 'text'
                 },
@@ -121,20 +118,20 @@ define([
                     key: 'imageCutoutSrc',
                     editable: true,
                     omitForSupporting: true,
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcWidth',
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image width',
                     type: 'text'
                 },
                 {
                     key: 'imageCutoutSrcHeight',
-                    if: 'imageCutoutReplace',
+                    'if': 'imageCutoutReplace',
                     label: 'replacement cutout image height',
                     type: 'text'
                 },
@@ -337,7 +334,7 @@ define([
             }
 
             if (withCapiData) {
-                this.addCapiData(opts)
+                this.addCapiData(opts);
             } else {
                 this.updateEditorsDisplay();
             }
@@ -422,8 +419,9 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
+                    var display = opts['if'] ? _.some(all, function(editor) { return editor.key === opts['if'] && self.meta[editor.key](); }) : true;
 
+                    display = display && (self.state.enableContentOverrides() || key === 'customKicker');
                     display = display && (opts.ifState ? self.state[opts.ifState]() : true);
                     display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
@@ -436,13 +434,13 @@ define([
                         .filter(function(editor) { return editor.singleton === opts.singleton; })
                         .filter(function(editor) { return editor.key !== key; })
                         .pluck('key')
-                        .each(function(key) { self.meta[key](false) })
+                        .each(function(key) { self.meta[key](false); });
                     }
 
                     meta(!meta());
 
                    _.chain(all)
-                    .filter(function(editor) { return editor.if === key; })
+                    .filter(function(editor) { return editor['if'] === key; })
                     .first(1)
                     .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
@@ -464,7 +462,7 @@ define([
                     },
                     owner: self
                 })
-            }
+            };
         };
 
         Article.prototype.validateImageMain = function() {
@@ -478,7 +476,7 @@ define([
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
                 }
-            )
+            );
         };
 
         Article.prototype.validateImageCutout = function() {
@@ -490,7 +488,7 @@ define([
                     maxWidth: 1000,
                     minWidth: 400
                 }
-            )
+            );
         };
 
         Article.prototype.addCapiData = function(opts) {
@@ -533,7 +531,7 @@ define([
             if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(identity));
             }
-        }
+        };
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
@@ -562,15 +560,16 @@ define([
         };
 
         Article.prototype.getMeta = function() {
-            var self = this;
+            var self = this,
+                cleanMeta;
 
-            return _.chain(self.meta)
+            cleanMeta = _.chain(self.meta)
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // trim and sanitize strings:
                 .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
-                // reject vals that are equivalent to their defaults (if set) OR are falsey
+                // reject vals that are equivalent to their defaults (if set)
                 .filter(function(p){ return _.has(self.metaDefaults, p[0]) ? self.metaDefaults[p[0]] !== p[1] : !!p[1]; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
@@ -589,8 +588,14 @@ define([
                     obj = obj || {};
                     obj[p[0]] = p[1];
                     return obj;
-                }, undefined)
+                }, {})
                 .value();
+
+            if (this.group.parentType === 'Collection') {
+                cleanMeta.group = this.group.index + '';
+            }
+
+            return _.isEmpty(cleanMeta) ? undefined : cleanMeta;
         };
 
         Article.prototype.save = function() {
@@ -633,7 +638,7 @@ define([
             this.meta.snapType('link');
 
             this.convertToSnap();
-        }
+        };
 
         Article.prototype.convertToLatestSnap = function(kicker) {
             this.meta.snapType('latest');
@@ -663,7 +668,7 @@ define([
                 type: 'GET'
             })
             .done(function(response) {
-                var doc = document.createElement("div"),
+                var doc = document.createElement('div'),
                     title,
                     og = {};
 
@@ -701,7 +706,15 @@ define([
                     this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
                 }
                 this.state.isOpen(true);
-                mediator.emit('ui:open', this.meta.headline, this);
+                mediator.emit(
+                    'ui:open',
+                    _.chain(this.editors())
+                     .filter(function(editor) { return editor.type === 'text' && editor.displayEditor(); })
+                     .map(function(editor) { return editor.meta; })
+                     .first()
+                     .value(),
+                    this
+                );
             } else {
                 mediator.emit('ui:open');
             }
@@ -746,11 +759,11 @@ define([
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
             }
-        };
+        }
 
         function undefineObservables() {
-            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
-        };
+            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); });
+        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;
@@ -782,7 +795,7 @@ define([
                     if (keyCode === 9) {
                         e.preventDefault();
                         formField = bindingContext.$rawData;
-                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === 'text' && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
                         mediator.emit('ui:open', formFields[nextIndex].meta, self);
                     }

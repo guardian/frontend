@@ -82,17 +82,8 @@ case class FrontProperties(
   editorialType: Option[String]
 )
 
-object FrontProperties{
-  implicit val propsFormatter = Json.format[FrontProperties]
+object FrontProperties {
+  implicit val jsonFormat = Json.format[FrontProperties]
 
   val empty = FrontProperties(None, None, None, None, false, None)
-}
-
-object FaciaComponentName {
-  /** TODO remove this once everything is using FaciaContainer */
-  def apply(config: CollectionConfig, collection: Collection): String = {
-    config.displayName.orElse(collection.displayName).map { title =>
-      title.toLowerCase.replace(" ", "-")
-    }.getOrElse("no-name")
-  }
 }

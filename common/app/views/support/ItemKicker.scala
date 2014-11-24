@@ -57,6 +57,16 @@ object ItemKicker {
       None
     }
   }
+
+  /** Used for de-duping bylines */
+  def kickerText(itemKicker: ItemKicker): Option[String] = itemKicker match {
+    case PodcastKicker(Some(series)) => Some(series.name)
+    case TagKicker(name, _) => Some(name)
+    case SectionKicker(name, _) => Some(name)
+    case FreeHtmlKicker(body) => Some(body)
+    case FreeHtmlKickerWithLink(body, _) => Some(body)
+    case _ => None
+  }
 }
 
 case class Series(name: String, url: String)

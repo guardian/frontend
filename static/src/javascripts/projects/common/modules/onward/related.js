@@ -2,6 +2,7 @@ define([
     'bonzo',
     'qwery',
     'lodash/arrays/intersection',
+    'lodash/collections/map',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -13,6 +14,7 @@ define([
     bonzo,
     qwery,
     intersection,
+    map,
     $,
     config,
     mediator,
@@ -84,8 +86,10 @@ define([
 
                 relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
 
-                if (opts.excludeTag) {
-                    relatedUrl += '?exclude-tag=' + opts.excludeTag;
+                if (opts.excludeTags) {
+                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                        return 'exclude-tag=' + tag;
+                    }).join('&');
                 }
 
                 new LazyLoad({

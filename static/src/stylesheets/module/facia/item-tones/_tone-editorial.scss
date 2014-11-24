@@ -4,6 +4,7 @@
     background-color: colour(editorial-default);
 
     &,
+    .flyer__link,
     .fc-sublink__title {
         color: $c-headline;
     }
@@ -19,13 +20,15 @@
         }
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .flyer__container:before {
         background-color: colour(editorial-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
-    .fc-item__standfirst {
+    .fc-item__standfirst,
+    .flyer__standfirst {
         color: colour(editorial-accent);
     }
 

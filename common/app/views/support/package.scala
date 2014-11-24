@@ -132,6 +132,14 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         if(!shortUrl.isEmpty) {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
+
+          // add extra margin if there is no caption to fit the share buttons
+          val figcaption = element.getElementsByTag("figcaption")
+          if(figcaption.length < 1) {
+            element.addClass("fig-extra-margin")
+          }
+        } else {
+          element.addClass("fig-full-width")
         }
       })
     }
@@ -201,22 +209,16 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val blockId = fig.attr("data-media-id")
-        val asset = findImageFromId(blockId)
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
-          img.attr("id", fig.attr("data-media-id"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
-
-            if(!article.isLiveBlog) {
-              val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(Some(blockId), image.url), article.contentType)
-              img.after(html.toString())
-            }
 
             //otherwise we mess with aspect ratio
             img.removeAttr("height")
@@ -234,15 +236,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
           }
         }
 
-        val getFigCaption = fig.getElementsByTag("figcaption")
-        val getGuVideo = fig.getElementsByClass("gu-media-wrapper--video")
-
-        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
-        if (getFigCaption.length < 1 && getGuVideo.length > 0) {
-          fig.addClass("fig-extra-margin")
-        }
-
-        getFigCaption.foreach { figcaption =>
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
           // content api/ tools sometimes pops a &nbsp; in the blank field
           if (!figcaption.hasText || figcaption.text().length < 2) {
             figcaption.remove()
@@ -254,6 +248,38 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
     }
     body
   }
+
+  def addSharesAndFullscreen(body: Document): Document = {
+    if(!article.isLiveBlog) {
+      val imageElements = body.getElementsByClass("element-image").view.zipWithIndex
+      imageElements foreach { case (fig, index) =>
+        val linkIndex = (index + 1).toString
+        val hashSuffix = "img-" + linkIndex
+        fig.attr("id", hashSuffix)
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
+
+        fig.getElementsByTag("img").foreach { img =>
+          asset.map { image =>
+            val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), image.url), article.contentType)
+            img.after(html.toString())
+
+            img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+            img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+          }
+        }
+
+        val figcaption = fig.getElementsByTag("figcaption")
+
+        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
+        if (figcaption.length < 1) {
+          fig.addClass("fig-extra-margin")
+        }
+      }
+    }
+    body
+  }
+
 
   def cleanShowcasePictures(body: Document): Document = {
     for {
@@ -270,7 +296,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   }
 
   def clean(body: Document): Document = {
-    cleanShowcasePictures(cleanStandardPictures(body))
+    cleanShowcasePictures(cleanStandardPictures(addSharesAndFullscreen(body)))
   }
 
   def findImageFromId(id:String): Option[ImageAsset] = {
@@ -288,14 +314,14 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
       body.select(".block").foreach { el =>
         val id = el.id()
         el.select(".block-time.published-time time").foreach { time =>
-            val datetime = DateTime.parse(time.attr("datetime"))
-            val hhmm = Format(datetime, "HH:mm")
-            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
-            time.attr("data-relativeformat", "med")
-            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
-            if (datetime.isAfter(DateTime.now().minusDays(5))) {
-              time.addClass("js-timestamp")
-            }
+          val datetime = DateTime.parse(time.attr("datetime"))
+          val hhmm = Format(datetime, "HH:mm")
+          time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+          time.attr("data-relativeformat", "med")
+          time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+          if (datetime.isAfter(DateTime.now().minusDays(5))) {
+            time.addClass("js-timestamp")
+          }
         }
       }
     }
@@ -397,7 +423,7 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
   def FixR1Link(href: String, section: String = "") = {
 
     /**
-     * We moved some R1 HTML files from subdomains to www.theguardian.com.
+    * We moved some R1 HTML files from subdomains to www.theguardian.com.
     * This means we broke some of the <a href="...">'s in the HTML.
     *
     * Here's how this works :-
@@ -785,7 +811,7 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
+  def apply(classes: Map[String, Boolean], extraClasses: String*): String = apply((classes.filter(_._2).keys ++ extraClasses).toSeq:_*)
 
   def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
@@ -799,12 +825,11 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
-      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive)
+      ("fc-item--live", item.isLive),
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -837,6 +862,7 @@ object GetClasses {
       disableHide = containerDefinition.hideToggle
     )
 
+  /** TODO get rid of this when we consolidate 'all' logic with index logic */
   def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,

@@ -91,22 +91,16 @@ figure.element.element--showcase {
         @include deport-left;
         position: relative;
         margin-bottom: ($gs-baseline/3)*4;
+        clear: both;
     }
 }
 
 figure.element.element--supporting {
-    figcaption {
-        @include mq(leftCol) {
-            background: #ffffff;
-            padding-left: 0;
-            top: 100%;
-            padding-top: ($gs-baseline/3)*2;
-            max-width: gs-span(6);
+    @include mq(desktop) {
+        figcaption {
+            max-width: gs-span(3);
         }
     }
-}
-
-figure.element.element--showcase {
     @include mq(leftCol) {
         padding-bottom: $gs-baseline * 2;
         border-bottom: 1px dotted colour(neutral-5);
@@ -115,7 +109,38 @@ figure.element.element--showcase {
             background: #ffffff;
             padding-left: 0;
             top: 100%;
+            padding-top: ($gs-baseline/3)*2;
+            max-width: gs-span(3);
+        }
+    }
+    @include mq(wide) {
+        max-width: gs-span(4);
+
+        figcaption {
+            padding-right: $gs-gutter/2;
+        }
+    }
+}
+
+figure.element.element--showcase {
+    @include mq(leftCol) {
+        figcaption {
+            background: #ffffff;
+            padding-left: 0;
+            top: 100%;
             max-width: gs-span(9);
+        }
+    }
+}
+
+figure.img--extended {
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline * 2;
+        border-bottom: 1px dotted colour(neutral-5);
+
+        &.element--thumbnail {
+            padding-bottom: 0;
+            border-bottom: 0;
         }
     }
 }

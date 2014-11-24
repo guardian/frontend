@@ -383,7 +383,6 @@
     right: -$gs-gutter/4;
     margin-top: ($gs-baseline/3)*2;
 
-    .element--supporting &,
     .element--thumbnail &,
     .img--base & {
         display: none !important;
@@ -396,9 +395,10 @@
 
 .fig-extra-margin {
     padding-bottom: $gs-baseline * 3 !important;
-    margin-bottom: 0 !important;
-    &.element--showcase {
-        margin-bottom: $gs-baseline !important;
-    }
 }
 
+.fig-full-width {
+    figcaption {
+        max-width: 100% !important;
+    }
+}

@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import slices._
+import views.support.{ReviewKicker, TagKicker, CartoonKicker}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -21,6 +22,7 @@ import common.Seqs._
 import scalaz.syntax.traverse._
 import scalaz.std.list._
 import Function.const
+import DateHeadline.cardTimestampDisplay
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -29,7 +31,6 @@ object IndexPagePagination {
     20
   }
 
-  /** Do not change this. I will kill you good. */
   def rssPageSize: Int = 20
 }
 
@@ -45,6 +46,9 @@ object IndexPage {
   }
 
   def makeFront(indexPage: IndexPage, edition: Edition) = {
+    val isCartoonPage = indexPage.isTagWithId("type/cartoon")
+    val isReviewPage = indexPage.isTagWithId("tone/reviews")
+
     val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
@@ -67,7 +71,7 @@ object IndexPage {
 
     val front = Front.fromConfigsAndContainers(
       containerDefinitions,
-      ContainerLayoutContext(Set.empty, hideCutOuts = true)
+      ContainerLayoutContext(Set.empty, hideCutOuts = indexPage.page.isContributorPage)
     )
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
@@ -86,17 +90,42 @@ object IndexPage {
     }
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
+      val timeStampDisplay = header match {
+        case MetaDataHeader(_, _, _, dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+      }
+
       container.copy(
         customHeader = Some(header),
         customClasses = Some(Seq("fc-container--tag")),
-        hideToggle = true
-      )
+        hideToggle = true,
+        showTimestamps = true,
+        dateLinkPath = Some(s"/${indexPage.page.id}")
+      ).transformCards({ card =>
+        card.copy(
+          timeStampDisplay = Some(timeStampDisplay),
+          byline = if (indexPage.page.isContributorPage) None else card.byline
+        ).setKicker(card.header.kicker flatMap {
+          case ReviewKicker if isReviewPage => None
+          case CartoonKicker if isCartoonPage => None
+          case otherKicker => Some(otherKicker)
+        })
+      })
     }))
   }
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now)
+                     date: DateTime = DateTime.now) {
+  def isTagWithId(id: String) = page match {
+    case tag: Tag => tag.id == id
+
+    case combiner: TagCombiner =>
+      combiner.leftTag.id == id || combiner.rightTag.id == id
+
+    case _ => false
+  }
+}
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -157,15 +186,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
           //we can use .head here as the query is guaranteed to return the 2 tags
           val tag1 = findTag(head, firstTag)
           val tag2 = findTag(head, secondTag)
-          val pageName = s"${tag1.name} + ${tag2.name}"
-          val page = Page(
-            s"$leftSide+$rightSide",
-            tag1.section,
-            pageName,
-            s"GFE:${tag1.section}:$pageName",
-            pagination = pagination(response),
-            maybeContentType = Some(GuardianContentTypes.TagIndex)
-          )
+
+          val page = new TagCombiner(s"$leftSide+$rightSide", tag1, tag2, pagination(response))
 
           Left(IndexPage(page, trails))
       }
@@ -243,6 +265,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
+
+object Index extends Index
 
 trait ImageQuery extends ConciergeRepository {
 

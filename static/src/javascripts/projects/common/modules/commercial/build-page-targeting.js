@@ -78,7 +78,7 @@ define([
             su:      page.isSurging,
             bp:      detect.getBreakpoint(),
             a:       audienceScience.getSegments(),
-            at:      cookies.get('adtest') || cookies.get('GU_TEST') || '',
+            at:      cookies.get('adtest') || '',
             gdncrm:  userAdTargeting.getUserSegments(),
             ab:      abParam(),
             co:      parseTargets(page.authorIds),

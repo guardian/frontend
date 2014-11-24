@@ -83,6 +83,7 @@
 // =============================================================================
 
 .fc-item--video .fc-item__title,
+.flyer--video .flyer__title,
 .fc-sublink--video .fc-sublink__link {
     &:before {
         @include icon(video-icon, false);
@@ -94,6 +95,7 @@
 }
 
 .fc-item--gallery .fc-item__title,
+.flyer--gallery .flyer__title,
 .fc-sublink--gallery .fc-sublink__link {
     &:before {
         @include icon(camera-yellow-large, false);
@@ -105,6 +107,7 @@
 }
 
 .fc-item--audio .fc-item__title,
+.flyer--audio .flyer__title,
 .fc-sublink--audio .fc-sublink__link {
     &:before {
         @include icon(volume-high--tone-media, false);
@@ -148,6 +151,7 @@
     }
 
     &.fc-item--audio .fc-item__title,
+    &.flyer--audio .flyer__title,
     &.fc-sublink--audio .fc-sublink__link {
         &:before {
             @include icon(volume-high--tone-podcast, false);
