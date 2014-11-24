@@ -9,7 +9,7 @@ import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.QueryDefaults
+import contentapi.{Paths, QueryDefaults}
 import slices._
 import views.support.{ReviewKicker, TagKicker, CartoonKicker}
 import scala.concurrent.Future
@@ -111,6 +111,7 @@ object IndexPage {
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
+          case TagKicker(_, _, id) if indexPage.isTagWithId(id) => None
           case otherKicker => Some(otherKicker)
         })
       })
@@ -121,6 +122,14 @@ object IndexPage {
 case class IndexPage(page: MetaData, trails: Seq[Content],
                      date: DateTime = DateTime.now) {
   def isTagWithId(id: String) = page match {
+    case section: Section =>
+      val sectionId = section.id
+      
+      Set(
+        Some(s"$sectionId/$sectionId"),
+        Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
+      ).flatten contains id
+
     case tag: Tag => tag.id == id
 
     case combiner: TagCombiner =>

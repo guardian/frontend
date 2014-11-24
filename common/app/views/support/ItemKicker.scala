@@ -62,7 +62,7 @@ object ItemKicker {
   /** Used for de-duping bylines */
   def kickerText(itemKicker: ItemKicker): Option[String] = itemKicker match {
     case PodcastKicker(Some(series)) => Some(series.name)
-    case TagKicker(name, _) => Some(name)
+    case TagKicker(name, _, _) => Some(name)
     case SectionKicker(name, _) => Some(name)
     case FreeHtmlKicker(body) => Some(body)
     case FreeHtmlKickerWithLink(body, _) => Some(body)
@@ -82,10 +82,10 @@ case object CartoonKicker extends ItemKicker
 case class PodcastKicker(series: Option[Series]) extends ItemKicker
 
 object TagKicker {
-  def fromTag(tag: Tag) = TagKicker(tag.name, tag.webUrl)
+  def fromTag(tag: Tag) = TagKicker(tag.name, tag.webUrl, tag.id)
 }
 
-case class TagKicker(name: String, url: String) extends ItemKicker
+case class TagKicker(name: String, url: String, id: String) extends ItemKicker
 
 case class SectionKicker(name: String, url: String) extends ItemKicker
 case class FreeHtmlKicker(body: String) extends ItemKicker
