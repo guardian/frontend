@@ -34,9 +34,9 @@ object Au extends Edition(
       NavItem(fashion),
       NavItem(economy, Seq(markets, companies, money)),
       NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
-      NavItem(science),
-      NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(media),
+      NavItem(environment, Seq(cities, globalDevelopment)),
+      NavItem(science),
       NavItem(video)
     )
   }
@@ -54,7 +54,7 @@ object Au extends Edition(
     NavItem(fashion),
     NavItem(economy, Seq(markets, companies, money)),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
-    NavItem(science),
+    NavItem(media),
     NavItem(environment, Seq(cities, globalDevelopment))
   )
 }
