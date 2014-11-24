@@ -32,7 +32,9 @@ object AdsStatusEmailJob extends Logging {
   }
 
   private def textBody: String = {
-    views.html.commercial.email.adsStatus(pageskinsWithoutEdition, geotargetedAdFeatures).body
+    views.html.commercial.email.adsStatus(
+      pageskinsWithoutEdition, geotargetedAdFeatures, sponsorshipsWithoutSponsors
+    ).body
   }
 
   private def pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
@@ -41,6 +43,13 @@ object AdsStatusEmailJob extends Logging {
 
   private def geotargetedAdFeatures: Seq[Sponsorship] = {
     Store.getDfpAdFeatureTags().sponsorships.filter(_.countries.nonEmpty)
+  }
+
+  private def sponsorshipsWithoutSponsors: Seq[Sponsorship] = {
+    val sponsorships = Store.getDfpSponsoredTags().sponsorships ++
+      Store.getDfpAdFeatureTags().sponsorships ++
+      Store.getDfpFoundationSupportedTags().sponsorships
+    sponsorships.filter(_.sponsor.isEmpty) sortBy (_.lineItemId)
   }
 
 }
