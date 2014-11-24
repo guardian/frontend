@@ -54,10 +54,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        var pageHasBeenSeen = _.find(history.get(), function (historyItem) {
-            return (historyItem.id === '/' + config.page.pageId) && historyItem.count > 1;
-        });
-        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop && !pageHasBeenSeen;
+        return isDesktop && !history.isRevisit(config.page.pageId) && $('.vjs-tech', player.el()).attr('data-auto-play') === 'true';
     }
 
     function constructEventName(eventName, player) {
