@@ -53,10 +53,15 @@ object FixedContainers {
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
 
-  val indexPageMpuII = slices(TTMpu)
-  val indexPageMpuIV = slices(TTlMpu)
-  val indexPageMpuVI = slices(TlTlMpu)
-  val indexPageMpuIX = fixedMediumSlowXIIMpu
+  val fastIndexPageMpuII = slices(TTMpu)
+  val fastIndexPageMpuIV = slices(TTlMpu)
+  val fastIndexPageMpuVI = slices(TlTlMpu)
+  val fastIndexPageMpuIX = fixedMediumSlowXIIMpu
+
+  val slowIndexPageMpuII = slices(TTMpu)
+  val slowIndexPageMpuIV = slices(HalfHalf2, TTMpu)
+  val slowIndexPageMpuV = slices(TTT, TTMpu)
+  val slowIndexPageMpuVII = slices(HalfHalf2, TTT, TTMpu)
 
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),

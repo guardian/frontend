@@ -229,7 +229,7 @@ object FaciaContainer {
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     FaciaContainer(
       index = 2,
-      container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
+      container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
