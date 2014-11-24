@@ -20,12 +20,10 @@ case class TagHistogram(frequencyById: Map[String, Int], numberOfItems: Int) {
 
 object SlowOrFastByTrails {
   val SlowTags = Set(
-    "world/series/eyewitness",
     "type/cartoon",
     "type/gallery",
     "type/picture",
-    "lifeandstyle/series/last-bites",
-    "news/series/ten-best-photographs-of-the-day"
+    "lifeandstyle/series/last-bites"
   )
 
   val FrequencyThreshold = 0.8
