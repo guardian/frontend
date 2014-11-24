@@ -6,6 +6,7 @@ import model.Content
 import org.joda.time.{DateTimeZone, LocalDate}
 import implicits.Dates._
 import common.Maps.RichMapSeq
+import common.JodaTime._
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
@@ -24,10 +25,10 @@ object IndexPageGrouping extends Collections {
 
           if (trailsByDay.meanFrequency >= MinimumPerDayPopOutFrequency) {
             trailsByDay.toSeq.sortBy(_._1).reverse map { case (day, trailsThatDay) =>
-              Day(day, trailsThatDay.map(_.trail))
+              Day(day, trailsThatDay.map(_.trail).sortBy(_.webPublicationDate).reverse)
             }
           } else {
-            Seq(Month(startOfMonth, trailsThatMonth.map(_.trail)))
+            Seq(Month(startOfMonth, trailsThatMonth.map(_.trail).sortBy(_.webPublicationDate).reverse))
           }
       }
     }
@@ -37,7 +38,7 @@ object IndexPageGrouping extends Collections {
   def byDay(trails: Seq[Content], timezone: DateTimeZone): Seq[Day] = {
     trails.groupBy(_.webPublicationDate.withZone(timezone).toLocalDate).toSeq.sortBy(_._1).reverse map {
       case (date, trailsThatDay) =>
-        Day(date, trailsThatDay)
+        Day(date, trailsThatDay.sortBy(_.webPublicationDate).reverse)
     }
   }
 }
