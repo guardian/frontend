@@ -53,13 +53,8 @@ define([
             expires.setDate(1);
         }
 
-        var cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';';
-        var domain = getShortDomain();
-        if (domain !== 'localhost') {
-            cookie += 'domain=' + getShortDomain() + ';';
-        }
-
-        getDocument().cookie = cookie;
+        getDocument().cookie =
+            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
     function addForMinutes(name, value, minutesToLive) {
