@@ -454,7 +454,8 @@ $header-image-size-desktop: 100px;
         box-shadow: none !important;
 
         @include mq(tablet) {
-            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
     }
 }
