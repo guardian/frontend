@@ -38,4 +38,13 @@ class ExternalLinksTest extends FlatSpec with Matchers with Inspectors {
       external(id) should be(true)
     }
   }
+
+  it should "be false for malformed URLs" in {
+    forAll(Seq(
+      "htt://",
+      "\0"
+    )) { id =>
+      external(id) should be(false)
+    }
+  }
 }

@@ -2,6 +2,8 @@ package common
 
 import java.net.URI
 
+import scala.util.Try
+
 object ExternalLinks {
   val GuardianDomains = Seq(
     "theguardian.com",
@@ -9,7 +11,7 @@ object ExternalLinks {
     "dev-theguardian.com"
   )
 
-  def external(url: String) = Option(new URI(url).getHost).exists({ host => !GuardianDomains.exists({ domain =>
+  def external(url: String) = Try(Option(new URI(url).getHost).exists({ host => !GuardianDomains.exists({ domain =>
     host == domain || host.endsWith(s".$domain")
-  })})
+  })})).getOrElse(false)
 }
