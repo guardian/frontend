@@ -1,8 +1,10 @@
 .tone-news--item {
-    &.fc-item {
+    &.fc-item,
+    &.flyer {
         background-color: colour(neutral-8);
     }
 
+    .flyer__container:before,
     .fc-item__container:before {
         background-color: colour(news-accent);
     }

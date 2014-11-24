@@ -5,10 +5,20 @@ import play.api.mvc.RequestHeader
 
 object EditionalisedSections {
 
-  val sections = Seq(
+
+  // if you add a section to this list you MUST add it to the editionalised sitemap
+  // see https://github.com/guardian/sitemap/blob/master/src/main/webapp/editionalised-sitemap.xml (private repo)
+  // if you do not do this we get weird search results in Google
+  private val sections = Seq(
     "", // network front
-    "commentisfree", "culture", "business", "money", "sport",
-    "sustainable-business"
+    "business",
+    "commentisfree",
+    "culture",
+    "media",
+    "money",
+    "sport",
+    "sustainable-business",
+    "technology"
   )
 
   def isEditionalised(id: String) = sections.contains(id)

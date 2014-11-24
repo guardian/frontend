@@ -11,9 +11,10 @@ package object layout {
     const(Half),
     const(ThreeQuarters),
     const(ThreeQuartersRight),
-    const(Full),
+    const(FullMedia75),
+    const(FullMedia50),
     const(Third),
-    const(MegaFull)
+    const(FullMedia100)
   )
 
   val itemLayoutGen = for {

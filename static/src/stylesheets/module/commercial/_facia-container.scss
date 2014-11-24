@@ -60,7 +60,6 @@
     }
 
     .container__header {
-        background-color: colour(neutral-2);
         height: 100%;
         padding-top: 0;
 
@@ -274,10 +273,8 @@
 
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
-   Update once breakpoints synced
    ========================================================================== */
 .commercial {
-    
     .has-page-skin & {
         @include mq(wide) {
             .container__header__inner,

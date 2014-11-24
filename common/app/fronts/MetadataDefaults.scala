@@ -38,8 +38,6 @@ object MetadataDefaults {
       ("imageCutoutReplace", true)
     )
 
-    case Podcast => Defaults + ("showKickerTag" -> true)
-
     case _ if content.isVideo => Defaults + ("showMainVideo" -> true)
 
     case _ => Defaults

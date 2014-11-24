@@ -67,7 +67,8 @@ object SliceWithCards {
     layout: SliceLayout,
     context: ContainerLayoutContext,
     config: CollectionConfig,
-    mobileShowMore: MobileShowMore
+    mobileShowMore: MobileShowMore,
+    showSeriesAndBlogKickers: Boolean
   ): (SliceWithCards, Seq[IndexedTrail], ContainerLayoutContext) = {
     val (columns, unconsumed, endContext) = layout.columns.foldLeft((Seq.empty[ColumnAndCards], items, context)) {
       case ((acc, itemsRemaining, currentContext), column) =>
@@ -81,7 +82,8 @@ object SliceWithCards {
                 FaciaCard.fromTrail(
                   trail,
                   config,
-                  Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)
+                  Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore),
+                  showSeriesAndBlogKickers
                 ),
                 mobileShowMore match {
                   case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
@@ -111,6 +113,12 @@ case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
   def numberOfCols = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column.colSpan
   }).sum
+
+  def transformCards(f: FaciaCard => FaciaCard) = copy(columns = columns map { column =>
+    column.copy(cards = column.cards map { cardAndIndex =>
+      cardAndIndex.copy(item = f(cardAndIndex.item))
+    })
+  })
 }
 
 case class ColumnAndCards(column: Column, cards: Seq[FaciaCardAndIndex])

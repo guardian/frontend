@@ -38,7 +38,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   it should "display an expired message for expired content" in {
     val result = controllers.GalleryController.render("theobserver/gallery/2012/jul/29/1")(TestRequest("/theobserver/gallery/2012/jul/29/1"))
-    status(result) should be(410)
+    status(result) should be(200)
     contentAsString(result) should include("Sorry - this page has been removed.")
   }
 

@@ -19,7 +19,8 @@
         }
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .flyer__container:before, {
         background-color: colour(live-mute);
     }
 
@@ -30,6 +31,7 @@
     }
 
     .fc-item__kicker:after,
+    .flyer__kicker:after,
     .fc-sublink__kicker:after {
         color: fade-out($c-headline, .8);
     }

@@ -34,7 +34,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 300,
+        maxFronts: 500,
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
@@ -67,6 +67,8 @@ define([
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
+
+        latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 

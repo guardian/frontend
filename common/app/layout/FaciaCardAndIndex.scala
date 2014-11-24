@@ -12,7 +12,12 @@ object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
   def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
     index,
-    FaciaCard.fromTrail(trail, CollectionConfig.emptyConfig, itemClasses),
+    FaciaCard.fromTrail(
+      trail,
+      CollectionConfig.emptyConfig,
+      itemClasses,
+      showSeriesAndBlogKickers = false
+    ),
     None
   )
 }
@@ -33,4 +38,6 @@ case class FaciaCardAndIndex(
     case Some(Desktop) => "hidden"
     case _ => "all"
   }
+
+  def transformCard(f: FaciaCard => FaciaCard) = copy(item = f(item))
 }

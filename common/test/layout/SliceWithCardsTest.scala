@@ -32,7 +32,11 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
       override def webUrl: String = s"$n"
 
       override def customImageCutout: Option[FaciaImageElement] = None
-    }, n)
+
+    override def snapType: Option[String] = None
+
+    override def snapUri: Option[String] = None
+  }, n)
   }
 
   "a slice" should "consume as many items as the columns it aggregates consume" in {
@@ -42,7 +46,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )._2.length shouldEqual
         (0 max (NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum))
     }
@@ -55,7 +60,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )
 
       def idFromTrail(trail: Trail) = trail match {
@@ -74,7 +80,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )._1
 
       for (column <- slice.columns) {

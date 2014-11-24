@@ -91,15 +91,8 @@ define([
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
                     $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
+                        $parent.addClass('fc-slice__item--no-mpu');
                 }
-            },
-            '300,1': function (event, $adSlot) {
-                $adSlot.addClass('u-h');
-                var $parent = $adSlot.parent();
-                // if in a slice, add the 'no mpu' class
-                $parent.hasClass('js-fc-slice-mpu-candidate') &&
-                    $parent.addClass('fc-slice__item--no-mpu');
             },
             '300,1050': function () {
                 // remove geo most popular
@@ -296,30 +289,48 @@ define([
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
-        breakoutIFrame = function (iFrame) {
+        breakoutIFrame = function (iFrame, $slot) {
             /* jshint evil: true */
-            var iFrameBody    = iFrame.contentDocument.body,
-                $iFrameParent = bonzo(iFrame).parent();
+            var shouldRemoveIFrame = false,
+                $iFrame            = bonzo(iFrame),
+                iFrameBody         = iFrame.contentDocument.body,
+                $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach (breakoutClasses, function (breakoutClass) {
-                    var $breakout = $('.' + breakoutClass, iFrameBody);
-                    if ($breakout.length) {
-                        // remove the iframe before breaking out
-                        bonzo(iFrame).remove();
-                        if ($breakout[0].nodeName.toLowerCase() === 'script') {
-                            // evil, but we own the returning js snippet
-                            eval($breakout.html());
+                forEach(breakoutClasses, function (breakoutClass) {
+                    $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
+                        var creativeConfig,
+                            $breakoutEl     = bonzo(breakoutEl),
+                            breakoutContent = $breakoutEl.html();
+
+                        if (breakoutClass === 'breakout__script') {
+                            // new way of passing data from DFP
+                            if ($breakoutEl.attr('type') === 'application/json') {
+                                creativeConfig = JSON.parse(breakoutContent);
+                                require(['common/modules/commercial/creatives/' + creativeConfig.name])
+                                    .then(function (Creative) {
+                                        new Creative($slot, creativeConfig.params).create();
+                                    });
+                            } else {
+                                // evil, but we own the returning js snippet
+                                eval(breakoutContent);
+                            }
+
                         } else {
-                            $iFrameParent.append($breakout.html());
+                            $iFrameParent.append(breakoutContent);
+
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
                                     bonzo(responsiveAd).addClass('ad--responsive--open');
                                 }, 50);
                             });
                         }
-                    }
+                        shouldRemoveIFrame = true;
+                    });
                 });
+            }
+            if (shouldRemoveIFrame) {
+                $iFrame.remove();
             }
         },
         /**
@@ -337,17 +348,18 @@ define([
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
+
                         if (
                             updatedIFrame &&
-                            typeof updatedIFrame.readyState !== 'unknown' &&
-                            updatedIFrame.readyState === 'complete'
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
                         ) {
-                            breakoutIFrame(updatedIFrame);
+                            breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');
                         }
                     });
                 } else {
-                    breakoutIFrame(iFrame);
+                    breakoutIFrame(iFrame, $slot);
                 }
             });
         },

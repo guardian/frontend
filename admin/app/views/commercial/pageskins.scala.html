@@ -2,20 +2,22 @@
 @import tools.DfpLink
 @import tools.SiteLink
 
-@listItem(sponsorship: dfp.PageSkinSponsorship) = {
-  <li style="margin:20px">@sponsorship.lineItemName
+@flaggableProperty(label: String, values: Seq[String], textWhenEmpty: String, flagErrors: Boolean) = {
+@if(values.isEmpty && flagErrors) {
+    <br /> <span class="flagged">@textWhenEmpty</span>
+} else {
+    @if(values.isEmpty) {<br /> @textWhenEmpty} else {
+        <br /> <small>@label:</small> @values.mkString(" ")
+    }
+}
+}
+
+@listItem(sponsorship: dfp.PageSkinSponsorship, flagErrors: Boolean = true) = {
+  <li class="lineItem">@sponsorship.lineItemName
     (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-    @if(sponsorship.editions.isEmpty) {
-      <br /><span style="color:red">No edition</span>
-    } else {
-      <br /><small>Editions:</small> @sponsorship.editions.map(_.id).mkString(" ")
-    }
-    @if(sponsorship.countries.isEmpty) {
-      <br /><span style="color : red">No country</span>
-    } else {
-      <br /><small>Countries:</small> @sponsorship.countries.mkString(" ")
-    }
-    <br /><small>Ad Units:</small>
+    @flaggableProperty("Editions", sponsorship.editions.map(_.id), "No edition", flagErrors)
+    @flaggableProperty("Countries", sponsorship.countries, "No country", flagErrors)
+    <br /> <small>Ad Units:</small>
     <ul>
       @if(sponsorship.adUnits.isEmpty) {<li>Run of network</li>}
       @for(adUnit <- sponsorship.adUnits) {
@@ -36,6 +38,7 @@
         <li>The Line Item must target an <em>edition</em> in its customised criteria</li>
         <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
         <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
+        <li>The viewport must be at least 1300px wide.</li>
     </ol>
     <p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
 
@@ -52,12 +55,12 @@
       <p>None</p>
     } else {
       <ol>
-      @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {@listItem(sponsorship)}
+      @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {@listItem(sponsorship, flagErrors = false)}
       </ol>
     }
 
     <h3>R2 Only</h3>
     <ol>
-    @for(sponsorship <- pageSkinnedAdUnits.legacySponsorships) {@listItem(sponsorship)}
+    @for(sponsorship <- pageSkinnedAdUnits.legacySponsorships) {@listItem(sponsorship, flagErrors = false)}
     </ol>
 }

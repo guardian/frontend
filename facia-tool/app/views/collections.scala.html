@@ -29,7 +29,7 @@
                 css: {active: !latestArticles.showingDrafts()}">Live content</a>
         </div>
 
-        <div class="col__inner scrollable">
+        <div class="col__inner">
             <div class="title title--clipboard">clipboard</div>
             <div class="clipboard" data-bind="with: clipboard">
                 <div class="droppable" data-bind="
@@ -38,6 +38,9 @@
                     css: {underDrag: underDrag},
                     template: {name: 'template_article', foreach: items}"></div>
             </div>
+        </div>
+
+        <div class="col__inner scrollable">
 
             <div data-bind="with: latestArticles">
                 <div class="search-tools">
@@ -130,19 +133,19 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...',
+                            placeholder: field() || (label + '...'),
                             title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
                         textInput: overrideOrVal"></textarea>
 
-                    <!-- ko if: hasFocus() -->
+                    <!-- ko if: hasFocus -->
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
                             text: length"></span>
                         <a class="editor__revert" data-bind="
-                            visible: meta,
+                            visible: meta() && field(),
                             click: revert"><i class="icon-fast-backward"></i></a>
                     <!-- /ko -->
                 </div>
@@ -252,9 +255,9 @@
     <script type="text/html" id="template_search_controls">
         <div class="finder__controls">
             Page <span data-bind="text: page"></span>
-            <a data-bind="click: pageNext">next</a>
-            <a data-bind="click: pagePrev, visible: page() > 1">prev</a>
-            <a data-bind="click: refresh,  visible: page() > 2">top</a>
+            <a data-bind="click: pageNext, visible: showNext()">next</a>
+            <a data-bind="click: pagePrev, visible: showPrev()">prev</a>
+            <a data-bind="click: refresh,  visible: showTop()">top</a>
         </div>
     </script>
 
@@ -285,7 +288,7 @@
                 <div class="article__overrides"
                     data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
-                <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
+                <div data-bind="if: state.enableContentOverrides() && group.parentType !== 'Article'">
                     <div class="supporting" data-bind="with: meta.supporting">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -293,13 +296,13 @@
                             css: {underDrag: underDrag},
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
+                    <span class="supporting-message">Drop content above</span>
                 </div>
 
                 <div class="tools">
                     <a class="tool tool--done" data-bind="
                         clickBubble: false,
                         click: closeAndSave">Save edits</a>
-                    <span class="supporting-message">Drop sublinks above</span>
                 </div>
             </div>
 
@@ -345,8 +348,8 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (state.isSnap() ? 'No headline!' : 'Loading...'),
-                            css: {'is-empty': state.isSnap() && !meta.headline()}"></div>
+                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
+                            css: {'is-empty': meta.snapType() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <span class="article__times">
@@ -364,8 +367,15 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: state.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'link'"></span>
+                            <!-- ko if: meta.snapType -->
+                                <span class="label label--snap">snap</span>
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || meta.snapType()"></span>
+                                <span class="label label--snap-uri" data-bind="text: meta.snapUri"></span>
+                            <!-- /ko -->
+
+                            <!-- ko if: meta.href -->
+                                <span class="label label--snap">url</span>
+                                <span class="label label--snap-uri" data-bind="text: meta.href"></span>
                             <!-- /ko -->
 
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->

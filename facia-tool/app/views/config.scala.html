@@ -195,7 +195,8 @@
                     <div class="cnf-form">
                         <label>Hidden</label>
                         <input type="checkbox" data-bind="
-                            checked: props.isHidden" />
+                            checked: props.isHidden,
+                            disable: state.isTypeLocked" />
 
                         <label>Nav section</label>
                         <select data-bind="
@@ -234,10 +235,19 @@
                             enable: props.imageUrl" />
 
                         <label>Type</label>
-                        <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />
+                        <input type="radio" name="group02" data-bind="
+                            checkedValue: undefined,
+                            checked: props.priority,
+                            disable: state.isTypeLocked" />
                         <span class="radio-label">editorial</span>
-                        <input type="radio" name="group02" value="commercial" data-bind="checked: props.priority" />
+                        <input type="radio" name="group02" value="commercial" data-bind="
+                            checked: props.priority,
+                            disable: state.isTypeLocked" />
                         <span class="radio-label">commercial</span>
+                        <input type="radio" name="group02" value="training" data-bind="
+                            checked: props.priority,
+                            disable: state.isTypeLocked" />
+                        <span class="radio-label">training</span>
 
                         <div class="tools">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
@@ -247,12 +257,12 @@
 
                  <!-- ko if: id -->
                     <div class="instructions">
-                        <!-- ko if: !state.isOpenProps() -->
-                            <span class="linky" data-bind="click: openProps">edit metadata</span>
+                        <!-- ko if: !state.isOpenProps() && collections.items().length -->
+                            <span class="linky tool--metadata" data-bind="click: openProps">edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">edit content</a>
+                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?front=' + id()}">edit content</a>
                             &middot;
-                            <a data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
+                            <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
                         <!-- /ko -->
                     </div>
 
@@ -263,7 +273,7 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        <span data-bind="click: createCollection" class="linky">create a container</span> or drop one above.
+                        <span data-bind="click: createCollection" class="linky tool--container">create a container</span> or drop one above.
                         <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->

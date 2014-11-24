@@ -59,6 +59,8 @@ define([
             return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
         }, this);
 
+        this.applyConstraints();
+
         this.collections = new Group({
             parent: self,
             parentType: 'Front',
@@ -191,6 +193,7 @@ define([
     };
 
     Front.prototype.saveProps = function() {
+        this.applyConstraints();
         persistence.front.update(this);
         this.state.isOpenProps(false);
     };
@@ -209,6 +212,13 @@ define([
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         this.saveProps();
+    };
+
+    Front.prototype.applyConstraints = function () {
+        if (this.props.priority() === 'training') {
+            this.state.isTypeLocked = true;
+            this.props.isHidden(true);
+        }
     };
 
     function toTitleCase(str) {

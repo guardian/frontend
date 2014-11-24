@@ -329,7 +329,7 @@ h1 {
 .article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    min-height: 56px;
+    min-height: 61px;
     overflow: hidden;
     position: relative;
     color: #999999;
@@ -382,7 +382,7 @@ h1 {
     top: 0;
     width: 83px;
     height: 50px;
-    background-color: #dddddd;
+    background-color: #cccccc;
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position-x: right;
@@ -433,8 +433,7 @@ h1 {
     word-wrap: break-word;
     color: #999999;
     font-size: 12px;
-    line-height: 14px;
-    margin: -2px 0;
+    margin: 0 0 -2px 0;
 }
 
 .article__ammends p,
@@ -450,22 +449,24 @@ h1 {
 .article__ammends .label {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    text-transform: uppercase;
-    padding-right: 3px;
+    font-weight: bold;
+    color: #CCCCCC;
 }
 
 .article__ammends .label--draft {
-    font-weight: bold;
     color: #ffc107;
 }
 
 .article__ammends .label--takedown {
-    font-weight: bold;
     color: #DD4B39;
 }
 
 .article__ammends .label--snap {
-    font-weight: bold;
+    color: #46c430;
+}
+
+.article__ammends .label--snap-uri {
+    text-transform: lowercase;
     color: #999999;
 }
 
@@ -507,7 +508,7 @@ h1 {
 }
 
 .article__overrides {
-    margin: 0 0 10px 92px;
+    margin: 0 0 0 92px;
     font-size: 12px;
     line-height: 14px;
 }
@@ -935,7 +936,7 @@ button {
 
 .tool--done {
     float: right;
-    width: 90px;
+    width: 83px;
     line-height: 30px;
     text-align: center;
 }
@@ -1019,7 +1020,7 @@ button {
 
 .cnf-front .title {
     cursor: pointer;
-    height: 24px;
+    min-height: 24px;
     font-weight: normal;
     font-family: inherit;
     font-size: 20px;
@@ -1326,9 +1327,6 @@ button {
         border: none;
         right: inherit;
         left: 0;
-    }
-    .scrollable {
-        overflow-y: inherit
     }
 }
 

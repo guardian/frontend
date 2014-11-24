@@ -102,6 +102,8 @@ trait Football extends Collections {
     override lazy val webPublicationDate: DateTime = m.date
     override lazy val sectionName: String = "Football"
     override lazy val mainVideo: Option[VideoElement] = None
+    lazy val snapUri: Option[String] = None
+    lazy val snapType: Option[String] = None
   }
 
   implicit class Match2hasStarted(m: FootballMatch) {

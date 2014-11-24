@@ -29,12 +29,16 @@ GET           /assets/fonts/*path        dev.DevAssetsController.atFonts(path)
 GET           /                          controllers.FaciaToolController.priorities()
 GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
 GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+GET           /training                  controllers.FaciaToolController.collectionEditor(priority="training")
+
 
 GET           /editorial/2               controllers.FaciaToolController.multiPane(panes:Int=2)
 GET           /editorial/3               controllers.FaciaToolController.multiPane(panes:Int=3)
 
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
+GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
+
 
 GET           /publish-all               controllers.ContentApiPressController.publishAll()
 GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
@@ -55,6 +59,7 @@ GET           /config                    controllers.FaciaToolController.getConf
 # endpoints for proxying https
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.capi(path)
+GET           /http/proxy/*url           controllers.FaciaContentApiProxy.http(url)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
 
 # thumbnails

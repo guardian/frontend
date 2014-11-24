@@ -1,5 +1,5 @@
 $header-image-size-mobile: 80px;
-$header-image-size-desktop: 120px;
+$header-image-size-desktop: 100px;
 
 .fc-container,
 .facia-container {
@@ -14,8 +14,13 @@ $header-image-size-desktop: 120px;
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
+            background-color: #ffffff;
         }
     }
+}
+
+.fc-container--outbrain {
+    background-color: colour(neutral-8);
 }
 
 .fc-container__inner,
@@ -28,15 +33,18 @@ $header-image-size-desktop: 120px;
     @include mq(wide) {
         .has-page-skin & {
             width: gs-span(12);
+            background-color: #ffffff;
         }
     }
 
     .fc-container & {
         border-top: 1px solid colour(news-accent);
     }
+}
 
-    .ad-slot & {
-        padding-top: 0;
+.has-page-skin .fc-container__pagination {
+    @include mq(wide) {
+        width: gs-span(12);
     }
 }
 
@@ -49,7 +57,7 @@ $header-image-size-desktop: 120px;
     padding-top: 0;
 
     .fc-container__inner {
-        border: 0 !important;
+        border: 0;
     }
 
     @include mq(tablet) {
@@ -144,7 +152,7 @@ $header-image-size-desktop: 120px;
     @include mq(leftCol) {
         float: none;
         display: block;
-        margin: $gs-baseline * 2 0 $gs-baseline;
+        margin: 0 0 $gs-baseline;
     }
 
     img {
@@ -448,49 +456,125 @@ $header-image-size-desktop: 120px;
         box-shadow: none !important;
 
         @include mq(tablet) {
-            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
     }
 }
 
-.gallery-lightbox__endslate {
-    .fc-container__inner {
-        border: 0;
-    }
-
-    .fc-container__header {
-        width: auto;
-    }
-
-    .fc-container__header__title {
-        padding-bottom: $gs-baseline*2;
-    }
-
-    .fc-slice--qqq-q {
-        .fc-slice__item:first-child .fc-item__title {
-            padding-top: 0;
-            margin-top: -1 * 2px;
-        }
-    }
-}
 
 .content-footer {
-    .fc-item__content {
-        padding-bottom: $gs-baseline * 2;
-    }
-
     /**
      *  For the occasions where we want to show timestamp and there are comments.
      *  In some cases this will force meta content to split to two lines for tablet view
      *  so we need to increase the content div bottom space.
      */
     @include mq($until: desktop) {
-        .fc-item--has-discussion .fc-item__content {
+        .fc-item--has-metadata .fc-item__content {
             padding-bottom: $gs-baseline * 3;
         }
     }
+}
 
-    .fc-item__timestamp {
-        display: block;
+.fc-date-headline {
+    color: colour(neutral-1);
+    display: block;
+    padding-bottom: $gs-baseline / 2;
+
+    @include fs-headline(2);
+}
+
+.fc-container--tag {
+    padding-bottom: 0;
+
+    .fc-container__inner {
+        border-top: 1px solid colour(neutral-5);
     }
+}
+
+.fc-trending-topics {
+    border-top: 0 !important;
+}
+
+.index-page-header {
+    border-top: 1px solid colour(news-accent);
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
+    margin-top: $gs-baseline;
+}
+
+.index-page-header__content {
+    width: 100%;
+
+    @include mq(wide) {
+        width: $left-column-wide + $gs-gutter + gs-span(12);
+
+        .has-page-skin {
+            width: 100%;
+        }
+    }
+}
+
+.index-page-header__title {
+    display: block;
+    line-height: get-line-height(header, 2);
+
+    &,
+    a {
+        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    }
+
+    @include fs-header(4);
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+
+        .has-page-skin & {
+            float: none;
+        }
+    }
+}
+
+.index-page-header__description {
+    color: colour(neutral-2);
+
+    @include fs-headline(2);
+
+    @include mq(leftCol) {
+        float: left;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: none;
+        }
+    }
+
+    @include mq(tablet) {
+        width: 50%;
+    }
+}
+
+.index-page-header__image-wrapper {
+    overflow: hidden;
+    float: right;
+}
+
+.index-page-header__image {
+    display: block;
+    float: right;
+    height: $header-image-size-mobile;
+
+    @include mq(desktop) {
+        height: $header-image-size-desktop;
+    }
+}
+
+.index-page-header__image-wrapper--contributor-circle {
+    @include border-radius(50%);
 }

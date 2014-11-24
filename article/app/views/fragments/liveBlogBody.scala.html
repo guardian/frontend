@@ -29,7 +29,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live"><span class="live-pulse-icon"></span>LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
 
                         @fragments.standfirst(article)
@@ -104,7 +104,11 @@
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
-                                        FaciaCardAndIndex.fromTrail(trail, ItemClasses.liveBlogMore, index),
+                                        FaciaCardAndIndex.fromTrail(
+                                            trail,
+                                            ItemClasses.liveBlogMore,
+                                            index
+                                        ).transformCard(_.withTimeStamp),
                                         0,
                                         isRow = false,
                                         isList = false

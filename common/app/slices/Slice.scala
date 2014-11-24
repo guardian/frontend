@@ -513,6 +513,55 @@ case object HalfHalf extends Slice {
   )
 }
 
+/** Same as above, but doesn't give two large standard items on mobile view. Good for when you just need a container
+  * that supports two items, but you don't want it to be given an extreme treatment on mobile, i.e., in the story
+  * package and on tag page containers.
+  */
+case object HalfHalf2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "h-h",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = Half
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Half
+        )
+      )
+    )
+  )
+}
+
+/* .___________________________________.
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * |                  #################|
+ * `-----------------------------------'
+ */
+case object FullMedia50 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "f",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = cards.FullMedia50
+        )
+      )
+    )
+  )
+}
+
 /* .___________________________________.
  * |         ##########################|
  * |         ##########################|
@@ -520,7 +569,7 @@ case object HalfHalf extends Slice {
  * |         ##########################|
  * `-----------------------------------'
  */
-case object Full extends Slice {
+case object FullMedia75 extends Slice {
   val layout = SliceLayout(
     cssClassName = "f",
     columns = Seq(
@@ -528,7 +577,7 @@ case object Full extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.Full
+          tablet = cards.FullMedia75
         )
       )
     )
@@ -542,7 +591,7 @@ case object Full extends Slice {
  * |                                   |
  * `-----------------------------------'
  */
-case object MegaFull extends Slice {
+case object FullMedia100 extends Slice {
   val layout = SliceLayout(
     cssClassName = "mf",
     columns = Seq(
@@ -550,7 +599,7 @@ case object MegaFull extends Slice {
         colSpan = 1,
         ItemClasses(
           mobile = Standard,
-          tablet = cards.MegaFull
+          tablet = cards.FullMedia100
         )
       )
     )
@@ -729,6 +778,31 @@ case object TTlMpu extends Slice {
         ItemClasses(
           mobile = ListItem,
           tablet = ListItem
+        )
+      ),
+      MPU(
+        colSpan = 1
+      )
+    )
+  )
+}
+
+case object TTMpu extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "t-t-mpu",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Third
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Third
         )
       ),
       MPU(

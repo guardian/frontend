@@ -41,7 +41,7 @@ $navigation-h-space-between-items: $gs-gutter;
 $c-navigation-expandable-background: colour(neutral-1);
 
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
 
 /* Styles common to all states
@@ -459,6 +459,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         display: table-cell;
     }
     .top-navigation {
+        overflow: hidden;
+
         @include mq(navigationBreakOnTwoLevels) {
             @include box-sizing(border-box);
             position: absolute;

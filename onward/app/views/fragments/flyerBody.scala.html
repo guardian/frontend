@@ -1,0 +1,71 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+
+@import views.support.{ImgSrc, Item140}
+@import views.support.TrailCssClasses.toneClass
+@import model.Tag
+@import views.support.RenderClasses
+
+@kicker = {
+    @if(content.isAnalysis) {
+        <span class="flyer__kicker">Analysis</span>
+    }
+    @if(content.isLiveBlog && content.isLive) {
+        <span class="flyer__kicker"><span class="flyer__live"><span class="live-pulse-icon"></span>Live</span></span>
+    }
+    @if(content.isPodcast) {
+        @content.seriesTag.map { series => <span class="flyer__kicker">@series.webTitle</span> }
+    }
+}
+
+<div class="flyer @toneClass(content)--item @RenderClasses(Map(
+    "flyer--video" -> content.isVideo,
+    "flyer--gallery" -> content.isGallery,
+    "flyer--audio" -> content.isAudio,
+    "flyer--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
+    ))"
+    data-link-name="content-card" data-component="content-card">
+
+    <div class="flyer__container">
+        @if(content.isGallery) {
+            @content.trailPicture(5, 3).map { image =>
+                <img class="flyer__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
+            }
+        }
+
+        <div class="flyer__header">
+            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
+            @if(!content.isMedia && content.visualTone == "comment") {
+                <div class="flyer__byline">
+                    - @content.byline.map { byline => @Html(byline) }
+                </div>
+            }
+            @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
+        </div>
+
+        @if(!content.isGallery) {
+            <div class="flyer__standfirst u-cf">
+            @if(content.isLiveBlog){
+                @content.trailText.map{ trailText => @Html(trailText) }
+            } else {
+                <div>
+                @content.standfirst.map { standfirst => @Html(standfirst) }
+                </div>
+            }
+            </div>
+            @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
+                @content.contributors.headOption.map { profile =>
+                    @profile.contributorLargeImagePath.map{ image =>
+                        <div class="flyer__byline-img">
+                            <img class="flyer__byline-img__img" src="@image" alt="@profile.name" />
+                        </div>
+                    }
+                }
+            }
+            @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
+        }
+    </div>
+
+    <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
+</div>
+

@@ -19,70 +19,70 @@ define([
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
-                mobile:  '1,1|300,1|300,250|300,251|300,600' +
+                mobile:  '1,1|300,250|300,251|300,600' +
                     (config.page.edition === 'US' ? '|300,1050' : '')
             }
         },
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile:  '1,1|300,1|300,250'
+                mobile:  '1,1|300,250'
             }
         },
         im: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|300,1|88,85'
+                mobile: '1,1|88,85'
             }
         },
         inline1: {
             sizeMappings: {
-                mobile:             '1,1|300,1|300,50|300,250',
-                'mobile-landscape': '1,1|300,1|300,50|320,50|300,250',
-                tablet:             '1,1|300,1|300,250'
+                mobile:             '1,1|300,50|300,250',
+                'mobile-landscape': '1,1|300,50|320,50|300,250',
+                tablet:             '1,1|300,250'
             }
         },
         inline2: {
             sizeMappings: {
-                mobile:             '1,1|300,1|300,50',
-                'mobile-landscape': '1,1|300,1|300,50|320,50',
-                tablet:             '1,1|300,1|300,250'
+                mobile:             '1,1|300,50',
+                'mobile-landscape': '1,1|300,50|320,50',
+                tablet:             '1,1|300,250'
             }
         },
         inline3: {
             sizeMappings: {
-                mobile:             '1,1|300,1|300,50',
-                'mobile-landscape': '1,1|300,1|300,50|320,50',
-                tablet:             '1,1|300,1|300,250'
+                mobile:             '1,1|300,50',
+                'mobile-landscape': '1,1|300,50|320,50',
+                tablet:             '1,1|300,250'
             }
         },
         'merchandising-high': {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|300,1|88,87'
+                mobile: '1,1|88,87'
             }
         },
         spbadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|300,1|140,90'
+                mobile: '1,1|140,90'
             }
         },
         adbadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|300,1|140,90'
+                mobile: '1,1|140,90'
             }
         },
         fobadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|300,1|140,90'
+                mobile: '1,1|140,90'
             }
         }
     };

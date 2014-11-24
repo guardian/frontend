@@ -234,7 +234,7 @@ define([
     }
 
     return function () {
-        if (config.switches.autoRefresh) {
+        if (config.switches.containerUpdates) {
             var $containers = $('.js-container--fetch-updates'),
                 updateInterval = detect.isBreakpoint('mobile') ? 20000 : 10000;
 

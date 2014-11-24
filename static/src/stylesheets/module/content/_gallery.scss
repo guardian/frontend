@@ -88,7 +88,7 @@
     color: colour(neutral-7);
     margin-bottom: 0;
 
-    > strong {
+    > strong:first-child {
         display: block;
         @include fs-headline(2);
         margin-bottom: $gs-baseline/2;
@@ -142,7 +142,8 @@
     right: 0;
 }
 
-.gallery2__fullscreen {
+.gallery2__fullscreen,
+.article__fullscreen {
     @include border-radius(50%);
     top: 0;
     right: 0;
@@ -166,8 +167,26 @@
         display: none;
     }
 
+    .element--thumbnail & {
+        width: 33px;
+        height: 33px;
+        margin: $gs-baseline/3 $gs-gutter/5;
+        display: none;
+
+        .i-expand-black,
+        .i-expand-white {
+            width: 50%;
+            height: 50%;
+        }
+    }
+
+    .element--thumbnail:hover & {
+        display: block;
+    }
+
     @include mq(desktop) {
-        .gallery2__img-container:hover & {
+        .gallery2__img-container:hover &,
+        .article__img-container:hover & {
             background-color: colour(media-default);
 
             .i-expand-black {
@@ -219,153 +238,3 @@
         }
     }
 }
-
-.block-share--gallery {
-    margin-top: $gs-baseline;
-    white-space: nowrap;
-    clear: both;
-
-    @include mq($until: tablet) {
-        display: none;
-    }
-
-    @include mq(tablet, desktop) {
-        position: absolute;
-        top: -$gs-baseline / 3;
-        right: 0;
-
-        .gallery-lightbox & {
-            right: $gs-gutter / 2;
-        }
-    }
-
-    .block-share__item {
-        @include transition(opacity .15s linear);
-        opacity: .8;
-
-        &:hover {
-            opacity: 1;
-        }
-    }
-}
-
-.block-share--gallery {
-    .block-share__item--facebook {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-facebook--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-facebook--white);
-            }
-        }
-    }
-
-    .block-share__item--twitter {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-twitter--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-twitter--white);
-            }
-        }
-    }
-
-    .block-share__item--gplus {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-gplus--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-gplus--white);
-            }
-        }
-    }
-
-    .block-share__item--linkedin {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-
-        .i {
-            @include icon(share-linkedin--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-linkedin--white);
-            }
-        }
-    }
-
-    .block-share__item--pinterest {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-
-        .i {
-            @include icon(share-pinterest--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-pinterest--white);
-            }
-        }
-    }
-}
-
-.block-share--gallery-mobile {
-    cursor: pointer;
-    opacity: .8;
-    margin-top: $gs-baseline / 2;
-}
-
-.block-share--gallery {
-    .block-share__item--expand {
-        border-color: colour(neutral-2);
-
-        &:hover {
-            border-color: #ffffff;
-        }
-    }
-
-    .block-share__item--link {
-        background-color: transparent;
-        color: #ffffff;
-        border-color: colour(neutral-2);
-
-        &:hover {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-    }
-
-    .block-share__item--expand .i {
-        opacity: 1;
-    }
-}
-
-.overlay--gallery {
-    background-color: colour(neutral-1);
-    .share-modal__title {
-        color: #ffffff;
-    }
-    .share-modal__close .i {
-        @include icon(close-icon-white-small);
-    }
-}
-

@@ -2,7 +2,7 @@ module.exports = function(grunt, options) {
     return {
         js: {
             files: [
-                'static/{src,public}/javascripts/**/*.js'
+                'static/{src,public}/javascripts/**/*.{js,html}'
             ],
             tasks: [
                 'compile:js',

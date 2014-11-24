@@ -45,6 +45,12 @@ object Switches extends Collections {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
+    "If this switch is on then we will request more items for larger tag pages",
+    safeState = Off,
+    sellByDate = never
+  )
+
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
@@ -89,6 +95,11 @@ object Switches extends Collections {
   val RelatedContentSwitch = Switch("Performance", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     safeState = On, sellByDate = never
+  )
+
+  val FlyerSwitch = Switch("Performance", "flyers",
+    "If this switch is turned off then flyers will not be shown. Turn off to help handle exceptional load.",
+     safeState = On, sellByDate = never
   )
 
   val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
@@ -190,6 +201,10 @@ object Switches extends Collections {
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
 
+  val KruxSwitch = Switch("Commercial", "krux",
+    "Enable Krux Control Tag",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
+
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
@@ -224,6 +239,11 @@ object Switches extends Collections {
 
   val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
+  val AdsStatusEmailDebugSwitch = Switch("Commercial", "ads-status-debug",
+    "If this switch is on, ads status emails will be in debug mode.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
@@ -390,10 +410,17 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ContainerUpdatesSwitch = Switch("Facia", "container-updates",
+    "Enables js detection that containers have updated since page load",
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+  )
+
   val all: List[Switch] = List(
+    TagPageSizeSwitch,
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    FlyerSwitch,
     AjaxRelatedContentSwitch,
     DfpCachingSwitch,
     CommercialSwitch,
@@ -424,6 +451,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    KruxSwitch,
     RemarketingSwitch,
     OutbrainSwitch,
     DiagnosticsLogging,
@@ -459,7 +487,9 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
-    CrosswordSvgThumbnailsSwitch
+    AdsStatusEmailDebugSwitch,
+    CrosswordSvgThumbnailsSwitch,
+    ContainerUpdatesSwitch
   )
 
   val httpSwitches: List[Switch] = List(

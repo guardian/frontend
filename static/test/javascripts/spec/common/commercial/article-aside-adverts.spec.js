@@ -66,7 +66,7 @@ define([
 
             it('should have the correct size mappings', function (articleAsideAdverts) {
                 articleAsideAdverts.init();
-                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,1|300,250|300,251|300,600');
+                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
             });
 
             it('should not display ad slot if standard-adverts switch is off', function (articleAsideAdverts, deps) {

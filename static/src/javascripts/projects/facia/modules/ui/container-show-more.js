@@ -4,6 +4,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/template',
+    'common/modules/userPrefs',
     'text!facia/views/button-show-more.html'
 ], function (
     bean,
@@ -11,6 +12,7 @@ define([
     qwery,
     $,
     template,
+    userPrefs,
     showMoreBtn
 ) {
     return function (container) {
@@ -21,6 +23,7 @@ define([
             textHook             = 'js-button-text',
             $button              = null,
             state                = 'hidden',
+            prefName             = 'section-states',
             buttonText           = {},
             self                 = this;
 
@@ -46,6 +49,8 @@ define([
                     .removeClass('js-container--fc-show-more');
                 bean.on($button[0], 'click', showMore);
             }
+
+            this.readPrefs($container);
         };
 
         this.getContainerTitle = function () {
@@ -53,7 +58,7 @@ define([
         };
 
         this.changeButtonText = function () {
-            $('.' + textHook, $button).text(buttonText[state]);
+            $('.' + textHook, $button).text((state === 'hidden') ? buttonText[state] : buttonText[state].split(' ')[0]);
         };
 
         this.changeButtonState = function () {
@@ -62,6 +67,29 @@ define([
                 .toggleClass('button--tertiary', state === 'displayed');
             $('.i', $button).toggleClass('i-plus-white', state !== 'displayed')
                 .toggleClass('i-minus-blue', state === 'displayed');
+        };
+
+        this.updatePref = function ($container, state) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName, { type: 'session' }),
+                prefValue = $container.attr('data-id');
+            if (state !== 'displayed') {
+                delete prefs[prefValue];
+            } else {
+                if (!prefs) {
+                    prefs = {};
+                }
+                prefs[prefValue] = 'more';
+            }
+            userPrefs.set(prefName, prefs, { type: 'session' });
+        };
+
+        this.readPrefs = function ($container) {
+            // update user prefs
+            var prefs = userPrefs.get(prefName, { type: 'session' });
+            if (prefs && prefs[$container.attr('data-id')]) {
+                bean.fire($button[0], 'click');
+            }
         };
 
         function showMore() {
@@ -73,6 +101,8 @@ define([
             state = (state === 'hidden') ? 'displayed' : 'hidden';
             self.changeButtonText();
             self.changeButtonState();
+
+            self.updatePref($container, state);
         }
     };
 });

@@ -106,6 +106,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def shouldServeFront(id: String) = getPathIds.contains(id) &&
     (Configuration.environment.isPreview || !isFrontHidden(id))
 
+  def shouldServeEditionalisedFront(edition: Edition, id: String) = {
+    shouldServeFront(s"${edition.id.toLowerCase}/$id")
+  }
+
   def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
     configAgent.get()
       .map(_.fronts

@@ -7,7 +7,7 @@ define([
     'models/collections/article',
     'modules/auto-complete',
     'modules/cache',
-    'modules/authed-ajax',
+    'modules/content-api',
     'knockout'
 ], function (
     vars,
@@ -17,13 +17,9 @@ define([
     Article,
     autoComplete,
     cache,
-    authedAjax,
+    contentApi,
     ko
 ) {
-    function dateYyyymmdd() {
-        var d = new Date();
-        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
-    }
 
     return function(options) {
 
@@ -31,7 +27,8 @@ define([
             deBounced,
             opts = options || {},
             counter = 0,
-            container = document.querySelector('.latest-articles');
+            container = document.querySelector('.latest-articles'),
+            pageSize = vars.CONST.searchPageSize || 25;
 
         this.articles = ko.observableArray();
 
@@ -56,6 +53,7 @@ define([
         this.suggestions = ko.observableArray();
 
         this.page = ko.observable(1);
+        this.totalPages = ko.observable(1);
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
@@ -87,8 +85,7 @@ define([
             .then(self.suggestions);
         };
 
-        // Grab articles from Content Api
-        this.search = function(opts) {
+        function fetch () {
             var count = counter += 1;
 
             opts = opts || {};
@@ -98,71 +95,62 @@ define([
             }
 
             clearTimeout(deBounced);
-            deBounced = setTimeout(function(){
-                var url = vars.CONST.apiSearchBase + '/',
-                    term,
-                    propName;
-
+            deBounced = setTimeout(function() {
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
                 }
 
+                var request = {
+                    isDraft: self.showingDrafts(),
+                    page: self.page(),
+                    pageSize: pageSize,
+                    filter: self.filter(),
+                    filterType: self.filterType().param
+                };
+
+                var term = self.term();
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    term = urlAbsPath(self.term());
+                    term = urlAbsPath(term);
                     self.term(term);
-                    propName = 'content';
-                    url += term + '?' + vars.CONST.apiSearchParams;
+                    request.article = term;
                 } else {
-                    term = encodeURIComponent(self.term().trim().replace(/ +/g,' AND '));
-                    propName = 'results';
-                    url += 'search?' + vars.CONST.apiSearchParams;
-                    url += self.showingDrafts() ?
-                        '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
-                        '&content-set=web-live&order-by=newest';
-                    url += '&page-size=' + (vars.CONST.searchPageSize || 25);
-                    url += '&page=' + self.page();
-                    url += term ? '&q=' + term : '';
-                    url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
+                    request.term = term;
                 }
 
-                authedAjax.request({
-                    url: url
-                })
-                .done(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [],
-                        errMsg = 'Sorry, the Content API is not currently returning content';
+                contentApi.fetchLatest(request)
+                .then(
+                    function(response) {
+                        if (count !== counter) { return; }
+                        var rawArticles = response.results;
 
-                    if (!term && !rawArticles.length) {
+                        self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
+
+                        _.each(rawArticles, function(opts) {
+                            var icc = internalContentCode(opts);
+
+                            opts.id = icc;
+                            cache.put('contentApi', icc, opts);
+
+                            opts.uneditable = true;
+                            self.articles.push(new Article(opts, true));
+                        });
+                        self.totalPages(response.pages);
+                        self.page(response.currentPage);
+                    },
+                    function(error) {
+                        var errMsg = error.message;
                         vars.model.alert(errMsg);
                         self.flush(errMsg);
-                        return;
                     }
-
-                    if (count !== counter) { return; }
-
-                    self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
-
-                   _.chain(rawArticles)
-                    .filter(function(opts) { return opts.fields && opts.fields.headline; })
-                    .each(function(opts) {
-                        var icc = internalContentCode(opts);
-
-                        opts.id = icc;
-                        cache.put('contentApi', icc, opts);
-
-                        opts.uneditable = true;
-                        self.articles.push(new Article(opts, true));
-                    });
-                })
-                .fail(function(xhr) {
-                    var errMsg = 'Content API error (' + xhr.status + '). Content is currently unavailable';
-
-                    vars.model.alert(errMsg);
-                    self.flush(errMsg);
-                })
-                ;
+                );
             }, 300);
+        }
+
+        // Grab articles from Content Api
+        this.search = function() {
+            self.page(1);
+            fetch();
 
             return true; // ensure default click happens on all the bindings
         };
@@ -175,7 +163,7 @@ define([
 
         this.refresh = function() {
             self.page(1);
-            self.search();
+            fetch();
         };
 
         this.reset = function() {
@@ -186,13 +174,25 @@ define([
 
         this.pageNext = function() {
             self.page(self.page() + 1);
-            self.search();
+            fetch();
         };
 
         this.pagePrev = function() {
             self.page(_.max([1, self.page() - 1]));
-            self.search();
+            fetch();
         };
+
+        this.showNext = ko.computed(function () {
+            return this.totalPages() >= this.page();
+        }, this);
+
+        this.showPrev = ko.computed(function () {
+            return this.page() > 1;
+        }, this);
+
+        this.showTop = ko.computed(function () {
+            return this.page() > 2;
+        }, this);
 
         this.startPoller = function() {
             setInterval(function(){
@@ -206,5 +206,3 @@ define([
 
     };
 });
-
-

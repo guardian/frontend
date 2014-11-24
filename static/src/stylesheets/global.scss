@@ -26,7 +26,6 @@
 
 @import 'module/_tabs';
 @import 'module/_headline-list';
-@import 'module/_profile';
 @import 'module/_cta';
 @import 'layout/_footer';
 @import 'module/content/_gallerythumbs';
@@ -52,6 +51,7 @@
 @import 'module/_overlay';
 @import 'module/content/_gallery';
 @import 'module/content/_gallery-lightbox';
+@import 'module/content/_block-level-sharing';
 
 @import 'module/_crosswords';
 
@@ -62,6 +62,7 @@
 
 @import 'module/preview/_freshness-check';
 
+@import 'module/_flyers';
 
 /* ==========================================================================
    External modules

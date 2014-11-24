@@ -33,6 +33,14 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
+    scenario("Have correct canonical url when 410 encountered") {
+      Given("I am on a video page")
+      goTo("/world/video/2008/dec/11/guantanamo-bay") { browser =>
+        import browser._
+        findFirst("link[rel='canonical']").getAttribute("href") should endWith ("/world")
+      }
+    }
+
     scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         browser.findFirst(".byline").getText should be ("Ben Child and Henry Barnes, theguardian.com")
@@ -57,6 +65,15 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         media.findFirst("[itemprop=width]").getAttribute("content") should be("480")
         media.findFirst("[itemprop=height]").getAttribute("content") should be("360")
         media.findFirst("[itemprop=headline]").getAttribute("content") should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
+      }
+    }
+
+    scenario("Twitter cards should appear in video article meta data") {
+      goTo("/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video") { browser =>
+        import browser._
+        findFirst("meta[name='twitter:site']").getAttribute("content") should be("@guardian")
+        findFirst("meta[name='twitter:app:url:googleplay']").getAttribute("content") should be("guardian://www.theguardian.com/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video")
+        findFirst("meta[name='twitter:card']").getAttribute("content") should be("summary_large_image")
       }
     }
   }

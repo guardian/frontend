@@ -55,7 +55,8 @@ define([
     'bootstraps/identity',
 
     'text!common/views/release-message.html',
-    'text!common/views/release-message-compulsory.html'
+    'text!common/views/release-message-compulsory.html',
+    'text!common/views/release-message-launched.html'
 ], function (
     bean,
     bonzo,
@@ -110,7 +111,8 @@ define([
     identity,
 
     releaseMessageTpl,
-    releaseMessageCompulsoryTpl
+    releaseMessageCompulsoryTpl,
+    releaseMessageLaunchedTpl
 ) {
 
     var modules = {
@@ -162,11 +164,13 @@ define([
             },
 
             transcludeRelated: function () {
-                var opts = {};
+                var opts = {
+                    excludeTags: ['tone/advertisement-features']
+                };
 
                 // don't want to show professional network content on videos or interactives
                 if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
-                    opts.excludeTag = 'guardian-professional/guardian-professional';
+                    opts.excludeTags.push('guardian-professional/guardian-professional');
                 }
                 new Related(opts).renderRelatedComponent();
             },
@@ -278,6 +282,13 @@ define([
                     if (config.page.edition === 'US' || /in\|/.test(shift)) {
                         releaseMessage.show(template(
                             releaseMessageCompulsoryTpl,
+                            {
+                                feedbackLink: feedbackLink
+                            }
+                        ));
+                    } else if (config.page.edition === 'AU' &&  config.page.section === 'commentisfree') {
+                        releaseMessage.show(template(
+                            releaseMessageLaunchedTpl,
                             {
                                 feedbackLink: feedbackLink
                             }
@@ -405,6 +416,15 @@ define([
                 }
             },
 
+            adTestCookie: function () {
+                var queryParams = url.getUrlVars();
+                if (queryParams.adtest === 'clear') {
+                    cookies.remove('adtest');
+                } else if (queryParams.adtest) {
+                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+                }
+            },
+
             initReleaseMessage: function () {
                 releaseMessage.init();
             },
@@ -446,6 +466,7 @@ define([
             modules.initDiscussion();
             modules.initFastClick();
             modules.testCookie();
+            modules.adTestCookie();
             modules.windowEventListeners();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();

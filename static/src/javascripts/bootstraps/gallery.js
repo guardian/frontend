@@ -59,16 +59,6 @@ define([
         ready = function () {
             LightboxGallery.init();
 
-            // Opens block level sharing links in the lightbox
-            var galleryHash = window.location.hash,
-                lightbox = new LightboxGallery.GalleryLightbox(),
-                hashIndex = galleryHash.substr(1),
-                parsedGalleryIndex = parseInt(hashIndex, 10),
-                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
-            if (galleryHash) {
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
-            }
-
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 

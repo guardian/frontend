@@ -63,7 +63,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(series.trails take 7, displayName, None, None, None),
         componentId
-      ),
+      ).withTimeStamps,
       properties
     )(request)
 

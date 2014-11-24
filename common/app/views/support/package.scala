@@ -112,13 +112,36 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").filter { element: Element =>
       element.getElementsByClass("gu-video").length == 0
     }.foreach { element: Element =>
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
+    }
+
+    if(!article.isLiveBlog) {
+      document.getElementsByClass("element-video").foreach( element => {
+        val shortUrl = element.attr("data-short-url")
+        val webUrl = element.attr("data-canonical-url")
+        val blockId = element.attr("data-media-id")
+        val mediaPath = element.attr("data-video-poster")
+        val mediaTitle = element.attr("data-video-name")
+
+        if(!shortUrl.isEmpty) {
+          val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
+          element.child(0).after(html.toString())
+
+          // add extra margin if there is no caption to fit the share buttons
+          val figcaption = element.getElementsByTag("figcaption")
+          if(figcaption.length < 1) {
+            element.addClass("fig-extra-margin")
+          }
+        } else {
+          element.addClass("fig-full-width")
+        }
+      })
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -158,6 +181,10 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
               </object>""")
 
       })
+
+      findVideoApiElement(mediaId).foreach( videoElement => {
+        element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
+      })
     }
 
     document.getElementsByClass("element-witness--main").foreach { element: Element =>
@@ -167,12 +194,14 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+  def getVideoAssets(id:String): Seq[VideoAsset] = article.bodyVideos.filter(_.id == id).flatMap(_.videoAssets)
 
   def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
+
+  def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
-case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
   def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -180,7 +209,8 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val asset = findImageFromId(fig.attr("data-media-id"))
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
@@ -205,8 +235,8 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
             })
           }
         }
-        fig.getElementsByTag("figcaption").foreach { figcaption =>
 
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
           // content api/ tools sometimes pops a &nbsp; in the blank field
           if (!figcaption.hasText || figcaption.text().length < 2) {
             figcaption.remove()
@@ -218,6 +248,38 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
     }
     body
   }
+
+  def addSharesAndFullscreen(body: Document): Document = {
+    if(!article.isLiveBlog) {
+      val imageElements = body.getElementsByClass("element-image").view.zipWithIndex
+      imageElements foreach { case (fig, index) =>
+        val linkIndex = (index + 1).toString
+        val hashSuffix = "img-" + linkIndex
+        fig.attr("id", hashSuffix)
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
+
+        fig.getElementsByTag("img").foreach { img =>
+          asset.map { image =>
+            val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), image.url), article.contentType)
+            img.after(html.toString())
+
+            img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+            img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+          }
+        }
+
+        val figcaption = fig.getElementsByTag("figcaption")
+
+        //if there's no caption then a larger margin-bottom is needed to fit the share buttons in
+        if (figcaption.length < 1) {
+          fig.addClass("fig-extra-margin")
+        }
+      }
+    }
+    body
+  }
+
 
   def cleanShowcasePictures(body: Document): Document = {
     for {
@@ -234,7 +296,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def clean(body: Document): Document = {
-    cleanShowcasePictures(cleanStandardPictures(body))
+    cleanShowcasePictures(cleanStandardPictures(addSharesAndFullscreen(body)))
   }
 
   def findImageFromId(id:String): Option[ImageAsset] = {
@@ -242,7 +304,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findContainerFromId(id:String): Option[ImageContainer] = {
-    contentImages.find(_.id == id)
+    article.bodyImages.find(_.id == id)
   }
 }
 
@@ -252,14 +314,14 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
       body.select(".block").foreach { el =>
         val id = el.id()
         el.select(".block-time.published-time time").foreach { time =>
-            val datetime = DateTime.parse(time.attr("datetime"))
-            val hhmm = Format(datetime, "HH:mm")
-            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
-            time.attr("data-relativeformat", "med")
-            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
-            if (datetime.isAfter(DateTime.now().minusDays(5))) {
-              time.addClass("js-timestamp")
-            }
+          val datetime = DateTime.parse(time.attr("datetime"))
+          val hhmm = Format(datetime, "HH:mm")
+          time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+          time.attr("data-relativeformat", "med")
+          time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+          if (datetime.isAfter(DateTime.now().minusDays(5))) {
+            time.addClass("js-timestamp")
+          }
         }
       }
     }
@@ -272,10 +334,9 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
     if (article.isLiveBlog) {
       body.select(".block").foreach { el =>
         val blockId = el.id()
-        val shares = article.blockLevelShares(blockId)
-        val link = article.blockLevelLink(blockId)
+        val shares = article.elementShares(Some(blockId))
 
-        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, link, article.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(blockId, shares, article.contentType)
 
         el.append(html.toString())
       }
@@ -362,7 +423,7 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
   def FixR1Link(href: String, section: String = "") = {
 
     /**
-     * We moved some R1 HTML files from subdomains to www.theguardian.com.
+    * We moved some R1 HTML files from subdomains to www.theguardian.com.
     * This means we broke some of the <a href="...">'s in the HTML.
     *
     * Here's how this works :-
@@ -689,9 +750,25 @@ object `package` extends Formats {
   }
 }
 
+object AuFriendlyFormat {
+  def apply(date: DateTime)(implicit request: RequestHeader): String = {
+    val edition = Edition(request)
+    val timezone = edition.timezone
+
+    edition.id match {
+      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " AEST"
+      case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
+    }
+  }
+}
+
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
-    val timezone = Edition(request).timezone
+    apply(date, Edition(request), pattern)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String): String = {
+    val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
@@ -732,25 +809,27 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = {
+    val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
+    model.Page(request.path, "news", "This page has been removed", "GFE:Gone", maybeCanonicalUrl = canonicalUrl)
+  }
+
   def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case 410 => Cached(60)(Ok(views.html.expired(gonePage)))
     case _ => result
   }
 }
 
 object RenderClasses {
-  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
+  def apply(classes: Map[String, Boolean], extraClasses: String*): String = apply((classes.filter(_._2).keys ++ extraClasses).toSeq:_*)
 
   def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
 
 object GetClasses {
   def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
-    val hasImage = item.hasImage
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -758,12 +837,11 @@ object GetClasses {
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
-      ("fc-item--has-discussion", item.discussionSettings.isCommentable),
-      ("fc-item--has-no-discussion", !item.discussionSettings.isCommentable),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
-      ("fc-item--live", item.isLive)
+      ("fc-item--live", item.isLive),
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
@@ -788,13 +866,15 @@ object GetClasses {
   def forContainerDefinition(containerDefinition: FaciaContainer) =
     forContainer(
       containerDefinition.showLatestUpdate,
-      containerDefinition.index == 0,
+      containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
-      Some(containerDefinition.container)
+      Some(containerDefinition.container),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      disableHide = containerDefinition.hideToggle
     )
 
-
+  /** TODO get rid of this when we consolidate 'all' logic with index logic */
   def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,

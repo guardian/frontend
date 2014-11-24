@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
+    'common/modules/gallery/lightbox',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -18,6 +19,7 @@ define([
     mediator,
     truncate,
     twitter,
+    Lightbox,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -60,8 +62,13 @@ define([
 
             initSelectionSharing: function () {
                 selectionSharing.init();
-            }
+            },
 
+            initLightbox: function () {
+                if ('lightboxImages' in config.page) {
+                    Lightbox.init();
+                }
+            }
         },
 
         ready = function () {
@@ -70,6 +77,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
+            modules.initLightbox();
 
             mediator.emit('page:article:ready');
         };

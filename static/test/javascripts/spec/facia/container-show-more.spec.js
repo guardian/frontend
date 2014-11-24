@@ -27,7 +27,8 @@ define([
             container = bonzo.create(
                     '<section class="container">' +
                         '<div class="facia-container__inner">' +
-                            '<div class="container__body js-hide fc-show-more--hidden" data-title="' + containerId + '">' +
+                            '<div class="container__body js-hide fc-show-more--hidden" ' +
+                                'data-title="' + containerId + '" data-id="' + containerId + '">' +
                                 '<div class="js-hide"></div>' +
                             '</div>' +
                         '</div>' +
@@ -40,6 +41,7 @@ define([
 
         afterEach(function () {
             sut = null;
+            sessionStorage.clear();
         });
 
         it("should get section (container) id", function() {
@@ -72,7 +74,7 @@ define([
             expect($('.button', $container).text()
                 .replace(/(\r\n|\n|\r)/g,"") // Replace line breaks
                 .replace(/^\s\s*/, ''))      // Replace spaces at the beginning
-                .toEqual('Less ' + containerId);
+                .toEqual('Less');
         });
 
         it("should show/hide content", function() {
@@ -90,8 +92,6 @@ define([
 
             var $button = $('.button', $container);
 
-            console.log($button.hasClass("button--primary"));
-
             expect($button.hasClass("button--primary")).toBeTruthy();
             expect($button.attr("data-link-name")).toEqual("More " + containerId);
             expect($('.i', $button).hasClass("i-plus-white")).toBeTruthy();
@@ -101,6 +101,16 @@ define([
             expect($button.hasClass("button--tertiary")).toBeTruthy();
             expect($button.attr("data-link-name")).toEqual("Less " + containerId);
             expect($('.i', $button).hasClass("i-minus-blue")).toBeTruthy();
+        });
+
+        it("should store the state in sessionStorage", function() {
+            var result = '{"value":{"' + containerId + '":"more"}}';
+
+            sut.addShowMoreButton();
+
+            bean.fire($('.button', $container)[0], 'click');
+
+            expect(window.sessionStorage.getItem('gu.prefs.section-states')).toEqual(result);
         });
     });
 });

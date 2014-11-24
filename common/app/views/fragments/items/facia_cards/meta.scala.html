@@ -4,16 +4,17 @@
 @import views.support.Format
 
 <aside class="fc-item__meta">
-    @item.webPublicationDate.map { date =>
-    <time class="fc-item__timestamp js-item__timestamp"
-    datetime="@date.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-    data-timestamp="@date.getMillis"
-    data-relativeformat="short">
-        <span class="fc-timestamp__text">
-            <span class="u-h">Published: </span>@Format(date, "d MMM y")
-        </span>
-    </time>
+    @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
+        <time class="fc-item__timestamp@if(timeStampDisplay.javaScriptUpdate){ js-item__timestamp}"
+              datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+              data-timestamp="@publishedAt.getMillis"
+              data-relativeformat="short">
+            <span class="fc-timestamp__text">
+                <span class="u-h">Published: </span>@Format(publishedAt, timeStampDisplay.formatString)
+            </span>
+        </time>
     }
+
     <a class="fc-trail__count fc-trail__count--commentcount fc-trail__count--inline-template js-item__inline-comment-template" href="@LinkTo(item)#comments" data-link-name="Comment count">
         <span class="js-item__comment-count"></span> <span class="fc-trail__count__label js-item__comment-or-comments"></span>
     </a>
