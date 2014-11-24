@@ -750,6 +750,18 @@ object `package` extends Formats {
   }
 }
 
+object AuFriendlyFormat {
+  def apply(date: DateTime)(implicit request: RequestHeader): String = {
+    val edition = Edition(request)
+    val timezone = edition.timezone
+
+    edition.id match {
+      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " AEST"
+      case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
+    }
+  }
+}
+
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
     apply(date, Edition(request), pattern)
