@@ -123,7 +123,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__cta {
         display: none;
-        width: gs-span(1.75);
+        width: $gs-gutter * 6;
 
         @include mq(leftCol) {
             display: block;
