@@ -481,7 +481,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble),
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)
         ))
       }
