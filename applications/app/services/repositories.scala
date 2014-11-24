@@ -63,10 +63,14 @@ object IndexPage {
           (ContainerDefinition.forNumberOfItems(grouping.items.length), mpuState)
         }
 
-        (newMpuState, ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
-          displayName = Some(grouping.dateHeadline.displayString)
-        )), collection),
-          Fixed(container)))
+        val containerConfig = ContainerDisplayConfig(
+          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+            displayName = Some(grouping.dateHeadline.displayString)
+          )),
+          showSeriesAndBlogKickers = true
+        )
+
+        (newMpuState, ((containerConfig, collection), Fixed(container)))
     }._2.toSeq
 
     val front = Front.fromConfigsAndContainers(

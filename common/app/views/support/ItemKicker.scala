@@ -9,9 +9,7 @@ object ItemKicker {
   def fromTrail(trail: Trail, config: Option[CollectionConfig]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
-    def tagKicker = maybeTag map { tag =>
-      TagKicker(tag.name, tag.webUrl)
-    }
+    def tagKicker = maybeTag.map(TagKicker.fromTag)
 
     def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
 
@@ -58,6 +56,9 @@ object ItemKicker {
     }
   }
 
+  def seriesOrBlogKicker(item: Trail) =
+    item.tags.find(Set("series", "blog") contains _.tagType).map(TagKicker.fromTag)
+
   /** Used for de-duping bylines */
   def kickerText(itemKicker: ItemKicker): Option[String] = itemKicker match {
     case PodcastKicker(Some(series)) => Some(series.name)
@@ -79,7 +80,13 @@ case object AnalysisKicker extends ItemKicker
 case object ReviewKicker extends ItemKicker
 case object CartoonKicker extends ItemKicker
 case class PodcastKicker(series: Option[Series]) extends ItemKicker
+
+object TagKicker {
+  def fromTag(tag: Tag) = TagKicker(tag.name, tag.webUrl)
+}
+
 case class TagKicker(name: String, url: String) extends ItemKicker
+
 case class SectionKicker(name: String, url: String) extends ItemKicker
 case class FreeHtmlKicker(body: String) extends ItemKicker
 case class FreeHtmlKickerWithLink(body: String, url: String) extends ItemKicker

@@ -90,7 +90,7 @@ object Front extends implicits.Collections {
   }
 
   def fromConfigsAndContainers(
-      configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)],
+      configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
   ) = {
     import scalaz.syntax.traverse._
@@ -102,11 +102,11 @@ object Front extends implicits.Collections {
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
-        ContainerLayout.fromContainer(container, context, config.config, newItems) map {
+        ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
             index,
             container,
-            config,
+            config.collectionConfigWithId,
             collection.copy(items = newItems),
             Some(containerLayout),
             None
@@ -115,7 +115,7 @@ object Front extends implicits.Collections {
           ((newSeen, context), FaciaContainer.fromConfig(
             index,
             container,
-            config,
+            config.collectionConfigWithId,
             collection.copy(items = newItems),
             None,
             None
@@ -126,7 +126,10 @@ object Front extends implicits.Collections {
   }
 
   def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
-    fromConfigsAndContainers(configs.zipWith({ case (config, _) => Container.fromConfig(config.config) }))
+    fromConfigsAndContainers(configs.map {
+      case (config, collectionEssentials) =>
+        ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))
+    })
   }
 }
 
@@ -163,15 +166,31 @@ object FaciaContainer {
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
     componentId: Option[String] = None
+  ): FaciaContainer = {
+    apply(
+      index,
+      container,
+      ContainerDisplayConfig.withDefaults(config),
+      collectionEssentials,
+      componentId
+    )
+  }
+
+  def apply(
+    index: Int,
+    container: Container,
+    config: ContainerDisplayConfig,
+    collectionEssentials: CollectionEssentials,
+    componentId: Option[String]
   ): FaciaContainer = fromConfig(
     index,
     container,
-    config,
+    config.collectionConfigWithId,
     collectionEssentials,
     ContainerLayout.fromContainer(
       container,
       ContainerLayoutContext.empty,
-      config.config,
+      config,
       collectionEssentials.items
     ).map(_._1),
     componentId
@@ -211,7 +230,7 @@ object FaciaContainer {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
-      config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
+      config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
     ).withTimeStamps
