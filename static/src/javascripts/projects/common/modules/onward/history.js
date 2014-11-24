@@ -41,7 +41,7 @@ define([
     }
 
     function getSummary() {
-        summary = storage.local.get(storageKeySummary);
+        var summary = storage.local.get(storageKeySummary);
 
         if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.start)) {
             summary = {
