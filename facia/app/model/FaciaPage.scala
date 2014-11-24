@@ -6,11 +6,39 @@ import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId
+import scala.language.postfixOps
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
                      collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+  /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
+    * content.
+    *
+    * There are fronts that exist in Facia but have no equivalent tag or section page, which is why we need to make
+    * this check.
+    */
+  def allPath: Option[String] = {
+    val tagAndSectionIds = for {
+      (_, collection) <- collections
+      item <- collection.items
+      id <- item.section +: item.tags.map(_.id)
+    } yield id
+
+    val idWithoutEdition = id.split("/").toList match {
+      case maybeEdition :: rest if Edition.byId(maybeEdition).isDefined => Some(rest.mkString("/"))
+      case _ => None
+    }
+
+    val validIds = Set(
+      Some(id),
+      idWithoutEdition.filter(_.nonEmpty)
+    ).flatten
+
+    tagAndSectionIds.find(validIds contains) map { id =>
+      s"/$id/all"
+    }
+  }
 
   lazy val front = Front.fromConfigs(collections map { case (config, collection) =>
     (config, CollectionEssentials.fromCollection(collection))

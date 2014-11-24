@@ -35,7 +35,7 @@ define([
 
     return {
 
-        run: function (type) {
+        run: function (type, clickMacro) {
             var templateConfig = templates[type],
                 $rightHandCol  = $('.content__secondary-column');
 
@@ -43,7 +43,9 @@ define([
                 return false;
             }
 
-            if ($rightHandCol.dim().height > 1000 && config.page.section !== 'football') {
+            templateConfig.config.clickMacro = clickMacro;
+
+            if ($rightHandCol.dim().height > 1600 && config.page.section !== 'football') {
 
                 $.create(template(templateConfig.template, templateConfig.config))
                     .appendTo($rightHandCol);

@@ -92,6 +92,14 @@ Media list item. Looks a bit like this:
         .fc-item__container {
             padding-left: 0;
         }
+
+        .fc-item__meta {
+            margin-left: 0;
+        }
+
+        .fc-item__footer--vertical {
+            margin-left: 0;
+        }
     }
 
     &.fc-item--has-cutout .fc-item__media-wrapper {
@@ -104,10 +112,6 @@ Media list item. Looks a bit like this:
     }
 
     &.fc-item--has-cutout {
-        .fc-item__meta {
-            margin-left: 0;
-        }
-
         .fc-item__container {
             min-height: gs-height(2) + $gs-baseline;
         }
@@ -123,10 +127,6 @@ Media list item. Looks a bit like this:
                 display: block;
                 right: - $gs-gutter;
             }
-        }
-
-        .fc-item__footer--vertical {
-            margin-left: 0;
         }
     }
 

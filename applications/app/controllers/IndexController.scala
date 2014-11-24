@@ -14,7 +14,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
 
-  def renderCombiner(leftSide: String, rightSide: String) = MemcachedAction{ implicit request =>
+  def renderCombiner(leftSide: String, rightSide: String) = MemcachedAction { implicit request =>
     logGoogleBot(request)
     index(Edition(request), leftSide, rightSide, inferPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)

@@ -142,7 +142,8 @@
     right: 0;
 }
 
-.gallery2__fullscreen {
+.gallery2__fullscreen,
+.article__fullscreen {
     @include border-radius(50%);
     top: 0;
     right: 0;
@@ -184,7 +185,8 @@
     }
 
     @include mq(desktop) {
-        .gallery2__img-container:hover & {
+        .gallery2__img-container:hover &,
+        .article__img-container:hover & {
             background-color: colour(media-default);
 
             .i-expand-black {
