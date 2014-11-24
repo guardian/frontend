@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import dfp.DfpAgent
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
@@ -64,12 +65,28 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-
-    def largest(i: ImageContainer) = i.largestImage.flatMap(_.url)
-
-    mainPicture.flatMap(largest)
-      .orElse(trailPicture.flatMap(largest))
+    bestOpenGraphImage
+      .orElse(mainPicture.flatMap(largestImageUrl))
+      .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
+  }
+
+  private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
+
+  private def mostSharableImageUrl(i: ImageContainer) = {
+    i.imageCrops.filter(_.width >= 460)
+      .sortBy(_.width)
+      .headOption
+      .flatMap(_.url)
+  }
+
+  protected def bestOpenGraphImage: Option[String] = {
+    if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
+      trailPicture.flatMap(mostSharableImageUrl)
+    } else {
+      None
+    }
+
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
@@ -650,7 +667,11 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "galleryLightbox" -> lightbox
   )
 
-  override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+  override lazy val openGraphImage: String = {
+    bestOpenGraphImage
+      .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
+      .getOrElse(conf.Configuration.facebook.imageFallback)
+  }
 
   override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
 

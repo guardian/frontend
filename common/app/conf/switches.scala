@@ -314,6 +314,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FacebookShareUseTrailPicFirstSwitch = Switch("Feature", "facebook-shareimage",
+    "Facebook shares try to use article trail picture image first when switched ON, or largest available image when switched OFF.",
+    safeState = On, sellByDate = never
+  )
+
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -440,6 +445,7 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     InlineCriticalCss,
     FacebookAutoSigninSwitch,
+    FacebookShareUseTrailPicFirstSwitch,
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
