@@ -12,7 +12,8 @@ object ContainerDefinition {
 
   def ofSlices(slices: Slice*) = ContainerDefinition(
     slices,
-    RestrictTo(6)
+    RestrictTo(6),
+    Set.empty
   )
 
   def fromContainer(container: Container, items: Seq[Content]) = container match {
@@ -36,5 +37,6 @@ object ContainerDefinition {
 
 case class ContainerDefinition(
   slices: Seq[Slice],
-  mobileShowMore: MobileShowMore
+  mobileShowMore: MobileShowMore,
+  customCssClasses: Set[String]
 )
