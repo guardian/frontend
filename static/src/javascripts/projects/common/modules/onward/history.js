@@ -15,7 +15,6 @@ define([
 
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
-        summaryCache,
         popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -42,16 +41,16 @@ define([
     }
 
     function getSummary() {
-        summaryCache = summaryCache || storage.local.get(storageKeySummary);
+        summary = storage.local.get(storageKeySummary);
 
-        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.start)) {
-            summaryCache = {
+        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.start)) {
+            summary = {
                 start: today,
                 tags: {}
             };
         }
 
-        return summaryCache;
+        return summary;
     }
 
     function pruneSummary() {
@@ -118,7 +117,7 @@ define([
     return {
         reset: function () {
             historyCache = undefined;
-            summaryCache = undefined;
+            popularCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
             storage.local.remove(storageKeyPopular);
