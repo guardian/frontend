@@ -41,7 +41,8 @@ object IndexPage {
     "world/series/eyewitness",
     "type/cartoon",
     "type/gallery",
-    "lifeandstyle/series/last-bites"
+    "lifeandstyle/series/last-bites",
+    "news/series/ten-best-photographs-of-the-day"
   )
 
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
@@ -156,7 +157,7 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   def isTagWithId(id: String) = page match {
     case section: Section =>
       val sectionId = section.id
-      
+
       Set(
         Some(s"$sectionId/$sectionId"),
         Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
