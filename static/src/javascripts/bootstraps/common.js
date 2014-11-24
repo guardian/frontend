@@ -55,7 +55,8 @@ define([
     'bootstraps/identity',
 
     'text!common/views/release-message.html',
-    'text!common/views/release-message-compulsory.html'
+    'text!common/views/release-message-compulsory.html',
+    'text!common/views/release-message-launched.html'
 ], function (
     bean,
     bonzo,
@@ -110,7 +111,8 @@ define([
     identity,
 
     releaseMessageTpl,
-    releaseMessageCompulsoryTpl
+    releaseMessageCompulsoryTpl,
+    releaseMessageLaunchedTpl
 ) {
 
     var modules = {
@@ -280,6 +282,13 @@ define([
                     if (config.page.edition === 'US' || /in\|/.test(shift)) {
                         releaseMessage.show(template(
                             releaseMessageCompulsoryTpl,
+                            {
+                                feedbackLink: feedbackLink
+                            }
+                        ));
+                    } else if (config.page.edition === 'AU' &&  config.page.section === 'commentisfree') {
+                        releaseMessage.show(template(
+                            releaseMessageLaunchedTpl,
                             {
                                 feedbackLink: feedbackLink
                             }
