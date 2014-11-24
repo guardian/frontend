@@ -18,7 +18,6 @@ import play.api.libs.json.{Json, JsValue, JsString, Writes}
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
-import slices.Container
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import java.util.regex.{Matcher, Pattern}
@@ -872,7 +871,7 @@ object GetClasses {
       containerDefinition.commercialOptions,
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
-        Container.customClasses(containerDefinition.container),
+        slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle
     )
 
