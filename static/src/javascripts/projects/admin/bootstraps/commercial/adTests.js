@@ -9,24 +9,24 @@ define([
     var cookieName = 'adtest',
 
     // cookie in this domain to track adtest cookie in theguardian.com
-        trackingCookieName = 'adtest_tracker';
+        trackingCookieName = 'adtest-tracker';
 
     function status() {
         var trackingCookieValue = cookies.get(trackingCookieName);
 
-        $('.cookie_row').removeClass('selected');
+        $('.cookie-row').removeClass('selected');
 
         if (trackingCookieValue == null) {
-            $('#cookie_status')
+            $('#cookie-status')
                 .text('Your browser has no test cookie set.')
-                .addClass('hasnt_cookie');
-            $('#clear_cookie').hide();
+                .addClass('hasnt-cookie');
+            $('#clear-cookie').hide();
         } else {
-            $('#cookie_status')
+            $('#cookie-status')
                 .text('Your browser has test cookie \'' + trackingCookieValue + '\' set.')
-                .addClass('has_cookie');
+                .addClass('has-cookie');
 
-            $('#cookie_' + trackingCookieValue).addClass('selected');
+            $('#cookie-' + trackingCookieValue).addClass('selected');
         }
     }
 
@@ -53,14 +53,14 @@ define([
             var cookieValue = event.srcElement.value;
             setCookie(ifrm, cookieValue);
             cookies.add(trackingCookieName, cookieValue, 10);
-            $('#clear_cookie').show();
+            $('#clear-cookie').show();
             status();
         });
 
-        bean.on(document, 'click', '#clear_cookie', function () {
+        bean.on(document, 'click', '#clear-cookie', function () {
             setCookie(ifrm, 'clear');
             cookies.remove(trackingCookieName);
-            $('#clear_cookie').hide();
+            $('#clear-cookie').hide();
             status();
         });
     }
