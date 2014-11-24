@@ -32,6 +32,7 @@ $header-image-size-desktop: 100px;
     @include mq(wide) {
         .has-page-skin & {
             width: gs-span(12);
+            background-color: #ffffff;
         }
     }
 
