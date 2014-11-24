@@ -42,8 +42,6 @@ define([
             for (i = 0, j = styleNodes.length; i < j; ++i) {
                 clearOldFonts(styleNodes[i]);
                 style = styleNodes[i];
-                console.log('FFOOOO');
-                console.log(fontIsRequired(style));
                 if (fontIsRequired(style)) {
                     that = this;
                     this.ajax({
@@ -106,8 +104,6 @@ define([
                 if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
                     widthMatches = false;
                 }
-
-                console.log(cachedValue);
 
                 return cachedValue === null && widthMatches;
             } else {
