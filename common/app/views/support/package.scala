@@ -832,8 +832,7 @@ object GetClasses {
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
-      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable),
-      ("fc-item--external-link", item.snapStuff.snapType == LinkSnap && ExternalLinks.external(item.url.baseUrl))
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
