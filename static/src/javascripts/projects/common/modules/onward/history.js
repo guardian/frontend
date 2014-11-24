@@ -9,7 +9,10 @@ define([
     _,
     storage
 ) {
-    var forgetAfterDays = 30,
+    var historySize = 50,
+        summaryDays = 30,
+        popularSize = 10,
+
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
@@ -17,7 +20,6 @@ define([
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
         storageKeyPopular = 'gu.history.popular',
-        maxSize = 100,
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
@@ -25,15 +27,9 @@ define([
             {tid: 'authorIds',  tname: 'author'}
         ];
 
-    function HistoryItem(item) {
-        _.assign(this, item);
-        this.count = 1;
-        return this;
-    }
-
-    function saveHistory(data) {
-        historyCache = data;
-        return storage.local.set(storageKeyHistory, data);
+    function saveHistory(history) {
+        historyCache = history;
+        return storage.local.set(storageKeyHistory, history);
     }
 
     function saveSummary(summary) {
@@ -60,7 +56,7 @@ define([
 
     function pruneSummary() {
         var summary = getSummary(),
-            newStart = today - forgetAfterDays,
+            newStart = today - summaryDays,
             updateBy;
 
         if (newStart > summary.start) {
@@ -102,7 +98,7 @@ define([
                 };
             })
             .sortBy('rank')
-            .last(10)
+            .last(popularSize)
             .reverse()
             .pluck('idAndName')
             .value();
@@ -150,31 +146,29 @@ define([
 
         isRevisit: function (pageId) {
             return (_.find(this.get(), function (page) {
-                return (page.id === pageId);
-            }) || {}).count > 1;
+                return (page[0] === pageId);
+            }) || [])[1] > 1;
         },
 
         log: function (pageConfig) {
-            var pageId = '/' + pageConfig.pageId,
+            var pageId = pageConfig.pageId,
                 history,
                 summary,
-                foundItem,
+                foundCount = 0,
                 sinceStart;
 
-            history = this.get().filter(function (item) {
-                var found = (item.id === pageId);
+            if (!pageConfig.isFront) {
+                history = this.get()
+                    .filter(function (item) {
+                        var isArr = _.isArray(item),
+                            found = isArr && (item[0] === pageId);
 
-                foundItem = found ? item : foundItem;
-                return !found;
-            });
-            if (foundItem) {
-                foundItem.count = (foundItem.count || 0) + 1;
-                history.unshift(foundItem);
-            } else {
-                history.unshift(new HistoryItem({id: pageId}));
-                history = history.slice(0, maxSize);
+                        foundCount = found ? item[1] : foundCount;
+                        return isArr && !found;
+                    });
+                history.unshift([pageId, foundCount + 1]);
+                saveHistory(history.slice(0, historySize));
             }
-            saveHistory(history);
 
             summary = pruneSummary();
             sinceStart = today - summary.start;
