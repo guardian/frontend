@@ -666,13 +666,22 @@ jQuery(function($) {
 
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
-                $.getJSON(
-                    '/commercial/capi.json?s=books&t=p%2F43b2q&t=p%2F43945&k=music%2Fledzeppelin&' +
-                    'k=music%2Fpinkfloyd&l=http%3A%2F%2Fpagead2.googlesyndication.com%2Fpagead%2Fimgad%3Fid%3DCICAgKDjnfPJbBABGAEyCHbj_OBIEKp8&' +
-                    'ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
-                    'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
-                    function(json) { $('.dfp-ad--merchandising-capi').html(json.html); }
-                );
+                require(['core'], function(core) {
+                    require(['bootstraps/commercial'], function(core) {
+                        require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                            var slot = document.querySelector('.dfp-ad--merchandising-capi');
+                            new CommercialComponent({
+                                oastoken: 'CLICK_URL_UNESC',
+                                capi: ['p/43945','p/43945'],
+                                logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                capiTitle: 'Led Zeppelin special',
+                                capiLinkUrl: 'http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin',
+                                capiAboutLinkUrl: 'http://theguardian.com/about',
+                                capiKeywords: 'music/ledzeppelin'
+                            }).init('capi', slot);
+                            });
+                        });
+                    });
             </script>
         </div>
     </div>
@@ -689,7 +698,7 @@ jQuery(function($) {
             require(['bootstraps/commercial'], function(core) {
                 require(['common/modules/commercial/loader'], function(CommercialComponent) {
                     new CommercialComponent({
-                        oastoken: '%%CLICK_URL_ESC%%',
+                        oastoken: 'CLICK_URL_UNESC',
                         t: ['p/4xv7c'],
                         l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
                         ct: 'Led Zeppelin special',
