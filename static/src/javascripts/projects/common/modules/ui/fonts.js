@@ -4,6 +4,7 @@ define([
     'qwery',
     'raven',
     'common/utils/ajax',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage'
 ], function (
@@ -11,13 +12,17 @@ define([
     qwery,
     raven,
     ajax,
+    detect,
     mediator,
     storage
 ) {
 
-    function Fonts(styleNodes, fileFormat) {
+    function Fonts(styleNodes) {
 
-        var storagePrefix = 'gu.fonts.';
+        var storagePrefix = 'gu.fonts.',
+            fileFormat    = detect.getFontFormatSupport(navigator.userAgent);
+
+        storage.local.set(storagePrefix + 'format', fileFormat);
 
         this.ajax = ajax; // expose publicly so we can inspect it in unit tests
 
@@ -37,6 +42,8 @@ define([
             for (i = 0, j = styleNodes.length; i < j; ++i) {
                 clearOldFonts(styleNodes[i]);
                 style = styleNodes[i];
+                console.log('FFOOOO');
+                console.log(fontIsRequired(style));
                 if (fontIsRequired(style)) {
                     that = this;
                     this.ajax({
@@ -99,6 +106,8 @@ define([
                 if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
                     widthMatches = false;
                 }
+
+                console.log(cachedValue);
 
                 return cachedValue === null && widthMatches;
             } else {
