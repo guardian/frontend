@@ -11,7 +11,7 @@ define([
     _,
     storage
 ) {
-    var forgetAfterDays = 50,
+    var forgetAfterDays = 30,
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
@@ -23,7 +23,8 @@ define([
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
-            {tid: 'seriesId',   tname: 'series'}
+            {tid: 'seriesId',   tname: 'series'},
+            {tid: 'authorIds',  tname: 'author'}
         ];
 
     function HistoryItem(item) {
