@@ -1,7 +1,7 @@
-@(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
+@(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiSupportedBy: Option[String], optCapiAdFeature: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi">
+    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising  fc-container--commercial-capi @for(adFeature <- optCapiAdFeature) {@adFeature}">
         <div class="fc-container__inner">
         <div class="container__border"></div>
             <div class="fc-container__header">
@@ -11,7 +11,7 @@
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
-                    <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
+                    <h3 class="ad-slot--paid-for-badge__header">@for(broughtBy <- optCapiSupportedBy) {@broughtBy}</h3>
                     <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
                         @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
                     </a>
@@ -25,7 +25,7 @@
                     <ul class="u-unstyled l-row l-row--cols-4 l-row--layout-m fc-slice">
                         @for(item <- items) {
                             <li class="fc-slice__item l-row__item l-row__item--span-1">
-                                <div class="fc-item fc-item--has-image fc-item--has-discussion @item match {
+                                <div class="fc-item fc-item--has-image fc-item--has-metadata @item match {
                                         case _: Video => { fc-item--video }
                                         case _: Audio => { fc-item--audio }
                                         case _: Gallery => { fc-item--gallery }

@@ -45,7 +45,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiSupportedBy, optCapiAdFeature))
         } else {
           format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy))
         }
