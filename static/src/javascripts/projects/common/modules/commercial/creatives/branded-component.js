@@ -17,45 +17,48 @@ define([
 ) {
 
     var templates = {
-        jobs: {
-            template: brandedComponentJobsTpl,
-            config:   {
-                imgUrl: config.images.commercial.brandedComponentJobs
+            jobs: {
+                template: brandedComponentJobsTpl,
+                config:   {
+                    imgUrl: config.images.commercial.brandedComponentJobs
+                }
+            },
+            membership: {
+                template: brandedComponentMembershipTpl,
+                config:   {}
+            },
+            soulmates: {
+                template: brandedComponentSoulmatesTpl,
+                config:   {}
             }
         },
-        membership: {
-            template: brandedComponentMembershipTpl,
-            config:   {}
-        },
-        soulmates: {
-            template: brandedComponentSoulmatesTpl,
-            config:   {}
-        }
-    };
+        /**
+         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027767
+         */
+        BrandedComponent = function ($adSlot, params) {
+            this.$adSlot = $adSlot;
+            this.params  = params;
+        };
 
-    return {
+    BrandedComponent.prototype.create = function () {
+        var templateConfig = templates[this.params.type],
+            $rightHandCol  = $('.js-secondary-column');
 
-        run: function (type, clickMacro) {
-            var templateConfig = templates[type],
-                $rightHandCol  = $('.content__secondary-column');
-
-            if (!templateConfig || $rightHandCol.css('display') === 'none') {
-                return false;
-            }
-
-            templateConfig.config.clickMacro = clickMacro;
-
-            if ($rightHandCol.dim().height > 1600 && config.page.section !== 'football') {
-
-                $.create(template(templateConfig.template, templateConfig.config))
-                    .appendTo($rightHandCol);
-
-            }
-
-            // assumption - this will always be targeted to the 88x87 slot
-            $('#dfp-ad--merchandising-high').css('display', 'none');
+        if (
+            !templateConfig ||
+            $rightHandCol.css('display') === 'none' ||
+            $rightHandCol.dim().height < 1600 ||
+            config.page.section === 'football'
+        ) {
+            return false;
         }
 
+        templateConfig.config.clickMacro = this.params.clickMacro;
+
+        $.create(template(templateConfig.template, templateConfig.config))
+            .appendTo($rightHandCol);
     };
+
+    return BrandedComponent;
 
 });
