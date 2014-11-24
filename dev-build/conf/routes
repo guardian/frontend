@@ -37,6 +37,7 @@ GET         /analytics/commercial/surging                                       
 GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 GET         /analytics/commercial/sponsored-containers                                                               controllers.admin.CommercialController.sponsoredContainers()
+GET         /analytics/commercial/adtests                                                                            controllers.admin.CommercialController.renderAdTests()
 
 
 # Discussion

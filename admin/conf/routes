@@ -58,6 +58,7 @@ GET         /analytics/commercial/sponsored-containers    controllers.admin.Comm
 GET         /commercialtools/adunits/toapprove            controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove            controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                    controllers.admin.CommercialController.renderFluidAds()
+GET         /analytics/commercial/adtests                 controllers.admin.CommercialController.renderAdTests()
 
 # Metrics
 GET         /metrics/loadbalancers        controllers.admin.MetricsController.renderLoadBalancers()
