@@ -30,8 +30,9 @@ object ContainerDefinition {
     case 2 => ofSlices(HalfHalf2)
     case 3 => ofSlices(TTT)
     case 5 => FixedContainers.fixedSmallSlowVI
-    case 6 | 7 => ofSlices(QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
-    case _ => ofSlices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
+    case 6 => ofSlices(QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+    case 7 => ofSlices(QuarterQuarterQuarterQuarter, TlTlTl)
+    case _ => ofSlices(QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
   }
 
   /** Slow container that looks good for the number of items provided */
