@@ -73,7 +73,7 @@
 
 .container--merchandising-feature {
     background-color: transparent;
-    
+
     .fc-container__inner {
         padding-top: $gs-baseline/2;
         border-top: 1px solid colour(neutral-4);
@@ -92,6 +92,14 @@
 
     .fc-container__header__title {
         color: colour(neutral-1);
+
+        .fc-container__header__link {
+            color: colour(guardian-brand);
+
+            &:hover {
+                color: colour(news-accent);
+            }
+        }
     }
 
     .fc-item__container {

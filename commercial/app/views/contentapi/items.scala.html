@@ -1,22 +1,26 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi">
+    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--advertisement-feature fc-container--commercial-capi" data-link-name="merchandising | capi | multiple">
         <div class="fc-container__inner">
         <div class="container__border"></div>
             <div class="fc-container__header">
                 <h2 class="fc-container__header__title">
-                    <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    @optCapiLink.map { linkUrl =>
+                        <a href="%OASToken%@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                    }.getOrElse {
+                        <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    }
                 </h2>
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
                     <h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>
-                    <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
+                    <a href="%OASToken%@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
                         @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
                     </a>
                     @for(aboutLinkUrl <- optCapiAbout) {
-                        <a href="@aboutLinkUrl" class="ad-slot--paid-for-badge__help">About this content</a>
+                        <a href="%OASToken%@aboutLinkUrl" class="ad-slot--paid-for-badge__help" data-link-name="about link">About this content</a>
                     }
                 </div>
             </div>
@@ -60,7 +64,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="@AdLink{@item.webUrl}" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle" tabindex="-1">
+                                    <a href="%OASToken%@AdLink{@item.webUrl}" class="u-faux-block-link__overlay" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle" tabindex="-1">
                                         @item.webTitle
                                     </a>
                                 </div>
