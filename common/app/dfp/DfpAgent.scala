@@ -32,7 +32,8 @@ trait DfpAgent {
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
       val possibleKeywords = tokens filterNot stopWords.contains flatMap frontKeywordIds
-      possibleKeywords find p
+      val keywords = possibleKeywords filter p
+      if (keywords.size == 1) keywords.headOption else None
     }
   }
 
