@@ -300,7 +300,7 @@ define([
                             feedbackLink: feedbackLink
                         }
                     ));
-                } 
+                }
             },
 
             displayBreakingNews: function () {
