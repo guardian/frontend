@@ -18,7 +18,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
   def teamHasStats(team: LineUpTeam) =
-    ( team.corners, team.offsides, team.shotsOn, team.shotsOff) match {
+    ( team.offsides, team.shotsOn, team.shotsOff, team.fouls) match {
       case (0,0,0,0) => false
       case _ => true
     }
