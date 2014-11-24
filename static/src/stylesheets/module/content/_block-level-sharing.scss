@@ -257,7 +257,7 @@
         background-color: colour(social-facebook);
 
         &:hover {
-            background-color: darken(colour(social-facebook), 10%);
+            background-color: colour-hover(social-facebook);
         }
 
         .i {
@@ -269,7 +269,7 @@
         background-color: colour(social-twitter);
 
         &:hover {
-            background-color: darken(colour(social-twitter), 10%);
+            background-color: colour-hover(social-twitter);
         }
 
         .i {
@@ -281,7 +281,7 @@
         background-color: colour(social-gplus);
 
         &:hover {
-            background-color: darken(colour(social-gplus), 10%);
+            background-color: colour-hover(social-gplus);
         }
 
         .i {
@@ -293,7 +293,7 @@
         background-color: colour(social-linkedin);
 
         &:hover {
-            background-color: darken(colour(social-linkedin), 10%);
+            background-color: colour-hover(social-linkedin);
         }
 
         .i {
@@ -305,7 +305,7 @@
         background-color: colour(social-pinterest);
 
         &:hover {
-            background-color: darken(colour(social-pinterest), 10%);
+            background-color: colour-hover(social-pinterest);
         }
 
         .i {
