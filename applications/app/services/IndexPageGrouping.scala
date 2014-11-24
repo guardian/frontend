@@ -32,6 +32,14 @@ object IndexPageGrouping extends Collections {
       }
     }
   }
+
+  /** Sometimes we want to force a by day view in order to show off pretty images - e.g., on eyewitness */
+  def byDay(trails: Seq[Content], timezone: DateTimeZone): Seq[Day] = {
+    trails.groupBy(_.webPublicationDate.withZone(timezone).toLocalDate).toSeq.sortBy(_._1).reverse map {
+      case (date, trailsThatDay) =>
+        Day(date, trailsThatDay)
+    }
+  }
 }
 
 sealed trait IndexPageGrouping {

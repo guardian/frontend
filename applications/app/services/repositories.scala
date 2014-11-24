@@ -37,11 +37,26 @@ object IndexPagePagination {
 case class MpuState(injected: Boolean)
 
 object IndexPage {
-  def containerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-    case 2 => Some(FixedContainers.indexPageMpuII)
-    case 4 => Some(FixedContainers.indexPageMpuIV)
-    case 6 => Some(FixedContainers.indexPageMpuVI)
-    case n if n >= 9 => Some(FixedContainers.indexPageMpuIX)
+  val TagsThatForceDayView = Set(
+    "world/series/eyewitness",
+    "type/cartoon",
+    "type/gallery",
+    "lifeandstyle/series/last-bites"
+  )
+
+  def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
+    case 2 => Some(FixedContainers.fastIndexPageMpuII)
+    case 4 => Some(FixedContainers.fastIndexPageMpuIV)
+    case 6 => Some(FixedContainers.fastIndexPageMpuVI)
+    case n if n >= 9 => Some(FixedContainers.fastIndexPageMpuIX)
+    case _ => None
+  }
+
+  def slowContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
+    case 2 => Some(FixedContainers.slowIndexPageMpuII)
+    case 4 => Some(FixedContainers.slowIndexPageMpuIV)
+    case 5 => Some(FixedContainers.slowIndexPageMpuV)
+    case 7 => Some(FixedContainers.slowIndexPageMpuVII)
     case _ => None
   }
 
@@ -49,7 +64,12 @@ object IndexPage {
     val isCartoonPage = indexPage.isTagWithId("type/cartoon")
     val isReviewPage = indexPage.isTagWithId("tone/reviews")
 
-    val grouped = IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
+    val isDayViewForced = TagsThatForceDayView.exists(indexPage.isTagWithId)
+
+    val grouped = if (isDayViewForced)
+      IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
+    else
+      IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
@@ -57,10 +77,21 @@ object IndexPage {
           grouping.items
         )
 
-        val (container, newMpuState) = containerWithMpu(grouping.items.length).filter(const(!mpuState.injected)) map { mpuContainer =>
+        val mpuContainer = (if (isDayViewForced)
+          slowContainerWithMpu(grouping.items.length)
+        else
+          fastContainerWithMpu(grouping.items.length)).filter(const(!mpuState.injected))
+
+        val (container, newMpuState) = mpuContainer map { mpuContainer =>
           (mpuContainer, mpuState.copy(injected = true))
         } getOrElse {
-          (ContainerDefinition.forNumberOfItems(grouping.items.length), mpuState)
+          val containerDefinition = if (isDayViewForced) {
+            ContainerDefinition.slowForNumberOfItems(grouping.items.length)
+          } else {
+            ContainerDefinition.fastForNumberOfItems(grouping.items.length)
+          }
+
+          (containerDefinition, mpuState)
         }
 
         (newMpuState, ((CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(

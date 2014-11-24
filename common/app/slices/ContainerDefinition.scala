@@ -24,13 +24,26 @@ object ContainerDefinition {
     case _ => None
   }
 
-  /** Fixed container that looks good for the number of items provided */
-  def forNumberOfItems(n: Int) = n match {
-    case 1 => ContainerDefinition.ofSlices(FullMedia50)
-    case 2 => ContainerDefinition.ofSlices(HalfHalf2)
-    case 3 => FixedContainers.fixedMediumSlowXIIMpu
+  /** Fast container that looks good for the number of items provided */
+  def fastForNumberOfItems(n: Int) = n match {
+    case 1 => ofSlices(FullMedia50)
+    case 2 => ofSlices(HalfHalf2)
+    case 3 => ofSlices(TTT)
     case 5 => FixedContainers.fixedSmallSlowVI
-    case _ => FixedContainers.fixedMediumFastXII
+    case 6 | 7 => ofSlices(QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+    case _ => ofSlices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
+  }
+
+  /** Slow container that looks good for the number of items provided */
+  def slowForNumberOfItems(n: Int) = n match {
+    case 1 => ofSlices(FullMedia75)
+    case 2 => ofSlices(HalfHalf2)
+    case 3 => ofSlices(TTT)
+    case 4 => ofSlices(QuarterQuarterQuarterQuarter)
+    case 5 => ofSlices(HalfHalf2, TTT)
+    case 6 => ofSlices(TTT, TTT)
+    case 7 => ofSlices(TTT, QuarterQuarterQuarterQuarter)
+    case _ => ofSlices(QuarterQuarterQuarterQuarter, QuarterQuarterQuarterQuarter)
   }
 }
 
