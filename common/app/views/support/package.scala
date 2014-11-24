@@ -262,7 +262,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             val html = views.html.fragments.share.blockLevelSharing(linkIndex, article.elementShares(Some(linkIndex), crop.url), article.contentType)
             img.after(html.toString())
 
-            img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-nxame='Launch Article Lightbox' data-is-ajax></a>")
+            img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
             img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
           }
       }

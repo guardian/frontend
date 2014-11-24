@@ -428,7 +428,7 @@ define([
     };
 
     GalleryLightbox.prototype.close = function () {
-        //url.hasHistorySupport ? url.back() :
+        url.hasHistorySupport ? url.back() : this.trigger('close');
         this.trigger('close');
     };
 
