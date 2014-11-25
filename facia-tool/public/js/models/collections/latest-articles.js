@@ -124,9 +124,7 @@ define([
                         if (count !== counter) { return; }
                         var rawArticles = response.results;
 
-                        if (rawArticles.length === 0) {
-                            self.flush('...sorry, no articles were found.');
-                        }
+                        self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
                         var newArticles = [];
                         _.each(rawArticles, function(opts) {
@@ -138,7 +136,7 @@ define([
                             opts.uneditable = true;
                             newArticles.push(new Article(opts, true));
                         });
-                        self.articles.splice.apply(self.articles, [0, self.articles.length].concat(newArticles));
+                        self.articles(newArticles);
                         self.totalPages(response.pages);
                         self.page(response.currentPage);
                     },
