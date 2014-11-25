@@ -122,6 +122,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionPageSizeSwitch = Switch("Performance", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
+    safeState = Off, sellByDate = never
+  )
+
   val OpenCtaSwitch = Switch("Performance", "open-cta",
     "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
     safeState = Off, sellByDate = never
@@ -333,11 +338,6 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
-  )
-
-  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
-    "If this is switched on then users will have the option to change their discussion page size",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
