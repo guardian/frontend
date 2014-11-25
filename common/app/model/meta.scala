@@ -243,11 +243,11 @@ trait Tags {
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
   def sponsorshipType: Option[String] = {
     if (isSponsored) {
-      Option("sponsored")
+      Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {
-      Option("advertisement-feature")
+      Option("advertisement-features")
     } else if (isFoundationSupported) {
-      Option("foundation-supported")
+      Option("foundation-features")
     } else {
       None
     }

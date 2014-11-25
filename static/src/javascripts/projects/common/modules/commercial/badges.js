@@ -21,17 +21,17 @@ define([
 ) {
 
     var badgesConfig = {
-            sponsored: {
+            sponsoredfeatures: {
                 count:      0,
                 header:     'Sponsored by:',
                 namePrefix: 'sp'
             },
-            'advertisement-feature': {
+            'advertisement-features': {
                 count:      0,
                 header:     'Brought to you by:',
                 namePrefix: 'ad'
             },
-            'foundation-supported': {
+            'foundation-features': {
                 count:      0,
                 header:     'Supported by:',
                 namePrefix: 'fo'
