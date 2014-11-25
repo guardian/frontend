@@ -60,7 +60,7 @@ object MagentoService extends ExecutionContexts with Logging {
         .get()
 
       futureResponse map { response =>
-        if (response.status == 200) {
+        if (response.status == 200 || response.status == 404) {
           val json = response.json
           json.validate[Book] match {
             case JsError(e) =>
