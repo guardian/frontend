@@ -128,6 +128,8 @@ define([
             return historyCache;
         },
 
+        getSummary: getSummary,
+
         getPopular: function () {
             popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
             return popularCache;
@@ -137,10 +139,10 @@ define([
             return this.get().length;
         },
 
-        contains: function (id) {
-            return this.get().some(function (el) {
-                return el.id === id;
-            });
+        contains: function (pageId) {
+            return (_.find(this.get(), function (page) {
+                return (page[0] === pageId);
+            }) || [])[1] > 0;
         },
 
         isRevisit: function (pageId) {
