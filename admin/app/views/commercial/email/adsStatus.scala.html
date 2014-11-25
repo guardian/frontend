@@ -1,32 +1,41 @@
 @(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship], sponsorshipsWithoutSponsors: Seq[dfp.Sponsorship])
 
-    @if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty) {
-        <p>No known targeting problems.</p>
-    } else {
-        <p>There are some targeting problems:</p>
+@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty && sponsorshipsWithoutSponsors.isEmpty) {
 
-        @if(pageskinsWithoutEditions.nonEmpty) {
+    <p>No known targeting problems.</p>
+
+} else {
+
+    <p>There are some targeting problems:</p>
+
+    @if(pageskinsWithoutEditions.nonEmpty) {
+        <div>
             <p>These pageskins have no edition set:</p>
             <ul>@for(pageskin <- pageskinsWithoutEditions) {
                 <li>@{pageskin.lineItemId}: @{pageskin.lineItemName}</li>
             }</ul>
             <p>See https://frontend.gutools.co.uk/analytics/commercial/pageskins</p>
-        }
+        </div>
+    }
 
-        @if(geotargetedAdFeatures.nonEmpty) {
+    @if(geotargetedAdFeatures.nonEmpty) {
+        <div>
             <p>These ad feature logos are geotargeted:</p>
             <ul>@for(adFeature <- geotargetedAdFeatures) {
                 <li>@{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}</li>
             }</ul>
             <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
-        }
+        </div>
+    }
 
-        @if(sponsorshipsWithoutSponsors.nonEmpty) {
+    @if(sponsorshipsWithoutSponsors.nonEmpty) {
+        <div>
             <p>These paid-for logos have no sponsor set up:</p>
             <ul>@for(sponsorship <- sponsorshipsWithoutSponsors) {
                 <li>@{sponsorship.lineItemId}: @{sponsorship.tags.mkString(", ")}</li>
             }</ul>
             <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
-        }
-
+        </div>
     }
+
+}
