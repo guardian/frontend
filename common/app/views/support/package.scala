@@ -2,7 +2,10 @@ package views.support
 
 import common._
 import conf.Switches.ShowAllArticleEmbedsSwitch
-import layout.{ContainerCommercialOptions, FaciaCard, Sublink, FaciaContainer}
+import layout._
+import model.Audio
+import model.Gallery
+import model.Video
 import model._
 
 import java.net.URLEncoder._
