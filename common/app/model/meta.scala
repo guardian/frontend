@@ -232,6 +232,7 @@ trait Tags {
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
+  lazy val blogsAndSeries: Seq[Tag] = tags.filter{ tag => tag.tagType == "series" || tag.tagType == "blog"}
 
   def isSponsored: Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
