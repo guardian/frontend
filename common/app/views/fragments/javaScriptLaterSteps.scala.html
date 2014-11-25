@@ -45,7 +45,7 @@
 
             var scripts        = document.getElementsByTagName('script'),
                 thisScript     = scripts[scripts.length - 1],
-                @* show hinted for Windows XP *@
+                // show hinted for Windows XP
                 hintedFonts    = navigator.userAgent.indexOf('Windows NT 5.1') > - 1,
                 webFontsFile   = 'webfonts-hinting-' +  + '-kerning-on.css',
                 fonts          = document.createElement('link');
