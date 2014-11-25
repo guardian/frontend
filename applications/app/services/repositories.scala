@@ -37,14 +37,6 @@ object IndexPagePagination {
 case class MpuState(injected: Boolean)
 
 object IndexPage {
-  val TagsThatForceDayView = Set(
-    "world/series/eyewitness",
-    "type/cartoon",
-    "type/gallery",
-    "lifeandstyle/series/last-bites",
-    "news/series/ten-best-photographs-of-the-day"
-  )
-
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
     case 2 => Some(FixedContainers.fastIndexPageMpuII)
     case 4 => Some(FixedContainers.fastIndexPageMpuIV)
@@ -65,9 +57,9 @@ object IndexPage {
     val isCartoonPage = indexPage.isTagWithId("type/cartoon")
     val isReviewPage = indexPage.isTagWithId("tone/reviews")
 
-    val isDayViewForced = TagsThatForceDayView.exists(indexPage.isTagWithId)
+    val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails)
 
-    val grouped = if (isDayViewForced)
+    val grouped = if (isSlow)
       IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
     else
       IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
@@ -78,7 +70,7 @@ object IndexPage {
           grouping.items
         )
 
-        val mpuContainer = (if (isDayViewForced)
+        val mpuContainer = (if (isSlow)
           slowContainerWithMpu(grouping.items.length)
         else
           fastContainerWithMpu(grouping.items.length)).filter(const(!mpuState.injected))
@@ -86,7 +78,7 @@ object IndexPage {
         val (container, newMpuState) = mpuContainer map { mpuContainer =>
           (mpuContainer, mpuState.copy(injected = true))
         } getOrElse {
-          val containerDefinition = if (isDayViewForced) {
+          val containerDefinition = if (isSlow) {
             ContainerDefinition.slowForNumberOfItems(grouping.items.length)
           } else {
             ContainerDefinition.fastForNumberOfItems(grouping.items.length)
