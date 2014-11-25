@@ -16,6 +16,10 @@ object DfpLink {
   def creative(creativeId: Long) = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/CreativeDetail/creativeId=$creativeId"
   }
+
+  def adUnit(adUnitId: String) = {
+    s"https://www.google.com/dfp/59666047?#inventory/inventory/adSlotId=$adUnitId"
+  }
 }
 
 object SiteLink {

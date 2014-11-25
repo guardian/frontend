@@ -169,11 +169,13 @@ class DfpDataHydrator extends Logging {
       }.toMap
   }
 
-  def loadSpecialAdunits(rootName: String): Seq[String] =
-    dfpServiceRegistry.fold(Seq[String]()) { serviceRegistry =>
+  def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
+    dfpServiceRegistry.fold(Seq[(String, String)]()) { serviceRegistry =>
       val statementBuilder = new StatementBuilder()
         .where("status = :status")
+        .where("explicitlyTargeted = :targetting")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
+        .withBindVariableValue("targetting", true)
 
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
 
@@ -183,9 +185,9 @@ class DfpDataHydrator extends Logging {
         }
       }
 
-      rootAndDescendantAdUnits.filter(_.getExplicitlyTargeted == true).map{ad =>
+      rootAndDescendantAdUnits.map{ad =>
         val parentPathComponents: List[String] = ad.getParentPath.map(_.getName).toList.tail
-        (parentPathComponents ::: ad.getName :: Nil).mkString("/")
+        (ad.getId, (parentPathComponents ::: ad.getName :: Nil).mkString("/"))
       }
     }
 
