@@ -169,6 +169,28 @@ class DfpDataHydrator extends Logging {
       }.toMap
   }
 
+  def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
+    dfpServiceRegistry.fold(Seq[(String, String)]()) { serviceRegistry =>
+      val statementBuilder = new StatementBuilder()
+        .where("status = :status")
+        .where("explicitlyTargeted = :targetting")
+        .withBindVariableValue("status", InventoryStatus._ACTIVE)
+        .withBindVariableValue("targetting", true)
+
+      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
+
+      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
+        }
+      }
+
+      rootAndDescendantAdUnits.map{ad =>
+        val parentPathComponents: List[String] = ad.getParentPath.map(_.getName).toList.tail
+        (ad.getId, (parentPathComponents ::: ad.getName :: Nil).mkString("/"))
+      }
+    }
+
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
       val statementBuilder = new StatementBuilder()

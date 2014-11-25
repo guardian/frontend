@@ -2,7 +2,7 @@ package controllers.admin
 
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
-import conf.LiveContentApi
+import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
 import dfp.{GuLineItem, DfpDataHydrator, LineItemReport}
 import model.{Content, NoCache, Page}
@@ -18,6 +18,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
   def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.fluidAds(environment.stage)))
+  }
+
+  def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
+    val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
+    Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
   def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
