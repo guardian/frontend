@@ -79,24 +79,13 @@ define([
          *
          * @constructor
          * @extends Component
-         * @param {Object=} options
+         * @param {Object=} params
          */
-        Loader = function (options) {
-            var opts = defaults(options || {}, {
-                    capi:             [],
-                    capiAboutLinkUrl: '',
-                    capiKeywords:     '',
-                    capiLinkUrl:      '',
-                    capiTitle:        '',
-                    components:       [],
-                    jobIds:           '',
-                    logo:             '',
-                    oastoken:         ''
-                }),
-                section = config.page.section,
-                jobs    = opts.jobIds ? opts.jobIds.split(',') : [];
+        Loader = function ($adSlot, params) {
+            var section = config.page.section,
+                jobs    = params.jobIds ? params.jobIds.split(',') : [];
 
-            this.oastoken   = opts.oastoken;
+            this.$adSlot = $adSlot;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
@@ -112,22 +101,23 @@ define([
                 soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
                 travel:            buildComponentUrl('travel/offers', { s: section }),
                 travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: opts.components }),
-                capiSingle:        buildComponentUrl('capi-single', defaults(options, { s: section })),
-                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(options, { s: section })),
-                capi:              buildComponentUrl('capi', defaults(options, {
-                    s:   section,
-                    t:   opts.capi,
-                    k:   opts.capiKeywords.split(','),
-                    l:   opts.logo,
-                    ct:  opts.capiTitle,
-                    cl:  opts.capiLinkUrl,
-                    cal: opts.capiAboutLinkUrl
-                }))
+                multi:             buildComponentUrl('multi', { c: params.components }),
+                capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
+                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
+                capi:              buildComponentUrl('capi', defaults(params, { s: section }))
+                //
+                //    s:   section,
+                //    t:   opts.capi,
+                //    k:   opts.capiKeywords.split(','),
+                //    l:   opts.logo,
+                //    ct:  opts.capiTitle,
+                //    cl:  opts.capiLinkUrl,
+                //    cal: opts.capiAboutLinkUrl,
+                //    omnitureId: opts.omnitureId,
+                //    clockMacro: opts.clickMacro
+                //})
             };
         };
-
-    Component.define(Loader);
 
     Loader.prototype.postLoadEvents = {
         bestbuy: function (el) {
@@ -138,15 +128,10 @@ define([
     /**
      * @param {Element} target
      */
-    Loader.prototype.load = function (name, target) {
+    Loader.prototype.load = function () {
         new LazyLoad({
             url: this.components[name],
-            container: target,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.oastoken).replace(/%OmnitureToken%/g, '') : html;
-            }.bind(this),
+            container: this.$adSlot,
             success: function () {
                 this.postLoadEvents[name] && this.postLoadEvents[name](target);
 
@@ -161,14 +146,14 @@ define([
      * @param {String}  name
      * @param {Element} el
      */
-    Loader.prototype.init = function (name, el) {
+    Loader.prototype.create = function () {
 
         if (this.components[name] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
             return false;
         }
 
-        return this.load(name, el);
+        return this.load();
     };
 
     return Loader;
