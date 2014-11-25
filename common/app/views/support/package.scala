@@ -870,7 +870,8 @@ object GetClasses {
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
       Some(containerDefinition.container),
-      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty),
+      extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
+        slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle
     )
 

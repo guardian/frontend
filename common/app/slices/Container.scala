@@ -28,6 +28,11 @@ object Container extends Logging {
     case NavList | NavMediaList => false
     case _ => true
   }
+
+  def customClasses(container: Container) = container match {
+    case Fixed(fixedContainer) => fixedContainer.customCssClasses
+    case _ => Nil
+  }
 }
 
 sealed trait Container

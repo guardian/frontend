@@ -81,7 +81,8 @@ object FixedContainers {
     ("fixed/medium/fast-XI", fixedMediumFastXI),
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
-    ("fixed/large/fast-XV", slices(HalfQQ, Ql3Ql3Ql3Ql3))
+    ("fixed/large/fast-XV", slices(HalfQQ, Ql3Ql3Ql3Ql3)),
+    ("fixed/thrasher", slices(FullMedia75).copy(customCssClasses = Set("fc-container--thrasher")))
   )
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =
