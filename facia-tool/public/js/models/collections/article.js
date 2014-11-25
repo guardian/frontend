@@ -591,7 +591,7 @@ define([
                 }, {})
                 .value();
 
-            if (this.group.parentType === 'Collection') {
+            if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
             }
 
