@@ -100,7 +100,7 @@ define([
     shareCount,
     Dropdowns,
     fauxBlockLink,
-    Fonts,
+    fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -118,9 +118,7 @@ define([
     var modules = {
 
             loadFonts: function () {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    new Fonts(document.querySelectorAll('[data-cache-name].initial')).loadFromServerAndApply();
-                }
+                fonts.load();
             },
 
             initId: function () {

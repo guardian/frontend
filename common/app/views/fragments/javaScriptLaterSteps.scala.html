@@ -50,8 +50,9 @@
                 webFontsFile   = 'webfonts-hinting-' +  + '-kerning-on.css',
                 fonts          = document.createElement('link');
 
-            fonts.rel  = 'stylesheet';
-            fonts.href = guardian.config.stylesheets.fonts['hinting' + (hintedFonts ? 'On' : 'Off') ].kerningOn;
+            fonts.rel       = 'stylesheet';
+            fonts.className = 'webfonts';
+            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (hintedFonts ? 'On' : 'Off') ].kerningOn;
             window.setTimeout(function() {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
