@@ -56,7 +56,7 @@ object MagentoService extends ExecutionContexts with Logging {
       val url = s"${props.urlPrefix}/$isbn"
       val futureResponse = WS.url(url)
         .sign(props.oauth)
-        .withRequestTimeout(4000)
+        .withRequestTimeout(5000)
         .get()
 
       futureResponse map { response =>
