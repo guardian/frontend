@@ -176,9 +176,6 @@ figure {
         position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
-            @include mq(tablet) {
-                max-width: gs-span(6);
-            }
         }
     }
     &.element-video {

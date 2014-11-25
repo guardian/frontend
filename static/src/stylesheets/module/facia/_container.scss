@@ -14,6 +14,7 @@ $header-image-size-desktop: 100px;
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
+            background-color: #ffffff;
         }
     }
 }
@@ -32,6 +33,7 @@ $header-image-size-desktop: 100px;
     @include mq(wide) {
         .has-page-skin & {
             width: gs-span(12);
+            background-color: #ffffff;
         }
     }
 
@@ -454,7 +456,8 @@ $header-image-size-desktop: 100px;
         box-shadow: none !important;
 
         @include mq(tablet) {
-            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
     }
 }

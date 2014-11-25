@@ -591,7 +591,7 @@ define([
                 }, {})
                 .value();
 
-            if (this.group.parentType === 'Collection') {
+            if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
             }
 
@@ -625,7 +625,10 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.href(this.id());
+            var id = this.id(),
+                href = isGuardianUrl(id) ? '/' + urlAbsPath(id) : id;
+
+            this.meta.href(href);
             this.id(snap.generateId());
             this.updateEditorsDisplay();
         };
@@ -685,8 +688,8 @@ define([
                 self.meta.trailText(og.description);
 
                 if(!isOnSite) {
-                    self.meta.customKicker(og.site_name || urlHost(url).replace(/^www\./, ''));
-                    self.meta.showKickerCustom(true);
+                    self.meta.byline(og.site_name || urlHost(url).replace(/^www\./, ''));
+                    self.meta.showByline(true);
                 }
 
                 self.updateEditorsDisplay();

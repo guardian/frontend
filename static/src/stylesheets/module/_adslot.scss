@@ -173,9 +173,13 @@
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
-        margin-top: $gs-baseline*2;
-        margin-bottom: $gs-baseline*2;
         padding-bottom: $gs-baseline*2;
+
+        & > div:not(.ad-slot__label) {
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }
 .ad-slot--liveblog-inline {
@@ -203,15 +207,6 @@
     overflow: hidden;
     border-top: 1px solid colour(neutral-5);
     padding-top: $gs-baseline/2;
-
-    .ad-slot--gallery-inline &,
-    .ad-slot--liveblog-inline & {
-        @include mq(tablet) {
-            width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
 }
 .ad-slot--sponsored__article {
     text-align: left;
@@ -255,10 +250,8 @@
  */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
-    min-height: 88px;
-
-    @include mq(wide) {
-        .has-page-skin & {
+    .has-page-skin & {
+        @include mq(wide) {
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);

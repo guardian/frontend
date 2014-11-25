@@ -105,6 +105,14 @@
 
     .fc-container__header__title {
         color: colour(neutral-1);
+
+        .fc-container__header__link {
+            color: colour(guardian-brand);
+
+            &:hover {
+                color: colour(news-accent);
+            }
+        }
     }
 
     .tone-news--item.fc-item {

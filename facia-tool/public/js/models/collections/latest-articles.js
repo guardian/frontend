@@ -85,7 +85,7 @@ define([
             .then(self.suggestions);
         };
 
-        function fetch () {
+        function fetch (opts) {
             var count = counter += 1;
 
             opts = opts || {};
@@ -105,7 +105,7 @@ define([
                     page: self.page(),
                     pageSize: pageSize,
                     filter: self.filter(),
-                    filterType: self.filterType()
+                    filterType: self.filterType().param
                 };
 
                 var term = self.term();
@@ -124,8 +124,11 @@ define([
                         if (count !== counter) { return; }
                         var rawArticles = response.results;
 
-                        self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
+                        if (rawArticles.length === 0) {
+                            self.flush('...sorry, no articles were found.');
+                        }
 
+                        var newArticles = [];
                         _.each(rawArticles, function(opts) {
                             var icc = internalContentCode(opts);
 
@@ -133,8 +136,9 @@ define([
                             cache.put('contentApi', icc, opts);
 
                             opts.uneditable = true;
-                            self.articles.push(new Article(opts, true));
+                            newArticles.push(new Article(opts, true));
                         });
+                        self.articles.splice.apply(self.articles, [0, self.articles.length].concat(newArticles));
                         self.totalPages(response.pages);
                         self.page(response.currentPage);
                     },
@@ -148,9 +152,9 @@ define([
         }
 
         // Grab articles from Content Api
-        this.search = function() {
+        this.search = function(opts) {
             self.page(1);
-            fetch();
+            fetch(opts);
 
             return true; // ensure default click happens on all the bindings
         };

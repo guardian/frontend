@@ -4,14 +4,16 @@ require([
     'admin/bootstraps/adunitapproval',
     'admin/bootstraps/browserstats',
     'admin/bootstraps/radiator',
-    'admin/bootstraps/commercial'
+    'admin/bootstraps/commercial',
+    'admin/bootstraps/commercial/adTests'
 ], function (
     ajax,
     abTests,
     adunitapproval,
     browserstats,
     radiator,
-    commercial
+    commercial,
+    adTests
 ) {
     require(['domReady!'], function () {
 
@@ -36,6 +38,10 @@ require([
 
             case '/commercialtools/adunits/toapprove':
                 adunitapproval.init();
+                break;
+
+            case '/analytics/commercial/adtests':
+                adTests.init();
                 break;
         }
     });

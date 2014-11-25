@@ -1,6 +1,6 @@
 package contentapi
 
-import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 
 /** Quite often we base tests on pieces of content from Content API, where we only care that a few of the fields are
   * set.
@@ -18,5 +18,15 @@ object FixtureTemplates {
     "",
     None,
     elements = None
+  )
+
+  val emptyTag = ApiTag(
+    "",
+    "",
+    None,
+    None,
+    "",
+    "",
+    ""
   )
 }

@@ -1,25 +1,41 @@
-@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship])
+@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship], sponsorshipsWithoutSponsors: Seq[dfp.Sponsorship])
 
-@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty){
-No known targeting problems.
+@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty && sponsorshipsWithoutSponsors.isEmpty) {
+
+    <p>No known targeting problems.</p>
+
 } else {
-There are some targeting problems:
 
-@if(pageskinsWithoutEditions.nonEmpty) {
-These pageskins have no edition set:
-@for(pageskin <- pageskinsWithoutEditions){
-    @{pageskin.lineItemId}: @{pageskin.lineItemName}
-}
+    <p>There are some targeting problems:</p>
 
-See https://frontend.gutools.co.uk/analytics/commercial/pageskins
-}
-@if(geotargetedAdFeatures.nonEmpty) {
-These ad feature logos are geotargeted:
-@for(adFeature <- geotargetedAdFeatures){
-    @{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}
-}
+    @if(pageskinsWithoutEditions.nonEmpty) {
+        <div>
+            <p>These pageskins have no edition set:</p>
+            <ul>@for(pageskin <- pageskinsWithoutEditions) {
+                <li>@{pageskin.lineItemId}: @{pageskin.lineItemName}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/pageskins</p>
+        </div>
+    }
 
-See https://frontend.gutools.co.uk/analytics/commercial/sponsorships
-}
+    @if(geotargetedAdFeatures.nonEmpty) {
+        <div>
+            <p>These ad feature logos are geotargeted:</p>
+            <ul>@for(adFeature <- geotargetedAdFeatures) {
+                <li>@{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
+        </div>
+    }
+
+    @if(sponsorshipsWithoutSponsors.nonEmpty) {
+        <div>
+            <p>These paid-for logos have no sponsor set up:</p>
+            <ul>@for(sponsorship <- sponsorshipsWithoutSponsors) {
+                <li>@{sponsorship.lineItemId}: @{sponsorship.tags.mkString(", ")}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
+        </div>
+    }
 
 }

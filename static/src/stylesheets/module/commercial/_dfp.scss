@@ -49,6 +49,10 @@
 
     /* Multiple */
     &.commercial--dfp-multiple {
+        .container__header__inner {
+            min-height: 36px;
+        }
+
         .lineitem {
             width: percentage(1/2);
 

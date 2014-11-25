@@ -47,7 +47,6 @@
 .fc-item__title--quoted {
     .fc-item__link {
         @include icon(quote-grey, false);
-        content: '';
         display: inline !important;
         background-size: 1.2em .75em !important;
         background-position: 0 .1em !important;
@@ -77,6 +76,15 @@
     .tone-review--item & .fc-item__link {
         @include icon(quote-white, false);
     }
+}
+
+.tone-external--item .fc-item__title:before {
+    @include icon(external-link, false);
+    content: '';
+    width: 1.2em;
+    height: .75em;
+    margin-right: .2em;
+
 }
 
 // Media Icons

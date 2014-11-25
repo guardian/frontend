@@ -2,7 +2,7 @@
 
 @import com.gu.facia.client.models.CollectionConfig
 @import views.support.PreviousAndNext
-@import layout.ContainerLayout
+@import layout.{ContainerLayout, ContainerDisplayConfig}
 @import model.Collection
 
 @main(index.page, projectName = Option("facia")){  }{
@@ -12,7 +12,7 @@
             Collection(index.trails),
             ContainerLayout.singletonFromContainerDefinition(
                 slices.TagContainers.allTagPage,
-                CollectionConfig.emptyConfig,
+                ContainerDisplayConfig.empty,
                 index.trails
             ),
             0,

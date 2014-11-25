@@ -251,87 +251,65 @@
 
     .block-share__item {
         @include transition(opacity .15s linear);
-        opacity: .8;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 
     .block-share__item--facebook {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-facebook--white);
-        }
+        background-color: colour(social-facebook);
 
         &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-facebook--white);
-            }
+            background-color: colour-hover(social-facebook);
+        }
+
+        .i {
+            @include icon(share-facebook--white);
         }
     }
 
     .block-share__item--twitter {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-twitter--white);
-        }
+        background-color: colour(social-twitter);
 
         &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-twitter--white);
-            }
+            background-color: colour-hover(social-twitter);
+        }
+
+        .i {
+            @include icon(share-twitter--white);
         }
     }
 
     .block-share__item--gplus {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
-        .i {
-            @include icon(share-gplus--white);
-        }
+        background-color: colour(social-gplus);
 
         &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-gplus--white);
-            }
+            background-color: colour-hover(social-gplus);
+        }
+
+        .i {
+            @include icon(share-gplus--white);
         }
     }
 
     .block-share__item--linkedin {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
+        background-color: colour(social-linkedin);
+
+        &:hover {
+            background-color: colour-hover(social-linkedin);
+        }
 
         .i {
             @include icon(share-linkedin--white);
         }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-linkedin--white);
-            }
-        }
     }
 
     .block-share__item--pinterest {
-        border-color: colour(neutral-2);
-        color: colour(neutral-2);
+        background-color: colour(social-pinterest);
+
+        &:hover {
+            background-color: colour-hover(social-pinterest);
+        }
 
         .i {
             @include icon(share-pinterest--white);
-        }
-
-        &:hover {
-            border-color: #ffffff;
-            .i {
-                @include icon(share-pinterest--white);
-            }
         }
     }
 
@@ -387,18 +365,45 @@
     .img--base & {
         display: none !important;
     }
-
-    .element-video & {
-        margin-top: 2px;
-    }
 }
 
-.fig-extra-margin {
+.fig--extra-margin {
     padding-bottom: $gs-baseline * 3 !important;
 }
 
-.fig-full-width {
+.fig--border {
+    @include mq(leftCol) {
+        border-bottom: 1px dotted colour(neutral-5) !important;
+    }
+
+    &.element--thumbnail {
+        border: 0 !important;
+    }
+}
+
+.fig--narrow-caption {
     figcaption {
-        max-width: 100% !important;
+        @include mq(leftCol) {
+            max-width: gs-span(6);
+        }
+    }
+
+    &.element--supporting {
+        figcaption {
+            @include mq(desktop) {
+                max-width: gs-span(3) - 10;
+            }
+            @include mq(wide) {
+                max-width: gs-span(4) - 10;
+            }
+        }
+    }
+
+    &.element--showcase {
+        figcaption {
+            @include mq(leftCol) {
+                max-width: gs-span(9);
+            }
+        }
     }
 }

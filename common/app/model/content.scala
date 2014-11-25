@@ -82,7 +82,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    series.headOption.map( series =>
+    blogsAndSeries.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
     ) getOrElse Nil
   }
@@ -252,6 +252,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       case Some(tag) => tag.webTitle
       case _ => ""
     }
+  }
+
+  lazy val blogOrSeriesTag: Option[Tag] = {
+    tags.find( tag => tag.id != "commentisfree/commentisfree" && (tag.isBlog || tag.isSeries )).headOption
   }
 
   lazy val seriesTag: Option[Tag] = {
@@ -473,15 +477,15 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   }
 
   lazy val lightbox: JsObject = {
-    val imageContainers = bodyImages
+    val imageContainers = bodyImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map{ imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
+      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble),
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)
         ))
       }
@@ -494,6 +498,11 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       "images" -> JsArray(imageJson.flatten)
     ))
   }
+
+  lazy val lightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
+    case (_, Some(crop)) => crop.width > 620
+    case _ => false
+  })
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
@@ -684,8 +693,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   }.flatten
 
   lazy val lightbox: JsObject = {
-    val imageContainers = galleryImages.filter(_.isGallery)
-    val imageJson = imageContainers.map{ imgContainer =>
+    val imageContainers = galleryImages
+    val imageJson = imageContainers.map { imgContainer =>
       imgContainer.largestEditorialCrop.map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),

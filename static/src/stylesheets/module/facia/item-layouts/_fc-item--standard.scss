@@ -27,12 +27,6 @@ x x x x x x x x
 
 
 @mixin fc-item--standard {
-    &.fc-item--has-cutout {
-        .fc-item__container {
-            min-height: gs-height(4);
-        }
-    }
-
     .fc-item__image-container {
         display: block;
     }

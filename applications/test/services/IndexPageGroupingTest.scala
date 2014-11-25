@@ -7,6 +7,7 @@ import org.joda.time.{LocalDate, DateTimeZone, DateTime}
 import org.scalatest.{Matchers, FlatSpec}
 import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
+import common.JodaTime._
 
 class IndexPageGroupingTest extends FlatSpec with Matchers {
   val timeZone = DateTimeZone.forOffsetHours(0)
@@ -26,7 +27,7 @@ class IndexPageGroupingTest extends FlatSpec with Matchers {
     fromContent(fixtures, timeZone) shouldEqual Seq(
       Day(
         new LocalDate(1987, 2, 5),
-        fixtures
+        fixtures.sortBy(_.webPublicationDate).reverse
       )
     )
   }
@@ -40,7 +41,7 @@ class IndexPageGroupingTest extends FlatSpec with Matchers {
     fromContent(fixtures, timeZone) shouldEqual Seq(
       Month(
         new LocalDate(1987, 2, 1),
-        fixtures
+        fixtures.sortBy(_.webPublicationDate).reverse
       )
     )
   }
