@@ -3,7 +3,11 @@
 
 @listItem(sponsorship: dfp.Sponsorship, flagCountries: Boolean = false) = {
     <li class="lineItem">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-        @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
+        @if(sponsorship.sponsor.isEmpty) {
+            <br /><span class="flagged">No sponsor</span>
+        } else {
+            @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
+        }
         @if(sponsorship.sections.nonEmpty){<br /><small>in section <em>@{sponsorship.sections.mkString(", ")}</em></small>}
         @if(sponsorship.countries.nonEmpty && flagCountries) {
             <br /><small><span class="flagged">
