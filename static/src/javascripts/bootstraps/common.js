@@ -266,40 +266,41 @@ define([
 
                 if (
                     config.switches.releaseMessage &&
-                    config.page.showClassicVersion &&
                     (detect.getBreakpoint() !== 'mobile')
                 ) {
-                    // force the visitor in to the alpha release for subsequent visits
-                    cookies.add('GU_VIEW', 'responsive', 365);
+                    if(config.page.showClassicVersion) {
+                        // force the visitor in to the alpha release for subsequent visits
+                        cookies.add('GU_VIEW', 'responsive', 365);
 
-                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+                        exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
 
-                    // The shift cookie may be 'in|...', 'ignore', or 'out'.
-                    shift = cookies.get('GU_SHIFT') || '';
+                        // The shift cookie may be 'in|...', 'ignore', or 'out'.
+                        shift = cookies.get('GU_SHIFT') || '';
 
-                    if (config.page.edition === 'US' || /in\|/.test(shift)) {
+                        if (config.page.edition === 'US' || /in\|/.test(shift)) {
+                            releaseMessage.show(template(
+                                releaseMessageCompulsoryTpl,
+                                {
+                                    feedbackLink: feedbackLink
+                                }
+                            ));
+                        } else {
+                            releaseMessage.show(template(
+                                releaseMessageTpl,
+                                {
+                                    exitLink: exitLink,
+                                    feedbackLink: feedbackLink
+                                }
+                            ));
+                        }
+                    } else if ((config.page.edition === 'AU' &&  config.page.section === 'commentisfree') || config.page.showClassicVersion) {
                         releaseMessage.show(template(
-                            releaseMessageCompulsoryTpl,
+                            releaseMessageLaunchedTpl,
                             {
-                                feedbackLink: feedbackLink
-                            }
-                        ));
-                    } else {
-                        releaseMessage.show(template(
-                            releaseMessageTpl,
-                            {
-                                exitLink:     exitLink,
                                 feedbackLink: feedbackLink
                             }
                         ));
                     }
-                } else if ((config.page.edition === 'AU' &&  config.page.section === 'commentisfree') || config.page.showClassicVersion) {
-                    releaseMessage.show(template(
-                        releaseMessageLaunchedTpl,
-                        {
-                            feedbackLink: feedbackLink
-                        }
-                    ));
                 }
             },
 
