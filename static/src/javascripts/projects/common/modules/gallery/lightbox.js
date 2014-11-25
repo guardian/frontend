@@ -240,7 +240,7 @@ define([
 
                     $img.attr('src', imgSrc); // src can change with width so overwrite every time
 
-                    bean.on($img[0], 'load', function () {
+                    bean.one($img[0], 'load', function () {
                         $('.js-loader').remove();
                     });
 
