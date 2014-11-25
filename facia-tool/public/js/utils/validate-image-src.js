@@ -44,8 +44,6 @@ define([
                             'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
                             : false;
 
-                console.log(Math.abs((height * criteria.widthAspectRatio) / (width * criteria.heightAspectRatio) - 1));
-
                 if (err) {
                     defer.reject(err);
                 } else {
