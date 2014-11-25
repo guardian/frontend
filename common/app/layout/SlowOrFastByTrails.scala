@@ -15,7 +15,10 @@ object TagHistogram extends Collections {
 
 case class TagHistogram(frequencyById: Map[String, Int], numberOfItems: Int) {
   def frequency(id: String): Double =
-    frequencyById.get(id) map { _.toDouble / numberOfItems } getOrElse 0d
+    if (numberOfItems == 0)
+      0
+    else
+      frequencyById.get(id) map { _.toDouble / numberOfItems } getOrElse 0d
 }
 
 object SlowOrFastByTrails {
