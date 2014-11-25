@@ -4,13 +4,6 @@ import org.scalatest.{Inspectors, Matchers, FlatSpec}
 import ExternalLinks.external
 
 class ExternalLinksTest extends FlatSpec with Matchers with Inspectors {
-  val testDomains = Seq(
-    "theguardian.com",
-    "www.theguardian.com",
-    "dev-theguardian.com",
-    "code.dev-theguardian.com"
-  )
-
   val testPaths = Seq(
     "/sport/cycling",
     "/cities/2014/nov/24/equal-streets-happier-healthier-mumbai",
@@ -26,19 +19,21 @@ class ExternalLinksTest extends FlatSpec with Matchers with Inspectors {
 
   it should "be false for absolute URLs to any Guardian origin domains" in {
     forAll(for {
-      domain <- testDomains
+      domain <- ExternalLinks.GuardianDomains
       path <- testPaths
     } yield domain + path) { id =>
       external(id) should be(false)
     }
   }
 
-  it should "be false for profile.theguardian.com" in {
-    external("http://profile.theguardian.com") should be(false)
-  }
-
-  it should "be false for witness.theguardian.com" in {
-    external("http://witness.theguardian.com") should be(false)
+  it should "be false for absolute URLs to any Guardian subdomains" in {
+    forAll(for {
+      subdomain <- Seq("profile", "witness")
+      domain <- ExternalLinks.GuardianDomains
+      path <- testPaths
+    } yield s"$subdomain.$domain$path") { id =>
+      external(id) should be(false)
+    }
   }
 
   it should "be true for other URLs" in {
