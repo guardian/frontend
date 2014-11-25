@@ -62,6 +62,16 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
 
+  private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
+
+  protected def bestOpenGraphImage: Option[String] = {
+    if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
+      trailPicture.flatMap(largestImageUrl)
+    } else {
+      None
+    }
+  }
+
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
@@ -69,24 +79,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .orElse(mainPicture.flatMap(largestImageUrl))
       .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
-  }
-
-  private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
-
-  private def mostSharableImageUrl(i: ImageContainer) = {
-    i.imageCrops.filter(_.width >= 460)
-      .sortBy(_.width)
-      .headOption
-      .flatMap(_.url)
-  }
-
-  protected def bestOpenGraphImage: Option[String] = {
-    if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
-      trailPicture.flatMap(mostSharableImageUrl)
-    } else {
-      None
-    }
-
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)

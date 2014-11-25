@@ -42,15 +42,15 @@ import scala.collection.JavaConversions._
     $("meta[name='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg")
   }
 
-  it should "use a smaller trail picture in the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
+  it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
     FacebookShareUseTrailPicFirstSwitch.switchOn()
     goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
       import browser._
-      $("meta[property='og:image']").getAttributes("content").head should endWith ("61e027cb-fec8-4aa3-a12b-e50f99493399-460x276.jpeg")
+      $("meta[property='og:image']").getAttributes("content").head should endWith ("61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg")
     }
   }
 
-  it should "use the largest main picture in the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
+  it should "select the largest main picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
     FacebookShareUseTrailPicFirstSwitch.switchOff()
     goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
       import browser._
