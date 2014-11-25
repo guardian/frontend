@@ -242,11 +242,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
-  val AdsStatusEmailDebugSwitch = Switch("Commercial", "ads-status-debug",
-    "If this switch is on, ads status emails will be in debug mode.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
-  )
-
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -487,7 +482,6 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
-    AdsStatusEmailDebugSwitch,
     CrosswordSvgThumbnailsSwitch,
     ContainerUpdatesSwitch
   )

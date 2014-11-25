@@ -1,4 +1,4 @@
-@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship])
+@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship], sponsorshipsWithoutSponsors: Seq[dfp.Sponsorship])
 
 @if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty){
 No known targeting problems.
@@ -18,8 +18,13 @@ These ad feature logos are geotargeted:
 @for(adFeature <- geotargetedAdFeatures){
     @{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}
 }
+}
+@if(sponsorshipsWithoutSponsors.nonEmpty) {
+These paid-for logos have no sponsor set up:
+@for(sponsorship <- sponsorshipsWithoutSponsors) {
+    @{sponsorship.lineItemId}: @{sponsorship.tags.mkString(", ")}
+}
 
 See https://frontend.gutools.co.uk/analytics/commercial/sponsorships
 }
-
 }
