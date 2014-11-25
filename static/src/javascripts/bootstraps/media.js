@@ -17,7 +17,7 @@ define([
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images',
-    'common/modules/video/vpaid'
+    'components/videojs-vpaid/vpaid'
 ], function (
     bean,
     bonzo,
