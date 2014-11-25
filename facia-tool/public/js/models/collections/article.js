@@ -736,6 +736,17 @@ define([
             return false;
         };
 
+        Article.prototype.drop = function (source, targetGroup) {
+            mediator.emit('collection:updates', {
+                sourceItem: source.sourceItem,
+                sourceGroup: source.sourceGroup,
+                targetItem: this,
+                targetGroup: targetGroup,
+                isAfter: false,
+                mediaItem: source.mediaItem
+            });
+        };
+
         function getMainMediaType(contentApiArticle) {
             return _.chain(contentApiArticle.elements).where({relation: 'main'}).pluck('type').first().value();
         }
