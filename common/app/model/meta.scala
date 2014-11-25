@@ -129,17 +129,25 @@ trait Elements {
 
   private val trailPicMinDesiredSize = 460
 
+  val AspectRatioThreshold = 0.01
+
   // Find a main picture crop which matches this aspect ratio.
-  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] =
+  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+    val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
+
     (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail)
-      .map{ image =>
-        image.imageCrops.filter{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight } match {
-          case Nil   => None
-          case crops => Option(ImageContainer(crops, image.delegate, image.index))
-        }
+      .map { image =>
+      image.imageCrops.filter { crop =>
+        aspectHeight.toDouble * crop.width != 0 &&
+          Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1 ) <= AspectRatioThreshold
+      } match {
+        case Nil => None
+        case crops => Option(ImageContainer(crops, image.delegate, image.index))
       }
+    }
       .flatten
       .toList
+  }
 
   def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
