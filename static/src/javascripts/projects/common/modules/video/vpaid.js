@@ -131,6 +131,9 @@ define([
                     this.el_.vjs_setProperty('bitrate', sourceObject.bitrate);
                     this.el_.vjs_setProperty('width', sourceObject.bitrate);
                     this.el_.vjs_setProperty('height', sourceObject.bitrate);
+
+                    this.player_.duration(sourceObject.duration);
+                    this.trackCurrentTime();
                 }
             }
 
