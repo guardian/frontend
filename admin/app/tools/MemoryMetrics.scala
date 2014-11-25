@@ -10,6 +10,7 @@ import scala.concurrent.Future
 
 object MemoryMetrics extends ExecutionContexts {
   def memory = withErrorLogging(Future.traverse(loadBalancers) { loadBalancer =>
+    val applicationName: Dimension = new Dimension().withName("ApplicationName").withValue(loadBalancer.project)
     for {
       usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(3).toDate)
@@ -18,7 +19,7 @@ object MemoryMetrics extends ExecutionContexts {
         .withStatistics("Average")
         .withNamespace("Application")
         .withMetricName("used-heap-memory")
-        .withDimensions(stage, new Dimension().withName("ApplicationName").withValue(loadBalancer.project)))
+        .withDimensions(stage, applicationName))
 
       maxHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(3).toDate)
@@ -27,7 +28,7 @@ object MemoryMetrics extends ExecutionContexts {
         .withStatistics("Average")
         .withNamespace("Application")
         .withMetricName("max-heap-memory")
-        .withDimensions(stage, new Dimension().withName("ApplicationName").withValue(loadBalancer.project)))
+        .withDimensions(stage, applicationName))
     } yield new AwsLineChart(
       s"${loadBalancer.name} JVM memory",
       Seq("Memory", "used (mb)", "max (mb)"),
