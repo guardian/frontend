@@ -58,7 +58,7 @@
             }, 0);
         }
 
-        function loadFontsFromStorage(prefs, key) {
+        function loadFontsFromStorage() {
             var showFonts        = @if(FontSwitch.isSwitchedOn) {true} else {false},
                 storedFontSwitch = localStorage['gu.prefs.switch.font-family'],
                 storedFontFormat = localStorage['gu.fonts.format'];
