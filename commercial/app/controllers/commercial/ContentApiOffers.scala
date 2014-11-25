@@ -50,6 +50,10 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
         )
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
+    val optClickMacro = request.getParameter("clickMacro").get
+
+    val optOmnitureId = request.getParameter("omnitureId")
+
     val futureLatestByKeyword = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
       Lookup.latestContentByKeyword(keyword, 8)

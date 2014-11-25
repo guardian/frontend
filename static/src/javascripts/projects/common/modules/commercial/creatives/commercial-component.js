@@ -67,8 +67,7 @@ define([
         },
         /**
          * Loads commercial components.
-         *
-         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
+         *         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
          *
          * @constructor
          * @extends Component
