@@ -30,6 +30,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
+    'common/modules/identity/gu_me-flush',
     'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
@@ -86,6 +87,7 @@ define([
     ab,
     id,
     AutoSignin,
+    guMeFlush,
     navigation,
     Profile,
     Search,
@@ -338,6 +340,14 @@ define([
                 });
             },
 
+            initGuMeFlush: function () {
+                mediator.on('page:common:ready', function () {
+                    if (config.switches && config.switches.guMeFlush) {
+                        guMeFlush.init();
+                    }
+                });
+            },
+
             windowEventListeners: function () {
                 var event,
                     events = {
@@ -482,6 +492,7 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs();
             modules.initAutoSignin();
+            modules.initGuMeFlush();
             modules.augmentInteractive();
             modules.runForseeSurvey();
             modules.startRegister();
