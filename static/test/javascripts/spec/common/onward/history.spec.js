@@ -4,9 +4,9 @@ define([
     'fixtures/history/max',
 ], function(hist, contains, max) {
 
-    var setStorageItem = function(pageConfig) {
+    var setStorageItem = function(data) {
         window.localStorage.setItem('gu.history', JSON.stringify({
-            'value' : pageConfig
+            'value' : data
         }));
     };
 
