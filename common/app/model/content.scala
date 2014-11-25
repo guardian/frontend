@@ -254,6 +254,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
+  lazy val blogOrSeriesTag: Option[Tag] = {
+    tags.find( tag => tag.id != "commentisfree/commentisfree" && (tag.isBlog || tag.isSeries )).headOption
+  }
+
   lazy val seriesTag: Option[Tag] = {
     blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
