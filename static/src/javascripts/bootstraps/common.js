@@ -293,7 +293,7 @@ define([
                                 }
                             ));
                         }
-                    } else if ((config.page.edition === 'AU' &&  config.page.section === 'commentisfree') || config.page.showClassicVersion) {
+                    } else {
                         releaseMessage.show(template(
                             releaseMessageLaunchedTpl,
                             {
