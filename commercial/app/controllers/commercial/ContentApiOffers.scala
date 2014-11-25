@@ -32,6 +32,20 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
 
     val optCapiSupportedBy = request.getParameter("sb")
 
+    val sponsorTypeToClass = Map (
+        "sponsored" -> ("container--merchandising-feature"),
+        "advertisement" -> ("container--advertisement-feature"),
+        "supported" -> ("container--merchandising-feature")
+        )
+    val optSponsorType: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
+    
+    val sponsorTypeToLabel = Map (
+        "sponsored" -> ("Sponsored by"),
+        "advertisement" -> ("Brought to you by"),
+        "supported" -> ("Supported by")
+        )
+    val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
+
     val futureLatestByKeyword = optKeyword.map { keyword =>
       Lookup.latestContentByKeyword(keyword, 4)
     }.getOrElse(Future.successful(Nil))
@@ -45,7 +59,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiSupportedBy, optCapiAdFeature))
+          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiAdFeature, optSponsorType, optSponsorLabel))
         } else {
           format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy))
         }
