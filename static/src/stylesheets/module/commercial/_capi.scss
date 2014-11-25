@@ -95,7 +95,6 @@
 .facia-container--advertisement-feature,
 .fc-container--advertisement-feature,
 .container--advertisement-feature,
-.container--merchandising-feature,
 .fc-container--merchandising-feature {
     background-color: colour(neutral-8);
 
@@ -131,7 +130,7 @@
     }
 }
 
-.container--merchandising-feature {
+.fc-container--merchandising-feature {
     background-color: transparent;
     
     .fc-container__inner {
