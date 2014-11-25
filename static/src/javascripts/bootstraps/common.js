@@ -268,7 +268,7 @@ define([
                     config.switches.releaseMessage &&
                     (detect.getBreakpoint() !== 'mobile')
                 ) {
-                    if(config.page.showClassicVersion) {
+                    if (config.page.showClassicVersion) {
                         // force the visitor in to the alpha release for subsequent visits
                         cookies.add('GU_VIEW', 'responsive', 365);
 
