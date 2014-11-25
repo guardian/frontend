@@ -26,6 +26,16 @@ class ExternalLinksTest extends FlatSpec with Matchers with Inspectors {
     }
   }
 
+  it should "be false for absolute URLs to any Guardian subdomains" in {
+    forAll(for {
+      subdomain <- Seq("profile", "witness")
+      domain <- ExternalLinks.GuardianDomains
+      path <- testPaths
+    } yield s"$subdomain.$domain$path") { id =>
+      external(id) should be(false)
+    }
+  }
+
   it should "be true for other URLs" in {
     forAll(Seq(
       "http://www.bbc.co.uk/news/uk-30173238",

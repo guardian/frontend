@@ -7,9 +7,9 @@ import conf.Configuration
 import scala.util.Try
 
 object ExternalLinks {
-  val GuardianDomains = Configuration.ajax.corsOrigins flatMap { url =>
+  val GuardianDomains = Configuration.ajax.corsOrigins flatMap { uri =>
     Try {
-      new URI(url).getHost
+      new URI(uri).getHost.stripPrefix("www.")
     }.toOption
   }
 
