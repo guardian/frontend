@@ -17,14 +17,11 @@ class ExternalLinksTest extends FlatSpec with Matchers with Inspectors {
     }
   }
 
-  it should "be false for absolute URLs to theguardian.com" in {
-    forAll(testPaths.map("http://www.theguardian.com" + _)) { id =>
-      external(id) should be(false)
-    }
-  }
-
-  it should "be false for absolute URLs to code.dev-theguardian.com" in {
-    forAll(testPaths.map("http://code.dev-theguardian.com" + _)) { id =>
+  it should "be false for absolute URLs to any Guardian origin domains" in {
+    forAll(for {
+      domain <- ExternalLinks.GuardianDomains
+      path <- testPaths
+    } yield domain + path) { id =>
       external(id) should be(false)
     }
   }
