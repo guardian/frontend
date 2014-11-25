@@ -197,13 +197,15 @@ object Switches extends Collections {
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
 
+  val targetMediaMathShutdownDate = new LocalDate(2015, 1, 6)
+
   val MediaMathSwitch = Switch("Commercial", "media-math",
     "Enable Media Math audience segment tracking",
-    safeState = Off, sellByDate = never)
+    safeState = Off, sellByDate = targetMediaMathShutdownDate)
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 28))
+    safeState = Off, sellByDate = targetMediaMathShutdownDate)
 
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
