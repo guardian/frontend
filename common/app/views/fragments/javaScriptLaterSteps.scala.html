@@ -68,13 +68,13 @@
             }
 
             if (showFonts && storedFontFormat) {
-                var fonts      = document.querySelectorAll('[data-cache-name]'),
+                var fonts      = document.querySelectorAll('.webfont'),
                     fontFormat = JSON.parse(storedFontFormat).value
 
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font            = fonts[i],
                         nameAndCacheKey = font.getAttribute('data-cache-file-' + fontFormat).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
-                        storedCachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]);
+                        storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
                     if (storedCachedCss) {
                         font.innerHTML = JSON.parse(storedCachedCss).value;
@@ -84,9 +84,9 @@
             }
         }
 
-        if (window.localStorage) {
+        try {
             loadFontsFromStorage();
-        } else {
+        } catch (e) {
             loadFontsAsynchronously();
         }
 

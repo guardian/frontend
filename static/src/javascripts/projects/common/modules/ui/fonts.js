@@ -68,7 +68,7 @@ define([
                         mediator.emit('modules:fonts:loaded', name);
                     }
                 });
-            })
+            });
 
         }
 
