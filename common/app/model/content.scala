@@ -477,9 +477,9 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   }
 
   lazy val lightbox: JsObject = {
-    val imageContainers = bodyImages
+    val imageContainers = bodyImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map{ imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
+      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
@@ -498,6 +498,11 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       "images" -> JsArray(imageJson.flatten)
     ))
   }
+
+  lazy val lightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
+    case (_, Some(crop)) => crop.width > 620
+    case _ => false
+  })
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
@@ -688,8 +693,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   }.flatten
 
   lazy val lightbox: JsObject = {
-    val imageContainers = galleryImages.filter(_.isGallery)
-    val imageJson = imageContainers.map{ imgContainer =>
+    val imageContainers = galleryImages
+    val imageJson = imageContainers.map { imgContainer =>
       imgContainer.largestEditorialCrop.map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
