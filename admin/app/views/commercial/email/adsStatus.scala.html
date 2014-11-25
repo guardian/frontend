@@ -1,30 +1,32 @@
 @(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.Sponsorship], sponsorshipsWithoutSponsors: Seq[dfp.Sponsorship])
 
-@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty){
-No known targeting problems.
-} else {
-There are some targeting problems:
+    @if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty) {
+        <p>No known targeting problems.</p>
+    } else {
+        <p>There are some targeting problems:</p>
 
-@if(pageskinsWithoutEditions.nonEmpty) {
-These pageskins have no edition set:
-@for(pageskin <- pageskinsWithoutEditions){
-    @{pageskin.lineItemId}: @{pageskin.lineItemName}
-}
+        @if(pageskinsWithoutEditions.nonEmpty) {
+            <p>These pageskins have no edition set:</p>
+            <ul>@for(pageskin <- pageskinsWithoutEditions) {
+                <li>@{pageskin.lineItemId}: @{pageskin.lineItemName}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/pageskins</p>
+        }
 
-See https://frontend.gutools.co.uk/analytics/commercial/pageskins
-}
-@if(geotargetedAdFeatures.nonEmpty) {
-These ad feature logos are geotargeted:
-@for(adFeature <- geotargetedAdFeatures){
-    @{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}
-}
-}
-@if(sponsorshipsWithoutSponsors.nonEmpty) {
-These paid-for logos have no sponsor set up:
-@for(sponsorship <- sponsorshipsWithoutSponsors) {
-    @{sponsorship.lineItemId}: @{sponsorship.tags.mkString(", ")}
-}
+        @if(geotargetedAdFeatures.nonEmpty) {
+            <p>These ad feature logos are geotargeted:</p>
+            <ul>@for(adFeature <- geotargetedAdFeatures) {
+                <li>@{adFeature.lineItemId}: @{adFeature.tags.mkString(", ")}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
+        }
 
-See https://frontend.gutools.co.uk/analytics/commercial/sponsorships
-}
-}
+        @if(sponsorshipsWithoutSponsors.nonEmpty) {
+            <p>These paid-for logos have no sponsor set up:</p>
+            <ul>@for(sponsorship <- sponsorshipsWithoutSponsors) {
+                <li>@{sponsorship.lineItemId}: @{sponsorship.tags.mkString(", ")}</li>
+            }</ul>
+            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
+        }
+
+    }

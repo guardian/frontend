@@ -14,33 +14,46 @@ object AdsStatusEmailJob extends Logging {
     log.info("Starting AdsStatusEmailJob")
 
     for {
-      from <- adTechTeam
-      to <- adOpsTeam
-      cc <- adTechTeam
-    } yield {
-        EmailService.send(from, Seq(to), Seq(cc), subject, textBody)
+      adTech <- adTechTeam
+      adOps <- adOpsTeam
+      adOpsUs <- adOpsUsTeam
+      adOpsAu <- adOpsAuTeam
+    } {
+      EmailService.send(
+        from = adTech,
+        to = Seq(adOps, adOpsUs, adOpsAu),
+        cc = Seq(adTech),
+        subject = subject,
+        htmlBody = Some(htmlBody))
     }
   }
 
-  private def textBody: String = {
+  private def htmlBody: String = {
+    val pageSkinsReport = Store.getDfpPageSkinnedAdUnits()
+    val sponsorshipsReport = Store.getDfpSponsoredTags()
+    val adFeaturesReport = Store.getDfpAdFeatureTags()
+    val foundationsReport = Store.getDfpFoundationSupportedTags()
+
+    val pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
+      pageSkinsReport.deliverableSponsorships.filter(_.editions.isEmpty)
+    }
+
+    val geotargetedAdFeatures: Seq[Sponsorship] = {
+      adFeaturesReport.sponsorships.filter(_.countries.nonEmpty)
+    }
+
+    val sponsorshipsWithoutSponsors: Seq[Sponsorship] = {
+      val sponsorships = sponsorshipsReport.sponsorships ++
+        adFeaturesReport.sponsorships ++
+        foundationsReport.sponsorships
+      sponsorships.filter(_.sponsor.isEmpty) sortBy (_.lineItemId)
+    }
+
     views.html.commercial.email.adsStatus(
-      pageskinsWithoutEdition, geotargetedAdFeatures, sponsorshipsWithoutSponsors
+      pageskinsWithoutEdition,
+      geotargetedAdFeatures,
+      sponsorshipsWithoutSponsors
     ).body
-  }
-
-  private def pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
-    Store.getDfpPageSkinnedAdUnits().deliverableSponsorships.filter(_.editions.isEmpty)
-  }
-
-  private def geotargetedAdFeatures: Seq[Sponsorship] = {
-    Store.getDfpAdFeatureTags().sponsorships.filter(_.countries.nonEmpty)
-  }
-
-  private def sponsorshipsWithoutSponsors: Seq[Sponsorship] = {
-    val sponsorships = Store.getDfpSponsoredTags().sponsorships ++
-      Store.getDfpAdFeatureTags().sponsorships ++
-      Store.getDfpFoundationSupportedTags().sponsorships
-    sponsorships.filter(_.sponsor.isEmpty) sortBy (_.lineItemId)
   }
 
 }
