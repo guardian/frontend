@@ -136,10 +136,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
-            element.addClass("fig-extra-margin")
+            element.addClass("fig--extra-margin")
           }
-        } else {
-          element.addClass("fig-full-width")
         }
       })
     }
@@ -234,9 +232,10 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
           // content api/ tools sometimes pops a &nbsp; in the blank field
           if (!figcaption.hasText || figcaption.text().length < 2) {
             figcaption.remove()
-            fig.addClass("fig-no-border")
+            fig.addClass("fig--extra-margin")
           } else {
             figcaption.attr("itemprop", "description")
+            fig.addClass("fig--border")
           }
         }
       }
@@ -247,16 +246,13 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   def addSharesAndFullscreen(body: Document): Document = {
     if(!article.isLiveBlog) {
 
-      article.bodyImages.zip(article.bodyImages.map(_.largestEditorialCrop)).filter({
-        case (_, Some(crop)) => crop.width > 620
-        case _ => false
-      }).zipWithIndex map {
+      article.lightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           val fig = body.select("[data-media-id=" + imageElement.id + "]").first()
           val linkIndex = (index + 1).toString
           val hashSuffix = "img-" + linkIndex
           fig.attr("id", hashSuffix)
-          fig.addClass("fig-narrow-caption")
+          fig.addClass("fig--narrow-caption")
 
           fig.getElementsByTag("img").foreach { img =>
             val html = views.html.fragments.share.blockLevelSharing(linkIndex, article.elementShares(Some(linkIndex), crop.url), article.contentType)

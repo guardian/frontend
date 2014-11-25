@@ -387,21 +387,23 @@
     .img--base & {
         display: none !important;
     }
-
-    .element-video & {
-        margin-top: 2px;
-    }
 }
 
-.fig-extra-margin {
+.fig--extra-margin {
     padding-bottom: $gs-baseline * 3 !important;
 }
 
-.fig-no-border {
-    border: 0 !important;
+.fig--border {
+    @include mq(leftCol) {
+        border-bottom: 1px dotted colour(neutral-5) !important;
+    }
+
+    &.element--thumbnail {
+        border: 0 !important;
+    }
 }
 
-.fig-narrow-caption {
+.fig--narrow-caption {
     figcaption {
         @include mq(leftCol) {
             max-width: gs-span(6);

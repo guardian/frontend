@@ -495,6 +495,11 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     ))
   }
 
+  lazy val lightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
+    case (_, Some(crop)) => crop.width > 620
+    case _ => false
+  })
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   override def metaData: Map[String, JsValue] = {
