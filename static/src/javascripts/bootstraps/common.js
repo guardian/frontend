@@ -293,7 +293,7 @@ define([
                             }
                         ));
                     }
-                } else if (config.page.edition === 'AU' &&  config.page.section === 'commentisfree') {
+                } else if ((config.page.edition === 'AU' &&  config.page.section === 'commentisfree') || config.page.showClassicVersion) {
                     releaseMessage.show(template(
                         releaseMessageLaunchedTpl,
                         {
