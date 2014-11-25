@@ -264,7 +264,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
           fig.addClass("fig--narrow-caption")
 
           fig.getElementsByTag("img").foreach { img =>
-            val html = views.html.fragments.share.blockLevelSharing(linkIndex, article.elementShares(Some(linkIndex), crop.url), article.contentType)
+            val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
             img.after(html.toString())
 
             img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
