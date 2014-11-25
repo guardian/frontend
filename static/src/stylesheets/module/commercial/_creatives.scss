@@ -16,7 +16,7 @@
     width: gs-span(3)+$gs-gutter/2;
 
     @include mq($from: wide) {
-        left: -$gs-gutter/2;
+        left: $gs-gutter/2;
     }
 
     .creative__inner {
