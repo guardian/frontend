@@ -43,12 +43,15 @@
                 return;
             }
 
-            var scripts    = document.getElementsByTagName('script'),
-                thisScript = scripts[scripts.length - 1],
-                fonts      = document.createElement('link');
+            var scripts        = document.getElementsByTagName('script'),
+                thisScript     = scripts[scripts.length - 1],
+                @* show hinted for Windows XP *@
+                hintedFonts    = navigator.userAgent.indexOf('Windows NT 5.1') > - 1,
+                webFontsFile   = 'webfonts-hinting-' +  + '-kerning-on.css',
+                fonts          = document.createElement('link');
 
             fonts.rel  = 'stylesheet';
-            fonts.href = '@Static("stylesheets/webfonts.css")';
+            fonts.href = guardian.config.stylesheets.fonts['hinting' + (hintedFonts ? 'On' : 'Off') ].kerningOn;
             window.setTimeout(function() {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
@@ -64,34 +67,26 @@
             }
 
             if (showFonts && storedFontFormat) {
-                var styleNodes = document.querySelectorAll('[data-cache-name]'),
+                var fonts      = document.querySelectorAll('[data-cache-name]'),
                     fontFormat = JSON.parse(storedFontFormat).value
 
-                for (var i = 0, j = styleNodes.length; i < j; ++i) {
-                    var style           = styleNodes[i],
-                        nameAndCacheKey = style.getAttribute('data-cache-file-' + fontFormat).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                for (var i = 0, j = fonts.length; i < j; ++i) {
+                    var font            = fonts[i],
+                        nameAndCacheKey = font.getAttribute('data-cache-file-' + fontFormat).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
                         storedCachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]);
 
                     if (storedCachedCss) {
-                        style.innerHTML = JSON.parse(storedCachedCss).value;
-                        style.setAttribute('data-cache-full', 'data-cache-full');
+                        font.innerHTML = JSON.parse(storedCachedCss).value;
+                        font.setAttribute('data-cache-full', 'data-cache-full');
                     }
                 }
             }
         }
 
-        @* Display hinted fonts (loaded asynchronously) in these platforms: *@
-        var loadsHintedFonts = /Windows/;
-        @* But exclude these platforms (and load non-hinted fonts from localStorage): *@
-        var loadsNonHintedFonts = /W(indows Phone|PDesktop)/;
-
-        guardian.shouldLoadFontsAsynchronously = loadsHintedFonts.test(navigator.userAgent)
-                                                 && !loadsNonHintedFonts.test(navigator.userAgent);
-
-        if (guardian.shouldLoadFontsAsynchronously) {
-            loadFontsAsynchronously();
-        } else {
+        if (window.localStorage) {
             loadFontsFromStorage();
+        } else {
+            loadFontsAsynchronously();
         }
 
         @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
