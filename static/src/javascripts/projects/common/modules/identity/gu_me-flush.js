@@ -1,9 +1,9 @@
-define(['common/utils/cookies'], function(cookies){
+define(['common/utils/cookies'], function (cookies) {
 
     return {
-        init: function(){
+        init: function () {
             cookies.remove('GU_ME');
         }
-    }
+    };
 
 });
