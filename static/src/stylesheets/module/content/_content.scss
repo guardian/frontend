@@ -127,6 +127,7 @@
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+    word-wrap: break-word;
 
     @include mq(leftCol) {
         border: 0;
