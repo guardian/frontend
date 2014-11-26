@@ -660,31 +660,88 @@ jQuery(function($) {
     <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CAPI component</a>
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - advertisement option</a>
             </h2>
         </div>
-
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-capi ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                require(['core'], function(core) {
-                    require(['bootstraps/commercial'], function(core) {
-                        require(['common/modules/commercial/loader'], function(CommercialComponent) {
-                            var slot = document.querySelector('.dfp-ad--merchandising-capi');
-                            new CommercialComponent({
-                                oastoken: 'CLICK_URL_UNESC',
-                                capi: ['p/43945','p/43945'],
-                                logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                capiTitle: 'Led Zeppelin special',
-                                capiLinkUrl: 'http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin',
-                                capiAboutLinkUrl: 'http://theguardian.com/about',
-                                capiKeywords: 'music/ledzeppelin'
-                            }).init('capi', slot);
-                            });
-                        });
-                    });
-            </script>
-        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        t: ['p/43b2q','p/43945'],
+                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        ct: 'Led Zeppelin special',
+                        cl: 'http://theguardian.com/music/ledzeppelin',
+                        cal: 'http://theguardian.com/about',
+                        k: 'music/ledzeppelin',
+                        af: 'advertisement-feature'
+                    }).init('capi', document.querySelector('[data-name="merchandising-capi"]'));
+                });
+            });
+        });
+        </script>
     </div>
+    
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - sponsored option</a>
+            </h2>
+        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-s"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        t: ['p/43b2q','p/43945'],
+                        l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        ct: 'Led Zeppelin special',
+                        cl: 'http://theguardian.com/music/ledzeppelin',
+                        cal: 'http://theguardian.com/about',
+                        k: 'music/ledzeppelin',
+                        af: 'sponsored'
+                    }).init('capi', document.querySelector('[data-name="merchandising-capi-s"]'));
+                });
+            });
+        });
+        </script>
+    </div>
+    
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - supported option</a>
+            </h2>
+        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-multi"></div>
+        <script>
+        require(['core'], function(core) {
+            require(['bootstraps/commercial'], function(core) {
+                require(['common/modules/commercial/loader'], function(CommercialComponent) {
+                    new CommercialComponent({
+                        oastoken: '%%CLICK_URL_ESC%%',
+                        capi: ['p/4xv7c','','',''],
+                        logo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                        capiTitle: 'Pink Floyd special',
+                        capiLinkUrl: 'http://theguardian.com/music/pinkfloyd',
+                        capiAboutLinkUrl: 'http://theguardian.com/about',
+                        capiKeywords: 'music/pinkfloyd',
+
+                        t: ['p/43akg','p/43945'],
+                        k: 'music/pinkfloyd',
+                        af: 'foundation-supported'
+                    }).init('capi', document.querySelector('[data-name="merchandising-capi-multi"]'));
+                });
+            });
+        });
+        </script>
+    </div>
+
+    <hr/>
 
     <div class="fc-container">
         <div class="fc-container__inner">
@@ -709,7 +766,7 @@ jQuery(function($) {
                         rmd: 'www.theguardina.com',
                         rmt: 'See more over here',
                         sb: 'Brought to you by:',
-                        af: 'container--advertisement-feature'
+                        af: 'fc-container--advertisement-feature'
                     }).init('capiSingle', document.querySelector('[data-name="merchandising-capi-single"]'));
                 });
             });
@@ -912,7 +969,7 @@ jQuery(function($) {
                         rmd: 'www.theguardina.com',
                         rmt: 'See more over here',
                         sb: 'Sponsored by:',
-                        af: 'container--merchandising-feature'
+                        af: 'fc-container--merchandising-feature'
                     }).init('capiSingleMerch', document.querySelector('[data-name="merchandising-capi-single-merch"]'));
                 });
             });
