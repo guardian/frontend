@@ -11,7 +11,7 @@ define([
 ) {
 
     /**
-     * Generic template creative -
+     * Create simple templated creatives -
      *
      *  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10021527
      *  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
