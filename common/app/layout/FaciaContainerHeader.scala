@@ -1,6 +1,6 @@
 package layout
 
-import model.{Page, Section, Tag}
+import model.{Zone, Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
@@ -31,6 +31,13 @@ object FaciaContainerHeader {
     sectionPage.webTitle,
     None,
     sectionPage.description,
+    dateHeadline
+  )
+
+  def fromZone(zone: Zone, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
+    zone.webTitle,
+    None,
+    zone.description,
     dateHeadline
   )
 

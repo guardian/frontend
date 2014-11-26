@@ -107,6 +107,7 @@ object IndexPage {
         indexPage.page match {
           case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
           case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case zone: Zone => FaciaContainerHeader.fromZone(zone, headline)
           case page: Page => FaciaContainerHeader.fromPage(page, headline)
           case _ =>
             // should never happen
@@ -146,14 +147,17 @@ object IndexPage {
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
                      date: DateTime = DateTime.now) {
+  private def isSectionKeyword(sectionId: String, id: String) = Set(
+    Some(s"$sectionId/$sectionId"),
+    Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
+  ).flatten contains id
+
   def isTagWithId(id: String) = page match {
     case section: Section =>
-      val sectionId = section.id
+      isSectionKeyword(section.id, id)
 
-      Set(
-        Some(s"$sectionId/$sectionId"),
-        Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
-      ).flatten contains id
+    case zone: Zone =>
+      isSectionKeyword(zone.id, id)
 
     case tag: Tag => tag.id == id
 
