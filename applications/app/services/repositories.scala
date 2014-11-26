@@ -166,6 +166,16 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
 
     case _ => false
   }
+
+  def allPath = {
+    val withoutEdition = Paths.withoutEdition(page.id)
+
+    if (withoutEdition.exists(Zones.ById.contains)) {
+      s"/$withoutEdition"
+    } else {
+      s"/${page.id}"
+    }
+  }
 }
 
 trait Index extends ConciergeRepository with QueryDefaults {
