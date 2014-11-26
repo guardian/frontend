@@ -5,14 +5,14 @@
 
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
-<h1>Special Ad Units:</h1>
+<h1>Special Ad Units</h1>
 
 <p>Special Ad Units do NOT inherit ads from their parents. You will have to target them specifically.</p>
 
 <ol>
-    @for(adUnit<- specialAdUnits){
-    <li><a href="@DfpLink.adUnit(adUnit._1)">@adUnit._2</a></li>
-    }
+@for((id, path) <- specialAdUnits) {
+    <li>@path <a href="@DfpLink.adUnit(id)">(@id)</a></li>
+}
 </ol>
 
 }
