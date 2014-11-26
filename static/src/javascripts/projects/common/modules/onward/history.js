@@ -205,7 +205,7 @@ define([
         test: {
             today: today,
             getSummary: getSummary,
-            pruneSummary: pruneSummary,
+            pruneSummary: pruneSummary
         }
     };
 });
