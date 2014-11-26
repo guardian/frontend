@@ -1,4 +1,3 @@
-/* global guardian:true */
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
@@ -100,7 +99,7 @@ define([
     shareCount,
     Dropdowns,
     fauxBlockLink,
-    Fonts,
+    fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -117,13 +116,8 @@ define([
 
     var modules = {
 
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat     = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-
-                    new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-                }
+            loadFonts: function () {
+                fonts.load();
             },
 
             initId: function () {
@@ -459,7 +453,7 @@ define([
 
         },
         ready = function () {
-            modules.loadFonts(navigator.userAgent);
+            modules.loadFonts();
             modules.initId();
             modules.initUserAdTargeting();
             modules.initDiscussion();
