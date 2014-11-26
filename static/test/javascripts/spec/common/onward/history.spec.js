@@ -83,10 +83,10 @@ define([
 
             expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
             expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(1);
-            expect(hist.test.getSummary().tags['baz/poo']).toBeUndefined();
 
             expect(hist.test.getSummary().tags['foo/bar'][0]).toEqual('Foobar Tag');
             expect(hist.test.getSummary().tags['foo/bar'][1][0][1]).toEqual(1);
+            expect(hist.test.getSummary().tags['baz/poo']).toBeUndefined();
 
             expect(hist.test.getSummary().tags['foo/series/bar'][0]).toEqual('Foobar Series');
             expect(hist.test.getSummary().tags['foo/series/bar'][1][0][1]).toEqual(1);
