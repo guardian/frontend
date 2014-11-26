@@ -28,7 +28,12 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
       .orElse(links.find(_.currentForIncludingAllTags(page)))
   }
 
-  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
+  def exactFor(page: MetaData): Boolean = {
+    Set(
+      contentapi.Paths.withoutEdition(page.section),
+      Some(page.section)
+    ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
+  }
 }
 
 trait Navigation {
