@@ -1,5 +1,6 @@
 package layout
 
+import common.Pagination
 import model.{Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
@@ -33,7 +34,7 @@ object FaciaContainerHeader {
     None,
     sectionPage.description,
     dateHeadline,
-    sectionPage.id
+    frontHref(sectionPage.id, sectionPage.pagination)
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
@@ -42,7 +43,7 @@ object FaciaContainerHeader {
       None,
       None,
       dateHeadline,
-      page.id
+      frontHref(page.id, page.pagination)
     )
   }
 
@@ -53,7 +54,7 @@ object FaciaContainerHeader {
         tagPage.getFootballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
         tagPage.description,
         dateHeadline,
-        tagPage.id
+        frontHref(tagPage.id, tagPage.pagination)
       )
     } else if (tagPage.isContributor) {
       MetaDataHeader(
@@ -61,7 +62,7 @@ object FaciaContainerHeader {
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
         dateHeadline,
-        tagPage.id
+        frontHref(tagPage.id, tagPage.pagination)
       )
     } else {
       MetaDataHeader(
@@ -69,10 +70,18 @@ object FaciaContainerHeader {
         None,
         tagPage.description,
         dateHeadline,
-        tagPage.id
+        frontHref(tagPage.id, tagPage.pagination)
       )
     }
   }
+
+  /** Want to show a link to the front if it exists, or to the first page of the tag page if we're not on that page */
+  private def frontHref(id: String, pagination: Option[Pagination]) =
+    if (ConfigAgent.shouldServeFront(id) || pagination.exists(_.currentPage > 1)) {
+      Some(s"/$id")
+    } else {
+      None
+    }
 }
 
 sealed trait FaciaContainerHeader
@@ -82,12 +91,8 @@ case class MetaDataHeader(
   image: Option[FaciaHeaderImage],
   description: Option[String],
   dateHeadline: DateHeadline,
-  frontId: String
-) extends FaciaContainerHeader {
-  def showFrontLink = ConfigAgent.shouldServeFront(frontId)
-
-  def frontPagePath = s"/$frontId"
-}
+  href: Option[String]
+) extends FaciaContainerHeader
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 

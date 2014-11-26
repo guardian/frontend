@@ -13,10 +13,12 @@
 
         <h1 class="index-page-header__title" data-test-id="header-title">
             @defining(Localisation(metaDataHeader.displayName)) { title =>
-                @if(metaDataHeader.showFrontLink) {
-                    <a href="@LinkTo(metaDataHeader.frontPagePath)" data-link-name="title">@title</a>
-                } else {
-                    @title
+                @metaDataHeader.href match {
+                    case Some(href) => {
+                        <a href="@LinkTo(href)" data-link-name="title">@title</a>
+                    }
+
+                    case None => {@title}
                 }
             }
         </h1>
