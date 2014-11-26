@@ -1,15 +1,18 @@
 package contentapi
 
+import common.Edition
+import conf.LiveContentApi
+
 /** There's a concept of 'zones' in R2, which isn't current reflected in Content API. If you look at the 'sport' or
   * 'culture' section, you actually see an amalgamation of several other sections.
   */
 object Zones {
-  val ById = Map(
-    "sport" -> Seq(
+  val ById: Map[String, Zone] = Map(
+    "sport" -> Zone("Sport", Seq(
       "sport",
       "football"
-    ),
-    "culture" -> Seq(
+    )),
+    "culture" -> Zone("Culture", Seq(
       "culture",
       "film",
       "music",
@@ -17,15 +20,18 @@ object Zones {
       "stage",
       "tv-and-radio",               // <-
       "artanddesign"                // <-  LOL WHAT
-    )
+    ))
   )
 
-  def queryById(id: String) = {
-
-    ById.get(id) map { sections =>
-
-      
+  def queryById(id: String, edition: Edition): Either[WebTitleAndQuery, LiveContentApi.ItemQuery] = {
+    ById.get(id) map { case Zone(webTitle, sections) =>
+      Left(WebTitleAndQuery(webTitle, LiveContentApi.search(edition).section(sections.mkString("|"))))
+    } getOrElse {
+      Right(LiveContentApi.item(id, edition))
     }
-
   }
 }
+
+case class WebTitleAndQuery(webTitle: String, query: LiveContentApi.SearchQuery)
+
+case class Zone(webTitle: String, sections: Seq[String])
