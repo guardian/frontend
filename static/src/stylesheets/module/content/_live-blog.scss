@@ -704,8 +704,13 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            padding-left: 0;
-            padding-right: 0;
+            background-color: darken(colour(neutral-8), 3%);
+        }
+
+        .u-faux-block-link--hover {
+            .fc-item__content {
+                background-color: darken(colour(neutral-8), 8%);
+            }
         }
     }
 }
