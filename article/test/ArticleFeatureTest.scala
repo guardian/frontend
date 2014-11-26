@@ -508,6 +508,14 @@ import collection.JavaConversions._
         Then("I should pass Facebook a tracking token")
         browser.findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should include(fbShareTrackingToken)
       }
+
+      Given("I am going to share an article on Facebook")
+      goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
+        import browser._
+        Then("there should only be ONE opengraph image in the metadata")
+        $("meta[property='og:image']").size() should be(1)
+      }
+
     }
 
     // http://www.w3.org/WAI/intro/aria
