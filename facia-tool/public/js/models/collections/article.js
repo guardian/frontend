@@ -338,6 +338,20 @@ define([
             } else {
                 this.updateEditorsDisplay();
             }
+
+            this.thumbImage = ko.computed(function () {
+                var meta = this.meta,
+                    fields = this.fields,
+                    state = this.state;
+
+                if (meta.imageReplace() && meta.imageSrc()) {
+                    return meta.imageSrc();
+                } else if (meta.imageCutoutReplace()) {
+                    return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                } else {
+                    return fields.thumbnail();
+                }
+            }, this);
         }
 
         Article.prototype.copy = function() {
