@@ -260,14 +260,15 @@ trait Index extends ConciergeRepository with QueryDefaults {
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
     val fields = if (isRss) rssFields else trailFields
+    val zonePath = contentapi.Paths.stripEditionIfPresent(path)
 
-    val promiseOfResponse = Zones.queryById(path, edition) match {
+    val promiseOfResponse = Zones.queryById(zonePath, edition) match {
       case Left(WebTitleAndQuery(webTitle, query)) =>
         query.page(pageNum)
           .pageSize(pageSize)
           .showFields(fields)
           .response map { response =>
-            Left(zone(path, webTitle, response))
+            Left(zone(zonePath, webTitle, response))
           }
 
       case Right(query) =>

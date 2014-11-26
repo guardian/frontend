@@ -23,9 +23,11 @@ object Zones {
     ))
   )
 
+  private def sectionTagId(sectionId: String) = s"$sectionId/$sectionId"
+
   def queryById(id: String, edition: Edition): Either[WebTitleAndQuery, LiveContentApi.ItemQuery] = {
     ById.get(id) map { case Zone(webTitle, sections) =>
-      Left(WebTitleAndQuery(webTitle, LiveContentApi.search(edition).section(sections.mkString("|"))))
+      Left(WebTitleAndQuery(webTitle, LiveContentApi.search(edition).tag(sections.map(sectionTagId).mkString("|"))))
     } getOrElse {
       Right(LiveContentApi.item(id, edition))
     }
