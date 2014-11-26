@@ -150,7 +150,24 @@ define([
                 },
                 {
                     name:    'capi',
-                    url:     '/commercial/capi.json?oastoken=123456789&capi=p%2F43b2q&capi=p%2F43945&logo=http%3A%2F%2Fcats.com%2Fimage.jpeg&capiTitle=Led%20Zeppelin%20special&capiLinkUrl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&capiAboutLinkUrl=http%3A%2F%2Ftheguardian.com%2Fabout&capiKeywords=music%2Fledzeppelin&t=p%2F43b2q&t=p%2F43945&k=music%2Fledzeppelin&af=sponsored&s=books&l=http%3A%2F%2Fcats.com%2Fimage.jpeg&ct=Led%20Zeppelin%20special&cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&cal=http%3A%2F%2Ftheguardian.com%2Fabout',
+                    url:     '/commercial/capi.json?' +
+                        'oastoken=123456789&' +
+                        'capi=p%2F43b2q&' +
+                        'capi=p%2F43945&' +
+                        'logo=http%3A%2F%2Fcats.com%2Fimage.jpeg&' +
+                        'capiTitle=Led%20Zeppelin%20special&' +
+                        'capiLinkUrl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
+                        'capiAboutLinkUrl=http%3A%2F%2Ftheguardian.com%2Fabout&' +
+                        'capiKeywords=music%2Fledzeppelin&' +
+                        't=p%2F43b2q&' +
+                        't=p%2F43945&' +
+                        'k=music%2Fledzeppelin&' +
+                        'af=sponsored&' +
+                        's=books&' +
+                        'l=http%3A%2F%2Fcats.com%2Fimage.jpeg&' +
+                        'ct=Led%20Zeppelin%20special&' +
+                        'cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
+                        'cal=http%3A%2F%2Ftheguardian.com%2Fabout',                        
                     options: {
                         oastoken: '123456789',
                         capi:             ['p/43b2q', 'p/43945'],
