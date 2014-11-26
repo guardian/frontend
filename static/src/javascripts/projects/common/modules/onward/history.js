@@ -15,6 +15,7 @@ define([
 
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
+        summaryCache,
         popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -32,12 +33,13 @@ define([
     }
 
     function saveSummary(summary) {
+        summaryCache = summary;
         return storage.local.set(storageKeySummary, summary);
     }
 
     function savePopular(popular) {
         popularCache = popular;
-        return storage.local.set(storageKeyPopular, popularCache);
+        return storage.local.set(storageKeyPopular, popular);
     }
 
     function getHistory() {
@@ -51,15 +53,14 @@ define([
     }
 
     function getSummary() {
-        var summary = storage.local.get(storageKeySummary);
+        var summary = summaryCache || storage.local.get(storageKeySummary);
 
         if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
-            summary = {
+            summary = summaryCache = {
                 periodEnd: today,
                 tags: {}
             };
         }
-
         return summary;
     }
 
@@ -124,6 +125,7 @@ define([
     return {
         reset: function () {
             historyCache = undefined;
+            summaryCache = undefined;
             popularCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
@@ -172,7 +174,7 @@ define([
 
             summary = pruneSummary(getSummary());
             _.chain(taxonomy)
-                .reduce(function (tags, tag) {
+                .reduceRight(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
                         tname = tid && firstCsv(pageConfig[tag.tname]);
 
