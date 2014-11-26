@@ -10,7 +10,7 @@ define([
     storage
 ) {
     var historySize = 50,
-        summaryDays = 30,
+        summaryPeriodDays = 30,
         popularSize = 10,
 
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
@@ -43,9 +43,9 @@ define([
     function getSummary() {
         var summary = storage.local.get(storageKeySummary);
 
-        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.start)) {
+        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
             summary = {
-                start: today,
+                periodEnd: today,
                 tags: {}
             };
         }
@@ -53,33 +53,30 @@ define([
         return summary;
     }
 
-    function pruneSummary() {
-        var summary = getSummary(),
-            newStart = today - summaryDays,
-            updateBy;
+    function pruneSummary(summary) {
+        var updateBy = today - summary.periodEnd;
 
-        if (newStart > summary.start) {
-            updateBy = newStart - summary.start;
-            summary.start = newStart;
+        if (updateBy > 0) {
+            summary.periodEnd = today;
 
-            _.each(summary.tags, function (sTag, tid) {
-                var ticks = _.chain(sTag[1])
-                    .map(function (tick) {
-                        var newSlot = tick[0] - updateBy;
-                        return newSlot < 0 ? 0 : [newSlot, tick[1]];
+            _.each(summary.tags, function (nameAndFreqs, tid) {
+                var freqs = _.chain(nameAndFreqs[1])
+                    .map(function (freq) {
+                        var newAge = freq[0] + updateBy;
+                        return newAge < summaryPeriodDays ? [newAge, freq[1]] : false;
                     })
                     .compact()
                     .value();
 
-                if (ticks.length) {
-                    summary.tags[tid] = [sTag[0], ticks];
+                if (freqs.length) {
+                    summary.tags[tid] = [nameAndFreqs[0], freqs];
                 } else {
                     delete summary.tags[tid];
                 }
             });
 
             if (_.isEmpty(summary.tags)) {
-                summary.start = today;
+                summary.periodEnd = today;
             }
         }
 
@@ -88,11 +85,11 @@ define([
 
     function calculatePopular(summary) {
         return _.chain(summary.tags)
-            .map(function (sTag, tid) {
+            .map(function (nameAndFreqs, tid) {
                 return {
-                    idAndName: [tid, sTag[0]],
-                    rank: _.reduce(sTag[1], function (rank, tick) {
-                        return rank + (tick[1] * (tick[0] + 1));
+                    idAndName: [tid, nameAndFreqs[0]],
+                    rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
+                        return rank + (freq[1] * (summaryPeriodDays - freq[0]));
                     }, 0)
                 };
             })
@@ -155,8 +152,7 @@ define([
             var pageId = pageConfig.pageId,
                 history,
                 summary,
-                foundCount = 0,
-                sinceStart;
+                foundCount = 0;
 
             if (!pageConfig.isFront) {
                 history = this.get()
@@ -171,8 +167,7 @@ define([
                 saveHistory(history.slice(0, historySize));
             }
 
-            summary = pruneSummary();
-            sinceStart = today - summary.start;
+            summary = pruneSummary(getSummary());
             _.chain(taxonomy)
                 .reduce(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
@@ -184,20 +179,20 @@ define([
                     return tags;
                 }, {})
                 .each(function (tname, tid) {
-                    var sTag = summary.tags[tid],
-                        ticks = sTag && sTag[1],
-                        tick = ticks && _.find(ticks, function (tick) { return tick[0] === sinceStart; });
+                    var nameAndFreqs = summary.tags[tid],
+                        freqs = nameAndFreqs && nameAndFreqs[1],
+                        freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
 
-                    if (tick) {
-                        tick[1] = tick[1] + 1;
-                    } else if (ticks) {
-                        ticks.unshift([sinceStart, 1]);
+                    if (freq) {
+                        freq[1] = freq[1] + 1;
+                    } else if (freqs) {
+                        freqs.unshift([0, 1]);
                     } else {
-                        summary.tags[tid] = [tname, [[sinceStart, 1]]];
+                        summary.tags[tid] = [tname, [[0, 1]]];
                     }
 
-                    if (sTag) {
-                        sTag[0] = tname;
+                    if (nameAndFreqs) {
+                        nameAndFreqs[0] = tname;
                     }
                 });
             saveSummary(summary);
