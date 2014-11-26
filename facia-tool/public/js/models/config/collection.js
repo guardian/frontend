@@ -9,6 +9,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/mediator',
     'utils/url-abs-path',
     'utils/identity'
 ], function(
@@ -21,6 +22,7 @@ define([
     asObservableProps,
     populateObservables,
     fullTrim,
+    mediator,
     urlAbsPath,
     identity
 ) {
@@ -185,6 +187,17 @@ define([
                 self.capiResults(results || []);
                 self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }
+        });
+    };
+
+    Collection.prototype.drop = function (source, targetGroup) {
+        mediator.emit('collection:updates', {
+            sourceItem: source.sourceItem,
+            sourceGroup: source.sourceGroup,
+            targetItem: this,
+            targetGroup: targetGroup,
+            isAfter: false,
+            mediaItem: null
         });
     };
 
