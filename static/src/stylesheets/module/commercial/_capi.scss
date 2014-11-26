@@ -71,9 +71,7 @@
     }
 }
 
-.facia-container--advertisement-feature,
-.fc-container--advertisement-feature,
-.container--advertisement-feature {
+.fc-container--advertisement-feature {
     .linkslist__action:visited,
     .fc-item__link:visited,
     .fc-item__standfirst,
@@ -92,10 +90,9 @@
     }
 }
 
-.facia-container--advertisement-feature,
 .fc-container--advertisement-feature,
-.container--advertisement-feature,
-.fc-container--merchandising-feature {
+.fc-container--sponsored,
+.fc-container--foundation-supported {
     background-color: colour(neutral-8);
 
     .fc-container__inner {
@@ -130,7 +127,10 @@
     }
 }
 
-.fc-container--merchandising-feature {
+.fc-container--sponsored,
+.fc-container--foundation-supported,
+.fc-container--merchandising-feature,
+.container--merchandising-feature {
     background-color: transparent;
     
     .fc-container__inner {
