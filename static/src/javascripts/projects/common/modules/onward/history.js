@@ -35,9 +35,19 @@ define([
         return storage.local.set(storageKeySummary, summary);
     }
 
-    function savePopular(summary) {
-        popularCache = calculatePopular(summary);
+    function savePopular(popular) {
+        popularCache = popular;
         return storage.local.set(storageKeyPopular, popularCache);
+    }
+
+    function getHistory() {
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
+    }
+
+    function getPopular() {
+        popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
+        return popularCache;
     }
 
     function getSummary() {
@@ -120,30 +130,22 @@ define([
             storage.local.remove(storageKeyPopular);
         },
 
-        get: function () {
-            historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
-            return historyCache;
-        },
+        getHistory: getHistory,
 
-        getSummary: getSummary,
-
-        getPopular: function () {
-            popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
-            return popularCache;
-        },
+        getPopular: getPopular,
 
         getSize: function () {
-            return this.get().length;
+            return getHistory().length;
         },
 
         contains: function (pageId) {
-            return (_.find(this.get(), function (page) {
+            return (_.find(getHistory(), function (page) {
                 return (page[0] === pageId);
             }) || [])[1] > 0;
         },
 
         isRevisit: function (pageId) {
-            return (_.find(this.get(), function (page) {
+            return (_.find(getHistory(), function (page) {
                 return (page[0] === pageId);
             }) || [])[1] > 1;
         },
@@ -155,7 +157,7 @@ define([
                 foundCount = 0;
 
             if (!pageConfig.isFront) {
-                history = this.get()
+                history = getHistory()
                     .filter(function (item) {
                         var isArr = _.isArray(item),
                             found = isArr && (item[0] === pageId);
@@ -163,6 +165,7 @@ define([
                         foundCount = found ? item[1] : foundCount;
                         return isArr && !found;
                     });
+
                 history.unshift([pageId, foundCount + 1]);
                 saveHistory(history.slice(0, historySize));
             }
@@ -196,7 +199,13 @@ define([
                     }
                 });
             saveSummary(summary);
-            savePopular(summary);
+            savePopular(calculatePopular(summary));
+        },
+
+        test: {
+            today: today,
+            getSummary: getSummary,
+            pruneSummary: pruneSummary,
         }
     };
 });
