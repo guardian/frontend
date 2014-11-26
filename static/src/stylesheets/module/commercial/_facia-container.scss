@@ -131,9 +131,11 @@
 
     .commercial__title__logo {
         @include fs-header(2);
+        text-align: center;
         display: inline-block;
         position: relative;
-        top: -5px;
+        top: $gs-baseline/-3;
+        min-width: 54px;
     }
 
     .commercial__search {
