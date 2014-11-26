@@ -31,7 +31,8 @@ object FaciaContainerHeader {
     sectionPage.webTitle,
     None,
     sectionPage.description,
-    dateHeadline
+    dateHeadline,
+    s"/${sectionPage.id}"
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
@@ -39,7 +40,8 @@ object FaciaContainerHeader {
       page.webTitle,
       None,
       None,
-      dateHeadline
+      dateHeadline,
+      s"/${page.id}"
     )
   }
 
@@ -49,21 +51,24 @@ object FaciaContainerHeader {
         tagPage.webTitle,
         tagPage.getFootballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
         tagPage.description,
-        dateHeadline
+        dateHeadline,
+        s"/${tagPage.id}"
       )
     } else if (tagPage.isContributor) {
       MetaDataHeader(
         tagPage.webTitle,
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
-        dateHeadline
+        dateHeadline,
+        s"/${tagPage.id}"
       )
     } else {
       MetaDataHeader(
         tagPage.webTitle,
         None,
         tagPage.description,
-        dateHeadline
+        dateHeadline,
+        s"/${tagPage.id}"
       )
     }
   }
@@ -75,7 +80,8 @@ case class MetaDataHeader(
   displayName: String,
   image: Option[FaciaHeaderImage],
   description: Option[String],
-  dateHeadline: DateHeadline
+  dateHeadline: DateHeadline,
+  frontPagePath: String
 ) extends FaciaContainerHeader
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader

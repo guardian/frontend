@@ -11,7 +11,9 @@
             </div>
         }
 
-        <h1 class="index-page-header__title" data-test-id="header-title">@Localisation(metaDataHeader.displayName)</h1>
+        <h1 class="index-page-header__title" data-test-id="header-title">
+            <a href="@metaDataHeader.frontPagePath" data-link-name="title">@Localisation(metaDataHeader.displayName)</a>
+        </h1>
         @metaDataHeader.description.map { desc =>
             <div class="index-page-header__description">@Html(desc)</div>
         }
