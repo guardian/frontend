@@ -65,20 +65,27 @@ define([
             it('should upgrade images', function (popular, deps, done) {
                 popular.render({
                     then: function () {
-                        expect($('.container--popular img').length).toEqual(4);
+                        expect($('.container--popular img').length).toBe(4);
                         done();
                     }
                 });
             });
 
-            it('should not display container if response is empty', function (popular, deps, done) {
+            it('should not display container if html is empty', function (popular, deps, done) {
                 server.respondWith([200, {}, JSON.stringify({ faciaHtml: "\n\n\n\n   \n\n\n" })]);
 
                 popular.render({
                     then: function () {
-                        expect($('.container--popular').length).toEqual(0);
+                        expect($('.container--popular').length).toBe(0);
                         done();
                     }
+                });
+            });
+
+            it('should not break if no response is empty', function (popular, deps, done) {
+                server.respondWith([200, {}, '{}']);
+                popular.render({
+                    then: done
                 });
             });
 
