@@ -48,7 +48,7 @@
                     <a><i class="icon-remove" data-bind="click: reset"></i></a>
                 </div>
 
-                <div class="title">latest</div>
+                <div class="title" data-bind="text: title"></div>
 
                 <div class="search-form">
                     <div class="search-term">
@@ -67,7 +67,7 @@
 
                         <input type="text" placeholder="filter" data-bind='
                             attr: {placeholder: filterType().placeholder},
-                            event: {keyup: autoComplete, afterpaste: autoComplete},
+                            event: {keyup: autoComplete, afterpaste: autoComplete, change: filterChange},
                             value: filter,
                             valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
@@ -255,7 +255,12 @@
     <script type="text/html" id="template_search_controls">
         <div class="finder__controls">
             Page <span data-bind="text: page"></span>
-            <a data-bind="click: pageNext, visible: showNext()">next</a>
+            <!-- ko if: showNext() -->
+                <a data-bind="click: pageNext">next</a>
+            <!-- /ko -->
+            <!-- ko ifnot: showNext() -->
+                <span>last</span>
+            <!-- /ko -->
             <a data-bind="click: pagePrev, visible: showPrev()">prev</a>
             <a data-bind="click: refresh,  visible: showTop()">top</a>
         </div>
@@ -272,7 +277,7 @@
             }">
 
             <a class="thumb" data-bind="
-                style: {backgroundImage: 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')'},
+                style: {backgroundImage: thumbImage() ? 'url(' + thumbImage() + ')' : ''},
                 attr: {href: id}"></a>
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
