@@ -71,6 +71,12 @@
     }
 }
 
+.fc-container--commercial-capi {
+    .fc-item__image-container {
+        display: block;
+    }    
+}
+
 .fc-container--advertisement-feature {
     .linkslist__action:visited,
     .fc-item__link:visited,
@@ -90,13 +96,11 @@
     }
 }
 
-.fc-container--advertisement-feature,
-.fc-container--sponsored,
-.fc-container--foundation-supported {
+.fc-container--advertisement-feature {
     background-color: colour(neutral-8);
 
     .fc-container__inner {
-        border-top: 1px solid colour(neutral-4);
+
         padding-top: $gs-baseline/2;
     }
 
@@ -120,20 +124,5 @@
         &:before {
             display: none;
         }
-    }
-
-    .fc-item__image-container {
-        display: block;
-    }
-}
-
-.fc-container--sponsored,
-.fc-container--foundation-supported,
-.fc-container--merchandising-feature,
-.container--merchandising-feature {
-    background-color: transparent;
-    
-    .fc-container__inner {
-        border-top: 1px solid colour(neutral-4);
     }
 }
