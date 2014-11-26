@@ -244,14 +244,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
-  // Identity
-
-  val GuMeFlushSwitch = Switch("Identity", "gu-me-flush",
-    "If this switch is on, all users who have the `GU_ME` cookie stored will have it deleted. Background: `GU_ME` cookie" +
-      "stores user's email address in plain text.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 3)
-  )
-
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -445,7 +437,6 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     InlineCriticalCss,
     FacebookAutoSigninSwitch,
-    GuMeFlushSwitch,
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
@@ -498,7 +489,6 @@ object Switches extends Collections {
   )
 
   val httpSwitches: List[Switch] = List(
-    GuMeFlushSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
