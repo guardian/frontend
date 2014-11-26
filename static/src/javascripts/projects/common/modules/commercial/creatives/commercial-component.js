@@ -1,5 +1,5 @@
 /*
- Module: commercial/loader.js
+ Module: commercial/creatives/commercial-component.js
  Description: Loads our commercial components
  */
 define([
@@ -81,10 +81,11 @@ define([
          * @extends Component
          * @param {Object=} params
          */
-        Loader = function ($adSlot, params) {
+        CommercialComponent = function ($adSlot, params) {
             var section = config.page.section,
                 jobs    = params.jobIds ? params.jobIds.split(',') : [];
 
+            this.params = params;
             this.$adSlot = $adSlot;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
@@ -105,21 +106,10 @@ define([
                 capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
                 capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
                 capi:              buildComponentUrl('capi', defaults(params, { s: section }))
-                //
-                //    s:   section,
-                //    t:   opts.capi,
-                //    k:   opts.capiKeywords.split(','),
-                //    l:   opts.logo,
-                //    ct:  opts.capiTitle,
-                //    cl:  opts.capiLinkUrl,
-                //    cal: opts.capiAboutLinkUrl,
-                //    omnitureId: opts.omnitureId,
-                //    clockMacro: opts.clickMacro
-                //})
             };
         };
 
-    Loader.prototype.postLoadEvents = {
+    CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
         }
@@ -128,14 +118,15 @@ define([
     /**
      * @param {Element} target
      */
-    Loader.prototype.load = function () {
+    CommercialComponent.prototype.load = function () {
+        console.log('CommercialComponent.prototype.load');
         new LazyLoad({
-            url: this.components[name],
+            url: this.components[this.params.type],
             container: this.$adSlot,
             success: function () {
-                this.postLoadEvents[name] && this.postLoadEvents[name](target);
+                this.postLoadEvents[this.params.type] && this.postLoadEvents[this.params.type](target);
 
-                mediator.emit('modules:commercial:loader:loaded');
+                mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this)
         }).load();
 
@@ -146,9 +137,10 @@ define([
      * @param {String}  name
      * @param {Element} el
      */
-    Loader.prototype.create = function () {
+    CommercialComponent.prototype.create = function () {
 
-        if (this.components[name] === undefined) {
+        console.log('CommercialComponent.prototype.create');
+        if (this.components[this.params.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
             return false;
         }
@@ -156,5 +148,5 @@ define([
         return this.load();
     };
 
-    return Loader;
+    return CommercialComponent;
 });
