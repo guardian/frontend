@@ -277,7 +277,7 @@
             }">
 
             <a class="thumb" data-bind="
-                style: {backgroundImage: 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')'},
+                style: {backgroundImage: thumbImage() ? 'url(' + thumbImage() + ')' : ''},
                 attr: {href: id}"></a>
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
