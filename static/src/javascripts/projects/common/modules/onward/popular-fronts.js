@@ -26,16 +26,19 @@ define([
                 crossOrigin: true
             }).then(
                 function (resp) {
-                    var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
-                    if (container) {
-                        bonzo(container)
-                            .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
+                    if (resp.faciaHtml) {
+                        var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
 
-                        commentCount.init(container);
-                        // relativise timestamps
-                        relativeDates.init(container);
-                        // upgrade image
-                        images.upgrade(container);
+                        if (container) {
+                            bonzo(container)
+                                .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
+
+                            commentCount.init(container);
+                            // relativise timestamps
+                            relativeDates.init(container);
+                            // upgrade image
+                            images.upgrade(container);
+                        }
                     }
 
                     opts.then && opts.then();
