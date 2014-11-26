@@ -131,11 +131,14 @@
 
     .commercial__title__logo {
         @include fs-header(2);
-        text-align: center;
         display: inline-block;
         position: relative;
         top: -5px;
-        min-width: 54px;
+
+        @include mq(leftCol) {
+            text-align: center;
+            min-width: 54px;
+        }
     }
 
     .commercial__search {
@@ -325,6 +328,11 @@
                 .i-commercial-brand {
                     opacity: .8;
                 }
+            }
+
+            .commercial__title__logo {
+                text-align: left;
+                min-width: auto;
             }
 
             .commercial__desc {
