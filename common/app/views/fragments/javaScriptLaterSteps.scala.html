@@ -38,6 +38,10 @@
 
         if (!isModern) { return false; }
 
+        function isWindowsXP() {
+            return navigator.userAgent.indexOf('Windows NT 5.1') > - 1;
+        }
+
         function loadFontsAsynchronously() {
             @if(FontSwitch.isSwitchedOff) {
                 return;
@@ -45,14 +49,12 @@
 
             var scripts        = document.getElementsByTagName('script'),
                 thisScript     = scripts[scripts.length - 1],
-                // show hinted for Windows XP
-                hintedFonts    = navigator.userAgent.indexOf('Windows NT 5.1') > - 1,
-                webFontsFile   = 'webfonts-hinting-' +  + '-kerning-on.css',
                 fonts          = document.createElement('link');
 
             fonts.rel       = 'stylesheet';
             fonts.className = 'webfonts';
-            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (hintedFonts ? 'On' : 'Off') ].kerningOn;
+            // show hinted for Windows XP
+            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (isWindowsXP() ? 'On' : 'Off') ].kerningOn;
             window.setTimeout(function() {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
@@ -85,6 +87,10 @@
         }
 
         try {
+            // always load fonts on XP async
+            if (isWindowsXP()) {
+                throw new Exception();
+            }
             loadFontsFromStorage();
         } catch (e) {
             loadFontsAsynchronously();
