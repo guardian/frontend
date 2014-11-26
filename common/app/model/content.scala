@@ -477,7 +477,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
     val leftColElements = Jsoup.parseBodyFragment(body).select("body > *").find(_.classNames.intersect(supportingClasses).size > 0)
-
     leftColElements.isDefined
   }
 
