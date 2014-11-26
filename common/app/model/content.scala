@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.{
 }
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import dfp.DfpAgent
 import fronts.MetadataDefaults
 import ophan.SurgingContentAgent
@@ -61,14 +62,22 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
 
+  private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
+
+  protected def bestOpenGraphImage: Option[String] = {
+    if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
+      trailPicture.flatMap(largestImageUrl)
+    } else {
+      None
+    }
+  }
+
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-
-    def largest(i: ImageContainer) = i.largestImage.flatMap(_.url)
-
-    mainPicture.flatMap(largest)
-      .orElse(trailPicture.flatMap(largest))
+    bestOpenGraphImage
+      .orElse(mainPicture.flatMap(largestImageUrl))
+      .orElse(trailPicture.flatMap(largestImageUrl))
       .getOrElse(facebook.imageFallback)
   }
 
@@ -659,7 +668,11 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "galleryLightbox" -> lightbox
   )
 
-  override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+  override lazy val openGraphImage: String = {
+    bestOpenGraphImage
+      .orElse(galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)))
+      .getOrElse(conf.Configuration.facebook.imageFallback)
+  }
 
   override def openGraphImages: Seq[String] = largestCrops.flatMap(_.url)
 
