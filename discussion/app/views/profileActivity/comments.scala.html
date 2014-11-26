@@ -1,4 +1,7 @@
-@(page: Page, profileComments: discussion.model.ProfileComments)(implicit request: RequestHeader)
+@(page: _root_.model.Page, profileComments: discussion.model.ProfileComments)(implicit request: RequestHeader)
+
+@import common.SimplePagePaths
+@import views.support.Seq2zipWithRowInfo
 
 <div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments" data-link-name="User activity replies">
     @if(profileComments.comments.isEmpty){
@@ -24,7 +27,7 @@
             }
         </div>
         <div class="activity-stream__pagination u-cf">
-            @fragments.pagination(page, profileComments.pagination, Some("js-activity-stream-page-change"), false, Some("Comments"))
+            @fragments.pagination(page.webTitle, profileComments.pagination, SimplePagePaths(page.url), Some("js-activity-stream-page-change"), false, Some("Comments"))
         </div>
     }
 </div>
