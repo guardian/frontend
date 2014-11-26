@@ -25,7 +25,7 @@ define([
             event.preventDefault();
             event.stopPropagation();
 
-            targetGroup.setAsTarget(targetItem);
+            targetGroup.setAsTarget(targetItem, !!event.ctrlKey);
         },
         dragleave: function (element, event) {
             var targetGroup = ko.dataFor(element);
@@ -57,7 +57,7 @@ define([
             copiedArticle.flush();
 
             targetGroup.unsetAsTarget();
-            targetItem.drop(source, targetGroup);
+            targetItem.drop(source, targetGroup, !!event.ctrlKey);
         }
     };
 

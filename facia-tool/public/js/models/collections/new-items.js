@@ -152,10 +152,49 @@ define([
         }
     }
 
+    function mergeItems(newItem, oldItem) {
+        var interesting = ['customKicker', 'isBoosted', 'showBoostedHeadline', 'showKickerCustom'];
+        interesting.forEach(function (field) {
+            newItem.meta[field](oldItem.meta[field]());
+        });
+        newItem.meta.supporting = oldItem.meta.supporting;
+        newItem.group = oldItem.group;
+
+        var sourceGroup = oldItem.group;
+        var itemMeta = newItem.getMeta() || {};
+        var update = {
+            collection: sourceGroup.parent,
+            item: newItem.id(),
+            position: oldItem.id(),
+            after: false,
+            live: vars.state.liveMode(),
+            draft: !vars.state.liveMode(),
+            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+        };
+        var remove = remover(sourceGroup, oldItem.id());
+
+        authedAjax.updateCollections({
+            update: update,
+            remove: remove
+        })
+        .then(function () {
+            if (vars.state.liveMode()) {
+                vars.model.deferredDetectPressFailure();
+            }
+        });
+        if (sourceGroup && !sourceGroup.keepCopy) {
+            var insertAt = sourceGroup.items().indexOf(oldItem);
+            sourceGroup.items.splice(insertAt, 1, newItem); // for immediate UI effect
+        }
+
+        return newItem;
+    }
+
     return {
         newItemsConstructor: newItemsConstructor,
         newItemsValidator: newItemsValidator,
         newItemsPersister: newItemsPersister,
-        mediaHandler: mediaHandler
+        mediaHandler: mediaHandler,
+        mergeItems: mergeItems
     };
 });

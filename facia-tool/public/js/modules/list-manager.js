@@ -70,10 +70,34 @@ define([
         });
     }
 
+    function alternateAction (opts) {
+        if (opts.targetGroup.parentType === 'Article') {
+            var id = urlAbsPath(opts.sourceItem.id);
+
+            if (id.indexOf('internal-code/content/') !== 0) {
+                return;
+            }
+
+            var newItems = opts.newItemsConstructor(urlAbsPath(id), null, opts.targetGroup);
+
+            if (!newItems[0]) {
+                alertBadContent();
+                return;
+            }
+
+            opts.mergeItems(newItems[0], opts.targetGroup.parent);
+        }
+    }
+
     return {
         init: _.once(function(newItems) {
             mediator.on('collection:updates', function(opts) {
-                listManager(_.extend(opts, newItems));
+                var options = _.extend(opts, newItems);
+                if (opts.alternateAction) {
+                    alternateAction(options);
+                } else {
+                    listManager(options);
+                }
             });
         })
     };
