@@ -50,7 +50,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
         )
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
-    val optClickMacro = request.getParameter("clickMacro").get
+    val optClickMacro = request.getParameter("clickMacro")
 
     val optOmnitureId = request.getParameter("omnitureId")
 
