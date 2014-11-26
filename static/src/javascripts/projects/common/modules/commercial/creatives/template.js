@@ -10,6 +10,7 @@ define([
 
     /**
      * Generic template creative -
+     *
      *  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
     var Template = function ($adSlot, params) {
