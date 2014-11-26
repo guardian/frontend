@@ -3,6 +3,7 @@ package layout
 import model.{Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
+import services.ConfigAgent
 
 sealed trait FaciaHeaderImageType
 
@@ -32,7 +33,7 @@ object FaciaContainerHeader {
     None,
     sectionPage.description,
     dateHeadline,
-    s"/${sectionPage.id}"
+    sectionPage.id
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
@@ -41,7 +42,7 @@ object FaciaContainerHeader {
       None,
       None,
       dateHeadline,
-      s"/${page.id}"
+      page.id
     )
   }
 
@@ -52,7 +53,7 @@ object FaciaContainerHeader {
         tagPage.getFootballBadgeUrl.map(FaciaHeaderImage(_, FootballBadge)),
         tagPage.description,
         dateHeadline,
-        s"/${tagPage.id}"
+        tagPage.id
       )
     } else if (tagPage.isContributor) {
       MetaDataHeader(
@@ -60,7 +61,7 @@ object FaciaContainerHeader {
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         Some(tagPage.bio).filter(_.nonEmpty) orElse tagPage.description,
         dateHeadline,
-        s"/${tagPage.id}"
+        tagPage.id
       )
     } else {
       MetaDataHeader(
@@ -68,7 +69,7 @@ object FaciaContainerHeader {
         None,
         tagPage.description,
         dateHeadline,
-        s"/${tagPage.id}"
+        tagPage.id
       )
     }
   }
@@ -81,8 +82,12 @@ case class MetaDataHeader(
   image: Option[FaciaHeaderImage],
   description: Option[String],
   dateHeadline: DateHeadline,
-  frontPagePath: String
-) extends FaciaContainerHeader
+  frontId: String
+) extends FaciaContainerHeader {
+  def showFrontLink = ConfigAgent.shouldServeFront(frontId)
+
+  def frontPagePath = s"/$frontId"
+}
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 
