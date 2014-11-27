@@ -487,8 +487,8 @@ define([
                 {
                     maxWidth: 1000,
                     minWidth: 400,
-                    widthAspectRatio: 3,
-                    heightAspectRatio: 5
+                    widthAspectRatio: 5,
+                    heightAspectRatio: 3
                 }
             );
         };
