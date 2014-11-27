@@ -68,17 +68,11 @@ define([
         /**
          * Loads commercial components.
          *
-         * BEWARE that this code is depended upon by the ad server.
-         *
-         * ```
-         * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-         *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
-         *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
-         * })
-         * ```
+         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
          *
          * @constructor
          * @extends Component
+         * @param (Object=) $adSlot
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
@@ -87,6 +81,7 @@ define([
 
             this.params = params;
             this.$adSlot = $adSlot;
+            this.type = params.type;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
@@ -120,10 +115,10 @@ define([
      */
     CommercialComponent.prototype.load = function () {
         new LazyLoad({
-            url: this.components[this.params.type],
+            url: this.components[this.type],
             container: this.$adSlot,
             success: function () {
-                this.postLoadEvents[this.params.type] && this.postLoadEvents[this.params.type](this.$adSlot);
+                this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this)
@@ -137,7 +132,7 @@ define([
      * @param {Element} el
      */
     CommercialComponent.prototype.create = function () {
-        if (this.components[this.params.type] === undefined) {
+        if (this.components[this.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
             return false;
         }
