@@ -294,7 +294,7 @@ define([
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
                 $iFrameParent      = $iFrame.parent();
-console.log('iFrameBody');
+
             if (iFrameBody) {
                 forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
@@ -305,7 +305,6 @@ console.log('iFrameBody');
                         if (breakoutClass === 'breakout__script') {
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
-                                console.log(breakoutContent);
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
