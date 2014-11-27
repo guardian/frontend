@@ -335,6 +335,16 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
 
+                var updateClipboardScrollable = function (what) {
+                    var onClipboard = true;
+                    if (what && what.targetGroup) {
+                        onClipboard = what.targetGroup.parentType === 'Clipboard';
+                    }
+                    if (onClipboard) {
+                        _.defer(updateScrollables);
+                    }
+                };
+
                 mediator.on('ui:open', function(element, article) {
                     if (model.uiOpenArticle() &&
                         model.uiOpenArticle().group &&
@@ -344,7 +354,16 @@ define([
                     }
                     model.uiOpenArticle(article);
                     model.uiOpenElement(element);
+
+                    updateClipboardScrollable(article ? {
+                        targetGroup: article.group
+                    } : null);
                 });
+
+                mediator.on('collection:updates', updateClipboardScrollable);
+                mediator.on('ui:close', updateClipboardScrollable);
+                mediator.on('ui:omit', updateClipboardScrollable);
+                mediator.on('ui:resize', updateClipboardScrollable);
             });
 
             listManager.init(newItems);
