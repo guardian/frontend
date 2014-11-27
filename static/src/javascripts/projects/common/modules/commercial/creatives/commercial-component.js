@@ -119,12 +119,11 @@ define([
      * @param {Element} target
      */
     CommercialComponent.prototype.load = function () {
-        console.log('CommercialComponent.prototype.load');
         new LazyLoad({
             url: this.components[this.params.type],
             container: this.$adSlot,
             success: function () {
-                this.postLoadEvents[this.params.type] && this.postLoadEvents[this.params.type](target);
+                this.postLoadEvents[this.params.type] && this.postLoadEvents[this.params.type](this.$adSlot);
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this)
@@ -138,8 +137,6 @@ define([
      * @param {Element} el
      */
     CommercialComponent.prototype.create = function () {
-
-        console.log('CommercialComponent.prototype.create');
         if (this.components[this.params.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
             return false;
