@@ -7,8 +7,6 @@ import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
 
-import scala.concurrent.{Future, Promise}
-
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
@@ -18,11 +16,9 @@ case class Switch( group: String,
                    description: String,
                    safeState: SwitchState,
                    sellByDate: LocalDate
-                   ) extends Switchable with ExecutionContexts {
+                   ) extends Switchable with Initializable[Switch] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
-
-  private val initialized = Promise[Switch]()
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
 
@@ -30,20 +26,18 @@ case class Switch( group: String,
     if (isSwitchedOff) {
       delegate.switchOn()
     }
-    initialized.trySuccess(this)
+    initialized(this)
   }
   def switchOff() {
     if (isSwitchedOn) {
       delegate.switchOff()
     }
-    initialized.trySuccess(this)
+    initialized(this)
   }
 
   def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
 
   def expiresSoon = daysToExpiry < 7
-
-  def onInitialized: Future[Switch] = initialized.future
 }
 
 object Switches extends Collections {
