@@ -2,9 +2,8 @@ package conf
 
 import java.util.concurrent.TimeoutException
 
-import common.{ExecutionContexts, Logging}
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
+import common.{AkkaAsync, ExecutionContexts, Logging}
+import play.api.Play
 
 import scala.concurrent.duration._
 import scala.concurrent.{Future, Promise}
@@ -13,11 +12,13 @@ trait Initializable[T] extends ExecutionContexts with Logging {
 
   private val initialized = Promise[T]()
 
-  protected val initializationTimeout: FiniteDuration = 1.minute
+  protected val initializationTimeout: FiniteDuration = 2.minutes
 
-  Akka.system.scheduler.scheduleOnce(initializationTimeout) {
-    initialized.tryFailure {
-      new TimeoutException(s"Initialization timed out after $initializationTimeout")
+  if (Play.maybeApplication.isDefined) {
+    AkkaAsync.after(initializationTimeout) {
+      initialized.tryFailure {
+        new TimeoutException(s"Initialization timed out after $initializationTimeout")
+      }
     }
   }
 
