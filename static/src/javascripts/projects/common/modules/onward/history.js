@@ -3,103 +3,211 @@
  Description: Gets and sets users reading history
  */
 define([
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/storage'
 ], function (
-    assign,
+    _,
     storage
 ) {
+    var historySize = 50,
+        summaryPeriodDays = 30,
+        popularSize = 10,
 
-    var history,
-        summary,
+        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
+        historyCache,
+        summaryCache,
+        popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        maxSize = 100;
+        storageKeyPopular = 'gu.history.popular',
+        taxonomy = [
+            {tid: 'section',    tname: 'sectionName'},
+            {tid: 'keywordIds', tname: 'keywords'},
+            {tid: 'seriesId',   tname: 'series'},
+            {tid: 'authorIds',  tname: 'author'}
+        ];
 
-    function HistoryItem(item) {
-        assign(this, item.meta);
-        this.id = item.id;
-        this.timestamp = Date.now();
-        this.count = 1;
-        return this;
+    function saveHistory(history) {
+        historyCache = history;
+        return storage.local.set(storageKeyHistory, history);
     }
 
-    function setHistory(data) {
-        history = data;
-        return storage.local.set(storageKeyHistory, data);
+    function saveSummary(summary) {
+        summaryCache = summary;
+        return storage.local.set(storageKeySummary, summary);
     }
 
-    function setSummary(data) {
-        summary = data;
-        return storage.local.set(storageKeySummary, data);
+    function savePopular(popular) {
+        popularCache = popular;
+        return storage.local.set(storageKeyPopular, popular);
     }
 
-    function updateSummary(summary, meta) {
-        var section = meta.section,
-            keyword = (meta.keywords || [])[0];
+    function getHistory() {
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
+    }
 
-        if (section) {
-            summary.sections[section] = (summary.sections[section] || 0) + 1;
+    function getPopular() {
+        popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
+        return popularCache;
+    }
+
+    function getSummary() {
+        var summary = summaryCache || storage.local.get(storageKeySummary);
+
+        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
+            summary = summaryCache = {
+                periodEnd: today,
+                tags: {}
+            };
+        }
+        return summary;
+    }
+
+    function pruneSummary(summary) {
+        var updateBy = today - summary.periodEnd;
+
+        if (updateBy > 0) {
+            summary.periodEnd = today;
+
+            _.each(summary.tags, function (nameAndFreqs, tid) {
+                var freqs = _.chain(nameAndFreqs[1])
+                    .map(function (freq) {
+                        var newAge = freq[0] + updateBy;
+                        return newAge < summaryPeriodDays ? [newAge, freq[1]] : false;
+                    })
+                    .compact()
+                    .value();
+
+                if (freqs.length) {
+                    summary.tags[tid] = [nameAndFreqs[0], freqs];
+                } else {
+                    delete summary.tags[tid];
+                }
+            });
+
+            if (_.isEmpty(summary.tags)) {
+                summary.periodEnd = today;
+            }
         }
 
-        if (keyword) {
-            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
-        }
+        return summary;
+    }
+
+    function calculatePopular(summary) {
+        return _.chain(summary.tags)
+            .map(function (nameAndFreqs, tid) {
+                return {
+                    idAndName: [tid, nameAndFreqs[0]],
+                    rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
+                        return rank + (freq[1] * (summaryPeriodDays - freq[0]));
+                    }, 0)
+                };
+            })
+            .sortBy('rank')
+            .last(popularSize)
+            .reverse()
+            .pluck('idAndName')
+            .value();
+    }
+
+    function firstCsv(str) {
+        return (str || '').split(',')[0];
+    }
+
+    function collapseTag(t) {
+        t = t.replace(/^(uk|us|au)\//, '');
+        t = t.split('/');
+        t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
+        return t.join('/');
     }
 
     return {
         reset: function () {
-            history = undefined;
-            summary = undefined;
+            historyCache = undefined;
+            summaryCache = undefined;
+            popularCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
+            storage.local.remove(storageKeyPopular);
         },
 
-        get: function () {
-            history = history || storage.local.get(storageKeyHistory) || [];
-            return history;
-        },
+        getHistory: getHistory,
 
-        getSummary: function () {
-            summary = summary || storage.local.get(storageKeySummary) || {sections: {}, keywords: {}};
-            return summary;
-        },
+        getPopular: getPopular,
 
         getSize: function () {
-            return this.get().length;
+            return getHistory().length;
         },
 
-        contains: function (id) {
-            return this.get().some(function (el) {
-                return el.id === id;
-            });
+        contains: function (pageId) {
+            return (_.find(getHistory(), function (page) {
+                return (page[0] === pageId);
+            }) || [])[1] > 0;
         },
 
-        log: function (newItem) {
-            var foundItem,
-                summary = {sections: {}, keywords: {}},
-                hist = this.get().filter(function (item) {
-                    var found = (item.id === newItem.id);
+        isRevisit: function (pageId) {
+            return (_.find(getHistory(), function (page) {
+                return (page[0] === pageId);
+            }) || [])[1] > 1;
+        },
 
-                    updateSummary(summary, item);
-                    foundItem = found ? item : foundItem;
-                    return !found;
-                });
+        log: function (pageConfig) {
+            var pageId = pageConfig.pageId,
+                history,
+                summary,
+                foundCount = 0;
 
-            if (foundItem) {
-                foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
-                hist.unshift(foundItem);
-            } else {
-                updateSummary(summary, newItem.meta);
-                hist.unshift(new HistoryItem(newItem));
-                hist = hist.slice(0, maxSize);
+            if (!pageConfig.isFront) {
+                history = getHistory()
+                    .filter(function (item) {
+                        var isArr = _.isArray(item),
+                            found = isArr && (item[0] === pageId);
+
+                        foundCount = found ? item[1] : foundCount;
+                        return isArr && !found;
+                    });
+
+                history.unshift([pageId, foundCount + 1]);
+                saveHistory(history.slice(0, historySize));
             }
 
-            summary.count = hist.length;
+            summary = pruneSummary(getSummary());
+            _.chain(taxonomy)
+                .reduceRight(function (tags, tag) {
+                    var tid = firstCsv(pageConfig[tag.tid]),
+                        tname = tid && firstCsv(pageConfig[tag.tname]);
 
-            setSummary(summary);
-            setHistory(hist);
+                    if (tid && tname) {
+                        tags[collapseTag(tid)] = tname;
+                    }
+                    return tags;
+                }, {})
+                .each(function (tname, tid) {
+                    var nameAndFreqs = summary.tags[tid],
+                        freqs = nameAndFreqs && nameAndFreqs[1],
+                        freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
+
+                    if (freq) {
+                        freq[1] = freq[1] + 1;
+                    } else if (freqs) {
+                        freqs.unshift([0, 1]);
+                    } else {
+                        summary.tags[tid] = [tname, [[0, 1]]];
+                    }
+
+                    if (nameAndFreqs) {
+                        nameAndFreqs[0] = tname;
+                    }
+                });
+            saveSummary(summary);
+            savePopular(calculatePopular(summary));
+        },
+
+        test: {
+            today: today,
+            getSummary: getSummary,
+            pruneSummary: pruneSummary
         }
     };
 });

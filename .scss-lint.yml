@@ -99,7 +99,7 @@ linters:
   SpaceAfterComma:
     enabled: true
     exclude:
-      - static/src/stylesheets/webfonts.scss
+      - static/src/stylesheets/webfonts*.scss
 
   SpaceAfterPropertyColon:
     enabled: true

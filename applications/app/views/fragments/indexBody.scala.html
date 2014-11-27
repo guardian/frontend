@@ -4,7 +4,7 @@
 @import views.html.fragments.pagination
 @import services.IndexPage
 @import model.FrontProperties.empty
-@import common.Edition
+@import common.{Edition, PagePaths}
 @import fragments.containers.facia_cards.container
 
 <div class="l-side-margins">
@@ -30,9 +30,9 @@
             }
         }
 
-        @index.page.pagination.map { paginate =>
+        @index.page.pagination.map { paginationInstance =>
             <div class="fc-container__pagination">
-                @pagination(index.page, paginate)
+                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.page.id))
             </div>
         }
 

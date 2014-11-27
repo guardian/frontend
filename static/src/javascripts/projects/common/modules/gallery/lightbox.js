@@ -241,7 +241,7 @@ define([
                     $img.attr('src', imgSrc); // src can change with width so overwrite every time
 
                     bean.one($img[0], 'load', function () {
-                        $('.js-loader', $parent[0]).remove();
+                        $('.js-loader').remove();
                     });
 
                 }
@@ -522,7 +522,7 @@ define([
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
             } else {
-                res = /^#(?:img-)?(\d)+$/.exec(galleryHash);
+                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
                 if (res) {
                     lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
                 }

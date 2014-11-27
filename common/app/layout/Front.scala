@@ -79,9 +79,9 @@ object Front extends implicits.Collections {
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => participatesInDeduplication(trail) && seen.contains(trail.url))
+        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
           .distinctBy(_.url)
-        (seen ++ notUsed.filter(participatesInDeduplication).take(nToTake).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
@@ -312,7 +312,7 @@ case class FaciaContainer(
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
       case LoneDateHeadline(dateHeadline) => dateHeadline
     }
 

@@ -338,6 +338,20 @@ define([
             } else {
                 this.updateEditorsDisplay();
             }
+
+            this.thumbImage = ko.computed(function () {
+                var meta = this.meta,
+                    fields = this.fields,
+                    state = this.state;
+
+                if (meta.imageReplace() && meta.imageSrc()) {
+                    return meta.imageSrc();
+                } else if (meta.imageCutoutReplace()) {
+                    return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                } else {
+                    return fields.thumbnail();
+                }
+            }, this);
         }
 
         Article.prototype.copy = function() {
@@ -473,8 +487,8 @@ define([
                 {
                     maxWidth: 1000,
                     minWidth: 400,
-                    widthAspectRatio: 3,
-                    heightAspectRatio: 5
+                    widthAspectRatio: 5,
+                    heightAspectRatio: 3
                 }
             );
         };
@@ -734,6 +748,17 @@ define([
             this.close();
             this.save();
             return false;
+        };
+
+        Article.prototype.drop = function (source, targetGroup) {
+            mediator.emit('collection:updates', {
+                sourceItem: source.sourceItem,
+                sourceGroup: source.sourceGroup,
+                targetItem: this,
+                targetGroup: targetGroup,
+                isAfter: false,
+                mediaItem: source.mediaItem
+            });
         };
 
         function getMainMediaType(contentApiArticle) {

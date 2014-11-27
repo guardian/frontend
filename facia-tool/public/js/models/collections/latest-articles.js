@@ -51,25 +51,30 @@ define([
         };
 
         this.suggestions = ko.observableArray();
+        this.lastSearch = ko.observable();
 
         this.page = ko.observable(1);
         this.totalPages = ko.observable(1);
 
+        this.title = ko.computed(function () {
+            var lastSearch = this.lastSearch(),
+                title = 'latest';
+            if (lastSearch && lastSearch.filter) {
+                title += ' in ' + lastSearch.filter;
+            }
+            return title;
+        }, this);
+
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
             self.suggestions.removeAll();
+            self.filterChange();
             self.search();
         };
 
         this.clearFilter = function() {
             self.filter('');
             self.suggestions.removeAll();
-        };
-
-        this.setSection = function(str) {
-            self.filterType(opts.filterTypes.section);
-            self.setFilter(str);
-            self.clearTerm();
         };
 
         this.clearTerm = function() {
@@ -83,6 +88,16 @@ define([
             })
             .progress(self.suggestions)
             .then(self.suggestions);
+        };
+
+        this.filterChange = function () {
+            if (!this.filter()) {
+                var lastSearch = this.lastSearch();
+                if (lastSearch && lastSearch.filter) {
+                    // The filter has been cleared
+                    this.search();
+                }
+            }
         };
 
         function fetch (opts) {
@@ -137,6 +152,7 @@ define([
                             newArticles.push(new Article(opts, true));
                         });
                         self.articles(newArticles);
+                        self.lastSearch(request);
                         self.totalPages(response.pages);
                         self.page(response.currentPage);
                     },
@@ -185,7 +201,7 @@ define([
         };
 
         this.showNext = ko.computed(function () {
-            return this.totalPages() >= this.page();
+            return this.totalPages() > this.page();
         }, this);
 
         this.showPrev = ko.computed(function () {

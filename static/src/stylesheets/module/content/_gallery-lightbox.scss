@@ -397,10 +397,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
     .fc-container__header {
         width: 100%;
-        border-bottom: 1px solid colour(neutral-2);
-        margin-bottom: $gs-baseline * 2;
+        margin-bottom: $gs-baseline;
     }
-
     .fc-container__inner {
         width: auto;
         border-top: 0 !important;

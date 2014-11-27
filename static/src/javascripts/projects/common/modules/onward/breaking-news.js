@@ -23,7 +23,6 @@ define([
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
-        interestThreshold = 5,
         maxSimultaneousAlerts = 1,
         container;
 
@@ -52,26 +51,24 @@ define([
 
                     keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
 
-                    pageMatchers = [
-                        page.edition,
-                        page.section,
-                        slashDelimit(page.edition, page.section),
-                        window.location.pathname.slice(1),
-                        keyword,
-                        keyword.split('/')[0]
-                    ]
-                    .filter(function (match) { return match; })
-                    .reduce(function (matchers, term) {
-                        matchers[term.toLowerCase()] = true;
-                        return matchers;
-                    }, {}),
-
-                    historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
+                    pageMatchers = history.getPopular().map(function (idAndName) { return idAndName[0]; })
+                        .concat([
+                            page.edition,
+                            page.section,
+                            slashDelimit(page.edition, page.section),
+                            window.location.pathname.slice(1),
+                            keyword,
+                            keyword.split('/')[0]
+                        ])
+                        .filter(function (match) { return match; })
+                        .reduce(function (matchers, term) {
+                            matchers[term.toLowerCase()] = true;
+                            return matchers;
+                        }, {}),
 
                     articles = flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return historyMatchers[c.href] >= interestThreshold; }).map(function (c) { return c.content; })
+                        collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; })
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; });

@@ -3,127 +3,75 @@ define([
     'bonzo',
     'qwery',
     'raven',
+    'common/utils/$',
     'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage'
 ], function (
     bonzo,
     qwery,
     raven,
+    $,
     ajax,
+    config,
+    detect,
     mediator,
     storage
 ) {
 
-    function Fonts(styleNodes, fileFormat) {
+    var storagePrefix = 'gu.fonts.',
+        fileFormat    = detect.getFontFormatSupport(navigator.userAgent);
 
-        var storagePrefix = 'gu.fonts.';
+    return {
 
-        this.ajax = ajax; // expose publicly so we can inspect it in unit tests
+        load: function () {
 
-        this.view = {
-            showFont: function (style, json) {
-                style.innerHTML = json.css;
-            }
-        };
-
-        this.loadFromServer = function (url, callback) {
-
-            // If no URL, then load from standard static assets path.
-            url = url || '';
-            // NOTE - clearing old fonts, can be removed after a certain amount of time
-            storage.local.clearByPrefix('gu.fonts.Web');
-            var i, j, style, that;
-            for (i = 0, j = styleNodes.length; i < j; ++i) {
-                clearOldFonts(styleNodes[i]);
-                style = styleNodes[i];
-                if (fontIsRequired(style)) {
-                    that = this;
-                    this.ajax({
-                        url: url + style.getAttribute('data-cache-file-' + fileFormat),
-                        type: 'jsonp',
-                        jsonpCallbackName: 'guFont',
-                        success: (function (style) {
-                            return function (json) {
-                                if (!json) {
-                                    raven.captureMessage('Failed to load fonts');
-                                    return;
-                                }
-                                if (typeof callback === 'function') {
-                                    callback(style, json);
-                                }
-
-                                var nameAndCacheKey = getNameAndCacheKey(style);
-
-                                that.clearFont(nameAndCacheKey[1]);
-                                storage.local.set(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0], json.css);
-                                mediator.emit('modules:fonts:loaded', [json.name]);
-                            };
-                        }(style))
-                    });
-                } else {
-                    mediator.emit('modules:fonts:notloaded', []);
-                }
-            }
-        };
-
-        this.loadFromServerAndApply = function (url) {
-            var that = this;
-            this.loadFromServer(url, function (style, json) {
-                that.view.showFont(style, json);
-            });
-        };
-
-        this.clearFont = function (name) {
-            storage.local.clearByPrefix(storagePrefix + name);
-        };
-
-        this.clearAllFontsFromStorage = function () {
-            storage.local.clearByPrefix(storagePrefix);
-        };
-
-        function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/([^/]*?)\/?([^/]*)\.woff.json$/);
-            nameAndCacheKey.shift();
-            return nameAndCacheKey;
-        }
-
-        function fontIsRequired(style) {
-            // A final check for storage (is it full, disabled, any other error).
-            // Because it would be horrible if people downloaded fonts and then couldn't cache them.
-            if (storage.local.isAvailable()) {
-                var nameAndCacheKey =  getNameAndCacheKey(style),
-                    cachedValue     = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]),
-                    widthMatches    = true,
-                    minWidth        = style.getAttribute('data-min-width');
-                if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
-                    widthMatches = false;
-                }
-
-                return cachedValue === null && widthMatches;
-            } else {
+            if (!config.switches.webFonts || qwery('.webfonts').length) {
                 return false;
             }
-        }
 
-        /**
-         * NOTE: temp method, to fix bug with removal of old fonts - can be removed if font files update
-         */
-        function clearOldFonts(style) {
-            var i, name,
-                key        = getNameAndCacheKey(style),
-                fontPrefix = 'gu.fonts.' + key[1],
-                fontName   = fontPrefix + '.' + key[0];
-            for (i = storage.local.length() - 1; i > -1; --i) {
-                name = storage.local.getKey(i);
-                if (name.indexOf(fontPrefix) === 0 && name.indexOf(fontName) !== 0) {
-                    storage.local.remove(name);
-                }
+            if (!storage.local.get(storagePrefix + 'format')) {
+                storage.local.set(storagePrefix + 'format', fileFormat);
             }
+
+            $('.webfont:not([data-cache-full])').each(function (webfont) {
+                var $webFont      = bonzo(webfont),
+                    fontFile      = $webFont.data('cache-file-' + fileFormat),
+                    minBreakpoint = $webFont.data('min-breakpoint');
+
+                if (minBreakpoint && !detect.isBreakpoint({ min: minBreakpoint })) {
+                    return;
+                }
+
+                ajax({
+                    url:               fontFile,
+                    type:              'jsonp',
+                    jsonpCallbackName: 'guFont',
+                    success:            function (resp) {
+                        if (!resp) {
+                            raven.captureMessage('Failed to load fonts');
+                            return;
+                        }
+
+                        // clear old font and store
+                        var fontInfo = fontFile.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                            fontHash = fontInfo[1],
+                            fontName = fontInfo[2];
+                        storage.local.clearByPrefix(storagePrefix + fontName);
+                        storage.local.set(storagePrefix + fontName + '.' + fontHash, resp.css);
+
+                        $webFont.text(resp.css)
+                            .attr('data-cache-full', 'data-cache-full');
+
+                        mediator.emit('modules:fonts:loaded', name);
+                    }
+                });
+            });
+
         }
 
-    }
-
-    return Fonts;
+    };
 
 });

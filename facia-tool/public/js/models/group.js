@@ -43,5 +43,52 @@ define([
         };
     }
 
+    Group.prototype.setAsTarget = function(targetItem) {
+        this.underDrag(targetItem.constructor === Group);
+        _.each(this.items(), function(item) {
+            var underDrag = (item === targetItem);
+            if (underDrag !== item.state.underDrag()) {
+                item.state.underDrag(underDrag);
+            }
+        });
+    };
+
+    Group.prototype.unsetAsTarget = function() {
+        this.underDrag(false);
+        _.each(this.items(), function(item) {
+            if (item.state.underDrag()) {
+                item.state.underDrag(false);
+            }
+        });
+    };
+
+    Group.prototype.drop = function(source, targetGroup) {
+        var isAfter = false, groups;
+        // assume it's to be appended *after* the other items in this group,
+        var targetItem = _.last(targetGroup.items());
+        if (targetItem) {
+            isAfter = true;
+        // or if there arent't any other items, after those in the first preceding group that contains items.
+        } else if (targetGroup.parentType === 'Collection') {
+            groups = targetGroup.parent.groups;
+            for (var i = groups.indexOf(targetGroup) - 1; i >= 0; i -= 1) {
+                targetItem = _.last(groups[i].items());
+                if (targetItem) {
+                    isAfter = true;
+                    break;
+                }
+            }
+        }
+
+        mediator.emit('collection:updates', {
+            sourceItem: source.sourceItem,
+            sourceGroup: source.sourceGroup,
+            targetItem: targetItem,
+            targetGroup: targetGroup,
+            isAfter: isAfter,
+            mediaItem: source.mediaItem
+        });
+    };
+
     return Group;
 });

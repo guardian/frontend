@@ -257,18 +257,19 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
       article.lightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
-          val fig = body.select("[data-media-id=" + imageElement.id + "]").first()
-          val linkIndex = (index + 1).toString
-          val hashSuffix = "img-" + linkIndex
-          fig.attr("id", hashSuffix)
-          fig.addClass("fig--narrow-caption")
+          body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
+            val linkIndex = (index + 1).toString
+            val hashSuffix = "img-" + linkIndex
+            fig.attr("id", hashSuffix)
+            fig.addClass("fig--narrow-caption")
 
-          fig.getElementsByTag("img").foreach { img =>
-            val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
-            img.after(html.toString())
+            fig.getElementsByTag("img").foreach { img =>
+              val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+              img.after(html.toString())
 
-            img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-            img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+              img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+              img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+            }
           }
       }
     }
