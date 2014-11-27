@@ -16,12 +16,11 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
       item.content.map { apiContent =>
         val pageShares = model.Content(apiContent).pageShares
 
-        pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Pinterest", "Google plus", "WhatsApp"))
+        pageShares.map(_.text) should be (List("Facebook", "Twitter", "Email", "Google plus", "WhatsApp"))
         pageShares.map(_.href) should be (List(
           "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsfb&ref=responsive",
           "https://twitter.com/intent/tweet?text=2014+Wildlife+photographer+of+the+Year&url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fstw",
           "mailto:?subject=2014%20Wildlife%20photographer%20of%20the%20Year&body=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsbl",
-          "http://www.pinterest.com/pin/find/?url=http%3A%2F%2Fwww.theguardian.com%2Fenvironment%2Fgallery%2F2014%2Foct%2F22%2F2014-wildlife-photographer-of-the-year",
           "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fsgp&amp;hl=en-GB&amp;wwc=1",
           "whatsapp://send?text=%222014%20Wildlife%20photographer%20of%20the%20Year%22%20http%3A%2F%2Fgu.com%2Fp%2F42jcb%2Fswa"))
       }
