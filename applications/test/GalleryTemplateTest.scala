@@ -42,6 +42,11 @@ import scala.collection.JavaConversions._
     $("meta[name='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg")
   }
 
+  it should "have only ONE opengraph image in a gallery" in goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    import browser._
+    $("meta[property='og:image']").size() should be(1)
+  }
+
   it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
     FacebookShareUseTrailPicFirstSwitch.switchOn()
     goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
