@@ -13,12 +13,16 @@ import play.twirl.api.Html
 
 import scala.concurrent.Future
 
-object Multi extends Controller with ExecutionContexts with implicits.Collections {
+object Multi
+  extends Controller
+  with ExecutionContexts
+  with implicits.Collections
+  with implicits.Requests {
 
   def renderMulti() = MemcachedAction { implicit request =>
 
     Future.successful {
-      val componentParts: Seq[Html] = request.queryString("c").flatMap {
+      val componentParts: Seq[Html] = request.getParameters("c") flatMap {
         case "jobs" =>
           JobsAgent.jobsTargetedAt(segment).headOption map { job =>
             views.html.jobFragments.job(job)
