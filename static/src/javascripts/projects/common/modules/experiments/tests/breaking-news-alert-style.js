@@ -33,14 +33,14 @@ define([
                 id: 'top',
                 test: function () {
                     $el.addClass('breaking-news--top');
-                    bonzo(document.body).prepend(bonzo(bonzo.create($el[0])).addClass('breaking-news--spectre'))
+                    bonzo(document.body).prepend(bonzo(bonzo.create($el[0])).addClass('breaking-news--spectre'));
                 }
             },
             {
                 id: 'bottom',
                 test: function () {
                     $el.addClass('breaking-news--bottom');
-                    bonzo(document.body).append(bonzo(bonzo.create($el[0])).addClass('breaking-news--spectre'))
+                    bonzo(document.body).append(bonzo(bonzo.create($el[0])).addClass('breaking-news--spectre'));
                 }
             },
             {

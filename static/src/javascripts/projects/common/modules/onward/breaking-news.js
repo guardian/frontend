@@ -37,16 +37,6 @@ define([
         var page = config.page,
             hiddenIds = storage.local.get(storageKeyHidden) || [];
 
-        this.init = function(type) {
-            type = (type || 'top');
-
-            switch(type) {
-                case 'top':
-
-                break;
-            }
-        }
-
         if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
 
         // just for tests
@@ -118,7 +108,7 @@ define([
 
                     $breakingNewsItems.append($el);
 
-                    bean.on($el[0], 'click', '.button', function (e) {
+                    bean.on($el[0], 'click', '.button', function () {
                         bonzo($breakingNews).hide();
                         hiddenIds.push(article.id);
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
@@ -127,8 +117,8 @@ define([
                     showAlert = true;
                 });
 
-                if(showAlert) {
-                    setTimeout(function() {
+                if (showAlert) {
+                    setTimeout(function () {
                         $breakingNews.removeClass('breaking-news--loading');
                     }, 1000);
                 }
