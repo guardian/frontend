@@ -270,7 +270,7 @@ define([
         }
         if (config.page.videoJsVpaidSwf) {
             videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
-            videojs.options.vpaid = {swf : config.page.videoJsVpaidSwf};
+            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
 
         videojs.plugin('adCountdown', adCountdown);
