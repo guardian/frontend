@@ -16,8 +16,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
-    'common/modules/ui/images',
-    'components/videojs-vpaid/vpaid'
+    'common/modules/ui/images'
 ], function (
     bean,
     bonzo,
@@ -35,8 +34,7 @@ define([
     buildPageTargeting,
     Component,
     history,
-    images,
-    vpaid
+    images
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -253,7 +251,6 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = ['vpaid', 'html5', 'flash'];
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
@@ -272,7 +269,7 @@ define([
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         if (config.page.videoJsVpaidSwf) {
-            vpaid.init(videojs);
+            videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
             videojs.options.vpaid = {swf : config.page.videoJsVpaidSwf};
         }
 
