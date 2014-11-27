@@ -4,7 +4,7 @@
   "dependencies": {
     "mediaelement": "~2.16.1",
     "video-js-swf" : "videojs/video-js-swf#4c0f3450e3df8632647e326dbff9d7a6ade1d9a8",
-    "video-js-vpaid": "guardian/video-js-vpaid#949feb308829881c0ad5ca7dabc96ab7282f086d"
+    "video-js-vpaid": "guardian/video-js-vpaid#9d50b481d8891162c005226ef5f9ce536d1a14e9"
   },
   "install": {
     "path": "components",
