@@ -312,7 +312,7 @@ case class FaciaContainer(
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
       case LoneDateHeadline(dateHeadline) => dateHeadline
     }
 
