@@ -39,7 +39,17 @@
         if (!isModern) { return false; }
 
         function isWindowsXP() {
-            return navigator.userAgent.indexOf('Windows NT 5.1') > - 1;
+            var windowsNt5 = /Windows NT 5.(\d+)/.exec(navigator.userAgent);
+
+            if (windowsNt5) {
+                var version = parseInt(windowsNt5[1], 10);
+
+                return version >= 1 && version <= 2;
+            } else {
+                return false;
+            }
+
+            return navigator.userAgent.indexOf('Windows NT 5.(1)') > - 1;
         }
 
         function loadFontsAsynchronously() {
