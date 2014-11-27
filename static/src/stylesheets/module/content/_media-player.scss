@@ -609,7 +609,7 @@ $vjs-progress-inset-bottom: 4px;
     right: 0;
     margin: auto;
     @include box-sizing(border-box);
-    background-color: rgba(25, 25, 25, .8);
+    background-color: rgba(25, 25, 25, .9);
     color: colour(neutral-7);
     top: $gs-baseline*4;
     padding-left: $gs-gutter/4;

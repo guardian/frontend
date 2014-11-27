@@ -1,13 +1,14 @@
 package implicits
 
-import play.api.mvc.{Request, RequestHeader}
 import play.api.http.MediaRange
-import conf.Configuration.ajax._
+import play.api.mvc.RequestHeader
 
 trait Requests {
   implicit class RichRequestHeader(r: RequestHeader) {
 
     def getParameter(name: String): Option[String] = r.queryString.get(name).flatMap(_.headOption)
+
+    def getParameters(name: String): Seq[String] = r.queryString.getOrElse(name, Nil)
 
     def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
 
@@ -23,7 +24,7 @@ trait Requests {
       imageMimeType.exists(_.mediaSubType == "webp")
     }
 
-    lazy val hasParameters: Boolean = !r.queryString.isEmpty
+    lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
 

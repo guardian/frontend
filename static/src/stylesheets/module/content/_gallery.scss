@@ -238,3 +238,21 @@
         }
     }
 }
+
+//disable hover state for lightbox and related content as they're on dark backgrounds
+.gallery__most-popular,
+.gallery-lightbox--endslate {
+    .tone-media--item {
+        .u-faux-block-link--hover {
+            background-color: colour(media-background) !important;
+
+            .responsive-img {
+                opacity: 1 !important;
+            }
+
+            .fc-item__link {
+                text-decoration: underline !important;
+            }
+        }
+    }
+}

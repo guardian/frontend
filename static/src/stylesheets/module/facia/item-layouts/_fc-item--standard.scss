@@ -31,14 +31,6 @@ x x x x x x x x
         display: block;
     }
 
-    .fc-item__avatar {
-        height: gs-height(4);
-    }
-
-    .fc-item__avatar__media {
-        right: - gs-span(1);
-    }
-
     &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
         display: block;
     }

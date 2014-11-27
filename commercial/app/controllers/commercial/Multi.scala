@@ -4,52 +4,45 @@ import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.soulmates.SoulmatesAggregatingAgent
+import model.commercial.soulmates.{SoulmatesMenAgent, SoulmatesWomenAgent}
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.twirl.api.Html
 
 import scala.concurrent.Future
+import scala.util.Random
 
-object Multi extends Controller with ExecutionContexts with implicits.Collections {
+object Multi
+  extends Controller
+  with ExecutionContexts
+  with implicits.Collections
+  with implicits.Requests {
 
   def renderMulti() = MemcachedAction { implicit request =>
-
     Future.successful {
-      val componentParts: Seq[Html] = request.queryString("c").flatMap {
-        case "jobs" =>
-          JobsAgent.jobsTargetedAt(segment).headOption map { job =>
-            views.html.jobFragments.job(job)
-          }
-        case "books" =>
-          BestsellersAgent.bestsellersTargetedAt(segment).headOption map { book =>
-            views.html.books.book(book)
-          }
-        case "travel" =>
-          TravelOffersAgent.offersTargetedAt(segment).headOption map { travelOffer =>
-            views.html.travelOfferFragments.travelOffer(travelOffer)
-          }
-        case "masterclasses" =>
-          MasterClassAgent.masterclassesTargetedAt(segment).headOption map { masterclass =>
-            views.html.masterClasses.masterClass(masterclass)
-          }
-        case "soulmates" =>
-          val members = SoulmatesAggregatingAgent.sampleMembers(segment).take(2)
-          if (members.size < 2) None
-          else Some(views.html.soulmateFragments.soulmates(members))
-        case _ => None
-      }
 
-      componentParts match {
-        case Nil => NoCache(jsonFormat.nilResult)
-        case parts => Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(parts))
+      val maybeResult = for {
+        job <- JobsAgent.jobsTargetedAt(segment).headOption
+        book <- BestsellersAgent.bestsellersTargetedAt(segment).headOption
+        travelOffer <- TravelOffersAgent.offersTargetedAt(segment).headOption
+        masterclass <- MasterClassAgent.masterclassesTargetedAt(segment).headOption
+        woman <- SoulmatesWomenAgent.sample(1).headOption
+        man <- SoulmatesMenAgent.sample(1).headOption
+      } yield {
+        Cached(componentMaxAge) {
+          jsonFormat.result(views.html.multi(Seq(
+            views.html.jobFragments.job(job),
+            views.html.books.book(book),
+            views.html.travelOfferFragments.travelOffer(travelOffer),
+            views.html.masterClasses.masterClass(masterclass),
+            views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)))
+          )))
         }
       }
-    }
 
+      maybeResult getOrElse NoCache(jsonFormat.nilResult)
+    }
   }
 
 }

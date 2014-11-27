@@ -1,20 +1,20 @@
-@(  page: MetaData,
-    pagination: Pagination,
-    actionClass: Option[String] = None,
-    showFull: Boolean = true,
-    ariaContext: Option[String] = None)(implicit request: RequestHeader)
+@(title: String,
+  pagination: Pagination,
+  pagePaths: PagePaths,
+  actionClass: Option[String] = None,
+  showFull: Boolean = true,
+  ariaContext: Option[String] = None)(implicit request: RequestHeader)
 
-@import model._
 @import common._
 @import views.support.Format
 
-@paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
-@paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
+@paginated(pageNum: Int) = {@common.LinkTo(pagePaths.pathFor(pageNum))}
+@paginationPointer(pageNo: Option[Int], dir: String) = {
     @pageNo.map { p =>
         <a class="button button--small button--tertiary pagination__action--static @actionClass"
             data-page="@p"
             rel="@dir"
-            href="@paginated(url, p)"
+            href="@paginated(p)"
             data-link-name="Pagination view @dir"
             aria-label="@ariaContext @dir page">
             @if(dir == "next") {
@@ -30,14 +30,14 @@
     <span class="pagination__text">…</span>
 }
 
-@paginationExtreme(pageNo: Option[Int], dir: String, url: String) = {
+@paginationExtreme(pageNo: Option[Int], dir: String) = {
     @pageNo.map { p =>
         @if(dir == "last") {
             @paginationDivider
         }
 
         <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
-        href="@paginated(url, p)"
+        href="@paginated(p)"
         data-page="@p"
         data-link-name="Pagination view page @p"
         aria-label="@ariaContext @dir page">@p</a>
@@ -52,16 +52,16 @@
 @if(pagination.lastPage > 1) {
     @if(showFull) {
     <div class="pagination pagination--full u-cf">
-        <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</span>
+        <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(title)</span>
     } else {
     <div class="pagination u-cf">
     }
         <div class="pagination__list">
         @if(pagination.lastPage > 5) {
-            @paginationPointer(pagination.previous, "prev", page.url)
+            @paginationPointer(pagination.previous, "prev")
 
             @if(pagination.currentPage - 2 > 1) {
-                @paginationExtreme(pagination.previous.map(_ => 1), "first", page.url)
+                @paginationExtreme(pagination.previous.map(_ => 1), "first")
             }
         }
 
@@ -72,7 +72,7 @@
             } else {
                 <a class="button button--small button--tertiary pagination__action @actionClass"
                 data-page="@pageNum"
-                href="@paginated(page.url, pageNum)"
+                href="@paginated(pageNum)"
                 data-link-name="Pagination view page @pageNum"
                 aria-label="@ariaContext page @pageNum">@pageNum</a>
             }
@@ -80,10 +80,10 @@
 
         @if(pagination.lastPage > 5) {
             @if(pagination.currentPage + 2 < pagination.lastPage) {
-                @paginationExtreme(Some(pagination.lastPage), "last", page.url)
+                @paginationExtreme(Some(pagination.lastPage), "last")
             }
 
-            @paginationPointer(pagination.next, "next", page.url)
+            @paginationPointer(pagination.next, "next")
         }
         </div>
     </div>

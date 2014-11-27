@@ -54,7 +54,7 @@ object Switches extends Collections {
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 11, 30)
+    sellByDate = never
   )
 
   val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
@@ -119,6 +119,11 @@ object Switches extends Collections {
 
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
+    safeState = Off, sellByDate = never
+  )
+
+  val DiscussionPageSizeSwitch = Switch("Performance", "discussion-page-size",
+    "If this is switched on then users will have the option to change their discussion page size",
     safeState = Off, sellByDate = never
   )
 
@@ -338,12 +343,7 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
-  )
-
-  val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
-    "If this is switched on then users will have the option to change their discussion page size",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",

@@ -1,7 +1,7 @@
 package model.commercial.soulmates
 
 import common.ExecutionContexts
-import model.commercial.{MerchandiseAgent, Segment}
+import model.commercial.MerchandiseAgent
 
 import scala.concurrent.Future
 import scala.util.Random
@@ -14,9 +14,9 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.refresh())
   }
 
-  def sampleMembers(segment: Segment): Seq[Member] = {
-    val women = Random.shuffle(SoulmatesWomenAgent.matchingMembers(segment))
-    val men = Random.shuffle(SoulmatesMenAgent.matchingMembers(segment))
+  def sampleMembers: Seq[Member] = {
+    val women = SoulmatesWomenAgent.sample(3)
+    val men = SoulmatesMenAgent.sample(3)
     if (women.isEmpty || men.isEmpty) {
       Nil
     } else {
@@ -31,15 +31,13 @@ object SoulmatesAggregatingAgent {
 
 trait SoulmatesAgent extends MerchandiseAgent[Member] with ExecutionContexts {
 
-  def matchingMembers(segment: Segment): Seq[Member] = {
-    getTargetedMerchandise(segment, default = Nil)(_ => true)
-  }
-    
   protected def membersLoaded: Future[Seq[Member]]
 
   def refresh() {
     for (members <- membersLoaded) updateAvailableMerchandise(members)
   }
+
+  def sample(sampleSize: Int): Seq[Member] = Random.shuffle(available) take sampleSize
 }
 
 object SoulmatesMenAgent extends SoulmatesAgent {

@@ -282,3 +282,46 @@
         }
     }
 }
+
+.creative--ad-feature-mpu-large {
+    background-color: colour(neutral-8);
+    padding: $gs-baseline / 2 0;
+    overflow: hidden;
+
+    .creative__article {
+        display: block;
+        padding: 0 $gs-gutter $gs-baseline / 2;
+        border-bottom: 1px solid colour(neutral-5);
+        color: colour(neutral-2-contrasted);
+    }
+    .creative__article__image {
+        width: 100%;
+    }
+    .creative__article__title {
+        @include f-headlineSans;
+        @include font-size(14, 18);
+    }
+    .creative__logo-text,
+    .creative__logo-info {
+        margin-left: $gs-gutter;
+        @include fs-textSans(1);
+        float: left;
+        color: colour(neutral-2-contrasted);
+    }
+    .creative__logo-text,
+    .creative__logo {
+        margin-top: $gs-baseline/ 2;
+    }
+    .creative__logo-text {
+        margin-bottom: 0;
+        font-weight: bold;
+    }
+    .creative__logo {
+        margin-right: $gs-gutter;
+        float: right;
+    }
+    .creative__logo-info {
+        display: block;
+        clear: left;
+    }
+}
