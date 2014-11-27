@@ -95,7 +95,9 @@
             <li class="colophon__item"><a data-link-name="au : footer : contact us" target="_blank" href="/info/2013/may/26/contact-guardian-australia">contact us</a></li>
             <li class="colophon__item"><a data-link-name="au : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-au-edition-feedback">feedback</a></li>
         }
+        @if(Edition(request) != Au) {
             <li class="colophon__item"><a data-link-name="complaints" href="/info/complaints-and-corrections">complaints &amp; corrections</a></li>
+        }
             <li class="colophon__item"><a data-link-name="terms" href="/help/terms-of-service">terms &amp; conditions</a></li>
             <li class="colophon__item"><a data-link-name="privacy" href="/help/privacy-policy">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="/info/cookies">cookie policy</a></li>
