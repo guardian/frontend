@@ -383,7 +383,7 @@
 
 .fig--narrow-caption {
     figcaption {
-        @include mq(leftCol) {
+        @include mq(tablet) {
             max-width: gs-span(6);
         }
     }
