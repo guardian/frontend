@@ -338,7 +338,7 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 02, 01)
   )
 
   val DiscussionPageSizeSwitch = Switch("Feature", "discussion-page-size",
