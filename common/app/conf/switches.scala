@@ -22,7 +22,7 @@ case class Switch( group: String,
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  protected val initialized = Promise[Switch]()
+  private val initialized = Promise[Switch]()
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new LocalDate().isBefore(sellByDate)
 
