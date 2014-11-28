@@ -104,6 +104,22 @@ class FrontTest extends FlatSpec with Matchers {
     dedupedTrails.map(_.webUrl) shouldEqual Seq("one", "two", "three")
   }
 
+  it should "not include items seen in a singleton container in the set of urls for further deduplication" in {
+    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.thrasher), Seq(
+      trailWithUrl("one")
+    ))
+
+    nowSeen shouldEqual Set.empty
+  }
+
+  it should "not remove items from a singleton container" in {
+    val (_, dedupedTrails) = Front.deduplicate(Set("one"), Fixed(FixedContainers.thrasher), Seq(
+      trailWithUrl("one")
+    ))
+
+    dedupedTrails.map(_.webUrl) shouldEqual Seq("one")
+  }
+
   it should "not include items seen in a nav media list in the set of urls for further deduplication" in {
     val (nowSeen, _) = Front.deduplicate(Set("one", "two"), NavMediaList, Seq(
       trailWithUrl("one"),

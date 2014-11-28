@@ -74,6 +74,10 @@ object Front extends implicits.Collections {
           (seen, trails)
         }
 
+      /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
+      case Fixed(containerDefinition) if containerDefinition.isSingleton =>
+        (seen, trails)
+
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
