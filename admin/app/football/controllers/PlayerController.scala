@@ -59,7 +59,6 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
   }
 
   def playerCardDateJson(cardType: String, playerId: String, teamId: String, startDateStr: String)
-
       = playerCardDate(cardType, playerId, teamId, startDateStr)
 
 
