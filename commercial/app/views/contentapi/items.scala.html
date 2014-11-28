@@ -39,14 +39,8 @@
                                         case _ => { tone-news--item }
                                     }">
                                     <div class="fc-item__container">
-                                        @FaciaDisplayElement.fromTrail(item) match {
-                                            case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                                                @fragments.items.elements.facia_cards.image(fallbackImage.imageContainer, true)
-                                            }
-                                            case Some(InlineImage(imageContainer)) => {
-                                                @fragments.items.elements.facia_cards.image(imageContainer, true)
-                                            }
-                                            case _ => { }
+                                        @item.trailPicture.map { trailPictureContainer =>
+                                            @fragments.items.elements.facia_cards.image(trailPictureContainer, true)
                                         }
                                         <div class="fc-item__content">
                                             <h2 class="fc-item__title">@item.webTitle</h2>

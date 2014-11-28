@@ -28,14 +28,8 @@
                     <div class="lineitem lineitem--dfp-single">
                         <div class="lineitem--dfp-single__offer">
                             <a href="%OASToken%@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
-                                @FaciaDisplayElement.fromTrail(item) match {
-                                    case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                                        @Item300.bestFor(fallbackImage.imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                    }
-                                    case Some(InlineImage(imageContainer)) => {
-                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                    }
-                                    case _ => { }
+                                @item.trailPicture.map { trailPictureContainer =>
+                                    @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                                 }
                                 <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
                                 @item.trailText.map { trailText =>
