@@ -32,10 +32,6 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
 
     val optCapiSupportedBy = request.getParameter("sb")
 
-    val optClickMacro = request.getParameter("clickMacro")
-
-    val optOmnitureId = request.getParameter("omnitureId")
-
     val sponsorTypeToClass = Map (
         "sponsored" -> ("fc-container--sponsored"),
         "advertisement-feature" -> ("fc-container--advertisement-feature"),
