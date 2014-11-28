@@ -262,16 +262,14 @@ define([
     };
 
     Membership.prototype.openFormAndUpdate = function () {
-        var self = this;
-        self.form.$cont.removeClass(self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPEN', true));
-        self.form.$button.addClass('membership-tab__update-button--muted')
+        this.form.$cont.removeClass(this.getClass('ANIM_CLOSE', true) + ' ' + this.getClass('ANIM_CLOSED', true)).addClass(this.getClass('ANIM_OPEN', true));
+        this.form.$button.addClass('membership-tab__update-button--muted')
             .text('Cancel');
     };
 
     Membership.prototype.closeFormAndUpdate = function () {
-        var self = this;
-        self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
-        self.form.$button.removeClass('membership-tab__update-button--muted')
+        this.form.$cont.removeClass(this.getClass('ANIM_OPEN', true) + ' ' + this.getClass('ANIM_OPENED', true)).addClass(this.getClass('ANIM_CLOSE', true));
+        this.form.$button.removeClass('membership-tab__update-button--muted')
             .text('Change card');
     };
 
