@@ -46,6 +46,10 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
         )
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
+    val optClickMacro = request.getParameter("clickMacro")
+
+    val optOmnitureId = request.getParameter("omnitureId")
+
     val futureLatestByKeyword = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
       Lookup.latestContentByKeyword(keyword, 8)
@@ -60,9 +64,9 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiAdFeature, optSponsorType, optSponsorLabel))
+          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy))
+          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy, optClickMacro, optOmnitureId))
         }
       }
     }
