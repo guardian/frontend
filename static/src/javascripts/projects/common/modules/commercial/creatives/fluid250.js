@@ -15,7 +15,6 @@ define([
     template,
     fluid250Tpl
 ) {
-
     var Creative = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
         this.params       = params;
@@ -23,13 +22,10 @@ define([
 
     Creative.prototype.create = function () {
         var $fluid250 = $.create(template(fluid250Tpl, this.params));
-        
-        console.log(this.params);
 
         $fluid250.appendTo(this.$adSlot);
         
         this.$adSlot.addClass('ad-slot--top-banner-ad__fluid250');
-
     };
 
     return Creative;
