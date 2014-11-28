@@ -156,7 +156,7 @@ $breaking-news-icon-width: 36px;
         $width: 50%;
 
         @include box-sizing(border-box);
-        padding: $gs-baseline $gs-gutter;
+        padding: $gs-baseline * 1.5 $gs-gutter $gs-baseline * 2 ($gs-gutter + $breaking-news-icon-width);
         background: $breaking-news-bg;
         position: absolute;
         top: 50%;
@@ -164,6 +164,17 @@ $breaking-news-icon-width: 36px;
         width: $width;
         margin-left: 0 - $width / 2;
         margin-top: 0 - $height / 2;
+
+        &:before {
+            position: absolute;
+            left: $gs-gutter / 2;
+            top: 0;
+            bottom: 0;
+            width: $breaking-news-icon-width;
+            @include icon(marque--breaking-36, false);
+            background-position: left $gs-baseline !important;
+            content: '';
+        }
     }
 
     .breaking-news__item-label {
