@@ -38,7 +38,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
         "foundation-supported" -> ("fc-container--foundation-supported")
         )
     val optSponsorType: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
-    
+
     val sponsorTypeToLabel = Map (
         "sponsored" -> ("Sponsored by"),
         "advertisement-feature" -> ("Brought to you by"),
@@ -47,13 +47,14 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
-      Lookup.latestContentByKeyword(keyword, 4)
+      // getting twice as many, as we filter out content without images
+      Lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     val futureContents = for {
       specific <- Lookup.contentByShortUrls(specificIds)
       latestByKeyword <- futureLatestByKeyword
-    } yield (specific ++ latestByKeyword).distinct take 4
+    } yield (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
 
     futureContents map {
       case Nil => NoCache(format.nilResult)
