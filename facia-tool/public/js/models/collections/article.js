@@ -742,6 +742,9 @@ define([
                 this.state.isOpen(false);
                 this.updateEditorsDisplay();
             }
+            mediator.emit('ui:close', {
+                targetGroup: this.group
+            });
         };
 
         Article.prototype.closeAndSave = function() {
