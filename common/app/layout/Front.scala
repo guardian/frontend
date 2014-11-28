@@ -46,9 +46,8 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
-  // Dream on.
-  def participatesInDeduplication(trail: Trail) =
-    !trail.snapType.exists(_ == "latest")
+  // Never de-duplicate snaps.
+  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
