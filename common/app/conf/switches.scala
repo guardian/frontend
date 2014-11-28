@@ -2,10 +2,10 @@ package conf
 
 import common._
 import implicits.Collections
-import org.joda.time.{Days, DateTime, LocalDate}
+import org.joda.time.{DateTime, Days, LocalDate}
+import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
-import play.api.Play.current
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -16,7 +16,7 @@ case class Switch( group: String,
                    description: String,
                    safeState: SwitchState,
                    sellByDate: LocalDate
-                 ) extends Switchable {
+                   ) extends Switchable with Initializable[Switch] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -26,11 +26,13 @@ case class Switch( group: String,
     if (isSwitchedOff) {
       delegate.switchOn()
     }
+    initialized(this)
   }
   def switchOff() {
     if (isSwitchedOn) {
       delegate.switchOff()
     }
+    initialized(this)
   }
 
   def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
