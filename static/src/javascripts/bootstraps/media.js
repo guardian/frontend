@@ -251,7 +251,6 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = ['html5', 'flash'];
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
@@ -264,6 +263,15 @@ define([
     }
 
     function initPlayer() {
+
+        // When possible, use our CDN instead of a third party (zencoder).
+        if (config.page.videoJsFlashSwf) {
+            videojs.options.flash.swf = config.page.videoJsFlashSwf;
+        }
+        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
+            videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
+            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
+        }
 
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
