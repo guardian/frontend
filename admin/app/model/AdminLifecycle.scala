@@ -68,7 +68,9 @@ trait AdminLifecycle extends GlobalSettings {
     }
 
     if (environment.isProd) {
-      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
+      // todo reinstate when email addresses have been verified in SES
+      //     Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
+      Jobs.schedule("AdsStatusEmailJob", "0 20 10 ? * MON-FRI") {
         AdsStatusEmailJob.run()
       }
     }
