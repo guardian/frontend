@@ -55,7 +55,7 @@ define([
             lenientRules.minAbove = 300;
 
             if (
-                config.page.sponsorshipType === 'foundation-supported' &&
+                config.page.sponsorshipType === 'foundation-features' &&
                     config.page.isInappropriateForSponsorship === false
             ) {
                 adNames.unshift(['fobadge', ['im', 'paid-for-badge']]);
