@@ -346,11 +346,6 @@
         min-height: 0;
     }
 }
-.ad-slot--paid-for-badge--live-blog {
-    @include mq(desktop) {
-        padding-top: $gs-baseline*2;
-    }
-}
 .ad-slot--paid-for-badge--interactive {
     min-width: 140px;
     min-height: 135px;
