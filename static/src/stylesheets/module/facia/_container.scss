@@ -248,6 +248,31 @@ $header-image-size-desktop: 100px;
     display: none !important;
 }
 
+.fc-container__updated {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-bottom: $gs-baseline / 2;
+    color: colour(neutral-2);
+    @include fs-headline(1);
+
+    @include mq(leftCol) {
+        position: static;
+        margin-top: ($gs-baseline / 3) * 5;
+        border-top: 1px dotted colour(neutral-3);
+        padding-top: $gs-baseline / 4;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            position: absolute;
+            bottom: 0;
+            border-top: 0;
+        }
+    }
+}
+
 .fc-timestamp {
     display: inline-block;
 }
