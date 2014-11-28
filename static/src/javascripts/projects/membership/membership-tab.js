@@ -106,7 +106,7 @@ define([
      * @returns {string}
      */
     Membership.prototype.formatAmount = function (amount) {
-        return (amount === 0) ? 'free' : (amount / 100).toFixed(2);
+        return (amount === 0) ? 'Free' : '£' + (amount / 100).toFixed(2);
     };
 
     /**
@@ -140,10 +140,9 @@ define([
 
             // Display default tab contents
             $(self.getClass('TIER'), upperTabDetailsList).text(resp.subscription.plan.name);
-            $(self.getClass('COST')).each(function () {
-                this.innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            });
-            $(self.getClass('JOIN'), upperTabDetailsList).text(self.formatDate(new Date(resp.joinDate)));
+            $(self.getClass('COST')).text(self.formatAmount(resp.subscription.plan.amount));
+            $(self.getClass('JOIN')).text(self.formatDate(new Date(resp.joinDate)));
+            $(self.getClass('INTERVAL')).text(subscriptionDates.interval);
 
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
 
@@ -220,7 +219,6 @@ define([
      */
     Membership.prototype.displayLowerTabContents = function (rootElement, resp, subscriptionDates) {
         $(rootElement, this.context).removeClass('is-hidden');
-        $(this.getClass('INTERVAL'), this.context).html(subscriptionDates.interval);
         $(this.getClass('NEXT'), rootElement).text(this.formatDate(new Date(resp.subscription.end)));
         $(this.getClass('CC_PAYMENT_LAST4'), rootElement).text(resp.subscription.card.last4);
 
