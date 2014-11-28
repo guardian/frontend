@@ -253,7 +253,7 @@ object Switches extends Collections {
 
   val GlobalDevelopmentQualtrics = Switch("Commercial", "global-development-qualtrics",
     "If this switch is on, the Qualtrics tracking tag for global development will be enabled.",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 1)
   )
 
   // Monitoring
