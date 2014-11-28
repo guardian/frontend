@@ -20,7 +20,14 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/ui/sticky'
+    'common/modules/ui/sticky',
+
+    // modules for creatives - need to be included so they're available, as they're required dynamically
+    'common/modules/commercial/creatives/branded-component',
+    'common/modules/commercial/creatives/commercial-component',
+    'common/modules/commercial/creatives/expandable',
+    'common/modules/commercial/creatives/scrollable-mpu',
+    'common/modules/commercial/creatives/template'
 ], function (
     bean,
     bonzo,
