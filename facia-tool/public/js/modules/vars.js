@@ -79,7 +79,9 @@ define([
             showHours: 1,
             width: 100,
             height: 35
-        }
+        },
+
+        internalContentPrefix: 'internal-code/content/'
     };
 
     function sparksBaseUrl(args) {

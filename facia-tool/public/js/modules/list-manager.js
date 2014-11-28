@@ -1,9 +1,11 @@
 /* global _: true */
 define([
+    'modules/vars',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/remove-by-id'
 ], function(
+    vars,
     mediator,
     urlAbsPath,
     removeById
@@ -74,7 +76,7 @@ define([
         if (opts.targetGroup.parentType === 'Article') {
             var id = urlAbsPath(opts.sourceItem.id);
 
-            if (id.indexOf('internal-code/content/') !== 0) {
+            if (id.indexOf(vars.CONST.internalContentPrefix) !== 0) {
                 return;
             }
 
