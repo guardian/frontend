@@ -153,11 +153,15 @@ define([
     }
 
     function mergeItems(newItem, oldItem) {
-        var interesting = ['customKicker', 'isBoosted', 'showBoostedHeadline', 'showKickerCustom'];
-        interesting.forEach(function (field) {
-            newItem.meta[field](oldItem.meta[field]());
-        });
-        newItem.meta.supporting = oldItem.meta.supporting;
+        _.chain(oldItem.meta)
+            .keys()
+            .each(function (key) {
+                if (_.isFunction(oldItem.meta[key])) {
+                    newItem.meta[key](oldItem.meta[key]());
+                } else {
+                    newItem.meta[key] = oldItem.meta[key];
+                }
+            });
         newItem.group = oldItem.group;
 
         var sourceGroup = oldItem.group;
