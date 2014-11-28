@@ -268,7 +268,7 @@ define([
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
-        if (config.page.videoJsVpaidSwf) {
+        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
             videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
             videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
