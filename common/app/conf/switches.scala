@@ -419,10 +419,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ContainerUpdatesSwitch = Switch("Facia", "container-updates",
-    "Enables js detection that containers have updated since page load",
-    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
-  )
 
   val all: List[Switch] = List(
     TagPageSizeSwitch,
@@ -498,8 +494,7 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
-    CrosswordSvgThumbnailsSwitch,
-    ContainerUpdatesSwitch
+    CrosswordSvgThumbnailsSwitch
   )
 
   val httpSwitches: List[Switch] = List(
