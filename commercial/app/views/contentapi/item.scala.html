@@ -27,7 +27,7 @@
                 <div class="lineitems">
                     <div class="lineitem lineitem--dfp-single">
                         <div class="lineitem--dfp-single__offer">
-                            <a href="@optClickMacro@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
+                            <a href="@optClickMacro@item.webUrl" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
                                 @item.trailPicture.map { trailPictureContainer =>
                                     @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                                 }
@@ -36,7 +36,7 @@
                                     <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
                                 }
                                 @for(buttonText <- optCapiButtonText) {
-                                    <a href="@optClickMacro@AdLink{@item.webUrl}" class="lineitem__cta button button--tertiary button--small">
+                                    <a href="@optClickMacro@item.webUrl" class="lineitem__cta button button--tertiary button--small">
                                         @buttonText
                                         <i class="i i-arrow-black-right i-right"></i>
                                     </a>
