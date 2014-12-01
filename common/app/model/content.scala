@@ -474,15 +474,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-  lazy val hasSupportingAtBottom: Boolean = {
+  lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    var wordCount = 0
-    val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
-      wordCount += el.text.length
-      wordCount < 2000
-    }
-    val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
-    supportingEls.isDefined
+    val leftColElements = Jsoup.parseBodyFragment(body).select("body > *").find(_.classNames.intersect(supportingClasses).size > 0)
+    leftColElements.isDefined
   }
 
   lazy val lightbox: JsObject = {
