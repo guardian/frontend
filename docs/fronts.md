@@ -10,7 +10,7 @@ The global list of defined fronts - and the definitions of the collections on th
 
 The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Tool and persisted to S3. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of each front's `pressed.json` files.
 
-As soon as a collection is edited it's id is added to a queue consumed the Presser, so as to re-create a `pressed.json` file for each front containing that collection. Additionally, every front is periodically queued for re-pressing by the Admin app; fronts have differential rates of periodic pressing reflecting their priority (eg. a network front vs. a commercial front.)
+As soon as a collection is edited, its id is added to a queue consumed the Presser, which will re-create a `pressed.json` file for any front containing that collection. Additionally, each front is periodically queued for re-pressing by the Admin app; fronts have differential rates of periodic re-pressing, to reflect their differing priorities.
 
 The `pressed.json` files - one for each front - are persisted to S3. Both preview and live versions are produced.
 
