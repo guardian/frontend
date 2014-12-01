@@ -15,23 +15,23 @@ define([
     template,
     fluid250Tpl
 ) {
-    var Creative = function ($adSlot, params) {
-        this.$adSlot      = $adSlot;
-        this.params       = params;
+    var Fluid250 = function ($adSlot, params) {
+        this.$adSlot = $adSlot;
+        this.params = params;
     };
 
-    Creative.prototype.create = function () {
+    Fluid250.prototype.create = function () {
         var $fluid250 = $.create(template(fluid250Tpl, this.params));
 
         $fluid250.appendTo(this.$adSlot);
          
         if(this.params.trackingPixel){
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + '" class="ad__fluid250-tracking-pixel"/>');
+            this.$adSlot.before('<img src="' + this.params.trackingPixel + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
     
-        this.$adSlot.addClass('ad-slot--top-banner-ad__fluid250');
+        this.$adSlot.addClass('ad-slot__fluid250');
     };
 
-    return Creative;
+    return Fluid250;
 
 });
