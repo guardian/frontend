@@ -32,15 +32,13 @@ define([
         return day + ' ' + month + ' ' + year;
     }
 
-    function Membership(context) {
-        this.context = context || document;
-    }
+    function Membership() {}
 
     Component.define(Membership);
 
     Membership.prototype.messages = {
         CHANGE_CC_SUCCESS: 'Your card details have been updated'
-    }
+    };
 
     Membership.prototype.classes = {
         TAB: 'js-membership-tab',
@@ -81,14 +79,10 @@ define([
 
     /**
     *    If the user is a guardian member; Render the contents of the membership
-    *    tab using the response from the /user/me
+    *    tab using the response from the /user/me/details
     */
     Membership.prototype.prerender = function () {
-        var self = this,
-            notificationCancelElement = self.getElem('NOTIFICATION_CANCEL'),
-            notificationChangeElement = self.getElem('NOTIFICATION_CHANGE'),
-            upperTabDetailsList = self.getClass('TAB_DETAILS_LIST_UPPER'),
-            lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
+        var self = this;
 
         ajax({
             url: config.page.membershipUrl + '/user/me/details',
@@ -105,65 +99,28 @@ define([
             $(self.getClass('CURRENT_PERIOD_START')).text(formatDate(resp.subscription.start));
             $(self.getClass('CURRENT_PERIOD_END')).text(formatDate(resp.subscription.end));
 
-            if (resp.subscription.card) {
-                self.updateCard(resp.subscription.card);
-            }
-
             if (resp.regNumber) {
                 $(self.getElem('NUM_CONTAINER')).removeClass('is-hidden');
                 $(self.getElem('NUM_TEXT')).text(resp.regNumber);
             }
 
-            if (resp.tier === 'Partner' || resp.tier === 'Patron') {
+            if (resp.subscription.card) {
+                self.updateCard(resp.subscription.card);
+            }
 
-                if (resp.subscription.cancelledAt) {
+            if (resp.subscription.cancelledAt) {
+                var notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
+                $(self.getClass('TAB_DETAILS_LIST_UPPER')).addClass('is-hidden');
+                $(self.getClass(notificationType)).removeClass('is-hidden');
 
-                    if (resp.optIn) {
-                        self.displayChangePackageTabContents.call(self, notificationChangeElement, resp);
-                    } else {
-                        self.displayCancellationTabContents.call(self, notificationCancelElement, resp);
-                    }
-
-                } else {
-                    self.displayLowerTabContents.call(self, lowerTabDetailsList, resp);
-                }
+                $(self.getClass('NOTIFICATION_ICON_CURRENT')).addClass('i-g-' + resp.tier.toLowerCase());
+            // only show lower list if user hasn't changed their subscription and has a payment method
+            } else if (resp.subscription.card) {
+                $(self.getElem('TAB_DETAILS_LIST_LOWER')).removeClass('is-hidden');
             }
 
             self.reveal();
         });
-    };
-
-    /**
-     * Display the tab contents for a downgraded membership
-     *
-     * @param rootElement String classname for the root
-     * @param resp Object JSON response
-     */
-    Membership.prototype.displayChangePackageTabContents = function (rootElement, resp) {
-        $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
-        $(rootElement, this.context).removeClass('is-hidden');
-        $(this.getClass('NOTIFICATION_ICON_CURRENT'), rootElement).addClass('i-g-' + resp.tier.toLowerCase());
-    };
-
-    /**
-     * Display the tab contents for a cancelled membership
-     *
-     * @param rootElement String classname for the root
-     * @param resp Object JSON response
-     */
-    Membership.prototype.displayCancellationTabContents = function (rootElement, resp) {
-        $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
-        $(rootElement, this.context).removeClass('is-hidden');
-    };
-
-    /**
-     * Display the contents of the lower tab for subscribed members
-     *
-     * @param rootElement String classname for the root
-     * @param resp Object JSON response
-     */
-    Membership.prototype.displayLowerTabContents = function (rootElement, resp) {
-        $(rootElement, this.context).removeClass('is-hidden');
     };
 
     /**
@@ -214,13 +171,13 @@ define([
     Membership.prototype.updateCard = (function () {
         var currentClass;
         return function (card) {
-            $(this.getElem('CC_LAST4')).text(card.last4);
+            $(this.getClass('CC_LAST4')).text(card.last4);
             if (currentClass) {
-                $(this.getElem('CC_TYPE')).removeClass(currentClass);
+                $(this.getClass('CC_TYPE')).removeClass(currentClass);
             }
 
             currentClass = 'i-' + card.type.toLowerCase().replace(' ', '-');
-            $(this.getElem('CC_TYPE')).addClass(currentClass);
+            $(this.getClass('CC_TYPE')).addClass(currentClass);
             $(this.getClass('CC_TYPE_TEXT')).text(card.type);
         };
     })();
