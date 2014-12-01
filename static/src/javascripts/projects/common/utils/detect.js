@@ -311,6 +311,18 @@ define([
         return 'WebSocket' in window;
     }
 
+    function shouldUseHintedFonts() {
+        var windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+
+        if (windowsNT) {
+            var version = parseFloat(windowsNT[1], 10);
+            // windows XP and newer && windows 7 and older
+            return version >= 5.1 && version <= 6.1;
+        } else {
+            return false;
+        }
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -328,7 +340,8 @@ define([
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
-        breakpoints: breakpoints
+        breakpoints: breakpoints,
+        shouldUseHintedFonts: shouldUseHintedFonts()
     };
 
 });
