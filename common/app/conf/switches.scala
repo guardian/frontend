@@ -500,7 +500,8 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     GlobalDevelopmentQualtrics,
-    CrosswordSvgThumbnailsSwitch
+    CrosswordSvgThumbnailsSwitch,
+    ZonesAggregationSwitch
   )
 
   val httpSwitches: List[Switch] = List(
