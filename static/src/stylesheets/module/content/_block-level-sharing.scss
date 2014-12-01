@@ -355,54 +355,57 @@
 
 // Inline embeds
 
-.block-share--article,
-.block-share--article-mobile {
-    position: absolute;
-    right: -$gs-gutter/4;
-    margin-top: ($gs-baseline/3)*2;
+.content--article {
 
-    .element--thumbnail &,
-    .img--base & {
-        display: none !important;
-    }
-}
+    .block-share--article,
+    .block-share--article-mobile {
+        position: absolute;
+        right: -$gs-gutter/4;
+        margin-top: ($gs-baseline/3)*2;
 
-.fig--extra-margin {
-    padding-bottom: $gs-baseline * 3 !important;
-}
-
-.fig--border {
-    @include mq(leftCol) {
-        border-bottom: 1px dotted colour(neutral-5) !important;
-    }
-
-    &.element--thumbnail {
-        border: 0 !important;
-    }
-}
-
-.fig--narrow-caption {
-    figcaption {
-        @include mq(tablet) {
-            max-width: gs-span(6);
+        .element--thumbnail &,
+        .img--base & {
+            display: none !important;
         }
     }
 
-    &.element--supporting {
-        figcaption {
-            @include mq(desktop) {
-                max-width: gs-span(3) - 10;
-            }
-            @include mq(wide) {
-                max-width: gs-span(4) - 10;
-            }
+    .fig--extra-margin {
+        padding-bottom: $gs-baseline * 3 !important;
+    }
+
+    .fig--border {
+        @include mq(leftCol) {
+            border-bottom: 1px dotted colour(neutral-5) !important;
+        }
+
+        &.element--thumbnail {
+            border: 0 !important;
         }
     }
 
-    &.element--showcase {
+    .fig--narrow-caption {
         figcaption {
-            @include mq(leftCol) {
-                max-width: gs-span(9);
+            @include mq(tablet) {
+                max-width: gs-span(6);
+            }
+        }
+
+        &.element--supporting {
+            figcaption {
+                @include mq(desktop) {
+                    max-width: gs-span(3) - 10;
+                }
+                @include mq(wide) {
+                    max-width: gs-span(4) - 10;
+                }
+            }
+        }
+
+        &.element--showcase {
+            figcaption {
+                @include mq(leftCol) {
+                    max-width: gs-span(9);
+                }
             }
         }
     }

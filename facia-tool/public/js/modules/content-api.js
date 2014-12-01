@@ -72,7 +72,7 @@ function (
                     err = 'Sorry, special links must be dragged to the Clipboard, initially';
 
                 // A snap, but a link off of the tool itself
-                } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
+                } else if (item.id().indexOf(window.location.hostname) > -1) {
                     err = 'Sorry, that link cannot be added to a front';
 
                 // A snap, but a link to unavailable guardian content

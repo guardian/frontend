@@ -35,7 +35,10 @@
                 <div class="droppable" data-bind="
                     makeDropabble: true,
                     click: pasteItem,
-                    css: {underDrag: underDrag},
+                    css: {
+                        underDrag: underDrag() && !underControlDrag(),
+                        underControlDrag: underDrag() && underControlDrag()
+                    },
                     template: {name: 'template_article', foreach: items}"></div>
             </div>
         </div>
@@ -248,7 +251,10 @@
         <div class="droppable" data-bind="
             makeDropabble: true,
             click: pasteItem,
-            css: {underDrag: underDrag},
+            css: {
+                underDrag: underDrag() && !underControlDrag(),
+                underControlDrag: underDrag() && underControlDrag()
+            },
             template: {name: 'template_article', foreach: items}"></div>
     </script>
 
@@ -272,7 +278,8 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag,
+                underDrag: state.underDrag() && !state.underControlDrag(),
+                underControlDrag: state.underDrag() && state.underControlDrag(),
                 imageHidden: meta.imageHide
             }">
 
@@ -298,10 +305,13 @@
                         <div class="droppable" data-bind="
                             makeDropabble: true,
                             click: pasteItem,
-                            css: {underDrag: underDrag},
+                            css: {
+                                underDrag: underDrag() && !underControlDrag(),
+                                underControlDrag: underDrag() && underControlDrag()
+                            },
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
-                    <span class="supporting-message">Drop content above</span>
+                    <span class="supporting-message">Drop content above, hold Ctrl key to replace item</span>
                 </div>
 
                 <div class="tools">

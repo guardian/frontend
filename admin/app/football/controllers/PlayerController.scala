@@ -3,16 +3,18 @@ package controllers.admin
 import play.api.mvc._
 import football.services.GetPaClient
 import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
+import implicits.Requests
 import common.{JsonComponent, ExecutionContexts}
 import org.joda.time.LocalDate
 import football.model.PA
 import scala.concurrent.Future
-import model.{NoCache, Cached}
+import model.{Cors, NoCache, Cached}
 import play.api.libs.json.{JsString, JsArray, JsObject}
 import org.joda.time.format.DateTimeFormat
+import play.twirl.api.HtmlFormat
 
 
-object PlayerController extends Controller with ExecutionContexts with GetPaClient {
+object PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
 
   def playerIndex =AuthActions.AuthActionTest.async { request =>
     for {
@@ -38,6 +40,8 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     }
     result
   }
+  def playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, competitionId: String)
+        = playerCardCompetition(cardType, playerId, teamId, competitionId)
 
   def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) =AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
@@ -47,33 +51,52 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
           playerStats <- client.playerStats(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
           playerAppearances <- client.appearances(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
         } yield {
-          val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-          NoCache(result)
+          val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+          result.map(renderPlayerCard).getOrElse(renderNotFound)
         }
       }
     }
   }
 
-  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def playerCardDateJson(cardType: String, playerId: String, teamId: String, startDateStr: String)
+      = playerCardDate(cardType, playerId, teamId, startDateStr)
+
+
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = AuthActions.AuthActionTest.async { implicit request =>
     val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
     for {
       playerProfile <- client.playerProfile(playerId)
       playerStats <- client.playerStats(playerId, startDate, LocalDate.now(), teamId)
       playerAppearances <- client.appearances(playerId, startDate, LocalDate.now(), teamId)
     } yield {
-      val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-      NoCache(result)
+      val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+      result.map(renderPlayerCard).getOrElse(renderNotFound)
     }
   }
 
-  private def renderPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances) = {
+  private def renderPlayerCard(card: HtmlFormat.Appendable)(implicit request: RequestHeader) = {
+    if(!request.isJson) Cors(NoCache(Ok(card)))
+    else NoCache {
+      JsonComponent(
+          "html" -> card
+      )
+    }
+  }
+
+  private def renderNotFound()(implicit request: RequestHeader) = {
+    if(!request.isJson) Cors(NotFound(views.html.football.error("Unknown card type")))
+    else NotFound
+  }
+
+  private def createPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances):
+    Option[HtmlFormat.Appendable] = {
     cardType match {
-      case "attack" => Ok(views.html.football.player.cards.attack(playerId, playerProfile, playerStats, playerAppearances))
-      case "assist" => Ok(views.html.football.player.cards.assist(playerId, playerProfile, playerStats, playerAppearances))
-      case "discipline" => Ok(views.html.football.player.cards.discipline(playerId, playerProfile, playerStats, playerAppearances))
-      case "defence" => Ok(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances))
-      case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId, playerProfile, playerStats, playerAppearances))
-      case _ => NotFound(views.html.football.error("Unknown card type"))
+      case "attack" => Some(views.html.football.player.cards.attack(playerId, playerProfile, playerStats, playerAppearances))
+      case "assist" => Some(views.html.football.player.cards.assist(playerId, playerProfile, playerStats, playerAppearances))
+      case "discipline" => Some(views.html.football.player.cards.discipline(playerId, playerProfile, playerStats, playerAppearances))
+      case "defence" => Some(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances))
+      case "goalkeeper" => Some(views.html.football.player.cards.goalkeeper(playerId, playerProfile, playerStats, playerAppearances))
+      case _ => None
     }
   }
 
