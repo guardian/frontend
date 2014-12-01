@@ -1,162 +1,162 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
 @main(page){ }{
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-        jQuery(function($) {
-            $("#switchFronts").click(function() {
-                $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-                $('#switchArticles').removeClass('current');
-                $('#article').slideUp();
-                $(this).addClass('current');
-                return false;
-            });
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+jQuery(function($) {
+    $("#switchFronts").click(function() {
+        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+        $('#switchArticles').removeClass('current');
+        $('#article').slideUp();
+        $(this).addClass('current');
+        return false;
+    });
 
-            $("#switchArticles").click(function() {
-                $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-                $('#switchFronts').removeClass('current');
-                $('#article').slideDown();
-                $(this).addClass('current');
-                return false;
-            });
+    $("#switchArticles").click(function() {
+        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+        $('#switchFronts').removeClass('current');
+        $('#article').slideDown();
+        $(this).addClass('current');
+        return false;
+    });
 
-            $("#pageSkin").click(function() {
-                $('body').toggleClass('has-page-skin');
-               return false;
-            });
+    $("#pageSkin").click(function() {
+        $('body').toggleClass('has-page-skin');
+       return false;
+    });
 
-            $(".codeContainer").hide();
-            $(".show-code").click(function() {
-                $(this).parent().next().slideToggle();
-                return false;
-            });
+    $(".codeContainer").hide();
+    $(".show-code").click(function() {
+        $(this).parent().next().slideToggle();
+        return false;
+    });
 
-            $("#dfp-number").on('change', function() {
-                $('.commercial--dfp-multiple, .commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
-                return false;
-            });
+    $("#dfp-number").on('change', function() {
+        $('.commercial--dfp-multiple, .commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
+        return false;
+    });
 
-            $("#dfp-palette").on('change', function() {
-                $('.commercial--dfp-single, .commercial--dfp-multiple, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
-                return false;
-            });
-        });
-    </script>
-    <style>
-        pre {
-            font-size: 11px;
-        }
-        hr {
-            height: 8px;
-            border: 0 none;
-            border-top: 8px dashed #ddd;
-            margin: 2em 0;
-        }
-        #dfp-ad--merchandising-high {
-            display: block;
-        }
-        .test-page-head {
-            font-size: 1.25rem;
-        }
-        .test-page-subhead {
-            font-size: 0.875rem;
-        }
-        .facia-switch {
-            font-family: sans-serif;
-            font-size: 12px;
-            margin: 0;
-            border: 1px solid #ccc;
-            border-right: 0;
-            background: #fff;
-            box-shadow: 0 0 2px rgba(0, 0, 0 ,0.3);
-            overflow: hidden;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1100;
-        }
-        .facia-switch dt {
-            color: #767676;
-            padding: 6px 10px;
-            margin: 0;
-            display: inline-block;
-        }
-        .facia-switch dd {
-            border-right: 1px solid #ccc;
-            padding: 6px 10px;
-            margin: 0;
-            display: inline-block;
-        }
-        .has-page-skin {
-            background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
-            background-attachment: fixed;
-            background-position: 50% 0;
-        }
-    </style>
+    $("#dfp-palette").on('change', function() {
+        $('.commercial--dfp-single, .commercial--dfp-multiple, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
+        return false;
+    });
+});
+</script>
+<style>
+    pre {
+        font-size: 11px;
+    }
+    hr {
+        height: 8px;
+        border: 0 none;
+        border-top: 8px dashed #ddd;
+        margin: 2em 0;
+    }
+    #dfp-ad--merchandising-high {
+        display: block;
+    }
+    .test-page-head {
+        font-size: 1.25rem;
+    }
+    .test-page-subhead {
+        font-size: 0.875rem;
+    }
+    .facia-switch {
+        font-family: sans-serif;
+        font-size: 12px;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-right: 0;
+        background: #fff;
+        box-shadow: 0 0 2px rgba(0, 0, 0 ,0.3);
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1100;
+    }
+    .facia-switch dt {
+        color: #767676;
+        padding: 6px 10px;
+        margin: 0;
+        display: inline-block;
+    }
+    .facia-switch dd {
+        border-right: 1px solid #ccc;
+        padding: 6px 10px;
+        margin: 0;
+        display: inline-block;
+    }
+    .has-page-skin {
+        background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
+        background-attachment: fixed;
+        background-position: 50% 0;
+    }
+</style>
 
-    <div class="l-side-margins">
+<div class="l-side-margins">
 
-        <div class="facia-container__inner">
-            <dl class="facia-switch">
-                <dt>Layout</dt>
-                <dd><a id="switchFronts" href="#">Fronts</a> • <a id="switchArticles" href="#" class="current">Articles</a> • <a id="pageSkin" href="#">Page skin?</a></dd>
-                <dt>Items in multiple DFP</dt>
-                <dd>
-                    <select id="dfp-number">
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                    </select>
-                </dd>
-                <dt>Palette for single DFP</dt>
-                <dd>
-                    <select id="dfp-palette">
-                        <option value="brand">Brand</option>
-                        <option value="subscriptions">Subscriptions</option>
-                        <option value="membership">Membership</option>
-                        <option value="live">Live</option>
-                        <option value="jobs">Jobs</option>
-                        <option value="networks">Networks</option>
-                        <option value="books">Books</option>
-                        <option value="masterclasses">Masterclasses</option>
-                        <option value="travel">Travel</option>
-                        <option value="shop">Shop</option>
-                        <option value="money">Money</option>
-                        <option value="gardening">Gardening</option>
-                    </select>
-                </dd>
-            </dl>
-        </div>
+    <div class="facia-container__inner">
+        <dl class="facia-switch">
+            <dt>Layout</dt>
+            <dd><a id="switchFronts" href="#">Fronts</a> • <a id="switchArticles" href="#" class="current">Articles</a> • <a id="pageSkin" href="#">Page skin?</a></dd>
+            <dt>Items in multiple DFP</dt>
+            <dd>
+                <select id="dfp-number">
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                </select>
+            </dd>
+            <dt>Palette for single DFP</dt>
+            <dd>
+                <select id="dfp-palette">
+                    <option value="brand">Brand</option>
+                    <option value="subscriptions">Subscriptions</option>
+                    <option value="membership">Membership</option>
+                    <option value="live">Live</option>
+                    <option value="jobs">Jobs</option>
+                    <option value="networks">Networks</option>
+                    <option value="books">Books</option>
+                    <option value="masterclasses">Masterclasses</option>
+                    <option value="travel">Travel</option>
+                    <option value="shop">Shop</option>
+                    <option value="money">Money</option>
+                    <option value="gardening">Gardening</option>
+                </select>
+            </dd>
+        </dl>
+    </div>
 
-        <article id="article" class="content content--article">
-            <div class="gs-container">
-                <h1 class="content__headline">All components</h1>
-                <h2 class="test-page-head">DFP Component (Article pages only)</h2>
+    <article id="article" class="content content--article">
+        <div class="gs-container">
+            <h1 class="content__headline">All components</h1>
+            <h2 class="test-page-head">DFP Component (Article pages only)</h2>
 
-                <h3 class="test-page-subhead">Inline<a class="show-code">Show code</a></h3>
-                <div class="codeContainer">
-                    <pre><code>
-    &lt;div class="breakout__html"&gt;
-        &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
-            &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
-                &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
+            <h3 class="test-page-subhead">Inline<a class="show-code">Show code</a></h3>
+            <div class="codeContainer">
+                <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
+        &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
+            &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
+        &lt;/a&gt;
+        &lt;div class="commercial--v-high__head"&gt;
+            &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__body"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
+                &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
+                &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
             &lt;/a&gt;
-            &lt;div class="commercial--v-high__head"&gt;
-                &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
-            &lt;/div&gt;
-            &lt;div class="commercial--v-high__body"&gt;
-                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
-                    &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
-                    &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
-            &lt;div class="commercial--v-high__footer"&gt;
-                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="button button--primary button--small" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
-                        Buy now&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__footer"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="button button--primary button--small" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
+                    Buy now&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
+            &lt;/a&gt;
         &lt;/div&gt;
     &lt;/div&gt;
+&lt;/div&gt;
 
 
 
@@ -782,174 +782,174 @@
 
     <hr />
 
-    <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
-    <div class="facia-container">
-        <section class="container container--special container--merchandising container--advertisement-feature">
-            <div class="facia-container__inner">
-                <div class="container__border"></div>
-                <div class="container__header">
-                    <h2 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">[%ContainerHeader%]</span>
-                    </h2>
-                </div>
-                <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
-                    <div class="ad-slot--paid-for-badge__inner">
-                        <h3 class="ad-slot--paid-for-badge__header"><strong>Brought to you by:</strong></h3>
-                        <a href="%%CLICK_URL_UNESC%%[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
-                            <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
-                        </a>
-                        <a href="%%CLICK_URL_UNESC%%[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+        <h2 class="facia-container__inner test-page-head">Advertisement Feature Container</h2>
+        <div class="facia-container">
+            <section class="container container--special container--merchandising container--advertisement-feature">
+                <div class="facia-container__inner">
+                    <div class="container__border"></div>
+                    <div class="container__header">
+                        <h2 class="container__title">
+                            <span class="container__title__label u-text-hyphenate">[%ContainerHeader%]</span>
+                        </h2>
+                    </div>
+                    <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                        <div class="ad-slot--paid-for-badge__inner">
+                            <h3 class="ad-slot--paid-for-badge__header"><strong>Brought to you by:</strong></h3>
+                            <a href="%%CLICK_URL_UNESC%%[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
+                                <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
+                            </a>
+                            <a href="%%CLICK_URL_UNESC%%[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+                        </div>
+                    </div>
+                    <div class="container__body">
+                        <div class="facia-slice-wrapper">
+                            <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="%%CLICK_URL_UNESC%%[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail1Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail1Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="%%CLICK_URL_UNESC%%[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail2Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail2Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="%%CLICK_URL_UNESC%%[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail3Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail3Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="%%CLICK_URL_UNESC%%[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail4Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail4Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="container__body">
-                    <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="%%CLICK_URL_UNESC%%[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail1Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail1Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="%%CLICK_URL_UNESC%%[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail2Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail2Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="%%CLICK_URL_UNESC%%[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail3Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail3Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="%%CLICK_URL_UNESC%%[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail4Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail4Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
 
-    <h2 class="facia-container__inner test-page-head">Merchandising Sponsored Content</h2>
-    <div class="facia-container">
-        <section class="container container--special container--merchandising container--sponsored">
-            <div class="facia-container__inner">
-                <div class="container__border"></div>
-                <div class="container__header">
-                    <h2 class="container__title">
-                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading">[%ContainerHeader%]</a>
-                    </h2>
-                </div>
-                <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
-                    <div class="ad-slot--paid-for-badge__inner">
-                        <h3 class="ad-slot--paid-for-badge__header"><strong>Sponsored by:</strong></h3>
-                        <a href="[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
-                            <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
-                        </a>
-                        <a href="[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+        <h2 class="facia-container__inner test-page-head">Merchandising Sponsored Content</h2>
+        <div class="facia-container">
+            <section class="container container--special container--merchandising container--sponsored">
+                <div class="facia-container__inner">
+                    <div class="container__border"></div>
+                    <div class="container__header">
+                        <h2 class="container__title">
+                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading">[%ContainerHeader%]</a>
+                        </h2>
+                    </div>
+                    <div class="ad-slot ad-slot--dfp ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
+                        <div class="ad-slot--paid-for-badge__inner">
+                            <h3 class="ad-slot--paid-for-badge__header"><strong>Sponsored by:</strong></h3>
+                            <a href="[%AdvertisementLogoLink%]" class="ad-slot--paid-for-badge__link">
+                                <img class="ad-slot--paid-for-badge__logo" src="[%AdvertisementLogo%]">
+                            </a>
+                            <a href="[%AdvertisementWhatsThis%]" class="ad-slot--paid-for-badge__help">About this content</a>
+                        </div>
+                    </div>
+                    <div class="container__body">
+                        <div class="facia-slice-wrapper">
+                            <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail1Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail1Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail2Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail2Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail3Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail3Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
+                                    <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
+                                        <div class="item__container">
+                                            <a href="[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
+                                                <div class="item__media-wrapper">
+                                                    <div class="item__image-container u-responsive-ratio">
+                                                        <img src="[%Trail4Image%]" alt="">
+                                                    </div>
+                                                </div>
+                                                <h2 class="item__title">[%Trail4Text%]</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="container__body">
-                    <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="[%Trail1Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail1Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail1Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="[%Trail2Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail2Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail2Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="[%Trail3Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail3Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail3Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="facia-slice__item facia-slice__item--volume-0 l-row__item">
-                                <div class="item item--has-image item--imageadjust-default" data-link-name="trail | 1">
-                                    <div class="item__container">
-                                        <a href="[%Trail4Link%]" class="item__link tone-accent-border" data-link-name="article">
-                                            <div class="item__media-wrapper">
-                                                <div class="item__image-container u-responsive-ratio">
-                                                    <img src="[%Trail4Image%]" alt="">
-                                                </div>
-                                            </div>
-                                            <h2 class="item__title">[%Trail4Text%]</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
 </div>
 }
