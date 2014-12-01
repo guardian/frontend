@@ -27,7 +27,7 @@ object Zones {
   private def sectionTagId(sectionId: String) = s"$sectionId/$sectionId"
 
   def queryById(id: String, edition: Edition): Either[WebTitleAndQuery, LiveContentApi.ItemQuery] = {
-    (ById.get(id) orElse Paths.withoutEdition(id).flatMap(ById.get))
+    Paths.withoutEdition(id).flatMap(ById.get)
       .filter(const(Switches.ZonesAggregationSwitch.isSwitchedOn)) map { case Zone(webTitle, sections) =>
       Left(WebTitleAndQuery(webTitle, LiveContentApi.search(edition).tag(sections.map(sectionTagId).mkString("|"))))
     } getOrElse {
