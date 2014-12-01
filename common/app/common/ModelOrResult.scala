@@ -1,6 +1,7 @@
 package common
 
 import com.gu.contentapi.client.model.ItemResponse
+import contentapi.Paths
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
 import implicits.ItemResponses
@@ -24,18 +25,30 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
-    itemPath match {
-      case Some(itemPath) if needsRedirect(itemPath) =>
-        val itemPathWithQueryString =
-          itemPath + (if (request.path.endsWith("/all")) "/all" else "") + paramString(request)
-        Right(Found(itemPathWithQueryString))
-      case _ => Left(item)
+
+    /** /all paths must not be editionalised */
+    if (request.path.endsWith("/all")) {
+      itemPath.map(Paths.stripEditionIfPresent) match {
+        case Some(itemPathWithoutEdition) if itemPathWithoutEdition != request.path.stripSuffix("/all") =>
+          Right(Found(itemPathWithoutEdition + "/all"))
+
+        case _ => Left(item)
+      }
+
+    } else {
+      itemPath match {
+        case Some(itemPath) if needsRedirect(itemPath) =>
+          val itemPathWithQueryString =
+            itemPath + paramString(request)
+          Right(Found(itemPathWithQueryString))
+        case _ => Left(item)
+      }
     }
   }
 
   private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
-    // redirect if itemPath is not the same as request's, and this isn't a JSON or RSS request
-    itemPath != request.path && s"$itemPath/all" != request.path && !(request.isJson || request.isRss)
+    // redirect if itemPath is not the same as request's, and this isn't an all page, a JSON or an RSS request
+    itemPath != request.path && !(request.isJson || request.isRss)
   }
 }
 
