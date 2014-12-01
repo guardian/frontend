@@ -15,13 +15,12 @@ define([
 ) {
 
     function formatAmount(amount) {
-        return (amount) ? '£' + (amount / 100).toFixed(2) : 'Free'
+        return (amount) ? '£' + (amount / 100).toFixed(2) : 'Free';
     }
 
     function formatDate(timestamp) { // eg: 4th June 2014
-        var date = new Date(timestamp);
-
-        var months = [
+        var date = new Date(timestamp),
+            months = [
                 'January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
                 'November', 'December'
             ],
@@ -87,7 +86,8 @@ define([
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
-            var intervalText = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
+            var intervalText = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+                notificationType;
 
             $(self.getClass('TIER')).text(resp.tier);
             $(self.getClass('COST')).text(formatAmount(resp.subscription.plan.amount));
@@ -106,7 +106,7 @@ define([
             }
 
             if (resp.subscription.cancelledAt) {
-                var notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
+                notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
                 $(self.getClass('TAB_DETAILS_LIST_UPPER')).addClass('is-hidden');
                 $(self.getClass(notificationType)).removeClass('is-hidden');
 
@@ -137,7 +137,7 @@ define([
 
     Membership.prototype.toggleForm = function (show) {
         var $cont = $(this.getElem('CC_CHANGE_FORM_CONT')),
-            $button = $(this.getElem('CC_CHANGE_BUTTON')),
+            $button = $(this.getElem('CC_CHANGE_BUTTON'));
 
         show = show !== undefined ? show : $cont.hasClass('is-closed');
 
