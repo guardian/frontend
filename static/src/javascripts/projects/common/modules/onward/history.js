@@ -100,7 +100,7 @@ define([
                 return {
                     idAndName: [tid, nameAndFreqs[0]],
                     rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
-                        return rank + (freq[1] * (summaryPeriodDays - freq[0]));
+                        return rank + (attenuate(freq[1]) * (summaryPeriodDays - freq[0]));
                     }, 0)
                 };
             })
@@ -109,6 +109,10 @@ define([
             .reverse()
             .pluck('idAndName')
             .value();
+    }
+
+    function attenuate(n) {
+        return Math.sqrt(Math.max(n, 10));
     }
 
     function firstCsv(str) {
