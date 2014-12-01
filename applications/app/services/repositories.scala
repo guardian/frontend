@@ -119,7 +119,7 @@ object IndexPage {
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
         case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
       }
 

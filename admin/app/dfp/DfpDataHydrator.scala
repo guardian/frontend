@@ -185,10 +185,10 @@ class DfpDataHydrator extends Logging {
         }
       }
 
-      rootAndDescendantAdUnits.map{ad =>
+      rootAndDescendantAdUnits.map { ad =>
         val parentPathComponents: List[String] = ad.getParentPath.map(_.getName).toList.tail
         (ad.getId, (parentPathComponents ::: ad.getName :: Nil).mkString("/"))
-      }
+      } sortBy (_._2)
     }
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
