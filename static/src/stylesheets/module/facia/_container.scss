@@ -133,6 +133,7 @@ $header-image-size-desktop: 100px;
     @include fs-header(4);
     line-height: get-line-height(header, 2);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    word-wrap: break-word;
 
     a {
         color: inherit;
