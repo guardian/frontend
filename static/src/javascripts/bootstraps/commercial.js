@@ -108,7 +108,8 @@ define([
             if (
                 !userPrefs.isOff('adverts') &&
                 !config.page.shouldHideAdverts &&
-                (!config.page.isSSL || config.page.section === 'admin')
+                (!config.page.isSSL || config.page.section === 'admin') &&
+                window.location.hash !== '#noads'
             ) {
                 modules.commercialLoaderHelper();
                 modules.tagContainer();
