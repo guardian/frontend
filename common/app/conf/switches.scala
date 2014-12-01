@@ -494,7 +494,6 @@ object Switches extends Collections {
     CircuitBreakerSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
-    GlobalDevelopmentQualtrics,
     CrosswordSvgThumbnailsSwitch,
     ZonesAggregationSwitch
   )
