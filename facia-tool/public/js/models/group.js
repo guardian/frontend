@@ -40,6 +40,9 @@ define([
         this.omitItem   = function(item) {
             self.items.remove(item);
             if (_.isFunction(opts.omitItem)) { opts.omitItem(item); }
+            mediator.emit('ui:omit', {
+                targetGroup: self
+            });
         };
     }
 

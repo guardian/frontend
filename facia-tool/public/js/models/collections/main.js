@@ -102,15 +102,10 @@ define([
             model.liveMode(false);
         };
 
-        model.previewUrl = ko.computed(function() {
-            if (pageConfig.env === 'prod' && !model.liveMode()) {
-                return vars.CONST.previewBase + '/responsive-viewer/' + model.front();
-            } else {
-                return vars.CONST.viewer +
-                    '#env=' + pageConfig.env +
-                    '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
-                    '&url=' + model.front();
-            }
+        model.previewUrl = ko.computed(function () {
+            var path = model.liveMode() ? 'http://' + vars.CONST.mainDomain : vars.CONST.previewBase;
+
+            return vars.CONST.previewBase + '/responsive-viewer/' + path + '/' + model.front();
         });
 
         model.deferredDetectPressFailure = _.debounce(function () {
@@ -335,6 +330,16 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
 
+                var updateClipboardScrollable = function (what) {
+                    var onClipboard = true;
+                    if (what && what.targetGroup) {
+                        onClipboard = what.targetGroup.parentType === 'Clipboard';
+                    }
+                    if (onClipboard) {
+                        _.defer(updateScrollables);
+                    }
+                };
+
                 mediator.on('ui:open', function(element, article) {
                     if (model.uiOpenArticle() &&
                         model.uiOpenArticle().group &&
@@ -344,7 +349,16 @@ define([
                     }
                     model.uiOpenArticle(article);
                     model.uiOpenElement(element);
+
+                    updateClipboardScrollable(article ? {
+                        targetGroup: article.group
+                    } : null);
                 });
+
+                mediator.on('collection:updates', updateClipboardScrollable);
+                mediator.on('ui:close', updateClipboardScrollable);
+                mediator.on('ui:omit', updateClipboardScrollable);
+                mediator.on('ui:resize', updateClipboardScrollable);
             });
 
             listManager.init(newItems);

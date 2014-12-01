@@ -21,7 +21,9 @@ object AdsStatusEmailJob extends Logging {
     } {
       EmailService.send(
         from = adTech,
-        to = Seq(adOps, adOpsUs, adOpsAu),
+        // todo reinstate when email addresses have been verified in SES
+        // to = Seq(adOps, adOpsUs, adOpsAu),
+        to = Seq(adOps),
         cc = Seq(adTech),
         subject = subject,
         htmlBody = Some(htmlBody))
