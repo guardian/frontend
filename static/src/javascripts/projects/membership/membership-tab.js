@@ -36,10 +36,6 @@ define([
 
     Component.define(Membership);
 
-    Membership.prototype.messages = {
-        CHANGE_CC_SUCCESS: 'Your card details have been updated'
-    };
-
     Membership.prototype.classes = {
         TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
@@ -60,6 +56,7 @@ define([
         CC_CHANGE_BUTTON: 'js-membership-change-cc-open',
         CC_CHANGE_FORM_CONT: 'js-membership-change-cc-form-cont',
         CC_CHANGE_FORM: 'js-membership-change-cc-form',
+        CC_CHANGE_SUCCESS: 'js-membership-change-cc-success',
         NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
         NOTIFICATION_CHANGE: 'js-mem-change-tier',
         NOTIFICATION_ICON_CURRENT: 'js-mem-icon-current'
@@ -138,21 +135,6 @@ define([
         $head.append(link);
     };
 
-    Membership.prototype.appendSuccessMessage = function (message) {
-        if (this.$successMessageElem) {
-            this.$successMessageElem.text(message);
-        } else {
-            this.$successMessageElem = $.create('<div>').addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
-        }
-    };
-
-    Membership.prototype.removeSuccessMessage = function () {
-        if (this.$successMessageElem) {
-            this.$successMessageElem.remove();
-            delete this.$successMessageElem;
-        }
-    };
-
     Membership.prototype.toggleForm = function (show) {
         var $cont = $(this.getElem('CC_CHANGE_FORM_CONT')),
             $button = $(this.getElem('CC_CHANGE_BUTTON')),
@@ -194,12 +176,12 @@ define([
         self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (newCard) {
             self.toggleForm(false);
             self.updateCard(newCard);
-            self.appendSuccessMessage(self.messages.CHANGE_CC_SUCCESS);
+            $(self.getElem('CC_CHANGE_SUCCESS')).removeClass('is-hidden');
         });
 
         bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
             self.toggleForm();
-            self.removeSuccessMessage();
+            $(self.getElem('CC_CHANGE_SUCCESS')).addClass('is-hidden');
         });
     };
 
