@@ -14,7 +14,12 @@ define([
 
         if (popular.length) {
             $('.js-history-nav-placeholder').html(
-                '<ul class="history-nav">' +
+                '<ul class="signposting">' +
+                    '<li class="signposting__item signposting__item--home">' +
+                        '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+                    '</li>' +
+                '</ul>' +
+                '<ul class="local-navigation">' +
                     popular.map(function (tag) {
                         return template(
                             '<li class="local-navigation__item">' +

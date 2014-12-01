@@ -160,7 +160,11 @@ define([
             },
 
             initialiseNavigationHistory: function () {
-                historyNav.init();
+                mediator.on('page:common:ready', function () {
+                    if (config.page.contentType === 'Network Front') {
+                        historyNav.init();
+                    }
+                });
             },
 
             transcludeRelated: function () {

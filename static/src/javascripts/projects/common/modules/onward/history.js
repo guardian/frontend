@@ -67,7 +67,7 @@ define([
     function pruneSummary(summary) {
         var updateBy = today - summary.periodEnd;
 
-        if (updateBy > 0) {
+        if (updateBy !== 0) {
             summary.periodEnd = today;
 
             _.each(summary.tags, function (nameAndFreqs, tid) {
