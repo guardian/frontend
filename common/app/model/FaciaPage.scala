@@ -7,6 +7,7 @@ import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId
+
 import scala.language.postfixOps
 
 case class FaciaPage(id: String,
