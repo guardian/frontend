@@ -24,7 +24,11 @@ define([
         var $fluid250 = $.create(template(fluid250Tpl, this.params));
 
         $fluid250.appendTo(this.$adSlot);
-        
+         
+        if(this.params.trackingPixel){
+            this.$adSlot.before('<img src="' + this.params.trackingPixel + '" class="ad__fluid250-tracking-pixel"/>');
+        }
+    
         this.$adSlot.addClass('ad-slot--top-banner-ad__fluid250');
     };
 

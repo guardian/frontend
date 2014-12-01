@@ -296,11 +296,15 @@
     .creative--fluid250__label {
         display: block;
         width: 100%;
-        
+
         .fc-container__inner {
             padding-top: 0;
         }
     }
+}
+
+.ad__fluid250-tracking-pixel {
+    position: absolute;
 }
 
 .creative--fluid250 {
@@ -339,5 +343,3 @@
         height: 250px;
     }    
 }
-
-
