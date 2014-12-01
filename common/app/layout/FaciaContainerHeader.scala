@@ -1,7 +1,7 @@
 package layout
 
 import common.Pagination
-import model.{Page, Section, Tag}
+import model.{Zone, Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import services.ConfigAgent
@@ -35,6 +35,14 @@ object FaciaContainerHeader {
     sectionPage.description,
     dateHeadline,
     frontHref(sectionPage.id, sectionPage.pagination)
+  )
+
+  def fromZone(zone: Zone, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
+    zone.webTitle,
+    None,
+    zone.description,
+    dateHeadline,
+    frontHref(zone.id, zone.pagination)
   )
 
   def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {

@@ -245,10 +245,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 
-  lazy val isCommentIsFree: Boolean = tags.exists{ tag => tag.id == "commentisfree/commentisfree" && tag.tagType == "blog" }
+  lazy val showSectionNotTag: Boolean = tags.exists{ tag => (tag.id == "commentisfree/commentisfree" || tag.id == "childrens-books-site/childrens-books-site") && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
-    if (isCommentIsFree || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
+    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
       section
     } else tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
@@ -257,14 +257,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val sectionLabelName : String = {
-    if(this.isCommentIsFree) sectionName else tags.find(_.isKeyword) match {
+    if(this.showSectionNotTag) sectionName else tags.find(_.isKeyword) match {
       case Some(tag) => tag.webTitle
       case _ => ""
     }
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.find( tag => tag.id != "commentisfree/commentisfree" && (tag.isBlog || tag.isSeries )).headOption
+    tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
   }
 
   lazy val seriesTag: Option[Tag] = {
@@ -474,15 +474,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
-  lazy val hasSupportingAtBottom: Boolean = {
+  lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    var wordCount = 0
-    val lastEls = Jsoup.parseBodyFragment(body).select("body > *").reverseIterator.takeWhile{ el =>
-      wordCount += el.text.length
-      wordCount < 2000
-    }
-    val supportingEls = lastEls.find(_.classNames.intersect(supportingClasses).size > 0)
-    supportingEls.isDefined
+    val leftColElements = Jsoup.parseBodyFragment(body).select("body > *").find(_.classNames.intersect(supportingClasses).size > 0)
+    leftColElements.isDefined
   }
 
   lazy val lightbox: JsObject = {

@@ -9,7 +9,7 @@ import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{Paths, QueryDefaults}
+import contentapi.{WebTitleAndQuery, Zones, Paths, QueryDefaults}
 import slices._
 import views.support.{ReviewKicker, TagKicker, CartoonKicker}
 import scala.concurrent.Future
@@ -107,6 +107,7 @@ object IndexPage {
         indexPage.page match {
           case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
           case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case zone: Zone => FaciaContainerHeader.fromZone(zone, headline)
           case page: Page => FaciaContainerHeader.fromPage(page, headline)
           case _ =>
             // should never happen
@@ -146,14 +147,17 @@ object IndexPage {
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
                      date: DateTime = DateTime.now) {
+  private def isSectionKeyword(sectionId: String, id: String) = Set(
+    Some(s"$sectionId/$sectionId"),
+    Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
+  ).flatten contains id
+
   def isTagWithId(id: String) = page match {
     case section: Section =>
-      val sectionId = section.id
+      isSectionKeyword(section.id, id)
 
-      Set(
-        Some(s"$sectionId/$sectionId"),
-        Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
-      ).flatten contains id
+    case zone: Zone =>
+      isSectionKeyword(zone.id, id)
 
     case tag: Tag => tag.id == id
 
@@ -161,6 +165,16 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
       combiner.leftTag.id == id || combiner.rightTag.id == id
 
     case _ => false
+  }
+
+  def allPath = {
+    val withoutEdition = Paths.withoutEdition(page.id)
+
+    if (withoutEdition.exists(Zones.ById.contains)) {
+      s"/$withoutEdition"
+    } else {
+      s"/${page.id}"
+    }
   }
 }
 
@@ -254,32 +268,49 @@ trait Index extends ConciergeRepository with QueryDefaults {
   ))
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+    val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
+    val fields = if (isRss) rssFields else trailFields
 
-    val promiseOfResponse = LiveContentApi.item(path, edition)
-      .page(pageNum)
-      .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
-      .showEditorsPicks(pageNum == 1) //only show ed pics on first page
-      .showFields(if (isRss) rssFields else trailFields)
-      .response.map {
-      response =>
-        val page = response.tag.flatMap(t => tag(response, pageNum))
-          .orElse(response.section.flatMap(t => section(response)))
-        ModelOrResult(page, response)
+    val promiseOfResponse = Zones.queryById(path, edition) match {
+      case Left(WebTitleAndQuery(webTitle, query)) =>
+        query.page(pageNum)
+          .pageSize(pageSize)
+          .showFields(fields)
+          .response map { response =>
+            Left(zone(path, webTitle, response))
+          }
+
+      case Right(query) =>
+        query.page(pageNum)
+          .pageSize(pageSize)
+          .showEditorsPicks(pageNum == 1) //only show ed pics on first page
+          .showFields(fields)
+          .response.map { response =>
+            val page = response.tag.flatMap(t => tag(response, pageNum))
+              .orElse(response.section.flatMap(t => section(response)))
+            ModelOrResult(page, response)
+        }
     }
-    promiseOfResponse.recover(convertApiExceptions)
+
+    promiseOfResponse.recover(convertApiExceptions) recover {
       //this is the best handle we have on a wrong 'page' number
-      .recover{ case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path")) }
+      case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
+    }
   }
 
-
+  private def zone(path: String, webTitle: String, response: SearchResponse): IndexPage = {
+    val page = new Zone(path, webTitle, pagination(response))
+    val items = response.results.map(Content(_))
+    IndexPage(page, items)
+  }
 
   private def section(response: ItemResponse) = {
-      val section = response.section.map{Section(_, pagination(response))}
-      val editorsPicks = response.editorsPicks.map(Content(_))
-      val editorsPicksIds = editorsPicks.map(_.id)
-      val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
-      val trails = editorsPicks ++ latestContent
-      section.map(IndexPage(_, trails))
+    val section = response.section map { Section(_, pagination(response)) }
+    val editorsPicks = response.editorsPicks.map(Content(_))
+    val editorsPicksIds = editorsPicks.map(_.id)
+    val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
+    val trails = editorsPicks ++ latestContent
+    section.map(IndexPage(_, trails))
   }
 
   private def tag(response: ItemResponse, page: Int) = {

@@ -45,6 +45,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
     !idParts.exists(_ != section)
   }
 
+  lazy val showSeriesInMeta = id != "commentisfree/commentisfree"  &&  id != "childrens-books-site/childrens-books-site"
+
   lazy val isKeyword = tagType == "keyword"
 
   override lazy val tags = Seq(this)
