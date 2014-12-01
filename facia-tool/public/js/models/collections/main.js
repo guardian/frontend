@@ -102,15 +102,10 @@ define([
             model.liveMode(false);
         };
 
-        model.previewUrl = ko.computed(function() {
-            if (pageConfig.env === 'prod' && !model.liveMode()) {
-                return vars.CONST.previewBase + '/responsive-viewer/' + model.front();
-            } else {
-                return vars.CONST.viewer +
-                    '#env=' + pageConfig.env +
-                    '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
-                    '&url=' + model.front();
-            }
+        model.previewUrl = ko.computed(function () {
+            var path = model.liveMode() ? 'http://' + vars.CONST.mainDomain : vars.CONST.previewBase;
+
+            return vars.CONST.previewBase + '/responsive-viewer/' + path + '/' + model.front();
         });
 
         model.deferredDetectPressFailure = _.debounce(function () {

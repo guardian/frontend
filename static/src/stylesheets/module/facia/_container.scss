@@ -133,6 +133,7 @@ $header-image-size-desktop: 100px;
     @include fs-header(4);
     line-height: get-line-height(header, 2);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
+    word-wrap: break-word;
 
     a {
         color: inherit;
@@ -270,69 +271,6 @@ $header-image-size-desktop: 100px;
             bottom: 0;
             border-top: 0;
         }
-    }
-}
-
-.fc-container__updated--has-updates {
-    border: 0;
-}
-
-.fc-container__update-cta {
-    margin-right: 0;
-    margin-bottom: -1 * $gs-baseline / 3;
-
-    .i {
-        width: 16px;
-        height: 16px;
-        margin-bottom: -1 * $gs-baseline / 6;
-        margin-right: -1 * $gs-gutter / 4;
-        margin-left: $gs-gutter / 6;
-    }
-
-    @include mq(tablet) {
-        margin-bottom: 0;
-    }
-}
-
-.fc-container__update-cta__desc {
-    display: none;
-
-    @include mq(tablet) {
-        display: inline;
-    }
-}
-
-@-moz-keyframes spin {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.fc-container__update-cta--is-updating {
-    .i {
-        -webkit-animation: spin 1s infinite linear;
-        -moz-animation: spin 1s infinite linear;
     }
 }
 

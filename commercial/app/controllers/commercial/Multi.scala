@@ -22,26 +22,42 @@ object Multi
   def renderMulti() = MemcachedAction { implicit request =>
     Future.successful {
 
-      val maybeResult = for {
-        job <- JobsAgent.jobsTargetedAt(segment).headOption
-        book <- BestsellersAgent.bestsellersTargetedAt(segment).headOption
-        travelOffer <- TravelOffersAgent.offersTargetedAt(segment).headOption
-        masterclass <- MasterClassAgent.masterclassesTargetedAt(segment).headOption
-        woman <- SoulmatesWomenAgent.sample(1).headOption
-        man <- SoulmatesMenAgent.sample(1).headOption
-      } yield {
-        Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(Seq(
-            views.html.jobFragments.job(job),
-            views.html.books.book(book),
-            views.html.travelOfferFragments.travelOffer(travelOffer),
-            views.html.masterClasses.masterClass(masterclass),
+      val requestedContent = request.getParameters("c")
+
+      val content = requestedContent flatMap {
+        case "jobs" =>
+          JobsAgent.jobsTargetedAt(segment).headOption map {
+            views.html.jobFragments.job(_)
+          }
+        case "books" =>
+          BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+            views.html.books.book(_)
+          }
+        case "travel" =>
+          TravelOffersAgent.offersTargetedAt(segment).headOption map {
+            views.html.travelOfferFragments.travelOffer(_)
+          }
+        case "masterclasses" =>
+          MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
+            views.html.masterClasses.masterClass(_)
+          }
+        case "soulmates" =>
+          for {
+            woman <- SoulmatesWomenAgent.sample(1).headOption
+            man <- SoulmatesMenAgent.sample(1).headOption
+          } yield {
             views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)))
-          )))
-        }
+          }
+        case _ => None
       }
 
-      maybeResult getOrElse NoCache(jsonFormat.nilResult)
+      if (requestedContent.nonEmpty && content.size == requestedContent.size) {
+        Cached(componentMaxAge) {
+          jsonFormat.result(views.html.multi(content))
+        }
+      } else {
+        NoCache(jsonFormat.nilResult)
+      }
     }
   }
 

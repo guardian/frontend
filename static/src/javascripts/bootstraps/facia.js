@@ -11,7 +11,6 @@ define([
     'common/utils/to-array',
     // Modules
     'facia/modules/onwards/geo-most-popular-front',
-    'facia/modules/ui/container-fetch-updates',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/snaps'
@@ -26,7 +25,6 @@ define([
     storage,
     toArray,
     GeoMostPopularFront,
-    containerFetchUpdates,
     ContainerToggle,
     ContainerShowMore,
     snaps
@@ -76,10 +74,6 @@ define([
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
-            },
-
-            fetchUpdates: function () {
-                containerFetchUpdates();
             }
         },
 
@@ -90,7 +84,6 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
-                modules.fetchUpdates();
             }
             mediator.emit('page:front:ready');
         };

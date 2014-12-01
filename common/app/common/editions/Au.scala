@@ -1,5 +1,6 @@
 package common.editions
 
+import common.editions.Uk._
 import org.joda.time.DateTimeZone
 import common._
 import contentapi.QueryDefaults
@@ -37,6 +38,7 @@ object Au extends Edition(
       NavItem(media),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(science),
+      NavItem(crosswords),
       NavItem(video)
     )
   }

@@ -17,6 +17,7 @@ define([
 
         this.items = ko.isObservable(opts.items) && opts.items.push ? opts.items : ko.observableArray(opts.items);
         this.underDrag  = ko.observable();
+        this.underControlDrag  = ko.observable();
         this.index      = opts.index || 0;
         this.name       = opts.name || '';
         this.parent     = opts.parent;
@@ -46,26 +47,30 @@ define([
         };
     }
 
-    Group.prototype.setAsTarget = function(targetItem) {
+    Group.prototype.setAsTarget = function(targetItem, alternateAction) {
         this.underDrag(targetItem.constructor === Group);
+        this.underControlDrag(alternateAction);
         _.each(this.items(), function(item) {
             var underDrag = (item === targetItem);
             if (underDrag !== item.state.underDrag()) {
                 item.state.underDrag(underDrag);
             }
+            item.state.underControlDrag(alternateAction);
         });
     };
 
     Group.prototype.unsetAsTarget = function() {
         this.underDrag(false);
+        this.underControlDrag(false);
         _.each(this.items(), function(item) {
             if (item.state.underDrag()) {
                 item.state.underDrag(false);
             }
+            item.state.underControlDrag(false);
         });
     };
 
-    Group.prototype.drop = function(source, targetGroup) {
+    Group.prototype.drop = function(source, targetGroup, alternateAction) {
         var isAfter = false, groups;
         // assume it's to be appended *after* the other items in this group,
         var targetItem = _.last(targetGroup.items());
@@ -89,7 +94,8 @@ define([
             targetItem: targetItem,
             targetGroup: targetGroup,
             isAfter: isAfter,
-            mediaItem: source.mediaItem
+            mediaItem: source.mediaItem,
+            alternateAction: alternateAction
         });
     };
 

@@ -7,4 +7,6 @@ object Paths {
     case maybeEdition :: rest if Edition.byId(maybeEdition).isDefined => Some(rest.mkString("/"))
     case _ => None
   }).filter(_.nonEmpty)
+
+  def stripEdition(path: String) = withoutEdition(path) getOrElse path
 }

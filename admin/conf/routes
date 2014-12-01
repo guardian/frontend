@@ -93,7 +93,9 @@ POST        /admin/football/browserRedirect                                     
 GET         /admin/football/browser/*query                                                     controllers.admin.PaBrowserController.browser(query)
 GET         /admin/football/player                                                             controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/card                                                        controllers.admin.PlayerController.redirectToCard
+GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId.json   controllers.admin.PlayerController.playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, compId: String)
 GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId        controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
+GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate.json       controllers.admin.PlayerController.playerCardDateJson(cardType: String, playerId: String, teamId: String, startDate: String)
 GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate            controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
 GET         /admin/football/tables                                                             controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                      controllers.admin.TablesController.redirectToTable
