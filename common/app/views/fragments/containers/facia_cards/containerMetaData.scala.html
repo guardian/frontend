@@ -1,6 +1,6 @@
 @(metaDataHeader: layout.MetaDataHeader)(implicit request: RequestHeader)
 
-@import common.Localisation
+@import common.{LinkTo, Localisation}
 @import views.support.RenderClasses
 
 <div class="index-page-header">
@@ -11,7 +11,17 @@
             </div>
         }
 
-        <h1 class="index-page-header__title" data-test-id="header-title">@Localisation(metaDataHeader.displayName)</h1>
+        <h1 class="index-page-header__title" data-test-id="header-title">
+            @defining(Localisation(metaDataHeader.displayName)) { title =>
+                @metaDataHeader.href match {
+                    case Some(href) => {
+                        <a href="@LinkTo(href)" data-link-name="title">@title</a>
+                    }
+
+                    case None => {@title}
+                }
+            }
+        </h1>
         @metaDataHeader.description.map { desc =>
             <div class="index-page-header__description">@Html(desc)</div>
         }

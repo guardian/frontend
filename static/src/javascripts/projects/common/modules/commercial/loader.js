@@ -1,7 +1,7 @@
 /*
-    Module: commercial/loader.js
-    Description: Loads our commercial components
-*/
+ Module: commercial/loader.js
+ Description: Loads our commercial components
+ */
 define([
     'bean',
     'bonzo',

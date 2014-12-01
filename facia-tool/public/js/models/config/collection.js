@@ -56,6 +56,7 @@ define([
             'isOpen',
             'isOpenTypePicker',
             'underDrag',
+            'underControlDrag',
             'apiQueryStatus']);
 
         this.state.withinPriority = ko.computed(function() {

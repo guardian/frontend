@@ -63,6 +63,8 @@ object FixedContainers {
   val slowIndexPageMpuV = slices(TTT, TTMpu)
   val slowIndexPageMpuVII = slices(HalfHalf2, TTT, TTMpu)
 
+  val thrasher = slices(FullMedia75).copy(customCssClasses = Set("fc-container--thrasher"))
+
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-II", slices(HalfHalf)),
@@ -82,7 +84,7 @@ object FixedContainers {
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/large/fast-XV", slices(HalfQQ, Ql3Ql3Ql3Ql3)),
-    ("fixed/thrasher", slices(FullMedia75).copy(customCssClasses = Set("fc-container--thrasher")))
+    ("fixed/thrasher", thrasher)
   )
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =

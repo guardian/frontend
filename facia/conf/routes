@@ -24,7 +24,6 @@ GET        /collection/*id/rss                                         controlle
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
 # Editionalised pages
-GET        /*path/front-index.json                                     controllers.FaciaController.renderFrontIndex(path)
 GET        /*path/collections/*id/:version.json                        controllers.FaciaController.renderFrontCollection(path, id, version)
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)

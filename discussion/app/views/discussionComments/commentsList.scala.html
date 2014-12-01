@@ -1,4 +1,9 @@
-@(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
+@(page: discussion.CommentPage, blankComment: discussion.model.Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
+
+@** TODO: WTF? NULL? SERIOUSLY? ARGH! *@
+
+@import common.SimplePagePaths
+
 <div
     class="d-discussion @if(isTopComments){d-discussion--top-comments} @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch =>
@@ -28,7 +33,7 @@
 
     @if(!isTopComments) {
     <div class="discussion__pagination discussion__pagination--bottom js-discussion-pagination">
-        @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), false, Some("Comments")) }
+        @page.pagination.map{ paginate => @fragments.pagination(page.webTitle, paginate, SimplePagePaths(page.url), Some("js-discussion-change-page"), false, Some("Comments")) }
     </div>
     @fragments.reportComment()
     }

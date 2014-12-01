@@ -68,7 +68,7 @@ trait AdminLifecycle extends GlobalSettings {
     }
 
     if (environment.isProd) {
-      Jobs.schedule("AdsStatusEmailJob", "0 5 9 ? * MON-FRI") {
+      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
         AdsStatusEmailJob.run()
       }
     }
