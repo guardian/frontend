@@ -274,6 +274,7 @@ define([
             this.state = asObservableProps([
                 'enableContentOverrides',
                 'underDrag',
+                'underControlDrag',
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
@@ -753,7 +754,11 @@ define([
             return false;
         };
 
-        Article.prototype.drop = function (source, targetGroup) {
+        Article.prototype.drop = function (source, targetGroup, alternateAction) {
+            if (alternateAction) {
+                // the drop target for replacing the article ID is the inner group
+                return;
+            }
             mediator.emit('collection:updates', {
                 sourceItem: source.sourceItem,
                 sourceGroup: source.sourceGroup,

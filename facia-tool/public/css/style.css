@@ -184,6 +184,10 @@ h1 {
     background-color: #999999;
 }
 
+.open .droppable.underControlDrag {
+    background-color: #cdbbfb;
+}
+
 .pending {
     pointer-events: none;
 }
