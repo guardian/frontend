@@ -2,12 +2,14 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html'
+    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'text!common/views/commercial/creatives/ad-single-manual.html'
 ], function (
     $,
     template,
     adFeatureMpuTpl,
-    adFeatureMpuLargeTpl
+    adFeatureMpuLargeTpl,
+    adSingleManual
 ) {
 
     /**
@@ -18,7 +20,30 @@ define([
      */
     var creativeTemplates = {
             'ad-feature-mpu': adFeatureMpuTpl,
-            'ad-feature-mpu-large': adFeatureMpuLargeTpl
+            'ad-feature-mpu-large': adFeatureMpuLargeTpl,
+            'ad-single-manual': adSingleManual
+
+            /*{
+             "name": "template",
+             "params": {
+             "creative": "ad-single-manual",
+             "toneClass": "[%Toneclass%]",
+             "omnitureId": "[%omnitureid%]",
+             "baseUrl": "[%base__url%]",
+             "relevance": "[%relevance%]",
+             "title": "[%title%]",
+             "viewAllText": "[%viewalltext%]",
+             "offerTitle": "[%offertitle%]",
+             "offerImage": "[%offerimage%]",
+             "offerText": "[%offertext%]",
+             "offerLinkText": "[%offerlinktext%]",
+             "offerUrl": "[%offerurl%]",
+             "seeMoreUrl": "[%seemoreurl%]",
+             "showCtaLink": "[%showctalink%]",
+             "clickMacro": "%%CLICK_URL_ESC%%"
+             }
+             }
+            * */
         },
         Template = function ($adSlot, params) {
             this.$adSlot = $adSlot;
