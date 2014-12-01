@@ -34,7 +34,9 @@ object Uk extends Edition(
       NavItem(education, Seq(students)),
       NavItem(media),
       NavItem(observer),
-      NavItem(video)
+      NavItem(todays),
+      NavItem(video),
+      NavItem(crosswords)
     )
   }
 
