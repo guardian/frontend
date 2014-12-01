@@ -62,10 +62,6 @@ define([
         CC_CHANGE_BUTTON: 'js-membership-change-cc-open',
         CC_CHANGE_FORM_CONT: 'js-membership-change-cc-form-cont',
         CC_CHANGE_FORM: 'js-membership-change-cc-form',
-        ANIM_OPEN: 'membership-tab__change-cc-form-cont--to-open',
-        ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
-        ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
-        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
         NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
         NOTIFICATION_CHANGE: 'js-mem-change-tier',
         NOTIFICATION_ICON_CURRENT: 'js-mem-icon-current'
@@ -200,16 +196,19 @@ define([
         }
     };
 
-    Membership.prototype.openFormAndUpdate = function () {
-        this.form.$cont.removeClass(this.getClass('ANIM_CLOSE', true) + ' ' + this.getClass('ANIM_CLOSED', true)).addClass(this.getClass('ANIM_OPEN', true));
-        this.form.$button.addClass('membership-tab__update-button--muted')
-            .text('Cancel');
-    };
+    Membership.prototype.toggleForm = function (show) {
+        var $cont = $(this.getElem('CC_CHANGE_FORM_CONT')),
+            $button = $(this.getElem('CC_CHANGE_BUTTON')),
 
-    Membership.prototype.closeFormAndUpdate = function () {
-        this.form.$cont.removeClass(this.getClass('ANIM_OPEN', true) + ' ' + this.getClass('ANIM_OPENED', true)).addClass(this.getClass('ANIM_CLOSE', true));
-        this.form.$button.removeClass('membership-tab__update-button--muted')
-            .text('Change card');
+        show = show !== undefined ? show : $cont.hasClass('is-closed');
+
+        if (show) {
+            $cont.removeClass('is-closed');
+            $button.addClass('membership-tab__update-button--muted').text('Cancel');
+        } else {
+            $cont.addClass('is-closed');
+            $button.removeClass('membership-tab__update-button--muted').text('Change card');
+        }
     };
 
     Membership.prototype.updateCard = (function () {
@@ -236,37 +235,14 @@ define([
         $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
 
         self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (newCard) {
-            // hide form
-            self.changeCCFormIsOpen = false;
-            self.closeFormAndUpdate();
-
+            self.toggleForm(false);
             self.updateCard(newCard);
             self.appendSuccessMessage(self.messages.CHANGE_CC_SUCCESS);
         });
 
         bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
-            self.form = self.form || {
-                $cont: $(self.getClass('CC_CHANGE_FORM_CONT')),
-                $button: $(self.getClass('CC_CHANGE_BUTTON'), self.context)
-            };
-
-            if (!self.changeCCFormIsOpen) { // open
-                self.changeCCFormIsOpen = true;
-                self.openFormAndUpdate();
-                self.removeSuccessMessage();
-            } else { // close
-                self.changeCCFormIsOpen = false;
-                self.closeFormAndUpdate();
-            }
-        });
-
-        bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
-            var $elem = $(this);
-            if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
-                $elem.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPENED', true));
-            } else {
-                $elem.removeClass(self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSED', true));
-            }
+            self.toggleForm();
+            self.removeSuccessMessage();
         });
     };
 
