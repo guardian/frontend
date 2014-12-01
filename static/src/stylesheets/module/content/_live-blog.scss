@@ -265,7 +265,7 @@ $block-padding-right: $gs-gutter;
         margin-top: ($gs-baseline/4)*-1;
         margin-bottom: $gs-baseline;
 
-        & + .block-elements .element-image:first-child,
+        & + .block-elements .element-image:first-child:not(.element--thumbnail),
         & + .block-elements .element-video:first-child {
             margin-top: 34px; // Extra margin top to position media below block-time
         }
