@@ -1,6 +1,6 @@
 package views.support
 
-import model.{Section, Tag, Content, MetaData}
+import model._
 import play.twirl.api.Html
 import play.api.mvc.RequestHeader
 import common.Localisation
@@ -12,6 +12,10 @@ object Title {
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val title = page match {
+      case faciaPage: FaciaPage =>
+        page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
+          s"${Localisation(page.webTitle)}${pagination(page)}"
+        )
       case c: Content =>
         s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
       case t: Tag     =>

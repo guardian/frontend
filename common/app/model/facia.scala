@@ -66,9 +66,11 @@ object SeoData extends ExecutionContexts with Logging {
       SeoData(path, oneWord, webTitleOnePart, None, descriptionFromWebTitle(webTitleOnePart))
   }
 
-  def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
+  def webTitleFromTail(tail: List[String]): String =
+    tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
 
-  def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
+  def descriptionFromWebTitle(webTitle: String): Option[String] =
+    Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
   lazy val empty: SeoData = SeoData("", "", "", None, None)
 }
