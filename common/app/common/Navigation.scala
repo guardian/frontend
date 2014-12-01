@@ -28,7 +28,12 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
       .orElse(links.find(_.currentForIncludingAllTags(page)))
   }
 
-  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
+  def exactFor(page: MetaData): Boolean = {
+    Set(
+      contentapi.Paths.withoutEdition(page.section),
+      Some(page.section)
+    ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
+  }
 }
 
 trait Navigation {
@@ -67,8 +72,8 @@ trait Navigation {
   val sports = sport.copy(title = "sports", breadcrumbTitle = "Sports")
   val usSport = SectionLink("sport", "US sports", "US sports", "/sport/us-sport")
   val australiaSport = SectionLink("australia sport", "australia sport", "Australia sport", "/sport/australia-sport")
-  val afl = SectionLink("afl", "afl", "afl", "/sport/afl")
-  val nrl = SectionLink("nrl", "nrl", "nfl", "/sport/nrl")
+  val afl = SectionLink("afl", "AFL", "AFL", "/sport/afl")
+  val nrl = SectionLink("nrl", "NRL", "NFL", "/sport/nrl")
   val aLeague = SectionLink("a-league", "a-league", "A-league", "/football/a-league")
   val football = SectionLink("football", "football", "Football", "/football")
   val soccer = football.copy(title = "soccer", breadcrumbTitle = "Soccer")

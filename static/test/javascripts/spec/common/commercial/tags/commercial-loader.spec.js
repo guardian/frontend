@@ -150,22 +150,35 @@ define([
                 },
                 {
                     name:    'capi',
-                    url:     '/commercial/capi.json?s=books&' +
-                        't=p%2F4xv7c&' +
-                        't=p%2F4vc5z&' +
+                    url:     '/commercial/capi.json?' +
+                        'oastoken=123456789&' +
+                        'capi=p%2F43b2q&' +
+                        'capi=p%2F43945&' +
+                        'logo=http%3A%2F%2Fcats.com%2Fimage.jpeg&' +
+                        'capiTitle=Led%20Zeppelin%20special&' +
+                        'capiLinkUrl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
+                        'capiAboutLinkUrl=http%3A%2F%2Ftheguardian.com%2Fabout&' +
+                        'capiKeywords=music%2Fledzeppelin&' +
+                        't=p%2F43b2q&' +
+                        't=p%2F43945&' +
                         'k=music%2Fledzeppelin&' +
-                        'k=music%2Fpinkfloyd&' +
+                        'af=sponsored&' +
+                        's=books&' +
                         'l=http%3A%2F%2Fcats.com%2Fimage.jpeg&' +
                         'ct=Led%20Zeppelin%20special&' +
                         'cl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
-                        'cal=http%3A%2F%2Ftheguardian.com%2Fabout',
+                        'cal=http%3A%2F%2Ftheguardian.com%2Fabout',                        
                     options: {
-                        capi:             ['p/4xv7c', 'p/4vc5z'],
-                        capiAboutLinkUrl: 'http://theguardian.com/about',
-                        capiKeywords:     'music/ledzeppelin,music/pinkfloyd',
-                        capiLinkUrl:      'http://theguardian.com/music/ledzeppelin',
+                        oastoken: '123456789',
+                        capi:             ['p/43b2q', 'p/43945'],
+                        logo:             'http://cats.com/image.jpeg',
                         capiTitle:        'Led Zeppelin special',
-                        logo:             'http://cats.com/image.jpeg'
+                        capiLinkUrl:      'http://theguardian.com/music/ledzeppelin',
+                        capiAboutLinkUrl: 'http://theguardian.com/about',
+                        capiKeywords:     'music/ledzeppelin',
+                        t: ['p/43b2q','p/43945'],
+                        k: 'music/ledzeppelin',                        
+                        af: 'sponsored'
                     }
                 }
             ].forEach(function (testConfig) {

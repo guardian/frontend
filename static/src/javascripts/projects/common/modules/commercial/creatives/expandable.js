@@ -16,7 +16,10 @@ define([
     expandableTpl
 ) {
 
-    var Creative = function ($adSlot, params) {
+    /**
+     * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028247
+     */
+    var Expandable = function ($adSlot, params) {
         this.$adSlot      = $adSlot;
         this.params       = params;
         this.isClosed     = true;
@@ -24,7 +27,7 @@ define([
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
     };
 
-    Creative.prototype.listener = function () {
+    Expandable.prototype.listener = function () {
         if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
@@ -39,7 +42,7 @@ define([
         }
     };
 
-    Creative.prototype.create = function () {
+    Expandable.prototype.create = function () {
         var $expandable = $.create(template(expandableTpl, this.params));
 
         this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
@@ -61,6 +64,6 @@ define([
 
     };
 
-    return Creative;
+    return Expandable;
 
 });

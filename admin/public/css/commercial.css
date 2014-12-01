@@ -32,3 +32,24 @@
 .lineItem {
     padding-bottom: 20px;
 }
+
+th, td {
+    padding: 10px 60px 20px 10px;
+}
+
+.has-cookie {
+    margin: 30px;
+    font-size: 18px;
+    color: limegreen;
+}
+
+.hasnt-cookie {
+    margin: 30px;
+    font-size: 18px;
+    color: blue;
+}
+
+.selected {
+    font-size: 16px;
+    color: limegreen;
+}

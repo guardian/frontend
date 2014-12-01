@@ -3,15 +3,16 @@
  Description: Gets and sets users reading history
  */
 define([
-    'bonzo',
     'common/utils/_',
     'common/utils/storage'
 ], function (
-    bonzo,
     _,
     storage
 ) {
-    var forgetAfterDays = 30,
+    var historySize = 50,
+        summaryPeriodDays = 30,
+        popularSize = 10,
+
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
@@ -19,7 +20,6 @@ define([
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
         storageKeyPopular = 'gu.history.popular',
-        maxSize = 100,
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
@@ -27,67 +27,67 @@ define([
             {tid: 'authorIds',  tname: 'author'}
         ];
 
-    function HistoryItem(item) {
-        _.assign(this, item);
-        this.timestamp = Date.now();
-        this.count = 1;
-        return this;
-    }
-
-    function saveHistory(data) {
-        historyCache = data;
-        return storage.local.set(storageKeyHistory, data);
+    function saveHistory(history) {
+        historyCache = history;
+        return storage.local.set(storageKeyHistory, history);
     }
 
     function saveSummary(summary) {
+        summaryCache = summary;
         return storage.local.set(storageKeySummary, summary);
     }
 
-    function savePopular(summary) {
-        popularCache = calculatePopular(summary);
-        return storage.local.set(storageKeyPopular, popularCache);
+    function savePopular(popular) {
+        popularCache = popular;
+        return storage.local.set(storageKeyPopular, popular);
+    }
+
+    function getHistory() {
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
+    }
+
+    function getPopular() {
+        popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
+        return popularCache;
     }
 
     function getSummary() {
-        summaryCache = summaryCache || storage.local.get(storageKeySummary);
+        var summary = summaryCache || storage.local.get(storageKeySummary);
 
-        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.start)) {
-            summaryCache = {
-                start: today,
+        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
+            summary = summaryCache = {
+                periodEnd: today,
                 tags: {}
             };
         }
-
-        return summaryCache;
+        return summary;
     }
 
-    function pruneSummary() {
-        var summary = getSummary(),
-            newStart = today - forgetAfterDays,
-            updateBy;
+    function pruneSummary(summary) {
+        var updateBy = today - summary.periodEnd;
 
-        if (newStart > summary.start) {
-            updateBy = newStart - summary.start;
-            summary.start = newStart;
+        if (updateBy > 0) {
+            summary.periodEnd = today;
 
-            _.each(summary.tags, function (sTag, tid) {
-                var ticks = _.chain(sTag[1])
-                    .map(function (tick) {
-                        var newSlot = tick[0] - updateBy;
-                        return newSlot < 0 ? 0 : [newSlot, tick[1]];
+            _.each(summary.tags, function (nameAndFreqs, tid) {
+                var freqs = _.chain(nameAndFreqs[1])
+                    .map(function (freq) {
+                        var newAge = freq[0] + updateBy;
+                        return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, freq[1]] : false;
                     })
                     .compact()
                     .value();
 
-                if (ticks.length) {
-                    summary.tags[tid] = [sTag[0], ticks];
+                if (freqs.length) {
+                    summary.tags[tid] = [nameAndFreqs[0], freqs];
                 } else {
                     delete summary.tags[tid];
                 }
             });
 
             if (_.isEmpty(summary.tags)) {
-                summary.start = today;
+                summary.periodEnd = today;
             }
         }
 
@@ -96,16 +96,16 @@ define([
 
     function calculatePopular(summary) {
         return _.chain(summary.tags)
-            .map(function (sTag, tid) {
+            .map(function (nameAndFreqs, tid) {
                 return {
-                    idAndName: [tid, sTag[0]],
-                    rank: _.reduce(sTag[1], function (rank, tick) {
-                        return rank + (tick[1] * (tick[0] + 1));
+                    idAndName: [tid, nameAndFreqs[0]],
+                    rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
+                        return rank + (freq[1] * (summaryPeriodDays - freq[0]));
                     }, 0)
                 };
             })
             .sortBy('rank')
-            .last(10)
+            .last(popularSize)
             .reverse()
             .pluck('idAndName')
             .value();
@@ -126,64 +126,55 @@ define([
         reset: function () {
             historyCache = undefined;
             summaryCache = undefined;
+            popularCache = undefined;
             storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
             storage.local.remove(storageKeyPopular);
         },
 
-        get: function () {
-            historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
-            return historyCache;
-        },
+        getHistory: getHistory,
 
-        getPopular: function () {
-            popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
-            return popularCache;
-        },
+        getPopular: getPopular,
 
         getSize: function () {
-            return this.get().length;
+            return getHistory().length;
         },
 
-        contains: function (id) {
-            return this.get().some(function (el) {
-                return el.id === id;
-            });
+        contains: function (pageId) {
+            return (_.find(getHistory(), function (page) {
+                return (page[0] === pageId);
+            }) || [])[1] > 0;
         },
 
         isRevisit: function (pageId) {
-            return (_.find(this.get(), function (page) {
-                return (page.id === pageId);
-            }) || {}).count > 1;
+            return (_.find(getHistory(), function (page) {
+                return (page[0] === pageId);
+            }) || [])[1] > 1;
         },
 
         log: function (pageConfig) {
-            var pageId = '/' + pageConfig.pageId,
+            var pageId = pageConfig.pageId,
                 history,
                 summary,
-                foundItem,
-                sinceStart;
+                foundCount = 0;
 
-            history = this.get().filter(function (item) {
-                var found = (item.id === pageId);
+            if (!pageConfig.isFront) {
+                history = getHistory()
+                    .filter(function (item) {
+                        var isArr = _.isArray(item),
+                            found = isArr && (item[0] === pageId);
 
-                foundItem = found ? item : foundItem;
-                return !found;
-            });
-            if (foundItem) {
-                foundItem.count = (foundItem.count || 0) + 1;
-                foundItem.timestamp = Date.now();
-                history.unshift(foundItem);
-            } else {
-                history.unshift(new HistoryItem({id: pageId}));
-                history = history.slice(0, maxSize);
+                        foundCount = found ? item[1] : foundCount;
+                        return isArr && !found;
+                    });
+
+                history.unshift([pageId, foundCount + 1]);
+                saveHistory(history.slice(0, historySize));
             }
-            saveHistory(history);
 
-            summary = pruneSummary();
-            sinceStart = today - summary.start;
+            summary = pruneSummary(getSummary());
             _.chain(taxonomy)
-                .reduce(function (tags, tag) {
+                .reduceRight(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
                         tname = tid && firstCsv(pageConfig[tag.tname]);
 
@@ -193,24 +184,30 @@ define([
                     return tags;
                 }, {})
                 .each(function (tname, tid) {
-                    var sTag = summary.tags[tid],
-                        ticks = sTag && sTag[1],
-                        tick = ticks && _.find(ticks, function (tick) { return tick[0] === sinceStart; });
+                    var nameAndFreqs = summary.tags[tid],
+                        freqs = nameAndFreqs && nameAndFreqs[1],
+                        freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
 
-                    if (tick) {
-                        tick[1] = tick[1] + 1;
-                    } else if (ticks) {
-                        ticks.unshift([sinceStart, 1]);
+                    if (freq) {
+                        freq[1] = freq[1] + 1;
+                    } else if (freqs) {
+                        freqs.unshift([0, 1]);
                     } else {
-                        summary.tags[tid] = [tname, [[sinceStart, 1]]];
+                        summary.tags[tid] = [tname, [[0, 1]]];
                     }
 
-                    if (sTag) {
-                        sTag[0] = tname;
+                    if (nameAndFreqs) {
+                        nameAndFreqs[0] = tname;
                     }
                 });
             saveSummary(summary);
-            savePopular(summary);
+            savePopular(calculatePopular(summary));
+        },
+
+        test: {
+            today: today,
+            getSummary: getSummary,
+            pruneSummary: pruneSummary
         }
     };
 });

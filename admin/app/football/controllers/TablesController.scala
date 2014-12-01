@@ -3,7 +3,7 @@ package controllers.admin
 import common.ExecutionContexts
 import football.model.PA
 import football.services.GetPaClient
-import model.{Cached, NoCache}
+import model.{Cors, Cached, NoCache}
 import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
@@ -44,7 +44,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
 
   def leagueTableFragment(competitionId: String, focus: String) =AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
-      seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
+      seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           val entries = focus match {
             case "top" => tableEntries.take(5)
@@ -53,7 +53,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
             case group if group.startsWith("group-") => tableEntries.filter(_.round.name.fold(false)(_.toLowerCase.replace(' ', '-') == group))
             case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
           }
-          NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(focus))))
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(focus)))))
         }
       }
     }
@@ -71,7 +71,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
             else
               (aroundTeam2 ++ aroundTeam1).distinct
           }
-          NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(team1Id, team2Id))))
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(team1Id, team2Id)))))
         }
       }
     }
@@ -79,9 +79,9 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
 
   def leagueTable(competitionId: String) = AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
-      seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
+      seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
-          NoCache(Ok(views.html.football.leagueTables.leagueTable(season, tableEntries)))
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, tableEntries))))
         }
       }
     }

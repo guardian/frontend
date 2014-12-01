@@ -1,4 +1,3 @@
-/* global guardian:true */
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
@@ -56,7 +55,8 @@ define([
     'bootstraps/identity',
 
     'text!common/views/release-message.html',
-    'text!common/views/release-message-compulsory.html'
+    'text!common/views/release-message-compulsory.html',
+    'text!common/views/release-message-launched.html'
 ], function (
     bean,
     bonzo,
@@ -101,7 +101,7 @@ define([
     shareCount,
     Dropdowns,
     fauxBlockLink,
-    Fonts,
+    fonts,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -112,18 +112,14 @@ define([
     identity,
 
     releaseMessageTpl,
-    releaseMessageCompulsoryTpl
+    releaseMessageCompulsoryTpl,
+    releaseMessageLaunchedTpl
 ) {
 
     var modules = {
 
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat     = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-
-                    new Fonts(fontStyleNodes, fileFormat).loadFromServerAndApply();
-                }
+            loadFonts: function () {
+                fonts.load();
             },
 
             initId: function () {
@@ -248,7 +244,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME']);
                 cookies.cleanUpDuplicates(['GU_VIEW']);
             },
 
@@ -263,38 +259,44 @@ define([
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
 
-                var exitLink, feedbackLink, shift,
+                var exitLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
-                    releaseMessage = new Message('alpha', {pinOnHide: true});
+                    releaseMessage = new Message('alpha', {pinOnHide: true}),
+                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' + (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
 
                 if (
                     config.switches.releaseMessage &&
-                    config.page.showClassicVersion &&
                     (detect.getBreakpoint() !== 'mobile')
                 ) {
-                    // force the visitor in to the alpha release for subsequent visits
-                    cookies.add('GU_VIEW', 'responsive', 365);
+                    if (config.page.showClassicVersion) {
+                        // force the visitor in to the alpha release for subsequent visits
+                        cookies.add('GU_VIEW', 'responsive', 365);
 
-                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+                        exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
 
-                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' +
-                        (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
+                        // The shift cookie may be 'in|...', 'ignore', or 'out'.
+                        shift = cookies.get('GU_SHIFT') || '';
 
-                    // The shift cookie may be 'in|...', 'ignore', or 'out'.
-                    shift = cookies.get('GU_SHIFT') || '';
-
-                    if (config.page.edition === 'US' || /in\|/.test(shift)) {
-                        releaseMessage.show(template(
-                            releaseMessageCompulsoryTpl,
-                            {
-                                feedbackLink: feedbackLink
-                            }
-                        ));
+                        if (config.page.edition === 'US' || /in\|/.test(shift)) {
+                            releaseMessage.show(template(
+                                releaseMessageCompulsoryTpl,
+                                {
+                                    feedbackLink: feedbackLink
+                                }
+                            ));
+                        } else {
+                            releaseMessage.show(template(
+                                releaseMessageTpl,
+                                {
+                                    exitLink: exitLink,
+                                    feedbackLink: feedbackLink
+                                }
+                            ));
+                        }
                     } else {
                         releaseMessage.show(template(
-                            releaseMessageTpl,
+                            releaseMessageLaunchedTpl,
                             {
-                                exitLink:     exitLink,
                                 feedbackLink: feedbackLink
                             }
                         ));
@@ -451,7 +453,7 @@ define([
 
         },
         ready = function () {
-            modules.loadFonts(navigator.userAgent);
+            modules.loadFonts();
             modules.initId();
             modules.initUserAdTargeting();
             modules.initDiscussion();

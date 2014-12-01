@@ -66,7 +66,9 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("music"), sections = Nil, Some("Music Foundation"), Nil, 6),
-      Sponsorship(Seq("chuckle"), sections = Nil, None, Nil, 7)
+      Sponsorship(Seq("chuckle"), sections = Nil, None, Nil, 7),
+      Sponsorship(Seq("womens-rights-and-gender-equality-in-focus"), sections = Nil, None, Nil, 10),
+      Sponsorship(Seq("global-development"), sections = Nil, None, Nil, 11)
     )
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
@@ -135,12 +137,12 @@ class DfpAgentTest extends FlatSpec with Matchers {
       "search?tag=environment%2Fblog%7Cfilm%2Ffilm%2Fguardian-environment-blogs%7Cenvironment" +
         "%2Fgeorgemonbiot%7Cenvironment%2Fdamian-carrington-blog%7books%2Ffilm",
       "search?tag=film%2Ffilm&section=sport&page-size=50",
-      "search?tag=books%2Ffilm&section=culture%7Cmusic%7Cfilm%7Cbooks%7Cartanddesign%7Cstage%7Ctv-and-radio",
+      "search?tag=books%2Ffilm&section=culture%7Cmusic%7Cgruel%7Cbooks%7Cartanddesign%7Cstage%7Ctv-and-radio",
       "search?tag=(tone%2Fanalysis%2C(world%2Fusa%7Cfilm%2Ffilm))%7C(tone%2Fcomment%2C" +
         "(world%2Fusa%7Cbusiness%2Fus-personal-finance))&section=business",
       "search?tag=business/financial-sector|business/manufacturing-sector|business/luxury-goods-sector|business" +
         "/fooddrinks|business/theairlineindustry|business/automotive-industry|business/banking|business/construction" +
-        "|filmo/film|business/healthcare|business/insurance|business/mining|business/musicindustry|business" +
+        "|filmo/gruel|business/healthcare|business/insurance|business/mining|business/musicindustry|business" +
         "/pharmaceuticals-industry|business/realestate|business/retail|business/technology|film/film|business" +
         "/tobacco-industry|business/travelleisure|business/utilities|business/services-sector",
       "film?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
@@ -278,12 +280,12 @@ class DfpAgentTest extends FlatSpec with Matchers {
       "search?tag=environment%2Fblog%7Cmedia%2Fmedia%2Fguardian-environment-blogs%7Cenvironment" +
       "%2Fgeorgemonbiot%7Cenvironment%2Fdamian-carrington-blog%7books%2Fmedia",
       "search?tag=media%2Fmedia&section=sport&page-size=50",
-      "search?tag=books%2Fmedia&section=culture%7Cmusic%7Cmedia%7Cbooks%7Cartanddesign%7Cstage%7Ctv-and-radio",
+      "search?tag=books%2Fgruel&section=culture%7Cmusic%7Cmedia%7Cbooks%7Cartanddesign%7Cstage%7Ctv-and-radio",
       "search?tag=(tone%2Fanalysis%2C(world%2Fusa%7Cmedia%2Fmedia))%7C(tone%2Fcomment%2C" +
       "(world%2Fusa%7Cbusiness%2Fus-personal-finance))&section=business",
       "search?tag=business/financial-sector|business/manufacturing-sector|business/luxury-goods-sector|business" +
       "/fooddrinks|business/theairlineindustry|business/automotive-industry|business/banking|business/construction" +
-      "|mediao/media|business/healthcare|business/insurance|business/mining|business/musicindustry|business" +
+      "|mediao/gruel|business/healthcare|business/insurance|business/mining|business/musicindustry|business" +
       "/pharmaceuticals-industry|business/realestate|business/retail|business/technology|media/media|business" +
       "/tobacco-industry|business/travelleisure|business/utilities|business/services-sector",
       "media?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
@@ -343,6 +345,19 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   it should "be false for a non foundation-supported page" in {
     testDfpAgent.isFoundationSupported("guffaw", None) should be(false)
+  }
+
+  it should "be false for a container with multiple foundation-targeted keywords or series" in {
+    val q =
+      "search?tag=global-development/series/womens-rights-and-gender-equality-in-focus|" +
+        "(world/gender,global-development/global-development)"
+    testDfpAgent.isFoundationSupported(apiQuery(q)) should be(false)
+  }
+
+  it should "be true for a container with a single foundation-targeted keyword or series" in {
+    val q =
+      "search?tag=global-development/series/womens-rights-and-gender-equality-in-focus"
+    testDfpAgent.isFoundationSupported(apiQuery(q)) should be(true)
   }
 
   "getSponsor" should "have some value for a sponsored tag with a specified sponsor" in {

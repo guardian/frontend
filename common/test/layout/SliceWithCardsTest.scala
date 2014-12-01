@@ -46,7 +46,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )._2.length shouldEqual
         (0 max (NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum))
     }
@@ -59,7 +60,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )
 
       def idFromTrail(trail: Trail) = trail match {
@@ -78,7 +80,8 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         layout,
         ContainerLayoutContext.empty,
         CollectionConfig.emptyConfig,
-        DesktopBehaviour
+        DesktopBehaviour,
+        showSeriesAndBlogKickers = false
       )._1
 
       for (column <- slice.columns) {

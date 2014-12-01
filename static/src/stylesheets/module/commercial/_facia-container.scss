@@ -60,7 +60,6 @@
     }
 
     .container__header {
-        background-color: colour(neutral-2);
         height: 100%;
         padding-top: 0;
 
@@ -135,6 +134,11 @@
         display: inline-block;
         position: relative;
         top: -5px;
+
+        @include mq(leftCol) {
+            text-align: center;
+            min-width: 54px;
+        }
     }
 
     .commercial__search {
@@ -274,10 +278,8 @@
 
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
-   Update once breakpoints synced
    ========================================================================== */
 .commercial {
-    
     .has-page-skin & {
         @include mq(wide) {
             .container__header__inner,
@@ -326,6 +328,11 @@
                 .i-commercial-brand {
                     opacity: .8;
                 }
+            }
+
+            .commercial__title__logo {
+                text-align: left;
+                min-width: auto;
             }
 
             .commercial__desc {

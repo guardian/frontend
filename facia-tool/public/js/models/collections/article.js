@@ -274,6 +274,7 @@ define([
             this.state = asObservableProps([
                 'enableContentOverrides',
                 'underDrag',
+                'underControlDrag',
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
@@ -338,6 +339,20 @@ define([
             } else {
                 this.updateEditorsDisplay();
             }
+
+            this.thumbImage = ko.computed(function () {
+                var meta = this.meta,
+                    fields = this.fields,
+                    state = this.state;
+
+                if (meta.imageReplace() && meta.imageSrc()) {
+                    return meta.imageSrc();
+                } else if (meta.imageCutoutReplace()) {
+                    return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                } else {
+                    return fields.thumbnail();
+                }
+            }, this);
         }
 
         Article.prototype.copy = function() {
@@ -473,8 +488,8 @@ define([
                 {
                     maxWidth: 1000,
                     minWidth: 400,
-                    widthAspectRatio: 3,
-                    heightAspectRatio: 5
+                    widthAspectRatio: 5,
+                    heightAspectRatio: 3
                 }
             );
         };
@@ -591,7 +606,7 @@ define([
                 }, {})
                 .value();
 
-            if (this.group.parentType === 'Collection') {
+            if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
             }
 
@@ -625,7 +640,10 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.href(this.id());
+            var id = this.id(),
+                href = isGuardianUrl(id) ? '/' + urlAbsPath(id) : id;
+
+            this.meta.href(href);
             this.id(snap.generateId());
             this.updateEditorsDisplay();
         };
@@ -685,8 +703,8 @@ define([
                 self.meta.trailText(og.description);
 
                 if(!isOnSite) {
-                    self.meta.customKicker(og.site_name || urlHost(url).replace(/^www\./, ''));
-                    self.meta.showKickerCustom(true);
+                    self.meta.byline(og.site_name || urlHost(url).replace(/^www\./, ''));
+                    self.meta.showByline(true);
                 }
 
                 self.updateEditorsDisplay();
@@ -725,12 +743,30 @@ define([
                 this.state.isOpen(false);
                 this.updateEditorsDisplay();
             }
+            mediator.emit('ui:close', {
+                targetGroup: this.group
+            });
         };
 
         Article.prototype.closeAndSave = function() {
             this.close();
             this.save();
             return false;
+        };
+
+        Article.prototype.drop = function (source, targetGroup, alternateAction) {
+            if (alternateAction) {
+                // the drop target for replacing the article ID is the inner group
+                return;
+            }
+            mediator.emit('collection:updates', {
+                sourceItem: source.sourceItem,
+                sourceGroup: source.sourceGroup,
+                targetItem: this,
+                targetGroup: targetGroup,
+                isAfter: false,
+                mediaItem: source.mediaItem
+            });
         };
 
         function getMainMediaType(contentApiArticle) {

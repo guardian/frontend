@@ -35,7 +35,10 @@
                 <div class="droppable" data-bind="
                     makeDropabble: true,
                     click: pasteItem,
-                    css: {underDrag: underDrag},
+                    css: {
+                        underDrag: underDrag() && !underControlDrag(),
+                        underControlDrag: underDrag() && underControlDrag()
+                    },
                     template: {name: 'template_article', foreach: items}"></div>
             </div>
         </div>
@@ -48,7 +51,7 @@
                     <a><i class="icon-remove" data-bind="click: reset"></i></a>
                 </div>
 
-                <div class="title">latest</div>
+                <div class="title" data-bind="text: title"></div>
 
                 <div class="search-form">
                     <div class="search-term">
@@ -67,7 +70,7 @@
 
                         <input type="text" placeholder="filter" data-bind='
                             attr: {placeholder: filterType().placeholder},
-                            event: {keyup: autoComplete, afterpaste: autoComplete},
+                            event: {keyup: autoComplete, afterpaste: autoComplete, change: filterChange},
                             value: filter,
                             valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
@@ -248,14 +251,22 @@
         <div class="droppable" data-bind="
             makeDropabble: true,
             click: pasteItem,
-            css: {underDrag: underDrag},
+            css: {
+                underDrag: underDrag() && !underControlDrag(),
+                underControlDrag: underDrag() && underControlDrag()
+            },
             template: {name: 'template_article', foreach: items}"></div>
     </script>
 
     <script type="text/html" id="template_search_controls">
         <div class="finder__controls">
             Page <span data-bind="text: page"></span>
-            <a data-bind="click: pageNext, visible: showNext()">next</a>
+            <!-- ko if: showNext() -->
+                <a data-bind="click: pageNext">next</a>
+            <!-- /ko -->
+            <!-- ko ifnot: showNext() -->
+                <span>last</span>
+            <!-- /ko -->
             <a data-bind="click: pagePrev, visible: showPrev()">prev</a>
             <a data-bind="click: refresh,  visible: showTop()">top</a>
         </div>
@@ -267,12 +278,13 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag,
+                underDrag: state.underDrag() && !state.underControlDrag(),
+                underControlDrag: state.underDrag() && state.underControlDrag(),
                 imageHidden: meta.imageHide
             }">
 
             <a class="thumb" data-bind="
-                style: {backgroundImage: 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')'},
+                style: {backgroundImage: thumbImage() ? 'url(' + thumbImage() + ')' : ''},
                 attr: {href: id}"></a>
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
@@ -293,10 +305,13 @@
                         <div class="droppable" data-bind="
                             makeDropabble: true,
                             click: pasteItem,
-                            css: {underDrag: underDrag},
+                            css: {
+                                underDrag: underDrag() && !underControlDrag(),
+                                underControlDrag: underDrag() && underControlDrag()
+                            },
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
-                    <span class="supporting-message">Drop content above</span>
+                    <span class="supporting-message">Drop content above, hold Ctrl key to replace item</span>
                 </div>
 
                 <div class="tools">

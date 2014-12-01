@@ -32,7 +32,8 @@ trait DfpAgent {
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
       val possibleKeywords = tokens filterNot stopWords.contains flatMap frontKeywordIds
-      possibleKeywords find p
+      val keywords = possibleKeywords filter p
+      if (keywords.size == 1) keywords.headOption else None
     }
   }
 
@@ -143,11 +144,11 @@ trait DfpAgent {
 
   def sponsorshipType(config: CollectionConfig): Option[String] = {
     if (isSponsored(config)) {
-      Option("sponsored")
+      Option("sponsoredfeatures")
     } else if (isAdvertisementFeature(config)) {
-      Option("advertisement-feature")
+      Option("advertisement-features")
     } else if (isFoundationSupported(config)) {
-      Option("foundation-supported")
+      Option("foundation-features")
     } else {
       None
     }

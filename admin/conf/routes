@@ -3,86 +3,88 @@
 # ~~~~
 
 
-GET         /_healthcheck                 controllers.HealthCheck.healthcheck()
+GET         /_healthcheck                                                                      controllers.HealthCheck.healthcheck()
 
 # authentication endpoints
-GET         /login                        controllers.admin.OAuthLoginController.login
-POST        /login                        controllers.admin.OAuthLoginController.loginAction
-GET         /oauth2callback               controllers.admin.OAuthLoginController.oauth2Callback
-GET         /logout                       controllers.admin.OAuthLoginController.logout
+GET         /login                                                                             controllers.admin.OAuthLoginController.login
+POST        /login                                                                             controllers.admin.OAuthLoginController.loginAction
+GET         /oauth2callback                                                                    controllers.admin.OAuthLoginController.oauth2Callback
+GET         /logout                                                                            controllers.admin.OAuthLoginController.logout
 
 # static files
-GET         /public/*file                 controllers.Assets.at(path="/public", file)
-GET         /assets/*path                 dev.DevAssetsController.at(path)
+GET         /public/*file                                                                      controllers.Assets.at(path="/public", file)
+GET         /assets/*path                                                                      dev.DevAssetsController.at(path)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
 #######################################################
 
 #Index page
-GET         /                             controllers.admin.AdminIndexController.index()
-GET         /admin                        controllers.admin.AdminIndexController.admin()
+GET         /                                                                                  controllers.admin.AdminIndexController.index()
+GET         /admin                                                                             controllers.admin.AdminIndexController.admin()
 
 # API endpoint proxying for https
-GET         /api/proxy/*path              controllers.admin.Api.proxy(path, callback)
-GET         /api/tag                      controllers.admin.Api.tag(q, callback)
-GET         /api/item/*path               controllers.admin.Api.item(path, callback)
-GET         /json/proxy/*absUrl           controllers.admin.Api.json(absUrl)
+GET         /api/proxy/*path                                                                   controllers.admin.Api.proxy(path, callback)
+GET         /api/tag                                                                           controllers.admin.Api.tag(q, callback)
+GET         /api/item/*path                                                                    controllers.admin.Api.item(path, callback)
+GET         /json/proxy/*absUrl                                                                controllers.admin.Api.json(absUrl)
 
 # Ophan proxying for https
-GET         /ophan/pageviews/*path        controllers.admin.OphanApiController.pageViews(path)
-GET         /ophan/pageviews              controllers.admin.OphanApiController.platformPageViews()
-GET         /ophan/ads/render-time        controllers.admin.OphanApiController.adsRenderTime()
+GET         /ophan/pageviews/*path                                                             controllers.admin.OphanApiController.pageViews(path)
+GET         /ophan/pageviews                                                                   controllers.admin.OphanApiController.platformPageViews()
+GET         /ophan/ads/render-time                                                             controllers.admin.OphanApiController.adsRenderTime()
 
 #Development endpoints
-GET         /dev/switchboard              controllers.admin.SwitchboardController.renderSwitchboard()
-POST        /dev/switchboard              controllers.admin.SwitchboardController.save()
+GET         /dev/switchboard                                                                   controllers.admin.SwitchboardController.renderSwitchboard()
+POST        /dev/switchboard                                                                   controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET         /analytics/abtests                      controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET         /analytics/google-referrers             controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
-GET         /analytics/content/gallery              controllers.admin.ContentPerformanceController.renderGalleryDashboard()
-GET         /analytics/content/liveblog             controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
-GET         /analytics/omniture/segments/:rsid      controllers.admin.OmnitureReportController.getSegments(rsid)
-GET         /analytics/omniture/*reportName         controllers.admin.OmnitureReportController.getReport(reportName)
+GET         /analytics/abtests                                                                 controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence                                                              controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/google-referrers                                                        controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
+GET         /analytics/content/gallery                                                         controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog                                                        controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/omniture/segments/:rsid                                                 controllers.admin.OmnitureReportController.getSegments(rsid)
+GET         /analytics/omniture/*reportName                                                    controllers.admin.OmnitureReportController.getReport(reportName)
 
 # Commercial
-GET         /analytics/commercial                         controllers.admin.CommercialController.renderCommercial()
-GET         /analytics/commercial/sponsorships            controllers.admin.CommercialController.renderSponsorships()
-GET         /analytics/commercial/pageskins               controllers.admin.CommercialController.renderPageskins()
-GET         /analytics/commercial/surging                 controllers.admin.CommercialController.renderSurgingContent()
-GET         /analytics/commercial/im-sponsorships         controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
-GET         /analytics/commercial/templates               controllers.admin.CommercialController.renderCreativeTemplates()
-GET         /analytics/commercial/sponsored-containers    controllers.admin.CommercialController.sponsoredContainers()
-GET         /commercialtools/adunits/toapprove            controllers.admin.CommercialAdUnitController.renderToApprove()
-POST        /commercialtools/adunits/toapprove            controllers.admin.CommercialAdUnitController.approve()
-GET         /admin/commercial/fluid250                    controllers.admin.CommercialController.renderFluidAds()
+GET         /analytics/commercial                                                              controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/specialadunits                                               controllers.admin.CommercialController.renderSpecialAdUnits()
+GET         /analytics/commercial/sponsorships                                                 controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins                                                    controllers.admin.CommercialController.renderPageskins()
+GET         /analytics/commercial/surging                                                      controllers.admin.CommercialController.renderSurgingContent()
+GET         /analytics/commercial/im-sponsorships                                              controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET         /analytics/commercial/templates                                                    controllers.admin.CommercialController.renderCreativeTemplates()
+GET         /analytics/commercial/sponsored-containers                                         controllers.admin.CommercialController.sponsoredContainers()
+GET         /commercialtools/adunits/toapprove                                                 controllers.admin.CommercialAdUnitController.renderToApprove()
+POST        /commercialtools/adunits/toapprove                                                 controllers.admin.CommercialAdUnitController.approve()
+GET         /admin/commercial/fluid250                                                         controllers.admin.CommercialController.renderFluidAds()
+GET         /analytics/commercial/adtests                                                      controllers.admin.CommercialController.renderAdTests()
 
 # Metrics
-GET         /metrics/loadbalancers        controllers.admin.MetricsController.renderLoadBalancers()
-GET         /metrics/fastly               controllers.admin.FastlyController.renderFastly()
-GET         /metrics/errors               controllers.admin.MetricsController.renderErrors()
-GET         /metrics/errors/4xx           controllers.admin.MetricsController.render4XX()
-GET         /metrics/errors/5xx           controllers.admin.MetricsController.render5XX()
-GET         /metrics/memory               controllers.admin.MetricsController.renderMemory()
-GET         /metrics/assets               controllers.admin.MetricsController.renderAssets()
-GET         /metrics/googlebot/404        controllers.admin.MetricsController.renderGooglebot404s()
+GET         /metrics/loadbalancers                                                             controllers.admin.MetricsController.renderLoadBalancers()
+GET         /metrics/fastly                                                                    controllers.admin.FastlyController.renderFastly()
+GET         /metrics/errors                                                                    controllers.admin.MetricsController.renderErrors()
+GET         /metrics/errors/4xx                                                                controllers.admin.MetricsController.render4XX()
+GET         /metrics/errors/5xx                                                                controllers.admin.MetricsController.render5XX()
+GET         /metrics/memory                                                                    controllers.admin.MetricsController.renderMemory()
+GET         /metrics/assets                                                                    controllers.admin.MetricsController.renderAssets()
+GET         /metrics/googlebot/404                                                             controllers.admin.MetricsController.renderGooglebot404s()
 
 # Radiator
-GET         /radiator                     controllers.admin.RadiatorController.renderRadiator()
-GET         /radiator/pingdom             controllers.admin.RadiatorController.pingdom()
-GET         /radiator/commit/*hash        controllers.admin.RadiatorController.commitDetail(hash)
+GET         /radiator                                                                          controllers.admin.RadiatorController.renderRadiator()
+GET         /radiator/pingdom                                                                  controllers.admin.RadiatorController.pingdom()
+GET         /radiator/commit/*hash                                                             controllers.admin.RadiatorController.commitDetail(hash)
 
 # Redirects
-GET         /redirects                    controllers.admin.RedirectController.redirect()
-POST        /redirect-post                controllers.admin.RedirectController.redirectPost()
+GET         /redirects                                                                         controllers.admin.RedirectController.redirect()
+POST        /redirect-post                                                                     controllers.admin.RedirectController.redirectPost()
 
 # Football Troubleshooter
-GET         /troubleshoot/football        controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/football                                                             controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 
-GET         /troubleshoot/pages           controllers.admin.TroubleshooterController.index()
-GET         /troubleshoot/test            controllers.admin.TroubleshooterController.test(id, testPath)
+GET         /troubleshoot/pages                                                                controllers.admin.TroubleshooterController.index()
+GET         /troubleshoot/test                                                                 controllers.admin.TroubleshooterController.test(id, testPath)
 
 # Football admin
 GET         /admin/football                                                                    controllers.admin.SiteController.index

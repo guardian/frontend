@@ -56,11 +56,11 @@ object MagentoService extends ExecutionContexts with Logging {
       val url = s"${props.urlPrefix}/$isbn"
       val futureResponse = WS.url(url)
         .sign(props.oauth)
-        .withRequestTimeout(4000)
+        .withRequestTimeout(5000)
         .get()
 
       futureResponse map { response =>
-        if (response.status == 200) {
+        if (response.status == 200 || response.status == 404) {
           val json = response.json
           json.validate[Book] match {
             case JsError(e) =>

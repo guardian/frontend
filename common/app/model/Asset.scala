@@ -6,15 +6,7 @@ import views.support.{Naked, ImgSrc}
 import scala.util.matching.Regex
 
 case class ImageAsset(delegate: Asset, index: Int) {
-
-  private lazy val fields: Map[String,String] = delegate.typeData
-  private lazy val aspectRatio: Fraction = {
-    val heightAsRatio: Int = height match {
-      case 0 => 1
-      case denom:Int => denom
-    }
-    new Fraction(width, heightAsRatio)
-  }
+  private lazy val fields: Map[String, String] = delegate.typeData
 
   lazy val mediaType: String = delegate.`type`
   lazy val mimeType: Option[String] = delegate.mimeType
@@ -36,9 +28,6 @@ case class ImageAsset(delegate: Asset, index: Int) {
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
   lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
-
-  lazy val aspectRatioWidth: Int = aspectRatio.getNumerator
-  lazy val aspectRatioHeight: Int = aspectRatio.getDenominator
 }
 
 case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {

@@ -34,7 +34,7 @@
             <span class="fc-item__kicker">Review</span>
         }
 
-        case TagKicker(tagName, tagLink) => {
+        case TagKicker(tagName, tagLink, _) => {
             <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-item__kicker">@Html(tagName)</a>
         }
 

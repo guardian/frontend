@@ -67,7 +67,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
           val pageSkinSponsorships = data.pageSkinSponsorships
           Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
-          Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
+          Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
         }
       }
     }

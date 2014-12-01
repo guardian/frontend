@@ -1,5 +1,6 @@
 package model
 
+import contentapi.FixtureTemplates
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -20,6 +21,53 @@ class ElementsTest extends FlatSpec with Matchers {
     )
 
     images.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
+  }
+
+  def thumbnailFixture(crops: (Int, Int)*) = FixtureTemplates.emptyElement.copy(
+    `type` = "image",
+    relation = "thumbnail",
+    assets = crops.toList map { case (width, height) =>
+      FixtureTemplates.emptyAsset.copy(
+        `type` = "image",
+        mimeType = Some("image/jpeg"),
+        typeData = Map(
+          "width" -> width.toString,
+          "height" -> height.toString
+        )
+      )
+    }
+  )
+
+  "trailPicture" should "find an asset with an aspect ratio within 1% of the desired aspect ratio" in {
+    val theImage = thumbnailFixture((504, 300))
+
+    Content(
+      FixtureTemplates.emptyApiContent.copy(
+        elements = Some(List(theImage))
+      )
+    ).trailPicture(5, 3).map(_.delegate) shouldEqual Some(theImage)
+  }
+
+  it should "reject images more than 1% from the desired aspect ratio" in {
+    val theImage = thumbnailFixture((506, 300))
+
+    Content(
+      FixtureTemplates.emptyApiContent.copy(
+        elements = Some(List(theImage))
+      )
+    ).trailPicture(5, 3).map(_.delegate) shouldEqual None
+  }
+
+  it should "not die if an image has 0 height or width" in {
+    val theImage = thumbnailFixture((500, 300))
+
+    Content(
+      FixtureTemplates.emptyApiContent.copy(
+        elements = Some(List(
+          thumbnailFixture((0, 300), (500, 0), (500, 300))
+        ))
+      )
+    ).trailPicture(5, 3) shouldBe defined
   }
 
   private def image(  id: String,

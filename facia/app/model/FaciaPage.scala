@@ -2,6 +2,7 @@ package model
 
 import common.{Edition, NavItem}
 import conf.Configuration
+import contentapi.Paths
 import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
@@ -25,14 +26,9 @@ case class FaciaPage(id: String,
       id <- item.section +: item.tags.map(_.id)
     } yield id
 
-    val idWithoutEdition = id.split("/").toList match {
-      case maybeEdition :: rest if Edition.byId(maybeEdition).isDefined => Some(rest.mkString("/"))
-      case _ => None
-    }
-
     val validIds = Set(
       Some(id),
-      idWithoutEdition.filter(_.nonEmpty)
+      Paths.withoutEdition(id)
     ).flatten
 
     tagAndSectionIds.find(validIds contains) map { id =>

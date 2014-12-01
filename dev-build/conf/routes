@@ -31,12 +31,14 @@ GET         /analytics/content/liveblog                                         
 GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/specialadunits                                                                     controllers.admin.CommercialController.renderSpecialAdUnits()
 GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
 GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 GET         /analytics/commercial/sponsored-containers                                                               controllers.admin.CommercialController.sponsoredContainers()
+GET         /analytics/commercial/adtests                                                                            controllers.admin.CommercialController.renderAdTests()
 
 
 # Discussion

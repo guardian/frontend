@@ -46,9 +46,8 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
-  // Dream on.
-  def participatesInDeduplication(trail: Trail) =
-    !trail.snapType.exists(_ == "latest")
+  // Never de-duplicate snaps.
+  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
@@ -75,13 +74,17 @@ object Front extends implicits.Collections {
           (seen, trails)
         }
 
+      /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
+      case Fixed(containerDefinition) if containerDefinition.isSingleton =>
+        (seen, trails)
+
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => participatesInDeduplication(trail) && seen.contains(trail.url))
+        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
           .distinctBy(_.url)
-        (seen ++ notUsed.filter(participatesInDeduplication).take(nToTake).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
@@ -90,7 +93,7 @@ object Front extends implicits.Collections {
   }
 
   def fromConfigsAndContainers(
-      configs: Seq[((CollectionConfigWithId, CollectionEssentials), Container)],
+      configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
   ) = {
     import scalaz.syntax.traverse._
@@ -102,11 +105,11 @@ object Front extends implicits.Collections {
       ) { case ((seenTrails, context), (((config, collection), container), index)) =>
         val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
 
-        ContainerLayout.fromContainer(container, context, config.config, newItems) map {
+        ContainerLayout.fromContainer(container, context, config, newItems) map {
           case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
             index,
             container,
-            config,
+            config.collectionConfigWithId,
             collection.copy(items = newItems),
             Some(containerLayout),
             None
@@ -115,7 +118,7 @@ object Front extends implicits.Collections {
           ((newSeen, context), FaciaContainer.fromConfig(
             index,
             container,
-            config,
+            config.collectionConfigWithId,
             collection.copy(items = newItems),
             None,
             None
@@ -126,7 +129,10 @@ object Front extends implicits.Collections {
   }
 
   def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
-    fromConfigsAndContainers(configs.zipWith({ case (config, _) => Container.fromConfig(config.config) }))
+    fromConfigsAndContainers(configs.map {
+      case (config, collectionEssentials) =>
+        ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))
+    })
   }
 }
 
@@ -163,15 +169,31 @@ object FaciaContainer {
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
     componentId: Option[String] = None
+  ): FaciaContainer = {
+    apply(
+      index,
+      container,
+      ContainerDisplayConfig.withDefaults(config),
+      collectionEssentials,
+      componentId
+    )
+  }
+
+  def apply(
+    index: Int,
+    container: Container,
+    config: ContainerDisplayConfig,
+    collectionEssentials: CollectionEssentials,
+    componentId: Option[String]
   ): FaciaContainer = fromConfig(
     index,
     container,
-    config,
+    config.collectionConfigWithId,
     collectionEssentials,
     ContainerLayout.fromContainer(
       container,
       ContainerLayoutContext.empty,
-      config.config,
+      config,
       collectionEssentials.items
     ).map(_._1),
     componentId
@@ -210,8 +232,8 @@ object FaciaContainer {
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     FaciaContainer(
       index = 2,
-      container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
-      config = CollectionConfigWithId(dataId, CollectionConfig.emptyConfig),
+      container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
+      config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
     ).withTimeStamps
@@ -293,7 +315,7 @@ case class FaciaContainer(
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
       case LoneDateHeadline(dateHeadline) => dateHeadline
     }
 
