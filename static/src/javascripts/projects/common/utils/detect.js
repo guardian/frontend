@@ -312,10 +312,11 @@ define([
     }
 
     function shouldUseHintedFonts() {
-        var windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+        var version,
+            windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
 
         if (windowsNT) {
-            var version = parseFloat(windowsNT[1], 10);
+            version = parseFloat(windowsNT[1], 10);
             // windows XP and newer && windows 7 and older
             return version >= 5.1 && version <= 6.1;
         } else {
