@@ -7,7 +7,7 @@ import common.{JsonComponent, ExecutionContexts}
 import org.joda.time.LocalDate
 import football.model.PA
 import scala.concurrent.Future
-import model.{NoCache, Cached}
+import model.{Cors, NoCache, Cached}
 import play.api.libs.json.{JsString, JsArray, JsObject}
 import org.joda.time.format.DateTimeFormat
 
@@ -48,7 +48,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
           playerAppearances <- client.appearances(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
         } yield {
           val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-          NoCache(result)
+          Cors(NoCache(result))
         }
       }
     }
@@ -62,7 +62,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       playerAppearances <- client.appearances(playerId, startDate, LocalDate.now(), teamId)
     } yield {
       val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-      NoCache(result)
+      Cors(NoCache(result))
     }
   }
 

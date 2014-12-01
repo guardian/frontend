@@ -1,5 +1,5 @@
 /*
- Module: commercial/loader.js
+ Module: commercial/creatives/commercial-component.js
  Description: Loads our commercial components
  */
 define([
@@ -67,36 +67,20 @@ define([
         },
         /**
          * Loads commercial components.
-         *
-         * BEWARE that this code is depended upon by the ad server.
-         *
-         * ```
-         * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-         *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
-         *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
-         * })
-         * ```
+         *         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
          *
          * @constructor
          * @extends Component
-         * @param {Object=} options
+         * @param (Object=) $adSlot
+         * @param {Object=} params
          */
-        Loader = function (options) {
-            var opts = defaults(options || {}, {
-                    capi:             [],
-                    capiAboutLinkUrl: '',
-                    capiKeywords:     '',
-                    capiLinkUrl:      '',
-                    capiTitle:        '',
-                    components:       [],
-                    jobIds:           '',
-                    logo:             '',
-                    oastoken:         ''
-                }),
-                section = config.page.section,
-                jobs    = opts.jobIds ? opts.jobIds.split(',') : [];
+        CommercialComponent = function ($adSlot, params) {
+            var section = config.page.section,
+                jobs    = params.jobIds ? params.jobIds.split(',') : [];
 
-            this.oastoken   = opts.oastoken;
+            this.params = params;
+            this.$adSlot = $adSlot;
+            this.type = params.type;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
@@ -112,24 +96,14 @@ define([
                 soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
                 travel:            buildComponentUrl('travel/offers', { s: section }),
                 travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: opts.components }),
-                capiSingle:        buildComponentUrl('capi-single', defaults(options, { s: section })),
-                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(options, { s: section })),
-                capi:              buildComponentUrl('capi', defaults(options, {
-                    s:   section,
-                    t:   opts.capi,
-                    k:   opts.capiKeywords.split(','),
-                    l:   opts.logo,
-                    ct:  opts.capiTitle,
-                    cl:  opts.capiLinkUrl,
-                    cal: opts.capiAboutLinkUrl
-                }))
+                multi:             buildComponentUrl('multi', { c: params.components }),
+                capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
+                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
+                capi:              buildComponentUrl('capi', defaults(params, { s: section }))
             };
         };
 
-    Component.define(Loader);
-
-    Loader.prototype.postLoadEvents = {
+    CommercialComponent.prototype.postLoadEvents = {
         bestbuy: function (el) {
             new Tabs().init(el);
         }
@@ -138,19 +112,14 @@ define([
     /**
      * @param {Element} target
      */
-    Loader.prototype.load = function (name, target) {
+    CommercialComponent.prototype.load = function () {
         new LazyLoad({
-            url: this.components[name],
-            container: target,
-            beforeInsert: function (html) {
-                // Currently we are replacing the OmnitureToken with nothing. This will change once
-                // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html ? html.replace(/%OASToken%/g, this.oastoken).replace(/%OmnitureToken%/g, '') : html;
-            }.bind(this),
+            url: this.components[this.type],
+            container: this.$adSlot,
             success: function () {
-                this.postLoadEvents[name] && this.postLoadEvents[name](target);
+                this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
 
-                mediator.emit('modules:commercial:loader:loaded');
+                mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this)
         }).load();
 
@@ -161,15 +130,14 @@ define([
      * @param {String}  name
      * @param {Element} el
      */
-    Loader.prototype.init = function (name, el) {
-
-        if (this.components[name] === undefined) {
+    CommercialComponent.prototype.create = function () {
+        if (this.components[this.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
             return false;
         }
 
-        return this.load(name, el);
+        return this.load();
     };
 
-    return Loader;
+    return CommercialComponent;
 });

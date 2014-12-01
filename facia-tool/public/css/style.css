@@ -605,7 +605,6 @@ select {
 .editor textarea {
     width: 100%;
     height: 17px;
-    transition: height 50ms;
     padding: 0 4px;
     border: 0;
     z-index: 10;

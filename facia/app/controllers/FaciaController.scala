@@ -9,7 +9,6 @@ import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import slices.Container
-import updates.FrontIndex
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction
@@ -87,14 +86,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
     } else {
       Future.successful(Cached(60)(NotFound))
-    }
-  }
-
-  def renderFrontIndex(path: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving front index: $path")
-
-    withFaciaPage(path) { page =>
-      Cached(60)(JsonComponent(Json.toJson(FrontIndex.fromFaciaPage(page)).asInstanceOf[JsObject]))
     }
   }
 
