@@ -392,53 +392,6 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-// TODO make this separate
-// this does not fix other links, just the ones in these pages.
-case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
-
-  private val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
-
-  def FixR1Link(href: String, section: String = "") = {
-
-    /**
-    * We moved some R1 HTML files from subdomains to www.theguardian.com.
-    * This means we broke some of the <a href="...">'s in the HTML.
-    *
-    * Here's how this works :-
-    *
-    * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
-    *       - Downcase the old subdomain paths.
-    *
-    * 2. /Film_Page/0,,594132,00.html -> /film/Film_Page/0,,594132,00.html
-    *       - Prefix the current section to any links without a path in them.
-    *
-    * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
-    *       - The /Guardian path is an alias for the root (www), so we just remove it.
-    *
-    * 4. http://...
-    *       - Ignore any links that contain a full URL.
-    */
-
-    // #1
-    href match {
-      case subdomains(section, path) => s"/${section.toLowerCase}/$path"
-      case _ =>
-        if (href.contains("/Guardian"))
-          href.replace("/Guardian", "") // #2
-        else
-          s"$section$href" // #3
-    }
-  }
-
-  def clean(body: Document): Document = {
-    val links = body.getElementsByTag("a")
-    links.filter(_.attr("href") startsWith "/") // #4
-    .foreach(link => link.attr("href", FixR1Link(link.attr("href"), section)))
-
-    body
-  }
-}
-
 object TweetCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
