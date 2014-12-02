@@ -29,7 +29,7 @@ import play.api.test.Helpers._
   it should "redirect to the all page for a section" in {
     val result = controllers.LatestIndexController.latest("books")(TestRequest())
     status(result) should be(PermanentRedirect)
-    header("Location", result).head should endWith ("/books/all")
+    header("Location", result).head should be ("/books/all")
   }
 
   it should "404 for a bad url" in {
