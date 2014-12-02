@@ -11,7 +11,7 @@ define([
 ) {
     var historySize = 50,
         summaryPeriodDays = 30,
-        popularSize = 10,
+        popularSize = 20,
 
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
@@ -97,29 +97,34 @@ define([
     function calculatePopular(summary) {
         return _.chain(summary.tags)
             .map(function (nameAndFreqs, tid) {
-                var freqs = nameAndFreqs[1];
+                var freqs = nameAndFreqs[1],
+                    rank;
 
-                return freqs.length < 3 ? false : {
-                    idAndName: [tid, nameAndFreqs[0]],
-                    rank: rankFreqs(freqs)
-                };
+                if (freqs.length >= 3) {
+                    rank = Math.round(10 * tallyFreqs(freqs) / (10 + habitFactor(freqs)));
+                    
+                    return {
+                        keep: [tid, nameAndFreqs[0], rank],
+                        rank: rank
+                    };
+                }
             })
             .compact()
             .sortBy('rank')
             .last(popularSize)
             .reverse()
-            .pluck('idAndName')
+            .pluck('keep')
             .value();
     }
 
-    function rankFreqs(freqs) {
-        return _.reduce(freqs, function (rank, freq) {
-            return rank + (1 + weightedVisitsInDay(freq[1])) * (summaryPeriodDays - freq[0]);
-        }, 0) / (1 + habitFactor(freqs));
+    function tallyFreqs(freqs) {
+        return _.reduce(freqs, function (tally, freq) {
+            return tally + dayScore(freq[1]) * (summaryPeriodDays - freq[0]);
+        }, 0);
     }
 
-    function weightedVisitsInDay(n) {
-        return Math.max(n, 20) * 0.2;
+    function dayScore(n) {
+        return 1 + Math.min(n, 20) * 0.2;
     }
 
     function habitFactor(freqs) {
