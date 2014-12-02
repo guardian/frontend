@@ -27,7 +27,8 @@ define([
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
-        $breakingNewsItems;
+        $breakingNewsItems,
+        $body;
 
     function slashDelimit() {
         return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
@@ -38,9 +39,6 @@ define([
             hiddenIds = storage.local.get(storageKeyHidden) || [];
 
         if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
-
-        // just for tests
-        if (location.pathname === '/us') { return; }
 
         ajax({
             url: breakingNewsSource,
@@ -94,24 +92,36 @@ define([
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function (article) {
-                    var src = '<div class="breaking-news__item" data-link-name="breaking news">' +
-                            '<em class="breaking-news__item-label">Breaking News</em> ' +
-                            '<p class="breaking-news__item-headline">' + article.headline + '</p>' +
-                            '<a class="breaking-news__item-headline" data-link-name="article" href="/' + article.id + '">' + article.headline + '</a>' +
-                            '<div class="js-breaking-news__item__close button button--tertiary breaking-news__item__close"><i class="i i-close-icon-white-small" data-link-name="close"></i> Close</div>' +
-                            '<a href="/' + article.id + '" class="button button--tertiary">Open story</a>' +
-                        '</div>',
-                        $el = bonzo.create(src);
+                    var $el = bonzo.create(
+                        '<a href="/' + article.id + '" class="js-breaking-news__item breaking-news__item" data-link-name="breaking news">' +
+                            '<div class="breaking-news__item-content">' +
+                                '<div class="breaking-news__item-header">' +
+                                    '<em class="breaking-news__item-kicker">Breaking News</em> ' +
+                                    '<div class="breaking-news__item-headline" data-link-name="headline link">' +
+                                        article.headline +
+                                    '</div>' +
+                                    '<div class="breaking-news__item-standfirst">' +
+                                        article.trailText +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="breaking-news__item-options">' +
+                                    '<button class="button button--tertiary breaking-news__item-show" data-link-name="read button">Show me</button>' +
+                                    '<button class="js-breaking-news__item__close button button--tertiary" aria-label="Dismiss" data-article-id="' + article.id + '"><i class="i i-close-icon-white-small" data-link-name="close button"></i></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</a>'
+                    );
 
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
-                    $breakingNewsItems = $breakingNewsItems || bonzo(qwery('.breaking-news__items'));
+                    $breakingNews.append($el);
 
-                    $breakingNewsItems.append($el);
-
-                    bean.on($el[0], 'click', '.button', function () {
-                        bonzo($breakingNews).hide();
-                        hiddenIds.push(article.id);
+                    bean.on($breakingNews[0], 'click', '.js-breaking-news__item__close', function (e) {
+                        var id;
+                        e.preventDefault();
+                        id = e.currentTarget.getAttribute('data-article-id');
+                        hiddenIds.push(id);
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
+                        bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
                     });
 
                     showAlert = true;
@@ -119,8 +129,10 @@ define([
 
                 if (showAlert) {
                     setTimeout(function () {
-                        $breakingNews.removeClass('breaking-news--loading');
-                    }, 1000);
+                        $body = $body || bonzo(document.body);
+                        $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
+                        $breakingNews.removeClass('breaking-news--hidden');
+                    }, 3000);
                 }
             }
         );
