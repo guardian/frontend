@@ -100,7 +100,7 @@ define([
                 return {
                     idAndName: [tid, nameAndFreqs[0]],
                     rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
-                        return rank + (attenuate(freq[1]) * (summaryPeriodDays - freq[0]));
+                        return rank + (1 + attenuate(freq[1])) * (summaryPeriodDays - freq[0]);
                     }, 0)
                 };
             })
@@ -111,8 +111,14 @@ define([
             .value();
     }
 
+    function rank(freqs) {
+        var score = _.reduce(freqs, function (rank, freq) {
+                return rank + (1 + attenuate(freq[1])) * (summaryPeriodDays - freq[0]);
+            }, 0)
+    }
+
     function attenuate(n) {
-        return Math.sqrt(Math.max(n, 10));
+        return Math.max(n, 20) * 0.2;
     }
 
     function firstCsv(str) {
