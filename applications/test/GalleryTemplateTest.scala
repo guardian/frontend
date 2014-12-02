@@ -1,5 +1,6 @@
 package test
 
+import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.collection.JavaConversions._
 
@@ -39,6 +40,22 @@ import scala.collection.JavaConversions._
     $("meta[name='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
     $("meta[name='twitter:image3:src']").getAttributes("content").head should startWith ("http://")
     $("meta[name='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg")
+  }
+
+  it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
+    FacebookShareUseTrailPicFirstSwitch.switchOn()
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+      import browser._
+      $("meta[property='og:image']").getAttributes("content").head should endWith ("61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg")
+    }
+  }
+
+  it should "select the largest main picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
+    FacebookShareUseTrailPicFirstSwitch.switchOff()
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+      import browser._
+      $("meta[property='og:image']").getAttributes("content").head should endWith ("e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg")
+    }
   }
 
   it should "include the index parameter in direct links" in goTo("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre?index=2") { browser =>

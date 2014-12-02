@@ -636,6 +636,26 @@ case object TlTlMpu extends Slice {
 
 /* .________.________.________.________.
  * |________|________|________|________|
+ */
+case object Ql1Ql1Ql1Ql1 extends Slice {
+  val layout: SliceLayout = SliceLayout(
+    cssClassName = "ql-ql-ql-ql",
+    columns = Seq(
+      Rows(
+        colSpan = 4,
+        columns = 4,
+        rows = 1,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem
+        )
+      )
+    )
+  )
+}
+
+/* .________.________.________.________.
+ * |________|________|________|________|
  * |________|________|________|________|
  */
 case object Ql2Ql2Ql2Ql2 extends Slice {

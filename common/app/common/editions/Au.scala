@@ -1,5 +1,6 @@
 package common.editions
 
+import common.editions.Uk._
 import org.joda.time.DateTimeZone
 import common._
 import contentapi.QueryDefaults
@@ -25,7 +26,7 @@ object Au extends Edition(
       NavItem(home),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
-      NavItem(cif),
+      NavItem(opinion),
       NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague, tennis, cycling, boxing, afl, nrl)),
       NavItem(football, aLeague :: footballNav.toList),
       NavItem(technology, Seq(games)),
@@ -34,9 +35,10 @@ object Au extends Edition(
       NavItem(fashion),
       NavItem(economy, Seq(markets, companies, money)),
       NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
-      NavItem(science),
-      NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(media),
+      NavItem(environment, Seq(cities, globalDevelopment)),
+      NavItem(science),
+      NavItem(crosswords),
       NavItem(video)
     )
   }
@@ -45,7 +47,7 @@ object Au extends Edition(
     NavItem(home),
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
-    NavItem(cif),
+    NavItem(opinion),
     NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, afl, nrl)),
     NavItem(football, aLeague :: footballNav.toList),
     NavItem(technology, Seq(games)),
@@ -54,7 +56,7 @@ object Au extends Edition(
     NavItem(fashion),
     NavItem(economy, Seq(markets, companies, money)),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
-    NavItem(science),
+    NavItem(media),
     NavItem(environment, Seq(cities, globalDevelopment))
   )
 }

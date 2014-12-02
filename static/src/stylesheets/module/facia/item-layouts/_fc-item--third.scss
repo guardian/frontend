@@ -36,8 +36,8 @@ x x x x x x x x
 
         &[class*="fc-item--has-sublinks"] {
             .fc-item__container {
-                @include mq(tablet, desktop) {
-                    padding-bottom: gs-height(5);
+                @include mq(desktop) {
+                    padding-bottom: 0;
                 }
             }
         }
@@ -50,7 +50,11 @@ x x x x x x x x
     }
 
     .fc-item__avatar {
-        height: gs-height(5);
+        height: gs-height(3) + $gs-baseline * 2;
+
+        @include mq(desktop) {
+            height: gs-height(4);
+        }
     }
 
     .fc-item__avatar__media {

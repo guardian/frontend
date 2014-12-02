@@ -62,7 +62,7 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
     val targetedBestsellers = available filter (book => keywordsMatch(segment, book.keywordIds))
     lazy val defaultBestsellers = available filter (_.category.exists(_ == "General"))
     val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
-    bestsellers.sortBy(_.position).take(10)
+    bestsellers.filter(_.jacketUrl.nonEmpty).sortBy(_.position).take(10)
   }
 
   def refresh() {

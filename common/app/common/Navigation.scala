@@ -28,7 +28,12 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
       .orElse(links.find(_.currentForIncludingAllTags(page)))
   }
 
-  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
+  def exactFor(page: MetaData): Boolean = {
+    Set(
+      contentapi.Paths.withoutEdition(page.section),
+      Some(page.section)
+    ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
+  }
 }
 
 trait Navigation {
@@ -59,6 +64,7 @@ trait Navigation {
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
   val video = SectionLink("video", "video", "Video", "/video")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
+  val todaysPaper = SectionLink("news", "today's paper", "Today's Paper", "/theguardian")
 
   val health = SectionLink("society", "health", "Health", "/society/health")
 
@@ -67,8 +73,8 @@ trait Navigation {
   val sports = sport.copy(title = "sports", breadcrumbTitle = "Sports")
   val usSport = SectionLink("sport", "US sports", "US sports", "/sport/us-sport")
   val australiaSport = SectionLink("australia sport", "australia sport", "Australia sport", "/sport/australia-sport")
-  val afl = SectionLink("afl", "afl", "afl", "/sport/afl")
-  val nrl = SectionLink("nrl", "nrl", "nfl", "/sport/nrl")
+  val afl = SectionLink("afl", "AFL", "AFL", "/sport/afl")
+  val nrl = SectionLink("nrl", "NRL", "NFL", "/sport/nrl")
   val aLeague = SectionLink("a-league", "a-league", "A-league", "/football/a-league")
   val football = SectionLink("football", "football", "Football", "/football")
   val soccer = football.copy(title = "soccer", breadcrumbTitle = "Soccer")
@@ -176,6 +182,9 @@ trait Navigation {
   val food = SectionLink("environment", "food", "Food", "/environment/food")
   val cities = SectionLink("environment", "cities", "Cities", "/cities")
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
+
+  //Games
+  val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
 
   val footballNav = Seq(
     SectionLink("football", "live scores", "Live scores", "/football/live"),

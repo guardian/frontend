@@ -56,8 +56,14 @@ object ItemKicker {
     }
   }
 
+  val TagsThatDoNotAutoKicker = Set(
+    "commentisfree/commentisfree"
+  )
+
   def seriesOrBlogKicker(item: Trail) =
-    item.tags.find(Set("series", "blog") contains _.tagType).map(TagKicker.fromTag)
+    item.tags.find({ tag =>
+      Set("series", "blog").contains(tag.tagType) && !TagsThatDoNotAutoKicker.contains(tag.id)
+    }).map(TagKicker.fromTag)
 
   /** Used for de-duping bylines */
   def kickerText(itemKicker: ItemKicker): Option[String] = itemKicker match {

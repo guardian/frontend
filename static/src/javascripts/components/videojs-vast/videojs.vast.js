@@ -23,8 +23,10 @@
 
     // return vast plugin
     return {
-      createSourceObjects: function (media_files) {
-        var sourcesByFormat = {}, i, j, tech;
+      createSourceObjects: function (creative) {
+        var sourcesByFormat = {},
+            media_files = creative.mediaFiles,
+            i, j, tech;
         var techOrder = player.options().techOrder;
         for (i = 0, j = techOrder.length; i < j; i++) {
           var techName = techOrder[i].charAt(0).toUpperCase() + techOrder[i].slice(1);
@@ -50,7 +52,11 @@
                   type:media_file.mimeType,
                   src: media_file.fileURL,
                   width: media_file.width,
-                  height: media_file.height
+                  height: media_file.height,
+                  apiFramework: media_file.apiFramework,
+                  bitrate: media_file.bitrate,
+                  adParameters: creative.adParameters,
+                  duration: creative.duration
                 });
               }
             }
@@ -84,7 +90,7 @@
 
                   if (creative.mediaFiles.length) {
 
-                    player.vast.sources = player.vast.createSourceObjects(creative.mediaFiles);
+                    player.vast.sources = player.vast.createSourceObjects(creative);
 
                     if (!player.vast.sources.length) {
                       player.trigger('adtimeout');

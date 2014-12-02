@@ -1,21 +1,25 @@
-@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optCapiAdFeature: Option[String], optCapiSupportedBy: Option[String])(implicit request: RequestHeader)
+@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for @for(adFeature <- optCapiAdFeature) {@adFeature} commercial commercial--dfp commercial--dfp-single">
+    <section class="fc-container fc-container--paid-for commercial commercial--dfp fc-container--merchandising commercial--dfp-single @optSponsorType" data-link-name="merchandising | capi | single @optOmnitureId">
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h3 class="fc-container__header__title">
-                    <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    @optCapiLink.map { linkUrl =>
+                        <a href="@optClickMacro@linkUrl" class="fc-container__header__link" data-link-name="header link"><span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span></a>
+                    }.getOrElse {
+                        <span class="u-text-hyphenate">@for(titleText <- optCapiTitle) {@titleText}</span>
+                    }
                 </h3>
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
-                    <h3 class="ad-slot--paid-for-badge__header">@for(broughtBy <- optCapiSupportedBy) {@broughtBy}</h3>
-                    <a href=" @for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link">
+                    <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel:</h3>
+                    <a href="@optClickMacro@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
                         @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
                     </a>
                     @for(aboutLinkUrl <- optCapiAbout) {
-                        <a href="@aboutLinkUrl" class="ad-slot--paid-for-badge__help">About this content</a>
+                        <a href="@optClickMacro@aboutLinkUrl" class="ad-slot--paid-for-badge__help" data-link-name="about link">About this content</a>
                     }
                 </div>
             </div>
@@ -23,22 +27,16 @@
                 <div class="lineitems">
                     <div class="lineitem lineitem--dfp-single">
                         <div class="lineitem--dfp-single__offer">
-                            <a href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
-                                @FaciaDisplayElement.fromTrail(item) match {
-                                    case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                                        @Item300.bestFor(fallbackImage.imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                    }
-                                    case Some(InlineImage(imageContainer)) => {
-                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                    }
-                                    case _ => { }
+                            <a href="@optClickMacro@item.webUrl" data-link-name="merchandising-capi-single-v@{version}_@{date}-@item.webTitle">
+                                @item.trailPicture.map { trailPictureContainer =>
+                                    @Item300.bestFor(trailPictureContainer).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
                                 }
                                 <h4 class="fc-item__title lineitem__title">@item.webTitle</h4>
                                 @item.trailText.map { trailText =>
                                     <p class="fc-item__standfirst lineitem__desc">@Html(trailText)</p>
                                 }
                                 @for(buttonText <- optCapiButtonText) {
-                                    <a href="@AdLink{@item.webUrl}" class="lineitem__cta button button--tertiary button--small">
+                                    <a href="@optClickMacro@item.webUrl" class="lineitem__cta button button--tertiary button--small">
                                         @buttonText
                                         <i class="i i-arrow-black-right i-right"></i>
                                     </a>
@@ -47,7 +45,7 @@
                         </div>
                         <div class="lineitem--dfp-single__cta hide-on-mobile">
                             @for(moreButton <- optCapiReadMoreText) {
-                                <a href="@for(moreUrl <- optCapiReadMoreUrl) {@moreUrl}" class="commercial__cta button button--primary button--large">
+                                <a href="@optClickMacro@for(moreUrl <- optCapiReadMoreUrl) {@moreUrl}" class="commercial__cta button button--primary button--large" data-link-name="merchandising-single-more">
                                     @moreButton
                                     <i class="i i-arrow-white-right i-right"></i>
                                 </a>

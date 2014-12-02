@@ -8,7 +8,7 @@
     </div>
 
 
-    @content.seriesTag.map { series =>
+    @content.blogOrSeriesTag.map { series =>
         <div class="content__series-label">
             <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
         </div>

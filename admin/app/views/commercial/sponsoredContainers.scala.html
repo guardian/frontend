@@ -11,13 +11,13 @@
 
     <div class="l-side-margins">
         <div class="fc-container js-sponsored-front"
-            data-sponsorship="sponsored">
+            data-sponsorship="sponsoredfeatures">
             @fragments.containers.facia_cards.container(FaciaContainer(
                 0,
                 Fixed(fixedMediumSlowVI),
                 CollectionConfigWithId("front", CollectionConfig.withDefaults(displayName = Some("Front"))),
                 CollectionEssentials.fromTrails(trails)
-            ))(request))
+            ))(request)
 
             @Seq(
                 Map(
@@ -44,7 +44,7 @@
                         apiQuery = Some(c("keyword"))
                     )),
                     CollectionEssentials.fromTrails(trails)
-                ))(request))
+                ))(request)
             }
         </div>
     </div>

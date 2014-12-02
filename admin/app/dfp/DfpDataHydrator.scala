@@ -2,8 +2,8 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
-import com.google.api.ads.dfp.axis.v201403._
+import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
+import com.google.api.ads.dfp.axis.v201411._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
@@ -168,6 +168,28 @@ class DfpDataHydrator extends Logging {
         (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
   }
+
+  def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
+    dfpServiceRegistry.fold(Seq[(String, String)]()) { serviceRegistry =>
+      val statementBuilder = new StatementBuilder()
+        .where("status = :status")
+        .where("explicitlyTargeted = :targetting")
+        .withBindVariableValue("status", InventoryStatus._ACTIVE)
+        .withBindVariableValue("targetting", true)
+
+      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
+
+      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
+        }
+      }
+
+      rootAndDescendantAdUnits.map { ad =>
+        val parentPathComponents: List[String] = ad.getParentPath.map(_.getName).toList.tail
+        (ad.getId, (parentPathComponents ::: ad.getName :: Nil).mkString("/"))
+      } sortBy (_._2)
+    }
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>
