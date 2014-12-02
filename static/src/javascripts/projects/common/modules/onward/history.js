@@ -97,14 +97,12 @@ define([
     function calculatePopular(summary) {
         return _.chain(summary.tags)
             .map(function (nameAndFreqs, tid) {
-                var freqs = nameAndFreqs[1],
-                    rank;
+                var freqs = nameAndFreqs[1];
 
                 if (freqs.length >= 3) {
-                    rank = Math.round(10 * tallyFreqs(freqs) / (10 + habitFactor(freqs)));
                     return {
-                        keep: [tid, nameAndFreqs[0], rank],
-                        rank: rank
+                        keep: [tid, nameAndFreqs[0]],
+                        rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
                     };
                 }
             })
