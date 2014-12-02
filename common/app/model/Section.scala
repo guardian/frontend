@@ -8,6 +8,8 @@ import play.api.libs.json.{JsString, JsValue}
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None)
   extends MetaData with AdSuffixHandlingForFronts with KeywordSponsorshipHandling {
 
+  def isEditionalised = delegate.editions.length > 1
+
   lazy val section: String = id
 
   lazy val id: String = delegate.id
