@@ -14,7 +14,7 @@ object IndexPageGrouping extends Collections {
   val MinimumPerDayPopOutFrequency = 2
 
   def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[IndexPageGrouping] = {
-    val trailsAndDates = trails.zipWith(_.webPublicationDate.withZone(timezone).toLocalDate).map(TrailAndDate.tupled)
+    val trailsAndDates = trails.map(content => TrailAndDate(content, content.webPublicationDate.withZone(timezone).toLocalDate))
 
     trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (startOfYear, trailsThatYear) =>
       val trailsByMonth = trailsThatYear.groupBy(_.date.withDayOfMonth(1))
