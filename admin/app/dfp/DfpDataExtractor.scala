@@ -8,13 +8,12 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   val isValid = lineItems.nonEmpty
 
   def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = {
-    adUnits map {
-      _.path.drop(1).headOption getOrElse {
-        /*
-         if a line item targets the site root ad unit
-         then a corresponding sponsorship will target any section of the site
-         */
-        ANY_SECTION
+     adUnits map { adUnit =>
+      val pathWithoutSiteRoot = adUnit.path.drop(1)
+
+       pathWithoutSiteRoot match {
+        case section :: restOfAdUnit => section
+        case Nil => ANY_SECTION
       }
     }
   }
