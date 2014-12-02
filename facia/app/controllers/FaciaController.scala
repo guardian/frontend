@@ -27,20 +27,21 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   // TODO - these should not be separate endpoints
   // see comment in routes file...
   def rootEditionRedirect() = editionRedirect(path = "")
-  def editionRedirect(path: String) = Action{ implicit request =>
+  def editionRedirect(path: String) = Action.async { implicit request =>
+    if (request.getQueryString("page").isDefined) {
+      applicationsRedirect(path)
+    } else {
+      val edition = Edition(request)
+      val editionBase = s"/${edition.id.toLowerCase}"
 
-    val edition = Edition(request)
-    val editionBase = s"/${edition.id.toLowerCase}"
+      val redirectPath = path match {
+        case "" => editionBase
+        case sectionFront => s"$editionBase/$sectionFront"
+      }
 
-    val redirectPath = path match {
-      case "" => editionBase
-      case sectionFront => s"$editionBase/$sectionFront"
+      Future.successful(Cached(60)(Redirect(redirectPath)))
     }
-
-    Cached(60)(Redirect(redirectPath))
   }
-
-
 
   def applicationsRedirect(path: String)(implicit request : RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
