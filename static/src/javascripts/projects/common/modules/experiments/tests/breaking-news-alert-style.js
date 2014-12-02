@@ -1,12 +1,4 @@
-define([
-    'bonzo',
-    'qwery'
-], function (
-    bonzo,
-    qwery
-) {
-    var $el = bonzo(qwery('.js-breaking-news-placeholder'));
-
+define([], function () {
     return function () {
         this.id = 'BreakingNewsAlertStyle';
         this.start = '2014-11-26';
