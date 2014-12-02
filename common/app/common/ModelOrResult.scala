@@ -25,16 +25,23 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
-
-    /** /all paths must not be editionalised */
+    
     if (request.path.endsWith("/all")) {
+      /** /all paths must not be editionalised */
       itemPath.map(Paths.stripEditionIfPresent) match {
         case Some(itemPathWithoutEdition) if itemPathWithoutEdition != request.path.stripSuffix("/all") =>
           Right(Found(itemPathWithoutEdition + "/all"))
 
         case _ => Left(item)
       }
+    } else if (request.getQueryString("page").exists(_ != "1")) {
+      /** Past the first page, paths should not be editionalised. Only the front itself has editionalised content. */
+      itemPath.map(Paths.stripEditionIfPresent) match {
+        case Some(pathWithoutEdition) if pathWithoutEdition != request.path =>
+          Right(Found(s"$pathWithoutEdition?${request.rawQueryString}"))
 
+        case _ => Left(item)
+      }
     } else {
       itemPath match {
         case Some(itemPath) if needsRedirect(itemPath) =>
