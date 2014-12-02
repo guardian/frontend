@@ -38,7 +38,7 @@ define([
 
             $('.webfont:not([data-cache-full])').each(function (webfont) {
                 var $webFont      = bonzo(webfont),
-                    fontFile      = $webFont.data('cache-file-' + fileFormat),
+                    fontFile      = $webFont.data('cache-file-' + (detect.shouldUseHintedFonts ? 'hinted-' : '') + fileFormat),
                     minBreakpoint = $webFont.data('min-breakpoint');
 
                 if (minBreakpoint && !detect.isBreakpoint({ min: minBreakpoint })) {
@@ -59,7 +59,8 @@ define([
                         var fontInfo = fontFile.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
                             fontHash = fontInfo[1],
                             fontName = fontInfo[2];
-                        storage.local.clearByPrefix(storagePrefix + fontName);
+
+                        storage.local.clearByPrefix(storagePrefix + fontName.replace(/Hinted$/, ''));
                         storage.local.set(storagePrefix + fontName + '.' + fontHash, resp.css);
 
                         $webFont.text(resp.css)
