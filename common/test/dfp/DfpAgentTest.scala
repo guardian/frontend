@@ -238,16 +238,14 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Some("sustainable-business/grundfos-partner-zone")) should be(true)
   }
 
-  it should "be true for an article in a partner zone" +
-    "where the partner zone logo targets the entire site and some special ad units" in {
+  it should "be true for an article where the corresponding logo targets the entire site and some special ad units" in {
     testDfpAgent.isAdvertisementFeature(
       tagId = "wsscc-partner-zone/wsscc-partner-zone",
       sectionId = Some("arbitrary section")
     ) should be(true)
   }
 
-  it should "be false for an article in a partner zone" +
-    "where the partner zone logo only targets some special ad units" in {
+  it should "be false for an article where the corresponding logo only targets some special ad units" in {
     testDfpAgent.isAdvertisementFeature(
       tagId = "some-partner-zone/some-partner-zone",
       sectionId = Some("arbitrary section")
