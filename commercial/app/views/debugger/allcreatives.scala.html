@@ -951,5 +951,41 @@ jQuery(function($) {
                 </div>
             </section>
         </div>
+
+        <div class="fc-container">
+            <div class="fc-container__inner">
+                <h2 class="test-page-head">
+                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10025607">Merchandising single manual</a>
+                </h2>
+            </div>
+            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-single-manual"></div>
+
+            <script>
+            require(['core'], function(core) {
+                require(['bootstraps/commercial'], function(core) {
+                    var $slot = document.querySelector('[data-name="merchandising-single-manual"]');
+                    require(['common/modules/commercial/creatives/template'])
+                    .then(function (Creative) {
+                        new Creative($slot, {
+                            "creative": "ad-single-manual",
+                            "toneClass": "commercial--tone-brand",
+                            "omnitureId": "[%omnitureid%]",
+                            "baseUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                            "title": "title",
+                            "viewAllText": "View all",
+                            "offerTitle": "Scientists climb to bottom of Siberian sinkhole - in pictures",
+                            "offerImage": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg",
+                            "offerText": "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times",
+                            "offerLinkText": "link text",
+                            "offerUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                            "seeMoreUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                            "showCtaLink": "show-cta-link",
+                            "clickMacro": "%%CLICK_URL_ESC%%"
+                        }).create();
+                    });
+                });
+            });
+            </script>
+        </div>
 </div>
 }
