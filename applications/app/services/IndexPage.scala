@@ -119,7 +119,7 @@ object IndexPage {
         customClasses = Some(Seq("fc-container--tag")),
         hideToggle = true,
         showTimestamps = true,
-        dateLinkPath = Some(s"/${indexPage.page.id}")
+        dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = Some(timeStampDisplay),
