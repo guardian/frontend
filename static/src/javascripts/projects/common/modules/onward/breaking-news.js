@@ -39,9 +39,6 @@ define([
 
         if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
 
-        // just for tests
-        if (location.pathname === '/us') { return; }
-
         ajax({
             url: breakingNewsSource,
             type: 'json',
