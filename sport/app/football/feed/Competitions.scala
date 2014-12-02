@@ -126,16 +126,18 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   }
 
   //one http call updates all competitions
-  def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
+  def refreshCompetitionData() = {
     log.info("Refreshing competition data")
-    competitionAgents.find(_.competition.id == season.id).map { agent =>
-      val newCompetition = agent.competition.startDate match {
-        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-        case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-        case _ =>
+    FootballClient.competitions.map(_.flatMap { season =>
+      competitionAgents.find(_.competition.id == season.id).map { agent =>
+        val newCompetition = agent.competition.startDate match {
+          case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+          case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+          case _ =>
+        }
       }
-    }
-  })
+    })
+  }
 
   //one http call updates all competitions
   def refreshMatchDay() = {
