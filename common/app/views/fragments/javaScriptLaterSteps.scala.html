@@ -38,30 +38,32 @@
 
         if (!isModern) { return false; }
 
-        function isWindowsXP() {
-            var windowsNt5 = /Windows NT 5.(\d+)/.exec(navigator.userAgent);
+        // duplicated in detect.js
+        var shouldUseHintedFonts = function shouldUseHintedFonts() {
+            var windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
 
-            if (windowsNt5) {
-                var version = parseInt(windowsNt5[1], 10);
-                return version >= 1 && version <= 2;
+            if (windowsNT) {
+                var version = parseFloat(windowsNT[1], 10);
+                // windows XP and newer && windows 7 and older
+                return version >= 5.1 && version <= 6.1;
             } else {
                 return false;
             }
-        }
+        }();
 
         function loadFontsAsynchronously() {
             @if(FontSwitch.isSwitchedOff) {
                 return;
             }
 
-            var scripts        = document.getElementsByTagName('script'),
-                thisScript     = scripts[scripts.length - 1],
-                fonts          = document.createElement('link');
+            var scripts    = document.getElementsByTagName('script'),
+                thisScript = scripts[scripts.length - 1],
+                fonts      = document.createElement('link');
 
             fonts.rel       = 'stylesheet';
             fonts.className = 'webfonts';
             // show hinted for Windows XP
-            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (isWindowsXP() ? 'On' : 'Off') ].kerningOn;
+            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (shouldUseHintedFonts ? 'On' : 'Off') ].kerningOn;
             window.setTimeout(function() {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             }, 0);
@@ -82,7 +84,8 @@
 
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font            = fonts[i],
-                        nameAndCacheKey = font.getAttribute('data-cache-file-' + fontFormat).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                        dataAttrName    = 'data-cache-file-' + (shouldUseHintedFonts ? 'hinted-' : '') + fontFormat,
+                        nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
                         storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
                     if (storedCachedCss) {
@@ -94,10 +97,6 @@
         }
 
         try {
-            // always load fonts on XP async
-            if (isWindowsXP()) {
-                throw new Exception();
-            }
             loadFontsFromStorage();
         } catch (e) {
             loadFontsAsynchronously();

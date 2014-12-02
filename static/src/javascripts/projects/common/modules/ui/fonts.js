@@ -38,7 +38,7 @@ define([
 
             $('.webfont:not([data-cache-full])').each(function (webfont) {
                 var $webFont      = bonzo(webfont),
-                    fontFile      = $webFont.data('cache-file-' + fileFormat),
+                    fontFile      = $webFont.data('cache-file-' + (detect.shouldUseHintedFonts ? 'hinted-' : '') + fileFormat),
                     minBreakpoint = $webFont.data('min-breakpoint');
 
                 if (minBreakpoint && !detect.isBreakpoint({ min: minBreakpoint })) {
