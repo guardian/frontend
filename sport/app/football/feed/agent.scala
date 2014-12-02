@@ -45,7 +45,6 @@ trait LeagueTables extends ExecutionContexts with Logging {
   }
 }
 
-
 trait Fixtures extends ExecutionContexts with Logging {
   def getFixtures(competition: Competition) = {
     log.info(s"refreshing fixtures for ${competition.id}")
