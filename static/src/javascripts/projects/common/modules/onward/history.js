@@ -102,7 +102,6 @@ define([
 
                 if (freqs.length >= 3) {
                     rank = Math.round(10 * tallyFreqs(freqs) / (10 + habitFactor(freqs)));
-                    
                     return {
                         keep: [tid, nameAndFreqs[0], rank],
                         rank: rank
