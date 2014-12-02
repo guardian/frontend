@@ -186,6 +186,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
+                    'bootstraps/commercial',
                     'text'
                 ]
             }
