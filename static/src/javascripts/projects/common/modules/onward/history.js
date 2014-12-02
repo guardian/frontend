@@ -125,18 +125,19 @@ define([
     function habitFactor(freqs) {
         var len = freqs.length;
 
-        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function(sum, n) {
+        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function (sum, n) {
             return sum + n;
         }, 0) / (len - 2);
     }
 
     function deltas(ints) {
-        var deltas = [];
+        var deltaInts = [],
+            i;
 
-        for (var i = ints.length - 1; i > 0; i -= 1) {
-            deltas.push(Math.abs(ints[i] - ints[i - 1]));
-        };
-        return deltas;
+        for (i = ints.length - 1; i > 0; i -= 1) {
+            deltaInts.push(Math.abs(ints[i] - ints[i - 1]));
+        }
+        return deltaInts;
     }
 
     function firstCsv(str) {
