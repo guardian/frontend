@@ -51,7 +51,7 @@ define([
         $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
 
         $expandable.appendTo(this.$adSlot);
