@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
+import contentapi.Paths
 import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime
@@ -323,7 +324,7 @@ case class FaciaContainer(
       path <- dateLinkPath
       dateHeadline <- maybeDateHeadline
       urlFragment <- dateHeadline.urlFragment
-    } yield s"$path/$urlFragment/all"
+    } yield s"${Paths.stripEditionIfPresent(path)}/$urlFragment/all"
   }
 }
 
