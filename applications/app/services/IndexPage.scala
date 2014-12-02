@@ -119,7 +119,7 @@ object IndexPage {
         customClasses = Some(Seq("fc-container--tag")),
         hideToggle = true,
         showTimestamps = true,
-        dateLinkPath = Some(s"/${indexPage.page.id}")
+        dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = Some(timeStampDisplay),
@@ -155,6 +155,11 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
       combiner.leftTag.id == id || combiner.rightTag.id == id
 
     case _ => false
+  }
+
+  def idWithoutEdition = page match {
+    case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.id)
+    case other => other.id
   }
 
   def allPath = {

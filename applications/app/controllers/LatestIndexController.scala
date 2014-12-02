@@ -14,7 +14,9 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
       index.page match {
         case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => Found(latest.url)).getOrElse(NotFound)
         case tag: Tag => MovedPermanently(s"${tag.url}/all")
-        case section: Section => MovedPermanently(s"${Paths.stripEditionIfPresent(section.url)}/all")
+        case section: Section =>
+          val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.url) else section.url
+          MovedPermanently(s"$url/all")
         case _ => NotFound
       }
     }.getOrElse(NotFound)}.map(Cached(300)(_))

@@ -324,7 +324,7 @@ case class FaciaContainer(
       path <- dateLinkPath
       dateHeadline <- maybeDateHeadline
       urlFragment <- dateHeadline.urlFragment
-    } yield s"${Paths.stripEditionIfPresent(path)}/$urlFragment/all"
+    } yield s"$path/$urlFragment/all"
   }
 }
 

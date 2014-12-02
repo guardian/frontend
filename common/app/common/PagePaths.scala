@@ -1,16 +1,14 @@
 package common
 
-import contentapi.Paths
+import play.api.mvc.RequestHeader
 import services.ConfigAgent
 
 object PagePaths {
-  def fromId(id: String) = {
-    val idWithoutEdition = Paths.stripEditionIfPresent(id)
-
-    if (ConfigAgent.shouldServeFront(id)) {
-      AllPagePaths(idWithoutEdition)
+  def fromId(id: String)(implicit request: RequestHeader) = {
+    if (ConfigAgent.shouldServeFront(id) || ConfigAgent.shouldServeEditionalisedFront(Edition(request), id)) {
+      AllPagePaths(s"/$id")
     } else {
-      SimplePagePaths(idWithoutEdition)
+      SimplePagePaths(s"/$id")
     }
   }
 }
@@ -19,19 +17,19 @@ trait PagePaths {
   def pathFor(page: Int): String
 }
 
-case class SimplePagePaths(id: String) extends PagePaths {
+case class SimplePagePaths(path: String) extends PagePaths {
   override def pathFor(page: Int): String = if (page <= 1) {
-    s"/$id"
+    s"$path"
   } else {
-    s"/$id?page=$page"
+    s"$path?page=$page"
   }
 }
 
 /** If a front, page 1 should link to the all page, not the front */
-case class AllPagePaths(id: String) extends PagePaths {
+case class AllPagePaths(path: String) extends PagePaths {
   override def pathFor(page: Int): String = if (page <= 1) {
-    s"/$id/all"
+    s"$path/all"
   } else {
-    s"/$id?page=$page"
+    s"$path?page=$page"
   }
 }

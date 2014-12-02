@@ -131,6 +131,13 @@ import conf.Switches.MemcachedSwitch
     header("Location", result).get should be ("/business?page=2")
   }
 
+  it should "not accidentally truncate tags that contain valid strings that are also editions" in {
+    val request = FakeRequest(GET, "/uk/london?page=2")
+    val result = controllers.IndexController.render("uk/london")(request)
+
+    status(result) should be (200)
+  }
+
   it should "not add editions to section tags" in {
     val request = FakeRequest(GET, "/sport?page=2")
     val result = controllers.IndexController.render("sport")(request)

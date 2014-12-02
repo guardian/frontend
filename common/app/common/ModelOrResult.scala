@@ -24,11 +24,16 @@ private object ItemOrRedirect extends ItemResponses with Logging {
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
+    val isEditionalised = response.section.exists(_.editions.length > 1)
+
+    def pathWithoutEdition(path: String) =
+      if (isEditionalised) Paths.stripEditionIfPresent(path) else path
+
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
 
     if (request.path.endsWith("/all")) {
       /** /all paths must not be editionalised */
-      itemPath.map(Paths.stripEditionIfPresent) match {
+      itemPath.map(pathWithoutEdition) match {
         case Some(itemPathWithoutEdition) if itemPathWithoutEdition != request.path.stripSuffix("/all") =>
           Right(Found(itemPathWithoutEdition + "/all"))
 
@@ -36,7 +41,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
       }
     } else if (request.getQueryString("page").exists(_ != "1")) {
       /** Past the first page, paths should not be editionalised. Only the front itself has editionalised content. */
-      itemPath.map(Paths.stripEditionIfPresent) match {
+      itemPath.map(pathWithoutEdition) match {
         case Some(pathWithoutEdition) if pathWithoutEdition != request.path =>
           Right(Found(s"$pathWithoutEdition?${request.rawQueryString}"))
 
