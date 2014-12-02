@@ -97,13 +97,14 @@ define([
     function calculatePopular(summary) {
         return _.chain(summary.tags)
             .map(function (nameAndFreqs, tid) {
-                return {
+                var freqs = nameAndFreqs[1];
+
+                return freqs.length < 3 ? false : {
                     idAndName: [tid, nameAndFreqs[0]],
-                    rank: _.reduce(nameAndFreqs[1], function (rank, freq) {
-                        return rank + (1 + attenuate(freq[1])) * (summaryPeriodDays - freq[0]);
-                    }, 0)
+                    rank: rankFreqs(freqs)
                 };
             })
+            .compact()
             .sortBy('rank')
             .last(popularSize)
             .reverse()
@@ -111,14 +112,31 @@ define([
             .value();
     }
 
-    function rank(freqs) {
-        var score = _.reduce(freqs, function (rank, freq) {
-                return rank + (1 + attenuate(freq[1])) * (summaryPeriodDays - freq[0]);
-            }, 0)
+    function rankFreqs(freqs) {
+        return _.reduce(freqs, function (rank, freq) {
+            return rank + (1 + weightedVisitsInDay(freq[1])) * (summaryPeriodDays - freq[0]);
+        }, 0) / (1 + habitFactor(freqs));
     }
 
-    function attenuate(n) {
+    function weightedVisitsInDay(n) {
         return Math.max(n, 20) * 0.2;
+    }
+
+    function habitFactor(freqs) {
+        var len = freqs.length;
+
+        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function(sum, n) {
+            return sum + n;
+        }, 0) / (len - 2);
+    }
+
+    function deltas(ints) {
+        var deltas = [];
+
+        for (var i = ints.length - 1; i > 0; i -= 1) {
+            deltas.push(Math.abs(ints[i] - ints[i - 1]));
+        };
+        return deltas;
     }
 
     function firstCsv(str) {
