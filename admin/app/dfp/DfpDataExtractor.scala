@@ -1,12 +1,23 @@
 package dfp
 
 import common.Edition
+import dfp.Sponsorship.ANY_SECTION
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val isValid = lineItems.nonEmpty
 
-  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = adUnits flatMap (_.path.drop(1).headOption)
+  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = {
+    adUnits map {
+      _.path.drop(1).headOption getOrElse {
+        /*
+         if a line item targets the site root ad unit
+         then a corresponding sponsorship will target any section of the site
+         */
+        ANY_SECTION
+      }
+    }
+  }
 
   val sponsorships: Seq[Sponsorship] = {
     lineItems.withFilter { lineItem =>
