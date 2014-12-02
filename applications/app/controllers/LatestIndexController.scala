@@ -1,5 +1,6 @@
 package controllers
 
+import contentapi.Paths
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.LiveContentApi
@@ -9,12 +10,11 @@ import common._
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
   def latest(path: String) = Action.async { implicit request =>
-
     loadLatest(path).map { _.map { index =>
       index.page match {
         case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => Found(latest.url)).getOrElse(NotFound)
         case tag: Tag => MovedPermanently(s"${tag.url}/all")
-        case section: Section => MovedPermanently(s"${section.url}/all")
+        case section: Section => MovedPermanently(s"${Paths.stripEditionIfPresent(section.url)}/all")
         case _ => NotFound
       }
     }.getOrElse(NotFound)}.map(Cached(300)(_))

@@ -113,6 +113,31 @@ import conf.Switches.MemcachedSwitch
     header("Location", result).get should endWith ("/books+tone/reviews")
   }
 
+  it should "remove editions from section tags on all pages" in {
+    val request = FakeRequest(GET, "/uk/culture/all")
+    val result = controllers.IndexController.render("uk/culture")(request)
+
+    status(result) should be (302)
+
+    header("Location", result).get should be ("/culture/all")
+  }
+
+  it should "remove editions past the first page of section tags" in {
+    val request = FakeRequest(GET, "/uk/business?page=2")
+    val result = controllers.IndexController.render("uk/business")(request)
+
+    status(result) should be (302)
+
+    header("Location", result).get should be ("/business?page=2")
+  }
+
+  it should "not add editions to section tags" in {
+    val request = FakeRequest(GET, "/sport?page=2")
+    val result = controllers.IndexController.render("sport")(request)
+
+    status(result) should be (200)
+  }
+
   "Normalise tags" should "convert content/gallery to type/gallery" in {
     val tag = "content/gallery"
     val result = controllers.IndexController.normaliseTag(tag)
