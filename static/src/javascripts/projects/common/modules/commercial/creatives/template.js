@@ -22,28 +22,6 @@ define([
             'ad-feature-mpu': adFeatureMpuTpl,
             'ad-feature-mpu-large': adFeatureMpuLargeTpl,
             'ad-single-manual': adSingleManual
-
-            /*{
-             "name": "template",
-             "params": {
-             "creative": "ad-single-manual",
-             "toneClass": "[%Toneclass%]",
-             "omnitureId": "[%omnitureid%]",
-             "baseUrl": "[%base__url%]",
-             "relevance": "[%relevance%]",
-             "title": "[%title%]",
-             "viewAllText": "[%viewalltext%]",
-             "offerTitle": "[%offertitle%]",
-             "offerImage": "[%offerimage%]",
-             "offerText": "[%offertext%]",
-             "offerLinkText": "[%offerlinktext%]",
-             "offerUrl": "[%offerurl%]",
-             "seeMoreUrl": "[%seemoreurl%]",
-             "showCtaLink": "[%showctalink%]",
-             "clickMacro": "%%CLICK_URL_ESC%%"
-             }
-             }
-            * */
         },
         Template = function ($adSlot, params) {
             this.$adSlot = $adSlot;
