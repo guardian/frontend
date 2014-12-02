@@ -30,8 +30,6 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
 
     val optCapiAdFeature = request.getParameter("af")
 
-    val optCapiSupportedBy = request.getParameter("sb")
-
     val sponsorTypeToClass = Map (
         "sponsored" -> ("fc-container--sponsored"),
         "advertisement-feature" -> ("fc-container--advertisement-feature"),
@@ -66,7 +64,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
         if (isMulti) {
           format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy, optClickMacro, optOmnitureId))
+          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optSponsorType, optSponsorLabel, optClickMacro, optOmnitureId))
         }
       }
     }

@@ -660,135 +660,123 @@ jQuery(function($) {
     <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - advertisement option</a>
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">Merchandising: cAPI multiple</a>
             </h2>
+            <form class="capi-multiple-paid-for-type">
+                <label>Type:
+                    <select>
+                        <option value="advertisement-feature" selected>Advertisement Feature</option>
+                        <option value="sponsored">Sponsored</option>
+                        <option value="foundation-supported">Foundation Supported</option>
+                    </select>
+                </label>
+            </form>
         </div>
-
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi">
-            <script>
-                require(['core'], function(core) {
-                    require(['bootstraps/commercial'], function(core) {
-                        var $slot = document.querySelector('[data-name="merchandising-capi"]');
-                        require(['common/modules/commercial/creatives/commercial-component'])
-                        .then(function (Creative) {
-                            new Creative($slot, {
-                                "type": "capi",
-                                "clickMacro": "%%CLICK_URL_UNESC%%",
-                                "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                                "ct": "This is title",
-                                "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                                "cal": "http://theguardian.com/about",
-                                "t": ["p/43945","p/43945"],
-                                "k": "music/pinkfloyd",
-                                "af": "advertisement-feature",
-                                "omnitureId": "omnitureId"
-                            }).create();
-                        });
-                    });
-                });
-            </script>
-        </div>
-    </div>
-
-        <div class="fc-container">
-            <div class="fc-container__inner">
-                <h2 class="test-page-head">
-                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - sponsored option</a>
-                </h2>
-            </div>
-            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-s"></div>
-            <script>
-                require(['core'], function(core) {
-                    require(['bootstraps/commercial'], function(core) {
-                        var $slot = document.querySelector('[data-name="merchandising-capi-s"]');
-                        require(['common/modules/commercial/creatives/commercial-component'])
-                        .then(function (Creative) {
-                            new Creative($slot, {
-                            "type": "capi",
-                            "clickMacro": "%%CLICK_URL_UNESC%%",
-                            "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                            "ct": "This is title",
-                            "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                            "cal": "http://theguardian.com/about",
-                            "t": ["p/43945","p/43945"],
-                            "k": "music/pinkfloyd",
-                            "af": "sponsored",
-                            "omnitureId": "omnitureId"
-                            }).create();
-                        });
-                    });
-                });
-            </script>
-        </div>
-
-        <div class="fc-container">
-            <div class="fc-container__inner">
-                <h2 class="test-page-head">
-                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">CMerchandising: cAPI multiple (advertorial) - supported option</a>
-                </h2>
-            </div>
-            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-multi"></div>
-            <script>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-multiple"></div>
+        <script>
             require(['core'], function(core) {
                 require(['bootstraps/commercial'], function(core) {
-                    var $slot = document.querySelector('[data-name="merchandising-capi-multi"]');
-                    require(['common/modules/commercial/creatives/commercial-component'])
-                    .then(function (Creative) {
-                        new Creative($slot, {
-                        "type": "capi",
-                        "clickMacro": "%%CLICK_URL_UNESC%%",
-                        "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                        "ct": "This is title",
-                        "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                        "cal": "http://theguardian.com/about",
-                        "t": ["p/43945","p/43945"],
-                        "k": "music/pinkfloyd",
-                        "af": "foundation-supported",
-                        "omnitureId": "omnitureId"
-                        }).create();
+                    require([
+                        'bean',
+                        'qwery',
+                        'common/utils/$',
+                        'common/modules/commercial/creatives/commercial-component'
+                    ], function(
+                        bean,
+                        qwery,
+                        $,
+                        CommercialComponent
+                    ) {
+                        var $capiMultiple = $('.ad-slot--capi-multiple');
+
+                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                                type: 'capi',
+                                t: ['p/43b2q','p/43945'],
+                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                ct: 'Led Zeppelin special',
+                                cl: 'http://theguardian.com/music/ledzeppelin',
+                                cal: 'http://theguardian.com/about',
+                                k: 'music/ledzeppelin',
+                                af: $(event.srcElement).val(),
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: "omnitureId"
+                            });
+
+                            commercialComponent.postLoadEvents.capi = function () {
+                                $capiMultiple.removeClass('lazyloaded');
+                            };
+                            commercialComponent.create();
+                        });
+
+                        bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
                     });
                 });
             });
-            </script>
-        </div>
+        </script>
+    </div>
 
-        <hr/>
+    <hr/>
 
     <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">CAPI Component (Single)</a>
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">Merchandising: cAPI single</a>
             </h2>
+            <form class="capi-single-paid-for-type">
+                <label>Type:
+                    <select>
+                        <option value="advertisement-feature" selected>Advertisement Feature</option>
+                        <option value="sponsored">Sponsored</option>
+                        <option value="foundation-supported">Foundation Supported</option>
+                    </select>
+                </label>
+            </form>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-single"></div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-single"></div>
         <script>
-        require(['core'], function(core) {
-            require(['bootstraps/commercial'], function(core) {
-                var $slot = document.querySelector('[data-name="merchandising-capi-single"]');
-                require(['common/modules/commercial/creatives/commercial-component'])
-                    .then(function (Creative) {
-                        new Creative($slot, {
-                            "type": "capiSingle",
-                            "clickMacro": "%%CLICK_URL_UNESC%%",
-                            "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                            "ct": "This is title",
-                            "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                            "clt": "Read more link text",
-                            "cal": "http://theguardian.com/about",
-                            "t": [
-                            "p/43945",
-                            "p/43945"
-                            ],
-                            "k": "music/pinkfloyd",
-                            "rmd": "www.theguardina.com",
-                            "rmt": "Seemoreoverhere",
-                            "sb": "Brought to you by:",
-                            "af": "fc-container--advertisement-feature",
-                            "omnitureId": "omnitureId"
-                        }).create();
+            require(['core'], function(core) {
+                require(['bootstraps/commercial'], function(core) {
+                    require([
+                        'bean',
+                        'qwery',
+                        'common/utils/$',
+                        'common/modules/commercial/creatives/commercial-component'
+                    ], function(
+                        bean,
+                        qwery,
+                        $,
+                        CommercialComponent
+                    ) {
+                        var $capiSingle = $('.ad-slot--capi-single');
+
+                        bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiSingle[0], {
+                                type: 'capiSingle',
+                                t: 'p/43b2q',
+                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                ct: 'This is title',
+                                cl: 'http://theguardian.com/music/ledzeppelin',
+                                clt: 'Read more link text',
+                                cal: 'http://theguardian.com/about',
+                                k: 'music/ledzeppelin',
+                                rmd: 'www.theguardina.com',
+                                rmt: 'Seemoreoverhere',
+                                af: $(event.srcElement).val(),
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: "omnitureId"
+                            });
+
+                            commercialComponent.postLoadEvents.capiSingle = function () {
+                                $capiSingle.removeClass('lazyloaded');
+                            };
+                            commercialComponent.create();
+                        });
+
+                        bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
                     });
+                });
             });
-        });
         </script>
     </div>
 
@@ -963,43 +951,5 @@ jQuery(function($) {
                 </div>
             </section>
         </div>
-
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027887">Merchandising content API (single) - Sponsored / supported by</a>
-            </h2>
-        </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-single-merch"></div>
-        <script>
-        require(['core'], function(core) {
-            require(['bootstraps/commercial'], function(core) {
-                var $slot = document.querySelector('[data-name="merchandising-capi-single-merch"]');
-                require(['common/modules/commercial/creatives/commercial-component'])
-                    .then(function (Creative) {
-                        new Creative($slot, {
-                        "type": "capiSingleMerch",
-                        "clickMacro": "%%CLICK_URL_UNESC%%",
-                        "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                        "ct": "This is title",
-                        "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                        "clt": "Readmorelinktext",
-                        "cal": "http://theguardian.com/about",
-                        "t": [
-                        "p/43945",
-                        "p/43945"
-                        ],
-                        "k": "music/pinkfloyd",
-                        "rmd": "www.theguardina.com",
-                        "rmt": "See more over here",
-                        "sb": "Sponsored by:",
-                        "af": "fc-container--merchandising-feature",
-                        "omnitureId": "omnitureId"
-                    }).create();
-                });
-            });
-        });
-        </script>
-    </div>
 </div>
 }
