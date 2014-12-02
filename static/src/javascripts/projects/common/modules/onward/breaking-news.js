@@ -27,7 +27,6 @@ define([
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
-        $breakingNewsItems,
         $body;
 
     function slashDelimit() {
@@ -78,13 +77,12 @@ define([
                     articleIds = articles.map(function (article) { return article.id; }),
                     showAlert = false;
 
-                // FOR TESTS, WE NEED TO CONTROL DISPLAY MORE THAN THIS
-                // if (articleIds.indexOf(page.pageId) > -1) {
-                //     hiddenIds.push(page.pageId);
-                //     storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
-                //     // when displaying a breaking news item, don't show any other breaking news:
-                //     return;
-                // }
+                if (articleIds.indexOf(page.pageId) > -1) {
+                    hiddenIds.push(page.pageId);
+                    storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
+                    // when displaying a breaking news item, don't show any other breaking news:
+                    return;
+                }
 
                 articles
                 .filter(function (article) {
