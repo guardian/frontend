@@ -24,7 +24,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
       }
     }
 
-    Jobs.schedule("MatchDayAgentRefreshJob", "0/5 * * * * ?") {
+    Jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
       Competitions.refreshMatchDay()
     }
 
