@@ -91,13 +91,22 @@ define([
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function (article) {
-                    var src = '<div class="breaking-news__item" data-link-name="breaking news">' +
-                            '<em class="breaking-news__item-label">Breaking News</em> ' +
-                            '<p class="breaking-news__item-headline">' + article.headline + '</p>' +
-                            '<a class="breaking-news__item-headline" data-link-name="article" href="/' + article.id + '">' + article.headline + '</a>' +
-                            '<div class="js-breaking-news__item__close button button--tertiary breaking-news__item__close"><i class="i i-close-icon-white-small" data-link-name="close"></i> Close</div>' +
-                            '<a href="/' + article.id + '" class="button button--tertiary">Open story</a>' +
-                        '</div>',
+                    var src =
+                        '<a href="/' + article.id + '" class="breaking-news__item" data-link-name="breaking news">' +
+                            '<div class="breaking-news__item-content">' +
+                                '<div class="breaking-news__item-header">' +
+                                    '<em class="breaking-news__item-kicker">Breaking News</em> ' +
+                                    '<div class="breaking-news__item-headline" data-link-name="headline link">' +
+                                        article.headline +
+                                    '</div>' +
+                                    '<div class="breaking-news__item-standfirst" href="/' + article.id + '">Robert Berry hits the streets, hard</div>' +
+                                '</div>' +
+                                '<div class="breaking-news__item-options">' +
+                                    '<button class="button button--tertiary breaking-news__item__show" data-link-name="read button" >Show me</button>' +
+                                    '<button class="js-breaking-news__item__close button button--tertiary breaking-news__item__close"><i class="i i-close-icon-white-small" data-link-name="close button"></i></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</a>',
                         $el = bonzo.create(src);
 
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
@@ -105,7 +114,7 @@ define([
 
                     $breakingNewsItems.append($el);
 
-                    bean.on($el[0], 'click', '.button', function () {
+                    bean.on($el[0], 'click', '.js-breaking-news__item__close', function () {
                         bonzo($breakingNews).hide();
                         hiddenIds.push(article.id);
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
@@ -117,7 +126,7 @@ define([
                 if (showAlert) {
                     setTimeout(function () {
                         $breakingNews.removeClass('breaking-news--loading');
-                    }, 1000);
+                    }, 10000);
                 }
             }
         );
