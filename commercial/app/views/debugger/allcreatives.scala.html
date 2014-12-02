@@ -987,43 +987,5 @@ jQuery(function($) {
             });
             </script>
         </div>
-
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027887">Merchandising content API (single) - Sponsored / supported by</a>
-            </h2>
-        </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-capi-single-merch"></div>
-        <script>
-        require(['core'], function(core) {
-            require(['bootstraps/commercial'], function(core) {
-                var $slot = document.querySelector('[data-name="merchandising-capi-single-merch"]');
-                require(['common/modules/commercial/creatives/commercial-component'])
-                    .then(function (Creative) {
-                        new Creative($slot, {
-                        "type": "capiSingleMerch",
-                        "clickMacro": "%%CLICK_URL_UNESC%%",
-                        "l": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8",
-                        "ct": "This is title",
-                        "cl": "http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin",
-                        "clt": "Readmorelinktext",
-                        "cal": "http://theguardian.com/about",
-                        "t": [
-                        "p/43945",
-                        "p/43945"
-                        ],
-                        "k": "music/pinkfloyd",
-                        "rmd": "www.theguardina.com",
-                        "rmt": "See more over here",
-                        "sb": "Sponsored by:",
-                        "af": "fc-container--merchandising-feature",
-                        "omnitureId": "omnitureId"
-                    }).create();
-                });
-            });
-        });
-        </script>
-    </div>
 </div>
 }
