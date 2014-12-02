@@ -64,7 +64,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (EditionalisedSections.isEditionalised(path))
+    if (EditionalisedSections.isEditionalised(path) && !request.getQueryString("page").isDefined)
       redirectToEditionalisedVersion(path)
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
