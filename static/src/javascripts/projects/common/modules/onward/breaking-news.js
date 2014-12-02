@@ -99,7 +99,9 @@ define([
                                     '<div class="breaking-news__item-headline" data-link-name="headline link">' +
                                         article.headline +
                                     '</div>' +
-                                    '<div class="breaking-news__item-standfirst" href="/' + article.id + '">Robert Berry hits the streets, hard</div>' +
+                                    '<div class="breaking-news__item-standfirst">' +
+                                        article.trailText +
+                                    '</div>' +
                                 '</div>' +
                                 '<div class="breaking-news__item-options">' +
                                     '<button class="button button--tertiary breaking-news__item__show" data-link-name="read button" >Show me</button>' +
