@@ -26,26 +26,6 @@ import java.text.DecimalFormat
 import java.util.regex.{Matcher, Pattern}
 
 /**
- * New 'collection' templates
- */
-sealed trait Container {
-  val containerType: String
-  val showMore: Boolean
-  val tone: String
-  val hasDarkBackground: Boolean = false
-}
-
-case class PopularContainer(showMore: Boolean = true) extends Container {
-  val containerType = "popular"
-  val tone = "news"
-}
-case class MostReferredContainer(showMore: Boolean = true) extends Container {
-  val containerType = "most-referred"
-  val tone = "news"
-}
-
-
-/**
  * Encapsulates previous and next urls
  */
 case class PreviousAndNext(prev: Option[String], next: Option[String]) {
