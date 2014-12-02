@@ -14,8 +14,8 @@ object ModelOrResult extends Results with Logging {
 
   def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
     item.map(i => ItemOrRedirect(i, response))
-    .orElse(InternalRedirect(response).map(Right(_)))
-    .getOrElse(Right(NoCache(NotFound)))
+      .orElse(InternalRedirect(response).map(Right(_)))
+      .getOrElse(Right(NoCache(NotFound)))
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
@@ -25,7 +25,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
-    
+
     if (request.path.endsWith("/all")) {
       /** /all paths must not be editionalised */
       itemPath.map(Paths.stripEditionIfPresent) match {
