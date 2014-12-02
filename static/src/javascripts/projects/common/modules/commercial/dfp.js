@@ -20,14 +20,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/ui/sticky',
-
-    // modules for creatives - need to be included so they're available, as they're required dynamically
-    'common/modules/commercial/creatives/branded-component',
-    'common/modules/commercial/creatives/commercial-component',
-    'common/modules/commercial/creatives/expandable',
-    'common/modules/commercial/creatives/scrollable-mpu',
-    'common/modules/commercial/creatives/template'
+    'common/modules/ui/sticky'
 ], function (
     bean,
     bonzo,
@@ -313,7 +306,8 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require(['common/modules/commercial/creatives/' + creativeConfig.name])
+                                require('bootstraps/creatives')
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
                                         new Creative($slot, creativeConfig.params).create();
                                     });
