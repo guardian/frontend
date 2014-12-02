@@ -9,11 +9,11 @@ import play.twirl.api.Html
 
 object OmnitureAnalyticsData {
   def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
-
     val data = page.metaData map {
       case (key, JsString(s)) => key -> s
       case (key, jValue: JsValue) => key -> Json.stringify(jValue)
     }
+
     val pageCode = data.getOrElse("pageCode", "")
     val contentType = data.getOrElse("contentType", "")
     val section = data.getOrElse("section", "")
@@ -57,7 +57,6 @@ object OmnitureAnalyticsData {
       ("v23", registrationType),
       ("e27", omnitureErrorMessage)
     )
-
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString "&")
   }

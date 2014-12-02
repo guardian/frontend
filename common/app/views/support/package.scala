@@ -1,29 +1,22 @@
 package views.support
 
 import common._
-import conf.Switches.ShowAllArticleEmbedsSwitch
-import layout._
-import model.Audio
-import model.Gallery
-import model.Video
 import model._
 
-import java.net.URLEncoder._
 import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
 import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{ Element, Document, TextNode }
+import org.jsoup.nodes.Document
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
-import play.api.libs.json.{Json, JsValue, JsString, Writes}
+import play.api.libs.json.Writes
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.{Matcher, Pattern}
 
 /**
  * Encapsulates previous and next urls
@@ -41,7 +34,6 @@ object JSON {
 //annoyingly content api will sometimes have things surrounded by <p> tags and sometimes not.
 //since you cannot nest <p> tags this causes all sorts of problems
 object RemoveOuterParaHtml {
-
   def apply(html: Html): Html = this(html.body)
 
   def apply(text: String): Html = {
@@ -72,8 +64,6 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
   }
 }
 
-
-
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -88,44 +78,6 @@ object ContributorLinks {
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
-}
-
-object ContentLayout {
-  implicit class ContentLayout(content: model.Content) {
-
-    def showBottomSocialButtons: Boolean = {
-      content match {
-        case l: LiveBlog => true
-        case a: Article => Jsoup.parseBodyFragment(a.body).select("> *").text().length > 600
-        case i: ImageContent => false
-        case m: Media => false
-        case g: Gallery => false
-        case _ => true
-      }
-    }
-
-    def submetaBreakpoint: Option[String] = {
-      content match {
-        case a: LiveBlog => None
-        case a: Article if !a.hasSupporting => Some("leftcol")
-        case v: Video if v.standfirst.getOrElse("").length > 350 => Some("leftcol")
-        case a: Audio if a.body.getOrElse("").length > 800 => Some("leftcol")
-        case i: ImageContent if i.mainPicture.flatMap(_.largestEditorialCrop).exists(crop => crop.height / crop.width.toFloat > 0.5) => Some("wide")
-        case g: Gallery => Some("leftcol")
-        case _ => None
-      }
-    }
-
-    def tagTone: Option[String] = {
-      content match {
-        case l: LiveBlog => Some(l.visualTone)
-        case m: Media => Some("media")
-        case g: Gallery => Some("media")
-        case i: ImageContent if(!i.isCartoon) => Some("media")
-        case _ => None
-      }
-    }
-  }
 }
 
 object `package` extends Formats {
