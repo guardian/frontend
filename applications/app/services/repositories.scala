@@ -7,7 +7,7 @@ import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{WebTitleAndQuery, Zones, QueryDefaults}
+import contentapi.QueryDefaults
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -106,37 +106,20 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
     val fields = if (isRss) rssFields else trailFields
 
-    val promiseOfResponse = Zones.queryById(path, edition) match {
-      case Left(WebTitleAndQuery(webTitle, query)) =>
-        query.page(pageNum)
-          .pageSize(pageSize)
-          .showFields(fields)
-          .response map { response =>
-            Left(zone(path, webTitle, response))
-          }
-
-      case Right(query) =>
-        query.page(pageNum)
-          .pageSize(pageSize)
-          .showEditorsPicks(pageNum == 1) //only show ed pics on first page
-          .showFields(fields)
-          .response.map { response =>
-            val page = response.tag.flatMap(t => tag(response, pageNum))
-              .orElse(response.section.flatMap(t => section(response)))
-            ModelOrResult(page, response)
-        }
-    }
+    val promiseOfResponse = LiveContentApi.item(path, edition).page(pageNum)
+        .pageSize(pageSize)
+        .showEditorsPicks(pageNum == 1) //only show ed pics on first page
+        .showFields(fields)
+        .response.map { response =>
+          val page = response.tag.flatMap(t => tag(response, pageNum))
+            .orElse(response.section.flatMap(t => section(response)))
+          ModelOrResult(page, response)
+      }
 
     promiseOfResponse.recover(convertApiExceptions) recover {
       //this is the best handle we have on a wrong 'page' number
       case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
     }
-  }
-
-  private def zone(path: String, webTitle: String, response: SearchResponse): IndexPage = {
-    val page = new Zone(path, webTitle, pagination(response))
-    val items = response.results.map(Content(_))
-    IndexPage(page, items)
   }
 
   private def section(response: ItemResponse) = {
