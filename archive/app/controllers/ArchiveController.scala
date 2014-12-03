@@ -61,9 +61,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   private object Decoded {
     def unapply(path: String): Option[String] = {
-        val decodedPath = URLDecoder.decode(path, "UTF-8")
-        val combinerPath = decodedPath.replace(" ", "+") // the + is for combiner pages
-        if (decodedPath != combinerPath) Some(combinerPath) else None
+        val decodedPath = URLDecoder.decode(path, "UTF-8").replace(" ", "+") // the + is for combiner pages
+        if (decodedPath != path) Some(decodedPath) else None
     }
   }
 
