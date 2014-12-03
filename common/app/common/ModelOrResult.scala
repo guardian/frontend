@@ -1,6 +1,6 @@
 package common
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.{ItemResponse, Section => ApiSection}
 import contentapi.Paths
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
@@ -24,31 +24,23 @@ private object ItemOrRedirect extends ItemResponses with Logging {
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
-    val isEditionalised = response.section.exists(_.editions.length > 1)
-
-    def pathWithoutEdition(path: String) =
-      if (isEditionalised) Paths.stripEditionIfPresent(path) else path
-
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
 
-    if (request.path.endsWith("/all")) {
-      /** /all paths must not be editionalised */
-      itemPath.map(pathWithoutEdition) match {
-        case Some(itemPathWithoutEdition) if itemPathWithoutEdition != request.path.stripSuffix("/all") =>
-          Right(Found(itemPathWithoutEdition + "/all"))
+    def pathWithoutEdition(section: ApiSection) =
+      section.editions.find(_.code == "default").map(edition => s"/${edition.id}").getOrElse(Paths.stripEditionIfPresent(section.id))
 
-        case _ => Left(item)
-      }
-    } else if (request.getQueryString("page").exists(_ != "1")) {
-      /** Past the first page, paths should not be editionalised. Only the front itself has editionalised content. */
-      itemPath.map(pathWithoutEdition) match {
-        case Some(pathWithoutEdition) if pathWithoutEdition != request.path =>
-          Right(Found(s"$pathWithoutEdition?${request.rawQueryString}"))
+    response.section match {
+      case Some(section) if request.path.endsWith("/all") &&
+        pathWithoutEdition(section) != request.path.stripSuffix("/all") =>
+        Right(Found(pathWithoutEdition(section) + "/all"))
 
-        case _ => Left(item)
-      }
-    } else {
-      itemPath match {
+      case Some(section) if request.getQueryString("page").exists(_ != "1") &&
+        pathWithoutEdition(section) != request.path =>
+        Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
+
+      case Some(_) => Left(item)
+
+      case None => itemPath match {
         case Some(itemPath) if needsRedirect(itemPath) =>
           val itemPathWithQueryString =
             itemPath + paramString(request)
