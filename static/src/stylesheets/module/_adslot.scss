@@ -383,10 +383,8 @@
     }
     .ad-slot--paid-for-badge__link {
         position: relative;
-        float: right;
-
         @include mq(mobile, $until: leftCol) {
-            margin-top: get-line-height(data, 3)*-1;
+            margin-top: 0;
         }
     }
 
@@ -397,13 +395,18 @@
         float: left;
         min-height: 0;
         margin-top: 4px;
+        padding-top: 2px;
+        border-top: 1px dotted colour(neutral-5);
 
         .ad-slot--paid-for-badge__link {
             float: none;
             margin-top: $gs-row-height/4;
         }
     }
-
+    @include mq(tablet, $until: leftCol) {
+        float: right;
+        clear: right;
+    }
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
