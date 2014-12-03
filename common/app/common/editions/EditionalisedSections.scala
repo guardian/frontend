@@ -14,11 +14,12 @@ object EditionalisedSections {
     "business",
     "commentisfree",
     "culture",
-    "media",
     "money",
     "sport",
     "sustainable-business",
-    "technology"
+    "technology",
+    "media",
+    "environment"
   )
 
   def isEditionalised(id: String) = sections.contains(id)

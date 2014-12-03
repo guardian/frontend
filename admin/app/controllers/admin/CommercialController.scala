@@ -2,7 +2,7 @@ package controllers.admin
 
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
-import conf.LiveContentApi
+import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
 import dfp.{GuLineItem, DfpDataHydrator, LineItemReport}
 import model.{Content, NoCache, Page}
@@ -18,6 +18,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
   def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.fluidAds(environment.stage)))
+  }
+
+  def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
+    val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
+    Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
   def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
@@ -71,7 +76,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     trailsFuture map { trails =>
       object CommercialPage {
         def apply() = new Page("commercial-templates", "admin", "Commercial Templates", "Commercial Templates", None, None) {
-          override def metaData: Map[String, JsValue] = super.metaData ++ List("keywordIds" -> JsString("live-better"))
+          override def metaData: Map[String, JsValue] = super.metaData ++
+            List(
+              "keywordIds" -> JsString("live-better"),
+              "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")
+            )
         }
       }
       NoCache(Ok(views.html.commercial.sponsoredContainers(environment.stage, CommercialPage(), trails)))

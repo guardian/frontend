@@ -6,7 +6,9 @@ import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
 
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None)
-  extends MetaData with AdSuffixHandlingForFronts {
+  extends MetaData with AdSuffixHandlingForFronts with KeywordSponsorshipHandling {
+
+  def isEditionalised = delegate.editions.length > 1
 
   lazy val section: String = id
 
@@ -29,26 +31,4 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString("Section")
   )
-
-  override lazy val isSponsored: Boolean = keywordIds exists (DfpAgent.isSponsored(_, Some(id)))
-
-  override lazy val hasMultipleSponsors: Boolean = keywordIds exists {
-    DfpAgent.hasMultipleSponsors
-  }
-
-  override lazy val isAdvertisementFeature: Boolean = keywordIds exists {
-    DfpAgent.isAdvertisementFeature(_, Some(id))
-  }
-
-  override lazy val hasMultipleFeatureAdvertisers: Boolean = keywordIds exists {
-    DfpAgent.hasMultipleFeatureAdvertisers
-  }
-
-  override lazy val isFoundationSupported: Boolean = keywordIds exists {
-    DfpAgent.isFoundationSupported(_, Some(id))
-  }
-
-  override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
-
-  override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

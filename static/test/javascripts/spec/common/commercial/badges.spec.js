@@ -45,11 +45,11 @@ define([
                 preBadges = function (sponsorship, sponsor) {
                     var header;
                     switch (sponsorship) {
-                        case 'sponsored':
+                        case 'sponsoredfeatures':
                             header = 'Sponsored by:';
                             break;
 
-                        case 'advertisement-feature':
+                        case 'advertisement-features':
                             header = 'Brought to you by:';
                             break;
 
@@ -91,15 +91,15 @@ define([
 
                 [
                     {
-                        type: 'sponsored',
+                        type: 'sponsoredfeatures',
                         name: 'spbadge1'
                     },
                     {
-                        type: 'advertisement-feature',
+                        type: 'advertisement-features',
                         name: 'adbadge1'
                     },
                     {
-                        type: 'foundation-supported',
+                        type: 'foundation-features',
                         name: 'fobadge1'
                     }
                 ].forEach(function (badge) {
@@ -140,15 +140,15 @@ define([
 
                 var configs = [
                     {
-                        type: 'sponsored',
+                        type: 'sponsoredfeatures',
                         name: 'spbadge1'
                     },
                     {
-                        type: 'advertisement-feature',
+                        type: 'advertisement-features',
                         name: 'adbadge1'
                     },
                     {
-                        type: 'foundation-supported',
+                        type: 'foundation-features',
                         name: 'fobadge1'
                     }
                 ];
@@ -201,7 +201,7 @@ define([
                         .addClass('js-sponsored-container')
                         .attr({
                             'data-keywords':    'russia,ukraine',
-                            'data-sponsorship': 'sponsored'
+                            'data-sponsorship': 'sponsoredfeatures'
                         });
                     badges.init();
                     expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
@@ -212,7 +212,7 @@ define([
                         .addClass('js-sponsored-container')
                         .attr({
                             'data-keywords':    'russia,ukraine',
-                            'data-sponsorship': 'sponsored'
+                            'data-sponsorship': 'sponsoredfeatures'
                         })[0];
                     badges.init();
                     expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
@@ -221,7 +221,7 @@ define([
                 it('should increment badge id if multiple badges added', function (badges) {
                     var $containers = $('.container', $fixtureContainer)
                         .addClass('js-sponsored-container')
-                        .attr('data-sponsorship', 'sponsored');
+                        .attr('data-sponsorship', 'sponsoredfeatures');
                     badges.init();
                     expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
                     expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
@@ -230,7 +230,7 @@ define([
                 it('should be able to add badge to a container', function (badges) {
                     var $container = $('.container', $fixtureContainer).first()
                         .addClass('js-sponsored-container')
-                        .attr('data-sponsorship', 'sponsored');
+                        .attr('data-sponsorship', 'sponsoredfeatures');
                     badges.add($container);
                     expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
                 });

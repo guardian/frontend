@@ -164,7 +164,11 @@
     $expandable-colour: #f3f3f3;
 
     margin-bottom: $gs-baseline;
-
+    
+    .facia-container__inner {
+        border-top: 0;
+        padding-top: 0;
+    }
     .ad-slot__label--wrapper {
         @include mq($until: tablet) {
             width: auto;
@@ -280,5 +284,109 @@
         .ad-exp-collapse__slide.slide-1 .ad-exp__logo {
             width: 22%;
         }
+    }
+}
+
+.top-banner-ad-container .ad-slot__fluid250 {
+    height: auto;
+    padding: 0 $gs-baseline/2;
+    width: 100%;
+    margin-left: 0;
+        
+    .ad-slot__label {
+        display: none;
+    }
+    
+    .creative--fluid250__label {
+        display: block;
+        width: 100%;
+
+        .fc-container__inner {
+            padding-top: 0;
+        }
+    }
+}
+
+.creative__tracking-pixel {
+    position: absolute;
+}
+
+.creative--fluid250 {
+    height: 100px;
+    
+    .gs-container {
+        height: 100%;
+    }
+    
+    .fluid250_layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-repeat: no-repeat;
+    }
+    
+    .fluid250_layer2 {
+        z-index: 2;
+    }
+    
+    .fluid250_layer3 {
+        z-index: 3;
+    }
+}
+
+@include mq(tablet) {
+    .top-banner-ad-container .ad-slot--top-banner-ad__fluid250 {
+        height: auto;
+        padding: 0;
+    }
+    
+    .creative--fluid250 {
+        height: 250px;
+    }
+}
+
+.creative--ad-feature-mpu-large {
+    background-color: colour(neutral-8);
+    padding: $gs-baseline / 2 0;
+    overflow: hidden;
+
+    .creative__article {
+        display: block;
+        padding: 0 $gs-gutter $gs-baseline / 2;
+        border-bottom: 1px solid colour(neutral-5);
+        color: colour(neutral-2-contrasted);
+    }
+    .creative__article__image {
+        width: 100%;
+    }
+    .creative__article__title {
+        @include f-headlineSans;
+        @include font-size(14, 18);
+    }
+    .creative__logo-text,
+    .creative__logo-info {
+        margin-left: $gs-gutter;
+        @include fs-textSans(1);
+        float: left;
+        color: colour(neutral-2-contrasted);
+    }
+    .creative__logo-text,
+    .creative__logo {
+        margin-top: $gs-baseline/ 2;
+    }
+    .creative__logo-text {
+        margin-bottom: 0;
+        font-weight: bold;
+    }
+    .creative__logo {
+        margin-right: $gs-gutter;
+        float: right;
+    }
+    .creative__logo-info {
+        display: block;
+        clear: left;
     }
 }

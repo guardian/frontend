@@ -1,10 +1,18 @@
 package views.support
 
+import common.ExternalLinks
 import model.Trail
 
 object CardStyle {
+  def isExternalLink(trail: Trail): Boolean = (for {
+    snapType <- trail.snapType
+    href <- trail.faciaUrl
+  } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
+
   def apply(trail: Trail): CardStyle = {
-    if (trail.isLiveBlog) {
+    if (isExternalLink(trail)) {
+      ExternalLink
+    } else if (trail.isLiveBlog) {
       if (trail.isLive) {
         LiveBlog
       } else {
@@ -74,6 +82,10 @@ case object Review extends CardStyle {
 
 case object Letters extends CardStyle {
   override def toneString: String = "letters"
+}
+
+case object ExternalLink extends CardStyle {
+  override def toneString: String = "external"
 }
 
 case object Default extends CardStyle {

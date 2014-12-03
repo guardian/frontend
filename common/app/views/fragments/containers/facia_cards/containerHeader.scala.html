@@ -29,11 +29,11 @@
                         "tone-comment" -> isContributor,
                         "tone-colour" -> isContributor))">
                         @href.map { href =>
-                        <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
+                        <a data-link-name="section heading" href="@LinkTo {/@href}">
                         @Html(Localisation(title))
                         </a>
                         }.getOrElse {
-                            <span class="u-text-hyphenate" tabindex="0">@Html(Localisation(title))</span>
+                            <span tabindex="0">@Html(Localisation(title))</span>
                         }
 
                         @if(containerDefinition.showDateHeader) {

@@ -30,24 +30,41 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
 
     val optCapiAdFeature = request.getParameter("af")
 
-    val optCapiSupportedBy = request.getParameter("sb")
+    val sponsorTypeToClass = Map (
+        "sponsored" -> ("fc-container--sponsored"),
+        "advertisement-feature" -> ("fc-container--advertisement-feature"),
+        "foundation-supported" -> ("fc-container--foundation-supported")
+        )
+    val optSponsorType: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
+
+    val sponsorTypeToLabel = Map (
+        "sponsored" -> ("Sponsored by"),
+        "advertisement-feature" -> ("Brought to you by"),
+        "foundation-supported" -> ("Supported by")
+        )
+    val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
+
+    val optClickMacro = request.getParameter("clickMacro")
+
+    val optOmnitureId = request.getParameter("omnitureId")
 
     val futureLatestByKeyword = optKeyword.map { keyword =>
-      Lookup.latestContentByKeyword(keyword, 4)
+      // getting twice as many, as we filter out content without images
+      Lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     val futureContents = for {
       specific <- Lookup.contentByShortUrls(specificIds)
       latestByKeyword <- futureLatestByKeyword
-    } yield (specific ++ latestByKeyword).distinct take 4
+    } yield (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
 
     futureContents map {
       case Nil => NoCache(format.nilResult)
       case contents => Cached(componentMaxAge) {
         if (isMulti) {
-          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout))
+          format.result(views.html.contentapi.items(contents, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optClickMacro, optOmnitureId, optCapiAdFeature, optSponsorType, optSponsorLabel))
         } else {
-          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optCapiAdFeature, optCapiSupportedBy))
+          format.result(views.html.contentapi.item(contents.head, optLogo, optCapiTitle, optCapiLink, optCapiAbout, optCapiButtonText, optCapiReadMoreUrl, optCapiReadMoreText, optSponsorType, optSponsorLabel, optClickMacro, optOmnitureId))
         }
       }
     }

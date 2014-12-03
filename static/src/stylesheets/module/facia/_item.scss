@@ -103,7 +103,6 @@ $fc-hover-transition: .25s ease;
 
 .fc-item,
 .item {
-    background-color: #ffffff;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
 
@@ -121,6 +120,20 @@ $fc-hover-transition: .25s ease;
 
         @include mq($until: desktop) {
             z-index: initial;
+        }
+    }
+
+    /**
+     * The z-index: initial trick above is not working on the webkit browsers.
+     * The only way how to make it work is to play with the z-index.
+     */
+    &.fc-item--video {
+        .u-faux-block-link__overlay {
+            z-index: 0;
+        }
+
+        .u-faux-block-link__promote {
+            z-index: 1;
         }
     }
 

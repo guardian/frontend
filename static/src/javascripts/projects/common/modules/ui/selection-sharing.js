@@ -31,7 +31,7 @@ define([
         twitterMessageLimit = 115, // 140 - t.co length - 3 chars for quotes and url spacing
         emailShortUrl = config.page.shortUrl + '/sbl',
         emailHrefTemplate = 'mailto:?subject={{subject}}&body="{{selection}}" {{url}}',
-        validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main'],
+        validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
 
     updateSelection = function () {
 

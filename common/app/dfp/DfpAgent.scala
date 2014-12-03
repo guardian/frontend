@@ -144,11 +144,11 @@ trait DfpAgent {
 
   def sponsorshipType(config: CollectionConfig): Option[String] = {
     if (isSponsored(config)) {
-      Option("sponsored")
+      Option("sponsoredfeatures")
     } else if (isAdvertisementFeature(config)) {
-      Option("advertisement-feature")
+      Option("advertisement-features")
     } else if (isFoundationSupported(config)) {
-      Option("foundation-supported")
+      Option("foundation-features")
     } else {
       None
     }

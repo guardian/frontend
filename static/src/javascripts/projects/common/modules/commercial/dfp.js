@@ -265,15 +265,14 @@ define([
             var size,
                 $slot = $('#' + event.slot.getSlotId().getDomId());
 
-            // remove any placeholder ad content
-            $('.ad-slot__content--placeholder', $slot).remove();
-
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
+                // remove any placeholder ad content
+                $('.ad-slot__content--placeholder', $slot).remove();
                 checkForBreakout($slot);
                 addLabel($slot);
-                size  = event.size.join(',');
+                size = event.size.join(',');
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
             }

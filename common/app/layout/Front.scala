@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
+import contentapi.Paths
 import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime
@@ -46,9 +47,8 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
-  // Dream on.
-  def participatesInDeduplication(trail: Trail) =
-    !trail.snapType.exists(_ == "latest")
+  // Never de-duplicate snaps.
+  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
@@ -75,13 +75,17 @@ object Front extends implicits.Collections {
           (seen, trails)
         }
 
+      /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
+      case Fixed(containerDefinition) if containerDefinition.isSingleton =>
+        (seen, trails)
+
       case Fixed(containerDefinition) =>
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filterNot(trail => participatesInDeduplication(trail) && seen.contains(trail.url))
+        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
           .distinctBy(_.url)
-        (seen ++ notUsed.filter(participatesInDeduplication).take(nToTake).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
@@ -229,7 +233,7 @@ object FaciaContainer {
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
     FaciaContainer(
       index = 2,
-      container = Fixed(ContainerDefinition.forNumberOfItems(items.size)),
+      container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
       collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
       componentId = None
@@ -312,7 +316,7 @@ case class FaciaContainer(
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline) => dateHeadline
+      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
       case LoneDateHeadline(dateHeadline) => dateHeadline
     }
 

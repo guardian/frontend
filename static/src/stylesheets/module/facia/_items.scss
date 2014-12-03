@@ -93,7 +93,7 @@
         &.fc-item--has-cutout {
             .fc-item__header,
             .fc-sublinks {
-                padding-right: 33%;
+                padding-right: 25%;
             }
         }
 
@@ -107,6 +107,14 @@
                     min-height: gs-height(3) + $gs-baseline;
                 }
             }
+        }
+
+        .fc-item__avatar {
+            height: gs-height(2) + $gs-baseline  * 2;
+        }
+
+        .fc-item__avatar__media {
+            right: - $gs-gutter;
         }
 
         .vjs-big-play-button > span {
@@ -151,6 +159,10 @@
             }
         }
 
+        .fc-item__avatar {
+            height: gs-height(4);
+        }
+
         .fc-item__avatar__media {
             right: -40%;
         }
@@ -163,10 +175,6 @@
 
         .fc-item__avatar__media {
             right: -20%;
-        }
-
-        .fc-item__avatar {
-            height: gs-height(4);
         }
     }
 }

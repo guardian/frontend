@@ -4,52 +4,61 @@ import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.soulmates.SoulmatesAggregatingAgent
+import model.commercial.soulmates.{SoulmatesMenAgent, SoulmatesWomenAgent}
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.twirl.api.Html
 
 import scala.concurrent.Future
+import scala.util.Random
 
-object Multi extends Controller with ExecutionContexts with implicits.Collections {
+object Multi
+  extends Controller
+  with ExecutionContexts
+  with implicits.Collections
+  with implicits.Requests {
 
   def renderMulti() = MemcachedAction { implicit request =>
-
     Future.successful {
-      val componentParts: Seq[Html] = request.queryString("c").flatMap {
+
+      val requestedContent = request.getParameters("c")
+
+      val content = requestedContent flatMap {
         case "jobs" =>
-          JobsAgent.jobsTargetedAt(segment).headOption map { job =>
-            views.html.jobFragments.job(job)
+          JobsAgent.jobsTargetedAt(segment).headOption map {
+            views.html.jobFragments.job(_)
           }
         case "books" =>
-          BestsellersAgent.bestsellersTargetedAt(segment).headOption map { book =>
-            views.html.books.book(book)
+          BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+            views.html.books.book(_)
           }
         case "travel" =>
-          TravelOffersAgent.offersTargetedAt(segment).headOption map { travelOffer =>
-            views.html.travelOfferFragments.travelOffer(travelOffer)
+          TravelOffersAgent.offersTargetedAt(segment).headOption map {
+            views.html.travelOfferFragments.travelOffer(_)
           }
         case "masterclasses" =>
-          MasterClassAgent.masterclassesTargetedAt(segment).headOption map { masterclass =>
-            views.html.masterClasses.masterClass(masterclass)
+          MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
+            views.html.masterClasses.masterClass(_)
           }
         case "soulmates" =>
-          val members = SoulmatesAggregatingAgent.sampleMembers(segment).take(2)
-          if (members.size < 2) None
-          else Some(views.html.soulmateFragments.soulmates(members))
+          for {
+            woman <- SoulmatesWomenAgent.sample(1).headOption
+            man <- SoulmatesMenAgent.sample(1).headOption
+          } yield {
+            views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)))
+          }
         case _ => None
       }
 
-      componentParts match {
-        case Nil => NoCache(jsonFormat.nilResult)
-        case parts => Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(parts))
+      if (requestedContent.nonEmpty && content.size == requestedContent.size) {
+        Cached(componentMaxAge) {
+          jsonFormat.result(views.html.multi(content))
         }
+      } else {
+        NoCache(jsonFormat.nilResult)
       }
     }
-
   }
 
 }

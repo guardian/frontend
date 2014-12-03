@@ -109,6 +109,7 @@ case class DisplaySettings(
 sealed trait SnapType
 
 case object LatestSnap extends SnapType
+case object LinkSnap extends SnapType
 case object OtherSnap extends SnapType
 
 object SnapStuff {
@@ -120,6 +121,8 @@ object SnapStuff {
     },
     if (trail.snapType.exists(_ == "latest")) {
       LatestSnap
+    } else if (trail.snapType.exists(_ == "link")) {
+      LinkSnap
     } else {
       OtherSnap
     }

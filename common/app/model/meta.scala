@@ -55,7 +55,9 @@ trait MetaData extends Tags {
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
     ("hasClassicVersion", JsBoolean(hasClassicVersion)),
-    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
   )
 
   def openGraph: Map[String, String] = Map(
@@ -129,17 +131,25 @@ trait Elements {
 
   private val trailPicMinDesiredSize = 460
 
+  val AspectRatioThreshold = 0.01
+
   // Find a main picture crop which matches this aspect ratio.
-  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] =
+  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+    val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
+
     (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail)
-      .map{ image =>
-        image.imageCrops.filter{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight } match {
-          case Nil   => None
-          case crops => Option(ImageContainer(crops, image.delegate, image.index))
-        }
+      .map { image =>
+      image.imageCrops.filter { crop =>
+        aspectHeight.toDouble * crop.width != 0 &&
+          Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1 ) <= AspectRatioThreshold
+      } match {
+        case Nil => None
+        case crops => Option(ImageContainer(crops, image.delegate, image.index))
       }
+    }
       .flatten
       .toList
+  }
 
   def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
@@ -232,6 +242,7 @@ trait Tags {
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
+  lazy val blogsAndSeries: Seq[Tag] = tags.filter{ tag => tag.tagType == "series" || tag.tagType == "blog"}
 
   def isSponsored: Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
@@ -242,11 +253,11 @@ trait Tags {
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
   def sponsorshipType: Option[String] = {
     if (isSponsored) {
-      Option("sponsored")
+      Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {
-      Option("advertisement-feature")
+      Option("advertisement-features")
     } else if (isFoundationSupported) {
-      Option("foundation-supported")
+      Option("foundation-features")
     } else {
       None
     }
