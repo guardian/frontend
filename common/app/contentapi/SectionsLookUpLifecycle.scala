@@ -1,6 +1,6 @@
 package contentapi
 
-import common.{Logging, Jobs}
+import common.{AkkaAsync, Logging, Jobs}
 import play.api.GlobalSettings
 
 trait SectionsLookUpLifecycle extends GlobalSettings with Logging  {
@@ -18,6 +18,10 @@ trait SectionsLookUpLifecycle extends GlobalSettings with Logging  {
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
+
+    AkkaAsync {
+      SectionsLookUp.refresh()
+    }
   }
 
   override def onStop(app: play.api.Application) {
