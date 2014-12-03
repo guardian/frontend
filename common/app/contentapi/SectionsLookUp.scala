@@ -1,7 +1,7 @@
 package contentapi
 
 import com.gu.contentapi.client.model.Section
-import common.{ExecutionContexts, Logging, AkkaAgent}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.LiveContentApi
 
 import scala.util.{Failure, Success}
