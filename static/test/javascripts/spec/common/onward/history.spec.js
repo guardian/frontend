@@ -6,7 +6,8 @@ define([
 ], function(
     storage,
     hist,
-    contains,max
+    contains,
+    max
 ) {
 
     var today =  Math.floor(Date.now() / 86400000); // 1 day in ms
