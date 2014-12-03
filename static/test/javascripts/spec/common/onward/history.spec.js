@@ -1,15 +1,15 @@
 define([
+    'common/utils/storage',
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
-], function(hist, contains, max) {
+], function(
+    storage,
+    hist,
+    contains,max
+) {
 
-    var setStorageItem = function(key, data) {
-            window.localStorage.setItem(key, JSON.stringify({
-                'value' : data
-            }));
-        },
-        today =  Math.floor(Date.now() / 86400000); // 1 day in ms
+    var today =  Math.floor(Date.now() / 86400000); // 1 day in ms
 
 
     var pageConfig = {
@@ -42,7 +42,7 @@ define([
 
         beforeEach(function() {
             hist.reset();
-            setStorageItem('gu.history', contains);
+            storage.local.set('gu.history', contains);
         });
 
         it('should get history from local storage', function() {
@@ -72,7 +72,7 @@ define([
         });
 
         it('should only store 50 latest entries', function() {
-            setStorageItem('gu.history', max);
+            storage.local.set('gu.history', max);
             hist.logHistory(pageConfig);
 
             expect(hist.test.getHistory().length).toEqual(50);
