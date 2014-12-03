@@ -1,0 +1,12 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+# For dev machines
+GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
+
+GET        /collection/*id/rss                                         controllers.FaciaController.renderCollectionRss(id)
+
+# Editionalised pages
+GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
