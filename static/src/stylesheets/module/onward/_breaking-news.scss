@@ -4,7 +4,7 @@ $breaking-news-icon-width: 36px;
     &:before {
         position: absolute;
         left: 0 - $breaking-news-icon-width - $gs-gutter / 2;
-        top: 0 - $gs-baseline / 2;
+        top: 0;
         width: $breaking-news-icon-width;
         height: $breaking-news-icon-width;
         @include icon(marque-36, false);
@@ -87,7 +87,11 @@ $breaking-news-icon-width: 36px;
 
 .breaking-news__item-kicker,
 .breaking-news__item-headline {
-    @include fs-headline(4);
+    @include fs-headline(3);
+
+    @include mq(tablet) {
+        @include fs-headline(4);
+    }
 }
 
 .breaking-news__item-kicker {
