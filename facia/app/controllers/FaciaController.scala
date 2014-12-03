@@ -49,7 +49,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
-  def renderFrontPressSpecial(path: String) = MemcachedAction { implicit  request => renderFrontPressResult(path) }
+  def renderFrontPressSpecial(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
