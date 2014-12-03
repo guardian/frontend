@@ -9,7 +9,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = {
      adUnits map { adUnit =>
-      val pathWithoutSiteRoot = adUnit.path.drop(1)
+      val pathWithoutSiteRoot = adUnit.path.drop(1).toList
 
        pathWithoutSiteRoot match {
         case section :: restOfAdUnit => section
