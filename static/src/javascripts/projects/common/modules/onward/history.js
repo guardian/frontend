@@ -140,13 +140,9 @@ define([
     }
 
     function deltas(ints) {
-        var deltaInts = [],
-            i;
-
-        for (i = ints.length - 1; i > 0; i -= 1) {
-            deltaInts.push(Math.abs(ints[i] - ints[i - 1]));
-        }
-        return deltaInts;
+        return _.map(_.initial(_.zip(ints, _.rest(ints))), function (pair) {
+            return pair[1] - pair[0];
+        });
     }
 
     function firstCsv(str) {
