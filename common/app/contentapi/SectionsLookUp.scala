@@ -27,4 +27,6 @@ object SectionsLookUp extends Logging with ExecutionContexts {
 
   def get(path: String) =
     sectionsByPath.get().flatMap(_.get(path))
+
+  def isLoaded() = sections.get().isDefined
 }
