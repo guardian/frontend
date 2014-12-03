@@ -125,7 +125,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
         val page = maybeSection.map(s => section(s, response)) orElse
           response.tag.flatMap(t => tag(response, pageNum)) orElse
           response.section.map(s => section(s, response))
-        ModelOrResult(page, response)
+        ModelOrResult(page, response, maybeSection)
       }
 
     promiseOfResponse.recover(convertApiExceptions) recover {
