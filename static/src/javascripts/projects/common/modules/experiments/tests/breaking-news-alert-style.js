@@ -10,13 +10,13 @@ define([
         this.start = '2014-11-26';
         this.expiry = '2015-02-01';
         this.author = 'Alex Sanders';
-        this.description = 'Test the efficacy of different alert types for breaking news';
+        this.description = 'Test the efficacy of breaking news alerts';
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = '';
+        this.successMeasure = 'Click-through for the breaking story.';
         this.audienceCriteria = 'All users';
-        this.dataLinkNames = '';
-        this.idealOutcome = '';
+        this.dataLinkNames = 'breaking news';
+        this.idealOutcome = 'Users who see the alert click through to the story.';
 
         this.canRun = function () {
             return true;
