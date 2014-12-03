@@ -386,7 +386,7 @@
     .fig--narrow-caption {
         figcaption {
             @include mq(tablet) {
-                max-width: gs-span(6);
+                max-width: gs-span(7) - 20;
             }
         }
 
@@ -404,7 +404,7 @@
         &.element--showcase {
             figcaption {
                 @include mq(leftCol) {
-                    max-width: gs-span(9);
+                    max-width: gs-span(9) - 20;
                 }
             }
         }

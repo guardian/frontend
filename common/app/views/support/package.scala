@@ -258,7 +258,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
       article.lightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + 1).toString
+            val linkIndex = (index + (if(article.isMainImageLightboxable) 2 else 1) ).toString
             val hashSuffix = "img-" + linkIndex
             fig.attr("id", hashSuffix)
             fig.addClass("fig--narrow-caption")
@@ -287,9 +287,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
       imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
       imgElement.addClass("responsive-img")
     }
-
     body
-
   }
 
   def clean(body: Document): Document = {

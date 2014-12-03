@@ -486,7 +486,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   }
 
   lazy val lightbox: JsObject = {
-    val imageContainers = bodyImages.filter(_.largestEditorialCrop.nonEmpty)
+    val allImages: Seq[ImageContainer] = mainPicture.toSeq ++ bodyImages
+    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>
       imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
         JsObject(Seq(
@@ -499,25 +500,12 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
         ))
       }
     }
-    val mainImage = trailPicture.filter(_.largestEditorialCrop.nonEmpty)
-    val mainJson = mainImage.map { imgContainer =>
-      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
-        JsObject(Seq(
-          ("caption", JsString(img.caption.getOrElse(""))),
-          ("credit", JsString(img.credit.getOrElse(""))),
-          ("displayCredit", JsBoolean(img.displayCredit)),
-          ("src", JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager))),
-          ("ratio", Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1))),
-          ("role", JsString(img.role.toString))
-        ))
-      }
-    }
     JsObject(Seq(
       "id" -> JsString(id),
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson ++ mainJson).flatten)
+      "images" -> JsArray((imageJson).toSeq.flatten)
     ))
   }
 
@@ -525,6 +513,12 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     case (_, Some(crop)) => crop.width > 620
     case _ => false
   })
+
+  lazy val isMainImageLightboxable: Boolean = {
+
+    val isBigPicture = mainPicture.filter(_.largestEditorialCrop.nonEmpty).find(_.largestEditorialCrop.map(_.width).filter(_ > 620).size > 0)
+    isBigPicture.isDefined
+  }
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
