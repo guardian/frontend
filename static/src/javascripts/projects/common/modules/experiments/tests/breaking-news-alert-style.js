@@ -1,4 +1,10 @@
-define([], function () {
+define([
+    'common/modules/onward/breaking-news',
+    'common/utils/config'
+], function (
+    breakingNews,
+    config
+) {
     return function () {
         this.id = 'BreakingNewsAlertStyle';
         this.start = '2014-11-26';
@@ -23,7 +29,11 @@ define([], function () {
             },
             {
                 id: 'bottom',
-                test: function () { }
+                test: function () {
+                    if (config.switches.breakingNews) {
+                        breakingNews();
+                    }
+                }
             }
         ];
     };
