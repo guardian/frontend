@@ -80,6 +80,7 @@ trait VideoContainer extends Element {
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+  lazy val embeddable: Boolean = videoAssets.headOption.map(_.embeddable).getOrElse(false)
   lazy val caption: Option[String] = largestVideo.flatMap(_.caption)
 }
 

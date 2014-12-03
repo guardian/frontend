@@ -597,7 +597,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
-      "source" -> JsString(source.getOrElse(""))
+      "source" -> JsString(source.getOrElse("")),
+      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false))
     )
 
   // I know it's not too pretty
