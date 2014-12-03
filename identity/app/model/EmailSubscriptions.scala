@@ -29,8 +29,8 @@ object EmailSubscriptions {
     EmailSubscription(
       "Morning Mail",
       "news",
+      "Guardian Australia's morning news briefing from around the web",
       "A brief mobile-friendly roundup of all the news you need to know in Australia, sent first thing in the morning",
-      "Subscribe to First Dog on the Moon to get his cartoons straight to your inbox every time they're published",
       "Every weekday",
       "2636",
       11,
