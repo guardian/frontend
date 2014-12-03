@@ -4,10 +4,10 @@ import model._
 import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
-import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
+import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.QueryDefaults
+import contentapi.{SectionsLookUp, QueryDefaults}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -106,14 +106,27 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
     val fields = if (isRss) rssFields else trailFields
 
-    val promiseOfResponse = LiveContentApi.item(path, edition).page(pageNum)
-        .pageSize(pageSize)
-        .showEditorsPicks(pageNum == 1) //only show ed pics on first page
-        .showFields(fields)
-        .response.map { response =>
-          val page = response.tag.flatMap(t => tag(response, pageNum))
-            .orElse(response.section.flatMap(t => section(response)))
-          ModelOrResult(page, response)
+    val maybeSection = SectionsLookUp.get(path)
+
+    /** If looking up a section, go to equivalent tag instead.
+      *
+      * As items can only have one section, but can have multiple section tags, this is how we get content of what are
+      * essentially 'subsections' in the nav. e.g., if you looked up 'culture' as a section, you would only get the
+      * items that directly belong to that section, which would exclude items in the 'books' section. If you look up
+      * the 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
+      * 'books', as everything in 'books' is also tagged 'culture/culture'.
+      */
+    val queryPath = maybeSection.fold(path)(s => s"${s.id}/${s.id}")
+
+    val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
+      .pageSize(pageSize)
+      .showEditorsPicks(pageNum == 1) //only show ed pics on first page
+      .showFields(fields)
+      .response map { response =>
+        val page = maybeSection.map(s => section(s, response)) orElse
+          response.tag.flatMap(t => tag(response, pageNum)) orElse
+          response.section.map(s => section(s, response))
+        ModelOrResult(page, response)
       }
 
     promiseOfResponse.recover(convertApiExceptions) recover {
@@ -122,13 +135,13 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }
   }
 
-  private def section(response: ItemResponse) = {
-    val section = response.section map { Section(_, pagination(response)) }
+  private def section(apiSection: ApiSection, response: ItemResponse) = {
+    val section = Section(apiSection, pagination(response))
     val editorsPicks = response.editorsPicks.map(Content(_))
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
     val trails = editorsPicks ++ latestContent
-    section.map(IndexPage(_, trails))
+    IndexPage(section, trails)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
