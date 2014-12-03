@@ -34,6 +34,7 @@ define([
     'common/modules/navigation/search',
     'common/modules/onward/breaking-news',
     'common/modules/onward/history',
+    'common/modules/onward/history-nav',
     'common/modules/onward/more-tags',
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
@@ -90,6 +91,7 @@ define([
     Search,
     breakingNews,
     history,
+    historyNav,
     MoreTags,
     Onward,
     Popular,
@@ -155,6 +157,14 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+            },
+
+            initialiseNavigationHistory: function () {
+                mediator.on('page:common:ready', function () {
+                    if (config.page.contentType === 'Network Front') {
+                        historyNav.init();
+                    }
+                });
             },
 
             transcludeRelated: function () {
@@ -464,6 +474,7 @@ define([
             modules.showTabs();
             modules.initialiseTopNavItems();
             modules.initialiseNavigation();
+            modules.initialiseNavigationHistory();
             modules.displayBreakingNews();
             modules.showToggles();
             modules.showRelativeDates();
