@@ -250,6 +250,8 @@
  */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
+    margin-bottom: -$gs-baseline;
+    
     .has-page-skin & {
         @include mq(wide) {
             margin-left: auto;

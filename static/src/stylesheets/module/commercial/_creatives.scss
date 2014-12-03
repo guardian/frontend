@@ -287,9 +287,9 @@
     }
 }
 
-.top-banner-ad-container .ad-slot__fluid250 {
+.ad-slot--dfp.ad-slot__fluid250 {
     height: auto;
-    padding: 0 $gs-baseline/2;
+    padding: 0;
     width: 100%;
     margin-left: 0;
         
@@ -300,11 +300,13 @@
     .creative--fluid250__label {
         display: block;
         width: 100%;
-
-        .fc-container__inner {
-            padding-top: 0;
-        }
+        text-align: left;
     }
+
+    .fc-container__inner {
+        padding-top: 0;
+        border-top: 0;
+    }    
 }
 
 .creative__tracking-pixel {
