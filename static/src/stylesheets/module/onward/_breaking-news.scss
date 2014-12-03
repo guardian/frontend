@@ -83,10 +83,6 @@ $breaking-news-icon-width: 36px;
     position: relative;
     @include batwing-bg;
     padding-right: gs-span(1) + $gs-gutter * .5;
-
-    @include mq(tablet) {
-        padding-right: gs-span(2);
-    }
 }
 
 .breaking-news__item-kicker,
@@ -131,12 +127,6 @@ $breaking-news-icon-width: 36px;
     position: absolute;
     top: $gs-baseline;
     right: 0;
-}
-
-.breaking-news__item-show {
-    @include mq($until: tablet) {
-        display: none;
-    }
 }
 
 // copy of breaking news element used inline in the body
