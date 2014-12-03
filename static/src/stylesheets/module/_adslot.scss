@@ -136,12 +136,21 @@
     @include mq(mobileLandscape) {
         width: 320px;
     }
+
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
         width: auto;
     }
     .ad-slot__label {
         background-color: transparent;
+    }
+}
+.ad-slot--gallery-inline {
+    @include mq(mobileLandscape) {
+        width: 300px;
+    }
+    @include mq(tablet) {
+        width: auto;
     }
 }
 .ad-slot--inline,
