@@ -120,7 +120,6 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
-      .showEditorsPicks(pageNum == 1) //only show ed pics on first page
       .showFields(fields)
       .response map { response =>
         val page = maybeSection.map(s => section(s, response)) orElse
