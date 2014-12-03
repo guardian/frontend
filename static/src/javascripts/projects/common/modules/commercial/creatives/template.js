@@ -2,12 +2,14 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html'
+    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'text!common/views/commercial/creatives/ad-single-manual.html'
 ], function (
     $,
     template,
     adFeatureMpuTpl,
-    adFeatureMpuLargeTpl
+    adFeatureMpuLargeTpl,
+    adSingleManual
 ) {
 
     /**
@@ -18,7 +20,8 @@ define([
      */
     var creativeTemplates = {
             'ad-feature-mpu': adFeatureMpuTpl,
-            'ad-feature-mpu-large': adFeatureMpuLargeTpl
+            'ad-feature-mpu-large': adFeatureMpuLargeTpl,
+            'ad-single-manual': adSingleManual
         },
         Template = function ($adSlot, params) {
             this.$adSlot = $adSlot;

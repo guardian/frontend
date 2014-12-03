@@ -110,6 +110,7 @@ define([
                         register.end(componentName);
                     },
                     error: function () {
+                        bonzo(container).remove();
                         register.error(componentName);
                     }
                 }).load();

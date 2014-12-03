@@ -32,7 +32,7 @@
 
         @index.page.pagination.map { paginationInstance =>
             <div class="fc-container__pagination">
-                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.page.id))
+                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
             </div>
         }
 

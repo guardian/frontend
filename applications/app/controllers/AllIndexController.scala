@@ -6,7 +6,7 @@ import scala.concurrent.Future
 import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
-import services.{Index, ConfigAgent, IndexPage}
+import services.{ConfigAgent, IndexPage}
 import views.support.PreviousAndNext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}

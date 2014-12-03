@@ -91,7 +91,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    blogsAndSeries.headOption.map( series =>
+    blogsAndSeries.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
     ) getOrElse Nil
   }
@@ -552,7 +552,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
   override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 
-  private lazy val cricketMetaData = if (isCricketLiveBlog) {
+  private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
     Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
   } else {
     Map()
