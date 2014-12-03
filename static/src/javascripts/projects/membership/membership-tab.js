@@ -15,7 +15,7 @@ define([
 ) {
 
     function formatAmount(amount) {
-        return (amount) ? '£' + (amount / 100).toFixed(2) : 'Free';
+        return amount ? '£' + (amount / 100).toFixed(2) : 'Free';
     }
 
     function formatDate(timestamp) { // eg: 4th June 2014
