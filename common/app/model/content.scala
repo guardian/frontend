@@ -515,7 +515,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   })
 
   lazy val isMainImageLightboxable: Boolean = {
-
     val isBigPicture = mainPicture.filter(_.largestEditorialCrop.nonEmpty).find(_.largestEditorialCrop.map(_.width).filter(_ > 620).size > 0)
     isBigPicture.isDefined
   }

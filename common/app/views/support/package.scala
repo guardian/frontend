@@ -237,15 +237,21 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
           }
         }
 
-        fig.getElementsByTag("figcaption").foreach { figcaption =>
-          // content api/ tools sometimes pops a &nbsp; in the blank field
-          if (!figcaption.hasText || figcaption.text().length < 2) {
-            figcaption.remove()
-            fig.addClass("fig--extra-margin")
-          } else {
-            figcaption.attr("itemprop", "description")
-            fig.addClass("fig--border")
+        val figcaptions = fig.getElementsByTag("figcaption")
+
+        if(figcaptions.length > 0) {
+          figcaptions.foreach { figcaption =>
+            // content api/ tools sometimes pops a &nbsp; in the blank field
+            if (!figcaption.hasText || figcaption.text().length < 2) {
+              figcaption.remove()
+              fig.addClass("fig--extra-margin")
+            } else {
+              figcaption.attr("itemprop", "description")
+              fig.addClass("fig--border")
+            }
           }
+        } else {
+          fig.addClass("fig--extra-margin")
         }
       }
     }
