@@ -27,7 +27,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
 
     def pathWithoutEdition(section: ApiSection) =
-      section.editions.find(_.code == "default").getOrElse(Paths.stripEditionIfPresent(section.id))
+      section.editions.find(_.code == "default").map(edition => s"/${edition.id}").getOrElse(Paths.stripEditionIfPresent(section.id))
 
     response.section match {
       case Some(section) if request.path.endsWith("/all") &&
@@ -37,6 +37,8 @@ private object ItemOrRedirect extends ItemResponses with Logging {
       case Some(section) if request.getQueryString("page").exists(_ != "1") &&
         pathWithoutEdition(section) != request.path =>
         Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
+
+      case Some(_) => Left(item)
 
       case None => itemPath match {
         case Some(itemPath) if needsRedirect(itemPath) =>
