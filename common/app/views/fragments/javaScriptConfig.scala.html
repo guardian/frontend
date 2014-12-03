@@ -1,7 +1,6 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 
 @import common.Edition
-@import dev.HttpSwitch
 @import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
 
@@ -9,11 +8,7 @@
     {
         "page": @Html(Json.stringify(JavaScriptPage(item).get)),
         "switches" : { @{Html(conf.Switches.all.map{ switch =>
-                if(conf.Switches.httpSwitches.contains(switch))
-                    s""""${CamelCase.fromHyphenated(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
-                else
-                    s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""
-            }.mkString(","))}
+            s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "modules": { },
         "images": {

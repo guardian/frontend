@@ -10,7 +10,7 @@ import com.gu.googleauth.UserIdentity
 import auth.ExpiringActions
 
 object CreateFront {
-  implicit val jsonFormat = Json.format[CreateFront]
+  implicit val jsonFormat = Json.format[CreateFront].filter(_.id.matches("""^[a-z0-9\/\-+]*$"""))
 }
 
 case class CreateFront(

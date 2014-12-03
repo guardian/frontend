@@ -164,7 +164,11 @@
     $expandable-colour: #f3f3f3;
 
     margin-bottom: $gs-baseline;
-
+    
+    .facia-container__inner {
+        border-top: 0;
+        padding-top: 0;
+    }
     .ad-slot__label--wrapper {
         @include mq($until: tablet) {
             width: auto;

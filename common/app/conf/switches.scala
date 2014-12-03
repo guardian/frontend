@@ -38,9 +38,16 @@ case class Switch( group: String,
   def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
 
   def expiresSoon = daysToExpiry < 7
+
+  Switch.switches.send(this :: _)
 }
 
-object Switches extends Collections {
+object Switch {
+  private val switches = AkkaAgent[List[Switch]](Nil)
+  def allSwitches: Seq[Switch] = switches.get
+}
+
+object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
@@ -379,6 +386,20 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
+    "If switched on then football matchday feeds will be recorded every minute",
+    safeState = Off, sellByDate = never)
+
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
+
+  val CricketScoresSwitch = Switch("Feature", "cricket-scores",
+    "If switched on, cricket score and scorecard link will be displayed",
+    safeState = Off, sellByDate = never
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -416,100 +437,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
-    "If switched on then football matchday feeds will be recorded every minute",
-    safeState = Off, sellByDate = never)
+  def all: Seq[Switch] = Switch.allSwitches
 
-  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
-    "If switched on, crossword thumbnails will be accurate SVGs",
-    safeState = Off, sellByDate = never
-  )
-
-
-  val all: List[Switch] = List(
-    TagPageSizeSwitch,
-    AutoRefreshSwitch,
-    DoubleCacheTimesSwitch,
-    RelatedContentSwitch,
-    FlyerSwitch,
-    AjaxRelatedContentSwitch,
-    DfpCachingSwitch,
-    CommercialSwitch,
-    StandardAdvertsSwitch,
-    CommercialComponentsSwitch,
-    VideoAdvertsSwitch,
-    VpaidAdvertsSwitch,
-    LiveblogAdvertsSwitch,
-    SponsoredSwitch,
-    AudienceScienceSwitch,
-    AudienceScienceGatewaySwitch,
-    CriteoSwitch,
-    DiscussionSwitch,
-    OpenCtaSwitch,
-    FontSwitch,
-    SearchSwitch,
-    ReleaseMessageSwitch,
-    IdentityProfileNavigationSwitch,
-    InlineCriticalCss,
-    FacebookAutoSigninSwitch,
-    FacebookShareUseTrailPicFirstSwitch,
-    IdentityFormstackSwitch,
-    IdentityAvatarUploadSwitch,
-    ToolDisable,
-    ToolSparklines,
-    OphanSwitch,
-    ScrollDepthSwitch,
-    ContentApiPutSwitch,
-    EffectiveMeasureSwitch,
-    ImrWorldwideSwitch,
-    ForeseeSwitch,
-    MediaMathSwitch,
-    KruxSwitch,
-    RemarketingSwitch,
-    OutbrainSwitch,
-    DiagnosticsLogging,
-    TravelOffersFeedSwitch,
-    JobFeedSwitch,
-    MasterclassFeedSwitch,
-    SoulmatesFeedSwitch,
-    MoneysupermarketFeedsSwitch,
-    LCMortgageFeedSwitch,
-    GuBookshopFeedsSwitch,
-    ImageServerSwitch,
-    FaciaToolPressSwitch,
-    ShowAllArticleEmbedsSwitch,
-    FrontPressJobSwitch,
-    EnhanceTweetsSwitch,
-    MemcachedSwitch,
-    MemcachedFallbackSwitch,
-    IncludeBuildNumberInMemcachedKey,
-    GeoMostPopular,
-    FaciaToolCachedContentApiSwitch,
-    FaciaToolDraftContent,
-    GuShiftCookieSwitch,
-    IdentityBlockSpamEmails,
-    IdentityLogRegistrationsFromTor,
-    ABHighCommercialComponent,
-    EnhancedMediaPlayerSwitch,
-    BreakingNewsSwitch,
-    ABBreakingNewsAlertStyleSwitch,
-    DiscussionPageSizeSwitch,
-    MetricsSwitch,
-    FootballFeedRecorderSwitch,
-    ForceHttpResponseCodeSwitch,
-    CircuitBreakerSwitch,
-    PollPreviewForFreshContentSwitch,
-    PngResizingSwitch,
-    CrosswordSvgThumbnailsSwitch,
-    ZonesAggregationSwitch
-  )
-
-  val httpSwitches: List[Switch] = List(
-  )
-
-  val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
-
-  def byName(name: String): Option[Switch] = all.find(_.name == name)
+  def grouped: List[(String, Seq[Switch])] = {
+    val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
+    sortedSwitches.toList.sortBy(_._1)
+  }
 }
 
 class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)

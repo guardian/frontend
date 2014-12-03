@@ -49,7 +49,7 @@ object IndexPage {
 
     val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails)
 
-    val grouped = if (isSlow)
+    val grouped = if (isSlow || indexPage.forcesDayView)
       IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
     else
       IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
@@ -154,6 +154,11 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case combiner: TagCombiner =>
       combiner.leftTag.id == id || combiner.rightTag.id == id
 
+    case _ => false
+  }
+
+  def forcesDayView = page match {
+    case tag: Tag => Set("series", "blog") contains tag.tagType
     case _ => false
   }
 
