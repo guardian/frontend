@@ -363,7 +363,7 @@ object Switches {
 
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
     "If this is switched on then different Breaking News alert styles are A/B tested",
-    safeState = On, sellByDate = new LocalDate(2015, 2, 1)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
   // actually just here to make us remove this in the future
