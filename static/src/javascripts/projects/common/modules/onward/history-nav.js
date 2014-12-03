@@ -33,13 +33,13 @@ define([
 
             topNavItems = $('.top-navigation__item', topNav);
 
-            topNavItemIds = topNavItems.map(function(item) {
+            topNavItemIds = topNavItems.map(function (item) {
                 return collapseTag(stripOuterSlashes($('a', item).attr('href')));
             });
 
             _.chain(popular)
                 .reverse()
-                .forEach(function(tag) {
+                .forEach(function (tag) {
                     var pos = topNavItemIds.indexOf(tag[0]);
 
                     if (pos > -1) {
