@@ -9,7 +9,9 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
-    'common/modules/onward/history'
+    'common/utils/template',
+    'common/modules/onward/history',
+    'text!common/views/breaking-news.html'
 ], function (
     bean,
     bonzo,
@@ -21,7 +23,9 @@ define([
     ajax,
     config,
     storage,
-    history
+    template,
+    history,
+    alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
@@ -90,25 +94,7 @@ define([
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function (article) {
-                    var $el = bonzo.create(
-                        '<a href="/' + article.id + '" class="js-breaking-news__item breaking-news__item" data-link-name="breaking news">' +
-                            '<div class="breaking-news__item-content">' +
-                                '<div class="breaking-news__item-header">' +
-                                    '<em class="breaking-news__item-kicker">Breaking News</em> ' +
-                                    '<div class="breaking-news__item-headline" data-link-name="headline link">' +
-                                        article.headline +
-                                    '</div>' +
-                                    '<div class="breaking-news__item-standfirst">' +
-                                        article.trailText +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="breaking-news__item-options">' +
-                                    '<button class="button button--tertiary breaking-news__item-show" data-link-name="read button">Show me</button>' +
-                                    '<button class="js-breaking-news__item__close button button--tertiary" aria-label="Dismiss" data-article-id="' + article.id + '"><i class="i i-close-icon-white-small" data-link-name="close button"></i></button>' +
-                                '</div>' +
-                            '</div>' +
-                        '</a>'
-                    );
+                    var $el = bonzo.create(template(alertHtml, article));
 
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
                     $breakingNews.append($el);
