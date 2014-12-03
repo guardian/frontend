@@ -6,13 +6,13 @@
                     ("navigation", true),
                     ("js-navigation-header", true),
                     ("navigation--collapsed", true),
-                    ("navigation--has-signposting", true || !Edition.isEditionFront),
-                    ("navigation--has-local-navigation", true || Navigation.localLinks(navigation, metaData).nonEmpty)
+                    ("navigation--has-signposting", !Edition.isEditionFront),
+                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-                    <nav class="navigation__container navigation__container--first js-history-nav-placeholder" data-component="nav" role="navigation" aria-label="Current section">
+                    <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
