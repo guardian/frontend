@@ -7,7 +7,7 @@ import common._
 import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{SectionsLookUp, QueryDefaults}
+import contentapi.{SectionTagLookUp, SectionsLookUp, QueryDefaults}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
@@ -116,7 +116,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       * the 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
       * 'books', as everything in 'books' is also tagged 'culture/culture'.
       */
-    val queryPath = maybeSection.fold(path)(s => s"${s.id}/${s.id}")
+    val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
     val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
