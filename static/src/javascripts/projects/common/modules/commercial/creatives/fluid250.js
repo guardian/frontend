@@ -25,7 +25,7 @@ define([
     Fluid250.prototype.create = function () {
         var templateOptions = {
             showLabel: (this.params.showAdLabel === 'hide') ?
-                'display: none;' : 'display: block;'
+                'creative__hide-label' : ''
         };
         $.create(template(fluid250Tpl, merge(this.params, templateOptions))).appendTo(this.$adSlot);
 

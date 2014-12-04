@@ -1,3 +1,7 @@
+.creative__tracking-pixel {
+    position: absolute;
+}
+
 .creative--scrollable-mpu {
     display: block;
     height: 250px;
@@ -296,19 +300,19 @@
     .ad-slot__label {
         display: none;
     }
-
-    .creative--fluid250__label {
-        display: block;
-        width: 100%;
-
-        .fc-container__inner {
-            padding-top: 0;
-        }
-    }
 }
 
-.creative__tracking-pixel {
-    position: absolute;
+.creative--fluid250__label {
+    width: 100%;
+    display: block;
+
+    .fc-container__inner {
+        padding-top: 0;
+    }
+    
+    &.creative__hide-label {
+        display: none;
+    }
 }
 
 .creative--fluid250 {
