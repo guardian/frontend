@@ -383,6 +383,19 @@
     }
     .ad-slot--paid-for-badge__link {
         position: relative;
+        &:after {
+            display: block;
+            height: 0;
+            width: $left-column + $gs-gutter;
+            content: '';
+            border-bottom: 1px dotted colour(neutral-5);
+            @include mq(leftCol) {
+                width: $left-column;
+            }
+            @include mq(wide) {
+                width: $left-column-wide;
+            }
+        }
         @include mq(mobile, $until: leftCol) {
             margin-top: 0;
         }
@@ -406,8 +419,10 @@
     @include mq(tablet, $until: leftCol) {
         float: right;
         clear: right;
+        width: $left-column + $gs-gutter;
     }
     @include mq(wide) {
+        width: $left-column-wide;
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
