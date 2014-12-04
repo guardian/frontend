@@ -1,14 +1,18 @@
 define([
     'common/utils/$',
     'common/utils/_',
-    'common/modules/onward/history',
-    'common/utils/template'
+    'common/utils/storage',
+    'common/utils/template',
+    'common/modules/onward/history'
 ], function (
     $,
     _,
-    history,
-    template
+    storage,
+    template,
+    history
     ) {
+
+    var storageKeyHistoryNav = 'gu.history.nav';
 
     function stripOuterSlashes(path) {
         return (path || '').replace(/^\/|\/$/g, '');
@@ -29,7 +33,7 @@ define([
             myNav = [];
 
         if (popular.length) {
-            topNav =  document.querySelector('.top-navigation');
+            topNav =  document.querySelector('.js-top-navigation');
 
             topNavItems = $('.top-navigation__item', topNav);
 
@@ -48,6 +52,8 @@ define([
                         myNav.unshift(tag);
                     }
                 });
+
+            storage.local.set(storageKeyHistoryNav, topNav.innerHTML.replace(/\s{2,}/g, ' ').replace('\\"', ''));
 
             if (myNav.length) {
                 $('.js-history-nav-placeholder').html(
