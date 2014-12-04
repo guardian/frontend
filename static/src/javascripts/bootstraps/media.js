@@ -16,8 +16,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
-    'common/modules/ui/images',
-    'common/modules/media/video-embed'
+    'common/modules/ui/images'
 ], function (
     bean,
     bonzo,
@@ -35,8 +34,7 @@ define([
     buildPageTargeting,
     Component,
     history,
-    images,
-    videoEmbed
+    images
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -277,7 +275,6 @@ define([
 
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
-        videojs.plugin('embed', videoEmbed);
 
         $('.js-gu-media').each(function (el) {
             var mediaType = el.tagName.toLowerCase(),
@@ -293,7 +290,7 @@ define([
                     plugins: {
                         embed: {
                             embedable: config.page.embeddable,
-                            link: '://embed.theguardian.com/embed/video/' + config.page.pageId
+                            location: '//embed.theguardian.com/embed/video/' + config.page.pageId
                         }
                     }
                 }),
