@@ -587,6 +587,8 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-embedoverlay-text {
     display: block;
     @include fs-headline(2);
+    color: #ffffff;
+    text-align: center;
     margin-bottom: $gs-baseline * 2;
 }
 
@@ -597,7 +599,7 @@ $vjs-progress-inset-bottom: 4px;
     color: colour(neutral-1);
     @include fs-textSans(2);
     padding: $gs-baseline/3 $gs-gutter/2 0;
-    border: 1px solid colour(neutral3);
+    border: 1px solid colour(neutral-3);
     outline: none;
 
     &::selection {

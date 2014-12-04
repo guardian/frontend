@@ -1,15 +1,18 @@
 /* jshint unused: false */
+/* global guardian */
 define([
     'bean',
     'bonzo',
     'qwery',
     'videojs',
+    'videojsembed',
     'lodash/functions/debounce'
 ], function (
     bean,
     bonzo,
     qwery,
     videojs,
+    videojsembed,
     debounce
 ) {
 
@@ -75,7 +78,13 @@ define([
             var player = createVideoPlayer(el, {
                     controls: true,
                     autoplay: false,
-                    preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                    plugins: {
+                        embed: {
+                            embedable: guardian.config.page.embeddable,
+                            location: '//embed.theguardian.com/embed/video/' + guardian.config.page.pageId
+                        }
+                    }
                 }),
                 mouseMoveIdle;
 

@@ -171,11 +171,15 @@ module.exports = function(grunt, options) {
                     bean:         'components/bean/bean',
                     bonzo:        'components/bonzo/bonzo',
                     lodash:       'components/lodash-amd',
-                    videojs:      'components/videojs/video'
+                    videojs:      'components/videojs/video',
+                    videojsembed: 'components/videojs-embed/videojs.embed'
                 },
                 shim: {
                     videojs: {
                         exports: 'videojs'
+                    },
+                    videojsembed: {
+                        deps: ['videojs']
                     }
                 },
                 wrapShim: true,

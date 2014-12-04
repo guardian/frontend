@@ -64,6 +64,21 @@
                 </figure>
 
                 <script>
+                    var guardian = {
+                        isModernBrowser: (
+                            'querySelector' in document
+                            && 'addEventListener' in window
+                            && 'localStorage' in window
+                            && 'sessionStorage' in window
+                            && 'bind' in Function
+                            && (
+                                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                                || 'XDomainRequest' in window
+                            )
+                        ),
+                        config: @fragments.javaScriptConfig(video)
+                    };
+
                     var docClass = document.documentElement.className;
 
                     function hasSvgSupport() {
