@@ -113,6 +113,11 @@ define([
         new LazyLoad({
             url: this.components[this.type],
             container: this.$adSlot,
+            beforeInsert: function (html) {
+                // Currently we are replacing the OmnitureToken with nothing. This will change once
+                // commercial components have properly been setup in the lovely mess that is Omniture!
+                return html ? html.replace(/%OASToken%/g, this.clickMacro).replace(/%OmnitureToken%/g, '') : html;
+            }.bind(this),
             success: function () {
                 this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
 
