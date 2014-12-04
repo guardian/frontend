@@ -579,7 +579,7 @@ $vjs-progress-inset-bottom: 4px;
     top: 0;
     width: 100%;
     height: 100%;
-    padding: 20% $gs-gutter*2 0 $gs-gutter*2;
+    padding: 20% $gs-gutter * 2 0;
     background-color: $vjs-control-colour;
     z-index: 3;
 }
@@ -603,7 +603,7 @@ $vjs-progress-inset-bottom: 4px;
     outline: none;
 
     &::selection {
-        background: #CEF1FC;
+        background: #cef1fc;
     }
 }
 
