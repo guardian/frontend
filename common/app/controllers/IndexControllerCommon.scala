@@ -29,6 +29,7 @@ trait IndexControllerCommon extends Controller with Index with Logging with Pagi
   }
 
   def renderJson(path: String) = render(path)
+
   def renderRss(path: String) = render(path)
 
   def render(path: String) = MemcachedAction { implicit request =>
@@ -39,8 +40,10 @@ trait IndexControllerCommon extends Controller with Index with Logging with Pagi
       case _ =>
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {
-          case Left(model) => renderFaciaFront(model)
-          case Right(other) => other
+          case Left(model) =>
+            renderFaciaFront(model)
+          case Right(other) =>
+            other
         }
     }
   }
@@ -49,7 +52,7 @@ trait IndexControllerCommon extends Controller with Index with Logging with Pagi
 
   def renderTrailsJson(path: String) = renderTrails(path)
 
-  def renderTrails(path: String) = MemcachedAction{ implicit request =>
+  def renderTrails(path: String) = MemcachedAction { implicit request =>
     index(Edition(request), path, inferPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
