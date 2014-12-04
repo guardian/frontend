@@ -22,15 +22,15 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Decoded(decodedPath)         => redirectTo(decodedPath)
-        case Gallery(gallery)             => redirectTo(gallery)
-        case Century(century)             => redirectTo(century)
-        case Lowercase(lower)             => redirectTo(lower)
+        case Decoded(decodedPath)         => redirectTo(decodedPath, "decoded")
+        case Gallery(gallery)             => redirectTo(gallery, "gallery")
+        case Century(century)             => redirectTo(century, "century")
+        case Lowercase(lower)             => redirectTo(lower, "lowercase")
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)  => redirectTo(s"$section/rss")
-        case CombinerSection(section)     => redirectTo(section)
+        case CombinerSectionRss(section)  => redirectTo(s"$section/rss", "combinerrss")
+        case CombinerSection(section)     => redirectTo(section, "combinersection")
 
         case _ =>
           log404(request)
@@ -95,9 +95,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def redirectTo(path: String)(implicit request: RequestHeader): Result = {
-    log.info(s"301,${RequestLog(request)}")
-    Cached(300)(Redirect(s"http://$path", 301))
+  private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
+    log.info(s"301, $identifier, ${RequestLog(request)}")
+    Cached(300)(Redirect(s"http://$path?redirection=$identifier", 301))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {

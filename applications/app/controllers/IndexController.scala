@@ -39,8 +39,10 @@ trait IndexController extends Controller with Index with Logging with Paging wit
       case _ =>
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {
-          case Left(model) => renderFaciaFront(model)
-          case Right(other) => other
+          case Left(model) =>
+            renderFaciaFront(model)
+          case Right(other) =>
+            other
         }
     }
   }

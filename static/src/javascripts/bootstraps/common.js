@@ -310,7 +310,10 @@ define([
             logReadingHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
-                        history.log(config.page);
+                        history.logSummary(config.page);
+                    }
+                    if (config.page.contentType === 'Video') {
+                        history.logHistory(config.page);
                     }
                 });
             },

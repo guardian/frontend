@@ -1,6 +1,5 @@
 package controllers
 
-import contentapi.Zones
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.LiveContentApi
@@ -36,8 +35,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
     val edition = Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) ||
-      ConfigAgent.shouldServeEditionalisedFront(edition, path) ||
-      Zones.ById.contains(path)) {
+      ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
       IndexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */

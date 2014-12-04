@@ -42,11 +42,11 @@ define([
                 break;
 
             default:
-                audienceScience.load();
                 audienceScienceGateway.load();
                 break;
         }
 
+        audienceScience.load();
         mediaMath.load();
         criteo.load();
         imrWorldwide.load();

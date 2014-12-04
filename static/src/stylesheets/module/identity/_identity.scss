@@ -521,10 +521,15 @@
         }
     }
 
-    .membership-tab__change-cc-form-cont {
-        display: none;
+    .membership-tab__change-cc-form {
         overflow: hidden;
-        height: auto;
+        max-height: rem(424px);
+        transition: all .25s ease-in-out;
+
+        &.is-closed {
+            max-height: 0;
+            opacity: 0;
+        }
 
         .form__error {
             margin: 0 0 $gs-baseline;
@@ -533,31 +538,6 @@
         .is-updating {
             vertical-align: middle;
             margin-top: 0;
-        }
-
-        &.membership-tab__change-cc-form-cont--to-open {
-            display: block;
-            @include animation(mem-tab-to-open .25s ease-in-out);
-        }
-        &.membership-tab__change-cc-form-cont--open {
-            display: block;
-
-            @include mq(tablet) {
-                max-height: 350px;
-            }
-            opacity: 1;
-        }
-
-        &.membership-tab__change-cc-form-cont--to-closed {
-            display: block;
-            max-height: 0;
-            opacity: 0;
-            @include animation(mem-tab-to-closed .25s ease-in-out forwards);
-        }
-        &.membership-tab__change-cc-form-cont--closed {
-            display: none;
-            max-height: 0;
-            opacity: 0;
         }
 
         /* Stripe credit card types
@@ -587,52 +567,6 @@
         }
     }
 }
-
-
-/* Membership Keyframe animations
-   ========================================================================== */
-
-@include keyframes('mem-tab-to-open') {
-    0% {
-        opacity: 0;
-        max-height: 0;
-    }
-    100% {
-        opacity: 1;
-        max-height: rem(424px);
-
-        @include mq(tablet) {
-            max-height: rem(350px);
-        }
-    }
-}
-
-@include keyframes('mem-tab-to-closed') {
-    0% {
-        opacity: 1;
-        max-height: rem(424px);
-
-        @include mq(tablet) {
-            max-height: rem(350px);
-        }
-    }
-    100% {
-        max-height: 0;
-        opacity: 0;
-    }
-}
-
-@include keyframes('updated') {
-    0% {
-        background-color: colour(guardian-brand-light);
-        color: #ffffff;
-    }
-    100% {
-        background-color: #ffffff;
-        color: inherit;
-    }
-}
-
 
 /* Email subscriptions
    ========================================================================== */

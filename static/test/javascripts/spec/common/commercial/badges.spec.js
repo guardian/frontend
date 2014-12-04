@@ -22,6 +22,9 @@ define([
                         },
                         page: {
                             section: 'news'
+                        },
+                        images: {
+                            commercial: {}
                         }
                     };
                 }

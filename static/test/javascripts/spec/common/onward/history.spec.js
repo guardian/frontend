@@ -1,14 +1,17 @@
 define([
+    'common/utils/storage',
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
-], function(hist, contains, max) {
+], function(
+    storage,
+    hist,
+    contains,
+    max
+) {
 
-    var setStorageItem = function(key, data) {
-        window.localStorage.setItem(key, JSON.stringify({
-            'value' : data
-        }));
-    };
+    var today =  Math.floor(Date.now() / 86400000); // 1 day in ms
+
 
     var pageConfig = {
             pageId: "/p/3jbcb",
@@ -28,58 +31,56 @@ define([
         oftenVisited = {
             pageId: "123",
             section: "often/visited",
-            sectionName: "Often Visited Section",
+            sectionName: "Often Visited Section"
         },
         lessVisited = {
             pageId: "456",
             section: "less/visited",
-            sectionName: "Less Visited Section",
+            sectionName: "Less Visited Section"
         };
 
     describe('History', function() {
 
         beforeEach(function() {
             hist.reset();
-            setStorageItem('gu.history', contains);
+            storage.local.set('gu.history', contains);
         });
 
         it('should get history from local storage', function() {
-            expect(hist.getHistory()).toEqual(contains);
+            expect(hist.test.getHistory()).toEqual(contains);
         });
 
         it('should set history to local storage', function() {
-            hist.log(pageConfig);
+            hist.logHistory(pageConfig);
 
-            expect(hist.getHistory()[0][0]).toEqual(pageConfig.pageId);
+            expect(hist.test.getHistory()[0][0]).toEqual(pageConfig.pageId);
         });
 
         it('should set the count of entries', function() {
-            hist.log(pageConfig);
-            expect(hist.getHistory()[0][1]).toEqual(1);
+            hist.logHistory(pageConfig);
+            expect(hist.test.getHistory()[0][1]).toEqual(1);
 
-            hist.log(pageConfig);
-            expect(hist.getHistory()[0][1]).toEqual(2);
+            hist.logHistory(pageConfig);
+            expect(hist.test.getHistory()[0][1]).toEqual(2);
         });
 
-        it('should be able to check if an pageConfig id exists, and is a revisit', function() {
-            hist.log(pageConfig);
-            expect(hist.contains(pageConfig.pageId)).toBeTruthy();
+        it('should be able to check a page revisit', function() {
+            hist.logHistory(pageConfig);
             expect(hist.isRevisit(pageConfig.pageId)).toBeFalsy();
 
-            hist.log(pageConfig);
-            expect(hist.contains(pageConfig.pageId)).toBeTruthy();
+            hist.logHistory(pageConfig);
             expect(hist.isRevisit(pageConfig.pageId)).toBeTruthy();
         });
 
         it('should only store 50 latest entries', function() {
-            setStorageItem('gu.history', max);
-            hist.log(pageConfig);
+            storage.local.set('gu.history', max);
+            hist.logHistory(pageConfig);
 
-            expect(hist.getSize()).toEqual(50);
+            expect(hist.test.getHistory().length).toEqual(50);
         });
 
         it('should increment a count in the summary, for the 1st value from each of various page metadata', function() {
-            hist.log(pageConfig);
+            hist.logSummary(pageConfig);
 
             expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
             expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(1);
@@ -95,8 +96,8 @@ define([
             expect(hist.test.getSummary().tags['profile/finbarrsaunders'][1][0][1]).toEqual(1);
             expect(hist.test.getSummary().tags['profile/rogermellie']).toBeUndefined();
 
-            hist.log(pageConfig);
-            hist.log(pageConfig);
+            hist.logSummary(pageConfig);
+            hist.logSummary(pageConfig);
 
             expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
             expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(3);
@@ -105,7 +106,7 @@ define([
         it('should age the data points in the the summary', function() {
             expect(
                 hist.test.pruneSummary({
-                    periodEnd: hist.test.today,
+                    periodEnd: today,
                     tags: {foo: ["Foo", [[0, 1]]]}
                 })
                 .tags['foo'][1][0][0]
@@ -113,7 +114,7 @@ define([
 
             expect(
                 hist.test.pruneSummary({
-                    periodEnd: hist.test.today - 5,
+                    periodEnd: today - 5,
                     tags: {foo: ["Foo", [[0, 1]]]}
                 })
                 .tags['foo'][1][0][0]
@@ -123,7 +124,7 @@ define([
         it('should drop the obsoleted data points from the summary', function() {
             expect(
                 hist.test.pruneSummary({
-                    periodEnd: hist.test.today - 500,
+                    periodEnd: today - 500,
                     tags: {foo: ["Foo", [[0, 1]]]}
                 })
                 .tags['foo']
@@ -131,8 +132,14 @@ define([
         });
 
         it('should return equally visited items in last-in-first-out order', function() {
-            hist.log(oftenVisited);
-            hist.log(lessVisited);
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(lessVisited,  today);
+
+            hist.logSummary(oftenVisited, today + 1);
+            hist.logSummary(lessVisited,  today + 1);
+
+            hist.logSummary(oftenVisited, today + 2);
+            hist.logSummary(lessVisited,  today + 2);
 
             expect(
                 hist.getPopular()[0][0]
@@ -144,9 +151,16 @@ define([
         });
 
         it('should return most visited items first', function() {
-            hist.log(oftenVisited);
-            hist.log(oftenVisited);
-            hist.log(lessVisited);
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(lessVisited,  today);
+
+            hist.logSummary(oftenVisited, today + 1);
+            hist.logSummary(lessVisited,  today + 1);
+
+            hist.logSummary(oftenVisited, today + 2);
+            hist.logSummary(lessVisited,  today + 2);
+
 
             expect(
                 hist.getPopular()[0][0]
