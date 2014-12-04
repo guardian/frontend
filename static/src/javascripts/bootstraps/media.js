@@ -289,8 +289,8 @@ define([
                     preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                     plugins: {
                         embed: {
-                            embedable: config.page.embeddable,
-                            location: '//embed.theguardian.com/embed/video/' + config.page.pageId
+                            embedable: config.switches.externalVideoEmbeds && config.page.embeddable,
+                            location: config.page.externalEmbedHost + config.page.pageId
                         }
                     }
                 }),
