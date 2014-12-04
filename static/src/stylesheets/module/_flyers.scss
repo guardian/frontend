@@ -1,3 +1,7 @@
+
+// Base flyer styles
+//----------------------------------
+
 .flyer__byline {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
@@ -64,5 +68,21 @@
     .flyer__standfirst {
         padding-right: $gs-gutter * 6;
         min-height: $gs-baseline * 5;
+    }
+}
+
+// In-article styles
+//-----------------------
+
+.element-rich-link--upgraded {
+    float: left;
+    width: gs-span(4);
+    margin: 5px $gs-gutter $gs-baseline 0;
+    clear: both;
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
 }
