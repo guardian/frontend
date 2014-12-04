@@ -11,7 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, Retries, Suite}
 
 trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
 
-  private val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
+  private lazy val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
 
   private lazy val remoteBrowser = {
     val capabilities = DesiredCapabilities.firefox()
