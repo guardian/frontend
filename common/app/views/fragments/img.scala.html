@@ -34,7 +34,7 @@
 
 @lightbox(picture: model.ImageContainer, upgradeProfile: Profile) = {
     @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
-        @if(picture.largestEditorialCrop.map(_.width).getOrElse(0) > 620) {
+        @if(picture.isLightboxable) {
             <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 <div class="js-image-upgrade @if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}" data-src="@imgSrc">
                     @image(picture)
