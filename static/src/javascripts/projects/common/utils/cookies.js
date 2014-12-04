@@ -59,11 +59,7 @@ define([
 
     function getDomainAttribute() {
         var shortDomain = getShortDomain();
-        if (shortDomain === 'localhost') {
-            return '';
-        } else {
-            return ' domain=' + shortDomain + ';';
-        }
+        return (shortDomain === 'localhost') ? '' : (' domain=' + shortDomain + ';');
     }
 
     function addForMinutes(name, value, minutesToLive) {
