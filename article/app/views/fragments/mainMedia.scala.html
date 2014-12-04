@@ -46,7 +46,7 @@
                     }
                 </figure>
             } else {
-                @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)
+                @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature, Some(article.url))
             }
         }
     }

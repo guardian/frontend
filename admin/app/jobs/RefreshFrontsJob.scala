@@ -11,7 +11,8 @@ sealed trait FrontType
 object LowFrequency extends FrontType
 object StandardFrequency extends FrontType
 object HighFrequency extends FrontType {
-  def highFrequencyPaths: List[String] = List("uk", "us", "au")
+  def highFrequencyPaths: List[String] =
+    List("uk", "us", "au", "uk/sport", "us/sport", "au/sport")
 }
 
 case class CronUpdate(path: String, frontType: FrontType)

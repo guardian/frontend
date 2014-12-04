@@ -1,5 +1,6 @@
 package test
 
+import contentapi.SectionsLookUp
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
@@ -12,6 +13,7 @@ import conf.Switches.MemcachedSwitch
 
   override def beforeAll(): Unit = {
     MemcachedSwitch.switchOff()
+    SectionsLookUp.refresh()
   }
 
   override def afterAll(): Unit = {
