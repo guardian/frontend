@@ -54,7 +54,16 @@ define([
         }
 
         getDocument().cookie =
-            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';' + getDomainAttribute();
+    }
+
+    function getDomainAttribute() {
+        var shortDomain = getShortDomain();
+        if (shortDomain === 'localhost') {
+            return '';
+        } else {
+            return ' domain=' + shortDomain + ';';
+        }
     }
 
     function addForMinutes(name, value, minutesToLive) {
@@ -62,14 +71,14 @@ define([
             var expires = new Date();
             expires.setMinutes(expires.getMinutes() + minutesToLive);
             getDocument().cookie =
-                name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+                name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';' + getDomainAttribute();
         } else {
             add(name, value);
         }
     }
 
     function addSessionCookie(name, value) {
-        getDocument().cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
+        getDocument().cookie = name + '=' + value + '; path=/;' + getDomainAttribute();
     }
 
     function getCookieValues(name) {
