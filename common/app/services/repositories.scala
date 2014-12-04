@@ -1,16 +1,16 @@
 package services
 
-import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
-import common._
-import conf.LiveContentApi
-import contentapi.{QueryDefaults, SectionsLookUp}
 import model._
+import conf.LiveContentApi
+import model.Section
+import common._
+import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import play.api.mvc.{RequestHeader, Result => PlayResult}
-
+import contentapi.{SectionTagLookUp, SectionsLookUp, QueryDefaults}
 import scala.concurrent.Future
+import play.api.mvc.{RequestHeader, Result => PlayResult}
+import com.gu.contentapi.client.GuardianContentApiError
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -115,17 +115,17 @@ trait Index extends ConciergeRepository with QueryDefaults {
       * the 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
       * 'books', as everything in 'books' is also tagged 'culture/culture'.
       */
-    val queryPath = maybeSection.fold(path)(s => s"${s.id}/${s.id}")
+    val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
     val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
       .response map { response =>
-        val page = maybeSection.map(s => section(s, response)) orElse
-          response.tag.flatMap(t => tag(response, pageNum)) orElse
-          response.section.map(s => section(s, response))
-        ModelOrResult(page, response)
-      }
+      val page = maybeSection.map(s => section(s, response)) orElse
+        response.tag.flatMap(t => tag(response, pageNum)) orElse
+        response.section.map(s => section(s, response))
+      ModelOrResult(page, response, maybeSection)
+    }
 
     promiseOfResponse.recover(convertApiExceptions) recover {
       //this is the best handle we have on a wrong 'page' number
