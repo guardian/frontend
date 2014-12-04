@@ -84,7 +84,7 @@ define([
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-                book:              buildComponentUrl('books/book', { t: config.page.isbn }),
+                book:              buildComponentUrl('books/book', { t: config.page.isbn || params.isbn }),
                 books:             buildComponentUrl('books/bestsellers'),
                 booksMedium:       buildComponentUrl('books/bestsellers-medium'),
                 booksHigh:         buildComponentUrl('books/bestsellers-high'),
@@ -109,9 +109,6 @@ define([
         }
     };
 
-    /**
-     * @param {Element} target
-     */
     CommercialComponent.prototype.load = function () {
         new LazyLoad({
             url: this.components[this.type],
@@ -126,10 +123,6 @@ define([
         return this;
     };
 
-    /**
-     * @param {String}  name
-     * @param {Element} el
-     */
     CommercialComponent.prototype.create = function () {
         if (this.components[this.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);
