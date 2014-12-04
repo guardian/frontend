@@ -1,8 +1,10 @@
 define([
     'lodash/objects/merge',
+    'common/utils/config',
     'common/modules/commercial/creatives/commercial-component'
 ], function (
     merge,
+    config,
     CommercialComponent
 ) {
 
@@ -15,7 +17,9 @@ define([
     };
 
     InlineBook.prototype.create = function () {
-        this.component = new CommercialComponent(this.$adSlot, merge(this.params, { type: 'book' })).create();
+        if (config.page.isbn || this.params.isbn) {
+            this.component = new CommercialComponent(this.$adSlot, merge(this.params, { type: 'book' })).create();
+        }
     };
 
     return InlineBook;
