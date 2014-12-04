@@ -66,7 +66,6 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
-
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
@@ -85,7 +84,7 @@ define([
                 }),
                 mouseMoveIdle;
 
-            bonzo(el).addClass('vjs')
+            bonzo(el).addClass('vjs');
 
             //Location of this is important
             handleInitialMediaError(player);
@@ -118,5 +117,5 @@ define([
 
     return {
         init: initPlayer
-    }
+    };
 });
