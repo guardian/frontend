@@ -178,6 +178,18 @@ module.exports = function(grunt, options) {
                     'text'
                 ]
             }
+        },
+        creatives: {
+            options: {
+                name: 'bootstraps/creatives',
+                out: options.staticTargetDir + 'javascripts/bootstraps/creatives.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'bootstraps/commercial',
+                    'text'
+                ]
+            }
         }
     };
 };
