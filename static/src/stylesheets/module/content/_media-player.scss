@@ -591,10 +591,18 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-embedoverlay-input {
+    @include box-sizing(border-box);
     width: 100%;
-    height: gs-height(1);
+    height: gs-height(1) + $gs-baseline;
     color: colour(neutral-1);
     @include fs-textSans(2);
+    padding: $gs-baseline/3 $gs-gutter/2 0;
+    border: 1px solid colour(neutral3);
+    outline: none;
+
+    &::selection {
+        background: #CEF1FC;
+    }
 }
 
 .vjs-embed-button {
@@ -602,8 +610,8 @@ $vjs-progress-inset-bottom: 4px;
     float: right;
     box-sizing: border-box;
     height: $vjs-control-height;
-    padding-left: $gs-gutter * 2;
-    padding-right: $gs-gutter;
+    padding-right: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
     position: relative;
 
     .vjs-control-content {
@@ -614,7 +622,7 @@ $vjs-progress-inset-bottom: 4px;
             height: $gs-baseline !important;
             position: absolute;
             top: 0;
-            left: 0;
+            left: -1 * ($gs-gutter * 4);
             right: 0;
             bottom: 0;
             margin: auto;
@@ -624,7 +632,6 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-control-text {
         padding-top: 16px;
-        padding-left: $gs-baseline * 4.5;
         display: block;
     }
 
