@@ -1,17 +1,16 @@
 package services
 
-import model._
-import conf.{InlineRelatedContentSwitch, LiveContentApi}
-import model.Section
+import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
-import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
+import conf.LiveContentApi
+import contentapi.{QueryDefaults, SectionsLookUp}
+import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{SectionsLookUp, QueryDefaults}
-import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
-import com.gu.contentapi.client.GuardianContentApiError
-import controllers.ImageContentPage
+
+import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -166,19 +165,4 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
 object Index extends Index
 
-trait ImageQuery extends ConciergeRepository {
 
-  def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
-    log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = LiveContentApi.item(path, edition)
-      .showFields("all")
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
-      .response.map { response:ItemResponse =>
-      val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
-      val storyPackage: List[Trail] = response.storyPackage map { Content(_) }
-      mainContent.map { content => Left(ImageContentPage(content, RelatedContent(content, response))) }.getOrElse(Right(NotFound))
-    }
-
-    response recover convertApiExceptions
-  }
-}

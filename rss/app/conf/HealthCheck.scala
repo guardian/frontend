@@ -1,5 +1,6 @@
 package conf
 
-object HealthCheck {
-
-}
+object HealthCheck extends AllGoodHealthcheckController(
+  9002,
+  "/books/harrypotter/rss"
+)

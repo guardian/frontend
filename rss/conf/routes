@@ -5,8 +5,10 @@
 
 GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
 
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/rss                controllers.IndexController.renderRss(path)
-GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.IndexController.renderCombinerRss(leftSide, rightSide)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/rss                controllers.RssController.renderRss(path)
+GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.RssController.renderCombinerRss(leftSide, rightSide)
+
+# TODO move these Facia endpoints here, too
 
 # GET        /collection/*id/rss                                         controllers.RssController.renderCollectionRss(id)
 

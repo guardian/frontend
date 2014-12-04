@@ -1,7 +1,10 @@
 package controllers
 
-import play.api.mvc.Controller
+import common._
+import model._
+import play.api.mvc.{Result, RequestHeader, Controller}
+import services.IndexPage
 
-class RssController extends Controller {
-
+object RssController extends IndexControllerCommon {
+  override protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = ???
 }
