@@ -14,7 +14,17 @@
                 <div class="navigation__scroll">
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(Edition.isEditionFront){
-                            <div class="js-history-nav-placeholder"></div>
+                            <script>
+                                (function(isModern) {
+                                    if (isModern) {
+                                        var myNav2 = window.localStorage.getItem('gu.history.nav.2');
+
+                                        if (myNav2) {
+                                            document.write(myNav2);
+                                        }
+                                    }
+                                })(guardian.isModernBrowser);
+                            </script>
                         }else{
                             @fragments.nav.signposting(metaData, navigation)
 

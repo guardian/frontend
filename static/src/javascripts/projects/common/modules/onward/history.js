@@ -23,8 +23,9 @@ define([
         popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        storageKeyNav = 'gu.history.nav',
-        taxonomy = [
+        storageKeyNav  = 'gu.history.nav',
+        storageKeyNav2 = 'gu.history.nav.2',
+        pageMeta = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
             {tid: 'seriesId',   tname: 'series'},
@@ -188,7 +189,7 @@ define([
     function logSummary(pageConfig, mockToday) {
         var summary = pruneSummary(getSummary(), mockToday);
 
-        _.chain(taxonomy)
+        _.chain(pageMeta)
             .reduceRight(function (tags, tag) {
                 var tid = firstCsv(pageConfig[tag.tid]),
                     tname = tid && firstCsv(pageConfig[tag.tname]);
@@ -225,14 +226,13 @@ define([
             myNav,
             myNavItems,
             myNavItemIds,
-            mySecondary = [];
+            mySecondaryTags = [];
 
         if (topNav) {
             myNav = document.createElement('div');
             myNav.innerHTML = topNav.innerHTML;
 
             myNavItems = $('.top-navigation__item', myNav);
-
             myNavItemIds = myNavItems.map(function (item) {
                 return collapseTag(stripOuterSlashes($('a', item).attr('href')));
             });
@@ -245,30 +245,31 @@ define([
                     if (pos > -1) {
                         $(myNavItems[pos]).detach().insertAfter(myNavItems[0]);
                     } else {
-                        mySecondary.unshift(tag);
+                        mySecondaryTags.unshift(tag);
                     }
                 });
 
             // On purpose not using storage module, to avoid a JSON parse on extraction:
             window.localStorage.setItem(storageKeyNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
 
-            if (mySecondary.length) {
-                $('.js-history-nav-placeholder').html(
-                        '<ul class="signposting">' +
+            if (mySecondaryTags.length) {
+                // On purpose not using storage module, to avoid a JSON parse on extraction:
+                window.localStorage.setItem(storageKeyNav2,
+                    '<ul class="signposting">' +
                         '<li class="signposting__item signposting__item--home">' +
-                        '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+                            '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
                         '</li>' +
-                        '</ul>' +
-                        '<ul class="local-navigation">' +
-                        mySecondary.map(function (tag) {
+                    '</ul>' +
+                    '<ul class="local-navigation">' +
+                        mySecondaryTags.map(function (tag) {
                             return template(
-                                    '<li class="local-navigation__item">' +
+                                '<li class="local-navigation__item">' +
                                     '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : history : {{name}}">{{name}}</a>' +
-                                    '</li>',
+                                '</li>',
                                 {id: tag[0], name: tag[1]}
                             );
                         }).join('') +
-                        '</ul>'
+                    '</ul>'
                 );
             }
         }
