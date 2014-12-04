@@ -6,14 +6,16 @@ define([
     'qwery',
     'videojs',
     'videojsembed',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
     qwery,
     videojs,
     videojsembed,
-    debounce
+    debounce,
+    loadingTmpl
 ) {
 
     function handleInitialMediaError(player) {
@@ -25,12 +27,7 @@ define([
     }
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML =
-            '<div class="pamplemousse">' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
     function createVideoPlayer(el, options) {

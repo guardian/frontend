@@ -172,7 +172,8 @@ module.exports = function(grunt, options) {
                     bonzo:        'components/bonzo/bonzo',
                     lodash:       'components/lodash-amd',
                     videojs:      'components/videojs/video',
-                    videojsembed: 'components/videojs-embed/videojs.embed'
+                    videojsembed: 'components/videojs-embed/videojs.embed',
+                    text:         'components/requirejs-text/text'
                 },
                 shim: {
                     videojs: {
@@ -182,6 +183,9 @@ module.exports = function(grunt, options) {
                         deps: ['videojs']
                     }
                 },
+                exclude: [
+                    'text'
+                ],
                 wrapShim: true,
                 optimize: 'none',
                 generateSourceMaps: true,
