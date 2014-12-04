@@ -1,168 +1,17 @@
 package services
 
-import com.gu.facia.client.models.CollectionConfig
-import layout._
 import model._
-import conf.{Switches, InlineRelatedContentSwitch, LiveContentApi}
+import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
-import com.gu.contentapi.client.model.{SearchResponse, ItemResponse}
+import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{Paths, QueryDefaults}
-import slices._
-import views.support.{ReviewKicker, TagKicker, CartoonKicker}
+import contentapi.{SectionsLookUp, QueryDefaults}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
 import controllers.ImageContentPage
-import implicits.Dates._
-import common.JodaTime._
-import common.Seqs._
-import scalaz.syntax.traverse._
-import scalaz.std.list._
-import Function.const
-import DateHeadline.cardTimestampDisplay
-
-object IndexPagePagination {
-  def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
-    35
-  } else {
-    20
-  }
-
-  def rssPageSize: Int = 20
-}
-
-case class MpuState(injected: Boolean)
-
-object IndexPage {
-  def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-    case 2 => Some(FixedContainers.fastIndexPageMpuII)
-    case 4 => Some(FixedContainers.fastIndexPageMpuIV)
-    case 6 => Some(FixedContainers.fastIndexPageMpuVI)
-    case n if n >= 9 => Some(FixedContainers.fastIndexPageMpuIX)
-    case _ => None
-  }
-
-  def slowContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-    case 2 => Some(FixedContainers.slowIndexPageMpuII)
-    case 4 => Some(FixedContainers.slowIndexPageMpuIV)
-    case 5 => Some(FixedContainers.slowIndexPageMpuV)
-    case 7 => Some(FixedContainers.slowIndexPageMpuVII)
-    case _ => None
-  }
-
-  def makeFront(indexPage: IndexPage, edition: Edition) = {
-    val isCartoonPage = indexPage.isTagWithId("type/cartoon")
-    val isReviewPage = indexPage.isTagWithId("tone/reviews")
-
-    val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails)
-
-    val grouped = if (isSlow)
-      IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
-    else
-      IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
-
-    val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
-      case (mpuState, grouping) =>
-        val collection = CollectionEssentials.fromTrails(
-          grouping.items
-        )
-
-        val mpuContainer = (if (isSlow)
-          slowContainerWithMpu(grouping.items.length)
-        else
-          fastContainerWithMpu(grouping.items.length)).filter(const(!mpuState.injected))
-
-        val (container, newMpuState) = mpuContainer map { mpuContainer =>
-          (mpuContainer, mpuState.copy(injected = true))
-        } getOrElse {
-          val containerDefinition = if (isSlow) {
-            ContainerDefinition.slowForNumberOfItems(grouping.items.length)
-          } else {
-            ContainerDefinition.fastForNumberOfItems(grouping.items.length)
-          }
-
-          (containerDefinition, mpuState)
-        }
-
-        val containerConfig = ContainerDisplayConfig(
-          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
-            displayName = Some(grouping.dateHeadline.displayString)
-          )),
-          showSeriesAndBlogKickers = true
-        )
-
-        (newMpuState, ((containerConfig, collection), Fixed(container)))
-    }._2.toSeq
-
-    val front = Front.fromConfigsAndContainers(
-      containerDefinitions,
-      ContainerLayoutContext(Set.empty, hideCutOuts = indexPage.page.isContributorPage)
-    )
-
-    val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
-      if (index == 0) {
-        indexPage.page match {
-          case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
-          case section: Section => FaciaContainerHeader.fromSection(section, headline)
-          case page: Page => FaciaContainerHeader.fromPage(page, headline)
-          case _ =>
-            // should never happen
-            LoneDateHeadline(headline)
-        }
-      } else {
-        LoneDateHeadline(headline)
-      }
-    }
-
-    front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
-      val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
-        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
-      }
-
-      container.copy(
-        customHeader = Some(header),
-        customClasses = Some(Seq("fc-container--tag")),
-        hideToggle = true,
-        showTimestamps = true,
-        dateLinkPath = Some(s"/${indexPage.page.id}")
-      ).transformCards({ card =>
-        card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
-        ).setKicker(card.header.kicker flatMap {
-          case ReviewKicker if isReviewPage => None
-          case CartoonKicker if isCartoonPage => None
-          case TagKicker(_, _, id) if indexPage.isTagWithId(id) => None
-          case otherKicker => Some(otherKicker)
-        })
-      })
-    }))
-  }
-}
-
-case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now) {
-  def isTagWithId(id: String) = page match {
-    case section: Section =>
-      val sectionId = section.id
-
-      Set(
-        Some(s"$sectionId/$sectionId"),
-        Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
-      ).flatten contains id
-
-    case tag: Tag => tag.id == id
-
-    case combiner: TagCombiner =>
-      combiner.leftTag.id == id || combiner.rightTag.id == id
-
-    case _ => false
-  }
-}
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -254,32 +103,44 @@ trait Index extends ConciergeRepository with QueryDefaults {
   ))
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+    val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
+    val fields = if (isRss) rssFields else trailFields
 
-    val promiseOfResponse = LiveContentApi.item(path, edition)
-      .page(pageNum)
-      .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
-      .showEditorsPicks(pageNum == 1) //only show ed pics on first page
-      .showFields(if (isRss) rssFields else trailFields)
-      .response.map {
-      response =>
-        val page = response.tag.flatMap(t => tag(response, pageNum))
-          .orElse(response.section.flatMap(t => section(response)))
+    val maybeSection = SectionsLookUp.get(path)
+
+    /** If looking up a section, go to equivalent tag instead.
+      *
+      * As items can only have one section, but can have multiple section tags, this is how we get content of what are
+      * essentially 'subsections' in the nav. e.g., if you looked up 'culture' as a section, you would only get the
+      * items that directly belong to that section, which would exclude items in the 'books' section. If you look up
+      * the 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
+      * 'books', as everything in 'books' is also tagged 'culture/culture'.
+      */
+    val queryPath = maybeSection.fold(path)(s => s"${s.id}/${s.id}")
+
+    val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
+      .pageSize(pageSize)
+      .showFields(fields)
+      .response map { response =>
+        val page = maybeSection.map(s => section(s, response)) orElse
+          response.tag.flatMap(t => tag(response, pageNum)) orElse
+          response.section.map(s => section(s, response))
         ModelOrResult(page, response)
-    }
-    promiseOfResponse.recover(convertApiExceptions)
+      }
+
+    promiseOfResponse.recover(convertApiExceptions) recover {
       //this is the best handle we have on a wrong 'page' number
-      .recover{ case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path")) }
+      case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
+    }
   }
 
-
-
-  private def section(response: ItemResponse) = {
-      val section = response.section.map{Section(_, pagination(response))}
-      val editorsPicks = response.editorsPicks.map(Content(_))
-      val editorsPicksIds = editorsPicks.map(_.id)
-      val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
-      val trails = editorsPicks ++ latestContent
-      section.map(IndexPage(_, trails))
+  private def section(apiSection: ApiSection, response: ItemResponse) = {
+    val section = Section(apiSection, pagination(response))
+    val editorsPicks = response.editorsPicks.map(Content(_))
+    val editorsPicksIds = editorsPicks.map(_.id)
+    val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
+    val trails = editorsPicks ++ latestContent
+    IndexPage(section, trails)
   }
 
   private def tag(response: ItemResponse, page: Int) = {

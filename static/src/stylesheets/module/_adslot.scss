@@ -144,6 +144,14 @@
         background-color: transparent;
     }
 }
+.ad-slot--gallery-inline {
+    @include mq(mobileLandscape) {
+        width: 300px;
+    }
+    @include mq(tablet) {
+        width: auto;
+    }
+}
 .ad-slot--inline,
 .ad-slot--container-inline {
     background-color: colour(neutral-8);

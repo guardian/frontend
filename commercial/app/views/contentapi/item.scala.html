@@ -1,7 +1,7 @@
-@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optCapiAdFeature: Option[String], optCapiSupportedBy: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
+@(item: model.Content, optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optCapiButtonText: Option[String], optCapiReadMoreUrl: Option[String], optCapiReadMoreText: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for @for(adFeature <- optCapiAdFeature) {@adFeature} commercial commercial--dfp commercial--dfp-single" data-link-name="merchandising | capi | single @optOmnitureId">
+    <section class="fc-container fc-container--paid-for commercial commercial--dfp fc-container--merchandising commercial--dfp-single @optSponsorType" data-link-name="merchandising | capi | single @optOmnitureId">
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h3 class="fc-container__header__title">
@@ -14,7 +14,7 @@
             </div>
             <div class="ad-slot--adbadge ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
                 <div class="ad-slot--paid-for-badge__inner">
-                    <h3 class="ad-slot--paid-for-badge__header">@for(broughtBy <- optCapiSupportedBy) {@broughtBy}</h3>
+                    <h3 class="ad-slot--paid-for-badge__header">@optSponsorLabel:</h3>
                     <a href="@optClickMacro@for(linkUrl <- optCapiLink) {@linkUrl}" class="ad-slot--paid-for-badge__link" data-link-name="logo link">
                         @for(logoUrl <- optLogo) {<img src="@logoUrl" alt="" class="ad-slot--paid-for-badge__logo" />}
                     </a>

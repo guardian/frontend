@@ -15,7 +15,7 @@ define([
 
         authedAjax.request(_.extend({
             type: 'POST'
-        }, opts)).then(function () {
+        }, opts)).always(function () {
             _.each(onUpdateCallbacks, function (callback) {
                 callback();
             });

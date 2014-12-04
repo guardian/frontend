@@ -1,7 +1,7 @@
 @(  charts: Seq[tools.AwsLineChart],
     hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
-    switches: List[conf.Switch],
+    switches: Seq[conf.Switch],
     env: String)
 
 @import org.joda.time.{DateTime, Days}

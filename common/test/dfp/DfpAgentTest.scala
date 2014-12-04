@@ -5,6 +5,7 @@ import com.gu.facia.client.models.CollectionConfig
 import common.Edition.defaultEdition
 import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
+import dfp.Sponsorship.ANY_SECTION
 import model.Tag
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
@@ -61,7 +62,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), sections = Nil, None, Nil, 5),
       Sponsorship(Seq("grundfos-partner-zone", "sustainable-business-grundfos-partner-zone"),
         sections = Seq("sustainable-business"), None, Nil, 8),
-      Sponsorship(Seq("media-network-adobe-partner-zone"), sections = Nil, None, Nil, 9)
+      Sponsorship(Seq("media-network-adobe-partner-zone"), sections = Nil, None, Nil, 9),
+      Sponsorship(
+        tags = Seq("wsscc-partner-zone"),
+        sections = Seq(
+          ANY_SECTION,
+          "global-development-professionals-network",
+          "global-development-professionals-network/front"),
+        sponsor = None,
+        countries = Nil,
+        lineItemId = 12
+      ),
+      Sponsorship(
+        tags = Seq("some-partner-zone"),
+        sections = Seq(
+          "global-development-professionals-network",
+          "global-development-professionals-network/front"),
+        sponsor = None,
+        countries = Nil,
+        lineItemId = 13
+      )
     )
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
@@ -216,6 +236,20 @@ class DfpAgentTest extends FlatSpec with Matchers {
     testDfpAgent.isAdvertisementFeature(
       "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
       Some("sustainable-business/grundfos-partner-zone")) should be(true)
+  }
+
+  it should "be true for an article where the corresponding logo targets the entire site and some special ad units" in {
+    testDfpAgent.isAdvertisementFeature(
+      tagId = "wsscc-partner-zone/wsscc-partner-zone",
+      sectionId = Some("arbitrary section")
+    ) should be(true)
+  }
+
+  it should "be false for an article where the corresponding logo only targets some special ad units" in {
+    testDfpAgent.isAdvertisementFeature(
+      tagId = "some-partner-zone/some-partner-zone",
+      sectionId = Some("arbitrary section")
+    ) should be(false)
   }
 
   "hasInlineMerchandise" should "be true if tag id has inline merchandising" in {
