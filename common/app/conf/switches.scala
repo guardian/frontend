@@ -1,7 +1,6 @@
 package conf
 
 import common._
-import implicits.Collections
 import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -435,6 +434,11 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
+    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
   )
 
   def all: Seq[Switch] = Switch.allSwitches
