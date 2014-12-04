@@ -10,6 +10,7 @@ define([
     'lodash/collections/size',
     'lodash/objects/defaults',
     'lodash/objects/isArray',
+    'lodash/objects/merge',
     'lodash/objects/pick',
     'common/utils/$',
     'common/utils/_',
@@ -26,6 +27,7 @@ define([
     size,
     defaults,
     isArray,
+    merge,
     pick,
     $,
     _,
@@ -75,31 +77,29 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            var section = config.page.section,
-                jobs    = params.jobIds ? params.jobIds.split(',') : [];
+            var urlParams = merge(params, { s: config.page.section });
 
             this.params = params;
             this.$adSlot = $adSlot;
             this.type = params.type;
             this.components = {
-                bestbuy:           buildComponentUrl('money/bestbuys'),
-                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-                book:              buildComponentUrl('books/book', { t: config.page.isbn || params.isbn }),
-                books:             buildComponentUrl('books/bestsellers'),
-                booksMedium:       buildComponentUrl('books/bestsellers-medium'),
-                booksHigh:         buildComponentUrl('books/bestsellers-high'),
-                jobs:              buildComponentUrl('jobs', { t: jobs }),
-                jobsHigh:          buildComponentUrl('jobs-high'),
-                masterclasses:     buildComponentUrl('masterclasses'),
-                masterclassesHigh: buildComponentUrl('masterclasses-high'),
-                soulmates:         buildComponentUrl('soulmates/mixed'),
-                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
-                travel:            buildComponentUrl('travel/offers', { s: section }),
-                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: params.components }),
-                capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
-                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
-                capi:              buildComponentUrl('capi', defaults(params, { s: section }))
+                bestbuy:           buildComponentUrl('money/bestbuys', urlParams),
+                bestbuyHigh:       buildComponentUrl('money/bestbuys-high', urlParams),
+                book:              buildComponentUrl('books/book', merge(urlParams, { t: config.page.isbn || params.isbn })),
+                books:             buildComponentUrl('books/bestsellers', urlParams),
+                booksMedium:       buildComponentUrl('books/bestsellers-medium', urlParams),
+                booksHigh:         buildComponentUrl('books/bestsellers-high', urlParams),
+                jobs:              buildComponentUrl('jobs', merge(urlParams, { t: params.jobIds ? params.jobIds.split(',') : [] })),
+                jobsHigh:          buildComponentUrl('jobs-high', urlParams),
+                masterclasses:     buildComponentUrl('masterclasses', urlParams),
+                masterclassesHigh: buildComponentUrl('masterclasses-high', urlParams),
+                soulmates:         buildComponentUrl('soulmates/mixed', urlParams),
+                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high', urlParams),
+                travel:            buildComponentUrl('travel/offers', urlParams),
+                travelHigh:        buildComponentUrl('travel/offers-high', urlParams),
+                multi:             buildComponentUrl('multi', urlParams),
+                capiSingle:        buildComponentUrl('capi-single', urlParams),
+                capi:              buildComponentUrl('capi', urlParams)
             };
         };
 

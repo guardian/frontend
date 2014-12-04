@@ -3,44 +3,51 @@
 @main(page){ }{
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-jQuery(function($) {
-    $("#switchFronts").click(function() {
-        $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-        $('#switchArticles').removeClass('current');
-        $('#article').slideUp();
-        $(this).addClass('current');
-        return false;
+    jQuery(function($) {
+        $("#switchFronts").click(function() {
+            $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+            $('#switchArticles').removeClass('current');
+            $('#article').slideUp();
+            $(this).addClass('current');
+            return false;
+        });
+
+        $("#switchArticles").click(function() {
+            $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+            $('#switchFronts').removeClass('current');
+            $('#article').slideDown();
+            $(this).addClass('current');
+            return false;
+        });
+
+        $("#pageSkin").click(function() {
+            $('body').toggleClass('has-page-skin');
+           return false;
+        });
+
+        $(".codeContainer").hide();
+        $(".show-code").click(function() {
+            $(this).parent().next().slideToggle();
+            return false;
+        });
+
+        $("#dfp-number").on('change', function() {
+            $('.commercial--dfp-multiple, .commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
+            return false;
+        });
+
+        $("#dfp-palette").on('change', function() {
+            $('.commercial--dfp-single, .commercial--dfp-multiple, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
+            return false;
+        });
     });
 
-    $("#switchArticles").click(function() {
-        $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-        $('#switchFronts').removeClass('current');
-        $('#article').slideDown();
-        $(this).addClass('current');
-        return false;
-    });
-
-    $("#pageSkin").click(function() {
-        $('body').toggleClass('has-page-skin');
-       return false;
-    });
-
-    $(".codeContainer").hide();
-    $(".show-code").click(function() {
-        $(this).parent().next().slideToggle();
-        return false;
-    });
-
-    $("#dfp-number").on('change', function() {
-        $('.commercial--dfp-multiple, .commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
-        return false;
-    });
-
-    $("#dfp-palette").on('change', function() {
-        $('.commercial--dfp-single, .commercial--dfp-multiple, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
-        return false;
-    });
-});
+    var loadCommercial = function (callback) {
+        require(['core'])
+            .next(['bootstraps/commercial'])
+            .next(['bootstraps/creatives'])
+            .then(callback) ;
+    };
 </script>
 <style>
     pre {
@@ -441,217 +448,66 @@ jQuery(function($) {
 
     <hr/>
 
-    <div class="facia-container facia-container--layout-content">
+    @Seq(
+        Map(("name", "Best Buys"), ("type", "bestbuy")),
+        Map(("name", "Books"), ("type", "books")),
+        Map(("name", "Jobs"), ("type", "jobs")),
+        Map(("name", "Masterclasses"), ("type", "masterclasses")),
+        Map(("name", "Soulmates"), ("type", "soulmates")),
+        Map(("name", "Travel"), ("type", "travel"))
+    ).map { component =>
 
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Travel</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
+        <div class="fc-container">
+            <div class="fc-container__inner">
+                <h2 class="test-page-head">@component("name")</h2>
             </div>
+            @Seq("low", "high").map { relevance =>
+                <div class="fc-container__inner">
+                    <div class="fc-container__header">
+                        <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
+                    </div>
+                </div>
+                <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
+                <script>
+                    loadCommercial(function () {
+                        require(['common/modules/commercial/creatives/commercial-component'])
+                            .then(function(
+                                CommercialComponent
+                            ) {
+                                new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
+                                    type: '@component("type")@if(relevance == "high"){High}',
+                                    clickMacro: '%%CLICK_URL_ESC%%',
+                                    omnitureId: 'omnitureId'
+                                }).create();
+                            });
+                    });
+                </script>
+            }
         </div>
+    }
 
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/travel/offers.json", function( json ) {
-                    $('.dfp-ad--merchandising-travel-low').html(json.html);
+    <hr/>
+
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">Multi-component</h2>
+        </div>
+        <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-multi"></div>
+        <script>
+            loadCommercial(function () {
+                require(['common/modules/commercial/creatives/commercial-component'])
+                    .then(function(
+                        CommercialComponent
+                    ) {
+                    new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
+                        type: 'multi',
+                        c: ['jobs', 'masterclasses', 'books', 'soulmates'],
+                        clickMacro: '%%CLICK_URL_ESC%%',
+                        omnitureId: 'omnitureId'
+                    }).create();
                 });
-            </script>
-        </div>
-
-
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
-                    $('.dfp-ad--merchandising-travel-high').html(json.html);
-                });
-            </script>
-        </div>
-
-    </div>
-
-    <hr/>
-
-    <div class="facia-container facia-container--layout-content">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Jobs</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/jobs.json", function( json ) {
-                $('.dfp-ad--merchandising-jobs-low').html(json.html);
-             });
-            </script>
-        </div>
-
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/jobs-high.json", function( json ) {
-                $('.dfp-ad--merchandising-jobs-high').html(json.html);
-             });
-            </script>
-        </div>
-    </div>
-
-    <hr/>
-
-    <div class="facia-container facia-container--layout-content">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Masterclasses</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/masterclasses.json", function( json ) {
-                $('.dfp-ad--merchandising-masterclasses-low').html(json.html);
-             });
-            </script>
-        </div>
-
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/masterclasses-high.json", function( json ) {
-                $('.dfp-ad--merchandising-masterclasses-high').html(json.html);
-             });
-            </script>
-        </div>
-
-    <hr/>
-
-    <div class="facia-container facia-container--layout-content">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Best buys</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/money/bestbuys.json", function( json ) {
-                $('.dfp-ad--merchandising-bestbuy-low').html(json.html);
-             });
-            </script>
-        </div>
-
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/money/bestbuys-high.json", function( json ) {
-                $('.dfp-ad--merchandising-bestbuy-high').html(json.html);
-             });
-            </script>
-        </div>
-    </div>
-
-    <hr/>
-
-    <div class="fc-container facia-container--layout-content">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Books</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
-                $('.dfp-ad--merchandising-books-low').html(json.html);
-             });
-            </script>
-        </div>
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Medium relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
-                $('.dfp-ad--merchandising-books-medium').html(json.html);
-             });
-            </script>
-        </div>
-
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Travel</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {
-                $('.dfp-ad--merchandising-books-high').html(json.html);
-             });
-            </script>
-        </div>
-    </div>
-
-    <hr/>
-
-    <div class="facia-container facia-container--layout-content">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">Soulmates</h2>
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">Low relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
-                $('.dfp-ad--merchandising-soulmates-low').html(json.html);
-             });
-            </script>
-        </div>
-
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h3 class="fc-container__header__description">High relevance</h3>
-            </div>
-        </div>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/soulmates/mixed-high.json", function( json ) {
-                $('.dfp-ad--merchandising-soulmates-high').html(json.html);
-             });
-            </script>
-        </div>
-    </div>
-
-    <hr/>
-
-    <div class="facia-container facia-container--layout-content">
-        <h2 class="facia-container__inner test-page-head">Multi-component</h2>
-
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-multi ad-slot ad-slot--merchandising ad-slot--commercial-component">
-            <script>
-                $.getJSON( "/commercial/multi.json?c=jobs&c=masterclasses&c=books&c=soulmates", function( json ) {
-                $('.dfp-ad--merchandising-multi').html(json.html);
-             });
-            </script>
+            });
+        </script>
         </div>
     </div>
 
@@ -674,45 +530,44 @@ jQuery(function($) {
         </div>
         <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-multiple"></div>
         <script>
-            require(['core'])
-                .next(['bootstraps/commercial'])
-                .next(['bootstraps/creatives'])
-                .next([
+            loadCommercial(function () {
+                require([
                     'bean',
                     'qwery',
                     'common/utils/$',
                     'common/modules/commercial/creatives/commercial-component'
                 ])
-                .then(function (
-                    bean,
-                    qwery,
-                    $,
-                    CommercialComponent
-                ) {
-                    var $capiMultiple = $('.ad-slot--capi-multiple');
+                    .then(function (
+                        bean,
+                        qwery,
+                        $,
+                        CommercialComponent
+                    ) {
+                        var $capiMultiple = $('.ad-slot--capi-multiple');
 
-                    bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                        var commercialComponent = new CommercialComponent($capiMultiple[0], {
-                            type: 'capi',
-                            t: ['p/43b2q','p/43945'],
-                            l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                            ct: 'Led Zeppelin special',
-                            cl: 'http://theguardian.com/music/ledzeppelin',
-                            cal: 'http://theguardian.com/about',
-                            k: 'music/ledzeppelin',
-                            af: $(event.srcElement).val(),
-                            clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: "omnitureId"
+                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                                type: 'capi',
+                                t: ['p/43b2q','p/43945'],
+                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                ct: 'Led Zeppelin special',
+                                cl: 'http://theguardian.com/music/ledzeppelin',
+                                cal: 'http://theguardian.com/about',
+                                k: 'music/ledzeppelin',
+                                af: $(event.srcElement).val(),
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: "omnitureId"
+                            });
+
+                            commercialComponent.postLoadEvents.capi = function () {
+                                $capiMultiple.removeClass('lazyloaded');
+                            };
+                            commercialComponent.create();
                         });
 
-                        commercialComponent.postLoadEvents.capi = function () {
-                            $capiMultiple.removeClass('lazyloaded');
-                        };
-                        commercialComponent.create();
+                        bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
                     });
-
-                    bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
-                });
+            });
         </script>
     </div>
 
@@ -735,48 +590,47 @@ jQuery(function($) {
         </div>
         <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-single"></div>
         <script>
-            require(['core'])
-                .next(['bootstraps/commercial'])
-                .next(['bootstraps/creatives'])
-                .next([
+            loadCommercial(function () {
+                require([
                     'bean',
                     'qwery',
                     'common/utils/$',
                     'common/modules/commercial/creatives/commercial-component'
                 ])
-                .then(function(
-                    bean,
-                    qwery,
-                    $,
-                    CommercialComponent
-                ) {
-                    var $capiSingle = $('.ad-slot--capi-single');
+                    .then(function(
+                        bean,
+                        qwery,
+                        $,
+                        CommercialComponent
+                    ) {
+                        var $capiSingle = $('.ad-slot--capi-single');
 
-                    bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
-                        var commercialComponent = new CommercialComponent($capiSingle[0], {
-                            type: 'capiSingle',
-                            t: 'p/43b2q',
-                            l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                            ct: 'This is title',
-                            cl: 'http://theguardian.com/music/ledzeppelin',
-                            clt: 'Read more link text',
-                            cal: 'http://theguardian.com/about',
-                            k: 'music/ledzeppelin',
-                            rmd: 'www.theguardina.com',
-                            rmt: 'Seemoreoverhere',
-                            af: $(event.srcElement).val(),
-                            clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: "omnitureId"
+                        bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiSingle[0], {
+                                type: 'capiSingle',
+                                t: 'p/43b2q',
+                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                ct: 'This is title',
+                                cl: 'http://theguardian.com/music/ledzeppelin',
+                                clt: 'Read more link text',
+                                cal: 'http://theguardian.com/about',
+                                k: 'music/ledzeppelin',
+                                rmd: 'www.theguardina.com',
+                                rmt: 'Seemoreoverhere',
+                                af: $(event.srcElement).val(),
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: "omnitureId"
+                            });
+
+                            commercialComponent.postLoadEvents.capiSingle = function () {
+                                $capiSingle.removeClass('lazyloaded');
+                            };
+                            commercialComponent.create();
                         });
 
-                        commercialComponent.postLoadEvents.capiSingle = function () {
-                            $capiSingle.removeClass('lazyloaded');
-                        };
-                        commercialComponent.create();
+                        bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
                     });
-
-                    bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
-                });
+            });
         </script>
     </div>
 
@@ -960,28 +814,27 @@ jQuery(function($) {
             </div>
             <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-single-manual"></div>
             <script>
-                require(['core'])
-                    .next(['bootstraps/commercial'])
-                    .next(['bootstraps/creatives'])
-                    .next(['common/modules/commercial/creatives/template'])
-                    .then(function (Creative) {
-                        new Creative(document.querySelector('[data-name="merchandising-single-manual"]'), {
-                            "creative": "ad-single-manual",
-                            "toneClass": "commercial--tone-brand",
-                            "omnitureId": "[%omnitureid%]",
-                            "baseUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            "title": "title",
-                            "viewAllText": "View all",
-                            "offerTitle": "Scientists climb to bottom of Siberian sinkhole - in pictures",
-                            "offerImage": "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg",
-                            "offerText": "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times",
-                            "offerLinkText": "link text",
-                            "offerUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            "seeMoreUrl": "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            "showCtaLink": "show-cta-link",
-                            "clickMacro": "%%CLICK_URL_ESC%%"
-                        }).create();
-                    });
+                loadCommercial(function () {
+                    require(['common/modules/commercial/creatives/template'])
+                        .then(function (Creative) {
+                            new Creative(document.querySelector('[data-name="merchandising-single-manual"]'), {
+                                creative: "ad-single-manual",
+                                toneClass: "commercial--tone-brand",
+                                omnitureId: "[%omnitureid%]",
+                                baseUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                                title: "title",
+                                viewAllText: "View all",
+                                offerTitle: "Scientists climb to bottom of Siberian sinkhole - in pictures",
+                                offerImage: "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg",
+                                offerText: "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times",
+                                offerLinkText: "link text",
+                                offerUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                                seeMoreUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
+                                showCtaLink: "show-cta-link",
+                                clickMacro: "%%CLICK_URL_ESC%%"
+                            }).create();
+                        });
+                });
             </script>
         </div>
 </div>
