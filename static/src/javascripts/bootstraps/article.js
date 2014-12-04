@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/modules/article/flyers',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
     'common/modules/gallery/lightbox',
@@ -17,6 +18,7 @@ define([
     config,
     detect,
     mediator,
+    flyers,
     truncate,
     twitter,
     Lightbox,
@@ -68,6 +70,10 @@ define([
                 if ('lightboxImages' in config.page) {
                     Lightbox.init();
                 }
+            },
+
+            initFlyers: function() {
+                flyers.init();
             }
         },
 
@@ -78,6 +84,7 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initLightbox();
+            modules.initFlyers();
 
             mediator.emit('page:article:ready');
         };
