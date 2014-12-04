@@ -3,10 +3,14 @@
  Description: Gets and sets users reading history
  */
 define([
+    'common/utils/$',
     'common/utils/_',
+    'common/utils/template',
     'common/utils/storage'
 ], function (
+    $,
     _,
+    template,
     storage
 ) {
     var summaryPeriodDays = 30,
@@ -19,7 +23,7 @@ define([
         popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        storageKeyPopular = 'gu.history.popular',
+        storageKeyNav = 'gu.history.nav',
         taxonomy = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
@@ -142,6 +146,10 @@ define([
         return (str || '').split(',')[0];
     }
 
+    function stripOuterSlashes(path) {
+        return (path || '').replace(/^\/|\/$/g, '');
+    }
+
     function collapseTag(t) {
         t = t.replace(/^(uk|us|au)\//, '');
         t = t.split('/');
@@ -155,7 +163,6 @@ define([
         popularCache = undefined;
         storage.local.remove(storageKeyHistory);
         storage.local.remove(storageKeySummary);
-        storage.local.remove(storageKeyPopular);
     }
 
     function logHistory(pageConfig) {
@@ -212,9 +219,65 @@ define([
         saveSummary(summary);
     }
 
+    function generateNavs() {
+        var popular = getPopular(),
+            topNav = popular.length && document.querySelector('.js-top-navigation'),
+            myNav,
+            myNavItems,
+            myNavItemIds,
+            mySecondary = [];
+
+        if (topNav) {
+            myNav = document.createElement('div');
+            myNav.innerHTML = topNav.innerHTML;
+
+            myNavItems = $('.top-navigation__item', myNav);
+
+            myNavItemIds = myNavItems.map(function (item) {
+                return collapseTag(stripOuterSlashes($('a', item).attr('href')));
+            });
+
+            _.chain(popular)
+                .reverse()
+                .forEach(function (tag) {
+                    var pos = myNavItemIds.indexOf(tag[0]);
+
+                    if (pos > -1) {
+                        $(myNavItems[pos]).detach().insertAfter(myNavItems[0]);
+                    } else {
+                        mySecondary.unshift(tag);
+                    }
+                });
+
+            // On purpose not using storage module, to avoid a JSON parse on extraction:
+            window.localStorage.setItem(storageKeyNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
+
+            if (mySecondary.length) {
+                $('.js-history-nav-placeholder').html(
+                        '<ul class="signposting">' +
+                        '<li class="signposting__item signposting__item--home">' +
+                        '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+                        '</li>' +
+                        '</ul>' +
+                        '<ul class="local-navigation">' +
+                        mySecondary.map(function (tag) {
+                            return template(
+                                    '<li class="local-navigation__item">' +
+                                    '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : history : {{name}}">{{name}}</a>' +
+                                    '</li>',
+                                {id: tag[0], name: tag[1]}
+                            );
+                        }).join('') +
+                        '</ul>'
+                );
+            }
+        }
+    }
+
     return {
         logHistory: logHistory,
         logSummary: logSummary,
+        generateNavs: generateNavs,
         getPopular: getPopular,
         isRevisit: isRevisit,
         reset: reset,
