@@ -84,7 +84,7 @@ define([
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys'),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-                book:              buildComponentUrl('books/book', { t: config.page.isbn }),
+                book:              buildComponentUrl('books/book', { t: params.isbn || config.page.isbn }),
                 books:             buildComponentUrl('books/bestsellers'),
                 booksMedium:       buildComponentUrl('books/bestsellers-medium'),
                 booksHigh:         buildComponentUrl('books/bestsellers-high'),
