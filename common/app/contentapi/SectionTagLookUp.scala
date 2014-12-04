@@ -11,7 +11,8 @@ object SectionTagLookUp {
 
   private val ExceptionsReverseMap = ExceptionsMap.reverseMap
 
-  private def useExceptions = const(Switches.HardcodedSectionTagLookUp.isSwitchedOn)
+  private def useExceptions[A] =
+    const[Boolean, A](Switches.HardcodedSectionTagLookUp.isSwitchedOn) _
 
   def tagId(sectionId: String) = {
     ExceptionsMap.get(sectionId).filter(useExceptions).getOrElse(s"$sectionId/$sectionId")
