@@ -300,21 +300,21 @@
     .ad-slot__label {
         display: none;
     }
-}
 
-.creative--fluid250__label {
-    width: 100%;
-    display: block;
-    text-align: left;
+    .creative--fluid250__label {
+        width: 100%;
+        display: block;
+        text-align: left;
 
-    .fc-container__inner {
-        padding-top: 0;
-        border-top: 0;
-    }
+        .fc-container__inner {
+            padding-top: 0;
+            border-top: 0;
+        }
     
-    &.creative__hide-label {
-        display: none;
-    } 
+        &.creative__hide-label {
+            display: none;
+        } 
+    }
 }
 
 .creative--fluid250 {
