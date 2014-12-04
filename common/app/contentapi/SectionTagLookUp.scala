@@ -1,6 +1,8 @@
 package contentapi
 
 import common.Maps.RichMap
+import conf.Switches
+import Function.const
 
 object SectionTagLookUp {
   private val ExceptionsMap = Map(
@@ -9,9 +11,13 @@ object SectionTagLookUp {
 
   private val ExceptionsReverseMap = ExceptionsMap.reverseMap
 
-  def tagId(sectionId: String) = ExceptionsMap.getOrElse(sectionId, s"$sectionId/$sectionId")
+  private def useExceptions = const(Switches.HardcodedSectionTagLookUp.isSwitchedOn)
 
-  def sectionId(tagId: String) = ExceptionsReverseMap.get(tagId) orElse (tagId.split('/').toList match {
+  def tagId(sectionId: String) = {
+    ExceptionsMap.get(sectionId).filter(useExceptions).getOrElse(s"$sectionId/$sectionId")
+  }
+
+  def sectionId(tagId: String) = ExceptionsReverseMap.get(tagId).filter(useExceptions) orElse (tagId.split('/').toList match {
     case a :: b :: Nil if a == b => Some(a)
     case _ => None
   })
