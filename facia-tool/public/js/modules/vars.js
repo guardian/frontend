@@ -57,6 +57,7 @@ define([
             editorial:  60000 * 2 * (pageConfig.standardFrequency || 5),
             commercial: 60000 * 2 * (pageConfig.lowFrequency || 60)
         },
+        highFrequencyPaths:    ["uk", "us", "au", "uk/sport", "us/sport", "au/sport"],
 
         mainDomain:            'www.theguardian.com',
 
