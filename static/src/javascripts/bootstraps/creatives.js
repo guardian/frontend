@@ -4,7 +4,6 @@ define([
     'common/modules/commercial/creatives/expandable',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
-    'common/modules/commercial/creatives/inline-book',
     'common/modules/commercial/creatives/scrollable-mpu',
     'common/modules/commercial/creatives/template'
 ], function () {});
