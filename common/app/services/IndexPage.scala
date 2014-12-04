@@ -4,15 +4,16 @@ import com.gu.facia.client.models.CollectionConfig
 import common.Edition
 import conf.Switches
 import contentapi.Paths
+import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
 import org.joda.time.DateTime
-import slices.{Fixed, FixedContainers, ContainerDefinition}
-import views.support.{TagKicker, CartoonKicker, ReviewKicker}
+import slices.{ContainerDefinition, Fixed, FixedContainers}
+import views.support.{CartoonKicker, ReviewKicker, TagKicker}
+
+import scala.Function.const
 import scalaz.syntax.traverse._
 import scalaz.std.list._
-import Function.const
-import DateHeadline.cardTimestampDisplay
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
