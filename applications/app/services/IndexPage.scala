@@ -3,7 +3,7 @@ package services
 import com.gu.facia.client.models.CollectionConfig
 import common.Edition
 import conf.Switches
-import contentapi.{Zones, Paths}
+import contentapi.Paths
 import layout._
 import model._
 import org.joda.time.DateTime
@@ -97,7 +97,6 @@ object IndexPage {
         indexPage.page match {
           case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
           case section: Section => FaciaContainerHeader.fromSection(section, headline)
-          case zone: Zone => FaciaContainerHeader.fromZone(zone, headline)
           case page: Page => FaciaContainerHeader.fromPage(page, headline)
           case _ =>
             // should never happen
@@ -146,9 +145,6 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case section: Section =>
       isSectionKeyword(section.id, id)
 
-    case zone: Zone =>
-      isSectionKeyword(zone.id, id)
-
     case tag: Tag => tag.id == id
 
     case combiner: TagCombiner =>
@@ -167,13 +163,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case other => other.id
   }
 
-  def allPath = {
-    val withoutEdition = Paths.withoutEdition(page.id)
-
-    if (withoutEdition.exists(Zones.ById.contains)) {
-      s"/$withoutEdition"
-    } else {
-      s"/${page.id}"
-    }
-  }
+  def allPath = s"/${idWithoutEdition}"
 }
