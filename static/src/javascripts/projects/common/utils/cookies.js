@@ -8,7 +8,7 @@ define([
 
     function getShortDomain() {
         // Remove www (and dev bit, for localhost set up with dev.theguardian.com domain)
-        return document.domain.replace(/^(www|dev)\./, '.');
+        return getDocument().domain.replace(/^(www|dev)\./, '.');
     }
 
     function cleanUp(names) {
@@ -38,7 +38,7 @@ define([
         if (!currentDomainOnly) {
             // also remove from the short domain
             getDocument().cookie =
-                name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=' + getShortDomain() + ';';
+                name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=' + getShortDomain() + ';';
         }
     }
 
@@ -121,7 +121,9 @@ define([
         addForMinutes: addForMinutes,
         remove: remove,
         get: get,
-        setDocument: setDocument
+        test: {
+            setDocument: setDocument
+        }
     };
 
 });
