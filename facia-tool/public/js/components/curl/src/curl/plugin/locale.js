@@ -7,7 +7,7 @@
  * by cram.js.  Its functionality is nearly identical to the i18n! plugin.
  * The only difference of significance is that the locale! plugin initially
  * assumes that the module for the i18n strings is already loaded.  If the
- * module is not loaded (and config.locale != false), it invokes the i18n!
+ * module is not loaded (and config.locale === true), it invokes the i18n!
  * plugin to fetch it and assemble it.
  *
  * You probably don't want to use this plugin directly.  You likely want the
@@ -65,37 +65,46 @@ define(/*=='curl/plugin/locale',==*/ function () {
 	}
 
 	function load (absId, require, loaded, config) {
-		var locale, toId, bundleId, defaultId;
+		var locale, toId, result, ex, bundleId, defaultId;
 
 		// figure out the locale and bundle to use
 		locale = getLocale(config, absId);
 		toId = config['localeToModuleId'] || toModuleId;
+
+		// try to get a bundle that's already loaded (sync require)
 		bundleId = locale ? toId(absId, locale) : absId;
+		result = attemptSync(require, bundleId);
 
-		try {
-			// try to get a bundle that's already loaded (sync require)
-			loaded(require(bundleId));
+		if (result.value) return loaded(result.value);
+
+		// try default bundle sync (unless we've already tried it)
+		defaultId = locale ? toId(absId, false) : absId;
+		result = defaultId !== bundleId
+			? attemptSync(require, defaultId)
+			: {};
+
+		if (result.value) return loaded(result.value);
+
+		// locale === true, try to use the i18n plugin
+		if (locale === true) {
+			require(['i18n!' + absId], loaded, fail);
 		}
-		catch (ex) {
-			// try default bundle sync (unless we've already tried it)
-			defaultId = locale ? toId(absId, false) : absId;
-			if (defaultId == bundleId) return fail();
-
-			try {
-				loaded(require(defaultId));
-			}
-			catch (ex) {
-				// locale === true, try to use the i18n plugin
-				if (locale !== true) return fail();
-				require(['i18n!' + absId], loaded, fail);
-			}
-		}
-
-		function fail () {
-			var ex = new Error('Unable to find correct locale for ' + absId);
+		else {
+			ex = new Error('Unable to find correct locale for ' + absId);
 			if (loaded.error) loaded.error(ex);
 			else throw ex;
 		}
+	}
+
+	function attemptSync (require, id) {
+		var result = {};
+		try {
+			result.value = require(id);
+		}
+		catch (ex) {
+			result.error = ex || new Error('unknown error');
+		}
+		return result;
 	}
 
 });

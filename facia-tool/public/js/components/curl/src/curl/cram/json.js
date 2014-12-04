@@ -15,7 +15,7 @@ define(function (require) {
 			absId = pluginId + '!' + resId;
 
 			io.read(
-				resId,
+				req.toUrl(resId),
 				function (source) {
 					var moduleText;
 					if (config.strictJSONParse) {

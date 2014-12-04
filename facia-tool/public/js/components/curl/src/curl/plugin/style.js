@@ -57,7 +57,7 @@ define([], function () {
 			});
 
 			createStyle.debouncer = setTimeout(function () {
-				var style, allCssText;
+				var style, allCssText, err;
 
 				try {
 					style = currentStyle;
@@ -71,15 +71,18 @@ define([], function () {
 					allCssText = allCssText.replace(/.+charset[^;]+;/g, '');
 
 					// IE 6-8 won't accept the W3C method for inserting css text
-					'cssText' in style ? style.cssText = allCssText :
-						style.appendChild(doc.createTextNode(allCssText));
+					'cssText' in style
+						? style.cssText = allCssText
+						: style.appendChild(doc.createTextNode(allCssText));
 
-					waitForDocumentComplete(notify);
 				}
 				catch (ex) {
+					err = ex;
 					// just notify most recent errback. no need to spam
 					errback(ex);
 				}
+
+				if (!err) waitForDocumentComplete(notify);
 
 			}, 0);
 
