@@ -281,12 +281,12 @@ object Switches {
   )
 
   // Features
-  val ZonesAggregationSwitch = Switch(
+  val HardcodedSectionTagLookUp = Switch(
     "Feature",
-    "zones-aggregation",
-    "If activated, all pages for 'zones' (e.g., sport and culture) will aggregate their respective subsections",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 1, 15)
+    "hardcoded-section-tag-lookup",
+    "Hardcoded section tag id lookup (uk-news palaver)",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
