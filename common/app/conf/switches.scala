@@ -303,7 +303,7 @@ object Switches {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -364,7 +364,7 @@ object Switches {
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
