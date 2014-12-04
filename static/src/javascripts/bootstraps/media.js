@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     buildPageTargeting,
     Component,
     history,
-    images
+    images,
+    loadingTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -240,12 +242,7 @@ define([
     }
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML =
-            '<div class="pamplemousse">' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
     function createVideoPlayer(el, options) {
@@ -286,7 +283,13 @@ define([
                 player = createVideoPlayer(el, {
                     controls: true,
                     autoplay: false,
-                    preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                    plugins: {
+                        embed: {
+                            embedable: config.switches.externalVideoEmbeds && config.page.embeddable,
+                            location: config.page.externalEmbedHost + config.page.pageId
+                        }
+                    }
                 }),
                 mouseMoveIdle;
 

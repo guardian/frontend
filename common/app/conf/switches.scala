@@ -126,6 +126,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val ExternalVideoEmbeds = Switch("Performance", "external-video-embeds",
+    "If switched on then we will accept and display external video views",
+    safeState = Off, sellByDate = never
+  )
+
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
