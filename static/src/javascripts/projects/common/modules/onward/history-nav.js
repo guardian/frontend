@@ -27,35 +27,38 @@ define([
 
     function init() {
         var popular = history.getPopular(),
-            topNav,
-            topNavItems,
-            topNavItemIds = [],
-            myNav = [];
+            topNav = popular.length && document.querySelector('.js-top-navigation'),
+            myNav,
+            myNavItems,
+            myNavItemIds,
+            mySecondary = [];
 
-        if (popular.length) {
-            topNav =  document.querySelector('.js-top-navigation');
+        if (topNav) {
+            myNav = document.createElement('div');
+            myNav.innerHTML = topNav.innerHTML;
 
-            topNavItems = $('.top-navigation__item', topNav);
+            myNavItems = $('.top-navigation__item', myNav);
 
-            topNavItemIds = topNavItems.map(function (item) {
+            myNavItemIds = myNavItems.map(function (item) {
                 return collapseTag(stripOuterSlashes($('a', item).attr('href')));
             });
 
             _.chain(popular)
                 .reverse()
                 .forEach(function (tag) {
-                    var pos = topNavItemIds.indexOf(tag[0]);
+                    var pos = myNavItemIds.indexOf(tag[0]);
 
                     if (pos > -1) {
-                        $(topNavItems[pos]).detach().insertAfter(topNavItems[0]);
+                        $(myNavItems[pos]).detach().insertAfter(myNavItems[0]);
                     } else {
-                        myNav.unshift(tag);
+                        mySecondary.unshift(tag);
                     }
                 });
 
-            storage.local.set(storageKeyHistoryNav, topNav.innerHTML.replace(/\s{2,}/g, ' ').replace('\\"', ''));
+            // On purpose not using storage module, to avoid a JSON parse on extraction:
+            window.localStorage.setItem(storageKeyHistoryNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
 
-            if (myNav.length) {
+            if (mySecondary.length) {
                 $('.js-history-nav-placeholder').html(
                     '<ul class="signposting">' +
                         '<li class="signposting__item signposting__item--home">' +
@@ -63,7 +66,7 @@ define([
                         '</li>' +
                     '</ul>' +
                     '<ul class="local-navigation">' +
-                        myNav.map(function (tag) {
+                        mySecondary.map(function (tag) {
                             return template(
                                 '<li class="local-navigation__item">' +
                                    '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : history : {{name}}">{{name}}</a>' +

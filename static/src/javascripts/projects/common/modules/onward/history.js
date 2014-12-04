@@ -37,19 +37,9 @@ define([
         return storage.local.set(storageKeySummary, summary);
     }
 
-    function savePopular(popular) {
-        popularCache = popular;
-        return storage.local.set(storageKeyPopular, popular);
-    }
-
     function getHistory() {
         historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
         return historyCache;
-    }
-
-    function getPopular() {
-        popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
-        return popularCache;
     }
 
     function getSummary() {
@@ -101,24 +91,27 @@ define([
         return summary;
     }
 
-    function calculatePopular(summary) {
-        return _.chain(summary.tags)
-            .map(function (nameAndFreqs, tid) {
-                var freqs = nameAndFreqs[1];
+    function getPopular() {
+        if (!popularCache) {
+            popularCache = _.chain(getSummary().tags)
+                .map(function (nameAndFreqs, tid) {
+                    var freqs = nameAndFreqs[1];
 
-                if (freqs.length >= 3) {
-                    return {
-                        keep: [tid, nameAndFreqs[0]],
-                        rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
-                    };
-                }
-            })
-            .compact()
-            .sortBy('rank')
-            .last(popularSize)
-            .reverse()
-            .pluck('keep')
-            .value();
+                    if (freqs.length >= 3) {
+                        return {
+                            keep: [tid, nameAndFreqs[0]],
+                            rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
+                        };
+                    }
+                })
+                .compact()
+                .sortBy('rank')
+                .last(popularSize)
+                .reverse()
+                .pluck('keep')
+                .value();
+        }
+        return popularCache;
     }
 
     function tallyFreqs(freqs) {
@@ -215,8 +208,8 @@ define([
                     nameAndFreqs[0] = tname;
                 }
             });
+
         saveSummary(summary);
-        savePopular(calculatePopular(summary));
     }
 
     return {

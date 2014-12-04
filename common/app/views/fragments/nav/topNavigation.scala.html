@@ -35,16 +35,10 @@
 <script>
     (function(isModern) {
         if (isModern) {
-            var rawNav = window.localStorage.getItem('gu.history.nav');
+            var myNav = window.localStorage.getItem('gu.history.nav');
 
-            if (rawNav) {
-                try {
-                    rawNav = JSON.parse(rawNav);
-                } catch(e) {}
-
-                if (rawNav) {
-                    document.write('<ul class="top-navigation top-navigation--personal">' + rawNav.value + '</ul>');
-                }
+            if (myNav) {
+                document.write('<ul class="top-navigation js-top-navigation--history">' + myNav + '</ul>');
             }
         }
     })(guardian.isModernBrowser);
