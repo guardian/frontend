@@ -9,22 +9,10 @@ define([
     _,
     storage
 ) {
-    var summaryPeriodDays = 30,
-        historySize = 50,
-        popularSize = 20,
-
-        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
-        historyCache,
-        summaryCache,
-        popularCache,
-        storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
-        storageKeyPopular = 'gu.history.popular',
-        taxonomy = [
-            {tid: 'section',    tname: 'sectionName'},
-            {tid: 'keywordIds', tname: 'keywords'},
-            {tid: 'seriesId',   tname: 'series'},
-            {tid: 'authorIds',  tname: 'author'}
+    var editions = [
+            'uk',
+            'us',
+            'au'
         ],
         editionalised = [
             'business',
@@ -36,8 +24,26 @@ define([
             'sport',
             'technology'
         ],
-        editionalisedRx = new RegExp('/^(uk|us|au)\/(' + editionalised.join('|') + ')$/');
+        pageMeta = [
+            {tid: 'section',    tname: 'sectionName'},
+            {tid: 'keywordIds', tname: 'keywords'},
+            {tid: 'seriesId',   tname: 'series'},
+            {tid: 'authorIds',  tname: 'author'}
+        ],
 
+        summaryPeriodDays = 30,
+        historySize = 50,
+        popularSize = 20,
+
+        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
+        historyCache,
+        summaryCache,
+        popularCache,
+        storageKeyHistory = 'gu.history',
+        storageKeySummary = 'gu.history.summary',
+        storageKeyPopular = 'gu.history.popular',
+        isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
+        stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
     function saveHistory(history) {
         historyCache = history;
@@ -162,8 +168,8 @@ define([
     }
 
     function collapseTag(t) {
-        if (t.match(editionalisedRx)) {
-            t = t.replace(/^(uk|us|au)\//, '');
+        if (t.match(isEditionalisedRx)) {
+            t = t.replace(stripEditionRx, '');
         }
         t = t.split('/');
         t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
@@ -202,7 +208,7 @@ define([
     function logSummary(pageConfig, mockToday) {
         var summary = pruneSummary(getSummary(), mockToday);
 
-        _.chain(taxonomy)
+        _.chain(pageMeta)
             .reduceRight(function (tags, tag) {
                 var tid = firstCsv(pageConfig[tag.tid]),
                     tname = tid && firstCsv(pageConfig[tag.tname]);
