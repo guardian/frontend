@@ -25,7 +25,19 @@ define([
             {tid: 'keywordIds', tname: 'keywords'},
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
-        ];
+        ],
+        editionalised = [
+            'business',
+            'commentisfree',
+            'culture',
+            'environment',
+            'media',
+            'money',
+            'sport',
+            'technology'
+        ],
+        editionalisedRx = new RegExp('/^(uk|us|au)\/(' + editionalised.join('|') + ')$/');
+
 
     function saveHistory(history) {
         historyCache = history;
@@ -150,7 +162,9 @@ define([
     }
 
     function collapseTag(t) {
-        t = t.replace(/^(uk|us|au)\//, '');
+        if (t.match(editionalisedRx)) {
+            t = t.replace(/^(uk|us|au)\//, '');
+        }
         t = t.split('/');
         t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
         return t.join('/');
