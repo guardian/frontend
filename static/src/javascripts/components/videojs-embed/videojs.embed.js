@@ -40,7 +40,12 @@
         });
 
         videojs.EmbedOverlay.prototype.isVisible = false;
-        videojs.EmbedOverlay.prototype.show = function() { this.el().style.display = 'block'; this.isVisible = true; };
+        videojs.EmbedOverlay.prototype.show = function() {
+            this.el().style.display = 'block';
+            this.isVisible = true;
+            this.input.contentEl().focus();
+            this.input.contentEl().select();
+        };
         videojs.EmbedOverlay.prototype.hide = function() { this.el().style.display = 'none'; this.isVisible = false; };
         videojs.EmbedOverlay.prototype.contentEl = function() { return this.el_; };
 
