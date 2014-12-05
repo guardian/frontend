@@ -1,7 +1,6 @@
 package conf
 
 import common._
-import implicits.Collections
 import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -158,8 +157,9 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off, sellByDate = never
+    //"If this switch is on png images will be resized via the png-resizing server",
+    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
   )
 
   // Commercial
