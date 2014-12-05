@@ -76,7 +76,6 @@
 
 .element-rich-link--upgraded {
     float: left;
-    width: gs-span(4);
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;
     @include mq(leftCol) {
@@ -84,5 +83,27 @@
     }
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
+        width: gs-span(5);
+    }
+
+    &.element--supporting {
+        width: gs-span(4);
+        @include mq(wide) {
+            width: gs-span(5);
+        }
+    }
+    &.element--thumbnail {
+        width: gs-span(3);
+
+        .tone-comment--item {
+            .flyer__standfirst {
+                display: none;
+            }
+            .flyer__byline-img {
+                position: static;
+                float: right;
+                margin-top: -1.5 * $gs-baseline;
+            }
+        }
     }
 }
