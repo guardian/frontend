@@ -13,7 +13,7 @@
             * { margin: 0; padding: 0; }
             figure { margin: 0 !important; }
         </style>
-        <link rel="stylesheet" href="@Static("stylesheets/media-player.css")"/>
+        <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
     </head>
     <body>
 
@@ -96,13 +96,13 @@
                         baseUrl: '@{Configuration.assets.path}javascripts',
                         apiName: 'require',
                         paths: {
-                            core: '@Static("javascripts/core.js")',
+                            core: '@StaticSecure("javascripts/core.js")',
                             text: 'text', // noop
-                            'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")'
+                            'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")'
                         }
                     };
 
-                    @Html(Static.js.curl)
+                    @Html(StaticSecure.js.curl)
 
                     require(['bootstraps/video-embed'], function(bootstrap) {
                         bootstrap.init();

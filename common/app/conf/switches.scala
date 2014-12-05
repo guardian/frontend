@@ -90,6 +90,12 @@ object Switches {
     sellByDate = never
   )
 
+  val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
+    "If this switch is switched on then the preview server requires login",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
+  )
+
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
@@ -151,8 +157,9 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off, sellByDate = never
+    //"If this switch is on png images will be resized via the png-resizing server",
+    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
   )
 
   // Commercial

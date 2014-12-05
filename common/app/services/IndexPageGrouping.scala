@@ -1,12 +1,12 @@
 package services
 
+import common.JodaTime._
+import common.Maps.RichMapSeq
 import implicits.Collections
-import layout.{MonthHeadline, DayHeadline, DateHeadline}
+import implicits.Dates._
+import layout.{DateHeadline, DayHeadline, MonthHeadline}
 import model.Content
 import org.joda.time.{DateTimeZone, LocalDate}
-import implicits.Dates._
-import common.Maps.RichMapSeq
-import common.JodaTime._
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
