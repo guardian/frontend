@@ -144,6 +144,14 @@
         background-color: transparent;
     }
 }
+.ad-slot--gallery-inline {
+    @include mq(mobileLandscape) {
+        width: 300px;
+    }
+    @include mq(tablet) {
+        width: auto;
+    }
+}
 .ad-slot--inline,
 .ad-slot--container-inline {
     background-color: colour(neutral-8);
@@ -283,6 +291,9 @@
         @include fs-textSans(1);
         color: colour(neutral-2);
     }
+    .ad-slot--paid-for-badge__help {
+        @include font-size(11, 14);
+    }
     .ad-slot--paid-for-badge__header {
         margin: 0;
         padding-top: $gs-baseline / 2;
@@ -335,12 +346,24 @@
 .ad-slot--paid-for-badge--article {
     padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted colour(neutral-5);
-    min-height: 135px;
 
     @include mq(leftCol) {
         min-height: 0;
         border-bottom-width: 0;
         border-top: 1px dotted colour(neutral-5);
+    }
+
+    @include mq(mobile, $until: leftCol) {
+        padding-bottom: $gs-baseline / 2;
+        .ad-slot--paid-for-badge__link {
+            margin-top: 6px;
+        }
+    }
+
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
+        }
     }
     .content--media--video & {
         min-height: 0;
@@ -368,17 +391,41 @@
     @include mq(tablet) {
         padding-left: $gs-gutter / 2;
     }
+
     .container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
         }
     }
+    .ad-slot--capi-single & {
+        margin: 0;
+    }
     .ad-slot--paid-for-badge__link {
         position: relative;
-        float: right;
+
+        &:after {
+            display: block;
+            height: 0;
+            width: $left-column + $gs-gutter;
+            content: '';
+            border-bottom: 1px dotted colour(neutral-5);
+
+            @include mq(leftCol) {
+                width: $left-column;
+            }
+
+            @include mq(wide) {
+                width: $left-column-wide;
+            }
+        }
 
         @include mq(mobile, $until: leftCol) {
-            margin-top: get-line-height(data, 3)*-1;
+            margin-top: 0;
+        }
+    }
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
         }
     }
 
@@ -389,14 +436,27 @@
         float: left;
         min-height: 0;
         margin-top: 4px;
+        padding-top: 2px;
+        border-top: 1px dotted colour(neutral-5);
+
+        .ad-slot--capi-multiple & {
+            position: absolute;
+            bottom: $gs-gutter;
+        }
 
         .ad-slot--paid-for-badge__link {
             float: none;
             margin-top: $gs-row-height/4;
         }
     }
-
+    @include mq(tablet, $until: leftCol) {
+        float: right;
+        clear: right;
+        width: $left-column + $gs-gutter;
+    }
     @include mq(wide) {
+        width: $left-column-wide;
+
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
@@ -410,6 +470,9 @@
         .has-page-skin .container--has-toggle & {
             margin-right: gs-span(1);
         }
+    }
+    @include mq($until: tablet) {
+        clear: both;
     }
 }
 .fc-container--sponsored .fc-container:first-child,

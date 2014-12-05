@@ -6,6 +6,7 @@ define([
     'videojsvast',
     'videojspersistvolume',
     'videojsplaylist',
+    'videojsembed',
     'videoinit'
 ], function (
     vast,
@@ -14,6 +15,7 @@ define([
     videojsvast,
     videojspersistvolume,
     videojsplaylist,
+    videojsembed,
     videoinit
 ) {
     return;

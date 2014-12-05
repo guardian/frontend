@@ -32,6 +32,9 @@ define([
                             pageId:      'world/uk',
                             section:     'news',
                             seriesId:    'learning/series/happy-times'
+                        },
+                        images: {
+                            commercial: {}
                         }
                     };
                 }
