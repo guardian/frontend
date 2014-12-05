@@ -3,61 +3,8 @@
 @import play.api.libs.json.{JsBoolean, JsString, JsObject, Json}
 
 @main(page){ }{
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-    jQuery(function($) {
-        $("#switchFronts").click(function() {
-            $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
-            $('#switchArticles').removeClass('current');
-            $('#article').slideUp();
-            $(this).addClass('current');
-            return false;
-        });
 
-        $("#switchArticles").click(function() {
-            $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
-            $('#switchFronts').removeClass('current');
-            $('#article').slideDown();
-            $(this).addClass('current');
-            return false;
-        });
-
-        $("#pageSkin").click(function() {
-            $('body').toggleClass('has-page-skin');
-           return false;
-        });
-
-        $("#dfp-number").on('change', function() {
-            $('.commercial--dfp-multiple, .commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
-            return false;
-        });
-
-        $("#dfp-palette").on('change', function() {
-            $('.commercial--dfp-single, .commercial--dfp-multiple, .commercial--v-high').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone-masterclasses commercial--tone-travel commercial--tone-shop commercial--tone-money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
-            return false;
-        });
-    });
-
-    var loadCommercial = function (callback) {
-        require(['core'])
-            .next(['bootstraps/commercial'])
-            .next(['bootstraps/creatives'])
-            .then(callback) ;
-    };
-</script>
 <style>
-    pre {
-        font-size: 11px;
-    }
-    hr {
-        height: 8px;
-        border: 0 none;
-        border-top: 8px dashed #ddd;
-        margin: 2em 0;
-    }
-    #dfp-ad--merchandising-high {
-        display: block;
-    }
     .test-page-head {
         font-size: 1.25rem;
     }
@@ -102,8 +49,11 @@
     <div class="facia-container__inner">
         <dl class="facia-switch">
             <dt>Layout</dt>
-            <dd><a id="switchFronts" href="#">Fronts</a> • <a id="switchArticles" href="#" class="current">Articles</a> • <a id="pageSkin" href="#">Page skin?</a></dd>
-            <dt>Items in multiple DFP</dt>
+            <dd>
+                <a id="switchFronts" href="#">Fronts</a> •
+                <a id="switchArticles" href="#" class="current">Articles</a> •
+                <a id="pageSkin" href="#">Page skin?</a></dd>
+            <dt>Items in manual multiple</dt>
             <dd>
                 <select id="dfp-number">
                     <option value="4">4</option>
@@ -111,7 +61,7 @@
                     <option value="2">2</option>
                 </select>
             </dd>
-            <dt>Palette for single DFP</dt>
+            <dt>Palette for manual single/multiple</dt>
             <dd>
                 <select id="dfp-palette">
                     <option value="brand">Brand</option>
@@ -131,6 +81,66 @@
         </dl>
     </div>
 
+    <script>
+        require('core')
+            .next([
+                'bean',
+                'common/utils/$'
+            ])
+            .then(function (
+                bean,
+                $
+            ) {
+                var $switchFronts   = $('#switchFronts'),
+                    $switchArticles = $('#switchArticles');
+
+                bean.on($switchFronts[0], 'click', function () {
+                    $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
+                    $switchArticles.removeClass('current');
+                    $switchFronts.addClass('current');
+                });
+
+                bean.on($switchArticles[0], 'click', function () {
+                    $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
+                    $switchFronts.removeClass('current');
+                    $switchArticles.addClass('current');
+                });
+
+                bean.on($('#pageSkin')[0], 'click', function () {
+                    $('body').toggleClass('has-page-skin');
+                });
+
+                var $number        = $('#dfp-number'),
+                    itemNumClasses = ['2', '3', '4']
+                        .map(function (num) {
+                            return 'commercial--items-dfp-' + num;
+                        });
+                bean.on($number[0], 'change', function () {
+                    $('.commercial--dfp-multiple')
+                        .removeClass(itemNumClasses.join(' '))
+                        .addClass('commercial--items-dfp-' + $number.val());
+                });
+
+                var $palette    = $('#dfp-palette'),
+                    toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
+                        .map(function (tone) {
+                            return 'commercial--tone-' + tone;
+                        });
+                bean.on($palette[0], 'change', function () {
+                    $('.commercial--dfp-multiple, .commercial--dfp-single, .commercial--v-high')
+                        .removeClass(toneClasses.join(' '))
+                        .addClass('commercial--tone-' + $palette.val());
+                });
+            });
+
+        var loadCommercial = function (callback) {
+            require(['core'])
+                .next(['bootstraps/commercial'])
+                .next(['bootstraps/creatives'])
+                .then(callback) ;
+        };
+    </script>
+
     <article id="article" class="content content--article">
         <div class="gs-container">
             <h1 class="content__headline">All components</h1>
@@ -138,7 +148,7 @@
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
                 </div>
@@ -146,15 +156,20 @@
         </div>
         <script>
             loadCommercial(function () {
-                require(['common/modules/commercial/creatives/commercial-component'])
+                require(['common/modules/commercial/creatives/template'])
                     .then(function(
-                        CommercialComponent
+                        Template
                     ) {
-                        new CommercialComponent(document.querySelector('.ad-slot--inline-book'), {
-                            type: 'book',
-                            isbn: '9781781254165',
-                            clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: 'omnitureId'
+                        new Template(document.querySelector('.ad-slot--inline-book'), {
+                            creative: 'manual-inline',
+                            Toneclass: 'commercial--tone-brand',
+                            component_title: 'The Guardian Bookshop',
+                            omniture_id: 'omniture_id',
+                            base_url: 'http://www.guardianbookshop.co.uk/',
+                            offer_title: 'Title',
+                            offer_url: 'http://www.guardianbookshop.co.uk/',
+                            offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
+                            offer_meta: 'Meta'
                         }).create();
                     });
                 });
