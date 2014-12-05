@@ -45,4 +45,10 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     status(result) should be(200)
     contentAsString(result) should include("Sorry - this page has been removed.")
   }
+
+  it should "render videos tagged as podcasts" in {
+    val result = controllers.MediaController.render("football/video/2014/dec/05/football-weekly-live-in-london-video")(TestRequest("/football/video/2014/dec/05/football-weekly-live-in-london-video"))
+    status(result) should be(200)
+    contentAsString(result) should include(""""isPodcast":false""")
+  }
 }
