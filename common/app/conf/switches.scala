@@ -177,7 +177,7 @@ object Switches {
 
   val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
     "If this switch is on, memory leak on Admin server should be plugged.",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
