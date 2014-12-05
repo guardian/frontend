@@ -11,7 +11,7 @@ define([
         this.expiry = '2015-02-01';
         this.author = 'Alex Sanders';
         this.description = 'Test the efficacy of breaking news alerts';
-        this.audience = 1;
+        this.audience = .1;
         this.audienceOffset = 0;
         this.successMeasure = 'Click-through for the breaking story.';
         this.audienceCriteria = 'All users';
