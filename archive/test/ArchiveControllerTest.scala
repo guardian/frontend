@@ -29,6 +29,9 @@ import scala.concurrent.Future
   it should "not decode encoded urls" in {
     val result = controllers.ArchiveController.lookup("www.theguardian.com/foo/%2Cfoo")(TestRequest())
     status(result) should be (404)
+
+    val combinerPattern = controllers.ArchiveController.lookup("www.theguardian.com/foo+foo+foo")(TestRequest())
+    status(combinerPattern) should be (404)
   }
 
   it should "decode encoded spaces as + for tag combiners" in {
