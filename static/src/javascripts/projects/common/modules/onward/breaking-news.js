@@ -3,7 +3,7 @@ define([
     'bonzo',
     'qwery',
     'lodash/arrays/flatten',
-    'lodash/collections/forEach',
+    'lodash/arrays/intersection',
     'lodash/objects/assign',
     'lodash/objects/isArray',
     'common/utils/ajax',
@@ -17,7 +17,7 @@ define([
     bonzo,
     qwery,
     flatten,
-    forEach,
+    intersection,
     assign,
     isArray,
     ajax,
@@ -37,19 +37,11 @@ define([
         return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
     }
 
-    function cleanIDs(articleIds, hiddenIds) {
-        var cleanedIDs = {};
-        forEach(articleIds, function (articleID) {
-            cleanedIDs[articleID] = hiddenIds[articleID] || false;
-        });
-        return cleanedIDs;
-    }
-
     return function () {
         var page = config.page,
-            hiddenIds = storage.local.get(storageKeyHidden) || {};
+            hiddenIds = storage.local.get(storageKeyHidden) || [];
 
-        if (!page || hiddenIds[page.pageId] === true) { return; }
+        if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
 
         ajax({
             url: breakingNewsSource,
@@ -87,20 +79,18 @@ define([
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; }),
-                    showAlert = false,
-                    alertDelay = 3000;
+                    showAlert = false;
 
-                // if we're on the page that an alert is for, hide alerts for it
                 if (articleIds.indexOf(page.pageId) > -1) {
-                    hiddenIds[page.pageId] = true;
+                    hiddenIds.push(page.pageId);
+                    storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
+                    // when displaying a breaking news item, don't show any other breaking news:
+                    return;
                 }
-
-                // update stored IDs with current batch, so we know we've seen these
-                storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
                 articles
                 .filter(function (article) {
-                    return hiddenIds[article.id] !== true;
+                    return (hiddenIds.indexOf(article.id) === -1);
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function (article) {
@@ -113,32 +103,20 @@ define([
                         var id;
                         e.preventDefault();
                         id = e.currentTarget.getAttribute('data-article-id');
-                        hiddenIds[id] = true;
-                        storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
+                        hiddenIds.push(id);
+                        storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                         bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
                     });
 
                     showAlert = true;
-
-                    if (hiddenIds[article.id] === false) {
-                        alertDelay = 0;
-                    }
                 });
 
                 if (showAlert) {
                     setTimeout(function () {
                         $body = $body || bonzo(document.body);
                         $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
-
-                        if (alertDelay === 0) {
-                            $breakingNews.removeClass('breaking-news--fade-in');
-                            s.tl(this, 'o', 'breaking news alert shown 2 or more times');
-                        } else {
-                            s.tl(this, 'o', 'breaking news alert shown');
-                        }
-
                         $breakingNews.removeClass('breaking-news--hidden');
-                    }, alertDelay);
+                    }, 3000);
                 }
             }
         );
