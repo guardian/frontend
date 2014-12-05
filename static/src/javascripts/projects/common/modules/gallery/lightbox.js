@@ -514,7 +514,7 @@ define([
             lightbox.loadGalleryfromJson(images, galleryIndex);
         });
 
-        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article') {
+        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article' || config.page.contentType === 'ImageContent') {
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);

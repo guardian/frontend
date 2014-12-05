@@ -752,11 +752,37 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
-  override lazy val metaData: Map[String, JsValue] =
-    super.metaData + ("contentType" -> JsString(contentType))
-
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
+  )
+
+  lazy val lightbox: JsObject = {
+    val allImages: Seq[ImageContainer] = mainPicture.toSeq ++ bodyImages
+    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
+    val imageJson = imageContainers.map { imgContainer =>
+      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
+        JsObject(Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+          "role" -> JsString(img.role.toString)
+        ))
+      }
+    }
+    JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "images" -> JsArray((imageJson).toSeq.flatten)
+    ))
+  }
+
+  override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
+    "contentType" -> JsString(contentType),
+    "lightboxImages" -> lightbox
   )
 }
 
