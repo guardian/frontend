@@ -175,6 +175,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
+    "If this switch is on, memory leak on Admin server should be plugged.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
+  )
+
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
     safeState = On, sellByDate = never
@@ -452,6 +457,11 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
+    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
   )
 
   def all: Seq[Switch] = Switch.allSwitches
