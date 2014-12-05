@@ -287,12 +287,14 @@ define([
                     preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                     plugins: {
                         embed: {
-                            embedable: config.switches.externalVideoEmbeds && $el.attr('data-block-video-ads') === 'true',
+                            embeddable: config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
                             location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
                         }
                     }
                 }),
                 mouseMoveIdle;
+
+            console.log($el.attr('data-embeddable'));
 
             player.guMediaType = mediaType;
 
