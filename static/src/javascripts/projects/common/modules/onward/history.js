@@ -262,9 +262,7 @@ define([
 
                 if (!item) {
                     mySecondaryTags.unshift(tag);
-                } else if (item === myNavItemsFirst) {
-                    // noop
-                } else  if (doPrimary) {
+                } else if (item !== myNavItemsFirst && doPrimary) {
                     $(item).detach().insertAfter(myNavItemsFirst);
                 }
             });
@@ -278,7 +276,7 @@ define([
             $(document.getElementById('history-nav-primary')).html(myNav);
         }
 
-        if (!doSecondary || mySecondaryTags.length == 0) { return; }
+        if (!doSecondary || mySecondaryTags.length === 0) { return; }
 
         mySecondaryNav =
             '<ul class="signposting">' +
