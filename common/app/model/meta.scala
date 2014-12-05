@@ -67,8 +67,6 @@ trait MetaData extends Tags {
     "og:url"       -> s"${Configuration.site.host}$url"
   )
 
-  def openGraphImages: Seq[String] = Seq()
-
   def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
