@@ -280,14 +280,15 @@ define([
                 blockVideoAds = $el.attr('data-block-video-ads') === 'true',
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',
                 endSlateUri = $el.attr('data-end-slate'),
+                embedPath = $el.attr('data-embed-path'),
                 player = createVideoPlayer(el, {
                     controls: true,
                     autoplay: false,
                     preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                     plugins: {
                         embed: {
-                            embedable: config.switches.externalVideoEmbeds && config.page.embeddable,
-                            location: config.page.externalEmbedHost + config.page.pageId
+                            embeddable: config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                            location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
                         }
                     }
                 }),

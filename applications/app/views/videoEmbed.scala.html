@@ -93,7 +93,7 @@
                     document.documentElement.className = docClass;
 
                     var curl = {
-                        baseUrl: '@{Configuration.assets.path}javascripts',
+                        baseUrl: '@{Configuration.assets.securePath}javascripts',
                         apiName: 'require',
                         paths: {
                             core: '@StaticSecure("javascripts/core.js")',

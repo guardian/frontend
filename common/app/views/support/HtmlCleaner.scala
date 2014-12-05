@@ -1,5 +1,6 @@
 package views.support
 
+import java.net.URL
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -65,47 +66,55 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
       })
     }
 
-    document.getElementsByClass("gu-video").foreach { element: Element =>
+    document.getElementsByClass("element-video").foreach { figure: Element =>
+      val canonicalUrl = figure.attr("data-canonical-url")
 
-      element
-        .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video")
-        .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
+      figure.getElementsByClass("gu-video").foreach { element: Element =>
 
-      val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
+        element
+          .removeClass("gu-video")
+          .addClass("js-gu-media gu-media gu-media--video")
+          .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
-      val mediaId = element.attr("data-media-id")
-      val asset = findVideoFromId(mediaId)
+        val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
 
-      element.getElementsByTag("source").remove()
+        val mediaId = element.attr("data-media-id")
+        val asset = findVideoFromId(mediaId)
 
-      val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-        videoAsset.encoding.map { encoding =>
-          s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
-        }.getOrElse("")
-      }.mkString("")
+        element.getElementsByTag("source").remove()
 
-      element.append(sourceHTML)
+        val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
+          videoAsset.encoding.map { encoding =>
+            s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+          }.getOrElse("")
+        }.mkString("")
 
-      // add the poster url
-      asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach{ url =>
-        element.attr("poster", url)
-      }
+        element.append(sourceHTML)
 
-      asset.foreach( video => {
-        element.append(
-          s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
+        // add the poster url
+        asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
+          element.attr("poster", url)
+        }
+
+        asset.foreach(video => {
+          element.append(
+            s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
                 <param name="allowFullScreen" value="true" />
                 <param name="movie" value="$flashMediaElement" />
                 <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-      })
+        })
 
-      findVideoApiElement(mediaId).foreach( videoElement => {
-        element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-      })
+        findVideoApiElement(mediaId).foreach{ videoElement =>
+          element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
+          element.attr("data-embeddable", videoElement.embeddable.toString)
+          if(!canonicalUrl.isEmpty) {
+            element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          }
+        }
+      }
     }
 
     document.getElementsByClass("element-witness--main").foreach { element: Element =>

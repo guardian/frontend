@@ -2,7 +2,7 @@
 
     videojs.plugin('embed', function(options) {
 
-        if (!options.embedable) { return false; }
+        if (!options.embeddable) { return false; }
 
         var player = this;
 
