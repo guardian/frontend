@@ -60,7 +60,7 @@ class DfpDataHydrator extends Logging {
 
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
-      val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
+      val allAdUnits = AdUnitAgent.get.adUnits
       val placementAdUnits = loadAdUnitIdsByPlacement()
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
@@ -146,27 +146,6 @@ class DfpDataHydrator extends Logging {
     val statementBuilder = new StatementBuilder().where("name = :name").withBindVariableValue("name", name)
       val field = DfpApiWrapper.fetchCustomFields(serviceRegistry, statementBuilder).headOption
     field map (_.getId)
-  }
-
-  def loadActiveDescendantAdUnits(rootName: String): Map[String, GuAdUnit] =
-    dfpServiceRegistry.fold(Map[String, GuAdUnit]()) { serviceRegistry =>
-
-      val statementBuilder = new StatementBuilder()
-        .where("status = :status")
-        .withBindVariableValue("status", InventoryStatus._ACTIVE)
-
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
-
-      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists { path =>
-          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
-        }
-      }
-
-      rootAndDescendantAdUnits.map { adUnit =>
-        val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-        (adUnit.getId, GuAdUnit(adUnit.getId, path))
-      }.toMap
   }
 
   def loadSpecialAdunits(rootName: String): Seq[(String, String)] =

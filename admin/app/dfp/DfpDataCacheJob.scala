@@ -44,6 +44,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
 
+        AdUnitAgent.refresh()
+
         val start = System.currentTimeMillis
         val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
         val duration = System.currentTimeMillis - start
