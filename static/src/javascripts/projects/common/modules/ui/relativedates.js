@@ -186,7 +186,7 @@ define([
             if (relativeDate) {
                 // If we find .timestamp__text (facia), use that instead
                 targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
-                if (targetEl.getAttribute('title') === 'Permalink to this comment' || !targetEl.getAttribute('title')) {
+                if (!targetEl.getAttribute('title')) {
                     targetEl.setAttribute('title', bonzo(targetEl).text());
                 }
                 targetEl.innerHTML = relativeDate;
