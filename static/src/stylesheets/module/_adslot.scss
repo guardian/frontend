@@ -291,6 +291,9 @@
         @include fs-textSans(1);
         color: colour(neutral-2);
     }
+    .ad-slot--paid-for-badge__help {
+        @include font-size(11, 14);
+    }
     .ad-slot--paid-for-badge__header {
         margin: 0;
         padding-top: $gs-baseline / 2;
@@ -343,12 +346,22 @@
 .ad-slot--paid-for-badge--article {
     padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted colour(neutral-5);
-    min-height: 135px;
 
     @include mq(leftCol) {
         min-height: 0;
         border-bottom-width: 0;
         border-top: 1px dotted colour(neutral-5);
+    }
+    @include mq(mobile, $until: leftCol) {
+        padding-bottom: $gs-baseline/2;
+        .ad-slot--paid-for-badge__link {
+            margin-top: 6px;
+        }
+    }
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
+        }
     }
     .content--media--video & {
         min-height: 0;
@@ -381,6 +394,9 @@
             margin-right: gs-span(1);
         }
     }
+    .ad-slot--capi-single & {
+        margin: 0;
+    }
     .ad-slot--paid-for-badge__link {
         position: relative;
         &:after {
@@ -398,6 +414,11 @@
         }
         @include mq(mobile, $until: leftCol) {
             margin-top: 0;
+        }
+    }
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
         }
     }
 
@@ -441,6 +462,9 @@
         .has-page-skin .container--has-toggle & {
             margin-right: gs-span(1);
         }
+    }
+    @include mq($until: tablet) {
+        clear: both;
     }
 }
 .fc-container--sponsored .fc-container:first-child,
