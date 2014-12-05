@@ -102,7 +102,7 @@ define([
                 !userPrefs.isOff('adverts') &&
                 !config.page.shouldHideAdverts &&
                 (!config.page.isSSL || config.page.section === 'admin') &&
-                window.location.hash.substr(1).split('&').indexOf('noads') === -1
+                !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 modules.commercialLoaderHelper();
                 modules.tagContainer();
