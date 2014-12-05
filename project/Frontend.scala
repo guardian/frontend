@@ -186,6 +186,10 @@ object Frontend extends Build with Prototypes {
       libraryDependencies += im4java
     )
 
+  val rss = application("rss")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val main = root().aggregate(
     common,
     facia,
@@ -204,6 +208,7 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     archive,
-    preview
+    preview,
+    rss
   )
 }

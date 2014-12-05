@@ -1,7 +1,6 @@
 package conf
 
 import common._
-import implicits.Collections
 import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -91,6 +90,12 @@ object Switches {
     sellByDate = never
   )
 
+  val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
+    "If this switch is switched on then the preview server requires login",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
+  )
+
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
@@ -126,6 +131,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val ExternalVideoEmbeds = Switch("Performance", "external-video-embeds",
+    "If switched on then we will accept and display external video views",
+    safeState = Off, sellByDate = never
+  )
+
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
@@ -147,8 +157,9 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off, sellByDate = never
+    //"If this switch is on png images will be resized via the png-resizing server",
+    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
   )
 
   // Commercial
@@ -281,12 +292,12 @@ object Switches {
   )
 
   // Features
-  val ZonesAggregationSwitch = Switch(
+  val HardcodedSectionTagLookUp = Switch(
     "Feature",
-    "zones-aggregation",
-    "If activated, all pages for 'zones' (e.g., sport and culture) will aggregate their respective subsections",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 1, 15)
+    "hardcoded-section-tag-lookup",
+    "Hardcoded section tag id lookup (uk-news palaver)",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
@@ -303,7 +314,7 @@ object Switches {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -364,7 +375,7 @@ object Switches {
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",

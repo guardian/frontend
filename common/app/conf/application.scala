@@ -14,6 +14,7 @@ object Configuration extends GuardianConfiguration("frontend", webappConfDirecto
 object LiveContentApi extends ElasticSearchLiveContentApiClient
 
 object Static extends Assets(Configuration.assets.path)
+object StaticSecure extends Assets(Configuration.assets.securePath)
 
 object Gzipper extends GzipFilter(
   shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))

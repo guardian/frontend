@@ -12,8 +12,9 @@ import java.net.URI
 // Assuming that 'I can serve this to the user' is the least error state.
 object ModelOrResult extends Results with Logging {
 
-  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
-    item.map(i => ItemOrRedirect(i, response))
+  def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None)
+              (implicit request: RequestHeader): Either[T, Result] =
+    item.map(i => ItemOrRedirect(i, response, maybeSection))
       .orElse(InternalRedirect(response).map(Right(_)))
       .getOrElse(Right(NoCache(NotFound)))
 }
@@ -23,13 +24,15 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
-  def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
+  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
 
     def pathWithoutEdition(section: ApiSection) =
-      section.editions.find(_.code == "default").map(edition => s"/${edition.id}").getOrElse(Paths.stripEditionIfPresent(section.id))
+      section.editions.find(_.code == "default")
+        .map(edition => s"/${edition.id}")
+        .getOrElse(Paths.stripEditionIfPresent(section.id))
 
-    response.section match {
+    maybeSection match {
       case Some(section) if request.path.endsWith("/all") &&
         pathWithoutEdition(section) != request.path.stripSuffix("/all") =>
         Right(Found(pathWithoutEdition(section) + "/all"))
@@ -52,7 +55,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
     // redirect if itemPath is not the same as request's, and this isn't an all page, a JSON or an RSS request
-    itemPath != request.path && !(request.isJson || request.isRss)
+    itemPath != request.path.stripSuffix("/all") && !(request.isJson || request.isRss)
   }
 }
 
