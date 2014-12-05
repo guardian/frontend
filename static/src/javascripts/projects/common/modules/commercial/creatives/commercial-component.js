@@ -10,6 +10,7 @@ define([
     'lodash/collections/size',
     'lodash/objects/defaults',
     'lodash/objects/isArray',
+    'lodash/objects/merge',
     'lodash/objects/pick',
     'common/utils/$',
     'common/utils/_',
@@ -26,6 +27,7 @@ define([
     size,
     defaults,
     isArray,
+    merge,
     pick,
     $,
     _,
@@ -75,8 +77,7 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            var section = config.page.section,
-                jobs    = params.jobIds ? params.jobIds.split(',') : [];
+            var section   = config.page.section;
 
             this.params = params;
             this.$adSlot = $adSlot;
@@ -88,7 +89,7 @@ define([
                 books:             buildComponentUrl('books/bestsellers'),
                 booksMedium:       buildComponentUrl('books/bestsellers-medium'),
                 booksHigh:         buildComponentUrl('books/bestsellers-high'),
-                jobs:              buildComponentUrl('jobs', { t: jobs }),
+                jobs:              buildComponentUrl('jobs', { t: params.jobIds ? params.jobIds.split(',') : [] }),
                 jobsHigh:          buildComponentUrl('jobs-high'),
                 masterclasses:     buildComponentUrl('masterclasses'),
                 masterclassesHigh: buildComponentUrl('masterclasses-high'),
@@ -97,9 +98,8 @@ define([
                 travel:            buildComponentUrl('travel/offers', { s: section }),
                 travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
                 multi:             buildComponentUrl('multi', { c: params.components }),
-                capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
-                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
-                capi:              buildComponentUrl('capi', defaults(params, { s: section }))
+                capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
+                capi:              buildComponentUrl('capi', merge(params, { s: section }))
             };
         };
 
