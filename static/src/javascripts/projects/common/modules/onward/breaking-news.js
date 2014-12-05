@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'qwery',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
     'lodash/objects/assign',
@@ -8,10 +9,13 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
-    'common/modules/onward/history'
+    'common/utils/template',
+    'common/modules/onward/history',
+    'text!common/views/breaking-news.html'
 ], function (
     bean,
     bonzo,
+    qwery,
     flatten,
     intersection,
     assign,
@@ -19,12 +23,15 @@ define([
     ajax,
     config,
     storage,
-    history
+    template,
+    history,
+    alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
-        container;
+        $breakingNews,
+        $body;
 
     function slashDelimit() {
         return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
@@ -71,7 +78,8 @@ define([
                         collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; })
                     ]),
 
-                    articleIds = articles.map(function (article) { return article.id; });
+                    articleIds = articles.map(function (article) { return article.id; }),
+                    showAlert = false;
 
                 if (articleIds.indexOf(page.pageId) > -1) {
                     hiddenIds.push(page.pageId);
@@ -86,19 +94,30 @@ define([
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function (article) {
-                    var $el = bonzo.create('<div class="breaking-news-item" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
-                        $closer = bonzo.create('<i class="breaking-news-item__close i-close-icon-white" data-link-name="close"></i>');
+                    var $el = bonzo.create(template(alertHtml, article));
 
-                    bonzo($el).append($closer);
-                    container = container || bonzo(document.querySelector('.js-breaking-news-placeholder'));
-                    container.append($el);
+                    $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
+                    $breakingNews.append($el);
 
-                    bean.on($closer[0], 'click', function () {
-                        bonzo($el).hide();
-                        hiddenIds.push(article.id);
+                    bean.on($breakingNews[0], 'click', '.js-breaking-news__item__close', function (e) {
+                        var id;
+                        e.preventDefault();
+                        id = e.currentTarget.getAttribute('data-article-id');
+                        hiddenIds.push(id);
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
+                        bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
                     });
+
+                    showAlert = true;
                 });
+
+                if (showAlert) {
+                    setTimeout(function () {
+                        $body = $body || bonzo(document.body);
+                        $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
+                        $breakingNews.removeClass('breaking-news--hidden');
+                    }, 3000);
+                }
             }
         );
     };

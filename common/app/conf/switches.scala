@@ -378,6 +378,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
+    "If this is switched on then different Breaking News alert styles are A/B tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
