@@ -131,7 +131,7 @@ define([
                         $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
 
                         if (alertDelay === 0) {
-                            $breakingNews.removeClass('breaking-news--fade-in')
+                            $breakingNews.removeClass('breaking-news--fade-in');
                         }
 
                         $breakingNews.removeClass('breaking-news--hidden');
