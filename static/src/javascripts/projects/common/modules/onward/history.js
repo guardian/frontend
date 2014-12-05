@@ -224,16 +224,20 @@ define([
         saveSummary(summary);
     }
 
-    function storeNavs() {
-        var popular,
+    function renderNavs(doPrimary, doSecondary) {
+        var switches = config.switches,
+            popular,
             canonicalNav,
             myNav,
             myNavItems,
             myNavItemsFirst,
             myNavItemsMap = {},
-            mySecondaryTags = [];
+            mySecondaryTags = [],
+            mySecondaryNav;
 
-        if (!config.switches.historyNavStorage) { return; }
+        doPrimary = doPrimary && (switches.historyNavPrimaryStore || switches.historyNavPrimaryInject);
+        doSecondary = doSecondary && (switches.historyNavSecondaryStore || switches.historyNavSecondaryInject);
+        if (!doPrimary && !doSecondary) { return; }
 
         popular = getPopular();
         if (popular.length === 0) { return; }
@@ -256,23 +260,33 @@ define([
             .forEach(function (tag) {
                 var item = myNavItemsMap[tag[0]];
 
-                if (item === myNavItemsFirst) {
-                    // noop
-
-                } else  if (item) {
-                    $(item).detach().insertAfter(myNavItemsFirst);
-
-                } else {
+                if (!item) {
                     mySecondaryTags.unshift(tag);
+                } else if (item === myNavItemsFirst) {
+                    // noop
+                } else  if (doPrimary) {
+                    $(item).detach().insertAfter(myNavItemsFirst);
                 }
             });
 
-        // On purpose not using storage module, to avoid a JSON parse on extraction:
-        window.localStorage.setItem(storageKeyNavPrimary, myNav.innerHTML.replace(/\s{2,}/g, ' '));
+        if (switches.historyNavPrimaryStore) {
+            // On purpose not using storage module, to avoid a JSON parse on extraction
+            window.localStorage.setItem(storageKeyNavPrimary, myNav.innerHTML.replace(/\s{2,}/g, ' '));
+        }
 
-        if (mySecondaryTags.length) {
-            // On purpose not using storage module, to avoid a JSON parse on extraction:
-            window.localStorage.setItem(storageKeyNavSecondary,
+        if (switches.historyNavPrimaryInject) {
+            $(document.getElementById('history-nav-primary')).html(myNav);
+        }
+
+        if (!doSecondary || mySecondaryTags.length == 0) { return; }
+
+        mySecondaryNav =
+            '<ul class="signposting">' +
+                '<li class="signposting__item signposting__item--home">' +
+                    '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+                '</li>' +
+            '</ul>' +
+            '<ul class="local-navigation" data-link-name="history">' +
                 mySecondaryTags.map(function (tag) {
                     return template(
                         '<li class="local-navigation__item">' +
@@ -280,16 +294,23 @@ define([
                         '</li>',
                         {id: tag[0], name: tag[1]}
                     );
-                }).join('')
-            );
+                }).join('') +
+            '</ul>';
+
+        if (switches.historyNavSecondaryStore) {
+            // On purpose not using storage module, to avoid a JSON parse on extraction
+            window.localStorage.setItem(storageKeyNavSecondary, mySecondaryNav);
         }
 
+        if (switches.historyNavSecondaryInject) {
+            $(document.getElementById('history-nav-secondary')).html(mySecondaryNav);
+        }
     }
 
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        storeNavs:  storeNavs,
+        renderNavs:  renderNavs,
         getPopular: getPopular,
         isRevisit:  isRevisit,
         reset: reset,

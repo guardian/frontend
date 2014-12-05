@@ -359,23 +359,23 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val HistoryNavStorageSwitch = Switch("Feature", "history-nav-storage",
-    "If switched on, history-based primary and secondary navs are saved as html to localStorage",
+  val HistoryNavPrimaryInject = Switch("Feature", "history-nav-primary-inject",
+    "If switched on, history-based primary nav is injected into page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
-  val HistoryNavPrimarySwitch = Switch("Feature", "history-nav-primary",
+  val HistoryNavSecondaryInject = Switch("Feature", "history-nav-secondary-inject",
+    "If switched on, history-based secondary nav is injected into page",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
+  val HistoryNavPrimaryStore = Switch("Feature", "history-nav-primary-store",
     "If switched on, history-based primary nav is fetched from localStorage and written to page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
-  val HistoryNavSecondarySwitch = Switch("Feature", "history-nav-secondary",
+  val HistoryNavSecondaryStore = Switch("Feature", "history-nav-secondary-store",
     "If switched on, history-based secondary nav is fetched from localStorage and written to page",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  val HistoryNavSecondaryInjectSwitch = Switch("Feature", "history-nav-secondary-inject",
-    "If switched on, history-based secondary nav is injected into page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
@@ -511,10 +511,10 @@ object Switches extends Collections {
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
     CrosswordSvgThumbnailsSwitch,
-    HistoryNavStorageSwitch,
-    HistoryNavPrimarySwitch,
-    HistoryNavSecondarySwitch,
-    HistoryNavSecondaryInjectSwitch
+    HistoryNavPrimaryInject,
+    HistoryNavSecondaryInject,
+    HistoryNavPrimaryStore,
+    HistoryNavSecondaryStore
   )
 
   val httpSwitches: List[Switch] = List(

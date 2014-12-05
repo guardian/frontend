@@ -7,34 +7,32 @@
                     ("navigation", true),
                     ("js-navigation-header", true),
                     ("navigation--collapsed", true),
-                    ("navigation--has-signposting", !Edition.isEditionFront || HistoryNavSecondarySwitch.isSwitchedOn),
-                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty || HistoryNavSecondarySwitch.isSwitchedOn)
+                    ("navigation--has-signposting", !Edition.isEditionFront || HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn),
+                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty || HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn)
                 ))">
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
-                        @if(Edition.isEditionFront && HistoryNavSecondarySwitch.isSwitchedOn) {
-                            <script>
-                                (function(hasStorage) {
-                                    var nav;
+                        @if(Edition.isEditionFront) {
+                            @if(HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn) {
+                                <div id="history-nav-secondary"></div>
+                            }
+                            @if(HistoryNavSecondaryStore.isSwitchedOn) {
+                                <script>
+                                    (function(hasStorage) {
+                                        var nav;
 
-                                    if (!hasStorage) { return; }
+                                        if (!hasStorage) { return; }
 
-                                    nav = window.localStorage.getItem('gu.history.nav.secondary');
+                                        nav = window.localStorage.getItem('gu.history.nav.secondary');
 
-                                    if (nav && !/<\/?SCRIPT/i.test(nav)) {
-                                        document.write(
-                                            '<ul class="signposting">' +
-                                                '<li class="signposting__item signposting__item--home">' +
-                                                    '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
-                                                '</li>' +
-                                            '</ul>' +
-                                            '<ul class="local-navigation" data-link-name="history">' + nav + '</ul>'
-                                        );
-                                    }
-                                })(guardian.isModernBrowser);
-                            </script>
+                                        if (nav) {
+                                            document.getElementById('history-nav-secondary').innerHTML = nav;
+                                        }
+                                    })(guardian.isModernBrowser);
+                                </script>
+                            }
                         }
                         @if(!Edition.isEditionFront) {
                             @fragments.nav.signposting(metaData, navigation)
@@ -53,7 +51,7 @@
                         }
                     </nav>
                     <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation)
+                        @fragments.nav.topNavigation(metaData, navigation, true)
                     </nav>
                 </div>
                 <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
