@@ -39,7 +39,7 @@ define([
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
-        forEach(articleIds, function(articleID) {
+        forEach(articleIds, function (articleID) {
             cleanedIDs[articleID] = hiddenIds[articleID] || false;
         });
         return cleanedIDs;
