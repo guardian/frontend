@@ -11,7 +11,8 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component'
+    'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/breaking-news-alert-style'
 ], function (
     raven,
     filter,
@@ -25,12 +26,14 @@ define([
     mediator,
     store,
     mvtCookie,
-    HighCommercialComponent
+    HighCommercialComponent,
+    BreakingNewsAlertStyle
 ) {
 
     var ab,
         TESTS = [
-            new HighCommercialComponent()
+            new HighCommercialComponent(),
+            new BreakingNewsAlertStyle()
         ],
         participationsKey = 'gu.ab.participations';
 

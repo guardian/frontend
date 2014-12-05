@@ -32,7 +32,6 @@ define([
     'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/onward/breaking-news',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
     'common/modules/onward/onward-content',
@@ -88,7 +87,6 @@ define([
     navigation,
     Profile,
     Search,
-    breakingNews,
     history,
     MoreTags,
     Onward,
@@ -298,12 +296,6 @@ define([
                 }
             },
 
-            displayBreakingNews: function () {
-                if (config.switches.breakingNews) {
-                    breakingNews();
-                }
-            },
-
             unshackleParagraphs: function () {
                 if (userPrefs.isOff('para-indents')) {
                     $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
@@ -313,7 +305,10 @@ define([
             logReadingHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
-                        history.log(config.page);
+                        history.logSummary(config.page);
+                    }
+                    if (config.page.contentType === 'Video') {
+                        history.logHistory(config.page);
                     }
                 });
             },
@@ -461,7 +456,6 @@ define([
             modules.showTabs();
             modules.initialiseTopNavItems();
             modules.initialiseNavigation();
-            modules.displayBreakingNews();
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
