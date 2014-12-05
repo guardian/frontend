@@ -5,11 +5,13 @@
 define([
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/template',
     'common/utils/storage'
 ], function (
     $,
     _,
+    config,
     template,
     storage
 ) {
