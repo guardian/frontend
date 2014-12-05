@@ -1,12 +1,12 @@
 package dfp
 
-import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
+import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
+import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
-import play.api.{Play, Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.{Application, GlobalSettings, Play}
 import tools.Store
-import conf.Switches.DfpCachingSwitch
 
 import scala.concurrent.future
 
@@ -48,6 +48,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
         val duration = System.currentTimeMillis - start
         log.info(s"Reading DFP data took $duration ms")
+
+        MemoryLeakPlug
 
         if (data.isValid) {
           val now = printLondonTime(DateTime.now())
