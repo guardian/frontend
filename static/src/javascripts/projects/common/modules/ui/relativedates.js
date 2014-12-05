@@ -20,14 +20,6 @@ define([
         return n < 10 ? '0' + n : n;
     }
 
-    function ampm(n) {
-        return n < 12 ? 'am' : 'pm';
-    }
-
-    function twelveHourClock(hours) {
-        return hours > 12 ? hours - 12 : hours;
-    }
-
     function isToday(date) {
         var today = new Date();
         return (date.toDateString() === today.toDateString());
@@ -142,7 +134,7 @@ define([
     }
 
     function withTime(date) {
-        return ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours());
+        return ' ' + date.getHours() + ':' + pad(date.getMinutes());
     }
 
     function findValidTimestamps() {
