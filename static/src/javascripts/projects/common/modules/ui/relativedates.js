@@ -135,11 +135,9 @@ define([
         } else if (delta < 5 * 24 * 60 * 60) { // less than 5 days
             return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
                    (opts.showTime ? withTime(then) : '');
-
         } else {
             return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
                    (opts.showTime ? withTime(then) : '');
-
         }
     }
 
