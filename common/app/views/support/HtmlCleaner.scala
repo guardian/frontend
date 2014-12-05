@@ -1,5 +1,6 @@
 package views.support
 
+import java.net.URL
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -105,6 +106,8 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
       findVideoApiElement(mediaId).foreach( videoElement => {
         element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
+        element.attr("data-embeddable", videoElement.embeddable.toString)
+        element.attr("data-embed-path", new URL(element.parent().parent().attr("data-canonical-url")).getPath.stripPrefix("/"))
       })
     }
 
