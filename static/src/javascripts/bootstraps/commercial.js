@@ -14,15 +14,7 @@ define([
     'common/modules/commercial/loader',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/tags/container',
-    'common/modules/userPrefs',
-
-    // modules for creatives - need to be included so they're available, as they're required dynamically
-    'common/modules/commercial/creatives/branded-component',
-    'common/modules/commercial/creatives/commercial-component',
-    'common/modules/commercial/creatives/expandable',
-    'common/modules/commercial/creatives/fluid250',
-    'common/modules/commercial/creatives/scrollable-mpu',
-    'common/modules/commercial/creatives/template'
+    'common/modules/userPrefs'
 ], function (
     bonzo,
     qwery,
@@ -110,7 +102,7 @@ define([
                 !userPrefs.isOff('adverts') &&
                 !config.page.shouldHideAdverts &&
                 (!config.page.isSSL || config.page.section === 'admin') &&
-                window.location.hash !== '#noads'
+                window.location.hash.substr(1).split('&').indexOf('noads') === -1
             ) {
                 modules.commercialLoaderHelper();
                 modules.tagContainer();

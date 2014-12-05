@@ -1,19 +1,31 @@
-<div class="membership-tab js-membership-tab" data-sprite-url="@Static("stylesheets/membership-icons.css")">
 @import views.html.fragments.selectDates
+
+<div class="membership-tab js-membership-tab" data-sprite-url="@Static("stylesheets/membership-icons.css")">
+    <div class="form__success is-hidden js-membership-change-cc-success">Your card details have been updated</div>
 
     <div class="membership-tab__subscription-cancel is-hidden js-mem-cancel-tier">
         <h2 class="subscription-change__title">You've cancelled your membership</h2>
-        <p>Now that you've cancelled your membership, your <span class="js-mem-tier-current"></span> benefits will run out on <strong><span class="js-mem-current-period-end"></span></strong>. After that date, the membership section won't be available in your profile.</p>
-        <p>Your final subscription payment was taken on <strong><span
-        class="js-mem-current-period-start"></span></strong>. Please note,
-        you won't be able to amend your package again until this change has been processed.</p>
+        <p>
+            Now that you've cancelled your membership, your <span class="js-membership-tier"></span> benefits will
+            run out on <strong><span class="js-membership-current-period-end"></span></strong>. After that date, the
+            membership section won't be available in your profile.
+        </p>
+        <p>
+            Your final subscription payment was taken on
+            <strong><span class="js-membership-current-period-start"></span></strong>. Please note, you won't be able to
+            amend your package again until this change has been processed.
+        </p>
     </div>
 
     <div class="membership-tab__subscription-change is-hidden js-mem-change-tier">
         <h2 class="subscription-change__title">You've changed packages</h2>
 
-        <p>Now that you've switched packages, your <span class="js-mem-tier-current"></span> benefits will run out on <strong><span class="js-mem-current-period-end"></span></strong>. After that date, you'll default to our Friend level of membership. Your final <span class="js-mem-tier-current"></span> subscription payment was taken on <strong><span
-        class="js-mem-current-period-start"></span></strong>.</p>
+        <p>
+            Now that you've switched packages, your <span class="js-membership-tier"></span> benefits will run out
+            on <strong><span class="js-membership-current-period-end"></span></strong>. After that date, you'll
+            default to our Friend level of membership. Your final <span class="js-membership-tier"></span>
+            subscription payment was taken on <strong><span class="js-membership-current-period-start"></span></strong>.
+        </p>
         <p>Please note, you won't be able to amend your package again until this change has been processed.</p>
 
         <h2 class="change-summary__heading">Change package summary</h2>
@@ -28,27 +40,27 @@
                     <div class="change-summary__tier-icon">
                         <i class="i js-mem-icon-current"></i>
                     </div>
-                    <h3 class="change-summary_tier js-mem-tier-current"></h3>
+                    <h3 class="change-summary_tier js-membership-tier"></h3>
                 </div>
                 <div class="change-summary__meta">
                     <ul class="u-unstyled">
                         <li class="change-summery__item">
                             <span class="change-summary__label">End date</span>
-                            <span class="change-summary__data js-mem-current-period-end"></span>
+                            <span class="change-summary__data js-membership-current-period-end"></span>
                         </li>
                         <li class="change-summery__item">
-                            <span class="change-summary__label"><span class="js-mem-current-interval"></span> payment</span>
-                            <span class="membership-tab__currency">£</span><span class="change-summary__data js-membership-payment-cost"></span>
+                            <span class="change-summary__label"><span class="js-membership-plan-interval"></span> payment</span>
+                            <span class="change-summary__data js-membership-payment-cost"></span>
                         </li>
                         <li class="change-summery__item">
                             <span class="change-summary__label">Last payment</span>
-                            <span class="change-summary__data js-mem-current-period-start"></span>
+                            <span class="change-summary__data js-membership-current-period-start"></span>
                         </li>
                         <li class="change-summery__item">
                             <span class="change-summary__label">Card</span>
                             <span class="change-summary__data">
                                 <span class="membership-tab__card-details">
-                                    •••• •••• •••• <span class="js-membership-summary-card-lastfour"></span>
+                                    •••• •••• •••• <span class="js-membership-cc-last4"></span>
                                 </span>
                             </span>
                         </li>
@@ -59,19 +71,19 @@
                 <div class="change-summary__panel-label change-summary__panel-label--target">Your new package</div>
                 <div class="change-summary__header">
                     <div class="change-summary__tier-icon">
-                        <i class="i js-mem-icon-target"></i>
+                        <i class="i i-g-friend"></i>
                     </div>
-                    <h3 class="change-summary_tier js-mem-tier-target"></h3>
+                    <h3 class="change-summary_tier">Friend</h3>
                 </div>
                 <div class="change-summary__meta">
                     <ul class="u-unstyled">
                         <li class="change-summery__item">
                             <span class="change-summary__label">Start date</span>
-                            <span class="change-summary__data js-mem-new-start"></span>
+                            <span class="change-summary__data js-membership-current-period-end"></span>
                         </li>
                         <li class="change-summery__item">
                             <span class="change-summary__label">Monthly payment</span>
-                            <span class="change-summary__data">£FREE</span>
+                            <span class="change-summary__data">FREE</span>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +106,7 @@
         <li>
             <div class="fieldset__heading">
                 <h2 class="form__heading">
-                    Membership Tier
+                    Membership tier
                 </h2>
             </div>
 
@@ -121,13 +133,13 @@
         <li>
             <div class="fieldset__heading">
                 <h2 class="form__heading">
-                    <span class="js-membership-plan-interval"></span> Payment
+                    <span class="js-membership-plan-interval"></span> payment
                 </h2>
             </div>
 
             <div class="fieldset__fields">
                 <div class="form-field">
-                    <span class="membership-tab__currency">£</span><span class="membership-payment-cost js-membership-payment-cost"></span>
+                    <span class="membership-payment-cost js-membership-payment-cost"></span>
                 </div>
             </div>
         </li>
@@ -142,7 +154,7 @@
 
             <div class="fieldset__fields">
                 <div class="form-field">
-                    <span class="js-membership-payment-next"></span>
+                    <span class="js-membership-current-period-end"></span>
                 </div>
             </div>
         </li>
@@ -155,18 +167,18 @@
 
             <div class="fieldset__fields u-cf">
                 <div class="form-field">
-                    <span class="js-membership-payment-card-type membership-tab__card-types"><span class="js-membership-payment-card-text u-h"></span></span>
+                    <span class="js-membership-cc-type membership-tab__card-types"><span class="js-membership-payment-card-text u-h"></span></span>
                     <span class="membership-tab__card-details">
-                        •••• •••• •••• <span class="js-membership-payment-card-lastfour"></span>
+                        •••• •••• •••• <span class="js-membership-cc-last4"></span>
                     </span>
                     <button class="submit-input js-membership-change-cc-open membership-tab__update-button" data-link-name="Change card">Change card</button>
                 </div>
             </div>
         </li>
-        <li class="membership-tab__change-cc-form-cont js-membership-change-cc-form-cont">
-            <form class="membership-tab__change-cc-form js-membership-change-cc-form js-stripe-form" action="">
+        <li class="membership-tab__change-cc-form is-closed js-membership-change-cc-form-cont">
+            <form class="js-membership-change-cc-form js-stripe-form" action="">
 
-                <div class="js-payment-errors form__error is-hidden"></div>
+                <div class="js-payment-errors qa-form-error form__error is-hidden"></div>
 
                 <div class="fieldset__heading">
                     <h2 class="form__heading">

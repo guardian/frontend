@@ -5,7 +5,6 @@
     .lineitems {
         padding: 0;
         margin: 0;
-        overflow: hidden;
     }
     .lineitem {
         @include box-sizing(border-box);

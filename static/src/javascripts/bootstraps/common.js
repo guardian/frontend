@@ -242,8 +242,7 @@ define([
 
             // opt-in to the responsive alpha
             optIn: function () {
-                var countMeIn = /#countmein/.test(window.location.hash);
-                if (countMeIn) {
+                if (window.location.hash.substr(1).split('&').indexOf('countmein') !== -1) {
                     cookies.add('GU_VIEW', 'responsive', 365);
                 }
             },
@@ -305,7 +304,10 @@ define([
             logReadingHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
-                        history.log(config.page);
+                        history.logSummary(config.page);
+                    }
+                    if (config.page.contentType === 'Video') {
+                        history.logHistory(config.page);
                     }
                 });
             },
