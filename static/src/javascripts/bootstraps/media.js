@@ -294,8 +294,6 @@ define([
                 }),
                 mouseMoveIdle;
 
-            console.log($el.attr('data-embeddable'));
-
             player.guMediaType = mediaType;
 
             //Location of this is important
