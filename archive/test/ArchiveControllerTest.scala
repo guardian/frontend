@@ -26,16 +26,18 @@ import scala.concurrent.Future
     controllers.ArchiveController.normalise(path , zeros = "00") should be (expectedPath)
   }
   
-  it should "decode encoded urls" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/foo%2Cfoo")(TestRequest())
-    status(result) should be (301)
-    location(result) should be ("http://www.theguardian.com/foo,foo?redirection=decoded")
+  it should "not decode encoded urls" in {
+    val result = controllers.ArchiveController.lookup("www.theguardian.com/foo/%2Cfoo")(TestRequest())
+    status(result) should be (404)
+
+    val combinerPattern = controllers.ArchiveController.lookup("www.theguardian.com/foo+foo+foo")(TestRequest())
+    status(combinerPattern) should be (404)
   }
 
   it should "decode encoded spaces as + for tag combiners" in {
     val result = controllers.ArchiveController.lookup("www.theguardian.com/foo%20foo")(TestRequest())
     status(result) should be (301)
-    location(result) should be ("http://www.theguardian.com/foo+foo?redirection=decoded")
+    location(result) should be ("http://www.theguardian.com/foo+foo?redirection=combiner")
   }
 
   it should "redirect old style galleries" in {

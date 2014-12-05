@@ -71,10 +71,14 @@
     }
 }
 
+.ad-slot--capi-multiple {
+    position: relative;
+}
+
 .fc-container--commercial-capi {
     .fc-item__image-container {
         display: block;
-    }    
+    }
 }
 
 .fc-container--advertisement-feature {
@@ -85,7 +89,7 @@
     .item__link:visited .item__title {
         color: colour(neutral-2-contrasted);
     }
-    
+
     .fc-item__header,
     .fc-item__title,
     .fc-item__standfirst,

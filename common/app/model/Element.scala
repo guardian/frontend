@@ -41,6 +41,8 @@ trait ImageContainer extends Element {
   // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
   // distinguish crops by their intended usage
   lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || (img.width != 2048 && img.width != 1024))
+
+  lazy val isLightboxable: Boolean = largestEditorialCrop.map(_.width).getOrElse(0) > 620
 }
 
 object ImageContainer {
@@ -80,6 +82,7 @@ trait VideoContainer extends Element {
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+  lazy val embeddable: Boolean = videoAssets.headOption.map(_.embeddable).getOrElse(false)
   lazy val caption: Option[String] = largestVideo.flatMap(_.caption)
 }
 

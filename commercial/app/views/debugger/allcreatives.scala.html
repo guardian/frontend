@@ -674,45 +674,45 @@ jQuery(function($) {
         </div>
         <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-multiple"></div>
         <script>
-            require(['core'], function(core) {
-                require(['bootstraps/commercial'], function(core) {
-                    require([
-                        'bean',
-                        'qwery',
-                        'common/utils/$',
-                        'common/modules/commercial/creatives/commercial-component'
-                    ], function(
-                        bean,
-                        qwery,
-                        $,
-                        CommercialComponent
-                    ) {
-                        var $capiMultiple = $('.ad-slot--capi-multiple');
+            require(['core'])
+                .next(['bootstraps/commercial'])
+                .next(['bootstraps/creatives'])
+                .next([
+                    'bean',
+                    'qwery',
+                    'common/utils/$',
+                    'common/modules/commercial/creatives/commercial-component'
+                ])
+                .then(function (
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $capiMultiple = $('.ad-slot--capi-multiple');
 
-                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
-                                type: 'capi',
-                                t: ['p/43b2q','p/43945'],
-                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                ct: 'Led Zeppelin special',
-                                cl: 'http://theguardian.com/music/ledzeppelin',
-                                cal: 'http://theguardian.com/about',
-                                k: 'music/ledzeppelin',
-                                af: $(event.srcElement).val(),
-                                clickMacro: '%%CLICK_URL_ESC%%',
-                                omnitureId: "omnitureId"
-                            });
-
-                            commercialComponent.postLoadEvents.capi = function () {
-                                $capiMultiple.removeClass('lazyloaded');
-                            };
-                            commercialComponent.create();
+                    bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
+                        var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                            type: 'capi',
+                            t: ['p/43b2q','p/43945'],
+                            l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                            ct: 'Led Zeppelin special',
+                            cl: 'http://theguardian.com/music/ledzeppelin',
+                            cal: 'http://theguardian.com/about',
+                            k: 'music/ledzeppelin',
+                            af: $(event.srcElement).val(),
+                            clickMacro: '%%CLICK_URL_ESC%%',
+                            omnitureId: "omnitureId"
                         });
 
-                        bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
+                        commercialComponent.postLoadEvents.capi = function () {
+                            $capiMultiple.removeClass('lazyloaded');
+                        };
+                        commercialComponent.create();
                     });
+
+                    bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
                 });
-            });
         </script>
     </div>
 
@@ -735,48 +735,48 @@ jQuery(function($) {
         </div>
         <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-single"></div>
         <script>
-            require(['core'], function(core) {
-                require(['bootstraps/commercial'], function(core) {
-                    require([
-                        'bean',
-                        'qwery',
-                        'common/utils/$',
-                        'common/modules/commercial/creatives/commercial-component'
-                    ], function(
-                        bean,
-                        qwery,
-                        $,
-                        CommercialComponent
-                    ) {
-                        var $capiSingle = $('.ad-slot--capi-single');
+            require(['core'])
+                .next(['bootstraps/commercial'])
+                .next(['bootstraps/creatives'])
+                .next([
+                    'bean',
+                    'qwery',
+                    'common/utils/$',
+                    'common/modules/commercial/creatives/commercial-component'
+                ])
+                .then(function(
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $capiSingle = $('.ad-slot--capi-single');
 
-                        bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiSingle[0], {
-                                type: 'capiSingle',
-                                t: 'p/43b2q',
-                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                ct: 'This is title',
-                                cl: 'http://theguardian.com/music/ledzeppelin',
-                                clt: 'Read more link text',
-                                cal: 'http://theguardian.com/about',
-                                k: 'music/ledzeppelin',
-                                rmd: 'www.theguardina.com',
-                                rmt: 'Seemoreoverhere',
-                                af: $(event.srcElement).val(),
-                                clickMacro: '%%CLICK_URL_ESC%%',
-                                omnitureId: "omnitureId"
-                            });
-
-                            commercialComponent.postLoadEvents.capiSingle = function () {
-                                $capiSingle.removeClass('lazyloaded');
-                            };
-                            commercialComponent.create();
+                    bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
+                        var commercialComponent = new CommercialComponent($capiSingle[0], {
+                            type: 'capiSingle',
+                            t: 'p/43b2q',
+                            l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                            ct: 'This is title',
+                            cl: 'http://theguardian.com/music/ledzeppelin',
+                            clt: 'Read more link text',
+                            cal: 'http://theguardian.com/about',
+                            k: 'music/ledzeppelin',
+                            rmd: 'www.theguardina.com',
+                            rmt: 'Seemoreoverhere',
+                            af: $(event.srcElement).val(),
+                            clickMacro: '%%CLICK_URL_ESC%%',
+                            omnitureId: "omnitureId"
                         });
 
-                        bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
+                        commercialComponent.postLoadEvents.capiSingle = function () {
+                            $capiSingle.removeClass('lazyloaded');
+                        };
+                        commercialComponent.create();
                     });
+
+                    bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
                 });
-            });
         </script>
     </div>
 
@@ -959,14 +959,13 @@ jQuery(function($) {
                 </h2>
             </div>
             <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-single-manual"></div>
-
             <script>
-            require(['core'], function(core) {
-                require(['bootstraps/commercial'], function(core) {
-                    var $slot = document.querySelector('[data-name="merchandising-single-manual"]');
-                    require(['common/modules/commercial/creatives/template'])
+                require(['core'])
+                    .next(['bootstraps/commercial'])
+                    .next(['bootstraps/creatives'])
+                    .next(['common/modules/commercial/creatives/template'])
                     .then(function (Creative) {
-                        new Creative($slot, {
+                        new Creative(document.querySelector('[data-name="merchandising-single-manual"]'), {
                             "creative": "ad-single-manual",
                             "toneClass": "commercial--tone-brand",
                             "omnitureId": "[%omnitureid%]",
@@ -983,8 +982,6 @@ jQuery(function($) {
                             "clickMacro": "%%CLICK_URL_ESC%%"
                         }).create();
                     });
-                });
-            });
             </script>
         </div>
 </div>
