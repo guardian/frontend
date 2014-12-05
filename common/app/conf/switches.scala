@@ -356,7 +356,24 @@ object Switches extends Collections {
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
-    safeState = On, sellByDate = never)
+    safeState = On, sellByDate = never
+  )
+
+  val HistoryNavStorageSwitch = Switch("Feature", "history-nav-storage",
+    "If switched on, history-based primary and secondary navs are saved as html to localStorage",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
+  val HistoryNavPrimarySwitch = Switch("Feature", "history-nav-primary",
+    "If switched on, history-based primary nav is fetched from localStorage and written to page",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
+  val HistoryNavSecondarySwitch = Switch("Feature", "history-nav-secondary",
+    "If switched on, history-based secondary nav is fetched from localStorage and written to page",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
@@ -488,7 +505,10 @@ object Switches extends Collections {
     CircuitBreakerSwitch,
     PollPreviewForFreshContentSwitch,
     PngResizingSwitch,
-    CrosswordSvgThumbnailsSwitch
+    CrosswordSvgThumbnailsSwitch,
+    HistoryNavStorageSwitch,
+    HistoryNavPrimarySwitch,
+    HistoryNavSecondarySwitch
   )
 
   val httpSwitches: List[Switch] = List(

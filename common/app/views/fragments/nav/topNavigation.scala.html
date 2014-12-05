@@ -1,5 +1,6 @@
 @(metaData: MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
 @import common._
+@import conf.Switches._
 
 <ul class="top-navigation js-top-navigation">
     <li class="top-navigation__item top-navigation__item--home">
@@ -32,17 +33,18 @@
     }
 </ul>
 
-<script>
-    (function(hasStorage) {
-        var nav;
+@if(HistoryNavPrimarySwitch.isSwitchedOn) {
+    <script>
+        (function(hasStorage) {
+            var nav;
 
-        if (!hasStorage) { return; }
+            if (!hasStorage) { return; }
 
-        nav = window.localStorage.getItem('gu.history.nav');
+            nav = window.localStorage.getItem('gu.history.nav.primary');
 
-        if (nav && !/<\/?SCRIPT/i.test(nav)) {
-            document.write('<ul class="top-navigation" data-link-name="history">' + nav + '</ul>');
-        }
-    })(guardian.isModernBrowser);
-</script>
-
+            if (nav && !/<\/?SCRIPT/i.test(nav)) {
+                document.write('<ul class="top-navigation" data-link-name="history">' + nav + '</ul>');
+            }
+        })(guardian.isModernBrowser);
+    </script>
+}

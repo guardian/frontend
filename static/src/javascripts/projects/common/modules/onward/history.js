@@ -24,8 +24,8 @@ define([
         popularCache,
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        storageKeyNav  = 'gu.history.nav',
-        storageKeyNav2 = 'gu.history.nav.2',
+        storageKeyNavPrimary  = 'gu.history.nav.primary',
+        storageKeyNavSecondary = 'gu.history.nav.secondary',
         pageMeta = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
@@ -266,11 +266,11 @@ define([
             });
 
         // On purpose not using storage module, to avoid a JSON parse on extraction:
-        window.localStorage.setItem(storageKeyNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
+        window.localStorage.setItem(storageKeyNavPrimary, myNav.innerHTML.replace(/\s{2,}/g, ' '));
 
         if (mySecondaryTags.length) {
             // On purpose not using storage module, to avoid a JSON parse on extraction:
-            window.localStorage.setItem(storageKeyNav2,
+            window.localStorage.setItem(storageKeyNavSecondary,
                 mySecondaryTags.map(function (tag) {
                     return template(
                         '<li class="local-navigation__item">' +
