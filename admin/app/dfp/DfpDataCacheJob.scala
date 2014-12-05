@@ -1,7 +1,7 @@
 package dfp
 
 import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
-import conf.Switches.DfpCachingSwitch
+import conf.Switches.{DfpCachingSwitch, DfpMemoryLeakSwitch}
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
@@ -49,8 +49,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         val duration = System.currentTimeMillis - start
         log.info(s"Reading DFP data took $duration ms")
 
-        MemoryLeakPlug
-
         if (data.isValid) {
           val now = printLondonTime(DateTime.now())
 
@@ -89,6 +87,8 @@ trait DfpDataCacheLifecycle extends GlobalSettings {
 
   override def onStart(app: Application) {
     super.onStart(app)
+
+    if (DfpMemoryLeakSwitch.isSwitchedOn) MemoryLeakPlug
 
     def scheduleJob(jobName: String, schedule: String) {
       Jobs.deschedule(jobName)
