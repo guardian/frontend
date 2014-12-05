@@ -51,7 +51,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
     if (Switches.RssServerSwitch.isSwitchedOn) {
       FaciaToRssRedirectMetric.increment()
-      Future.apply(InternalRedirect.internalRedirect(
+      Future.successful(InternalRedirect.internalRedirect(
         "rss_server",
         path,
         if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
