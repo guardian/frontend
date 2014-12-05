@@ -244,8 +244,7 @@ define([
 
             // opt-in to the responsive alpha
             optIn: function () {
-                var countMeIn = /#countmein/.test(window.location.hash);
-                if (countMeIn) {
+                if (window.location.hash.substr(1).split('&').contains('countmein')) {
                     cookies.add('GU_VIEW', 'responsive', 365);
                 }
             },
