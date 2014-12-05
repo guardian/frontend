@@ -14,6 +14,7 @@ define([
     storage
 ) {
     var summaryPeriodDays = 30,
+        forgetUniqueAfter = 10,
         historySize = 50,
         popularSize = 20,
 
@@ -48,15 +49,19 @@ define([
     }
 
     function getSummary() {
-        var summary = summaryCache || storage.local.get(storageKeySummary);
+        if (summaryCache) {
+            return summaryCache;
+        }
 
-        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
-            summary = summaryCache = {
+        summaryCache = storage.local.get(storageKeySummary);
+
+        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
+            summaryCache = {
                 periodEnd: today,
                 tags: {}
             };
         }
-        return summary;
+        return summaryCache;
     }
 
     function isRevisit(pageId) {
@@ -81,7 +86,7 @@ define([
                     .compact()
                     .value();
 
-                if (freqs.length) {
+                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniqueAfter)) {
                     summary.tags[tid] = [nameAndFreqs[0], freqs];
                 } else {
                     delete summary.tags[tid];
@@ -255,21 +260,14 @@ define([
             if (mySecondaryTags.length) {
                 // On purpose not using storage module, to avoid a JSON parse on extraction:
                 window.localStorage.setItem(storageKeyNav2,
-                    '<ul class="signposting">' +
-                        '<li class="signposting__item signposting__item--home">' +
-                            '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
-                        '</li>' +
-                    '</ul>' +
-                    '<ul class="local-navigation">' +
-                        mySecondaryTags.map(function (tag) {
-                            return template(
-                                '<li class="local-navigation__item">' +
-                                    '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : history : {{name}}">{{name}}</a>' +
-                                '</li>',
-                                {id: tag[0], name: tag[1]}
-                            );
-                        }).join('') +
-                    '</ul>'
+                    mySecondaryTags.map(function (tag) {
+                        return template(
+                            '<li class="local-navigation__item">' +
+                                '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
+                            '</li>',
+                            {id: tag[0], name: tag[1]}
+                        );
+                    }).join('')
                 );
             }
         }

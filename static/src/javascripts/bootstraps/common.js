@@ -312,10 +312,9 @@ define([
 
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.page.contentType === 'Network Front') {
-                        history.generateNavs();
-                    } else {
+                    if (config.page.contentType !== 'Network Front') {
                         history.logSummary(config.page);
+                        history.generateNavs();
                     }
 
                     if (config.page.contentType === 'Video') {

@@ -15,13 +15,22 @@
                     <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(Edition.isEditionFront){
                             <script>
-                                (function(isModern) {
-                                    if (isModern) {
-                                        var myNav2 = window.localStorage.getItem('gu.history.nav.2');
+                                (function(hasStorage) {
+                                    var nav;
 
-                                        if (myNav2) {
-                                            document.write(myNav2);
-                                        }
+                                    if (!hasStorage) { return; }
+
+                                    nav = window.localStorage.getItem('gu.history.nav.2');
+
+                                    if (nav && !/<\/?SCRIPT/i.test(nav)) {
+                                        document.write(
+                                            '<ul class="signposting">' +
+                                                '<li class="signposting__item signposting__item--home">' +
+                                                    '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+                                                '</li>' +
+                                            '</ul>' +
+                                            '<ul class="local-navigation" data-link-name="history">' + nav + '</ul>'
+                                        );
                                     }
                                 })(guardian.isModernBrowser);
                             </script>

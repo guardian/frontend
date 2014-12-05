@@ -33,13 +33,15 @@
 </ul>
 
 <script>
-    (function(isModern) {
-        if (isModern) {
-            var myNav = window.localStorage.getItem('gu.history.nav');
+    (function(hasStorage) {
+        var nav;
 
-            if (myNav) {
-                document.write('<ul class="top-navigation js-top-navigation--history">' + myNav + '</ul>');
-            }
+        if (!hasStorage) { return; }
+
+        nav = window.localStorage.getItem('gu.history.nav');
+
+        if (nav && !/<\/?SCRIPT/i.test(nav)) {
+            document.write('<ul class="top-navigation" data-link-name="history">' + nav + '</ul>');
         }
     })(guardian.isModernBrowser);
 </script>
