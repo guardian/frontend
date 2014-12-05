@@ -132,6 +132,9 @@ define([
 
                         if (alertDelay === 0) {
                             $breakingNews.removeClass('breaking-news--fade-in');
+                            s.tl(this, 'o', 'breaking news alert shown 2 or more times');
+                        } else {
+                            s.tl(this, 'o', 'breaking news alert shown');
                         }
 
                         $breakingNews.removeClass('breaking-news--hidden');
