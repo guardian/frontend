@@ -16,10 +16,10 @@ object RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
       case Success(response) =>
         response.header.headers.get("X-Accel-Redirect") match {
           case Some(internalRedirect) =>
-            log.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed}ms and redirected to $internalRedirect")
+            log.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed} ms and redirected to $internalRedirect")
 
           case None =>
-            log.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed}ms and returned ${response.header.status}")
+            log.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed} ms and returned ${response.header.status}")
         }
 
       case Failure(error) =>
