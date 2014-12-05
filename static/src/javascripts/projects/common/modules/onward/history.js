@@ -152,11 +152,8 @@ define([
         return (str || '').split(',')[0];
     }
 
-    function stripOuterSlashes(path) {
-        return (path || '').replace(/^\/|\/$/g, '');
-    }
-
     function collapseTag(t) {
+        t = t.replace(/^\/|\/$/g, '');
         t = t.replace(/^(uk|us|au)\//, '');
         t = t.split('/');
         t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
@@ -230,7 +227,7 @@ define([
             topNav = popular.length && document.querySelector('.js-top-navigation'),
             myNav,
             myNavItems,
-            myNavItemIds,
+            myNavItemMap = {},
             mySecondaryTags = [];
 
         if (topNav) {
@@ -238,17 +235,18 @@ define([
             myNav.innerHTML = topNav.innerHTML;
 
             myNavItems = $('.top-navigation__item', myNav);
-            myNavItemIds = myNavItems.map(function (item) {
-                return collapseTag(stripOuterSlashes($('a', item).attr('href')));
+
+            myNavItems.each(function (item) {
+                myNavItemMap[collapseTag($('a', item).attr('href'))] = item;
             });
 
             _.chain(popular)
                 .reverse()
                 .forEach(function (tag) {
-                    var pos = myNavItemIds.indexOf(tag[0]);
+                    var item = myNavItemMap[tag[0]];
 
-                    if (pos > -1) {
-                        $(myNavItems[pos]).detach().insertAfter(myNavItems[0]);
+                    if (item) {
+                        $(item).detach().insertAfter(myNavItems[0]);
                     } else {
                         mySecondaryTags.unshift(tag);
                     }
