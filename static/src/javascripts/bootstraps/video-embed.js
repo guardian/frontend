@@ -71,20 +71,21 @@ define([
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
-            var player = createVideoPlayer(el, {
-                    controls: true,
-                    autoplay: false,
-                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
-                    plugins: {
-                        embed: {
-                            embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
-                            location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
-                        }
-                    }
-                }),
-                mouseMoveIdle;
+            var player, mouseMoveIdle;
 
             bonzo(el).addClass('vjs');
+
+            player = createVideoPlayer(el, {
+                controls: true,
+                autoplay: false,
+                preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                plugins: {
+                    embed: {
+                        embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
+                        location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
+                    }
+                }
+            });
 
             //Location of this is important
             handleInitialMediaError(player);
