@@ -222,8 +222,8 @@ define([
         saveSummary(summary);
     }
 
-    function generateNavs() {
-        var popular = getPopular(),
+    function storeNavs() {
+        var popular,
             canonicalNav,
             myNav,
             myNavItems,
@@ -231,18 +231,18 @@ define([
             myNavItemsMap = {},
             mySecondaryTags = [];
 
+        if (!config.switches.historyNavStorage) { return; }
+
+        popular = getPopular();
         if (popular.length === 0) { return; }
 
         canonicalNav = document.querySelector('.js-top-navigation');
-
         if (!canonicalNav) { return; }
 
         myNav = document.createElement('div');
-
         myNav.innerHTML = canonicalNav.innerHTML;
 
         myNavItems = $('.top-navigation__item', myNav);
-
         myNavItems.each(function (item) {
             myNavItemsMap[collapseTag($('a', item).attr('href'))] = item;
         });
@@ -287,9 +287,9 @@ define([
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        generateNavs: generateNavs,
+        storeNavs:  storeNavs,
         getPopular: getPopular,
-        isRevisit: isRevisit,
+        isRevisit:  isRevisit,
         reset: reset,
 
         test: {

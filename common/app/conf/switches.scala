@@ -374,6 +374,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
+  val HistoryNavSecondaryInjectSwitch = Switch("Feature", "history-nav-secondary-inject",
+    "If switched on, history-based secondary nav is injected into page",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
@@ -508,7 +513,8 @@ object Switches extends Collections {
     CrosswordSvgThumbnailsSwitch,
     HistoryNavStorageSwitch,
     HistoryNavPrimarySwitch,
-    HistoryNavSecondarySwitch
+    HistoryNavSecondarySwitch,
+    HistoryNavSecondaryInjectSwitch
   )
 
   val httpSwitches: List[Switch] = List(

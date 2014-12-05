@@ -314,7 +314,7 @@ define([
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
                         history.logSummary(config.page);
-                        history.generateNavs();
+                        history.storeNavs();
                     }
 
                     if (config.page.contentType === 'Video') {
