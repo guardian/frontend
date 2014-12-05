@@ -227,13 +227,13 @@ define([
     function renderNavs(doPrimary, doSecondary) {
         var switches = config.switches,
             popular,
-            canonicalNav,
-            myNav,
-            myNavItems,
-            myNavItemsFirst,
-            myNavItemsMap = {},
-            mySecondaryTags = [],
-            mySecondaryNav;
+            priNavCanonical,
+            priNav,
+            priNavItems,
+            priNavItemsFirst,
+            priNavItemsMap = {},
+            secNav,
+            secNavTags = [];
 
         doPrimary = doPrimary && (switches.historyNavPrimaryStore || switches.historyNavPrimaryInject);
         doSecondary = doSecondary && (switches.historyNavSecondaryStore || switches.historyNavSecondaryInject);
@@ -242,50 +242,50 @@ define([
         popular = getPopular();
         if (popular.length === 0) { return; }
 
-        canonicalNav = document.querySelector('.js-top-navigation');
-        if (!canonicalNav) { return; }
+        priNavCanonical = document.querySelector('.js-top-navigation');
+        if (!priNavCanonical) { return; }
 
-        myNav = document.createElement('div');
-        myNav.innerHTML = canonicalNav.innerHTML;
+        priNav = document.createElement('div');
+        priNav.innerHTML = priNavCanonical.innerHTML;
 
-        myNavItems = $('.top-navigation__item', myNav);
-        myNavItems.each(function (item) {
-            myNavItemsMap[collapseTag($('a', item).attr('href'))] = item;
+        priNavItems = $('.top-navigation__item', priNav);
+        priNavItems.each(function (item) {
+            priNavItemsMap[collapseTag($('a', item).attr('href'))] = item;
         });
 
-        myNavItemsFirst = myNavItems[0];
+        priNavItemsFirst = priNavItems[0];
 
         _.chain(popular)
             .reverse()
             .forEach(function (tag) {
-                var item = myNavItemsMap[tag[0]];
+                var item = priNavItemsMap[tag[0]];
 
                 if (!item) {
-                    mySecondaryTags.unshift(tag);
-                } else if (item !== myNavItemsFirst && doPrimary) {
-                    $(item).detach().insertAfter(myNavItemsFirst);
+                    secNavTags.unshift(tag);
+                } else if (item !== priNavItemsFirst && doPrimary) {
+                    $(item).detach().insertAfter(priNavItemsFirst);
                 }
             });
 
         if (switches.historyNavPrimaryStore) {
             // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavPrimary, myNav.innerHTML.replace(/\s{2,}/g, ' '));
+            window.localStorage.setItem(storageKeyNavPrimary, priNav.innerHTML.replace(/\s{2,}/g, ' '));
         }
 
         if (switches.historyNavPrimaryInject) {
-            $(document.getElementById('history-nav-primary')).html(myNav);
+            $(document.getElementById('history-nav-primary')).html(priNav);
         }
 
-        if (!doSecondary || mySecondaryTags.length === 0) { return; }
+        if (!doSecondary || secNavTags.length === 0) { return; }
 
-        mySecondaryNav =
+        secNav =
             '<ul class="signposting">' +
                 '<li class="signposting__item signposting__item--home">' +
                     '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
                 '</li>' +
             '</ul>' +
             '<ul class="local-navigation" data-link-name="history">' +
-                mySecondaryTags.map(function (tag) {
+                secNavTags.map(function (tag) {
                     return template(
                         '<li class="local-navigation__item">' +
                             '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
@@ -297,20 +297,20 @@ define([
 
         if (switches.historyNavSecondaryStore) {
             // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavSecondary, mySecondaryNav);
+            window.localStorage.setItem(storageKeyNavSecondary, secNav);
         }
 
         if (switches.historyNavSecondaryInject) {
-            $(document.getElementById('history-nav-secondary')).html(mySecondaryNav);
+            $(document.getElementById('history-nav-secondary')).html(secNav);
         }
     }
 
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        renderNavs:  renderNavs,
+        renderNavs: renderNavs,
         getPopular: getPopular,
-        isRevisit:  isRevisit,
+        isRevisit: isRevisit,
         reset: reset,
 
         test: {
