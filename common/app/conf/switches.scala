@@ -59,6 +59,12 @@ object Switches {
     sellByDate = never
   )
 
+  val RssServerSwitch = Switch("Performance", "rss-server",
+    "If this switch is on then RSS traffic will be redirected to RSS server",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,

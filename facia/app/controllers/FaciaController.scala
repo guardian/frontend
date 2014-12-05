@@ -3,20 +3,20 @@ package controllers
 import com.gu.facia.client.models.CollectionConfig
 import common._
 import common.editions.EditionalisedSections
+import conf.Switches
 import front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import play.api.mvc._
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.Json
 import slices.Container
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction
 import services.{CollectionConfigWithId, ConfigAgent}
-import common.FaciaMetrics.FaciaToApplicationRedirectMetric
+import common.FaciaMetrics._
 import views.html.fragments.containers.facia_cards.container
 import scala.concurrent.Future.successful
-
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
@@ -43,9 +43,22 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def applicationsRedirect(path: String)(implicit request : RequestHeader) = {
+  def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
     FaciaToApplicationRedirectMetric.increment()
     Future.apply(InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None))
+  }
+
+  def rssRedirect(path: String)(implicit request: RequestHeader) = {
+    if (Switches.RssServerSwitch.isSwitchedOn) {
+      FaciaToRssRedirectMetric.increment()
+      Future.successful(InternalRedirect.internalRedirect(
+        "rss_server",
+        path,
+        if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
+      ))
+    } else {
+      applicationsRedirect(path)
+    }
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
@@ -58,7 +71,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
   log.info(s"Serving RSS Path: $path")
     if (!ConfigAgent.shouldServeFront(path))
-      applicationsRedirect(s"$path/rss")
+      rssRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
   }
