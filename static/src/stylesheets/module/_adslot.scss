@@ -352,12 +352,14 @@
         border-bottom-width: 0;
         border-top: 1px dotted colour(neutral-5);
     }
+
     @include mq(mobile, $until: leftCol) {
-        padding-bottom: $gs-baseline/2;
+        padding-bottom: $gs-baseline / 2;
         .ad-slot--paid-for-badge__link {
             margin-top: 6px;
         }
     }
+
     .ad-slot--paid-for-badge__logo {
         @include mq(mobile, $until: leftCol) {
             max-height: 60px;
@@ -389,6 +391,7 @@
     @include mq(tablet) {
         padding-left: $gs-gutter / 2;
     }
+
     .container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
@@ -399,19 +402,23 @@
     }
     .ad-slot--paid-for-badge__link {
         position: relative;
+
         &:after {
             display: block;
             height: 0;
             width: $left-column + $gs-gutter;
             content: '';
             border-bottom: 1px dotted colour(neutral-5);
+
             @include mq(leftCol) {
                 width: $left-column;
             }
+
             @include mq(wide) {
                 width: $left-column-wide;
             }
         }
+
         @include mq(mobile, $until: leftCol) {
             margin-top: 0;
         }
@@ -449,6 +456,7 @@
     }
     @include mq(wide) {
         width: $left-column-wide;
+
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
