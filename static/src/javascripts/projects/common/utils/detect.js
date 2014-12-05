@@ -115,6 +115,14 @@ define([
         return navigator.mozApps && !window.locationbar.visible;
     }
 
+    function isInFacebookApp() {
+        return /FBAN\//.test(navigator.userAgent);
+    }
+
+    function isInTwitterApp() {
+        return /Twitter for iPhone/.test(navigator.userAgent);
+    }
+
     function getConnectionSpeed(performance, connection, reportUnknown) {
 
         connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
@@ -336,6 +344,8 @@ define([
         isIOS: isIOS,
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
+        isInFacebookApp: isInFacebookApp,
+        isInTwitterApp: isInTwitterApp,
         isBreakpoint: isBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,

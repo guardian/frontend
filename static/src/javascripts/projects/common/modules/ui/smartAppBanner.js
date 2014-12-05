@@ -58,7 +58,7 @@ define([
     }
 
     function init() {
-        if (isDevice() && canShow()) {
+        if (isDevice() && !detect.isInFacebookApp() && !detect.isInTwitterApp() && canShow()) {
             showMessage();
         }
     }
