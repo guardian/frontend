@@ -75,13 +75,13 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
 }
 
 object Filters {
-   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
-   // which effectively means "JsonVaryHeaders goes around Gzipper"
+  // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
+  // which effectively means "JsonVaryHeaders goes around Gzipper"
   lazy val common: List[EssentialFilter] = List(
     ForceHttpResponseFilter,
-     JsonVaryHeadersFilter,
-     Gzipper,
-     BackendHeaderFilter,
-     RequestLoggingFilter
-   )
+    JsonVaryHeadersFilter,
+    Gzipper,
+    BackendHeaderFilter,
+    RequestLoggingFilter
+  )
 }
