@@ -1,5 +1,7 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
+@import play.api.libs.json.{JsBoolean, JsString, JsObject, Json}
+
 @main(page){ }{
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
@@ -159,8 +161,6 @@
             </script>
     </article>
 
-    <hr/>
-
     <div class="fc-container">
         <div class="fc-container__inner">
             <h2 class="test-page-head">
@@ -177,7 +177,6 @@
         Map(("name", "Soulmates"), ("type", "soulmates"), ("hasMedium" -> false)),
         Map(("name", "Travel"), ("type", "travel"), ("hasMedium" -> false))
     ).map { component =>
-
         <div class="fc-container">
             <div class="fc-container__inner">
                 <h2 class="test-page-head">@component("name")</h2>
@@ -207,8 +206,6 @@
                 }
             }
         </div>
-
-        <hr/>
     }
 
     <div class="fc-container">
@@ -236,208 +233,159 @@
         </div>
     </div>
 
-    <hr/>
+    @Seq(
+        Map(
+            ("type", "single"),
+            ("creativeId", "10026447")
+        ),
+        Map(
+            ("type", "multiple"),
+            ("creativeId", "10023207")
+        )
+    ).map { component =>
+        <div class="fc-container">
+            <div class="fc-container__inner">
+                <h2 class="test-page-head">
+                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                        Merchandising: cAPI @component("type")
+                    </a>
+                </h2>
+                <form class="capi-@component("type")-paid-for-type">
+                    <label>Type:
+                        <select>
+                            <option value="advertisement-feature" selected>Advertisement Feature</option>
+                            <option value="sponsored">Sponsored</option>
+                            <option value="foundation-supported">Foundation Supported</option>
+                        </select>
+                    </label>
+                </form>
+            </div>
+            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-@component("type")"></div>
+            <script>
+                loadCommercial(function () {
+                    require([
+                        'bean',
+                        'qwery',
+                        'common/utils/$',
+                        'common/modules/commercial/creatives/commercial-component'
+                    ])
+                        .then(function (
+                            bean,
+                            qwery,
+                            $,
+                            CommercialComponent
+                        ) {
+                            var $capiMultiple = $('.ad-slot--capi-@component("type")');
 
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207">Merchandising: cAPI multiple</a>
-            </h2>
-            <form class="capi-multiple-paid-for-type">
-                <label>Type:
-                    <select>
-                        <option value="advertisement-feature" selected>Advertisement Feature</option>
-                        <option value="sponsored">Sponsored</option>
-                        <option value="foundation-supported">Foundation Supported</option>
-                    </select>
-                </label>
-            </form>
-        </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-multiple"></div>
-        <script>
-            loadCommercial(function () {
-                require([
-                    'bean',
-                    'qwery',
-                    'common/utils/$',
-                    'common/modules/commercial/creatives/commercial-component'
-                ])
-                    .then(function (
-                        bean,
-                        qwery,
-                        $,
-                        CommercialComponent
-                    ) {
-                        var $capiMultiple = $('.ad-slot--capi-multiple');
+                            bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
+                                var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                                    type: 'capi@if(component("type") == "single"){Single}',
+                                    t: ['p/43b2q','p/43945'],
+                                    l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                    ct: 'Led Zeppelin special',
+                                    cl: 'http://theguardian.com/music/ledzeppelin',
+                                    cal: 'http://theguardian.com/about',
+                                    k: 'music/ledzeppelin',
+                                    rmd: 'www.theguardina.com',
+                                    rmt: 'Seemoreoverhere',
+                                    af: $(event.srcElement).val(),
+                                    clickMacro: '%%CLICK_URL_ESC%%',
+                                    omnitureId: "omnitureId"
+                                });
 
-                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
-                                type: 'capi',
-                                t: ['p/43b2q','p/43945'],
-                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                ct: 'Led Zeppelin special',
-                                cl: 'http://theguardian.com/music/ledzeppelin',
-                                cal: 'http://theguardian.com/about',
-                                k: 'music/ledzeppelin',
-                                af: $(event.srcElement).val(),
-                                clickMacro: '%%CLICK_URL_ESC%%',
-                                omnitureId: "omnitureId"
+                                commercialComponent.postLoadEvents.capi = function () {
+                                    $capiMultiple.removeClass('lazyloaded');
+                                };
+                                commercialComponent.create();
                             });
 
-                            commercialComponent.postLoadEvents.capi = function () {
-                                $capiMultiple.removeClass('lazyloaded');
-                            };
-                            commercialComponent.create();
+                            bean.fire(qwery('.capi-@component("type")-paid-for-type select')[0], 'change');
                         });
-
-                        bean.fire(qwery('.capi-multiple-paid-for-type select')[0], 'change');
-                    });
-            });
-        </script>
-    </div>
-
-    <hr/>
-
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026447">Merchandising: cAPI single</a>
-            </h2>
-            <form class="capi-single-paid-for-type">
-                <label>Type:
-                    <select>
-                        <option value="advertisement-feature" selected>Advertisement Feature</option>
-                        <option value="sponsored">Sponsored</option>
-                        <option value="foundation-supported">Foundation Supported</option>
-                    </select>
-                </label>
-            </form>
+                });
+            </script>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-single"></div>
-        <script>
-            loadCommercial(function () {
-                require([
-                    'bean',
-                    'qwery',
-                    'common/utils/$',
-                    'common/modules/commercial/creatives/commercial-component'
-                ])
-                    .then(function(
-                        bean,
-                        qwery,
-                        $,
-                        CommercialComponent
-                    ) {
-                        var $capiSingle = $('.ad-slot--capi-single');
+    }
 
-                        bean.on(qwery('.capi-single-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiSingle[0], {
-                                type: 'capiSingle',
-                                t: 'p/43b2q',
-                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                ct: 'This is title',
-                                cl: 'http://theguardian.com/music/ledzeppelin',
-                                clt: 'Read more link text',
-                                cal: 'http://theguardian.com/about',
-                                k: 'music/ledzeppelin',
-                                rmd: 'www.theguardina.com',
-                                rmt: 'Seemoreoverhere',
-                                af: $(event.srcElement).val(),
-                                clickMacro: '%%CLICK_URL_ESC%%',
-                                omnitureId: "omnitureId"
+    @Seq(
+        Map(
+            ("type", "single"),
+            ("creativeId", "10025607"),
+            ("args", Json.obj(
+                ("creative", "ad-single-manual"),
+                ("toneClass",  "commercial--tone-brand"),
+                ("omnitureId", "[%omnitureid%]"),
+                ("baseUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
+                ("title", "title"),
+                ("viewAllText", "View all"),
+                ("offerTitle", "Scientists climb to bottom of Siberian sinkhole - in pictures"),
+                ("offerImage", "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg"),
+                ("offerText", "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times"),
+                ("offerLinkText", "link text"),
+                ("offerUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
+                ("seeMoreUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
+                ("showCtaLink", "show-cta-link"),
+                ("clickMacro", "%%CLICK_URL_ESC%%")
+            ))
+        ),
+        Map(
+            ("type", "multiple"),
+            ("creativeId", "10025847"),
+            ("args", Json.obj(
+                ("creative", "ad-multiple-manual"),
+                ("title", "A Title"),
+                ("explainer", "Explainer text"),
+                ("base__url", "http://www.theguardian.com/uk"),
+                ("offerlinktext", "Offer link text"),
+                ("viewalltext", "View all text"),
+                ("offeramount", "offer-amount"),
+                ("relevance", "high"),
+                ("Toneclass", "commercial--tone-brand"),
+                ("offer1title", "Offer 1 Title"),
+                ("offer1url", "http://www.theguardian.com/uk"),
+                ("offer1meta", "Offer 1 Meta"),
+                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer2title", "Offer 2 Title"),
+                ("offer2url", "http://www.theguardian.com/uk"),
+                ("offer2meta", "Offer 1 Meta"),
+                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer3title", "Offer 3 Title"),
+                ("offer3url", "http://www.theguardian.com/uk"),
+                ("offer3meta", "Offer 1 Meta"),
+                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("offer4title", "Offer 4 Title"),
+                ("offer4url", "http://www.theguardian.com/uk"),
+                ("offer4meta", "Offer 1 Meta"),
+                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
+                ("omnitureId", "[%OmnitureID%]"),
+                ("clickMacro", "%%CLICK_URL_ESC%")
+            ))
+        )
+    ).map { component =>
+        <div class="fc-container">
+            <div class="fc-container__inner">
+                <h2 class="test-page-head">
+                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                        Merchandising: manual @component("type")
+                    </a>
+                </h2>
+            </div>
+            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+            <script>
+                @component("args") match {
+                    case args: JsObject => {
+                        loadCommercial(function () {
+                            require(['common/modules/commercial/creatives/template'])
+                                .then(function (Template) {
+                                    new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                        .create();
                             });
-
-                            commercialComponent.postLoadEvents.capiSingle = function () {
-                                $capiSingle.removeClass('lazyloaded');
-                            };
-                            commercialComponent.create();
                         });
-
-                        bean.fire(qwery('.capi-single-paid-for-type select')[0], 'change');
-                    });
-            });
-        </script>
-    </div>
-
-    <hr />
-
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10025847">Merchandising: manual multiple</a>
-            </h2>
+                    }
+                    case _ => { }
+                }
+            </script>
         </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--ad-multiple-manual"></div>
-        <script>
-            loadCommercial(function () {
-                require(['common/modules/commercial/creatives/template'])
-                    .then(function (Creative) {
-                        new Creative(document.querySelector('.ad-slot--ad-multiple-manual'), {
-                            creative: 'ad-multiple-manual',
-                            title: 'A Title',
-                            explainer: 'Explainer text',
-                            base__url: 'http://www.theguardian.com/uk',
-                            offerlinktext: 'Offer link text',
-                            viewalltext: 'View all text',
-                            offeramount: 'offer-amount',
-                            relevance: 'high',
-                            Toneclass: 'commercial--tone-brand',
-                            offer1title: 'Offer 1 Title',
-                            offer1url: 'http://www.theguardian.com/uk',
-                            offer1meta: 'Offer 1 Meta',
-                            offer1image: 'http://www.catgifpage.com/gifs/247.gif',
-                            offer2title: 'Offer 2 Title',
-                            offer2url: 'http://www.theguardian.com/uk',
-                            offer2meta: 'Offer 1 Meta',
-                            offer2image: 'http://www.catgifpage.com/gifs/247.gif',
-                            offer3title: 'Offer 3 Title',
-                            offer3url: 'http://www.theguardian.com/uk',
-                            offer3meta: 'Offer 1 Meta',
-                            offer3image: 'http://www.catgifpage.com/gifs/247.gif',
-                            offer4title: 'Offer 4 Title',
-                            offer4url: 'http://www.theguardian.com/uk',
-                            offer4meta: 'Offer 1 Meta',
-                            offer4image: 'http://www.catgifpage.com/gifs/247.gif',
-                            omnitureId: '[%OmnitureID%]',
-                            clickMacro: '%%CLICK_URL_ESC%%'
-                        }).create();
-                    });
-            });
-        </script>
-    </div>
+    }
 
-    <hr />
-
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10025607">Merchandising: manual single</a>
-            </h2>
-        </div>
-        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component" data-name="merchandising-single-manual"></div>
-        <script>
-            loadCommercial(function () {
-                require(['common/modules/commercial/creatives/template'])
-                    .then(function (Creative) {
-                        new Creative(document.querySelector('[data-name="merchandising-single-manual"]'), {
-                            creative: "ad-single-manual",
-                            toneClass: "commercial--tone-brand",
-                            omnitureId: "[%omnitureid%]",
-                            baseUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            title: "title",
-                            viewAllText: "View all",
-                            offerTitle: "Scientists climb to bottom of Siberian sinkhole - in pictures",
-                            offerImage: "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg",
-                            offerText: "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times",
-                            offerLinkText: "link text",
-                            offerUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            seeMoreUrl: "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify",
-                            showCtaLink: "show-cta-link",
-                            clickMacro: "%%CLICK_URL_ESC%%"
-                        }).create();
-                    });
-            });
-        </script>
-    </div>
 </div>
 }
