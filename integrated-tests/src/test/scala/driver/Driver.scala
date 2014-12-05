@@ -35,7 +35,7 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
   override protected def afterAll(): Unit = quit()
 
   // helper methods for tests
-  protected def theguardian(path: String) = s"$baseUrl$path?view=responsive&test=test#gu.prefs.switchOff=adverts"
+  protected def theguardian(path: String) = s"$baseUrl$path?view=responsive&test=test#gu.prefs.switchOff=adverts&countmein&noads"
 
   protected def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
   protected def first(selector: String): Element = $(selector).head
