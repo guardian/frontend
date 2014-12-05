@@ -224,51 +224,64 @@ define([
 
     function generateNavs() {
         var popular = getPopular(),
-            topNav = popular.length && document.querySelector('.js-top-navigation'),
+            canonicalNav,
             myNav,
             myNavItems,
-            myNavItemMap = {},
+            myNavItemsFirst,
+            myNavItemsMap = {},
             mySecondaryTags = [];
 
-        if (topNav) {
-            myNav = document.createElement('div');
-            myNav.innerHTML = topNav.innerHTML;
+        if (popular.length === 0) { return; }
 
-            myNavItems = $('.top-navigation__item', myNav);
+        canonicalNav = document.querySelector('.js-top-navigation');
 
-            myNavItems.each(function (item) {
-                myNavItemMap[collapseTag($('a', item).attr('href'))] = item;
+        if (!canonicalNav) { return; }
+
+        myNav = document.createElement('div');
+
+        myNav.innerHTML = canonicalNav.innerHTML;
+
+        myNavItems = $('.top-navigation__item', myNav);
+
+        myNavItems.each(function (item) {
+            myNavItemsMap[collapseTag($('a', item).attr('href'))] = item;
+        });
+
+        myNavItemsFirst = myNavItems[0];
+
+        _.chain(popular)
+            .reverse()
+            .forEach(function (tag) {
+                var item = myNavItemsMap[tag[0]];
+
+                if (item === myNavItemsFirst) {
+                    // noop
+
+                } else  if (item) {
+                    $(item).detach().insertAfter(myNavItemsFirst);
+
+                } else {
+                    mySecondaryTags.unshift(tag);
+                }
             });
 
-            _.chain(popular)
-                .reverse()
-                .forEach(function (tag) {
-                    var item = myNavItemMap[tag[0]];
+        // On purpose not using storage module, to avoid a JSON parse on extraction:
+        window.localStorage.setItem(storageKeyNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
 
-                    if (item) {
-                        $(item).detach().insertAfter(myNavItems[0]);
-                    } else {
-                        mySecondaryTags.unshift(tag);
-                    }
-                });
-
+        if (mySecondaryTags.length) {
             // On purpose not using storage module, to avoid a JSON parse on extraction:
-            window.localStorage.setItem(storageKeyNav, myNav.innerHTML.replace(/\s{2,}/g, ' '));
-
-            if (mySecondaryTags.length) {
-                // On purpose not using storage module, to avoid a JSON parse on extraction:
-                window.localStorage.setItem(storageKeyNav2,
-                    mySecondaryTags.map(function (tag) {
-                        return template(
-                            '<li class="local-navigation__item">' +
-                                '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
-                            '</li>',
-                            {id: tag[0], name: tag[1]}
-                        );
-                    }).join('')
-                );
-            }
+            window.localStorage.setItem(storageKeyNav2,
+                mySecondaryTags.map(function (tag) {
+                    return template(
+                        '<li class="local-navigation__item">' +
+                            '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
+                        '</li>',
+                        {id: tag[0], name: tag[1]}
+                    );
+                }).join('')
+            );
         }
+
     }
 
     return {
