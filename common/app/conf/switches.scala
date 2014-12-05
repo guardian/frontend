@@ -91,6 +91,12 @@ object Switches {
     sellByDate = never
   )
 
+  val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
+    "If this switch is switched on then the preview server requires login",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
+  )
+
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
