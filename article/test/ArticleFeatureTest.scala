@@ -149,12 +149,12 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Poster image on embedded video", ArticleComponents) {
-      goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
-        import browser._
-        findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
-      }
-    }
+    // scenario("Poster image on embedded video", ArticleComponents) {
+    //   goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
+    //     import browser._
+    //     findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
+    //   }
+    // }
 
     scenario("Display the article publication date", ArticleComponents) {
 
