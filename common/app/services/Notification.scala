@@ -52,7 +52,7 @@ trait Notification extends Logging with ExecutionContexts {
 object Notification extends Notification {
   lazy val topic: String = Configuration.aws.notificationSns
 
-  def onSwitchChanges(requester: String, stage: String, changes: List[String]) {
+  def onSwitchChanges(requester: String, stage: String, changes: Seq[String]) {
     val subject = s"${stage.toUpperCase}: Switch changes by ${requester}"
     val message =
       s"""

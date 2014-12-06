@@ -91,7 +91,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    blogsAndSeries.headOption.map( series =>
+    blogsAndSeries.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
     ) getOrElse Nil
   }
@@ -481,8 +481,9 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   }
 
   lazy val lightbox: JsObject = {
-    val imageContainers = bodyImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map{ imgContainer =>
+    val allImages: Seq[ImageContainer] = mainPicture.toSeq ++ bodyImages
+    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
+    val imageJson = imageContainers.map { imgContainer =>
       imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
@@ -499,7 +500,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray(imageJson.flatten)
+      "images" -> JsArray((imageJson).toSeq.flatten)
     ))
   }
 
@@ -507,6 +508,11 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     case (_, Some(crop)) => crop.width > 620
     case _ => false
   })
+
+  lazy val isMainImageLightboxable: Boolean = {
+    val isBigPicture = mainPicture.filter(_.largestEditorialCrop.nonEmpty).find(_.largestEditorialCrop.map(_.width).filter(_ > 620).size > 0)
+    isBigPicture.isDefined
+  }
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
@@ -552,7 +558,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
   override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 
-  private lazy val cricketMetaData = if (isCricketLiveBlog) {
+  private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
     Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
   } else {
     Map()
@@ -610,7 +616,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
-      "source" -> JsString(source.getOrElse(""))
+      "source" -> JsString(source.getOrElse("")),
+      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false))
     )
 
   // I know it's not too pretty

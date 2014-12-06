@@ -1,6 +1,7 @@
 package common
 
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.{ItemResponse, Section => ApiSection}
+import contentapi.Paths
 import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
 import implicits.ItemResponses
@@ -11,10 +12,11 @@ import java.net.URI
 // Assuming that 'I can serve this to the user' is the least error state.
 object ModelOrResult extends Results with Logging {
 
-  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
-    item.map(i => ItemOrRedirect(i, response))
-    .orElse(InternalRedirect(response).map(Right(_)))
-    .getOrElse(Right(NoCache(NotFound)))
+  def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None)
+              (implicit request: RequestHeader): Either[T, Result] =
+    item.map(i => ItemOrRedirect(i, response, maybeSection))
+      .orElse(InternalRedirect(response).map(Right(_)))
+      .getOrElse(Right(NoCache(NotFound)))
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
@@ -22,20 +24,38 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
   private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
 
-  def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
+  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
-    itemPath match {
-      case Some(itemPath) if needsRedirect(itemPath) =>
-        val itemPathWithQueryString =
-          itemPath + (if (request.path.endsWith("/all")) "/all" else "") + paramString(request)
-        Right(Found(itemPathWithQueryString))
-      case _ => Left(item)
+
+    def pathWithoutEdition(section: ApiSection) =
+      section.editions.find(_.code == "default")
+        .map(edition => s"/${edition.id}")
+        .getOrElse(Paths.stripEditionIfPresent(section.id))
+
+    maybeSection match {
+      case Some(section) if request.path.endsWith("/all") &&
+        pathWithoutEdition(section) != request.path.stripSuffix("/all") =>
+        Right(Found(pathWithoutEdition(section) + "/all"))
+
+      case Some(section) if request.getQueryString("page").exists(_ != "1") &&
+        pathWithoutEdition(section) != request.path =>
+        Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
+
+      case Some(_) => Left(item)
+
+      case None => itemPath match {
+        case Some(itemPath) if needsRedirect(itemPath) =>
+          val itemPathWithQueryString =
+            itemPath + paramString(request)
+          Right(Found(itemPathWithQueryString))
+        case _ => Left(item)
+      }
     }
   }
 
   private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
-    // redirect if itemPath is not the same as request's, and this isn't a JSON or RSS request
-    itemPath != request.path && s"$itemPath/all" != request.path && !(request.isJson || request.isRss)
+    // redirect if itemPath is not the same as request's, and this isn't an all page, a JSON or an RSS request
+    itemPath != request.path.stripSuffix("/all") && !(request.isJson || request.isRss)
   }
 }
 

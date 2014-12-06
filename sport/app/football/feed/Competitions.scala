@@ -99,7 +99,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
     Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true, tableDividers = List(2, 6, 21)),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
-    Competition("120", "/football/scottish-premiership", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
+    Competition("120", "/football/scottish-premiership", "Scottish Premiership", "Scottish Premiership", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
@@ -126,16 +126,18 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   }
 
   //one http call updates all competitions
-  def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
+  def refreshCompetitionData() = {
     log.info("Refreshing competition data")
-    competitionAgents.find(_.competition.id == season.id).map { agent =>
-      val newCompetition = agent.competition.startDate match {
-        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-        case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-        case _ =>
+    FootballClient.competitions.map(_.flatMap { season =>
+      competitionAgents.find(_.competition.id == season.id).map { agent =>
+        val newCompetition = agent.competition.startDate match {
+          case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+          case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+          case _ =>
+        }
       }
-    }
-  })
+    })
+  }
 
   //one http call updates all competitions
   def refreshMatchDay() = {

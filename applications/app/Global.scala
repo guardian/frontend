@@ -1,5 +1,6 @@
 import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
+import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
@@ -13,7 +14,8 @@ object Global extends WithFilters(Filters.common: _*)
   with CloudWatchApplicationMetrics
   with DfpAgentLifecycle
   with SurgingContentAgentLifecycle
-  with IndexListingsLifecycle {
+  with IndexListingsLifecycle
+  with SectionsLookUpLifecycle {
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(

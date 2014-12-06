@@ -7,6 +7,7 @@ import dfp.DfpAgent
 import layout.{CollectionEssentials, Front}
 import play.api.libs.json.{JsString, JsValue}
 import services.CollectionConfigWithId
+
 import scala.language.postfixOps
 
 case class FaciaPage(id: String,
@@ -32,7 +33,7 @@ case class FaciaPage(id: String,
     ).flatten
 
     tagAndSectionIds.find(validIds contains) map { id =>
-      s"/$id/all"
+      s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
     }
   }
 

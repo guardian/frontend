@@ -21,6 +21,7 @@ object Sponsorship {
 
   implicit val jsonReads = Json.reads[Sponsorship]
 
+  val ANY_SECTION = ""
 }
 
 case class Sponsorship(tags: Seq[String],
