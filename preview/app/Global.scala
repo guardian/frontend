@@ -1,8 +1,10 @@
-import com.gu.googleauth.{FilterExemption, GoogleAuthFilters}
+import com.gu.googleauth.{UserIdentity, FilterExemption, GoogleAuthFilters}
 import common.ExecutionContexts
-import conf.Filters
+import conf.{Switches, Filters}
 import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
+import play.Play
+import play.api.mvc.Results._
 import play.api.mvc._
 import scala.concurrent.Future
 import services.ConfigAgentLifecycle
@@ -25,8 +27,32 @@ object FilterExemptions {
   )
 }
 
+object PreviewAuthFilters {
+  val LOGIN_ORIGIN_KEY = "loginOriginUrl"
+  class AuthFilterWithExemptions(
+                                  loginUrl: FilterExemption,
+                                  exemptions: Seq[FilterExemption]) extends Filter {
+
+    def apply(nextFilter: (RequestHeader) => Future[Result])
+             (requestHeader: RequestHeader): Future[Result] = {
+
+      if (Play.isTest || requestHeader.path.startsWith(loginUrl.path) || Switches.EnableOauthOnPreview.isSwitchedOff ||
+        exemptions.exists(exemption => requestHeader.path.startsWith(exemption.path)))
+        nextFilter(requestHeader)
+      else {
+        UserIdentity.fromRequest(requestHeader) match {
+          case Some(identity) if identity.isValid => nextFilter(requestHeader)
+          case otherIdentity =>
+            Future.successful(Redirect(loginUrl.path)
+              .addingToSession((LOGIN_ORIGIN_KEY, requestHeader.uri))(requestHeader))
+        }
+      }
+    }
+  }
+}
+
 object Global extends WithFilters(
-  new GoogleAuthFilters.AuthFilterWithExemptions(
+  new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
                                                         with OnwardJourneyLifecycle

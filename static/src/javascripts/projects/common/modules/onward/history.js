@@ -15,25 +15,50 @@ define([
     template,
     storage
 ) {
-    var summaryPeriodDays = 30,
-        forgetUniqueAfter = 10,
-        historySize = 50,
-        popularSize = 20,
 
-        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
-        historyCache,
-        summaryCache,
-        popularCache,
-        storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
-        storageKeyNavPrimary  = 'gu.history.nav.primary',
-        storageKeyNavSecondary = 'gu.history.nav.secondary',
+    var editions = [
+            'uk',
+            'us',
+            'au'
+        ],
+
+        editionalised = [
+            'business',
+            'commentisfree',
+            'culture',
+            'environment',
+            'media',
+            'money',
+            'sport',
+            'technology'
+        ],
+
         pageMeta = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
-        ];
+        ],
+
+        summaryPeriodDays = 30,
+        forgetUniqueAfter = 10,
+        historySize = 50,
+        popularSize = 20,
+
+        storageKeyHistory = 'gu.history',
+        storageKeySummary = 'gu.history.summary',
+        storageKeyNavPrimary  = 'gu.history.nav.primary',
+        storageKeyNavSecondary = 'gu.history.nav.secondary',
+
+        historyCache,
+        summaryCache,
+        popularCache,
+
+        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
+
+        isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
+        stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
+
 
     function saveHistory(history) {
         historyCache = history;
@@ -156,7 +181,9 @@ define([
 
     function collapseTag(t) {
         t = t.replace(/^\/|\/$/g, '');
-        t = t.replace(/^(uk|us|au)\//, '');
+        if (t.match(isEditionalisedRx)) {
+            t = t.replace(stripEditionRx, '');
+        }
         t = t.split('/');
         t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
         return t.join('/');

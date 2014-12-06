@@ -5,7 +5,7 @@ import scala.concurrent.Future
 import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
-import services.{Index, ConfigAgent, IndexPage}
+import services.{ConfigAgent, IndexPage}
 import views.support.PreviousAndNext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeZone, DateTime}
@@ -34,7 +34,8 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def all(path: String) = Action.async { request =>
     val edition = Edition(request)
 
-    if (ConfigAgent.shouldServeFront(path) || ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
+    if (ConfigAgent.shouldServeFront(path) ||
+      ConfigAgent.shouldServeEditionalisedFront(edition, path)) {
       IndexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */

@@ -111,7 +111,7 @@ object ImgSrc {
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
 
-    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Seq(".jpg", ".jpeg", ".png") else Seq(".jpg", ".jpeg")
+    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Seq(".jpg", ".jpeg"/*, ".png" rewritten in the browser for now*/) else Seq(".jpg", ".jpeg")
     val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
     hostPrefixMapping.get(uri.getHost)

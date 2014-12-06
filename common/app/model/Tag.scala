@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import conf.Configuration
+import contentapi.SectionTagLookUp
 import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140, Item360}
 
@@ -40,10 +41,10 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val isFront = true
 
   lazy val isSectionTag: Boolean = {
-    val idParts = id.split("/")
-    // a section tag id looks like     science/science
-    !idParts.exists(_ != section)
+    SectionTagLookUp.sectionId(id).exists(_ == section)
   }
+
+  lazy val showSeriesInMeta = id != "commentisfree/commentisfree"  &&  id != "childrens-books-site/childrens-books-site"
 
   lazy val isKeyword = tagType == "keyword"
 

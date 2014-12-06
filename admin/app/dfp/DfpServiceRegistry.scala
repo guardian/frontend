@@ -1,7 +1,7 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.factory.DfpServices
-import com.google.api.ads.dfp.axis.v201403._
+import com.google.api.ads.dfp.axis.v201411._
 import com.google.api.ads.dfp.lib.client.DfpSession
 
 case class DfpServiceRegistry(session: DfpSession) {

@@ -1,6 +1,7 @@
 package common.editions
 
 import common._
+import common.editions.Uk._
 import org.joda.time.DateTimeZone
 import contentapi.QueryDefaults
 import common.NavItem
@@ -34,6 +35,7 @@ object Us extends Edition(
       NavItem(environment, Seq(globalDevelopment, cities)),
       NavItem(science),
       NavItem(media),
+      NavItem(crosswords),
       NavItem(video)
     )
   }
