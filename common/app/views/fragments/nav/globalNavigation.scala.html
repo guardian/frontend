@@ -6,7 +6,7 @@
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
         <nav role="navigation" aria-label="All sections">
-            <ul class="global-navigation">
+            <ul class="global-navigation js-global-navigation">
                 @navigation.map { nav =>
                     <li class="@RenderClasses(Map(
                             ("global-navigation__section", true),
@@ -22,8 +22,8 @@
                         @if(nav.links.nonEmpty) {
                             <ul class="global-navigation__children">
                                 @nav.links.map{ link =>
-                                    <li class="global-navigation__child@if(link.currentFor(metaData)){ global-navigation__child--current}">
-                                        <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : globalSub : @link.title">
+                                    <li class="local-navigation__item@if(link.currentFor(metaData)){ global-navigation__child--current}">
+                                        <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : globalSub : @link.title">
                                             @Html(link.title)
                                             @if(link.currentFor(metaData)){
                                                 <span class="u-h">selected</span>

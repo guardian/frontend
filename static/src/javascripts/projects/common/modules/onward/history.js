@@ -224,7 +224,7 @@ define([
         saveSummary(summary);
     }
 
-    function renderNavs(doPrimary, doSecondary) {
+    function renderNavs(withVisibleSecondary) {
         var switches = config.switches,
             popular,
             priNavCanonical,
@@ -232,12 +232,14 @@ define([
             priNavItems,
             priNavItemsFirst,
             priNavItemsMap = {},
-            secNav,
+            secNavHtml,
             secNavTags = [];
 
-        doPrimary = doPrimary && (switches.historyNavPrimaryStore || switches.historyNavPrimaryInject);
-        doSecondary = doSecondary && (switches.historyNavSecondaryStore || switches.historyNavSecondaryInject);
-        if (!doPrimary && !doSecondary) { return; }
+        if (!(switches.historyNavPrimaryStore
+           || switches.historyNavPrimaryInject
+           || switches.historyNavSecondaryStore
+           || switches.historyNavSecondaryInject
+        )) { return; }
 
         popular = getPopular();
         if (popular.length === 0) { return; }
@@ -262,7 +264,7 @@ define([
 
                 if (!item) {
                     secNavTags.unshift(tag);
-                } else if (item !== priNavItemsFirst && doPrimary) {
+                } else if (item !== priNavItemsFirst && (switches.historyNavPrimaryStore || switches.historyNavPrimaryInject)) {
                     $(item).detach().insertAfter(priNavItemsFirst);
                 }
             });
@@ -276,32 +278,41 @@ define([
             $(document.getElementById('history-nav-primary')).html(priNav);
         }
 
-        if (!doSecondary || secNavTags.length === 0) { return; }
+        if (secNavTags.length === 0) { return; }
 
-        secNav =
-            '<ul class="signposting">' +
-                '<li class="signposting__item signposting__item--home">' +
-                    '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
-                '</li>' +
-            '</ul>' +
-            '<ul class="local-navigation" data-link-name="history">' +
-                secNavTags.map(function (tag) {
-                    return template(
-                        '<li class="local-navigation__item">' +
-                            '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
-                        '</li>',
-                        {id: tag[0], name: tag[1]}
-                    );
-                }).join('') +
-            '</ul>';
+        /* SIGNPOSTING:
+        '<ul class="signposting">' +
+        '<li class="signposting__item signposting__item--home">' +
+        '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
+        '</li>' +
+        '</ul>' +
+        '<ul class="local-navigation" data-link-name="history">' +
+        '</ul>';
+         */
+
+        secNavHtml = secNavTags.reduce(function (html, tag) { return html + template(
+            '<li class="local-navigation__item">' +
+                '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
+            '</li>',
+            {id: tag[0], name: tag[1]}
+        ); }, '');
 
         if (switches.historyNavSecondaryStore) {
             // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavSecondary, secNav);
+            window.localStorage.setItem(storageKeyNavSecondary, secNavHtml);
         }
 
-        if (switches.historyNavSecondaryInject) {
-            $(document.getElementById('history-nav-secondary')).html(secNav);
+        if (withVisibleSecondary && switches.historyNavSecondaryInject) {
+            $(document.getElementById('history-nav-secondary')).html(secNavHtml);
+        }
+
+        if (switches.historyNavMegaInject) {
+            $(document.querySelectorAll('.js-global-navigation')).prepend(
+                '<li class="global-navigation__section global-navigation__section--history">' +
+                    '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : jump to">jump to</a>' +
+                    '<ul class="global-navigation__children">' + secNavHtml + '</ul>' +
+                '</li>'
+            );
         }
     }
 

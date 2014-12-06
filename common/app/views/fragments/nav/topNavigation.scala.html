@@ -2,6 +2,28 @@
 @import common._
 @import conf.Switches._
 
+
+@if(maybeWithHistory) {
+    @if(HistoryNavPrimaryStore.isSwitchedOn || HistoryNavPrimaryInject.isSwitchedOn) {
+        <ul class="top-navigation top-navigation--history" id="history-nav-primary" data-link-name="history"></ul>
+    }
+    @if(HistoryNavPrimaryStore.isSwitchedOn) {
+        <script>
+            (function(hasStorage) {
+                var nav;
+
+                if (!hasStorage) { return; }
+
+                nav = window.localStorage.getItem('gu.history.nav.primary');
+
+                if (nav) {
+                    document.getElementById('history-nav-primary').innerHTML = nav;
+                }
+            })(guardian.isModernBrowser);
+        </script>
+    }
+}
+
 <ul class="top-navigation js-top-navigation">
     <li class="top-navigation__item top-navigation__item--home">
         <a href="@LinkTo{/}"
@@ -32,24 +54,3 @@
         }
     }
 </ul>
-
-@if(maybeWithHistory) {
-    @if(HistoryNavPrimaryStore.isSwitchedOn || HistoryNavPrimaryInject.isSwitchedOn) {
-        <ul class="top-navigation" id="history-nav-primary" data-link-name="history"></ul>
-    }
-    @if(HistoryNavPrimaryStore.isSwitchedOn) {
-        <script>
-            (function(hasStorage) {
-                var nav;
-
-                if (!hasStorage) { return; }
-
-                nav = window.localStorage.getItem('gu.history.nav.primary');
-
-                if (nav) {
-                    document.getElementById('history-nav-primary').innerHTML = nav;
-                }
-            })(guardian.isModernBrowser);
-        </script>
-    }
-}

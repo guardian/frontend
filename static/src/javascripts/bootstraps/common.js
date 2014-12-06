@@ -313,9 +313,9 @@ define([
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType === 'Network Front') {
-                        history.renderNavs(true, true);
+                        history.renderNavs(true);
                     } else {
-                        history.renderNavs(true, false);
+                        history.renderNavs();
                         history.logSummary(config.page);
                     }
 

@@ -369,6 +369,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
+  val HistoryNavMegaInject = Switch("Feature", "history-nav-mega-inject",
+    "If switched on, history-based nav is injected into the mega-nav",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+  )
+
   val HistoryNavPrimaryStore = Switch("Feature", "history-nav-primary-store",
     "If switched on, history-based primary nav is fetched from localStorage and written to page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
@@ -513,6 +518,7 @@ object Switches extends Collections {
     CrosswordSvgThumbnailsSwitch,
     HistoryNavPrimaryInject,
     HistoryNavSecondaryInject,
+    HistoryNavMegaInject,
     HistoryNavPrimaryStore,
     HistoryNavSecondaryStore
   )

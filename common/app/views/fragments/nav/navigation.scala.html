@@ -13,10 +13,33 @@
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-                    <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
-                        @if(Edition.isEditionFront) {
+
+                    @if(!Edition.isEditionFront) {
+                        <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
+                            @fragments.nav.signposting(metaData, navigation)
+
+                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                                @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
+                                    <ul class="local-navigation">
+                                        @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
+                                            <li class="local-navigation__item">
+                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            }
+                        </nav>
+                    }
+
+                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
+                        @fragments.nav.topNavigation(metaData, navigation, true)
+                    </nav>
+
+                    @if(Edition.isEditionFront) {
+                        <nav class="navigation__container navigation__container--third" data-component="nav" role="navigation" aria-label="Current section">
                             @if(HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn) {
-                                <div id="history-nav-secondary"></div>
+                                <ul class="local-navigation local-navigation--history" id="history-nav-secondary" data-link-name="history secondary"></ul>
                             }
                             @if(HistoryNavSecondaryStore.isSwitchedOn) {
                                 <script>
@@ -33,26 +56,8 @@
                                     })(guardian.isModernBrowser);
                                 </script>
                             }
-                        }
-                        @if(!Edition.isEditionFront) {
-                            @fragments.nav.signposting(metaData, navigation)
-
-                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
-                                @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
-                                    <ul class="local-navigation">
-                                        @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item">
-                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                            }
-                        }
-                    </nav>
-                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation, true)
-                    </nav>
+                        </nav>
+                    }
                 </div>
                 <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
                     <i class="burger-icon"></i>
