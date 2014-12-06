@@ -307,16 +307,6 @@ define([
 
         if (secNavTags.length === 0) { return; }
 
-        /* SIGNPOSTING:
-        '<ul class="signposting">' +
-        '<li class="signposting__item signposting__item--home">' +
-        '<a class="signposting__action" href="/" data-link-name="nav : signposting : jump to">jump to</a>' +
-        '</li>' +
-        '</ul>' +
-        '<ul class="local-navigation" data-link-name="history">' +
-        '</ul>';
-         */
-
         secNavHtml = secNavTags.reduce(function (html, tag) { return html + template(
             '<li class="local-navigation__item">' +
                 '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
