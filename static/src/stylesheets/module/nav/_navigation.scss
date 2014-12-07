@@ -49,10 +49,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation {
     position: relative;
-    overflow: hidden;
     clear: both;
     background: $c-navigation-background;
-    height: $navigation-height;
 
     &:before,
     &:after {
@@ -115,6 +113,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     background: $c-top-navigation-background;
     min-height: $navigation-height;
 }
+.navigation__container--second {
+    height: $navigation-height;
+}
 .navigation__expandable {
     background: $c-navigation-expandable-background;
     overflow: hidden;
@@ -139,8 +140,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         right: 0;
     }
 }
-.top-navigation--history {
-    z-index: 1;
+.top-navigation:nth-child(2) {
+    display: none;
 }
 
 /* Signposting
@@ -270,17 +271,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
 }
-.navigation--has-signposting {
-    .local-navigation,
-    .top-navigation {
-        padding-left: $navigation-h-space-between-items/2;
-    }
-}
-@include mq(mobileLandscape) {
-    .local-navigation,
-    .top-navigation {
-        padding-left: $navigation-h-space-between-items/2;
-    }
+.local-navigation,
+.top-navigation {
+    padding-left: $navigation-h-space-between-items/2;
 }
 
 /* Top navigation home icon
@@ -288,10 +281,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .top-navigation__item--home {
     min-width: 15px;
-
-    .navigation--has-signposting & {
-        display: none;
-    }
 
     @include mq(navigationBreakOnTwoLevels) {
         display: table-cell;
@@ -443,11 +432,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .navigation__expandable {
         display: none;
     }
-    &,
-    .signposting,
-    .local-navigation {
-        height: $navigation-height;
-    }
     .signposting,
     .local-navigation {
         display: table-cell;
@@ -481,9 +465,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             padding-right: $gs-gutter/2;
         }
     }
-    .local-navigation--history {
-        display: none !important;
-    }
     .local-navigation__item {
         @include mq($until: tablet) {
             font-size: 14px;
@@ -505,6 +486,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         .top-navigation {
             display: none;
         };
+    }
+    .local-navigation--history {
+        display: none !important;
     }
 }
 
@@ -538,7 +522,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 @include mq(navigationBreakOnTwoLevels) {
-    .navigation--has-signposting {
+    .navigation {
         .navigation__inner:before {
             content: '';
             position: absolute;
@@ -548,9 +532,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             top: $navigation-height;
             height: 1px;
             background: $c-global-navigation-border;
-        }
-        &.navigation--collapsed {
-            height: $navigation-height * 2;
         }
         &.navigation--expanded {
             .top-navigation__item {
@@ -589,14 +570,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             display: table !important;
             width: 100%;
         }
-        .navigation__container--first,
-        .navigation__container--third {
+        .navigation__container--first {
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-navigation-background;
-        }
-        .navigation__container--second {
             position: absolute;
             top: 0;
+        }
+        &.navigation--has-local-navigation .navigation__container--second {
+            height: $navigation-height * 2;
         }
     }
 }

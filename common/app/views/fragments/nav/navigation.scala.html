@@ -7,8 +7,7 @@
                     ("navigation", true),
                     ("js-navigation-header", true),
                     ("navigation--collapsed", true),
-                    ("navigation--has-signposting", !Edition.isEditionFront || HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn),
-                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty || HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn)
+                    ("navigation--has-local-navigation", !Edition.isEditionFront)
                 ))">
         <div class="gs-container">
             <div class="navigation__inner">
@@ -32,15 +31,28 @@
                         </nav>
                     }
 
-                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation, true)
+                    <nav class="navigation__container navigation__container--second" id="navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
+                        @fragments.nav.topNavigation(metaData, navigation)
+                        @if(HistoryNavPrimaryStore.isSwitchedOn) {
+                            <script>
+                                (function(hasStorage) {
+                                    var nav,
+                                        parent;
+
+                                    if (!hasStorage) { return; }
+
+                                    nav = window.localStorage.getItem('gu.history.nav.primary');
+
+                                    if (nav) {
+                                        document.getElementById('navigation__container--second').insertAdjacentHTML('afterbegin', nav);
+                                    }
+                                })(guardian.isModernBrowser);
+                            </script>
+                        }
                     </nav>
 
                     @if(Edition.isEditionFront) {
-                        <nav class="navigation__container navigation__container--third" data-component="nav" role="navigation" aria-label="Current section">
-                            @if(HistoryNavSecondaryStore.isSwitchedOn || HistoryNavSecondaryInject.isSwitchedOn) {
-                                <ul class="local-navigation local-navigation--history" id="history-nav-secondary" data-link-name="history secondary"></ul>
-                            }
+                        <nav class="navigation__container navigation__container--third" id="navigation__container--third" data-component="nav" role="navigation" aria-label="Current section">
                             @if(HistoryNavSecondaryStore.isSwitchedOn) {
                                 <script>
                                     (function(hasStorage) {
@@ -51,7 +63,7 @@
                                         nav = window.localStorage.getItem('gu.history.nav.secondary');
 
                                         if (nav) {
-                                            document.getElementById('history-nav-secondary').innerHTML = nav;
+                                            document.getElementById('navigation__container--third').insertAdjacentHTML('afterbegin', nav);
                                         }
                                     })(guardian.isModernBrowser);
                                 </script>

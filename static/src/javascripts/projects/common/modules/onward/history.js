@@ -43,7 +43,7 @@ define([
         summaryPeriodDays = 30,
         forgetUniqueAfter = 10,
         historySize = 50,
-        popularSize = 20,
+        popularSize = 30,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -275,7 +275,7 @@ define([
         if (!priNavCanonical) { return; }
 
         priNav = document.createElement('div');
-        priNav.innerHTML = priNavCanonical.innerHTML;
+        priNav.innerHTML = '<ul class="top-navigation" data-link-name="history">' + priNavCanonical.innerHTML + '</ul>';
 
         priNavItems = $('.top-navigation__item', priNav);
         priNavItems.each(function (item) {
@@ -302,7 +302,7 @@ define([
         }
 
         if (switches.historyNavPrimaryInject) {
-            $(document.getElementById('history-nav-primary')).html(priNav);
+            $(document.getElementById('navigation__container--third')).prepend(priNav);
         }
 
         if (secNavTags.length === 0) { return; }
@@ -314,15 +314,6 @@ define([
             {id: tag[0], name: tag[1]}
         ); }, '');
 
-        if (switches.historyNavSecondaryStore) {
-            // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavSecondary, secNavHtml);
-        }
-
-        if (withVisibleSecondary && switches.historyNavSecondaryInject) {
-            $(document.getElementById('history-nav-secondary')).html(secNavHtml);
-        }
-
         if (switches.historyNavMegaInject) {
             $(document.querySelectorAll('.js-global-navigation')).prepend(
                 '<li class="global-navigation__section global-navigation__section--history">' +
@@ -330,6 +321,17 @@ define([
                     '<ul class="global-navigation__children">' + secNavHtml + '</ul>' +
                 '</li>'
             );
+        }
+
+        secNavHtml = '<ul class="local-navigation local-navigation--history">' + secNavHtml + '</ul>';
+
+        if (switches.historyNavSecondaryStore) {
+            // On purpose not using storage module, to avoid a JSON parse on extraction
+            window.localStorage.setItem(storageKeyNavSecondary, secNavHtml);
+        }
+
+        if (withVisibleSecondary && switches.historyNavSecondaryInject) {
+            $(document.getElementById('navigation__container--third')).prepend(secNavHtml);
         }
     }
 
