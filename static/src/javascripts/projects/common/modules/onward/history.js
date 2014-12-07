@@ -59,7 +59,6 @@ define([
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
-
     function saveHistory(history) {
         historyCache = history;
         return storage.local.set(storageKeyHistory, history);
