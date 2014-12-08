@@ -1,7 +1,7 @@
 .fc-container--thrasher {
     border-top: 0;
     margin-top: 0;
-    margin-bottom: 24px;
+    margin-bottom: $gs-baseline * 2;
     padding-bottom: 0;
 
     .fc-container__inner {
@@ -32,8 +32,8 @@
         margin-right: 0;
 
         @include mq(tablet) {
-            margin-left: -20px;
-            margin-right: -20px;
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
         }
     }
 
