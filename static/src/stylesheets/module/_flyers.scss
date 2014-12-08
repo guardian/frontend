@@ -30,13 +30,17 @@
 }
 
 .flyer__header {
-    padding: $gs-baseline / 4 $gs-gutter / 4;
-    padding-bottom: $gs-baseline;
+    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
 }
 
 .flyer__standfirst {
     @include fs-headline(1);
-    padding: $gs-baseline / 4 $gs-gutter / 4;
+    padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
+    ul {
+        list-style: none;
+        margin-bottom: $gs-baseline / 1.5;
+        
+    }
 }
 
 .flyer__link {
@@ -49,14 +53,15 @@
 
 .flyer__gallery-img {
     width: 100%;
+    display: block;
 }
 
 .flyer__byline-img {
-    height: $gs-baseline * 9.5;
+    height: $gs-baseline * 12;
     z-index: 2;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: -$gs-gutter * 1.5;
 }
 
 .flyer--has-byline-pic {
@@ -66,7 +71,7 @@
     }
 
     .flyer__standfirst {
-        padding-right: $gs-gutter * 6;
+        padding-right: $gs-gutter * 8;
         min-height: $gs-baseline * 5;
     }
 }
