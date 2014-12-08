@@ -672,6 +672,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
 
   lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   override lazy val lightboxImages = galleryImages
+  override lazy val minLightboxWidth = 0
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
@@ -695,12 +696,12 @@ object Gallery {
 trait Lightboxable extends Content {
 
   lazy val lightboxImages: Seq[ImageContainer] = List()
-
+  lazy val minLightboxWidth = 620
   lazy val lightbox: JsObject = {
     val allImages: Seq[ImageContainer] = lightboxImages
     val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
+      imgContainer.largestEditorialCrop.filter(_.width > minLightboxWidth).map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
