@@ -1,7 +1,7 @@
 @(items: Seq[model.Content], optLogo: Option[String], optCapiTitle: Option[String], optCapiLink: Option[String], optCapiAbout: Option[String], optClickMacro: Option[String], optOmnitureId: Option[String], optCapiAdFeature: Option[String], optSponsorType: Option[String], optSponsorLabel: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising fc-container--commercial-capi @optSponsorType" data-link-name="merchandising | capi | multiple @optOmnitureId">
+    <section class="fc-container fc-container--paid-for fc-container--special fc-container--merchandising commercial-dfp-multi @optSponsorType" data-link-name="merchandising | capi | multiple @optOmnitureId">
         <div class="fc-container__inner">
         <div class="container__border"></div>
             <div class="fc-container__header">
