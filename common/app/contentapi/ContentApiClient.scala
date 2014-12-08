@@ -148,3 +148,7 @@ class ElasticSearchLiveContentApiClient extends CircuitBreakingContentApiClient 
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
 }
+
+class ElasticSearchPreviewContentApiClient extends ElasticSearchLiveContentApiClient {
+  override val targetUrl = contentApi.contentApiPreviewHost
+}

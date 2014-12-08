@@ -2,7 +2,7 @@ package conf
 
 import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
-import contentapi.ElasticSearchLiveContentApiClient
+import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
 import Switches.ForceHttpResponseCodeSwitch
@@ -12,6 +12,8 @@ import scala.concurrent.Future
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 
 object LiveContentApi extends ElasticSearchLiveContentApiClient
+
+object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 
 object Static extends Assets(Configuration.assets.path)
 
