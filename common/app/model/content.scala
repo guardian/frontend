@@ -455,7 +455,7 @@ case class SnapLatest(articleId: String,
   override lazy val tags: Seq[Tag] = snapTags
 }
 
-class Article(content: ApiContentWithMeta) extends Content(content) {
+class Article(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
@@ -480,31 +480,9 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     leftColElements.isDefined
   }
 
-  lazy val lightbox: JsObject = {
-    val allImages: Seq[ImageContainer] = mainPicture.toSeq ++ bodyImages
-    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
-        JsObject(Seq(
-          "caption" -> JsString(img.caption.getOrElse("")),
-          "credit" -> JsString(img.credit.getOrElse("")),
-          "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-          "role" -> JsString(img.role.toString)
-        ))
-      }
-    }
-    JsObject(Seq(
-      "id" -> JsString(id),
-      "headline" -> JsString(headline),
-      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
-      "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson).toSeq.flatten)
-    ))
-  }
+  override lazy val lightboxImages = mainPicture.toSeq ++ bodyImages
 
-  lazy val lightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
+  lazy val bodyLightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
     case (_, Some(crop)) => crop.width > 620
     case _ => false
   })
@@ -648,7 +626,7 @@ object Video {
   def apply(delegate: ApiContent): Video = new Video(ApiContentWithMeta(delegate))
 }
 
-class Gallery(content: ApiContentWithMeta) extends Content(content) {
+class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
@@ -667,7 +645,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "contentType" -> JsString(contentType),
     "gallerySize" -> JsNumber(size),
-    "galleryLightbox" -> lightbox
+    "lightboxImages" -> lightbox
   )
 
   override lazy val openGraphImage: String = {
@@ -693,6 +671,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   )
 
   lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
+  override lazy val lightboxImages = galleryImages
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
@@ -706,17 +685,29 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
         s"twitter:image$index:src" -> i
       })
   }.flatten
+}
+
+object Gallery {
+  def apply(delegate: ApiContent): Gallery = new Gallery(ApiContentWithMeta(delegate))
+
+}
+
+trait Lightboxable extends Content {
+
+  lazy val lightboxImages: Seq[ImageContainer] = List()
 
   lazy val lightbox: JsObject = {
-    val imageContainers = galleryImages
+    val allImages: Seq[ImageContainer] = lightboxImages
+    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
+      imgContainer.largestEditorialCrop.filter(_.width > 620).map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
-          "ratio" -> JsNumber(img.width.toDouble / img.height.toDouble)
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+          "role" -> JsString(img.role.toString)
         ))
       }
     }
@@ -725,13 +716,9 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray(imageJson.flatten)
+      "images" -> JsArray((imageJson).toSeq.flatten)
     ))
   }
-}
-
-object Gallery {
-  def apply(delegate: ApiContent): Gallery = new Gallery(ApiContentWithMeta(delegate))
 
 }
 
@@ -747,17 +734,20 @@ object Interactive {
   def apply(delegate: ApiContent): Interactive = new Interactive(ApiContentWithMeta(delegate))
 }
 
-class ImageContent(content: ApiContentWithMeta) extends Content(content) {
+class ImageContent(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
 
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
-  override lazy val metaData: Map[String, JsValue] =
-    super.metaData + ("contentType" -> JsString(contentType))
-
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
   )
+
+  override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
+    "contentType" -> JsString(contentType),
+    "lightboxImages" -> lightbox
+  )
+  override lazy val lightboxImages = mainPicture.toSeq
 }
 
 case class ApiContentWithMeta(
