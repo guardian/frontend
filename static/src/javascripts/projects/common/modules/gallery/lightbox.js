@@ -494,27 +494,27 @@ define([
     };
 
     function bootstrap() {
-        var lightbox,
-            galleryId,
-            match,
-            galleryHash = window.location.hash,
-            images = config.page.lightboxImages,
-            res;
-
-        bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
-            e.preventDefault();
-
-            var $el = bonzo(e.currentTarget),
-                galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split('#img-'),
-                parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
-                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
-            lightbox = lightbox || new GalleryLightbox();
-
-            lightbox.loadGalleryfromJson(images, galleryIndex);
-        });
-
         if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
+            var lightbox,
+                galleryId,
+                match,
+                galleryHash = window.location.hash,
+                images = config.page.lightboxImages,
+                res;
+
+            bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
+                e.preventDefault();
+
+                var $el = bonzo(e.currentTarget),
+                    galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
+                    galleryHrefParts = galleryHref.split('#img-'),
+                    parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
+                    galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+                lightbox = lightbox || new GalleryLightbox();
+
+                lightbox.loadGalleryfromJson(images, galleryIndex);
+            });
+
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);
