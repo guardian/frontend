@@ -498,7 +498,7 @@ define([
             galleryId,
             match,
             galleryHash = window.location.hash,
-            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'],
+            images = config.page.lightboxImages,
             res;
 
         bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
@@ -514,7 +514,7 @@ define([
             lightbox.loadGalleryfromJson(images, galleryIndex);
         });
 
-        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article' || config.page.contentType === 'ImageContent') {
+        if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);

@@ -645,7 +645,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "contentType" -> JsString(contentType),
     "gallerySize" -> JsNumber(size),
-    "galleryLightbox" -> lightbox
+    "lightboxImages" -> lightbox
   )
 
   override lazy val openGraphImage: String = {
