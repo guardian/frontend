@@ -1,0 +1,55 @@
+.fc-container--thrasher {
+    border-top: 0;
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-bottom: 0;
+
+    .fc-container__inner {
+        border-top: 0;
+        padding-top: 0;
+
+        @include mq($until: tablet) {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+    }
+
+    .fc-container__header {
+        display: none;
+    }
+
+    .fc-container__body {
+        margin-left: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        width: 100%;
+        overflow: initial;
+    }
+
+    .fc-slice-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+
+        @include mq(tablet) {
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+    }
+
+    .fc-slice {
+        margin: 0;
+        width: 100%;
+    }
+
+    .fc-slice__item {
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .fc-item {
+        margin: 0;
+        overflow: auto;
+        width: 100%;
+    }
+}
