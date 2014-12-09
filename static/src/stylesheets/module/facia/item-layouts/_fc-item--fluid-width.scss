@@ -22,7 +22,12 @@ Currently used as a fallback for Thrashers
 */
 
 @mixin fc-item--fluid-width {
-    .fc-item__header {
-        background-color: red;
+    .fc-item__content {
+        padding-bottom: 0;
+    }
+
+    .fc-item__image-container,
+    .fc-item__standfirst {
+        display: block;
     }
 }

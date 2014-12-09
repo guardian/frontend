@@ -233,12 +233,44 @@
 .fc-item--fluid-width-mobile {
     @include mq($until: tablet) {
         @include fc-item--fluid-width;
+
+        @include mq(mobileLandscape, tablet) {
+            .fc-item__image-container {
+                display: none;
+            }
+
+            .fc-item__header {
+                @include fs-headline(5, true);
+            }
+        }
     }
 }
 
 .fc-item--fluid-width-tablet {
     @include mq(tablet) {
         @include fc-item--fluid-width;
+        @include fc-item--horizontal(20%);
+
+        .has-flex-wrap & {
+            .fc-item__container {
+                @include flex-direction(row);
+            }
+        }
+
+        .fc-item__header {
+            @include fs-headline(3, true);
+
+            @include mq(desktop) {
+                @include fs-headline(6, true);
+            }
+        }
+
+        .fc-item__header,
+        .fc-item__standfirst {
+            @include mq(desktop) {
+                padding-right: 30%;
+            }
+        }
     }
 }
 
