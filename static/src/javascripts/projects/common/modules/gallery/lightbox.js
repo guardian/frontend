@@ -48,7 +48,6 @@ define([
 
         // CONFIG
         this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
-        this.hideControls = config.page.lightboxImages.images.length < 2
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -107,10 +106,6 @@ define([
 
         if (detect.hasTouchScreen()) {
             this.disableHover();
-        }
-
-        if (this.hideControls) {
-            $('.gallery-lightbox__progress, .js-gallery-next, .js-gallery-prev').hide();
         }
 
         bean.on(window, 'popstate', function (event) {
@@ -221,12 +216,12 @@ define([
 
     GalleryLightbox.prototype.getImgSrc = function (imgJson, width, height) {
         var possibleWidths = _.filter(imagesModule.availableWidths, function (w) {
-            var widthBigger = w > width,
-                calculatedHeight = (w / imgJson.ratio),
-                heightBigger =  calculatedHeight > height;
-            return widthBigger || heightBigger;
-        }).sort(function (a, b) { return a > b; }),
-        chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
+                var widthBigger = w > width,
+                    calculatedHeight = (w / imgJson.ratio),
+                    heightBigger =  calculatedHeight > height;
+                return widthBigger || heightBigger;
+            }).sort(function (a, b) { return a > b; }),
+            chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
 
         return imgJson.src.replace('{width}', chosenWidth);
     };
@@ -303,6 +298,11 @@ define([
 
                     if (this.useSwipe) {
                         this.initSwipe();
+                    }
+
+                    this.hideControls = this.galleryJson.images.length < 2;
+                    if (this.hideControls) {
+                        $('.gallery-lightbox__progress, .js-gallery-next, .js-gallery-prev').hide();
                     }
 
                     this.state = 'image';
