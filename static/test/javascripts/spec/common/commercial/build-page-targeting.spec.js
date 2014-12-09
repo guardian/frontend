@@ -10,7 +10,7 @@ define([
                     return {
                         page: {
                             edition:     'US',
-                            contentType: 'Network Front',
+                            contentType: 'Video',
                             isSurging:   true,
                             source: 'ITN',
                             tones: 'News',
@@ -19,7 +19,8 @@ define([
                             seriesId: 'film/series/filmweekly',
                             pageId: 'football/series/footballweekly',
                             keywordIds: 'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
-                            blogIds: 'blog'
+                            blogIds: 'blog',
+                            videoDuration: 63
                         },
                         switches: {
                             audienceScienceGateway: true
@@ -97,8 +98,8 @@ define([
                 var pageTargeting = buildPageTargeting();
 
                 expect(pageTargeting.edition).toBe('us');
-                expect(pageTargeting.ct).toBe('network-front');
-                expect(pageTargeting.pt).toBe('network-front');
+                expect(pageTargeting.ct).toBe('video');
+                expect(pageTargeting.pt).toBe('video');
                 expect(pageTargeting.p).toBe('ng');
                 expect(pageTargeting.su).toBe(true);
                 expect(pageTargeting.bp).toBe('mobile');
@@ -108,6 +109,7 @@ define([
                 expect(pageTargeting.bl).toEqual(['blog']);
                 expect(pageTargeting.ms).toBe('itn');
                 expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
+                expect(pageTargeting.vl).toEqual('90');
             });
 
             it('should set correct edition param', function (buildPageTargeting) {
