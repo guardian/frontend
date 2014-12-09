@@ -11,7 +11,7 @@ define([
 ) {
     function upgradeFlyer(el) {
         var href = $('a', el).attr('href'),
-            matches = href.match(/(?:https?:\/\/www\.theguardian\.com)?(\/.*)/);
+            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
             ajax({
