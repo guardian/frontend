@@ -42,19 +42,7 @@
 
         @if(!content.isGallery) {
             <div class="flyer__standfirst u-cf">
-            @if(content.isLiveBlog){
-                @content.trailText.map{ trailText => @Html(trailText) }
-            } else {
-                <div>
-                @content.standfirst.map { s =>
-                    @defining(Edition(request)) { edition =>
-                        @withJsoup(BulletCleaner(s))(
-                            InBodyLinkCleaner("in standfirst link")
-                        )
-                    }
-                }
-                </div>
-            }
+                @content.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
             </div>
             @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                 @content.contributors.headOption.map { profile =>
