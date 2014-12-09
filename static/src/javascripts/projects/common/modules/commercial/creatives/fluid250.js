@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'lodash/objects/merge',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -9,6 +10,7 @@ define([
 ], function (
     bean,
     bonzo,
+    merge,
     $,
     mediator,
     storage,
@@ -21,8 +23,11 @@ define([
     };
 
     Fluid250.prototype.create = function () {
-
-        $.create(template(fluid250Tpl, this.params)).appendTo(this.$adSlot);
+        var templateOptions = {
+            showLabel: (this.params.showAdLabel === 'hide') ?
+                'creative__label--hidden' : ''
+        };
+        $.create(template(fluid250Tpl, merge(this.params, templateOptions))).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');

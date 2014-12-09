@@ -108,7 +108,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .filter(c => c.meta.exists(_.snapType.exists(_ == "latest")))
       .flatMap(c => c.meta.flatMap(_.snapUri))
 
-    Future.traverse(latestSnapSearches) { id =>
+    val lastestSnaps = Future.traverse(latestSnapSearches) { id =>
       LiveContentApi.item(id, Edition.defaultEdition)
         .showFields(showFieldsWithBodyQuery)
         .pageSize(1)
@@ -117,6 +117,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
     .map(_.flatten)
     .map(_.toMap)
+
+    lastestSnaps.onSuccess { case m => log.info(s"Successfully requested ${m.size} Dreamsnaps")}
+    lastestSnaps.onFailure { case t: Throwable => log.info(s"Dreamsnaps request failed: $t")}
+    lastestSnaps
   }
 
   def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {

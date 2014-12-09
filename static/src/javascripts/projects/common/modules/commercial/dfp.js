@@ -18,6 +18,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/url',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
@@ -40,6 +41,7 @@ define([
     config,
     detect,
     mediator,
+    urlUtils,
     buildPageTargeting,
     geoMostPopular,
     Sticky
@@ -224,12 +226,15 @@ define([
          * Private functions
          */
         defineSlot = function ($adSlot) {
-            var slotTarget  = $adSlot.data('slot-target') || $adSlot.data('name'),
-                adUnit      = config.page.adUnit,
-                id          = $adSlot.attr('id'),
-                sizeMapping = defineSlotSizes($adSlot),
+            var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
+                adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+                // if ?ad-unit=x, use that
+                adUnit         = adUnitOverride ?
+                    ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
+                id             = $adSlot.attr('id'),
+                sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size        = uniq(
+                size           = uniq(
                     flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
@@ -306,7 +311,8 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require(['common/modules/commercial/creatives/' + creativeConfig.name])
+                                require('bootstraps/creatives')
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name])
                                     .then(function (Creative) {
                                         new Creative($slot, creativeConfig.params).create();
                                     });
