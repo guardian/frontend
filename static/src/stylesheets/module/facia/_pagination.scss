@@ -28,10 +28,11 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 ```
 */
 
-$pagination-item-size: $gs-baseline * 2;
-$pagination-height:    $gs-baseline * 4;
-$pagination-gutter:    $gs-baseline;
-$text-size:            14px;
+$pagination-item-size:    $gs-baseline * 2;
+$pagination-height:       $gs-baseline * 4;
+$pagination-gutter:       $gs-baseline;
+$text-size:               14px;
+$pagination-icon-spacing: 10px;
 
 .pagination {
     width: auto;
@@ -126,5 +127,17 @@ $text-size:            14px;
         margin: 0;
         line-height: $text-size;
         vertical-align: middle;
+    }
+}
+
+.pagination__action--pushright {
+    .i {
+        margin-right: $pagination-icon-spacing;
+    }
+}
+
+.pagination__action--pushleft {
+    .i {
+        margin-left: $pagination-icon-spacing;
     }
 }

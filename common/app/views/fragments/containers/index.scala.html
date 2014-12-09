@@ -32,15 +32,8 @@
 
                 @if(nav.isDefined) {
                     <div class="pagination u-cf">
-                        <ol class="u-unstyled pagination__links">
-                            <li class="pagination__item pagination__item--next">
-                                @nav.prev.map{ prev => <a rel="prev" href="@LinkTo{@prev}">Older</a> }
-                            </li>
-
-                            <li class="pagination__item pagination__item--prev">
-                                @nav.next.map{ next => <a rel="next" href="@LinkTo{@next}">Newer</a> }
-                            </li>
-                        </ol>
+                        @nav.next.map{ next => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushright" rel="next" href="@LinkTo{@next}"><i aria-hidden="true" class="i i-arrow-left-grey"></i>Newer</a> }
+                        @nav.prev.map{ prev => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushleft" rel="prev" href="@LinkTo{@prev}">Older<i aria-hidden="true" class="i i-arrow-right-grey"></i></a> }
                     </div>
                 }
             </div>
