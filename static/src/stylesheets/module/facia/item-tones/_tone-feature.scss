@@ -41,7 +41,7 @@
     .flyer__standfirst {
         color: fade-out($c-headline, .2);
         ul > li:before {
-            background: rgba($c-headline, 0.4);
+            background: rgba($c-headline, .4);
         }
     }
 
