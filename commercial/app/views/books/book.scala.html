@@ -1,11 +1,11 @@
-@(book: model.commercial.books.Book)(implicit request: RequestHeader)
+@(book: model.commercial.books.Book, clickMacro: Option[String])(implicit request: RequestHeader)
 
 @defining(("2_0", "2014-10-14")) { case (version, date) =>
     <li class="lineitem lineitem--multi" itemscope itemtype="http://schema.org/Book">
         <div class="commercial--books commercial--tone-books">
             <div class="commercial--multi__header">
                 <h4 class="commercial__title">
-                    <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
+                    <a href="@{clickMacro}http://www.guardianbookshop.co.uk/"
                     data-link-name="merchandising-hybrid-book-v@{version}_@{date}-visit-shop">
                         <i class="i i-guardian-logo-commercial"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
                         <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
@@ -13,7 +13,7 @@
                 </h4>
             </div>
             <div class="commercial--multi__body">
-                <a href="@AdLink{@book.buyUrl}"
+                <a href="@clickMacro@book.buyUrl"
                 class="lineitem__link"
                 data-link-name="merchandising-hybrid-book-v@{version}_@{date}-@book.title">
                     @book.jacketUrl.map { url =>
@@ -38,7 +38,7 @@
                         </p>
                     </div>
                 </a>
-                <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
+                <a class="lineitem__cta button button--primary button--small" href="@clickMacro@book.buyUrl" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
                     Buy now<i class="i i-arrow-white-right i-right"></i>
                 </a>
             </div>

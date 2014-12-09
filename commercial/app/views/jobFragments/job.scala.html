@@ -1,22 +1,22 @@
-@(job: model.commercial.jobs.Job)(implicit request: RequestHeader)
+@(job: model.commercial.jobs.Job, clickMacro: Option[String])(implicit request: RequestHeader)
 @defining("http://jobs.theguardian.com", "1_0", "2014-08-14") { case (jobsHost, version, date) =>
     <li class="lineitem lineitem--multi">
         <div class="commercial--jobs commercial--tone-jobs">
             <div class="commercial--multi__header">
                 <h4 class="commercial__title">
-                    <a href="@AdLink{@jobsHost/}" data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-visit-site">
+                    <a href="@clickMacro@jobsHost" data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-visit-site">
                         <i class="i i-guardian-logo-commercial"></i><i class="i i-jobs-logo i-commercial-brand"></i>
                         <span class="u-h">The Guardian</span> <span class="u-h">Jobs</span>
                     </a>
                 </h4>
             </div>
             <div class="commercial--multi__body">
-                <a class="lineitem__link" href="@AdLink{@job.listingUrl}">
+                <a class="lineitem__link" href="@clickMacro@job.listingUrl">
                     <img class="lineitem__image" src="@job.recruiterLogoUrl" alt="@job.recruiterName" title="@job.recruiterName"/>
                     <h4 class="lineitem__title">@job.title</h4>
                     <p class="lineitem__meta">@job.locationDescription - @job.shortSalaryDescription</p>
                 </a>
-                <a class="lineitem__cta button button--primary button--small" href="@AdLink{@job.recruiterPageUrl}">
+                <a class="lineitem__cta button button--primary button--small" href="@clickMacro@job.recruiterPageUrl">
                     Apply now <i class="i i-arrow-white-right i-right"></i>
                 </a>
             </div>
