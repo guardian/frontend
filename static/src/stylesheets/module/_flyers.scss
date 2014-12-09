@@ -92,6 +92,44 @@
     }
 }
 
+.element-rich-link:not(.element--upgraded) {
+    border-top: 1px dotted colour(neutral-3);
+    border-bottom: 1px dotted colour(neutral-3);
+    margin-bottom: $gs-baseline / 1.5;
+
+    @include mq(mobileLandscape) {
+        float: left;
+        width: gs-span(3);
+        margin-right: $gs-gutter;
+        margin-top: $gs-baseline / 3;
+    }
+
+    p {
+        margin: 0;
+    }
+    a {
+        @include fs-headline(2);
+        font-weight: 500;
+        display: block;
+        padding: 0;
+        color: colour(neutral-1);
+        border: 0;
+        padding-bottom: $gs-baseline * 1.5;
+
+        &:hover {
+            text-decoration: underline !important;
+        }
+
+        &:before {
+            content: 'More on this topic';
+            display: block;
+            @include fs-textSans(1);
+            color: colour(neutral-2);
+            padding: $gs-baseline/4 0;
+        }
+    }
+}
+
 // In-article styles
 //-----------------------
 
