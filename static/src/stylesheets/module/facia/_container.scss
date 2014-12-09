@@ -17,6 +17,10 @@ $header-image-size-desktop: 100px;
             background-color: #ffffff;
         }
     }
+    
+    &.fc-container--merchandising {
+        padding-bottom: 0;
+    }
 }
 
 .fc-container--outbrain {

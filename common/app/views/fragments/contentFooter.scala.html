@@ -8,7 +8,7 @@
     @if(!content.isAdvertisementFeature) {
 
         @if(!content.shouldHideAdverts) {
-            <div class="fc-container fc-container--commercial">
+            <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
@@ -30,7 +30,7 @@
         }
 
         @if(!content.shouldHideAdverts) {
-            <div class="fc-container fc-container--commercial">
+            <div class="fc-container fc-container--merchandising">
                 @fragments.commercial.commercialComponent()
             </div>
         }
