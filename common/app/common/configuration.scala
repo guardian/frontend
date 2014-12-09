@@ -200,6 +200,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val path =
       if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
       else configuration.getMandatoryStringProperty("assets.path")
+    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
   }
 
   object staticSport {

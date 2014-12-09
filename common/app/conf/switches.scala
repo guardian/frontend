@@ -1,7 +1,6 @@
 package conf
 
 import common._
-import implicits.Collections
 import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -38,9 +37,16 @@ case class Switch( group: String,
   def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate.toDateTimeAtStartOfDay).getDays
 
   def expiresSoon = daysToExpiry < 7
+
+  Switch.switches.send(this :: _)
 }
 
-object Switches extends Collections {
+object Switch {
+  private val switches = AkkaAgent[List[Switch]](Nil)
+  def allSwitches: Seq[Switch] = switches.get
+}
+
+object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
@@ -51,6 +57,12 @@ object Switches extends Collections {
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
     sellByDate = never
+  )
+
+  val RssServerSwitch = Switch("Performance", "rss-server",
+    "If this switch is on then RSS traffic will be redirected to RSS server",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 2, 1)
   )
 
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
@@ -82,6 +94,12 @@ object Switches extends Collections {
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never
+  )
+
+  val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
+    "If this switch is switched on then the preview server requires login",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -119,6 +137,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val ExternalVideoEmbeds = Switch("Performance", "external-video-embeds",
+    "If switched on then we will accept and display external video views",
+    safeState = Off, sellByDate = never
+  )
+
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
@@ -140,8 +163,9 @@ object Switches extends Collections {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off, sellByDate = never
+    //"If this switch is on png images will be resized via the png-resizing server",
+    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
   )
 
   // Commercial
@@ -149,6 +173,11 @@ object Switches extends Collections {
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
+  )
+
+  val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
+    "If this switch is on, memory leak on Admin server should be plugged.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
@@ -274,12 +303,12 @@ object Switches extends Collections {
   )
 
   // Features
-  val ZonesAggregationSwitch = Switch(
+  val HardcodedSectionTagLookUp = Switch(
     "Feature",
-    "zones-aggregation",
-    "If activated, all pages for 'zones' (e.g., sport and culture) will aggregate their respective subsections",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 1, 15)
+    "hardcoded-section-tag-lookup",
+    "Hardcoded section tag id lookup (uk-news palaver)",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
@@ -296,7 +325,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -354,10 +383,15 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
+    "If this is switched on then different Breaking News alert styles are A/B tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2014, 12, 5)
+    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -371,6 +405,20 @@ object Switches extends Collections {
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
+    safeState = Off, sellByDate = never
+  )
+
+  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
+    "If switched on then football matchday feeds will be recorded every minute",
+    safeState = Off, sellByDate = never)
+
+  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
+    "If switched on, crossword thumbnails will be accurate SVGs",
+    safeState = Off, sellByDate = never
+  )
+
+  val CricketScoresSwitch = Switch("Feature", "cricket-scores",
+    "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off, sellByDate = never
   )
 
@@ -411,99 +459,17 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
-    "If switched on then football matchday feeds will be recorded every minute",
-    safeState = Off, sellByDate = never)
-
-  val CrosswordSvgThumbnailsSwitch = Switch("Feature", "crossword-svg-thumbnails",
-    "If switched on, crossword thumbnails will be accurate SVGs",
-    safeState = Off, sellByDate = never
+  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
+    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
   )
 
+  def all: Seq[Switch] = Switch.allSwitches
 
-  val all: List[Switch] = List(
-    TagPageSizeSwitch,
-    AutoRefreshSwitch,
-    DoubleCacheTimesSwitch,
-    RelatedContentSwitch,
-    FlyerSwitch,
-    AjaxRelatedContentSwitch,
-    DfpCachingSwitch,
-    CommercialSwitch,
-    StandardAdvertsSwitch,
-    CommercialComponentsSwitch,
-    VideoAdvertsSwitch,
-    VpaidAdvertsSwitch,
-    LiveblogAdvertsSwitch,
-    SponsoredSwitch,
-    AudienceScienceSwitch,
-    AudienceScienceGatewaySwitch,
-    CriteoSwitch,
-    DiscussionSwitch,
-    OpenCtaSwitch,
-    FontSwitch,
-    SearchSwitch,
-    ReleaseMessageSwitch,
-    IdentityProfileNavigationSwitch,
-    InlineCriticalCss,
-    FacebookAutoSigninSwitch,
-    FacebookShareUseTrailPicFirstSwitch,
-    IdentityFormstackSwitch,
-    IdentityAvatarUploadSwitch,
-    ToolDisable,
-    ToolSparklines,
-    OphanSwitch,
-    ScrollDepthSwitch,
-    ContentApiPutSwitch,
-    EffectiveMeasureSwitch,
-    ImrWorldwideSwitch,
-    ForeseeSwitch,
-    MediaMathSwitch,
-    KruxSwitch,
-    RemarketingSwitch,
-    OutbrainSwitch,
-    DiagnosticsLogging,
-    TravelOffersFeedSwitch,
-    JobFeedSwitch,
-    MasterclassFeedSwitch,
-    SoulmatesFeedSwitch,
-    MoneysupermarketFeedsSwitch,
-    LCMortgageFeedSwitch,
-    GuBookshopFeedsSwitch,
-    ImageServerSwitch,
-    FaciaToolPressSwitch,
-    ShowAllArticleEmbedsSwitch,
-    FrontPressJobSwitch,
-    EnhanceTweetsSwitch,
-    MemcachedSwitch,
-    MemcachedFallbackSwitch,
-    IncludeBuildNumberInMemcachedKey,
-    GeoMostPopular,
-    FaciaToolCachedContentApiSwitch,
-    FaciaToolDraftContent,
-    GuShiftCookieSwitch,
-    IdentityBlockSpamEmails,
-    IdentityLogRegistrationsFromTor,
-    ABHighCommercialComponent,
-    EnhancedMediaPlayerSwitch,
-    BreakingNewsSwitch,
-    DiscussionPageSizeSwitch,
-    MetricsSwitch,
-    FootballFeedRecorderSwitch,
-    ForceHttpResponseCodeSwitch,
-    CircuitBreakerSwitch,
-    PollPreviewForFreshContentSwitch,
-    PngResizingSwitch,
-    CrosswordSvgThumbnailsSwitch,
-    ZonesAggregationSwitch
-  )
-
-  val httpSwitches: List[Switch] = List(
-  )
-
-  val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
-
-  def byName(name: String): Option[Switch] = all.find(_.name == name)
+  def grouped: List[(String, Seq[Switch])] = {
+    val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
+    sortedSwitches.toList.sortBy(_._1)
+  }
 }
 
 class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)

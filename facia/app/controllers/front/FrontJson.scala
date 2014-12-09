@@ -42,6 +42,7 @@ trait FrontJsonLite extends ExecutionContexts{
     .map{ j =>
       Json.obj(
         "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "meta" \ "trailText").asOpt[JsString].getOrElse(j \ "safeFields" \ "trailText"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
         "id" -> (j \ "id")
@@ -58,7 +59,7 @@ trait FrontJson extends ExecutionContexts with Logging {
   val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
   def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()

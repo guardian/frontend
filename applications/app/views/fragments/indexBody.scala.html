@@ -32,11 +32,11 @@
 
         @index.page.pagination.map { paginationInstance =>
             <div class="fc-container__pagination">
-                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.page.id))
+                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
             </div>
         }
 
-        @fragments.trendingTopics(index.trails, index.allPath)
+        @fragments.trendingTopics(index.trails, index.page.id, None)
 
         @fragments.commercial.commercialComponent()
     </div>

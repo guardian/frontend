@@ -284,7 +284,8 @@ trait Tags {
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
-  lazy val isPodcast = types.exists(_.id == Tags.Podcast) || tags.exists(_.podcast.isDefined)
+  lazy val isPodcast = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.podcast.isDefined))
+  lazy val isAudio = types.exists(_.id == Tags.Audio)
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
@@ -299,11 +300,12 @@ trait Tags {
 
 object Tags {
   val Analysis = "tone/analysis"
-  val Crossword = "type/crossword"
-  val Podcast = "type/podcast"
-  val Editorial = "tone/editorials"
+  val Audio = "type/audio"
   val Cartoon = "type/cartoon"
+  val Crossword = "type/crossword"
+  val Editorial = "tone/editorials"
   val Letters = "tone/letters"
+  val Podcast = "type/podcast"
 
   object VisualTone {
     val Live = "live"

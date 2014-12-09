@@ -65,9 +65,7 @@ define([
             },
 
             initLightbox: function () {
-                if ('lightboxImages' in config.page) {
-                    Lightbox.init();
-                }
+                Lightbox.init();
             }
         },
 
