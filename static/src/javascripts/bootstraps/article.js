@@ -72,7 +72,7 @@ define([
                 }
             },
 
-            initFlyers: function() {
+            initFlyers: function () {
                 flyers.init();
             }
         },

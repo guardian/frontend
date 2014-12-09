@@ -9,18 +9,17 @@ define([
     $,
     ajax
 ) {
-
     function upgradeFlyer(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:https?:\/\/www\.theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
             ajax({
-                url: "http://embed.theguardian.com/embed/card" + matches[1] + '.json',
+                url: '/embed/card' + matches[1] + '.json',
                 crossOrigin: true
-            }).then(function(response) {
+            }).then(function (response) {
                 $(el).html(response.html)
-                    .addClass('element-rich-link--upgraded')
+                    .addClass('element-rich-link--upgraded');
             });
         }
     }
@@ -33,5 +32,4 @@ define([
         init: init,
         upgradeFlyer: upgradeFlyer
     };
-
 });
