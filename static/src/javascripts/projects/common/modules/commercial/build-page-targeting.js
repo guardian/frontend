@@ -78,7 +78,6 @@ define([
                 edition: page.edition && page.edition.toLowerCase(),
                 se:      getSeries(page),
                 ct:      contentType,
-                pt:      contentType,
                 p:       'ng',
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 su:      page.isSurging,

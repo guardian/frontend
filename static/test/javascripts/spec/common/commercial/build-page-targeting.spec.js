@@ -99,7 +99,6 @@ define([
 
                 expect(pageTargeting.edition).toBe('us');
                 expect(pageTargeting.ct).toBe('video');
-                expect(pageTargeting.pt).toBe('video');
                 expect(pageTargeting.p).toBe('ng');
                 expect(pageTargeting.su).toBe(true);
                 expect(pageTargeting.bp).toBe('mobile');
