@@ -48,6 +48,7 @@ define([
 
         // CONFIG
         this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
+        this.hideControls = config.page.lightboxImages.images.length < 2
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -106,6 +107,10 @@ define([
 
         if (detect.hasTouchScreen()) {
             this.disableHover();
+        }
+
+        if (this.hideControls) {
+            $('.gallery-lightbox__progress, .js-gallery-next, .js-gallery-prev').hide();
         }
 
         bean.on(window, 'popstate', function (event) {
