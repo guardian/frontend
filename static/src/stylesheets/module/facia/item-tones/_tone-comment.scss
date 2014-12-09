@@ -24,6 +24,14 @@
     .fc-item__meta {
         background-color: fade-out(colour(comment-background), .5);
     }
+
+    .fc-item__standfirst,
+    .flyer__standfirst {
+        ul > li:before {
+            background: colour(neutral-3);
+        }
+    }
+    
 }
 
 .tone-comment--sublink,
