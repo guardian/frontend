@@ -1,3 +1,7 @@
+
+// Base flyer styles
+//----------------------------------
+
 .flyer__byline {
     @include fs-header(3);
     padding-left: $gs-gutter / 2;
@@ -26,13 +30,17 @@
 }
 
 .flyer__header {
-    padding: $gs-baseline / 4 $gs-gutter / 4;
-    padding-bottom: $gs-baseline;
+    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
 }
 
 .flyer__standfirst {
     @include fs-headline(1);
-    padding: $gs-baseline / 4 $gs-gutter / 4;
+    padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
+    ul {
+        list-style: none;
+        margin-bottom: $gs-baseline / 1.5;
+        
+    }
 }
 
 .flyer__link {
@@ -45,14 +53,24 @@
 
 .flyer__gallery-img {
     width: 100%;
+    display: block;
+}
+
+.flyer--gallery .flyer__header {
+    margin-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline / 4;
+}
+
+.flyer.tone-live--item .live-pulse-icon {
+    margin-bottom: 1px;
 }
 
 .flyer__byline-img {
-    height: $gs-baseline * 9.5;
+    height: $gs-baseline * 12;
     z-index: 2;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: -$gs-gutter * 1.5;
 }
 
 .flyer--has-byline-pic {
@@ -62,7 +80,45 @@
     }
 
     .flyer__standfirst {
-        padding-right: $gs-gutter * 6;
+        padding-right: $gs-gutter * 7;
         min-height: $gs-baseline * 5;
+    }
+}
+
+// In-article styles
+//-----------------------
+
+.element-rich-link--upgraded {
+    float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
+    clear: both;
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+        width: gs-span(5);
+    }
+
+    &.element--supporting {
+        width: gs-span(4);
+        @include mq(wide) {
+            width: gs-span(5);
+        }
+    }
+    &.element--thumbnail {
+        width: gs-span(3);
+
+        .tone-comment--item {
+            .flyer__standfirst {
+                display: none;
+            }
+            .flyer__byline-img {
+                position: static;
+                float: right;
+                margin-top: -1.5 * $gs-baseline;
+                margin-right: -1.5 * $gs-gutter;
+            }
+        }
     }
 }

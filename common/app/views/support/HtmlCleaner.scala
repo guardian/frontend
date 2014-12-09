@@ -485,3 +485,12 @@ object FigCaptionCleaner extends HtmlCleaner {
     document
   }
 }
+
+object RichLinkCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val richLinks = document.getElementsByClass("element-rich-link")
+    richLinks.foreach(_.attr("data-component", s"rich-link-${richLinks.length}"))
+    richLinks.zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+    document
+  }
+}
