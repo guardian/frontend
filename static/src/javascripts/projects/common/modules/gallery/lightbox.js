@@ -304,7 +304,7 @@ define([
                     if (this.hideControls) {
                         $('.gallery-lightbox__progress, .js-gallery-next, .js-gallery-prev').hide();
                     }
-o
+
                     this.state = 'image';
                 }
             }
