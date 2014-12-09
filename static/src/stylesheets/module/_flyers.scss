@@ -100,8 +100,7 @@
     @include mq(mobileLandscape) {
         float: left;
         width: gs-span(3);
-        margin-right: $gs-gutter;
-        margin-top: $gs-baseline / 3;
+        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0; 
     }
 
     span {
