@@ -16,6 +16,7 @@
 @import 'item-layouts/fc-item--full-media-50';
 @import 'item-layouts/fc-item--full-media-75';
 @import 'item-layouts/fc-item--full-media-100';
+@import 'item-layouts/fc-item--fluid-width';
 
 // overrides of current slices
 
@@ -226,6 +227,18 @@
 .fc-item--full-media-100-tablet {
     @include mq(tablet) {
         @include fc-item--full-media-100;
+    }
+}
+
+.fc-item--fluid-width-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--fluid-width;
+    }
+}
+
+.fc-item--fluid-width-tablet {
+    @include mq(tablet) {
+        @include fc-item--fluid-width;
     }
 }
 
