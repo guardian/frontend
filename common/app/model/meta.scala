@@ -310,7 +310,6 @@ object Tags {
   object VisualTone {
     val Live = "live"
     val Comment = "comment"
-    val Editorial = "editorial"
     val Feature = "feature"
     val News = "news"
   }
