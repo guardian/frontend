@@ -1,11 +1,49 @@
+// not-upgraded style (no-js / failures)
+//--------------------------------------
+
+.element-rich-link--not-upgraded {
+    border-top: 1px dotted colour(neutral-3);
+    border-bottom: 1px dotted colour(neutral-3);
+    margin-bottom: $gs-baseline / 1.5;
+
+    @include mq(mobileLandscape) {
+        float: left;
+        width: gs-span(3);
+        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
+    }
+
+    span {
+        display: none;
+    }
+
+    p {
+        margin: 0;
+    }
+    a {
+        @include fs-headline(2);
+        font-weight: 500;
+        display: block;
+        padding: 0;
+        color: colour(neutral-1);
+        border: 0;
+        padding-bottom: $gs-baseline * 1.5;
+
+        &:hover {
+            text-decoration: underline !important;
+        }
+
+        &:before {
+            content: 'More on this topic';
+            display: block;
+            @include fs-textSans(1);
+            color: colour(neutral-2);
+            padding: $gs-baseline/4 0;
+        }
+    }
+}
 
 // Base flyer styles
 //----------------------------------
-
-.flyer__byline {
-    @include fs-header(3);
-    padding-right: $gs-gutter;
-}
 
 .flyer {
     margin: 0;
@@ -24,16 +62,13 @@
     }
 }
 
-.flyer__title {
-    padding: 0;
+.flyer__byline {
+    @include fs-header(3);
+    padding-right: $gs-gutter;
 }
 
-.tone-comment--item .flyer__title:before {
-    @include icon(quote-grey);
-    width: 1.2em !important;
-    height: .7em !important;
-    padding-right: $gs-gutter / 5;
-    content: '';
+.flyer__title {
+    padding: 0;
 }
 
 .flyer__header {
@@ -72,6 +107,14 @@
     margin-bottom: 1px;
 }
 
+.flyer.tone-comment--item .flyer__title:before {
+    @include icon(quote-grey);
+    width: 1.2em !important;
+    height: .7em !important;
+    padding-right: $gs-gutter / 5;
+    content: '';
+}
+
 .flyer__byline-img {
     height: $gs-baseline * 12;
     z-index: 2;
@@ -92,51 +135,10 @@
     }
 }
 
-.element-rich-link--not-upgraded {
-    border-top: 1px dotted colour(neutral-3);
-    border-bottom: 1px dotted colour(neutral-3);
-    margin-bottom: $gs-baseline / 1.5;
-
-    @include mq(mobileLandscape) {
-        float: left;
-        width: gs-span(3);
-        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0; 
-    }
-
-    span {
-        display: none;
-    }
-
-    p {
-        margin: 0;
-    }
-    a {
-        @include fs-headline(2);
-        font-weight: 500;
-        display: block;
-        padding: 0;
-        color: colour(neutral-1);
-        border: 0;
-        padding-bottom: $gs-baseline * 1.5;
-
-        &:hover {
-            text-decoration: underline !important;
-        }
-
-        &:before {
-            content: 'More on this topic';
-            display: block;
-            @include fs-textSans(1);
-            color: colour(neutral-2);
-            padding: $gs-baseline/4 0;
-        }
-    }
-}
-
 // In-article styles
 //-----------------------
 
-@include mq($until: mobileLandscape) {
+@include mq($until: mobileLandscape) { // font colour overrides
     .flyer__header,
     .flyer__link {
         .tone-feature--item & {
@@ -159,6 +161,7 @@
         border-bottom: 1px dotted colour(neutral-3);
         padding-bottom: $gs-baseline;
         margin-bottom: $gs-baseline / 1.5;
+
         .flyer {
             background: transparent !important;
         }
@@ -207,8 +210,6 @@
             position: relative;
             top: -1px;
         }
-        .i-star-grey {
-        }
     }
 
     @include mq(leftCol) {
@@ -239,6 +240,7 @@
             width: gs-span(5);
         }
     }
+
     &.element--thumbnail {
         width: gs-span(3);
 
