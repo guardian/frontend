@@ -1,12 +1,9 @@
 package dfp
 
-import com.google.api.ads.common.lib.auth.OfflineCredentials
-import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411.InventoryStatus
-import com.google.api.ads.dfp.lib.client.DfpSession
 import common.{AkkaAgent, Logging}
-import conf.{AdminConfiguration, Configuration}
+import conf.Configuration
 import org.joda.time.DateTime
 
 object AdUnitAgent extends Logging {
@@ -20,33 +17,7 @@ object AdUnitAgent extends Logging {
 
   private def loadActiveCoreSiteAdUnits(): Map[String, GuAdUnit] = {
 
-    val dfpSession: Option[DfpSession] = try {
-      for {
-        clientId <- AdminConfiguration.dfpApi.clientId
-        clientSecret <- AdminConfiguration.dfpApi.clientSecret
-        refreshToken <- AdminConfiguration.dfpApi.refreshToken
-        appName <- AdminConfiguration.dfpApi.appName
-      } yield {
-        val credential = new OfflineCredentials.Builder()
-          .forApi(Api.DFP)
-          .withClientSecrets(clientId, clientSecret)
-          .withRefreshToken(refreshToken)
-          .build().generateCredential()
-        new DfpSession.Builder()
-          .withOAuth2Credential(credential)
-          .withApplicationName(appName)
-          .withNetworkCode(Configuration.commercial.dfpAccountId)
-          .build()
-      }
-    } catch {
-      case e: Exception =>
-        log.error(s"Building DFP session failed: $e")
-        None
-    }
-
-    val dfpServiceRegistry = dfpSession map (session => new DfpServiceRegistry(session))
-
-    dfpServiceRegistry.fold(Map[String, GuAdUnit]()) { serviceRegistry =>
+    DfpServiceRegistry().fold(Map[String, GuAdUnit]()) { serviceRegistry =>
 
       val statementBuilder = new StatementBuilder()
         .where("status = :status")
