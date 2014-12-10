@@ -83,8 +83,8 @@ define([
             this.$adSlot = $adSlot;
             this.type = params.type;
             this.components = {
-                bestbuy:           buildComponentUrl('money/bestbuys'),
-                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
+                bestbuy:           buildComponentUrl('money/bestbuys', params),
+                bestbuyHigh:       buildComponentUrl('money/bestbuys-high', params),
                 book:              buildComponentUrl('books/book', { t: config.page.isbn || params.isbn }),
                 books:             buildComponentUrl('books/bestsellers'),
                 booksMedium:       buildComponentUrl('books/bestsellers-medium'),
