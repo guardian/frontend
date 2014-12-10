@@ -189,11 +189,10 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def addSharesAndFullscreen(body: Document): Document = {
     if(!article.isLiveBlog) {
-
       article.bodyLightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + (if(article.isMainImageLightboxable) 2 else 1) ).toString
+            val linkIndex = (index + (if (article.isMainImageLightboxable) 2 else 1)).toString
             val hashSuffix = "img-" + linkIndex
             fig.attr("id", hashSuffix)
             fig.addClass("fig--narrow-caption")
@@ -201,14 +200,13 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             fig.getElementsByTag("img").foreach { img =>
               val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
               img.after(html.toString())
-
               img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
               img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
           }
       }
     }
-    body
+  body
   }
 
 
