@@ -27,3 +27,17 @@
 .more-tags { //fix for IE8/9 bug
     display: inline;
 }
+
+.history-tags {
+    @include box-sizing(border-box);
+    padding-left: $gs-gutter / 2;
+    max-height: $gs-baseline * 4;
+    overflow: hidden;
+
+    .button--tag {
+        margin-top: $gs-baseline;
+        margin-bottom: 0;
+    }
+}
+
+

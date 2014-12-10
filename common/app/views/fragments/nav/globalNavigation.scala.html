@@ -22,8 +22,8 @@
                         @if(nav.links.nonEmpty) {
                             <ul class="global-navigation__children">
                                 @nav.links.map{ link =>
-                                    <li class="local-navigation__item@if(link.currentFor(metaData)){ global-navigation__child--current}">
-                                        <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : globalSub : @link.title">
+                                    <li class="global-navigation__child@if(link.currentFor(metaData)){ global-navigation__child--current}">
+                                        <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : globalSub : @link.title">
                                             @Html(link.title)
                                             @if(link.currentFor(metaData)){
                                                 <span class="u-h">selected</span>

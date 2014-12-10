@@ -49,8 +49,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation {
     position: relative;
+    overflow: hidden;
     clear: both;
     background: $c-navigation-background;
+    height: $navigation-height;
 
     &:before,
     &:after {
@@ -113,9 +115,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     background: $c-top-navigation-background;
     min-height: $navigation-height;
 }
-.navigation__container--second {
-    height: $navigation-height;
-}
 .navigation__expandable {
     background: $c-navigation-expandable-background;
     overflow: hidden;
@@ -129,20 +128,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     margin: 0;
     padding: 0;
 }
-.top-navigation {
-    overflow: hidden;
 
-    @include mq(navigationBreakOnTwoLevels) {
-        @include box-sizing(border-box);
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-}
-.top-navigation:nth-child(2) {
-    display: none;
-}
 
 /* Signposting
    ========================================================================== */
@@ -218,7 +204,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 // Expand touchable zone on navigation actions
 .signposting__action,
 .local-navigation__action,
-.top-navigation__action {
+.top-navigation__action,
+.global-navigation__action {
     position: relative;
 
     &:after {
@@ -236,6 +223,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
+    display: block;
+}
+.global-navigation__action {
+    color: $c-global-navigation-action;
     display: block;
 }
 .local-navigation__item,
@@ -271,9 +262,19 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
 }
-.local-navigation,
-.top-navigation {
-    padding-left: $navigation-h-space-between-items/2;
+.navigation--collapsed.navigation--has-signposting {
+    .local-navigation,
+    .top-navigation {
+        padding-left: $navigation-h-space-between-items/2;
+    }
+}
+@include mq(mobileLandscape) {
+    .navigation--collapsed {
+        .local-navigation,
+        .top-navigation {
+            padding-left: $navigation-h-space-between-items/2;
+        }
+    }
 }
 
 /* Top navigation home icon
@@ -281,6 +282,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .top-navigation__item--home {
     min-width: 15px;
+
+    .navigation--has-signposting & {
+        display: none;
+    }
 
     @include mq(navigationBreakOnTwoLevels) {
         display: table-cell;
@@ -355,8 +360,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
+        padding-bottom: $gs-baseline;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
     }
@@ -381,6 +385,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .global-navigation__children {
     @include box-sizing(border-box);
     min-height: $navigation-height;
+    padding-top: $gs-baseline/4;
     overflow: hidden;
 
     @include mq($until: tablet) {
@@ -388,6 +393,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         margin-right: -$gs-gutter/2;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
+        padding-bottom: $gs-baseline*.75;
         font-size: 14px;
         line-height: 2;
     }
@@ -396,6 +402,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-right: $gs-gutter;
     }
     @include mq(tablet) {
+        padding-bottom: $gs-baseline/4;
         padding-left: $gs-gutter/2;
     }
 }
@@ -406,6 +413,16 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         display: block;
     }
 }
+@include mq(tablet) {
+    .global-navigation__action {
+        float: left;
+        line-height: $navigation-height - $gs-baseline/2;
+        margin-left: $navigation-h-space-between-items/2;
+        margin-right: $navigation-h-space-between-items/2;
+        white-space: nowrap;
+    }
+}
+
 
 /* State: collapsed
    ========================================================================== */
@@ -432,9 +449,25 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .navigation__expandable {
         display: none;
     }
+    &,
+    .signposting,
+    .local-navigation {
+        height: $navigation-height;
+    }
     .signposting,
     .local-navigation {
         display: table-cell;
+    }
+    .top-navigation {
+        overflow: hidden;
+
+        @include mq(navigationBreakOnTwoLevels) {
+            @include box-sizing(border-box);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
     }
     .top-navigation__item:last-child {
         padding-right: $navigation-toggler-width + $gs-gutter;
@@ -456,6 +489,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     z-index: 2;
     height: auto;
 
+    .top-navigation {
+        display: none;
+    }
     .local-navigation {
         overflow: hidden;
         background: $c-local-navigation-background;
@@ -482,17 +518,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         display: block;
         float: left;
     }
-    @include mq($until: navigationBreakOnTwoLevels) {
-        .top-navigation {
-            display: none;
-        };
-    }
-    .local-navigation--history {
-        display: none !important;
-    }
 }
 
-.navigation--expanded .local-navigation__item {
+.navigation--expanded .local-navigation__item,
+.global-navigation__child {
     @include mq($until: tablet) {
         float: left;
         width: 50%;
@@ -522,7 +551,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 @include mq(navigationBreakOnTwoLevels) {
-    .navigation {
+    .navigation--has-signposting {
         .navigation__inner:before {
             content: '';
             position: absolute;
@@ -532,13 +561,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             top: $navigation-height;
             height: 1px;
             background: $c-global-navigation-border;
+            z-index: 1;
+        }
+        &.navigation--collapsed {
+            height: $navigation-height * 2;
         }
         &.navigation--expanded {
             .top-navigation__item {
-                display: none;
-            }
-            .top-navigation__item--home {
-                display: block;
+                visibility: hidden;
             }
         }
         .top-navigation {
@@ -573,11 +603,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         .navigation__container--first {
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-navigation-background;
+        }
+        .navigation__container--second {
             position: absolute;
             top: 0;
-        }
-        &.navigation--has-local-navigation .navigation__container--second {
-            height: $navigation-height * 2;
         }
     }
 }

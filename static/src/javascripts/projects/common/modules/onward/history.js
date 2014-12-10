@@ -250,87 +250,60 @@ define([
         saveSummary(summary);
     }
 
-    function renderNavs(withVisibleSecondary) {
+    function renderNavs(injectHistoryTags) {
         var switches = config.switches,
             popular,
-            priNavCanonical,
-            priNav,
-            priNavItems,
-            priNavItemsFirst,
+            navEl,
             priNavItemsMap = {},
-            secNavHtml,
-            secNavTags = [];
+            secNavTags,
+            mageNavHtml,
+            secNavHtml;
 
-        if (!(switches.historyNavPrimaryStore
-           || switches.historyNavPrimaryInject
-           || switches.historyNavSecondaryStore
-           || switches.historyNavSecondaryInject
-        )) { return; }
+        //if (!switches.historyNavSecondaryInject && !switches.historyNavMegaInject) { return; }
 
         popular = getPopular();
+
         if (popular.length === 0) { return; }
 
-        priNavCanonical = document.querySelector('.js-top-navigation');
-        if (!priNavCanonical) { return; }
+        navEl = document.querySelector('.js-navigation-header');
 
-        priNav = document.createElement('div');
-        priNav.innerHTML = '<ul class="top-navigation" data-link-name="history">' + priNavCanonical.innerHTML + '</ul>';
-
-        priNavItems = $('.top-navigation__item', priNav);
-        priNavItems.each(function (item) {
-            priNavItemsMap[collapseTag($('a', item).attr('href'))] = item;
+        $(navEl.querySelectorAll('.js-top-navigation a')).each(function (item) {
+            priNavItemsMap[collapseTag($(item).attr('href'))] = true;
         });
 
-        priNavItemsFirst = priNavItems[0];
-
-        _.chain(popular)
-            .reverse()
-            .forEach(function (tag) {
-                var item = priNavItemsMap[tag[0]];
-
-                if (!item) {
-                    secNavTags.unshift(tag);
-                } else if (item !== priNavItemsFirst && (switches.historyNavPrimaryStore || switches.historyNavPrimaryInject)) {
-                    $(item).detach().insertAfter(priNavItemsFirst);
-                }
-            });
-
-        if (switches.historyNavPrimaryStore) {
-            // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavPrimary, priNav.innerHTML.replace(/\s{2,}/g, ' '));
-        }
-
-        if (switches.historyNavPrimaryInject) {
-            $(document.getElementById('navigation__container--third')).prepend(priNav);
-        }
+        secNavTags = _.filter(popular, function (tag) { return !priNavItemsMap[tag[0]]; });
 
         if (secNavTags.length === 0) { return; }
 
-        secNavHtml = secNavTags.reduce(function (html, tag) { return html + template(
-            '<li class="local-navigation__item">' +
-                '<a href="/{{id}}" class="local-navigation__action" data-link-name="nav : secondary : {{name}}">{{name}}</a>' +
-            '</li>',
-            {id: tag[0], name: tag[1]}
-        ); }, '');
-
         if (switches.historyNavMegaInject) {
-            $(document.querySelectorAll('.js-global-navigation')).prepend(
-                '<li class="global-navigation__section global-navigation__section--history">' +
+            mageNavHtml =
+                '<li class="global-navigation__section"  data-link-name="history">' +
                     '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : jump to">jump to</a>' +
-                    '<ul class="global-navigation__children">' + secNavHtml + '</ul>' +
-                '</li>'
-            );
+                    '<ul class="global-navigation__children">' +
+                        secNavTags.reduce(function (html, tag) { return html + template(
+                            '<li class="global-navigation__child">' +
+                                '<a href="/{{id}}" class="global-navigation__action" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
+                            '</li>',
+                            {id: tag[0], name: tag[1]}
+                        ); }, '') +
+                    '</ul>' +
+                '</li>';
+
+            $(navEl.querySelectorAll('.js-global-navigation')).prepend(mageNavHtml);
         }
 
-        secNavHtml = '<ul class="local-navigation local-navigation--history">' + secNavHtml + '</ul>';
+        if (injectHistoryTags && switches.historyNavSecondaryInject) {
+            secNavHtml =
+                '<ul class="keyword-list inline-list">' +
+                    secNavTags.slice(0,10).reduce(function (html, tag) { return html + template(
+                        '<li class="inline-list__item">' +
+                            '<a href="/{{id}}" class="button button--small button--tag button--secondary" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
+                        '</li>',
+                        {id: tag[0], name: tag[1]}
+                    ); }, '') +
+                '</ul>';
 
-        if (switches.historyNavSecondaryStore) {
-            // On purpose not using storage module, to avoid a JSON parse on extraction
-            window.localStorage.setItem(storageKeyNavSecondary, secNavHtml);
-        }
-
-        if (withVisibleSecondary && switches.historyNavSecondaryInject) {
-            $(document.getElementById('navigation__container--third')).prepend(secNavHtml);
+            $(document.querySelector('.js-history-tags')).append(secNavHtml);
         }
     }
 

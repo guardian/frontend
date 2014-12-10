@@ -399,11 +399,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val HistoryNavPrimaryInject = Switch("Feature", "history-nav-primary-inject",
-    "If switched on, history-based primary nav is injected into page",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
   val HistoryNavSecondaryInject = Switch("Feature", "history-nav-secondary-inject",
     "If switched on, history-based secondary nav is injected into page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
@@ -411,16 +406,6 @@ object Switches {
 
   val HistoryNavMegaInject = Switch("Feature", "history-nav-mega-inject",
     "If switched on, history-based nav is injected into the mega-nav",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  val HistoryNavPrimaryStore = Switch("Feature", "history-nav-primary-store",
-    "If switched on, history-based primary nav is fetched from localStorage and written to page",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  val HistoryNavSecondaryStore = Switch("Feature", "history-nav-secondary-store",
-    "If switched on, history-based secondary nav is fetched from localStorage and written to page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 

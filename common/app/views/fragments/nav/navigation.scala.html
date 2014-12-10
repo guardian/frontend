@@ -1,20 +1,19 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import common._
-@import conf.Switches._
 
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(
                     ("navigation", true),
                     ("js-navigation-header", true),
                     ("navigation--collapsed", true),
-                    ("navigation--has-local-navigation", !Edition.isEditionFront)
+                    ("navigation--has-signposting", !Edition.isEditionFront),
+                    ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-
-                    @if(!Edition.isEditionFront) {
-                        <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
+                    <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
+                        @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
                             @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
@@ -28,48 +27,11 @@
                                     </ul>
                                 }
                             }
-                        </nav>
-                    }
-
-                    <nav class="navigation__container navigation__container--second" id="navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
-                        @fragments.nav.topNavigation(metaData, navigation)
-                        @if(HistoryNavPrimaryStore.isSwitchedOn) {
-                            <script>
-                                (function(hasStorage) {
-                                    var nav,
-                                        parent;
-
-                                    if (!hasStorage) { return; }
-
-                                    nav = window.localStorage.getItem('gu.history.nav.primary');
-
-                                    if (nav) {
-                                        document.getElementById('navigation__container--second').insertAdjacentHTML('afterbegin', nav);
-                                    }
-                                })(guardian.isModernBrowser);
-                            </script>
                         }
                     </nav>
-
-                    @if(Edition.isEditionFront) {
-                        <nav class="navigation__container navigation__container--third" id="navigation__container--third" data-component="nav" role="navigation" aria-label="Current section">
-                            @if(HistoryNavSecondaryStore.isSwitchedOn) {
-                                <script>
-                                    (function(hasStorage) {
-                                        var nav;
-
-                                        if (!hasStorage) { return; }
-
-                                        nav = window.localStorage.getItem('gu.history.nav.secondary');
-
-                                        if (nav) {
-                                            document.getElementById('navigation__container--third').insertAdjacentHTML('afterbegin', nav);
-                                        }
-                                    })(guardian.isModernBrowser);
-                                </script>
-                            }
-                        </nav>
-                    }
+                    <nav class="navigation__container navigation__container--second" data-component="nav" role="navigation" aria-label="Guardian sections">
+                        @fragments.nav.topNavigation(metaData, navigation)
+                    </nav>
                 </div>
                 <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
                     <i class="burger-icon"></i>
