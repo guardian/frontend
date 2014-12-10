@@ -324,6 +324,10 @@ define([
         }
     }
 
+    function hasGeoLocation() {
+        return ('geolocation' in navigator);
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -340,6 +344,7 @@ define([
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
+        hasGeoLocation: hasGeoLocation,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         shouldUseHintedFonts: shouldUseHintedFonts()
