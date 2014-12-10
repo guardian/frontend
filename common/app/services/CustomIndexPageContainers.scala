@@ -6,6 +6,8 @@ import model.Tag
 import org.joda.time.DateTime
 import slices.{Fixed, FixedContainers}
 import model.Snap
+import Front.containers
+import FaciaContainer.index
 
 object CustomIndexPageContainers {
   private def makeJsonSnap(id: String, snapTitle: String, link: String, endpoint: String) = new Snap(
@@ -48,11 +50,9 @@ object CustomIndexPageContainers {
   def merge(front: Front, container: FaciaContainer) = {
     val (preceding, succeeding) = front.containers splitAt container.index
 
-    Front.containers.set(
+    containers.set(
       front,
-      preceding ++
-        Seq(FaciaContainer.index.set(container, preceding.length)) ++
-        succeeding.map(FaciaContainer.index.modifyF(_ + 1))
+      preceding ++ Seq(index.set(container, preceding.length)) ++ succeeding.map(index.modifyF(_ + 1))
     )
   }
 }
