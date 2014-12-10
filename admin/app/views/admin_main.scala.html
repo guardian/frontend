@@ -76,7 +76,10 @@
         <script type="text/javascript">
             var curl = {
                 baseUrl: 'assets/javascripts',
-                apiName: 'require'
+                apiName: 'require',
+                paths:   {
+                    text: 'text' // noop
+                }
             };
 
             @Html(Static.js.curl)
