@@ -371,7 +371,7 @@
         }
     }
 
-    .fig--extra-margin {
+    .fig--no-caption.fig--hasShares {
         padding-bottom: $gs-baseline * 3 !important;
     }
 
@@ -411,4 +411,5 @@
             }
         }
     }
+
 }
