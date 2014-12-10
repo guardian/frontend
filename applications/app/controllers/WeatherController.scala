@@ -17,7 +17,7 @@ object WeatherController extends Controller with ExecutionContexts {
   val weatherApiKey: String = ""
 
   val weatherCityUrl: String = "http://api.accuweather.com/currentconditions/v1/"
-  val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/geoposition/search.json"
+  val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/search.json"
 
   private def weatherUrlForCity(city: City): String =
    s"$weatherSearchUrl?apikey=$weatherApiKey&q=${city.name}"
