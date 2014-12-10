@@ -40,7 +40,7 @@ trait ImageContainer extends Element {
   // all landscape images with a width of 1024 or 2048 have been auto-cropped to 4:3. portrait images are never
   // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
   // distinguish crops by their intended usage
-  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || (img.width != 2048 && img.width != 1024) || ((img.width == 1024 || img.width == 2048) && img.width/img.height != 4/3))
+  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || !(img.width/img.height == 4/3 && (img.width == 1024 || img.width == 2048)))
 
   lazy val isLightboxable: Boolean = largestEditorialCrop.map(_.width).getOrElse(0) > 620
 }
