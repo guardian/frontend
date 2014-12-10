@@ -140,10 +140,10 @@
             raven.config(
                 'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
                 {
-    //                    whitelistUrls: [
-    //                        /assets\.guim\.co\.uk/,
-    //                        /ophan\.co\.uk/
-    //                    ],
+                    whitelistUrls: [
+                        /assets\.guim\.co\.uk/,
+                        /ophan\.co\.uk/
+                    ],
                     tags: {
                         edition:        guardian.config.page.edition,
                         contentType:    guardian.config.page.contentType,
@@ -157,7 +157,6 @@
                         return data;
                     },
                     shouldSendCallback: function(data) {
-                        console.log(data);
                         return Math.random() < 0.2 && guardian.config.switches.enableDiagnosticsLogging;
                     }
                 }

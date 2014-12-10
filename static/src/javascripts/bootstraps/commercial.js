@@ -96,7 +96,6 @@ define([
 
         },
         ready = function () {
-
             modules.adBlockTest();
 
             if (
