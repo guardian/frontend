@@ -1,8 +1,12 @@
 package controllers
 
-import common.ExecutionContexts
+import common.editions.{Au, Us, Uk}
+import common.{Edition, ExecutionContexts}
+import play.api.libs.json.JsValue
 import play.api.libs.ws.WS
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{RequestHeader, Action, Controller}
+
+import scala.concurrent.Future
 
 object WeatherController extends Controller with ExecutionContexts {
   import play.api.Play.current
@@ -27,18 +31,37 @@ object WeatherController extends Controller with ExecutionContexts {
   private def weatherUrlForCityId(cityId: CityId): String =
     s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
-  private def getCityIdFromRequest(request: RequestHeader): CityId =
+  private def getWeatherForCity(city: City): Future[Option[CityId]] =
+    for (cityJson <- WS.url(weatherUrlForCity(city)).get().map(_.json))
+    yield {
+      val cities = cityJson.asOpt[List[JsValue]].getOrElse(Nil)
+      cities.map(j => (j \ "Key").as[String]).headOption.map(CityId)
+    }
+
+  private def getWeatherForCityId(cityId: CityId): Future[JsValue] =
+    WS.url(weatherUrlForCityId(cityId)).get().map(_.json)
+
+  def getCityIdFromRequestEdition(request: RequestHeader): CityId =
     Edition(request) match {
       case Uk => London
       case Us => NewYork
       case Au => Sydney
     }
 
+  private def getCityIdFromRequest(request: RequestHeader): Future[CityId] = {
+    lazy val cityIdFromRequestEdition: CityId = getCityIdFromRequestEdition(request)
+    request.headers.get(LocationHeader) match {
+      case Some(city) =>
+        getWeatherForCity(City(city)).map(_.getOrElse(cityIdFromRequestEdition))
+      case None => Future.successful(cityIdFromRequestEdition)
+    }
+  }
+
   def getWeatherForCity(name: String) = Action.async { implicit request =>
+    lazy val cityIdFromRequest: Future[CityId] = getCityIdFromRequest(request)
     for {
-      cityJson <- WS.url(weatherUrlForCity(City(name))).get().map(_.json)
-      cityId = (cityJson \ "Key").as[String]
-      weatherJson <- WS.url(weatherUrlForCityId(CityId(cityId))).get().map(_.json)
-    } yield Ok(weatherJson)
+      cityId <- cityIdFromRequest
+      json <- getWeatherForCityId(cityId)
+    } yield Ok(json)
   }
 }
