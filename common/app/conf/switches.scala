@@ -315,6 +315,10 @@ object Switches {
     "If switched on then the preview server will poll until the latest content is indexed.",
     safeState = On, sellByDate = new LocalDate(2015, 1, 15))
 
+  val PrioritiseFlashVideoPlayer = Switch("Feature", "prioritise-flash-video-player",
+    "If switched on then the Flash player will be preferred over the html5 player.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31))
+
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
     safeState = Off, sellByDate = never)
