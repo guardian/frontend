@@ -19,6 +19,7 @@ define([
                 crossOrigin: true
             }).then(function (response) {
                 $(el).html(response.html)
+                    .removeClass('element-rich-link--not-upgraded')
                     .addClass('element-rich-link--upgraded');
             });
         }

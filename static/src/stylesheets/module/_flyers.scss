@@ -92,7 +92,7 @@
     }
 }
 
-.element-rich-link:not(.element--upgraded) {
+.element-rich-link--not-upgraded {
     border-top: 1px dotted colour(neutral-3);
     border-bottom: 1px dotted colour(neutral-3);
     margin-bottom: $gs-baseline / 1.5;
