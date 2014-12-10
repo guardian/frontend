@@ -134,8 +134,8 @@
             raven
         ) {
 
-            define  = raven.wrap({deep: false}, define);
-            require = raven.wrap({deep: false}, require);
+            define  = raven.wrap({ deep: false }, define);
+            require = raven.wrap({ deep: false }, require);
 
             raven.config(
                 'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
