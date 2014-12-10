@@ -22,7 +22,7 @@ object Multi
   def renderMulti() = MemcachedAction { implicit request =>
     Future.successful {
 
-      val requestedContent = request.getParameters("c")
+      val requestedContent = request.getParameters("components")
 
       val clickMacro = request.getParameter("clickMacro")
 
