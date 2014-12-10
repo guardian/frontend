@@ -261,14 +261,24 @@ define([
 
     function initPlayer() {
 
+        var playerPriority = ['html5', 'flash'];
+
+        if (config.switches.prioritiseFlashVideoPlayer) {
+            playerPriority = ['flash', 'html5'];
+        }
+
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-            videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
+
+            // 'unshift()' inserts at the front of the Array
+            playerPriority.unshift('vpaid');
             videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
+
+        videojs.options.techOrder = playerPriority;
 
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
