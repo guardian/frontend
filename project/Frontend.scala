@@ -37,7 +37,9 @@ object Frontend extends Build with Prototypes {
       faciaScalaClient,
       filters,
       ws,
-      scalaTestPlus
+      scalaTestPlus,
+      monocleCore,
+      monocleMacro
     )
   ).settings(
       mappings in TestAssets ~= filterAssets

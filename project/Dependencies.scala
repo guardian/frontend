@@ -7,6 +7,7 @@ object Dependencies {
   val identityLibVersion = "3.43"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
+  val monocleLibraryVersion = "0.5.1"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -34,6 +35,8 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.5"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
+  val monocleCore = "com.github.julien-truffaut" %% "monocle-core" % monocleLibraryVersion
+  val monocleMacro = "com.github.julien-truffaut" %% "monocle-macro" % monocleLibraryVersion
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"

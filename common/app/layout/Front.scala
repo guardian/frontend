@@ -4,6 +4,7 @@ import com.gu.facia.client.models.CollectionConfig
 import contentapi.Paths
 import dfp.DfpAgent
 import model._
+import monocle.Lenser
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
@@ -41,102 +42,6 @@ case class ContainerLayoutContext(
   }
 }
 
-object Front extends implicits.Collections {
-  type TrailUrl = String
-
-  def itemsVisible(containerDefinition: ContainerDefinition) =
-    containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
-
-  // Never de-duplicate snaps.
-  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
-
-  /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
-    * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
-    * container.
-    */
-  def deduplicate(
-    seen: Set[TrailUrl],
-    container: Container,
-    trails: Seq[Trail]
-  ): (Set[TrailUrl], Seq[Trail]) = {
-    container match {
-      case Dynamic(dynamicContainer) =>
-        /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
-          * Containers will not be duplicated further down on the page, they themselves retain all their trails, no
-          * matter what occurred further up the page.
-          */
-        dynamicContainer.containerDefinitionFor(
-          trails.collect({ case content: Content => content }).map(Story.fromContent)
-        ) map { containerDefinition =>
-          (seen ++ trails
-            .map(_.url)
-            .take(itemsVisible(containerDefinition)), trails)
-        } getOrElse {
-          (seen, trails)
-        }
-
-      /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
-      case Fixed(containerDefinition) if containerDefinition.isSingleton =>
-        (seen, trails)
-
-      case Fixed(containerDefinition) =>
-        /** Fixed Containers participate in de-duplication.
-          */
-        val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
-          .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
-
-      case _ =>
-        /** Nav lists and most popular do not participate in de-duplication at all */
-        (seen, trails)
-    }
-  }
-
-  def fromConfigsAndContainers(
-      configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
-      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
-  ) = {
-    import scalaz.syntax.traverse._
-    import scalaz.std.list._
-
-    Front(
-      configs.zipWithIndex.toList.mapAccumL(
-        (Set.empty[TrailUrl], initialContext)
-      ) { case ((seenTrails, context), (((config, collection), container), index)) =>
-        val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
-
-        ContainerLayout.fromContainer(container, context, config, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
-            index,
-            container,
-            config.collectionConfigWithId,
-            collection.copy(items = newItems),
-            Some(containerLayout),
-            None
-          ))
-        } getOrElse {
-          ((newSeen, context), FaciaContainer.fromConfig(
-            index,
-            container,
-            config.collectionConfigWithId,
-            collection.copy(items = newItems),
-            None,
-            None
-          ))
-        }
-      }._2.filterNot(_.items.isEmpty)
-    )
-  }
-
-  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
-    fromConfigsAndContainers(configs.map {
-      case (config, collectionEssentials) =>
-        ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))
-    })
-  }
-}
-
 object CollectionEssentials {
   def fromCollection(collection: Collection) = CollectionEssentials(
     collection.items,
@@ -163,7 +68,47 @@ case class CollectionEssentials(
   showMoreLimit: Option[Int]
 )
 
+object ContainerCommercialOptions {
+  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
+    DfpAgent.isSponsored(config),
+    DfpAgent.isAdvertisementFeature(config),
+    DfpAgent.isFoundationSupported(config),
+    DfpAgent.sponsorshipTag(config),
+    DfpAgent.sponsorshipType(config)
+  )
+
+  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
+    metaData.isSponsored,
+    metaData.isAdvertisementFeature,
+    metaData.isFoundationSupported,
+    metaData.sponsor,
+    metaData.sponsorshipType
+  )
+
+  val empty = ContainerCommercialOptions(
+    false,
+    false,
+    false,
+    None,
+    None
+  )
+}
+
+case class ContainerCommercialOptions(
+  isSponsored: Boolean,
+  isAdvertisementFeature: Boolean,
+  isFoundationSupported: Boolean,
+  sponsorshipTag: Option[String],
+  sponsorshipType: Option[String]
+) {
+  val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
+}
+
 object FaciaContainer {
+  val lenser = Lenser[FaciaContainer]
+
+  val index = lenser(_.index)
+
   def apply(
     index: Int,
     container: Container,
@@ -241,42 +186,6 @@ object FaciaContainer {
   }
 }
 
-object ContainerCommercialOptions {
-  def fromConfig(config: CollectionConfig) = ContainerCommercialOptions(
-    DfpAgent.isSponsored(config),
-    DfpAgent.isAdvertisementFeature(config),
-    DfpAgent.isFoundationSupported(config),
-    DfpAgent.sponsorshipTag(config),
-    DfpAgent.sponsorshipType(config)
-  )
-
-  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored,
-    metaData.isAdvertisementFeature,
-    metaData.isFoundationSupported,
-    metaData.sponsor,
-    metaData.sponsorshipType
-  )
-
-  val empty = ContainerCommercialOptions(
-    false,
-    false,
-    false,
-    None,
-    None
-  )
-}
-
-case class ContainerCommercialOptions(
-  isSponsored: Boolean,
-  isAdvertisementFeature: Boolean,
-  isFoundationSupported: Boolean,
-  sponsorshipTag: Option[String],
-  sponsorshipType: Option[String]
-) {
-  val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
-}
-
 case class FaciaContainer(
   index: Int,
   dataId: String,
@@ -325,6 +234,105 @@ case class FaciaContainer(
       dateHeadline <- maybeDateHeadline
       urlFragment <- dateHeadline.urlFragment
     } yield s"$path/$urlFragment/all"
+  }
+}
+
+object Front extends implicits.Collections {
+  val lenser = Lenser[Front]
+  val containers = lenser(_.containers)
+
+  type TrailUrl = String
+
+  def itemsVisible(containerDefinition: ContainerDefinition) =
+    containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
+
+  // Never de-duplicate snaps.
+  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
+
+  /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
+    * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
+    * container.
+    */
+  def deduplicate(
+    seen: Set[TrailUrl],
+    container: Container,
+    trails: Seq[Trail]
+  ): (Set[TrailUrl], Seq[Trail]) = {
+    container match {
+      case Dynamic(dynamicContainer) =>
+        /** Although Dynamic Containers participate in de-duplication, insofar as trails that appear in Dynamic
+          * Containers will not be duplicated further down on the page, they themselves retain all their trails, no
+          * matter what occurred further up the page.
+          */
+        dynamicContainer.containerDefinitionFor(
+          trails.collect({ case content: Content => content }).map(Story.fromContent)
+        ) map { containerDefinition =>
+          (seen ++ trails
+            .map(_.url)
+            .take(itemsVisible(containerDefinition)), trails)
+        } getOrElse {
+          (seen, trails)
+        }
+
+      /** Singleton containers (such as the eyewitness one or the thrasher one) do not participate in deduplication */
+      case Fixed(containerDefinition) if containerDefinition.isSingleton =>
+        (seen, trails)
+
+      case Fixed(containerDefinition) =>
+        /** Fixed Containers participate in de-duplication.
+          */
+        val nToTake = itemsVisible(containerDefinition)
+        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
+          .distinctBy(_.url)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
+
+      case _ =>
+        /** Nav lists and most popular do not participate in de-duplication at all */
+        (seen, trails)
+    }
+  }
+
+  def fromConfigsAndContainers(
+    configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
+    initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
+  ) = {
+    import scalaz.syntax.traverse._
+    import scalaz.std.list._
+
+    Front(
+      configs.zipWithIndex.toList.mapAccumL(
+        (Set.empty[TrailUrl], initialContext)
+      ) { case ((seenTrails, context), (((config, collection), container), index)) =>
+        val (newSeen, newItems) = deduplicate(seenTrails, container, collection.items)
+
+        ContainerLayout.fromContainer(container, context, config, newItems) map {
+          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
+            index,
+            container,
+            config.collectionConfigWithId,
+            collection.copy(items = newItems),
+            Some(containerLayout),
+            None
+          ))
+        } getOrElse {
+          ((newSeen, context), FaciaContainer.fromConfig(
+            index,
+            container,
+            config.collectionConfigWithId,
+            collection.copy(items = newItems),
+            None,
+            None
+          ))
+        }
+      }._2.filterNot(_.items.isEmpty)
+    )
+  }
+
+  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+    fromConfigsAndContainers(configs.map {
+      case (config, collectionEssentials) =>
+        ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))
+    })
   }
 }
 

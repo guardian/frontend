@@ -108,7 +108,7 @@ object IndexPage {
       }
     }
 
-    front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
+    val withDatePaths = front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
         case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
         case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
@@ -132,6 +132,10 @@ object IndexPage {
         })
       })
     }))
+
+    CustomIndexPageContainers.fromIndexPage(indexPage).fold(withDatePaths) { customContainer =>
+      CustomIndexPageContainers.merge(withDatePaths, customContainer)
+    }
   }
 }
 
