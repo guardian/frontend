@@ -2,6 +2,7 @@ package controllers
 
 import common.editions.{Au, Us, Uk}
 import common.{Edition, ExecutionContexts}
+import conf.Configuration
 import play.api.libs.json.JsValue
 import play.api.libs.ws.WS
 import play.api.mvc.{RequestHeader, Action, Controller}
@@ -20,7 +21,7 @@ object WeatherController extends Controller with ExecutionContexts {
   case class City(name: String) extends AnyVal
   case class CityId(id: String) extends AnyVal
 
-  val weatherApiKey: String = ""
+  val weatherApiKey: Option[String] = Configuration.weather.apiKey
 
   val weatherCityUrl: String = "http://api.accuweather.com/currentconditions/v1/"
   val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/search.json"
@@ -41,7 +42,7 @@ object WeatherController extends Controller with ExecutionContexts {
   private def getWeatherForCityId(cityId: CityId): Future[JsValue] =
     WS.url(weatherUrlForCityId(cityId)).get().map(_.json)
 
-  def getCityIdFromRequestEdition(request: RequestHeader): CityId =
+  private def getCityIdFromRequestEdition(request: RequestHeader): CityId =
     Edition(request) match {
       case Uk => London
       case Us => NewYork
