@@ -13,6 +13,7 @@ define([
     'common/utils/url',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
+    'common/modules/gallery/lightbox',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
@@ -35,6 +36,7 @@ define([
     url,
     liveblogAdverts,
     Affix,
+    Lightbox,
     LiveFilter,
     AutoUpdate,
     dropdowns,
@@ -277,6 +279,7 @@ define([
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
         article.modules.initSelectionSharing();
+        Lightbox.init();
 
         mediator.emit('page:liveblog:ready');
     }
