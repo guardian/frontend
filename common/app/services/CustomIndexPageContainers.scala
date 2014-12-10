@@ -32,8 +32,8 @@ object CustomIndexPageContainers {
             CollectionConfig.emptyConfig.copy(displayName = Some("Fixtures and results"))
           ),
           CollectionEssentials.fromTrails(Seq(
-            makeJsonSnap("fixtures", "Fixtures", s"/${tag.id}/fixtures", ""),
-            makeJsonSnap("results", "Results", s"/${tag.id}/results", ""),
+            makeJsonSnap("fixtures", "Fixtures", s"/${tag.id}/fixtures", s"/${tag.id}/fixtures.json"),
+            makeJsonSnap("results", "Results", s"/${tag.id}/results", s"/${tag.id}/results.json"),
             makeJsonSnap("table", "Table", s"/football/tables", "")
           ))
         ).copy(
