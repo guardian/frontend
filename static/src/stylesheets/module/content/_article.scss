@@ -1,5 +1,6 @@
 .media-primary {
     margin: 0 $gs-gutter * -.5;
+    position: relative;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / -1;

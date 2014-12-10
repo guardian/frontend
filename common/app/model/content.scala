@@ -523,7 +523,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   )
 }
 
-class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
+class LiveBlog(content: ApiContentWithMeta) extends Article(content) with Lightboxable {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
