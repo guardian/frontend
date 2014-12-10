@@ -25,6 +25,13 @@ object WeatherController extends Controller with ExecutionContexts {
   private def weatherUrlForCityId(cityId: CityId): String =
     s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
+  private def getCityIdFromRequest(request: RequestHeader): CityId =
+    Edition(request) match {
+      case Uk => London
+      case Us => NewYork
+      case Au => Sydney
+    }
+
   def getWeatherForCity(name: String) = Action.async { implicit request =>
     for {
       cityJson <- WS.url(weatherUrlForCity(City(name))).get().map(_.json)
