@@ -27,8 +27,10 @@ category: Common
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share on Google+</span>
-            <span class="social-icon"><i class="i-share-gplus--white i"></i></span>
+            <span class="social-icon">
+                <i class="i-share-gplus--white i"></i>
+                <span class="social-icon__label">Share on Google+</span>
+            </span>
         </a>
     </li>
 </ul>
@@ -74,6 +76,12 @@ category: Common
  * <element class="social-icon-wrapper">
  *     <span class="social-icon">
  *         <i class="i share-icon-xxx"></i>
+ *     </span>
+ * </element>
+ * <element class="social-icon-wrapper">
+ *     <span class="social-icon social-icon--small">
+ *         <i class="i share-icon-xxx"></i>
+ *         <span class="social-icon__label">Share on xxx</span>
  *     </span>
  * </element>
  */
