@@ -22,7 +22,8 @@ object BodyCleaner {
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
-        FigCaptionCleaner
+        FigCaptionCleaner,
+        RichLinkCleaner
       )
   }
 }
