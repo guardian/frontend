@@ -190,7 +190,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   def addSharesAndFullscreen(body: Document): Document = {
     if(!article.isLiveBlog) {
 
-      article.lightboxImages.zipWithIndex map {
+      article.bodyLightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
             val linkIndex = (index + (if(article.isMainImageLightboxable) 2 else 1) ).toString
@@ -482,6 +482,18 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
+object RichLinkCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val richLinks = document.getElementsByClass("element-rich-link")
+    richLinks
+      .addClass("element-rich-link--not-upgraded")
+      .attr("data-component", s"rich-link-${richLinks.length}")
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+
     document
   }
 }

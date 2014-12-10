@@ -18,6 +18,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/url',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
@@ -40,6 +41,7 @@ define([
     config,
     detect,
     mediator,
+    urlUtils,
     buildPageTargeting,
     geoMostPopular,
     Sticky
@@ -69,7 +71,7 @@ define([
     /**
      * Private variables
      */
-    var adSlotSelector    = '.ad-slot--dfp',
+    var adSlotSelector    = '.js-ad-slot',
         displayed         = false,
         rendered          = false,
         slots             = {},
@@ -165,16 +167,6 @@ define([
          */
         init = function () {
 
-            if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
-                return false;
-            }
-
-            if (!config.switches.standardAdverts) {
-                adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
-
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
@@ -224,12 +216,15 @@ define([
          * Private functions
          */
         defineSlot = function ($adSlot) {
-            var slotTarget  = $adSlot.data('slot-target') || $adSlot.data('name'),
-                adUnit      = config.page.adUnit,
-                id          = $adSlot.attr('id'),
-                sizeMapping = defineSlotSizes($adSlot),
+            var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
+                adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+                // if ?ad-unit=x, use that
+                adUnit         = adUnitOverride ?
+                    ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
+                id             = $adSlot.attr('id'),
+                sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size        = uniq(
+                size           = uniq(
                     flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
