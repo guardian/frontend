@@ -10,7 +10,7 @@ define([
     'common/modules/search-tool',
     'common/modules/userPrefs',
     'common/modules/ui/toggles',
-    'text!common/views/components/weather.html'
+    'text!common/views/weather.html'
 ], function (
     bean,
     raven,
