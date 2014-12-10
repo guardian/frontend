@@ -399,13 +399,13 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val HistoryNavSecondaryInject = Switch("Feature", "history-nav-secondary-inject",
-    "If switched on, history-based secondary nav is injected into page",
+  val HistoryTagsInPage = Switch("Feature", "history-tags-in-page",
+    "If switched on, history-based tags are injected into the page",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
-  val HistoryNavMegaInject = Switch("Feature", "history-nav-mega-inject",
-    "If switched on, history-based nav is injected into the mega-nav",
+  val HistoryTagsInMegaNav = Switch("Feature", "history-tags-in-mega-nav",
+    "If switched on, history-based tags are injected into the the mage nav",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
