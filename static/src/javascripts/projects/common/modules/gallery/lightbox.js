@@ -300,6 +300,11 @@ define([
                         this.initSwipe();
                     }
 
+                    if (this.galleryJson.images.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', this.lightboxEl).hide();
+                    }
+
                     this.state = 'image';
                 }
             }
