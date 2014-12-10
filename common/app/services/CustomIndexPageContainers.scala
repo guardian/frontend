@@ -14,6 +14,7 @@ object CustomIndexPageContainers {
     DateTime.now(),
     None
   ) {
+    override lazy val url: String = link
     override lazy val href: Option[String] = Some(link)
     override lazy val snapType: Option[String] = Some("json.html")
     override lazy val snapUri: Option[String] = Some(endpoint)
