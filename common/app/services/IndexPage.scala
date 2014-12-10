@@ -133,7 +133,9 @@ object IndexPage {
       })
     }))
 
-    CustomIndexPageContainers.fromIndexPage(indexPage).fold(withDatePaths) { customContainer =>
+    CustomIndexPageContainers.fromIndexPage(indexPage)
+      .filter(_ => indexPage.page.pagination.exists(_.isFirstPage))
+      .fold(withDatePaths) { customContainer =>
       CustomIndexPageContainers.merge(withDatePaths, customContainer)
     }
   }
@@ -168,5 +170,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case other => other.id
   }
 
-  def allPath = s"/${idWithoutEdition}"
+  def allPath = s"/$idWithoutEdition"
 }

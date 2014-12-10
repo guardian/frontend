@@ -8,7 +8,7 @@ import slices.{Fixed, FixedContainers}
 import model.Snap
 
 object CustomIndexPageContainers {
-  private def makeJsonSnap(id: String, title: String, link: String, endpoint: String) = new Snap(
+  private def makeJsonSnap(id: String, snapTitle: String, link: String, endpoint: String) = new Snap(
     id,
     Nil,
     DateTime.now(),
@@ -17,6 +17,7 @@ object CustomIndexPageContainers {
     override lazy val href: Option[String] = Some(link)
     override lazy val snapType: Option[String] = Some("json.html")
     override lazy val snapUri: Option[String] = Some(endpoint)
+    override lazy val headline: String = snapTitle
   }
 
   def fromIndexPage(indexPage: IndexPage) = {
@@ -27,13 +28,16 @@ object CustomIndexPageContainers {
           Fixed(FixedContainers.footballTeamFixtures),
           CollectionConfigWithId(
             "football-team-fixtures",
-            CollectionConfig.emptyConfig
+            CollectionConfig.emptyConfig.copy(displayName = Some("Fixtures and results"))
           ),
           CollectionEssentials.fromTrails(Seq(
             makeJsonSnap("fixtures", "Fixtures", s"/${tag.id}/fixtures", ""),
             makeJsonSnap("results", "Results", s"/${tag.id}/results", ""),
             makeJsonSnap("table", "Table", s"/football/tables", "")
           ))
+        ).copy(
+          customClasses = Some(Seq("fc-container--tag")),
+          hideToggle = true
         ))
 
       case _ => None
