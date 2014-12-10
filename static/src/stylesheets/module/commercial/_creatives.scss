@@ -222,6 +222,34 @@
             @include transform(rotate(360deg));
         }
     }
+    
+    .slide-1 {
+        z-index: 1;
+    }
+    
+    .ad-exp-collapse__slide {
+        position: relative;
+    }
+
+    .ad-exp__layer {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        &.ad-exp__layer1 {
+            z-index: 1;
+        }
+
+        &.ad-exp__layer2 {
+            z-index: 2;
+        }
+
+        &.ad-exp__layer3 {
+            z-index: 3;
+        }
+    }
 }
 
 .creative--expandable-GA {

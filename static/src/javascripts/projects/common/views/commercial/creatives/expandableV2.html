@@ -3,37 +3,41 @@
         <div class="facia-container__inner">Advertisement</div>
     </div>
     
-    <div class="ad-exp--expand l-side-margins mobile-only">
+    <div class="ad-exp--expand l-side-margins mobile-only" style="background-color: {{backgroundColor}}">
         <div class="facia-container__inner facia-container__inner--full-span">
             <button class="ad-exp__close-button">
                 <i class="i i-close-icon-white-small"></i>
             </button>
             <a href="{{clickMacro}}{{link}}" target="_new">
-                <div class="ad-exp-collapse__slide slide-1" style="background-image: url('{{slide1}}');">
-                    <div class="ad-exp__cta" style="background-image: url('{{cta}}');"></div>
-                    <div class="ad-exp__logo" style="background-image: url('{{logo}}');"></div>
+                <div class="ad-exp-collapse__slide slide-1">
+                    <div class="ad-exp__layer ad-exp__layer1"></div>
+                    <div class="ad-exp__layer ad-exp__layer2"></div>
+                    <div class="ad-exp__layer ad-exp__layer3"></div>
                 </div>
                 <div class="ad-exp-collapse__slide slide-2" style="background-image: url('{{slide2}}');">
-                    <div class="ad-exp__text-1 mobile-only" style="background-image: url('{{textMobile}}');"></div>
-                    <div class="ad-exp__text-1 hide-until-tablet" style="background-image: url('{{text}}');"></div>
+                    <div class="ad-exp__layer ad-exp__layer1"></div>
+                    <div class="ad-exp__layer ad-exp__layer2"></div>
+                    <div class="ad-exp__layer ad-exp__layer3"></div>
                 </div>
             </a>
         </div>
     </div>
     
-    <div class="ad-exp--expand l-side-margins hide-until-tablet">
-        <div class="facia-container__inner facia-container__inner--full-span">
+    <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: {{backgroundColor}}">
+        <div class="facia-container__inner facia-container__inner--full-span" style="background-image: url('{{backgroundImage}}'); background-repeat: {{backgroundRepeat}}; background-position: {{backgroundPosition}};">
             <button class="ad-exp__close-button">
                 <i class="i i-close-icon-white-small"></i>
             </button>
             <a href="{{clickMacro}}{{link}}" target="_new">
-                <div class="ad-exp-collapse__slide slide-1" style="background-image: url('{{slide1}}');">
-                    <div class="ad-exp__cta" style="background-image: url('{{cta}}');"></div>
-                    <div class="ad-exp__logo" style="background-image: url('{{logo}}');"></div>
+                <div class="ad-exp-collapse__slide slide-1" style="background-color: {{slide1BGColor}}; background-image: url('{{slide1BGImage}}'); background-repeat: {{slide1BGImageRepeat}}; background-position: {{slide1BGImagePosition}};">
+                    <div class="ad-exp__layer ad-exp__layer1"></div>
+                    <div class="ad-exp__layer ad-exp__layer2"></div>
+                    <div class="ad-exp__layer ad-exp__layer3"></div>
                 </div>
-                <div class="ad-exp-collapse__slide slide-2" style="background-image: url('{{slide2}}');">
-                    <div class="ad-exp__text-1 mobile-only" style="background-image: url('{{textMobile}}');"></div>
-                    <div class="ad-exp__text-1 hide-until-tablet" style="background-image: url('{{text}}');"></div>
+                <div class="ad-exp-collapse__slide slide-2" style="background-color: {{slide2BGColor}}; background-image: url('{{slide2BGImage}}'); background-position: {{slide2BGImagePosition}}; background-repeat: {{slide2BGImageRepeat}};">
+                    <div class="ad-exp__layer ad-exp__layer1"></div>
+                    <div class="ad-exp__layer ad-exp__layer2"></div>
+                    <div class="ad-exp__layer ad-exp__layer3"></div>
                 </div>
             </a>
         </div>
