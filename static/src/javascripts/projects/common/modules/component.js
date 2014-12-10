@@ -127,12 +127,16 @@ define([
      * @return {Reqwest}
      */
     Component.prototype.fetch = function (parent, key) {
+
         this.checkAttached();
 
         this.responseDataKey = key || this.responseDataKey;
         var self = this;
 
         return this._fetch().then(function render(resp) {
+
+            throw new Error('ASYNC');
+
             self.elem = bonzo.create(resp[self.responseDataKey])[0];
             self._prerender();
 

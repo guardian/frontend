@@ -30,13 +30,12 @@ define([
 
     Template.prototype.create = function () {
 
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'])
-            .then(function (creativeTpl) {
-                var creativeHtml = template(creativeTpl, this.params);
+        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            var creativeHtml = template(creativeTpl, this.params);
 
-                $.create(creativeHtml)
-                    .appendTo(this.$adSlot);
-            }.bind(this));
+            $.create(creativeHtml)
+                .appendTo(this.$adSlot);
+        }.bind(this));
     };
 
     return Template;

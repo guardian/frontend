@@ -302,8 +302,7 @@ define([
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name])
-                                    .then(function (Creative) {
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params).create();
                                     });
                             } else {
