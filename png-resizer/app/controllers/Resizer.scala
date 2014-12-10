@@ -1,21 +1,19 @@
 package controllers
 
-import java.io.ByteArrayInputStream
 import common.StopWatch
-import conf.{PngResizerMetrics, Configuration}
-import model.Cached
-import play.api.mvc.{Controller, Action}
+import conf.{Configuration, PngResizerMetrics}
 import data.Backends
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.ws.WS
-import play.api.Play.current
-import lib.WS._
-import lib.Streams._
-import lib.IntString
 import grizzled.slf4j.Logging
-import lib.Im4Java
-import lib.PngQuant
+import lib.Streams._
+import lib.WS._
+import lib.{Im4Java, IntString, PngQuant}
+import model.Cached
+import play.api.Play.current
+import play.api.libs.ws.WS
+import play.api.mvc.{Action, Controller}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object Resizer extends Controller with Logging {
   def resize(backend: String, path: String, widthString: String, qualityString: String) = Action.async {
@@ -33,26 +31,21 @@ object Resizer extends Controller with Logging {
               logger.info(s"Resizing $uri to $width pixels wide at $quality compression")
 
               enumerator.toByteArray flatMap { bytes =>
-                logger.info(s"Downloaded $uri in $downloadStopWatch")
+                logger.info(s"Took $downloadStopWatch to download $uri")
                 PngResizerMetrics.downloadTime.recordDuration(downloadStopWatch.elapsed)
 
                 val resizeStopWatch = new StopWatch
 
-                val maybeImage = Option(new ByteArrayInputStream(bytes).toBufferedImage)
+                val resized = Im4Java.resizeBufferedImage(width)(bytes)
+                logger.info(s"Took $resizeStopWatch to IM convert (resize) $uri")
+                val quantStopWatch = new StopWatch
+                PngQuant(resized, quality) map { compressedImage =>
+                  logger.info(s"Took $quantStopWatch to PngQuant $uri")
+                  PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
 
-                maybeImage match {
-                  case Some(image) =>
-                    val resized = Im4Java.resizeBufferedImage(image, width)
-                    PngQuant(resized, quality) map { compressedImage =>
-                      logger.info(s"Resized $uri in $resizeStopWatch")
-                      PngResizerMetrics.resizeTime.recordDuration(resizeStopWatch.elapsed)
-
-                      Cached(Configuration.pngResizer.ttlInSeconds)(Ok(compressedImage).as("image/png"))
-                    }
-
-                  case None =>
-                    Future.successful(InternalServerError(s"Could not convert $uri to a buffered image"))
+                  Cached(Configuration.pngResizer.ttlInSeconds)(Ok(compressedImage).as("image/png"))
                 }
+
               }
 
             case NOT_FOUND => Future.successful(NotFound(s"Unable to find source image at $uri"))

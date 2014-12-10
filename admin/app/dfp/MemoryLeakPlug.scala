@@ -11,14 +11,19 @@ import common.Logging
  */
 object MemoryLeakPlug extends Logging {
 
-  def apply() {
+  def apply(): Unit = {
     log.info("Plugging memory leak")
-    val queueHolderClass = Class.forName("com.google.inject.internal.util.$MapMaker$QueueHolder")
-    val queueField = queueHolderClass.getDeclaredField("queue")
-    queueField.setAccessible(true)
-    val modifiersField = classOf[Field].getDeclaredField("modifiers")
-    modifiersField.setAccessible(true)
-    modifiersField.setInt(queueField, queueField.getModifiers & ~Modifier.FINAL)
-    queueField.set(null, null)
+    try {
+      val queueHolderClass = Class.forName("com.google.inject.internal.util.$MapMaker$QueueHolder")
+      val queueField = queueHolderClass.getDeclaredField("queue")
+      queueField.setAccessible(true)
+      val modifiersField = classOf[Field].getDeclaredField("modifiers")
+      modifiersField.setAccessible(true)
+      modifiersField.setInt(queueField, queueField.getModifiers & ~Modifier.FINAL)
+      queueField.set(null, null)
+      log.info("Memory leak plugged")
+    } catch {
+      case e: Exception => log.error(e.getMessage)
+    }
   }
 }
