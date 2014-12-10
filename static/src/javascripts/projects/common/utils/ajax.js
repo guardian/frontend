@@ -20,7 +20,7 @@ define([
             params.crossOrigin = true;
         }
         r = reqwest(params);
-        raven.wrap({deep: false}, r.then);
+        raven.wrap({ deep: true }, r.then);
         return r;
     }
 
