@@ -7,6 +7,7 @@ define([
     'videojs',
     'videojsembed',
     'lodash/functions/debounce',
+    'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -15,6 +16,7 @@ define([
     videojs,
     videojsembed,
     debounce,
+    playerPriority,
     loadingTmpl
 ) {
 
@@ -33,12 +35,12 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = ['html5', 'flash'];
+        options.techOrder = playerPriority;
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = ['flash', 'html5'];
+            options.techOrder = playerPriority.reverse();
             player = videojs(el, options);
         }
 
