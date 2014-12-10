@@ -263,18 +263,20 @@ define([
 
     function initPlayer() {
 
+        videojs.options.techOrder = playerPriority;
+
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
 
-            // 'unshift()' inserts at the front of the Array
-            playerPriority.unshift('vpaid');
+            // clone the video options and add 'vpaid' to them.
+            videojs.options.techOrder = videojs.options.techOrder.slice(0);
+            videojs.options.techOrder.unshift('vpaid');
+
             videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
-
-        videojs.options.techOrder = playerPriority;
 
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
