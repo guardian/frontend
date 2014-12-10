@@ -7,6 +7,10 @@ import play.api.mvc.{Action, Controller}
 object WeatherController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
+  val London: CityId = CityId("328328")
+  val NewYork: CityId = CityId("349727")
+  val Sydney: CityId = CityId("22889")
+
   case class City(name: String) extends AnyVal
   case class CityId(id: String) extends AnyVal
 
