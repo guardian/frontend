@@ -662,7 +662,7 @@ $vjs-progress-inset-bottom: 4px;
 
 /* VJS: AD OVERLAY
    ========================================================================== */
-.vjs-ads-overlay {
+.vjs-ads-overlay-top {
     position: absolute;
     z-index: 2;
     top: 0;
@@ -679,6 +679,15 @@ $vjs-progress-inset-bottom: 4px;
     @include mq(tablet) {
         @include fs-textSans(2, true);
     }
+}
+
+.vjs-ads-overlay .pamplemousse {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .vjs-ads-overlay--not-started {
