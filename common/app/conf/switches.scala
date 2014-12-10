@@ -165,7 +165,7 @@ object Switches {
   val PngResizingSwitch = Switch("Performance", "png-resizing",
     //"If this switch is on png images will be resized via the png-resizing server",
     "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   // Commercial
@@ -461,7 +461,7 @@ object Switches {
 
   val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
     "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   def all: Seq[Switch] = Switch.allSwitches
