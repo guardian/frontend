@@ -9,6 +9,9 @@ GET        /_healthcheck                                                        
 
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
+#Weather
+GET        /weather/city/:name                                                  controllers.WeatherController.getWeatherForCity(name)
+
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
@@ -53,4 +56,3 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             
 # Tag combiners
 GET        /$leftSide<[^+]+>+*rightSide/rss                                     controllers.IndexController.renderCombinerRss(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                                         controllers.IndexController.renderCombiner(leftSide, rightSide)
-
