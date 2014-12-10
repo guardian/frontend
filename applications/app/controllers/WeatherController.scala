@@ -21,7 +21,7 @@ object WeatherController extends Controller with ExecutionContexts {
   case class City(name: String) extends AnyVal
   case class CityId(id: String) extends AnyVal
 
-  val weatherApiKey: Option[String] = Configuration.weather.apiKey
+  val weatherApiKey: String = Configuration.weather.apiKey.get
 
   val weatherCityUrl: String = "http://api.accuweather.com/currentconditions/v1/"
   val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/search.json"
