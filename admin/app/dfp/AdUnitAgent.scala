@@ -2,16 +2,19 @@ package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411.InventoryStatus
-import common.{AkkaAgent, Logging}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import org.joda.time.DateTime
 
-object AdUnitAgent extends Logging {
+import scala.concurrent.Future
+
+object AdUnitAgent extends ExecutionContexts with Logging {
 
   private val initialCache = AdUnitCache(DateTime.now, Map.empty)
   private lazy val cache = AkkaAgent[AdUnitCache](initialCache)
 
-  def refresh(): Unit = {
+  def refresh(): Future[AdUnitCache] = {
+    log.info("Loading ad units")
     refresh(loadActiveCoreSiteAdUnits())
   }
 
@@ -40,12 +43,13 @@ object AdUnitAgent extends Logging {
     }
   }
 
-  private def refresh(freshAdUnits: Map[String, GuAdUnit]): Unit = {
-    cache send { oldCache =>
+  private def refresh(freshAdUnits: Map[String, GuAdUnit]): Future[AdUnitCache] = {
+    cache alterOff { oldCache =>
       if (freshAdUnits.nonEmpty) {
+        log.info("Ad units loaded")
         AdUnitCache(DateTime.now, freshAdUnits)
       } else {
-        log.warn("Keeping old ad units as there is no fresh data")
+        log.error("No ad units loaded so keeping old set")
         oldCache
       }
     }
