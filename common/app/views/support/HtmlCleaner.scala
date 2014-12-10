@@ -201,7 +201,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             fig.getElementsByTag("img").foreach { img =>
               val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
               img.after(html.toString())
-              fig.addClass("fig--hasShares")
+              fig.addClass("fig--has-shares")
               img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
               img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
