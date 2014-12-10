@@ -165,10 +165,8 @@
 }
 
 .creative--expandable {
-    $expandable-colour: #f3f3f3;
-
     margin-bottom: $gs-baseline;
-    
+
     .facia-container__inner {
         border-top: 0;
         padding-top: 0;
@@ -184,7 +182,6 @@
     .ad-exp--expand {
         height: 0;
         position: relative;
-        background-color: $expandable-colour;
         overflow: hidden;
         @include transition(height 1s);
     }
@@ -225,6 +222,10 @@
             @include transform(rotate(360deg));
         }
     }
+}
+
+.creative--expandable-GA {
+    $expandable-colour: #f3f3f3;
     .ad-exp-collapse__slide {
         position: absolute;
         top: 0;
