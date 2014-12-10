@@ -304,9 +304,9 @@ define([
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType === 'Network Front') {
-                        history.renderNavs(true);
+                        history.renderTags({inMegaNav: true, inPage: true});
                     } else {
-                        history.renderNavs();
+                        history.renderTags({inMegaNav: true});
                         history.logSummary(config.page);
                     }
 

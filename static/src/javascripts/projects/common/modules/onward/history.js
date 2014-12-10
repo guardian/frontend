@@ -7,12 +7,14 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
+    'common/utils/detect',
     'common/utils/storage'
 ], function (
     $,
     _,
     config,
     template,
+    detect,
     storage
 ) {
 
@@ -250,67 +252,61 @@ define([
         saveSummary(summary);
     }
 
-    function renderNavs(injectHistoryTags) {
-        var switches = config.switches,
-            popular,
-            navEl,
-            priNavItemsMap = {},
-            secNavTags,
-            mageNavHtml,
-            secNavHtml;
+    function renderTags(opts) {
+        var popular,
+            topNav,
+            topNavItems = {},
+            tags;
 
-        //if (!switches.historyNavSecondaryInject && !switches.historyNavMegaInject) { return; }
+        if (!opts.inPage && !opts.inMegaNav) { return; }
 
         popular = getPopular();
 
         if (popular.length === 0) { return; }
 
-        navEl = document.querySelector('.js-navigation-header');
+        topNav = document.querySelector('.js-navigation-header');
 
-        $(navEl.querySelectorAll('.js-top-navigation a')).each(function (item) {
-            priNavItemsMap[collapseTag($(item).attr('href'))] = true;
+        $(topNav.querySelectorAll('.js-top-navigation a')).each(function (item) {
+            topNavItems[collapseTag($(item).attr('href'))] = true;
         });
 
-        secNavTags = _.filter(popular, function (tag) { return !priNavItemsMap[tag[0]]; });
+        tags = _.chain(popular)
+            .filter(function (tag) { return !topNavItems[tag[0]]; })
+            .first(20)
+            .map(tagsHtml)
+            .value();
 
-        if (secNavTags.length === 0) { return; }
+        if (tags.length === 0) { return; }
 
-        if (switches.historyNavMegaInject) {
-            mageNavHtml =
+        if (opts.inMegaNav) {
+            $(topNav.querySelectorAll('.js-global-navigation')).prepend(
                 '<li class="global-navigation__section"  data-link-name="history">' +
                     '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : jump to">jump to</a>' +
-                    '<ul class="global-navigation__children">' +
-                        secNavTags.reduce(function (html, tag) { return html + template(
-                            '<li class="global-navigation__child">' +
-                                '<a href="/{{id}}" class="global-navigation__action" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
-                            '</li>',
-                            {id: tag[0], name: tag[1]}
-                        ); }, '') +
-                    '</ul>' +
-                '</li>';
-
-            $(navEl.querySelectorAll('.js-global-navigation')).prepend(mageNavHtml);
+                    '<ul class="global-navigation__children global-navigation__children---tags">' + tags.join('') + '</ul>' +
+                '</li>'
+            );
         }
 
-        if (injectHistoryTags && switches.historyNavSecondaryInject) {
-            secNavHtml =
-                '<ul class="keyword-list inline-list">' +
-                    secNavTags.slice(0,10).reduce(function (html, tag) { return html + template(
-                        '<li class="inline-list__item">' +
-                            '<a href="/{{id}}" class="button button--small button--tag button--secondary" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
-                        '</li>',
-                        {id: tag[0], name: tag[1]}
-                    ); }, '') +
-                '</ul>';
-
-            $(document.querySelector('.js-history-tags')).append(secNavHtml);
+        if (opts.inPage && ['tablet', 'desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1) {
+            $(document.querySelector('.js-history-tags')).append(
+                '<ul class="keyword-list inline-list">' + tags.slice(0,10).join('') + '</ul>'
+            );
         }
+    }
+
+    function tagsHtml(tag) {
+        return template(
+            '<li class="inline-list__item">' +
+                '<a href="/{{id}}" class="button button--small button--tag button--secondary" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
+            '</li>',
+            {id: tag[0], name: tag[1]}
+        );
     }
 
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        renderNavs: renderNavs,
+        renderTags: renderTags,
         getPopular: getPopular,
         isRevisit: isRevisit,
         reset: reset,
