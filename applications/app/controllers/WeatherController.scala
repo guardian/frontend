@@ -7,6 +7,8 @@ import play.api.mvc.{Action, Controller}
 object WeatherController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
+  val LocationHeader: String = "X-GU-GeoCity"
+
   val London: CityId = CityId("328328")
   val NewYork: CityId = CityId("349727")
   val Sydney: CityId = CityId("22889")
