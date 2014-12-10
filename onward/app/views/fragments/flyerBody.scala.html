@@ -23,8 +23,7 @@
     "flyer--gallery" -> content.isGallery,
     "flyer--audio" -> content.isAudio,
     "flyer--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
-    ))"
-    data-link-name="content-card" data-component="content-card">
+    ))">
 
     <div class="flyer__container">
         @if(content.isGallery) {
@@ -36,22 +35,14 @@
         <div class="flyer__header">
             <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
             @if(!content.isMedia && content.visualTone == "comment") {
-                <div class="flyer__byline">
-                    - @content.byline.map { byline => @Html(byline) }
-                </div>
+                <div class="flyer__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
 
         @if(!content.isGallery) {
             <div class="flyer__standfirst u-cf">
-            @if(content.isLiveBlog){
-                @content.trailText.map{ trailText => @Html(trailText) }
-            } else {
-                <div>
-                @content.standfirst.map { standfirst => @Html(standfirst) }
-                </div>
-            }
+                @content.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
             </div>
             @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                 @content.contributors.headOption.map { profile =>

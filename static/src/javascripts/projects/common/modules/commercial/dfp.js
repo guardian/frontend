@@ -71,7 +71,7 @@ define([
     /**
      * Private variables
      */
-    var adSlotSelector    = '.ad-slot--dfp',
+    var adSlotSelector    = '.js-ad-slot',
         displayed         = false,
         rendered          = false,
         slots             = {},
@@ -166,16 +166,6 @@ define([
          * Public functions
          */
         init = function () {
-
-            if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
-                return false;
-            }
-
-            if (!config.switches.standardAdverts) {
-                adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
 
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {

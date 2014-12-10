@@ -17,6 +17,10 @@ $header-image-size-desktop: 100px;
             background-color: #ffffff;
         }
     }
+}    
+
+.fc-container--commercial {
+    padding-bottom: 0;
 }
 
 .fc-container__inner,
@@ -436,6 +440,10 @@ $header-image-size-desktop: 100px;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     margin-top: $gs-baseline;
+    
+    .has-page-skin & {
+        width: gs-span(12);
+    }
 }
 
 .index-page-header__content {
@@ -444,7 +452,7 @@ $header-image-size-desktop: 100px;
     @include mq(wide) {
         width: $left-column-wide + $gs-gutter + gs-span(12);
 
-        .has-page-skin {
+        .has-page-skin & {
             width: 100%;
         }
     }
