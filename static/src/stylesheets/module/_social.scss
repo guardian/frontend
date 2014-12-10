@@ -42,11 +42,11 @@ category: Common
 
 .social__item {
     float: left;
-    width: 36px;
+    min-width: 36px;
     padding: 0 3px $gs-baseline/2 0;
 
     @include mq(leftCol) {
-        width: 32px;
+        min-width: 32px;
     }
 }
 
@@ -57,7 +57,14 @@ category: Common
 }
 
 .social__action {
-    display: block;
+    display: inline-block;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
 }
 
 
@@ -71,29 +78,47 @@ category: Common
  * </element>
  */
 
-@include mq(desktop) {
-
-    $social-icon: (
-        width: 36px,
-        height: 36px,
-        color: colour(neutral-2),
-        space-in-between: 2px
-    );
-
-}
 .social-icon {
     @extend %icon-holder-circle;
     border: 0;
-    width: 32px;
+    min-width: 32px;
+    width: auto;
     height: 32px;
 
     i {
-        display: block;
-        width: 100%;
+        display: inline-block;
+        width: 32px;
         height: 100%;
         background-size: 88% !important;
         background-position: center !important;
+        vertical-align: middle;
     }
+
+    .social-icon__label {
+        @include fs-textSans(2);
+        margin: 0 .8em 0 -.5em;
+    }
+}
+
+.social-icon--small {
+    min-width: 24px;
+    height: 24px;
+
+    i {
+        width: 24px;
+        background-size: 100% !important;
+    }
+
+    .social-icon__label {
+        @include fs-textSans(1);
+        margin: 0 .7em 0 -.3em;
+    }
+}
+
+.social-icon__label {
+    color: #ffffff;
+    white-space: nowrap;
+    font-weight: bold;
 }
 
 .social-icon--facebook {
