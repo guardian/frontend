@@ -1,0 +1,29 @@
+<div class="weather">
+    <div class="weather__wrap">
+        <a class="weather__city  js-get-location" href="#weather-get-location" data-toggle="weather-change-location" data-link-name="weather-get-location">
+            <span class="js-weather-city">{{location}}</span>
+            <i class="i i-arrow-grey-large weather__pin"><span class="u-h">Get your current location</span></i>
+        </a>
+        <p class="weather__temp js-weather-temp">{{tempNow}}</p>
+    </div>
+    <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
+    <div class="popup is-off weather-change-location" id="weather-get-location">
+        <ul class="popup__group">
+            <li class="popup__item">
+                <a class="brand-bar__item--action weather__get-location js-detect-location" data-link-name="weather-detect-location"
+                   href="#detect-location">Detect my location<i class="i i-location-gps weather__gps"></i>
+                </a>
+            </li>
+            <li class="popup__item">
+                <div class="search-tool js-search-tool">
+                    <div class="search-tool__form u-cf">
+                        <input class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-list-location" />
+                        <button class="search-tool__btn"><i class="i i-search-white-36"></i></button>
+                    </div>
+                    <ul class="u-unstyled js-search-tool-list"></ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
