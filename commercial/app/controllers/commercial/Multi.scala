@@ -22,38 +22,42 @@ object Multi
   def renderMulti() = MemcachedAction { implicit request =>
     Future.successful {
 
-      val requestedContent = request.getParameters("c")
+      val requestedContent = request.getParameters("components")
+
+      val clickMacro = request.getParameter("clickMacro")
+
+      val omnitureId = request.getParameter("omnitureId")
 
       val content = requestedContent flatMap {
         case "jobs" =>
           JobsAgent.jobsTargetedAt(segment).headOption map {
-            views.html.jobFragments.job(_)
+            views.html.jobFragments.job(_, clickMacro)
           }
         case "books" =>
           BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
-            views.html.books.book(_)
+            views.html.books.book(_, clickMacro)
           }
         case "travel" =>
           TravelOffersAgent.offersTargetedAt(segment).headOption map {
-            views.html.travelOfferFragments.travelOffer(_)
+            views.html.travelOfferFragments.travelOffer(_, clickMacro)
           }
         case "masterclasses" =>
           MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterClasses.masterClass(_)
+            views.html.masterClasses.masterClass(_, clickMacro)
           }
         case "soulmates" =>
           for {
             woman <- SoulmatesWomenAgent.sample(1).headOption
             man <- SoulmatesMenAgent.sample(1).headOption
           } yield {
-            views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)))
+            views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)), clickMacro)
           }
         case _ => None
       }
 
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {
         Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(content))
+          jsonFormat.result(views.html.multi(content, omnitureId))
         }
       } else {
         NoCache(jsonFormat.nilResult)
