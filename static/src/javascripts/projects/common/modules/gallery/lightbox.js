@@ -301,8 +301,8 @@ define([
                     }
 
                     if (this.galleryJson.images.length < 2) {
-                        $([this.nextBtn, this.prevBtn]).hide();
-                        $('.gallery-lightbox__progress', '.gallery-lightbox__sidebar').hide();
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', this.lightboxEl).hide();
                     }
 
                     this.state = 'image';
