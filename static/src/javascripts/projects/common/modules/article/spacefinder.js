@@ -80,15 +80,24 @@ define([
 
     // getParaWithSpace returns a paragraph that satisfies the given/default rules:
     function getParaWithSpace(rules, debug) {
+        var bodyBottom, paraElems, slots;
         rules = rules || defaultRules;
 
         // get all immediate children
-        var bodyBottom = qwery(bodySelector)[0].offsetHeight,
-            paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions),
-            slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+        bodyBottom = qwery(bodySelector)[0].offsetHeight;
+        paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+
+        if (debug) { // reset any previous debug messages
+            bonzo(paraElems.pluck('element').valueOf())
+                .attr('data-spacefinder-msg', '')
+                .removeClass('spacefinder--valid')
+                .removeClass('spacefinder--error');
+        }
+
+        slots = _enforceRules(paraElems, rules, bodyBottom, debug);
 
         if (debug) {
-            bonzo(slots.map(function (p) { return p.element; })).addClass('spacefinder--valid');
+            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
         }
 
         return slots.length ? slots[0].element : undefined;
