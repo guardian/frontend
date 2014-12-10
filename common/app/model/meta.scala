@@ -274,7 +274,6 @@ trait Tags {
    */
   lazy val visualTone: String =
     if (isLiveBlog) Tags.VisualTone.Live
-    else if (isEditorial) Tags.VisualTone.Editorial
     else if (isComment) Tags.VisualTone.Comment
     else if (isFeature) Tags.VisualTone.Feature
     else Tags.VisualTone.News
