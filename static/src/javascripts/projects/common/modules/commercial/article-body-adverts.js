@@ -16,7 +16,7 @@ define([
     createAdSlot
 ) {
 
-    var getRules = function() {
+    function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
             minBelow: 300,
@@ -26,15 +26,14 @@ define([
                 ' .ad-slot': {minAbove: 500, minBelow: 500}
             }
         };
-    };
+    }
 
-    var getLenientRules = function() {
+    function getLenientRules() {
         var lenientRules = cloneDeep(getRules());
         // more lenient rules, closer to the top start of the article
         lenientRules.minAbove = 300;
         return lenientRules;
-    };
-
+    }
 
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
