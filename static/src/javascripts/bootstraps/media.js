@@ -17,6 +17,7 @@ define([
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images',
+    'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -36,6 +37,7 @@ define([
     Component,
     history,
     images,
+    playerPriority,
     loadingTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
@@ -252,7 +254,7 @@ define([
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = ['flash', 'html5'];
+            options.techOrder = playerPriority.reverse();
             player = videojs(el, options);
         }
 
@@ -261,12 +263,18 @@ define([
 
     function initPlayer() {
 
+        videojs.options.techOrder = playerPriority;
+
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-            videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
+
+            // clone the video options and add 'vpaid' to them.
+            videojs.options.techOrder = videojs.options.techOrder.slice(0);
+            videojs.options.techOrder.unshift('vpaid');
+
             videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
 
