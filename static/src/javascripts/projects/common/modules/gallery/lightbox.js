@@ -300,9 +300,9 @@ define([
                         this.initSwipe();
                     }
 
-                    this.hideControls = this.galleryJson.images.length < 2;
-                    if (this.hideControls) {
-                        $('.gallery-lightbox__progress, .js-gallery-next, .js-gallery-prev').hide();
+                    if (this.galleryJson.images.length < 2) {
+                        $([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', '.gallery-lightbox__sidebar').hide();
                     }
 
                     this.state = 'image';
