@@ -523,7 +523,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   )
 }
 
-class LiveBlog(content: ApiContentWithMeta) extends Article(content) with Lightboxable {
+class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
@@ -543,6 +543,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) with Lightb
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+  override lazy val lightboxImages = mainPicture.toSeq
 
   lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
     case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
