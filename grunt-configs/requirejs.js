@@ -136,7 +136,8 @@ module.exports = function(grunt, options) {
                     videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
                     videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist',
                     videojsembed: 'components/videojs-embed/videojs.embed',
-                    videoinit: 'projects/video/modules/video-init'
+                    videoinit: 'projects/video/modules/video-init',
+                    videotechorder: 'projects/video/modules/tech-order'
                 },
                 shim: {
                     videojs: {

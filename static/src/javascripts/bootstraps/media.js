@@ -17,6 +17,7 @@ define([
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images',
+    'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -36,6 +37,7 @@ define([
     Component,
     history,
     images,
+    playerPriority,
     loadingTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
@@ -252,7 +254,7 @@ define([
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = ['flash', 'html5'];
+            options.techOrder = playerPriority.reverse();
             player = videojs(el, options);
         }
 
@@ -260,12 +262,6 @@ define([
     }
 
     function initPlayer() {
-
-        var playerPriority = ['html5', 'flash'];
-
-        if (config.switches.prioritiseFlashVideoPlayer) {
-            playerPriority = ['flash', 'html5'];
-        }
 
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
