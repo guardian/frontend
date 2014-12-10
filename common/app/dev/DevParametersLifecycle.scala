@@ -32,6 +32,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
   )
 
   val commercialParams = Seq(
+    "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
     "google_console", // two params for dfp console
     "googfc",

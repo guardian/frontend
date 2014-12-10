@@ -97,7 +97,7 @@ define([
                 soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
                 travel:            buildComponentUrl('travel/offers', { s: section }),
                 travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: params.components }),
+                multi:             buildComponentUrl('multi', params),
                 capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
                 capi:              buildComponentUrl('capi', merge(params, { s: section }))
             };

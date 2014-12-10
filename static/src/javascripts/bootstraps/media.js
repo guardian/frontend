@@ -287,7 +287,7 @@ define([
                     preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                     plugins: {
                         embed: {
-                            embeddable: config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                            embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
                             location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
                         }
                     }

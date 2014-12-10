@@ -9,6 +9,7 @@ define([
     'bootstraps/common',
     'bootstraps/football',
     'bootstraps/gallery',
+    'bootstraps/image-content',
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
@@ -26,6 +27,7 @@ define([
     common,
     football,
     gallery,
+    imageContent,
     liveBlog,
     media,
     profile,
@@ -74,6 +76,10 @@ define([
 
             if (config.page.contentType === 'Gallery') {
                 bootstrapContext('gallery', gallery);
+            }
+
+            if (config.page.contentType === 'ImageContent') {
+                bootstrapContext('image-content', imageContent);
             }
 
             if (config.page.contentType === 'Tag') {
