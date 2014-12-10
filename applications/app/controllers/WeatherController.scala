@@ -57,11 +57,16 @@ object WeatherController extends Controller with ExecutionContexts {
     }
   }
 
-  def getWeatherForCity(name: String) = Action.async { implicit request =>
-    lazy val cityIdFromRequest: Future[CityId] = getCityIdFromRequest(request)
-    for {
-      cityId <- cityIdFromRequest
-      json <- getWeatherForCityId(cityId)
-    } yield Ok(json)
+  def forCity(name: String) = Action.async { implicit request =>
+    getWeatherForCity(City(name)).flatMap {
+      case Some(cityId) => getWeatherForCityId(cityId).map(Ok(_))
+      case None => Future.successful(NotFound)
+    }
+  }
+
+  def forRequest() = Action.async { implicit request =>
+    getCityIdFromRequest(request).flatMap { cityId =>
+      getWeatherForCityId(cityId).map(Ok(_))
+    }
   }
 }
