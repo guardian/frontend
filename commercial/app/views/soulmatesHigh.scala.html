@@ -1,9 +1,9 @@
-@(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
+@(members: Seq[model.commercial.soulmates.Member], omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
 
 @import conf.Configuration
 
 @defining(("2_2", "2014-03-28")) { case (version, date) =>
-    <div class="commercial commercial--soulmates commercial--tone-soulmates commercial--high" role="complementary">
+    <div class="commercial commercial--soulmates commercial--tone-soulmates commercial--high" role="complementary" data-link-name="commercial-high | soulmates | @omnitureId">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -14,7 +14,7 @@
                             <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
                         </h3>
                         <p class="commercial__explainer">Meet someone <em>worth</em> meeting</p>
-                        <a class="commercial__cta button button--tertiary" href="@AdLink{@Configuration.commercial.soulmates_url}" data-link-name="merchandising-soulmates-v@{version}_@{date}-high-join-now">
+                        <a class="commercial__cta button button--tertiary" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-high-join-now">
                             <i class="i i-arrow-white-right i-right"></i>
                             <span class="commercial__cta__label">Join now</span>
                         </a>
@@ -28,7 +28,7 @@
                         <li class="lineitem">
                             <a class="lineitem__link"
                                 data-link-name="merchandising-soulmates-v@{version}_@{date}-high-profile-@{member.gender}"
-                                href="@AdLink{@member.profileUrl}">
+                                href="@clickMacro@member.profileUrl">
                                 <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
                                 <h4 class="lineitem__title">@member.username</h4>
                                 <p class="lineitem__meta">@member.age, @member.location</p>

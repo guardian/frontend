@@ -7,16 +7,24 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object MasterClasses extends Controller {
+object MasterClasses extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
   object lowRelevance extends Relevance[MasterClass] {
-    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclasses(classes)
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.masterclasses(classes, omnitureId, clickMacro)
+    }
   }
 
   object highRelevance extends Relevance[MasterClass] {
-    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclassesHigh(classes)
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.masterclassesHigh(classes, omnitureId, clickMacro)
+    }
   }
 
   private def renderMasterclasses(relevance: Relevance[MasterClass], format: Format) =
