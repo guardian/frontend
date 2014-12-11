@@ -32,7 +32,7 @@ object WeatherController extends Controller with ExecutionContexts {
   private def weatherUrlForCityId(cityId: CityId): String =
     s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
-  private def getWeatherForCity(city: City): Future[Option[CityId]] =
+  private def getCityIdForCity(city: City): Future[Option[CityId]] =
     for (cityJson <- WS.url(weatherUrlForCity(city)).get().map(_.json))
     yield {
       val cities = cityJson.asOpt[List[JsValue]].getOrElse(Nil)
@@ -53,13 +53,13 @@ object WeatherController extends Controller with ExecutionContexts {
     lazy val cityIdFromRequestEdition: CityId = getCityIdFromRequestEdition(request)
     request.headers.get(LocationHeader) match {
       case Some(city) =>
-        getWeatherForCity(City(city)).map(_.getOrElse(cityIdFromRequestEdition))
+        getCityIdForCity(City(city)).map(_.getOrElse(cityIdFromRequestEdition))
       case None => Future.successful(cityIdFromRequestEdition)
     }
   }
 
   def forCity(name: String) = Action.async {
-    getWeatherForCity(City(name)).flatMap {
+    getCityIdForCity(City(name)).flatMap {
       case Some(cityId) => getWeatherForCityId(cityId).map(Ok(_))
       case None => Future.successful(NotFound)
     }
