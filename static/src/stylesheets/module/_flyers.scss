@@ -90,8 +90,8 @@
     text-decoration: none;
 
     &.u-faux-block-link__overlay {
-        transition: opacity 0.3s;
-        background-color: rgba(0,0,0,0.1);
+        transition: opacity .3s;
+        background-color: rgba(0, 0, 0, .1);
         z-index: 2;
         &:hover {
             opacity: 1 !important;
