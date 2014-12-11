@@ -1,4 +1,4 @@
-define('utils/query-params', function () {
+define('utils/fronts-from-url', function () {
     var queryParams = {};
 
     var getter = function () {

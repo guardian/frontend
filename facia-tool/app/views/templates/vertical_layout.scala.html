@@ -1,0 +1,81 @@
+<script type="text/html" id="vertical_layout">
+    <div class="column" data-bind="style: {
+        width: style.width(),
+        left: style.left($data),
+        bottom: 0
+    }">
+
+        <div class="config-pane" data-bind="slideIn: layout.configVisible">
+            <!-- ko if: isFront -->
+                <h1>Front</h1>
+            <!-- /ko -->
+            <!-- ko if: isLatest -->
+                <h1>Latest news</h1>
+            <!-- /ko -->
+            <!-- ko if: isOphan -->
+                <h1>Ophan</h1>
+            <!-- /ko -->
+            <!-- ko if: isIframe -->
+                <h1>Iframe</h1>
+            <!-- /ko -->
+
+            <i class="icon-circle-plus" data-bind="click: layout.addColumn.bind(layout)"></i>
+            <i class="icon-circle-minus" data-bind="click: layout.removeColumn.bind(layout)"></i>
+
+            <br>
+            <h3>Type</h3>
+            <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
+                label: 'Front',
+                checked: isFront,
+                context: $data
+            }},
+            click: setType.bind($data, 'front')"></div>
+            <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
+                label: 'Latest articles',
+                checked: isLatest,
+                context: $data
+            }},
+            click: setType.bind($data, 'latest')"></div>
+            @if(Switches.FaciaToolPaneOptions.isSwitchedOn) {
+                <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
+                    label: 'Ophan recently published',
+                    checked: isOphan,
+                    context: $data
+                }},
+                click: setType.bind($data, 'ophan')"></div>
+                <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
+                    label: 'External page',
+                    checked: isIframe,
+                    context: $data
+                }},
+                click: setType.bind($data, 'iframe')"></div>
+                <!-- ko if: isIframe -->
+                    <input type="url" data-bind="value: edit.iframeURL" placeholder="URL">
+                <!-- /ko -->
+            }
+        </div>
+
+        <div class="content-pane">
+            <!-- ko if: isFront -->
+                <fronts-widget params="position: $index, column: $data"></fronts-widget>
+            <!-- /ko -->
+            <!-- ko if: isLatest -->
+                <latest-widget params="position: $index, column: $data"></latest-widget>
+            <!-- /ko -->
+            <!-- ko if: isOphan -->
+                <iframe-widget params="position: $index, column: $data, src: 'https://dashboard.ophan.co.uk/content'"></iframe-widget>
+            <!-- /ko -->
+            <!-- ko if: isIframe() -->
+                <iframe-widget params="position: $index, column: $data, src: initialState.iframeURL"></iframe-widget>
+            <!-- /ko -->
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="checkbox">
+    <label>
+        <input type="checkbox" data-bind="checked: checked">
+        <span class="check"></span>
+        <strong data-bind="text: label"></strong>
+    </label>
+</script>

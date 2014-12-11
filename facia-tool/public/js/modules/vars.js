@@ -82,7 +82,8 @@ define([
             height: 35
         },
 
-        internalContentPrefix: 'internal-code/content/'
+        internalContentPrefix: 'internal-code/content/',
+        layoutStorageLocation:  'gu.fronts.tools.layout.configuration'
     };
 
     function sparksBaseUrl(args) {
@@ -96,8 +97,6 @@ define([
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
-            liveMode: ko.observable(false),
-            pending: ko.observable(false),
             openFronts: {}
         }
     };

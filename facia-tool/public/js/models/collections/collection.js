@@ -4,8 +4,10 @@ define([
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
-    'utils/populate-observables',
+    'utils/global-listeners',
     'utils/human-time',
+    'utils/mediator',
+    'utils/populate-observables',
     'modules/authed-ajax',
     'models/group',
     'models/collections/article',
@@ -15,18 +17,22 @@ define([
     ko,
     vars,
     asObservableProps,
-    populateObservables,
+    globalListeners,
     humanTime,
+    mediator,
+    populateObservables,
     authedAjax,
     Group,
     Article,
     contentApi
-    ) {
+) {
     function Collection(opts) {
 
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+
+        this.front = opts.front;
 
         this.raw = undefined;
 
@@ -58,7 +64,8 @@ define([
             'pending',
             'editingConfig',
             'count',
-            'timeAgo']);
+            'timeAgo',
+            'alsoOnVisible']);
 
         this.itemDefaults = _.reduce({
             showTags: 'showKickerTag',
@@ -73,6 +80,10 @@ define([
 
         this.setPending(true);
         this.load();
+
+        if (this.alsoOn.length) {
+            globalListeners.on('mousedown', this.closeAlsoOn.bind(this));
+        }
     }
 
     Collection.prototype.setPending = function(asPending) {
@@ -100,7 +111,8 @@ define([
                 name: name,
                 parent: self,
                 parentType: 'Collection',
-                omitItem: self.drop.bind(self)
+                omitItem: self.drop.bind(self),
+                front: self.front
             });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
@@ -143,26 +155,27 @@ define([
             self.load()
             .then(function(){
                 if (goLive) {
-                    vars.model.deferredDetectPressFailure();
+                    mediator.emit('presser:detectfailures', self.front.front());
                 }
             });
         });
     };
 
     Collection.prototype.drop = function(item) {
+        var front = this.front;
         this.setPending(true);
 
         authedAjax.updateCollections({
             remove: {
                 collection: this,
                 item:       item.id(),
-                live:       vars.state.liveMode(),
-                draft:     !vars.state.liveMode()
+                live:       front.liveMode(),
+                draft:     !front.liveMode()
             }
         })
         .then(function() {
-            if(vars.state.liveMode()) {
-                vars.model.deferredDetectPressFailure();
+            if (front.liveMode()) {
+                mediator.emit('presser:detectfailures', front.front());
             }
         });
     };
@@ -214,7 +227,7 @@ define([
                 this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
-                list = vars.state.liveMode() ? this.raw.live : this.raw.draft || this.raw.live || [];
+                list = this.front.liveMode() ? this.raw.live : this.raw.draft || this.raw.live || [];
 
                 _.each(this.groups, function(group) {
                     group.items.removeAll();
@@ -281,6 +294,24 @@ define([
 
     Collection.prototype.getTimeAgo = function(date) {
         return date ? humanTime(date) : '';
+    };
+
+    Collection.prototype.alsoOnToggle = function () {
+        this.state.alsoOnVisible(!this.state.alsoOnVisible());
+    };
+
+    Collection.prototype.closeAlsoOn = function (event) {
+        if (!this.state.alsoOnVisible()) {
+            return;
+        }
+
+        var context = ko.contextFor(event.target);
+        if (typeof context.$data === 'string') {
+            context = context.$parentContext;
+        }
+        if (context.$data !== this) {
+            this.state.alsoOnVisible(false);
+        }
     };
 
     return Collection;

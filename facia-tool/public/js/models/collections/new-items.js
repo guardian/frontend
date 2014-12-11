@@ -6,6 +6,7 @@ define([
     'models/collections/article',
     'utils/clean-clone',
     'utils/deep-get',
+    'utils/mediator',
     'utils/remove-by-id'
 ], function(
     vars,
@@ -14,6 +15,7 @@ define([
     Article,
     cleanClone,
     deepGet,
+    mediator,
     removeById
 ) {
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
@@ -36,7 +38,7 @@ define([
         });
     }
 
-    function newItemsValidator(newItems) {
+    function newItemsValidator(newItems, context) {
         var defer = $.Deferred();
 
         contentApi.validateItem(newItems[0])
@@ -44,14 +46,14 @@ define([
             defer.reject(err);
         })
         .done(function(item) {
-            var front = vars.model.front(),
+            var front = context ? context.front() : '',
                 err;
 
             if(item.group.parentType === 'Collection') {
                 if (restrictHeadlinesOn.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
                     err = 'Sorry, a ' + front + ' headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.';
                 }
-                if (restrictedLiveMode.indexOf(front) > -1 && vars.model.liveMode()) {
+                if (restrictedLiveMode.indexOf(front) > -1 && context.liveMode()) {
                     err = 'Sorry, ' + front + ' items cannot be added in Live Front mode. Switch to Draft Front then try again.';
                 }
             }
@@ -66,7 +68,7 @@ define([
         return defer.promise();
     }
 
-    function newItemsPersister(newItems, sourceGroup, targetGroup, position, isAfter) {
+    function newItemsPersister(newItems, sourceContext, sourceGroup, targetContext, targetGroup, position, isAfter) {
         var id = newItems[0].id(),
             itemMeta,
             supporting,
@@ -84,7 +86,7 @@ define([
             });
             contentApi.decorateItems(supporting());
 
-            remove = remover(sourceGroup, id);
+            remove = remover(sourceContext, sourceGroup, id);
 
         } else if (targetGroup.parentType === 'Collection') {
             itemMeta = newItems[0].getMeta() || {};
@@ -100,13 +102,17 @@ define([
                 item:     id,
                 position: position,
                 after:    isAfter,
-                live:     vars.state.liveMode(),
-                draft:   !vars.state.liveMode(),
+                live:     targetContext.liveMode(),
+                draft:   !targetContext.liveMode(),
                 itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
             };
 
             remove = sourceGroup && sourceGroup.parentType === 'Collection' && (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
-            remove = remove ? remover(sourceGroup, id) : undefined;
+            remove = remove ? remover(sourceContext, sourceGroup, id) : undefined;
+        }
+
+        if (sourceContext !== targetContext) {
+            remove = undefined;
         }
 
         if (update || remove) {
@@ -115,8 +121,8 @@ define([
                 remove: remove
             })
             .then(function () {
-                if (vars.state.liveMode()) {
-                    vars.model.deferredDetectPressFailure();
+                if (targetContext.liveMode()) {
+                    mediator.emit('presser:detectfailures', targetContext.front());
                 }
             });
         }
@@ -137,8 +143,8 @@ define([
         }
     }
 
-    function remover(sourceGroup, id) {
-        if (sourceGroup &&
+    function remover(sourceContext, sourceGroup, id) {
+        if (sourceContext && sourceGroup &&
             sourceGroup.parentType === 'Collection' &&
            !sourceGroup.keepCopy) {
 
@@ -146,13 +152,13 @@ define([
                 collection: sourceGroup.parent,
                 id:     sourceGroup.parent.id,
                 item:   id,
-                live:   vars.state.liveMode(),
-                draft: !vars.state.liveMode()
+                live:   sourceContext.liveMode(),
+                draft: !sourceContext.liveMode()
             };
         }
     }
 
-    function mergeItems(newItem, oldItem) {
+    function mergeItems(newItem, oldItem, targetContext) {
         _.chain(oldItem.meta)
             .keys()
             .each(function (key) {
@@ -171,19 +177,19 @@ define([
             item: newItem.id(),
             position: oldItem.id(),
             after: false,
-            live: vars.state.liveMode(),
-            draft: !vars.state.liveMode(),
+            live: targetContext.liveMode(),
+            draft: !targetContext.liveMode(),
             itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
         };
-        var remove = remover(sourceGroup, oldItem.id());
+        var remove = remover(targetContext, sourceGroup, oldItem.id());
 
         authedAjax.updateCollections({
             update: update,
             remove: remove
         })
         .then(function () {
-            if (vars.state.liveMode()) {
-                vars.model.deferredDetectPressFailure();
+            if (targetContext.liveMode()) {
+                mediator.emit('presser:detectfailures', targetContext.front());
             }
         });
         if (sourceGroup && !sourceGroup.keepCopy) {
