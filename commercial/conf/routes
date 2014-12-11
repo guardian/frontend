@@ -9,10 +9,7 @@ GET        /_healthcheck                                             conf.Health
 
 
 # Travel offers
-GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
-GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.travelOffersLowJson
-GET        /commercial/travel/offers-high                            controllers.commercial.TravelOffers.travelOffersHighHtml
-GET        /commercial/travel/offers-high.json                       controllers.commercial.TravelOffers.travelOffersHighJson
+GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.renderTravel
 
 
 # Jobs

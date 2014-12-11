@@ -248,32 +248,86 @@
                 'common/utils/$',
                 'common/modules/commercial/creatives/commercial-component'
             ])
-            .then(function (
-                bean,
-                qwery,
-                $,
-                CommercialComponent
-            ) {
-                var $merchandisingBooks = $('.js-merchandising-books');
+                .then(function (
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $merchandisingBooks = $('.js-merchandising-books');
 
-                bean.on(qwery('.js-merchandising-books-layout')[0], 'change', function (event) {
-                    var commercialComponent = new CommercialComponent($merchandisingBooks[0], {
-                        type: 'books',
-                        layout: $(event.srcElement).val(),
-                        isbns: '9780224097000,9781783350629',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%'
+                    bean.on(qwery('.js-merchandising-books-layout')[0], 'change', function (event) {
+                        console.log(event);
+                        var commercialComponent = new CommercialComponent($merchandisingBooks[0], {
+                            type: 'books',
+                            layout: $(event.srcElement).val(),
+                            isbns: '9780224097000,9781783350629',
+                            omnitureId: '[%OmnitureID%]',
+                            clickMacro: '%%CLICK_URL_ESC%%'
+                        });
+
+                        commercialComponent.postLoadEvents.books = function () {
+                            $merchandisingBooks.removeClass('lazyloaded');
+                        };
+
+                        commercialComponent.create();
                     });
 
-                    commercialComponent.postLoadEvents.books = function () {
-                        $merchandisingBooks.removeClass('lazyloaded');
-                    };
-
-                    commercialComponent.create();
+                    bean.fire(qwery('.js-merchandising-books-layout select')[0], 'change');
                 });
+        });
+    </script>
 
-                bean.fire(qwery('.js-merchandising-books-layout select')[0], 'change');
-            });
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030527">
+                Merchandising: commercial component (travel)
+            </a>
+        </h2>
+        <form class="js-merchandising-travel-layout">
+            <label>Layout:
+                <select>
+                    <option value="standard" selected>Standard</option>
+                    <option value="prominent">Prominent</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="js-merchandising-travel"></div>
+    <script>
+        loadCommercial(function () {
+            require([
+                'bean',
+                'qwery',
+                'common/utils/$',
+                'common/modules/commercial/creatives/commercial-component'
+            ])
+                .then(function (
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $merchandisingTravel = $('.js-merchandising-travel');
+
+                    bean.on(qwery('.js-merchandising-travel-layout')[0], 'change', function (event) {
+                        var commercialComponent = new CommercialComponent($merchandisingTravel[0], {
+                            type: 'travel',
+                            layout: $(event.srcElement).val(),
+                            ids: '',
+                            omnitureId: '[%OmnitureID%]',
+                            clickMacro: '%%CLICK_URL_ESC%%'
+                        });
+
+                        commercialComponent.postLoadEvents.books = function () {
+                            $merchandisingTravel.removeClass('lazyloaded');
+                        };
+
+                        commercialComponent.create();
+                    });
+
+                    bean.fire(qwery('.js-merchandising-travel-layout select')[0], 'change');
+                });
         });
     </script>
 
@@ -285,8 +339,7 @@
 
     @Seq(
         Map(("name", "Best Buys"), ("type", "bestbuy")),
-        Map(("name", "Soulmates"), ("type", "soulmates")),
-        Map(("name", "Travel"), ("type", "travel"))
+        Map(("name", "Soulmates"), ("type", "soulmates"))
     ).map { component =>
         <div class="fc-container__inner">
             <h2 class="test-page-head">@component("name")</h2>
