@@ -8,7 +8,6 @@ define([
     'raven',
     'lodash/collections/map',
     'lodash/collections/size',
-    'lodash/objects/defaults',
     'lodash/objects/isArray',
     'lodash/objects/merge',
     'lodash/objects/pick',
@@ -25,7 +24,6 @@ define([
     raven,
     map,
     size,
-    defaults,
     isArray,
     merge,
     pick,
@@ -61,7 +59,7 @@ define([
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
+            var filteredParams = pick(merge(params || {}, getKeywords()), function (v) {
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
@@ -80,8 +78,10 @@ define([
             var section   = config.page.section;
 
             this.params = params;
-            this.$adSlot = $adSlot;
-            this.type = params.type;
+            this.type   = params.type;
+            // remove type from params
+            delete this.params.type;
+            this.$adSlot    = $adSlot;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys', params),
                 bestbuyHigh:       buildComponentUrl('money/bestbuys-high', params),
@@ -90,16 +90,15 @@ define([
                 booksMedium:       buildComponentUrl('books/bestsellers-medium', params),
                 booksHigh:         buildComponentUrl('books/bestsellers-high', params),
                 jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
-                jobsHigh:          buildComponentUrl('jobs-high', params),
                 masterclasses:     buildComponentUrl('masterclasses', params),
                 masterclassesHigh: buildComponentUrl('masterclasses-high', params),
                 soulmates:         buildComponentUrl('soulmates/mixed', params),
                 soulmatesHigh:     buildComponentUrl('soulmates/mixed-high', params),
-                travel:            buildComponentUrl('travel/offers', merge(params, { s: section })),
-                travelHigh:        buildComponentUrl('travel/offers-high', merge(params, { s: section })),
+                travel:            buildComponentUrl('travel/offers', params),
+                travelHigh:        buildComponentUrl('travel/offers-high', params),
                 multi:             buildComponentUrl('multi', params),
-                capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
-                capi:              buildComponentUrl('capi', merge(params, { s: section }))
+                capiSingle:        buildComponentUrl('capi-single', params),
+                capi:              buildComponentUrl('capi', params)
             };
         };
 
