@@ -60,7 +60,7 @@ define([
             expect(sut.getUserLocation()).toEqual(result);
         });
 
-        it("should fetch data", function(done) {
+        xit("should fetch data", function(done) {
             var server = sinon.fakeServer.create();
             server.autoRespond = true;
 

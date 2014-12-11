@@ -54,12 +54,11 @@ define([
             self.changeLocationOptionText('error');
         },
 
-        getWeatherData: function (urlWeather, locationData) {
+        getWeatherData: function (url) {
             return ajax({
-                url: urlWeather + locationData.Key + '.json?apikey=' + apiKey,
-                type: 'jsonp',
-                method: 'get',
-                cache: true
+                url: url,
+                type: 'json',
+                method: 'get'
             });
         },
 
@@ -89,12 +88,9 @@ define([
                 this.saveUserLocation(location);
             }
 
-            /*
             try {
-                self.getLocationData(urlLocation).then(function (locationResp) {
-                    self.getWeatherData(urlWeather, locationResp).then(function (weatherResp) {
-                        self.views.render(weatherResp[0], locationResp.AdministrativeArea.EnglishName);
-                    });
+                self.getWeatherData(url).then(function (response) {
+                    self.views.render(response[0], 'London');
                 });
             } catch (e) {
                 raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
@@ -102,7 +98,7 @@ define([
                         feature: 'weather'
                     }
                 });
-            }*/
+            }
         },
 
         bindEvents: function () {

@@ -45,7 +45,7 @@
         width: gs-span(2) + $gs-gutter * 2;
     }
 
-    .has-page-skin & {
+    /*.has-page-skin & {
         width: 220px;
         position: absolute;
         top: 0;
@@ -66,7 +66,7 @@
         @include mq($from: tablet, $to: leftCol) {
             top: $gs-gutter / 5;
         }
-    }
+    }*/
 }
 
 .weather__city {
