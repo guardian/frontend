@@ -53,4 +53,9 @@ $c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40
         margin-top: $gs-baseline / 2;
         margin-bottom: 0;
     }
+    @include mq($until: mobileLandscape) {
+        & {
+            margin-left: 0;
+        }
+    }
 }
