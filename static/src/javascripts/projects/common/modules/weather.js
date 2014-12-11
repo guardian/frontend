@@ -107,6 +107,7 @@ define([
 
         unbindEvents: function () {
             bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
+            mediator.off('autocomplete:fetch', this.getCityCoordinates);
         },
 
         detectPosition: function (e) {
@@ -135,19 +136,13 @@ define([
 
         render: function (weatherData, city) {
             $weather = $('.weather');
-
-            if ($weather.length > 0) {
-                self.unbindEvents();
-                $weather.remove();
-            }
+            $holder = $('.js-weather');
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,
                 icon: weatherData.WeatherIcon,
                 tempNow: self.getTemperature(weatherData)
             }));
-
-            $holder = $('.js-weather');
 
             $weather.insertAfter($holder);
 
