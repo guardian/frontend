@@ -6,6 +6,7 @@ import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.LiftJsonConfig
 import common.ExecutionContexts
 import conf.Configuration
+import model.diagnostics.CloudWatch
 import net.liftweb.json._
 import utils.SafeLogging
 import scala.concurrent.Future
@@ -21,6 +22,8 @@ class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionConte
     val formstackUrl = Configuration.formstack.url
     s"$formstackUrl/form/$formId.json"
   }
+
+  def cloudWatchCount(id: String) { CloudWatch.put("Formstack", Map(id -> 1d)) }
 
   def checkForm(formstackForm: FormstackForm): Future[Response[FormstackForm]] = {
 
@@ -48,14 +51,17 @@ class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionConte
           }
           case 405 => {
             logger.warn("405 returned while checking formstack reference")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Invalid form reference", "Invalid form reference", 405)))
           }
           case 404 => {
             logger.warn(s"Attempted to load bad formstack reference (404) $body")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Form not found", "Form not found", 404)))
           }
           case _ => {
             logger.warn(s"Unexpected error getting info for formstack reference. Status code $statusCode, body $body")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Form error", "Unexpected error retrieving form info", statusCode)))
           }
         }
