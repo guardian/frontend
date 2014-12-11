@@ -129,8 +129,9 @@ define([
         };
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, still init content tracking
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
         player.one('adtimeout', function () {
+            player.trigger('adscanceled');
             bindContentEvents(player);
         });
     }
