@@ -1,3 +1,6 @@
+$c-history-tags-background: colour(neutral-5);
+$c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40%);
+
 .button--tag {
     margin-right: $gs-gutter / 5;
     margin-bottom: $gs-row-height / 4.5;
@@ -29,16 +32,22 @@
 }
 
 .history-tags {
-    @include box-sizing(border-box);
-    padding-left: $gs-gutter / 2;
-    max-height: $gs-baseline * 4;
+    max-height: $gs-baseline * 3;
     overflow: hidden;
+    background: $c-history-tags-background-side-bar;
 
-    .button--tag {
-        margin-top: $gs-baseline;
-        margin-bottom: 0;
+    .keyword-list {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter / 2;
+        background: $c-history-tags-background;
+
+        .button--tag {
+            margin-top: $gs-baseline / 2;
+            margin-bottom: $gs-baseline / 2;
+        }
     }
 }
+
 .global-navigation__children---tags {
     .button--tag {
         margin-top: $gs-baseline / 2;

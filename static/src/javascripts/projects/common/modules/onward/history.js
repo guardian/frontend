@@ -7,14 +7,12 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
-    'common/utils/detect',
     'common/utils/storage'
 ], function (
     $,
     _,
     config,
     template,
-    detect,
     storage
 ) {
     var editions = [
@@ -42,7 +40,7 @@ define([
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
-        popularSize = 30,
+        minDisplayedTags = 3,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -137,7 +135,7 @@ define([
                 })
                 .compact()
                 .sortBy('rank')
-                .last(popularSize)
+                .last(100)
                 .reverse()
                 .pluck('keep')
                 .value();
@@ -246,45 +244,41 @@ define([
     }
 
     function renderTags(opts) {
-        var topNav,
-            topNavItems = {},
-            tags;
+        var topNavItems = {},
+            tagsHtml;
 
-        if (!opts.inPage && !opts.inMegaNav) { return; }
+        if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
 
-        if (getPopular().length === 0) { return; }
+            $('.js-navigation-header .js-top-navigation a').each(function (item) {
+                topNavItems[collapseTag($(item).attr('href'))] = true;
+            });
 
-        topNav = document.querySelector('.js-navigation-header');
+            tagsHtml = _.chain(getPopular())
+                .filter(function (tag) { return !topNavItems[tag[0]]; })
+                .first(20)
+                .map(tagHtml)
+                .value();
 
-        $(topNav.querySelectorAll('.js-top-navigation a')).each(function (item) {
-            topNavItems[collapseTag($(item).attr('href'))] = true;
-        });
+            if (tagsHtml.length < minDisplayedTags) { return; }
 
-        tags = _.chain(getPopular())
-            .filter(function (tag) { return !topNavItems[tag[0]]; })
-            .first(20)
-            .map(tagsHtml)
-            .value();
+            if (opts.inMegaNav) {
+                $('.js-global-navigation').prepend(
+                    '<li class="global-navigation__section"  data-link-name="history">' +
+                        '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : shortcuts">shortcuts</a>' +
+                        '<ul class="global-navigation__children global-navigation__children---tags">' + tagsHtml.join('') + '</ul>' +
+                    '</li>'
+                );
+            }
 
-        if (tags.length === 0) { return; }
-
-        if (opts.inMegaNav) {
-            $(topNav.querySelectorAll('.js-global-navigation')).prepend(
-                '<li class="global-navigation__section"  data-link-name="history">' +
-                    '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : jump to">jump to</a>' +
-                    '<ul class="global-navigation__children global-navigation__children---tags">' + tags.join('') + '</ul>' +
-                '</li>'
-            );
-        }
-
-        if (opts.inPage && ['tablet', 'desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1) {
-            $(document.querySelector('.js-history-tags')).append(
-                '<ul class="keyword-list inline-list">' + tags.slice(0,10).join('') + '</ul>'
-            );
+            if (opts.inPage) {
+                $('.js-history-tags').append(
+                    '<ul class="gs-container keyword-list inline-list">' + tagsHtml.slice(0,10).join('') + '</ul>'
+                );
+            }
         }
     }
 
-    function tagsHtml(tag) {
+    function tagHtml(tag) {
         return template(
             '<li class="inline-list__item">' +
                 '<a href="/{{id}}" class="button button--small button--tag button--secondary" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +

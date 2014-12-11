@@ -388,6 +388,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
+    "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -396,19 +401,7 @@ object Switches {
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
-    safeState = On, sellByDate = never
-  )
-
-  val HistoryTagsInPage = Switch("Feature", "history-tags-in-page",
-    "If switched on, history-based tags are injected into the page",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  val HistoryTagsInMegaNav = Switch("Feature", "history-tags-in-mega-nav",
-    "If switched on, history-based tags are injected into the the mage nav",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
+    safeState = On, sellByDate = never)
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
