@@ -88,8 +88,8 @@ define([
             }
 
             try {
-                self.getWeatherData(url).then(function (response) {
-                    self.views.render(response[0], 'London');
+                return self.getWeatherData(url).then(function (response) {
+                    self.render(response[0], 'London');
                 });
             } catch (e) {
                 raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
@@ -133,46 +133,44 @@ define([
                 + weatherData.Temperature[this.getUnits()].Unit;
         },
 
-        views: {
-            render: function (weatherData, city) {
-                $weather = $('.weather');
+        render: function (weatherData, city) {
+            $weather = $('.weather');
 
-                if ($weather.length > 0) {
-                    self.unbindEvents();
-                    $weather.remove();
-                }
-
-                $weather = $.create(template(weatherTemplate, {
-                    location: city,
-                    icon: weatherData.WeatherIcon,
-                    tempNow: self.getTemperature(weatherData)
-                }));
-
-                $holder = $('.js-weather');
-
-                $weather.insertAfter($holder);
-
-                toggles = new Toggles();
-                toggles.init($weather);
-
-                self.bindEvents();
-                searchTool = new SearchTool({
-                    container: $('.js-search-tool'),
-                    apiUrl: 'http://api.accuweather.com/locations/v1/cities/autocomplete?language=en&apikey=&q='
-                });
-                searchTool.init();
-
-                // After first run override funtion to just update data
-                self.views.render = function (weatherData, city) {
-                    $('.js-weather-city', $weather).text(city);
-                    $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
-
-                    var $weatherIcon = $('.js-weather-icon', $weather);
-                    $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g, weatherData.WeatherIcon));
-
-                    bean.fire($('.js-toggle-ready', $weather)[0], 'click');
-                };
+            if ($weather.length > 0) {
+                self.unbindEvents();
+                $weather.remove();
             }
+
+            $weather = $.create(template(weatherTemplate, {
+                location: city,
+                icon: weatherData.WeatherIcon,
+                tempNow: self.getTemperature(weatherData)
+            }));
+
+            $holder = $('.js-weather');
+
+            $weather.insertAfter($holder);
+
+            toggles = new Toggles();
+            toggles.init($weather);
+
+            self.bindEvents();
+            searchTool = new SearchTool({
+                container: $('.js-search-tool'),
+                apiUrl: 'http://api.accuweather.com/locations/v1/cities/autocomplete?language=en&apikey=&q='
+            });
+            searchTool.init();
+
+            // After first run override funtion to just update data
+            self.render = function (weatherData, city) {
+                $('.js-weather-city', $weather).text(city);
+                $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
+
+                var $weatherIcon = $('.js-weather-icon', $weather);
+                $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g, weatherData.WeatherIcon));
+
+                bean.fire($('.js-toggle-ready', $weather)[0], 'click');
+            };
         }
     };
 });

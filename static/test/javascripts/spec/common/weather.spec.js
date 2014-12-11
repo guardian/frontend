@@ -14,7 +14,7 @@ define([
     sut
     ) {
 
-    ddescribe('Weather component', function() {
+    describe('Weather component', function() {
         var container,
             $weather;
 
@@ -60,52 +60,67 @@ define([
             expect(sut.getUserLocation()).toEqual(result);
         });
 
-        xit("should fetch data", function(done) {
+        it("should fetch data", function(done) {
             var server = sinon.fakeServer.create();
             server.autoRespond = true;
 
             server.respondWith([200, { "Content-Type": "application/json" },
-                '[{ "localizedName": "London"}]']);
+                '[{"WeatherIcon": 3}]']);
 
-            spyOn(sut, "renderList");
-
-            sut.fetchData().then(function() {
-                expect(sut.renderList).toHaveBeenCalledWith([{"localizedName": "London"}], 3);
+            sut.getWeatherData("/testurl/").then(function(response) {
+                expect(response).toEqual([{WeatherIcon: 3}]);
                 done();
             });
 
             server.restore();
         });
 
-        xit("should add weather component to the DOM", function() {
+        it("should call proper url", function() {
+            spyOn(sut, "getWeatherData");
+
+            sut.fetchData();
+            expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city");
+
+            sut.fetchData("London");
+            expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/London");
+        });
+
+        it("should call render function after fetching the data", function(done) {
+            var server = sinon.fakeServer.create();
+            server.autoRespond = true;
+
+            server.respondWith([200, { "Content-Type": "application/json" },
+                '[{"WeatherIcon": 3}]']);
+
+            spyOn(sut, "render");
+
+            sut.fetchData().then(function() {
+                expect(sut.render).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
+                done();
+            });
+
+            server.restore();
+        });
+
+        it("should add weather component to the DOM", function() {
             var mockWeatherData = {
-                WeatherIcon: 3,
-                Temperature: {
-                    Metric: {
-                        Value: 9.1
+                    WeatherIcon: 3,
+                    Temperature: {
+                        Metric: {
+                            Value: 9.1,
+                            Unit: "C"
+                        }
                     }
-                }
-            };
+                },
+                mockCity = 'London';
 
-            var mockCity = 'London';
-
-            sut.views.addToDOM(mockWeatherData, mockCity);
+            sut.render(mockWeatherData, mockCity);
 
             $weather = $('.weather');
 
-            expect($(".weather__city", $weather).text()).toEqual('London');
-            expect($(".weather__temp", $weather).text()).toEqual('9°');
-            expect($(".weather__icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
-        });
-
-        xit("should bind click event", function() {
-            spyOn(sut, "togglePositionPopup");
-
-            sut.bindEvents();
-
-            bean.fire($('.js-get-location')[0], 'click');
-
-            expect(sut.togglePositionPopup).toHaveBeenCalled();
+            expect($(".js-weather-city", $weather).text()).toEqual('London');
+            expect($(".js-weather-temp", $weather).text()).toEqual('9°C');
+            expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
         });
     });
 });
