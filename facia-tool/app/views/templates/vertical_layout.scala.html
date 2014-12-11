@@ -3,6 +3,8 @@
         width: style.width(),
         left: style.left($data),
         bottom: 0
+    }, css: {
+        'narrow': style.isNarrow()
     }">
 
         <div class="config-pane" data-bind="slideIn: layout.configVisible">

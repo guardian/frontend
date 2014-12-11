@@ -1,8 +1,21 @@
 /* globals _ */
 define([
-    'knockout'
-],function (ko) {
+    'knockout',
+    'utils/global-listeners'
+],function (
+    ko,
+    globalListeners
+) {
+    function isNarrow (column) {
+        var percentage = parseFloat('0.' + column.style.width().replace('vw', '')),
+            width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+        return width * percentage <= 550;
+    }
+
     function Column (opts) {
+        var column = this;
+
         this.initialState = {
             'type': ko.observable(opts.type || 'front'),
             'iframeURL': ko.observable(opts.iframeURL || '')
@@ -18,8 +31,12 @@ define([
             },
             left: function (data) {
                 return 100 / opts.layout.columns().length * opts.layout.columns.indexOf(data) + 'vw';
-            }
+            },
+            isNarrow: ko.observable()
         };
+        _.delay(function () {
+            column.style.isNarrow(isNarrow(column));
+        }, 25);
 
         function isType (what) {
             return this.edit.type() === what;
@@ -28,6 +45,10 @@ define([
         this.isLatest = ko.computed(isType.bind(this, 'latest'), this);
         this.isOphan = ko.computed(isType.bind(this, 'ophan'), this);
         this.isIframe = ko.computed(isType.bind(this, 'iframe'), this);
+
+        globalListeners.on('resize', _.debounce(function () {
+            column.style.isNarrow(isNarrow(column));
+        }, 25));
     }
     Column.prototype.setType = function (what) {
         this.edit.type(what);

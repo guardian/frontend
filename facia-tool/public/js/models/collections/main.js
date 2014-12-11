@@ -6,6 +6,7 @@ define([
     'utils/mediator',
     'utils/fetch-settings',
     'utils/fronts-from-url',
+    'utils/global-listeners',
     'utils/update-scrollables',
     'utils/terminate',
     'modules/list-manager',
@@ -21,6 +22,7 @@ define([
     mediator,
     fetchSettings,
     getFrontsFromURL,
+    globalListeners,
     updateScrollables,
     terminate,
     listManager,
@@ -126,7 +128,7 @@ define([
                 $('.top-button-collections').show();
 
                 updateScrollables();
-                window.onresize = updateScrollables;
+                globalListeners.on('resize', updateScrollables);
             });
 
             listManager.init(newItems);

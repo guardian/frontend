@@ -10,9 +10,8 @@
 
             <span data-bind="visible: !front.liveMode()">
                 <a class="tool draft-publish" data-bind="
-                    click: publishDraft">Launch</a>
-
-                <a class="tool draft-discard" data-bind="
+                    click: publishDraft">Launch</a
+                ><a class="tool draft-discard" data-bind="
                     click: discardDraft">Discard</a>
             </span >
         </span>
@@ -30,23 +29,18 @@
             (<span class="non-zero">updating...</span>)
         </span>
 
-        <div class="dropdown also" data-bind="
+        <span class="dropdown also" data-bind="
             if: alsoOn.length,
             css: {'dropdown-open': state.alsoOnVisible}
         ">
             <a data-bind="click: alsoOnToggle">also on&hellip;</a>
-            <ul placement="bottom-left" data-bind="foreach: alsoOn">
+            <ul data-bind="foreach: alsoOn">
                 <li><a class="list-header__also-on" data-bind="
                     click: $parent.front.setFront,
                     text: $data"></a>
                 </li>
             </ul>
-        </div>
-
-        <a class="list-header__collapser" data-bind="click: toggleCollapsed">
-            <i data-bind="css: {
-                'icon-chevron-down': !state.collapsed(),
-                'icon-chevron-up'  :  state.collapsed }"></i></a>
+        </span>
 
         <span class="list-header__timings" data-bind="
             css: {'has-concurrent-user': state.hasConcurrentEdits}">
@@ -59,6 +53,11 @@
                 visible: state.hasConcurrentEdits,
                 ">Show edits</a>
         </span>
+
+        <a class="list-header__collapser" data-bind="click: toggleCollapsed">
+            <i data-bind="css: {
+                'icon-chevron-down': !state.collapsed(),
+                'icon-chevron-up'  :  state.collapsed }"></i></a>
     </div>
 
     <!-- ko if: !state.collapsed() -->

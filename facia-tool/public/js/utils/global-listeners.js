@@ -12,7 +12,7 @@ define([
                 bus.emit(event, eventObject);
             };
 
-            $('document, body').on(event, registeredListeners[event]);
+            (event === 'resize' ? $(window) : $('document, body')).on(event, registeredListeners[event]);
         }
         bus.on(event, callback);
     }

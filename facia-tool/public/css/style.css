@@ -568,13 +568,11 @@ h1 {
 }
 
 .list-header__collapser {
-    float: right;
     margin: 5px 6px 0 8px;
     opacity: 0.75;
 }
 
 .list-header__timings {
-    float: right;
     font-weight: normal;
     font-size: 10px;
     line-height: 24px;
@@ -1174,10 +1172,13 @@ button {
     margin-left: 5px;
 }
 
+.list-header {
+  display: flex;
+  align-items: center;
+}
+
 .tool {
-    display: inline-block;
-    float: left;
-    padding: 0 10px;
+    padding: 5px 10px;
     background: #cccccc;
     font-size: 15px;
     line-height: 27px;
@@ -1202,14 +1203,20 @@ button {
 }
 
 .tool-label {
-    float: left;
-    display: inline-block;
     padding: 5px 5px 0 2px;
     color: #999999;
 }
 
+.list-header .also {
+    flex: 1 2 4em;
+}
+
 .tools .tool:first-child {
     background: #2ea3eb;
+}
+
+.tools {
+    flex: 0 0 150px;
 }
 
 .tools .tool:first-child:hover {
@@ -1660,8 +1667,9 @@ button {
 
 .also {
     position: relative;
-    display: inline-block;
+    margin: 10px;
 }
+
 .dropdown > ul {
     position: absolute;
     padding: 0;
@@ -1673,12 +1681,7 @@ button {
 .dropdown-open > ul {
     transform: scale(1);
 }
-.dropdown > ul[placement=top-left] {
-    transform-origin: bottom left;
-    bottom: 0;
-    left: 0;
-}
-.dropdown > ul[placement=bottom-left] {
+.dropdown > ul {
     transform-origin: top left;
     top: 1.5em;
     left: 0;
@@ -1698,6 +1701,32 @@ button {
 .dropdown > ul > li {
     cursor: pointer;
 }
+
+.narrow .preview,
+.narrow .article .thumb,
+.narrow .article .thumb--cutout,
+.narrow .article .has-playable,
+.narrow .image__overrides,
+.narrow .log-in-out,
+.narrow .article__spark,
+.narrow .list-header__timings {
+    display: none;
+}
+.narrow .article__times {
+    position: inherit;
+}
+.narrow .article .article__content {
+    margin-right: 5px;
+    margin-left: 0;
+}
+.narrow .article__overrides {
+    margin: 0;
+}
+.narrow .dropdown.also > ul {
+    left:auto;
+    right: 0;
+}
+
 
 /*****************************************/
 /* MEDIA QUERIES */

@@ -309,7 +309,7 @@ define([
         if (typeof context.$data === 'string') {
             context = context.$parentContext;
         }
-        if (context.$data !== this) {
+        if (context.$data !== this || $(event.target).parents('.dropdown').length === 0) {
             this.state.alsoOnVisible(false);
         }
     };
