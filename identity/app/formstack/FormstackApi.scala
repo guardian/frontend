@@ -51,17 +51,17 @@ class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionConte
           }
           case 405 => {
             logger.warn("405 returned while checking formstack reference")
-            cloudWatchCount("status-405")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Invalid form reference", "Invalid form reference", 405)))
           }
           case 404 => {
             logger.warn(s"Attempted to load bad formstack reference (404) $body")
-            cloudWatchCount("status-404")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Form not found", "Form not found", 404)))
           }
           case _ => {
             logger.warn(s"Unexpected error getting info for formstack reference. Status code $statusCode, body $body")
-            cloudWatchCount("status-other")
+            cloudWatchCount(s"status-$statusCode")
             Left(List(Error("Form error", "Unexpected error retrieving form info", statusCode)))
           }
         }
