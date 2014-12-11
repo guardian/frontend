@@ -6,16 +6,24 @@ import performance.MemcachedAction
 import play.api.mvc._
 import scala.concurrent.Future
 
-object JobAds extends Controller {
+object JobAds extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
   object lowRelevance extends Relevance[Job] {
-    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = views.html.jobs(jobs)
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.jobs(jobs, omnitureId, clickMacro)
+    }
   }
 
   object highRelevance extends Relevance[Job] {
-    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = views.html.jobsHigh(jobs)
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.jobsHigh(jobs, omnitureId, clickMacro)
+    }
   }
 
   private def renderJobs(relevance: Relevance[Job], format: Format) =
