@@ -15,7 +15,16 @@ object AdUnitAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[AdUnitCache] = {
     log.info("Loading ad units")
-    refresh(loadActiveCoreSiteAdUnits())
+    cache alterOff { oldCache =>
+      val freshAdUnits = loadActiveCoreSiteAdUnits()
+      if (freshAdUnits.nonEmpty) {
+        log.info("Ad units loaded")
+        AdUnitCache(DateTime.now, freshAdUnits)
+      } else {
+        log.error("No ad units loaded so keeping old set")
+        oldCache
+      }
+    }
   }
 
   private def loadActiveCoreSiteAdUnits(): Map[String, GuAdUnit] = {
@@ -40,18 +49,6 @@ object AdUnitAgent extends ExecutionContexts with Logging {
         val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
         (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
-    }
-  }
-
-  private def refresh(freshAdUnits: Map[String, GuAdUnit]): Future[AdUnitCache] = {
-    cache alterOff { oldCache =>
-      if (freshAdUnits.nonEmpty) {
-        log.info("Ad units loaded")
-        AdUnitCache(DateTime.now, freshAdUnits)
-      } else {
-        log.error("No ad units loaded so keeping old set")
-        oldCache
-      }
     }
   }
 
