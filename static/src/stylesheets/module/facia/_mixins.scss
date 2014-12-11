@@ -1,6 +1,6 @@
 $item-top-border-height: 1px;
 $mobile-max-container-width: gs-span(8);
-$mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+@include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 $breakpoints: (
     tablet:  gs-span(9),
     desktop: gs-span(12),
