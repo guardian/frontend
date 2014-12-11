@@ -266,6 +266,7 @@ GET         /commercialtools/adunits/toapprove                                  
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
