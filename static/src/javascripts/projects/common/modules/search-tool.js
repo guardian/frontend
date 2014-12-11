@@ -155,9 +155,9 @@ define([
 
                     li.className = 'search-tool__item';
                     li.innerHTML = '<a role="button" href="#' + item.LocalizedName + '"' +
-                        ' id="' + index + 'sti" class="search-tool__item__link"' +
+                        ' id="' + index + 'sti" class="search-tool__link"' +
                         ' data-link-name="search-tool">' + item.LocalizedName +
-                        ' <span class="search-tool__item__meta">' + item.Country.LocalizedName + '</span></a>';
+                        ' <span class="search-tool__meta">' + item.Country.LocalizedName + '</span></a>';
 
                     docFragment.appendChild(li);
                 });

@@ -31,7 +31,7 @@
     }
 }
 
-.search-tool__item__link {
+.search-tool__link {
     @include box-sizing(border-box);
     color: colour(neutral-1);
     padding-left: $gs-baseline / 2;
@@ -48,7 +48,7 @@
     }
 }
 
-.search-tool__item__meta {
+.search-tool__meta {
     color: colour(neutral-2);
     display: block;
     @include fs-textSans(3);
