@@ -606,6 +606,28 @@ case object FullMedia100 extends Slice {
   )
 }
 
+/*   .___________________________________.
+ * ##|###################################|##
+ * ##|###################################|##
+ * ##|###################################|##
+ *   |                                   |
+ *   `-----------------------------------'
+ */
+case object Fluid extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "mf",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = cards.Fluid,
+          tablet = cards.Fluid
+        )
+      )
+    )
+  )
+}
+
 
 /*** LIST SLICES ***/
 
