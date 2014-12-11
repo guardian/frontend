@@ -95,8 +95,8 @@ define([
                 masterclassesHigh: buildComponentUrl('masterclasses-high', params),
                 soulmates:         buildComponentUrl('soulmates/mixed', params),
                 soulmatesHigh:     buildComponentUrl('soulmates/mixed-high', params),
-                travel:            buildComponentUrl('travel/offers', { s: section }),
-                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
+                travel:            buildComponentUrl('travel/offers', merge(params, { s: section })),
+                travelHigh:        buildComponentUrl('travel/offers-high', merge(params, { s: section })),
                 multi:             buildComponentUrl('multi', params),
                 capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
                 capi:              buildComponentUrl('capi', merge(params, { s: section }))
