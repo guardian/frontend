@@ -153,10 +153,11 @@ define([
                 _(results).initial(resultsToShow).each(function (item, index) {
                     var li = document.createElement('li');
 
+                    li.className = 'search-tool__item';
                     li.innerHTML = '<a role="button" href="#' + item.LocalizedName + '"' +
-                        ' id="' + index + 'sti" class="search-tool__item"' +
+                        ' id="' + index + 'sti" class="search-tool__item__link"' +
                         ' data-link-name="search-tool">' + item.LocalizedName +
-                        ' (' + item.Country.LocalizedName + ')</a>';
+                        ' <span class="search-tool__item__meta">' + item.Country.LocalizedName + '</span></a>';
 
                     docFragment.appendChild(li);
                 });
