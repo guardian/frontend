@@ -27,14 +27,11 @@
         top: $gs-row-height * 6;
         margin: 0;
         border-top: 1px solid colour(news-main-2);
+        padding-top: $gs-baseline / 4;
     }
 
     @include mq(wide) {
         width: $left-column-wide;
-    }
-
-    .weather__pin {
-        height: 18px;
     }
 
     .popup {
@@ -70,23 +67,26 @@
 }
 
 .weather__city {
-    @include fs-headline(1);
+    @include fs-header(2);
     color: colour(neutral-1);
     font-weight: bold;
     margin: 0;
     display: none;
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         display: inline-block;
     }
 
-    @include mq($to: leftCol) {
+    @include mq($until: leftCol) {
         padding-top: 7px;
         padding-right: $gs-gutter / 2;
     }
 
-    @include mq($from: leftCol) {
+    @include mq(leftCol) {
         position: relative;
+        width: 100%;
+        padding-bottom: $gs-baseline / 2;
+        border-bottom: 1px dotted colour(neutral-3);
     }
 }
 
@@ -132,9 +132,8 @@
 }
 
 .weather__pin {
+    margin-top: $gs-baseline / 4;
     float: right;
-    background-size: 50% !important;
-    background-position: right center !important;
 }
 
 .weather__gps {
