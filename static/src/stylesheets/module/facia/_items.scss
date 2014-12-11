@@ -232,7 +232,7 @@
 
 .fc-item--fluid-mobile {
     @include mq($until: tablet) {
-        @include fc-item--fluid-width;
+        @include fc-item--fluid;
     }
 
     @include mq(mobileLandscape, tablet) {
@@ -248,7 +248,7 @@
 
 .fc-item--fluid-tablet {
     @include mq(tablet) {
-        @include fc-item--fluid-width;
+        @include fc-item--fluid;
         @include fc-item--horizontal(20%);
 
         .has-flex-wrap & {
