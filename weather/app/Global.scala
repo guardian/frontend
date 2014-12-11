@@ -1,12 +1,7 @@
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
+import common.CloudWatchApplicationMetrics
 import conf.Filters
-import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
-import metrics.FrontendMetric
-import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
   with DevParametersLifecycle
