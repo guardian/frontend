@@ -18,8 +18,9 @@ define([
         }
 
         var containerIndex,
-            $adSlot     = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
-            $containers = $('.fc-container');
+            $adSlotWrapper = $.create('<div class="fc-container"></div>'),
+            $adSlot        = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
+            $containers    = $('.fc-container');
 
         if ($containers.length >= 2) {
             containerIndex = 0;
@@ -28,7 +29,9 @@ define([
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
             }
 
-            return $adSlot.insertAfter($containers[containerIndex]);
+            return $adSlotWrapper
+                .append($adSlot)
+                .insertAfter($containers[containerIndex]);
         }
 
     }

@@ -81,7 +81,7 @@
 
             if (showFonts && storedFontFormat) {
                 var fonts      = document.querySelectorAll('.webfont'),
-                    fontFormat = JSON.parse(storedFontFormat).value
+                    fontFormat = JSON.parse(storedFontFormat).value;
 
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font            = fonts[i],
@@ -105,8 +105,12 @@
 
         @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
-                if(c) {
+                var c = null, s, head;
+
+                try {
+                    c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key');
+                } catch(e) { }
+                if (c) {
                     s = document.createElement('style');
                     head = document.getElementsByTagName('head')[0];
                     s.innerHTML = c;
@@ -127,27 +131,27 @@
     require([
         'core',
         'domReady!'
-    ], function() {
-
-        require([
-            'raven',
-            'common/utils/config'
+    ])
+        .next([
+            'raven'
         ], function(
-            raven,
-            config
+            raven
         ) {
 
+            define  = raven.wrap({ deep: false }, define);
+            require = raven.wrap({ deep: false }, require);
+
             raven.config(
-                'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
+                'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
                 {
                     whitelistUrls: [
                         /assets\.guim\.co\.uk/,
                         /ophan\.co\.uk/
                     ],
                     tags: {
-                        edition: config.page.edition,
-                        contentType: config.page.contentType,
-                        revisionNumber: config.page.revisionNumber
+                        edition:        guardian.config.page.edition,
+                        contentType:    guardian.config.page.contentType,
+                        revisionNumber: guardian.config.page.revisionNumber
                     },
                     dataCallback: function(data) {
                         if (data.culprit) {
@@ -163,9 +167,11 @@
             ).install();
 
             require([
+                'common/utils/config',
                 'common/modules/experiments/ab',
                 'common/modules/ui/images'
-            ], function(
+            ], function (
+                config,
                 ab,
                 images
             ) {
@@ -176,13 +182,12 @@
                 images.listen();
 
                 if (config.switches.commercial) {
-                    require(['bootstraps/commercial'], function(commercial) {
-                        raven.context(
-                            { tags: { feature: 'commercial' } },
-                            commercial.init,
-                            []
-                        );
-                    });
+                    require(['bootstraps/commercial'], raven.wrap(
+                        { tags: { feature: 'commercial' } },
+                        function (commercial) {
+                            commercial.init();
+                        }
+                    ));
                 }
 
                 if (guardian.isModernBrowser) {
@@ -199,5 +204,4 @@
 
         });
 
-    });
 </script>

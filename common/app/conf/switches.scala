@@ -165,7 +165,7 @@ object Switches {
   val PngResizingSwitch = Switch("Performance", "png-resizing",
     //"If this switch is on png images will be resized via the png-resizing server",
     "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   // Commercial
@@ -315,6 +315,10 @@ object Switches {
     "If switched on then the preview server will poll until the latest content is indexed.",
     safeState = On, sellByDate = new LocalDate(2015, 1, 15))
 
+  val PrioritiseFlashVideoPlayer = Switch("Feature", "prioritise-flash-video-player",
+    "If switched on then the Flash player will be preferred over the html5 player.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31))
+
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
     safeState = Off, sellByDate = never)
@@ -457,11 +461,6 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
-  )
-
-  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
-    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

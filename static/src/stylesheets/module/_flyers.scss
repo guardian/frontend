@@ -1,8 +1,50 @@
-.flyer__byline {
-    @include fs-header(3);
-    padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter;
+// not-upgraded style (no-js / failures)
+//--------------------------------------
+
+.element-rich-link--not-upgraded {
+    border-top: 1px dotted colour(neutral-3);
+    border-bottom: 1px dotted colour(neutral-3);
+    margin-bottom: $gs-baseline / 1.5;
+
+    @include mq(mobileLandscape) {
+        float: left;
+        width: gs-span(3);
+        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
+    }
+
+    span {
+        display: none;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    a {
+        @include fs-headline(2);
+        font-weight: 500;
+        display: block;
+        padding: 0;
+        color: colour(neutral-1);
+        border: 0;
+        padding-bottom: $gs-baseline * 1.5;
+
+        &:hover {
+            text-decoration: underline !important;
+        }
+
+        &:before {
+            content: 'More on this topic';
+            display: block;
+            @include fs-textSans(1);
+            color: colour(neutral-2);
+            padding: $gs-baseline/4 0;
+        }
+    }
 }
+
+// Base flyer styles
+//----------------------------------
 
 .flyer {
     margin: 0;
@@ -21,22 +63,40 @@
     }
 }
 
+.flyer__byline {
+    @include fs-header(3);
+    padding-right: $gs-gutter;
+}
+
 .flyer__title {
     padding: 0;
 }
 
 .flyer__header {
-    padding: $gs-baseline / 4 $gs-gutter / 4;
-    padding-bottom: $gs-baseline;
+    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
 }
 
 .flyer__standfirst {
     @include fs-headline(1);
-    padding: $gs-baseline / 4 $gs-gutter / 4;
+    padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
+    ul {
+        list-style: none;
+        margin-bottom: $gs-baseline / 1.5;
+        
+    }
 }
 
 .flyer__link {
     text-decoration: none;
+
+    &.u-faux-block-link__overlay {
+        transition: opacity .3s;
+        background-color: rgba(0, 0, 0, .1);
+        z-index: 2;
+        &:hover {
+            opacity: 1 !important;
+        }
+    }
 }
 
 .flyer__live {
@@ -45,14 +105,32 @@
 
 .flyer__gallery-img {
     width: 100%;
+    display: block;
+}
+
+.flyer--gallery .flyer__header {
+    margin-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline / 4;
+}
+
+.flyer.tone-live--item .live-pulse-icon {
+    margin-bottom: 1px;
+}
+
+.flyer.tone-comment--item .flyer__title:before {
+    @include icon(quote-grey);
+    width: 1.2em !important;
+    height: .7em !important;
+    padding-right: $gs-gutter / 5;
+    content: '';
 }
 
 .flyer__byline-img {
-    height: $gs-baseline * 9.5;
-    z-index: 2;
+    height: $gs-baseline * 12;
+    z-index: 1;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: -$gs-gutter * 1.5;
 }
 
 .flyer--has-byline-pic {
@@ -62,7 +140,133 @@
     }
 
     .flyer__standfirst {
-        padding-right: $gs-gutter * 6;
+        padding-right: $gs-gutter * 7;
         min-height: $gs-baseline * 5;
+    }
+}
+
+// In-article styles
+//-----------------------
+
+@include mq($until: mobileLandscape) { // font colour overrides
+    .flyer__header,
+    .flyer__link {
+        .tone-feature--item & {
+            color: colour(feature-default) !important;
+        }
+        .tone-editorial--item & {
+            color: colour(editorial-default) !important;
+        }
+    }
+}
+
+.element-rich-link--upgraded {
+    float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
+    clear: both;
+
+    @include mq($until: mobileLandscape) {
+        float: none;
+        width: 100% !important;
+        border-bottom: 1px dotted colour(neutral-3);
+        padding-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline / 1.5;
+
+        .flyer {
+            background: transparent !important;
+        }
+        .flyer__header {
+            @include fs-headline(1, true);
+            padding: 0;
+            color: colour(neutral-1);
+
+            &:before {
+                content: 'More on this topic';
+                display: block;
+                @include fs-textSans(1);
+                color: colour(neutral-2);
+                padding: $gs-baseline/4 0;
+            }
+        }
+        .flyer__kicker:after {
+            color: colour(neutral-3) !important;
+        }
+        .flyer__standfirst {
+            display: none;
+        }
+        .flyer__gallery-img {
+            display: none;
+        }
+        .flyer--gallery .flyer__header {
+            margin: 0;
+        }
+        .flyer__live {
+            color: colour(live-main-1);
+            font-weight: 500;
+        }
+        .live-pulse-icon {
+            background: colour(live-main-1);
+            margin-bottom: 0 !important;
+            width: 10px;
+            height: 10px;
+        }
+        .flyer__byline-img {
+            display: none;
+        }
+        .tone-editorial--item .flyer__byline {
+            display: none;
+        }
+        .tone-comment--item .flyer__title:before {
+            position: relative;
+            top: -1px;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+        width: gs-span(5);
+    }
+
+    &.element--supporting {
+        width: gs-span(3);
+        @include mq($until: tablet) {
+            .flyer__standfirst {
+                display: none;
+            }
+            .flyer__byline-img {
+                position: static;
+                float: right;
+                margin-top: -1.5 * $gs-baseline;
+                margin-right: -1.5 * $gs-gutter;
+            }
+        }
+        @include mq(tablet) {
+            width: gs-span(4);
+        }
+        @include mq(wide) {
+            width: gs-span(5);
+        }
+    }
+
+    &.element--thumbnail {
+        width: gs-span(3);
+
+        .tone-comment--item {
+            .flyer__standfirst {
+                display: none;
+            }
+            .flyer__byline-img {
+                @include mq($until: tablet) {
+                    display: none;
+                }
+                position: static;
+                float: right;
+                margin-top: -1.5 * $gs-baseline;
+                margin-right: -1.5 * $gs-gutter;
+            }
+        }
     }
 }

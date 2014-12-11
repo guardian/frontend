@@ -4,7 +4,6 @@ define([
     'lodash/objects/isArray',
     'lodash/objects/merge',
     'lodash/objects/pick',
-    'lodash/utilities/identity',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -20,7 +19,6 @@ define([
     isArray,
     merge,
     pick,
-    identity,
     config,
     cookies,
     detect,
@@ -53,9 +51,11 @@ define([
             if (!ids) {
                 return null;
             }
-            return map((ids || '').split(','), function (id) {
-                return parseId(id);
-            });
+            return compact(map(
+                ids.split(','), function (id) {
+                    return parseId(id);
+                }
+            ));
         },
         abParam = function () {
             var hchTest = ab.getParticipations().HighCommercialComponent;
@@ -78,7 +78,6 @@ define([
                 edition: page.edition && page.edition.toLowerCase(),
                 se:      getSeries(page),
                 ct:      contentType,
-                pt:      contentType,
                 p:       'ng',
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 su:      page.isSurging,
@@ -90,7 +89,9 @@ define([
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
-                tn:      compact([config.page.sponsorshipType].concat(parseIds(page.tones)))
+                tn:      compact([page.sponsorshipType].concat(parseIds(page.tones))),
+                // round video duration up to nearest 30 multiple
+                vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
 
         // filter out empty values

@@ -176,12 +176,10 @@
             </script>
     </article>
 
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028487">Merchandising: commercial component</a>
-            </h2>
-        </div>
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028487">Merchandising: commercial component</a>
+        </h2>
     </div>
 
     @Seq(
@@ -192,60 +190,56 @@
         Map(("name", "Soulmates"), ("type", "soulmates"), ("hasMedium" -> false)),
         Map(("name", "Travel"), ("type", "travel"), ("hasMedium" -> false))
     ).map { component =>
-        <div class="fc-container">
-            <div class="fc-container__inner">
-                <h2 class="test-page-head">@component("name")</h2>
-            </div>
-            @Seq("low", "medium", "high").map { relevance =>
-                @if(relevance != "medium" || (relevance == "medium" && component("hasMedium") == true)) {
-                    <div class="fc-container__inner">
-                        <div class="fc-container__header">
-                            <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
-                        </div>
-                    </div>
-                    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
-                    <script>
-                        loadCommercial(function () {
-                            require(['common/modules/commercial/creatives/commercial-component'])
-                                .then(function(
-                                    CommercialComponent
-                                ) {
-                                    new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
-                                        type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
-                                        clickMacro: '%%CLICK_URL_ESC%%',
-                                        omnitureId: 'omnitureId'
-                                    }).create();
-                                });
-                        });
-                    </script>
-                }
-            }
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">@component("name")</h2>
         </div>
+        @Seq("low", "medium", "high").map { relevance =>
+            @if(relevance != "medium" || (relevance == "medium" && component("hasMedium") == true)) {
+                <div class="fc-container__inner">
+                    <div class="fc-container__header">
+                        <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
+                    </div>
+                </div>
+                <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
+                <script>
+                    loadCommercial(function () {
+                        require(['common/modules/commercial/creatives/commercial-component'])
+                            .then(function(
+                                CommercialComponent
+                            ) {
+                                new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
+                                    type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
+                                    clickMacro: '%%CLICK_URL_ESC%%',
+                                    omnitureId: 'omnitureId'
+                                }).create();
+                            });
+                    });
+                </script>
+            }
+        }
     }
 
-    <div class="fc-container">
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">Merchandising: blended component</a>
-            </h2>
-        </div>
-        <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-multi"></div>
-        <script>
-            loadCommercial(function () {
-                require(['common/modules/commercial/creatives/commercial-component'])
-                    .then(function(
-                        CommercialComponent
-                    ) {
-                    new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
-                        type: 'multi',
-                        components: ['jobs', 'masterclasses', 'books', 'soulmates'],
-                        clickMacro: '%%CLICK_URL_ESC%%',
-                        omnitureId: 'omnitureId'
-                    }).create();
-                });
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">Merchandising: blended component</a>
+        </h2>
+    </div>
+    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-multi"></div>
+    <script>
+        loadCommercial(function () {
+            require(['common/modules/commercial/creatives/commercial-component'])
+                .then(function(
+                    CommercialComponent
+                ) {
+                new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
+                    type: 'multi',
+                    components: ['jobs', 'masterclasses', 'books', 'soulmates'],
+                    clickMacro: '%%CLICK_URL_ESC%%',
+                    omnitureId: 'omnitureId'
+                }).create();
             });
-        </script>
-        </div>
+        });
+    </script>
     </div>
 
     @Seq(
@@ -258,67 +252,65 @@
             ("creativeId", "10023207")
         )
     ).map { component =>
-        <div class="fc-container">
-            <div class="fc-container__inner">
-                <h2 class="test-page-head">
-                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                        Merchandising: cAPI @component("type")
-                    </a>
-                </h2>
-                <form class="capi-@component("type")-paid-for-type">
-                    <label>Type:
-                        <select>
-                            <option value="advertisement-feature" selected>Advertisement Feature</option>
-                            <option value="sponsored">Sponsored</option>
-                            <option value="foundation-supported">Foundation Supported</option>
-                        </select>
-                    </label>
-                </form>
-            </div>
-            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-@component("type")"></div>
-            <script>
-                loadCommercial(function () {
-                    require([
-                        'bean',
-                        'qwery',
-                        'common/utils/$',
-                        'common/modules/commercial/creatives/commercial-component'
-                    ])
-                        .then(function (
-                            bean,
-                            qwery,
-                            $,
-                            CommercialComponent
-                        ) {
-                            var $capiMultiple = $('.ad-slot--capi-@component("type")');
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: cAPI @component("type")
+                </a>
+            </h2>
+            <form class="capi-@component("type")-paid-for-type">
+                <label>Type:
+                    <select>
+                        <option value="advertisement-feature" selected>Advertisement Feature</option>
+                        <option value="sponsored">Sponsored</option>
+                        <option value="foundation-supported">Foundation Supported</option>
+                    </select>
+                </label>
+            </form>
+        </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--capi-@component("type")"></div>
+        <script>
+            loadCommercial(function () {
+                require([
+                    'bean',
+                    'qwery',
+                    'common/utils/$',
+                    'common/modules/commercial/creatives/commercial-component'
+                ])
+                    .then(function (
+                        bean,
+                        qwery,
+                        $,
+                        CommercialComponent
+                    ) {
+                        var $capiMultiple = $('.ad-slot--capi-@component("type")');
 
-                            bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                                var commercialComponent = new CommercialComponent($capiMultiple[0], {
-                                    type: 'capi@if(component("type") == "single"){Single}',
-                                    t: ['p/43b2q','p/43945'],
-                                    l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                    ct: 'Led Zeppelin special',
-                                    cl: 'http://theguardian.com/music/ledzeppelin',
-                                    cal: 'http://theguardian.com/about',
-                                    k: 'music/ledzeppelin',
-                                    rmd: 'www.theguardina.com',
-                                    rmt: 'Seemoreoverhere',
-                                    af: $(event.srcElement).val(),
-                                    clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: "omnitureId"
-                                });
-
-                                commercialComponent.postLoadEvents.capi = function () {
-                                    $capiMultiple.removeClass('lazyloaded');
-                                };
-                                commercialComponent.create();
+                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                                type: 'capi@if(component("type") == "single"){Single}',
+                                t: ['p/43b2q','p/43945'],
+                                l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
+                                ct: 'Led Zeppelin special',
+                                cl: 'http://theguardian.com/music/ledzeppelin',
+                                cal: 'http://theguardian.com/about',
+                                k: 'music/ledzeppelin',
+                                rmd: 'www.theguardina.com',
+                                rmt: 'Seemoreoverhere',
+                                af: $(event.srcElement).val(),
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: "omnitureId"
                             });
 
-                            bean.fire(qwery('.capi-@component("type")-paid-for-type select')[0], 'change');
+                            commercialComponent.postLoadEvents.capi = function () {
+                                $capiMultiple.removeClass('lazyloaded');
+                            };
+                            commercialComponent.create();
                         });
-                });
-            </script>
-        </div>
+
+                        bean.fire(qwery('.capi-@component("type")-paid-for-type select')[0], 'change');
+                    });
+            });
+        </script>
     }
 
     @Seq(
@@ -376,30 +368,28 @@
             ))
         )
     ).map { component =>
-        <div class="fc-container">
-            <div class="fc-container__inner">
-                <h2 class="test-page-head">
-                    <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                        Merchandising: manual @component("type")
-                    </a>
-                </h2>
-            </div>
-            <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-            <script>
-                @component("args") match {
-                    case args: JsObject => {
-                        loadCommercial(function () {
-                            require(['common/modules/commercial/creatives/template'])
-                                .then(function (Template) {
-                                    new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
-                                        .create();
-                            });
-                        });
-                    }
-                    case _ => { }
-                }
-            </script>
+        <div class="fc-container__inner">
+            <h2 class="test-page-head">
+                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
+                    Merchandising: manual @component("type")
+                </a>
+            </h2>
         </div>
+        <div class="ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
+        <script>
+            @component("args") match {
+                case args: JsObject => {
+                    loadCommercial(function () {
+                        require(['common/modules/commercial/creatives/template'])
+                            .then(function (Template) {
+                                new Template(document.querySelector('.ad-slot--@component("type")-manual'), @Html(Json.stringify(args)))
+                                    .create();
+                        });
+                    });
+                }
+                case _ => { }
+            }
+        </script>
     }
 
 </div>

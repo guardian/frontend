@@ -47,7 +47,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType === 'Gallery';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -298,6 +298,11 @@ define([
 
                     if (this.useSwipe) {
                         this.initSwipe();
+                    }
+
+                    if (this.galleryJson.images.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', this.lightboxEl).hide();
                     }
 
                     this.state = 'image';
