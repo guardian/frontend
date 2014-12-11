@@ -75,19 +75,8 @@ $vjs-progress-inset-bottom: 4px;
     @include box-sizing(border-box);
     text-align: center;
 
-    .gu-media--audio & {
-        display: none;
-    }
     .vjs-has-started & {
         padding-bottom: $vjs-control-height;
-    }
-
-    .vjs-has-ended & {
-        display: none;
-    }
-
-    .vjs-ad-playing--vpaid & {
-        display: none;
     }
 
     &:after {
@@ -142,6 +131,9 @@ $vjs-progress-inset-bottom: 4px;
         }
     }
 
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
     .vjs-playing &,
     .vjs-has-started.vjs-using-native-controls &,
     .vjs-ad-loading & {
