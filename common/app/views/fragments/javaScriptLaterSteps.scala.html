@@ -81,7 +81,7 @@
 
             if (showFonts && storedFontFormat) {
                 var fonts      = document.querySelectorAll('.webfont'),
-                    fontFormat = JSON.parse(storedFontFormat).value
+                    fontFormat = JSON.parse(storedFontFormat).value;
 
                 for (var i = 0, j = fonts.length; i < j; ++i) {
                     var font            = fonts[i],
@@ -105,8 +105,12 @@
 
         @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
-                if(c) {
+                var c = null, s, head;
+
+                try {
+                    c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key');
+                } catch(e) { }
+                if (c) {
                     s = document.createElement('style');
                     head = document.getElementsByTagName('head')[0];
                     s.innerHTML = c;
