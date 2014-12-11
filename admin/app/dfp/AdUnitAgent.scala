@@ -15,8 +15,8 @@ object AdUnitAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[AdUnitCache] = {
     log.info("Loading ad units")
-    val freshAdUnits = loadActiveCoreSiteAdUnits()
     cache alterOff { oldCache =>
+      val freshAdUnits = loadActiveCoreSiteAdUnits()
       if (freshAdUnits.nonEmpty) {
         log.info("Ad units loaded")
         AdUnitCache(DateTime.now, freshAdUnits)

@@ -13,8 +13,8 @@ object CustomFieldAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[CustomFieldCache] = {
     log.info("Loading custom fields")
-    val freshData = loadCustomFields()
     cache alterOff { oldCache =>
+      val freshData = loadCustomFields()
       if (freshData.nonEmpty) {
         log.info("Custom fields loaded")
         CustomFieldCache(DateTime.now, freshData)
