@@ -53,4 +53,3 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             
 # Tag combiners
 GET        /$leftSide<[^+]+>+*rightSide/rss                                     controllers.IndexController.renderCombinerRss(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                                         controllers.IndexController.renderCombiner(leftSide, rightSide)
-
