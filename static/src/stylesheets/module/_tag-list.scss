@@ -49,6 +49,8 @@ $c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40
 }
 
 .global-navigation__children---tags {
+    padding-top: 0;
+
     .button--tag {
         margin-top: $gs-baseline / 2;
         margin-bottom: 0;
