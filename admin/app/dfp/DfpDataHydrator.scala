@@ -1,13 +1,9 @@
 package dfp
 
-import com.google.api.ads.common.lib.auth.OfflineCredentials
-import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411._
-import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
-import conf.{AdminConfiguration, Configuration}
 import dfp.DfpApiWrapper.DfpSessionException
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
@@ -34,7 +30,7 @@ class DfpDataHydrator extends Logging {
 
       val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
-      val optSponsorFieldId = loadCustomFieldId("sponsor")
+      val optSponsorFieldId = CustomFieldAgent.get.customFields.get("sponsor")
 
       val allAdUnits = AdUnitAgent.get.adUnits
       val placementAdUnits = loadAdUnitIdsByPlacement()
@@ -115,13 +111,6 @@ class DfpDataHydrator extends Logging {
         log.error(e.getStackTraceString)
         Nil
     }
-  }
-
-  def loadCustomFieldId(name: String): Option[Long] = dfpServiceRegistry flatMap {
-    serviceRegistry =>
-    val statementBuilder = new StatementBuilder().where("name = :name").withBindVariableValue("name", name)
-      val field = DfpApiWrapper.fetchCustomFields(serviceRegistry, statementBuilder).headOption
-    field map (_.getId)
   }
 
   def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
