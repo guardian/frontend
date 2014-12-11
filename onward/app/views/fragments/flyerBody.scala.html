@@ -28,8 +28,11 @@
 
     <div class="flyer__container">
         @if(content.isGallery) {
-            @content.trailPicture(5, 3).map { image =>
-                <img class="flyer__gallery-img js-image-upgrade" src="@Item620.bestFor(image)"/>
+            @content.trailPicture.map { trailPictureContainer =>
+                @ImgSrc.imager(trailPictureContainer, 300).map { imgSrc =>
+                    <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
+                    </div>
+                }
             }
         }
 
@@ -56,8 +59,7 @@
             }
             @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
         }
+
+        <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl"></a>
     </div>
-
-    <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl" target="_blank"></a>
 </div>
-
