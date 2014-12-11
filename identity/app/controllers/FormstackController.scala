@@ -1,6 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
+import metrics.CountMetric
 import play.api.mvc._
 import model.IdentityPage
 import common.ExecutionContexts
@@ -10,7 +11,7 @@ import utils.SafeLogging
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.Switches
-
+import model.diagnostics.CloudWatch
 
 @Singleton
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
@@ -23,6 +24,8 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   import authenticatedActions.authAction
 
   val page = IdentityPage("/form", "Form", "formstack")
+
+  def cloudWatchCount(id: String) { CloudWatch.put("Formstack", Map(id -> 1d)) }
 
   def formstackForm(formReference: String, composer: Boolean) = authAction.async { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
@@ -38,6 +41,8 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
           }
           case Left(errors) => {
             logger.warn(s"Unable to render formstack form ${formstackForm.formReference}, $errors")
+            if (composer) cloudWatchCount("composer-render-failure")
+            else cloudWatchCount("render-failure")
             new Status(errors.map(_.statusCode).max)(views.html.formstack.formstackFormNotFound(page))
           }
         }
@@ -46,6 +51,7 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       }
     } else {
       logger.info(s"formstack switched off, attempt to access $formReference failed")
+      cloudWatchCount("disabled-render-failure")
       Future.successful(NotFound(views.html.errors._404()))
     }
   }
