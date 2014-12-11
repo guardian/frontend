@@ -16,7 +16,7 @@
 @import 'item-layouts/fc-item--full-media-50';
 @import 'item-layouts/fc-item--full-media-75';
 @import 'item-layouts/fc-item--full-media-100';
-@import 'item-layouts/fc-item--fluid-width';
+@import 'item-layouts/fc-item--fluid';
 
 // overrides of current slices
 
@@ -230,7 +230,7 @@
     }
 }
 
-.fc-item--fluid-width-mobile {
+.fc-item--fluid-mobile {
     @include mq($until: tablet) {
         @include fc-item--fluid-width;
     }
@@ -246,7 +246,7 @@
     }
 }
 
-.fc-item--fluid-width-tablet {
+.fc-item--fluid-tablet {
     @include mq(tablet) {
         @include fc-item--fluid-width;
         @include fc-item--horizontal(20%);

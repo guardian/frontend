@@ -1,6 +1,6 @@
 /*
 
-A completely fluid width item bounded to the page margins
+A completely fluid width item bounded to the page margins, not the content margins
 
 Currently used as a fallback for Thrashers
 
@@ -21,7 +21,7 @@ Currently used as a fallback for Thrashers
 
 */
 
-@mixin fc-item--fluid-width {
+@mixin fc-item--fluid {
     .fc-item__content {
         padding-bottom: 0;
     }
