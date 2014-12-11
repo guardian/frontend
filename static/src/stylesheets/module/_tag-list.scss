@@ -32,7 +32,7 @@ $c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40
 }
 
 .history-tags {
-    max-height: $gs-baseline * 3;
+    max-height: gs-height(1);
     overflow: hidden;
     background: $c-history-tags-background-side-bar;
 

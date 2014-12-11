@@ -7,13 +7,15 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/template',
-    'common/utils/storage'
+    'common/utils/storage',
+    'text!common/views/history-tags.html'
 ], function (
     $,
     _,
     config,
     template,
-    storage
+    storage,
+    HistoryTagsTemplate
 ) {
     var editions = [
             'uk',
@@ -263,8 +265,8 @@ define([
 
             if (opts.inMegaNav) {
                 $('.js-global-navigation').prepend(
-                    '<li class="global-navigation__section"  data-link-name="history">' +
-                        '<a class="global-navigation__title" href="/" data-link-name="nav : globalTop : shortcuts">shortcuts</a>' +
+                    '<li class="global-navigation__section" data-link-name="history nav">' +
+                        '<a class="global-navigation__title" href="/" data-link-name="shortcuts">shortcuts</a>' +
                         '<ul class="global-navigation__children global-navigation__children---tags">' + tagsHtml.join('') + '</ul>' +
                     '</li>'
                 );
@@ -272,19 +274,14 @@ define([
 
             if (opts.inPage) {
                 $('.js-history-tags').append(
-                    '<ul class="gs-container keyword-list inline-list">' + tagsHtml.slice(0, 10).join('') + '</ul>'
+                    '<ul class="gs-container keyword-list inline-list" data-link-name="history tags">' + tagsHtml.slice(0, 10).join('') + '</ul>'
                 );
             }
         }
     }
 
     function tagHtml(tag) {
-        return template(
-            '<li class="inline-list__item">' +
-                '<a href="/{{id}}" class="button button--small button--tag button--secondary" data-link-name="nav : globalSub : {{name}}">{{name}}</a>' +
-            '</li>',
-            {id: tag[0], name: tag[1]}
-        );
+        return template(HistoryTagsTemplate, {id: tag[0], name: tag[1]});
     }
 
     return {
