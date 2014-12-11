@@ -613,15 +613,15 @@ case object FullMedia100 extends Slice {
  *   |                                   |
  *   `-----------------------------------'
  */
-case object FluidWidth extends Slice {
+case object Fluid extends Slice {
   val layout = SliceLayout(
     cssClassName = "mf",
     columns = Seq(
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = cards.FluidWidth,
-          tablet = cards.FluidWidth
+          mobile = cards.Fluid,
+          tablet = cards.Fluid
         )
       )
     )

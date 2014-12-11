@@ -51,8 +51,8 @@ case object FullMedia100 extends CardType {
   override val cssClassName: String = "full-media-100"
 }
 
-case object FluidWidth extends CardType {
-  override val cssClassName: String = "fluid-width"
+case object Fluid extends CardType {
+  override val cssClassName: String = "fluid"
 }
 
 case object Third extends CardType {
