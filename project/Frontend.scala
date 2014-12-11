@@ -190,6 +190,10 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
+  val weather = application("weather")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val main = root().aggregate(
     common,
     facia,
@@ -209,6 +213,7 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
-    rss
+    rss,
+    weather
   )
 }
