@@ -10,7 +10,6 @@ import utils.SafeLogging
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.Switches
-import model.diagnostics.CloudWatch
 
 @Singleton
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
