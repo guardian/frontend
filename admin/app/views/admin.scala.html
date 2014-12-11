@@ -99,6 +99,10 @@
                 <div class="panel-heading">Tools for the commercial team</div>
                 <div class="panel-body">
                     <ul>
+                        <li>
+                            <a class="btn btn-danger" href="@controllers.admin.commercial.routes.DfpDataController.flushCache()" role="button">Flush!</a>
+                            Refresh all cached DFP data
+                        </li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderSpecialAdUnits()">List Special Ad Units</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderSponsorships()">Content Sponsorships</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderInlineMerchandisingTargetedTags()">Inline Merchandising Slot</a></li>
