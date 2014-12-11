@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
@@ -26,6 +27,7 @@ define([
     bean,
     bonzo,
     qwery,
+    raven,
     debounce,
     flatten,
     uniq,
@@ -108,11 +110,11 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+            googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
-            });
+            }));
         },
         setPageTargeting = function () {
             forOwn(buildPageTargeting(), function (value, key) {
@@ -173,6 +175,8 @@ define([
                 // load the library asynchronously
                 require(['js!googletag']);
             }
+
+            window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
@@ -302,8 +306,7 @@ define([
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name])
-                                    .then(function (Creative) {
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params).create();
                                     });
                             } else {
