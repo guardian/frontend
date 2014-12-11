@@ -303,15 +303,7 @@ define([
 
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.page.contentType === 'Network Front') {
-                        history.renderTags({
-                            inMegaNav: config.switches.historyTagsInMegaNav,
-                            inPage: config.switches.historyTagsInPage
-                        });
-                    } else {
-                        history.renderTags({
-                            inMegaNav: config.switches.historyTagsInMegaNav
-                        });
+                    if (config.page.contentType !== 'Network Front') {
                         history.logSummary(config.page);
                     }
 
