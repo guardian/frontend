@@ -60,7 +60,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && player._autoplay;
+        return isDesktop && !history.isRevisit(config.page.pageId) && player.gu_autoplay;
     }
 
     function constructEventName(eventName, player) {
@@ -263,7 +263,8 @@ define([
 
         player = videojs(el, options);
 
-        player._autoplay = $(el).attr('data-auto-play') === 'true';
+        // we have some special autoplay rules, so do not want to depend on 'default' autoplay
+        player.gu_autoplay = $(el).attr('data-auto-play') === 'true';
 
         if (handleInitialMediaError(player)) {
             player.dispose();
