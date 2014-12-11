@@ -60,7 +60,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && $('.vjs-tech', player.el()).attr('data-auto-play') === 'true';
+        return isDesktop && !history.isRevisit(config.page.pageId) && player._autoplay;
     }
 
     function constructEventName(eventName, player) {
@@ -262,6 +262,8 @@ define([
         var player;
 
         player = videojs(el, options);
+
+        player._autoplay = $(el).attr('data-auto-play') === 'true';
 
         if (handleInitialMediaError(player)) {
             player.dispose();
