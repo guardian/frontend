@@ -224,10 +224,7 @@ GET         /commercial/travel/offers-high.json                                 
 
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.renderJobs
 
-GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.masterclassesLowHtml
-GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson
-GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.masterclassesHighHtml
-GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.masterclassesHighJson
+GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson

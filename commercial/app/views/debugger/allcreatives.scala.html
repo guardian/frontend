@@ -178,17 +178,19 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">Merchandising: jobs</a>
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
+                Merchandising: commercial component (jobs)
+            </a>
         </h2>
     </div>
-    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-jobs"></div>
+    <div class="js-merchandising-jobs"></div>
     <script>
         loadCommercial(function () {
             require(['common/modules/commercial/creatives/commercial-component'])
                 .then(function(
                     CommercialComponent
                 ) {
-                    new CommercialComponent(document.querySelector('.dfp-ad--merchandising-jobs'), {
+                    new CommercialComponent(document.querySelector('.js-merchandising-jobs'), {
                         type: 'jobs',
                         jobIds: '4977372',
                         omnitureId: '[%OmnitureID%]',
@@ -200,7 +202,33 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">Merchandising: books</a>
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030407">
+                Merchandising: commercial component (masterclasses)
+            </a>
+        </h2>
+    </div>
+    <div class="js-merchandising-masterclasses"></div>
+    <script>
+        loadCommercial(function () {
+            require(['common/modules/commercial/creatives/commercial-component'])
+                .then(function(
+                    CommercialComponent
+                ) {
+                    new CommercialComponent(document.querySelector('.js-merchandising-masterclasses'), {
+                        type: 'masterclasses',
+                        ids: '',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%'
+                    }).create();
+                });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">
+                Merchandising: commercial component (books)
+            </a>
         </h2>
         <form class="js-merchandising-books-layout">
             <label>Layout:
@@ -211,7 +239,7 @@
             </label>
         </form>
     </div>
-    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component js-merchandising-books"></div>
+    <div class="js-merchandising-books"></div>
     <script>
         loadCommercial(function () {
             require([
@@ -256,37 +284,34 @@
     </div>
 
     @Seq(
-        Map(("name", "Best Buys"), ("type", "bestbuy"), ("hasMedium" -> false)),
-        Map(("name", "Masterclasses"), ("type", "masterclasses"), ("hasMedium" -> false)),
-        Map(("name", "Soulmates"), ("type", "soulmates"), ("hasMedium" -> false)),
-        Map(("name", "Travel"), ("type", "travel"), ("hasMedium" -> false))
+        Map(("name", "Best Buys"), ("type", "bestbuy")),
+        Map(("name", "Soulmates"), ("type", "soulmates")),
+        Map(("name", "Travel"), ("type", "travel"))
     ).map { component =>
         <div class="fc-container__inner">
             <h2 class="test-page-head">@component("name")</h2>
         </div>
-        @Seq("low", "medium", "high").map { relevance =>
-            @if(relevance != "medium" || (relevance == "medium" && component("hasMedium") == true)) {
-                <div class="fc-container__inner">
-                    <div class="fc-container__header">
-                        <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
-                    </div>
+        @Seq("low", "high").map { relevance =>
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
                 </div>
-                <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
-                <script>
-                    loadCommercial(function () {
-                        require(['common/modules/commercial/creatives/commercial-component'])
-                            .then(function(
-                                CommercialComponent
-                            ) {
-                                new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
-                                    type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
-                                    clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: 'omnitureId'
-                                }).create();
-                            });
-                    });
-                </script>
-            }
+            </div>
+            <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
+            <script>
+                loadCommercial(function () {
+                    require(['common/modules/commercial/creatives/commercial-component'])
+                        .then(function(
+                            CommercialComponent
+                        ) {
+                            new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
+                                type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: 'omnitureId'
+                            }).create();
+                        });
+                });
+            </script>
         }
     }
 
