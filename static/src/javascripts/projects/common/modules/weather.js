@@ -46,25 +46,25 @@ define([
 
             // Data mock for testing
             var result = [{
-                "LocalObservationDateTime": "2014-12-11T16:25:00+00:00",
-                "EpochTime": 1418315100,
-                "WeatherText": "Partly cloudy",
-                "WeatherIcon": 35,
-                "IsDayTime": false,
-                "Temperature": {
-                    "Metric": {
-                        "Value": 8.9,
-                        "Unit": "C",
-                        "UnitType": 17
+                'LocalObservationDateTime': '2014-12-11T16:25:00+00:00',
+                'EpochTime': 1418315100,
+                'WeatherText': 'Partly cloudy',
+                'WeatherIcon': 35,
+                'IsDayTime': false,
+                'Temperature': {
+                    'Metric': {
+                        'Value': 8.9,
+                        'Unit': 'C',
+                        'UnitType': 17
                     },
-                    "Imperial": {
-                        "Value": 48,
-                        "Unit": "F",
-                        "UnitType": 18
+                    'Imperial': {
+                        'Value': 48,
+                        'Unit': 'F',
+                        'UnitType': 18
                     }
                 },
-                "MobileLink": "http://m.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us",
-                "Link": "http://www.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us"
+                'MobileLink': 'http://m.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us',
+                'Link': 'http://www.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us'
             }];
 
             self.render(result[0], 'London');
