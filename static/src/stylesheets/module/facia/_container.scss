@@ -206,7 +206,7 @@ $header-image-size-desktop: 100px;
         width: 100%;
 
         & + & {
-            border-top: none;
+            border-top: 0;
             margin-top: 0;
             padding-top: 0;
         }
