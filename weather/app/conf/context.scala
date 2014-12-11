@@ -6,7 +6,7 @@ import play.api.mvc.{AnyContent, Action}
 import scala.concurrent.Future
 
 object HealthCheck extends AllGoodHealthcheckController(
-  9002,
+  9020,
   "/weather/city",
   "/weather/city/sydney"
 ) {

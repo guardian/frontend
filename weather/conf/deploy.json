@@ -1,6 +1,6 @@
 {
     "packages":{
-        "applications":{
+        "weather":{
             "type":"autoscaling",
             "apps":[ "frontend::weather" ],
             "data":{
