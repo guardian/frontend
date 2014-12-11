@@ -11,7 +11,6 @@ import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.Switches
 
-
 @Singleton
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                     idRequestParser: IdRequestParser,
