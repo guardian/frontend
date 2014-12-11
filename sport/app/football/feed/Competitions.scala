@@ -45,6 +45,13 @@ trait CompetitionSupport extends implicits.Football {
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
   }
 
+  def mostPertinentCompetitionForTeam(teamId: String) =
+    withTeam(teamId).competitions.sortBy({ competition =>
+      - (competition.leagueTable.find(_.team.id == teamId) map { team =>
+        competition.leagueTable.count(_.stageNumber == team.stageNumber)
+      } getOrElse 0)
+    }).headOption
+
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: LocalDate, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)

@@ -10,7 +10,7 @@ import Front.containers
 import FaciaContainer.index
 
 object CustomIndexPageContainers {
-  private def makeJsonSnap(id: String, snapTitle: String, link: String, endpoint: String) = new Snap(
+  private def makeJsonSnap(id: String, snapTitle: String, link: String, endpoint: String, cssClass: String) = new Snap(
     id,
     Nil,
     DateTime.now(),
@@ -21,6 +21,7 @@ object CustomIndexPageContainers {
     override lazy val snapType: Option[String] = Some("json.html")
     override lazy val snapUri: Option[String] = Some(endpoint)
     override lazy val headline: String = snapTitle
+    override lazy val snapCss: Option[String] = Some(cssClass)
   }
 
   def fromIndexPage(indexPage: IndexPage) = {
@@ -34,9 +35,9 @@ object CustomIndexPageContainers {
             CollectionConfig.emptyConfig.copy(displayName = Some("Fixtures and results"))
           ),
           CollectionEssentials.fromTrails(Seq(
-            makeJsonSnap("fixtures", "Fixtures", s"/${tag.id}/fixtures", s"/${tag.id}/fixtures.json"),
-            makeJsonSnap("results", "Results", s"/${tag.id}/results", s"/${tag.id}/results.json"),
-            makeJsonSnap("table", "Table", s"/football/tables", "")
+            makeJsonSnap("fixtures", "Fixtures", s"/${tag.id}/fixtures", s"/${tag.id}/fixtures.json", "football"),
+            makeJsonSnap("results", "Results", s"/${tag.id}/results", s"/${tag.id}/results.json", "football"),
+            makeJsonSnap("table", "Table", s"/football/tables", s"/${tag.id}/team-table.json", "football")
           ))
         ).copy(
           customClasses = Some(Seq("fc-container--tag")),
