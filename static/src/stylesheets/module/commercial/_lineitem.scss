@@ -4,7 +4,7 @@
 .commercial {
     .lineitems {
         padding: 0;
-        margin: 0;
+        margin: 0 $gs-gutter/-2;
     }
     .lineitem {
         @include box-sizing(border-box);
@@ -16,11 +16,6 @@
 
         &:first-child {
             border-left: 0;
-            padding-left: 0;
-        }
-
-        &:last-child {
-            padding-right: 0;
         }
     }
     .lineitem--v-high {
