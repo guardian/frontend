@@ -9,12 +9,7 @@ import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
-  with ConfigAgentLifecycle
   with DevParametersLifecycle
-  with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
-  with SurgingContentAgentLifecycle
-  with IndexListingsLifecycle
-  with SectionsLookUpLifecycle {
+  with CloudWatchApplicationMetrics {
   override lazy val applicationName = "frontend-weather"
 }
