@@ -60,13 +60,6 @@ category: Common
 
 .social__action {
     display: inline-block;
-
-    &,
-    &:hover,
-    &:focus,
-    &:active {
-        text-decoration: none;
-    }
 }
 
 
@@ -94,6 +87,17 @@ category: Common
     width: auto;
     height: 32px;
     display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
 
     i {
         display: inline-block;
@@ -126,7 +130,6 @@ category: Common
 }
 
 .social-icon__label {
-    color: #ffffff;
     white-space: nowrap;
     font-weight: bold;
 }
