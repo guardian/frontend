@@ -17,13 +17,11 @@ define([
     detect,
     storage
 ) {
-
     var editions = [
             'uk',
             'us',
             'au'
         ],
-
         editionalised = [
             'business',
             'commentisfree',
@@ -34,7 +32,6 @@ define([
             'sport',
             'technology'
         ],
-
         pageMeta = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
@@ -43,21 +40,17 @@ define([
         ],
 
         summaryPeriodDays = 30,
-        forgetUniqueAfter = 10,
+        forgetUniquesAfter = 10,
         historySize = 50,
         popularSize = 30,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        storageKeyNavPrimary  = 'gu.history.nav.primary',
-        storageKeyNavSecondary = 'gu.history.nav.secondary',
 
+        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
         popularCache,
-
-        today =  Math.floor(Date.now() / 86400000), // 1 day in ms
-
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -114,7 +107,7 @@ define([
                     .compact()
                     .value();
 
-                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniqueAfter)) {
+                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniquesAfter)) {
                     summary.tags[tid] = [nameAndFreqs[0], freqs];
                 } else {
                     delete summary.tags[tid];
@@ -253,16 +246,13 @@ define([
     }
 
     function renderTags(opts) {
-        var popular,
-            topNav,
+        var topNav,
             topNavItems = {},
             tags;
 
         if (!opts.inPage && !opts.inMegaNav) { return; }
 
-        popular = getPopular();
-
-        if (popular.length === 0) { return; }
+        if (getPopular().length === 0) { return; }
 
         topNav = document.querySelector('.js-navigation-header');
 
@@ -270,7 +260,7 @@ define([
             topNavItems[collapseTag($(item).attr('href'))] = true;
         });
 
-        tags = _.chain(popular)
+        tags = _.chain(getPopular())
             .filter(function (tag) { return !topNavItems[tag[0]]; })
             .first(20)
             .map(tagsHtml)
