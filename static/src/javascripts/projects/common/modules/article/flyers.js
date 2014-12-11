@@ -3,7 +3,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/modules/ui/images',
+    'common/modules/ui/images'
 ], function (
     qwery,
     _,
