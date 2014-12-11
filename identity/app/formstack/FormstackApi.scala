@@ -42,10 +42,12 @@ class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionConte
                 Right(formstackForm)
               } else {
                 logger.warn(s"Form, '$formId' is valid but not enabled (request formId vs response formId: ${formstackForm.formId} - $formId, inactive: $inactive)")
+                cloudWatchCount("invalid-form")
                 Left(List(Error("Invalid form", "This is not a valid form", 404)))
               }
             }).getOrElse {
               logger.warn(s"200 received from Formstack for '${formstackForm.formId}', but response was invalid $body")
+              cloudWatchCount("invalid-body")
               Left(List(Error("Invalid Formstack API response", "")))
             }
           }
