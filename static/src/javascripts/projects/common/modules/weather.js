@@ -31,7 +31,6 @@ define([
         $holder    = null,
         toggles    = null,
         searchTool = null,
-        apiKey     = 'testapi',
         prefName   = 'weather-location',
         getGeoStates = {
             process: 'Getting location...',
@@ -63,7 +62,7 @@ define([
         },
 
         saveUserLocation: function (city) {
-            userPrefs.set(prefName, {"location": city});
+            userPrefs.set(prefName, {'location': city});
         },
 
         /**
@@ -157,11 +156,11 @@ define([
                 toggles.init($weather);
 
                 self.bindEvents();
-                /*searchTool = new SearchTool({
+                searchTool = new SearchTool({
                     container: $('.js-search-tool'),
-                    apiUrl: 'http://api.accuweather.com/locations/v1/cities/autocomplete?language=en&apikey=' + apiKey + '&q='
+                    apiUrl: 'http://api.accuweather.com/locations/v1/cities/autocomplete?language=en&apikey=&q='
                 });
-                searchTool.init();*/
+                searchTool.init();
 
                 // After first run override funtion to just update data
                 self.views.render = function (weatherData, city) {
