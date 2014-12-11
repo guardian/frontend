@@ -272,7 +272,7 @@ define([
 
             if (opts.inPage) {
                 $('.js-history-tags').append(
-                    '<ul class="gs-container keyword-list inline-list">' + tagsHtml.slice(0,10).join('') + '</ul>'
+                    '<ul class="gs-container keyword-list inline-list">' + tagsHtml.slice(0, 10).join('') + '</ul>'
                 );
             }
         }
