@@ -90,8 +90,10 @@ category: Common
     @extend %icon-holder-circle;
     border: 0;
     min-width: 32px;
+    max-width: 100%;
     width: auto;
     height: 32px;
+    display: inline-block;
 
     i {
         display: inline-block;

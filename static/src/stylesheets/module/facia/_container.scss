@@ -193,6 +193,17 @@ $header-image-size-desktop: 100px;
         position: absolute;
         right: 0;
         top: 0;
+    @include mq(leftCol) {
+        border-top: 1px dotted colour(neutral-5);
+        padding-top: $gs-baseline / 2;
+        margin-top: $gs-baseline;
+        width: 100%;
+
+        & + & {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+        }
     }
 }
 
