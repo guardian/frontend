@@ -56,11 +56,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         if(!shortUrl.isEmpty) {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
-
+          element.addClass("fig--has-shares")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
-            element.addClass("fig--extra-margin")
+            element.addClass("fig--no-caption")
           }
         }
       })
