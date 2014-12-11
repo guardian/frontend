@@ -596,7 +596,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false))
+      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
+      "videoDuration" -> videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull)
     )
 
   // I know it's not too pretty
