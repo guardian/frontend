@@ -40,7 +40,7 @@ object WeatherController extends Controller with ExecutionContexts {
     }
 
   private def getWeatherForCityId(cityId: CityId): Future[JsValue] =
-    WS.url(weatherUrlForCityId(cityId)).get().map(_.json)
+    WS.url(weatherUrlForCityId(cityId)).get().filter(_.status == 200).map(_.json)
 
   private def getCityIdFromRequestEdition(request: RequestHeader): CityId =
     Edition(request) match {
@@ -58,7 +58,7 @@ object WeatherController extends Controller with ExecutionContexts {
     }
   }
 
-  def forCity(name: String) = Action.async { implicit request =>
+  def forCity(name: String) = Action.async {
     getWeatherForCity(City(name)).flatMap {
       case Some(cityId) => getWeatherForCityId(cityId).map(Ok(_))
       case None => Future.successful(NotFound)
