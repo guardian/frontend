@@ -8,14 +8,18 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
-    'text!common/views/history-tags.html'
+    'text!common/views/history/tag.html',
+    'text!common/views/history/tags.html',
+    'text!common/views/history/mega-nav.html'
 ], function (
     $,
     _,
     config,
     template,
     storage,
-    HistoryTagsTemplate
+    viewTag,
+    viewTags,
+    viewMegaNav
 ) {
     var editions = [
             'uk',
@@ -264,24 +268,17 @@ define([
             if (tagsHtml.length < minDisplayedTags) { return; }
 
             if (opts.inMegaNav) {
-                $('.js-global-navigation').prepend(
-                    '<li class="global-navigation__section" data-link-name="history nav">' +
-                        '<a class="global-navigation__title" href="/" data-link-name="shortcuts">shortcuts</a>' +
-                        '<ul class="global-navigation__children global-navigation__children---tags">' + tagsHtml.join('') + '</ul>' +
-                    '</li>'
-                );
+                $('.js-global-navigation').prepend(template(viewMegaNav, {tags: tagsHtml.join('')}));
             }
 
             if (opts.inPage) {
-                $('.js-history-tags').append(
-                    '<ul class="gs-container keyword-list inline-list" data-link-name="history tags">' + tagsHtml.slice(0, 10).join('') + '</ul>'
-                );
+                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
             }
         }
     }
 
     function tagHtml(tag) {
-        return template(HistoryTagsTemplate, {id: tag[0], name: tag[1]});
+        return template(viewTag, {id: tag[0], name: tag[1]});
     }
 
     return {
