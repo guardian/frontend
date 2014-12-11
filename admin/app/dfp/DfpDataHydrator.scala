@@ -30,7 +30,7 @@ class DfpDataHydrator extends Logging {
 
       val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
-      val optSponsorFieldId = CustomFieldAgent.get.customFields.get("sponsor")
+      val optSponsorFieldId = CustomFieldAgent.get.customFields.get("Sponsor")
 
       val allAdUnits = AdUnitAgent.get.adUnits
       val placementAdUnits = loadAdUnitIdsByPlacement()
