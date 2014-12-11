@@ -191,10 +191,61 @@
                     new CommercialComponent(document.querySelector('.dfp-ad--merchandising-jobs'), {
                         type: 'jobs',
                         jobIds: '4977372',
-                        clickMacro: '%%CLICK_URL_ESC%%',
-                        omnitureId: '[%OmnitureID%]'
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%'
                     }).create();
                 });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">Merchandising: books</a>
+        </h2>
+        <form class="js-merchandising-books-layout">
+            <label>Layout:
+                <select>
+                    <option value="standard" selected>Standard</option>
+                    <option value="prominent">Prominent</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component js-merchandising-books"></div>
+    <script>
+        loadCommercial(function () {
+            require([
+                'bean',
+                'qwery',
+                'common/utils/$',
+                'common/modules/commercial/creatives/commercial-component'
+            ])
+            .then(function (
+                bean,
+                qwery,
+                $,
+                CommercialComponent
+            ) {
+                var $merchandisingBooks = $('.js-merchandising-books');
+
+                bean.on(qwery('.js-merchandising-books-layout')[0], 'change', function (event) {
+                    var commercialComponent = new CommercialComponent($merchandisingBooks[0], {
+                        type: 'books',
+                        layout: $(event.srcElement).val(),
+                        isbns: '9780224097000,9781783350629',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%'
+                    });
+
+                    commercialComponent.postLoadEvents.books = function () {
+                        $merchandisingBooks.removeClass('lazyloaded');
+                    };
+
+                    commercialComponent.create();
+                });
+
+                bean.fire(qwery('.js-merchandising-books-layout select')[0], 'change');
+            });
         });
     </script>
 
@@ -206,7 +257,6 @@
 
     @Seq(
         Map(("name", "Best Buys"), ("type", "bestbuy"), ("hasMedium" -> false)),
-        Map(("name", "Books"), ("type", "books"), ("hasMedium" -> true)),
         Map(("name", "Masterclasses"), ("type", "masterclasses"), ("hasMedium" -> false)),
         Map(("name", "Soulmates"), ("type", "soulmates"), ("hasMedium" -> false)),
         Map(("name", "Travel"), ("type", "travel"), ("hasMedium" -> false))

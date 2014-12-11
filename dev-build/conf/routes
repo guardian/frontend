@@ -234,14 +234,8 @@ GET         /commercial/soulmates/mixed.json                                    
 GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
 GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
 
-GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
-GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
-GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMediumHtml
-GET         /commercial/books/bestsellers-medium.json                                                                controllers.commercial.BookOffers.bestsellersMediumJson
-GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHighHtml
-GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
-GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
 
 GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson

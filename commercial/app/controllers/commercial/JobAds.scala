@@ -10,7 +10,7 @@ object JobAds extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
-  def renderJobs() = MemcachedAction { implicit request =>
+  def renderJobs = MemcachedAction { implicit request =>
     Future.successful {
       (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
         case Nil => NoCache(jsonFormat.nilResult)
