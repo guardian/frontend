@@ -178,4 +178,3 @@ define([
 
     return SearchTool;
 });
-
