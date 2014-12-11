@@ -463,11 +463,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
-    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
-  )
-
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
