@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/template',
-    'common/modules/weather/weather'
+    'common/modules/weather'
 ], function (
     bean,
     bonzo,
@@ -14,7 +14,7 @@ define([
     sut
     ) {
 
-    xdescribe('Weather component', function() {
+    ddescribe('Weather component', function() {
         var container,
             $weather;
 
@@ -24,6 +24,7 @@ define([
             )[0];
 
             $('body').append(container);
+            localStorage.clear();
         });
 
         afterEach(function() {
@@ -33,68 +34,50 @@ define([
 
         it("should initalize", function() {
             spyOn(sut, 'fetchData');
-            spyOn(sut, 'getDefaultLocation').and.callThrough();
 
-            expect(sut).toEqual(jasmine.any(Object));
-
-            sut.init();
-
-            expect(sut.getDefaultLocation).toHaveBeenCalled();
-            expect(sut.fetchData).toHaveBeenCalledWith(jasmine.any(Object));
-        });
-
-        it("should get default location based on edition", function() {
-            var geo      = {
-                'London': {
-                    coords: {
-                        latitude: 51.51,
-                        longitude: -0.11
-                    }
-                },
-                'New York': {
-                    coords: {
-                        latitude: 40.71,
-                        longitude: -74.01
-                    }
-                },
-                'Sydney': {
-                    coords: {
-                        latitude: -33.86,
-                        longitude: 151.21
-                    }
-                }
-            };
-
-            guardian.config.page.edition = 'UK';
-
-            expect(sut.getDefaultLocation()).toEqual(geo['London']);
-
-            guardian.config.page.edition = 'US';
-
-            expect(sut.getDefaultLocation()).toEqual(geo['New York']);
-
-            guardian.config.page.edition = 'AU';
-
-            expect(sut.getDefaultLocation()).toEqual(geo['Sydney']);
-
-            guardian.config.page.edition = '';
-
-            expect(sut.getDefaultLocation()).toEqual(geo['London']);
-        });
-
-        xit("should call fetch data", function() {
-            window.navigator.geolocation = {
-                "getCurrentPosition": function(success) {}
-            };
-
-            spyOn(navigator.geolocation, 'getCurrentPosition');
+            expect(typeof sut).toEqual('object');
 
             sut.init();
-
-            expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledWith(sut.fetchData);
+            expect(sut.fetchData).toHaveBeenCalledWith(undefined);
         });
 
-        it("should add weather component to the DOM", function() {
+        it("should get location from local storage", function() {
+            var result = {location: "London"};
+
+            expect(typeof sut.getUserLocation()).toEqual('undefined');
+
+            sut.saveUserLocation("London");
+            expect(sut.getUserLocation()).toEqual(result);
+        });
+
+        it("should fetch the data and save location", function() {
+            var result = {location: "Sydney"};
+
+            sut.fetchData();
+            expect(sut.getUserLocation()).toEqual(undefined);
+
+            sut.fetchData("Sydney");
+            expect(sut.getUserLocation()).toEqual(result);
+        });
+
+        it("should fetch data", function(done) {
+            var server = sinon.fakeServer.create();
+            server.autoRespond = true;
+
+            server.respondWith([200, { "Content-Type": "application/json" },
+                '[{ "localizedName": "London"}]']);
+
+            spyOn(sut, "renderList");
+
+            sut.fetchData().then(function() {
+                expect(sut.renderList).toHaveBeenCalledWith([{"localizedName": "London"}], 3);
+                done();
+            });
+
+            server.restore();
+        });
+
+        xit("should add weather component to the DOM", function() {
             var mockWeatherData = {
                 WeatherIcon: 3,
                 Temperature: {
@@ -115,7 +98,7 @@ define([
             expect($(".weather__icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
         });
 
-        it("should bind click event", function() {
+        xit("should bind click event", function() {
             spyOn(sut, "togglePositionPopup");
 
             sut.bindEvents();

@@ -33,26 +33,6 @@ define([
         searchTool = null,
         apiKey     = 'testapi',
         prefName   = 'weather-location',
-        geo        = {
-            'London': {
-                coords: {
-                    latitude: 51.51,
-                    longitude: -0.11
-                }
-            },
-            'New York': {
-                coords: {
-                    latitude: 40.71,
-                    longitude: -74.01
-                }
-            },
-            'Sydney': {
-                coords: {
-                    latitude: -33.86,
-                    longitude: 151.21
-                }
-            }
-        },
         getGeoStates = {
             process: 'Getting location...',
             error: 'Unable to get location...',
@@ -63,33 +43,7 @@ define([
         init: function () {
             self = this;
 
-            this.fetchData(this.getUserPrefs());
-        },
-
-        getDefaultLocation: function () {
-            switch (config.page.edition) {
-                case 'US': return geo['New York'];
-                case 'AU': return geo.Sydney;
-                default: return geo.London;
-            }
-        },
-
-        getCityCoordinates: function (city) {
-            ajax({
-                url: 'http://api.accuweather.com/locations/v1/search/?apikey=' + apiKey + '&q=' + city[0],
-                type: 'jsonp',
-                method: 'get',
-                cache: true
-            }).then(function (response) {
-                var position = {
-                    coords: {
-                        latitude: response[0].GeoPosition.Latitude,
-                        longitude: response[0].GeoPosition.Longitude
-                    }
-                };
-
-                self.fetchData(position);
-            });
+            this.fetchData(this.getUserLocation());
         },
 
         getGeoLocation: function () {
@@ -98,15 +52,6 @@ define([
 
         geoLocationDisabled: function () {
             self.changeLocationOptionText('error');
-        },
-
-        getLocationData: function (urlLocation) {
-            return ajax({
-                url: urlLocation,
-                type: 'jsonp',
-                method: 'get',
-                cache: true
-            });
         },
 
         getWeatherData: function (urlWeather, locationData) {
@@ -118,15 +63,8 @@ define([
             });
         },
 
-        saveUserLocation: function (position) {
-            var toStore = {
-                coords: {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                }
-            };
-
-            userPrefs.set(prefName, toStore);
+        saveUserLocation: function (city) {
+            userPrefs.set(prefName, {"location": city});
         },
 
         /**
@@ -135,23 +73,23 @@ define([
          *
          * @returns {object} geolocation - lat and long
          */
-        getUserPrefs: function () {
+        getUserLocation: function () {
             var prefs = userPrefs.get(prefName);
 
-            if (prefs && prefs.coords) {
+            if (prefs && prefs.location) {
                 return prefs;
             }
-
-            return this.getDefaultLocation();
         },
 
-        fetchData: function (position) {
-            var urlLocation = 'http://api.accuweather.com/locations/v1/cities/geoposition/search.json?q='
-                    + position.coords.latitude + ', ' + position.coords.longitude + '&apikey=' + apiKey,
-                urlWeather = 'http://api.accuweather.com/currentconditions/v1/';
+        fetchData: function (location) {
+            var url = '/weather/city';
 
-            self.saveUserLocation(position);
+            if (typeof location === 'string') {
+                url += '/' + location;
+                this.saveUserLocation(location);
+            }
 
+            /*
             try {
                 self.getLocationData(urlLocation).then(function (locationResp) {
                     self.getWeatherData(urlWeather, locationResp).then(function (weatherResp) {
@@ -164,7 +102,7 @@ define([
                         feature: 'weather'
                     }
                 });
-            }
+            }*/
         },
 
         bindEvents: function () {
@@ -223,11 +161,11 @@ define([
                 toggles.init($weather);
 
                 self.bindEvents();
-                searchTool = new SearchTool({
+                /*searchTool = new SearchTool({
                     container: $('.js-search-tool'),
                     apiUrl: 'http://api.accuweather.com/locations/v1/cities/autocomplete?language=en&apikey=' + apiKey + '&q='
                 });
-                searchTool.init();
+                searchTool.init();*/
 
                 // After first run override funtion to just update data
                 self.views.render = function (weatherData, city) {
