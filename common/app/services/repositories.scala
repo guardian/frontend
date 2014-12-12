@@ -78,9 +78,11 @@ trait Index extends ConciergeRepository with QueryDefaults {
       }
     }
 
-    promiseOfResponse.recover(convertApiExceptions)
+    promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      .recover{ case GuardianContentApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
+      case GuardianContentApiError(400, _) => Right(Found(s"/$leftSide+$rightSide"))
+    }).recover(convertApiExceptions)
+
   }
 
   private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
@@ -127,10 +129,10 @@ trait Index extends ConciergeRepository with QueryDefaults {
       ModelOrResult(page, response, maybeSection)
     }
 
-    promiseOfResponse.recover(convertApiExceptions) recover {
+    promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
       case GuardianContentApiError(400, _) if pageNum != 1 => Right(Found(s"/$path"))
-    }
+    }).recover(convertApiExceptions)
   }
 
   private def section(apiSection: ApiSection, response: ItemResponse) = {

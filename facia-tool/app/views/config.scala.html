@@ -237,16 +237,13 @@
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="
                             checkedValue: undefined,
-                            checked: props.priority,
-                            disable: state.isTypeLocked" />
+                            checked: props.priority" />
                         <span class="radio-label">editorial</span>
                         <input type="radio" name="group02" value="commercial" data-bind="
-                            checked: props.priority,
-                            disable: state.isTypeLocked" />
+                            checked: props.priority" />
                         <span class="radio-label">commercial</span>
                         <input type="radio" name="group02" value="training" data-bind="
-                            checked: props.priority,
-                            disable: state.isTypeLocked" />
+                            checked: props.priority" />
                         <span class="radio-label">training</span>
 
                         <div class="tools">
@@ -263,6 +260,8 @@
                             <a class='tool--content' data-bind="attr: {href: '/@{priority}?front=' + id()}">edit content</a>
                             &middot;
                             <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
+                            &middot;
+                            <a class='tool--live' data-bind="attr: {href: ophanPerformances()}" target="_blank">view performances</a>
                         <!-- /ko -->
                     </div>
 

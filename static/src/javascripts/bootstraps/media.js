@@ -18,7 +18,9 @@ define([
     'common/modules/onward/history',
     'common/modules/ui/images',
     'common/modules/video/tech-order',
-    'text!common/views/ui/loading.html'
+    'common/modules/analytics/beacon',
+    'text!common/views/ui/loading.html',
+    'text!common/views/ui/video-ads-overlay.html'
 ], function (
     bean,
     bonzo,
@@ -38,7 +40,9 @@ define([
     history,
     images,
     playerPriority,
-    loadingTmpl
+    beacon,
+    loadingTmpl,
+    adsOverlayTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -58,7 +62,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && $('.vjs-tech', player.el()).attr('data-auto-play') === 'true';
+        return isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
     }
 
     function constructEventName(eventName, player) {
@@ -96,21 +100,29 @@ define([
         var events = {
             end: function () {
                 player.trigger(constructEventName('preroll:end', player));
+                player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
-            play: function () {
+            start: function () {
                 var duration = player.duration();
                 if (duration) {
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
-                    player.one('durationchange', events.play);
+                    player.one('durationchange', events.start);
                 }
+            },
+            vpaidStarted: function () {
+                player.addClass('vjs-ad-playing--vpaid');
             },
             ready: function () {
                 player.trigger(constructEventName('preroll:ready', player));
 
-                player.one('adstart', events.play);
+                player.one('adstart', events.start);
                 player.one('adend', events.end);
+
+                // Handle custom event to understand when vpaid is playing;
+                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
+                player.one('Vpaid::AdStarted', events.vpaidStarted);
 
                 if (shouldAutoPlay(player)) {
                     player.play();
@@ -119,8 +131,9 @@ define([
         };
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, still init content tracking
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
         player.one('adtimeout', function () {
+            player.trigger('adscanceled');
             bindContentEvents(player);
         });
     }
@@ -201,18 +214,19 @@ define([
 
     function adCountdown() {
         var player = this,
-            tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
-                  ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
             events =  {
                 destroy: function () {
                     $('.js-ads-overlay', this.el()).remove();
                     this.off('timeupdate', events.update);
                 },
                 update: function () {
+                    if (this.currentTime() > 0.1) {
+                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
+                    }
                     $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                 },
                 init: function () {
-                    $(this.el()).append($.create(tmp));
+                    $(this.el()).append($.create(adsOverlayTmpl));
                     this.on('timeupdate', events.update.bind(this));
                     this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
                     this.one(constructEventName('content:play', player), events.destroy.bind(player));
@@ -247,10 +261,28 @@ define([
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
+    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
+    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
+    // needing to know about videojs
+    function bindGlobalEvents(player) {
+        player.on('playing', function () {
+            bean.fire(document.body, 'videoPlaying');
+        });
+        player.on('pause', function () {
+            bean.fire(document.body, 'videoPause');
+        });
+        player.on('ended', function () {
+            bean.fire(document.body, 'videoEnded');
+        });
+    }
+
     function createVideoPlayer(el, options) {
         var player;
 
         player = videojs(el, options);
+
+        // we have some special autoplay rules, so do not want to depend on 'default' autoplay
+        player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
         if (handleInitialMediaError(player)) {
             player.dispose();
@@ -259,6 +291,14 @@ define([
         }
 
         return player;
+    }
+
+    // Apologies for the slightly hacky nature of this.
+    // Improvements welcomed...
+    function isFlash(event) {
+        return event.target.firstChild &&
+            event.target.firstChild.id &&
+            event.target.firstChild.id.indexOf('flash_api') > 0;
     }
 
     function initPlayer() {
@@ -312,6 +352,15 @@ define([
 
                 bindErrorHandler(player);
                 initLoadingSpinner(player);
+                bindGlobalEvents(player);
+
+                player.one('playing', function (e) {
+                    if (isFlash(e)) {
+                        beacon.counts('video-tech-flash');
+                    } else {
+                        beacon.counts('video-tech-html5');
+                    }
+                });
 
                 // unglitching the volume on first load
                 vol = player.volume();

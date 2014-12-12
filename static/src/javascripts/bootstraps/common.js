@@ -303,11 +303,12 @@ define([
                 }
             },
 
-            logReadingHistory: function () {
+            updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
                         history.logSummary(config.page);
                     }
+
                     if (config.page.contentType === 'Video') {
                         history.logHistory(config.page);
                     }
@@ -468,7 +469,7 @@ define([
             modules.initClickstream();
             modules.optIn();
             modules.displayReleaseMessage();
-            modules.logReadingHistory();
+            modules.updateHistory();
             modules.unshackleParagraphs();
             modules.initAutoSignin();
             modules.augmentInteractive();

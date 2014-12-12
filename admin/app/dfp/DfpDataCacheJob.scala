@@ -40,11 +40,16 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     }
   }
 
-  def run() {
+  def run(): Unit = {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
-        AdUnitAgent.refresh() onSuccess {
-          case _ => cacheData()
+        for {
+          _ <- AdUnitAgent.refresh()
+          _ <- CustomFieldAgent.refresh()
+          _ <- CustomTargetingKeyAgent.refresh()
+          _ <- CustomTargetingValueAgent.refresh()
+        } {
+          cacheData()
         }
       }
     }

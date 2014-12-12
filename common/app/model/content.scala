@@ -543,6 +543,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+  override lazy val lightboxImages = mainPicture.toSeq
 
   lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
     case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
@@ -595,7 +596,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false))
+      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
+      "videoDuration" -> videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull)
     )
 
   // I know it's not too pretty
