@@ -48,6 +48,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
           _ <- CustomFieldAgent.refresh()
           _ <- CustomTargetingKeyAgent.refresh()
           _ <- CustomTargetingValueAgent.refresh()
+          _ <- PlacementAgent.refresh()
         } {
           cacheData()
         }
