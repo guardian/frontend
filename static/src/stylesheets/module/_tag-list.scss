@@ -54,6 +54,10 @@ $c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40
     .button--tag {
         margin-top: $gs-baseline / 2;
         margin-bottom: 0;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
     @include mq($until: mobileLandscape) {
         & {

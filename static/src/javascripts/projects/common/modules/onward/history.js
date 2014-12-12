@@ -277,8 +277,8 @@ define([
         }
     }
 
-    function tagHtml(tag) {
-        return template(viewTag, {id: tag[0], name: tag[1]});
+    function tagHtml(tag, index) {
+        return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
     }
 
     return {
