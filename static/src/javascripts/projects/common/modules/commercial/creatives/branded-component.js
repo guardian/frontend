@@ -45,10 +45,10 @@ define([
             $rightHandCol  = $('.js-secondary-column');
 
         if (
-            !this.params.showEverywhere && ( !templateConfig ||
+            !this.params.showEverywhere && (!templateConfig ||
             $rightHandCol.css('display') === 'none' ||
             $rightHandCol.dim().height < 1600 ||
-            config.page.section === 'football' )
+            config.page.section === 'football')
         ) {
             return false;
         }
