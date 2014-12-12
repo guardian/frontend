@@ -110,7 +110,6 @@
         }
         @include mq(leftCol) {
             margin-left: $left-column + $gs-gutter;
-            min-height: $gs-row-height * 5;
         }
         @include mq(wide) {
             margin-left: $left-column-wide + $gs-gutter;

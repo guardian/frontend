@@ -49,6 +49,10 @@
 
     /* Multiple */
     &.commercial--dfp-multiple {
+        @include mq(leftCol) {
+            min-height: $gs-row-height * 5;
+        }
+
         .container__header__inner {
             min-height: 36px;
         }
