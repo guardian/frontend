@@ -20,7 +20,7 @@
 
     @include mq(leftCol) {
         width: $left-column;
-        margin: 0;
+        margin-top: $gs-baseline * 5;
         border-top: 1px solid colour(news-main-2);
         padding-top: $gs-baseline / 4;
     }
@@ -86,6 +86,12 @@
 .weather__forecast {
     position: relative;
     overflow: auto;
+
+    @include mq(tablet, leftCol) {
+        width: 50%;
+        min-height: $gs-baseline * 4;
+        border-right: 1px dotted colour(neutral-3);
+    }
 }
 
 .weather__desc {
@@ -110,7 +116,7 @@
 .weather__time {
     display: none;
 
-    @include mq(leftCol) {
+    @include mq(tablet) {
         display: block;
     }
 }
@@ -123,10 +129,14 @@
     height: 36px !important;
     margin: 0;
 
-    @include mq(tablet) {
+    @include mq(tablet, leftCol) {
         width: 40px !important;
         height: 40px !important;
-        margin-top: $gs-gutter / 5; // Change to gs-baseline
+        position: absolute;
+        top: 4px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
     }
 
     @include mq(leftCol) {
@@ -134,6 +144,7 @@
         width: 60px !important;
         height: 60px !important;
         display: block;
+        margin-top: $gs-baseline / 3;
     }
     
     @include mq(wide) {
