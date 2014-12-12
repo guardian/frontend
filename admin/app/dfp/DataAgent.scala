@@ -1,6 +1,7 @@
 package dfp
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
+import conf.Switches._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -14,19 +15,25 @@ trait DataAgent[K, V] extends ExecutionContexts with Logging {
 
   def refresh(): Future[DataCache[K, V]] = {
     log.info("Refreshing data cache")
+    val start = System.currentTimeMillis
     cache alterOff { oldCache =>
-      loadFreshData() match {
-        case Success(freshData) =>
-          if (freshData.nonEmpty) {
-            log.info("Fresh data loaded")
-            DataCache(freshData)
-          } else {
-            log.error("No fresh data loaded so keeping old data")
+      if (DfpCachingSwitch.isSwitchedOn) {
+        loadFreshData() match {
+          case Success(freshData) =>
+            if (freshData.nonEmpty) {
+              val duration = System.currentTimeMillis - start
+              log.info(s"Loading data took $duration ms")
+              DataCache(freshData)
+            } else {
+              log.error("No fresh data loaded so keeping old data")
+              oldCache
+            }
+          case Failure(e) =>
+            log.error(e.getStackTraceString)
             oldCache
-          }
-        case Failure(e) =>
-          log.error(e.getStackTraceString)
-          oldCache
+        }
+      } else {
+        oldCache
       }
     }
   }
