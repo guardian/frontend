@@ -35,7 +35,7 @@ define([
             isNarrow: ko.observable()
         };
         _.delay(function () {
-            column.style.isNarrow(isNarrow(column));
+            column.recomputeWidth();
         }, 25);
 
         function isType (what) {
@@ -47,9 +47,10 @@ define([
         this.isIframe = ko.computed(isType.bind(this, 'iframe'), this);
 
         globalListeners.on('resize', _.debounce(function () {
-            column.style.isNarrow(isNarrow(column));
+            column.recomputeWidth();
         }, 25));
     }
+
     Column.prototype.setType = function (what) {
         this.edit.type(what);
     };
@@ -68,6 +69,10 @@ define([
             serialized[key] = this.edit[key]();
         }, this);
         return serialized;
+    };
+
+    Column.prototype.recomputeWidth = function () {
+        this.style.isNarrow(isNarrow(this));
     };
 
 

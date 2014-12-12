@@ -116,6 +116,9 @@ define([
 
     Layout.prototype.onConfigVisibilityChange = function () {
         copiedArticle.flush();
+        _.each(this.columns(), function (column) {
+            column.recomputeWidth();
+        });
     };
 
 
