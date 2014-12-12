@@ -2,7 +2,11 @@ package layout
 
 import cards.{Standard, MediaList, ListItem, CardType}
 import com.gu.facia.client.models.CollectionConfig
+import play.twirl.api.Html
 import slices.{MobileShowMore, RestrictTo}
+import scalaz.syntax.traverse._
+import scalaz.std.option._
+import scalaz.std.list._
 
 object ItemClasses {
   val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
@@ -51,12 +55,24 @@ case class MPU(colSpan: Int) extends Column {
   val numItems: Int = 0
 }
 
+case class HtmlAndClasses(index: Int, html: Html, classes: Seq[String])
+
 object SliceWithCards {
-  def itemsToConsume(column: Column) = column match {
-    case _: SingleItem => 1
-    case Rows(_, columns, rows, _) => columns * rows
-    case _: SplitColumn => 3
-    case _: MPU => 0
+  def fromBlobs(layout: SliceLayout, blobs: Seq[HtmlAndClasses]): SliceWithCards = {
+    val columns = layout.columns.toList.mapAccumL(blobs) { case (itemsRemaining, column) =>
+      val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt column.numItems
+
+      (itemsNotConsumed, ColumnAndCards(column, itemsForColumn.zipWithIndex map {
+        case (HtmlAndClasses(index, html, classes), positionInColumn) =>
+          FaciaCardAndIndex(
+            index,
+            HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
+            None
+          )
+      }))
+    }._2
+
+    SliceWithCards(layout.cssClassName, columns)
   }
 
   /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new
@@ -72,7 +88,7 @@ object SliceWithCards {
   ): (SliceWithCards, Seq[IndexedTrail], ContainerLayoutContext) = {
     val (columns, unconsumed, endContext) = layout.columns.foldLeft((Seq.empty[ColumnAndCards], items, context)) {
       case ((acc, itemsRemaining, currentContext), column) =>
-        val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt itemsToConsume(column)
+        val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt column.numItems
 
         val (finalContext, cards) = itemsForColumn.zipWithIndex.foldLeft((currentContext, Seq.empty[FaciaCardAndIndex])) {
           case ((contextSoFar, accumulator), (IndexedTrail(trail, index), positionInColumn)) =>

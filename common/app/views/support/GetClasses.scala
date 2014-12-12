@@ -4,11 +4,11 @@ import layout._
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob) = {
-    RenderClasses(Map(
-      ("fc-item", true),
-      ("js-fc-item", true)
-//        fc-item js-fc-item @htmlBlob.cardTypes.classes @htmlBlob.
-    ))
+    RenderClasses(Seq(
+      "fc-item",
+      "js-fc-item",
+      item.cardTypes.classes
+    ) ++ item.customCssClasses: _*)
   }
 
   def forItem(item: ContentCard, isFirstContainer: Boolean) = {

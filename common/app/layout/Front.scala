@@ -63,6 +63,8 @@ object CollectionEssentials {
     None,
     None
   )
+
+  val empty = CollectionEssentials(Nil, None, None, None, None)
 }
 
 case class CollectionEssentials(

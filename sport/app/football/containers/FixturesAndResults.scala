@@ -1,32 +1,19 @@
 package football.containers
 
-import com.gu.facia.client.models.CollectionConfig
 import feed.Competitions
+import football.model.{TeamResultsList, TeamFixturesList}
 import implicits.Football
-import layout.{CollectionEssentials, FaciaContainer}
-import model.{TeamMap, Snap}
-import org.joda.time.DateTime
-import services.CollectionConfigWithId
+import layout._
+import model.TeamMap
+import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 import slices.{FixedContainers, Fixed}
+import football.views.html.matchList.matchesComponent
 
 import scalaz.syntax.std.boolean._
 
 object FixturesAndResults extends Football {
-  private def makeJsonSnap(id: String, snapTitle: String, link: String, endpoint: String, cssClass: String) = new Snap(
-    id,
-    Nil,
-    DateTime.now(),
-    None
-  ) {
-    override lazy val url: String = link
-    override lazy val href: Option[String] = Some(link)
-    override lazy val snapType: Option[String] = Some("json.html")
-    override lazy val snapUri: Option[String] = Some(endpoint)
-    override lazy val headline: String = snapTitle
-    override lazy val snapCss: Option[String] = Some(cssClass)
-  }
-
-  def makeContainer(tagId: String) = {
+  def makeContainer(tagId: String)(implicit request: RequestHeader) = {
     val competitions = Competitions()
 
     for {
@@ -36,45 +23,48 @@ object FixturesAndResults extends Football {
         theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
       }).toList
 
+      val container = FixedContainers.footballTeamFixtures
+
       val fixtureExists = relevantMatches.exists(_.isFixture)
       val resultExists = relevantMatches.exists(_.isResult)
       val leagueTableExists = competitions.mostPertinentCompetitionForTeam(teamId).isDefined
+      val cssClasses = Seq("facia-snap--football", "facia-snap-embed")
 
-      val snaps = Seq(
-        fixtureExists option makeJsonSnap(
-          "fixtures",
-          "Fixtures",
-          s"/$tagId/fixtures",
-          s"/$tagId/fixtures.json",
-          "football"
+      val layout = ContainerLayout.forHtmlBlobs(container.slices, Seq(
+        fixtureExists option HtmlAndClasses(
+          1,
+          matchesComponent(TeamFixturesList.forTeamId(teamId)),
+          cssClasses
         ),
-        resultExists option makeJsonSnap(
-          "results",
-          "Results",
-          s"/$tagId/results",
-          s"/$tagId/results.json",
-          "football"
+        resultExists option HtmlAndClasses(
+          2,
+          matchesComponent(TeamResultsList.forTeamId(teamId)),
+          cssClasses
         ),
-        leagueTableExists option makeJsonSnap(
-          "table",
-          "Table",
-          s"/football/tables",
-          s"/$tagId/team-table.json",
-          "football"
+        leagueTableExists option HtmlAndClasses(
+          3,
+          Html("<p>:(</p>"),
+          cssClasses
         )
-      ).flatten
+      ).flatten)
 
       FaciaContainer(
-        1,
-        Fixed(FixedContainers.footballTeamFixtures),
-        CollectionConfigWithId(
-          "football-team-fixtures",
-          CollectionConfig.emptyConfig.copy(displayName = Some("Fixtures and results"))
-        ),
-        CollectionEssentials.fromTrails(snaps)
-      ).copy(
+        index = 1,
+        dataId = "fixtures-and-results",
+        displayName = Some("Fixtures and results"),
+        href = None,
+        componentId = Some("fixtures-and-results"),
+        container = Fixed(container),
+        collectionEssentials = CollectionEssentials.empty,
+        containerLayout = Some(layout),
+        showDateHeader = false,
+        showLatestUpdate = false,
+        commercialOptions = ContainerCommercialOptions.empty,
+        customHeader = None,
         customClasses = Some(Seq("fc-container--tag")),
-        hideToggle = true
+        hideToggle = true,
+        showTimestamps = false,
+        dateLinkPath = None
       )
     }
   }
