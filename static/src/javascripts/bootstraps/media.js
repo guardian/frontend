@@ -265,13 +265,13 @@ define([
     // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
-        player.on('playing', function(){
+        player.on('playing', function () {
             bean.fire(document.body, 'videoPlaying');
         });
-        player.on('pause', function(){
+        player.on('pause', function () {
             bean.fire(document.body, 'videoPause');
         });
-        player.on('ended', function(){
+        player.on('ended', function () {
             bean.fire(document.body, 'videoEnded');
         });
     }
@@ -298,7 +298,7 @@ define([
     function isFlash(event) {
         return event.target.firstChild &&
             event.target.firstChild.id &&
-            event.target.firstChild.id.indexOf('flash_api') > 0
+            event.target.firstChild.id.indexOf('flash_api') > 0;
     }
 
     function initPlayer() {
@@ -354,8 +354,8 @@ define([
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
 
-                player.one('playing', function(e){
-                    if(isFlash(e)) {
+                player.one('playing', function (e) {
+                    if (isFlash(e)) {
                         beacon.counts('video-tech-flash');
                     } else {
                         beacon.counts('video-tech-html5');
