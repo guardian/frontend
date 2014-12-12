@@ -1,0 +1,114 @@
+@(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
+
+@import model.InlineImage
+@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
+@import views.html.fragments.media.video
+@import views.html.fragments.items.facia_cards.meta
+@import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.items.elements.starRating
+
+<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
+    @if(item.discussionSettings.isCommentable) {
+        @item.discussionSettings.discussionId.map{ id =>
+        data-discussion-id="@id"
+        }
+        data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-inline-upgrade="true"
+    }
+data-link-name="@item.cardStyle.toneString | @{index + 1}"
+    @item.id.map { id =>
+    data-id="@id"
+    }
+data-item-visibility="@visibilityDataAttribute"
+data-test-id="facia-card"
+    @item.snapStuff.dataAttributes>
+
+    <div class="fc-item__container">
+        @item.displayElement match {
+            case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
+                @defining(VideoPlayer(
+                    videoElement,
+                    Video640,
+                    title,
+                    autoPlay = false,
+                    showControlsAtStart = false,
+                    endSlatePath,
+                    Some(false)
+                )) { player =>
+                    <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                        <div class="fc-item__video-container">
+                            @video(player)
+                        </div>
+                    </div>
+                @fallback.map { fallbackImage =>
+                    <div class="fc-item__video-fallback">
+                        @image(
+                            fallbackImage.imageContainer,
+                            inlineImage = containerIndex == 0 && index < 4
+                        )
+                    </div>
+                }
+                }
+            }
+
+            case Some(svg @ CrosswordSvg(_)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                        <img src="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                        role="presentation" data-crossword-id="@svg.persistenceId" />
+                    </div>
+                </div>
+            }
+
+            case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+                @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+            }
+
+            case Some(InlineImage(imageContainer)) => {
+                @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
+            }
+
+            case _ => { }
+        }
+
+    <div class="fc-item__content">
+        <div class="@RenderClasses(Map(
+            ("fc-item__header", true),
+            ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
+        ))">
+            @title(item.header, index, containerIndex)
+
+            @item.byline.map { byline =>
+                <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
+            }
+
+            @item.starRating.map { rating =>
+                @starRating(rating)
+            }
+        </div>
+
+        @item.trailText.map { text =>
+            <div class="fc-item__standfirst">@Html(text)</div>
+        }
+
+        @if(item.sublinks.nonEmpty) {
+            <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+        }
+
+        @meta(item)
+    </div>
+
+        @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
+        <div class="fc-item__avatar">
+            <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
+        </div>
+        }
+
+        @if(item.sublinks.nonEmpty) {
+            <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
+        }
+
+    <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
+    </div>
+</div>

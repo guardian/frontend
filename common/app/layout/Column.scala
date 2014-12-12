@@ -114,9 +114,12 @@ case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
     columnAndCards.column.colSpan
   }).sum
 
-  def transformCards(f: FaciaCard => FaciaCard) = copy(columns = columns map { column =>
+  def transformCards(f: ContentCard => ContentCard) = copy(columns = columns map { column =>
     column.copy(cards = column.cards map { cardAndIndex =>
-      cardAndIndex.copy(item = f(cardAndIndex.item))
+      cardAndIndex.copy(item = cardAndIndex.item match {
+        case content: ContentCard => f(content)
+        case other => other
+      })
     })
   })
 }

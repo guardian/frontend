@@ -39,5 +39,8 @@ case class FaciaCardAndIndex(
     case _ => "all"
   }
 
-  def transformCard(f: FaciaCard => FaciaCard) = copy(item = f(item))
+  def transformCard(f: ContentCard => ContentCard) = copy(item = item match {
+    case content: ContentCard => f(content)
+    case other => other
+  })
 }

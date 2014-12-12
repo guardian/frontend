@@ -25,18 +25,23 @@ case class ContainerLayoutContext(
 
   def transform(card: FaciaCardAndIndex) = {
     if (hideCutOuts) {
-      (card.copy(item = card.item.copy(cutOut = None)), this)
+      (card.transformCard(_.copy(cutOut = None)), this)
     } else {
       // Latest snaps are sometimes used to promote journalists, and the cut out should always show on these snaps.
-      if (card.item.snapStuff.snapType == LatestSnap) {
-        (card, this)
-      } else {
-        val newCard = if (card.item.cutOut.exists(cutOutsSeen.contains)) {
-          card.copy(item = card.item.copy(cutOut = None))
-        } else {
-          card
-        }
-        (newCard, addCutOuts(card.item.cutOut.filter(const(card.item.cardTypes.showCutOut)).toSet))
+      card.item match {
+        case content: ContentCard =>
+          if (content.snapStuff.snapType == LatestSnap) {
+            (card, this)
+          } else {
+            val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
+              card.copy(item = content.copy(cutOut = None))
+            } else {
+              card
+            }
+            (newCard, addCutOuts(content.cutOut.filter(const(content.cardTypes.showCutOut)).toSet))
+          }
+
+        case _ => (card, this)
       }
     }
   }
@@ -204,7 +209,7 @@ case class FaciaContainer(
   showTimestamps: Boolean,
   dateLinkPath: Option[String]
 ) {
-  def transformCards(f: FaciaCard => FaciaCard) = copy(
+  def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
   )
 

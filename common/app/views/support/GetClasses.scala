@@ -1,9 +1,17 @@
 package views.support
 
-import layout.{ContainerCommercialOptions, FaciaContainer, Sublink, FaciaCard}
+import layout._
 
 object GetClasses {
-  def forItem(item: FaciaCard, isFirstContainer: Boolean) = {
+  def forHtmlBlob(item: HtmlBlob) = {
+    RenderClasses(Map(
+      ("fc-item", true),
+      ("js-fc-item", true)
+//        fc-item js-fc-item @htmlBlob.cardTypes.classes @htmlBlob.
+    ))
+  }
+
+  def forItem(item: ContentCard, isFirstContainer: Boolean) = {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -25,7 +33,7 @@ object GetClasses {
     sublinkMediaTypeClass(sublink)
   ).flatten: _*)
 
-  def mediaTypeClass(faciaCard: FaciaCard) = faciaCard.mediaType map {
+  def mediaTypeClass(faciaCard: ContentCard) = faciaCard.mediaType map {
     case layout.Gallery => "fc-item--gallery"
     case layout.Video => "fc-item--video"
     case layout.Audio => "fc-item--audio"
