@@ -1,13 +1,9 @@
 package dfp
 
-import com.google.api.ads.common.lib.auth.OfflineCredentials
-import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411._
-import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
-import conf.{AdminConfiguration, Configuration}
 import dfp.DfpApiWrapper.DfpSessionException
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
@@ -19,31 +15,7 @@ object DfpDataHydrator {
 
 class DfpDataHydrator extends Logging {
 
-  private val dfpSession: Option[DfpSession] = try {
-    for {
-      clientId <- AdminConfiguration.dfpApi.clientId
-      clientSecret <- AdminConfiguration.dfpApi.clientSecret
-      refreshToken <- AdminConfiguration.dfpApi.refreshToken
-      appName <- AdminConfiguration.dfpApi.appName
-    } yield {
-      val credential = new OfflineCredentials.Builder()
-        .forApi(Api.DFP)
-        .withClientSecrets(clientId, clientSecret)
-        .withRefreshToken(refreshToken)
-        .build().generateCredential()
-      new DfpSession.Builder()
-        .withOAuth2Credential(credential)
-        .withApplicationName(appName)
-        .withNetworkCode(Configuration.commercial.dfpAccountId)
-        .build()
-    }
-  } catch {
-    case e: Exception =>
-      log.error(s"Building DFP session failed: $e")
-      None
-  }
-
-  private val dfpServiceRegistry = dfpSession map (session => new DfpServiceRegistry(session))
+  private lazy val dfpServiceRegistry = DfpServiceRegistry()
 
   def loadCurrentLineItems(): Seq[GuLineItem] =
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
@@ -58,9 +30,9 @@ class DfpDataHydrator extends Logging {
 
       val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
-      val optSponsorFieldId = loadCustomFieldId("sponsor")
+      val optSponsorFieldId = CustomFieldAgent.get.customFields.get("Sponsor")
 
-      val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
+      val allAdUnits = AdUnitAgent.get.adUnits
       val placementAdUnits = loadAdUnitIdsByPlacement()
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
@@ -139,34 +111,6 @@ class DfpDataHydrator extends Logging {
         log.error(e.getStackTraceString)
         Nil
     }
-  }
-
-  def loadCustomFieldId(name: String): Option[Long] = dfpServiceRegistry flatMap {
-    serviceRegistry =>
-    val statementBuilder = new StatementBuilder().where("name = :name").withBindVariableValue("name", name)
-      val field = DfpApiWrapper.fetchCustomFields(serviceRegistry, statementBuilder).headOption
-    field map (_.getId)
-  }
-
-  def loadActiveDescendantAdUnits(rootName: String): Map[String, GuAdUnit] =
-    dfpServiceRegistry.fold(Map[String, GuAdUnit]()) { serviceRegistry =>
-
-      val statementBuilder = new StatementBuilder()
-        .where("status = :status")
-        .withBindVariableValue("status", InventoryStatus._ACTIVE)
-
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
-
-      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists { path =>
-          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
-        }
-      }
-
-      rootAndDescendantAdUnits.map { adUnit =>
-        val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-        (adUnit.getId, GuAdUnit(adUnit.getId, path))
-      }.toMap
   }
 
   def loadSpecialAdunits(rootName: String): Seq[(String, String)] =

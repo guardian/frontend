@@ -1,12 +1,12 @@
 package dfp
 
-import common.{Logging, AkkaAsync, Jobs, ExecutionContexts}
+import common.{AkkaAsync, ExecutionContexts, Jobs, Logging}
+import conf.Switches.{DfpCachingSwitch, DfpMemoryLeakSwitch}
 import org.joda.time.DateTime
-import play.api.{Play, Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.{Application, GlobalSettings, Play}
 import tools.Store
-import conf.Switches.DfpCachingSwitch
 
 import scala.concurrent.future
 
@@ -40,36 +40,50 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     }
   }
 
-  def run() {
+  def run(): Unit = {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
-
-        val start = System.currentTimeMillis
-        val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
-        val duration = System.currentTimeMillis - start
-        log.info(s"Reading DFP data took $duration ms")
-
-        if (data.isValid) {
-          val now = printLondonTime(DateTime.now())
-
-          val sponsorships = data.sponsorships
-          Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
-
-          val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
-          Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
-
-          val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-          Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
-
-          val foundationSupported = data.foundationSupported
-          Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now, foundationSupported))))
-
-          val pageSkinSponsorships = data.pageSkinSponsorships
-          Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
-
-          Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
+        for {
+          adUnitCache <- AdUnitAgent.refresh()
+          customFieldCache <- CustomFieldAgent.refresh()
+        } {
+          cacheData()
         }
       }
+    }
+  }
+
+  private def cacheData() {
+    val start = System.currentTimeMillis
+    val data = DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+    val duration = System.currentTimeMillis - start
+    log.info(s"Reading DFP data took $duration ms")
+
+    if (DfpMemoryLeakSwitch.isSwitchedOn) MemoryLeakPlug()
+
+    if (data.isValid) {
+      val now = printLondonTime(DateTime.now())
+
+      val sponsorships = data.sponsorships
+      Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
+
+      val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
+      Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now,
+        advertisementFeatureSponsorships))))
+
+      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+      Store.putInlineMerchandisingSponsorships(stringify(toJson(
+        InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
+
+      val foundationSupported = data.foundationSupported
+      Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now,
+        foundationSupported))))
+
+      val pageSkinSponsorships = data.pageSkinSponsorships
+      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
+        pageSkinSponsorships))))
+
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
     }
   }
 }

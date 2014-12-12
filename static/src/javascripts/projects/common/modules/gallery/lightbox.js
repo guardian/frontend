@@ -47,7 +47,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType !== 'Article';
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType === 'Gallery';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -300,6 +300,11 @@ define([
                         this.initSwipe();
                     }
 
+                    if (this.galleryJson.images.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', this.lightboxEl).hide();
+                    }
+
                     this.state = 'image';
                 }
             }
@@ -494,27 +499,27 @@ define([
     };
 
     function bootstrap() {
-        var lightbox,
-            galleryId,
-            match,
-            galleryHash = window.location.hash,
-            images = config.page[(config.page.contentType === 'Gallery') ? 'galleryLightbox' : 'lightboxImages'],
-            res;
+        if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
+            var lightbox,
+                galleryId,
+                match,
+                galleryHash = window.location.hash,
+                images = config.page.lightboxImages,
+                res;
 
-        bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
-            e.preventDefault();
+            bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
+                e.preventDefault();
 
-            var $el = bonzo(e.currentTarget),
-                galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split('#img-'),
-                parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
-                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
-            lightbox = lightbox || new GalleryLightbox();
+                var $el = bonzo(e.currentTarget),
+                    galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
+                    galleryHrefParts = galleryHref.split('#img-'),
+                    parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
+                    galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+                lightbox = lightbox || new GalleryLightbox();
 
-            lightbox.loadGalleryfromJson(images, galleryIndex);
-        });
+                lightbox.loadGalleryfromJson(images, galleryIndex);
+            });
 
-        if (config.page.contentType === 'Gallery' || config.page.contentType === 'Article') {
             lightbox = lightbox || new GalleryLightbox();
             galleryId = '/' + config.page.pageId;
             match = /\?index=(\d+)/.exec(document.location.href);

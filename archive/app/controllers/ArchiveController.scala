@@ -22,7 +22,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Decoded(decodedPath)         => redirectTo(decodedPath, "decoded")
         case Gallery(gallery)             => redirectTo(gallery, "gallery")
         case Century(century)             => redirectTo(century, "century")
         case Lowercase(lower)             => redirectTo(lower, "lowercase")
@@ -31,6 +30,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         // bounce these to the section
         case CombinerSectionRss(section)  => redirectTo(s"$section/rss", "combinerrss")
         case CombinerSection(section)     => redirectTo(section, "combinersection")
+        case Combiner(combiner)           => redirectTo(combiner, "combiner")
 
         case _ =>
           log404(request)
@@ -59,10 +59,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       linksToItself(path, destination.location)
   })
 
-  private object Decoded {
+  private object Combiner {
     def unapply(path: String): Option[String] = {
-        val decodedPath = URLDecoder.decode(path, "UTF-8").replace(" ", "+") // the + is for combiner pages
-        if (decodedPath != path) Some(decodedPath) else None
+        val decodedPath = URLDecoder.decode(path, "UTF-8")
+        val combinerPath = decodedPath.replace(" ", "+") // the + is for combiner pages
+        if (combinerPath != decodedPath && combinerPath != path) Some(combinerPath) else None
     }
   }
 

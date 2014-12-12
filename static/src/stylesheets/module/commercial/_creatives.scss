@@ -293,7 +293,6 @@
 
 .ad-slot--dfp.ad-slot__fluid250 {
     height: auto;
-    padding: 0;
     width: 100%;
     margin-left: 0;
 
@@ -349,8 +348,12 @@
         padding: 0;
     }
 
-    .creative--fluid250 {
+    .creative--fluid250__height--tall {
         height: 250px;
+    }
+    
+    .creative--fluid250__height--medium {
+        height: 200px;
     }
 }
 

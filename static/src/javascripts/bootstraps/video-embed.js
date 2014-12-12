@@ -7,6 +7,7 @@ define([
     'videojs',
     'videojsembed',
     'lodash/functions/debounce',
+    'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -15,6 +16,7 @@ define([
     videojs,
     videojsembed,
     debounce,
+    playerPriority,
     loadingTmpl
 ) {
 
@@ -33,12 +35,12 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = ['html5', 'flash'];
+        options.techOrder = playerPriority;
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = ['flash', 'html5'];
+            options.techOrder = playerPriority.reverse();
             player = videojs(el, options);
         }
 
@@ -71,20 +73,21 @@ define([
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
-            var player = createVideoPlayer(el, {
-                    controls: true,
-                    autoplay: false,
-                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
-                    plugins: {
-                        embed: {
-                            embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
-                            location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
-                        }
-                    }
-                }),
-                mouseMoveIdle;
+            var player, mouseMoveIdle;
 
             bonzo(el).addClass('vjs');
+
+            player = createVideoPlayer(el, {
+                controls: true,
+                autoplay: false,
+                preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                plugins: {
+                    embed: {
+                        embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
+                        location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
+                    }
+                }
+            });
 
             //Location of this is important
             handleInitialMediaError(player);

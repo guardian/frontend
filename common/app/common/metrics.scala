@@ -186,6 +186,11 @@ object FaciaMetrics {
     "redirects-to-applications",
     "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
   )
+
+  object FaciaToRssRedirectMetric extends CountMetric(
+    "redirects-to-rss",
+    "Number of requests to Facia that have been redirected to RSS via X-Accel-Redirect"
+  )
 }
 
 object FaciaPressMetrics {

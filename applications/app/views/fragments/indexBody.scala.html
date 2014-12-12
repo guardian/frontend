@@ -36,8 +36,9 @@
             </div>
         }
 
-        @fragments.trendingTopics(index.trails, index.allPath)
-
-        @fragments.commercial.commercialComponent()
+        @fragments.trendingTopics(index.trails, index.page.id, None)
+        <div class="fc-container fc-container--commercial">
+            @fragments.commercial.commercialComponent()
+        </div>
     </div>
 </div>

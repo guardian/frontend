@@ -1,7 +1,6 @@
 package conf
 
 import common._
-import implicits.Collections
 import org.joda.time.{DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -60,6 +59,12 @@ object Switches {
     sellByDate = never
   )
 
+  val RssServerSwitch = Switch("Performance", "rss-server",
+    "If this switch is on then RSS traffic will be redirected to RSS server",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
@@ -89,6 +94,12 @@ object Switches {
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never
+  )
+
+  val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
+    "If this switch is switched on then the preview server requires login",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -152,8 +163,9 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    "If this switch is on png images will be resized via the png-resizing server",
-    safeState = Off, sellByDate = never
+    //"If this switch is on png images will be resized via the png-resizing server",
+    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   // Commercial
@@ -161,6 +173,11 @@ object Switches {
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
+  )
+
+  val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
+    "If this switch is on, memory leak on Admin server should be plugged.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
@@ -298,6 +315,10 @@ object Switches {
     "If switched on then the preview server will poll until the latest content is indexed.",
     safeState = On, sellByDate = new LocalDate(2015, 1, 15))
 
+  val PrioritiseFlashVideoPlayer = Switch("Feature", "prioritise-flash-video-player",
+    "If switched on then the Flash player will be preferred over the html5 player.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31))
+
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
     safeState = Off, sellByDate = never)
@@ -363,6 +384,11 @@ object Switches {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
+    "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 

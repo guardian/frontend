@@ -2,33 +2,37 @@ package lib
 
 import java.awt.image.BufferedImage
 import org.im4java.core.{Stream2BufferedImage, ConvertCmd, IMOperation}
-import java.io.ByteArrayOutputStream
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import javax.imageio.ImageIO
 
-object Im4Java {
-  def apply(image: BufferedImage, operation: IMOperation, format: String = "png"): Array[Byte] = {
-    val cmd = new ConvertCmd(false)
-    val s2b = new Stream2BufferedImage
-    cmd.setOutputConsumer(s2b)
+import org.im4java.process.Pipe
 
-    cmd.run(operation, image)
-    val resized = s2b.getImage
+object Im4Java {
+  def apply(operation: IMOperation, format: String = "png")(imageBytes: Array[Byte]): Array[Byte] = {
+    val cmd = new ConvertCmd(false)
+
+    val pipeIn = new Pipe(new ByteArrayInputStream(imageBytes), null)
+    cmd.setInputProvider(pipeIn)
 
     val baos = new ByteArrayOutputStream
-    ImageIO.write(resized, format,  baos)
+    val s2b = new Pipe(null, baos)
+    cmd.setOutputConsumer(s2b)
+
+    cmd.run(operation)
+
     baos.flush()
     baos.toByteArray
   }
 
-  def resizeBufferedImage(image: BufferedImage, width: Int) = {
+  def resizeBufferedImage(width: Int) = {
     val operation = new IMOperation
 
-    operation.addImage()
+    operation.addImage("-")
     operation.sharpen(1.0)
     operation.resize(width)
     operation.quality(100)
     operation.addImage("png:-")
 
-    apply(image, operation)
+    apply(operation)_
   }
 }

@@ -19,7 +19,8 @@
         }
     }
 
-    .fc-item__container:before {
+    .fc-item__container:before,
+    .flyer__container:before {
         background-color: colour(review-accent);
     }
 
