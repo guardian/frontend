@@ -64,6 +64,7 @@ $header-image-size-desktop: 100px;
 .fc-container__header,
 .container__header {
     position: relative;
+    overflow: auto;
 
     .fc-container--paid-for &,
     .fc-container[data-sponsorship] &,
@@ -135,6 +136,11 @@ $header-image-size-desktop: 100px;
     line-height: get-line-height(header, 2);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
     word-wrap: break-word;
+
+    @include mq(tablet, leftCol) {
+        float: left;
+        width: gs-span(6) + $gs-gutter;
+    }
 
     a {
         color: inherit;

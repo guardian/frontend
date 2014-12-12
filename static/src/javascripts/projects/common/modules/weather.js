@@ -169,7 +169,7 @@ define([
                 tempNow: self.getTemperature(weatherData)
             }));
 
-            $weather.insertAfter($holder);
+            $weather.appendTo($holder);
 
             toggles = new Toggles();
             toggles.init($weather);

@@ -1,7 +1,4 @@
 .weather {
-    position: absolute;
-    top: 0;
-    right: 0;
     color: colour(neutral-2);
     text-align: right;
 
@@ -17,14 +14,12 @@
         text-align: left;
     }
 
-    @include mq(tablet, leftCol) {
-        top: $gs-gutter / 5;
+    @include mq($until: leftCol) {
+        float: right;
     }
 
     @include mq(leftCol) {
         width: $left-column;
-        left: $gs-gutter;
-        top: $gs-row-height * 6;
         margin: 0;
         border-top: 1px solid colour(news-main-2);
         padding-top: $gs-baseline / 4;
