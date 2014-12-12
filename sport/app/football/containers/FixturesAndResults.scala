@@ -4,13 +4,26 @@ import feed.Competitions
 import football.model.{TeamResultsList, TeamFixturesList}
 import implicits.Football
 import layout._
-import model.TeamMap
+import model.{Group, Competition, Table, TeamMap}
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 import slices.{FixedContainers, Fixed}
 import football.views.html.matchList.matchesComponent
+import football.views.html.tablesList.tablesComponent
 
 import scalaz.syntax.std.boolean._
+
+object CompetitionAndGroup {
+  def bestForTeam(teamId: String) = {
+    for {
+      competition <- Competitions().mostPertinentCompetitionForTeam(teamId)
+      table = Table(competition)
+      group <- table.groups.find(_.entries.exists(_.team.id == teamId)) orElse
+        table.groups.headOption
+    } yield CompetitionAndGroup(competition, group.copy(entries = group.entries.take(10)))
+  }
+}
+
+case class CompetitionAndGroup(competition: Competition, group: Group)
 
 object FixturesAndResults extends Football {
   def makeContainer(tagId: String)(implicit request: RequestHeader) = {
@@ -30,6 +43,8 @@ object FixturesAndResults extends Football {
       val leagueTableExists = competitions.mostPertinentCompetitionForTeam(teamId).isDefined
       val cssClasses = Seq("facia-snap--football", "facia-snap-embed")
 
+      val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
+
       val layout = ContainerLayout.forHtmlBlobs(container.slices, Seq(
         fixtureExists option HtmlAndClasses(
           1,
@@ -41,11 +56,13 @@ object FixturesAndResults extends Football {
           matchesComponent(TeamResultsList.forTeamId(teamId)),
           cssClasses
         ),
-        leagueTableExists option HtmlAndClasses(
-          3,
-          Html("<p>:(</p>"),
-          cssClasses
-        )
+        maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
+          HtmlAndClasses(
+            3,
+            tablesComponent(competition, group, highlightTeamId = Some(teamId), false),
+            cssClasses
+          )
+        }
       ).flatten)
 
       FaciaContainer(
