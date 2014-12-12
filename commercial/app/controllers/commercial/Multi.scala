@@ -35,7 +35,7 @@ object Multi
           }
         case "books" =>
           BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
-            views.html.books.book(_, clickMacro)
+            views.html.books.bookFragment(_, clickMacro)
           }
         case "travel" =>
           TravelOffersAgent.offersTargetedAt(segment).headOption map {
