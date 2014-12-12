@@ -110,6 +110,15 @@
                 attr: { href: previewUrl },
                 text: liveMode() ? 'View live' : 'Preview draft',
                 visible: front"></a>
+            <!-- ko if: front -->
+            <a class='performances' target='_blank' data-bind="
+                attr: { href: ophanPerformances },
+                click: function() { return true; },
+                clickBubble: false
+            ">
+                <i class="icon-signal"></i>
+            </a>
+            <!-- /ko -->
 
             <span class="front-age" data-bind="visible: frontAge">
                refreshed <span data-bind="text: frontAge"></span>
