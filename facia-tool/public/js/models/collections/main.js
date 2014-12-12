@@ -82,6 +82,10 @@ define([
             keepCopy:  true
         });
 
+        model.ophanPerformances = ko.computed(function () {
+            return vars.CONST.ophanFrontBase + encodeURIComponent('/' + model.front());
+        }, this);
+
         model.createSnap = function() {
             var blank = new Article();
 
