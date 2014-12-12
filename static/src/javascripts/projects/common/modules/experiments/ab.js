@@ -12,6 +12,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/breaking-news-alert-style'
 ], function (
     raven,
@@ -27,12 +28,14 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
+    HistoryTags,
     BreakingNewsAlertStyle
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
+            new HistoryTags(),
             new BreakingNewsAlertStyle()
         ],
         participationsKey = 'gu.ab.participations';

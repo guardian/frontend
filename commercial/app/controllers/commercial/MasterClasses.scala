@@ -11,37 +11,18 @@ object MasterClasses extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
-  object lowRelevance extends Relevance[MasterClass] {
-    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = {
-      val clickMacro = request.getParameter("clickMacro")
-      val omnitureId = request.getParameter("omnitureId")
-      views.html.masterclasses(classes, omnitureId, clickMacro)
-    }
-  }
+  def renderMasterclasses = MemcachedAction { implicit request =>
+    Future.successful {
+      (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.masterclassesTargetedAt(segment)).distinct match {
+        case Nil => NoCache(jsonFormat.nilResult)
+        case masterclasses => Cached(componentMaxAge) {
+          val clickMacro = request.getParameter("clickMacro")
+          val omnitureId = request.getParameter("omnitureId")
 
-  object highRelevance extends Relevance[MasterClass] {
-    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = {
-      val clickMacro = request.getParameter("clickMacro")
-      val omnitureId = request.getParameter("omnitureId")
-      views.html.masterclassesHigh(classes, omnitureId, clickMacro)
-    }
-  }
-
-  private def renderMasterclasses(relevance: Relevance[MasterClass], format: Format) =
-    MemcachedAction { implicit request =>
-      Future.successful {
-        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.masterclassesTargetedAt(segment)).distinct match {
-          case Nil => NoCache(format.nilResult)
-          case masterclasses => Cached(componentMaxAge) {
-            format.result(relevance.view(masterclasses take 4))
-          }
+          jsonFormat.result(views.html.masterclasses(masterclasses.take(4), omnitureId, clickMacro))
         }
       }
     }
+  }
 
-  def masterclassesLowHtml = renderMasterclasses(lowRelevance, htmlFormat)
-  def masterclassesLowJson = renderMasterclasses(lowRelevance, jsonFormat)
-
-  def masterclassesHighHtml = renderMasterclasses(highRelevance, htmlFormat)
-  def masterclassesHighJson = renderMasterclasses(highRelevance, jsonFormat)
 }
