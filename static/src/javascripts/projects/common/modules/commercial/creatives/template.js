@@ -1,38 +1,40 @@
 define([
     'common/utils/$',
     'common/utils/template',
+
+    // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
     'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'text!common/views/commercial/creatives/ad-single-manual.html'
+    'text!common/views/commercial/creatives/logo-ad-feature.html',
+    'text!common/views/commercial/creatives/logo-foundation-funded.html',
+    'text!common/views/commercial/creatives/logo-foundation-funded-partners.html',
+    'text!common/views/commercial/creatives/logo-sponsored.html',
+    'text!common/views/commercial/creatives/manual-inline.html',
+    'text!common/views/commercial/creatives/manual-multiple.html',
+    'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
-    template,
-    adFeatureMpuTpl,
-    adFeatureMpuLargeTpl,
-    adSingleManual
+    template
 ) {
 
     /**
-     * Create simple templated creatives -
+     * Create simple templated creatives
      *
-     *  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10021527
-     *  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
+     * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10021527
+     * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
-    var creativeTemplates = {
-            'ad-feature-mpu': adFeatureMpuTpl,
-            'ad-feature-mpu-large': adFeatureMpuLargeTpl,
-            'ad-single-manual': adSingleManual
-        },
-        Template = function ($adSlot, params) {
+    var Template = function ($adSlot, params) {
             this.$adSlot = $adSlot;
             this.params  = params;
         };
 
     Template.prototype.create = function () {
-        var creativeHtml = template(creativeTemplates[this.params.creative], this.params);
+        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            var creativeHtml = template(creativeTpl, this.params);
 
-        $.create(creativeHtml)
-            .appendTo(this.$adSlot);
+            $.create(creativeHtml)
+                .appendTo(this.$adSlot);
+        }.bind(this));
     };
 
     return Template;

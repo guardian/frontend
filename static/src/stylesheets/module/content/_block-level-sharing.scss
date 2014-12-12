@@ -362,14 +362,16 @@
         position: absolute;
         right: -$gs-gutter/4;
         margin-top: ($gs-baseline/3)*2;
+    }
 
-        .element--thumbnail &,
-        .img--base & {
+    .element--thumbnail,
+    .img--base {
+        .block-share--article {
             display: none !important;
         }
     }
 
-    .fig--extra-margin {
+    .fig--no-caption.fig--has-shares {
         padding-bottom: $gs-baseline * 3 !important;
     }
 
@@ -386,7 +388,7 @@
     .fig--narrow-caption {
         figcaption {
             @include mq(tablet) {
-                max-width: gs-span(6);
+                max-width: gs-span(7) - 20;
             }
         }
 
@@ -404,9 +406,10 @@
         &.element--showcase {
             figcaption {
                 @include mq(leftCol) {
-                    max-width: gs-span(9);
+                    max-width: gs-span(9) - 20;
                 }
             }
         }
     }
+
 }

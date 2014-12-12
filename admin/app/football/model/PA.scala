@@ -5,13 +5,13 @@ import implicits.Collections
 
 
 object PA extends Collections {
-  
+
   val competitionNames = Map[String, String](
     ("100", "Premier League"),
     ("101", "Championship"),
     ("102", "League One"),
     ("103", "League Two"),
-    ("120", "Scottish Premier League"),
+    ("120", "Scottish Premiership"),
     ("121", "Scottish Championship"),
     ("122", "Scottish League One"),
     ("123", "Scottish League Two"),

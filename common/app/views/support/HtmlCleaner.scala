@@ -1,5 +1,6 @@
 package views.support
 
+import java.net.URL
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -55,57 +56,65 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         if(!shortUrl.isEmpty) {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
-
+          element.addClass("fig--has-shares")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
-            element.addClass("fig--extra-margin")
+            element.addClass("fig--no-caption")
           }
         }
       })
     }
 
-    document.getElementsByClass("gu-video").foreach { element: Element =>
+    document.getElementsByClass("element-video").foreach { figure: Element =>
+      val canonicalUrl = figure.attr("data-canonical-url")
 
-      element
-        .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video")
-        .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
+      figure.getElementsByClass("gu-video").foreach { element: Element =>
 
-      val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
+        element
+          .removeClass("gu-video")
+          .addClass("js-gu-media gu-media gu-media--video")
+          .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
-      val mediaId = element.attr("data-media-id")
-      val asset = findVideoFromId(mediaId)
+        val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
 
-      element.getElementsByTag("source").remove()
+        val mediaId = element.attr("data-media-id")
+        val asset = findVideoFromId(mediaId)
 
-      val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-        videoAsset.encoding.map { encoding =>
-          s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
-        }.getOrElse("")
-      }.mkString("")
+        element.getElementsByTag("source").remove()
 
-      element.append(sourceHTML)
+        val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
+          videoAsset.encoding.map { encoding =>
+            s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+          }.getOrElse("")
+        }.mkString("")
 
-      // add the poster url
-      asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach{ url =>
-        element.attr("poster", url)
-      }
+        element.append(sourceHTML)
 
-      asset.foreach( video => {
-        element.append(
-          s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
+        // add the poster url
+        asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
+          element.attr("poster", url)
+        }
+
+        asset.foreach(video => {
+          element.append(
+            s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
                 <param name="allowFullScreen" value="true" />
                 <param name="movie" value="$flashMediaElement" />
                 <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-      })
+        })
 
-      findVideoApiElement(mediaId).foreach( videoElement => {
-        element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-      })
+        findVideoApiElement(mediaId).foreach{ videoElement =>
+          element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
+          element.attr("data-embeddable", videoElement.embeddable.toString)
+          if(!canonicalUrl.isEmpty) {
+            element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          }
+        }
+      }
     }
 
     document.getElementsByClass("element-witness--main").foreach { element: Element =>
@@ -157,15 +166,21 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
           }
         }
 
-        fig.getElementsByTag("figcaption").foreach { figcaption =>
-          // content api/ tools sometimes pops a &nbsp; in the blank field
-          if (!figcaption.hasText || figcaption.text().length < 2) {
-            figcaption.remove()
-            fig.addClass("fig--extra-margin")
-          } else {
-            figcaption.attr("itemprop", "description")
-            fig.addClass("fig--border")
+        val figcaptions = fig.getElementsByTag("figcaption")
+
+        if(figcaptions.length > 0) {
+          figcaptions.foreach { figcaption =>
+            // content api/ tools sometimes pops a &nbsp; in the blank field
+            if (!figcaption.hasText || figcaption.text().length < 2) {
+              figcaption.remove()
+              fig.addClass("fig--no-caption")
+            } else {
+              figcaption.attr("itemprop", "description")
+              fig.addClass("fig--border")
+            }
           }
+        } else {
+          fig.addClass("fig--no-caption")
         }
       }
     }
@@ -174,11 +189,10 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def addSharesAndFullscreen(body: Document): Document = {
     if(!article.isLiveBlog) {
-
-      article.lightboxImages.zipWithIndex map {
+      article.bodyLightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + 1).toString
+            val linkIndex = (index + (if (article.isMainImageLightboxable) 2 else 1)).toString
             val hashSuffix = "img-" + linkIndex
             fig.attr("id", hashSuffix)
             fig.addClass("fig--narrow-caption")
@@ -186,7 +200,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             fig.getElementsByTag("img").foreach { img =>
               val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
               img.after(html.toString())
-
+              fig.addClass("fig--has-shares")
               img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
               img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
@@ -207,9 +221,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
       imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
       imgElement.addClass("responsive-img")
     }
-
     body
-
   }
 
   def clean(body: Document): Document = {
@@ -469,6 +481,18 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
+object RichLinkCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val richLinks = document.getElementsByClass("element-rich-link")
+    richLinks
+      .addClass("element-rich-link--not-upgraded")
+      .attr("data-component", s"rich-link-${richLinks.length}")
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+
     document
   }
 }

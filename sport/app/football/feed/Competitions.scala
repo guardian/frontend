@@ -97,6 +97,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17)),
     Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true, tableDividers = List(3, 4, 17)),
     Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true, tableDividers = List(2, 6, 21)),
+    Competition("120", "/football/scottish-premiership", "Scottish Premiership", "Scottish Premiership", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
     Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true, tableDividers = List(2, 6, 20)),
     Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true, tableDividers = List(3, 7, 22)),
     Competition("121", "/football/scottish-championship", "Scottish Championship", "Scottish Championship", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
@@ -105,12 +106,10 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
     Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
-    Competition("120", "/football/scottish-premiership", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish")
   )

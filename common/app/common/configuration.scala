@@ -30,6 +30,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
   }
 
+  object weather {
+    lazy val apiKey = configuration.getStringProperty("weather.api.key")
+  }
+
   object indexes {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
@@ -198,6 +202,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val path =
       if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
       else configuration.getMandatoryStringProperty("assets.path")
+    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
   }
 
   object staticSport {

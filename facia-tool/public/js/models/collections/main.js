@@ -219,7 +219,7 @@ define([
 
         function getFrontAgeAlertMs() {
             return vars.CONST.frontAgeAlertMs[
-                vars.CONST.editions.indexOf(model.front()) > -1 ? 'front' : vars.priority || 'editorial'
+                vars.CONST.highFrequencyPaths.indexOf(model.front()) > -1 ? 'front' : vars.priority || 'editorial'
             ];
         }
 

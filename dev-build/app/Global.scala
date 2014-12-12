@@ -1,5 +1,6 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
+import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
@@ -65,3 +66,4 @@ with DfpDataCacheLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
+with SectionsLookUpLifecycle

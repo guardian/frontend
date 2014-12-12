@@ -9,23 +9,32 @@ import play.twirl.api.Html
 
 import scala.concurrent.Future
 
-object BookOffers extends Controller with ExecutionContexts with implicits.Collections {
+object BookOffers extends Controller with ExecutionContexts with implicits.Collections with implicits.Requests {
 
   object lowRelevance extends Relevance[Book] {
-    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
-      views.html.books.bestsellers(books)
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.books.bestsellers(books, omnitureId, clickMacro)
+    }
   }
 
   object mediumRelevance extends Relevance[Book] {
-    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
-      views.html.books.bestsellersMedium(books)
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.books.bestsellersMedium(books, omnitureId, clickMacro)
+    }
   }
 
   object highRelevance extends Relevance[Book] {
-    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
-      views.html.books.bestsellersHigh(books)
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.books.bestsellersHigh(books, omnitureId, clickMacro)
+    }
   }
-  
+
   private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
@@ -42,8 +51,10 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   private def renderSingleBook(format: Format) = MemcachedAction { implicit request =>
     specificId map { isbn =>
       BookFinder.findByIsbn(isbn) map { optBook =>
+        val clickMacro = request.getParameter("clickMacro")
+        val omnitureId = request.getParameter("omnitureId")
         val result = optBook map { book =>
-          format.result(views.html.books.bestsellersSuperHigh(book))
+          format.result(views.html.books.bestsellersSuperHigh(book, omnitureId, clickMacro))
         } getOrElse {
           format.nilResult
         }

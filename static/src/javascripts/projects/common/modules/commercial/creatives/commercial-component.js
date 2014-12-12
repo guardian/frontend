@@ -10,6 +10,7 @@ define([
     'lodash/collections/size',
     'lodash/objects/defaults',
     'lodash/objects/isArray',
+    'lodash/objects/merge',
     'lodash/objects/pick',
     'common/utils/$',
     'common/utils/_',
@@ -26,6 +27,7 @@ define([
     size,
     defaults,
     isArray,
+    merge,
     pick,
     $,
     _,
@@ -75,31 +77,29 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            var section = config.page.section,
-                jobs    = params.jobIds ? params.jobIds.split(',') : [];
+            var section   = config.page.section;
 
             this.params = params;
             this.$adSlot = $adSlot;
             this.type = params.type;
             this.components = {
-                bestbuy:           buildComponentUrl('money/bestbuys'),
-                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-                book:              buildComponentUrl('books/book', { t: config.page.isbn }),
-                books:             buildComponentUrl('books/bestsellers'),
-                booksMedium:       buildComponentUrl('books/bestsellers-medium'),
-                booksHigh:         buildComponentUrl('books/bestsellers-high'),
-                jobs:              buildComponentUrl('jobs', { t: jobs }),
-                jobsHigh:          buildComponentUrl('jobs-high'),
-                masterclasses:     buildComponentUrl('masterclasses'),
-                masterclassesHigh: buildComponentUrl('masterclasses-high'),
-                soulmates:         buildComponentUrl('soulmates/mixed'),
-                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
-                travel:            buildComponentUrl('travel/offers', { s: section }),
-                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: params.components }),
-                capiSingle:        buildComponentUrl('capi-single', defaults(params, { s: section })),
-                capiSingleMerch:   buildComponentUrl('capi-single-merch', defaults(params, { s: section })),
-                capi:              buildComponentUrl('capi', defaults(params, { s: section }))
+                bestbuy:           buildComponentUrl('money/bestbuys', params),
+                bestbuyHigh:       buildComponentUrl('money/bestbuys-high', params),
+                book:              buildComponentUrl('books/book', merge(params, { t: config.page.isbn || params.isbn })),
+                books:             buildComponentUrl('books/bestsellers', params),
+                booksMedium:       buildComponentUrl('books/bestsellers-medium', params),
+                booksHigh:         buildComponentUrl('books/bestsellers-high', params),
+                jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
+                jobsHigh:          buildComponentUrl('jobs-high', params),
+                masterclasses:     buildComponentUrl('masterclasses', params),
+                masterclassesHigh: buildComponentUrl('masterclasses-high', params),
+                soulmates:         buildComponentUrl('soulmates/mixed', params),
+                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high', params),
+                travel:            buildComponentUrl('travel/offers', merge(params, { s: section })),
+                travelHigh:        buildComponentUrl('travel/offers-high', merge(params, { s: section })),
+                multi:             buildComponentUrl('multi', params),
+                capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
+                capi:              buildComponentUrl('capi', merge(params, { s: section }))
             };
         };
 
@@ -109,13 +109,15 @@ define([
         }
     };
 
-    /**
-     * @param {Element} target
-     */
     CommercialComponent.prototype.load = function () {
         new LazyLoad({
             url: this.components[this.type],
             container: this.$adSlot,
+            beforeInsert: function (html) {
+                // Currently we are replacing the OmnitureToken with nothing. This will change once
+                // commercial components have properly been setup in the lovely mess that is Omniture!
+                return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
+            }.bind(this),
             success: function () {
                 this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
 
@@ -126,10 +128,6 @@ define([
         return this;
     };
 
-    /**
-     * @param {String}  name
-     * @param {Element} el
-     */
     CommercialComponent.prototype.create = function () {
         if (this.components[this.type] === undefined) {
             raven.captureMessage('Unknown commercial component: ' + name);

@@ -20,6 +20,7 @@ object Global extends WithFilters(Filters.common: _*)
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
     S3Metrics.S3AuthorizationError,
     FaciaMetrics.FaciaToApplicationRedirectMetric,
+    FaciaMetrics.FaciaToRssRedirectMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
   )
 }

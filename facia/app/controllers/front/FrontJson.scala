@@ -42,6 +42,7 @@ trait FrontJsonLite extends ExecutionContexts{
     .map{ j =>
       Json.obj(
         "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "meta" \ "trailText").asOpt[JsString].getOrElse(j \ "safeFields" \ "trailText"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
         "id" -> (j \ "id")

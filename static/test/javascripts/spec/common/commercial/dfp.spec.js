@@ -32,6 +32,9 @@ define([
                             pageId:      'world/uk',
                             section:     'news',
                             seriesId:    'learning/series/happy-times'
+                        },
+                        images: {
+                            commercial: {}
                         }
                     };
                 }
@@ -44,10 +47,10 @@ define([
                 fixturesConfig = {
                     id: 'article',
                     fixtures: [
-                        '<div id="dfp-ad-html-slot" class="ad-slot--dfp" data-name="html-slot" data-mobile="300,50"></div>\
-                        <div id="dfp-ad-script-slot" class="ad-slot--dfp" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
-                        <div id="dfp-ad-already-labelled" class="ad-slot--dfp ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
-                        <div id="dfp-ad-dont-label" class="ad-slot--dfp" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>'
+                        '<div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>\
+                        <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
+                        <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
+                        <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>'
                     ]
                 },
                 makeFakeEvent = function(id, isEmpty) {
@@ -128,40 +131,8 @@ define([
                 expect(Object.keys(dfp.getSlots()).length).toBe(4);
             });
 
-            it('should not call DFP if standard-adverts and commercial-components switches are off', function (dfp, deps) {
-                deps['common/utils/config'].switches = {
-                    standardAdverts: false,
-                    commercialComponents: false
-                };
-                expect(dfp.init()).toBe(false);
-            });
-
-            it('should not use commercial components if commercial-components switch is off', function (dfp, deps) {
-                deps['common/utils/config'].switches.commercialComponents = false;
-                $('.ad-slot--dfp').first().addClass('ad-slot--commercial-component')[0];
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                var slots = dfp.getSlots();
-                expect(Object.keys(slots).length).toBe(3);
-                for (var slotId in slots) {
-                    expect(slotId).not.toBe('dfp-ad-html-slot');
-                }
-            });
-
-            it('should not use non-commercial components if standard-adverts switch is off', function (dfp, deps) {
-                deps['common/utils/config'].switches.standardAdverts = false;
-                $('.ad-slot--dfp:nth-child(n+2)').addClass('ad-slot--commercial-component');
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                var slots = dfp.getSlots();
-                expect(Object.keys(slots).length).toBe(3);
-                for (var slotId in slots) {
-                    expect(slotId).not.toBe('dfp-ad-html-slot');
-                }
-            });
-
             it('should not get hidden ad slots', function (dfp) {
-                $('.ad-slot--dfp').first().css('display', 'none');
+                $('.js-ad-slot').first().css('display', 'none');
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 var slots = dfp.getSlots();
@@ -225,7 +196,7 @@ define([
             });
 
             it('should be able to create "out of page" ad slot', function (dfp) {
-                $('.ad-slot--dfp').first().attr('data-out-of-page', true);
+                $('.js-ad-slot').first().attr('data-out-of-page', true);
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
@@ -240,7 +211,7 @@ define([
                 });
 
                 it('should send container level keywords', function (dfp) {
-                    $('.ad-slot--dfp').first().attr('data-keywords', 'country/china');
+                    $('.js-ad-slot').first().attr('data-keywords', 'country/china');
                     dfp.init();
                     window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);

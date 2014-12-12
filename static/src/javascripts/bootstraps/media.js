@@ -16,7 +16,10 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/modules/video/tech-order',
+    'text!common/views/ui/loading.html',
+    'text!common/views/ui/video-ads-overlay.html'
 ], function (
     bean,
     bonzo,
@@ -34,7 +37,10 @@ define([
     buildPageTargeting,
     Component,
     history,
-    images
+    images,
+    playerPriority,
+    loadingTmpl,
+    adsOverlayTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -54,7 +60,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && $('.vjs-tech', player.el()).attr('data-auto-play') === 'true';
+        return isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
     }
 
     function constructEventName(eventName, player) {
@@ -92,21 +98,29 @@ define([
         var events = {
             end: function () {
                 player.trigger(constructEventName('preroll:end', player));
+                player.removeClass('vjs-ad-playing--vpaid');
                 bindContentEvents(player, true);
             },
-            play: function () {
+            start: function () {
                 var duration = player.duration();
                 if (duration) {
                     player.trigger(constructEventName('preroll:play', player));
                 } else {
-                    player.one('durationchange', events.play);
+                    player.one('durationchange', events.start);
                 }
+            },
+            vpaidStarted: function () {
+                player.addClass('vjs-ad-playing--vpaid');
             },
             ready: function () {
                 player.trigger(constructEventName('preroll:ready', player));
 
-                player.one('adstart', events.play);
+                player.one('adstart', events.start);
                 player.one('adend', events.end);
+
+                // Handle custom event to understand when vpaid is playing;
+                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
+                player.one('Vpaid::AdStarted', events.vpaidStarted);
 
                 if (shouldAutoPlay(player)) {
                     player.play();
@@ -115,8 +129,9 @@ define([
         };
         player.one('adsready', events.ready);
 
-        //If no preroll avaliable or preroll fails, still init content tracking
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
         player.one('adtimeout', function () {
+            player.trigger('adscanceled');
             bindContentEvents(player);
         });
     }
@@ -197,18 +212,19 @@ define([
 
     function adCountdown() {
         var player = this,
-            tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
-                  ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
             events =  {
                 destroy: function () {
                     $('.js-ads-overlay', this.el()).remove();
                     this.off('timeupdate', events.update);
                 },
                 update: function () {
+                    if (this.currentTime() > 0.1) {
+                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
+                    }
                     $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                 },
                 init: function () {
-                    $(this.el()).append($.create(tmp));
+                    $(this.el()).append($.create(adsOverlayTmpl));
                     this.on('timeupdate', events.update.bind(this));
                     this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
                     this.one(constructEventName('content:play', player), events.destroy.bind(player));
@@ -240,12 +256,7 @@ define([
     }
 
     function initLoadingSpinner(player) {
-        player.loadingSpinner.contentEl().innerHTML =
-            '<div class="pamplemousse">' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
+        player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
     function createVideoPlayer(el, options) {
@@ -253,9 +264,12 @@ define([
 
         player = videojs(el, options);
 
+        // we have some special autoplay rules, so do not want to depend on 'default' autoplay
+        player.guAutoplay = $(el).attr('data-auto-play') === 'true';
+
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = ['flash', 'html5'];
+            options.techOrder = playerPriority.reverse();
             player = videojs(el, options);
         }
 
@@ -264,12 +278,18 @@ define([
 
     function initPlayer() {
 
+        videojs.options.techOrder = playerPriority;
+
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-            videojs.options.techOrder = ['vpaid', 'html5', 'flash'];
+
+            // clone the video options and add 'vpaid' to them.
+            videojs.options.techOrder = videojs.options.techOrder.slice(0);
+            videojs.options.techOrder.unshift('vpaid');
+
             videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
         }
 
@@ -283,10 +303,17 @@ define([
                 blockVideoAds = $el.attr('data-block-video-ads') === 'true',
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',
                 endSlateUri = $el.attr('data-end-slate'),
+                embedPath = $el.attr('data-embed-path'),
                 player = createVideoPlayer(el, {
                     controls: true,
                     autoplay: false,
-                    preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                    plugins: {
+                        embed: {
+                            embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                            location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                        }
+                    }
                 }),
                 mouseMoveIdle;
 

@@ -52,7 +52,8 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-onward"),
     LoadBalancer("frontend-r2football"),
     LoadBalancer("frontend-diagnostics"),
-    LoadBalancer("frontend-archive")
+    LoadBalancer("frontend-archive"),
+    LoadBalancer("frontend-rss")
   ).flatten
 
   private val chartColours = Map(
@@ -68,7 +69,8 @@ object CloudWatch extends Logging with ExecutionContexts {
     ("frontend-onward",       ChartFormat(Colour.`tone-news-2`)),
     ("frontend-r2football",   ChartFormat(Colour.`tone-news-2`)),
     ("frontend-diagnostics",  ChartFormat(Colour.`tone-news-2`)),
-    ("frontend-archive",      ChartFormat(Colour.`tone-news-2`))
+    ("frontend-archive",      ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-rss",          ChartFormat(Colour.`tone-news-2`))
   ).withDefaultValue(ChartFormat.SingleLineBlack)
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
