@@ -11,7 +11,6 @@ GET        /_healthcheck                                             conf.Health
 # Travel offers
 GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.renderTravel
 
-
 # Jobs
 GET        /commercial/jobs.json                                     controllers.commercial.JobAds.renderJobs
 
