@@ -119,7 +119,9 @@ object IndexPage {
         customHeader = Some(header),
         customClasses = Some(Seq(
           Some("fc-container--tag"),
-          (container.index == 0 && indexPage.isFootballTeam) option "js-insert-team-stats-after"
+          (container.index == 0 &&
+            indexPage.isFootballTeam &&
+            Switches.FixturesAndResultsContainerSwitch.isSwitchedOn) option "js-insert-team-stats-after"
         ).flatten),
         hideToggle = true,
         showTimestamps = true,
