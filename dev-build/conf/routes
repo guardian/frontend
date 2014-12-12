@@ -21,6 +21,9 @@ GET         /counts.gif                                                         
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
+#Weather
+GET        /weather/city/:name                                                                                       controllers.WeatherController.forCity(name)
+GET        /weather/city                                                                                             controllers.WeatherController.forRequest()
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -217,34 +220,19 @@ GET         /admin/football/fronts/match/:matchId                               
 GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
-GET         /commercial/travel/offers                                                                                controllers.commercial.TravelOffers.travelOffersLowHtml
-GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.travelOffersLowJson
-GET         /commercial/travel/offers-high                                                                           controllers.commercial.TravelOffers.travelOffersHighHtml
-GET         /commercial/travel/offers-high.json                                                                      controllers.commercial.TravelOffers.travelOffersHighJson
+GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.renderTravel
 
-GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.jobsLowHtml
-GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobsLowJson
-GET         /commercial/jobs-high                                                                                    controllers.commercial.JobAds.jobsHighHtml
-GET         /commercial/jobs-high.json                                                                               controllers.commercial.JobAds.jobsHighJson
+GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.renderJobs
 
-GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.masterclassesLowHtml
-GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson
-GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.masterclassesHighHtml
-GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.masterclassesHighJson
+GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson
 GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
 GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
 
-GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
-GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
-GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMediumHtml
-GET         /commercial/books/bestsellers-medium.json                                                                controllers.commercial.BookOffers.bestsellersMediumJson
-GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHighHtml
-GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
-GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
 
 GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson
@@ -266,6 +254,8 @@ GET         /commercialtools/adunits/toapprove                                  
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+GET         /admin/commercial/dfp/flush/view                                                                         controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
+GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate

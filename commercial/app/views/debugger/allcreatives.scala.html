@@ -6,6 +6,7 @@
 
 <style>
     .test-page-head {
+        margin-top: 30px;
         font-size: 1.25rem;
     }
     .test-page-subhead {
@@ -148,9 +149,12 @@
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
-                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--manual-inline"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
+                    <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
+                    <div class="ad-slot ad-slot--im ad-slot--im ad-slot--inline-book"></div>
+                    <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
             </div>
         </div>
@@ -160,7 +164,7 @@
                     .then(function(
                         Template
                     ) {
-                        new Template(document.querySelector('.ad-slot--inline-book'), {
+                        new Template(document.querySelector('.ad-slot--manual-inline'), {
                             creative: 'manual-inline',
                             Toneclass: 'commercial--tone-brand',
                             component_title: 'The Guardian Bookshop',
@@ -171,10 +175,185 @@
                             offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
                             offer_meta: 'Meta'
                         }).create();
-                    });
+                      });
                 });
+            loadCommercial(function () {
+                require(['common/modules/commercial/creatives/commercial-component'])
+                    .then(function(
+                        CommercialComponent
+                    ) {
+                    new CommercialComponent(document.querySelector('.ad-slot--inline-book'), {
+                        type: 'book',
+                        isbn: '9780852655634',
+                        clickMacro: '%%CLICK_URL_ESC%%',
+                        omnitureId: 'omnitureId'
+                    }).create();
+                });
+            });
             </script>
     </article>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
+                Merchandising: commercial component (jobs)
+            </a>
+        </h2>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-jobs ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+        loadCommercial(function () {
+            require(['common/modules/commercial/creatives/commercial-component'])
+                .then(function(
+                    CommercialComponent
+                ) {
+                    new CommercialComponent(document.querySelector('.js-merchandising-jobs'), {
+                        type: 'jobs',
+                        jobIds: '4977372',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%'
+                    }).create();
+                });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030407">
+                Merchandising: commercial component (masterclasses)
+            </a>
+        </h2>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-masterclasses ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+        loadCommercial(function () {
+            require(['common/modules/commercial/creatives/commercial-component'])
+                .then(function(
+                    CommercialComponent
+                ) {
+                    new CommercialComponent(document.querySelector('.js-merchandising-masterclasses'), {
+                        type: 'masterclasses',
+                        ids: '',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%'
+                    }).create();
+                });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">
+                Merchandising: commercial component (books)
+            </a>
+        </h2>
+        <form class="js-merchandising-books-layout">
+            <label>Layout:
+                <select>
+                    <option value="standard" selected>Standard</option>
+                    <option value="prominent">Prominent</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-books ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+        loadCommercial(function () {
+            require([
+                'bean',
+                'qwery',
+                'common/utils/$',
+                'common/modules/commercial/creatives/commercial-component'
+            ])
+                .then(function (
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $merchandisingBooks = $('.js-merchandising-books');
+
+                    bean.on(qwery('.js-merchandising-books-layout')[0], 'change', function (event) {
+                        var commercialComponent = new CommercialComponent($merchandisingBooks[0], {
+                            type: 'books',
+                            layout: $(event.srcElement).val(),
+                            isbns: '9780224097000,9781783350629',
+                            omnitureId: '[%OmnitureID%]',
+                            clickMacro: '%%CLICK_URL_ESC%%'
+                        });
+
+                        commercialComponent.postLoadEvents.books = function () {
+                            $merchandisingBooks.removeClass('lazyloaded');
+                        };
+
+                        commercialComponent.create();
+                    });
+
+                    bean.fire(qwery('.js-merchandising-books-layout select')[0], 'change');
+                });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030527">
+                Merchandising: commercial component (travel)
+            </a>
+        </h2>
+        <form class="js-merchandising-travel-layout">
+            <label>Layout:
+                <select>
+                    <option value="standard" selected>Standard</option>
+                    <option value="prominent">Prominent</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-travel ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+        loadCommercial(function () {
+            require([
+                'bean',
+                'qwery',
+                'common/utils/$',
+                'common/modules/commercial/creatives/commercial-component'
+            ])
+                .then(function (
+                    bean,
+                    qwery,
+                    $,
+                    CommercialComponent
+                ) {
+                    var $merchandisingTravel = $('.js-merchandising-travel');
+
+                    bean.on(qwery('.js-merchandising-travel-layout')[0], 'change', function (event) {
+                        var commercialComponent = new CommercialComponent($merchandisingTravel[0], {
+                            type: 'travel',
+                            layout: $(event.srcElement).val(),
+                            ids: '',
+                            omnitureId: '[%OmnitureID%]',
+                            clickMacro: '%%CLICK_URL_ESC%%'
+                        });
+
+                        commercialComponent.postLoadEvents.travel = function () {
+                            $merchandisingTravel.removeClass('lazyloaded');
+                        };
+
+                        commercialComponent.create();
+                    });
+
+                    bean.fire(qwery('.js-merchandising-travel-layout select')[0], 'change');
+                });
+        });
+    </script>
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
@@ -183,39 +362,33 @@
     </div>
 
     @Seq(
-        Map(("name", "Best Buys"), ("type", "bestbuy"), ("hasMedium" -> false)),
-        Map(("name", "Books"), ("type", "books"), ("hasMedium" -> true)),
-        Map(("name", "Jobs"), ("type", "jobs"), ("hasMedium" -> false)),
-        Map(("name", "Masterclasses"), ("type", "masterclasses"), ("hasMedium" -> false)),
-        Map(("name", "Soulmates"), ("type", "soulmates"), ("hasMedium" -> false)),
-        Map(("name", "Travel"), ("type", "travel"), ("hasMedium" -> false))
+        Map(("name", "Best Buys"), ("type", "bestbuy")),
+        Map(("name", "Soulmates"), ("type", "soulmates"))
     ).map { component =>
         <div class="fc-container__inner">
             <h2 class="test-page-head">@component("name")</h2>
         </div>
-        @Seq("low", "medium", "high").map { relevance =>
-            @if(relevance != "medium" || (relevance == "medium" && component("hasMedium") == true)) {
-                <div class="fc-container__inner">
-                    <div class="fc-container__header">
-                        <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
-                    </div>
+        @Seq("low", "high").map { relevance =>
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <h3 class="fc-container__header__description">@relevance.capitalize relevance</h3>
                 </div>
-                <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
-                <script>
-                    loadCommercial(function () {
-                        require(['common/modules/commercial/creatives/commercial-component'])
-                            .then(function(
-                                CommercialComponent
-                            ) {
-                                new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
-                                    type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
-                                    clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: 'omnitureId'
-                                }).create();
-                            });
-                    });
-                </script>
-            }
+            </div>
+            <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-@component("type")-@relevance"></div>
+            <script>
+                loadCommercial(function () {
+                    require(['common/modules/commercial/creatives/commercial-component'])
+                        .then(function(
+                            CommercialComponent
+                        ) {
+                            new CommercialComponent(document.querySelector('.dfp-ad--merchandising-@component("type")-@relevance'), {
+                                type: '@component("type")@if(relevance != "low"){@relevance.capitalize}',
+                                clickMacro: '%%CLICK_URL_ESC%%',
+                                omnitureId: 'omnitureId'
+                            }).create();
+                        });
+                });
+            </script>
         }
     }
 
@@ -240,7 +413,6 @@
             });
         });
     </script>
-    </div>
 
     @Seq(
         Map(

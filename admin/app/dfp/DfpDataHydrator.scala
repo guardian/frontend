@@ -1,13 +1,9 @@
 package dfp
 
-import com.google.api.ads.common.lib.auth.OfflineCredentials
-import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411._
-import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
-import conf.{AdminConfiguration, Configuration}
 import dfp.DfpApiWrapper.DfpSessionException
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
@@ -34,13 +30,13 @@ class DfpDataHydrator extends Logging {
 
       val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
-      val optSponsorFieldId = loadCustomFieldId("sponsor")
+      val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
 
-      val allAdUnits = AdUnitAgent.get.adUnits
+      val allAdUnits = AdUnitAgent.get.data
       val placementAdUnits = loadAdUnitIdsByPlacement()
 
-      val allCustomTargetingKeys = loadAllCustomTargetKeys()
-      val allCustomTargetingValues = loadAllCustomTargetValues()
+      val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
+      val allCustomTargetingValues = CustomTargetingValueAgent.get.data
 
       dfpLineItems map { dfpLineItem =>
 
@@ -117,13 +113,6 @@ class DfpDataHydrator extends Logging {
     }
   }
 
-  def loadCustomFieldId(name: String): Option[Long] = dfpServiceRegistry flatMap {
-    serviceRegistry =>
-    val statementBuilder = new StatementBuilder().where("name = :name").withBindVariableValue("name", name)
-      val field = DfpApiWrapper.fetchCustomFields(serviceRegistry, statementBuilder).headOption
-    field map (_.getId)
-  }
-
   def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
     dfpServiceRegistry.fold(Seq[(String, String)]()) { serviceRegistry =>
       val statementBuilder = new StatementBuilder()
@@ -171,20 +160,6 @@ class DfpDataHydrator extends Logging {
       DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
   }.getOrElse(Failure(new DfpSessionException()))
 
-
-  def loadAllCustomTargetKeys(): Map[Long, String] =
-    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
-      DfpApiWrapper.fetchCustomTargetingKeys(serviceRegistry, new StatementBuilder()).map { k =>
-      k.getId.longValue() -> k.getName
-    }.toMap
-  }
-
-  def loadAllCustomTargetValues(): Map[Long, String] =
-    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
-      DfpApiWrapper.fetchCustomTargetingValues(serviceRegistry, new StatementBuilder()).map { v =>
-      v.getId.longValue() -> v.getName
-    }.toMap
-  }
 
   def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] =
     dfpServiceRegistry.fold(Map[Long, Seq[String]]()) { serviceRegistry =>

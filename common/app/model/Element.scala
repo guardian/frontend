@@ -2,6 +2,7 @@ package model
 
 import org.joda.time.Duration
 import com.gu.contentapi.client.model.{Element => ApiElement}
+import org.apache.commons.math3.fraction.Fraction
 
 trait Element {
   def delegate: ApiElement
@@ -37,10 +38,19 @@ trait ImageContainer extends Element {
   // The image crop with the largest width.
   lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
 
-  // all landscape images with a width of 1024 or 2048 have been auto-cropped to 4:3. portrait images are never
+  // all landscape images get 4:3 aspect autocrops generated at widths of 1024 and 2048. portrait images are never
   // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
   // distinguish crops by their intended usage
-  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || (img.width != 2048 && img.width != 1024))
+  lazy val largestEditorialCrop: Option[ImageAsset] = {
+    val autoCropRatio = new Fraction(4,3)
+    // if all crops are 4:3 then we can assume the original was 4:3 as we only generate 4:3 auto-crops
+    // otherwise the original must have been a different aspect ratio
+    if (imageCrops.exists(img => new Fraction(img.width, img.height) != autoCropRatio)) {
+      imageCrops.find{img => !(new Fraction(img.width, img.height) == autoCropRatio && (img.width == 1024 || img.width == 2048))}
+    } else {
+      largestImage
+    }
+  }
 
   lazy val isLightboxable: Boolean = largestEditorialCrop.map(_.width).getOrElse(0) > 620
 }

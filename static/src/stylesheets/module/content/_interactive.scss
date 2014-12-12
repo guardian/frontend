@@ -124,7 +124,11 @@
         }
     }
     .byline {
+        @include mq(desktop) {
+            width: gs-span(7);
+        }
         @include mq(leftCol) {
+            width: gs-span(8);
             border-top: 0;
             padding-bottom: 0;
             min-height: $gs-baseline * 2;

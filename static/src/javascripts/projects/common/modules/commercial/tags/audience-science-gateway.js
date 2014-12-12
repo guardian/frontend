@@ -40,14 +40,13 @@ define([
                     }),
                     url = [gatewayUrl, '?', query].join('');
 
-                return require(['js!' + url + '!exports=asiPlacements'])
-                    .then(function (asiPlacements) {
-                        var segments = storage.local.get(storageKey) || {};
-                        // override the global value with our previously stored one
-                        window.asiPlacements = segments[section];
-                        segments[section] = asiPlacements;
-                        storage.local.set(storageKey, segments);
-                    });
+                return require(['js!' + url + '!exports=asiPlacements'], function (asiPlacements) {
+                    var segments = storage.local.get(storageKey) || {};
+                    // override the global value with our previously stored one
+                    window.asiPlacements = segments[section];
+                    segments[section] = asiPlacements;
+                    storage.local.set(storageKey, segments);
+                });
             }
         }),
         getSegments = function () {

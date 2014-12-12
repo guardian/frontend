@@ -140,6 +140,10 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
+  val weather = application("weather")
+    .dependsOn(commonWithTests)
+    .aggregate(common)
+
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -153,7 +157,8 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward
+      onward,
+      weather
     ).settings(crosswordsRouting: _*)
 
   val faciaEndToEnd = application("facia-end-to-end")
@@ -211,6 +216,7 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
-    rss
+    rss,
+    weather
   )
 }
