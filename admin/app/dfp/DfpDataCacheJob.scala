@@ -44,8 +44,10 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     future {
       if (DfpCachingSwitch.isSwitchedOn) {
         for {
-          adUnitCache <- AdUnitAgent.refresh()
-          customFieldCache <- CustomFieldAgent.refresh()
+          _ <- AdUnitAgent.refresh()
+          _ <- CustomFieldAgent.refresh()
+          _ <- CustomTargetingKeyAgent.refresh()
+          _ <- CustomTargetingValueAgent.refresh()
         } {
           cacheData()
         }

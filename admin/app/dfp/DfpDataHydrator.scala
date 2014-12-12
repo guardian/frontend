@@ -30,13 +30,13 @@ class DfpDataHydrator extends Logging {
 
       val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
 
-      val optSponsorFieldId = CustomFieldAgent.get.customFields.get("Sponsor")
+      val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
 
-      val allAdUnits = AdUnitAgent.get.adUnits
+      val allAdUnits = AdUnitAgent.get.data
       val placementAdUnits = loadAdUnitIdsByPlacement()
 
-      val allCustomTargetingKeys = loadAllCustomTargetKeys()
-      val allCustomTargetingValues = loadAllCustomTargetValues()
+      val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
+      val allCustomTargetingValues = CustomTargetingValueAgent.get.data
 
       dfpLineItems map { dfpLineItem =>
 
@@ -160,20 +160,6 @@ class DfpDataHydrator extends Logging {
       DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
   }.getOrElse(Failure(new DfpSessionException()))
 
-
-  def loadAllCustomTargetKeys(): Map[Long, String] =
-    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
-      DfpApiWrapper.fetchCustomTargetingKeys(serviceRegistry, new StatementBuilder()).map { k =>
-      k.getId.longValue() -> k.getName
-    }.toMap
-  }
-
-  def loadAllCustomTargetValues(): Map[Long, String] =
-    dfpServiceRegistry.fold(Map[Long, String]()) { serviceRegistry =>
-      DfpApiWrapper.fetchCustomTargetingValues(serviceRegistry, new StatementBuilder()).map { v =>
-      v.getId.longValue() -> v.getName
-    }.toMap
-  }
 
   def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] =
     dfpServiceRegistry.fold(Map[Long, Seq[String]]()) { serviceRegistry =>
