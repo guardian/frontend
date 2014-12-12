@@ -1,3 +1,6 @@
+/**
+ *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
+ */
 .collection__show-more {
     line-height: 2.4;
 }
@@ -6,6 +9,7 @@
     line-height: 0;
 }
 
+// Removing the default margin for form elements in FF
 .collection__show-more::-moz-focus-inner {
     border: 0;
     padding: 0;
