@@ -6,6 +6,7 @@
 
 <style>
     .test-page-head {
+        margin-top: 30px;
         font-size: 1.25rem;
     }
     .test-page-subhead {
@@ -183,7 +184,9 @@
             </a>
         </h2>
     </div>
-    <div class="js-merchandising-jobs"></div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-jobs ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
     <script>
         loadCommercial(function () {
             require(['common/modules/commercial/creatives/commercial-component'])
@@ -207,7 +210,9 @@
             </a>
         </h2>
     </div>
-    <div class="js-merchandising-masterclasses"></div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-masterclasses ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
     <script>
         loadCommercial(function () {
             require(['common/modules/commercial/creatives/commercial-component'])
@@ -239,7 +244,9 @@
             </label>
         </form>
     </div>
-    <div class="js-merchandising-books"></div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-books ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
     <script>
         loadCommercial(function () {
             require([
@@ -257,7 +264,6 @@
                     var $merchandisingBooks = $('.js-merchandising-books');
 
                     bean.on(qwery('.js-merchandising-books-layout')[0], 'change', function (event) {
-                        console.log(event);
                         var commercialComponent = new CommercialComponent($merchandisingBooks[0], {
                             type: 'books',
                             layout: $(event.srcElement).val(),
@@ -293,7 +299,9 @@
             </label>
         </form>
     </div>
-    <div class="js-merchandising-travel"></div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-travel ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
     <script>
         loadCommercial(function () {
             require([
@@ -319,7 +327,7 @@
                             clickMacro: '%%CLICK_URL_ESC%%'
                         });
 
-                        commercialComponent.postLoadEvents.books = function () {
+                        commercialComponent.postLoadEvents.travel = function () {
                             $merchandisingTravel.removeClass('lazyloaded');
                         };
 
@@ -389,7 +397,6 @@
             });
         });
     </script>
-    </div>
 
     @Seq(
         Map(
