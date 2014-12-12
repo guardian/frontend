@@ -220,7 +220,7 @@
     }
 
     @include mq(tablet) {
-        .tone-comment--item .flyer__container {
+        .flyer--has-byline-pic.tone-comment--item .flyer__container {
             padding-bottom: $gs-baseline * 11;
         }
     }
