@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
@@ -18,6 +19,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/url',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/sticky'
@@ -25,6 +27,7 @@ define([
     bean,
     bonzo,
     qwery,
+    raven,
     debounce,
     flatten,
     uniq,
@@ -40,6 +43,7 @@ define([
     config,
     detect,
     mediator,
+    urlUtils,
     buildPageTargeting,
     geoMostPopular,
     Sticky
@@ -69,7 +73,7 @@ define([
     /**
      * Private variables
      */
-    var adSlotSelector    = '.ad-slot--dfp',
+    var adSlotSelector    = '.js-ad-slot',
         displayed         = false,
         rendered          = false,
         slots             = {},
@@ -106,11 +110,11 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+            googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
-            });
+            }));
         },
         setPageTargeting = function () {
             forOwn(buildPageTargeting(), function (value, key) {
@@ -165,22 +169,14 @@ define([
          */
         init = function () {
 
-            if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
-                return false;
-            }
-
-            if (!config.switches.standardAdverts) {
-                adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
-
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
                 require(['js!googletag']);
             }
+
+            window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
@@ -224,12 +220,15 @@ define([
          * Private functions
          */
         defineSlot = function ($adSlot) {
-            var slotTarget  = $adSlot.data('slot-target') || $adSlot.data('name'),
-                adUnit      = config.page.adUnit,
-                id          = $adSlot.attr('id'),
-                sizeMapping = defineSlotSizes($adSlot),
+            var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
+                adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+                // if ?ad-unit=x, use that
+                adUnit         = adUnitOverride ?
+                    ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
+                id             = $adSlot.attr('id'),
+                sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size        = uniq(
+                size           = uniq(
                     flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
@@ -307,8 +306,7 @@ define([
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name])
-                                    .then(function (Creative) {
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params).create();
                                     });
                             } else {

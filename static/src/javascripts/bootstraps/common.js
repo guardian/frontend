@@ -174,7 +174,7 @@ define([
             },
 
             transcludeOnwardContent: function () {
-                if ('seriesId' in config.page) {
+                if ('seriesId' in config.page && 'showRelatedContent' in config.page && config.page.showRelatedContent) {
                     new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {

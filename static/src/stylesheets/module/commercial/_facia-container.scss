@@ -110,6 +110,7 @@
         }
         @include mq(leftCol) {
             margin-left: $left-column + $gs-gutter;
+            min-height: $gs-row-height * 5;
         }
         @include mq(wide) {
             margin-left: $left-column-wide + $gs-gutter;
@@ -223,7 +224,7 @@
             bottom: $gs-baseline;
             left: $gs-gutter/2;
         }
-        
+
         .hide-on-mobile-inline {
             @include mq(leftCol, wide) {
                 display: none !important;

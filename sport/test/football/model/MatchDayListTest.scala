@@ -27,7 +27,7 @@ import test.ConfiguredTestSuite
 
       "should subgroup matches correctly league, with the leagues ordered correctly" in {
         val (_, competitionMatches1) = matches.matchesGroupedByDateAndCompetition(0)
-        competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("500", "100"))
+        competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("100", "500"))
       }
 
       "should show all matches happening today" in {

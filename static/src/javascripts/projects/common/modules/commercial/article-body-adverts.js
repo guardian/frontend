@@ -16,6 +16,25 @@ define([
     createAdSlot
 ) {
 
+    function getRules() {
+        return {
+            minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
+            minBelow: 300,
+            selectors: {
+                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 250},
+                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                ' .ad-slot': {minAbove: 500, minBelow: 500}
+            }
+        };
+    }
+
+    function getLenientRules() {
+        var lenientRules = cloneDeep(getRules());
+        // more lenient rules, closer to the top start of the article
+        lenientRules.minAbove = 300;
+        return lenientRules;
+    }
+
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -28,7 +47,7 @@ define([
         },
         init = function () {
 
-            var breakpoint, rules, lenientRules;
+            var rules, lenientRules;
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -39,20 +58,8 @@ define([
                 return false;
             }
 
-            breakpoint = detect.getBreakpoint();
-            rules      = {
-                minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
-            },
-            lenientRules = cloneDeep(rules);
-
-            // more lenient rules, closer to the top start of the article
-            lenientRules.minAbove = 300;
+            rules = getRules();
+            lenientRules = getLenientRules();
 
             if (
                 config.page.sponsorshipType === 'foundation-features' &&
@@ -75,6 +82,10 @@ define([
     return {
 
         init: once(init),
+
+        // rules exposed for spacefinder debugging
+        getRules: getRules,
+        getLenientRules: getLenientRules,
 
         destroy: function () {
             ads.forEach(function ($ad) {

@@ -9,7 +9,9 @@ define([
         mock: function () {
             return {
                 'reqwest': function () {
-                    return reqwestSpy = sinon.spy();
+                    return reqwestSpy = sinon.spy(function () {
+                        return { then: function () { } };
+                    });
                 },
                 'common/utils/config': function () {
                     return {

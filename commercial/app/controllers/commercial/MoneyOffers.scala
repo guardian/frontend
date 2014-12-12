@@ -7,16 +7,22 @@ import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
 
-object MoneyOffers extends Controller {
+object MoneyOffers extends Controller with implicits.Requests {
 
   object lowRelevance extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuys(bestBuys)
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.moneysupermarket.bestBuys(bestBuys, omnitureId, clickMacro)
+    }
   }
 
   object highRelevance extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuysHigh(bestBuys)
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html = {
+      val clickMacro = request.getParameter("clickMacro")
+      val omnitureId = request.getParameter("omnitureId")
+      views.html.moneysupermarket.bestBuysHigh(bestBuys, omnitureId, clickMacro)
+    }
   }
 
   private def bestBuys(relevance: BestBuysRelevance, format: Format) = MemcachedAction { implicit request =>

@@ -75,15 +75,8 @@ $vjs-progress-inset-bottom: 4px;
     @include box-sizing(border-box);
     text-align: center;
 
-    .gu-media--audio & {
-        display: none;
-    }
     .vjs-has-started & {
         padding-bottom: $vjs-control-height;
-    }
-
-    .vjs-has-ended & {
-        display: none;
     }
 
     &:after {
@@ -138,6 +131,9 @@ $vjs-progress-inset-bottom: 4px;
         }
     }
 
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
     .vjs-playing &,
     .vjs-has-started.vjs-using-native-controls &,
     .vjs-ad-loading & {
@@ -156,6 +152,10 @@ $vjs-progress-inset-bottom: 4px;
     z-index: 2;
 
     .vjs-using-native-controls & {
+        display: none;
+    }
+
+    .vjs-ad-playing--vpaid & {
         display: none;
     }
 }
@@ -565,6 +565,10 @@ $vjs-progress-inset-bottom: 4px;
     .vjs-playing & {
         display: block;
     }
+
+    .vjs-playing.vjs-ad-playing--vpaid & {
+        display: none;
+    }
 }
 
 .vast-skip-button {
@@ -650,7 +654,7 @@ $vjs-progress-inset-bottom: 4px;
 
 /* VJS: AD OVERLAY
    ========================================================================== */
-.vjs-ads-overlay {
+.vjs-ads-overlay-top {
     position: absolute;
     z-index: 2;
     top: 0;
@@ -667,6 +671,30 @@ $vjs-progress-inset-bottom: 4px;
     @include mq(tablet) {
         @include fs-textSans(2, true);
     }
+}
+
+.vjs-ads-overlay .pamplemousse {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.vjs-ads-overlay--not-started {
+
+    .vjs-ads-overlay-countdown {
+        display: none;
+    }
+
+    .vjs-ads-overlay-loading {
+        display: block;
+    }
+}
+
+.vjs-ads-overlay-loading {
+    display: none;
 }
 
 .vjs-ads-overlay__label {

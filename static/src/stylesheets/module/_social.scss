@@ -27,8 +27,10 @@ category: Common
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share on Google+</span>
-            <span class="social-icon"><i class="i-share-gplus--white i"></i></span>
+            <span class="social-icon">
+                <i class="i-share-gplus--white i"></i>
+                <span class="social-icon__label">Share on Google+</span>
+            </span>
         </a>
     </li>
 </ul>
@@ -42,11 +44,11 @@ category: Common
 
 .social__item {
     float: left;
-    width: 36px;
+    min-width: 36px;
     padding: 0 3px $gs-baseline/2 0;
 
     @include mq(leftCol) {
-        width: 32px;
+        min-width: 32px;
     }
 }
 
@@ -57,7 +59,7 @@ category: Common
 }
 
 .social__action {
-    display: block;
+    display: inline-block;
 }
 
 
@@ -69,31 +71,67 @@ category: Common
  *         <i class="i share-icon-xxx"></i>
  *     </span>
  * </element>
+ * <element class="social-icon-wrapper">
+ *     <span class="social-icon social-icon--small">
+ *         <i class="i share-icon-xxx"></i>
+ *         <span class="social-icon__label">Share on xxx</span>
+ *     </span>
+ * </element>
  */
 
-@include mq(desktop) {
-
-    $social-icon: (
-        width: 36px,
-        height: 36px,
-        color: colour(neutral-2),
-        space-in-between: 2px
-    );
-
-}
 .social-icon {
     @extend %icon-holder-circle;
     border: 0;
-    width: 32px;
+    min-width: 32px;
+    max-width: 100%;
+    width: auto;
     height: 32px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
 
     i {
-        display: block;
-        width: 100%;
+        display: inline-block;
+        width: 32px;
         height: 100%;
         background-size: 88% !important;
         background-position: center !important;
+        vertical-align: middle;
     }
+
+    .social-icon__label {
+        @include fs-textSans(2);
+        margin: 0 .8em 0 -.5em;
+    }
+}
+
+.social-icon--small {
+    min-width: 24px;
+    height: 24px;
+
+    i {
+        width: 24px;
+        background-size: 100% !important;
+    }
+
+    .social-icon__label {
+        @include fs-textSans(1);
+        margin: 0 .7em 0 -.3em;
+    }
+}
+
+.social-icon__label {
+    white-space: nowrap;
+    font-weight: bold;
 }
 
 .social-icon--facebook {

@@ -20,14 +20,6 @@ define([
         return n < 10 ? '0' + n : n;
     }
 
-    function ampm(n) {
-        return n < 12 ? 'am' : 'pm';
-    }
-
-    function twelveHourClock(hours) {
-        return hours > 12 ? hours - 12 : hours;
-    }
-
     function isToday(date) {
         var today = new Date();
         return (date.toDateString() === today.toDateString());
@@ -135,16 +127,14 @@ define([
         } else if (delta < 5 * 24 * 60 * 60) { // less than 5 days
             return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
                    (opts.showTime ? withTime(then) : '');
-
         } else {
             return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
                    (opts.showTime ? withTime(then) : '');
-
         }
     }
 
     function withTime(date) {
-        return ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours());
+        return ' ' + date.getHours() + ':' + pad(date.getMinutes());
     }
 
     function findValidTimestamps() {
@@ -186,7 +176,6 @@ define([
             if (relativeDate) {
                 // If we find .timestamp__text (facia), use that instead
                 targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
-
                 if (!targetEl.getAttribute('title')) {
                     targetEl.setAttribute('title', bonzo(targetEl).text());
                 }
