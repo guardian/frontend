@@ -45,15 +45,16 @@ define([
             $rightHandCol  = $('.js-secondary-column');
 
         if (
-            !templateConfig ||
+            !this.params.showEverywhere && ( !templateConfig ||
             $rightHandCol.css('display') === 'none' ||
             $rightHandCol.dim().height < 1600 ||
-            config.page.section === 'football'
+            config.page.section === 'football' )
         ) {
             return false;
         }
 
         templateConfig.config.clickMacro = this.params.clickMacro;
+        templateConfig.config.omnitureId = this.params.omnitureId;
 
         $.create(template(templateConfig.template, templateConfig.config))
             .appendTo($rightHandCol);
