@@ -9,6 +9,7 @@ import play.api.mvc.RequestHeader
 import slices.{FixedContainers, Fixed}
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
+import football.views.html.fragments.componentMissingMessage
 import common.Seqs._
 
 import scalaz.syntax.std.boolean._
@@ -54,16 +55,22 @@ object FixturesAndResults extends Football {
       val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
 
       val blobs = Seq(
-        fixtureExists option HtmlAndClasses(
+        Some(HtmlAndClasses(
           1,
-          matchesComponent(TeamFixturesList.forTeamId(teamId)),
+          if (fixtureExists)
+            matchesComponent(TeamFixturesList.forTeamId(teamId))
+          else
+            componentMissingMessage("No upcoming fixtures"),
           cssClasses
-        ),
-        resultExists option HtmlAndClasses(
+        )),
+        Some(HtmlAndClasses(
           2,
-          matchesComponent(TeamResultsList.forTeamId(teamId)),
+          if (resultExists)
+            matchesComponent(TeamResultsList.forTeamId(teamId))
+          else
+            componentMissingMessage("No recent results"),
           cssClasses
-        ),
+        )),
         maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
           HtmlAndClasses(
             3,

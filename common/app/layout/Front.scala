@@ -1,7 +1,6 @@
 package layout
 
 import com.gu.facia.client.models.CollectionConfig
-import contentapi.Paths
 import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime

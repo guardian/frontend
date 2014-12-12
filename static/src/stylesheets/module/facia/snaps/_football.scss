@@ -246,3 +246,8 @@ $footballBadgeSizeDesktop: 120px;
 .after-article .football-extras {
     margin-top: $gs-baseline*2;
 }
+
+.football-component-missing {
+    @include fs-textSans(2);
+    padding: 8px 8px;
+}
