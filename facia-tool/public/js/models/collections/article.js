@@ -682,7 +682,7 @@ define([
             this.meta.headline('Fetching headline...');
 
             authedAjax.request({
-                url: '/http/proxy/' + url + (isOnSite ? '%3Fview=mobile' : ''),
+                url: '/http/proxy/' + url + (isOnSite ? '?view=mobile' : ''),
                 type: 'GET'
             })
             .done(function(response) {
