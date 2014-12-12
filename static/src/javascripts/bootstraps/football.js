@@ -13,6 +13,7 @@ define([
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/score-board',
+    'common/modules/sport/football/tag-page-stats',
     'common/modules/ui/rhc'
 ], function (
     bean,
@@ -29,6 +30,7 @@ define([
     MatchInfo,
     MatchListLive,
     ScoreBoard,
+    tagPageStats,
     rhc
 ) {
 
@@ -321,10 +323,11 @@ define([
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }
+
+        tagPageStats();
     }
 
     return {
         init: init
     };
-
 });

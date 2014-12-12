@@ -14,6 +14,7 @@ import views.support.{CartoonKicker, ReviewKicker, TagKicker}
 import scala.Function.const
 import scalaz.syntax.traverse._
 import scalaz.std.list._
+import scalaz.syntax.std.boolean._
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -108,7 +109,7 @@ object IndexPage {
       }
     }
 
-    val withDatePaths = front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
+    front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
         case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
         case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
@@ -116,7 +117,10 @@ object IndexPage {
 
       container.copy(
         customHeader = Some(header),
-        customClasses = Some(Seq("fc-container--tag")),
+        customClasses = Some(Seq(
+          Some("fc-container--tag"),
+          (container.index == 0 && indexPage.isFootballTeam) option "js-insert-team-stats-after"
+        ).flatten),
         hideToggle = true,
         showTimestamps = true,
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
@@ -132,12 +136,6 @@ object IndexPage {
         })
       })
     }))
-
-    CustomIndexPageContainers.fromIndexPage(indexPage)
-      .filter(_ => indexPage.page.pagination.exists(_.isFirstPage))
-      .fold(withDatePaths) { customContainer =>
-      CustomIndexPageContainers.merge(withDatePaths, customContainer)
-    }
   }
 }
 
@@ -157,6 +155,11 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case combiner: TagCombiner =>
       combiner.leftTag.id == id || combiner.rightTag.id == id
 
+    case _ => false
+  }
+
+  def isFootballTeam = page match {
+    case tag: Tag => tag.isFootballTeam
     case _ => false
   }
 
