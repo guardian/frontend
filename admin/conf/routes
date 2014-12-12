@@ -60,6 +60,7 @@ GET         /commercialtools/adunits/toapprove                                  
 POST        /commercialtools/adunits/toapprove                                                 controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                                                         controllers.admin.CommercialController.renderFluidAds()
 GET         /analytics/commercial/adtests                                                      controllers.admin.CommercialController.renderAdTests()
+GET         /admin/commercial/dfp/flush/view                                                   controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /admin/commercial/dfp/flush                                                        controllers.admin.commercial.DfpDataController.flushCache()
 
 # Metrics
