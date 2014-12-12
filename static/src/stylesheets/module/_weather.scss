@@ -94,12 +94,12 @@
     @include fs-bodyCopy(2);
     margin: 0;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         line-height: $gs-row-height;
         margin-right: 5px;
     }
 
-    @include mq($from: tablet, $to: leftCol) {
+    @include mq(tablet, leftCol) {
         display: block;
         padding-right: $gs-gutter / 4;
     }
@@ -109,20 +109,17 @@
     float: right;
     background-position: left top !important;
     background-size: 100% !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0;
 
-    @include mq($to: tablet) {
-        width: 36px !important;
-        height: 36px !important;
-        margin: 0;
-    }
-
-    @include mq($from: tablet, $to: leftCol) {
+    @include mq(tablet) {
         width: 40px !important;
         height: 40px !important;
         margin-top: $gs-gutter / 5;
     }
 
-    @include mq($from: leftCol) {
+    @include mq(leftCol) {
         //Till we will have new icons
         width: 60px !important;
         height: 60px !important;
@@ -142,7 +139,7 @@
 }
 
 .weather__wrap {
-    @include mq($to: leftCol) {
+    @include mq($until: leftCol) {
         float: left;
     }
 }
