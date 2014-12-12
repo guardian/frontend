@@ -3,11 +3,11 @@ package feed
 import common._
 import conf.FootballClient
 import java.util.Comparator
-import model.Competition
-import model.TeamFixture
+import model.{Competition, TeamFixture}
 import org.joda.time.{ DateTimeComparator, LocalDate }
 import org.scala_tools.time.Imports._
 import pa._
+import model.Competition
 
 
 trait CompetitionSupport extends implicits.Football {
@@ -111,7 +111,9 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
-    Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish")
+    Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
+    Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals")
+
   )
 
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
