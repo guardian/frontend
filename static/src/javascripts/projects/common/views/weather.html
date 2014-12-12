@@ -4,9 +4,18 @@
             <span class="js-weather-city">{{location}}</span>
             <i class="i i-search-dark-grey-36 weather__pin"><span class="u-h">Get your current location</span></i>
         </a>
-        <p class="weather__temp js-weather-temp">{{tempNow}}</p>
+        <ul class="u-unstyled">
+            <li class="weather__forecast">
+                <p class="weather__desc">
+                    <span class="u-h">The temperature</span>
+                    <span class="weather__time">now</span>
+                    <span class="u-h">is</span>
+                    <span class="weather__temp js-weather-temp">{{tempNow}}</span>
+                </p>
+                <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
+            </li>
+        </ul>
     </div>
-    <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
     <div class="popup is-off weather-change-location" id="weather-get-location">
         <ul class="popup__group">
             <li class="popup__item">

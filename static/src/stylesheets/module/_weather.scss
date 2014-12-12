@@ -90,8 +90,13 @@
     }
 }
 
-.weather__temp {
-    @include fs-bodyCopy(2);
+.weather__forecast {
+    position: relative;
+    overflow: auto;
+}
+
+.weather__desc {
+    @include fs-headline(2);
     margin: 0;
 
     @include mq($until: tablet) {
@@ -102,6 +107,18 @@
     @include mq(tablet, leftCol) {
         display: block;
         padding-right: $gs-gutter / 4;
+    }
+
+    @include mq(leftCol) {
+        position: absolute;
+    }
+}
+
+.weather__time {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
     }
 }
 
@@ -116,7 +133,7 @@
     @include mq(tablet) {
         width: 40px !important;
         height: 40px !important;
-        margin-top: $gs-gutter / 5;
+        margin-top: $gs-gutter / 5; // Change to gs-baseline
     }
 
     @include mq(leftCol) {
@@ -124,7 +141,12 @@
         width: 60px !important;
         height: 60px !important;
         display: block;
-        margin-top: -$gs-gutter;
+    }
+    
+    @include mq(wide) {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
