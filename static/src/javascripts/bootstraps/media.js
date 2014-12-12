@@ -18,6 +18,7 @@ define([
     'common/modules/onward/history',
     'common/modules/ui/images',
     'common/modules/video/tech-order',
+    'common/modules/analytics/beacon',
     'text!common/views/ui/loading.html',
     'text!common/views/ui/video-ads-overlay.html'
 ], function (
@@ -39,6 +40,7 @@ define([
     history,
     images,
     playerPriority,
+    beacon,
     loadingTmpl,
     adsOverlayTmpl
 ) {
@@ -259,6 +261,21 @@ define([
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
+    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
+    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
+    // needing to know about videojs
+    function bindGlobalEvents(player) {
+        player.on('playing', function(){
+            bean.fire(document.body, 'videoPlaying');
+        });
+        player.on('pause', function(){
+            bean.fire(document.body, 'videoPause');
+        });
+        player.on('ended', function(){
+            bean.fire(document.body, 'videoEnded');
+        });
+    }
+
     function createVideoPlayer(el, options) {
         var player;
 
@@ -274,6 +291,14 @@ define([
         }
 
         return player;
+    }
+
+    // Apologies for the slightly hacky nature of this.
+    // Improvements welcomed...
+    function isFlash(event) {
+        return event.target.firstChild &&
+            event.target.firstChild.id &&
+            event.target.firstChild.id.indexOf('flash_api') > 0
     }
 
     function initPlayer() {
@@ -327,6 +352,15 @@ define([
 
                 bindErrorHandler(player);
                 initLoadingSpinner(player);
+                bindGlobalEvents(player);
+
+                player.one('playing', function(e){
+                    if(isFlash(e)) {
+                        beacon.counts('video-tech-flash');
+                    } else {
+                        beacon.counts('video-tech-html5');
+                    }
+                });
 
                 // unglitching the volume on first load
                 vol = player.volume();
