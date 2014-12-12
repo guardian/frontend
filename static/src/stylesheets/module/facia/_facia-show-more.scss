@@ -1,25 +1,13 @@
-$icon-collection-size: 80%;
-
 .collection__show-more {
-    display: block;
-    clear: both;
-    margin-top: $gs-baseline;
-    border: 1px solid colour(guardian-brand-light);
-    color: colour(guardian-brand);
+    line-height: 2.4;
+}
 
-    &:hover,
-    &:focus {
-        border-color: colour(guardian-brand-dark);
-    }
+.show-more__text {
+    line-height: 0;
+}
 
-    .i {
-        width: $icon-collection-size;
-        height: $icon-collection-size;
-    }
-
-    .fc-show-more--hidden & {
-        margin-top: 0;
-        border: 0;
-        color: #ffffff;
-    }
+.collection__show-more::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
