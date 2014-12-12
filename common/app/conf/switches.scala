@@ -392,6 +392,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
+    "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
