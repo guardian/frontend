@@ -75,8 +75,6 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            var section   = config.page.section;
-
             this.params = params;
             this.type   = params.type;
             // remove type from params
