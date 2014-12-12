@@ -2,27 +2,63 @@
     <div class="ad-slot__label adFullWidth__label facia-container--layout-front" data-test-id="ad-slot-label">
         <div class="facia-container__inner">Advertisement</div>
     </div>
-    
     <div class="ad-exp--expand l-side-margins mobile-only" style="background-color: {{backgroundColor}}">
-        <div class="facia-container__inner facia-container__inner--full-span">
+        <div class="facia-container__inner facia-container__inner--full-span" style="
+            background-image: url('{{backgroundImageM}}');
+            background-repeat: {{backgroundRepeatM}};
+            background-position: {{backgroundPositionM}};
+        ">
             <button class="ad-exp__close-button">
                 <i class="i i-close-icon-white-small"></i>
             </button>
             <a href="{{clickMacro}}{{link}}" target="_new">
-                <div class="ad-exp-collapse__slide slide-1">
-                    <div class="ad-exp__layer ad-exp__layer1"></div>
-                    <div class="ad-exp__layer ad-exp__layer2"></div>
-                    <div class="ad-exp__layer ad-exp__layer3"></div>
+                <div class="ad-exp-collapse__slide slide-1" style="
+                    background-color: {{slide1BGColor}};
+                    background-image: url('{{slide1BGImageM}}');
+                    background-repeat: {{slide1BGImageRepeatM}};
+                    background-position: {{slide1BGImagePositionM}};
+                ">
+                    <div class="ad-exp__layer ad-exp__layer1" style="
+                        background-image: url('{{slide1Layer1BGImageM}}');
+                        background-repeat: {{slide1Layer1BGImageRepeatM}};
+                        background-position: {{slide1Layer1BGImagePositionM}};
+                    "></div>
+                    <div class="ad-exp__layer ad-exp__layer2" style="
+                        background-image: url('{{slide1Layer2BGImageM}}');
+                        background-repeat: {{slide1Layer2BGImageRepeatM}};
+                        background-position: {{slide1Layer2BGImagePositionM}};
+                    "></div>
+                    <div class="ad-exp__layer ad-exp__layer3" style="
+                        background-image: url('{{slide1Layer3BGImageM}}');
+                        background-repeat: {{slide1Layer3BGImageRepeatM}};
+                        background-position: {{slide1Layer3BGImagePositionM}};
+                    "></div>
                 </div>
-                <div class="ad-exp-collapse__slide slide-2" style="background-image: url('{{slide2}}');">
-                    <div class="ad-exp__layer ad-exp__layer1"></div>
-                    <div class="ad-exp__layer ad-exp__layer2"></div>
-                    <div class="ad-exp__layer ad-exp__layer3"></div>
+                <div class="ad-exp-collapse__slide slide-2" style="
+                    background-color: {{slide2BGColor}};
+                    background-image: url('{{slide2BGImageM}}');
+                    background-position: {{slide2BGImagePositionM}};
+                    background-repeat: {{slide2BGImageRepeatM}};
+                ">
+                    <div class="ad-exp__layer ad-exp__layer1" style="
+                        background-image: url('{{slide2Layer1BGImageM}}');
+                        background-repeat: {{slide2Layer1BGImageRepeatM}};
+                        background-position: {{slide2Layer1BGImagePositionM}};
+                    "></div>
+                    <div class="ad-exp__layer ad-exp__layer2" style="
+                        background-image: url('{{slide2Layer2BGImageM}}');
+                        background-repeat: {{slide2Layer2BGImageRepeatM}};
+                        background-position: {{slide2Layer2BGImagePositionM}};
+                    "></div>
+                    <div class="ad-exp__layer ad-exp__layer3" style="
+                        background-image: url('{{slide2Layer3BGImageM}}');
+                        background-repeat: {{slide2Layer3BGImageRepeatM}};
+                        background-position: {{slide2Layer3BGImagePositionM}};
+                    "></div>
                 </div>
             </a>
         </div>
     </div>
-    
     <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: {{backgroundColor}}">
         <div class="facia-container__inner facia-container__inner--full-span" style="
             background-image: url('{{backgroundImage}}');
