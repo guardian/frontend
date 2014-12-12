@@ -17,7 +17,7 @@
         text-align: left;
     }
 
-    @include mq($from: tablet, $to: leftCol) {
+    @include mq(tablet, leftCol) {
         top: $gs-gutter / 5;
     }
 
@@ -66,6 +66,12 @@
     }*/
 }
 
+.weather__wrap {
+    @include mq($until: tablet) {
+        float: left;
+    }
+}
+
 .weather__city {
     @include fs-header(2);
     color: colour(neutral-1);
@@ -75,14 +81,6 @@
 
     @include mq(tablet) {
         display: inline-block;
-    }
-
-    @include mq($until: leftCol) {
-        padding-top: 7px;
-        padding-right: $gs-gutter / 2;
-    }
-
-    @include mq(leftCol) {
         position: relative;
         width: 100%;
         padding-bottom: $gs-baseline / 2;
@@ -158,10 +156,4 @@
 .weather__gps {
     background-size: 40% !important;
     background-position: center bottom !important;
-}
-
-.weather__wrap {
-    @include mq($until: leftCol) {
-        float: left;
-    }
 }
