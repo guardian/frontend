@@ -4,7 +4,6 @@ import com.gu.facia.client.models.CollectionConfig
 import contentapi.Paths
 import dfp.DfpAgent
 import model._
-import monocle.Lenser
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices._
@@ -112,10 +111,6 @@ case class ContainerCommercialOptions(
 }
 
 object FaciaContainer {
-  val lenser = Lenser[FaciaContainer]
-
-  val index = lenser(_.index)
-
   def apply(
     index: Int,
     container: Container,
@@ -245,9 +240,6 @@ case class FaciaContainer(
 }
 
 object Front extends implicits.Collections {
-  val lenser = Lenser[Front]
-  val containers = lenser(_.containers)
-
   type TrailUrl = String
 
   def itemsVisible(containerDefinition: ContainerDefinition) =

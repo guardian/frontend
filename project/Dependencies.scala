@@ -35,8 +35,6 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.5"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
-  val monocleCore = "com.github.julien-truffaut" %% "monocle-core" % monocleLibraryVersion
-  val monocleMacro = "com.github.julien-truffaut" %% "monocle-macro" % monocleLibraryVersion
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
