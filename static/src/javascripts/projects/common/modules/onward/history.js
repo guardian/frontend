@@ -256,7 +256,7 @@ define([
         if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
 
             $('.js-navigation-header .js-top-navigation a').each(function (item) {
-                topNavItems[collapseTag($(item).attr('href'))] = true;
+                topNavItems[collapseTag(urlPath($(item).attr('href')))] = true;
             });
 
             tagsHtml = _.chain(getPopular())
@@ -279,6 +279,12 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+    }
+
+    function urlPath(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        return a.pathname;
     }
 
     return {
