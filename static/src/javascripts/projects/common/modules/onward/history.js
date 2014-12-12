@@ -272,7 +272,7 @@ define([
             }
 
             if (opts.inPage) {
-                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
+                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 8).join('')}));
             }
         }
     }
