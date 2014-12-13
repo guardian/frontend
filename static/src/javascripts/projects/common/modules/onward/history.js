@@ -55,6 +55,7 @@ define([
         historyCache,
         summaryCache,
         popularCache,
+        popularProfilesCache,
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -69,8 +70,7 @@ define([
     }
 
     function getHistory() {
-        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
-        return historyCache;
+        return historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
     }
 
     function getSummary() {
@@ -127,50 +127,40 @@ define([
     }
 
     function getPopular() {
-        if (!popularCache) {
-            popularCache = _.chain(getSummary().tags)
-                .map(function (nameAndFreqs, tid) {
-                    var freqs = nameAndFreqs[1];
+        return popularCache = popularCache || _getPopular({excludeRx: new RegExp(/^profile/)});
+    }
 
-                    if (freqs.length >= 3) {
-                        return {
-                            keep: [tid, nameAndFreqs[0]],
-                            rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
-                        };
-                    }
-                })
-                .compact()
-                .sortBy('rank')
-                .last(100)
-                .reverse()
-                .pluck('keep')
-                .value();
-        }
-        return popularCache;
+    function getPopularProfiles() {
+        return popularProfilesCache = popularProfilesCache || _getPopular({includeRx: new RegExp(/^profile/)});
+    }
+
+    function _getPopular(opts) {
+        opts = opts || {};
+
+        return _.chain(getSummary().tags)
+            .map(function (nameAndFreqs, tid) {
+                var freqs = nameAndFreqs[1];
+
+                if ((!opts.includeRx ||  tid.match(opts.includeRx)) &&
+                    (!opts.excludeRx || !tid.match(opts.excludeRx))) {
+                    return {
+                        keep: [tid, nameAndFreqs[0]],
+                        rank: tallyFreqs(freqs)
+                    };
+                }
+            })
+            .compact()
+            .sortBy('rank')
+            .last(100)
+            .reverse()
+            .pluck('keep')
+            .value();
     }
 
     function tallyFreqs(freqs) {
         return _.reduce(freqs, function (tally, freq) {
-            return tally + dayScore(freq[1]) * (summaryPeriodDays - freq[0]);
+            return tally + (4 + freq[1]) * (summaryPeriodDays - freq[0]);
         }, 0);
-    }
-
-    function dayScore(n) {
-        return 1 + Math.min(n, 20) * 0.2;
-    }
-
-    function habitFactor(freqs) {
-        var len = freqs.length;
-
-        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function (sum, n) {
-            return sum + n;
-        }, 0) / (len - 2);
-    }
-
-    function deltas(ints) {
-        return _.map(_.initial(_.zip(ints, _.rest(ints))), function (pair) {
-            return pair[1] - pair[0];
-        });
     }
 
     function firstCsv(str) {
@@ -272,7 +262,7 @@ define([
             }
 
             if (opts.inPage) {
-                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 8).join('')}));
+                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
             }
         }
     }
