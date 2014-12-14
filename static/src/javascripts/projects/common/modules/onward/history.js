@@ -127,11 +127,11 @@ define([
     }
 
     function getPopular() {
-        popularCache = popularCache || _getPopular({excludeRx: new RegExp(/^profile/)});
+        popularCache = popularCache || getPopularFiltered({excludeRx: new RegExp(/^profile/)});
         return popularCache;
     }
 
-    function _getPopular(opts) {
+    function getPopularFiltered(opts) {
         opts = opts || {};
 
         return _.chain(getSummary().tags)
@@ -163,7 +163,7 @@ define([
     function weeklyHabitFactor(freqs) {
         var days;
 
-        if(freqs.length < 2) {
+        if (freqs.length < 2) {
             return 1;
         } else {
             days = _.pluck(freqs, 0);
