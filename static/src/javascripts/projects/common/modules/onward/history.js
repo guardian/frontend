@@ -55,7 +55,6 @@ define([
         historyCache,
         summaryCache,
         popularCache,
-        popularProfilesCache,
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -70,7 +69,8 @@ define([
     }
 
     function getHistory() {
-        return historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        return historyCache;
     }
 
     function getSummary() {
@@ -127,11 +127,8 @@ define([
     }
 
     function getPopular() {
-        return popularCache = popularCache || _getPopular({excludeRx: new RegExp(/^profile/)});
-    }
-
-    function getPopularProfiles() {
-        return popularProfilesCache = popularProfilesCache || _getPopular({includeRx: new RegExp(/^profile/)});
+        popularCache = popularCache || _getPopular({excludeRx: new RegExp(/^profile/)});
+        return popularCache;
     }
 
     function _getPopular(opts) {
