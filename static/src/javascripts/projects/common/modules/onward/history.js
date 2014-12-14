@@ -145,7 +145,7 @@ define([
                     (!opts.excludeRx || !tid.match(opts.excludeRx))) {
                     return {
                         keep: [tid, nameAndFreqs[0]],
-                        rank: tallyFreqs(freqs)
+                        rank: tallyFreqs(freqs) * weeklyHabitFactor(freqs)
                     };
                 }
             })
@@ -159,8 +159,25 @@ define([
 
     function tallyFreqs(freqs) {
         return _.reduce(freqs, function (tally, freq) {
-            return tally + (4 + freq[1]) * (summaryPeriodDays - freq[0]);
+            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
         }, 0);
+    }
+
+    function weeklyHabitFactor(freqs) {
+        var days;
+
+        if(freqs.length < 2) {
+            return 1;
+        } else {
+            days = _.pluck(freqs, 0);
+            return _.chain(days)
+                .zip(_.rest(days))
+                .initial()
+                .map(function (tup) { return tup[1] - tup[0]; })
+                .filter(function (gap) { return Math.abs(gap - 7) % 7 <= 2; })
+                .value()
+                .length + 1;
+        }
     }
 
     function firstCsv(str) {
