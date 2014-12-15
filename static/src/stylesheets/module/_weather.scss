@@ -22,7 +22,6 @@
         width: $left-column;
         margin-top: $gs-baseline * 5;
         border-top: 1px solid colour(news-main-2);
-        padding-top: $gs-baseline / 4;
     }
 
     @include mq(wide) {
@@ -56,6 +55,7 @@
 .weather__location {
     margin: 0;
     overflow: auto;
+    padding: $gs-baseline / 2 0;
 
     @include mq(tablet) {
         position: relative;
@@ -63,23 +63,18 @@
         border-bottom: 1px dotted colour(neutral-3);
     }
 
-    .search-tool {
-        width: gs-span(2) + $gs-gutter;
-        float: left;
-    }
-
     .search-tool__input {
         width: 100%;
-        padding-right: 18px + $gs-gutter / 2; // 18px width of icon
         border-bottom: 0;
         @include fs-header(2);
         color: colour(neutral-1);
         font-weight: bold;
         display: none;
+        padding: 0;
+        position: absolute;
 
         @include mq(tablet) {
             display: inline-block;
-            padding-bottom: $gs-baseline / 2;
         }
     }
 
