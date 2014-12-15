@@ -64,7 +64,6 @@ $header-image-size-desktop: 100px;
 .fc-container__header,
 .container__header {
     position: relative;
-    overflow: auto;
 
     .fc-container--paid-for &,
     .fc-container[data-sponsorship] &,
