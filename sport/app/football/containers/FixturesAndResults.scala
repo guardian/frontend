@@ -54,33 +54,30 @@ object FixturesAndResults extends Football {
 
       val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
 
-      val blobs = Seq(
-        Some(HtmlAndClasses(
-          1,
-          if (fixtureExists)
-            matchesComponent(TeamFixturesList.forTeamId(teamId))
-          else
-            componentMissingMessage("No upcoming fixtures"),
-          cssClasses
-        )),
-        Some(HtmlAndClasses(
-          2,
-          if (resultExists)
-            matchesComponent(TeamResultsList.forTeamId(teamId))
-          else
-            componentMissingMessage("No recent results"),
-          cssClasses
-        )),
-        maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
-          HtmlAndClasses(
-            3,
-            tablesComponent(competition, group, highlightTeamId = Some(teamId), false),
-            cssClasses
-          )
-        }
-      ).flatten
+      val fixturesComponent = fixtureExists option matchesComponent(TeamFixturesList.forTeamId(teamId))
+      val resultsComponent = resultExists option matchesComponent(TeamResultsList.forTeamId(teamId))
 
-      blobs.nonEmpty option {
+      Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty option {
+        val blobs = Seq(
+          Some(HtmlAndClasses(
+            1,
+            fixturesComponent getOrElse componentMissingMessage("No upcoming fixtures"),
+            cssClasses
+          )),
+          Some(HtmlAndClasses(
+            2,
+            resultsComponent getOrElse componentMissingMessage("No recent results"),
+            cssClasses
+          )),
+          maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
+            HtmlAndClasses(
+              3,
+              tablesComponent(competition, group, highlightTeamId = Some(teamId), false),
+              cssClasses
+            )
+          }
+        ).flatten
+
         val layout = ContainerLayout.forHtmlBlobs(container.slices, blobs)
 
         FaciaContainer(
