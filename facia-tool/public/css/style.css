@@ -497,6 +497,7 @@ h1 {
 
 .count {
     font-weight: normal;
+    margin-left: 0.4em;
 }
 
 .count span {
@@ -1230,6 +1231,7 @@ button {
 .tools .tool.draft-warning {
     background: #ffc107;
     margin-right: 4px;
+    white-space: nowrap;
 }
 
 .tools .tool.draft-warning:hover {
@@ -1705,7 +1707,8 @@ button {
 .narrow .image__overrides,
 .narrow .log-in-out,
 .narrow .article__spark,
-.narrow .list-header__timings {
+.narrow .list-header__timings,
+.narrow .also {
     display: none;
 }
 .narrow .article__times {
