@@ -51,6 +51,7 @@ object FixturesAndResults extends Football {
       val resultExists = relevantMatches.exists(_.isResult)
       val leagueTableExists = competitions.mostPertinentCompetitionForTeam(teamId).isDefined
       val cssClasses = Seq("facia-snap--football", "facia-snap-embed")
+      val missingComponentClasses = Seq("football-component-missing")
 
       val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
 
@@ -62,12 +63,12 @@ object FixturesAndResults extends Football {
           Some(HtmlAndClasses(
             1,
             fixturesComponent getOrElse componentMissingMessage("No upcoming fixtures"),
-            cssClasses
+            if (fixturesComponent.isDefined) cssClasses else missingComponentClasses
           )),
           Some(HtmlAndClasses(
             2,
             resultsComponent getOrElse componentMissingMessage("No recent results"),
-            cssClasses
+            if (resultsComponent.isDefined) cssClasses else missingComponentClasses
           )),
           maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
             HtmlAndClasses(
