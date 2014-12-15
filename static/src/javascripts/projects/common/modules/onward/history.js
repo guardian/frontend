@@ -127,24 +127,14 @@ define([
     }
 
     function getPopular() {
-        popularCache = popularCache || getPopularFiltered({excludeRx: new RegExp(/^profile/)});
-        return popularCache;
-    }
-
-    function getPopularFiltered(opts) {
-        opts = opts || {};
-
-        return _.chain(getSummary().tags)
+        popularCache = popularCache || _.chain(getSummary().tags)
             .map(function (nameAndFreqs, tid) {
                 var freqs = nameAndFreqs[1];
 
-                if ((!opts.includeRx ||  tid.match(opts.includeRx)) &&
-                    (!opts.excludeRx || !tid.match(opts.excludeRx))) {
-                    return {
-                        keep: [tid, nameAndFreqs[0]],
-                        rank: tally(freqs)
-                    };
-                }
+                return {
+                    keep: [tid, nameAndFreqs[0]],
+                    rank: tally(freqs)
+                };
             })
             .compact()
             .sortBy('rank')
@@ -152,6 +142,8 @@ define([
             .reverse()
             .pluck('keep')
             .value();
+
+        return popularCache;
     }
 
     function tally(freqs) {
