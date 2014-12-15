@@ -13,6 +13,12 @@
     .fc-item__byline {
         color: colour(news-default);
     }
+
+    &[data-snap-uri] {
+        .fc-item__kicker:before {
+            color: colour(neutral-1);
+        }
+    }
 }
 
 .tone-news--sublink {

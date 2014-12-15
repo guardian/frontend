@@ -32,6 +32,12 @@
         color: colour(editorial-accent);
     }
 
+    &[data-snap-uri] {
+        .fc-item__kicker:before {
+            color: #ffffff;
+        }
+    }
+
     .fc-item__meta {
         color: colour(editorial-accent);
     }

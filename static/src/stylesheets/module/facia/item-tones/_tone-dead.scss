@@ -13,6 +13,12 @@
     .fc-item__byline {
         color: colour(live-accent);
     }
+
+    &[data-snap-uri] {
+        .fc-item__kicker:before {
+            color: #ffffff;
+        }
+    }
 }
 
 .tone-dead--sublink {

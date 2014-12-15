@@ -21,6 +21,12 @@
         color: colour(comment-default);
     }
 
+    &[data-snap-uri] {
+        .fc-item__kicker:before {
+            color: colour(neutral-1);
+        }
+    }
+
     .fc-item__meta {
         background-color: fade-out(colour(comment-background), .5);
     }
@@ -31,7 +37,7 @@
             background: colour(neutral-3);
         }
     }
-    
+
 }
 
 .tone-comment--sublink,

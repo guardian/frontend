@@ -6,6 +6,12 @@
         color: colour(external-main-1);
     }
 
+    &[data-snap-uri] {
+        .fc-item__kicker:before {
+            color: colour(neutral-1);
+        }
+    }
+
     .u-faux-block-link--hover {
         background-color: darken(colour(neutral-6), 3%);
     }

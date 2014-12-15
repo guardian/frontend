@@ -6,6 +6,11 @@ $fc-hover-transition: .25s ease;
 */
 
 @mixin fc-item--horizontal($media-width, $media-align: right) {
+
+    &[data-snap-uri] .fc-item__kicker {
+        margin-right: 0 - $gs-gutter;
+    }
+
     .fc-item__image-container {
         @include box-sizing(border-box);
         padding-left: $gs-gutter * .25;
@@ -134,6 +139,32 @@ $fc-hover-transition: .25s ease;
 
         .u-faux-block-link__promote {
             z-index: 1;
+        }
+    }
+
+    // dream snaps
+    &[data-snap-uri] {
+        .fc-item__kicker {
+            display: block;
+            @include fs-header(2);
+            background-color: fade-out(#000000, .9);
+            margin: (0 - $gs-baseline * .25) (0 - $gs-gutter * .25) ($gs-baseline * .25);
+            padding: ($gs-baseline * .25) ($gs-gutter * .25) ($gs-baseline * .5);
+            clear: both;
+
+            &:before {
+                content: 'Latest from\2026';
+                display: table;
+                @include fs-headline(1);
+            }
+
+            &:hover:before {
+                text-decoration: none;
+            }
+
+            &:after {
+                display: none;
+            }
         }
     }
 
