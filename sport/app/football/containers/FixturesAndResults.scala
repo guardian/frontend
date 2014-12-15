@@ -55,8 +55,14 @@ object FixturesAndResults extends Football {
 
       val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
 
-      val fixturesComponent = fixtureExists option matchesComponent(TeamFixturesList.forTeamId(teamId))
-      val resultsComponent = resultExists option matchesComponent(TeamResultsList.forTeamId(teamId))
+      val fixturesComponent = fixtureExists option matchesComponent(
+        TeamFixturesList.forTeamId(teamId),
+        linkToCompetition = true
+      )
+      val resultsComponent = resultExists option matchesComponent(
+        TeamResultsList.forTeamId(teamId),
+        linkToCompetition = true
+      )
 
       Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty option {
         val blobs = Seq(

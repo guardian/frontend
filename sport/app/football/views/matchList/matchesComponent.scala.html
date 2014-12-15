@@ -1,4 +1,4 @@
-@(matchesList: football.model.MatchesList)(implicit request: RequestHeader)
+@(matchesList: football.model.MatchesList, linkToCompetition: Boolean = false)(implicit request: RequestHeader)
 
 @import football.model._
 
@@ -11,8 +11,9 @@
                     competition,
                     date,
                     matchType = matchesList.pageType,
+                    linkToCompetition = linkToCompetition,
                     heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
-                    link = if(dateRow.isLast && matchRow.isLast)
+                    link = if(dateRow.isLast && matchRow.isLast && !linkToCompetition)
                             Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None
                 )
             }
