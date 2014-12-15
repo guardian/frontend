@@ -25,7 +25,7 @@ define([
             return (this.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
-            return _(config.page.references || [])
+            return _(this.page.references || [])
                 .filter(function (reference) {
                     return typeof reference[name] !== 'undefined';
                 })
@@ -51,7 +51,7 @@ define([
 
         // returns 2014/apr/22
         dateFromSlug: function () {
-            var s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
+            var s = this.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
             return s ? s[0] : null;
         },
 
