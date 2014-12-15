@@ -17,8 +17,8 @@ case class ImageAsset(delegate: Asset, index: Int) {
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
   lazy val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
 
-  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
-  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
+  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
+  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
   lazy val role: Option[String] = fields.get("role")
 
   lazy val caption: Option[String] = fields.get("caption")
