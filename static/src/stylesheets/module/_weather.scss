@@ -99,8 +99,9 @@
     margin: 0;
 
     @include mq($until: tablet) {
-        line-height: $gs-row-height;
+        line-height: $gs-baseline * 2.5;
         margin-right: 5px;
+        float: left;
     }
 
     @include mq(tablet, leftCol) {
@@ -125,8 +126,8 @@
     float: right;
     background-position: left top !important;
     background-size: 100% !important;
-    width: 36px !important;
-    height: 36px !important;
+    width: 28px !important;
+    height: 28px !important;
     margin: 0;
 
     @include mq(tablet, leftCol) {
