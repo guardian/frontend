@@ -12,6 +12,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   def run(): Future[Unit] = future {
     if (DfpCachingSwitch.isSwitchedOn) cacheData()
+    else log.info("DFP caching switched off")
   }
 
   def cacheData(): Unit = {

@@ -33,6 +33,7 @@ trait DataAgent[K, V] extends ExecutionContexts with Logging {
             oldCache
         }
       } else {
+        log.info("DFP caching switched off so no fresh data loaded")
         oldCache
       }
     }
