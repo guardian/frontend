@@ -71,6 +71,7 @@ define([
         latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+        ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
