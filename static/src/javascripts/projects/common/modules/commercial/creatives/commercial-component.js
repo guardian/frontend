@@ -8,6 +8,7 @@ define([
     'raven',
     'lodash/collections/map',
     'lodash/collections/size',
+    'lodash/objects/defaults',
     'lodash/objects/isArray',
     'lodash/objects/merge',
     'lodash/objects/pick',
@@ -24,6 +25,7 @@ define([
     raven,
     map,
     size,
+    defaults,
     isArray,
     merge,
     pick,
@@ -59,7 +61,7 @@ define([
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(merge(params || {}, getKeywords()), function (v) {
+            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
