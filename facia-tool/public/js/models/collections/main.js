@@ -74,6 +74,9 @@ define([
             currentlyLoaded[front.position()] = front;
             model.loadedFronts(currentlyLoaded);
         });
+        mediator.on('front:disposed', function (front) {
+            model.loadedFronts.remove(front);
+        });
 
         this.init = function() {
             fetchSettings(function (config, switches) {

@@ -246,6 +246,7 @@ define([
         _.each(this.setTimeouts, function (timeout) {
             clearTimeout(timeout);
         });
+        mediator.emit('front:disposed', this);
     };
 
     return Front;
