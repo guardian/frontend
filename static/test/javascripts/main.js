@@ -29,6 +29,7 @@ requirejs.config({
         omniture:     '/base/static/public/javascripts/vendor/omniture',
         stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
         jasq:         '/base/static/test/javascripts/components/jasq/jasq',
+        squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
         // plugins
@@ -46,5 +47,6 @@ requirejs.config({
 });
 
 require(tests, function() {
-    window.__karma__.start();
+    // fix
+    window.setTimeout(window.__karma__.start, 2000);
 });
