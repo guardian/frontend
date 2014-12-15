@@ -4,7 +4,7 @@ import feed.Competitions
 import football.model.{TeamResultsList, TeamFixturesList}
 import implicits.Football
 import layout._
-import model.{Group, Competition, Table, TeamMap}
+import model._
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import slices.{FixedContainers, Fixed}
@@ -40,6 +40,7 @@ object FixturesAndResults extends Football {
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
+      teamName <- TeamName.fromId(teamId)
     } yield {
       val relevantMatches = competitions.matches.filter({ theMatch =>
         theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
@@ -57,11 +58,11 @@ object FixturesAndResults extends Football {
 
       val fixturesComponent = fixtureExists option matchesComponent(
         TeamFixturesList.forTeamId(teamId),
-        linkToCompetition = true
+        customLink = Some((s"Show more $teamName fixtures", s"/football/$tagId/fixtures"))
       )
       val resultsComponent = resultExists option matchesComponent(
         TeamResultsList.forTeamId(teamId),
-        linkToCompetition = true
+        customLink = Some((s"Show more $teamName results", s"/football/$tagId/results"))
       )
 
       Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty option {
