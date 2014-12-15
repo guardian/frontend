@@ -82,6 +82,11 @@
     }
 }
 
+.weather__search-icon {
+    margin-top: $gs-baseline / 4;
+    float: right;
+}
+
 .weather__forecast {
     position: relative;
     overflow: auto;
@@ -155,13 +160,8 @@
     }
 }
 
-.weather__icon--search {
-    margin-top: $gs-baseline / 4;
-    float: right;
-}
-
-.weather__icon--gps,
-.weather__icon--close {
+.weather__gps-icon,
+.weather__close-icon {
     background-size: 90% !important;
     background-position: center bottom !important;
 }
