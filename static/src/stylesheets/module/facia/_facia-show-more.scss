@@ -1,25 +1,7 @@
-$icon-collection-size: 80%;
-
+/**
+ *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
+ */
 .collection__show-more {
-    display: block;
-    clear: both;
-    margin-top: $gs-baseline;
-    border: 1px solid colour(guardian-brand-light);
-    color: colour(guardian-brand);
-
-    &:hover,
-    &:focus {
-        border-color: colour(guardian-brand-dark);
-    }
-
-    .i {
-        width: $icon-collection-size;
-        height: $icon-collection-size;
-    }
-
-    .fc-show-more--hidden & {
-        margin-top: 0;
-        border: 0;
-        color: #ffffff;
-    }
+    line-height: 2.2;
+    font-size: 14px;
 }
