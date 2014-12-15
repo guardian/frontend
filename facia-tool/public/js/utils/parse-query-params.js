@@ -8,6 +8,7 @@ define(['utils/url-query'], function(urlQuery) {
      * @param {string}   opts.namespace        prefix for keys
      * @param {boolean}  opts.excludeNamespace whether to exclude or include prefixed keys
      * @param {boolean}  opts.stripNamespace   whether to strip prefix from returned object's keys
+     * @param {boolean}  opts.multipleValues   whether a key can appear multiple times, all values are array
      */
 
     return function(url, opts) {
@@ -15,9 +16,10 @@ define(['utils/url-query'], function(urlQuery) {
 
         var nsIndex = opts.excludeNamespace ? -1 : 0,
             nsStrip = opts.namespace && opts.stripNamespace && !opts.excludeNamespace,
-            nsLength = opts.namespace ? ('' + opts.namespace).length : 0;
+            nsLength = opts.namespace ? ('' + opts.namespace).length : 0,
+            result = {};
 
-        return _.chain(urlQuery(url).split('&'))
+        _.chain(urlQuery(url).split('&'))
             .filter(function(kv) {
                 return kv; })
 
@@ -34,12 +36,18 @@ define(['utils/url-query'], function(urlQuery) {
                 return !opts.namespace || kv[0].indexOf(opts.namespace) === nsIndex; })
 
             .map(function(kv) {
-                return [
-                    nsStrip ? kv[0].slice(nsLength) : kv[0],
-                    kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '))
-                ]; })
+                var key = nsStrip ? kv[0].slice(nsLength) : kv[0],
+                    value = kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '));
 
-            .object()
-            .value();
+                if (opts.multipleValues) {
+                    if (!_.has(result, key)) {
+                        result[key] = [];
+                    }
+                    result[key].push(value);
+                } else {
+                    result[key] = value;
+                }
+            });
+        return result;
     };
 });

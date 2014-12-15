@@ -13,7 +13,7 @@
 (function (global) {
 //"use strict"; don't restore this until the config routine is refactored
 	var
-		version = '0.8.4',
+		version = '0.8.10',
 		curlName = 'curl',
 		defineName = 'define',
 		bootScriptAttr = 'data-curl-run',
@@ -820,7 +820,9 @@
 			if (resource === undef && def.exports) {
 				// note: exports will equal module.exports unless
 				// module.exports was reassigned inside module.
-				resource = def.module ? (def.exports = def.module.exports) : def.exports;
+				resource = def.module
+					? (def.exports = def.module['exports'])
+					: def.exports;
 			}
 			return resource;
 		},

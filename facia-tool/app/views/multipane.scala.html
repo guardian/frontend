@@ -1,14 +1,29 @@
 @(panes: Int)
 
-@if(panes==3) {
-    <frameset cols="50%,25%,25%">
-        <frame src="/editorial" />
-        <frame src="/editorial" />
-        <frame src="/editorial" />
-    </frameset>
-} else {
-    <frameset cols="65%,35%">
-        <frame src="/editorial" />
-        <frame src="/editorial" />
-    </frameset>
-}
+<html>
+    <head>
+        <title>Link deprecated</title>
+        <style type="text/css">
+        body {
+            background-color: #f2e6f7;
+        }
+        </style>
+        <meta http-equiv="refresh" content="30; url=/editorial?layout=@panes" />
+    </head>
+    <body>
+<!--
+
+    This page is a warning for editors who bookmarked a deprecated link.
+    Please, remove this page and its controller by the end of January 2015,
+    hopefully sooner!
+
+-->
+        <h1>Fronts tools layout has changed</h1>
+        <p>You can now choose the number of columns to display using the <em>Configure</em> button in the tool.</p>
+        <p>This page will redirect to the tool in few seconds, but please update your bookmarks as this page will be removed soon.</p>
+        <p><a href="/editorial?layout=@panes">Click here</a> to be redirected immediately.</p>
+        <script type="text/javascript">
+            localStorage.removeItem('gu.fronts.tools.layout.configuration');
+        </script>
+    </body>
+</html>

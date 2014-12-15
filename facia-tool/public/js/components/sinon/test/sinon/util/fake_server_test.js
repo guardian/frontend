@@ -1,5 +1,3 @@
-/*jslint onevar: false, browser: false, regexp: false, browser: true*/
-/*globals sinon window buster*/
 /**
  * @author Christian Johansen (christian@cjohansen.no)
  * @license BSD
@@ -10,7 +8,9 @@
 
 buster.testCase("sinon.fakeServer", {
     tearDown: function () {
-        this.server.restore();
+        if (this.server) {
+            this.server.restore();
+        }
     },
 
     "provides restore method": function () {
@@ -37,7 +37,7 @@ buster.testCase("sinon.fakeServer", {
         assert(restore.called);
     }),
 
-    "requests": {
+    ".requests": {
         setUp: function () {
             this.server = sinon.fakeServer.create();
         },
@@ -78,7 +78,7 @@ buster.testCase("sinon.fakeServer", {
         }
     },
 
-    "handleRequest": {
+    ".handleRequest": {
         setUp: function () {
             this.server = sinon.fakeServer.create();
         },
@@ -108,8 +108,10 @@ buster.testCase("sinon.fakeServer", {
         }
     },
 
-    "respondWith": {
+    ".respondWith": {
         setUp: function () {
+            this.sandbox = sinon.sandbox.create();
+
             this.server = sinon.fakeServer.create();
 
             this.getRootAsync = new sinon.FakeXMLHttpRequest();
@@ -138,6 +140,7 @@ buster.testCase("sinon.fakeServer", {
 
         tearDown: function () {
             this.server.restore();
+            this.sandbox.restore();
         },
 
         "responds to queued async requests": function () {
@@ -156,6 +159,28 @@ buster.testCase("sinon.fakeServer", {
 
             assert(this.getRootAsync.respond.called);
             assert(this.getPathAsync.respond.called);
+        },
+
+        "does not respond to requests queued after respond() (eg from callbacks)": function () {
+            var xhr;
+            this.getRootAsync.addEventListener("load", function () {
+                xhr = new sinon.FakeXMLHttpRequest();
+                xhr.open("GET", "/", true);
+                xhr.send();
+                sinon.spy(xhr, "respond");
+            });
+
+            this.server.respondWith("Oh yeah! Duffman!");
+
+            this.server.respond();
+
+            assert(this.getRootAsync.respond.called);
+            assert(this.getPathAsync.respond.called);
+            assert(!xhr.respond.called);
+
+            this.server.respond();
+
+            assert(xhr.respond.called);
         },
 
         "responds with status, headers, and body": function () {
@@ -327,6 +352,8 @@ buster.testCase("sinon.fakeServer", {
         },
 
         "notifies all requests when some throw": function () {
+            this.sandbox.stub(sinon, "logError"); // reduce console spam in the test runner
+
             this.getRootAsync.respond = function () {
                 throw new Error("Oops!");
             };
@@ -375,20 +402,30 @@ buster.testCase("sinon.fakeServer", {
             }
 
             assert.isObject(error);
-            assert.equals(                     error.message, "Fake server response body should be string, but was undefined");
+            assert.equals(error.message, "Fake server response body should be string, but was undefined");
         },
 
-        "is able to pass the same args to respond directly": function() {
+        "is able to pass the same args to respond directly": function () {
             this.server.respond("Oh yeah! Duffman!");
 
             assert.equals(this.getRootAsync.respond.args[0], [200, {}, "Oh yeah! Duffman!"]);
             assert.equals(this.getPathAsync.respond.args[0], [200, {}, "Oh yeah! Duffman!"]);
             assert.equals(this.postRootAsync.respond.args[0], [200, {}, "Oh yeah! Duffman!"]);
             assert.equals(this.postPathAsync.respond.args[0], [200, {}, "Oh yeah! Duffman!"]);
+        },
+
+        "responds to most recently defined match": function () {
+            this.server.respondWith("POST", "", "All POSTs");
+            this.server.respondWith("POST", "/path", "Particular POST");
+
+            this.server.respond();
+
+            assert.equals(this.postRootAsync.respond.args[0], [200, {}, "All POSTs"]);
+            assert.equals(this.postPathAsync.respond.args[0], [200, {}, "Particular POST"]);
         }
     },
 
-    "respondWithFunctionHandler": {
+    ".respondWith (FunctionHandler)": {
         setUp: function () {
             this.server = sinon.fakeServer.create();
         },
@@ -412,7 +449,7 @@ buster.testCase("sinon.fakeServer", {
 
         "responds to request from function handler": function () {
             this.server.respondWith("/hello", function (xhr) {
-                xhr.respond(200, { "Content-Type": "application/json" }, '{"id":42}');
+                xhr.respond(200, { "Content-Type": "application/json" }, "{\"id\":42}");
             });
 
             var request = new sinon.FakeXMLHttpRequest();
@@ -423,7 +460,7 @@ buster.testCase("sinon.fakeServer", {
 
             assert.equals(request.status, 200);
             assert.equals(request.responseHeaders, { "Content-Type": "application/json" });
-            assert.equals(request.responseText, '{"id":42}');
+            assert.equals(request.responseText, "{\"id\":42}");
         },
 
         "yields response to request function handler when method matches": function () {
@@ -431,6 +468,18 @@ buster.testCase("sinon.fakeServer", {
             this.server.respondWith("GET", "/hello", handler);
             var xhr = new sinon.FakeXMLHttpRequest();
             xhr.open("GET", "/hello");
+            xhr.send();
+
+            this.server.respond();
+
+            assert(handler.calledOnce);
+        },
+
+        "yields response to request function handler when url contains RegExp characters": function () {
+            var handler = sinon.spy();
+            this.server.respondWith("GET", "/hello?world", handler);
+            var xhr = new sinon.FakeXMLHttpRequest();
+            xhr.open("GET", "/hello?world");
             xhr.send();
 
             this.server.respond();
@@ -476,7 +525,7 @@ buster.testCase("sinon.fakeServer", {
 
         "adds function handler without method or url filter": function () {
             this.server.respondWith(function (xhr) {
-                xhr.respond(200, { "Content-Type": "application/json" }, '{"id":42}');
+                xhr.respond(200, { "Content-Type": "application/json" }, "{\"id\":42}");
             });
 
             var request = new sinon.FakeXMLHttpRequest();
@@ -487,13 +536,13 @@ buster.testCase("sinon.fakeServer", {
 
             assert.equals(request.status, 200);
             assert.equals(request.responseHeaders, { "Content-Type": "application/json" });
-            assert.equals(request.responseText, '{"id":42}');
+            assert.equals(request.responseText, "{\"id\":42}");
         },
 
         "does not process request further if processed by function": function () {
             var handler = sinon.spy();
-            this.server.respondWith("GET", /\/a.*/, handler);
             this.server.respondWith("GET", "/aloha", [200, {}, "Oh hi"]);
+            this.server.respondWith("GET", /\/a.*/, handler);
             var xhr = new sinon.FakeXMLHttpRequest();
             xhr.respond = sinon.spy();
             xhr.open("GET", "/aloha");
@@ -520,7 +569,7 @@ buster.testCase("sinon.fakeServer", {
         }
     },
 
-    "respondFakeHTTPVerb": {
+    "respond with fake HTTP Verb": {
         setUp: function () {
             this.server = sinon.fakeServer.create();
 
@@ -585,8 +634,7 @@ buster.testCase("sinon.fakeServer", {
             assert.equals(this.request.respond.args[0], [200, {}, "OK"]);
         },
 
-        "does not fail when getting the HTTP method from a request with no body":
-        function () {
+        "does not fail when getting the HTTP method from a request with no body": function () {
             var server = this.server;
             server.fakeHTTPMethods = true;
 
@@ -594,12 +642,12 @@ buster.testCase("sinon.fakeServer", {
         }
     },
 
-    "autoResponse": {
+    ".autoResponse": {
         setUp: function () {
             this.get = function get(url) {
                 var request = new sinon.FakeXMLHttpRequest();
                 sinon.spy(request, "respond");
-                request.open("get", "/path", true);
+                request.open("get", url, true);
                 request.send();
                 return request;
             };
@@ -662,6 +710,71 @@ buster.testCase("sinon.fakeServer", {
 
             this.clock.tick(1);
             assert.isTrue(request.respond.calledOnce);
+        },
+
+        "auto-responds if two successive requests are made with a single XHR": function () {
+            this.server.autoRespond = true;
+
+            var request = this.get("/path");
+
+            this.clock.tick(10);
+
+            assert.isTrue(request.respond.calledOnce);
+
+            request.open("get", "/other", true);
+            request.send();
+
+            this.clock.tick(10);
+
+            assert.isTrue(request.respond.calledTwice);
+        },
+
+        "auto-responds if timeout elapses between creating a XHR object and sending a request with it": function () {
+            this.server.autoRespond = true;
+
+            var request = new sinon.FakeXMLHttpRequest();
+            sinon.spy(request, "respond");
+
+            this.clock.tick(100);
+
+            request.open("get", "/path", true);
+            request.send();
+
+            this.clock.tick(10);
+
+            assert.isTrue(request.respond.calledOnce);
+        }
+    },
+
+    ".log": {
+        setUp: function () {
+            this.server = sinon.fakeServer.create();
+        },
+
+        tearDown: function () {
+            this.server.restore();
+        },
+
+        "logs response and request": function () {
+            sinon.spy(this.server, "log");
+            var xhr = new sinon.FakeXMLHttpRequest();
+            xhr.open("GET", "/hello");
+            xhr.send();
+            var response = [200, {}, "Hello!"];
+            this.server.respond("GET", /.*/, response);
+            assert(this.server.log.calledOnce);
+            assert(this.server.log.calledWithExactly(response, xhr));
+        },
+
+        "can be overridden": function () {
+            this.server.log = sinon.spy();
+            var xhr = new sinon.FakeXMLHttpRequest();
+            xhr.open("GET", "/hello");
+            xhr.send();
+            var response = [200, {}, "Hello!"];
+            this.server.respond("GET", /.*/, response);
+            assert(this.server.log.calledOnce);
+            assert(this.server.log.calledWithExactly(response, xhr));
         }
     }
 });

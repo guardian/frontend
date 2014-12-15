@@ -1,54 +1,25 @@
 curl (cujoJS resource loader)
 =====================
 
-See the [wiki](https://github.com/cujojs/curl/wiki) for information about using
-curl.js with jQuery, dojo, or underscore.
+## Note: curl.js --> RaveJS
 
-What's New?
-=======
+We are very excited about [RaveJS](https://github.com/RaveJS), the successor to curl.js.  At its core, rave uses an ES6 Loader, rather than an AMD loader.  However, rave can load many types of modules, *including AMD*.  Therefore, rave will work with your application's AMD modules.  
 
-* 0.8.4
-	* data-curl-run now only supports scripts, not modules, and is
-	  documented in the bootstrapping section of the wiki.
-	  There are now fewer conflicts when defining a
-	  main module in the curl config, as a result.
-* 0.8.3
-	* Export legacy-loaded modules with normal AMD/CommonJS module ids
-	  (thanks @mmacaula!)
-	* Build curl/debug into curl/dist/debug/curl.js correctly.
-* 0.8.2
-	* Run compile.sh from anywhere (thanks @webpro!)
-	* Restore quotes to cram text plugin output (thanks @gehan!)
-	* Correctly bake-in the locale module in the kitchen-sink dist build.
-* 0.8.1
-	* Adds a build-time (cram) plugin for the new legacy loader.
-* 0.8.0
-	* Adds new curl/loader/legacy module loader that provides similar
-	  functionality to RequireJS's "shim config".
-	* Adds dontAddFileExt config option functionality to js! plugin and
-	  curl/loader/legacy module loader.
-	* Fixes configuration context mixups. Modules will get their package's
-	  config unless they are loaded explicitly via a plugin and that
-	  plugin has a custom configuration.
-	* Paths can now be objects like packages and can have all of the same
-	  properties, except `main`, i.e. `location` (or `path`), `config`, `name`.
-	* Fixes an issue in node on windows wherein C: was seen as a web protocol.
-	* Updates READMEs in the plugin and loader folders.
-	* Drops dojo 1.6 compatibility in the "kitchen sink" distribution.
-	* Adds new dojo 1.8 distribution.
-* 0.7.6
-	* Adds compatibility with dojo 1.8 and 1.9, including the ability to provide
-	  `has` configuration via `curl.config()`. (Requires use of the
-	  curl/shim/dojo18 shim.)
-	* Fixes many bugs in the i18n and cjsm11 cram (build) plugins.
-	* Stops encoding the output of the cram plugins that emit javascript code.
-	* Adds code documentation improvements in the plugins.
-	* Applies Seriously overdue README updates.
-	* Restores text! plugin functionality to the "kitchen sink" build.
-* 0.7.5
-	* Can now resolve relative plugin ids in local require (bug fix).
+Rave's most exciting feature, however, is it's ability to eliminate the drudgery of bootstrapping and maintaining modern, modular web applications.  If you've built a non-trivial AMD-based web app, you should be excited about rave, too.  
 
-----------------------------------------
+Rave is definitely the future, so we're putting all of our effort into ensuring that RaveJS is as awesome as it can possibly be.  Watch these RaveJS github projects to stay up to date:
+
+* [RaveJS/rave](https://github.com/RaveJS/rave) - Zero-configuration application bootstrap and development
+* [RaveJS/rave-start](https://github.com/RaveJS/rave-start) - Begin here for the simplest possible startup experience
+* [RaveJS/rave-start-angular](https://github.com/RaveJS/rave-start-angular) - Begin here to create an AngularJS-based application
+* [snichme/rave-start-react](https://github.com/snichme/rave-start-react) - Begin here to create a React-based application
+* [fabricematrat/rave-start-cujo](https://github.com/fabricematrat/rave-start-cujo) - Begin here to create a cujoJS-based application
+
+This means that all development for curl.js and cram.js has stopped. For the foreseeable future, we will continue to respond to issues on github, as well as in the #cujojs room on freenode.  However, keep in mind that there will be no further development, so some issues might not be resolved fully.
+
+If you're as excited as we are about the future, consider helping us improve the [curl-to-rave migration guide](https://github.com/RaveJS/rave/blob/master/docs/migrating-from-curl.md).  There are many ways to architect curl-based applications, so your experience migrating your app from curl to rave is extremely valuable to other curl users.
+
+Also, if you are interested in becoming the lead maintainer of curl.js and/or cram.js, please let us know on #cujojs!
 
 What is curl.js?
 ================
@@ -57,16 +28,15 @@ curl.js is a small and very fast AMD-compliant asynchronous loader.
 Size: ~4KB (gzipped) using Google's Closure Compiler.
 
 If you'd like to use curl.js for non-AMD modules (ordinary javascript files),
-you'll want to  use a version with the legacy loader built in.  You may also
-want to build-in the domReady module.
+you'll want to use the legacy loader.
 
 curl.js, like all async loaders, cannot circumvent browsers' security
 restrictions when using the `file:` protocol.  Therefore, you must use
 curl from a page served from a web server (i.e. using `http:` or `https:`).
 Trying to run curl.js from a page loaded from your local file system
-will not work correctly.
+will not work correctly in all browsers.
 
-What the heck is "cujoJS"?  cujoJS is a web app development platform.
+What the heck is "cujoJS"?  cujoJS is the JavaScript Architectural Toolkit.
 More info: [cujojs.com](http://cujojs.com)
 
 What is "cram"? cram (cujoJS resource assembler) is the build tool companion to
@@ -78,18 +48,18 @@ javascript files which are loaded much faster into the browsers.
 Features at a glance:
 =====================
 
-* Loads AMD-formatted javascript modules in parallel (fast!)
-* Loads CommonJS Modules (v1.1 when wrapped in a `define()`) (fast!)
-* Loads CommonJS Modules (unwrapped when using the cjsm11 loader) (fast!)
-* Loads non-AMD javascript files in parallel, too (fast!)
-* Loads CSS files and text files in parallel (fast! via plugins)
+* Loads AMD-formatted javascript modules in parallel
+* Loads CommonJS/node modules (v1.1 when wrapped in a `define()`)
+* Loads CommonJS/node modules (unwrapped when using the cjsm11 loader)
+* Loads non-AMD javascript files in parallel, too.
+* Loads CSS files and text files in parallel
 * Waits for dependencies (js, css, text, etc) before executing javascript
-* Waits for domReady, if/when desired
+* Waits for domReady, if desired
 * Allows for virtually limitless combinations of files and dependencies
 * Tested with Safari 5+, IE6+, and recent Chrome, FF, Opera
 
-Oh, did we mention?  It's fast!  It's even faster than the leading non-AMD
-script loaders.
+More detailed information below and on the
+[wiki](https://github.com/cujojs/curl/wiki).
 
 ----------------------------------------
 
@@ -107,6 +77,46 @@ It's that easy.
 Got more in-depth questions?  Browse the
 [cujoJS discussion group](https://groups.google.com/d/forum/cujojs) or
 come chat with us on freenode @ #cujojs.
+
+See the [wiki](https://github.com/cujojs/curl/wiki) for information about using
+curl.js with jQuery, dojo, or underscore.
+
+----------------------------------------
+
+What's New?
+=======
+
+* 0.8.12
+    * Add deprecation notice.
+    * Add links to Rave Starters.
+    * Add a link to the migration guide.
+* 0.8.11
+    * Improve instructions for custom build thanks to @azazel75.
+    * Stop catching (and indirectly squelching) errors in callback functions. Fixes #281.
+    * Add version number at the beginning. Thanks @szepeviktor!
+    * Add note about config options that are not supported in embedded config.
+    * Added img! plugin and test cases.  Thanks @asilvas!
+    * Recognize Windows absolute urls. C:\, e:/, etc. Thanks @doom777!
+    * Update to README.md to correct link to James Burke's site.  Thanks @kryger!
+* 0.8.10
+	* Add moduleType and main properties to bower.json and package.json.
+* 0.8.9
+	* Protect more API functions in plugins and loaders from closure compiler's
+	aggressive obfuscation.
+	* Switch to newer //# sourceURL syntax.
+	* Stop doubling the ".js" on the sourceURL.
+	* Ensure that `define` is undefined when wrapping cjs/node modules.
+* 0.8.8
+	* Stop double-appending .css extension in css! plugin.
+	(thanks @stanislawosinski!)
+* 0.8.7
+	* Fix botched release wherein some dummy forgot to `bin/make-all.sh`.
+* 0.8.6
+	* Cram plugins: hide legacy plugin's `define` from cram parser.
+* 0.8.5
+	* Cram plugins: plugins are now responsible for resolving url/filepath.
+	* Cram plugins: legacy loader no longer fails to add a .js extension
+	  when there are dots in the file name.
 
 ----------------------------------------
 
@@ -524,12 +534,15 @@ curl.config({
 	paths: {
 		plainOldJsFile1: {
 			location: 'js/plainOldJsFile1.js',
-			exports: 'aGlobal'
+			config: { loader: 'curl/loader/legacy', exports: 'aGlobal' }
 		},
 		anotherPlainOldJsFile: {
 			location: 'js/anotherPlainOldJsFile.js',
-			exports: 'anotherGlobal',
-			requires: ['plainOldJsFile1']
+			config: {
+				loader: 'curl/loader/legacy',
+				exports: 'anotherGlobal',
+				requires: [ 'plainOldJsFile1' ]
+			}
 		}
 	}
 });
@@ -784,6 +797,8 @@ and will be fetched from the following path:
 
 	path/to/js/path/to/my-package/other-module.js
 
+Note that a package may also contain it's own embedded set of `config` options.  Most, but not all, config options may be specified here.  Specifically, you cannot specify any options that change the path or id of modules, such as `paths`, `packages`, `plugins`, or `'pluginPrefix`.
+
 ----------------------------------------
 
 What is cujoJS?
@@ -803,7 +818,7 @@ More about Bryan: <http://www.reigndropsfall.net/>
 
 Kudos also to James Burke ([@jrburke](http://www.twitter.com/jrburke)) who
 instigated the AMD standard and paved the way to create AMD-style loaders.
-More about James: <http://tagneto.blogspot.com/>
+More about James: <http://jrburke.com/about/>
 
 Shout out to Kris Zyp ([@kriszyp](http://www.twitter.com/kriszyp)) for
 excellent ideas and feedback and to Kyle Simpson

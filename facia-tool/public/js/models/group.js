@@ -1,12 +1,10 @@
 /* global _: true */
 define([
     'knockout',
-    'modules/vars',
     'modules/copied-article',
     'utils/mediator'
 ], function(
     ko,
-    vars,
     copiedArticle,
     mediator
 ) {
@@ -23,17 +21,24 @@ define([
         this.parent     = opts.parent;
         this.parentType = opts.parentType;
         this.keepCopy   = opts.keepCopy;
+        this.front      = opts.front;
+
+        this.elementHasFocus = opts.elementHasFocus || (opts.front ? opts.front.elementHasFocus.bind(opts.front) : null);
 
         this.pasteItem = function() {
-            var sourceItem = copiedArticle.get(true);
+            var sourceItem = copiedArticle.get(true),
+                targetItem;
 
             if(!sourceItem) { return; }
+            targetItem = _.last(this.items());
 
             mediator.emit('collection:updates', {
                 sourceItem: sourceItem,
                 sourceGroup: sourceItem.group,
-                targetItem: _.last(this.items()),
+                targetItem: targetItem,
                 targetGroup: this,
+                sourceContext: sourceItem.front,
+                targetContext: targetItem.front,
                 isAfter: true
             });
         };
@@ -95,7 +100,9 @@ define([
             targetGroup: targetGroup,
             isAfter: isAfter,
             mediaItem: source.mediaItem,
-            alternateAction: alternateAction
+            alternateAction: alternateAction,
+            sourceContext: source.sourceItem.front,
+            targetContext: targetGroup.front
         });
     };
 

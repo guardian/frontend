@@ -25,9 +25,11 @@ define([
 
         var self = this,
             deBounced,
+            poller,
             opts = options || {},
             counter = 0,
-            container = document.querySelector('.latest-articles'),
+            container = options.container.querySelector('.latest-articles'),
+            scrollable = options.container.querySelector('.scrollable'),
             pageSize = vars.CONST.searchPageSize || 25;
 
         this.articles = ko.observableArray();
@@ -137,7 +139,8 @@ define([
                 .then(
                     function(response) {
                         if (count !== counter) { return; }
-                        var rawArticles = response.results;
+                        var rawArticles = response.results,
+                            initialScroll = scrollable.scrollTop;
 
                         self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
@@ -155,6 +158,7 @@ define([
                         self.lastSearch(request);
                         self.totalPages(response.pages);
                         self.page(response.currentPage);
+                        scrollable.scrollTop = initialScroll;
                     },
                     function(error) {
                         var errMsg = error.message;
@@ -200,26 +204,31 @@ define([
             fetch();
         };
 
-        this.showNext = ko.computed(function () {
+        this.showNext = ko.pureComputed(function () {
             return this.totalPages() > this.page();
         }, this);
 
-        this.showPrev = ko.computed(function () {
+        this.showPrev = ko.pureComputed(function () {
             return this.page() > 1;
         }, this);
 
-        this.showTop = ko.computed(function () {
+        this.showTop = ko.pureComputed(function () {
             return this.page() > 2;
         }, this);
 
         this.startPoller = function() {
-            setInterval(function(){
+            poller = setInterval(function(){
                 if (self.page() === 1) {
                     self.search({noFlushFirst: true});
                 }
             }, vars.CONST.latestArticlesPollMs || 60000);
 
             this.startPoller = function() {}; // make idempotent
+        };
+
+        this.dispose = function () {
+            clearTimeout(deBounced);
+            clearInterval(poller);
         };
 
     };
