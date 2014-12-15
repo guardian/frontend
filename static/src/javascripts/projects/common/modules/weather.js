@@ -127,7 +127,6 @@ define([
 
         bindEvents: function () {
             bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
-            bean.on($('.js-close-location')[0], 'click', Toggles.prototype.close($('.js-get-location')[0]));
             mediator.on('autocomplete:fetch', this.getCityCoordinates);
         },
 
