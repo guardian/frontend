@@ -1,8 +1,22 @@
 <div class="weather">
-    <a class="weather__city" href="#js-weather-get-location" data-toggle="js-weather-change-location" data-link-name="weather-get-location">
-        <span class="js-weather-city">{{location}}</span>
-        <i class="i i-search-dark-grey-36 weather__search-icon"><span class="u-h">Get your current location</span></i>
-    </a>
+    <div class="weather__location">
+        <div class="search-tool js-search-tool">
+            <div class="search-tool__form u-cf">
+                <input class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-list-location" value="{{location}}" />
+                <button class="search-tool__btn"><i class="i i-search-white-36"></i></button>
+            </div>
+            <ul class="u-unstyled js-search-tool-list"></ul>
+        </div>
+        <a class="weather__edit-location js-edit-location" data-link-name="weather-edit-location"
+            href="#edit-location"><span class="u-h">Edit my location</span><i class="i i-search-dark-grey-36 weather__search-icon"></i>
+        </a>
+        <a class="weather__get-location js-detect-location" data-link-name="weather-detect-location"
+            href="#detect-location"><span class="u-h">Detect my location</span><i class="i i-location-gps weather__gps-icon"></i>
+        </a>
+        <a class="weather__close-location js-close-location" data-link-name="weather-close-location"
+            href="#close-change-location"><span class="u-h">Close change location</span><i class="i i-close-icon-grey weather__close-icon"></i>
+        </a>
+    </div>
     <ul class="u-unstyled">
         <li class="weather__forecast">
             <p class="weather__desc">
@@ -14,19 +28,4 @@
             <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
         </li>
     </ul>
-    <div class="weather__change-location is-off js-weather-change-location" id="js-weather-get-location">
-        <div class="search-tool js-search-tool">
-            <div class="search-tool__form u-cf">
-                <input class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-list-location" value="{{location}}" />
-                <button class="search-tool__btn"><i class="i i-search-white-36"></i></button>
-            </div>
-            <ul class="u-unstyled js-search-tool-list"></ul>
-        </div>
-        <a class="weather__get-location js-detect-location" data-link-name="weather-detect-location"
-           href="#detect-location"><span class="u-h">Detect my location</span><i class="i i-location-gps weather__gps-icon"></i>
-        </a>
-        <a class="weather__close js-close-change-location" data-link-name="weather-close-change-location"
-           href="#close-change-location"><span class="u-h">Close change location</span><i class="i i-close-icon-grey weather__close-icon"></i>
-        </a>
-    </div>
 </div>

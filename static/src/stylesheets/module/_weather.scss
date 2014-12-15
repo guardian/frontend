@@ -53,37 +53,60 @@
     }*/
 }
 
-.weather__wrap {
-    @include mq($until: tablet) {
-        float: left;
-    }
-}
-
-.weather__city {
+.weather__location {
     margin: 0;
+    overflow: auto;
 
     @include mq(tablet) {
         position: relative;
         width: 100%;
         border-bottom: 1px dotted colour(neutral-3);
     }
-}
 
-.weather__city,
-.search-tool__input {
-    @include fs-header(2);
-    color: colour(neutral-1);
-    font-weight: bold;
-    display: none;
+    .search-tool {
+        width: gs-span(2) + $gs-gutter;
+        float: left;
+    }
 
-    @include mq(tablet) {
-        display: inline-block;
-        padding-bottom: $gs-baseline / 2;
+    .search-tool__input {
+        width: 100%;
+        padding-right: 18px + $gs-gutter / 2; // 18px width of icon
+        border-bottom: 0;
+        @include fs-header(2);
+        color: colour(neutral-1);
+        font-weight: bold;
+        display: none;
+
+        @include mq(tablet) {
+            display: inline-block;
+            padding-bottom: $gs-baseline / 2;
+        }
+    }
+
+    .search-tool__btn {
+        display: none;
     }
 }
 
 .weather__search-icon {
     margin-top: $gs-baseline / 4;
+    float: right;
+}
+
+.weather__gps-icon,
+.weather__close-icon {
+    background-size: 90% !important;
+    background-position: center bottom !important;
+}
+
+.weather__get-location,
+.weather__close-location {
+    margin: $gs-gutter / 4;
+    display: none;
+}
+
+.weather__close {
+    margin-right: 0;
     float: right;
 }
 
@@ -157,50 +180,4 @@
         margin-left: auto;
         margin-right: auto;
     }
-}
-
-.weather__gps-icon,
-.weather__close-icon {
-    background-size: 90% !important;
-    background-position: center bottom !important;
-}
-
-.weather__change-location {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background-color: #ffffff;
-
-    .search-tool {
-        width: gs-span(2) + $gs-gutter;
-        float: left;
-    }
-
-    .search-tool__input {
-        width: 100%;
-        padding-right: 18px + $gs-gutter / 2; // 18px width of icon
-    }
-
-    .search-tool__btn {
-        display: none;
-    }
-}
-
-.weather__get-location,
-.weather__close {
-    display: inline-block;
-    margin: $gs-gutter / 4;
-}
-
-.weather__city,
-.weather__get-location,
-.weather__close {
-    &:hover {
-        opacity: .8;
-    }
-}
-
-.weather__close {
-    float: right;
-    margin-right: 0;
 }
