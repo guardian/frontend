@@ -87,7 +87,6 @@ define([
                 jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
                 masterclasses:     buildComponentUrl('masterclasses', merge(params, { t: params.ids ? params.ids.split(',') : [] })),
                 soulmates:         buildComponentUrl('soulmates/mixed', params),
-                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high', params),
                 travel:            buildComponentUrl('travel/offers', params),
                 multi:             buildComponentUrl('multi', params),
                 capiSingle:        buildComponentUrl('capi-single', params),

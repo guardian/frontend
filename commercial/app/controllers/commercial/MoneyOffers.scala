@@ -15,7 +15,6 @@ object MoneyOffers extends Controller with implicits.Requests {
         case Some(bestBuys) => {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          request.queryString.foreach(p => println(p._1,p._2.mkString(",")))
           Cached(componentMaxAge)(jsonFormat.result(views.html.moneysupermarket.bestBuys(bestBuys, omnitureId, clickMacro)))
         }
         case None => NoCache(jsonFormat.nilResult)
