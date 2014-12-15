@@ -4,7 +4,6 @@ define([
     Squire
 ) {
 
-
     var reqwestSpy = sinon.spy(function () {
         return {
             then: function () { }

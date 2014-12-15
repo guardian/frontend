@@ -1,42 +1,25 @@
 define([
     'qwery',
+    'squire',
     'common/utils/$',
-    'helpers/fixtures',
-    'jasq'
+    'helpers/fixtures'
 ], function (
     qwery,
+    Squire,
     $,
     fixtures
 ) {
 
-    var expandableSpy;
+    var expandableSpy = sinon.spy(function () {
+        return {
+            init: function () { }
+        };
+    });
 
-    describe('Related', {
-        moduleName: 'common/modules/onward/related',
-        mock: function () {
-            return {
-                'common/utils/config': function () {
-                    return {
-                        switches: {
-                            relatedContent:     true,
-                            ajaxRelatedContent: true
-                        },
-                        page: {
-                            hasStoryPackage:    false,
-                            showRelatedContent: true
-                        }
-                    };
-                },
-                'common/modules/ui/expandable': function () {
-                    return expandableSpy = sinon.spy(function () {
-                        return {
-                            init: function () { }
-                        };
-                    });
-                }
-            }
-        },
-        specify: function () {
+    new Squire()
+        .mock('common/modules/ui/expandable', expandableSpy)
+        .store('common/utils/config')
+        .require(['common/modules/onward/related', 'mocks'], function (Related, mocks) {
 
             var fixturesConfig = {
                     id: 'related',
@@ -47,37 +30,50 @@ define([
                 },
                 $fixturesContainer;
 
-            beforeEach(function () {
-                fixtures.render(fixturesConfig);
-            });
+            describe('Related', function () {
 
-            afterEach(function () {
-                fixtures.clean(fixturesConfig.id);
-            });
-
-            it('should exist', function (Related) {
-                expect(Related).toBeDefined();
-            });
-
-            it('should hide if there\'s no story package and related can\'t be fetched', function (Related, deps) {
-                deps['common/utils/config'].switches.relatedContent = false;
-                var related = new Related();
-                related.renderRelatedComponent();
-                expect($('.js-related', $fixturesContainer).hasClass('u-h')).toBe(true);
-            });
-
-            it('should create expandable if page has story package', function (Related, deps) {
-                deps['common/utils/config'].page.hasStoryPackage = true;
-                var related = new Related();
-                related.renderRelatedComponent();
-                expect(expandableSpy).toHaveBeenCalledWith({
-                    dom:       qwery('.related-trails', $fixturesContainer)[0],
-                    expanded:  false,
-                    showCount: false
+                beforeEach(function () {
+                    mocks.store['common/utils/config'].page = {
+                        hasStoryPackage: false,
+                        showRelatedContent: true
+                    };
+                    mocks.store['common/utils/config'].switches = {
+                        relatedContent: true,
+                        ajaxRelatedContent: true
+                    };
+                    fixtures.render(fixturesConfig);
                 });
+
+                afterEach(function () {
+                    fixtures.clean(fixturesConfig.id);
+                });
+
+                it('should exist', function () {
+                    expect(Related).toBeDefined();
+                });
+
+                it('should hide if there\'s no story package and related can\'t be fetched', function () {
+                    mocks.store['common/utils/config'].switches.relatedContent = false;
+
+                    var related = new Related();
+                    related.renderRelatedComponent();
+                    expect($('.js-related', $fixturesContainer).hasClass('u-h')).toBe(true);
+                });
+
+                it('should create expandable if page has story package', function () {
+                    mocks.store['common/utils/config'].page.hasStoryPackage = true;
+
+                    var related = new Related();
+                    related.renderRelatedComponent();
+                    expect(expandableSpy).toHaveBeenCalledWith({
+                        dom:       qwery('.related-trails', $fixturesContainer)[0],
+                        expanded:  false,
+                        showCount: false
+                    });
+                });
+
             });
 
-        }
     });
 
 });
