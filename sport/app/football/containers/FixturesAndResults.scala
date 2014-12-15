@@ -6,10 +6,10 @@ import implicits.Football
 import layout._
 import model.{Group, Competition, Table, TeamMap}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 import slices.{FixedContainers, Fixed}
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
-import football.views.html.fragments.componentMissingMessage
 import common.Seqs._
 
 import scalaz.syntax.std.boolean._
@@ -62,12 +62,12 @@ object FixturesAndResults extends Football {
         val blobs = Seq(
           Some(HtmlAndClasses(
             1,
-            fixturesComponent getOrElse componentMissingMessage("No upcoming fixtures"),
+            fixturesComponent getOrElse Html("No upcoming fixtures"),
             if (fixturesComponent.isDefined) cssClasses else missingComponentClasses
           )),
           Some(HtmlAndClasses(
             2,
-            resultsComponent getOrElse componentMissingMessage("No recent results"),
+            resultsComponent getOrElse Html("No recent results"),
             if (resultsComponent.isDefined) cssClasses else missingComponentClasses
           )),
           maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
