@@ -303,6 +303,14 @@ object Switches {
   )
 
   // Features
+  val FixturesAndResultsContainerSwitch = Switch(
+    "Feature",
+    "fixtures-and-results-container",
+    "Fixtures and results container on football tag pages",
+    safeState = On,
+    sellByDate = never
+  )
+
   val HardcodedSectionTagLookUp = Switch(
     "Feature",
     "hardcoded-section-tag-lookup",

@@ -2,6 +2,7 @@ package model
 
 import common._
 import conf.LiveContentApi
+import feed.Competitions
 import pa._
 import org.joda.time.DateTime
 
@@ -131,6 +132,8 @@ object TeamName {
   def apply(team: FootballTeam) = {
     TeamMap.shortNames.get(team.id).getOrElse(team.name)
   }
+
+  def fromId(id: String) = Competitions().findTeam(id).map(apply)
 }
 
 // if we have tags for the matches we can make a sensible url for it
