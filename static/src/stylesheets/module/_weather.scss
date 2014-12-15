@@ -1,4 +1,5 @@
 .weather {
+    position: relative;
     color: colour(neutral-2);
     text-align: right;
 
@@ -10,7 +11,6 @@
 
     @include mq(tablet) {
         width: 220px;
-        right: $gs-gutter;
         text-align: left;
     }
 
@@ -60,18 +60,25 @@
 }
 
 .weather__city {
+    margin: 0;
+
+    @include mq(tablet) {
+        position: relative;
+        width: 100%;
+        border-bottom: 1px dotted colour(neutral-3);
+    }
+}
+
+.weather__city,
+.search-tool__input {
     @include fs-header(2);
     color: colour(neutral-1);
     font-weight: bold;
-    margin: 0;
     display: none;
 
     @include mq(tablet) {
         display: inline-block;
-        position: relative;
-        width: 100%;
         padding-bottom: $gs-baseline / 2;
-        border-bottom: 1px dotted colour(neutral-3);
     }
 }
 
@@ -114,6 +121,7 @@
     }
 }
 
+// Change name of this
 .i.weather__icon {
     float: right;
     background-position: left top !important;
@@ -156,4 +164,44 @@
 .weather__icon--close {
     background-size: 90% !important;
     background-position: center bottom !important;
+}
+
+.weather__change-location {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: #ffffff;
+
+    .search-tool {
+        width: gs-span(2) + $gs-gutter;
+        float: left;
+    }
+
+    .search-tool__input {
+        width: 100%;
+        padding-right: 18px + $gs-gutter / 2; // 18px width of icon
+    }
+
+    .search-tool__btn {
+        display: none;
+    }
+}
+
+.weather__get-location,
+.weather__close-change-location {
+    display: inline-block;
+    margin: $gs-gutter / 4;
+}
+
+.weather__city,
+.weather__get-location,
+.weather__close-change-location {
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.weather__close-change-location {
+    float: right;
+    margin-right: 0;
 }
