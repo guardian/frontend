@@ -29,14 +29,6 @@
         width: $left-column-wide;
     }
 
-    .popup {
-        z-index: 10;
-    }
-
-    .popup__item {
-        width: gs-span(2) + $gs-gutter * 2;
-    }
-
     /*.has-page-skin & {
         width: 220px;
         position: absolute;
@@ -147,7 +139,7 @@
         display: block;
         margin-top: $gs-baseline / 3;
     }
-    
+
     @include mq(wide) {
         float: none;
         margin-left: auto;
@@ -155,12 +147,13 @@
     }
 }
 
-.weather__pin {
+.weather__icon--search {
     margin-top: $gs-baseline / 4;
     float: right;
 }
 
-.weather__gps {
-    background-size: 40% !important;
+.weather__icon--gps,
+.weather__icon--close {
+    background-size: 90% !important;
     background-position: center bottom !important;
 }
