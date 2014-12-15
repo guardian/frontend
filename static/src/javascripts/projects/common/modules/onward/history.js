@@ -131,10 +131,12 @@ define([
             .map(function (nameAndFreqs, tid) {
                 var freqs = nameAndFreqs[1];
 
-                return {
-                    keep: [tid, nameAndFreqs[0]],
-                    rank: tally(freqs)
-                };
+                if (freqs.length > 1) {
+                    return {
+                        keep: [tid, nameAndFreqs[0]],
+                        rank: tally(freqs)
+                    };
+                }
             })
             .compact()
             .sortBy('rank')
