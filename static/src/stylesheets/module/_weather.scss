@@ -126,7 +126,6 @@
     }
 }
 
-// Change name of this
 .i.weather__icon {
     float: right;
     background-position: left top !important;
@@ -188,20 +187,20 @@
 }
 
 .weather__get-location,
-.weather__close-change-location {
+.weather__close {
     display: inline-block;
     margin: $gs-gutter / 4;
 }
 
 .weather__city,
 .weather__get-location,
-.weather__close-change-location {
+.weather__close {
     &:hover {
         opacity: .8;
     }
 }
 
-.weather__close-change-location {
+.weather__close {
     float: right;
     margin-right: 0;
 }
