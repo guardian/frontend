@@ -97,6 +97,9 @@ GET         /sport/cricket/match/:matchId.json                                  
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
 GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day.json                                                           football.controllers.FixturesController.moreFixturesForJson(year, month, day)
+
+
 GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
 GET         /football/fixtures                                                                                       football.controllers.FixturesController.allFixtures()
 GET         /football/fixtures.json                                                                                  football.controllers.FixturesController.allFixturesJson()
