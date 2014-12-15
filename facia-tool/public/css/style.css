@@ -1175,7 +1175,7 @@ button {
 
 .list-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 .tool {
