@@ -1,7 +1,7 @@
 {
   "name": "pasteup-buttons",
   "description": "Button component in the Pasteup collection",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "main": [
     "build/buttons.min.css",
     "src/_buttons.scss"
@@ -22,11 +22,11 @@
   "devDependencies": {
     "Cortana": "~1.2.7"
   },
-  "_release": "0.4.12",
+  "_release": "0.4.13",
   "_resolution": {
     "type": "version",
-    "tag": "0.4.12",
-    "commit": "035e684170b12daf617a2630af7e8485ab9cd2ed"
+    "tag": "0.4.13",
+    "commit": "6d6cac3a58227ebde89bde79337fe1d6aa2eba43"
   },
   "_source": "git://github.com/guardian/pasteup-buttons.git",
   "_target": "~0.4.0",
