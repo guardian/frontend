@@ -1,5 +1,7 @@
 package model
 
+import java.net.URL
+
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
@@ -473,6 +475,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+  lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(main).body.getElementsByClass("element-video").headOption.map { v =>
+    new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
+  }
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
