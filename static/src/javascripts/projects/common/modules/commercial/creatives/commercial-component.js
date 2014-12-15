@@ -82,7 +82,6 @@ define([
             this.$adSlot    = $adSlot;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys', params),
-                bestbuyHigh:       buildComponentUrl('money/bestbuys-high', params),
                 book:              buildComponentUrl('books/book', merge(params, { t: config.page.isbn || params.isbn })),
                 books:             buildComponentUrl('books/books', merge(params, { t: params.isbns ? params.isbns.split(',') : [] })),
                 jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),

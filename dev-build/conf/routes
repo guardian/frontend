@@ -234,10 +234,7 @@ GET         /commercial/soulmates/mixed-high.json                               
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
 GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
 
-GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
-GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson
-GET         /commercial/money/bestbuys-high                                                                          controllers.commercial.MoneyOffers.bestBuysHighHtml
-GET         /commercial/money/bestbuys-high.json                                                                     controllers.commercial.MoneyOffers.bestBuysHighJson
+GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
