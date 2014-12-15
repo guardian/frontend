@@ -606,7 +606,7 @@ h1 {
     right: 0;
 }
 
-.right-col.live-mode {
+.front-container.live-mode {
     background: #EEFFEE;
 }
 
@@ -1213,10 +1213,6 @@ button {
 
 .tools .tool:first-child {
     background: #2ea3eb;
-}
-
-.tools {
-    flex: 0 0 150px;
 }
 
 .tools .tool:first-child:hover {
