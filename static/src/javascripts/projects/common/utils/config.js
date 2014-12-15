@@ -19,10 +19,10 @@ define([
 
     return extend({
         hasTone: function (name) {
-            return (config.page.tones || '').indexOf(name) > -1;
+            return (this.page.tones || '').indexOf(name) > -1;
         },
         hasSeries: function (name) {
-            return (config.page.series || '').indexOf(name) > -1;
+            return (this.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
             return _(config.page.references || [])

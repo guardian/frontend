@@ -1,11 +1,9 @@
 define([
     'bonzo',
-    'squire',
-    'common/modules/analytics/beacon'
+    'squire'
 ], function (
     bonzo,
-    Squire,
-    beacon
+    Squire
 ) {
 
     var config = {
