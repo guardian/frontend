@@ -2,7 +2,7 @@
     <div class="weather__location">
         <div class="search-tool js-search-tool">
             <div class="search-tool__form u-cf">
-                <input class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-list-location" value="{{location}}" />
+                <input class="search-tool__input js-search-tool-input js-weather-input" type="text" data-link-name="weather-list-location" value="{{location}}" />
                 <button class="search-tool__btn"><i class="i i-search-white-36"></i></button>
             </div>
             <ul class="u-unstyled js-search-tool-list"></ul>
@@ -25,7 +25,9 @@
                 <span class="u-h">is</span>
                 <span class="weather__temp js-weather-temp">{{tempNow}}</span>
             </p>
-            <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
+            <a href="#" title="{{description}}">
+                <i class="i i-weather-{{icon}} weather__icon js-weather-icon"></i>
+            </a>
         </li>
     </ul>
 </div>

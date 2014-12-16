@@ -126,32 +126,32 @@ define([
         },
 
         bindEvents: function () {
-            bean.on($('.js-search-tool-input')[0], 'click', function() {
-                self.editSwitch(1);
+            bean.on($('.js-weather-input')[0], 'click', function() {
+                self.toggleControls(true);
             });
             bean.on($('.js-close-location')[0], 'click', function() {
-                self.editSwitch(0);
+                self.toggleControls(false);
             });
             bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.on('autocomplete:fetch', this.getCityCoordinates);
         },
 
         unbindEvents: function () {
-            bean.off($('.js-search-tool-input')[0], 'click', self.editSwitch);
-            bean.off($('.js-close-location')[0], 'click', self.editSwitch);
+            bean.off($('.js-weather-input')[0], 'click', self.toggleControls);
+            bean.off($('.js-close-location')[0], 'click', self.toggleControls);
             bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.off('autocomplete:fetch', this.getCityCoordinates);
         },
 
-        editSwitch: function(value) {
-            $input = $('.js-search-tool-input')[0];
+        toggleControls: function(value, city) {
+            $input = $('.js-weather-input')[0];
             $location = $('.weather__location');
 
-            if (value == 0) {
-                $location.removeClass('is-editing');
-            } else if (value == 1) {
+            if (value) {
                 $location.addClass('is-editing');
                 $input.setSelectionRange(0, $input.value.length);
+            } else {
+                $location.removeClass('is-editing');
             }
         },
 
@@ -186,6 +186,7 @@ define([
             $weather = $.create(template(weatherTemplate, {
                 location: city,
                 icon: weatherData.WeatherIcon,
+                description: weatherData.WeatherText,
                 tempNow: self.getTemperature(weatherData)
             }));
 
