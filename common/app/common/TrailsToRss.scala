@@ -47,7 +47,6 @@ object TrailsToRss extends implicits.Collections {
 
     // Feed: entries
     val entries = trails.map{ trail =>
-
       // Entry: categories
       val categories = trail.keywords.map{ tag =>
         val category = new SyndCategoryImpl
