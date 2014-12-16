@@ -5,7 +5,6 @@ define([
     'models/collections/collection',
     'modules/vars',
     'utils/fetch-lastmodified',
-    'utils/fronts-from-url',
     'utils/mediator',
     'utils/presser',
     'utils/update-scrollables'
@@ -15,7 +14,6 @@ define([
     Collection,
     vars,
     lastModified,
-    getFrontsFromURL,
     mediator,
     presser,
     updateScrollables
@@ -24,7 +22,7 @@ define([
         var frontId, listeners = mediator.scope();
 
         this.column = params.column;
-        frontId = getFrontsFromURL()[this.column['nth-of-type']()];
+        frontId = this.column.initialState.config();
         this.front = ko.observable(frontId);
         this.previousFront = frontId;
         this.frontAge = ko.observable();
@@ -105,15 +103,14 @@ define([
             model.pressLiveFront();
         });
 
-        listeners.on('front:change', function (newLayout) {
-            var newFront = newLayout[model.column['nth-of-type']()];
-            if (newFront !== model.front()) {
-                model.front(newFront);
-            }
-        });
-
         listeners.on('alert:dismiss', function () {
             model.alertFrontIsStale(false);
+        });
+
+        listeners.on('column:change', function (column) {
+            if (model.column === column) {
+                model.front(column.initialState.config());
+            }
         });
 
         this.setIntervals = [];
@@ -211,10 +208,7 @@ define([
             return;
         }
         this.previousFront = front;
-        mediator.emit('front:select', {
-            position: this.position(),
-            front: front
-        });
+        this.column.setConfig(front).saveChanges();
 
         this.load(front);
 

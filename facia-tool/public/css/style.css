@@ -1187,6 +1187,7 @@ button {
     border: 0;
     cursor: pointer;
     text-decoration: none;
+    display: inline-block;
 }
 
 .tool--rhs {
@@ -1477,7 +1478,7 @@ button {
 }
 
 .cnf-collection .cnf-form {
-    margin: 10px 0 0 20px;
+    margin: 10px 0 15px 20px;
 }
 
 .cnf-form label {

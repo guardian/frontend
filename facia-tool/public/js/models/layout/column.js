@@ -1,10 +1,12 @@
 /* globals _ */
 define([
     'knockout',
-    'utils/global-listeners'
+    'utils/global-listeners',
+    'utils/mediator'
 ],function (
     ko,
-    globalListeners
+    globalListeners,
+    mediator
 ) {
     function isNarrow (column) {
         var percentage = parseFloat('0.' + column.style.width().replace('vw', '')),
@@ -18,11 +20,10 @@ define([
 
         this.initialState = {
             'type': ko.observable(opts.type || 'front'),
-            'iframeURL': ko.observable(opts.iframeURL || '')
+            'config': ko.observable(opts.config)
         };
         this.edit = {};
         cloneObservables(this.initialState, this.edit);
-        this['nth-of-type'] = ko.observable(opts['nth-of-type']);
 
         this.layout = opts.layout;
         this.style = {
@@ -52,11 +53,37 @@ define([
     }
 
     Column.prototype.setType = function (what) {
-        this.edit.type(what);
+        if (this.edit.type() !== what) {
+            this.edit.type(what);
+            this.edit.config(undefined);
+        }
+        return this;
+    };
+
+    Column.prototype.setConfig = function (what) {
+        this.edit.config(what);
+        return this;
+    };
+
+    Column.prototype.reset = function (to) {
+        var hasChanges = false;
+        if (to.type !== this.edit.type()) {
+            this.edit.type(to.type);
+            hasChanges = true;
+        }
+        if (to.config !== this.edit.config()) {
+            this.edit.config(to.config);
+            hasChanges = true;
+        }
+        if (hasChanges) {
+            this.saveChanges();
+            mediator.emit('column:change', this);
+        }
     };
 
     Column.prototype.saveChanges = function () {
         cloneObservables(this.edit, this.initialState);
+        mediator.emit('layout:change');
     };
 
     Column.prototype.dropChanges = function () {
@@ -66,7 +93,10 @@ define([
     Column.prototype.serializable = function () {
         var serialized = {};
         _.chain(this.edit).keys().each(function (key) {
-            serialized[key] = this.edit[key]();
+            var val = this.edit[key]();
+            if (val !== undefined) {
+                serialized[key] = val;
+            }
         }, this);
         return serialized;
     };
