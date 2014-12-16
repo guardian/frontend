@@ -1,19 +1,19 @@
 /**
  * More or less copy-pasted from the 'buster' package. The buster
- * "all inclusive" package includes Sinon, which is why we avoid it. 
+ * "all inclusive" package includes Sinon, which is why we avoid it.
  */
-(function (global, buster) {
+(function (global, buster, formatio) {
     if (typeof require == "function" && typeof module == "object") {
         buster = require("buster-core");
+        formatio = require("formatio");
 
         module.exports = buster.extend(buster, require("buster-test"), {
             assertions: require("buster-assertions"),
-            format: require("buster-format"),
             eventedLogger: require("buster-evented-logger")
         });
     }
 
-    var logFormatter = buster.create(buster.format);
+    var logFormatter = buster.create(formatio);
     logFormatter.quoteStrings = false;
     var asciiFormat = buster.bind(logFormatter, "ascii");
 
@@ -43,7 +43,7 @@
     buster.assertions.on("failure", count);
 
     buster.testRunner.onCreate(function (runner) {
-        buster.assertions.bind(runner, { "failure": "assertionFailure" });
+        buster.assertions.bind(runner, { failure: "assertionFailure" });
         runner.console = buster.console;
 
         runner.on("test:async", function () {
@@ -119,4 +119,6 @@
         },
         assertMessage: "Expected object ${0} to be a clock"
     });
-}(typeof global != "undefined" ? global : this, typeof buster == "object" ? buster : null));
+}(typeof global !== "undefined" ? global : this,
+  typeof buster !== "undefined" ? buster : null,
+  typeof formatio !== "undefined" ? formatio : null));

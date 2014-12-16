@@ -473,6 +473,11 @@
     }
     @include mq($until: tablet) {
         clear: both;
+        border-top: 1px dotted colour(neutral-5);
+
+        .fc-container--tag & {
+            width: gs-span(2);
+        }
     }
 }
 .fc-container--sponsored .fc-container:first-child,

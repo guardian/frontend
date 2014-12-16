@@ -2,7 +2,7 @@
 begin
   require "juicer/merger/javascript_merger"
 rescue LoadError => err
-  puts "Install juicer to build Sinon.JS"
+  puts "Install juicer ruby gem to build Sinon.JS. Try `gem install juicer`."
   if !defined?(Gem)
     puts "RubyGems is not loaded. Perhaps that is why juicer can not be found?"
   end
@@ -34,26 +34,53 @@ PREAMBLE
   end
 end
 
-def add_buster_format(file)
-  if !File.exists?("./node_modules/buster-format")
+def add_deps(file)
+  if !File.exists?("./node_modules/formatio")
     puts <<-MSG
-buster-format not found, skipping. To build with buster-format support:
-    mkdir node_modules
-    git submodule add git://gitorious.org/buster/buster-format.git node_modules/buster-format
-    cd node_modules/buster-format
-    npm link
+formatio not found, skipping. To build with formatio support:
+    npm install formatio
     MSG
     return file
   end
+
   contents = File.read(file)
 
   File.open(file, "w") do |f|
-    f.puts("this.sinon = (function () {")
-    f.puts(File.read("./node_modules/buster-core/lib/buster-core.js"))
-    f.puts(File.read("./node_modules/buster-format/lib/buster-format.js").gsub("var buster = this.buster || {};", ""))
+    f.puts("(function (root, factory) {")
+    f.puts("  if (typeof define === 'function' && define.amd) {")
+    f.puts("    define([], function () {")
+    f.puts("      return (root.sinon = factory());")
+    f.puts("    });")
+    f.puts("  } else if (typeof exports === 'object') {")
+    f.puts("    module.exports = factory();")
+    f.puts("  } else {")
+    f.puts("    root.sinon = factory();")
+    f.puts("  }")
+    f.puts("}(this, function () {")
+    f.puts("  var samsam, formatio;")
+    f.puts("  (function () {")
+    f.puts(<<EOF)
+                function define(mod, deps, fn) {
+                  if (mod == "samsam") {
+                    samsam = deps();
+                  } else if (typeof deps === "function" && mod.length === 0) {
+                    lolex = deps();
+                  } else if (typeof fn === "function") {
+                    formatio = fn(samsam);
+                  }
+                }
+EOF
+    f.puts("    define.amd = {};")
+    f.puts(File.read("./node_modules/formatio/node_modules/samsam/lib/samsam.js"))
+    f.puts(File.read("./node_modules/formatio/lib/formatio.js"))
+    f.puts(File.read("./node_modules/lolex/lolex.js"))
+    f.puts("  })();")
+    # mask the real define from the code so that it doesn't use it internally
+    f.puts("  var define;")
     f.puts(contents)
-    f.puts("return sinon;}.call(typeof window != 'undefined' && window || {}));")
-  end
+    f.puts("  return sinon;")
+    f.puts("}));")
+    end
 
   file
 end
@@ -67,13 +94,15 @@ Dir.chdir(File.dirname(__FILE__)) do
   merger = Juicer::Merger::JavaScriptMerger.new
   merger << "lib/sinon/test_case.js"
   merger << "lib/sinon/assert.js"
+  merger << "lib/sinon/util/fake_xdomain_request.js"
   merger.save(output)
-  add_license(add_buster_format(output), version)
+  add_license(add_deps(output), version)
 
   File.open("pkg/sinon-ie#{version_string}.js", "w") do |f|
     f.puts(File.read("lib/sinon/util/timers_ie.js"))
     f.puts("\n")
     f.puts(File.read("lib/sinon/util/xhr_ie.js"))
+    f.puts(File.read("lib/sinon/util/xdr_ie.js"))
   end
 
   add_license("pkg/sinon-ie#{version_string}.js", version)

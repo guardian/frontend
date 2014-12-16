@@ -19,4 +19,13 @@ class SeqsTest extends FlatSpec with Matchers {
   "reverseSorted" should "reverse sort a list" in {
     Seq(1, 5, 2, 3, -3).reverseSorted shouldEqual Seq(5, 3, 2, 1, -3)
   }
+
+  "around" should "return a window around the desired item" in {
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).around(0, 3)(_ == 3) shouldEqual Some(Seq(3, 4, 5))
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).around(1, 3)(_ == 3) shouldEqual Some(Seq(2, 3, 4))
+  }
+
+  it should "return None if the item could not be found" in {
+    Seq(1, 2, 3).around(0, 3)(_ == 10) shouldEqual None
+  }
 }

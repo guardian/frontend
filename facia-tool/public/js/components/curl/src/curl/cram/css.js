@@ -52,13 +52,16 @@ define(['./jsEncode'], function (jsEncode) {
 			while ((eachId = resources.shift())) templatize(eachId);
 
 			function templatize (resId) {
-				var absId, idPath;
+				var absId, url, idPath;
 
 				absId = pluginId + '!' + resId;
+				url = req.toUrl(resId);
+				if (url.substr(url.length - 4) !== ".css") {
+					url += ".css";
+				}
+				idPath = path(resId);
 
-				idPath = path(resId); //), baseUrl);
-
-				io.read(resId, function (text) {
+				io.read(url, function (text) {
 					var changed, moduleText;
 
 					text = text.replace(findUrlRx, function (all, url) {

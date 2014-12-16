@@ -62,7 +62,7 @@ For example, to make a version of curl with the js! and css! plugins built-in:
 Note: The make.sh bash script is not smart.  You must tell it to concat
 dependencies -- and in the right order.  For instance, to use the text!
 and json! plugins, you must also include the _fetchText.js module (in the
-same folder).
+same folder) *before the plugins that depend on it*.
 
 Note: you will need a fairly recent version of `curl` (the unix utility, not
 curl.js!) to run `make.sh`.  Version 7.18 or later is fine.

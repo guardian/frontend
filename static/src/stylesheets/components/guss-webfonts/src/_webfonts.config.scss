@@ -57,15 +57,11 @@ $guss-webfonts-charset: 'original' !default;
 /**
  * Complete path
  *
- * @requires {variable} guss-webfonts-charset
- * @requires {variable} guss-webfonts-hinting
- * @requires {variable} guss-webfonts-kerning
- *
  * @type String
  *
  * @group webfonts
  */
-$guss-webfonts-path: '#{$guss-webfonts-version}/hinting-#{$guss-webfonts-hinting}/kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
+$guss-webfonts-path: false !default;
 
 
 /**

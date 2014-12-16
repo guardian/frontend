@@ -14,6 +14,7 @@ import views.support.{CartoonKicker, ReviewKicker, TagKicker}
 import scala.Function.const
 import scalaz.syntax.traverse._
 import scalaz.std.list._
+import scalaz.syntax.std.boolean._
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -116,7 +117,12 @@ object IndexPage {
 
       container.copy(
         customHeader = Some(header),
-        customClasses = Some(Seq("fc-container--tag")),
+        customClasses = Some(Seq(
+          Some("fc-container--tag"),
+          (container.index == 0 &&
+            indexPage.isFootballTeam &&
+            Switches.FixturesAndResultsContainerSwitch.isSwitchedOn) option "js-insert-team-stats-after"
+        ).flatten),
         hideToggle = true,
         showTimestamps = true,
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
@@ -154,6 +160,11 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case _ => false
   }
 
+  def isFootballTeam = page match {
+    case tag: Tag => tag.isFootballTeam
+    case _ => false
+  }
+
   def forcesDayView = page match {
     case tag: Tag => Set("series", "blog") contains tag.tagType
     case _ => false
@@ -164,5 +175,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case other => other.id
   }
 
-  def allPath = s"/${idWithoutEdition}"
+  def allPath = s"/$idWithoutEdition"
 }

@@ -1,5 +1,3 @@
-/*jslint onevar: false*/
-/*globals sinon buster*/
 /**
  * @author Christian Johansen (christian@cjohansen.no)
  * @license BSD
@@ -14,7 +12,7 @@ if (typeof require == "function" && typeof module == "object") {
 }
 
 buster.testCase("sinon.mock", {
-    "create": {
+    ".create": {
         "returns function with expects method": function () {
             var mock = sinon.mock.create({});
 
@@ -28,7 +26,7 @@ buster.testCase("sinon.mock", {
         }
     },
 
-    "expects": {
+    ".expects": {
         setUp: function () {
             this.mock = sinon.mock.create({ someMethod: function () {} });
         },
@@ -57,7 +55,7 @@ buster.testCase("sinon.mock", {
         }
     },
 
-    "expectation": {
+    ".expectation": {
         setUp: function () {
             this.method = "myMeth";
             this.expectation = sinon.expectation.create(this.method);
@@ -96,7 +94,7 @@ buster.testCase("sinon.mock", {
             });
         },
 
-        "returns": {
+        ".returns": {
             "returns configured return value": function () {
                 var object = {};
                 this.expectation.returns(object);
@@ -105,7 +103,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "call": {
+        call: {
             "is called with correct this value": function () {
                 var object = { method: this.expectation };
                 object.method();
@@ -114,7 +112,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCount": {
+        ".callCount": {
             "onlys be invokable once by default": function () {
                 var expectation = this.expectation;
                 expectation();
@@ -137,7 +135,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCountNever": {
+        ".callCountNever": {
             "is not callable": function () {
                 var expectation = this.expectation;
                 expectation.never();
@@ -152,7 +150,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCountOnce": {
+        ".callCountOnce": {
             "allows one call": function () {
                 var expectation = this.expectation;
                 expectation.once();
@@ -168,7 +166,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCountTwice": {
+        ".callCountTwice": {
             "allows two calls": function () {
                 var expectation = this.expectation;
                 expectation.twice();
@@ -185,7 +183,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCountThrice": {
+        ".callCountThrice": {
             "allows three calls": function () {
                 var expectation = this.expectation;
                 expectation.thrice();
@@ -203,7 +201,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "callCountExactly": {
+        ".callCountExactly": {
             "allows specified number of calls": function () {
                 var expectation = this.expectation;
                 expectation.exactly(2);
@@ -236,7 +234,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "atLeast": {
+        ".atLeast": {
             "throws without argument": function () {
                 var expectation = this.expectation;
 
@@ -269,7 +267,7 @@ buster.testCase("sinon.mock", {
                 });
             },
 
-            "nots be met with too few calls": function () {
+            "should not be met with too few calls": function () {
                 this.expectation.atLeast(2);
                 this.expectation();
 
@@ -293,7 +291,7 @@ buster.testCase("sinon.mock", {
                 assert(this.expectation.met());
             },
 
-            "nots throw when exceeding at least expectation": function () {
+            "should not throw when exceeding at least expectation": function () {
                 var obj = { foobar: function () {} };
                 var mock = sinon.mock(obj);
                 mock.expects("foobar").atLeast(1);
@@ -307,7 +305,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "atMost": {
+        ".atMost": {
             "throws without argument": function () {
                 var expectation = this.expectation;
 
@@ -352,7 +350,7 @@ buster.testCase("sinon.mock", {
                 assert(this.expectation.met());
             },
 
-            "nots be met with excessive calls": function () {
+            "should not be met with excessive calls": function () {
                 var expectation = this.expectation;
                 this.expectation.atMost(2);
                 this.expectation();
@@ -366,13 +364,13 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "atMostAndAtLeast": {
+        ".atMostAndAtLeast": {
             setUp: function () {
                 this.expectation.atLeast(2);
                 this.expectation.atMost(3);
             },
 
-            "nots be met with too few calls": function () {
+            "should not be met with too few calls": function () {
                 this.expectation();
 
                 assert.isFalse(this.expectation.met());
@@ -405,8 +403,8 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "met": {
-            "nots be met when not called enough times": function () {
+        ".met": {
+            "should not be met when not called enough times": function () {
                 assert.isFalse(this.expectation.met());
             },
 
@@ -416,7 +414,7 @@ buster.testCase("sinon.mock", {
                 assert(this.expectation.met());
             },
 
-            "nots be met when called too many times": function () {
+            "should not be met when called too many times": function () {
                 this.expectation();
 
                 try {
@@ -427,7 +425,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "withArgs": {
+        ".withArgs": {
             "returns expectation for chaining": function () {
                 assert.same(this.expectation.withArgs(1), this.expectation);
             },
@@ -489,10 +487,25 @@ buster.testCase("sinon.mock", {
                 refute.exception(function () {
                     expectation(1, 2, 3);
                 });
+            },
+            "works with sinon matchers": function () {
+                this.expectation.withArgs(sinon.match.number, sinon.match.string, sinon.match.func);
+                this.expectation(1, "test", function () {});
+
+                assert(this.expectation.met());
+            },
+            "throws when sinon matchers fail": function () {
+                var expectation = this.expectation;
+
+                this.expectation.withArgs(sinon.match.number, sinon.match.string, sinon.match.func);
+                assert.exception(function () {
+                    expectation(1, 2, 3);
+                }, "ExpectationError");
+
             }
         },
 
-        "withExactArgs": {
+        ".withExactArgs": {
             "returns expectation for chaining": function () {
                 assert.same(this.expectation.withExactArgs(1), this.expectation);
             },
@@ -531,7 +544,7 @@ buster.testCase("sinon.mock", {
                 }, "ExpectationError");
             },
 
-            "nots allow excessive args": function () {
+            "should not allow excessive args": function () {
                 var expectation = this.expectation;
                 expectation.withExactArgs(1, 2, 3);
 
@@ -547,7 +560,7 @@ buster.testCase("sinon.mock", {
                 assert(this.expectation.met());
             },
 
-            "nots allow excessive args with no expected args": function () {
+            "does not allow excessive args with no expected args": function () {
                 var expectation = this.expectation;
                 expectation.withExactArgs();
 
@@ -557,7 +570,7 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "on": {
+        ".on": {
             "returns expectation for chaining": function () {
                 assert.same(this.expectation.on({}), this.expectation);
             },
@@ -579,8 +592,8 @@ buster.testCase("sinon.mock", {
             }
         },
 
-        "verify": {
-            "passs if met": function () {
+        ".verify": {
+            "pass if met": function () {
                 sinon.stub(sinon.expectation, "pass");
                 var expectation = this.expectation;
 
@@ -613,7 +626,7 @@ buster.testCase("sinon.mock", {
         }
     },
 
-    "verify": {
+    ".verify": {
         setUp: function () {
             this.method = function () {};
             this.object = { method: this.method };
@@ -809,10 +822,24 @@ buster.testCase("sinon.mock", {
 
             assert.equals(message, "Expected method([...]) at least once and at most twice " +
                           "(never called)");
+        },
+
+        "does not call pass if no expectations": function () {
+            var pass = sinon.stub(sinon.expectation, "pass");
+
+            var mock = this.mock;
+            mock.expects("method").never();
+            delete mock.expectations;
+
+            mock.verify();
+
+            refute(pass.called, "expectation.pass should not be called");
+
+            pass.restore();
         }
     },
 
-    "mockObject": {
+    "mock object": {
         setUp: function () {
             this.method = function () {};
             this.object = { method: this.method };
@@ -873,8 +900,8 @@ buster.testCase("sinon.mock", {
             this.method = function () {};
             this.object = { method: this.method };
             this.mock = sinon.mock.create(this.object);
-            this.mock1 = this.mock.expects("method");
-            this.mock2 = this.mock.expects("method").on(this.thisValue);
+            this.mock.expects("method");
+            this.mock.expects("method").on(this.thisValue);
         },
 
         "queues expectations": function () {
@@ -950,7 +977,7 @@ buster.testCase("sinon.mock", {
         }
     },
 
-    "yields": {
+    ".yields": {
         "invokes only argument as callback": function () {
             var mock = sinon.mock().yields();
             var spy = sinon.spy();
@@ -962,7 +989,6 @@ buster.testCase("sinon.mock", {
 
         "throws understandable error if no callback is passed": function () {
             var mock = sinon.mock().yields();
-            var spy = sinon.spy();
 
             try {
                 mock();
