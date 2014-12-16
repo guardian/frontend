@@ -1702,8 +1702,7 @@ button {
 .narrow .image__overrides,
 .narrow .log-in-out,
 .narrow .article__spark,
-.narrow .list-header__timings,
-.narrow .also {
+.narrow .list-header__timings {
     display: none;
 }
 .narrow .article__times {

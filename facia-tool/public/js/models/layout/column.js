@@ -12,7 +12,7 @@ define([
         var percentage = parseInt(column.style.width(), 10),
             width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-        return width * 100 / percentage <= 550;
+        return width * percentage / 100 <= 550;
     }
 
     function Column (opts) {
