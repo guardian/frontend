@@ -40,7 +40,7 @@ define([
         BrandedComponent = function ($adSlot, params, options) {
             this.$adSlot = $adSlot;
             this.params  = params;
-            this.opts = defaults(options, {
+            this.opts = defaults(options || {}, {
                 force: false
             });
         };

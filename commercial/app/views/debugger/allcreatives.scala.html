@@ -183,11 +183,9 @@
                 loadCommercial(function () {
                     require('core')
                         .next([
-                            'bean',
                             'common/utils/$'
                         ])
                         .then(function (
-                            bean,
                             $
                         ) {
                         $('.content__secondary-column').empty();
@@ -196,7 +194,7 @@
                             .then(function(
                                 BrandedComponent
                             ) {
-                                new BrandedComponent(document.querySelector('.branded-component-' + component), {
+                                new BrandedComponent($('.branded-component-' + component), {
                                     type: component,
                                     clickMacro: '%%CLICK_URL_ESC%%',
                                     omnitureId: 'omnitureId'

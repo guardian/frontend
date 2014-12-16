@@ -307,11 +307,7 @@ define([
                                 creativeConfig = JSON.parse(breakoutContent);
                                 require('bootstraps/creatives')
                                     .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
-                                        if (creativeConfig.name === 'branded-component') {
-                                            new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
-                                        } else {
-                                            new Creative($slot, creativeConfig.params).create();
-                                        }
+                                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                     });
                             } else {
                                 // evil, but we own the returning js snippet
