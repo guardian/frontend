@@ -561,10 +561,11 @@ h1 {
 
 .list-header {
     color: #999999;
-    padding: 5px 0;
-    height: 40px;
+    padding: 5px 8px 0 0;
+    height: 34px;
     overflow: hidden;
     position: relative;
+    margin-bottom: 8px;
 }
 
 .list-header.collapsed {
@@ -1660,6 +1661,7 @@ button {
 .also {
     margin: 6px;
     line-height: 24px;
+    white-space: nowrap;
 }
 
 .dropdown > ul {
