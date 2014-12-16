@@ -46,6 +46,7 @@ define([
         },
 
         getGeoLocation: function () {
+            // This sends all geolocation data to fetchData when fetchData is expecting an Accuweather location
             navigator.geolocation.getCurrentPosition(this.fetchData, this.geoLocationDisabled);
         },
 
