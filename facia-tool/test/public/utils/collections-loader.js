@@ -4,7 +4,7 @@ define([
     'mock-switches',
     'test/fixtures/articles',
     'test/fixtures/some-collections',
-    'utils/fronts-from-url',
+    'utils/layout-from-url',
     'text!views/collections.scala.html',
     'text!views/templates/vertical_layout.scala.html',
     'utils/mediator'
@@ -14,7 +14,7 @@ define([
     mockSwitches,
     fixArticles,
     fixCollections,
-    frontsFromURL,
+    layoutFromURL,
     templateCollections,
     verticalLayout,
     mediator
@@ -26,7 +26,15 @@ define([
             verticalLayout +
             templateCollections.replace(/\@[^\n]+\n/g, '') +
             '</div>';
-        frontsFromURL.set(['uk']);
+
+        layoutFromURL.get = function () {
+            return [{
+                type: 'latest'
+            }, {
+                type: 'front',
+                config: 'uk'
+            }];
+        };
 
         // Mock the time
         var originalSetTimeout = window.setTimeout;

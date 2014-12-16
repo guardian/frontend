@@ -29,17 +29,8 @@
             (<span class="non-zero">updating...</span>)
         </span>
 
-        <span class="dropdown also" data-bind="
-            if: alsoOn.length,
-            css: {'dropdown-open': state.alsoOnVisible}
-        ">
+        <span class="also" data-bind="if: alsoOn.length">
             <a data-bind="click: alsoOnToggle">also on&hellip;</a>
-            <ul data-bind="foreach: alsoOn">
-                <li><a class="list-header__also-on" data-bind="
-                    click: $parent.front.setFront,
-                    text: $data"></a>
-                </li>
-            </ul>
         </span>
 
         <span class="list-header__timings" data-bind="
@@ -58,6 +49,19 @@
             <i data-bind="css: {
                 'icon-chevron-down': !state.collapsed(),
                 'icon-chevron-up'  :  state.collapsed }"></i></a>
+    </div>
+
+    <div class="dropdown"data-bind="
+        if: alsoOn.length,
+        css: {'dropdown-open': state.alsoOnVisible},
+        visible: state.alsoOnVisible
+    ">
+        <ul data-bind="foreach: alsoOn">
+            <li><a class="list-header__also-on" data-bind="
+                click: $parent.front.setFront,
+                text: $data"></a>
+            </li>
+        </ul>
     </div>
 
     <!-- ko if: !state.collapsed() -->

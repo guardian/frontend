@@ -8,7 +8,11 @@
             background-color: #f2e6f7;
         }
         </style>
-        <meta http-equiv="refresh" content="30; url=/editorial?layout=@panes" />
+        @if(panes==3) {
+            <meta http-equiv="refresh" content="30; url=/editorial?layout=latest,,," />
+        } else {
+            <meta http-equiv="refresh" content="30; url=/editorial?layout=latest,," />
+        }
     </head>
     <body>
 <!--
@@ -21,9 +25,12 @@
         <h1>Fronts tools layout has changed</h1>
         <p>You can now choose the number of columns to display using the <em>Configure</em> button in the tool.</p>
         <p>This page will redirect to the tool in few seconds, but please update your bookmarks as this page will be removed soon.</p>
-        <p><a href="/editorial?layout=@panes">Click here</a> to be redirected immediately.</p>
-        <script type="text/javascript">
-            localStorage.removeItem('gu.fronts.tools.layout.configuration');
-        </script>
+        <p>
+            @if(panes==3) {
+                <a href="/editorial?layout=latest,,,">
+            } else {
+                <a href="/editorial?layout=latest,,">
+            }
+        Click here</a> to be redirected immediately.</p>
     </body>
 </html>
