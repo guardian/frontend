@@ -10,3 +10,5 @@ GET        /_healthcheck                                                        
 #Weather
 GET        /weather/city/:name.json                                             controllers.WeatherController.forCity(name)
 GET        /weather/city.json                                                   controllers.WeatherController.forRequest()
+
+GET        /locations                                                           controllers.LocationsController.findCity(query: String)

@@ -1,6 +1,6 @@
 package models
 
-import common.Edition
+import common.{ExecutionContexts, Edition}
 import common.editions.{Au, Us, Uk}
 import play.api.mvc.RequestHeader
 import weather.WeatherApi
@@ -9,7 +9,7 @@ import scala.concurrent.Future
 
 case class City(name: String) extends AnyVal
 
-object CityId {
+object CityId extends ExecutionContexts {
   val London = CityId("328328")
   val NewYork = CityId("349727")
   val Sydney = CityId("22889")
