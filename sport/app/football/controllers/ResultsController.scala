@@ -23,6 +23,8 @@ object ResultsController extends MatchListController with CompetitionResultFilte
   def allResults(): Action[AnyContent] =
     renderAllResults(LocalDate.now(Edition.defaultEdition.timezone))
 
+  def moreResultsFor(year: String, month: String, day: String) = renderMoreResults(createDate(year, month, day))
+
   def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] =
     renderMoreResults(createDate(year, month, day))
 
@@ -41,6 +43,7 @@ object ResultsController extends MatchListController with CompetitionResultFilte
 
   def tagResultsForJson(year: String, month: String, day: String, tag: String) = tagResultsFor(year, month, day, tag)
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
+
     renderTagResults(createDate(year, month, day), tag)
 
   private def renderTagResults(date: LocalDate, tag: String): Action[AnyContent] = {

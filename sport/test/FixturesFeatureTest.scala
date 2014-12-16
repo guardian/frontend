@@ -32,23 +32,16 @@ import tools.MatchListFeatureTools
     }
 
     scenario("Next fixtures") {
-      println("+++++++++++++Next")
       Given("I am on the fixtures page")
       goTo("/football/fixtures") { browser =>
         import browser._
 
         When("I click the 'Next' fixtures link")
 
-        val next = findFirst("[data-link-name=next]")
-
-        println("+++++++++ Next" + next.toString)
-
-        next.click()
+        findFirst("[data-link-name=next]").click()
 
         Then("I should see the next set of upcoming matches")
         val matches = $(".football-teams")
-
-        println("++ Teams: " + matches.toString)
 
         assertFixture(matches, "Swansea", "Reading")
       }
