@@ -47,7 +47,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
 
     new Job[Unit] {
       val name: String = "DFP-Cache"
-      val interval: Int = 5
+      val interval: Int = 2
       def run(): Future[Unit] = DfpDataCacheJob.run()
     }
 
