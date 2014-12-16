@@ -449,11 +449,17 @@ case class SnapLatest(articleId: String,
                       snapElements: List[ApiElement] = Nil,
                       fields: Map[String, String],
                       snapTags: List[Tag])
-  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields), snapTags), supporting = snapSupporting, metaData = snapMeta)) {
-
+  extends Content(new ApiContentWithMeta(
+    SnapApiContent(
+      snapElements,
+      Option(fields),
+      snapTags
+    ).copy(
+      webUrl = s"/$articleId",
+      webPublicationDateOption = Some(snapWebPublicationDate)
+    ), supporting = snapSupporting, metaData = snapMeta)) {
   override lazy val id: String = articleId
   override lazy val url: String = s"/$articleId"
-
   override lazy val tags: Seq[Tag] = snapTags
 }
 
