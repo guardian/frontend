@@ -67,7 +67,7 @@ define([
             mediator.on('window:scroll', this.listener.bind(this));
         }
 
-        bean.on(this.$button, 'click', function () {
+        bean.on(this.$adSlot[0], 'click', '.ad-exp__close-button', function () {
             this.$button.toggleClass('button-spin');
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
