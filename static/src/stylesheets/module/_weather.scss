@@ -56,15 +56,14 @@
 .weather__location {
     margin: 0;
     overflow: auto;
-    padding-bottom: $gs-baseline / 2;
     display: none;
     text-align: right;
+    padding-bottom: $gs-baseline / 2;
 
     @include mq(tablet) {
         position: relative;
         display: block;
         width: 100%;
-        border-bottom: 1px dotted colour(neutral-3);
     }
 
     .search-tool__input {
@@ -81,6 +80,12 @@
 
         @include mq(tablet) {
             display: inline-block;
+            padding-bottom: $gs-baseline / 2;
+            border-bottom: 1px dotted colour(neutral-3);
+        }
+
+        &:focus {
+            outline: none;
         }
     }
 
@@ -89,6 +94,12 @@
     }
 
     &.is-editing {
+        border-bottom: none;
+
+        .search-tool__input {
+            border-bottom: 1px solid colour(neutral-3);
+        }
+
         .weather__edit-location {
             display: none;
         }
