@@ -2,14 +2,16 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/expandableV2.html'
+    'text!common/views/commercial/creatives/expandable-v2.html'
 ], function (
     bean,
     bonzo,
     $,
+	detect,
     mediator,
     storage,
     template,
@@ -23,7 +25,8 @@ define([
         this.$adSlot      = $adSlot;
         this.params       = params;
         this.isClosed     = true;
-        if (bonzo.viewport().width > 740) {
+
+        if (detect.isBreakpoint({min: 'tablet'})) {
             this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
             this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
         } else {
@@ -31,8 +34,6 @@ define([
             this.openedHeight = '300';
         }
     };
-
-console.log(bonzo.viewport().width);
 
     ExpandableV2.prototype.listener = function () {
         if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
@@ -66,18 +67,11 @@ console.log(bonzo.viewport().width);
             mediator.on('window:scroll', this.listener.bind(this));
         }
 
-        bean.on(this.$button[0], 'click', function () {
-            this.$button.toggleClass('button-spin');
-            this.$ad.css('height', this.isClosed ? "300px" : "150px");
-            this.isClosed = !this.isClosed;
-        }.bind(this));
-
-        bean.on(this.$button[1], 'click', function () {
+        bean.on(this.$button, 'click', function () {
             this.$button.toggleClass('button-spin');
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
         }.bind(this));
-
     };
 
     return ExpandableV2;
