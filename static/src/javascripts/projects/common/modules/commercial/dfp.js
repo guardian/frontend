@@ -309,8 +309,7 @@ define([
                                     .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         if (creativeConfig.name === 'branded-component') {
                                             new Creative($slot, creativeConfig.params, creativeConfig.showEverywhere).create();
-                                        }
-                                        else {
+                                        } else {
                                             new Creative($slot, creativeConfig.params).create();
                                         }
                                     });
