@@ -6,6 +6,8 @@ import conf.Configuration
 import play.api.libs.json.JsValue
 import play.api.libs.ws.WS
 import play.api.mvc.{RequestHeader, Action, Controller}
+import models.{City, CityId}
+import CityId._
 
 import scala.concurrent.Future
 
@@ -14,14 +16,9 @@ object WeatherController extends Controller with ExecutionContexts {
 
   val LocationHeader: String = "X-GU-GeoCity"
 
-  val London: CityId = CityId("328328")
-  val NewYork: CityId = CityId("349727")
-  val Sydney: CityId = CityId("22889")
-
-  case class City(name: String) extends AnyVal
-  case class CityId(id: String) extends AnyVal
-
-  lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(throw new RuntimeException("Weather API Key not set"))
+  lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
+    throw new RuntimeException("Weather API Key not set")
+  )
 
   val weatherCityUrl: String = "http://api.accuweather.com/currentconditions/v1/"
   val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/search.json"
@@ -36,7 +33,7 @@ object WeatherController extends Controller with ExecutionContexts {
     for (cityJson <- WS.url(weatherUrlForCity(city)).get().map(_.json))
     yield {
       val cities = cityJson.asOpt[List[JsValue]].getOrElse(Nil)
-      cities.map(j => (j \ "Key").as[String]).headOption.map(CityId)
+      cities.map(j => (j \ "Key").as[String]).headOption.map(CityId(_))
     }
 
   private def getWeatherForCityId(cityId: CityId): Future[JsValue] =
