@@ -56,11 +56,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         if(!shortUrl.isEmpty) {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
-
+          element.addClass("fig--has-shares")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
-            element.addClass("fig--extra-margin")
+            element.addClass("fig--no-caption")
           }
         }
       })
@@ -173,14 +173,14 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             // content api/ tools sometimes pops a &nbsp; in the blank field
             if (!figcaption.hasText || figcaption.text().length < 2) {
               figcaption.remove()
-              fig.addClass("fig--extra-margin")
+              fig.addClass("fig--no-caption")
             } else {
               figcaption.attr("itemprop", "description")
               fig.addClass("fig--border")
             }
           }
         } else {
-          fig.addClass("fig--extra-margin")
+          fig.addClass("fig--no-caption")
         }
       }
     }
@@ -189,11 +189,10 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def addSharesAndFullscreen(body: Document): Document = {
     if(!article.isLiveBlog) {
-
       article.bodyLightboxImages.zipWithIndex map {
         case ((imageElement, Some(crop)), index) =>
           body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + (if(article.isMainImageLightboxable) 2 else 1) ).toString
+            val linkIndex = (index + (if (article.isMainImageLightboxable) 2 else 1)).toString
             val hashSuffix = "img-" + linkIndex
             fig.attr("id", hashSuffix)
             fig.addClass("fig--narrow-caption")
@@ -201,7 +200,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
             fig.getElementsByTag("img").foreach { img =>
               val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
               img.after(html.toString())
-
+              fig.addClass("fig--has-shares")
               img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
               img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
@@ -489,8 +488,11 @@ object FigCaptionCleaner extends HtmlCleaner {
 object RichLinkCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     val richLinks = document.getElementsByClass("element-rich-link")
-    richLinks.foreach(_.attr("data-component", s"rich-link-${richLinks.length}"))
-    richLinks.zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+    richLinks
+      .addClass("element-rich-link--not-upgraded")
+      .attr("data-component", s"rich-link-${richLinks.length}")
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+
     document
   }
 }

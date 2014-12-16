@@ -157,9 +157,13 @@ define([
 
             transcludeRelated: function () {
                 var opts = {
-                    excludeTags: ['tone/advertisement-features']
+                    excludeTags: []
                 };
 
+                // exclude ad features from non-ad feature content
+                if (config.page.sponsorshipType !== 'advertisement-features') {
+                    opts.excludeTags.push('tone/advertisement-features');
+                }
                 // don't want to show professional network content on videos or interactives
                 if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
                     opts.excludeTags.push('guardian-professional/guardian-professional');
@@ -301,11 +305,12 @@ define([
                 }
             },
 
-            logReadingHistory: function () {
+            updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
                         history.logSummary(config.page);
                     }
+
                     if (config.page.contentType === 'Video') {
                         history.logHistory(config.page);
                     }
@@ -460,7 +465,7 @@ define([
             modules.initClickstream();
             modules.optIn();
             modules.displayReleaseMessage();
-            modules.logReadingHistory();
+            modules.updateHistory();
             modules.unshackleParagraphs();
             modules.initAutoSignin();
             modules.augmentInteractive();

@@ -1,8 +1,8 @@
 /**
  * @depend fake_xml_http_request.js
+ * @depend ../format.js
+ * @depend ../log_error.js
  */
-/*jslint eqeqeq: false, onevar: false, regexp: false, plusplus: false*/
-/*global module, require, window*/
 /**
  * The Sinon "server" mimics a web server that receives requests from
  * sinon.FakeXMLHttpRequest and provides an API to respond to those requests,
@@ -20,7 +20,7 @@ if (typeof sinon == "undefined") {
     var sinon = {};
 }
 
-sinon.fakeServer = (function () {
+(function () {
     var push = [].push;
     function F() {}
 
@@ -57,7 +57,6 @@ sinon.fakeServer = (function () {
     }
 
     function match(response, request) {
-        var requestMethod = this.getHTTPMethod(request);
         var requestUrl = request.url;
 
         if (!/^https?:\/\//.test(requestUrl) || rCurrLoc.test(requestUrl)) {
@@ -67,7 +66,7 @@ sinon.fakeServer = (function () {
         if (matchOne(response, this.getHTTPMethod(request), requestUrl)) {
             if (typeof response.response == "function") {
                 var ru = response.url;
-                var args = [request].concat(!ru ? [] : requestUrl.match(ru).slice(1));
+                var args = [request].concat(ru && typeof ru.exec == "function" ? ru.exec(requestUrl).slice(1) : []);
                 return response.response.apply(response, args);
             }
 
@@ -77,136 +76,156 @@ sinon.fakeServer = (function () {
         return false;
     }
 
-    function log(response, request) {
-        var str;
+    function makeApi(sinon) {
+        sinon.fakeServer = {
+            create: function () {
+                var server = create(this);
+                this.xhr = sinon.useFakeXMLHttpRequest();
+                server.requests = [];
 
-        str =  "Request:\n"  + sinon.format(request)  + "\n\n";
-        str += "Response:\n" + sinon.format(response) + "\n\n";
+                this.xhr.onCreate = function (xhrObj) {
+                    server.addRequest(xhrObj);
+                };
 
-        sinon.log(str);
-    }
+                return server;
+            },
 
-    return {
-        create: function () {
-            var server = create(this);
-            this.xhr = sinon.useFakeXMLHttpRequest();
-            server.requests = [];
+            addRequest: function addRequest(xhrObj) {
+                var server = this;
+                push.call(this.requests, xhrObj);
 
-            this.xhr.onCreate = function (xhrObj) {
-                server.addRequest(xhrObj);
-            };
+                xhrObj.onSend = function () {
+                    server.handleRequest(this);
 
-            return server;
-        },
+                    if (server.autoRespond && !server.responding) {
+                        setTimeout(function () {
+                            server.responding = false;
+                            server.respond();
+                        }, server.autoRespondAfter || 10);
 
-        addRequest: function addRequest(xhrObj) {
-            var server = this;
-            push.call(this.requests, xhrObj);
+                        server.responding = true;
+                    }
+                };
+            },
 
-            xhrObj.onSend = function () {
-                server.handleRequest(this);
-            };
-
-            if (this.autoRespond && !this.responding) {
-                setTimeout(function () {
-                    server.responding = false;
-                    server.respond();
-                }, this.autoRespondAfter || 10);
-
-                this.responding = true;
-            }
-        },
-
-        getHTTPMethod: function getHTTPMethod(request) {
-            if (this.fakeHTTPMethods && /post/i.test(request.method)) {
-                var matches = (request.requestBody || "").match(/_method=([^\b;]+)/);
-                return !!matches ? matches[1] : request.method;
-            }
-
-            return request.method;
-        },
-
-        handleRequest: function handleRequest(xhr) {
-            if (xhr.async) {
-                if (!this.queue) {
-                    this.queue = [];
+            getHTTPMethod: function getHTTPMethod(request) {
+                if (this.fakeHTTPMethods && /post/i.test(request.method)) {
+                    var matches = (request.requestBody || "").match(/_method=([^\b;]+)/);
+                    return !!matches ? matches[1] : request.method;
                 }
 
-                push.call(this.queue, xhr);
-            } else {
-                this.processRequest(xhr);
-            }
-        },
+                return request.method;
+            },
 
-        respondWith: function respondWith(method, url, body) {
-            if (arguments.length == 1 && typeof method != "function") {
-                this.response = responseArray(method);
-                return;
-            }
+            handleRequest: function handleRequest(xhr) {
+                if (xhr.async) {
+                    if (!this.queue) {
+                        this.queue = [];
+                    }
 
-            if (!this.responses) { this.responses = []; }
+                    push.call(this.queue, xhr);
+                } else {
+                    this.processRequest(xhr);
+                }
+            },
 
-            if (arguments.length == 1) {
-                body = method;
-                url = method = null;
-            }
+            log: function log(response, request) {
+                var str;
 
-            if (arguments.length == 2) {
-                body = url;
-                url = method;
-                method = null;
-            }
+                str =  "Request:\n"  + sinon.format(request)  + "\n\n";
+                str += "Response:\n" + sinon.format(response) + "\n\n";
 
-            push.call(this.responses, {
-                method: method,
-                url: url,
-                response: typeof body == "function" ? body : responseArray(body)
-            });
-        },
+                sinon.log(str);
+            },
 
-        respond: function respond() {
-            if (arguments.length > 0) this.respondWith.apply(this, arguments);
-            var queue = this.queue || [];
-            var request;
-
-            while(request = queue.shift()) {
-                this.processRequest(request);
-            }
-        },
-
-        processRequest: function processRequest(request) {
-            try {
-                if (request.aborted) {
+            respondWith: function respondWith(method, url, body) {
+                if (arguments.length == 1 && typeof method != "function") {
+                    this.response = responseArray(method);
                     return;
                 }
 
-                var response = this.response || [404, {}, ""];
+                if (!this.responses) { this.responses = []; }
 
-                if (this.responses) {
-                    for (var i = 0, l = this.responses.length; i < l; i++) {
-                        if (match.call(this, this.responses[i], request)) {
-                            response = this.responses[i].response;
-                            break;
+                if (arguments.length == 1) {
+                    body = method;
+                    url = method = null;
+                }
+
+                if (arguments.length == 2) {
+                    body = url;
+                    url = method;
+                    method = null;
+                }
+
+                push.call(this.responses, {
+                    method: method,
+                    url: url,
+                    response: typeof body == "function" ? body : responseArray(body)
+                });
+            },
+
+            respond: function respond() {
+                if (arguments.length > 0) {
+                    this.respondWith.apply(this, arguments);
+                }
+
+                var queue = this.queue || [];
+                var requests = queue.splice(0, queue.length);
+                var request;
+
+                while (request = requests.shift()) {
+                    this.processRequest(request);
+                }
+            },
+
+            processRequest: function processRequest(request) {
+                try {
+                    if (request.aborted) {
+                        return;
+                    }
+
+                    var response = this.response || [404, {}, ""];
+
+                    if (this.responses) {
+                        for (var l = this.responses.length, i = l - 1; i >= 0; i--) {
+                            if (match.call(this, this.responses[i], request)) {
+                                response = this.responses[i].response;
+                                break;
+                            }
                         }
                     }
-                }
 
-                if (request.readyState != 4) {
-                    log(response, request);
+                    if (request.readyState != 4) {
+                        this.log(response, request);
 
-                    request.respond(response[0], response[1], response[2]);
+                        request.respond(response[0], response[1], response[2]);
+                    }
+                } catch (e) {
+                    sinon.logError("Fake server request processing", e);
                 }
-            } catch (e) {
-                sinon.logError("Fake server request processing", e);
+            },
+
+            restore: function restore() {
+                return this.xhr.restore && this.xhr.restore.apply(this.xhr, arguments);
             }
-        },
+        };
+    }
 
-        restore: function restore() {
-            return this.xhr.restore && this.xhr.restore.apply(this.xhr, arguments);
-        }
-    };
+    var isNode = typeof module !== "undefined" && module.exports && typeof require == "function";
+    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+
+    function loadDependencies(require, exports, module) {
+        var sinon = require("./core");
+        require("./fake_xml_http_request");
+        makeApi(sinon);
+        module.exports = sinon;
+    }
+
+    if (isAMD) {
+        define(loadDependencies);
+    } else if (isNode) {
+        loadDependencies(require, module.exports, module);
+    } else {
+        makeApi(sinon);
+    }
 }());
-
-if (typeof module == "object" && typeof require == "function") {
-    module.exports = sinon;
-}

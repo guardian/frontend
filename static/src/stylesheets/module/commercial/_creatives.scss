@@ -43,6 +43,10 @@
         @include fs-textSans(3);
         color: colour(neutral-2);
     }
+    .fc-container-test-page & {
+        position: static;
+        margin-bottom: 20px;
+    }
 }
 
 .creative--jobs {
@@ -160,6 +164,12 @@
 
         @include mq(wide) {
             right: auto;
+        }
+
+        .fc-container-test-page & {
+            top: 5px;
+            left: 30px;
+            height: 414px;
         }
     }
 }
@@ -341,7 +351,7 @@
 
         &.creative__label--hidden {
             display: none;
-        } 
+        }
     }
 }
 

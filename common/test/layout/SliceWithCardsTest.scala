@@ -49,7 +49,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )._2.length shouldEqual
-        (0 max (NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum))
+        (0 max (NumberOfFixtures - layout.columns.map(_.numItems).sum))
     }
   }
 
@@ -85,7 +85,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
       )._1
 
       for (column <- slice.columns) {
-        column.cards.length should be <= SliceWithCards.itemsToConsume(column.column)
+        column.cards.length should be <= column.column.numItems
       }
     }
   }

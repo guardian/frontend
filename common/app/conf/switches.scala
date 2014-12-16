@@ -165,7 +165,7 @@ object Switches {
   val PngResizingSwitch = Switch("Performance", "png-resizing",
     //"If this switch is on png images will be resized via the png-resizing server",
     "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   // Commercial
@@ -303,6 +303,14 @@ object Switches {
   )
 
   // Features
+  val FixturesAndResultsContainerSwitch = Switch(
+    "Feature",
+    "fixtures-and-results-container",
+    "Fixtures and results container on football tag pages",
+    safeState = On,
+    sellByDate = never
+  )
+
   val HardcodedSectionTagLookUp = Switch(
     "Feature",
     "hardcoded-section-tag-lookup",
@@ -314,6 +322,10 @@ object Switches {
   val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
     "If switched on then the preview server will poll until the latest content is indexed.",
     safeState = On, sellByDate = new LocalDate(2015, 1, 15))
+
+  val PrioritiseFlashVideoPlayer = Switch("Feature", "prioritise-flash-video-player",
+    "If switched on then the Flash player will be preferred over the html5 player.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 31))
 
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
@@ -388,6 +400,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
+    "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -429,6 +446,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
+    "If this switch is on facia tool will display more options for panes",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -457,11 +479,6 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
-  )
-
-  val IntegratedTestsNoAds = Switch("Facia", "integrated-tests-no-ads",
-    "The tests are running without adverts, we need to decide if it's helping reliability before this expires",
-    safeState = Off, sellByDate = new LocalDate(2014, 12, 11)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

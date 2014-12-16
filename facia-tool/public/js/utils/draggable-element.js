@@ -47,6 +47,7 @@ define([
 
         if (sourceItem) {
             sourceItem = JSON.parse(sourceItem);
+            sourceItem.front = (sourceGroup || {}).front;
 
         } else if (unknownQueryParams.url) {
             sourceItem = { id: unknownQueryParams.url };

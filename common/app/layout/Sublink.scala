@@ -211,7 +211,7 @@ object FaciaCard {
       byline <- trail.byline
     } yield kickerText contains byline) getOrElse false
 
-    FaciaCard(
+    ContentCard(
       content.map(_.id),
       trail.headline,
       FaciaCardHeader.fromTrailAndKicker(trail, maybeKicker, Some(config)),
@@ -235,7 +235,9 @@ object FaciaCard {
   }
 }
 
-case class FaciaCard(
+sealed trait FaciaCard
+
+case class ContentCard(
   id: Option[String],
   headline: String,
   header: FaciaCardHeader,
@@ -255,7 +257,7 @@ case class FaciaCard(
   displaySettings: DisplaySettings,
   isLive: Boolean,
   timeStampDisplay: Option[FaciaCardTimestamp]
-) {
+) extends FaciaCard {
   def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
@@ -271,3 +273,5 @@ case class FaciaCard(
 
   def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 }
+
+case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

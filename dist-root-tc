@@ -11,7 +11,7 @@ echo "Disting everything."
 rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
-"facia facia-tool facia-press identity image onward png-resizer preview router sport rss"
+"facia facia-tool facia-press identity image onward png-resizer preview router sport rss weather"
 
 for config in $configurations
 do

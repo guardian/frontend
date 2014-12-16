@@ -7,32 +7,20 @@ import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
 
-object MoneyOffers extends Controller {
+object MoneyOffers extends Controller with implicits.Requests {
 
-  object lowRelevance extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuys(bestBuys)
-  }
-
-  object highRelevance extends BestBuysRelevance {
-    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
-      views.html.moneysupermarket.bestBuysHigh(bestBuys)
-  }
-
-  private def bestBuys(relevance: BestBuysRelevance, format: Format) = MemcachedAction { implicit request =>
+  def renderBestBuys = MemcachedAction { implicit request =>
     Future.successful {
       BestBuysAgent.adsTargetedAt(segment) match {
-        case Some(products) => Cached(componentMaxAge)(format.result(relevance.view(products)))
-        case None => NoCache(format.nilResult)
+        case Some(bestBuys) => {
+          val clickMacro = request.getParameter("clickMacro")
+          val omnitureId = request.getParameter("omnitureId")
+          Cached(componentMaxAge)(jsonFormat.result(views.html.moneysupermarket.bestBuys(bestBuys, omnitureId, clickMacro)))
+        }
+        case None => NoCache(jsonFormat.nilResult)
       }
     }
   }
-
-  def bestBuysLowHtml = bestBuys(lowRelevance, htmlFormat)
-  def bestBuysLowJson = bestBuys(lowRelevance, jsonFormat)
-
-  def bestBuysHighHtml = bestBuys(highRelevance, htmlFormat)
-  def bestBuysHighJson = bestBuys(highRelevance, jsonFormat)
 
   def savings(savingsType: String) = MemcachedAction { implicit request =>
     Future.successful {

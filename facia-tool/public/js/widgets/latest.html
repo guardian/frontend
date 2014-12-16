@@ -1,0 +1,76 @@
+<div class="modes" data-bind="
+    css: {
+        'live-mode': !latestArticles.showingDrafts(),
+        'draft-mode': latestArticles.showingDrafts
+    }">
+    <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
+        click: latestArticles.showDrafts,
+        css: {active: latestArticles.showingDrafts}">Draft content</a
+   ><!-- /ko --><a class="live-mode" data-bind="
+        click: latestArticles.showLive,
+        css: {active: !latestArticles.showingDrafts()}">Live content</a>
+</div>
+
+<div class="col__inner cilpboard-container">
+    <div class="title title--clipboard">clipboard</div>
+    <div class="clipboard" data-bind="with: clipboard">
+        <div class="droppable" data-bind="
+            makeDropabble: true,
+            click: pasteItem,
+            css: {
+                underDrag: underDrag() && !underControlDrag(),
+                underControlDrag: underDrag() && underControlDrag()
+            },
+            template: {name: 'template_article', foreach: items}"></div>
+    </div>
+</div>
+
+<div class="col__inner scrollable">
+
+    <div data-bind="with: latestArticles">
+        <div class="search-tools">
+            <a><i class="icon-refresh" data-bind="click: refresh"></i></a>
+            <a><i class="icon-remove" data-bind="click: reset"></i></a>
+        </div>
+
+        <div class="title" data-bind="text: title"></div>
+
+        <div class="search-form">
+            <div class="search-term">
+                <input type="text" placeholder="Search for..." data-bind='
+                    event: {keyup: search, afterpaste: search},
+                    value: term,
+                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
+            </div>
+
+            <div class="autocompleter">
+                <select data-bind="
+                    event: { change: clearFilter },
+                    options: filterTypes,
+                    optionsText: 'display',
+                    value: filterType"></select>
+
+                <input type="text" placeholder="filter" data-bind='
+                    attr: {placeholder: filterType().placeholder},
+                    event: {keyup: autoComplete, afterpaste: autoComplete, change: filterChange},
+                    value: filter,
+                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+                <div class="suggestions" data-bind="foreach: suggestions">
+                    <!-- ko if: $data._alert -->
+                    <div class="suggestion" data-bind="text: _alert"></div>
+                    <!-- /ko -->
+                    <!-- ko if: $data.id -->
+                    <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+
+        <search-controls params="context: $context"></search-controls>
+
+        <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}"></div>
+
+        <search-controls params="context: $context"></search-controls>
+    </div>
+</div>

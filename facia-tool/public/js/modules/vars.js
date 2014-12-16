@@ -71,6 +71,7 @@ define([
         latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+        ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
@@ -81,7 +82,8 @@ define([
             height: 35
         },
 
-        internalContentPrefix: 'internal-code/content/'
+        internalContentPrefix: 'internal-code/content/',
+        layoutStorageLocation:  'gu.fronts.tools.layout.configuration'
     };
 
     function sparksBaseUrl(args) {
@@ -95,8 +97,6 @@ define([
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
-            liveMode: ko.observable(false),
-            pending: ko.observable(false),
             openFronts: {}
         }
     };

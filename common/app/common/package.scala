@@ -25,6 +25,12 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case timeout: TimeoutException =>
       log.info(s"Got a timeout while calling content api: ${timeout.getMessage}")
       Right(NoCache(GatewayTimeout(timeout.getMessage)))
+    case error =>
+      log.info(s"Content api exception: ${error.getMessage}")
+      Option(error.getCause).map { cause =>
+        log.info(s"Content api exception cause: ", cause)
+      }
+      Right(NoCache(InternalServerError))
   }
 
   /*

@@ -3,11 +3,23 @@
  Description: Gets and sets users reading history
  */
 define([
+    'common/utils/$',
     'common/utils/_',
-    'common/utils/storage'
+    'common/utils/config',
+    'common/utils/template',
+    'common/utils/storage',
+    'text!common/views/history/tag.html',
+    'text!common/views/history/tags.html',
+    'text!common/views/history/mega-nav.html'
 ], function (
+    $,
     _,
-    storage
+    config,
+    template,
+    storage,
+    viewTag,
+    viewTags,
+    viewMegaNav
 ) {
     var editions = [
             'uk',
@@ -32,16 +44,17 @@ define([
         ],
 
         summaryPeriodDays = 30,
+        forgetUniquesAfter = 10,
         historySize = 50,
-        popularSize = 20,
+        minDisplayedTags = 3,
+
+        storageKeyHistory = 'gu.history',
+        storageKeySummary = 'gu.history.summary',
 
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
         popularCache,
-        storageKeyHistory = 'gu.history',
-        storageKeySummary = 'gu.history.summary',
-        storageKeyPopular = 'gu.history.popular',
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -55,31 +68,25 @@ define([
         return storage.local.set(storageKeySummary, summary);
     }
 
-    function savePopular(popular) {
-        popularCache = popular;
-        return storage.local.set(storageKeyPopular, popular);
-    }
-
     function getHistory() {
         historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
         return historyCache;
     }
 
-    function getPopular() {
-        popularCache = popularCache || storage.local.get(storageKeyPopular) || [];
-        return popularCache;
-    }
-
     function getSummary() {
-        var summary = summaryCache || storage.local.get(storageKeySummary);
+        if (summaryCache) {
+            return summaryCache;
+        }
 
-        if (!_.isObject(summary) || !_.isObject(summary.tags) || !_.isNumber(summary.periodEnd)) {
-            summary = summaryCache = {
+        summaryCache = storage.local.get(storageKeySummary);
+
+        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
+            summaryCache = {
                 periodEnd: today,
                 tags: {}
             };
         }
-        return summary;
+        return summaryCache;
     }
 
     function isRevisit(pageId) {
@@ -104,7 +111,7 @@ define([
                     .compact()
                     .value();
 
-                if (freqs.length) {
+                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniquesAfter)) {
                     summary.tags[tid] = [nameAndFreqs[0], freqs];
                 } else {
                     delete summary.tags[tid];
@@ -119,48 +126,32 @@ define([
         return summary;
     }
 
-    function calculatePopular(summary) {
-        return _.chain(summary.tags)
+    function getPopular() {
+        popularCache = popularCache || _.chain(getSummary().tags)
             .map(function (nameAndFreqs, tid) {
                 var freqs = nameAndFreqs[1];
 
-                if (freqs.length >= 3) {
+                if (freqs.length > 1) {
                     return {
                         keep: [tid, nameAndFreqs[0]],
-                        rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
+                        rank: tally(freqs)
                     };
                 }
             })
             .compact()
             .sortBy('rank')
-            .last(popularSize)
+            .last(100)
             .reverse()
             .pluck('keep')
             .value();
+
+        return popularCache;
     }
 
-    function tallyFreqs(freqs) {
+    function tally(freqs) {
         return _.reduce(freqs, function (tally, freq) {
-            return tally + dayScore(freq[1]) * (summaryPeriodDays - freq[0]);
+            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
         }, 0);
-    }
-
-    function dayScore(n) {
-        return 1 + Math.min(n, 20) * 0.2;
-    }
-
-    function habitFactor(freqs) {
-        var len = freqs.length;
-
-        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function (sum, n) {
-            return sum + n;
-        }, 0) / (len - 2);
-    }
-
-    function deltas(ints) {
-        return _.map(_.initial(_.zip(ints, _.rest(ints))), function (pair) {
-            return pair[1] - pair[0];
-        });
     }
 
     function firstCsv(str) {
@@ -168,6 +159,7 @@ define([
     }
 
     function collapseTag(t) {
+        t = t.replace(/^\/|\/$/g, '');
         if (t.match(isEditionalisedRx)) {
             t = t.replace(stripEditionRx, '');
         }
@@ -182,7 +174,6 @@ define([
         popularCache = undefined;
         storage.local.remove(storageKeyHistory);
         storage.local.remove(storageKeySummary);
-        storage.local.remove(storageKeyPopular);
     }
 
     function logHistory(pageConfig) {
@@ -235,13 +226,52 @@ define([
                     nameAndFreqs[0] = tname;
                 }
             });
+
         saveSummary(summary);
-        savePopular(calculatePopular(summary));
+    }
+
+    function renderTags(opts) {
+        var topNavItems = {},
+            tagsHtml;
+
+        if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
+
+            $('.js-navigation-header .js-top-navigation a').each(function (item) {
+                topNavItems[collapseTag(urlPath($(item).attr('href')))] = true;
+            });
+
+            tagsHtml = _.chain(getPopular())
+                .filter(function (tag) { return !topNavItems[tag[0]]; })
+                .first(20)
+                .map(tagHtml)
+                .value();
+
+            if (tagsHtml.length < minDisplayedTags) { return; }
+
+            if (opts.inMegaNav) {
+                $('.js-global-navigation').prepend(template(viewMegaNav, {tags: tagsHtml.join('')}));
+            }
+
+            if (opts.inPage) {
+                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
+            }
+        }
+    }
+
+    function tagHtml(tag, index) {
+        return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+    }
+
+    function urlPath(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        return a.pathname;
     }
 
     return {
         logHistory: logHistory,
         logSummary: logSummary,
+        renderTags: renderTags,
         getPopular: getPopular,
         isRevisit: isRevisit,
         reset: reset,

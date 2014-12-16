@@ -30,13 +30,15 @@
 
                     function storeCss(c) {
                         Object.keys(localStorage).forEach(function(key) {
-                            if(key.match(/^gu.css./g)) { localStorage.removeItem(key); }
+                            if (key.match(/^gu.css./g)) {
+                                try {
+                                    localStorage.removeItem(key);
+                                } catch(e) { }
+                            }
                         });
                         try {
                             localStorage.setItem('gu.css.@Static("stylesheets/global.css").md5Key', c);
-                        } catch(e) {
-
-                        }
+                        } catch(e) { }
                     }
 
                     function loadCssWithLink() {

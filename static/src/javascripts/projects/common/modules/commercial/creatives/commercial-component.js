@@ -77,29 +77,22 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            var section   = config.page.section;
-
             this.params = params;
-            this.$adSlot = $adSlot;
-            this.type = params.type;
+            this.type   = params.type;
+            // remove type from params
+            delete this.params.type;
+            this.$adSlot    = $adSlot;
             this.components = {
-                bestbuy:           buildComponentUrl('money/bestbuys'),
-                bestbuyHigh:       buildComponentUrl('money/bestbuys-high'),
-                book:              buildComponentUrl('books/book', { t: config.page.isbn || params.isbn }),
-                books:             buildComponentUrl('books/bestsellers'),
-                booksMedium:       buildComponentUrl('books/bestsellers-medium'),
-                booksHigh:         buildComponentUrl('books/bestsellers-high'),
-                jobs:              buildComponentUrl('jobs', { t: params.jobIds ? params.jobIds.split(',') : [] }),
-                jobsHigh:          buildComponentUrl('jobs-high'),
-                masterclasses:     buildComponentUrl('masterclasses'),
-                masterclassesHigh: buildComponentUrl('masterclasses-high'),
-                soulmates:         buildComponentUrl('soulmates/mixed'),
-                soulmatesHigh:     buildComponentUrl('soulmates/mixed-high'),
-                travel:            buildComponentUrl('travel/offers', { s: section }),
-                travelHigh:        buildComponentUrl('travel/offers-high', { s: section }),
-                multi:             buildComponentUrl('multi', { c: params.components }),
-                capiSingle:        buildComponentUrl('capi-single', merge(params, { s: section })),
-                capi:              buildComponentUrl('capi', merge(params, { s: section }))
+                bestbuy:           buildComponentUrl('money/bestbuys', params),
+                book:              buildComponentUrl('books/book', merge(params, { t: config.page.isbn || params.isbn })),
+                books:             buildComponentUrl('books/books', merge(params, { t: params.isbns ? params.isbns.split(',') : [] })),
+                jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
+                masterclasses:     buildComponentUrl('masterclasses', merge(params, { t: params.ids ? params.ids.split(',') : [] })),
+                soulmates:         buildComponentUrl('soulmates/mixed', params),
+                travel:            buildComponentUrl('travel/offers', params),
+                multi:             buildComponentUrl('multi', params),
+                capiSingle:        buildComponentUrl('capi-single', params),
+                capi:              buildComponentUrl('capi', params)
             };
         };
 

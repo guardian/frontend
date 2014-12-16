@@ -7,22 +7,22 @@ $guss-webfonts-hinting: 'off';
     (
         'Guardian Text Egyptian Web': (
             (weight: 'regular',  style: 'normal'),
-            (weight: 'regular',  style: 'italic'),
-            (weight: 'medium',   style: 'normal', use-as: (weight: 'bold', style: 'normal')),
+            (weight: 'regular',  style: 'italic', charset: 'latin1'),
+            (weight: 'medium',   style: 'normal', charset: 'latin1', use-as: (weight: 'bold', style: 'normal')),
         ),
         'Guardian Egyptian Web': (
-            (weight: 'light',    style: 'normal'),
-            (weight: 'regular',  style: 'normal'),
-            (weight: 'medium',   style: 'normal'),
-            (weight: 'semibold', style: 'normal', use-as: (weight: 'ultrablack', style: 'normal')),
+            (weight: 'light',    style: 'normal', charset: 'latin1'),
+            (weight: 'regular',  style: 'normal', charset: 'latin1'),
+            (weight: 'medium',   style: 'normal', charset: 'latin1'),
+            (weight: 'semibold', style: 'normal', charset: 'ascii', use-as: (weight: 'ultrablack', style: 'normal')),
         ),
         'Guardian Text Sans Web': (
             (weight: 'regular',  style: 'normal'),
-            (weight: 'regular',  style: 'italic'),
+            (weight: 'regular',  style: 'italic', charset: 'latin1'),
             (weight: 'medium',   style: 'normal', use-as: (weight: 'bold', style: 'normal')),
         ),
         'Guardian Sans Web': (
-            (weight: 'regular',  style: 'normal'),
+            (weight: 'regular',  style: 'normal', charset: 'latin1'),
         )
     )
 );

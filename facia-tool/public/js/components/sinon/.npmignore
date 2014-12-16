@@ -1,0 +1,12 @@
+/.npmignore
+/.travis.yml
+/AUTHORS
+/build
+/test
+/Changelog.txt
+/jsl.conf
+/release.sh
+
+/pkg
+!/pkg/sinon.js
+!/pkg/sinon-ie.js

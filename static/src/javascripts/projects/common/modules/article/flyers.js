@@ -2,12 +2,14 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'common/modules/ui/images'
 ], function (
     qwery,
     _,
     $,
-    ajax
+    ajax,
+    imagesModule
 ) {
     function upgradeFlyer(el) {
         var href = $('a', el).attr('href'),
@@ -19,7 +21,9 @@ define([
                 crossOrigin: true
             }).then(function (response) {
                 $(el).html(response.html)
+                    .removeClass('element-rich-link--not-upgraded')
                     .addClass('element-rich-link--upgraded');
+                imagesModule.upgrade(el);
             });
         }
     }

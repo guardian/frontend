@@ -1,5 +1,7 @@
 package model
 
+import java.net.URL
+
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
@@ -474,6 +476,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
+  lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(main).body.getElementsByClass("element-video").headOption.map { v =>
+    new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
+  }
+
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
     val leftColElements = Jsoup.parseBodyFragment(body).select("body > *").find(_.classNames.intersect(supportingClasses).size > 0)
@@ -543,6 +549,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+  override lazy val lightboxImages = mainPicture.toSeq
 
   lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
     case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
@@ -595,7 +602,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false))
+      "embeddable" -> JsBoolean(videos.find(_.isMain).map(_.embeddable).getOrElse(false)),
+      "videoDuration" -> videos.find(_.isMain).map{ v => JsNumber(v.duration)}.getOrElse(JsNull)
     )
 
   // I know it's not too pretty

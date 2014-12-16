@@ -7,12 +7,12 @@ define(['../loader/cjsm11'], function (wrapCjsm11) {
 
 	return {
 		compile: function (pluginId, resId, req, io, config) {
-			var moduleId = resId;
-			if (resId.substr(resId.length - 3) !== ".js") {
-				resId += ".js";
+			var url = req.toUrl(resId);
+			if (url.substr(url.length - 3) !== ".js") {
+				url += ".js";
 			}
-			io.read(resId, function (text) {
-				io.write(wrapCjsm11(text, moduleId));
+			io.read(url, function (text) {
+				io.write(wrapCjsm11(text, resId));
 			}, io.error);
 		}
 	};

@@ -86,7 +86,7 @@ define([
 
                 relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
 
-                if (opts.excludeTags) {
+                if (opts.excludeTags && opts.excludeTags.length) {
                     relatedUrl += '?' + map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
                     }).join('&');

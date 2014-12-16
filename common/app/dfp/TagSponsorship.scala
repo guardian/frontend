@@ -37,6 +37,17 @@ case class Sponsorship(tags: Seq[String],
 
 object InlineMerchandisingTagSet {
   implicit val jsonReads = Json.reads[InlineMerchandisingTagSet]
+
+  implicit val inlineMerchandisingTagSetWrites = new Writes[InlineMerchandisingTagSet] {
+    def writes(tagSet: InlineMerchandisingTagSet): JsValue = {
+      Json.obj(
+        "keywords" -> tagSet.keywords,
+        "series" -> tagSet.series,
+        "contributors" -> tagSet.contributors
+      )
+    }
+  }
+
 }
 
 case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: Set[String] = Set.empty, contributors: Set[String] = Set.empty) {
@@ -88,6 +99,16 @@ object SponsorshipReportParser extends Logging {
 
 object InlineMerchandisingTargetedTagsReport {
   implicit val jsonReads = Json.reads[InlineMerchandisingTargetedTagsReport]
+
+  implicit val inlineMerchandisingTargetedTagsReportWrites =
+    new Writes[InlineMerchandisingTargetedTagsReport] {
+      def writes(report: InlineMerchandisingTargetedTagsReport): JsValue = {
+        Json.obj(
+          "updatedTimeStamp" -> report.updatedTimeStamp,
+          "targetedTags" -> report.targetedTags
+        )
+      }
+    }
 }
 
 case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
