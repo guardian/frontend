@@ -9,10 +9,10 @@ define([
     mediator
 ) {
     function isNarrow (column) {
-        var percentage = parseFloat('0.' + column.style.width().replace('vw', '')),
+        var percentage = parseInt(column.style.width(), 10),
             width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-        return width * percentage <= 550;
+        return width * 100 / percentage <= 550;
     }
 
     function Column (opts) {

@@ -562,6 +562,9 @@ h1 {
 .list-header {
     color: #999999;
     padding: 5px 0;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
 }
 
 .list-header.collapsed {
@@ -571,6 +574,9 @@ h1 {
 .list-header__collapser {
     margin: 5px 6px 0 8px;
     opacity: 0.75;
+    position: absolute;
+    right: 0;
+    top: 8px;
 }
 
 .list-header__timings {
@@ -578,6 +584,9 @@ h1 {
     font-size: 10px;
     line-height: 24px;
     color: #666666;
+    float: right;
+    margin-right: 24px;
+    margin-top: 3px;
 }
 
 .list-header .tools {
@@ -1173,11 +1182,6 @@ button {
     margin-left: 5px;
 }
 
-.list-header {
-  display: flex;
-  align-items: baseline;
-}
-
 .tool {
     padding: 0 15px;
     background: #cccccc;
@@ -1207,10 +1211,6 @@ button {
 .tool-label {
     padding: 5px 5px 0 2px;
     color: #999999;
-}
-
-.list-header .also {
-    flex: 1 2 4em;
 }
 
 .tools .tool:first-child {
@@ -1569,8 +1569,6 @@ button {
 }
 
 .cnf-form .type-picker {
-    display: flex;
-    flex-wrap: wrap;
     position: absolute;
     top: 25px;
     left: 0;
@@ -1604,11 +1602,6 @@ button {
 .cnf-form .type-option--highlight {
     color: #FFFFFF;
     background: #2ea3eb;
-}
-
-.cnf-form .type-picker .type-option {
-    flex: 0 0 24%;
-    flex-wrap: wrap;
 }
 
 .cnf-form .type-option-chosen {
@@ -1665,12 +1658,11 @@ button {
 }
 
 .also {
-    position: relative;
-    margin: 10px;
+    margin: 6px;
+    line-height: 24px;
 }
 
 .dropdown > ul {
-    position: absolute;
     padding: 0;
     margin: 0;
     min-width: 200px;
