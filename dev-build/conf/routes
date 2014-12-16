@@ -22,8 +22,8 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
 #Weather
-GET        /weather/city/:name                                                                                       controllers.WeatherController.forCity(name)
-GET        /weather/city                                                                                             controllers.WeatherController.forRequest()
+GET        /weather/city/:name.json                                                                                       controllers.WeatherController.forCity(name)
+GET        /weather/city.json                                                                                             controllers.WeatherController.forRequest()
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()

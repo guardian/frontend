@@ -42,32 +42,7 @@ define([
         init: function () {
             self = this;
 
-            //this.fetchData(this.getUserLocation());
-
-            // Data mock for testing
-            var result = [{
-                'LocalObservationDateTime': '2014-12-11T16:25:00+00:00',
-                'EpochTime': 1418315100,
-                'WeatherText': 'Partly cloudy',
-                'WeatherIcon': 35,
-                'IsDayTime': false,
-                'Temperature': {
-                    'Metric': {
-                        'Value': 8.9,
-                        'Unit': 'C',
-                        'UnitType': 17
-                    },
-                    'Imperial': {
-                        'Value': 48,
-                        'Unit': 'F',
-                        'UnitType': 18
-                    }
-                },
-                'MobileLink': 'http://m.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us',
-                'Link': 'http://www.accuweather.com/en/gb/london/ec4a-2/current-weather/328328?lang=en-us'
-            }];
-
-            self.render(result[0], 'London');
+            this.fetchData(this.getUserLocation());
         },
 
         getGeoLocation: function () {
@@ -108,11 +83,13 @@ define([
             var url = '/weather/city';
 
             if (typeof location === 'string') {
-                url += '/' + location;
+                url += '/' + location + '.json';
                 this.saveUserLocation(location);
+            } else {
+                url += '.json';
             }
 
-            /*try {
+            try {
                 return self.getWeatherData(url).then(function (response) {
                     self.render(response[0], 'London');
                 });
@@ -122,7 +99,7 @@ define([
                         feature: 'weather'
                     }
                 });
-            }*/
+            }
         },
 
         bindEvents: function () {
