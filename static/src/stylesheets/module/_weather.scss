@@ -10,7 +10,7 @@
     }
 
     @include mq(tablet) {
-        width: 220px;
+        width: gs-span(3);
         text-align: left;
     }
 
@@ -29,28 +29,15 @@
         width: $left-column-wide;
     }
 
-    /*.has-page-skin & {
-        width: 220px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: auto;
-        color: colour(neutral-2);
-        text-align: right;
-        border: 0;
-
-        @include fs-headline(1);
-
-        @include mq(tablet) {
-            width: 220px;
-            right: $gs-gutter;
-            text-align: left;
+    .has-page-skin & {
+        @include mq(leftCol) {
+            width: gs-span(3);
+            margin-top: 0;
+            border-top: 0;
+            padding-top: 0;
+            float: right;
         }
-
-        @include mq($from: tablet, $to: leftCol) {
-            top: $gs-gutter / 5;
-        }
-    }*/
+    }
 }
 
 .weather__location {
@@ -143,6 +130,14 @@
         min-height: $gs-baseline * 4;
         border-right: 1px dotted colour(neutral-3);
     }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            width: 50%;
+            min-height: $gs-baseline * 4;
+            border-right: 1px dotted colour(neutral-3);
+        }
+    }
 }
 
 .weather__desc {
@@ -162,6 +157,14 @@
 
     @include mq(leftCol) {
         position: absolute;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            position: inherit;
+            display: block;
+            padding-right: $gs-gutter / 4;
+        }
     }
 }
 
@@ -203,5 +206,17 @@
         float: none;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            width: 40px !important;
+            height: 40px !important;
+            position: absolute;
+            top: 4px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
     }
 }
