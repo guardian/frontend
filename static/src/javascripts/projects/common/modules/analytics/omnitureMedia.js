@@ -18,6 +18,7 @@ define([
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
+            prerollPlayed = false,
             events = {
                 // this is the expected ordering of events
                 'video:request': 'event98',
@@ -61,7 +62,10 @@ define([
 
         this.sendEvent = function (event, eventName, ad) {
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
-            s.prop41 = eventName;
+            if (prerollPlayed) {
+                // Any event after 'video:preroll:play' should be tagged with this value.
+                s.prop41 = 'PrerollMilestone';
+            }
             s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
             s.linkTrackEvents = values(events).join(',');
             s.events = event;
@@ -86,7 +90,7 @@ define([
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
             s.eVar44 = s.prop44 = mediaName;
             s.eVar7 = s.pageName;
-            
+
             s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
 
             if (mediaType === 'video') {
@@ -141,8 +145,18 @@ define([
             durationEventTimer = false;
         };
 
+        this.onContentPlay = function () {
+            contentStarted = true;
+            this.sendNamedEvent('video:play');
+            this.startDurationEventTimer();
+        };
+
+        this.onPrerollPlay = function () {
+            prerollPlayed = true;
+            this.sendNamedEvent('preroll:play', true);
+        };
+
         this.init = function () {
-            var self = this;
 
             this.omnitureInit();
 
@@ -150,13 +164,9 @@ define([
             player.on('pause', this.pause.bind(this));
 
             player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
-            player.one('video:preroll:play', this.sendNamedEvent.bind(this, 'preroll:play', true));
+            player.one('video:preroll:play', this.onPrerollPlay.bind(this));
             player.one('video:preroll:end', this.sendNamedEvent.bind(this, 'preroll:end', true));
-            player.one('video:content:play', function () {
-                contentStarted = true;
-                self.sendNamedEvent('video:play');
-                self.startDurationEventTimer();
-            });
+            player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));
 
             player.one('video:play:25', this.sendSegment.bind(this, 'event21'));
