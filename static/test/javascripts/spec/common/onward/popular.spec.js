@@ -47,7 +47,7 @@ define([
                 });
 
                 // json test needs to be run asynchronously
-                it("should request the most popular feed and graft it on to the dom", function () {
+                it("should request the most popular feed and graft it on to the dom", function (done) {
                     var section = 'football';
 
                     server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "' + html + '" }']);

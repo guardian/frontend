@@ -25,6 +25,7 @@ define([
     rightSmallHtml,
     spbadgeHtml
 ) {
+
     new Squire()
         .store(['common/utils/config'])
         .require(['common/modules/commercial/create-ad-slot', 'mocks'], function (createAdSlot, mocks) {

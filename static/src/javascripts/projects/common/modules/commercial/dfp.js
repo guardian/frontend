@@ -441,10 +441,18 @@ define([
          * Module
          */
         dfp = {
-            init:        once(init),
+            init:        init,
             addSlot:     addSlot,
             refreshSlot: refreshSlot,
-            getSlots:    getSlots
+            getSlots:    getSlots,
+
+            // testing
+            reset: function () {
+                displayed      = false;
+                rendered       = false;
+                slots          = {};
+                slotsToRefresh = [];
+            }
         };
 
     return dfp;

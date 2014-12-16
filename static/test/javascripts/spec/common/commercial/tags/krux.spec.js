@@ -1,47 +1,44 @@
 define([
-    'common/utils/$',
-    'jasq'
+    'squire',
+    'common/utils/$'
 ], function (
+    Squire,
     $
 ) {
-    describe('Krux', {
-        moduleName: 'common/modules/commercial/tags/krux',
-        mock: function () {
-            return {
-                'common/utils/config': function () {
-                    return {
-                        switches: {
-                            krux: true
-                        }
+
+    new Squire()
+        .store('common/utils/config')
+        .require(['common/modules/commercial/tags/krux', 'mocks'], function (krux, mocks) {
+
+            describe('Krux', function () {
+
+                beforeEach(function () {
+                    mocks.store['common/utils/config'].switches = {
+                        krux: true
                     };
-                }
-            }
-        },
-        specify: function () {
+                    requireStub = sinon.stub(window, 'require');
+                });
 
-            beforeEach(function () {
-                requireStub = sinon.stub(window, 'require');
+                afterEach(function () {
+                    requireStub.restore();
+                });
+
+
+                it('should not load if switch is off', function () {
+                    mocks.store['common/utils/config'].switches.krux = false;
+
+                    expect(krux.load()).toBeFalsy();
+                });
+
+                it('should send correct "netid" param', function () {
+                    krux.load();
+                    var url = requireStub.args[0][0][0];
+
+                    expect(url).toBe('js!//cdn.krxd.net/controltag?confid=JVZiE3vn');
+                });
+
             });
 
-            afterEach(function () {
-                requireStub.restore();
-            });
-
-
-            it('should not load if switch is off', function (krux, deps) {
-                deps['common/utils/config'].switches.krux = false;
-
-                expect(krux.load()).toBeFalsy();
-            });
-
-            it('should send correct "netid" param', function (krux) {
-                krux.load();
-                var url = requireStub.args[0][0][0];
-
-                expect(url).toBe('js!//cdn.krxd.net/controltag?confid=JVZiE3vn');
-            });
-
-        }
-    });
+        });
 
 });
