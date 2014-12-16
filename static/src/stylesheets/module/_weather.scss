@@ -22,6 +22,7 @@
         width: $left-column;
         margin-top: $gs-baseline * 5;
         border-top: 1px solid colour(news-main-2);
+        padding-top: $gs-baseline / 2;
     }
 
     @include mq(wide) {
@@ -55,10 +56,12 @@
 .weather__location {
     margin: 0;
     overflow: auto;
-    padding: $gs-baseline / 2 0;
+    padding-bottom: $gs-baseline / 2;
+    display: none;
 
     @include mq(tablet) {
         position: relative;
+        display: block;
         width: 100%;
         border-bottom: 1px dotted colour(neutral-3);
     }
