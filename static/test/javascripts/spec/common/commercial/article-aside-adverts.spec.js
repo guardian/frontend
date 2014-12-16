@@ -1,13 +1,13 @@
 define([
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
     var config = {
@@ -19,7 +19,7 @@ define([
         }
     };
 
-    new Squire()
+    return new Injector()
         .mock({
             'common/utils/config': config
         })

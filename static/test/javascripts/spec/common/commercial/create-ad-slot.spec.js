@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'squire',
+    'helpers/injector',
     'text!fixtures/commercial/ad-slots/adbadge.html',
     'text!fixtures/commercial/ad-slots/fobadge.html',
     'text!fixtures/commercial/ad-slots/im.html',
@@ -13,7 +13,7 @@ define([
     'text!fixtures/commercial/ad-slots/spbadge.html'
 ], function (
     bonzo,
-    Squire,
+    Injector,
     adbadgeHtml,
     fobadgeHtml,
     imHtml,
@@ -26,7 +26,7 @@ define([
     spbadgeHtml
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config'])
         .require(['common/modules/commercial/create-ad-slot', 'mocks'], function (createAdSlot, mocks) {
 

@@ -1,9 +1,9 @@
 define([
     'bonzo',
-    'squire'
+    'helpers/injector'
 ], function (
     bonzo,
-    Squire
+    Injector
 ) {
 
     var config = {
@@ -12,7 +12,7 @@ define([
         }
     };
 
-    new Squire()
+    return new Injector()
         .mock({
             'common/utils/config': config
         })

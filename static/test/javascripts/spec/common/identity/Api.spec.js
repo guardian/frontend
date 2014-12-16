@@ -1,7 +1,7 @@
 define([
-    'squire'
+    'helpers/injector'
 ], function (
-    Squire
+    Injector
 ) {
 
     var reqwestStub = sinon.stub(),
@@ -10,7 +10,7 @@ define([
         };
     reqwestStub.returns(reqwestReturn);
 
-    new Squire()
+    return new Injector()
         .mock('reqwest', reqwestStub)
         .store(['reqwest', 'common/utils/config', 'common/utils/cookies', 'common/utils/storage'])
         .require(['common/modules/identity/api', 'mocks'], function (Id, mocks) {

@@ -1,22 +1,22 @@
 define([
     'bonzo',
     'qwery',
-    'squire',
     'common/utils/$',
     'common/modules/user-prefs',
     'helpers/fixtures',
+    'helpers/injector',
     'text!fixtures/commercial/slice-adverts.html'
 ], function (
     bonzo,
     qwery,
-    Squire,
     $,
     userPrefs,
     fixtures,
+    Injector,
     sliceAdvertsHtml
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config'])
         .require(['common/modules/commercial/slice-adverts', 'mocks'], function (sliceAdverts, mocks) {
 

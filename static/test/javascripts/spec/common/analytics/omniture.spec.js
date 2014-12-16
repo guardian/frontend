@@ -1,9 +1,9 @@
 define([
-    'squire',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'helpers/injector'
 ], function (
-    Squire,
-    mediator
+    mediator,
+    Injector
 ) {
 
     var config = {
@@ -11,7 +11,7 @@ define([
         switches: { }
     };
 
-    new Squire()
+    return new Injector()
         .mock({
             'common/utils/config': config,
             'common/utils/mediator': mediator

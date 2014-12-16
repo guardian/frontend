@@ -1,17 +1,17 @@
 define([
     'qwery',
-    'squire',
     'common/utils/$',
     'common/utils/template',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     qwery,
-    Squire,
     $,
     template,
-    fixtures
+    fixtures,
+    Injector
 ) {
-    new Squire()
+    return new Injector()
         .store(['common/utils/config'])
         .require(['common/modules/commercial/badges', 'mocks'], function (badges, mocks) {
 

@@ -1,10 +1,10 @@
 define([
-    'squire'
+    'helpers/injector'
 ], function (
-    Squire
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store([
             'common/utils/config',
             'common/utils/cookies',

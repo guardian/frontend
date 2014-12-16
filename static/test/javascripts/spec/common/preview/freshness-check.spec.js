@@ -1,12 +1,12 @@
 define([
-    'squire',
-    'common/utils/$'
+    'common/utils/$',
+    'helpers/injector'
 ], function (
-    Squire,
-    $
+    $,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/preview/freshness-check', 'mocks'], function (freshness, mocks) {
 

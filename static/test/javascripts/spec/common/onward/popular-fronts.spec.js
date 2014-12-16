@@ -1,14 +1,14 @@
 define([
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store('common/utils/config')
         .require(['common/modules/onward/popular-fronts', 'mocks'], function (popular, mocks) {
 

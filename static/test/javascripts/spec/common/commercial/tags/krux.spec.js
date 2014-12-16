@@ -1,12 +1,12 @@
 define([
-    'squire',
-    'common/utils/$'
+    'common/utils/$',
+    'helpers/injector'
 ], function (
-    Squire,
-    $
+    $,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store('common/utils/config')
         .require(['common/modules/commercial/tags/krux', 'mocks'], function (krux, mocks) {
 

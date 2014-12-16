@@ -1,18 +1,18 @@
 define([
     'bonzo',
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     bonzo,
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config'])
         .require(['common/modules/commercial/front-commercial-components', 'mocks'], function (frontCommercialComponents, mocks) {
 

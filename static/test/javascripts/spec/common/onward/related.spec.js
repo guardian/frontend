@@ -1,13 +1,13 @@
 define([
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
     var expandableSpy = sinon.spy(function () {
@@ -16,7 +16,7 @@ define([
         };
     });
 
-    new Squire()
+    return new Injector()
         .mock('common/modules/ui/expandable', expandableSpy)
         .store('common/utils/config')
         .require(['common/modules/onward/related', 'mocks'], function (Related, mocks) {

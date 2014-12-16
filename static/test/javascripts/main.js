@@ -46,7 +46,10 @@ requirejs.config({
     }
 });
 
-require(tests, function() {
-    // fix
-    window.setTimeout(window.__karma__.start, 2000);
+require(['Promise', 'common/utils/to-array'], function (Promise, toArray) {
+    require(tests, function () {
+        Promise.all(toArray(arguments)).then(function () {
+            window.__karma__.start()
+        });
+    });
 });

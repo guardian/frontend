@@ -1,14 +1,14 @@
 define([
-    'squire',
     'qwery',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
-    Squire,
     qwery,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/commercial/loader', 'mocks'], function (CommercialComponent, mocks) {
 

@@ -1,7 +1,7 @@
 define([
-    'squire'
+    'helpers/injector'
 ], function (
-    Squire
+    Injector
 ) {
 
     var reqwestSpy = sinon.spy(function () {
@@ -10,7 +10,7 @@ define([
         };
     });
 
-    new Squire()
+    return new Injector()
         .mock({
             reqwest:  reqwestSpy,
             'common/utils/config': {

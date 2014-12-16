@@ -1,16 +1,16 @@
 define([
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config', 'common/modules/article/spacefinder'])
         .require(['common/modules/commercial/article-body-adverts', 'mocks'], function (articleBodyAdverts, mocks) {
 

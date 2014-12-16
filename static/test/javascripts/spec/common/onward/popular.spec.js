@@ -1,12 +1,12 @@
 define([
-    'squire',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function(
-    Squire,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .mock({
             'common/modules/commercial/create-ad-slot': function () {
                 return '<div class="ad-slot"></div>';

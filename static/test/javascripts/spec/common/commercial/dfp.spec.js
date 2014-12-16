@@ -2,19 +2,19 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function (
     bean,
     bonzo,
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/commercial/dfp', 'mocks'], function (dfp, mocks) {
 
@@ -166,7 +166,7 @@ define([
                 });
 
                 it('should refresh on breakpoint changed', function (done) {
-                    dfp.init();
+                    dfp.init({ resizeTimeout: 1 });
                     window.googletag.cmd.forEach(function (func) { func(); });
                     // change breakpoint
                     $style.html('body:after { content: "mobile"; }');

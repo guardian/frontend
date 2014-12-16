@@ -1,12 +1,12 @@
 define([
-    'squire',
-    'fixtures/ab-test'
+    'fixtures/ab-test',
+    'helpers/injector'
 ], function (
-    Squire,
-    ABTest
+    ABTest,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store(['common/utils/config', 'common/modules/analytics/mvt-cookie'])
         .require(['common/modules/experiments/ab', 'mocks'], function (ab, mocks) {
 

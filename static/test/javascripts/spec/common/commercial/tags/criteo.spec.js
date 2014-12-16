@@ -1,14 +1,14 @@
 define([
-    'squire',
     'lodash/arrays/zipObject',
-    'common/utils/$'
+    'common/utils/$',
+    'helpers/injector'
 ], function (
-    Squire,
     zipObject,
-    $
+    $,
+    Injector
 ) {
 
-    new Squire()
+    return new Injector()
         .store('common/utils/config')
         .require(['common/modules/commercial/tags/criteo', 'mocks'], function (criteo, mocks) {
 

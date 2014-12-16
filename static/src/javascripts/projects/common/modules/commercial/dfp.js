@@ -73,12 +73,14 @@ define([
     /**
      * Private variables
      */
-    var adSlotSelector    = '.js-ad-slot',
-        displayed         = false,
-        rendered          = false,
-        slots             = {},
-        slotsToRefresh    = [],
-        breakoutClasses   = [
+    var resizeTimeout,
+        adSlotSelector       = '.js-ad-slot',
+        displayed            = false,
+        rendered             = false,
+        slots                = {},
+        slotsToRefresh       = [],
+        hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
+        breakoutClasses      = [
             'breakout__html',
             'breakout__script'
         ],
@@ -154,20 +156,26 @@ define([
             googletag.display(keys(slots).shift());
             displayed = true;
         },
+        windowResize = debounce(
+            function () {
+                // refresh on resize
+                hasBreakpointChanged(refresh);
+            }, resizeTimeout
+        ),
         postDisplay = function () {
-            var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
-            mediator.on('window:resize',
-                debounce(function () {
-                    // refresh on resize
-                    hasBreakpointChanged(refresh);
-                }, 2000)
-            );
+            mediator.on('window:resize', windowResize);
         },
 
         /**
          * Public functions
          */
-        init = function () {
+        init = function (options) {
+
+            var opts = defaults(options || {}, {
+                resizeTimeout: 2000
+            });
+
+            resizeTimeout = opts.resizeTimeout;
 
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
@@ -452,6 +460,8 @@ define([
                 rendered       = false;
                 slots          = {};
                 slotsToRefresh = [];
+                mediator.off('window:resize', windowResize);
+                hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
             }
         };
 

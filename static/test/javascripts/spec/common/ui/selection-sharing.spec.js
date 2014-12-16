@@ -1,13 +1,13 @@
 define([
     'qwery',
-    'squire',
     'common/utils/$',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'helpers/injector'
 ], function(
     qwery,
-    Squire,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
 
     var conf =  {
@@ -15,7 +15,7 @@ define([
         fixtures: ['<div class="js-article__body"></div>']
     };
 
-    new Squire()
+    return new Injector()
         .mock({
             'common/utils/client-rects': {
                 getBoundingClientRect: function () {
