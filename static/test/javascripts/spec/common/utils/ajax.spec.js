@@ -28,7 +28,6 @@ define([
                 });
 
                 it('should proxy calls to reqwest', function () {
-                    console.log(reqwestSpy);
                     ajax({url: '/endpoint.json', param: 'value'});
 
                     expect(reqwestSpy).toHaveBeenCalledWith({
