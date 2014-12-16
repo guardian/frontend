@@ -126,13 +126,33 @@ define([
         },
 
         bindEvents: function () {
+            bean.on($('.js-search-tool-input')[0], 'click', function() {
+                self.editSwitch(1);
+            });
+            bean.on($('.js-close-location')[0], 'click', function() {
+                self.editSwitch(0);
+            });
             bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.on('autocomplete:fetch', this.getCityCoordinates);
         },
 
         unbindEvents: function () {
+            bean.off($('.js-search-tool-input')[0], 'click', self.editSwitch);
+            bean.off($('.js-close-location')[0], 'click', self.editSwitch);
             bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.off('autocomplete:fetch', this.getCityCoordinates);
+        },
+
+        editSwitch: function(value) {
+            $input = $('.js-search-tool-input')[0];
+            $location = $('.weather__location');
+
+            if (value == 0) {
+                $location.removeClass('is-editing');
+            } else if (value == 1) {
+                $location.addClass('is-editing');
+                $input.setSelectionRange(0, $input.value.length);
+            }
         },
 
         detectPosition: function (e) {
