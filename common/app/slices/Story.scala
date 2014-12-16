@@ -2,10 +2,13 @@ package slices
 
 import common.Maps._
 import model.Content
+import play.api.libs.json.Json
 
 import scala.util.Try
 
 object Story {
+  implicit val jsonFormat = Json.format[Story]
+
   implicit val ordering = Ordering.by[Story, Int](_.group)
 
   def unboosted(n: Int) = Story(n, isBoosted = false)
