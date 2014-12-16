@@ -34,7 +34,7 @@ define([
                 'audio:end': 'event20',
                 // extra events with no set ordering
                 duration: 'event57'
-            }
+            };
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -42,10 +42,6 @@ define([
 
         this.getPosition = function () {
             return player.currentTime();
-        };
-
-        this.getSegmentInfo = function (segmentIndex) {
-            return segmentEvents[segmentIndex];
         };
 
         this.play = function () {
