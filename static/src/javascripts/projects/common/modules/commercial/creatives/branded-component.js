@@ -35,9 +35,10 @@ define([
         /**
          * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027767
          */
-        BrandedComponent = function ($adSlot, params) {
+        BrandedComponent = function ($adSlot, params, showEverywhere) {
             this.$adSlot = $adSlot;
             this.params  = params;
+            this.showEverywhere = showEverywhere || false;
         };
 
     BrandedComponent.prototype.create = function () {
@@ -45,7 +46,7 @@ define([
             $rightHandCol  = $('.js-secondary-column');
 
         if (
-            !this.params.showEverywhere && (!templateConfig ||
+            !this.showEverywhere && (!templateConfig ||
             $rightHandCol.css('display') === 'none' ||
             $rightHandCol.dim().height < 1600 ||
             config.page.section === 'football')
