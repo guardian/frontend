@@ -40,7 +40,7 @@
  * Output the @font-face declaration for a Guss webfont.
  *
  * @param {Number} $font-family - ID of the font in $guss-webfonts
- * @param {Map} $properties - weight (member of `$guss-font-weights`), style (`normal` | `italic`)
+ * @param {Map} $properties - weight (member of `$guss-font-weights`), style (`normal` | `italic`), version, hinting, kerning, charset
  * @param {Map} $overrides - weight (member of `$guss-font-weights`), style (`normal` | `italic`)
  *
  * @requires {variable} guss-webfonts
@@ -53,15 +53,28 @@
  */
 @mixin guss-webfonts-single-declaration(
     $font-family,
-    $properties: (weight: 'regular', style: 'normal'),
+    $properties: (
+        weight:  'regular',
+        style:   'normal',
+        version: false,
+        hinting: false,
+        kerning: false,
+        charset: false
+    ),
     $overrides: (weight: false, style: false)
 ) {
     $font: map-get($guss-webfonts, $font-family);
     $font-weight-override: map-get($overrides, weight);
     $font-style-override: map-get($overrides, style);
 
+    $version:   if(map-has-key($properties, version), map-get($properties, version), $guss-webfonts-version);
+    $hinting:   if(map-has-key($properties, hinting), map-get($properties, hinting), $guss-webfonts-hinting);
+    $kerning:   if(map-has-key($properties, kerning), map-get($properties, kerning), $guss-webfonts-kerning);
+    $charset:   if(map-has-key($properties, charset), map-get($properties, charset), $guss-webfonts-charset);
+    $base-path: if($guss-webfonts-path, $guss-webfonts-path, '#{$version}/hinting-#{$hinting}/kerning-#{$kerning}/#{$charset}/');
+
     $font-filename: compose-webfont-filename($font-family, map-get($properties, weight), map-get($properties, style));
-    $full-path: compose-webfont-path($font-family);
+    $full-path: compose-webfont-path($font-family, $base-path);
     $font-weight: guss-font-weight(if($font-weight-override, $font-weight-override, map-get($properties, weight)));
     $font-style: if($font-style-override, $font-style-override, map-get($properties, style));
 
