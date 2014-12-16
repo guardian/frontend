@@ -153,8 +153,16 @@ define([
                         return {};
                     };
 
-                    expect(buildPageTargeting()).toEqual({
-                        url: '/context.html',
+                    var opts = {
+                        window: {
+                            location: {
+                                pathname: '/a/page.html'
+                            }
+                        }
+                    };
+
+                    expect(buildPageTargeting(opts)).toEqual({
+                        url: '/a/page.html',
                         p: 'ng',
                         bp: 'mobile',
                         at: 'ng101',
