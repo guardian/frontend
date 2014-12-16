@@ -15,6 +15,8 @@ import tools.MatchListFeatureTools
       goTo("/football/fixtures") { browser =>
         import browser._
 
+
+
         val matches = $(".football-teams")
         Then("I should see upcoming fixtures over the next 3 days")
         assertFixture(matches, "Liverpool", "Man C")
@@ -30,16 +32,24 @@ import tools.MatchListFeatureTools
     }
 
     scenario("Next fixtures") {
+      println("+++++++++++++Next")
       Given("I am on the fixtures page")
       goTo("/football/fixtures") { browser =>
         import browser._
 
         When("I click the 'Next' fixtures link")
 
-        findFirst("[data-link-name=next]").click()
+        val next = findFirst("[data-link-name=next]")
+
+        println("+++++++++ Next" + next.toString)
+
+        next.click()
 
         Then("I should see the next set of upcoming matches")
         val matches = $(".football-teams")
+
+        println("++ Teams: " + matches.toString)
+
         assertFixture(matches, "Swansea", "Reading")
       }
     }

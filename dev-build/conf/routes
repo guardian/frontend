@@ -98,6 +98,7 @@ GET         /sport/cricket/match/:matchId                                       
 
 GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET         /football/fixtures/more/:year/:month/:day.json                                                           football.controllers.FixturesController.moreFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day                                                                football.controllers.FixturesController.moreFixturesFor(year, month, day)
 
 
 GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
@@ -109,6 +110,7 @@ GET         /football/:tag/fixtures                                             
 GET         /football/:tag/fixtures.json                                                                             football.controllers.FixturesController.tagFixtures(tag)
 
 GET         /football/results/:year/:month/:day.json                                                                 football.controllers.ResultsController.allResultsForJson(year, month, day)
+GET         /football/results/more/:year/:month/:day.json                                                            football.controllers.ResultsController.moreResultsForJson(year, month, day)
 GET         /football/results/:year/:month/:day                                                                      football.controllers.ResultsController.allResultsFor(year, month, day)
 GET         /football/results                                                                                        football.controllers.ResultsController.allResults()
 GET         /football/results.json                                                                                   football.controllers.ResultsController.allResultsJson()

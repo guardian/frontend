@@ -16,21 +16,32 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   //---------------------------------------
 
-  def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
-  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
+  def allFixturesForJson(year: String, month: String, day: String) = {
+    println("+++ Fixtures HTML")
+    allFixturesFor(year, month, day)
+  }
+  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] = {
+    println("+++ Fixtures jSON")
     renderAllFixtures(createDate(year, month, day))
-
-  def moreFixturesForJson(year: String, month: String, day: String ): Action[AnyContent] = {
-    val date = createDate(year, month, day)
-    renderMoreMatches(page, fixtures(date), filters)
-  )
+  }
 
   def allFixturesJson() = allFixtures()
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
 
+  def moreFixturesFor(year: String, month: String, day: String)  =  moreFixturesForJson(day, month, year)
+
+  def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] = {
+    println("+++ more Fixtures")
+    renderMoreFixtures(createDate(year, month, day))
+  }
+
   private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
     renderMatchList(page, fixtures(date), filters)
+  }
+
+  private def renderMoreFixtures(date: LocalDate) = Action { implicit request =>
+    renderMoreMatches(page, fixtures(date), filters)
   }
 
   def tagFixturesJson(tag: String) = tagFixtures(tag)
