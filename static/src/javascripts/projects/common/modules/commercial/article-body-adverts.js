@@ -74,7 +74,7 @@ define([
 
     return {
 
-        init: once(init),
+        init: init,
 
         // rules exposed for spacefinder debugging
         getRules: getRules,
