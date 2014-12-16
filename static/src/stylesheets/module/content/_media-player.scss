@@ -804,7 +804,8 @@ $vjs-progress-inset-bottom: 4px;
 
 /* Tech overrides
    ========================================================================== */
-.vjs-tech-flash {
+.vjs-tech-flash,
+.vjs-tech-vpaid {
     .vjs-poster,
     .vjs-big-play-button,
     .vjs-fullscreen-clickbox,
