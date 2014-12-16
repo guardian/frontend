@@ -17,8 +17,8 @@ object StoriesVisibleResponse {
 }
 
 case class StoriesVisibleResponse(
-  maxDesktop: Option[Int],
-  maxMobile: Option[Int]
+  desktop: Option[Int],
+  mobile: Option[Int]
 )
 
 object StoriesVisibleController extends Controller {
