@@ -10,7 +10,8 @@ define([
             }, {
                 'type': 'front'
             }],
-            configFromURL = parseQueryParams(window.location.search).layout;
+            queryParams = parseQueryParams(window.location.search),
+            configFromURL = queryParams.layout;
 
         if (configFromURL) {
             columns = _.map(configFromURL.split(','), function (column) {
@@ -26,6 +27,13 @@ define([
                     config: parts[1]
                 };
             });
+        } else if (queryParams.front) {
+            columns = [{
+                type: 'latest'
+            }, {
+                type: 'front',
+                config: queryParams.front
+            }];
         }
 
         return columns;
