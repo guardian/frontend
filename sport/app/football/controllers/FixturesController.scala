@@ -25,13 +25,10 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
 
-  def moreFixturesFor(year: String, month: String, day: String)  = {
-    moreFixturesForJson(year, month, day)
-  }
-
-  def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] = {
+  def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderMoreFixtures(createDate(year, month, day))
-  }
+
+  def moreFixturesForJson(year: String, month: String, day: String) = moreFixturesFor(year, month, day)
 
   private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
     renderMatchList(page, fixtures(date), filters)

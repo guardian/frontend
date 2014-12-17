@@ -23,10 +23,10 @@ object ResultsController extends MatchListController with CompetitionResultFilte
   def allResults(): Action[AnyContent] =
     renderAllResults(LocalDate.now(Edition.defaultEdition.timezone))
 
-  def moreResultsFor(year: String, month: String, day: String) = renderMoreResults(createDate(year, month, day))
-
-  def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] =
+  def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] =
     renderMoreResults(createDate(year, month, day))
+
+  def moreResultsForJson(year: String, month: String, day: String) = moreResultsFor(year, month, day)
 
 
   private def renderAllResults(date: LocalDate) = Action { implicit request =>
