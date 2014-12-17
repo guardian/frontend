@@ -276,6 +276,23 @@ define([
         });
     }
 
+    function upgradeVideoPlayerAccessibility(player) {
+        // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
+        // It doesn't match what kind of tech this is, flash or html5.
+        $('.vjs-tech', player.el()).attr('aria-hidden', true);
+
+        // Hide superfluous controls, and label useful buttons.
+        $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
+        $('.vjs-current-time', player.el()).attr('aria-hidden', true);
+        $('.vjs-time-divider', player.el()).attr('aria-hidden', true);
+        $('.vjs-duration', player.el()).attr('aria-hidden', true);
+        $('.vjs-embed-button', player.el()).attr('aria-hidden', true);
+
+        $('.vjs-play-control', player.el()).attr('aria-label', 'video play');
+        $('.vjs-mute-control', player.el()).attr('aria-label', 'video mute');
+        $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
+    }
+
     function createVideoPlayer(el, options) {
         var player;
 
@@ -354,6 +371,7 @@ define([
                 bindErrorHandler(player);
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
+                upgradeVideoPlayerAccessibility(player);
 
                 player.one('playing', function (e) {
                     if (isFlash(e)) {
