@@ -42,7 +42,7 @@ define([
         init: function () {
             self = this;
 
-            this.fetchData(this.getUserLocation());
+            self.getDefaultLocation();
         },
 
         getGeoLocation: function () {
@@ -62,8 +62,11 @@ define([
             });
         },
 
-        saveUserLocation: function (city) {
-            userPrefs.set(prefName, {'location': city});
+        saveUserLocation: function (location) {
+            userPrefs.set(prefName, {
+                'id': location.id,
+                'city': location.city
+            });
         },
 
         /**
@@ -80,14 +83,28 @@ define([
             }
         },
 
+        getDefaultLocation: function() {
+            var location = self.getUserLocation();
+
+            if (location) {
+                self.fetchData(location);
+            } else {
+                try {
+                    self.getWeatherData('/weather/city.json').then(function (response) {
+                        self.fetchData(response);
+                    });
+                } catch (e) {
+                    return "Some error message";
+                }
+            }
+        },
+
         fetchData: function (location) {
             var url = '/weather/city';
 
-            if (typeof location === 'string') {
-                url += '/' + location + '.json';
+            if (typeof location.id === 'string') {
+                url += '/' + location.id + '.json';
                 this.saveUserLocation(location);
-            } else {
-                url += '.json';
             }
 
             try {
@@ -176,7 +193,7 @@ define([
             self.bindEvents();
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
-                apiUrl: 'weather/locations?q='
+                apiUrl: 'weather/locations?query='
             });
             searchTool.init();
 
