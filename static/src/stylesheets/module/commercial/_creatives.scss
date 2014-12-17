@@ -39,7 +39,8 @@
     .creative__title {
         @include fs-headline(4);
     }
-    .creative__text {
+    .creative__text,
+    .creative__subtitle {
         @include fs-textSans(3);
         color: colour(neutral-2);
     }
@@ -90,17 +91,49 @@
             width: gs-span(3)-$gs-gutter;
             margin-right: $gs-gutter/2;
         }
-
-        &:before {
-            @extend %i-soulmates-trill;
-            @extend %svg-i-soulmates-trill !optional;
-            content: '';
-            display: block;
-            margin: $gs-baseline auto 0;
-        }
     }
-    .creative__title,
+    .creative__title {
+        margin: $gs-baseline/2 0 0;
+        @include fs-header(5);
+        @include font-size(24, 24);
+        text-align: center;
+    }
+    .creative__subtitle {
+        @include fs-bodyCopy(1);
+        @include font-size(12, 14);
+        color: colour(neutral-2);
+        text-align: center;
+        margin-top: $gs-baseline/2;
+    }
     .creative__text {
+        margin: $gs-baseline/2 0 0;
+        overflow: hidden;
+
+        .creative__text__link {
+            display: block;
+            @include clearfix;
+
+            .creative__text__img {
+                float: left;
+                margin: 0 $gs-gutter/2 $gs-baseline/2 0;
+            }
+            .creative__text__title {
+                @include fs-header(1);
+                color: colour(neutral-1);
+                font-size: 14px;
+                text-overflow: ellipsis;
+                white-space: pre;
+                overflow: hidden;
+                margin-bottom: 0;
+            }
+            .creative__text__meta {
+                color: colour(neutral-2);
+                @include fs-textSans(1);
+                margin-bottom: $gs-baseline/2;
+            }
+        }
+
+        &:after,
         &:before {
             content: '';
             display: block;
@@ -109,21 +142,16 @@
             margin: 0 auto $gs-baseline;
             background-color: #000000;
         }
-    }
-    .creative__title {
-        margin: $gs-baseline 0 0;
-        @include fs-header(5);
-        text-align: center;
-    }
-    .creative__text {
-        margin: $gs-baseline 0 0;
+        &:after {
+            margin: $gs-baseline/2 auto 0;
+        }
     }
     .creative__link-wrapper {
         margin-top: $gs-baseline;
         text-align: center;
     }
     .creative__link {
-        @include fs-header(3);
+        @include fs-header(1);
         color: #000000;
     }
     .creative__link__button {
@@ -133,7 +161,7 @@
     }
     .soulmates-logo {
         height: gs-height(1);
-        margin: gs-height(2) auto 0;
+        margin: gs-height(1)/2 auto 0;
         padding-top: $gs-baseline*3;
         background-size: 100%;
         width: auto;
