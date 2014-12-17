@@ -1,47 +1,33 @@
 package controllers
 
-import common.ExecutionContexts
-import models.LocationResponse
+import common.{Edition, ExecutionContexts}
+import models.{CityResponse, City, CityId}
 import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
-import scalaz.std.AllInstances._
-import scalaz.syntax.foldable._
-
-object CityResponse {
-  implicit val jsonWrites = Json.writes[CityResponse]
-}
-
-case class CityResponse(
-  id: String,
-  city: String,
-  country: String
-)
+import scala.concurrent.Future
 
 object LocationsController extends Controller with ExecutionContexts {
   def findCity(query: String) = Action.async {
     WeatherApi.searchForLocations(query) map { locations =>
+      Ok(Json.toJson(CityResponse.fromLocationResponses(locations.toList)))
+    }
+  }
 
-      def cityAndCountry(location: LocationResponse) = (location.EnglishName, location.Country.EnglishName)
+  val LocationHeader: String = "X-GU-GeoCity"
 
-      val citiesWithSameNameByCountry = locations.map({ location => Map(cityAndCountry(location) -> 1) }).toList.suml
+  def whatIsMyCity() = Action.async { implicit request =>
+    def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
-      Ok(Json.toJson(locations.map { location =>
+    request.headers.get(LocationHeader) match {
+      case Some(city) =>
+        WeatherApi.searchForLocations(city) map { locations =>
+          val cities = CityResponse.fromLocationResponses(locations.toList)
+          Ok(Json.toJson(cities.headOption.getOrElse(cityFromRequestEdition)))
+        }
 
-        val needsDisambiguating = citiesWithSameNameByCountry.get(cityAndCountry(location)).exists(_ > 1)
-
-        val cityName = if (needsDisambiguating)
-          s"${location.EnglishName}, ${location.AdministrativeArea.EnglishName}"
-        else
-          location.EnglishName
-
-        CityResponse(
-          location.Key,
-          cityName,
-          location.Country.EnglishName
-        )
-      }))
+      case None => Future.successful(Ok(Json.toJson(cityFromRequestEdition)))
     }
   }
 }
