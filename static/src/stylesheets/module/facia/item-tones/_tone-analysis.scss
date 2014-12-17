@@ -14,9 +14,18 @@
         background-color: colour(analysis-accent);
     }
 
+    .flyer__read-more-text {
+        color: colour(analysis-default);
+    }
+
+    path.flyer__arrow-icon {
+        fill: colour(analysis-default);
+    }
+
     .fc-item__kicker,
     .flyer__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .flyer__standfirst {
         color: colour(news-support-6);
     }
 

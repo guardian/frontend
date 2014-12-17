@@ -10,8 +10,13 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .flyer__read-more-text {
         color: colour(news-default);
+    }
+
+    path.flyer__arrow-icon {
+        fill: colour(news-default);
     }
 }
 
