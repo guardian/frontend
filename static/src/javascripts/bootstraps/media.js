@@ -283,13 +283,13 @@ define([
 
         // Hide superfluous controls, and label useful buttons.
         $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
-        $('.vjs-current-time'   , player.el()).attr('aria-hidden', true);
-        $('.vjs-time-divider'   , player.el()).attr('aria-hidden', true);
-        $('.vjs-duration'       , player.el()).attr('aria-hidden', true);
-        $('.vjs-embed-button'   , player.el()).attr('aria-hidden', true);
+        $('.vjs-current-time', player.el()).attr('aria-hidden', true);
+        $('.vjs-time-divider', player.el()).attr('aria-hidden', true);
+        $('.vjs-duration', player.el()).attr('aria-hidden', true);
+        $('.vjs-embed-button', player.el()).attr('aria-hidden', true);
 
-        $('.vjs-play-control'   , player.el()).attr('aria-label', 'video play');
-        $('.vjs-mute-control'   , player.el()).attr('aria-label', 'video mute');
+        $('.vjs-play-control', player.el()).attr('aria-label', 'video play');
+        $('.vjs-mute-control', player.el()).attr('aria-label', 'video mute');
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
