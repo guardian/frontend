@@ -34,11 +34,11 @@ define([
     }
 
     return function priority(el) {
-        var defaultPriority = ['html5', 'flash'];
-        if (config.switches.inferVideoTechFromCodec) {
-            return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority : defaultPriority.reverse();
+        var defaultPriority = ['flash', 'html5'];
+        if (config.switches.html5MediaCompatibilityCheck) {
+            return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority.reverse() : defaultPriority;
         } else {
-            return defaultPriority.reverse();
+            return defaultPriority;
         }
     };
 });
