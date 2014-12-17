@@ -13,11 +13,11 @@ define([
         'video/mp4': 'video/mp4; codecs="avc1.42C01e, mp4a.40.2"',
         'video/3gp:large': 'video/3gp:large; codecs="avc1.42C01e, mp4a.40.2"',
         'video/3gp:small': 'video/3gp:small; codecs="avc1.42C01e, mp4a.40.2"',
-        'video/webm' : 'video/webm; codecs="vp8, vorbis"'
+        'video/webm': 'video/webm; codecs="vp8, vorbis"'
     };
 
     function getMediaSources(el) {
-        return $('source', el).map(function(source){
+        return $('source', el).map(function (source) {
             var type = source.getAttribute('type');
             return codecs[type] ? codecs[type] : type;
         });
@@ -25,7 +25,7 @@ define([
 
     function hasProbableHtml5Source(el) {
         return _.chain(getMediaSources(el))
-            .map(function(type){
+            .map(function (type) {
                 return el.canPlayType(type);
             })
             .compact()
@@ -35,7 +35,7 @@ define([
 
     return function priority(el) {
         var defaultPriority = ['html5', 'flash'];
-        if(config.switches.inferVideoTechFromCodec) {
+        if (config.switches.inferVideoTechFromCodec) {
             return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority : defaultPriority.reverse();
         } else {
             return defaultPriority.reverse();
