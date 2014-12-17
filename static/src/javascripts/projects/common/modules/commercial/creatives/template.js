@@ -6,8 +6,6 @@ define([
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
     'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
     'text!common/views/commercial/creatives/logo-ad-feature.html',
-    'text!common/views/commercial/creatives/logo-foundation-funded.html',
-    'text!common/views/commercial/creatives/logo-foundation-funded-partners.html',
     'text!common/views/commercial/creatives/logo-sponsored.html',
     'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/manual-multiple.html',
@@ -24,9 +22,9 @@ define([
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
     var Template = function ($adSlot, params) {
-            this.$adSlot = $adSlot;
-            this.params  = params;
-        };
+        this.$adSlot = $adSlot;
+        this.params  = params;
+    };
 
     Template.prototype.create = function () {
         require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {

@@ -61,13 +61,6 @@ define([
             rules = getRules();
             lenientRules = getLenientRules();
 
-            if (
-                config.page.sponsorshipType === 'foundation-features' &&
-                    config.page.isInappropriateForSponsorship === false
-            ) {
-                adNames.unshift(['fobadge', ['im', 'paid-for-badge']]);
-                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
-            }
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
                 insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
