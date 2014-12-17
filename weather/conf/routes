@@ -8,6 +8,6 @@ GET         /assets/*path                                                       
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
 #Weather
-GET        /weather/city/:name.json                                             controllers.WeatherController.forCity(name)
+GET        /weather/city/:id.json                                               controllers.WeatherController.forCityId(id)
 GET        /weather/city.json                                                   controllers.WeatherController.forRequest()
 GET        /weather/locations                                                   controllers.LocationsController.findCity(query: String)
