@@ -35,10 +35,10 @@ define([
 
     return function priority(el) {
         var defaultPriority = ['html5', 'flash'];
-        if(config.switches.prioritiseFlashVideoPlayer) {
-            return defaultPriority.reverse();
-        } else {
+        if(config.switches.inferVideoTechFromCodec) {
             return ('canPlayType' in el && hasProbableHtml5Source(el)) ? defaultPriority : defaultPriority.reverse();
+        } else {
+            return defaultPriority.reverse();
         }
     };
 });
