@@ -154,10 +154,10 @@ define([
                     var li = document.createElement('li');
 
                     li.className = 'search-tool__item';
-                    li.innerHTML = '<a role="button" href="#' + item.LocalizedName + '"' +
+                    li.innerHTML = '<a role="button" href="#' + item.id + '"' +
                         ' id="' + index + 'sti" class="search-tool__link"' +
-                        ' data-link-name="search-tool">' + item.LocalizedName +
-                        ' <span class="search-tool__meta">' + item.Country.LocalizedName + '</span></a>';
+                        ' data-link-name="search-tool">' + item.city +
+                        ' <span class="search-tool__meta">' + item.country + '</span></a>';
 
                     docFragment.appendChild(li);
                 });
