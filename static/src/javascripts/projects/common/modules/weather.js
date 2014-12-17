@@ -92,7 +92,6 @@ define([
 
             try {
                 return self.getWeatherData(url).then(function (response) {
-                    console.log(response);
                     self.render(response[0], 'London');
                 });
             } catch (e) {
