@@ -26,8 +26,13 @@
 
     .fc-item__kicker,
     .flyer__kicker,
+    .flyer__read-more-text,
     .fc-item__byline {
         color: colour(podcast-default);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(podcast-default);
     }
 
     .fc-item__kicker:after,

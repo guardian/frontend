@@ -25,8 +25,13 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .flyer__read-more-text {
         color: colour(review-accent);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(review-accent);
     }
 
     .fc-item__kicker:after,

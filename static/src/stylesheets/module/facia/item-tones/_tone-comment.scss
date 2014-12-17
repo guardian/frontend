@@ -17,8 +17,13 @@
     .fc-item__kicker,
     .flyer__kicker,
     .fc-item__byline,
-    .flyer__byline {
+    .flyer__byline,
+    .flyer__read-more-text {
         color: colour(comment-default);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(comment-default);
     }
 
     .fc-item__kicker--dreamsnap:before {

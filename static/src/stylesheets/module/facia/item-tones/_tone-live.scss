@@ -26,8 +26,13 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .fc-item__meta {
+    .fc-item__meta,
+    .flyer__read-more-text {
         color: colour(live-mute);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(live-mute);
     }
 
     .fc-item__kicker:after,
