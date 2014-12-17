@@ -143,7 +143,7 @@ $fc-hover-transition: .25s ease;
         display: block;
         @include fs-header(2);
         background-color: fade-out(#000000, .9);
-        margin: 0 (0 - $gs-gutter * .25) ($gs-baseline * .25);
+        margin: 0 (0 - $gs-gutter * .25);
         padding: ($gs-baseline * .25) ($gs-gutter * .25) ($gs-baseline * .5);
 
         &:before {
