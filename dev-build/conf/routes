@@ -303,3 +303,7 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>        
 # Articles
 GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
+
+GET         /weather/city/:name.json                                                                                 controllers.WeatherController.forCity(name)
+GET         /weather/city.json                                                                                       controllers.WeatherController.forRequest()
+GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
