@@ -20,6 +20,10 @@
         }
     }
 
+    .flyer__arrow-icon {
+        fill: colour(media-default);
+    }
+
     .fc-item__container:before,
     .flyer__container:before {
         background-color: colour(media-default);
@@ -27,7 +31,8 @@
 
     .fc-item__kicker,
     .flyer__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .flyer__read-more-text {
         color: colour(media-default);
     }
 
