@@ -39,7 +39,7 @@ define([
     Component,
     history,
     images,
-    playerPriority,
+    techOrder,
     beacon,
     loadingTmpl,
     adsOverlayTmpl
@@ -318,20 +318,21 @@ define([
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',
                 endSlateUri = $el.attr('data-end-slate'),
                 embedPath = $el.attr('data-embed-path'),
+                techPriority = techOrder(el),
                 player,
                 mouseMoveIdle;
 
-            videojs.options.techOrder = playerPriority(el);
 
             if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
 
                 // clone the video options and add 'vpaid' to them.
-                videojs.options.techOrder = ['vpaid'].concat(videojs.options.techOrder);
+                techPriority = ['vpaid'].concat(techPriority);
 
                 videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
             }
 
             player = createVideoPlayer(el, {
+                techOrder: techPriority,
                 controls: true,
                 autoplay: false,
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
