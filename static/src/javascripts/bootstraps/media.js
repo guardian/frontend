@@ -286,7 +286,7 @@ define([
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = playerPriority.reverse();
+            options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
         }
 
@@ -321,7 +321,6 @@ define([
                 techPriority = techOrder(el),
                 player,
                 mouseMoveIdle;
-
 
             if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
 
