@@ -14,12 +14,9 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   private def fixtures(date: LocalDate) = new FixturesList(date, Competitions())
   private val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
 
-  def allFixturesForJson(year: String, month: String, day: String) = {
-    allFixturesFor(year, month, day)
-  }
-  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] = {
+  def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
+  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderAllFixtures(createDate(year, month, day))
-  }
 
   def allFixturesJson() = allFixtures()
   def allFixtures(): Action[AnyContent] =
