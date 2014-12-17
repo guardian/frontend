@@ -21,10 +21,8 @@
         color: colour(comment-default);
     }
 
-    &[data-snap-uri] {
-        .fc-item__kicker:before {
-            color: colour(neutral-1);
-        }
+    .fc-item__kicker--dreamsnap:before {
+        color: colour(neutral-1);
     }
 
     .fc-item__meta {

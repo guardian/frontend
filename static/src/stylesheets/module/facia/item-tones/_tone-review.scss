@@ -34,10 +34,8 @@
         color: fade-out($c-headline, .8);
     }
 
-    &[data-snap-uri] {
-        .fc-item__kicker:before {
-            color: #ffffff;
-        }
+    .fc-item__kicker--dreamsnap:before {
+        color: #ffffff;
     }
 
     .fc-item__standfirst {

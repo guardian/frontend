@@ -20,10 +20,8 @@
         color: colour(news-support-6);
     }
 
-    &[data-snap-uri] {
-        .fc-item__kicker:before {
-            color: colour(neutral-1);
-        }
+    .fc-item__kicker--dreamsnap:before {
+        color: colour(neutral-1);
     }
 
     .fc-item__meta {
