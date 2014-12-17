@@ -4,8 +4,9 @@ define([
     'mock-switches',
     'test/fixtures/articles',
     'test/fixtures/some-collections',
-    'utils/query-params',
+    'utils/layout-from-url',
     'text!views/collections.scala.html',
+    'text!views/templates/vertical_layout.scala.html',
     'utils/mediator'
 ], function(
     CollectionsEditor,
@@ -13,21 +14,41 @@ define([
     mockSwitches,
     fixArticles,
     fixCollections,
-    queryParams,
+    layoutFromURL,
     templateCollections,
+    verticalLayout,
     mediator
 ){
     return function () {
         var deferred = $.Deferred();
 
-        document.body.innerHTML += templateCollections.replace(/\@[^\n]+\n/g, '');
-        queryParams.set({
-            front: 'uk'
-        });
+        document.body.innerHTML += '<div id="_test_container_collections">' +
+            verticalLayout +
+            templateCollections.replace(/\@[^\n]+\n/g, '') +
+            '</div>';
+
+        layoutFromURL.get = function () {
+            return [{
+                type: 'latest'
+            }, {
+                type: 'front',
+                config: 'uk'
+            }];
+        };
 
         // Mock the time
+        var originalSetTimeout = window.setTimeout;
         jasmine.clock().install();
         fixArticles.reset();
+
+        mediator.on('latest:loaded', function () {
+            // wait for the debounce (give some time to knockout to handle bindings)
+            originalSetTimeout(function () {
+                jasmine.clock().tick(350);
+            }, 50);
+        });
+
+
         new CollectionsEditor().init();
 
         // Number 2 is because we wait for two search, latest and the only
@@ -43,7 +64,7 @@ define([
 
         function unload () {
             jasmine.clock().uninstall();
-            var container = document.querySelector('.alert').parentNode;
+            var container = document.getElementById('_test_container_collections');
             document.body.removeChild(container);
         }
 

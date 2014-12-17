@@ -13,7 +13,7 @@
 (function (global) {
 //"use strict"; don't restore this until the config routine is refactored
 	var
-		version = '0.8.4',
+		version = '0.8.10',
 		curlName = 'curl',
 		defineName = 'define',
 		bootScriptAttr = 'data-curl-run',
@@ -820,7 +820,9 @@
 			if (resource === undef && def.exports) {
 				// note: exports will equal module.exports unless
 				// module.exports was reassigned inside module.
-				resource = def.module ? (def.exports = def.module.exports) : def.exports;
+				resource = def.module
+					? (def.exports = def.module['exports'])
+					: def.exports;
 			}
 			return resource;
 		},
@@ -1477,6 +1479,7 @@ define('curl/shim/_fetchText', function () {
  * TODO: support environments that implement XMLHttpRequest such as Wakanda
  */
 define['amd'].ssjs = true;
+if (typeof module !== 'undefined') module.exports = curl;
 var require, load;
 (function (freeRequire, globalLoad) {
 define('curl/shim/ssjs', ['curl/_privileged', './_fetchText'], function (priv, _fetchText) {
@@ -1662,9 +1665,9 @@ define('curl/loader/cjsm11', ['../plugin/_fetchText', 'curl/_privileged'], funct
 	checkToAddJsExt = priv['core'].checkToAddJsExt;
 
 	function wrapSource (source, resourceId, fullUrl) {
-		var sourceUrl = fullUrl ? '/*\n////@ sourceURL=' + fullUrl.replace(/\s/g, '%20') + '.js\n*/' : '';
+		var sourceUrl = fullUrl ? '////# sourceURL=' + fullUrl.replace(/\s/g, '%20') + '' : '';
 		return "define('" + resourceId + "'," +
-			"['require','exports','module'],function(require,exports,module){" +
+			"['require','exports','module'],function(require,exports,module,define){" +
 			source + "\n});\n" + sourceUrl + "\n";
 	}
 
@@ -1687,7 +1690,7 @@ define('curl/loader/cjsm11', ['../plugin/_fetchText', 'curl/_privileged'], funct
 		var errback, url, sourceUrl;
 
 		errback = callback['error'] || function (ex) { throw ex; };
-		url = checkToAddJsExt(require.toUrl(resourceId), config);
+		url = checkToAddJsExt(require['toUrl'](resourceId), config);
 		sourceUrl = config['injectSourceUrl'] !== false && url;
 
 		fetchText(url, function (source) {

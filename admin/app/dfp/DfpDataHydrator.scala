@@ -33,7 +33,7 @@ class DfpDataHydrator extends Logging {
       val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
 
       val allAdUnits = AdUnitAgent.get.data
-      val placementAdUnits = loadAdUnitIdsByPlacement()
+      val placementAdUnits = PlacementAgent.get.data
 
       val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
       val allCustomTargetingValues = CustomTargetingValueAgent.get.data
@@ -160,13 +160,6 @@ class DfpDataHydrator extends Logging {
       DfpApiWrapper.approveTheseAdUnits(serviceRegistry, statementBuilder)
   }.getOrElse(Failure(new DfpSessionException()))
 
-
-  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] =
-    dfpServiceRegistry.fold(Map[Long, Seq[String]]()) { serviceRegistry =>
-      DfpApiWrapper.fetchPlacements(serviceRegistry, new StatementBuilder()).map { placement =>
-      placement.getId.toLong -> placement.getTargetedAdUnitIds.toSeq
-    }.toMap
-  }
 
   def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] =
     dfpServiceRegistry.fold(Seq.empty[GuCreativeTemplate]) { serviceRegistry =>

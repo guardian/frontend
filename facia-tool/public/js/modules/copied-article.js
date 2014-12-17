@@ -16,6 +16,7 @@ define([
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
                 groupIndex: article.group ? article.group.index : undefined,
+                frontPosition: article.group ? article.group.front.position() : undefined,
                 groupParentId: article.group && article.group.parent ? article.group.parent.id : undefined
             }));
         },
@@ -33,10 +34,11 @@ define([
                     article: obj.article
                 }));
             }
+            var sourceFront = vars.model.loadedFronts()[obj.frontPosition];
 
-            sourceCollection = _.find(vars.model.collections(), function(collection) {
+            sourceCollection = sourceFront ? _.find(sourceFront.collections(), function(collection) {
                 return collection.id === obj.groupParentId;
-            });
+            }) : null;
 
             obj.article.group = sourceCollection ? _.find(sourceCollection.groups, function(group) {
                 return group.index === obj.groupIndex;

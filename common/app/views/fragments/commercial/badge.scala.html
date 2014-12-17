@@ -43,7 +43,7 @@
                           @if(content.isAdvertisementFeature) {
                             Brought to you by:
                           } else {
-                            Supported by:
+                            Guardian @content.sectionLabelName.split(" ").map(_.capitalize).mkString(" ") is supported by:
                           }
                         }
                     </h3>

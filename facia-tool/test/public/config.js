@@ -1,12 +1,8 @@
 curl.config({
     baseUrl: "base/public/js/",
     paths: {
-        knockout:      'components/knockout.js/knockout.js',
-        EventEmitter:  'components/eventEmitter/EventEmitter',
-        reqwest:       'components/reqwest/reqwest',
-        bean:          'components/bean/bean',
-        bonzo:         'components/bonzo/bonzo',
-        omniture:      'omniture.js',
+        knockout:      'components/knockout/dist/knockout',
+        EventEmitter:  'components/eventEmitter/EventEmitter.min',
         views:         '../../app/views',
         css:           '../css',
         test:          '../../test/public'

@@ -1,5 +1,3 @@
-/*jslint onevar: false*/
-/*global XMLHttpRequest ActiveXObject window setTimeout sinon buster*/
 /**
  * @author Christian Johansen (christian@cjohansen.no)
  * @license BSD
@@ -38,7 +36,13 @@ if (typeof require == "function" && typeof module == "object") {
             assert(sinon.sandbox.isPrototypeOf(sandbox));
         },
 
-        "useFakeTimers": {
+        "exposes match": function () {
+            var sandbox = sinon.sandbox.create();
+
+            assert.same(sandbox.match, sinon.match);
+        },
+
+        ".useFakeTimers": {
             setUp: function () {
                 this.sandbox = sinon.create(sinon.sandbox);
             },
@@ -91,10 +95,10 @@ if (typeof require == "function" && typeof module == "object") {
             //     "XHR/ActiveXObject": globalXHR || globalAXO
             // },
             requiresSupportFor: {
-                "browser": typeof window !== "undefined"
+                browser: typeof window !== "undefined"
             },
 
-            "useFakeXMLHttpRequest": {
+            ".useFakeXMLHttpRequest": {
                 setUp: function () {
                     this.sandbox = sinon.create(sinon.sandbox);
                 },
@@ -119,7 +123,7 @@ if (typeof require == "function" && typeof module == "object") {
                 }
             },
 
-            "useFakeServer": {
+            ".useFakeServer": {
                 setUp: function () {
                     this.sandbox = sinon.create(sinon.sandbox);
                 },
@@ -164,7 +168,7 @@ if (typeof require == "function" && typeof module == "object") {
             }
         },
 
-        "inject": {
+        ".inject": {
             setUp: function () {
                 this.obj = {};
                 this.sandbox = sinon.create(sinon.sandbox);
@@ -297,6 +301,22 @@ if (typeof require == "function" && typeof module == "object") {
                 assert.mock(sandbox.args[1]({}));
             },
 
+            "does not inject properties if they are already present": function () {
+                var server = function () {},
+                    clock = {},
+                    spy = false,
+                    object = { server: server, clock: clock, spy: spy};
+
+                sinon.sandbox.create(sinon.getConfig({
+                    properties: ["server", "clock", "spy"],
+                    injectInto: object
+                }));
+
+                assert.same(object.server, server);
+                assert.same(object.clock, clock);
+                assert.same(object.spy, spy);
+            },
+
             "ajax options": {
                 requiresSupportFor: { "ajax/browser": supportsAjax },
 
@@ -370,7 +390,7 @@ if (typeof require == "function" && typeof module == "object") {
             },
 
             "fakes specified timers": function () {
-                var sandbox = sinon.sandbox.create(sinon.getConfig({
+                sinon.sandbox.create(sinon.getConfig({
                     injectIntoThis: false,
                     properties: ["clock"],
                     useFakeTimers: ["Date", "setTimeout"]
@@ -390,6 +410,17 @@ if (typeof require == "function" && typeof module == "object") {
                 assert.equals(sandbox.args.length, 0);
                 assert.isFunction(object.spy);
                 assert.isObject(object.sandbox);
+            },
+
+            "injects match": function () {
+                var object = {};
+
+                var sandbox = sinon.sandbox.create(sinon.getConfig({
+                    properties: ["match"],
+                    injectInto: object
+                }));
+
+                assert.same(object.match, sinon.match);
             }
         }
     });

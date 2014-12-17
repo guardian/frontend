@@ -259,7 +259,7 @@ function (
             url += 'search?' + vars.CONST.apiSearchParams;
             url += options.isDraft ?
                 '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
-                '&content-set=web-live&order-by=newest&use-date=first-publication';
+                '&content-set=web-live&order-by=newest';
             url += '&page-size=' + options.pageSize;
             url += '&page=' + options.page;
             url += term ? '&q=' + term : '';

@@ -96,8 +96,6 @@ define([
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
-            liveMode: ko.observable(false),
-            pending: ko.observable(false),
             openFronts: {}
         }
     };

@@ -3,7 +3,7 @@
 @import conf.Configuration
 
 @defining(("2_2", "2014-03-28")) { case (version, date) =>
-    <div class="commercial commercial--soulmates commercial--tone-soulmates commercial--low" role="complementary" data-link-name="commercial-low | soulmates | @omnitureId">
+    <div class="commercial commercial--soulmates commercial--tone-soulmates" role="complementary" data-link-name="commercial | soulmates | @omnitureId">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -14,7 +14,7 @@
                             <span class="u-h">The Guardian</span> <span class="u-h">Soulmates</span>
                         </h3>
                         <p class="commercial__explainer">Meet someone <em>worth</em> meeting</p>
-                        <a class="commercial__cta button button--tertiary" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
+                        <a class="commercial__cta button button--tertiary" href="@clickMacro@Configuration.commercial.soulmates_url" data-link-name="merchandising-soulmates-v@{version}_@{date}-join-now">
                             <i class="i i-arrow-white-right i-right"></i>
                             <span class="commercial__cta__label">Join now</span>
                         </a>
@@ -27,7 +27,7 @@
                     @members.map { member =>
                         <li class="lineitem">
                             <a class="lineitem__link"
-                                data-link-name="merchandising-soulmates-v@{version}_@{date}-low-profile-@{member.gender}"
+                                data-link-name="merchandising-soulmates-v@{version}_@{date}-profile-@{member.gender}"
                                 href="@clickMacro@member.profileUrl">
                                 <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
                                 <h4 class="lineitem__title">@member.username</h4>
@@ -65,7 +65,7 @@
                             }
                         </select>
                     </label>
-                    <button type="submit" class="search__submit button button--tone-media button--small" data-link-name="merchandising-soulmates-v@{version}_@{date}-low-find-a-soulmate">
+                    <button type="submit" class="search__submit button button--tone-media button--small" data-link-name="merchandising-soulmates-v@{version}_@{date}-find-a-soulmate">
                         Find a soulmate <i class="i i-arrow-white-right i-right"></i>
                     </button>
                 </form>

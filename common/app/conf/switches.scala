@@ -303,6 +303,14 @@ object Switches {
   )
 
   // Features
+  val FixturesAndResultsContainerSwitch = Switch(
+    "Feature",
+    "fixtures-and-results-container",
+    "Fixtures and results container on football tag pages",
+    safeState = On,
+    sellByDate = never
+  )
+
   val HardcodedSectionTagLookUp = Switch(
     "Feature",
     "hardcoded-section-tag-lookup",
@@ -436,6 +444,11 @@ object Switches {
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
+    "If this switch is on facia tool will display more options for panes",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
