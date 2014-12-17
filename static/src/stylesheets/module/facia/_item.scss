@@ -297,6 +297,7 @@ $fc-hover-transition: .25s ease;
         content: 'Latest from\2026';
         display: block;
         @include fs-headline(1);
+        color: #ffffff;
     }
 
     &:hover:before {
