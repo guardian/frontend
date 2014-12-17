@@ -278,7 +278,7 @@ define([
 
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
-        // It doesn't match what kind of tech this is, flash or html5.
+        // It doesn't matter what kind of tech this is, flash or html5.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
         // Hide superfluous controls, and label useful buttons.
