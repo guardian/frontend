@@ -19,13 +19,18 @@ define([
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026327
      */
     var Template = function ($adSlot, params) {
+        var capitalisedTag;
+
         this.$adSlot       = $adSlot;
         this.params        = params;
-        this.params.header = config.page.isFront ?
-            'Supported by:' :
-            'Guardian ' + config.page.sectionName.replace(/(^|\s)[a-z]/g, function (m) {
+        if (!config.page.isFront && config.page.sponsorshipTag) {
+            capitalisedTag = config.page.sponsorshipTag.replace(/(^|\s|-)[a-z]/g, function (m) {
                 return m.toUpperCase();
-            }) + ' is supported by:';
+            });
+            this.params.header = 'Guardian ' + capitalisedTag + ' is supported by:';
+        } else {
+            this.params.header = 'Supported by:';
+        }
     };
 
     Template.prototype.create = function () {
