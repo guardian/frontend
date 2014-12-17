@@ -109,7 +109,7 @@
 }
 
 .flyer__read-more {
-    padding: 0 0 0 $gs-gutter / 4;
+    padding-left: $gs-gutter / 4;
 
     @include mq(tablet) {
         .tone-comment--item.flyer--has-byline-pic & {
