@@ -6,6 +6,7 @@ import conf.Configuration.commercial._
 import dfp._
 import implicits.Dates
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 import services.S3
 
 trait Store extends Logging with Dates {
@@ -28,6 +29,9 @@ trait Store extends Logging with Dates {
 
   def putDfpSponsoredTags(keywordsJson: String) {
     S3.putPublic(dfpSponsoredTagsDataKey, keywordsJson, defaultJsonEncoding)
+  }
+  def putDfpPaidForTags(content: String) {
+    S3.putPublic(dfpPaidForTagsDataKey, content, defaultJsonEncoding)
   }
   def putDfpAdvertisementFeatureTags(keywordsJson: String) {
     S3.putPublic(dfpAdvertisementFeatureTagsDataKey, keywordsJson, defaultJsonEncoding)
@@ -56,6 +60,11 @@ trait Store extends Logging with Dates {
     S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
   def getDfpFoundationSupportedTags() =
     S3.get(dfpFoundationSupportedTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
+  def getDfpPaidForTags(): PaidForTagsReport =
+    S3.get(dfpPaidForTagsDataKey).map {
+    Json.parse(_).as[PaidForTagsReport]
+  }.getOrElse(PaidForTagsReport(now, Nil))
+
   def getDfpPageSkinnedAdUnits() =
     S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
 

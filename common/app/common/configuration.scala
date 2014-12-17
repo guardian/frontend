@@ -252,6 +252,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
     lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v5.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v1.json"
     lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v5.json"
     lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v5.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"

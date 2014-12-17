@@ -64,7 +64,7 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
     }
 
     AkkaAsync {
-      refreshAllDfpData()
+      DfpDataCacheJob.refreshAllDfpData()
     }
   }
 
