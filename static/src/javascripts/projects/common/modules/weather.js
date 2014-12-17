@@ -92,6 +92,7 @@ define([
 
             try {
                 return self.getWeatherData(url).then(function (response) {
+                    console.log(response);
                     self.render(response[0], 'London');
                 });
             } catch (e) {
@@ -110,14 +111,14 @@ define([
             bean.on($('.js-close-location')[0], 'click', function() {
                 self.toggleControls(false);
             });
-            bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
+            // bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.on('autocomplete:fetch', this.getCityCoordinates);
         },
 
         unbindEvents: function () {
             bean.off($('.js-weather-input')[0], 'click', self.toggleControls);
             bean.off($('.js-close-location')[0], 'click', self.toggleControls);
-            bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
+            // bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.off('autocomplete:fetch', this.getCityCoordinates);
         },
 
