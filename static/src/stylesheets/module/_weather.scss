@@ -80,6 +80,10 @@
         display: none;
     }
 
+    .search-tool__item {
+        text-align: left;
+    }
+
     &.is-editing {
         border-bottom: none;
 

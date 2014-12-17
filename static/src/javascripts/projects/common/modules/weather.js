@@ -109,7 +109,7 @@ define([
 
             try {
                 return self.getWeatherData(url).then(function (response) {
-                    self.render(response[0], 'London');
+                    self.render(response[0], location.city);
                 });
             } catch (e) {
                 raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
