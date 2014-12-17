@@ -95,6 +95,10 @@
         .weather__close-location {
             display: initial;
         }
+
+        & ~ .weather__forecasts {
+            opacity: 0.5;
+        }
     }
 }
 
@@ -119,6 +123,10 @@
 
 .weather__close-location {
     margin-right: 0;
+}
+
+.weather__forecasts {
+    @include transition(opacity 0.2s ease-in);
 }
 
 .weather__forecast {
