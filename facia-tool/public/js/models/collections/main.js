@@ -3,10 +3,12 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'utils/ammended-query-str',
     'utils/mediator',
     'utils/fetch-settings',
-    'utils/fronts-from-url',
     'utils/global-listeners',
+    'utils/layout-from-url',
+    'utils/parse-query-params',
     'utils/update-scrollables',
     'utils/terminate',
     'modules/list-manager',
@@ -19,10 +21,12 @@ define([
     pageConfig,
     ko,
     vars,
+    ammendedQueryStr,
     mediator,
     fetchSettings,
-    getFrontsFromURL,
     globalListeners,
+    layoutFromUrl,
+    parseQueryParams,
     updateScrollables,
     terminate,
     listManager,
@@ -90,9 +94,9 @@ define([
 
                 vars.state.config = config;
 
-                var frontsInURL = getFrontsFromURL();
-                fronts = _.contains(frontsInURL, 'testcard') ? ['testcard'] :
-                   _.chain(config.fronts)
+                var frontInURL = parseQueryParams(window.location.search).front;
+                fronts = frontInURL === 'testcard' ? ['testcard'] :
+                    _.chain(config.fronts)
                     .map(function(front, path) {
                         return front.priority === vars.priority ? path : undefined;
                     })
@@ -109,19 +113,14 @@ define([
                 var wasPopstate = false;
                 window.onpopstate = function() {
                     wasPopstate = true;
-                    var newFronts = getFrontsFromURL();
-                    mediator.emit('front:change', newFronts);
+                    model.layout.locationChange();
                 };
-                mediator.on('front:select', function () {
+                mediator.on('layout:change', function () {
                     if (!wasPopstate) {
-                        var queryStr = _.chain(model.loadedFronts())
-                            .filter(function (column) { return !!column; })
-                            .map(function (front) {
-                                return 'front=' + (front.front() || '');
-                            })
-                            .value()
-                            .join('&');
-                        history.pushState({}, '', window.location.pathname + '?' + queryStr);
+                        var serializedLayout = layoutFromUrl.serialize(model.layout.serializable());
+                        if (serializedLayout !== parseQueryParams(window.location.search).layout) {
+                            history.pushState({}, '', window.location.pathname + '?' + ammendedQueryStr('layout', serializedLayout));
+                        }
                     }
                     wasPopstate = false;
                 });

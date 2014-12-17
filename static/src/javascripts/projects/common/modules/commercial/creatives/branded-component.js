@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'text!common/views/commercial/creatives/branded-component-jobs.html',
     'text!common/views/commercial/creatives/branded-component-membership.html',
-    'text!common/views/commercial/creatives/branded-component-soulmates.html'
+    'text!common/views/commercial/creatives/branded-component-soulmates.html',
+    'lodash/objects/defaults'
 ], function (
     qwery,
     $,
@@ -13,7 +14,8 @@ define([
     template,
     brandedComponentJobsTpl,
     brandedComponentMembershipTpl,
-    brandedComponentSoulmatesTpl
+    brandedComponentSoulmatesTpl,
+    defaults
 ) {
 
     var templates = {
@@ -29,15 +31,21 @@ define([
             },
             soulmates: {
                 template: brandedComponentSoulmatesTpl,
-                config:   {}
+                config:   {
+                    profileImgM: config.images.commercial.brandedComponentSoulmatesM,
+                    profileImgF: config.images.commercial.brandedComponentSoulmatesF
+                }
             }
         },
         /**
          * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10027767
          */
-        BrandedComponent = function ($adSlot, params) {
+        BrandedComponent = function ($adSlot, params, options) {
             this.$adSlot = $adSlot;
             this.params  = params;
+            this.opts = defaults(options || {}, {
+                force: false
+            });
         };
 
     BrandedComponent.prototype.create = function () {
@@ -45,7 +53,7 @@ define([
             $rightHandCol  = $('.js-secondary-column');
 
         if (
-            !this.params.showEverywhere && (!templateConfig ||
+            !this.opts.force && (!templateConfig ||
             $rightHandCol.css('display') === 'none' ||
             $rightHandCol.dim().height < 1600 ||
             config.page.section === 'football')

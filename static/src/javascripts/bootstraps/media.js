@@ -323,7 +323,7 @@ define([
 
         $('.js-gu-media').each(function (el) {
             var mediaType = el.tagName.toLowerCase(),
-                $el = bonzo(el).addClass('vjs'),
+                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
                 mediaId = $el.attr('data-media-id'),
                 blockVideoAds = $el.attr('data-block-video-ads') === 'true',
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',

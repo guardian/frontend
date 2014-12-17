@@ -4,7 +4,6 @@ define([
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
-    'utils/global-listeners',
     'utils/human-time',
     'utils/mediator',
     'utils/populate-observables',
@@ -17,7 +16,6 @@ define([
     ko,
     vars,
     asObservableProps,
-    globalListeners,
     humanTime,
     mediator,
     populateObservables,
@@ -80,10 +78,6 @@ define([
 
         this.setPending(true);
         this.load();
-
-        if (this.alsoOn.length) {
-            globalListeners.on('mousedown', this.closeAlsoOn.bind(this));
-        }
     }
 
     Collection.prototype.setPending = function(asPending) {
@@ -298,20 +292,6 @@ define([
 
     Collection.prototype.alsoOnToggle = function () {
         this.state.alsoOnVisible(!this.state.alsoOnVisible());
-    };
-
-    Collection.prototype.closeAlsoOn = function (event) {
-        if (!this.state.alsoOnVisible()) {
-            return;
-        }
-
-        var context = ko.contextFor(event.target);
-        if (typeof context.$data === 'string') {
-            context = context.$parentContext;
-        }
-        if (context.$data !== this || $(event.target).parents('.dropdown').length === 0) {
-            this.state.alsoOnVisible(false);
-        }
     };
 
     return Collection;
