@@ -3,7 +3,7 @@ package feed
 import common._
 import conf.FootballClient
 import java.util.Comparator
-import model.{Competition, TeamFixture}
+import model.{Table, Competition, TeamFixture}
 import org.joda.time.{ DateTimeComparator, LocalDate }
 import org.scala_tools.time.Imports._
 import pa._
@@ -44,6 +44,13 @@ trait CompetitionSupport extends implicits.Football {
   def withTeam(team: String) = CompetitionSupport {
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
   }
+
+  def mostPertinentCompetitionForTeam(teamId: String) =
+    withTeam(teamId).competitions.sortBy({ competition =>
+      val table = Table(competition)
+      val group = table.groups.find(_.entries.exists(_.team.id == teamId))
+      -(group.map(_.entries.length) getOrElse competition.leagueTable.length)
+    }).headOption
 
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 

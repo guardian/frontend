@@ -2,6 +2,8 @@ package layout
 
 import model.{Content, Trail}
 import slices._
+import scalaz.syntax.traverse._
+import scalaz.std.list._
 
 case class IndexedTrail(trail: Trail, index: Int)
 
@@ -79,13 +81,28 @@ object ContainerLayout extends implicits.Collections {
       case definition: ContainerDefinition =>
         fromContainerDefinition(definition, containerLayoutContext, config, items)
     }
+
+  def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]) = {
+    val slicesWithCards = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum))
+      .toList
+      .mapAccumL(blobs) {
+      case (blobsRemaining, (slice, numToConsume)) =>
+        val (blobsConsumed, blobsUnconsumed) = blobsRemaining.splitAt(numToConsume)
+        (blobsUnconsumed, SliceWithCards.fromBlobs(slice.layout, blobsConsumed))
+    }._2
+
+    ContainerLayout(
+      slicesWithCards,
+      Nil
+    )
+  }
 }
 
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
   remainingCards: Seq[FaciaCardAndIndex]
 ) {
-  def transformCards(f: FaciaCard => FaciaCard) = copy(
+  def transformCards(f: ContentCard => ContentCard) = copy(
     slices = slices.map(_.transformCards(f)),
     remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
   )

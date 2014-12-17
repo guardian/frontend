@@ -13,7 +13,7 @@
 (function (global) {
 //"use strict"; don't restore this until the config routine is refactored
 	var
-		version = '0.8.4',
+		version = '0.8.11',
 		curlName = 'curl',
 		defineName = 'define',
 		bootScriptAttr = 'data-curl-run',
@@ -49,7 +49,7 @@
 		argsNet,
 		// RegExp's used later, pre-compiled here
 		dontAddExtRx = /\?|\.js\b/,
-		absUrlRx = /^\/|^[^:]+:\/\//,
+		absUrlRx = /^\/|^[^:]+:\/\/|^[A-Za-z]:[\\/]/,
 		findDotsRx = /(\.)(\.?)(?:$|\/([^\.\/]+.*)?)/g,
 		removeCommentsRx = /\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g,
 		findRValueRequiresRx = /require\s*\(\s*(["'])(.*?[^\\])\1\s*\)|[^\\]?(["'])/g,
@@ -820,7 +820,9 @@
 			if (resource === undef && def.exports) {
 				// note: exports will equal module.exports unless
 				// module.exports was reassigned inside module.
-				resource = def.module ? (def.exports = def.module.exports) : def.exports;
+				resource = def.module
+					? (def.exports = def.module['exports'])
+					: def.exports;
 			}
 			return resource;
 		},

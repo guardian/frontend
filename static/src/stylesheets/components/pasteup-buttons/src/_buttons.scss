@@ -63,15 +63,10 @@ $base-size: $gs-baseline / 2;
  *    we have to change line-height depending on resolution.
  */
 @mixin button-height($button-size) {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     height: $button-size;
     padding: 0 ($button-size / 3);
     margin-right: $button-size / 3;
     line-height: $button-size - 2px; /* [1] */
-    border-width: 1px;
-    border-style: solid;
 
     .i {
         width: $button-size;
@@ -80,13 +75,9 @@ $base-size: $gs-baseline / 2;
     }
     .i-left {
         margin-left: -($button-size / 3);
-        margin-right: 0;
-        float: left;
     }
     .i-right {
         margin-right: -($button-size / 3);
-        margin-left: 0;
-        float: right;
     }
 }
 @mixin button-colour(
@@ -107,18 +98,26 @@ $border-color: $fill-colour
         border-color: $hover-border;
     }
 }
+
+/*
+    If we want to draw a circle, output a pixel value instead,
+    as older versions of WebKit do not support % in border-radius
+*/
 .button {
     display: inline-block;
     vertical-align: top;
     width: auto;
-    @include fs-textSans(2);
     font-weight: bold;
     text-decoration: none;
+    -webkit-border-radius: 1000px; /* [1] */
+    border-radius: 1000px;         /* [1] */
+    border-width: 1px;
+    border-style: solid;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    @include fs-textSans(2);
     @include button-height($base-size * 5);
-    // If we want to draw a circle, output a pixel value instead,
-    // as older versions of WebKit do not support % in border-radius
-    -webkit-border-radius: 1000px;
-    border-radius: 1000px;
     @include button-colour(
         guss-colour(news-main-2, $pasteup-palette),
         #ffffff,
@@ -129,6 +128,15 @@ $border-color: $fill-colour
     &:focus,
     &:active {
         text-decoration: none;
+    }
+
+    .i-left {
+        margin-right: 0;
+        float: left;
+    }
+    .i-right {
+        margin-left: 0;
+        float: right;
     }
 }
 .button--primary {
@@ -154,7 +162,6 @@ $border-color: $fill-colour
         guss-colour(neutral-4, $pasteup-palette)
     );
 }
-
 .button--tone-media {
     @include button-colour(
         guss-colour(multimedia-support-4, $pasteup-palette),
@@ -235,7 +242,6 @@ $border-color: $fill-colour
         guss-colour(neutral-3, $pasteup-palette)
     );
 }
-
 .button--xlarge {
     @include button-height(44px);
 }

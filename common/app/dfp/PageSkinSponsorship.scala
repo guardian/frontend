@@ -44,6 +44,7 @@ object PageSkin {
   def isValidForNextGenPageSkin(adUnit: String): Boolean = adUnit.endsWith("/front") || adUnit.endsWith("/front/ng")
 }
 
+
 case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
 
   val (deliverableAndTestSponsorships, legacySponsorships) = sponsorships partition { sponsorship =>
@@ -51,6 +52,20 @@ case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq
   }
   val (testSponsorships, deliverableSponsorships) = deliverableAndTestSponsorships partition (_.targetsAdTest)
 }
+
+object PageSkinSponsorshipReport {
+
+  implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
+    def writes(report: PageSkinSponsorshipReport): JsValue = {
+      Json.obj(
+        "updatedTimeStamp" -> report.updatedTimeStamp,
+        "sponsorships" -> report.sponsorships
+      )
+    }
+  }
+
+}
+
 
 object PageSkinSponsorshipReportParser extends Logging {
 

@@ -39,7 +39,8 @@
     .creative__title {
         @include fs-headline(4);
     }
-    .creative__text {
+    .creative__text,
+    .creative__subtitle {
         @include fs-textSans(3);
         color: colour(neutral-2);
     }
@@ -70,6 +71,7 @@
 
     border-left: 0;
     padding-left: 0;
+    background-color: transparent;
 
     @include mq(wide) {
         right: auto;
@@ -90,17 +92,38 @@
             width: gs-span(3)-$gs-gutter;
             margin-right: $gs-gutter/2;
         }
-
-        &:before {
-            @extend %i-soulmates-trill;
-            @extend %svg-i-soulmates-trill !optional;
-            content: '';
-            display: block;
-            margin: $gs-baseline auto 0;
-        }
     }
-    .creative__title,
+    .creative__title {
+        margin: $gs-baseline/2 0 0;
+        @include f-header();
+        @include font-size(24, 24);
+        text-align: center;
+    }
+    .creative__subtitle {
+        @include f-bodyCopy();
+        @include font-size(12, 14);
+        color: colour(neutral-2);
+        text-align: center;
+        margin-top: $gs-baseline/2;
+    }
     .creative__text {
+        margin: $gs-baseline/2 0 0;
+        overflow: hidden;
+
+        .creative__text__link {
+            display: block;
+            @include clearfix;
+
+            .creative__text__img {
+                float: left;
+                margin: 0 $gs-gutter/2 $gs-baseline/2 0;
+            }
+            .lineitem__title {
+                margin-bottom: 0;
+            }
+        }
+
+        &:after,
         &:before {
             content: '';
             display: block;
@@ -109,21 +132,16 @@
             margin: 0 auto $gs-baseline;
             background-color: #000000;
         }
-    }
-    .creative__title {
-        margin: $gs-baseline 0 0;
-        @include fs-header(5);
-        text-align: center;
-    }
-    .creative__text {
-        margin: $gs-baseline 0 0;
+        &:after {
+            margin: $gs-baseline/2 auto 0;
+        }
     }
     .creative__link-wrapper {
         margin-top: $gs-baseline;
         text-align: center;
     }
     .creative__link {
-        @include fs-header(3);
+        @include fs-header(1);
         color: #000000;
     }
     .creative__link__button {
@@ -133,11 +151,10 @@
     }
     .soulmates-logo {
         height: gs-height(1);
-        margin: gs-height(2) auto 0;
+        margin: $gs-baseline auto 0;
         padding-top: $gs-baseline*3;
         background-size: 100%;
         width: auto;
-
     }
     .soulmates-logo__title {
         text-align: center;
@@ -168,7 +185,7 @@
     $expandable-colour: #f3f3f3;
 
     margin-bottom: $gs-baseline;
-    
+
     .facia-container__inner {
         border-top: 0;
         padding-top: 0;
@@ -312,7 +329,7 @@
 
         &.creative__label--hidden {
             display: none;
-        } 
+        }
     }
 }
 
@@ -351,7 +368,7 @@
     .creative--fluid250__height--tall {
         height: 250px;
     }
-    
+
     .creative--fluid250__height--medium {
         height: 200px;
     }

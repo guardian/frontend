@@ -1,5 +1,7 @@
 package model
 
+import java.net.URL
+
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.contentapi.client.model.{
   Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
@@ -447,11 +449,17 @@ case class SnapLatest(articleId: String,
                       snapElements: List[ApiElement] = Nil,
                       fields: Map[String, String],
                       snapTags: List[Tag])
-  extends Content(new ApiContentWithMeta(SnapApiContent(snapElements, Option(fields), snapTags), supporting = snapSupporting, metaData = snapMeta)) {
-
+  extends Content(new ApiContentWithMeta(
+    SnapApiContent(
+      snapElements,
+      Option(fields),
+      snapTags
+    ).copy(
+      webUrl = s"/$articleId",
+      webPublicationDateOption = Some(snapWebPublicationDate)
+    ), supporting = snapSupporting, metaData = snapMeta)) {
   override lazy val id: String = articleId
   override lazy val url: String = s"/$articleId"
-
   override lazy val tags: Seq[Tag] = snapTags
 }
 
@@ -473,6 +481,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+  lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(main).body.getElementsByClass("element-video").headOption.map { v =>
+    new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
+  }
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")

@@ -39,7 +39,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(4)) })
       }
     }
-    
+
     val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
     val jsonResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
@@ -61,7 +61,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     }
 
     val comps = competitions.filter(_.showInTeamsList).filter(_.hasTeams)
-    
+
     val htmlResponse = () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
     val jsonResponse = () => football.views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)

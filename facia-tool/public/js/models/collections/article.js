@@ -257,6 +257,8 @@ define([
 
             this.group = opts.group;
 
+            this.front = opts.group ? opts.group.front : null;
+
             this.props = asObservableProps(capiProps);
 
             this.fields = asObservableProps(capiFields);
@@ -298,20 +300,20 @@ define([
 
             this.editorsDisplay = ko.observableArray();
 
-            this.headlineLength = ko.computed(function() {
+            this.headlineLength = ko.pureComputed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
             }, this);
 
-            this.headlineLengthAlert = ko.computed(function() {
+            this.headlineLengthAlert = ko.pureComputed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length > vars.CONST.restrictedHeadlineLength;
             }, this);
 
 
-            this.webPublicationTime = ko.computed(function(){
+            this.webPublicationTime = ko.pureComputed(function(){
                 return humanTime(this.props.webPublicationDate());
             }, this);
 
-            this.viewUrl = ko.computed(function() {
+            this.viewUrl = ko.pureComputed(function() {
                 return this.fields.isLive() === 'false' ?
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
@@ -322,7 +324,9 @@ define([
                 this.meta.supporting = new Group({
                     parent: self,
                     parentType: 'Article',
-                    omitItem: self.save.bind(self)
+                    omitItem: self.save.bind(self),
+                    front: self.front,
+                    elementHasFocus: self.group.elementHasFocus.bind(self.group)
                 });
 
                 this.meta.supporting.items(_.map((opts.meta || {}).supporting, function(item) {
@@ -340,7 +344,7 @@ define([
                 this.updateEditorsDisplay();
             }
 
-            this.thumbImage = ko.computed(function () {
+            this.thumbImage = ko.pureComputed(function () {
                 var meta = this.meta,
                     fields = this.fields,
                     state = this.state;
@@ -368,7 +372,9 @@ define([
                 sourceItem: sourceItem,
                 sourceGroup: sourceItem.group,
                 targetItem: this,
-                targetGroup: this.group
+                targetGroup: this.group,
+                sourceContext: sourceItem.front,
+                targetContext: this.front
             });
         };
 
@@ -427,13 +433,13 @@ define([
 
                 revert: function() { meta(undefined); },
 
-                open:   function() { mediator.emit('ui:open', meta, self); },
+                open:   function() { mediator.emit('ui:open', meta, self, self.front); },
 
-                hasFocus: ko.computed(function() {
-                    return meta === vars.model.uiOpenElement();
+                hasFocus: ko.pureComputed(function() {
+                    return this.group.elementHasFocus(meta);
                 }, self),
 
-                displayEditor: ko.computed(function() {
+                displayEditor: ko.pureComputed(function() {
                     var display = opts['if'] ? _.some(all, function(editor) { return editor.key === opts['if'] && self.meta[editor.key](); }) : true;
 
                     display = display && (self.state.enableContentOverrides() || key === 'customKicker');
@@ -457,14 +463,14 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor['if'] === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self, self.front); });
                 },
 
-                length: ko.computed(function() {
+                length: ko.pureComputed(function() {
                     return opts.maxLength ? (meta() || field() || '').length : undefined;
                 }, self),
 
-                lengthAlert: ko.computed(function() {
+                lengthAlert: ko.pureComputed(function() {
                     return opts.maxLength && (meta() || field() || '').length > opts.maxLength;
                 }, self),
 
@@ -632,8 +638,8 @@ define([
                         item:       this.id(),
                         position:   this.id(),
                         itemMeta:   this.getMeta(),
-                        live:       vars.state.liveMode(),
-                        draft:     !vars.state.liveMode()
+                        live:       this.front.liveMode(),
+                        draft:     !this.front.liveMode()
                     }
                 });
             }
@@ -731,10 +737,11 @@ define([
                      .map(function(editor) { return editor.meta; })
                      .first()
                      .value(),
-                    this
+                    this,
+                    this.front
                 );
             } else {
-                mediator.emit('ui:open');
+                mediator.emit('ui:open', null, null, this.front);
             }
         };
 
@@ -765,7 +772,9 @@ define([
                 targetItem: this,
                 targetGroup: targetGroup,
                 isAfter: false,
-                mediaItem: source.mediaItem
+                mediaItem: source.mediaItem,
+                sourceContext: source.sourceItem.front,
+                targetContext: this.front
             });
         };
 
@@ -833,7 +842,7 @@ define([
                         formField = bindingContext.$rawData;
                         formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === 'text' && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
-                        mediator.emit('ui:open', formFields[nextIndex].meta, self);
+                        mediator.emit('ui:open', formFields[nextIndex].meta, self, self.front);
                     }
                 });
             }

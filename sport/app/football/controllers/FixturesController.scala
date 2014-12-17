@@ -68,8 +68,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
   def teamFixturesComponent(teamId: String) = Action { implicit request =>
     Competitions().findTeam(teamId).map { team =>
-      val date = LocalDate.now(Edition.defaultEdition.timezone)
-      val fixtures = new TeamFixturesList(date, Competitions(), teamId, 2)
+      val fixtures = TeamFixturesList.forTeamId(teamId)
       val page = new FootballPage(
         s"football/${team.id}/fixtures",
         "football",

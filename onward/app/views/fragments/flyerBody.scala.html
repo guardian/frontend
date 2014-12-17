@@ -5,7 +5,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 @import views.support.RenderClasses
-@import views.support.{CardStyle, Comment}
+@import views.support.{CardStyle, Comment, Default, Feature}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -27,7 +27,7 @@
     ))">
 
     <div class="flyer__container">
-        @if(content.isGallery) {
+        @if(content.isGallery || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
                 @ImgSrc.imager(trailPictureContainer, 300).map { imgSrc =>
                     <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">

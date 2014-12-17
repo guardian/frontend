@@ -1,7 +1,8 @@
 package football.model
 
+import common.Edition
 import feed.{CompetitionSupport, Competitions}
-import org.joda.time.{DateTime, LocalDate}
+import org.joda.time.{LocalDate, DateTime}
 import model.Competition
 import pa.{Round, FootballMatch}
 import implicits.Football
@@ -105,6 +106,14 @@ case class CompetitionFixturesList(date: LocalDate, competitions: CompetitionSup
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isFixture
 }
+
+object TeamFixturesList {
+  def forTeamId(teamId: String) = {
+    val date = LocalDate.now(Edition.defaultEdition.timezone)
+    TeamFixturesList(date, Competitions(), teamId, 2)
+  }
+}
+
 case class TeamFixturesList(date: LocalDate, competitions: CompetitionSupport, teamId: String, daysToDisplay: Int = 20) extends Fixtures with TeamList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture && fMatch.hasTeam(teamId)
@@ -120,6 +129,12 @@ case class CompetitionResultsList(date: LocalDate, competitions: CompetitionSupp
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isResult
 }
+
+object TeamResultsList {
+  def forTeamId(teamId: String) =
+    TeamResultsList(LocalDate.now(Edition.defaultEdition.timezone), Competitions(), teamId)
+}
+
 case class TeamResultsList(date: LocalDate, competitions: CompetitionSupport, teamId: String) extends Results with TeamList {
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =

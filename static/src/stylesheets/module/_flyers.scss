@@ -93,17 +93,18 @@
     padding: 0;
 }
 
-.flyer__header {
+.flyer .flyer__header {
     padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
+    @include box-sizing(border-box);
+    min-height: $gs-baseline * 3;
 }
 
 .flyer__standfirst {
     @include fs-headline(1);
-    padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
+    padding: $gs-baseline / 3  $gs-gutter / 2 0 $gs-gutter / 4;
     ul {
         list-style: none;
         margin-bottom: $gs-baseline / 1.5;
-        
     }
 }
 
@@ -120,7 +121,7 @@
 }
 
 .flyer__container {
-    min-height: $gs-baseline * 5;
+    padding-bottom: $gs-baseline;
     &:after {
         content: '';
         display: table;
@@ -129,16 +130,15 @@
 }
 
 .flyer--gallery {
-    .flyer__container {
-        padding-bottom: $gs-baseline * 2;
-    }
     .flyer__header {
         padding-top: $gs-baseline / 4;
     }
 }
 
 .flyer.tone-live--item .live-pulse-icon {
-    margin-bottom: 1px;
+    @include mq(mobileLandscape) {
+        margin-bottom: 1px;
+    }
 }
 
 .flyer.tone-comment--item .flyer__title:before {
@@ -154,6 +154,7 @@
     z-index: 1;
     position: absolute;
     bottom: 0;
+    margin: 0;
     right: -$gs-gutter * 1.5;
 }
 
@@ -177,61 +178,29 @@
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;
 
-    @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
-    }
-    @include mq(wide) {
-        margin-left: -1 * (gs-span(3) + $gs-gutter);
-        width: gs-span(5);
-    }
-
-    &.element--supporting {
-        @include mq($until: tablet) {
-            width: gs-span(3);
-            .flyer__standfirst {
+    .tone-comment--item {
+        .flyer__standfirst {
+            display: none;
+        }
+        .flyer__byline-img {
+            @include mq($until: tablet) {
                 display: none;
             }
-            .flyer__byline-img {
-                position: static;
-                float: right;
-                margin-top: -1.5 * $gs-baseline;
-                margin-right: -1.5 * $gs-gutter;
-            }
-        }
-        @include mq(tablet) {
-            width: gs-span(4);
-        }
-        @include mq(wide) {
-            width: gs-span(5);
         }
     }
 
-    &.element--thumbnail {
-        width: gs-span(3);
-
-        .tone-comment--item {
-            .flyer__standfirst {
-                display: none;
-            }
-            .flyer__byline-img {
-                @include mq($until: tablet) {
-                    display: none;
-                }
-                position: static;
-                float: right;
-                margin-top: -1.5 * $gs-baseline;
-                margin-right: -1.5 * $gs-gutter;
-            }
+    .tone-feature--item,
+    .tone-news--item {
+        .flyer__standfirst {
+            display: none;
         }
     }
 
     @include mq($until: mobileLandscape) {
-        &.element--supporting,
-        &.element--thumbnail {
-            width: $gs-gutter * 6.5;
-            margin-bottom: $gs-baseline / 2;
-            margin-right: $gs-gutter / 2;
-        }
+        width: $gs-gutter * 6.5;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+
         .flyer__header {
             @include fs-headline(1, true);
         }
@@ -243,7 +212,41 @@
         }
         .flyer__container {
             padding-bottom: $gs-baseline / 2;
-            @include box-sizing(border-box);
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
+    @include mq(tablet) {
+        .flyer--has-byline-pic.tone-comment--item .flyer__container {
+            padding-bottom: $gs-baseline * 11;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        &.element--supporting {
+            width: gs-span(4);
+            .tone-comment--item {
+                .flyer__standfirst {
+                    display: block;
+                }
+                .flyer__container {
+                    padding-bottom: $gs-baseline;
+                }
+            }
+        }
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+        &.element--supporting {
+            width: gs-span(5);
+            .flyer__byline-img {
+                height: $gs-baseline * 10;
+            }
         }
     }
 }
