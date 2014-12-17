@@ -4,7 +4,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/template',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'text!facia/views/button-show-more.html'
 ], function (
     bean,
