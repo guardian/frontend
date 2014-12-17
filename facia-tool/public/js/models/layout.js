@@ -4,7 +4,7 @@ define([
     'models/layout/column',
     'modules/copied-article',
     'modules/vars',
-    'utils/local-storage',
+    'utils/layout-from-url',
     'utils/parse-query-params',
     'utils/update-scrollables'
 ],function (
@@ -12,50 +12,41 @@ define([
     Column,
     copiedArticle,
     vars,
-    storage,
+    layoutFromURL,
     parseQueryParams,
     updateScrollables
 ) {
-    var memory = storage.bind(vars.CONST.layoutStorageLocation);
-
     function Layout () {
         this.initialState = {
             columns: ko.observableArray()
         };
         this.configVisible = ko.observable(false);
 
-        var defaultFrontsNumber = parseInt(parseQueryParams(window.location.search).layout, 10) || 1,
-            defaultConfig = [{
-                'type': 'latest'
-            }],
-            columns;
-
-        for (var i = 0; i < defaultFrontsNumber; i += 1) {
-            defaultConfig.push({
-                'type': 'front'
-            });
-        }
-        columns = memory.getItem(defaultConfig);
-
-        _.each(columns, function (col) {
+        _.each(layoutFromURL.get(), function (col) {
             var config = _.extend(col, {
                 'layout': this
             });
             this.initialState.columns.push(new Column(config));
         }, this);
         this.columns = ko.observableArray(this.initialState.columns().slice());
-        this.columns.subscribe(this.onColumnsChange.bind(this));
-        this.onColumnsChange();
 
         this.configVisible.subscribe(this.onConfigVisibilityChange.bind(this));
     }
+
+    Layout.prototype.locationChange = function () {
+        var allColumns = this.columns();
+        _.each(layoutFromURL.get(), function (col, position) {
+            if (allColumns[position]) {
+                allColumns[position].reset(col);
+            }
+        });
+    };
 
     Layout.prototype.toggleConfigVisible = function () {
         this.configVisible(!this.configVisible());
     };
 
     Layout.prototype.save = function () {
-        memory.setItem(this.serializable());
         _.each(this.columns(), function (column) {
             column.saveChanges();
         });
@@ -92,17 +83,6 @@ define([
     Layout.prototype.serializable = function () {
         return _.map(this.columns(), function (column) {
             return column.serializable();
-        });
-    };
-
-    Layout.prototype.onColumnsChange = function () {
-        var count = {};
-        _.each(this.columns(), function (column) {
-            var type = column.edit.type();
-            if (!count.hasOwnProperty(type)) {
-                count[type] = -1;
-            }
-            column['nth-of-type'](++count[type]);
         });
     };
 

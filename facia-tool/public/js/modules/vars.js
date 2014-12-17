@@ -82,8 +82,7 @@ define([
             height: 35
         },
 
-        internalContentPrefix: 'internal-code/content/',
-        layoutStorageLocation:  'gu.fronts.tools.layout.configuration'
+        internalContentPrefix: 'internal-code/content/'
     };
 
     function sparksBaseUrl(args) {

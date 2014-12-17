@@ -31,7 +31,10 @@ define([
             },
             soulmates: {
                 template: brandedComponentSoulmatesTpl,
-                config:   {}
+                config:   {
+                    profileImgM: config.images.commercial.brandedComponentSoulmatesM,
+                    profileImgF: config.images.commercial.brandedComponentSoulmatesF
+                }
             }
         },
         /**

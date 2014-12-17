@@ -12,7 +12,7 @@
                 <h1>Front</h1>
             <!-- /ko -->
             <!-- ko if: isLatest -->
-                <h1>Latest news</h1>
+                <h1>Latest</h1>
             <!-- /ko -->
             <!-- ko if: isOphan -->
                 <h1>Ophan</h1>
@@ -32,7 +32,7 @@
             }},
             click: setType.bind($data, 'front')"></div>
             <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
-                label: 'Latest articles',
+                label: 'Latest',
                 checked: isLatest,
                 context: $data
             }},

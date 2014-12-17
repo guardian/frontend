@@ -11,29 +11,30 @@
     "media"
   ],
   "main": "_mq.scss",
-  "author": "Guardian Media Group",
+  "author": "Guardian Media Group and contributors",
   "ignore": [
-    "test"
+    "test",
+    "**/.*"
   ],
   "licenses": [
     {
-      "type": "Apache-2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/guardian/sass-mq"
+    "url": "https://github.com/sass-mq/sass-mq"
   },
   "homepage": "https://github.com/guardian/sass-mq",
-  "version": "2.1.1",
-  "_release": "2.1.1",
+  "version": "3.0.1",
+  "_release": "3.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.1",
-    "commit": "454e5e7e0cb53661240d5546a8a701cf6415a7f8"
+    "tag": "v3.0.1",
+    "commit": "7b2f0003f8c7a48bd4689ee393151a217c1cb614"
   },
   "_source": "git://github.com/guardian/sass-mq.git",
-  "_target": "~2.1.1",
+  "_target": "~3.0.0",
   "_originalSource": "sass-mq"
 }
