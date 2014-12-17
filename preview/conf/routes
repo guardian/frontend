@@ -164,6 +164,10 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>            
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                        controllers.InteractiveController.renderInteractive(path)
 
+GET        /weather/city/:name.json                                                            controllers.WeatherController.forCity(name)
+GET        /weather/city.json                                                                  controllers.WeatherController.forRequest()
+GET        /weather/locations                                                                  controllers.LocationsController.findCity(query: String)
+
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET        /*path                                                                              controllers.ArticleController.renderArticle(path)
