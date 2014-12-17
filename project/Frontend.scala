@@ -173,7 +173,8 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     commercial,
-    onward
+    onward,
+    weather
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests")).settings(
