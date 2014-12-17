@@ -305,5 +305,5 @@ GET         /*path.json                                                         
 GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
 
 GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
-GET         /weather/city.json                                                                                       controllers.WeatherController.forRequest()
+GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
 GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
