@@ -51,9 +51,4 @@ trait MatchListController extends Controller with Requests {
       team <- Competitions().findTeam(teamId)
     } yield team
   }
-
-
-
-
-
 }

@@ -15,8 +15,6 @@ import tools.MatchListFeatureTools
       goTo("/football/fixtures") { browser =>
         import browser._
 
-
-
         val matches = $(".football-teams")
         Then("I should see upcoming fixtures over the next 3 days")
         assertFixture(matches, "Liverpool", "Man C")
@@ -42,7 +40,6 @@ import tools.MatchListFeatureTools
 
         Then("I should see the next set of upcoming matches")
         val matches = $(".football-teams")
-
         assertFixture(matches, "Swansea", "Reading")
       }
     }
