@@ -303,21 +303,10 @@ define([
 
     function initPlayer() {
 
-        videojs.options.techOrder = playerPriority;
-
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
-        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-
-            // clone the video options and add 'vpaid' to them.
-            videojs.options.techOrder = videojs.options.techOrder.slice(0);
-            videojs.options.techOrder.unshift('vpaid');
-
-            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
-        }
-
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
@@ -329,18 +318,30 @@ define([
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',
                 endSlateUri = $el.attr('data-end-slate'),
                 embedPath = $el.attr('data-embed-path'),
-                player = createVideoPlayer(el, {
-                    controls: true,
-                    autoplay: false,
-                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
-                    plugins: {
-                        embed: {
-                            embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
-                            location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
-                        }
-                    }
-                }),
+                player,
                 mouseMoveIdle;
+
+            videojs.options.techOrder = playerPriority(el);
+
+            if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
+
+                // clone the video options and add 'vpaid' to them.
+                videojs.options.techOrder = ['vpaid'].concat(videojs.options.techOrder);
+
+                videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
+            }
+
+            player = createVideoPlayer(el, {
+                controls: true,
+                autoplay: false,
+                preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                plugins: {
+                    embed: {
+                        embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                        location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                    }
+                }
+            });
 
             player.guMediaType = mediaType;
 
