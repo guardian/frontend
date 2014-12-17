@@ -71,6 +71,7 @@
 
     border-left: 0;
     padding-left: 0;
+    background-color: transparent;
 
     @include mq(wide) {
         right: auto;
@@ -94,12 +95,12 @@
     }
     .creative__title {
         margin: $gs-baseline/2 0 0;
-        @include fs-header(5);
+        @include f-header();
         @include font-size(24, 24);
         text-align: center;
     }
     .creative__subtitle {
-        @include fs-bodyCopy(1);
+        @include f-bodyCopy();
         @include font-size(12, 14);
         color: colour(neutral-2);
         text-align: center;
@@ -117,19 +118,8 @@
                 float: left;
                 margin: 0 $gs-gutter/2 $gs-baseline/2 0;
             }
-            .creative__text__title {
-                @include fs-header(1);
-                color: colour(neutral-1);
-                font-size: 14px;
-                text-overflow: ellipsis;
-                white-space: pre;
-                overflow: hidden;
+            .lineitem__title {
                 margin-bottom: 0;
-            }
-            .creative__text__meta {
-                color: colour(neutral-2);
-                @include fs-textSans(1);
-                margin-bottom: $gs-baseline/2;
             }
         }
 
@@ -161,11 +151,10 @@
     }
     .soulmates-logo {
         height: gs-height(1);
-        margin: gs-height(1)/2 auto 0;
+        margin: $gs-baseline auto 0;
         padding-top: $gs-baseline*3;
         background-size: 100%;
         width: auto;
-
     }
     .soulmates-logo__title {
         text-align: center;
