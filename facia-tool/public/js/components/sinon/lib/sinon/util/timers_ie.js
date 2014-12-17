@@ -1,4 +1,3 @@
-/*global sinon, setTimeout, setInterval, clearTimeout, clearInterval, Date*/
 /**
  * Helps IE run the fake timers. By defining global functions, IE allows
  * them to be overwritten at a later point. If these are not defined like
@@ -14,6 +13,8 @@
  */
 function setTimeout() {}
 function clearTimeout() {}
+function setImmediate() {}
+function clearImmediate() {}
 function setInterval() {}
 function clearInterval() {}
 function Date() {}
@@ -22,6 +23,8 @@ function Date() {}
 // should be true. Hackish, I know, but it works.
 setTimeout = sinon.timers.setTimeout;
 clearTimeout = sinon.timers.clearTimeout;
+setImmediate = sinon.timers.setImmediate;
+clearImmediate = sinon.timers.clearImmediate;
 setInterval = sinon.timers.setInterval;
 clearInterval = sinon.timers.clearInterval;
 Date = sinon.timers.Date;

@@ -11,120 +11,14 @@
         <i class="icon-remove" data-bind="click: clearAlerts"></i>
     </div>
 
-    <div class="front-selector">
-        <select data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
-    </div>
+    <div data-bind="template: {
+        name: 'vertical_layout',
+        foreach: layout.columns,
+        afterAdd: layout.addNewColumn
+    }"></div>
 
-    <div class="left-col">
-        <div class="modes" data-bind="
-            css: {
-                'live-mode': !latestArticles.showingDrafts(),
-                'draft-mode': latestArticles.showingDrafts
-            }">
-            <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
-                click: latestArticles.showDrafts,
-                css: {active: latestArticles.showingDrafts}">Draft content</a
-           ><!-- /ko --><a class="live-mode" data-bind="
-                click: latestArticles.showLive,
-                css: {active: !latestArticles.showingDrafts()}">Live content</a>
-        </div>
 
-        <div class="col__inner">
-            <div class="title title--clipboard">clipboard</div>
-            <div class="clipboard" data-bind="with: clipboard">
-                <div class="droppable" data-bind="
-                    makeDropabble: true,
-                    click: pasteItem,
-                    css: {
-                        underDrag: underDrag() && !underControlDrag(),
-                        underControlDrag: underDrag() && underControlDrag()
-                    },
-                    template: {name: 'template_article', foreach: items}"></div>
-            </div>
-        </div>
-
-        <div class="col__inner scrollable">
-
-            <div data-bind="with: latestArticles">
-                <div class="search-tools">
-                    <a><i class="icon-refresh" data-bind="click: refresh"></i></a>
-                    <a><i class="icon-remove" data-bind="click: reset"></i></a>
-                </div>
-
-                <div class="title" data-bind="text: title"></div>
-
-                <div class="search-form">
-                    <div class="search-term">
-                        <input type="text" placeholder="Search for..." data-bind='
-                            event: {keyup: search, afterpaste: search},
-                            value: term,
-                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
-                    </div>
-
-                    <div class="autocompleter">
-                        <select data-bind="
-                            event: { change: clearFilter },
-                            options: filterTypes,
-                            optionsText: 'display',
-                            value: filterType"></select>
-
-                        <input type="text" placeholder="filter" data-bind='
-                            attr: {placeholder: filterType().placeholder},
-                            event: {keyup: autoComplete, afterpaste: autoComplete, change: filterChange},
-                            value: filter,
-                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
-
-                        <div class="suggestions" data-bind="foreach: suggestions">
-                            <!-- ko if: $data._alert -->
-                            <div class="suggestion" data-bind="text: _alert"></div>
-                            <!-- /ko -->
-                            <!-- ko if: $data.id -->
-                            <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
-                            <!-- /ko -->
-                        </div>
-                    </div>
-                </div>
-
-                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
-
-                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}"></div>
-
-                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
-        <div class="modes" data-bind="
-            css: {
-                'live-mode': $root.liveMode,
-                'draft-mode': !$root.liveMode()
-            }">
-            <a class="draft-mode" data-bind="
-                click: setModeDraft,
-                css: {active: !liveMode()}">Draft front</a
-           ><a class="live-mode" data-bind="
-                click: setModeLive,
-                css: {active: liveMode}">Live front</a>
-            <a class="preview" target="preview" data-bind="
-                attr: { href: previewUrl },
-                text: liveMode() ? 'View live' : 'Preview draft',
-                visible: front"></a>
-
-            <span class="front-age" data-bind="visible: frontAge">
-               refreshed <span data-bind="text: frontAge"></span>
-                <!-- ko if: alertFrontIsStale -->
-                    <span class="tools">
-                        <a data-bind="click: pressLiveFront">Refresh it</a>
-                    </span>
-                <!-- /ko -->
-            </span>
-        </div>
-
-        <div class="col__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
-    </div>
-
-    <!-- templates -->
+    @templates.vertical_layout()
 
     <script type="text/html" id="template_editor">
         <!-- ko if: displayEditor -->
@@ -175,75 +69,6 @@
         </span>
     </script>
 
-    <script type="text/html" id="template_collection">
-        <div class="collection">
-            <div class="list-header" data-bind="
-                css: {collapsed: state.collapsed() || configMeta.uneditable()}">
-
-                <span class="tools" data-bind="visible: state.hasDraft">
-                    <a class="draft-warning" data-bind="
-                        click: $root.setModeDraft,
-                        visible: $root.liveMode">
-                        <span class="tool draft-warning">Show unlaunched changes</a>
-
-                    <span data-bind="visible: !$root.liveMode()">
-                        <a class="tool draft-publish" data-bind="
-                            click: publishDraft">Launch</a>
-
-                        <a class="tool draft-discard" data-bind="
-                            click: discardDraft">Discard</a>
-                    </span >
-                </span>
-
-                <span class="title" data-bind="
-                    text: configMeta.displayName() || collectionMeta.displayName() || '(no title)'"></span>
-
-                <span class="count" data-bind="if: !isPending() && !configMeta.uneditable()">
-                    (<span data-bind="
-                        text: state.count() ? state.count() : 'empty',
-                        css: {'non-zero':  state.count}"></span>)
-                </span>
-
-                <span class="count" data-bind="if: isPending() && !configMeta.uneditable()">
-                    (<span class="non-zero">updating...</span>)
-                </span>
-
-                <span data-bind="if: alsoOn.length">
-                    also on
-                    <span data-bind="foreach: alsoOn"
-                    ><span data-bind="if: $index">, </span
-                    ><a class="list-header__also-on" data-bind="
-                            click: $root.setFront,
-                            text: $data"></a
-                    ></span>
-                </span>
-
-                <a class="list-header__collapser" data-bind="click: toggleCollapsed">
-                    <i data-bind="css: {
-                        'icon-chevron-down': !state.collapsed(),
-                        'icon-chevron-up'  :  state.collapsed }"></i></a>
-
-                <span class="list-header__timings" data-bind="
-                    css: {'has-concurrent-user': state.hasConcurrentEdits}">
-                    <!-- ko if: state.timeAgo -->
-                        <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
-                        by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
-                    <!-- /ko -->
-                    <a data-bind="
-                        click: reset,
-                        visible: state.hasConcurrentEdits,
-                        ">Show edits</a>
-                </span>
-            </div>
-
-            <!-- ko if: !state.collapsed() -->
-                <div data-bind="
-                    css: {'pending': isPending()},
-                    template: {name: 'template_groups', foreach: groups}"></div>
-            <!-- /ko -->
-        </div>
-    </script>
-
     <script type="text/html" id="template_groups">
         <!-- ko if: name -->
             <div class="group-name" data-bind="text: name"></div>
@@ -256,20 +81,6 @@
                 underControlDrag: underDrag() && underControlDrag()
             },
             template: {name: 'template_article', foreach: items}"></div>
-    </script>
-
-    <script type="text/html" id="template_search_controls">
-        <div class="finder__controls">
-            Page <span data-bind="text: page"></span>
-            <!-- ko if: showNext() -->
-                <a data-bind="click: pageNext">next</a>
-            <!-- /ko -->
-            <!-- ko ifnot: showNext() -->
-                <span>last</span>
-            <!-- /ko -->
-            <a data-bind="click: pagePrev, visible: showPrev()">prev</a>
-            <a data-bind="click: refresh,  visible: showTop()">top</a>
-        </div>
     </script>
 
     <script type="text/html" id="template_article">

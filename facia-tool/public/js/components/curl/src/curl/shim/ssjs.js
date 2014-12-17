@@ -11,6 +11,7 @@
  * TODO: support environments that implement XMLHttpRequest such as Wakanda
  */
 define['amd'].ssjs = true;
+if (typeof module !== 'undefined') module.exports = curl;
 var require, load;
 (function (freeRequire, globalLoad) {
 define(/*=='curl/shim/ssjs',==*/ ['curl/_privileged', './_fetchText'], function (priv, _fetchText) {

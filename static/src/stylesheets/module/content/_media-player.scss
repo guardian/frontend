@@ -801,3 +801,15 @@ $vjs-progress-inset-bottom: 4px;
     color: colour(neutral-7);
     @include fs-textSans(1);
 }
+
+/* Tech overrides
+   ========================================================================== */
+.vjs-tech-flash,
+.vjs-tech-vpaid {
+    .vjs-poster,
+    .vjs-big-play-button,
+    .vjs-fullscreen-clickbox,
+    .vast-blocker {
+        display: none !important;
+    }
+}

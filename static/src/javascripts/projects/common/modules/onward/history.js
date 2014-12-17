@@ -127,50 +127,31 @@ define([
     }
 
     function getPopular() {
-        if (!popularCache) {
-            popularCache = _.chain(getSummary().tags)
-                .map(function (nameAndFreqs, tid) {
-                    var freqs = nameAndFreqs[1];
+        popularCache = popularCache || _.chain(getSummary().tags)
+            .map(function (nameAndFreqs, tid) {
+                var freqs = nameAndFreqs[1];
 
-                    if (freqs.length >= 3) {
-                        return {
-                            keep: [tid, nameAndFreqs[0]],
-                            rank: tallyFreqs(freqs) / (10 + habitFactor(freqs))
-                        };
-                    }
-                })
-                .compact()
-                .sortBy('rank')
-                .last(100)
-                .reverse()
-                .pluck('keep')
-                .value();
-        }
+                if (freqs.length > 1) {
+                    return {
+                        keep: [tid, nameAndFreqs[0]],
+                        rank: tally(freqs)
+                    };
+                }
+            })
+            .compact()
+            .sortBy('rank')
+            .last(100)
+            .reverse()
+            .pluck('keep')
+            .value();
+
         return popularCache;
     }
 
-    function tallyFreqs(freqs) {
+    function tally(freqs) {
         return _.reduce(freqs, function (tally, freq) {
-            return tally + dayScore(freq[1]) * (summaryPeriodDays - freq[0]);
+            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
         }, 0);
-    }
-
-    function dayScore(n) {
-        return 1 + Math.min(n, 20) * 0.2;
-    }
-
-    function habitFactor(freqs) {
-        var len = freqs.length;
-
-        return len < 3 ? 0 : _.reduce(deltas(deltas(_.pluck(freqs, 0))), function (sum, n) {
-            return sum + n;
-        }, 0) / (len - 2);
-    }
-
-    function deltas(ints) {
-        return _.map(_.initial(_.zip(ints, _.rest(ints))), function (pair) {
-            return pair[1] - pair[0];
-        });
     }
 
     function firstCsv(str) {
@@ -256,7 +237,7 @@ define([
         if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
 
             $('.js-navigation-header .js-top-navigation a').each(function (item) {
-                topNavItems[collapseTag($(item).attr('href'))] = true;
+                topNavItems[collapseTag(urlPath($(item).attr('href')))] = true;
             });
 
             tagsHtml = _.chain(getPopular())
@@ -279,6 +260,12 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+    }
+
+    function urlPath(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        return a.pathname;
     }
 
     return {

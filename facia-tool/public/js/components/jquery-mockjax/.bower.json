@@ -21,6 +21,6 @@
     "commit": "e4969fd891a50f259e65a2f61a646038d773f2c1"
   },
   "_source": "git://github.com/jakerella/jquery-mockjax.git",
-  "_target": "~1.6.1",
+  "_target": "1.6.1",
   "_originalSource": "jquery-mockjax"
 }

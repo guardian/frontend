@@ -63,6 +63,8 @@ object FixedContainers {
   val slowIndexPageMpuV = slices(TTT, TTMpu)
   val slowIndexPageMpuVII = slices(HalfHalf2, TTT, TTMpu)
 
+  val footballTeamFixtures = slices(TTT)
+
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
   val all: Map[String, ContainerDefinition] = Map(

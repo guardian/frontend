@@ -2,6 +2,6 @@
 .DS_Store
 .sass-cache
 
-demo/demo.css
+demo/*.css
 docs
 node_modules

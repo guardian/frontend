@@ -303,6 +303,14 @@ object Switches {
   )
 
   // Features
+  val FixturesAndResultsContainerSwitch = Switch(
+    "Feature",
+    "fixtures-and-results-container",
+    "Fixtures and results container on football tag pages",
+    safeState = On,
+    sellByDate = never
+  )
+
   val HardcodedSectionTagLookUp = Switch(
     "Feature",
     "hardcoded-section-tag-lookup",
@@ -315,9 +323,9 @@ object Switches {
     "If switched on then the preview server will poll until the latest content is indexed.",
     safeState = On, sellByDate = new LocalDate(2015, 1, 15))
 
-  val PrioritiseFlashVideoPlayer = Switch("Feature", "prioritise-flash-video-player",
-    "If switched on then the Flash player will be preferred over the html5 player.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31))
+  val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
+    "If switched on then will will infer the video player tech priority based on the video source codec",
+    safeState = On, sellByDate = new LocalDate(2015, 1, 31))
 
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
@@ -436,6 +444,11 @@ object Switches {
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
+    "If this switch is on facia tool will display more options for panes",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",

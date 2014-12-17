@@ -71,6 +71,7 @@ define([
         latestSnapPrefix:      'Latest from ',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+        ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
@@ -95,8 +96,6 @@ define([
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
-            liveMode: ko.observable(false),
-            pending: ko.observable(false),
             openFronts: {}
         }
     };

@@ -8,7 +8,7 @@ define([
 
     /**
      * @param {Object} match
-     * @param {string} whoscalling (url)
+     * @param {string} whosCalling (url)
      */
     var MatchInfo = function (match, whosCalling) {
         this.endpoint += (match.id ? match.id : [match.date].concat(match.teams).join('/')) +
