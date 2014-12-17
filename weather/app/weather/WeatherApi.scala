@@ -24,13 +24,6 @@ object WeatherApi extends ExecutionContexts {
   private def weatherUrlForCityId(cityId: CityId): String =
     s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
-  def getCityIdForCity(city: City): Future[Option[CityId]] =
-    for (cityJson <- WS.url(weatherUrlForCity(city)).get().map(_.json))
-    yield {
-      val cities = cityJson.asOpt[List[JsValue]].getOrElse(Nil)
-      cities.map(j => (j \ "Key").as[String]).headOption.map(CityId(_))
-    }
-
   def searchForLocations(query: String) = {
     WS.url(weatherUrlForCity(City(query))).get().map({ r =>
       Json.fromJson[Seq[LocationResponse]](r.json).get

@@ -22,8 +22,9 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
 #Weather
-GET        /weather/city/:name.json                                                                                       controllers.WeatherController.forCity(name)
-GET        /weather/city.json                                                                                             controllers.WeatherController.forRequest()
+GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
+GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
+GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -303,7 +304,3 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>        
 # Articles
 GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
-
-GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
-GET         /weather/city.json                                                                                       controllers.WeatherController.forRequest()
-GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
