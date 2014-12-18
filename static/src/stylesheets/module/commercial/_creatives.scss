@@ -362,6 +362,10 @@
             display: none;
         }
     }
+    
+    .top-banner-ad-container--mobile & {
+        padding-bottom: $gs-baseline*1.5;
+    }
 }
 
 .creative--fluid250 {
