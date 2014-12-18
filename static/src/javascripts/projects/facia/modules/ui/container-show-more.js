@@ -37,7 +37,7 @@ define([
 
             $button = $.create(template(showMoreBtn, {
                 type: buttonText[state],
-                dataLink: buttonText['displayed']
+                dataLink: buttonText.displayed
             }));
 
             if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
