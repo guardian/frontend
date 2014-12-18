@@ -147,6 +147,7 @@ define([
                 $input.setSelectionRange(0, $input.value.length);
             } else {
                 $location.removeClass('is-editing');
+                searchTool.clear();
             }
         },
 
