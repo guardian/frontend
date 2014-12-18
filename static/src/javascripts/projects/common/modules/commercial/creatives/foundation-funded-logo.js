@@ -21,11 +21,8 @@ define([
     var Template = function ($adSlot, params) {
         this.$adSlot       = $adSlot;
         this.params        = params;
-        this.params.header = config.page.isFront ?
-            'Supported by:' :
-            'Guardian ' + config.page.sectionName.replace(/(^|\s)[a-z]/g, function (m) {
-                return m.toUpperCase();
-            }) + ' is supported by:';
+        this.params.header = (!config.page.isFront && config.page.sponsorshipTag) ?
+            'Guardian ' + config.page.sponsorshipTag + ' is supported by:' : 'Supported by:';
     };
 
     Template.prototype.create = function () {

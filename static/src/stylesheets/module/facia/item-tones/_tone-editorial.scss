@@ -5,7 +5,8 @@
 
     &,
     .flyer__link,
-    .fc-sublink__title {
+    .fc-sublink__title,
+    .flyer__standfirst {
         color: $c-headline;
     }
 
@@ -28,8 +29,12 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__standfirst,
-    .flyer__standfirst {
+    .flyer__read-more-text {
         color: colour(editorial-accent);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(editorial-accent);
     }
 
     .fc-item__meta {

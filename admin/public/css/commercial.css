@@ -33,6 +33,14 @@
     padding-bottom: 20px;
 }
 
+.line-item {
+    padding-bottom: 40px;
+}
+
+.sub-line-item {
+    padding-top: 10px;
+}
+
 th, td {
     padding: 10px 60px 20px 10px;
 }

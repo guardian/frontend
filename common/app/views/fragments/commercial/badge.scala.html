@@ -40,11 +40,15 @@
                                 Sponsored by:
                             }
                         } else {
-                          @if(content.isAdvertisementFeature) {
-                            Brought to you by:
-                          } else {
-                            Guardian @content.sectionLabelName.split(" ").map(_.capitalize).mkString(" ") is supported by:
-                          }
+                            @if(content.isAdvertisementFeature) {
+                                Brought to you by:
+                            } else {
+                                @content.sponsorshipTag.map { tag =>
+                                    Guardian @tag.name is supported by:
+                                }.getOrElse {
+                                    Supported by:
+                                }
+                            }
                         }
                     </h3>
                     @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
