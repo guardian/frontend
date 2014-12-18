@@ -194,11 +194,11 @@ define([
 
             // After first run override function to just update data
             self.render = function (weatherData, city) {
-                $('.js-weather-input', $weather).val(city);
                 $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
 
                 var $weatherIcon = $('.js-weather-icon', $weather);
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g, weatherData.WeatherIcon));
+                self.toggleControls(false);
             };
         }
     };

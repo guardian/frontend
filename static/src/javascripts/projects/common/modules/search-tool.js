@@ -46,8 +46,6 @@ define([
 
             handleClick: function (e) {
                 e.preventDefault();
-
-                this.setInputValue(e.target.textContent);
                 this.pushData();
             },
 
@@ -58,6 +56,7 @@ define([
                 }
 
                 mediator.emit('autocomplete:fetch', data);
+                this.setInputValue();
 
                 // Clear all after timeout because of the ophan tracking we can't remove everything straight away
                 setTimeout(this.destroy.bind(this), 50);
@@ -146,7 +145,8 @@ define([
             },
 
             setInputValue: function (value) {
-                var inputValue = value || $('.active', $list).text();
+                var inputValue = value || $('.active', $list).attr('data-weather-city');
+                console.log(inputValue);
 
                 $input.val(inputValue);
             },
@@ -176,7 +176,7 @@ define([
 
             destroy: function () {
                 this.clear();
-                $input.val('');
+                // $input.val('');
             }
         };
     }
