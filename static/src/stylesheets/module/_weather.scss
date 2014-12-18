@@ -42,9 +42,8 @@
 
 .weather__location {
     margin: 0;
-    overflow: auto;
+    overflow: inherit;
     display: none;
-    text-align: right;
     padding-bottom: $gs-baseline / 2;
 
     @include mq(tablet) {
@@ -61,9 +60,8 @@
         font-weight: bold;
         display: none;
         padding: 0;
-        position: absolute;
-        left: 0;
-        text-align: left;
+        position: relative;
+        z-index: 4;
 
         @include mq(tablet) {
             display: inline-block;
@@ -78,10 +76,6 @@
 
     .search-tool__btn {
         display: none;
-    }
-
-    .search-tool__item {
-        text-align: left;
     }
 
     &.is-editing {
@@ -110,7 +104,6 @@
     padding-top: 1px;
     margin-bottom: -1px;
 }
-
 // .weather__gps-icon,
 .weather__search-icon,
 .weather__close-icon {
@@ -120,13 +113,16 @@
 
 // .weather__get-location,
 .weather__close-location {
-    position: relative;
-    margin: 0 $gs-gutter / 4;
     display: none;
+    z-index: 5;
 }
 
-.weather__close-location {
-    margin-right: 0;
+// .weather__get-location,
+.weather__close-location,
+.weather__edit-location {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .weather__forecasts {
