@@ -3,6 +3,7 @@ define([
     'bonzo',
     'qwery',
     'raven',
+    'common/modules/userPrefs',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -13,6 +14,7 @@ define([
     bonzo,
     qwery,
     raven,
+    userPrefs,
     $,
     ajax,
     config,
@@ -28,7 +30,7 @@ define([
 
         load: function () {
 
-            if (!config.switches.webFonts || qwery('.webfonts').length) {
+            if (!config.switches.webFonts || qwery('.webfonts').length || userPrefs.isOff('font-family')) {
                 return false;
             }
 
