@@ -36,7 +36,7 @@ define([
             },
 
             bindEvents: function () {
-                bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
+                bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
                 bean.on(document.body, 'click', $list, this.handleClick.bind(this));
             },
 

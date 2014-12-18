@@ -194,7 +194,7 @@ define([
 
             // After first run override function to just update data
             self.render = function (weatherData, city) {
-                $('.js-weather-city', $weather).text(city);
+                $('.js-weather-input', $weather).val(city);
                 $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
 
                 var $weatherIcon = $('.js-weather-icon', $weather);
