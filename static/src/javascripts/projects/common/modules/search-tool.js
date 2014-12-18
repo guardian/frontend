@@ -52,7 +52,12 @@ define([
             },
 
             pushData: function () {
-                mediator.emit('autocomplete:fetch', [$input.val()]);
+                var data = {
+                    'id' : $('.active', $list).attr('data-weather-id'),
+                    'city' : $('.active', $list).attr('data-weather-city')
+                }
+
+                mediator.emit('autocomplete:fetch', data);
 
                 // Clear all after timeout because of the ophan tracking we can't remove everything straight away
                 setTimeout(this.destroy.bind(this), 50);
@@ -79,7 +84,7 @@ define([
                     type: 'json',
                     crossOrigin: true
                 }).then(function (positions) {
-                    this.renderList(positions, 3);
+                    this.renderList(positions, 5);
                     oldQuery = newQuery;
                 }.bind(this));
             },
@@ -156,8 +161,8 @@ define([
                     li.className = 'search-tool__item';
                     li.innerHTML = '<a role="button" href="#' + item.id + '"' +
                         ' id="' + index + 'sti" class="search-tool__link"' +
-                        ' data-link-name="search-tool">' + item.city +
-                        ' <span class="search-tool__meta">' + item.country + '</span></a>';
+                        ' data-link-name="search-tool" data-weather-id="' + item.id + '" data-weather-city="' + item.city + '">' +
+                        item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
 
                     docFragment.appendChild(li);
                 });

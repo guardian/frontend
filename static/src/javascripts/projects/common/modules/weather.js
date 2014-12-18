@@ -9,7 +9,6 @@ define([
     'common/utils/template',
     'common/modules/search-tool',
     'common/modules/userPrefs',
-    'common/modules/ui/toggles',
     'text!common/views/weather.html'
 ], function (
     bean,
@@ -22,14 +21,12 @@ define([
     template,
     SearchTool,
     userPrefs,
-    Toggles,
     weatherTemplate
     ) {
 
     var self       = null,
         $weather   = null,
         $holder    = null,
-        toggles    = null,
         searchTool = null,
         prefName   = 'weather-location',
         getGeoStates = {
@@ -78,7 +75,7 @@ define([
         getUserLocation: function () {
             var prefs = userPrefs.get(prefName);
 
-            if (prefs && prefs.location) {
+            if (prefs && prefs.id) {
                 return prefs;
             }
         },
@@ -104,7 +101,7 @@ define([
 
             if (typeof location.id === 'string') {
                 url += '/' + location.id + '.json';
-                this.saveUserLocation(location);
+                self.saveUserLocation(location);
             }
 
             try {
@@ -128,7 +125,7 @@ define([
                 self.toggleControls(false);
             });
             // bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
-            mediator.on('autocomplete:fetch', this.getCityCoordinates);
+            mediator.on('autocomplete:fetch', this.fetchData);
         },
 
         unbindEvents: function () {
@@ -188,25 +185,20 @@ define([
 
             $weather.appendTo($holder);
 
-            toggles = new Toggles();
-            toggles.init($weather);
-
             self.bindEvents();
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
-                apiUrl: 'weather/locations?query='
+                apiUrl: '/weather/locations?query='
             });
             searchTool.init();
 
-            // After first run override funtion to just update data
+            // After first run override function to just update data
             self.render = function (weatherData, city) {
                 $('.js-weather-city', $weather).text(city);
                 $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
 
                 var $weatherIcon = $('.js-weather-icon', $weather);
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g, weatherData.WeatherIcon));
-
-                bean.fire($('.js-toggle-ready', $weather)[0], 'click');
             };
         }
     };
