@@ -364,7 +364,10 @@
     }
     
     .top-banner-ad-container--mobile & {
+        height: auto;
+        padding: 0;
         padding-bottom: $gs-baseline*1.5;
+        
     }
 }
 
