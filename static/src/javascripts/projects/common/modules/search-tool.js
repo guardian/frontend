@@ -146,7 +146,6 @@ define([
 
             setInputValue: function (value) {
                 var inputValue = value || $('.active', $list).attr('data-weather-city');
-                console.log(inputValue);
 
                 $input.val(inputValue);
             },
