@@ -674,12 +674,12 @@ h1 {
     float: right;
 }
 
-.collection {
+collection-widget .collection {
     padding: 0 0 5px 0;
     border-top: 1px solid #CCCCCC;
 }
 
-.collection:first-child {
+collection-widget:first-child .collection {
     border-top: 0;
     box-shadow: none;
 }
@@ -1570,6 +1570,8 @@ button {
 }
 
 .cnf-form .type-picker {
+    display: flex;
+    flex-wrap: wrap;
     position: absolute;
     top: 25px;
     left: 0;
@@ -1603,6 +1605,11 @@ button {
 .cnf-form .type-option--highlight {
     color: #FFFFFF;
     background: #2ea3eb;
+}
+
+.cnf-form .type-picker .type-option {
+    flex: 0 0 24%;
+    flex-wrap: wrap;
 }
 
 .cnf-form .type-option-chosen {
