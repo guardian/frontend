@@ -91,10 +91,20 @@
                 }
             }
 
-            try {
-                loadFontsFromStorage();
-            } catch (e) {
-                loadFontsAsynchronously();
+            @* ability to turn off fonts with `#fonts-off` *@
+            var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
+            if (window.location.hash === '#fonts-off') {
+                document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
+            } else if (window.location.hash === '#fonts-on') {
+                document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
+            }
+
+            if (document.cookie.indexOf('GU_fonts=off') === -1) {
+                try {
+                    loadFontsFromStorage();
+                } catch (e) {
+                    loadFontsAsynchronously();
+                }
             }
 
         }

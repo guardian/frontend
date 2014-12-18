@@ -3,10 +3,10 @@ define([
     'bonzo',
     'qwery',
     'raven',
-    'common/modules/userPrefs',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage'
@@ -14,10 +14,10 @@ define([
     bonzo,
     qwery,
     raven,
-    userPrefs,
     $,
     ajax,
     config,
+    cookies,
     detect,
     mediator,
     storage
@@ -30,7 +30,7 @@ define([
 
         load: function () {
 
-            if (!config.switches.webFonts || qwery('.webfonts').length || userPrefs.isOff('font-family')) {
+            if (!config.switches.webFonts || qwery('.webfonts').length || cookies.get('GU_fonts') === 'off') {
                 return false;
             }
 
