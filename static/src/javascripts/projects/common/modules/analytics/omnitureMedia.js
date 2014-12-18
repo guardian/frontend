@@ -165,9 +165,9 @@ define([
             player.one('video:content:play', this.onContentPlay.bind(this));
             player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));
 
-            player.one('video:play:25', this.sendSegment.bind(this, 'event21'));
-            player.one('video:play:50', this.sendSegment.bind(this, 'event22'));
-            player.one('video:play:75', this.sendSegment.bind(this, 'event23'));
+            player.one('video:play:25', this.sendNamedEvent.bind(this, 'video:25'));
+            player.one('video:play:50', this.sendNamedEvent.bind(this, 'video:50'));
+            player.one('video:play:75', this.sendNamedEvent.bind(this, 'video:75'));
             player.one('video:content:end', this.sendNamedEvent.bind(this, 'video:end'));
             player.one('audio:content:end', this.sendNamedEvent.bind(this, 'audio:end'));
         };
