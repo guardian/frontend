@@ -17,6 +17,7 @@
             poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id"
             data-end-slate="@player.endSlatePath" data-block-video-ads="@player.blockVideoAds" data-embeddable="@player.video.embeddable"
             @player.embedPath.map{ p => data-embed-path="@p" }
+            preload="auto"
         >
 
             @player.video.encodings.map { encoding =>
