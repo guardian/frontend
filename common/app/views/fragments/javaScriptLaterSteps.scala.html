@@ -69,11 +69,9 @@
             }
 
             function loadFontsFromStorage() {
-                var storedFontSwitch = localStorage['gu.prefs.switch.font-family'],
-                    storedFontFormat = localStorage['gu.fonts.format'],
-                    showFonts        = storedFontSwitch ? JSON.parse(storedFontSwitch).value : true;
+                var storedFontFormat = localStorage['gu.fonts.format'];
 
-                if (showFonts && storedFontFormat) {
+                if (storedFontFormat) {
                     var fonts      = document.querySelectorAll('.webfont'),
                         fontFormat = JSON.parse(storedFontFormat).value;
 
