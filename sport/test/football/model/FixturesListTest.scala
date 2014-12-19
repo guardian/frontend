@@ -123,13 +123,6 @@ import test.ConfiguredTestSuite
           val expectedDate = today.plusDays(11) // see test data
           fixtures.nextPage.value should equal("/football/fixtures/more/" + expectedDate.toString("yyyy/MMM/dd"))
         }
-
-        //TODO remove
-        "should find correct value for 'prevPage'" in {
-          val expectedDate = today.plusDays(1) // see test data
-          fixtures.previousPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
-        }
-      }
     }
   }
 
