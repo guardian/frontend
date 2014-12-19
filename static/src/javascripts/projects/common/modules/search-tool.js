@@ -46,6 +46,9 @@ define([
 
             handleClick: function (e) {
                 e.preventDefault();
+                e.stopPropagation();
+
+                $(e.target).addClass('active');
                 this.pushData();
             },
 
@@ -178,7 +181,6 @@ define([
 
             destroy: function () {
                 this.clear();
-                // $input.val('');
             }
         };
     }

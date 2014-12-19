@@ -119,7 +119,7 @@ define([
 
             if (typeof location.id === 'string') {
                 url += '/' + location.id + '.json';
-                this.saveUserLocation(location);
+                self.saveUserLocation(location);
             }
 
             try {
