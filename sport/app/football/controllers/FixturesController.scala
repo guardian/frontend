@@ -11,6 +11,9 @@ import play.api.mvc.{Action, AnyContent}
 
 object FixturesController extends MatchListController with CompetitionFixtureFilters {
 
+  private def fixtures(date: LocalDate) = new FixturesList(date, Competitions())
+  private val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
+
   def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
   def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderAllFixtures(createDate(year, month, day))
@@ -19,10 +22,17 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
 
+  def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
+    renderMoreFixtures(createDate(year, month, day))
+
+  def moreFixturesForJson(year: String, month: String, day: String) = moreFixturesFor(year, month, day)
+
   private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
-    val fixtures = new FixturesList(date, Competitions())
-    val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
-    renderMatchList(page, fixtures, filters)
+    renderMatchList(page, fixtures(date), filters)
+  }
+
+  private def renderMoreFixtures(date: LocalDate) = Action { implicit request =>
+    renderMoreMatches(page, fixtures(date), filters)
   }
 
   def tagFixturesJson(tag: String) = tagFixtures(tag)
