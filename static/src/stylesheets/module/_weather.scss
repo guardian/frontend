@@ -79,7 +79,7 @@
     }
 
     &.is-editing {
-        border-bottom: none;
+        border-bottom: 0;
 
         .search-tool__input {
             border-bottom: 1px solid colour(neutral-3);
@@ -95,7 +95,7 @@
         }
 
         & ~ .weather__forecasts {
-            opacity: 0.5;
+            opacity: .5;
         }
     }
 }
@@ -126,7 +126,7 @@
 }
 
 .weather__forecasts {
-    @include transition(opacity 0.2s ease-in);
+    @include transition(opacity .2s ease-in);
 }
 
 .weather__forecast {

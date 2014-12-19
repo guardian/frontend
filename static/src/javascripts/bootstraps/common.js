@@ -447,7 +447,7 @@ define([
             },
 
             initWeatherComponent: function () {
-                if (detect.hasGeoLocation()) {
+                if (config.switches && config.switches.weather && detect.hasGeoLocation()) {
                     weather.init();
                 }
             }

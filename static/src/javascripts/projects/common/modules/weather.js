@@ -91,7 +91,7 @@ define([
                         self.fetchData(response);
                     });
                 } catch (e) {
-                    return "Some error message";
+                    return 'Unable to get weather data';
                 }
             }
         },
@@ -135,9 +135,9 @@ define([
             mediator.off('autocomplete:fetch', this.getCityCoordinates);
         },
 
-        toggleControls: function(value, city) {
-            $input = $('.js-weather-input')[0];
-            $location = $('.weather__location');
+        toggleControls: function(value) {
+            var $input    = $('.js-weather-input')[0],
+                $location = $('.weather__location');
 
             if (value) {
                 $location.addClass('is-editing');
@@ -193,7 +193,7 @@ define([
             searchTool.init();
 
             // After first run override function to just update data
-            self.render = function (weatherData, city) {
+            self.render = function (weatherData) {
                 $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
 
                 var $weatherIcon = $('.js-weather-icon', $weather);

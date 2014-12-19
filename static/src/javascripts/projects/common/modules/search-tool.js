@@ -53,7 +53,7 @@ define([
                 var data = {
                     'id' : $('.active', $list).attr('data-weather-id'),
                     'city' : $('.active', $list).attr('data-weather-city')
-                }
+                };
 
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
