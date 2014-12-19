@@ -22,7 +22,7 @@ object LoadLimit extends Logging {
 
     val requestsIncludingUs = inProgress.incrementAndGet
 
-    val result = try {
+    try {
       if (requestsIncludingUs > requestLimit) {
         log.info(s"limit exceeded - redirecting to: $fallbackUri")
         Future.successful(TemporaryRedirect(fallbackUri))
@@ -33,8 +33,6 @@ object LoadLimit extends Logging {
     } finally {
       inProgress.decrementAndGet
     }
-
-    result
   }
 
 }
