@@ -39,7 +39,7 @@ define([
     Component,
     history,
     images,
-    playerPriority,
+    techOrder,
     beacon,
     loadingTmpl,
     adsOverlayTmpl
@@ -276,6 +276,23 @@ define([
         });
     }
 
+    function upgradeVideoPlayerAccessibility(player) {
+        // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
+        // It doesn't matter what kind of tech this is, flash or html5.
+        $('.vjs-tech', player.el()).attr('aria-hidden', true);
+
+        // Hide superfluous controls, and label useful buttons.
+        $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
+        $('.vjs-current-time', player.el()).attr('aria-hidden', true);
+        $('.vjs-time-divider', player.el()).attr('aria-hidden', true);
+        $('.vjs-duration', player.el()).attr('aria-hidden', true);
+        $('.vjs-embed-button', player.el()).attr('aria-hidden', true);
+
+        $('.vjs-play-control', player.el()).attr('aria-label', 'video play');
+        $('.vjs-mute-control', player.el()).attr('aria-label', 'video mute');
+        $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
+    }
+
     function createVideoPlayer(el, options) {
         var player;
 
@@ -286,7 +303,7 @@ define([
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = playerPriority.reverse();
+            options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
         }
 
@@ -303,21 +320,10 @@ define([
 
     function initPlayer() {
 
-        videojs.options.techOrder = playerPriority;
-
         // When possible, use our CDN instead of a third party (zencoder).
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
-        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
-
-            // clone the video options and add 'vpaid' to them.
-            videojs.options.techOrder = videojs.options.techOrder.slice(0);
-            videojs.options.techOrder.unshift('vpaid');
-
-            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
-        }
-
         videojs.plugin('adCountdown', adCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
@@ -329,18 +335,30 @@ define([
                 showEndSlate = $el.attr('data-show-end-slate') === 'true',
                 endSlateUri = $el.attr('data-end-slate'),
                 embedPath = $el.attr('data-embed-path'),
-                player = createVideoPlayer(el, {
-                    controls: true,
-                    autoplay: false,
-                    preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
-                    plugins: {
-                        embed: {
-                            embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
-                            location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
-                        }
-                    }
-                }),
+                techPriority = techOrder(el),
+                player,
                 mouseMoveIdle;
+
+            if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
+
+                // clone the video options and add 'vpaid' to them.
+                techPriority = ['vpaid'].concat(techPriority);
+
+                videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
+            }
+
+            player = createVideoPlayer(el, {
+                techOrder: techPriority,
+                controls: true,
+                autoplay: false,
+                preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
+                plugins: {
+                    embed: {
+                        embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                        location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                    }
+                }
+            });
 
             player.guMediaType = mediaType;
 
@@ -353,6 +371,7 @@ define([
                 bindErrorHandler(player);
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
+                upgradeVideoPlayerAccessibility(player);
 
                 player.one('playing', function (e) {
                     if (isFlash(e)) {

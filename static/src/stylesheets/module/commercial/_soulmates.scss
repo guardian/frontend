@@ -209,6 +209,7 @@ $c-soulmates-high: colour(neutral-1);
 
         @include mq($until: tablet) {
             margin-top: $gs-baseline/2;
+            clear: both;
         }
 
         @include mq(tablet) {

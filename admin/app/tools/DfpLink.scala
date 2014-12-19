@@ -43,6 +43,8 @@ object SiteLink {
   }
 
   def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"
+
+  def page(pageId: String):String = s"${site.host}/$pageId"
 }
 
 object CapiLink {

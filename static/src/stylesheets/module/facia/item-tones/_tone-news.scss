@@ -10,8 +10,17 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .flyer__read-more-text {
         color: colour(news-default);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(news-default);
+    }
+
+    .fc-item__kicker--dreamsnap:before {
+        color: colour(neutral-1);
     }
 }
 
