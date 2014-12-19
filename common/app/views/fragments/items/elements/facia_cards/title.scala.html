@@ -6,9 +6,7 @@
 @import views.support._
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
-    @if(snapType != Some(LatestSnap)) {
-        @kicker(header)
-    }
+    @kicker(header)
 } {
     <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(header.headline)</span></a>
 }
