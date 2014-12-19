@@ -298,6 +298,7 @@ $fc-hover-transition: .25s ease;
         display: block;
         @include fs-headline(1);
         color: #ffffff;
+        line-height: 1; // IE bug
     }
 
     &:hover:before {
