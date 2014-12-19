@@ -10,7 +10,7 @@ define([
     SearchTool
     ) {
 
-    describe('Search tool', function () {
+    ddescribe('Search tool', function () {
         var container,
             sut;
 
@@ -167,7 +167,7 @@ define([
             spyOn(sut, "renderList");
 
             sut.fetchData().then(function() {
-                expect(sut.renderList).toHaveBeenCalledWith([{"localizedName": "London"}], 3);
+                expect(sut.renderList).toHaveBeenCalledWith([{"localizedName": "London"}], 5);
                 done();
             });
 
@@ -182,7 +182,7 @@ define([
             sut.setInputValue("test1");
             expect($(".js-search-tool-input").val()).toEqual("test1");
 
-            $(".js-search-tool-list").html('<li><a class="active">test2</a></li>');
+            $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
             sut.setInputValue();
             expect($(".js-search-tool-input").val()).toEqual("test2");
         });
