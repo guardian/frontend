@@ -351,7 +351,7 @@ define([
                 techOrder: techPriority,
                 controls: true,
                 autoplay: false,
-                preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
+                preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
                 plugins: {
                     embed: {
                         embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',

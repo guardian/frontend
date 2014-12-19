@@ -36,7 +36,8 @@ define([
             };
 
             $button = $.create(template(showMoreBtn, {
-                type: buttonText[state]
+                type: buttonText[state],
+                dataLink: buttonText.displayed
             }));
 
             if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
@@ -62,7 +63,7 @@ define([
         };
 
         this.changeButtonState = function () {
-            $button.attr('data-link-name', buttonText[state])
+            $button.attr('data-link-name', buttonText[(state === 'displayed') ? 'hidden' : 'displayed'])
                 .toggleClass('button--primary', state !== 'displayed')
                 .toggleClass('button--tertiary', state === 'displayed');
             $('.i', $button).toggleClass('i-plus-white', state !== 'displayed')
