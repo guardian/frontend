@@ -51,19 +51,15 @@ define([
             self.changeLocationOptionText('error');
         },
 
-        getWeatherData: function (url) {
-            return ajax({
-                url: url,
-                type: 'json',
-                method: 'get'
-            });
+        detectPosition: function (e) {
+            e.preventDefault();
+
+            self.changeLocationOptionText('process');
+            self.getGeoLocation();
         },
 
-        saveUserLocation: function (location) {
-            userPrefs.set(prefName, {
-                'id': location.id,
-                'city': location.city
-            });
+        changeLocationOptionText: function (state) {
+            $('.js-detect-location').text(getGeoStates[state]);
         },
 
         /**
@@ -80,18 +76,40 @@ define([
             }
         },
 
+        getWeatherData: function (url) {
+            return ajax({
+                url: url,
+                type: 'json',
+                method: 'get'
+            });
+        },
+
+        /**
+         * Save user location into localStorage
+         */
+        saveUserLocation: function (location) {
+            userPrefs.set(prefName, {
+                'id': location.id,
+                'city': location.city
+            });
+        },
+
         getDefaultLocation: function() {
-            var location = self.getUserLocation();
+            var location = this.getUserLocation();
 
             if (location) {
-                self.fetchData(location);
+                this.fetchData(location);
             } else {
                 try {
                     self.getWeatherData('/weather/city.json').then(function (response) {
                         self.fetchData(response);
                     });
                 } catch (e) {
-                    return 'Unable to get weather data';
+                    raven.captureException(new Error('Error retrieving city data (' + e.message + ')'), {
+                        tags: {
+                            feature: 'weather'
+                        }
+                    });
                 }
             }
         },
@@ -101,7 +119,7 @@ define([
 
             if (typeof location.id === 'string') {
                 url += '/' + location.id + '.json';
-                self.saveUserLocation(location);
+                this.saveUserLocation(location);
             }
 
             try {
@@ -124,15 +142,9 @@ define([
             bean.on($('.js-close-location')[0], 'click', function() {
                 self.toggleControls(false);
             });
+            // HTML GeoApi disabled for now
             // bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.on('autocomplete:fetch', this.fetchData);
-        },
-
-        unbindEvents: function () {
-            bean.off($('.js-weather-input')[0], 'click', self.toggleControls);
-            bean.off($('.js-close-location')[0], 'click', self.toggleControls);
-            // bean.off($('.js-detect-location')[0], 'click', self.detectPosition);
-            mediator.off('autocomplete:fetch', this.getCityCoordinates);
         },
 
         toggleControls: function(value) {
@@ -146,17 +158,6 @@ define([
                 $location.removeClass('is-editing');
                 searchTool.clear();
             }
-        },
-
-        detectPosition: function (e) {
-            e.preventDefault();
-
-            self.changeLocationOptionText('process');
-            self.getGeoLocation();
-        },
-
-        changeLocationOptionText: function (state) {
-            $('.js-detect-location').text(getGeoStates[state]);
         },
 
         getUnits: function () {
@@ -184,8 +185,9 @@ define([
             }));
 
             $weather.appendTo($holder);
-
             self.bindEvents();
+
+            // Initialize Search Tool
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
                 apiUrl: '/weather/locations?query='
@@ -194,10 +196,15 @@ define([
 
             // After first run override function to just update data
             self.render = function (weatherData) {
+                var $weatherIcon = $('.js-weather-icon', $weather);
+
                 $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
 
-                var $weatherIcon = $('.js-weather-icon', $weather);
-                $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g, weatherData.WeatherIcon));
+                // Replace number in weather icon class
+                $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
+                    weatherData.WeatherIcon));
+
+                // Close editing
                 self.toggleControls(false);
             };
         }
