@@ -51,18 +51,20 @@ define([
 
             pushData: function () {
                 var data = {
-                    'id' : $('.active', $list).attr('data-weather-id'),
-                    'city' : $('.active', $list).attr('data-weather-city')
+                    'id': $('.active', $list).attr('data-weather-id'),
+                    'city': $('.active', $list).attr('data-weather-city')
                 };
 
+                // Send data to whoever is listening
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
 
-                // Clear all after timeout because of the ophan tracking we can't remove everything straight away
+                // Clear all after timeout because of the tracking we can't remove everything straight away
                 setTimeout(this.destroy.bind(this), 50);
             },
 
             getListOfResults: function (e) {
+                // If we have empty input clear everything and don't fetch the data
                 if (!e.target.value.match(/\S/)) {
                     this.clear();
                     return;
@@ -70,6 +72,7 @@ define([
 
                 newQuery = e.target.value;
 
+                // If input value hasn't changed don't fetch the data
                 if (!this.hasInputValueChanged()) {
                     return;
                 }
@@ -91,7 +94,7 @@ define([
             handleKeyEvents: function (e) {
                 var key = keyCodeMap[e.which || e.keyCode];
 
-                // Run this function only if we are inside input
+                // Run this function only if we are inside the input
                 if (!$(e.target).hasClass('js-search-tool-input')) {
                     return;
                 }
