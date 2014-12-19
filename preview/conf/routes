@@ -169,5 +169,5 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                        controllers.InteractiveController.renderInteractive(path)
 
 # Articles
-GET         /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET         /*path                                                                              controllers.ArticleController.renderArticle(path)
+GET         /*path.json                                                                        controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
+GET         /*path                                                                             controllers.ArticleController.renderArticle(path)
