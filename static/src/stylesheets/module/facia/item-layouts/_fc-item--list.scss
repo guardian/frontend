@@ -27,4 +27,13 @@ x x x x x x x x x x x x x x x x x x x x x x x x
             display: none;
         }
     }
+
+    .fc-item__kicker {
+        display: none;
+    }
+
+    .fc-item__kicker--dreamsnap-list {
+        display: block;
+        margin: 0;
+    }
 }

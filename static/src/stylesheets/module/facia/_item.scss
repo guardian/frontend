@@ -6,6 +6,7 @@ $fc-hover-transition: .25s ease;
 */
 
 @mixin fc-item--horizontal($media-width, $media-align: right) {
+
     .fc-item__image-container {
         @include box-sizing(border-box);
         padding-left: $gs-gutter * .25;
@@ -282,6 +283,34 @@ $fc-hover-transition: .25s ease;
     &:hover:after {
         text-decoration: none;
     }
+}
+
+// dream snaps
+.fc-item__kicker--dreamsnap {
+    display: block;
+    @include fs-header(2);
+    background-color: fade-out(#000000, .9);
+    margin: 0 (0 - $gs-gutter * .25);
+    padding: ($gs-baseline * .25) ($gs-gutter * .25) ($gs-baseline * .5);
+
+    &:before {
+        content: 'Latest from\2026';
+        display: block;
+        @include fs-headline(1);
+        color: #ffffff;
+    }
+
+    &:hover:before {
+        text-decoration: none;
+    }
+
+    &:after {
+        display: none;
+    }
+}
+
+.fc-item__kicker--dreamsnap-list {
+    display: none;
 }
 
 .fc-item__byline {
