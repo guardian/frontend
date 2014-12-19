@@ -1,5 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
-@import common.{Navigation, LinkTo, Edition, Breadcrumbs, BreadcrumbItem}
+@import common.{LinkTo, Edition, Breadcrumbs}
 
 <ul class="breadcrumb signposting">
     @defining(Breadcrumbs.items(Edition(request).navigation, content)) { breadcrumbs =>
@@ -7,7 +7,7 @@
             <li class="signposting__item signposting__item--parent">
                 <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                     @if(i > 0){
-                        <span class="signposting__separator"><span class="signposting__separator__inner">›</span></span>
+                        <span class="signposting__separator" aria-hidden="true"><span class="signposting__separator__inner">›</span></span>
                     }
                     <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href" class="signposting__action"><span itemprop="title">@Html(breadcrumb.title)</span></a>
                 </div>
