@@ -95,7 +95,7 @@ define([
             });
         },
 
-        getDefaultLocation: function() {
+        getDefaultLocation: function () {
             var location = this.getUserLocation();
 
             if (location) {
@@ -132,10 +132,10 @@ define([
         },
 
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function() {
+            bean.on($('.js-weather-input')[0], 'click', function () {
                 self.toggleControls(true);
             });
-            bean.on($('.js-close-location')[0], 'click', function() {
+            bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
             // HTML GeoApi disabled for now
@@ -143,7 +143,7 @@ define([
             mediator.on('autocomplete:fetch', this.fetchData);
         },
 
-        toggleControls: function(value) {
+        toggleControls: function (value) {
             var $input    = $('.js-weather-input')[0],
                 $location = $('.weather__location');
 

@@ -14,7 +14,7 @@ define([
     sut
     ) {
 
-    ddescribe('Weather component', function() {
+    describe('Weather component', function() {
         var container,
             $weather;
 
