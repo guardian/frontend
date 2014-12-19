@@ -16,7 +16,7 @@ define([
     videojs,
     videojsembed,
     debounce,
-    playerPriority,
+    techOrder,
     loadingTmpl
 ) {
 
@@ -35,12 +35,12 @@ define([
     function createVideoPlayer(el, options) {
         var player;
 
-        options.techOrder = playerPriority;
+        options.techOrder = techOrder(el);
         player = videojs(el, options);
 
         if (handleInitialMediaError(player)) {
             player.dispose();
-            options.techOrder = playerPriority.reverse();
+            options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
         }
 
