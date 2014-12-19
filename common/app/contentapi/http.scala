@@ -42,6 +42,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
     response.onSuccess {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => httpTimingMetric.recordDuration(currentTimeMillis - start)
+      case _ =>
     }
 
     response.onFailure {
@@ -57,6 +58,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
         ContentApiErrorMetric.increment()
       case Failure(_) =>
         ContentApiErrorMetric.increment()
+      case _ =>
     }
 
     response map { wsResponse =>
