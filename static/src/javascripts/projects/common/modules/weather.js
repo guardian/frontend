@@ -24,22 +24,23 @@ define([
     weatherTemplate
     ) {
 
-    var self       = null,
-        $weather   = null,
-        $holder    = null,
-        searchTool = null,
-        prefName   = 'weather-location',
-        getGeoStates = {
+    var self          = null,
+        $weather      = null,
+        $holder       = null,
+        searchTool    = null,
+        prefName      = 'weather-location',
+        getGeoStates  = {
             process: 'Getting location...',
             error: 'Unable to get location...',
             defaultmsg: 'Detect my location'
-        };
+        },
+        weatherApiUrl = '/weather/city';
 
     return {
         init: function () {
             self = this;
 
-            self.getDefaultLocation();
+            this.getDefaultLocation();
         },
 
         getGeoLocation: function () {
@@ -101,7 +102,7 @@ define([
                 this.fetchData(location);
             } else {
                 try {
-                    self.getWeatherData('/weather/city.json').then(function (response) {
+                    self.getWeatherData(weatherApiUrl + '.json').then(function (response) {
                         self.fetchData(response);
                     });
                 } catch (e) {
@@ -115,15 +116,10 @@ define([
         },
 
         fetchData: function (location) {
-            var url = '/weather/city';
-
-            if (typeof location.id === 'string') {
-                url += '/' + location.id + '.json';
-                self.saveUserLocation(location);
-            }
+            self.saveUserLocation(location);
 
             try {
-                return self.getWeatherData(url).then(function (response) {
+                return self.getWeatherData(weatherApiUrl + '/' + location.id + '.json').then(function (response) {
                     self.render(response[0], location.city);
                 });
             } catch (e) {

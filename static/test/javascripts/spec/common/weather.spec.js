@@ -14,7 +14,7 @@ define([
     sut
     ) {
 
-    describe('Weather component', function() {
+    ddescribe('Weather component', function() {
         var container,
             $weather;
 
@@ -33,30 +33,29 @@ define([
         });
 
         it("should initalize", function() {
-            spyOn(sut, 'fetchData');
+            spyOn(sut, 'getDefaultLocation');
 
             expect(typeof sut).toEqual('object');
 
             sut.init();
-            expect(sut.fetchData).toHaveBeenCalledWith(undefined);
+            expect(sut.getDefaultLocation).toHaveBeenCalled();
         });
 
         it("should get location from local storage", function() {
-            var result = {location: "London"};
+            var result = {id: 1, city: "London"};
 
             expect(typeof sut.getUserLocation()).toEqual('undefined');
 
-            sut.saveUserLocation("London");
+            sut.saveUserLocation(result);
             expect(sut.getUserLocation()).toEqual(result);
         });
 
         it("should fetch the data and save location", function() {
-            var result = {location: "Sydney"};
+            var result = {id: '2', city: "Sydney"};
 
-            sut.fetchData();
-            expect(sut.getUserLocation()).toEqual(undefined);
+            spyOn(sut, "getWeatherData");
 
-            sut.fetchData("Sydney");
+            sut.fetchData(result);
             expect(sut.getUserLocation()).toEqual(result);
         });
 
@@ -76,17 +75,18 @@ define([
         });
 
         it("should call proper url", function() {
+            var data = {id: '1', city: "London"};
+
             spyOn(sut, "getWeatherData");
 
-            sut.fetchData();
-            expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city");
-
-            sut.fetchData("London");
-            expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/London");
+            sut.fetchData(data);
+            expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json");
         });
 
         it("should call render function after fetching the data", function(done) {
-            var server = sinon.fakeServer.create();
+            var server = sinon.fakeServer.create(),
+                data   = {id: '1', city: "London"};
+
             server.autoRespond = true;
 
             server.respondWith([200, { "Content-Type": "application/json" },
@@ -94,7 +94,7 @@ define([
 
             spyOn(sut, "render");
 
-            sut.fetchData().then(function() {
+            sut.fetchData(data).then(function() {
                 expect(sut.render).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
                 done();
             });
@@ -118,7 +118,7 @@ define([
 
             $weather = $('.weather');
 
-            expect($(".js-weather-city", $weather).text()).toEqual('London');
+            expect($(".js-weather-input", $weather).val()).toEqual('London');
             expect($(".js-weather-temp", $weather).text()).toEqual('9°C');
             expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
         });
