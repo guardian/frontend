@@ -53,7 +53,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
     }
 
     response onComplete {
-      case Success(r) if r.status >= 400 =>
+      case Success(r) if r.status >= 500 =>
         ContentApiErrorMetric.increment()
       case Failure(_) =>
         ContentApiErrorMetric.increment()
