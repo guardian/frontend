@@ -123,6 +123,7 @@ import test.ConfiguredTestSuite
           val expectedDate = today.plusDays(11) // see test data
           fixtures.nextPage.value should equal("/football/fixtures/more/" + expectedDate.toString("yyyy/MMM/dd"))
         }
+      }
     }
   }
 
