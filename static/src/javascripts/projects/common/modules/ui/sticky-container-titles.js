@@ -63,18 +63,18 @@ define([
 
                 titles.forEach(function(el, i) {
                     if (vPosAll[i] > winHeight + vPosNow - offsets[i] + 0) {
-                        el.style.display = "block";
+                        el.style.display = 'block';
                     } else {
-                        el.style.display = "none";
+                        el.style.display = 'none';
                     }
                 });
             }
         }
 
         function addCss(width) {
-            var css = document.createElement("style");
-            css.type = "text/css";
-            css.innerHTML = ".fc-container__header__titles.fixed {width: " + width + "px;}";
+            var css = document.createElement('style');
+            css.type = 'text/css';
+            css.innerHTML = '.fc-container__header__titles.fixed {width: ' + width + 'px;}';
             document.body.appendChild(css);
         }
 
@@ -118,8 +118,8 @@ define([
             setInterval(setPositions, 11);
 
             titles.forEach(function(el, index) {
-                el.addEventListener("click", function(e) {
-                    if (el.classList.contains("fixed")) {
+                el.addEventListener('click', function(e) {
+                    if (el.classList.contains('fixed')) {
                         w.scrollTo(0, vPosAll[index]);
                         e.preventDefault();
                     }
