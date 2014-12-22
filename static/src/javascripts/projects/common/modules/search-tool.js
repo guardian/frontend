@@ -53,9 +53,15 @@ define([
             },
 
             pushData: function () {
+                var $active = $('.active', $list);
+
+                if ($active.length === 0) {
+                    return false;
+                }
+
                 var data = {
-                    'id': $('.active', $list).attr('data-weather-id'),
-                    'city': $('.active', $list).attr('data-weather-city')
+                    'id': $active.attr('data-weather-id'),
+                    'city': $active.attr('data-weather-city')
                 };
 
                 // Send data to whoever is listening

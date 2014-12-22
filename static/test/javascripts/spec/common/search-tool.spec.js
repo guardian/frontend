@@ -10,7 +10,7 @@ define([
     SearchTool
     ) {
 
-    describe('Search tool', function () {
+    ddescribe('Search tool', function () {
         var container,
             sut;
 
@@ -93,6 +93,10 @@ define([
             expect(sut.pushData).toHaveBeenCalled();
         });
 
+        it("should not push data after enter without selecting from the list", function() {
+            expect(sut.pushData()).toEqual(false);
+        });
+
         it("should return new ID", function() {
             $(".js-search-tool-list").html("<li></li><li></li><li></li><li></li>");
 
@@ -141,6 +145,8 @@ define([
 
         it("should clear after pushing data", function() {
             spyOn(sut, "destroy");
+
+            $(".js-search-tool-list").html('<li><a class="active"></a></li>');
 
             sut.init();
 
