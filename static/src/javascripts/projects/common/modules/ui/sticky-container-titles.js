@@ -74,7 +74,7 @@ define([
         function addCss(width) {
             var css = document.createElement("style");
             css.type = "text/css";
-            css.innerHTML = ".fc-container__header__titles {margin-top: 100px;} .fc-container__header__titles.fixed {position: fixed; bottom: 0; z-index: 99;} .fc-container__header__title.fixed {margin-left: -20px; padding: 0 0 5px 20px; color: #5b5b5b; background: #ffffff; cursor: pointer; border: 0; width: " + width + "px;}";
+            css.innerHTML = ".fc-container__header__titles.fixed {width: " + width + "px;}";
             document.body.appendChild(css);
         }
 
@@ -89,11 +89,11 @@ define([
             titleOneWidth = titleOne.offsetWidth;
 
             headerOne.insertAdjacentHTML('beforeend',
-                    '<div class="fc-container__header__titles">' +
+                '<div class="fc-container__header__titles">' +
                     headers.map(function(header) {
                         return '<div class="fc-container__header__title fixed">' + header.querySelector('.fc-container__header__title').innerText + '</div>';
                     }).join('') +
-                    '</div>'
+                '</div>'
             );
 
             nav = headerOne.querySelector('.fc-container__header__titles');
@@ -110,6 +110,10 @@ define([
             }
 
             getPositions();
+            setPositions();
+
+            nav.style.visibility = 'visible';
+
             setInterval(getPositions, 51);
             setInterval(setPositions, 11);
 

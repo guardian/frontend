@@ -126,6 +126,17 @@ $header-image-size-desktop: 100px;
     }
 }
 
+.fc-container__header__titles {
+    margin-top: 100px;
+    visibility: hidden;
+
+    &.fixed {
+        position: fixed;
+        bottom: 0;
+        z-index: 99;
+    }
+}
+
 .fc-container__header__title,
 .container__title {
     position: relative;
@@ -142,7 +153,19 @@ $header-image-size-desktop: 100px;
             color: colour(news-accent);
         }
     }
+
+   &.fixed {
+       font-weight: normal;
+       margin-left: -20px;
+       padding: 0 0 5px 20px;
+       color: #5b5b5b;
+       background: #ffffff;
+       cursor: pointer;
+       border: 0;
+   }
 }
+
+
 
 .fc-container__header__image {
     display: table-cell;
