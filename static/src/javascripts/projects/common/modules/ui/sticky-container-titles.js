@@ -1,13 +1,9 @@
 define([
     'common/utils/$',
-    'common/utils/_',
-    'common/utils/config',
-    'common/utils/template'
+    'common/utils/_'
 ], function(
     $,
-    _,
-    config,
-    template
+    _
     ) {
 
     function init() {
@@ -130,5 +126,5 @@ define([
 
     return {
         init: _.once(init)
-    }
+    };
 });
