@@ -85,6 +85,8 @@ sealed trait ItemKicker {
 
   val kickerHtml: String
 
+  def sublinkKickerHtml: String = kickerHtml
+
   val link: Option[String]
 }
 
@@ -114,7 +116,9 @@ case object LiveKicker extends ItemKicker {
     "fc-item__live-indicator"
   )
 
-  override val kickerHtml = "Live"
+  override val kickerHtml = "<span class=\"live-pulse-icon\"></span>Live"
+
+  override def sublinkKickerHtml: String = "Live"
 
   override val link = None
 }
