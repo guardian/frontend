@@ -13,6 +13,6 @@
 
         case (Some(kicker), None) => {@articleLink{<span class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.sublinkKickerHtml)</span> @RemoveOuterParaHtml(sublink.headline)}}
 
-        case (None, None) => {@articleLink{@headline()}}
+        case _ => {@articleLink{@headline()}}
     }
 </h3>
