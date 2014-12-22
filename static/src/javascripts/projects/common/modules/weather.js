@@ -1,3 +1,17 @@
+/**
+    "WEATHER"
+
+    Whether the weather be fine,
+    Or whether the weather be not,
+    Whether the weather be cold,
+    Or whether the weather be hot,
+    We'll weather the weather
+    Whatever the weather,
+    Whether we like it or not!
+
+    Author: Anonymous British
+ */
+
 define([
     'bean',
     'raven',
@@ -120,8 +134,10 @@ define([
 
             try {
                 return self.getWeatherData(weatherApiUrl + '/' + location.id + '.json').then(function (response) {
-                    self.render(response[0], location.city);
-                });
+                        self.render(response[0], location.city);
+                    }).fail(function() {
+                        self.failedRequest();
+                    });
             } catch (e) {
                 raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
                     tags: {
@@ -129,6 +145,14 @@ define([
                     }
                 });
             }
+        },
+
+        failedRequest: function() {
+            raven.captureException(new Error('Error retrieving weather data'), {
+                tags: {
+                    feature: 'weather'
+                }
+            });
         },
 
         bindEvents: function () {

@@ -102,6 +102,23 @@ define([
             server.restore();
         });
 
+        it("should handle failed request", function(done) {
+            var server = sinon.fakeServer.create(),
+                data   = {id: '1', city: "London"};
+
+            server.respondWith([500, {}, ""]);
+
+            spyOn(sut, "failedRequest");
+
+            sut.fetchData(data).fail(function() {
+                expect(sut.failedRequest).toHaveBeenCalled();
+                done();
+            });
+
+            server.respond();
+            server.restore();
+        });
+
         it("should add weather component to the DOM", function() {
             var mockWeatherData = {
                     WeatherIcon: 3,

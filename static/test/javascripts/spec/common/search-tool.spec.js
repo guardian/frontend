@@ -10,7 +10,7 @@ define([
     SearchTool
     ) {
 
-    ddescribe('Search tool', function () {
+    describe('Search tool', function () {
         var container,
             sut;
 
