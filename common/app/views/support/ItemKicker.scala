@@ -78,22 +78,159 @@ object ItemKicker {
 
 case class Series(name: String, url: String)
 
-sealed trait ItemKicker
+sealed trait ItemKicker {
+  val sublinkClasses: Set[String]
 
-case object BreakingNewsKicker extends ItemKicker
-case object LiveKicker extends ItemKicker
-case object AnalysisKicker extends ItemKicker
-case object ReviewKicker extends ItemKicker
-case object CartoonKicker extends ItemKicker
-case class PodcastKicker(series: Option[Series]) extends ItemKicker
+  val linkClasses: Set[String]
+
+  val kickerHtml: String
+
+  val link: Option[String]
+}
+
+case object BreakingNewsKicker extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker",
+    "fc-sublink__live-indicator"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__breaking-indicator"
+  )
+
+  override val kickerHtml = "Breaking News"
+
+  override val link = None
+}
+
+case object LiveKicker extends ItemKicker {
+  override val sublinkClasses: Set[String] = Set(
+    "fc-sublink__kicker",
+    "fc-sublink__live-indicator"
+  )
+
+  override val linkClasses: Set[String] = Set(
+    "fc-item__kicker",
+    "fc-item__live-indicator"
+  )
+
+  override val kickerHtml = "Live"
+
+  override val link = None
+}
+
+case object AnalysisKicker extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses: Set[String] = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml = "Analysis"
+
+  override val link = None
+}
+
+case object ReviewKicker extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml = "Review"
+
+  override val link = None
+}
+
+case object CartoonKicker extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml = "Cartoon"
+
+  override val link = None
+}
+
+case class PodcastKicker(series: Option[Series]) extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml = series.map(_.name).getOrElse("Podcast")
+
+  override val link = series.map(_.url)
+}
 
 object TagKicker {
   def fromTag(tag: Tag) = TagKicker(tag.name, tag.webUrl, tag.id)
 }
 
-case class TagKicker(name: String, url: String, id: String) extends ItemKicker
+case class TagKicker(name: String, url: String, id: String) extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
 
-case class SectionKicker(name: String, url: String) extends ItemKicker
-case class FreeHtmlKicker(body: String) extends ItemKicker
-case class FreeHtmlKickerWithLink(body: String, url: String) extends ItemKicker
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml: String = name
+
+  override val link = Some(url)
+}
+
+case class SectionKicker(name: String, url: String) extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+  override val kickerHtml: String = name
+
+  override val link = Some(url)
+}
+
+case class FreeHtmlKicker(body: String) extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml: String = body
+
+  override val link = None
+}
+
+case class FreeHtmlKickerWithLink(body: String, url: String) extends ItemKicker {
+  override val sublinkClasses = Set(
+    "fc-sublink__kicker"
+  )
+
+  override val linkClasses = Set(
+    "fc-item__kicker"
+  )
+
+  override val kickerHtml: String = body
+
+  override val link = Some(url)
+}
 

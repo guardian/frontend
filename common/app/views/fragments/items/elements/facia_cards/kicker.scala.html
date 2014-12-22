@@ -4,10 +4,6 @@
 @import views.support._
 
 @header.kicker.map {
-    case BreakingNewsKicker => {
-        <span class="fc-item__breaking-indicator">Breaking news</span>
-    }
-
     case LiveKicker => {
         <span class="fc-item__kicker fc-item__live-indicator"><span class="live-pulse-icon"></span>Live</span>
     }
