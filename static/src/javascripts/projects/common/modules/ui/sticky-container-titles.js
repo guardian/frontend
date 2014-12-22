@@ -77,7 +77,7 @@ define([
         if (winWidth >= 1024) {
             headers = Array.prototype.slice.call(document.querySelectorAll('section:not(.fc-container--thrasher) .js-container__header')).filter(function(section) {
                 return section.querySelector('.fc-container__header__title');
-            })
+            });
 
             headerOne = headers.splice(0, 1)[0];
             titleOne = headerOne.querySelector('.fc-container__header__title');
