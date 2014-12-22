@@ -80,7 +80,7 @@ define([
 
             showStickyContainerTitles: function () {
                 if (true || config.switches.showStickContainerTitles) {
-                    new stickyContainerTitles.init();
+                    stickyContainerTitles.init();
                 }
             }
         },
