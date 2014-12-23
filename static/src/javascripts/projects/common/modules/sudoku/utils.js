@@ -34,7 +34,7 @@ define([
             })
         }));
 
-        return _.filter(_.uniq(column.concat(row).concat(square), false, function (position) {
+        return _.filter(_.uniq(column.concat(row, square), false, function (position) {
             /** A key function is needed, as Objects in JavaScript use reference equality */
             return position.x + "_" + position.y;
         }), function (position) {
