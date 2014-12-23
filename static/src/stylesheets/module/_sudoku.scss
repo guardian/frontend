@@ -1,0 +1,33 @@
+.sudoku__grid {
+    outline: none;
+}
+
+.sudoku__background {
+
+}
+
+.sudoku__cell rect {
+    fill: #ffffff;
+    cursor: pointer;
+}
+
+.sudoku__cell--not-editable .sudoku__cell-text {
+    font-weight: bold;
+}
+
+.sudoku__cell--highlighted rect {
+    fill: #f5ffcf;
+}
+
+.sudoku__cell--focussed rect {
+    fill: #D6FBFF;
+}
+
+.sudoku__cell--same-value .sudoku__cell-text {
+    fill: blue;
+}
+
+.sudoku__cell-text {
+    cursor: pointer;
+    font: 28px Helvetica, Arial, Verdana, sans-serif;
+}
