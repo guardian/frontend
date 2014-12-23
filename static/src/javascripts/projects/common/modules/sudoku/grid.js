@@ -14,6 +14,9 @@ define([
 ) {
     return React.createClass({
         focusCell: function (x, y) {
+            var isHighlighted = utils.highlights(x, y),
+                valueInFocus = this.getCell(x, y).value;
+
             this.state.focus = {
                 x: x,
                 y: y
@@ -21,9 +24,15 @@ define([
 
             this.mapCells(function (cell) {
                 return _.extend({}, cell, {
-
+                    isHighlighted: isHighlighted(cell.x, cell.y),
+                    isSameValue: cell.value && cell.value === valueInFocus,
+                    isFocussed: cell.x === x && cell.y === y
                 });
             });
+        },
+
+        getCell: function(x, y) {
+            return this.cells[y * 9 + n];
         },
 
         mapCells: function (f) {

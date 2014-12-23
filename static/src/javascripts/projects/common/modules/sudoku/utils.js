@@ -27,7 +27,7 @@ define([
                 squareX == focusSquareX && squareY == focusSquareY;
         };
     }
-    
+
     return {
         position: position,
         highlights: highlights
