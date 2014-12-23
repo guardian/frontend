@@ -1,10 +1,11 @@
 package views.support
 
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers
+import model.{ImageContainer, ImageAsset}
 import com.gu.contentapi.client.model.Asset
+import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import conf.Configuration
-import conf.Switches.ImageServerSwitch
-import model.{ImageAsset, ImageContainer}
-import org.scalatest.{FlatSpec, Matchers}
 
 
 class ImgSrcTest extends FlatSpec with Matchers  {
@@ -34,12 +35,12 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
     ImageServerSwitch.switchOn()
-      GalleryLargeTrail.bestFor(image) should be (Some(s"${imageHost}/static/w-480/h-288/q-95/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
+      GalleryLargeTrail.bestFor(image) should be (Some(s"$imageHost/static/w-480/h-288/q-95/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
   }
 
   it should "convert the URL of a media service to the resizing endpoint with a /media prefix" in {
     ImageServerSwitch.switchOn()
-      GalleryLargeTrail.bestFor(mediaImage) should be (Some(s"${imageHost}/media/w-480/h-288/q-95/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"))
+      GalleryLargeTrail.bestFor(mediaImage) should be (Some(s"$imageHost/media/w-480/h-288/q-95/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"))
   }
 
   it should "not convert the URL of the image if it is disabled" in {
@@ -47,13 +48,12 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     GalleryLargeTrail.bestFor(image) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
   }
 
-  // removed temporarily because the PNG is converted on the client side for 10% of users for an extra hidden img element
-//  it should "convert the URL of the image if it is a PNG" in {
-//    ImageServerSwitch.switchOn()
-//    PngResizingSwitch.switchOn()
-//    val pngImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)), null, 0)
-//    GalleryLargeTrail.bestFor(pngImage) should be (Some(s"${imageHost}/static/w-480/h-288/q-95/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png"))
-//  }
+  it should "convert the URL of the image if it is a PNG" in {
+    ImageServerSwitch.switchOn()
+    PngResizingSwitch.switchOn()
+    val pngImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png")),0)), null, 0)
+    GalleryLargeTrail.bestFor(pngImage) should be (Some(s"$imageHost/static/w-480/h-288/q-95/sys-images/Guardian/Pix/contributor/2014/10/30/1414675415419/Jessica-Valenti-R.png"))
+  }
 
   it should "not convert the URL of the image if it is a GIF (we do not support animated GIF)" in {
     ImageServerSwitch.switchOn()
