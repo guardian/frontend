@@ -115,7 +115,7 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
                     imager: {
-                        deps: ['common/components/imager.js/imager'],
+                        deps: ['components/imager.js/imager'],
                         exports: 'Imager'
                     },
                     omniture: {
