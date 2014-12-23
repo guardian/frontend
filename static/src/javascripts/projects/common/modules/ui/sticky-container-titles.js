@@ -1,122 +1,117 @@
 define([
     'common/utils/$',
-    'common/utils/_'
-], function(
+    'common/utils/_',
+    'common/utils/detect'
+], function (
     $,
-    _
+    _,
+    detect
     ) {
 
-    function init() {
-        var w = window,
-            d = document,
-            e = d.documentElement,
-            g = d.getElementsByTagName('body')[0],
-            winWidth = w.innerWidth || e.clientWidth || g.clientWidth,
-            winHeight = w.innerHeight || e.clientHeight || g.clientHeight,
+    var w = window,
+        d = document,
+        e = d.documentElement,
+        winHeight,
 
-            vPosNow = w.scrollY,
-            vPosCache,
-            vPosAll = [],
+        vPosNow = w.scrollY,
+        vPosCache,
 
-            headers,
-            headerOne,
-            headerOnePos,
+        headers,
+        headerPositions = [],
 
-            titles,
-            titleOne,
-            titleOneHeight,
-            titleOneWidth,
+        headerOne,
+        headerOnePosition,
 
-            nav,
+        titleOne,
+        titleOneHeight,
 
-            heights = [],
-            offsets = [],
-            lastIndex = -1;
+        stickyTitles,
+        stickyTitlesContainer,
 
-        function getPosition(el) {
-            return vPosNow + el.getBoundingClientRect().top;
+        offsets = [],
+        lastIndex = -1;
+
+    function getWindowHeight() {
+        return w.innerHeight || e.clientHeight;
+    }
+
+    function getPosition(el) {
+        return vPosNow + el.getBoundingClientRect().top;
+    }
+
+    function getMetrics() {
+        if (headerPositions[lastIndex] !== getPosition(headers[lastIndex])) {
+            headerPositions = headers.map(getPosition);
+            winHeight = getWindowHeight();
+            headerOnePosition = getPosition(headerOne);
         }
+    }
 
-        function getPositions() {
-            if (vPosAll[lastIndex] !== getPosition(headers[lastIndex])) {
-                winHeight = w.innerHeight || e.clientHeight || g.clientHeight;
-                vPosAll = headers.map(getPosition);
-                headerOnePos = getPosition(headerOne);
+    function setPositions() {
+        vPosNow = w.scrollY;
+
+        if (vPosCache !== vPosNow) {
+            vPosCache = vPosNow;
+
+            if (winHeight - stickyTitlesContainer.offsetHeight < headerOnePosition - vPosNow + titleOneHeight + 100) {
+                $(stickyTitlesContainer).removeClass('fixed');
+            } else {
+                $(stickyTitlesContainer).addClass('fixed');
             }
-        }
 
-        function setPositions() {
-            vPosNow = w.scrollY;
-
-            if (vPosCache !== vPosNow) {
-                vPosCache = vPosNow;
-
-                if (winHeight - nav.offsetHeight < headerOnePos - vPosNow + titleOneHeight + 100) {
-                    nav.classList.remove('fixed');
+            stickyTitles.forEach(function (el, i) {
+                if (headerPositions[i] > winHeight + vPosNow - offsets[i] + 0) {
+                    $(el).show();
                 } else {
-                    nav.classList.add('fixed');
+                    $(el).hide();
                 }
-
-                titles.forEach(function(el, i) {
-                    if (vPosAll[i] > winHeight + vPosNow - offsets[i] + 0) {
-                        el.style.display = 'block';
-                    } else {
-                        el.style.display = 'none';
-                    }
-                });
-            }
+            });
         }
+    }
 
-        function addCss(width) {
-            var css = document.createElement('style');
-            css.type = 'text/css';
-            css.innerHTML = '.fc-container__header__titles.fixed {width: ' + width + 'px;}';
-            document.body.appendChild(css);
-        }
-
-        if (winWidth >= 1024) {
-            headers = Array.prototype.slice.call(document.querySelectorAll('section:not(.fc-container--thrasher) .js-container__header')).filter(function(section) {
+    function init() {
+        if (['desktop', 'wide'].indexOf(detect.getBreakpoint(true)) > -1) {
+            headers = Array.prototype.slice.call(document.querySelectorAll('section:not(.fc-container--thrasher) .js-container__header')).filter(function (section) {
                 return section.querySelector('.fc-container__header__title');
             });
 
             headerOne = headers.splice(0, 1)[0];
+            lastIndex = headers.length - 1;
+
             titleOne = headerOne.querySelector('.fc-container__header__title');
             titleOneHeight = titleOne.offsetHeight;
-            titleOneWidth = titleOne.offsetWidth;
 
             headerOne.insertAdjacentHTML('beforeend',
-                '<div class="fc-container__header__titles">' +
-                    headers.map(function(header) {
-                        return '<div class="fc-container__header__title fixed">' + header.querySelector('.fc-container__header__title').innerText + '</div>';
+                '<div class="fc-container__header__title--stickies">' +
+                    headers.map(function (header) {
+                        return '<div class="fc-container__header__title--sticky">' + header.querySelector('.fc-container__header__title').innerText + '</div>';
                     }).join('') +
                 '</div>'
             );
 
-            nav = headerOne.querySelector('.fc-container__header__titles');
+            stickyTitlesContainer = headerOne.querySelector('.fc-container__header__title--stickies');
 
-            titles = Array.prototype.slice.call(nav.querySelectorAll('.fc-container__header__title'));
+            stickyTitles = Array.prototype.slice.call(stickyTitlesContainer.querySelectorAll('.fc-container__header__title--sticky'));
 
-            lastIndex = titles.length - 1;
+            stickyTitles.reduceRight(function (m, title, i) {
+                var height = title.offsetHeight + m;
 
-            addCss(titleOneWidth);
+                offsets[i] = height;
+                return height;
+            }, 0);
 
-            for (var i = lastIndex; i >= 0; i -= 1) {
-                heights[i] = titles[i].offsetHeight;
-                offsets[i] = heights[i] + (offsets[i + 1] || 0);
-            }
-
-            getPositions();
+            getMetrics();
             setPositions();
 
-            nav.style.visibility = 'visible';
+            $(stickyTitlesContainer).css('visibility', 'visible');
 
-            setInterval(getPositions, 51);
-            setInterval(setPositions, 11);
+            setInterval(getMetrics, 500);
+            setInterval(setPositions, 50);
 
-            titles.forEach(function(el, index) {
-                el.addEventListener('click', function(e) {
+            stickyTitles.forEach(function (el, index) {
+                el.addEventListener('click', function (e) {
                     if (el.classList.contains('fixed')) {
-                        w.scrollTo(0, vPosAll[index]);
+                        w.scrollTo(0, headerPositions[index]);
                         e.preventDefault();
                     }
                 });
