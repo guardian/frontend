@@ -13,6 +13,12 @@ define([
     utils
 ) {
     return React.createClass({
+        getInitialState: function () {
+            return {
+                cells: this.props.cells
+            };
+        },
+
         focusCell: function (x, y) {
             var isHighlighted = utils.highlights(x, y),
                 valueInFocus = this.getCell(x, y).value;
@@ -86,9 +92,9 @@ define([
             return React.DOM.svg({
                 width: utils.position(9),
                 height: utils.position(9),
-                tabIndex: "0",
+                tabIndex: '0',
                 onKeyDown: this.onKeyDown,
-                className: "sudoku__grid"
+                className: 'sudoku__grid'
             }, cells);
         }
     });
