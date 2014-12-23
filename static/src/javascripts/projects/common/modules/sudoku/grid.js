@@ -40,7 +40,7 @@ define([
         },
 
         getCell: function(x, y) {
-            return this.cells[y * 9 + n];
+            return this.state.cells[y * 9 + x];
         },
 
         mapCells: function (f) {
@@ -82,10 +82,11 @@ define([
         },
 
         render: function () {
-            var cells = _.map(this.state.cells, function (cell) {
+            var self = this,
+                cells = _.map(this.state.cells, function (cell) {
                 var data = _.extend({}, cell, {
                     key: cell.x + '_' + cell.y,
-                    onClick: this.focusCell
+                    onClick: self.focusCell
                 });
 
                 return Cell(data);
