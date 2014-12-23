@@ -135,10 +135,10 @@ define([
 
             try {
                 return self.getWeatherData(weatherApiUrl + '/' + location.id + '.json').then(function (response) {
-                        self.render(response[0], location.city);
-                    }).fail(function() {
-                        self.failedRequest();
-                    });
+                    self.render(response[0], location.city);
+                }).fail(function () {
+                    self.failedRequest();
+                });
             } catch (e) {
                 raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
                     tags: {
@@ -148,7 +148,7 @@ define([
             }
         },
 
-        failedRequest: function() {
+        failedRequest: function () {
             raven.captureException(new Error('Error retrieving weather data'), {
                 tags: {
                     feature: 'weather'
@@ -197,8 +197,6 @@ define([
         render: function (weatherData, city) {
             $weather = $('.weather');
             $holder = $('.js-weather');
-
-            console.log('render');
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,

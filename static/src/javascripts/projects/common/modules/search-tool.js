@@ -53,13 +53,14 @@ define([
             },
 
             pushData: function () {
-                var $active = $('.active', $list);
+                var $active = $('.active', $list),
+                    data    = {};
 
                 if ($active.length === 0) {
                     return false;
                 }
 
-                var data = {
+                data = {
                     'id': $active.attr('data-weather-id'),
                     'city': $active.attr('data-weather-city')
                 };
