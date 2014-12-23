@@ -176,7 +176,8 @@ define([
             }), Controls({
                 x: constants.controlsLeftMargin,
                 y: gridSize + constants.controlsTopMargin,
-                onClickNumber: this.setFocussedValue
+                onClickNumber: this.setFocussedValue,
+                onClickDelete: this.unsetFocussedValue
             }), cells);
         }
     });

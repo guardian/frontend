@@ -37,11 +37,14 @@ define([
                 x = this.props.x,
                 y = this.props.y,
                 buttonsPerRow = 7,
+                buttonOffset = function (n) {
+                    return n * (constants.buttonSize + constants.buttonMargin);
+                },
                 numberButtons = _.map(_.range(9), function (n) {
                     var col = n % buttonsPerRow,
                         row = Math.floor(n / buttonsPerRow),
-                        buttonX = x + col * (constants.buttonSize + constants.buttonMargin),
-                        buttonY = y + row * (constants.buttonSize + constants.buttonMargin);
+                        buttonX = x + buttonOffset(col),
+                        buttonY = y + buttonOffset(row);
 
                     return Button({
                         key: 'button_' + n,
@@ -57,6 +60,15 @@ define([
             return React.DOM.g({
                 className: 'sudoku__controls'
             },
+                Button({
+                    key: 'button_erase',
+                    x: x + buttonOffset(2),
+                    y: y + buttonOffset(1),
+                    text: '-',
+                    onClick: function () {
+                        self.props.onClickDelete();
+                    }
+                }),
                 numberButtons
             );
         }
