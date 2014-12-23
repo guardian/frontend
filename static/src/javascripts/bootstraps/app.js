@@ -62,6 +62,12 @@ define([
                 });
             }
 
+            if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
+                require(['bootstraps/sudoku'], function (sudoku) {
+                    bootstrapContext('sudoku', sudoku);
+                });
+            }
+
             if (config.page.contentType === 'Article') {
                 bootstrapContext('article', article);
             }
