@@ -23,9 +23,11 @@ define([
                 y = utils.position(this.props.y),
                 jottingX = function (n) {
                     return x + constants.jottingXOffset + ((n - 1) % 3) * constants.jottingWidth;
-                }, jottingY = function (n) {
+                },
+                jottingY = function (n) {
                     return y + constants.jottingYOffset + Math.floor((n - 1) / 3) * constants.jottingHeight;
-                }, innerCells = _.compact([
+                },
+                innerCells = _.compact([
                     React.DOM.rect({
                         key: 'background',
                         x: x,
@@ -57,7 +59,8 @@ define([
                     'sudoku__cell--not-editable': !this.props.isEditable,
                     'sudoku__cell--highlighted': this.props.isHighlighted,
                     'sudoku__cell--focussed': this.props.isFocussed,
-                    'sudoku__cell--same-value': this.props.isSameValue
+                    'sudoku__cell--same-value': this.props.isSameValue,
+                    'sudoku__cell--error': this.props.isError
                 })
             }, innerCells);
         }

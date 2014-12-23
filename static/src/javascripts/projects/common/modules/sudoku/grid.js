@@ -32,6 +32,60 @@ define([
             this.updateCellStatesAndRender();
         },
 
+        highlightDuplicatesInRange: function (cells) {
+            var cellsByValue = _.map(_.range(9), function () {
+                return [];
+            });
+
+            _.forEach(cells, function (cell) {
+                if (cell.value) {
+                    cellsByValue[cell.value - 1].push(cell);
+                }
+            });
+
+            _.forEach(cellsByValue, function (cells) {
+                if (cells.length > 1) {
+                    _.forEach(cells, function (cell) {
+                        cell.isError = true;
+                    });
+                }
+            });
+        },
+
+        highlightErrors: function () {
+            var self = this, rows, columns, squares;
+
+            this.mapCells(function (cell) {
+                return _.extend({}, cell, {
+                    isError: false
+                });
+            });
+
+            rows = _.map(_.range(9), function (y) {
+                return _.map(_.range(9), function (x) {
+                    return self.getCell(x, y);
+                });
+            });
+
+            columns = _.map(_.range(9), function (x) {
+                return _.map(_.range(9), function (y) {
+                    return self.getCell(x, y);
+                })
+            });
+
+            squares = flatMap(_.range(3), function (x) {
+                return _.map(_.range(3), function (y) {
+                    return flatMap(_.range(3), function (dx) {
+                        return _.map(_.range(3), function (dy) {
+                            return self.getCell(x * 3 + dx, y * 3 + dy);
+                        });
+                    });
+                });
+            });
+
+            _.forEach(rows.concat(columns, squares), _.bind(this.highlightDuplicatesInRange, this));
+        },
+
         updateCellStatesAndRender: function () {
             var focus = this.state.focus,
                 isHighlighted = focus ? utils.highlights(focus.x, focus.y) : _.constant(false),
@@ -46,6 +100,7 @@ define([
                 });
             });
 
+            this.highlightErrors();
             this.forceUpdate();
         },
 

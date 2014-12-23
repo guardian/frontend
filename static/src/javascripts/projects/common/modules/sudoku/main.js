@@ -26,7 +26,8 @@ define([
                                 isEditable: sudokuData[x][y] === null,
                                 isFocussed: false,
                                 isHighlighted: false,
-                                isSameValue: false
+                                isSameValue: false,
+                                isError: false
                             };
                         });
                     });

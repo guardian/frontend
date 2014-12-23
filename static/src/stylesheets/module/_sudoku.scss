@@ -19,8 +19,8 @@
     fill: lighten(colour(crosswordAccent2), 10%);
 }
 
-.sudoku__cell--same-value .sudoku__cell-text {
-    fill: colour(sudoku-accent-3);
+.sudoku__cell--error .sudoku__cell-text {
+    fill: colour(error)
 }
 
 .sudoku__cell-text {
