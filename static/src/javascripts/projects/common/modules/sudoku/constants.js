@@ -1,9 +1,13 @@
 define([], function () {
     return {
-        cellSize: 30,
+        cellSize: 40,
         borderSize: 1,
-        textXOffset: 15,
-        textYOffset: 25,
+        jottingXOffset: 8,
+        jottingYOffset: 11,
+        jottingWidth: 12,
+        jottingHeight: 13,
+        textXOffset: 20,
+        textYOffset: 33,
         keyLeft: 37,
         keyUp: 38,
         keyRight: 39,

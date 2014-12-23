@@ -17,11 +17,15 @@ define([
         },
 
         render: function () {
-            var value = this.props.value,
+            var self = this,
+                value = this.props.value,
                 x = utils.position(this.props.x),
-                y = utils.position(this.props.y);
-
-            var innerCells = _.compact([
+                y = utils.position(this.props.y),
+                jottingX = function (n) {
+                    return x + constants.jottingXOffset + ((n - 1) % 3) * constants.jottingWidth;
+                }, jottingY = function (n) {
+                    return y + constants.jottingYOffset + Math.floor((n - 1) / 3) * constants.jottingHeight;
+                }, innerCells = _.compact([
                 React.DOM.rect({
                     key: 'background',
                     x: x,
@@ -37,7 +41,15 @@ define([
                     className: 'sudoku__cell-text',
                     onClick: this.onClick
                 }, value): null
-            ]);
+            ]).concat(_.map(this.props.jottings, function (n) {
+                return React.DOM.text({
+                    key: 'jotting_' + n,
+                    x: jottingX(n),
+                    y: jottingY(n),
+                    className: 'sudoku__cell-jotting',
+                    onClick: self.onClick
+                }, n);
+            }));
 
             return React.DOM.g({
                 className: React.addons.classSet({

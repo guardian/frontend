@@ -15,14 +15,14 @@ define([
     return function () {
         $('.js-sudoku').each(function (element) {
             if (element.hasAttribute('data-sudoku-data')) {
-                var sudokuData = JSON.parse(element.getAttribute('data-sudoku-data'));
-
-                var cells = flatMap(_.range(9), function (y) {
+                var sudokuData = JSON.parse(element.getAttribute('data-sudoku-data')),
+                    cells = flatMap(_.range(9), function (y) {
                     return _.map(_.range(9), function (x) {
                         return {
                             x: x,
                             y: y,
                             value: sudokuData[x][y],
+                            jottings: [],
                             isEditable: sudokuData[x][y] === null,
                             isFocussed: false,
                             isHighlighted: false,

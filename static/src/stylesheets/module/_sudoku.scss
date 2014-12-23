@@ -25,7 +25,15 @@
 
 .sudoku__cell-text {
     cursor: pointer;
-    font-size: 28px;
+    font-size: 38px;
+    text-anchor: middle;
+    font-family: $f-sans-serif-text;
+}
+
+.sudoku__cell-jotting {
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 10px;
     text-anchor: middle;
     font-family: $f-sans-serif-text;
 }

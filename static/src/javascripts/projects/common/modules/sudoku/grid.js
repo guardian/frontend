@@ -47,17 +47,30 @@ define([
             this.forceUpdate();
         },
 
+        addJotting: function (n) {
+            var focussed = this.getFocussedCell();
+
+            if (focussed.isEditable) {
+                focussed.value = null;
+
+                if (_.contains(focussed.jottings, n)) {
+                    focussed.jottings = _.without(focussed.jottings, n);
+                } else {
+                    focussed.jottings.push(n);
+                }
+
+                this.updateCellStatesAndRender();
+            }
+        },
+
         setFocussedValue: function (n) {
             var focussed = this.getFocussedCell();
 
-            if (n >= 1 && n <= 9) {
-                if (focussed.isEditable) {
-                    focussed.value = n;
+            if (focussed.isEditable) {
+                focussed.value = n;
+                focussed.jottings = [];
 
-                    this.updateCellStatesAndRender();
-                }
-            } else {
-                console.error("Cannot set focussed value to " + n);
+                this.updateCellStatesAndRender();
             }
         },
 
@@ -109,9 +122,14 @@ define([
                 } else {
                     var n = utils.numberFromKeyCode(event.keyCode);
 
-                    if (n !== null) {
+                    if (n !== null && n > 0) {
                         event.preventDefault();
-                        this.setFocussedValue(n);
+
+                        if (event.ctrlKey) {
+                            this.addJotting(n);
+                        } else {
+                            this.setFocussedValue(n);
+                        }
                     }
                 }
             }
