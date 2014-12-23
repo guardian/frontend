@@ -1,6 +1,5 @@
 /* jshint newcap: false */
 define([
-    'common/utils/_',
     'react',
     'common/modules/sudoku/constants'
 ], function (
@@ -20,9 +19,9 @@ define([
             var squareX = Math.floor(x / 3),
                 squareY = Math.floor(y / 3);
 
-            return x == focusX ||
-                y == focusY ||
-                squareX == focusSquareX && squareY == focusSquareY;
+            return x === focusX ||
+                y === focusY ||
+                squareX === focusSquareX && squareY === focusSquareY;
         };
     }
 

@@ -1,11 +1,13 @@
 /* jshint newcap: false */
 define([
+    'common/utils/_',
     'react',
     'common/modules/sudoku/cell',
     'common/modules/sudoku/constants',
     'common/modules/sudoku/flatMap',
     'common/modules/sudoku/utils'
 ], function (
+    _,
     React,
     Cell,
     constants,
@@ -86,7 +88,7 @@ define([
                     onClick: this.focusCell
                 });
 
-                return new Cell(data);
+                return Cell(data);
             });
 
             return React.DOM.svg({

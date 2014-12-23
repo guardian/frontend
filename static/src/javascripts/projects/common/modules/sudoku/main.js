@@ -31,9 +31,9 @@ define([
                     });
                 });
 
-                React.renderComponent(new Grid({
+                React.renderComponent(Grid({
                     cells: cells
-                }, element))
+                }), element);
             } else {
                 console.error('JavaScript Sudoku without associated "data-sudoku-data" attribute.', element);
             }

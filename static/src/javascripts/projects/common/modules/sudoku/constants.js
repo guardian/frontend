@@ -1,4 +1,4 @@
-define(function () {
+define([], function () {
     return {
         cellSize: 30,
         borderSize: 1,
