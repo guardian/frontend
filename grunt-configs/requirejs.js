@@ -80,6 +80,17 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        sudoku: {
+            options: {
+                name: 'bootstraps/sudoku',
+                out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',
