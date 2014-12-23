@@ -12,7 +12,7 @@ object CityResponse {
 
   def fromLocationResponses(locations: List[LocationResponse]) = {
     def cityAndCountry(location: LocationResponse) =
-      (location.EnglishName, location.Country.EnglishName)
+      (location.LocalizedName, location.Country.LocalizedName)
 
     val citiesWithSameNameByCountry = locations.map({ location => Map(cityAndCountry(location) -> 1) }).suml
 
@@ -20,14 +20,14 @@ object CityResponse {
       val needsDisambiguating = citiesWithSameNameByCountry.get(cityAndCountry(location)).exists(_ > 1)
 
       val cityName = if (needsDisambiguating)
-        s"${location.EnglishName}, ${location.AdministrativeArea.EnglishName}"
+        s"${location.LocalizedName}, ${location.AdministrativeArea.LocalizedName}"
       else
-        location.EnglishName
+        location.LocalizedName
 
       CityResponse(
         location.Key,
         cityName,
-        location.Country.EnglishName
+        location.Country.LocalizedName
       )
     }
   }
