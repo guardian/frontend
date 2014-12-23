@@ -10,7 +10,8 @@ define([
     var Button = React.createClass({
         render: function () {
             return React.DOM.g({
-                    className: 'sudoku__button'
+                    className: 'sudoku__button',
+                    onClick: this.props.onClick
                 },
                 React.DOM.rect({
                     className: 'sudoku__button-background',
@@ -19,8 +20,7 @@ define([
                     rx: constants.buttonBorderRadius,
                     ry: constants.buttonBorderRadius,
                     width: constants.buttonSize,
-                    height: constants.buttonSize,
-                    onClick: this.props.onClick
+                    height: constants.buttonSize
                 }), React.DOM.text({
                     className: 'sudoku__button-text',
                     x: this.props.x + constants.buttonSize / 2,
@@ -32,7 +32,8 @@ define([
 
     return React.createClass({
         render: function () {
-            var x = this.props.x,
+            var self = this,
+                x = this.props.x,
                 y = this.props.y,
                 buttonsPerRow = 7,
                 numberButtons = _.map(_.range(9), function (n) {
@@ -47,7 +48,7 @@ define([
                         y: buttonY,
                         text: n + 1 + "",
                         onClick: function () {
-                            console.log("Clicked " + n + 1);
+                            self.props.onClickNumber(n + 1);
                         }
                     })
             });

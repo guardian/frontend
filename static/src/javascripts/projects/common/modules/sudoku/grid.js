@@ -68,7 +68,7 @@ define([
         setFocussedValue: function (n) {
             var focussed = this.getFocussedCell();
 
-            if (focussed.isEditable) {
+            if (focussed && focussed.isEditable) {
                 focussed.value = n;
                 focussed.jottings = [];
 
@@ -174,7 +174,8 @@ define([
                 height: gridSize
             }), Controls({
                 x: constants.controlsLeftMargin,
-                y: gridSize + constants.controlsTopMargin
+                y: gridSize + constants.controlsTopMargin,
+                onClickNumber: this.setFocussedValue
             }), cells);
         }
     });

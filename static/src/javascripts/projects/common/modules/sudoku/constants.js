@@ -6,7 +6,7 @@ define([], function () {
         buttonSize: 45,
         buttonMargin: 9,
         buttonTopMargin: 37,
-        controlsLeftMargin: 1,
+        controlsLeftMargin: 2,
         controlsTopMargin: 10,
         controlsHeight: 100,
         jottingXOffset: 8,
