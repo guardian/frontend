@@ -1,10 +1,10 @@
 /* jshint newcap: false */
 define([
     'react',
-    'common/modules/crosswords/cell',
-    'common/modules/crosswords/constants',
-    'common/modules/crosswords/flatMap',
-    'common/modules/crosswords/utils'
+    'common/modules/sudoku/cell',
+    'common/modules/sudoku/constants',
+    'common/modules/sudoku/flatMap',
+    'common/modules/sudoku/utils'
 ], function (
     React,
     Cell,

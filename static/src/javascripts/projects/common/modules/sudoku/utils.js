@@ -2,7 +2,7 @@
 define([
     'common/utils/_',
     'react',
-    'common/modules/crosswords/constants'
+    'common/modules/sudoku/constants'
 ], function (
     React,
     constants

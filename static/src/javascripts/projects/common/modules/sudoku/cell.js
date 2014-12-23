@@ -2,8 +2,8 @@
 define([
     'common/utils/_',
     'react',
-    'common/modules/crosswords/constants',
-    'common/modules/crosswords/utils'
+    'common/modules/sudoku/constants',
+    'common/modules/sudoku/utils'
 ], function (
     _,
     React,
