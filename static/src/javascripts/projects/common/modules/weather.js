@@ -95,7 +95,8 @@ define([
             return ajax({
                 url: url,
                 type: 'json',
-                method: 'get'
+                method: 'get',
+                crossOrigin: true
             });
         },
 
@@ -196,6 +197,8 @@ define([
         render: function (weatherData, city) {
             $weather = $('.weather');
             $holder = $('.js-weather');
+
+            console.log('render');
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,

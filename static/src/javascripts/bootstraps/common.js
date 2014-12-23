@@ -447,9 +447,11 @@ define([
             },
 
             initWeatherComponent: function () {
-                if (config.switches && config.switches.weather && detect.hasGeoLocation()) {
-                    weather.init();
-                }
+                mediator.on('page:common:ready', function () {
+                    if (config.switches && config.switches.weather && detect.hasGeoLocation()) {
+                        weather.init();
+                    }
+                });
             }
 
         },
