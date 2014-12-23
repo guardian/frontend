@@ -37,3 +37,19 @@
     text-anchor: middle;
     font-family: $f-sans-serif-text;
 }
+
+.sudoku__button-background {
+    cursor: pointer;
+    fill: #d7d7d7;
+
+    .sudoku__button:hover & {
+        fill: lighten(colour(crosswordAccent2), 30%);
+    }
+}
+
+.sudoku__button-text {
+    cursor: pointer;
+    text-anchor: middle;
+    font-family: $f-sans-serif-text;
+    font-size: 42px;
+}

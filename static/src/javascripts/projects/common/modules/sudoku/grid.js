@@ -3,6 +3,7 @@ define([
     'common/utils/_',
     'react',
     'common/modules/sudoku/cell',
+    'common/modules/sudoku/controls',
     'common/modules/sudoku/constants',
     'common/modules/sudoku/flatMap',
     'common/modules/sudoku/utils'
@@ -10,6 +11,7 @@ define([
     _,
     React,
     Cell,
+    Controls,
     constants,
     flatMap,
     utils
@@ -148,16 +150,20 @@ define([
 
             return React.DOM.svg({
                 width: gridSize,
-                height: gridSize,
+                height: gridSize + constants.controlsTopMargin + constants.controlsHeight,
                 tabIndex: '0',
                 onKeyDown: this.onKeyDown,
-                className: 'sudoku__grid'
+                className: 'sudoku__grid',
+                viewBox: '0 0 ' + gridSize + ' ' + (gridSize + constants.controlsTopMargin + constants.controlsHeight)
             }, React.DOM.rect({
                 className: 'sudoku__background',
                 x: 0,
                 y: 0,
                 width: gridSize,
                 height: gridSize
+            }), Controls({
+                x: constants.controlsLeftMargin,
+                y: gridSize + constants.controlsTopMargin
             }), cells);
         }
     });

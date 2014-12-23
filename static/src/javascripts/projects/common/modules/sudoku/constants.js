@@ -2,6 +2,13 @@ define([], function () {
     return {
         cellSize: 40,
         borderSize: 1,
+        buttonBorderRadius: 8,
+        buttonSize: 45,
+        buttonMargin: 5,
+        buttonTopMargin: 37,
+        controlsLeftMargin: 1,
+        controlsTopMargin: 10,
+        controlsHeight: 100,
         jottingXOffset: 8,
         jottingYOffset: 11,
         jottingWidth: 12,
