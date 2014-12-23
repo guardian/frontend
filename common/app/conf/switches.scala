@@ -405,6 +405,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
+    "If this is switched on container titles stick to the bottom of the page",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",

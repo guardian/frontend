@@ -1,11 +1,13 @@
 define([
     'common/utils/$',
     'common/utils/_',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/mediator'
 ], function (
     $,
     _,
-    detect
+    detect,
+    mediator
     ) {
 
     var w = window,
@@ -70,7 +72,7 @@ define([
     }
 
     function init() {
-        if (['desktop', 'wide'].indexOf(detect.getBreakpoint(true)) > -1) {
+        if (['leftCol', 'wide'].indexOf(detect.getBreakpoint(true)) > -1) {
             headers = Array.prototype.slice.call(document.querySelectorAll('section:not(.fc-container--thrasher) .js-container__header')).filter(function (section) {
                 return section.querySelector('.fc-container__header__title');
             });
@@ -101,19 +103,17 @@ define([
             }, 0);
 
             getMetrics();
+            setInterval(getMetrics, 500);
+
             setPositions();
+            mediator.on('window:scroll', _.throttle(setPositions, 10));
 
             $(stickyTitlesContainer).css('visibility', 'visible');
 
-            setInterval(getMetrics, 500);
-            setInterval(setPositions, 50);
-
             stickyTitles.forEach(function (el, index) {
                 el.addEventListener('click', function (e) {
-                    if (el.classList.contains('fixed')) {
-                        w.scrollTo(0, headerPositions[index]);
-                        e.preventDefault();
-                    }
+                    w.scrollTo(0, headerPositions[index]);
+                    e.preventDefault();
                 });
             });
         }

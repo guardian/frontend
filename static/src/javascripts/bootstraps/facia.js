@@ -13,8 +13,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
-    'facia/modules/ui/snaps',
-    'common/modules/ui/sticky-container-titles'
+    'facia/modules/ui/snaps'
 ], function (
     bonzo,
     qwery,
@@ -28,8 +27,7 @@ define([
     GeoMostPopularFront,
     ContainerToggle,
     ContainerShowMore,
-    snaps,
-    stickyContainerTitles
+    snaps
 ) {
 
     var modules = {
@@ -76,19 +74,12 @@ define([
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
-            },
-
-            showStickyContainerTitles: function () {
-                if (true || config.switches.showStickContainerTitles) {
-                    stickyContainerTitles.init();
-                }
             }
         },
 
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                modules.showStickyContainerTitles();
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
