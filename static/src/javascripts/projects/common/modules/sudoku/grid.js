@@ -33,16 +33,16 @@ define([
         },
 
         updateCellStatesAndRender: function () {
-            var focus = this.state.focus;
-
-            var isHighlighted = utils.highlights(focus.x, focus.y),
-                valueInFocus = this.getFocussedCell().value;
+            var focus = this.state.focus,
+                isHighlighted = focus ? utils.highlights(focus.x, focus.y) : _.constant(false),
+                focussedCell = this.getFocussedCell(),
+                valueInFocus = focussedCell ? focussedCell.value : null;
 
             this.mapCells(function (cell) {
                 return _.extend({}, cell, {
                     isHighlighted: isHighlighted(cell.x, cell.y),
                     isSameValue: cell.value && cell.value === valueInFocus,
-                    isFocussed: cell.x === focus.x && cell.y === focus.y
+                    isFocussed: focus && cell.x === focus.x && cell.y === focus.y
                 });
             });
 
@@ -91,12 +91,22 @@ define([
 
         getFocussedCell: function() {
             var focus = this.state.focus;
-            return this.getCell(focus.x, focus.y);
+
+            if (focus) {
+                return this.getCell(focus.x, focus.y);
+            } else {
+                return null;
+            }
         },
 
         mapCells: function (f) {
             this.state.cells = _.map(this.state.cells, f);
             this.forceUpdate();
+        },
+
+        onBlur: function (event) {
+            this.state.focus = null;
+            this.updateCellStatesAndRender();
         },
 
         onKeyDown: function (event) {
@@ -154,7 +164,8 @@ define([
                 tabIndex: '0',
                 onKeyDown: this.onKeyDown,
                 className: 'sudoku__grid',
-                viewBox: '0 0 ' + gridSize + ' ' + (gridSize + constants.controlsTopMargin + constants.controlsHeight)
+                viewBox: '0 0 ' + gridSize + ' ' + (gridSize + constants.controlsTopMargin + constants.controlsHeight),
+                onBlur: this.onBlur
             }, React.DOM.rect({
                 className: 'sudoku__background',
                 x: 0,
