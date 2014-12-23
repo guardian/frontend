@@ -6,25 +6,25 @@
 @import views.html.fragments.items.facia_cards.contentCard
 
 @defining((card.item, card.index)) { case (item, index) =>
-    <li class="@RenderClasses(Map(
-            ("fc-slice__item", true),
-            ("u-faux-block-link", true),
-            ("l-row__item", isRow),
-            (s"l-row__item--span-$colSpan", isRow),
-            ("l-list__item", isList),
-            (card.cssClasses, true)
-        ))">
+<li class="@RenderClasses(Map(
+    ("fc-slice__item", true),
+    ("u-faux-block-link", true),
+    ("l-row__item", isRow),
+    (s"l-row__item--span-$colSpan", isRow),
+    ("l-list__item", isList),
+    (card.cssClasses, true)
+))">
 
-        @defining(containerIndex == 0) { case (isFirstContainer) =>
-            @item match {
-                case content: ContentCard => {
-                    @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
-                }
-
-                case htmlBlob: HtmlBlob => {
-                    <div class="@GetClasses.forHtmlBlob(htmlBlob)">@htmlBlob.html</div>
-                }
-            }
+@defining(containerIndex == 0) { case (isFirstContainer) =>
+    @item match {
+        case content: ContentCard => {
+            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
         }
-    </li>
+
+        case htmlBlob: HtmlBlob => {
+            <div class="@GetClasses.forHtmlBlob(htmlBlob)">@htmlBlob.html</div>
+        }
+    }
+}
+</li>
 }

@@ -122,6 +122,11 @@ object ContentApiMetrics {
     "Elastic Content api calls that timeout"
   )
 
+  object ContentApiErrorMetric extends CountMetric(
+    "content-api-errors",
+    "Number of times the Content API returns errors (not counting when circuit breaker is on)"
+  )
+
   object ContentApi404Metric extends CountMetric(
     "content-api-404",
     "Number of times the Content API has responded with a 404"

@@ -29,6 +29,19 @@ trait MatchListController extends Controller with Requests {
     }
   }
 
+  protected def renderMoreMatches(page: Page, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader) = {
+    Cached(10) {
+      if(request.isJson)
+        JsonComponent(
+          "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
+          "next" -> Html(matchesList.nextPage.getOrElse("")),
+          "previous" -> Html(matchesList.previousPage.getOrElse(""))
+        )
+      else
+        Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
+    }
+  }
+
   protected def lookupCompetition(tag: String): Option[Competition] = {
     Competitions().withTag(tag).orElse(Competitions().withId(tag))
   }

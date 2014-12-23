@@ -18,6 +18,7 @@ object Global
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerOnOpen
+    ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
+    ContentApiMetrics.ContentApiErrorMetric
   )
 }
