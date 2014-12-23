@@ -1,5 +1,6 @@
 /* jshint newcap: false */
 define([
+    'common/utils/_',
     'react',
     'common/modules/crosswords/constants'
 ], function (
@@ -13,16 +14,32 @@ define([
 
     function highlights(focusX, focusY) {
         var focusSquareX = Math.floor(focusX / 3),
-            focusSquareY = Math.floor(focusY / 3);
+            focusSquareY = Math.floor(focusY / 3),
+            column = _.map(_.range(9), function (y) {
+            return {
+                x: focusX,
+                y: y
+            };
+        }), row = _.map(_.range(9), function (x) {
+            return {
+                x: x,
+                y: focusY
+            };
+        }), square = _.flatten(_.map(_.range(focusSquareX, focusSquareX + 3), function (x) {
+            return _.map(_.range(focusSquareY, focusSquareY + 3), function (y) {
+                return {
+                    x: x,
+                    y: y
+                }
+            })
+        }));
 
-        return function (x, y) {
-            var squareX = Math.floor(x / 3),
-                squareY = Math.floor(y / 3);
-
-            return x == focusX ||
-                y == focusY ||
-                squareX == focusSquareX && squareY == focusSquareY;
-        };
+        return _.filter(_.uniq(column.concat(row).concat(square), false, function (position) {
+            /** A key function is needed, as Objects in JavaScript use reference equality */
+            return position.x + "_" + position.y;
+        }), function (position) {
+            return !(position.x === focusX && position.y === focusY);
+        });
     }
 
     return {
