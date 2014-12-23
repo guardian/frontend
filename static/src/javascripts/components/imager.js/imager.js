@@ -36,8 +36,6 @@ ImagerStrategyOptions;
 function Imager (collection, options) {
     options = options || {};
 
-    this.matchingClassName = (options.placeholder && options.placeholder.matchingClassName) || 'none' // TODO temporary code
-
     this.update(collection);
     options.strategy = options.strategy || 'replacer';
     this.replacementDelay = (options.hasOwnProperty('replacementDelay')) ? options.replacementDelay : 200;
@@ -96,44 +94,17 @@ Imager.prototype.update = function updateNodes (collection) {
 };
 
 /**
- * change
- * http://static.guim.co.uk /sys-images/Guardian/Pix/pictures/2014/3/13/1394733741000/JonathanJones.png
- * http://i.guim.co.uk/static/w-10/h--/q-95 /sys-images/Guardian/Pix/pictures/2014/3/13/1394733741000/JonathanJones.png
- * @param url
- * @returns {*}
- */
-Imager.changeToResizer = function changeToResizer (url) {
-
-    if ((url.slice(-'.png'.length) == '.png') && (url.indexOf('http://static.guim.co.uk/') === 0)) {
-        return url.replace('http://static.guim.co.uk', 'http://i.guim.co.uk/static/w-10/h--/q-95');
-    }
-    return undefined;
-};
-
-/**
  * Updates the responsive image source with a better URI
  */
 Imager.prototype.updateImagesSource = function updateImagesSource () {
     var i = this.nodes.length,
         self = this,
-        strategy = self.strategy,
-        srcUrl,
-        updatedUrl;
+        strategy = self.strategy;
 
     while (i--) {
-        // TODO temp code to put some load on the PNG resizer
-        if (this.matchingClassName && this.matchingClassName === 'resized-png-img') {
-            srcUrl = this.nodes[i].getAttribute('data-src');
-            updatedUrl = Imager.changeToResizer(srcUrl);
-            if (updatedUrl) {
-                strategy.updatePlaceholderUri(this.nodes[i], updatedUrl);
-            }
-        } else {
-            // END temp code
-            strategy.updatePlaceholderUri(this.nodes[i], Imager.replaceUri(this.nodes[i].getAttribute('data-src'), {
-                'width': self.getBestWidth(this.nodes[i].clientWidth, this.nodes[i].getAttribute('data-width'))
-            }));
-        }
+        strategy.updatePlaceholderUri(this.nodes[i], Imager.replaceUri(this.nodes[i].getAttribute('data-src'), {
+            'width': self.getBestWidth(this.nodes[i].clientWidth, this.nodes[i].getAttribute('data-width'))
+        }));
     }
 };
 
