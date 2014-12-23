@@ -70,7 +70,7 @@ define([
             columns = _.map(_.range(9), function (x) {
                 return _.map(_.range(9), function (y) {
                     return self.getCell(x, y);
-                })
+                });
             });
 
             squares = flatMap(_.range(3), function (x) {
