@@ -2,10 +2,12 @@
 define([
     'common/utils/_',
     'react',
-    'common/modules/crosswords/constants'
+    'common/modules/crosswords/constants',
+    'common/modules/crosswords/flatMap'
 ], function (
     React,
-    constants
+    constants,
+    flatMap
 ) {
     function position(a) {
         return (Math.floor(a / 3) + 2) * constants.borderSize +
@@ -25,14 +27,14 @@ define([
                 x: x,
                 y: focusY
             };
-        }), square = _.flatten(_.map(_.range(focusSquareX, focusSquareX + 3), function (x) {
+        }), square = flatMap(_.range(focusSquareX, focusSquareX + 3), function (x) {
             return _.map(_.range(focusSquareY, focusSquareY + 3), function (y) {
                 return {
                     x: x,
                     y: y
                 }
             })
-        }));
+        });
 
         return _.filter(_.uniq(column.concat(row, square), false, function (position) {
             /** A key function is needed, as Objects in JavaScript use reference equality */
