@@ -89,15 +89,21 @@ define([
                 });
 
                 return Cell(data);
-            });
+            }), gridSize = utils.position(9);
 
             return React.DOM.svg({
-                width: utils.position(9),
-                height: utils.position(9),
+                width: gridSize,
+                height: gridSize,
                 tabIndex: '0',
                 onKeyDown: this.onKeyDown,
                 className: 'sudoku__grid'
-            }, cells);
+            }, React.DOM.rect({
+                className: 'sudoku__background',
+                x: 0,
+                y: 0,
+                width: gridSize,
+                height: gridSize
+            }), cells);
         }
     });
 });
