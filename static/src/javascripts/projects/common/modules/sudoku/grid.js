@@ -14,8 +14,21 @@ define([
 ) {
     return React.createClass({
         focusCell: function (x, y) {
-            // TODO fill me in
-            console.log("Focussing " + x + ":" + y);
+            this.state.focus = {
+                x: x,
+                y: y
+            };
+
+            this.mapCells(function (cell) {
+                return _.extend({}, cell, {
+
+                });
+            });
+        },
+
+        mapCells: function (f) {
+            this.state.cells = _.map(this.state.cells, f);
+            this.forceUpdate();
         },
 
         onKeyDown: function (event) {
@@ -52,12 +65,10 @@ define([
         },
 
         render: function () {
-            var cells = flatMap(this.state.cells, function (column) {
-                return _.map(column, function (cell) {
-                    var data = _.clone(cell);
-                    data.key = cell.x + '_' + cell.y;
-                    return new Cell(data);
-                });
+            var cells = _.map(this.state.cells, function (cell) {
+                var data = _.clone(cell);
+                data.key = cell.x + '_' + cell.y;
+                return new Cell(data);
             });
 
             return React.DOM.svg({
