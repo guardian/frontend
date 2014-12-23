@@ -38,17 +38,18 @@ define([
     weatherTemplate
     ) {
 
-    var self          = null,
-        $weather      = null,
-        $holder       = null,
-        searchTool    = null,
-        prefName      = 'weather-location',
-        getGeoStates  = {
+    var self           = null,
+        $weather       = null,
+        $holder        = null,
+        searchTool     = null,
+        prefName       = 'weather-location',
+        getGeoStates   = {
             process: 'Getting location...',
             error: 'Unable to get location...',
             defaultmsg: 'Detect my location'
         },
-        weatherApiUrl = '/weather/city';
+        weatherApiUrl  = '/weather/city',
+        locationApiUrl = '/weather/locations?query=';
 
     return {
         init: function () {
@@ -194,6 +195,14 @@ define([
                 + weatherData.Temperature[this.getUnits()].Unit;
         },
 
+        addSearch: function () {
+            searchTool = new SearchTool({
+                container: $('.js-search-tool'),
+                apiUrl: locationApiUrl
+            });
+            searchTool.init();
+        },
+
         render: function (weatherData, city) {
             $weather = $('.weather');
             $holder = $('.js-weather');
@@ -207,13 +216,7 @@ define([
 
             $weather.appendTo($holder);
             self.bindEvents();
-
-            // Initialize Search Tool
-            searchTool = new SearchTool({
-                container: $('.js-search-tool'),
-                apiUrl: '/weather/locations?query='
-            });
-            searchTool.init();
+            self.addSearch();
 
             // After first run override function to just update data
             self.render = function (weatherData) {
