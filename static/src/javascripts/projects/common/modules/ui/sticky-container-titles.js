@@ -83,7 +83,7 @@ define([
             titleOne = headerOne.querySelector('.fc-container__header__title');
             titleOneHeight = titleOne.offsetHeight;
 
-            headerOne.insertAdjacentHTML('beforeend',
+            $(headerOne).append(
                 '<div class="fc-container__header__title--stickies">' +
                     headers.map(function (header) {
                         return '<div class="fc-container__header__title--sticky">' + header.querySelector('.fc-container__header__title').innerText + '</div>';
