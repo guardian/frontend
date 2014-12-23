@@ -2,18 +2,18 @@
 define([
     'common/utils/$',
     'react',
-    'common/modules/crosswords/sudoku'
+    'common/modules/crosswords/grid'
 ], function (
     $,
     React,
-    Sudoku
+    Grid
 ) {
     return function () {
         $('.js-sudoku').each(function (element) {
             if (element.hasAttribute('data-sudoku-data')) {
                 var sudokuData = JSON.parse(element.getAttribute('data-sudoku-data'));
 
-                React.renderComponent(new Sudoku({
+                React.renderComponent(new Grid({
                     data: sudokuData
                 }, element))
             } else {
