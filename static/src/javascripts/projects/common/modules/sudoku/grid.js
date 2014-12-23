@@ -85,11 +85,11 @@ define([
             }
         },
 
-        getCell: function(x, y) {
+        getCell: function (x, y) {
             return this.state.cells[y * 9 + x];
         },
 
-        getFocussedCell: function() {
+        getFocussedCell: function () {
             var focus = this.state.focus;
 
             if (focus) {
@@ -104,13 +104,13 @@ define([
             this.forceUpdate();
         },
 
-        onBlur: function (event) {
+        onBlur: function () {
             this.state.focus = null;
             this.updateCellStatesAndRender();
         },
 
         onKeyDown: function (event) {
-            var x, y;
+            var x, y, n;
 
             if (this.state.focus) {
                 x = this.state.focus.x;
@@ -132,7 +132,7 @@ define([
                     event.preventDefault();
                     this.unsetFocussedValue();
                 } else {
-                    var n = utils.numberFromKeyCode(event.keyCode);
+                    n = utils.numberFromKeyCode(event.keyCode);
 
                     if (n !== null && n > 0) {
                         event.preventDefault();
@@ -150,13 +150,14 @@ define([
         render: function () {
             var self = this,
                 cells = _.map(this.state.cells, function (cell) {
-                var data = _.extend({}, cell, {
-                    key: cell.x + '_' + cell.y,
-                    onClick: self.focusCell
-                });
+                    var data = _.extend({}, cell, {
+                        key: cell.x + '_' + cell.y,
+                        onClick: self.focusCell
+                    });
 
-                return Cell(data);
-            }), gridSize = utils.position(9);
+                    return Cell(data);
+                }),
+                gridSize = utils.position(9);
 
             return React.DOM.svg({
                 width: gridSize,

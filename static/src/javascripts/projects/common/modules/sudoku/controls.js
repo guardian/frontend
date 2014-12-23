@@ -1,3 +1,4 @@
+/* jshint newcap: false */
 define([
     'common/utils/_',
     'react',
@@ -10,9 +11,9 @@ define([
     var Button = React.createClass({
         render: function () {
             return React.DOM.g({
-                    className: 'sudoku__button',
-                    onClick: this.props.onClick
-                },
+                className: 'sudoku__button',
+                onClick: this.props.onClick
+            },
                 React.DOM.rect({
                     className: 'sudoku__button-background',
                     x: this.props.x,
@@ -26,7 +27,7 @@ define([
                     x: this.props.x + constants.buttonSize / 2,
                     y: this.props.y + constants.buttonTopMargin
                 }, this.props.text)
-            )
+            );
         }
     });
 
@@ -46,12 +47,12 @@ define([
                         key: 'button_' + n,
                         x: buttonX,
                         y: buttonY,
-                        text: n + 1 + "",
+                        text: n + 1 + '',
                         onClick: function () {
                             self.props.onClickNumber(n + 1);
                         }
-                    })
-            });
+                    });
+                });
 
             return React.DOM.g({
                 className: 'sudoku__controls'
