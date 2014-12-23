@@ -4,6 +4,16 @@ import play.api.libs.json.{JsString, JsObject, Json}
 
 import scala.concurrent.Future
 
+object Sudoku {
+  implicit val jsonFormat = Json.format[Sudoku]
+}
+
+case class Sudoku(
+  id: String,
+  title: String,
+  grid: Seq[Seq[Option[Int]]]
+)
+
 object SudokuApi {
   def getData(id: String) = {
     /** Here's one I prepared earlier ...
@@ -11,7 +21,7 @@ object SudokuApi {
       * TODO: connect up with our actual Sudoku source of data.
       */
     Future.successful(
-      JsObject(Seq(
+      Json.fromJson[Sudoku](JsObject(Seq(
         "id" -> JsString("sudoku/123"),
         "title" -> JsString("Sudoku Easy 123"),
         "grid" -> Json.parse(
@@ -28,14 +38,9 @@ object SudokuApi {
               |    [null, 1, null, 2, null, null, null, 7, 5]
               |]
             """.stripMargin
-        )
-      ))
+          )
+        ))
+      ).asOpt
     )
   }
 }
-
-case class Sudoku(
-  id: String,
-  title: String,
-  grid: Seq[Seq[Option[Int]]]
-)
