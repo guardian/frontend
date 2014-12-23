@@ -56,29 +56,19 @@ define([
                 y = this.state.focus.y;
 
                 if (event.keyCode === constants.keyLeft && x > 0) {
-                    this.focusCell({
-                        x: x - 1,
-                        y: y
-                    });
+                    event.preventDefault();
+                    this.focusCell(x - 1, y);
                 } else if (event.keyCode === constants.keyRight && x < 8) {
-                    this.focusCell({
-                        x: x + 1,
-                        y: y
-                    });
+                    event.preventDefault();
+                    this.focusCell(x + 1, y);
                 } else if (event.keyCode === constants.keyUp && y > 0) {
-                    this.focusCell({
-                        x: x,
-                        y: y - 1
-                    });
+                    event.preventDefault();
+                    this.focusCell(x, y - 1);
                 } else if (event.keyCode === constants.keyDown && y < 8) {
-                    this.focusCell({
-                        x: x,
-                        y: y + 1
-                    });
+                    event.preventDefault();
+                    this.focusCell(x, y + 1);
                 }
             }
-
-            event.preventDefault();
         },
 
         render: function () {
