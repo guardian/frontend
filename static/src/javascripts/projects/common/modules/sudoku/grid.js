@@ -75,8 +75,11 @@ define([
 
         render: function () {
             var cells = _.map(this.state.cells, function (cell) {
-                var data = _.clone(cell);
-                data.key = cell.x + '_' + cell.y;
+                var data = _.extend({}, cell, {
+                    key: cell.x + '_' + cell.y,
+                    onClick: this.focusCell
+                });
+
                 return new Cell(data);
             });
 
