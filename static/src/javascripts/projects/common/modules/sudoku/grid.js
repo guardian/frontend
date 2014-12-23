@@ -1,11 +1,15 @@
 /* jshint newcap: false */
 define([
     'react',
+    'common/modules/crosswords/cell',
     'common/modules/crosswords/constants',
+    'common/modules/crosswords/flatMap',
     'common/modules/crosswords/utils'
 ], function (
     React,
+    Cell,
     constants,
+    flatMap,
     utils
 ) {
     return React.createClass({
@@ -48,7 +52,13 @@ define([
         },
 
         render: function () {
-            var cells = [];
+            var cells = flatMap(this.state.cells, function (column) {
+                return _.map(column, function (cell) {
+                    var data = _.clone(cell);
+                    data.key = cell.x + '_' + cell.y;
+                    return new Cell(data);
+                });
+            });
 
             return React.DOM.svg({
                 width: utils.position(9),

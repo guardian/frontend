@@ -12,7 +12,7 @@ define([
 ) {
     return React.createClass({
         onClick: function (event) {
-            this.props.onClick(this.props.x, this.props.y)
+            this.props.onClick(this.props.x, this.props.y);
             event.preventDefault();
         },
 
