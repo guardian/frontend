@@ -2,12 +2,10 @@
 define([
     'common/utils/_',
     'react',
-    'common/modules/crosswords/constants',
-    'common/modules/crosswords/flatMap'
+    'common/modules/crosswords/constants'
 ], function (
     React,
-    constants,
-    flatMap
+    constants
 ) {
     function position(a) {
         return (Math.floor(a / 3) + 2) * constants.borderSize +
