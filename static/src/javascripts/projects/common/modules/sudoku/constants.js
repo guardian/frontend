@@ -4,7 +4,7 @@ define([], function () {
         borderSize: 1,
         buttonBorderRadius: 8,
         buttonSize: 45,
-        buttonMargin: 5,
+        buttonMargin: 9,
         buttonTopMargin: 37,
         controlsLeftMargin: 1,
         controlsTopMargin: 10,
