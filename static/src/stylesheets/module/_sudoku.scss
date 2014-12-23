@@ -2,10 +2,6 @@
     outline: none;
 }
 
-.sudoku__background {
-
-}
-
 .sudoku__cell rect {
     fill: #ffffff;
     cursor: pointer;
@@ -16,18 +12,20 @@
 }
 
 .sudoku__cell--highlighted rect {
-    fill: #f5ffcf;
+    fill: lighten(colour(crosswordAccent2), 30%);
 }
 
 .sudoku__cell--focussed rect {
-    fill: #D6FBFF;
+    fill: lighten(colour(crosswordAccent2), 10%);
 }
 
 .sudoku__cell--same-value .sudoku__cell-text {
-    fill: blue;
+    fill: colour(sudoku-accent-3);
 }
 
 .sudoku__cell-text {
     cursor: pointer;
-    font: 28px Helvetica, Arial, Verdana, sans-serif;
+    font-size: 28px;
+    text-anchor: middle;
+    font-family: $f-sans-serif-text;
 }
