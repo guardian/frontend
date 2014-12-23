@@ -22,25 +22,61 @@ define([
         },
 
         focusCell: function (x, y) {
-            var isHighlighted = utils.highlights(x, y),
-                valueInFocus = this.getCell(x, y).value;
-
             this.state.focus = {
                 x: x,
                 y: y
             };
 
+            this.updateCellStatesAndRender();
+        },
+
+        updateCellStatesAndRender: function () {
+            var focus = this.state.focus;
+
+            var isHighlighted = utils.highlights(focus.x, focus.y),
+                valueInFocus = this.getFocussedCell().value;
+
             this.mapCells(function (cell) {
                 return _.extend({}, cell, {
                     isHighlighted: isHighlighted(cell.x, cell.y),
                     isSameValue: cell.value && cell.value === valueInFocus,
-                    isFocussed: cell.x === x && cell.y === y
+                    isFocussed: cell.x === focus.x && cell.y === focus.y
                 });
             });
+
+            this.forceUpdate();
+        },
+
+        setFocussedValue: function (n) {
+            var focussed = this.getFocussedCell();
+
+            if (n >= 1 && n <= 9) {
+                if (focussed.isEditable) {
+                    focussed.value = n;
+
+                    this.updateCellStatesAndRender();
+                }
+            } else {
+                console.error("Cannot set focussed value to " + n);
+            }
+        },
+
+        unsetFocussedValue: function () {
+            var focussed = this.getFocussedCell();
+
+            if (focussed.isEditable && focussed.value !== null) {
+                focussed.value = null;
+                this.updateCellStatesAndRender();
+            }
         },
 
         getCell: function(x, y) {
             return this.state.cells[y * 9 + x];
+        },
+
+        getFocussedCell: function() {
+            var focus = this.state.focus;
+            return this.getCell(focus.x, focus.y);
         },
 
         mapCells: function (f) {
@@ -67,6 +103,16 @@ define([
                 } else if (event.keyCode === constants.keyDown && y < 8) {
                     event.preventDefault();
                     this.focusCell(x, y + 1);
+                } else if (event.keyCode === constants.keyBackspace) {
+                    event.preventDefault();
+                    this.unsetFocussedValue();
+                } else {
+                    var n = utils.numberFromKeyCode(event.keyCode);
+
+                    if (n !== null) {
+                        event.preventDefault();
+                        this.setFocussedValue(n);
+                    }
                 }
             }
         },

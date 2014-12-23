@@ -25,8 +25,19 @@ define([
         };
     }
 
+    function numberFromKeyCode(keyCode) {
+        if (keyCode >= constants.key0 && keyCode <= constants.key9) {
+            return keyCode - constants.key0;
+        } else if (keyCode >= constants.keyPad0 && keyCode <= constants.keyPad9) {
+            return keyCode - constants.keyPad0;
+        } else {
+            return null;
+        }
+    }
+
     return {
         position: position,
-        highlights: highlights
+        highlights: highlights,
+        numberFromKeyCode: numberFromKeyCode
     };
 });
