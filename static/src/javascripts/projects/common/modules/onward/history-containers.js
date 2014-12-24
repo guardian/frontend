@@ -73,6 +73,8 @@ define([
         };
 
     function getFavouriteContainerIds(opts) {
+        opts = opts || {};
+
         var limitContainers = opts.maxContainers || maxContainers,
 
             favouriteTags = history.getPopular().map(function (pair) {
@@ -97,12 +99,15 @@ define([
         });
     }
 
+    function hasContainers() {
+        var containerIds = getFavouriteContainerIds();
+        return containerIds.length > 0;
+    }
+
     /* opts:
      *   maxContainers (int) - maximum number of containers to inject
      */
     function injectContainers(opts) {
-        opts = opts || {};
-
         var favouriteContainers = getFavouriteContainerIds(opts);
         if (favouriteContainers.length > 0) {
             Promise.all(favouriteContainers.map(fetchContainerHtml)).then(function (containers) {
@@ -116,6 +121,7 @@ define([
     }
 
     return {
+        hasContainers: hasContainers,
         injectContainers: injectContainers
     };
 });

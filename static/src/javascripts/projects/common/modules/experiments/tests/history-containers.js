@@ -19,7 +19,7 @@ define([
         this.idealOutcome = 'Users click through to more content as it is relevant to them';
 
         this.canRun = function () {
-            return true;
+            return historyContainers.hasContainers();
         };
 
         this.variants = [
