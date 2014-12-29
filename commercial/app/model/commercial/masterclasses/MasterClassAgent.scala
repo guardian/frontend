@@ -27,7 +27,9 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
 
     val futureMasterclasses = eventbriteEvents map { event =>
-      val contentId = event.guardianUrl.replace("http://www.theguardian.com/", "")
+      val contentId = event.guardianUrl
+        .replace("http://www.theguardian.com/", "")
+        .replaceFirst("\\?.*", "")
       Lookup.mainPicture(contentId) map { imageContainer =>
         MasterClass(event, imageContainer)
       } recover {
