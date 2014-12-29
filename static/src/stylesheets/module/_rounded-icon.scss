@@ -2,7 +2,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    width: 32px;
-    height: 32px;
+    min-idth: 32px;
+    min-height: 32px;
     @include border-radius(50%);
 }

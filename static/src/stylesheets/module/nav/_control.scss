@@ -53,36 +53,12 @@ $control-size: 36px;
     float: left;
     height: 34px;
     width: 34px;
+    text-align: center;
+    line-height: 3; // 3 x 14px = 42px
 
     .brand-bar__item--right & {
         @include mq(tablet) {
             display: none;
-        }
-    }
-}
-
-.control__icon {
-    display: block;
-    text-align: center;
-    height: 32px;
-    padding-top: 7px;
-
-    .i {
-        display: none;
-        margin: 0 auto;
-
-        &:first-child {
-            display: block;
-        }
-
-        .control:active &,
-        .control:focus &,
-        .control.is-active & {
-            display: block;
-
-            &:first-child {
-                display: none;
-            }
         }
     }
 }
