@@ -108,7 +108,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .live-pulse-icon:before {
-    @extend .rounded-icon;
+    @extend %rounded-icon;
 
     $size: 12px;
     background-color: #ffffff;
