@@ -40,7 +40,9 @@ trait Prototypes {
       "Akka" at "http://repo.akka.io/releases",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
+      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
+      Resolver.sonatypeRepo("snapshots"),
+      Resolver.sbtPluginRepo("snapshots")
     ),
 
     resolvers ++= Seq(
