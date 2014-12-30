@@ -150,5 +150,8 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
+    grunt.registerTask('css-benchmark', function () {
+        grunt.task.run(['clean:cssBenchmark', 'compile:css', 'copy:cssBenchmark', 'shell:cssBenchmark']);
+    });
 
 };

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "btoa": "1.1.2",
+    "css-minification-benchmark": "git+https://github.com/piuccio/css-minification-benchmark.git#percentages",
     "esprima": "1.2.2",
     "glob": "4.0.6",
     "grunt": "0.4.5",

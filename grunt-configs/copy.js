@@ -103,6 +103,16 @@ module.exports = function(grunt, options) {
                 src: ['*'],
                 dest: '.git/hooks/'
             }]
+        },
+        cssBenchmark: {
+            files: [{
+                expand: true,
+                cwd: options.staticTargetDir + 'stylesheets',
+                src: ['**/*'],
+                dest: 'node_modules/css-minification-benchmark/data/',
+                flatten: true,
+                filter: 'isFile'
+            }]
         }
     };
 };
