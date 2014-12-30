@@ -4,7 +4,7 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{GuLineItem, DfpDataHydrator, LineItemReport}
+import dfp.{DfpDataHydrator, LineItemReport}
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
@@ -23,14 +23,6 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
     val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
-  }
-
-  def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
-    val sponsoredTags = Store.getDfpSponsoredTags()
-    val advertisementTags = Store.getDfpAdFeatureTags()
-    val foundationSupportedTags = Store.getDfpFoundationSupportedTags()
-
-    NoCache(Ok(views.html.commercial.sponsorships(environment.stage, sponsoredTags, advertisementTags, foundationSupportedTags)))
   }
 
   def renderPaidForTags = AuthActions.AuthActionTest { implicit request =>
