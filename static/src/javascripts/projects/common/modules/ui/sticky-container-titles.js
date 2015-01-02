@@ -10,13 +10,9 @@ define([
     mediator
     ) {
 
-    var w = window,
-        d = document,
-        e = d.documentElement,
-        winHeight,
-
-        vPosNow = w.scrollY,
+    var vPosNow = window.scrollY,
         vPosCache,
+        winHeight,
 
         headers,
         headerPositions = [],
@@ -33,7 +29,7 @@ define([
         lastIndex = -1;
 
     function getWindowHeight() {
-        return w.innerHeight || e.clientHeight;
+        return window.innerHeight || document.documentElement.clientHeight;
     }
 
     function getPosition(el) {
@@ -51,7 +47,7 @@ define([
     function setPositions() {
         var winBottom;
 
-        vPosNow = w.scrollY;
+        vPosNow = window.scrollY;
 
         if (vPosCache !== vPosNow) {
             vPosCache = vPosNow;
@@ -108,7 +104,7 @@ define([
                 var height = title.offsetHeight + m;
 
                 title.addEventListener('click', function (e) {
-                    w.scrollTo(0, headerPositions[i] - 15);
+                    window.scrollTo(0, headerPositions[i] - 15);
                     e.preventDefault();
                 });
 
