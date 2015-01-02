@@ -108,7 +108,7 @@ define([
                 var height = title.offsetHeight + m;
 
                 title.addEventListener('click', function (e) {
-                    w.scrollTo(0, headerPositions[i]);
+                    w.scrollTo(0, headerPositions[i] - 15);
                     e.preventDefault();
                 });
 
