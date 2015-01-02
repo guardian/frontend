@@ -89,9 +89,11 @@ define([
             titleOneHeight = $('.fc-container__header__title', headerOne).offset().height;
 
             $(headerOne).append(
-                '<div class="fc-container__header__title--stickies">' +
-                    headers.map(function (header) {
-                        return '<div class="fc-container__header__title--sticky">' + $('.fc-container__header__title > *', header).text() + '</div>';
+                '<div class="fc-container__header__title--stickies" data-link-name="lhs titles">' +
+                    headers.map(function (header, i) {
+                        var title = $('.fc-container__header__title > *', header).text();
+
+                        return '<button class="fc-container__header__title--sticky" data-link-name="' + i + ' | ' + title + '">' + title + '</button>';
                     }).join('') +
                 '</div>'
             );
@@ -105,7 +107,6 @@ define([
 
                 title.addEventListener('click', function (e) {
                     window.scrollTo(0, headerPositions[i] - 15);
-                    e.preventDefault();
                 });
 
                 offsets[i] = height;

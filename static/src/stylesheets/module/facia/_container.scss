@@ -146,6 +146,9 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__header__title--sticky {
+    display: block;
+    width: 100%;
+    text-align: left;
     font-weight: normal;
     margin-left: $gs-gutter * -1;
     padding: $gs-gutter/4 0 0 $gs-gutter;
