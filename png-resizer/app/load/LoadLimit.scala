@@ -3,6 +3,7 @@ package load
 import java.util.concurrent.atomic.AtomicInteger
 
 import common.{ExecutionContexts, Logging}
+import conf.PngResizerMetrics
 import model.Cached
 import play.api.mvc.Results._
 import play.api.mvc._
@@ -37,6 +38,7 @@ object LoadLimit extends ExecutionContexts with Logging {
         currentNumberOfRequests.decrementAndGet()
         throw t
     } else {
+      PngResizerMetrics.redirectCount.increment
       currentNumberOfRequests.decrementAndGet()
       Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))
     }
