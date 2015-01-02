@@ -49,12 +49,13 @@ define([
     }
 
     function setPositions() {
-        var winBottom = winHeight + vPosNow;
+        var winBottom;
 
         vPosNow = w.scrollY;
 
         if (vPosCache !== vPosNow) {
             vPosCache = vPosNow;
+            winBottom = winHeight + vPosNow;
 
             if (winHeight - stickyTitlesContainer.offset().height < headerOnePosition - vPosNow + titleOneHeight + 100) {
                 stickyTitlesContainer.removeClass('fixed');
@@ -94,7 +95,7 @@ define([
             $(headerOne).append(
                 '<div class="fc-container__header__title--stickies">' +
                     headers.map(function (header) {
-                        return '<div class="fc-container__header__title--sticky">' + $('.fc-container__header__title', header).text() + '</div>';
+                        return '<div class="fc-container__header__title--sticky">' + $('.fc-container__header__title > *', header).text() + '</div>';
                     }).join('') +
                 '</div>'
             );
