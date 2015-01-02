@@ -49,6 +49,8 @@ define([
     }
 
     function setPositions() {
+        var winBottom = winHeight + vPosNow;
+
         vPosNow = w.scrollY;
 
         if (vPosCache !== vPosNow) {
@@ -61,14 +63,15 @@ define([
             }
 
             stickyTitles.forEach(function (title, i) {
-                if (headerPositions[i] > winHeight + vPosNow - offsets[i]) {
-                    title.show();
+                var headerPosition = headerPositions[i],
+                    offset = offsets[i];
 
-                    if (headerPositions[i] > winHeight + vPosNow) {
-                        title.removeClass('onscreen');
-                    } else {
-                        title.addClass('onscreen');
-                    }
+                if (headerPosition > winBottom - offset/2) {
+                    title.removeClass('onscreen');
+                    title.show();
+                } else if (headerPosition > winBottom - offset) {
+                    title.addClass('onscreen');
+                    title.show();
                 } else {
                     title.hide();
                 }
