@@ -106,7 +106,7 @@ define([
                 return height;
             }, 0);
 
-            stickyTitles = stickyTitles.map(function(el) { return $(el); });
+            stickyTitles = stickyTitles.map(function (el) { return $(el); });
 
             getMetrics();
             setInterval(getMetrics, 500);
