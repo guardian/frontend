@@ -1,9 +1,10 @@
+.sudoku__container {
+    max-width: 374px;
+}
+
 .sudoku__grid {
     outline: none;
-    
-    @include mq($until: tablet) {
-        width: 300px;
-    }
+    width: 100%;
 }
 
 .sudoku__cell rect {
