@@ -66,7 +66,7 @@ define([
                 var headerPosition = headerPositions[i],
                     offset = offsets[i];
 
-                if (headerPosition > winBottom - offset/2) {
+                if (headerPosition > winBottom - offset / 2) {
                     title.removeClass('onscreen');
                     title.show();
                 } else if (headerPosition > winBottom - offset) {
