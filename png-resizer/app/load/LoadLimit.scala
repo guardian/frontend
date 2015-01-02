@@ -2,37 +2,43 @@ package load
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
+import model.Cached
 import play.api.mvc.Results._
 import play.api.mvc._
 
 import scala.concurrent.Future
 
-object LoadLimit extends Logging {
+object LoadLimit extends ExecutionContexts with Logging {
 
-  val inProgress = new AtomicInteger(0)
-  lazy val requestLimit = {
-    val limit = Runtime.getRuntime.availableProcessors() * 2
-    // one per cpu is too low as we have to wait for the content to download, so go for 2 per cpu
+  private lazy val currentNumberOfRequests = new AtomicInteger(0)
+
+  // temporary count just to check things are working as expected
+  private lazy val currentNumberOfResizes = new AtomicInteger(0)
+
+  private lazy val requestLimit = {
+    val limit = Runtime.getRuntime.availableProcessors()
     log.info(s"request limit set to $limit")
     limit
   }
 
-  def apply(fallbackUri: String)(available: =>  Future[Result]): Future[Result] = {
-
-    val requestsIncludingUs = inProgress.incrementAndGet
-
-    try {
-      if (requestsIncludingUs > requestLimit) {
-        log.info(s"limit exceeded - redirecting to: $fallbackUri")
-        Future.successful(TemporaryRedirect(fallbackUri))
-      } else {
-        log.info(s"capacity available - now at $requestsIncludingUs")
-        available
+  def apply(fallbackUri: String)(available: =>  Future[Result]): Future[Result] = try {
+    val concurrentRequests = currentNumberOfRequests.incrementAndGet
+    if (concurrentRequests <= requestLimit) try {
+      log.info(s"Resize ${currentNumberOfResizes.incrementAndGet()}/$requestLimit")
+      val result = available
+      result.onComplete{_ =>
+        currentNumberOfRequests.decrementAndGet()
+        currentNumberOfResizes.decrementAndGet()
       }
-    } finally {
-      inProgress.decrementAndGet
+      result
+    } catch {
+      case t: Throwable =>
+        currentNumberOfRequests.decrementAndGet()
+        throw t
+    } else {
+      currentNumberOfRequests.decrementAndGet()
+      Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))
     }
   }
-
 }
