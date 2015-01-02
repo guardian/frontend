@@ -63,6 +63,12 @@ define([
             stickyTitles.forEach(function (title, i) {
                 if (headerPositions[i] > winHeight + vPosNow - offsets[i]) {
                     title.show();
+
+                    if (headerPositions[i] > winHeight + vPosNow) {
+                        title.removeClass('onscreen');
+                    } else {
+                        title.addClass('onscreen');
+                    }
                 } else {
                     title.hide();
                 }
