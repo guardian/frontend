@@ -24,7 +24,6 @@ define([
         headerOne,
         headerOnePosition,
 
-        titleOne,
         titleOneHeight,
 
         stickyTitles,
@@ -55,17 +54,17 @@ define([
         if (vPosCache !== vPosNow) {
             vPosCache = vPosNow;
 
-            if (winHeight - stickyTitlesContainer.offsetHeight < headerOnePosition - vPosNow + titleOneHeight + 100) {
-                $(stickyTitlesContainer).removeClass('fixed');
+            if (winHeight - stickyTitlesContainer.offset().height < headerOnePosition - vPosNow + titleOneHeight + 100) {
+                stickyTitlesContainer.removeClass('fixed');
             } else {
-                $(stickyTitlesContainer).addClass('fixed');
+                stickyTitlesContainer.addClass('fixed');
             }
 
-            stickyTitles.forEach(function (el, i) {
-                if (headerPositions[i] > winHeight + vPosNow - offsets[i] + 0) {
-                    $(el).show();
+            stickyTitles.forEach(function (title, i) {
+                if (headerPositions[i] > winHeight + vPosNow - offsets[i]) {
+                    title.show();
                 } else {
-                    $(el).hide();
+                    title.hide();
                 }
             });
         }
@@ -73,34 +72,41 @@ define([
 
     function init() {
         if (['leftCol', 'wide'].indexOf(detect.getBreakpoint(true)) > -1) {
-            headers = Array.prototype.slice.call(document.querySelectorAll('section:not(.fc-container--thrasher) .js-container__header')).filter(function (section) {
-                return section.querySelector('.fc-container__header__title');
-            });
+            headers = _.chain($('section:not(.fc-container--thrasher) .js-container__header'))
+                .filter(function (section) { return $('.fc-container__header__title', section).text(); })
+                .value();
 
             headerOne = headers.splice(0, 1)[0];
+
             lastIndex = headers.length - 1;
 
-            titleOne = headerOne.querySelector('.fc-container__header__title');
-            titleOneHeight = titleOne.offsetHeight;
+            titleOneHeight = $('.fc-container__header__title', headerOne).offset().height;
 
             $(headerOne).append(
                 '<div class="fc-container__header__title--stickies">' +
                     headers.map(function (header) {
-                        return '<div class="fc-container__header__title--sticky">' + header.querySelector('.fc-container__header__title').innerText + '</div>';
+                        return '<div class="fc-container__header__title--sticky">' + $('.fc-container__header__title', header).text() + '</div>';
                     }).join('') +
                 '</div>'
             );
 
-            stickyTitlesContainer = headerOne.querySelector('.fc-container__header__title--stickies');
+            stickyTitlesContainer = $('.fc-container__header__title--stickies', headerOne);
 
-            stickyTitles = Array.prototype.slice.call(stickyTitlesContainer.querySelectorAll('.fc-container__header__title--sticky'));
+            stickyTitles = _.toArray($('.fc-container__header__title--sticky', stickyTitlesContainer));
 
-            stickyTitles.reduceRight(function (m, title, i) {
+            _.reduceRight(stickyTitles, function (m, title, i) {
                 var height = title.offsetHeight + m;
+
+                title.addEventListener('click', function (e) {
+                    w.scrollTo(0, headerPositions[i]);
+                    e.preventDefault();
+                });
 
                 offsets[i] = height;
                 return height;
             }, 0);
+
+            stickyTitles = stickyTitles.map(function(el) { return $(el); });
 
             getMetrics();
             setInterval(getMetrics, 500);
@@ -108,14 +114,7 @@ define([
             setPositions();
             mediator.on('window:scroll', _.throttle(setPositions, 10));
 
-            $(stickyTitlesContainer).css('visibility', 'visible');
-
-            stickyTitles.forEach(function (el, index) {
-                el.addEventListener('click', function (e) {
-                    w.scrollTo(0, headerPositions[index]);
-                    e.preventDefault();
-                });
-            });
+            stickyTitlesContainer.css('visibility', 'visible');
         }
     }
 
