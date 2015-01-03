@@ -60,10 +60,10 @@ define([
             }
 
             stickyTitles.forEach(function (title, i) {
-                var headerPosition = headerPositions[i],
+                var headerPosition = headerPositions[i] - 5,
                     offset = offsets[i];
 
-                if (headerPosition > winBottom - offset / 2) {
+                if (headerPosition > winBottom - offset / 3) {
                     title.removeClass('onscreen');
                     title.show();
                 } else if (headerPosition > winBottom - offset) {

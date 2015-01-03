@@ -152,13 +152,12 @@ $header-image-size-desktop: 100px;
     font-weight: normal;
     margin-left: $gs-gutter * -1;
     padding: $gs-gutter/4 0 0 $gs-gutter;
-    color: guss-colour(guardian-brand-dark, $pasteup-palette);
     background: #ffffff;
     cursor: pointer;
     border: 0;
 
     &.onscreen {
-        font-weight: bold;
+        @include f-header();
     }
 }
 
