@@ -89,11 +89,11 @@ define([
             titleOneHeight = $('.fc-container__header__title', headerOne).offset().height;
 
             $(headerOne).append(
-                '<div class="fc-container__header__title--stickies" data-link-name="lhs titles">' +
+                '<div class="fc-container__header__title--stickies" data-link-name="LHC titles">' +
                     headers.map(function (header, i) {
                         var title = $('.fc-container__header__title > *', header).text();
 
-                        return '<button class="fc-container__header__title--sticky" data-link-name="' + i + ' | ' + title + '">' + title + '</button>';
+                        return '<div class="fc-container__header__title--sticky"><button data-link-name="' + i + ' | ' + title + '">' + title + '</button></div>';
                     }).join('') +
                 '</div>'
             );

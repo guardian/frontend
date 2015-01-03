@@ -153,8 +153,16 @@ $header-image-size-desktop: 100px;
     margin-left: $gs-gutter * -1;
     padding: $gs-gutter/4 0 0 $gs-gutter;
     background: #ffffff;
-    cursor: pointer;
     border: 0;
+
+    & button {
+        text-align: left;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        cursor: pointer;
+    }
 
     &.onscreen {
         @include f-header();
