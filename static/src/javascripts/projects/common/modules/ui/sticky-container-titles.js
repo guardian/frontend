@@ -105,10 +105,7 @@ define([
             _.reduceRight(stickyTitles, function (m, title, i) {
                 var height = title.offsetHeight + m;
 
-                title.addEventListener('click', function (e) {
-                    window.scrollTo(0, headerPositions[i] - 15);
-                });
-
+                title.addEventListener('click', function () { window.scrollTo(0, headerPositions[i] - 15); });
                 offsets[i] = height;
                 return height;
             }, 0);
