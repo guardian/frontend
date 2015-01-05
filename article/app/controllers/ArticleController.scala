@@ -9,6 +9,7 @@ import performance.MemcachedAction
 import play.api.mvc.{Content => _, _}
 import views.BodyCleaner
 import views.support._
+import LiveContentApi.getResponse
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -55,12 +56,12 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-      .response
+    )
 
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }

@@ -1,6 +1,5 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
@@ -8,6 +7,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
 import play.api.libs.json.{Json, JsArray}
+import LiveContentApi.getResponse
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
   val page = new Page(
@@ -73,10 +73,10 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    LiveContentApi.item(path, edition)
+    getResponse(LiveContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-      .response.map{response =>
+    ).map{response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
           val popular = response.mostViewed map { Content(_) } take 10
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))

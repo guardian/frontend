@@ -7,6 +7,7 @@ import common._
 import model.{Content, Gallery}
 import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
+import LiveContentApi.getResponse
 
 object MostViewedGalleryAgent extends Logging with ExecutionContexts {
 
@@ -31,7 +32,7 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition).response.map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition)).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
