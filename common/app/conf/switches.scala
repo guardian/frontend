@@ -246,7 +246,7 @@ object Switches {
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
+    safeState = Off, sellByDate = never)
 
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
