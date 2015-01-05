@@ -18,8 +18,10 @@ define([
         this.dataLinkNames = 'history containers';
         this.idealOutcome = 'Users click through to more content as it is relevant to them';
 
+        var isNetworkFront = config.page.contentType === 'Network Front';
+
         this.canRun = function () {
-            return historyContainers.hasContainers();
+            return isNetworkFront && historyContainers.hasContainers();
         };
 
         this.variants = [
@@ -30,7 +32,7 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    if (config.page.contentType === 'Network Front') {
+                    if (isNetworkFront) {
                         historyContainers.injectContainers();
                     }
                 }
