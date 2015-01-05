@@ -22,6 +22,23 @@ module.exports = function(grunt, options) {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
                      'static/src/javascripts/modules/experiments/tests ' +
                      'static/abtests.json'
+        },
+
+        cssBenchmark: {
+            command: [
+                'npm install',
+                'node bin/bench --html --only clean,csso,cssshrink,csswring,sqwish,ycssmin --verbose --gzip --total'
+                // basically exclude condense, more-css and ncss because they error out
+            ].join('&&'),
+            options: {
+                execOptions: {
+                    cwd: 'node_modules/css-minification-benchmark'
+                },
+                stdout: false,
+                callback: function (err, stdout, stderr, cb) {
+                    require('fs').writeFile('tmp/css-benchmark.html', stdout.substring(stdout.indexOf('<!DOCTYPE')), cb);
+                }
+            }
         }
     };
 };

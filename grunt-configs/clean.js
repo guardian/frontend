@@ -23,6 +23,7 @@ module.exports = function(grunt, options) {
         ],
         // Clean any pre-commit hooks in .git/hooks directory
         hooks: ['.git/hooks'],
-        assets: ['common/conf/assets']
+        assets: ['common/conf/assets'],
+        cssBenchmark: ['node_modules/css-minification-benchmark/data/*']
     };
 };
