@@ -94,43 +94,31 @@ define([
             if (location) {
                 this.fetchData(location);
             } else {
-                try {
-                    self.getWeatherData(config.page.weatherapi_url + '.json').then(function (response) {
-                        self.fetchData(response);
-                    });
-                } catch (e) {
-                    raven.captureException(new Error('Error retrieving city data (' + e.message + ')'), {
+
+                self.getWeatherData(config.page.weatherapi_url + '.json')
+                .then(self.fetchData)
+                .fail(function(err, msg) {
+                    raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                }
+                });
             }
         },
 
         fetchData: function (location) {
             self.saveUserLocation(location);
 
-            try {
-                return self.getWeatherData(config.page.weatherapi_url + '/' + location.id + '.json').then(function (response) {
-                    self.render(response[0], location.city);
-                }).fail(function () {
-                    self.failedRequest();
-                });
-            } catch (e) {
-                raven.captureException(new Error('Error retrieving weather data (' + e.message + ')'), {
+            return self.getWeatherData(config.page.weatherapi_url + '/' + location.id + '.json')
+                .then(function (response) {
+                self.render(response[0], location.city);
+            }).fail(function(err, msg) {
+                raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
                     tags: {
                         feature: 'weather'
                     }
                 });
-            }
-        },
-
-        failedRequest: function () {
-            raven.captureException(new Error('Error retrieving weather data'), {
-                tags: {
-                    feature: 'weather'
-                }
             });
         },
 
