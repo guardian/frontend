@@ -40,15 +40,17 @@ trait Prototypes {
       "Akka" at "http://repo.akka.io/releases",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
+      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
+      "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
+      "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
-    resolvers ++= Seq(
-      // where Shade lives
-      "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
-      // for SpyMemcached
-      "Spy" at "https://files.couchbase.com/maven2/"
-    )
+    updateOptions := updateOptions.value.withCachedResolution(true),
+
+    evictionWarningOptions in update := EvictionWarningOptions.default
+      .withWarnTransitiveEvictions(false)
+      .withWarnDirectEvictions(false)
+      .withWarnScalaVersionEviction(false)
   )
 
   val frontendClientSideSettings = Seq(
