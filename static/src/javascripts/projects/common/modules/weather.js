@@ -42,6 +42,7 @@ define([
         $weather       = null,
         $holder        = null,
         searchTool     = null,
+        city           = '',
         prefName       = 'weather-location',
         getGeoStates   = {
             process: 'Getting location...',
@@ -109,6 +110,8 @@ define([
                 'id': location.id,
                 'city': location.city
             });
+
+            city = location.city;
         },
 
         getDefaultLocation: function () {
@@ -179,6 +182,7 @@ define([
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
+                searchTool.setInputValue(city);
             }
         },
 
