@@ -7,7 +7,7 @@ resolvers ++= Seq(
   Resolver.typesafeRepo("releases")
 )
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.2")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.7")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.1")
 
