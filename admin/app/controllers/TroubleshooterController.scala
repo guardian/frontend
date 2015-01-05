@@ -8,8 +8,10 @@ import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import conf.{PreviewContentApi, LiveContentApi}
+import LiveContentApi.getResponse
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
+
 object TestPassed{
   def apply(name: String) = EndpointStatus(name, true)
 }
@@ -19,7 +21,7 @@ object TestFailed{
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() =AuthActions.AuthActionTest{ request =>
+  def index() = AuthActions.AuthActionTest{ request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
@@ -75,7 +77,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
     val request = LiveContentApi.item(testPath, "UK").showFields("all")
-    request.response.map {
+    getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -90,7 +92,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
     val request = PreviewContentApi.item(testPath, "UK").showFields("all")
-    request.response.map {
+    getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)

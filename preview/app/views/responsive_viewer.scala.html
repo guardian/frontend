@@ -65,6 +65,11 @@
                 top: 2px;
             }
 
+            #ads-toggler {
+                text-align: center;
+                cursor: pointer;
+            }
+
             #edition-switcher a {
                 font-weight: bold;
             }
@@ -97,19 +102,34 @@
                     html += '<div style="left:' + leftAcc + 'px">' +
                             '<h2>' + bp.name + '</h2>' +
                             '<iframe frameBorder="0" sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
-                            'src="' + src + '#noads" ' +
+                            'src="' + src + (window.location.hash ? window.location.hash : '') + '" ' +
                             'width="' + ( bp.width + sbWidth ) + '"></iframe>' +
                             '</div>' ;
                     leftAcc += bp.width + sbWidth + 15 ;
                 });
 
                 document.querySelector ( '.frames' ).innerHTML = html ;
+
+                document.getElementById('toggle-ads' ).innerHTML = 'Turn ads ' +
+                    (window.location.hash === '#noads' ? 'on' : 'off');
+            }
+
+            function toggleAds() {
+                if (window.location.hash === '#noads') {
+                    window.location.hash = '';
+                } else {
+                    window.location.hash = '#noads';
+                }
+                window.location.reload();
             }
         </script>
     </head>
     <body>
         <div id="edition-switcher">
             <a href="./uk">UK</a> <a href="./us">US</a> <a href="./au">AU</a>
+        </div>
+        <div id="ads-toggler">
+            <a id='toggle-ads' onclick='toggleAds()'>Toggle ads</a>
         </div>
         <div id="chrome-instructions" style="display: none;">
             <a id="chrome-instructions__toggle" onclick="toggle('chrome-instructions__text')">Looks wrong in Chrome?</a>

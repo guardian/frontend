@@ -15,21 +15,20 @@ object WeatherApi extends ExecutionContexts {
     throw new RuntimeException("Weather API Key not set")
   )
 
-  val weatherCityUrl: String = "http://api.accuweather.com/currentconditions/v1/"
-  val weatherSearchUrl: String = "http://api.accuweather.com/locations/v1/cities/search.json"
+  val weatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
+  val weatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
 
-  private def weatherUrlForCity(city: City): String =
-    s"$weatherSearchUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(city.name, "utf-8")}"
+  private def autocompleteUrl(query: String): String =
+    s"$weatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
-  private def weatherUrlForCityId(cityId: CityId): String =
+  private def cityLookUp(cityId: CityId): String =
     s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
-  def searchForLocations(query: String) = {
-    WS.url(weatherUrlForCity(City(query))).get().map({ r =>
+  def searchForLocations(query: String) =
+    WS.url(autocompleteUrl(query)).get().map({ r =>
       Json.fromJson[Seq[LocationResponse]](r.json).get
     })
-  }
 
   def getWeatherForCityId(cityId: CityId): Future[JsValue] =
-    WS.url(weatherUrlForCityId(cityId)).get().filter(_.status == 200).map(_.json)
+    WS.url(cityLookUp(cityId)).get().filter(_.status == 200).map(_.json)
 }

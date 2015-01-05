@@ -1406,7 +1406,7 @@ button {
 }
 
 .cnf-front__inner {
-    padding: 0 10px 0 10px;
+    padding: 5px 10px 0 10px;
 }
 
 .cnf-front__collections {
@@ -1535,6 +1535,10 @@ button {
     padding: 10px 0;
     clear: left;
     height: 30px;
+}
+
+.cnf-form .action-buttons {
+    height: 40px;
 }
 
 .cnf-form .api-query-status {

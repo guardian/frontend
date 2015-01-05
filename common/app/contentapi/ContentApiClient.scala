@@ -10,9 +10,9 @@ import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
-import com.gu.contentapi.client.model.ItemResponse
+import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
 
-import scala.concurrent.duration.{Duration, SECONDS, MILLISECONDS}
+import scala.concurrent.duration.{Duration, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
 import ExecutionContexts.{executionContext => implicitExecutionContext}
 
@@ -127,9 +127,9 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
     log.info("Content API Client looks healthy again, circuit breaker is closed.")
   })
 
-  override def fetch(url: String, parameters: Map[String, String]) = {
+  override def fetch(url: String) = {
     if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
-      val future = circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+      val future = circuitBreaker.withCircuitBreaker(super.fetch(url))
 
       future onFailure {
         case e: CircuitBreakerOpenException =>
@@ -138,7 +138,7 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
 
       future
     } else {
-      super.fetch(url, parameters)
+      super.fetch(url)
     }
   }
 }

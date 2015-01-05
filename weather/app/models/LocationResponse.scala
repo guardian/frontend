@@ -10,8 +10,7 @@ object LocationName {
 
 case class LocationName(
   ID: String,
-  LocalizedName: String,
-  EnglishName: String
+  LocalizedName: String
 )
 
 object LocationResponse {
@@ -21,8 +20,6 @@ object LocationResponse {
 case class LocationResponse(
   Key: String,
   LocalizedName: String,
-  EnglishName: String,
-  Region: LocationName,
   Country: LocationName,
   AdministrativeArea: LocationName,
   Type: String

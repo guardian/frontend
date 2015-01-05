@@ -2,6 +2,7 @@ package dfp
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.LiveContentApi
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 
@@ -22,7 +23,7 @@ object CapiLookupAgent extends ExecutionContexts with Logging {
 
     def lookup(tagType: TagType, tagName: String): Future[((TagType, String), Seq[String])] = {
       val query = LiveContentApi.tags.q(tagName).tagType(tagType.name).pageSize(50)
-      val lookupResult = query.response map { response =>
+      val lookupResult = getResponse(query) map { response =>
         val tags = response.results
         log.info(s"Looking up $tagType '$tagName' gave ${tags.map(_.id)}")
         tags
