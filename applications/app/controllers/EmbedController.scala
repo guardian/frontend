@@ -6,6 +6,7 @@ import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
 import scala.concurrent.Future
+import LiveContentApi.getResponse
 
 case class EmbedPage(model: Option[Video], title: String, isExpired: Boolean = false)
 
@@ -23,10 +24,10 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
 
     log.info(s"Fetching video: $path for edition $edition")
 
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
-      .response
+    )
 
     val result = response map { response =>
       val modelOption: Option[Video] = response.content.filter(_.isVideo).map(Video(_))
@@ -49,5 +50,4 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
   private def renderVideo(model: EmbedPage)(implicit request: RequestHeader): Result = {
     Cached(600)(Ok(views.html.videoEmbed(model)))
   }
-
 }
