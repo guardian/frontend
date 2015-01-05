@@ -55,7 +55,7 @@ define([
         if (
             !this.opts.force && (!templateConfig ||
             $rightHandCol.css('display') === 'none' ||
-            $rightHandCol.dim().height < 1600 ||
+            $rightHandCol.dim().height < 1800 ||
             config.page.section === 'football')
         ) {
             return false;

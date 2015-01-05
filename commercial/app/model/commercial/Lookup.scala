@@ -11,8 +11,17 @@ import scala.concurrent.Future
 object Lookup extends ExecutionContexts with Logging {
 
   def content(contentId: String): Future[Option[Content]] = {
-    LiveContentApi.item(contentId, defaultEdition).response map {
+    val response = try {
+      LiveContentApi.item(contentId, defaultEdition).response
+    } catch {
+      case e: Exception => Future.failed(e)
+    }
+    response map {
       _.content map (Content(_))
+    } recover {
+      case e: Exception =>
+        log.info(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
+        None
     }
   }
 

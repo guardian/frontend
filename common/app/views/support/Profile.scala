@@ -1,5 +1,6 @@
 package views.support
 
+import common.AkkaAgent
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
@@ -7,7 +8,7 @@ import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import conf.Configuration
 
-trait ElementProfile {
+sealed trait ElementProfile {
 
   def width: Option[Int]
   def height: Option[Int]
@@ -35,10 +36,14 @@ trait ElementProfile {
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
-case class Profile(
+sealed case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
-  override val compression: Int = 95) extends ElementProfile
+  override val compression: Int = 95) extends ElementProfile {
+
+  Profile.add(this)
+
+}
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -55,48 +60,34 @@ case class VideoProfile(
 }
 
 // Configuration of our different image profiles
-object Contributor extends Profile(Some(140), Some(140))
-object GalleryInitialImage extends Profile(Some(300), None)
-object GalleryUpgradedImage extends Profile(Some(800), None)
-object GalleryLargeImage extends Profile(Some(1024), None)
-object GalleryLargeTrail extends Profile(Some(480), Some(288))
-object GallerySmallTrail extends Profile(Some(280), Some(168))
-object Showcase extends Profile(Some(860), None)
-object Item120 extends Profile(Some(120), None)
-object Item140 extends Profile(Some(140), None)
-object Item220 extends Profile(Some(220), None)
-object Item300 extends Profile(Some(300), None)
-object Item360 extends Profile(Some(360), None)
-object Item460 extends Profile(Some(460), None)
-object Item620 extends Profile(Some(620), None)
-object Item640 extends Profile(Some(640), None)
-object Item700 extends Profile(Some(700), None)
-object Item940 extends Profile(Some(940), None)
-object Video640 extends VideoProfile(Some(640), Some(360)) // 16:9
-object Video460 extends VideoProfile(Some(460), Some(276)) // 5:3
+object Contributor extends Profile(width = Some(140), height = Some(140))
+object GalleryInitialImage extends Profile(width = Some(300))
+object GalleryUpgradedImage extends Profile(width = Some(800))
+object GalleryLargeImage extends Profile(width = Some(1024))
+object GalleryLargeTrail extends Profile(width = Some(480), height = Some(288))
+object GallerySmallTrail extends Profile(width = Some(280), height = Some(168))
+object Showcase extends Profile(width = Some(860))
+object Item120 extends Profile(width = Some(120))
+object Item140 extends Profile(width = Some(140))
+object Item220 extends Profile(width = Some(220))
+object Item300 extends Profile(width = Some(300))
+object Item360 extends Profile(width = Some(360))
+object Item460 extends Profile(width = Some(460))
+object Item620 extends Profile(width = Some(620))
+object Item640 extends Profile(width = Some(640))
+object Item700 extends Profile(width = Some(700))
+object Item940 extends Profile(width = Some(940))
+object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
+object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5:3
 object SeoOptimisedContentImage extends Profile(width = Some(460))
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
 object Profile {
-  lazy val all = Seq(
-    Contributor,
-    GalleryLargeImage,
-    GalleryLargeTrail,
-    GallerySmallTrail,
-    Naked,
-    Showcase,
-    Item140,
-    Item220,
-    Item300,
-    Item360,
-    Item460,
-    Item620,
-    Item640,
-    Item700,
-    Item940
-  )
+  private lazy val profiles = AkkaAgent(Seq.empty[Profile])
+  private[Profile] def add(newProfile: Profile) = profiles.send(currentProfiles => currentProfiles :+ newProfile)
+  def all: Seq[Profile] = profiles.get()
 }
 
 object ImgSrc {
@@ -111,7 +102,8 @@ object ImgSrc {
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
 
-    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Seq(".jpg", ".jpeg"/*, ".png" rewritten in the browser for now*/) else Seq(".jpg", ".jpeg")
+    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
+
     val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
     hostPrefixMapping.get(uri.getHost)
@@ -135,12 +127,11 @@ object ImgSrc {
 
   def imager(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
     // get largest profile closest to the width
-    val sortedProfiles: Seq[Profile] = Profile.all.filter(_.height == None).sortBy(_.width)
+    val sortedProfiles = Profile.all.filter(_.height == None).sortBy(_.width)
     sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
   }
-
 }
 
 object SeoThumbnail {

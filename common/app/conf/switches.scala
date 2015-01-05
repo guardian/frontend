@@ -74,7 +74,7 @@ object Switches {
   val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
     "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 12, 31)
+    sellByDate = new LocalDate(2015, 2, 1)
   )
 
 
