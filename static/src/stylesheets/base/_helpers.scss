@@ -219,3 +219,11 @@
     margin: 0;
     padding: 0;
 }
+
+// smooth fonts in chrome/windows where font-smoothing is disabled
+// for all inline elements following this one (instead of just the larger ones)
+.win-chrome-font-fix {
+    @include mq(desktop) {
+        -webkit-transform: translateZ(0);
+    }
+}
