@@ -74,13 +74,14 @@ define([
             },
 
             getListOfResults: function (e) {
+                newQuery = e.target.value;
+
                 // If we have empty input clear everything and don't fetch the data
                 if (!e.target.value.match(/\S/)) {
                     this.clear();
+                    oldQuery = '';
                     return;
                 }
-
-                newQuery = e.target.value;
 
                 // If input value hasn't changed don't fetch the data
                 if (!this.hasInputValueChanged()) {
