@@ -11,6 +11,9 @@ define([
             return {
                 'common/utils/config': function () {
                     return {
+                        // Needed for tests that may lookup page properties
+                        page: {
+                        },
                         switches: {
                             abDummyTest:  true,
                             abDummyTest2: true
