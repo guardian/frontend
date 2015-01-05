@@ -44,11 +44,6 @@ define([
         searchTool     = null,
         city           = '',
         prefName       = 'weather-location',
-        getGeoStates   = {
-            process: 'Getting location...',
-            error: 'Unable to get location...',
-            defaultmsg: 'Detect my location'
-        },
         weatherApiUrl  = '/weather/city',
         locationApiUrl = '/weather/locations?query=';
 
@@ -57,26 +52,6 @@ define([
             self = this;
 
             this.getDefaultLocation();
-        },
-
-        getGeoLocation: function () {
-            // This sends all geolocation data to fetchData when fetchData is expecting an Accuweather location
-            navigator.geolocation.getCurrentPosition(this.fetchData, this.geoLocationDisabled);
-        },
-
-        geoLocationDisabled: function () {
-            self.changeLocationOptionText('error');
-        },
-
-        detectPosition: function (e) {
-            e.preventDefault();
-
-            self.changeLocationOptionText('process');
-            self.getGeoLocation();
-        },
-
-        changeLocationOptionText: function (state) {
-            $('.js-detect-location').text(getGeoStates[state]);
         },
 
         /**
@@ -167,8 +142,6 @@ define([
             bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
-            // HTML GeoApi disabled for now
-            // bean.on($('.js-detect-location')[0], 'click', self.detectPosition);
             mediator.on('autocomplete:fetch', this.fetchData);
         },
 
