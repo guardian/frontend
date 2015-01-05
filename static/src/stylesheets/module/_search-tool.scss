@@ -40,6 +40,14 @@
     display: block;
     @include fs-header(2);
 
+    @include mq($until: leftCol) {
+        padding-left: $gs-gutter / 4;
+    }
+
+    .has-page-skin & {
+        padding-left: $gs-gutter / 4;
+    }
+
     &:hover,
     &.active {
         background-color: colour(neutral-4);
