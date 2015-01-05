@@ -7,20 +7,20 @@ define([
     _,
     history
 ) {
-    return function() {
+    return function () {
         var SummaryTags = React.createClass({
-            getInitialState: function() {
+            getInitialState: function () {
                 return { popular: history.getPopular() };
             },
-            handleRemove: function(tag) {
+            handleRemove: function (tag) {
                 history.deleteFromSummary(tag);
                 this.setState({ popular: history.getPopular(true) });
             },
-            render: function() {
+            render: function () {
                 var self = this;
 
                 return React.DOM.div({},
-                    _.reduce(this.state.popular, function(obj, tag) {
+                    _.reduce(this.state.popular, function (obj, tag) {
                         obj[tag[0]] = React.DOM.span({className: 'button button--small button--tag button--secondary'},
                             React.DOM.a({href: '/' + tag[0]}, tag[1]),
                             React.DOM.button({onClick: self.handleRemove.bind(self, tag[0])}, 'X')
