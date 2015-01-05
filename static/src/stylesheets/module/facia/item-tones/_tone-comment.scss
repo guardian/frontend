@@ -17,8 +17,13 @@
     .fc-item__kicker,
     .flyer__kicker,
     .fc-item__byline,
-    .flyer__byline {
+    .flyer__byline,
+    .flyer__read-more-text {
         color: colour(comment-default);
+    }
+
+    .flyer__arrow-icon {
+        fill: colour(comment-default);
     }
 
     .fc-item__meta {
@@ -31,7 +36,7 @@
             background: colour(neutral-3);
         }
     }
-    
+
 }
 
 .tone-comment--sublink,

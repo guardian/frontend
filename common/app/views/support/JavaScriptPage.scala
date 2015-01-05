@@ -43,6 +43,8 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       })),
       ("isPreview", JsBoolean(environment.isPreview)),
       ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship))
-    ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil))
+    ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil)
+      ++ metaData.sponsorshipTag.map{tag => Map("sponsorshipTag" -> JsString(tag.name))}.getOrElse(Nil))
   }
+
 }

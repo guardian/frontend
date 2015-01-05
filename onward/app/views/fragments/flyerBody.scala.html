@@ -60,6 +60,19 @@
             @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
         }
 
+        <div class="flyer__read-more">
+            <div class="flyer__arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path class="flyer__arrow-icon" d="m12 0c-6.627 0-12 5.373-12 12 0 6.627 5.373 12 12 12 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12m.21 19l-.637-.668 4.888-6.326h-11.465v-1.01h11.465l-4.888-6.333.637-.668 6.79 7.158v.685l-6.79 7.157"/></g></svg>
+            </div>
+            <div class="flyer__read-more-text">
+                @{content.contentType match {
+                        case "Audio" => "Listen"
+                        case "Gallery" => "View gallery"
+                        case _ => "Read more"
+                    }
+                }
+            </div>
+        </div>
         <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl"></a>
     </div>
 </div>

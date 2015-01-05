@@ -79,6 +79,14 @@
                     <option value="gardening">Gardening</option>
                 </select>
             </dd>
+            <dt>Component in the RH column</dt>
+            <dd>
+                <select class="rh-column-component">
+                    <option value="soulmates">Soulmates</option>
+                    <option value="jobs">Jobs</option>
+                    <option value="membership">Membership</option>
+                </select>
+            </dd>
         </dl>
     </div>
 
@@ -93,18 +101,21 @@
                 $
             ) {
                 var $switchFronts   = $('#switchFronts'),
-                    $switchArticles = $('#switchArticles');
+                    $switchArticles = $('#switchArticles'),
+                    $rhColumn = $('.content__secondary-column');
 
                 bean.on($switchFronts[0], 'click', function () {
                     $('#head-css').attr('href', '@Static("stylesheets/head.facia.css")');
                     $switchArticles.removeClass('current');
                     $switchFronts.addClass('current');
+                    $rhColumn.hide();
                 });
 
                 bean.on($switchArticles[0], 'click', function () {
                     $('#head-css').attr('href', '@Static("stylesheets/head.content.css")');
                     $switchFronts.removeClass('current');
                     $switchArticles.addClass('current');
+                    $rhColumn.show();
                 });
 
                 bean.on($('#pageSkin')[0], 'click', function () {
@@ -132,6 +143,11 @@
                         .removeClass(toneClasses.join(' '))
                         .addClass('commercial--tone-' + $palette.val());
                 });
+
+                var $rhComponent = $('.rh-column-component');
+                bean.on($rhComponent[0], 'change', function () {
+                    showRHColumn($rhComponent.val());
+                });
             });
 
         var loadCommercial = function (callback) {
@@ -158,7 +174,41 @@
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never let his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
             </div>
+            <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component fc-container__inner js-secondary-column content__secondary-column">
+            </div>
         </div>
+
+        <script>
+            function showRHColumn(component) {
+                loadCommercial(function () {
+                    require('core')
+                        .next([
+                            'common/utils/$'
+                        ])
+                        .then(function (
+                            $
+                        ) {
+                        $('.content__secondary-column').empty();
+
+                        require(['common/modules/commercial/creatives/branded-component'])
+                            .then(function(
+                                BrandedComponent
+                            ) {
+                                new BrandedComponent($('.branded-component-' + component), {
+                                    type: component,
+                                    clickMacro: '%%CLICK_URL_ESC%%',
+                                    omnitureId: 'omnitureId'
+                                }, {
+                                    force: true
+                                }).create();
+                            });
+                        });
+                });
+            }
+
+            showRHColumn('soulmates');
+        </script>
+
         <script>
             loadCommercial(function () {
                 require(['common/modules/commercial/creatives/template'])
@@ -427,41 +477,6 @@
             });
         });
     </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">RH components</a>
-        </h2>
-    </div>
-    <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component fc-container__inner js-secondary-column fc-container-test-page">
-    </div>
-    @Seq(
-        Map(
-            ("type", "soulmates")
-        ),
-        Map(
-            ("type", "jobs")
-        ),
-        Map(
-            ("type", "membership")
-        )
-    ).map { component =>
-        <script>
-        loadCommercial(function () {
-            require(['common/modules/commercial/creatives/branded-component'])
-                .then(function(
-                    BrandedComponent
-                ) {
-                new BrandedComponent(document.querySelector('.branded-component-@component("type")'), {
-                    type: '@component("type")',
-                    clickMacro: '%%CLICK_URL_ESC%%',
-                    omnitureId: 'omnitureId',
-                    showEverywhere: 'true'
-                }).create();
-            });
-        });
-        </script>
-    }
 
     @Seq(
         Map(

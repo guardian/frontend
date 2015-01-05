@@ -22,8 +22,9 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
 #Weather
-GET        /weather/city/:name                                                                                       controllers.WeatherController.forCity(name)
-GET        /weather/city                                                                                             controllers.WeatherController.forRequest()
+GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
+GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
+GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -35,7 +36,7 @@ GET         /analytics/omniture/segments/:rsid                                  
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
 GET         /analytics/commercial/specialadunits                                                                     controllers.admin.CommercialController.renderSpecialAdUnits()
-GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderPaidForTags()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
 GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
@@ -96,8 +97,10 @@ GET         /embed/card/*path                                                   
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
-GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day.json                                                           football.controllers.FixturesController.moreFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day                                                                football.controllers.FixturesController.moreFixturesFor(year, month, day)
 GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
+GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET         /football/fixtures                                                                                       football.controllers.FixturesController.allFixtures()
 GET         /football/fixtures.json                                                                                  football.controllers.FixturesController.allFixturesJson()
 GET         /football/:tag/fixtures/:year/:month/:day.json                                                           football.controllers.FixturesController.tagFixturesForJson(year, month, day, tag)
@@ -107,6 +110,8 @@ GET         /football/:tag/fixtures.json                                        
 
 GET         /football/results/:year/:month/:day.json                                                                 football.controllers.ResultsController.allResultsForJson(year, month, day)
 GET         /football/results/:year/:month/:day                                                                      football.controllers.ResultsController.allResultsFor(year, month, day)
+GET         /football/results/more/:year/:month/:day.json                                                            football.controllers.ResultsController.moreResultsForJson(year, month, day)
+GET         /football/results/more/:year/:month/:day                                                                 football.controllers.ResultsController.moreResultsFor(year, month, day)
 GET         /football/results                                                                                        football.controllers.ResultsController.allResults()
 GET         /football/results.json                                                                                   football.controllers.ResultsController.allResultsJson()
 GET         /football/:tag/results/:year/:month/:day.json                                                            football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)

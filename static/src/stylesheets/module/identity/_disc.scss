@@ -2,7 +2,7 @@
    Profile comment activity
    ========================================================================== */
 
-$mq-breakpoints: mq-add-breakpoint(activityLeftCol, mq-get-breakpoint-width(desktop));
+@include mq-add-breakpoint(activityLeftCol, mq-get-breakpoint-width(desktop));
 $disc-avatar-size: 44px;
 
 

@@ -22,8 +22,14 @@ Media list item. Looks a bit like this:
 
     min-height: $item-min-height + ($mobile-media-padding * 2);
 
+    .fc-item__content {
+        min-height: $item-min-height + ($mobile-media-padding * 2);
+    }
+
     @include mq(tablet) {
-        min-height: $item-min-height;
+        .fc-item__content {
+            min-height: $item-min-height;
+        }
     }
 
     .fc-item__container,
@@ -112,11 +118,8 @@ Media list item. Looks a bit like this:
     }
 
     &.fc-item--has-cutout {
-        .fc-item__container {
-            min-height: gs-height(2) + $gs-baseline;
-        }
-
         .fc-item__content {
+            min-height: gs-height(2) + $gs-baseline;
             padding-right: gs-span(1);
         }
 

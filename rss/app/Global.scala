@@ -18,7 +18,10 @@ with SectionsLookUpLifecycle {
   override lazy val applicationName = "frontend-rss"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
+    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
+    ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerOnOpen
+    ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
+    ContentApiMetrics.ContentApiErrorMetric
   )
 }

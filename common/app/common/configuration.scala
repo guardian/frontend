@@ -89,6 +89,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
     lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
+    lazy val contentApiPreviewHost: String = configuration.getStringProperty("content.api.preview.elastic.host").getOrElse(defaultContentApi)
+
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
           .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
@@ -252,6 +254,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
     lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v5.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v1.json"
     lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v5.json"
     lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v5.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"

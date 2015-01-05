@@ -41,10 +41,13 @@ trait DfpAgent {
     containerSponsoredTag(config, p).isDefined
   }
 
-  private def isPaidFor(available: Seq[Sponsorship], tags: Seq[Tag], section: Option[String]): Boolean = {
+  private def paidForTag(available: Seq[Sponsorship], tags: Seq[Tag], section: Option[String]): Option[Tag] = {
     val keywordOrSeriesTags = tags.filter(t => t.isSeries || t.isKeyword)
-    keywordOrSeriesTags exists (tag => isPaidFor(available, tag.id, section))
+    keywordOrSeriesTags find (tag => isPaidFor(available, tag.id, section))
   }
+
+  private def isPaidFor(available: Seq[Sponsorship], tags: Seq[Tag], section: Option[String]): Boolean =
+    paidForTag(available, tags, section).nonEmpty
 
   private def isPaidFor(available: Seq[Sponsorship], tagId: String, section: Option[String]): Boolean = {
 
@@ -58,6 +61,7 @@ trait DfpAgent {
     }
   }
 
+  def sponsoredTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(sponsorships, tags, sectionId)
   def isSponsored(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(sponsorships, tags, sectionId)
   def isSponsored(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(sponsorships, tagId, sectionId)
   def isSponsored(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isSponsored(_, None)})
@@ -84,10 +88,12 @@ trait DfpAgent {
       (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
   }
 
+  def advertisementFeatureTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(advertisementFeatureSponsorships, tags, sectionId)
   def isAdvertisementFeature(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(advertisementFeatureSponsorships, tags, sectionId)
   def isAdvertisementFeature(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(advertisementFeatureSponsorships, tagId, sectionId)
   def isAdvertisementFeature(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isAdvertisementFeature(_, None)})
 
+  def foundationSupportedTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(foundationSupported, tags, sectionId)
   def isFoundationSupported(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tags, sectionId)
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
   def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isFoundationSupported(_, None)})
@@ -152,6 +158,12 @@ trait DfpAgent {
     } else {
       None
     }
+  }
+
+  def sponsorshipTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = {
+    sponsoredTag(tags: Seq[Tag], sectionId: Option[String])
+      .orElse(advertisementFeatureTag(tags: Seq[Tag], sectionId: Option[String]))
+      .orElse(foundationSupportedTag(tags: Seq[Tag], sectionId: Option[String]))
   }
 
 }

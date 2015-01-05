@@ -14,7 +14,6 @@ $header-image-size-desktop: 100px;
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
-            background-color: #ffffff;
         }
     }
 }
@@ -33,7 +32,6 @@ $header-image-size-desktop: 100px;
     @include mq(wide) {
         .has-page-skin & {
             width: gs-span(12);
-            background-color: #ffffff;
         }
     }
 
@@ -53,7 +51,7 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-slice-wrapper {
-    padding-top: 0;
+    padding-top: .01px; // Pure magic: makes it to jump below the header for FF
     margin: 0 $gs-gutter/2 * -1;
 
     .show-more--hidden & {
@@ -513,6 +511,10 @@ $header-image-size-desktop: 100px;
     border-top: 0 !important;
 }
 
+.facia-page,
+.index-page {
+    background-color: #ffffff;
+}
 .index-page-header {
     border-top: 1px solid colour(news-accent);
     padding-top: $gs-baseline / 2;

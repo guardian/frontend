@@ -167,24 +167,23 @@
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
-            <div class="title">
+            <div class="title" data-bind="visible: id">
                 <span data-bind="
                     text: id,
-                    visible: id,
                     click: toggleOpen
                 "></span>
 
                 <!-- ko if: props.isHidden() && collections.items().length > 0 -->
                 <span class="cfn-front__hidden-text">hidden</span>
                 <!-- /ko -->
-                </div>
+            </div>
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
                     <label>URL path</label>
                     <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
 
-                    <div class="tools">
+                    <div class="tools action-buttons">
                         <span class="tool">Create front</span>
                     </div>
                 </div>
@@ -246,7 +245,7 @@
                             checked: props.priority" />
                         <span class="radio-label">training</span>
 
-                        <div class="tools">
+                        <div class="tools action-buttons">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
                         </div>
                     </div>
@@ -257,7 +256,7 @@
                         <!-- ko if: !state.isOpenProps() && collections.items().length -->
                             <span class="linky tool--metadata" data-bind="click: openProps">edit metadata</span>
                             &middot;
-                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?front=' + id()}">edit content</a>
+                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?layout=latest,front:' + id()}">edit content</a>
                             &middot;
                             <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
                             &middot;

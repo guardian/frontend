@@ -6,6 +6,7 @@ $fc-hover-transition: .25s ease;
 */
 
 @mixin fc-item--horizontal($media-width, $media-align: right) {
+
     .fc-item__image-container {
         @include box-sizing(border-box);
         padding-left: $gs-gutter * .25;
