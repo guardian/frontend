@@ -19,6 +19,7 @@ case class ImageAsset(delegate: Asset, index: Int) {
 
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
+  lazy val ratio: Int = width/height
   lazy val role: Option[String] = fields.get("role")
 
   lazy val caption: Option[String] = fields.get("caption")
