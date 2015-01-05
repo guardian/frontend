@@ -1,0 +1,32 @@
+@(metaData: model.PreferencesMetaData)(implicit request: RequestHeader)
+
+<div class="l-side-margins">
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <div class="fc-container__header">
+                <div class="fc-container__header__title" style="bottom: inherit;">
+                    <span tabindex="0">preferences</span>
+                </div>
+            </div>
+
+            <div class="fc-container__body">
+                Edit your personal preferences for how The Guardian website is displayed.
+            </div>
+        </div>
+    </div>
+
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <div class="fc-container__header">
+                <div class="fc-container__header__title" style="bottom: inherit;">
+                    <span tabindex="0">suggested links</span>
+                </div>
+            </div>
+
+            <div class="fc-container__body">
+                <p>These are links suggested by your browsing history. You can remove individual ones by clicking 'X' next to them.</p>
+                <div id="preferences-history-tags"></div>
+            </div>
+        </div>
+    </div>
+</div>
