@@ -43,9 +43,7 @@ define([
         $holder        = null,
         searchTool     = null,
         city           = '',
-        prefName       = 'weather-location',
-        weatherApiUrl  = '/weather/city',
-        locationApiUrl = '/weather/locations?query=';
+        prefName       = 'weather-location';
 
     return {
         init: function () {
@@ -96,6 +94,7 @@ define([
                 this.fetchData(location);
             } else {
                 try {
+                    console.log(config.weather);
                     self.getWeatherData(weatherApiUrl + '.json').then(function (response) {
                         self.fetchData(response);
                     });
