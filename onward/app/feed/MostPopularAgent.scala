@@ -56,7 +56,9 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        getResponse(
+          LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition )
+        ).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>

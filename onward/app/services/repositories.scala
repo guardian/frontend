@@ -1,11 +1,12 @@
 package services
 
 import common.Edition
-import model.{Trail, Content}
+import model.Content
 import scala.concurrent.Future
-import conf.{InlineRelatedContentSwitch, LiveContentApi}
+import conf.LiveContentApi
 import feed.MostReadAgent
 import conf.Switches.RelatedContentSwitch
+import LiveContentApi.getResponse
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[Seq[Content]] = {
@@ -20,10 +21,10 @@ trait Related extends ConciergeRepository {
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val response = LiveContentApi.item(path, edition)
+      val response = getResponse(LiveContentApi.item(path, edition)
         .tag(tags)
         .showRelated(true)
-        .response
+      )
 
       val trails = response.map { response =>
         response.relatedContent map {
@@ -39,10 +40,11 @@ trait Related extends ConciergeRepository {
 
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
-    val response = LiveContentApi.search(edition)
-      .tag(tags)
-      .pageSize(50)
-      .response
+    val response = getResponse(
+      LiveContentApi.search(edition)
+        .tag(tags)
+        .pageSize(50)
+    )
 
     val trails: Future[Seq[Content]] = response.map { response =>
       response.results.map(Content(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
