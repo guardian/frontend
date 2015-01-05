@@ -17,6 +17,7 @@ import scala.io.Codec.UTF8
 
 trait DfpAgent {
 
+  protected def allPaidForTags: Seq[PaidForTag]
   protected def sponsorships: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
   protected def advertisementFeatureSponsorships: Seq[PaidForTag]
@@ -38,7 +39,7 @@ trait DfpAgent {
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
       val possibleKeywords = tokens filterNot stopWords.contains flatMap frontKeywordIds
       val keywords = possibleKeywords filter p
-      if (keywords.size == 1) keywords.headOption else None
+      keywords.headOption
     }
   }
 
@@ -49,8 +50,12 @@ trait DfpAgent {
   private def paidForTag(available: Seq[PaidForTag],
                          tags: Seq[Tag],
                          section: Option[String]): Option[Tag] = {
-    val keywordOrSeriesTags = tags.filter(t => t.isSeries || t.isKeyword)
-    keywordOrSeriesTags find (tag => isPaidFor(available, tag.id, section))
+    sponsorshipTag(tags, section) match {
+      case Some(capiTag) if available.exists { paidForTag =>
+        matches(capiTag.id, paidForTag.targetedName)
+      } => Some(capiTag)
+      case _ => None
+    }
   }
 
   private def isPaidFor(available: Seq[PaidForTag],
@@ -63,7 +68,7 @@ trait DfpAgent {
                         maybeSection: Option[String]): Boolean = {
     def sectionMatches(sectionId: String, paidForTagAdUnitPaths: Seq[Seq[String]]): Boolean = {
       paidForTagAdUnitPaths.isEmpty || paidForTagAdUnitPaths.exists { path =>
-        path.tail.isEmpty || path.tail.head == sectionId
+        path.tail.isEmpty || sectionId.startsWith(path.tail.head)
       }
     }
     available exists { tag =>
@@ -76,8 +81,6 @@ trait DfpAgent {
         })
     }
   }
-
-  def sponsoredTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(sponsorships, tags, sectionId)
 
   def isSponsored(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(sponsorships, tags, sectionId)
 
@@ -109,14 +112,14 @@ trait DfpAgent {
       (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
   }
 
-  def advertisementFeatureTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(advertisementFeatureSponsorships, tags, sectionId)
-  def isAdvertisementFeature(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(advertisementFeatureSponsorships, tags, sectionId)
+  def isAdvertisementFeature(tags: Seq[Tag], sectionId: Option[String]): Boolean = {
+    isPaidFor(advertisementFeatureSponsorships, tags, sectionId)
+  }
   def isAdvertisementFeature(tagId: String, sectionId: Option[String]): Boolean = {
     isPaidFor(advertisementFeatureSponsorships, tagId, sectionId)
   }
   def isAdvertisementFeature(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isAdvertisementFeature(_, None)})
 
-  def foundationSupportedTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = paidForTag(foundationSupported, tags, sectionId)
   def isFoundationSupported(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tags, sectionId)
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
   def isFoundationSupported(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isFoundationSupported(_, None)})
@@ -188,9 +191,10 @@ trait DfpAgent {
   }
 
   def sponsorshipTag(tags: Seq[Tag], sectionId: Option[String]): Option[Tag] = {
-    sponsoredTag(tags: Seq[Tag], sectionId: Option[String])
-      .orElse(advertisementFeatureTag(tags: Seq[Tag], sectionId: Option[String]))
-      .orElse(foundationSupportedTag(tags: Seq[Tag], sectionId: Option[String]))
+    val series = tags.filter(_.isSeries)
+    val keywords = tags.filter(_.isKeyword)
+    series.find(tag => isPaidFor(allPaidForTags, tag.id, sectionId)) orElse
+      keywords.find(tag => isPaidFor(allPaidForTags, tag.id, sectionId))
   }
 
 }
@@ -198,6 +202,7 @@ trait DfpAgent {
 
 object DfpAgent extends DfpAgent with ExecutionContexts {
 
+  private lazy val allPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
@@ -206,6 +211,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
+  protected def allPaidForTags: Seq[PaidForTag] = allPaidForTagsAgent get()
   protected def sponsorships: Seq[PaidForTag] = sponsoredTagsAgent get()
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def advertisementFeatureSponsorships: Seq[PaidForTag] = advertisementFeatureTagsAgent get()
@@ -275,6 +281,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     }
 
     val paidForTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpPaidForTagsDataKey)
+    update(allPaidForTagsAgent, paidForTags)
 
     val sponsoredTags: Seq[PaidForTag] = paidForTags filter (_.paidForType == Sponsored)
     update(sponsoredTagsAgent, sponsoredTags)
