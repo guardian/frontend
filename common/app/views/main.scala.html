@@ -24,7 +24,8 @@
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
             ("childrens-books-site", metaData.section == "childrens-books-site")))"
         itemscope itemtype="http://schema.org/WebPage">
-        <div style="transform: translateZ(0)"></div>
+
+        <div style="-webkit-transform: translateZ(0)" class="desktop-only">@* hack to fix fonts in win/chrome with font-smoothing disabled *@</div>
 
         @fragments.message(metaData)
 
