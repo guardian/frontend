@@ -48,6 +48,7 @@ define([
     return {
         init: function () {
             self = this;
+            console.log(config.page);
 
             this.getDefaultLocation();
         },
@@ -94,8 +95,7 @@ define([
                 this.fetchData(location);
             } else {
                 try {
-                    console.log(config.weather);
-                    self.getWeatherData(weatherApiUrl + '.json').then(function (response) {
+                    self.getWeatherData(config.page.weatherapi_url + '.json').then(function (response) {
                         self.fetchData(response);
                     });
                 } catch (e) {
@@ -112,7 +112,7 @@ define([
             self.saveUserLocation(location);
 
             try {
-                return self.getWeatherData(weatherApiUrl + '/' + location.id + '.json').then(function (response) {
+                return self.getWeatherData(config.page.weatherapi_url + '/' + location.id + '.json').then(function (response) {
                     self.render(response[0], location.city);
                 }).fail(function () {
                     self.failedRequest();
@@ -174,7 +174,7 @@ define([
         addSearch: function () {
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
-                apiUrl: locationApiUrl
+                apiUrl: config.page.locationapi_url
             });
             searchTool.init();
         },

@@ -448,7 +448,8 @@ define([
 
             initWeatherComponent: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.switches && config.switches.weather && detect.hasGeoLocation()) {
+                    console.log(config.switches.weather);
+                    if (config.switches && config.switches.weather) {
                         weather.init();
                     }
                 });
