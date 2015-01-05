@@ -89,6 +89,13 @@ define([
         return summaryCache;
     }
 
+    function deleteFromSummary(tag) {
+        var summary = getSummary();
+
+        delete summary.tags[tag];
+        saveSummary(summary);
+    }
+
     function isRevisit(pageId) {
         return (_.find(getHistory(), function (page) {
             return (page[0] === pageId);
@@ -126,8 +133,8 @@ define([
         return summary;
     }
 
-    function getPopular() {
-        popularCache = popularCache || _.chain(getSummary().tags)
+    function getPopular(flush) {
+        popularCache = (flush ? undefined : popularCache) || _.chain(getSummary().tags)
             .map(function (nameAndFreqs, tid) {
                 var freqs = nameAndFreqs[1];
 
@@ -273,6 +280,7 @@ define([
         logSummary: logSummary,
         renderTags: renderTags,
         getPopular: getPopular,
+        deleteFromSummary: deleteFromSummary,
         isRevisit: isRevisit,
         reset: reset,
 
