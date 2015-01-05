@@ -108,7 +108,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets',
-                src: ['**/*'],
+                src: ['**/*.css'],
                 dest: 'node_modules/css-minification-benchmark/data/',
                 flatten: true,
                 filter: 'isFile'
