@@ -123,7 +123,7 @@ define([
 
             // for testing
             reset: function () {
-                for(var type in badgesConfig) {
+                for (var type in badgesConfig) {
                     badgesConfig[type].count = 0;
                 }
             }
