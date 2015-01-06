@@ -38,11 +38,12 @@ define([
         return vPosNow + el.getBoundingClientRect().top;
     }
 
-    function getMetrics(forced) {
+    function reflow(forced) {
         if (headerPositions[lastIndex] !== getPosition(headers[lastIndex]) || forced) {
             headerPositions = headers.map(getPosition);
             winHeight = getWindowHeight();
             headerOnePosition = getPosition(headerOne);
+            setPositions(true);
         }
     }
 
@@ -71,9 +72,8 @@ define([
         }
     }
 
-    function reflow() {
-        getMetrics(true);
-        setPositions(true);
+    function forceReflow() {
+        reflow(true);
     }
 
     function init() {
@@ -114,14 +114,14 @@ define([
 
             stickyTitles = _.map(stickyTitles, function (el) { return $(el); });
 
-            setInterval(getMetrics, 1000);
+            setInterval(reflow, 1000);
 
             reflow();
 
             mediator.on('window:scroll', _.throttle(setPositions, 10));
-            mediator.on('window:resize', _.throttle(reflow, 50));
-            mediator.on('modules:nav:open', reflow);
-            mediator.on('modules:nav:close', reflow);
+            mediator.on('window:resize', _.throttle(forceReflow, 50));
+            mediator.on('modules:nav:open', forceReflow);
+            mediator.on('modules:nav:close', forceReflow);
 
             stickyTitlesContainer.css('visibility', 'visible');
         }
