@@ -22,7 +22,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/search-tool',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'text!common/views/weather.html'
 ], function (
     bean,
