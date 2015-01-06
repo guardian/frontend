@@ -27,17 +27,8 @@ trait Store extends Logging with Dates {
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putDfpSponsoredTags(keywordsJson: String) {
-    S3.putPublic(dfpSponsoredTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
   def putDfpPaidForTags(content: String) {
     S3.putPublic(dfpPaidForTagsDataKey, content, defaultJsonEncoding)
-  }
-  def putDfpAdvertisementFeatureTags(keywordsJson: String) {
-    S3.putPublic(dfpAdvertisementFeatureTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
-  def putDfpFoundationSupportedTags(keywordsJson: String) {
-    S3.putPublic(dfpFoundationSupportedTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
@@ -54,12 +45,6 @@ trait Store extends Logging with Dates {
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpSponsoredTags() =
-    S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
-  def getDfpAdFeatureTags() =
-    S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
-  def getDfpFoundationSupportedTags() =
-    S3.get(dfpFoundationSupportedTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
   def getDfpPaidForTags(): PaidForTagsReport =
     S3.get(dfpPaidForTagsDataKey).map {
     Json.parse(_).as[PaidForTagsReport]
