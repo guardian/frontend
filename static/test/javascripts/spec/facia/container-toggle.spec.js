@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'bonzo',
     'bean',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'qwery'
 ], function(
     ContainerDisplayToggle,

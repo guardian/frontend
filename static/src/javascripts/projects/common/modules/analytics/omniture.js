@@ -173,8 +173,6 @@ define([
 
             s.prop25    = config.page.blogs || '';
 
-            s.prop14    = config.page.buildNumber || '';
-
             s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
 
             s.prop19     = platform;

@@ -46,6 +46,7 @@
             width: 100%;
             max-width: gs-span(8);
             margin: 0 auto;
+            padding-left: 0;
         }
         @include mq(tablet) {
             max-width: gs-span(9);
