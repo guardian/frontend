@@ -28,7 +28,7 @@ requirejs.config({
         reqwest:      'components/reqwest/reqwest',
         omniture:     '/base/static/public/javascripts/vendor/omniture',
         stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
-        jasq:         '/base/static/test/javascripts/components/jasq/jasq',
+        squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
         // plugins
@@ -45,6 +45,10 @@ requirejs.config({
     }
 });
 
-require(tests, function() {
-    window.__karma__.start();
+require(['Promise', 'common/utils/to-array'], function (Promise, toArray) {
+    require(tests, function () {
+        Promise.all(toArray(arguments)).then(function () {
+            window.__karma__.start()
+        });
+    });
 });

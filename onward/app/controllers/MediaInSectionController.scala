@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfig
-import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer}
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -10,6 +10,7 @@ import slices.{Fixed, FixedContainers}
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
+import LiveContentApi.getResponse
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
 
@@ -28,20 +29,20 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
   private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching $mediaType content in section: ${sectionId}")
+    log.info(s"Fetching $mediaType content in section: $sectionId")
 
-    val excludeTags: Seq[String] = (request.queryString.get("exclude-tag").getOrElse(Nil) ++ seriesId).map(t => s"-$t")
+    val excludeTags: Seq[String] = (request.queryString.getOrElse("exclude-tag", Nil) ++ seriesId).map(t => s"-$t")
     val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
+    def isCurrentStory(content: ApiContent) =
+      content.safeFields.get("shortUrl").exists(!_.equals(currentShortUrl))
 
-    val promiseOrResponse = LiveContentApi.search(edition)
+    val promiseOrResponse = getResponse(LiveContentApi.search(edition)
       .section(sectionId)
       .tag(tags)
       .showTags("all")
       .showFields("all")
-      .response
-      .map {
+    ).map {
       response =>
         response.results filter { content => isCurrentStory(content) } map { result =>
           Content(result)
