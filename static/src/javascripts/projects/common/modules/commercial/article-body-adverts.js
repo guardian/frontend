@@ -84,6 +84,10 @@ define([
             ads.forEach(function ($ad) {
                 $ad.remove();
             });
+        },
+
+        reset: function () {
+            ads = [];
         }
 
     };
