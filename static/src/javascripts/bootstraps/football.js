@@ -226,7 +226,10 @@ define([
         });
 
         page.isCompetition(function (competition) {
-            renderTable(competition, extras, dropdownTemplate);
+            var $rightHandCol = $('.js-secondary-column')
+            if ($rightHandCol.dim().height > 1800 ) {
+                renderTable(competition, extras, dropdownTemplate);
+            }
         });
 
         page.isLiveClockwatch(function () {
