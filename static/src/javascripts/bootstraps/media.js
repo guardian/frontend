@@ -178,7 +178,7 @@ define([
     }
 
     function beaconError(err) {
-        if (err && 'message' in err) {
+        if (err && 'message' in err && 'code' in err) {
             raven.captureException(new Error(err.message), {
                 tags: {
                     feature: 'player',
@@ -198,8 +198,8 @@ define([
     }
 
     function bindErrorHandler(player) {
-        player.on('error', function (e) {
-            beaconError(e);
+        player.on('error', function () {
+            beaconError(player.error());
         });
     }
 
@@ -360,15 +360,14 @@ define([
                 }
             });
 
-            player.guMediaType = mediaType;
+            // Location of this is important.
+            bindErrorHandler(player);
 
-            //Location of this is important
-            handleInitialMediaError(player);
+            player.guMediaType = mediaType;
 
             player.ready(function () {
                 var vol;
 
-                bindErrorHandler(player);
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
                 upgradeVideoPlayerAccessibility(player);
