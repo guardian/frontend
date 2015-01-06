@@ -51,7 +51,7 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-slice-wrapper {
-    padding-top: 0;
+    padding-top: .01px; // Pure magic: makes it to jump below the header for FF
     margin: 0 $gs-gutter/2 * -1;
 
     .show-more--hidden & {
@@ -351,7 +351,7 @@ $header-image-size-desktop: 100px;
     min-height: gs-height(1);
     min-width: gs-span(1);
     position: absolute;
-    top: 2px;
+    top: -3px;
     right: 0;
     border: 0;
     background-color: transparent;

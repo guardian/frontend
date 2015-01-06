@@ -97,7 +97,7 @@ define([
         },
         badges = {
 
-            init: once(init),
+            init: init,
 
             // add a badge to a container (if appropriate)
             add: function (container) {
@@ -118,6 +118,13 @@ define([
                     );
                     // add slot to dfp
                     dfp.addSlot($adSlot);
+                }
+            },
+
+            // for testing
+            reset: function () {
+                for(var type in badgesConfig) {
+                    badgesConfig[type].count = 0;
                 }
             }
 

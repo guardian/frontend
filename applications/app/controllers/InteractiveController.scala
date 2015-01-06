@@ -7,6 +7,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import com.gu.contentapi.client.model.ItemResponse
 import views.support.RenderOtherStatus
+import LiveContentApi.getResponse
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent)
 
@@ -25,12 +26,12 @@ object InteractiveController extends Controller with Logging with ExecutionConte
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showFields("all")
-      .response
+    val response: Future[ItemResponse] = getResponse(
+      LiveContentApi.item(path, edition)
+       .showFields("all")
+    )
 
     val result = response map { response =>
-      val storyPackage = response.storyPackage map { Content(_) }
       val interactive = response.content map { Interactive(_) }
       val page = interactive.map(i => InteractivePage(i, RelatedContent(i, response)))
 

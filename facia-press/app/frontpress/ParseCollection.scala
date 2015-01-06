@@ -12,11 +12,11 @@ import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
 import services.ParseCollectionJsonImplicits._
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
-
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -109,11 +109,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .flatMap(c => c.meta.flatMap(_.snapUri))
 
     val lastestSnaps = Future.traverse(latestSnapSearches) { id =>
-      LiveContentApi.item(id, Edition.defaultEdition)
+      getResponse(LiveContentApi.item(id, Edition.defaultEdition)
         .showFields(showFieldsWithBodyQuery)
         .pageSize(1)
-        .response
-        .map(_.results.headOption.map(id -> _))
+      ).map(_.results.headOption.map(id -> _))
     }
     .map(_.flatten)
     .map(_.toMap)
@@ -205,13 +204,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
                                                   edition: Edition): Future[Seq[ApiContent]] = {
     lazy val itemIds: Seq[String] = collectionItems.map(_.get)
     lazy val collectionIdsQuery: String = itemIds.mkString(",")
-    lazy val response = client.search(edition)
+    lazy val response = getResponse(client.search(edition)
       .ids(collectionIdsQuery)
       .showFields(showFieldsWithBodyQuery)
       .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
-      .response
-      .map(Option.apply)
-      .recover {
+    ).map(Option.apply).recover {
       case apiError: com.gu.contentapi.client.GuardianContentApiError if apiError.httpStatus == 404 => {
         log.warn(s"Content API Error: 404 for collectionIds $collectionIdsQuery")
         None
@@ -274,7 +271,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          newSearch.response map { searchResponse =>
+          getResponse(newSearch) map { searchResponse =>
             Result(
               curated = Nil,
               editorsPicks = Nil,
@@ -290,7 +287,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          newSearch.response map { itemResponse =>
+          getResponse(newSearch) map { itemResponse =>
             Result(
               curated = Nil,
               editorsPicks = itemResponse.editorsPicks,

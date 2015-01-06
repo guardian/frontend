@@ -57,6 +57,7 @@ define([
         };
 
         model.pressLiveFront = function () {
+            model.clearAlerts();
             mediator.emit('presser:live');
         };
 

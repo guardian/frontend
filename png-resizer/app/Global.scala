@@ -8,6 +8,9 @@ object Global extends WithFilters(Filters.common: _*) with CloudWatchApplication
 
   override def applicationMetrics: List[FrontendMetric] = List(
     PngResizerMetrics.downloadTime,
-    PngResizerMetrics.resizeTime
+    PngResizerMetrics.resizeTime,
+    PngResizerMetrics.quantizeTime,
+    PngResizerMetrics.redirectCount,
+    PngResizerMetrics.notModifiedCount
   )
 }

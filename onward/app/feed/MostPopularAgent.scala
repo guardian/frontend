@@ -7,7 +7,7 @@ import play.api.libs.json.{JsArray, JsValue}
 import model.Content
 import scala.concurrent.duration._
 import scala.concurrent.Future
-import akka.util.Timeout
+import LiveContentApi.getResponse
 
 object MostPopularAgent extends Logging with ExecutionContexts {
 
@@ -20,9 +20,9 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = LiveContentApi.item("/", edition)
-    .showMostViewed(true)
-    .response.map{ response =>
+  def refresh(edition: Edition) = getResponse(LiveContentApi.item("/", edition)
+      .showMostViewed(true)
+    ).map { response =>
       val mostViewed = response.mostViewed map { Content(_) } take 10
       agent.alter{ old =>
         old + (edition.id -> mostViewed)
@@ -56,7 +56,9 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        getResponse(
+          LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition )
+        ).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -102,7 +104,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        getResponse(LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition )).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -132,10 +134,10 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      LiveContentApi.item("/", edition)
+      getResponse(LiveContentApi.item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
-        .response.foreach{ response =>
+      ).foreach { response =>
         val mostViewed = response.mostViewed map { Content(_) } take 10
         agent.send{ old =>
           old + (edition.id -> mostViewed)
@@ -143,5 +145,4 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
       }
     }
   }
-
 }

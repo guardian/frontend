@@ -7,6 +7,7 @@ import common._
 import model.{Audio, Content}
 import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
+import LiveContentApi.getResponse
 
 object MostViewedAudioAgent extends Logging with ExecutionContexts {
 
@@ -33,7 +34,7 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition).response.map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition)).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
