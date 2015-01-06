@@ -25,6 +25,8 @@
             ("childrens-books-site", metaData.section == "childrens-books-site")))"
         itemscope itemtype="http://schema.org/WebPage">
 
+        <div style="-webkit-transform: translateZ(0)" class="desktop-only">@* hack to fix fonts in win/chrome with font-smoothing disabled *@</div>
+
         @fragments.message(metaData)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
