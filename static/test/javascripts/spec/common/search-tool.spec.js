@@ -29,7 +29,7 @@ define([
             $('body').append(container);
 
             sut = new SearchTool({
-                container: $('.js-search-tool'),
+                container: container,
                 apiUrl: 'http://testapiurl'
             });
         });
@@ -100,6 +100,8 @@ define([
 
         it("should return new ID", function() {
             $(".js-search-tool-list").html("<li></li><li></li><li></li><li></li>");
+
+            sut.init();
 
             expect(sut.getNewId(0)).toEqual(0);
             expect(sut.getNewId(1)).toEqual(1);
