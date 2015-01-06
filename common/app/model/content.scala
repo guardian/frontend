@@ -98,12 +98,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) getOrElse Nil
   }
 
-  lazy val blogMeta = {
-    blogs.headOption.map( blog =>
-      Seq(("blog", JsString(blog.name)), ("blogId", JsString(blog.id)))
-    ) getOrElse Nil
-  }
-
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
@@ -171,7 +165,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-      ("blogIds", JsString(blogs.map { _.id.split("/").last }.mkString(","))),
+      ("blogIds", JsString(blogs.map { _.id.last }.mkString(","))),
       ("commentable", JsBoolean(isCommentable)),
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
@@ -184,7 +178,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("sectionName", JsString(sectionName)),
       ("showRelatedContent", JsBoolean(showInRelated)),
       ("productionOffice", JsString(productionOffice.getOrElse("")))
-    ) ++ Map(seriesMeta: _*) ++ Map(blogMeta: _*)
+    ) ++ Map(seriesMeta: _*)
   }
 
   override lazy val cacheSeconds = {

@@ -1,6 +1,7 @@
 define([
     'lodash/arrays/union',
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
     'common/modules/component',
@@ -8,6 +9,7 @@ define([
 ], function (
     union,
     config,
+    mediator,
     register,
     badges,
     Component,
@@ -15,7 +17,8 @@ define([
 ) {
 
     var getTag = function () {
-        return union(config.page.nonKeywordTagIds.split(','), [config.page.seriesId, config.page.blogId]).shift();
+        var seriesAndBlogTags = config.page.blogIds.split(',').concat([config.page.seriesId]);
+        return union(config.page.nonKeywordTagIds.split(','), seriesAndBlogTags).shift();
     };
 
     function OnwardContent(context) {
@@ -31,6 +34,7 @@ define([
         badges.add(container);
         images.upgrade(this.context);
         register.end('series-content');
+        mediator.emit('modules:onward:loaded')
     };
 
     OnwardContent.prototype.error = function () {

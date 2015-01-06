@@ -32,7 +32,7 @@ define([
                         seriesId: 'film/series/filmweekly',
                         pageId: 'football/series/footballweekly',
                         keywordIds: 'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
-                        blogIds: 'blog',
+                        blogIds: 'a/blog',
                         videoDuration: 63
                     };
                     mocks.store['common/utils/config'].switches = {
