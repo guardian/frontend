@@ -93,8 +93,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    blogsAndSeries.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
+    series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
+    ) getOrElse Nil
+  }
+
+  lazy val blogMeta = {
+    blogs.headOption.map( blog =>
+      Seq(("blog", JsString(blog.name)), ("blogId", JsString(blog.id)))
     ) getOrElse Nil
   }
 
@@ -156,6 +162,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     super.metaData ++ Map(
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
       ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
+      ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
       ("publication", JsString(publication)),
       ("headline", JsString(headline)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),
@@ -177,7 +184,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("sectionName", JsString(sectionName)),
       ("showRelatedContent", JsBoolean(showInRelated)),
       ("productionOffice", JsString(productionOffice.getOrElse("")))
-    ) ++ Map(seriesMeta: _*)
+    ) ++ Map(seriesMeta: _*) ++ Map(blogMeta: _*)
   }
 
   override lazy val cacheSeconds = {

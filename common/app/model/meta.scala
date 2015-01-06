@@ -237,13 +237,13 @@ trait Tags {
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 
   lazy val keywords: Seq[Tag] = tagsOfType("keyword")
+  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.tagType == "keyword")
   lazy val contributors: Seq[Tag] = tagsOfType("contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
   lazy val series: Seq[Tag] = tagsOfType("series")
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
-  lazy val blogsAndSeries: Seq[Tag] = tags.filter{ tag => tag.tagType == "series" || tag.tagType == "blog"}
 
   def isSponsored: Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
