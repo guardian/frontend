@@ -70,11 +70,12 @@ define([
             return '3';
         };
 
-    return function () {
-        var page        = config.page,
+    return function (opts) {
+        var win         = (opts || {}).window || window,
+            page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = merge({
-                url:     window.location.pathname,
+                url:     win.location.pathname,
                 edition: page.edition && page.edition.toLowerCase(),
                 se:      getSeries(page),
                 ct:      contentType,
