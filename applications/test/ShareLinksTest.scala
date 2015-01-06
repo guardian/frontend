@@ -1,6 +1,7 @@
 package test
 
 import com.gu.contentapi.client.model.ItemResponse
+import conf.LiveContentApi.getResponse
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import org.scalatest.concurrent.{Futures, ScalaFutures}
 
@@ -9,7 +10,9 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
   private val edition = common.editions.Uk
 
   "ShareLink" should "provide valid page-level campaign-links in the correct order" in {
-    val response = conf.LiveContentApi.item("environment/gallery/2014/oct/22/2014-wildlife-photographer-of-the-year", edition).response
+    val response = getResponse(
+      conf.LiveContentApi.item("environment/gallery/2014/oct/22/2014-wildlife-photographer-of-the-year", edition)
+    )
 
     whenReady(response) { item: ItemResponse =>
 
@@ -29,7 +32,9 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
   }
 
   it should "provide valid block-level campaign-links in the correct order" in {
-    val response = conf.LiveContentApi.item("environment/gallery/2014/oct/22/2014-wildlife-photographer-of-the-year", edition).response
+    val response = getResponse(
+      conf.LiveContentApi.item("environment/gallery/2014/oct/22/2014-wildlife-photographer-of-the-year", edition)
+    )
 
     whenReady(response) { item: ItemResponse =>
 

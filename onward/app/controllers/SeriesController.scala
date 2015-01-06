@@ -10,8 +10,9 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import layout.{CollectionEssentials, FaciaContainer, ContainerLayout}
+import layout.{CollectionEssentials, FaciaContainer}
 import slices.{Fixed, FixedContainers}
+import LiveContentApi.getResponse
 
 case class Series(id: String, tag: Tag, trails: Seq[Content])
 
@@ -29,10 +30,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
     def isCurrentStory(content: ApiContent) =
       content.safeFields.get("shortUrl").exists(_.equals(currentShortUrl))
 
-    val seriesResponse: Future[Option[Series]] = LiveContentApi.item(seriesId, edition)
+    val seriesResponse: Future[Option[Series]] = getResponse(LiveContentApi.item(seriesId, edition)
       .showFields("all")
-      .response
-      .map { response =>
+    ).map { response =>
         response.tag.flatMap { tag =>
           val trails = response.results filterNot (isCurrentStory(_)) map (Content(_))
           if (!trails.isEmpty) {

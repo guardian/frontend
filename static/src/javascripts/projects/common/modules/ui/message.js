@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'bean',
     'common/utils/storage',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'lodash/arrays/uniq'
 ], function (
     $,

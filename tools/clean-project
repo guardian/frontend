@@ -1,0 +1,14 @@
+#!/bin/bash
+# This script can be used to clean a team city agent's checkout folder.
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+cd `dirname $0`/..
+
+rm -rf node_modules
+npm prune
+npm cache clean
+
+echo "Done cleaning."
