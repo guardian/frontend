@@ -5,11 +5,12 @@ import com.gu.facia.client.models.CollectionConfig
 import common.Edition.defaultEdition
 import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
-import dfp.Sponsorship.ANY_SECTION
 import model.Tag
+import org.joda.time.DateTime
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
 
+import scala.util.Random
 
 class DfpAgentTest extends FlatSpec with Matchers {
 
@@ -50,46 +51,61 @@ class DfpAgentTest extends FlatSpec with Matchers {
   private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag = toTag("keyword", tagId, sectionId)
   private def toSeries(tagId: String, sectionId: Option[String] = None): Tag = toTag("series", tagId, sectionId)
 
-  private object testDfpAgent extends DfpAgent {
-    override protected def sponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("spon-page"), sections = Nil, Some("spon"), Nil, 1),
-      Sponsorship(Seq("media"), sections = Nil, None, Nil, 2),
-      Sponsorship(Seq("healthyliving"), sections = Seq("spinach"), Some("Squeegee"), Nil, 3)
-    )
+  private def paidForTag(targetedName: String,
+                           paidForType: PaidForType,
+                           tagType: TagType,
+                           adUnitPaths: Seq[String] = Nil,
+                           sponsor: Option[String] = None): PaidForTag = {
+    val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/")))
+    val targeting = GuTargeting(adUnits, Nil, Nil, Nil)
+    val lineItem = GuLineItem(Random.nextInt(),
+      "liName",
+      DateTime.now(),
+      None,
+      isPageSkin = false,
+      sponsor,
+      targeting)
+    PaidForTag(targetedName, Keyword, paidForType, Nil, Seq(lineItem))
+  }
 
-    override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("ad-feature"), sections = Nil, Some("spon2"), Nil, 4),
-      Sponsorship(Seq("film"), sections = Nil, None, Nil, 5),
-      Sponsorship(Seq("grundfos-partner-zone", "sustainable-business-grundfos-partner-zone"),
-        sections = Seq("sustainable-business"), None, Nil, 8),
-      Sponsorship(Seq("media-network-adobe-partner-zone"), sections = Nil, None, Nil, 9),
-      Sponsorship(
-        tags = Seq("wsscc-partner-zone"),
-        sections = Seq(
-          ANY_SECTION,
-          "global-development-professionals-network",
-          "global-development-professionals-network/front"),
-        sponsor = None,
-        countries = Nil,
-        lineItemId = 12
-      ),
-      Sponsorship(
-        tags = Seq("some-partner-zone"),
-        sections = Seq(
-          "global-development-professionals-network",
-          "global-development-professionals-network/front"),
-        sponsor = None,
-        countries = Nil,
-        lineItemId = 13
+  private object testDfpAgent extends DfpAgent {
+    override protected def sponsorships: Seq[PaidForTag] = Seq(
+      paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
+      paidForTag("media", Sponsored, Keyword),
+      paidForTag("healthyliving",
+        Sponsored, Keyword,
+        adUnitPaths = Seq("theguardian.com/spinach"),
+        sponsor = Some("Squeegee")
       )
     )
 
-    override protected def foundationSupported: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("music"), sections = Nil, Some("Music Foundation"), Nil, 6),
-      Sponsorship(Seq("chuckle"), sections = Nil, None, Nil, 7),
-      Sponsorship(Seq("womens-rights-and-gender-equality-in-focus"), sections = Nil, None, Nil, 10),
-      Sponsorship(Seq("global-development"), sections = Nil, None, Nil, 11)
+    override protected def advertisementFeatureSponsorships: Seq[PaidForTag] = Seq(
+      paidForTag("best-awards", AdvertisementFeature, Keyword, sponsor = Some("spon2")),
+      paidForTag("film", AdvertisementFeature, Keyword),
+      paidForTag("grundfos-partner-zone", AdvertisementFeature, Keyword),
+      paidForTag("sustainable-business-grundfos-partner-zone", AdvertisementFeature, Keyword),
+      paidForTag("media-network-adobe-partner-zone", AdvertisementFeature, Keyword),
+      paidForTag("wsscc-partner-zone", AdvertisementFeature, Keyword,
+        adUnitPaths = Seq("theguardian.com",
+          "theguardian.com/global-development-professionals-network",
+          "theguardian.com/global-development-professionals-network/front")),
+      paidForTag("some-partner-zone", AdvertisementFeature, Keyword,
+        adUnitPaths = Seq(
+          "theguardian.com/global-development-professionals-network",
+          "theguardian.com/global-development-professionals-network/front")
+      ),
+      paidForTag("agencies", Sponsored, Series)
     )
+
+    override protected def foundationSupported: Seq[PaidForTag] = Seq(
+      paidForTag("music", FoundationFunded, Keyword, sponsor = Some("Music Foundation")),
+      paidForTag("womens-rights-and-gender-equality-in-focus", FoundationFunded, Keyword),
+      paidForTag("global-development", FoundationFunded, Keyword),
+      paidForTag("global-modern-day-slavery-in-focus", FoundationFunded, Series)
+    )
+
+    override protected def allPaidForTags: Seq[PaidForTag] =
+      sponsorships ++ advertisementFeatureSponsorships ++ foundationSupported
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
@@ -106,11 +122,13 @@ class DfpAgentTest extends FlatSpec with Matchers {
   private object notProductionTestDfpAgent extends DfpAgent {
     override def isProd = false
 
-    override protected def sponsorships: Seq[Sponsorship] = Nil
+    override protected def allPaidForTags: Seq[PaidForTag] = Nil
 
-    override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Nil
+    override protected def sponsorships: Seq[PaidForTag] = Nil
 
-    override protected def foundationSupported: Seq[Sponsorship] = Nil
+    override protected def advertisementFeatureSponsorships: Seq[PaidForTag] = Nil
+
+    override protected def foundationSupported: Seq[PaidForTag] = Nil
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
@@ -127,13 +145,13 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {
-    testDfpAgent.isAdvertisementFeature("advert/ad-feature", None) should be(true)
+    testDfpAgent.isAdvertisementFeature("advert/best-awards/best-awards", None) should be(true)
   }
 
   it should "be true if keyword tag exists" in {
     val tags = Seq(
       toKeyword("culture/article"),
-      toKeyword("advert/ad-feature")
+      toKeyword("best-awards/best-awards")
     )
     testDfpAgent.isAdvertisementFeature(tags, sectionId = None) should be(true)
   }
@@ -145,7 +163,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
   it should "be true if series tag exists" in {
     val tags = Seq(
       toKeyword("culture/article"),
-      toSeries("advert/ad-feature")
+      toSeries("best-awards/best-awards")
     )
     testDfpAgent.isAdvertisementFeature(tags, sectionId = None) should be(true)
   }
@@ -252,6 +270,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
     ) should be(false)
   }
 
+  it should "be true if primary keyword is ad-feature sponsored" in {
+    val tags = Seq(toKeyword("culture/film"),
+      toKeyword("culture/healthyliving"),
+      toKeyword("culture/culture"))
+    testDfpAgent.isAdvertisementFeature(tags, sectionId = Some("culture")) should be(true)
+  }
+
+  it should "be false if primary keyword is ad-feature sponsored" in {
+    val tags = Seq(toKeyword("culture/healthyliving"),
+      toKeyword("global-development/global-development"),
+      toKeyword("culture/film"))
+    testDfpAgent.isAdvertisementFeature(tags, sectionId = Some("culture")) should be(false)
+  }
+
+  it should "be true if series is ad-feature sponsored" in {
+    val tags = Seq(toKeyword("global-development/global-development"),
+      toKeyword("culture/film"), toSeries("media-network/series/agencies"))
+    testDfpAgent.isAdvertisementFeature(tags, sectionId = Some("culture")) should be(true)
+  }
+
   "hasInlineMerchandise" should "be true if tag id has inline merchandising" in {
     testDfpAgent.hasInlineMerchandise(Seq(toKeyword("advert/ad-feature"))) should be(true)
   }
@@ -275,7 +313,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isSponsored" should "be true for a sponsored article" in {
-    testDfpAgent.isSponsored("spon-page", None) should be(true)
+    testDfpAgent.isSponsored("small-business-network/business-essentials", None) should be(true)
   }
 
   it should "be true if section tag exists" in {
@@ -304,6 +342,17 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   it should "be false for an unsponsored tag and section combination" in {
     val tags = Seq(toKeyword("culture/healthyliving", Some("culture")))
+    testDfpAgent.isSponsored(tags, sectionId = Some("culture")) should be(false)
+  }
+
+  it should "be true if primary keyword is sponsored" in {
+    val tags = Seq(toKeyword("culture/healthyliving"), toKeyword("culture/culture"))
+    testDfpAgent.isSponsored(tags, sectionId = Some("spinach")) should be(true)
+  }
+
+  it should "be false if primary keyword is foundation-funded" in {
+    val tags = Seq(toKeyword("global-development/global-development"),
+      toKeyword("culture/healthyliving"))
     testDfpAgent.isSponsored(tags, sectionId = Some("culture")) should be(false)
   }
 
@@ -374,18 +423,25 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isFoundationSupported" should "be true for a foundation-supported page" in {
-    testDfpAgent.isFoundationSupported("chuckle", None) should be(true)
+    testDfpAgent.isFoundationSupported("global-development/global-development", None) should be(true)
   }
 
   it should "be false for a non foundation-supported page" in {
     testDfpAgent.isFoundationSupported("guffaw", None) should be(false)
   }
 
-  it should "be false for a container with multiple foundation-targeted keywords or series" in {
+  it should "be true for a container with multiple foundation-targeted keywords" in {
     val q =
       "search?tag=global-development/series/womens-rights-and-gender-equality-in-focus|" +
         "(world/gender,global-development/global-development)"
-    testDfpAgent.isFoundationSupported(apiQuery(q)) should be(false)
+    testDfpAgent.isFoundationSupported(apiQuery(q)) should be(true)
+  }
+
+  it should "be true for a container with multiple foundation-targeted series and keywords" in {
+    val q =
+      "search?tag=global-development/series/womens-rights-and-gender-equality-in-focus|" +
+        "(world/gender,global-development/global-development,modern-day-slavery-in-focus)"
+    testDfpAgent.isFoundationSupported(apiQuery(q)) should be(true)
   }
 
   it should "be true for a container with a single foundation-targeted keyword or series" in {
@@ -395,11 +451,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "getSponsor" should "have some value for a sponsored tag with a specified sponsor" in {
-    testDfpAgent.getSponsor("spon-page") should be(Some("spon"))
+    testDfpAgent.getSponsor("small-business-network/business-essentials") should be(Some("spon"))
   }
 
   it should "have some value for an advertisement feature tag with a specified sponsor" in {
-    testDfpAgent.getSponsor("ad-feature") should be(Some("spon2"))
+    testDfpAgent.getSponsor("best-awards/best-awards") should be(Some("spon2"))
   }
 
   it should "have no value for an advertisement feature tag without a specified sponsor" in {
@@ -457,10 +513,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
-    val universitySponsorships =
-      Sponsorship(List("universityguide", "university A"), sections = Nil, Some("University Sponsor A"), Nil, 1) ::
-        Sponsorship(List("universityguide"), sections = Nil, Some("University Sponsor B"), Nil, 2) ::
-        Nil
+    val universitySponsorships = Seq(
+      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
+      paidForTag("university A", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
+      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor B"))
+    )
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
     sponsorsMap should contain key "universityguide"
@@ -470,10 +527,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   it should "not bother with tag with no detected sponsors" in {
-    val sponsorshipsWithANone =
-      Sponsorship(List("universityguide", "university A"), sections = Nil, Some("University Sponsor A"), Nil, 3) ::
-        Sponsorship(List("videogames"), sections = Nil, None, Nil, 4) ::
-        Nil
+    val sponsorshipsWithANone = Seq(
+      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
+      paidForTag("videogames", Sponsored, Keyword)
+    )
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
     sponsorsMap should contain key "universityguide"

@@ -7,6 +7,8 @@
 GET        /assets/*path                                               dev.DevAssetsController.at(path)
 
 GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
+GET        /_fronts_cdn_healthcheck                                    conf.HealthCheck.cdnHealthcheck()
+
 GET        /_agentcontents                                             controllers.FaciaController.renderAgentContents
 
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")

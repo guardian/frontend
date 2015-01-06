@@ -3,6 +3,7 @@ package load
 import java.util.concurrent.atomic.AtomicInteger
 
 import common.{ExecutionContexts, Logging}
+import conf.PngResizerMetrics
 import model.Cached
 import play.api.mvc.Results._
 import play.api.mvc._
@@ -17,8 +18,7 @@ object LoadLimit extends ExecutionContexts with Logging {
   private lazy val currentNumberOfResizes = new AtomicInteger(0)
 
   private lazy val requestLimit = {
-    val limit = Runtime.getRuntime.availableProcessors() * 2
-    // one per cpu is too low as we have to wait for the content to download, so go for 2 per cpu
+    val limit = Runtime.getRuntime.availableProcessors()
     log.info(s"request limit set to $limit")
     limit
   }
@@ -38,6 +38,8 @@ object LoadLimit extends ExecutionContexts with Logging {
         currentNumberOfRequests.decrementAndGet()
         throw t
     } else {
+      log.info(s"too many requests - redirecting to $fallbackUri")
+      PngResizerMetrics.redirectCount.increment
       currentNumberOfRequests.decrementAndGet()
       Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))
     }

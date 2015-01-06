@@ -9,7 +9,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/modules/commercial/create-ad-slot',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs'
 ], function (
     bonzo,
     qwery,

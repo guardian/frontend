@@ -1,11 +1,12 @@
 package lib
 
-import java.awt.image.BufferedImage
-import org.im4java.core.{Stream2BufferedImage, ConvertCmd, IMOperation}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
-import javax.imageio.ImageIO
 
+import org.im4java.core.{ConvertCmd, IMOperation}
 import org.im4java.process.Pipe
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object Im4Java {
   def apply(operation: IMOperation, format: String = "png")(imageBytes: Array[Byte]): Array[Byte] = {
@@ -24,15 +25,15 @@ object Im4Java {
     baos.toByteArray
   }
 
-  def resizeBufferedImage(width: Int) = {
+  def resizeBufferedImage(width: Int)(imageBytes: Array[Byte]) = Future {
     val operation = new IMOperation
 
     operation.addImage("-")
-    operation.sharpen(1.0)
     operation.resize(width)
-    operation.quality(100)
+    operation.sharpen(1.0)
+    operation.quality(0)
     operation.addImage("png:-")
 
-    apply(operation)_
+    apply(operation)(imageBytes)
   }
 }

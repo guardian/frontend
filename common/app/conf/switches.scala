@@ -74,7 +74,7 @@ object Switches {
   val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
     "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 12, 31)
+    sellByDate = new LocalDate(2015, 2, 1)
   )
 
 
@@ -175,11 +175,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
-    "If this switch is on, memory leak on Admin server should be plugged.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
-  )
-
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
     safeState = On, sellByDate = never
@@ -238,7 +233,7 @@ object Switches {
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
 
-  val targetMediaMathShutdownDate = new LocalDate(2015, 1, 6)
+  val targetMediaMathShutdownDate = new LocalDate(2015, 2, 1)
 
   val MediaMathSwitch = Switch("Commercial", "media-math",
     "Enable Media Math audience segment tracking",
@@ -246,7 +241,7 @@ object Switches {
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
+    safeState = Off, sellByDate = never)
 
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
