@@ -30,7 +30,7 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    if (['Network Front', 'Section'].indexOf(config.page.contentType) > -1) {
+                    if (config.page.contentType === 'Network Front' || config.page.contentType === 'Section') {
                         stickyContainerTitles.init();
                     }
                 }
