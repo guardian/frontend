@@ -2,7 +2,11 @@
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid colour(neutral-4);
-    height: 22px;
+    height: 16px;
+
+    @include mq(leftCol) {
+        height: 22px;
+    }
 
     &:focus {
         border-bottom-color: colour(neutral-2);
@@ -38,7 +42,8 @@
     padding-bottom: $gs-baseline;
     width: 100%;
     display: block;
-    @include fs-header(2);
+    @include fs-headline(2);
+    font-weight: 500;
 
     @include mq($until: leftCol) {
         padding-left: $gs-gutter / 4;
@@ -58,6 +63,6 @@
 .search-tool__meta {
     color: colour(neutral-2);
     display: block;
-    @include fs-textSans(3);
+    @include fs-textSans(2);
     line-height: 16px;
 }
