@@ -52,55 +52,59 @@
             }
         }();
 
-        function loadFontsAsynchronously() {
-            @if(FontSwitch.isSwitchedOff) {
-                return;
+        @if(FontSwitch.isSwitchedOn) {
+
+            function loadFontsAsynchronously() {
+                var scripts    = document.getElementsByTagName('script'),
+                    thisScript = scripts[scripts.length - 1],
+                    fonts      = document.createElement('link');
+
+                fonts.rel       = 'stylesheet';
+                fonts.className = 'webfonts';
+                // show hinted for Windows XP
+                fonts.href      = guardian.config.stylesheets.fonts['hinting' + (shouldUseHintedFonts ? 'On' : 'Off') ].kerningOn;
+                window.setTimeout(function() {
+                    thisScript.parentNode.insertBefore(fonts, thisScript);
+                }, 0);
             }
 
-            var scripts    = document.getElementsByTagName('script'),
-                thisScript = scripts[scripts.length - 1],
-                fonts      = document.createElement('link');
+            function loadFontsFromStorage() {
+                var storedFontFormat = localStorage['gu.fonts.format'];
 
-            fonts.rel       = 'stylesheet';
-            fonts.className = 'webfonts';
-            // show hinted for Windows XP
-            fonts.href      = guardian.config.stylesheets.fonts['hinting' + (shouldUseHintedFonts ? 'On' : 'Off') ].kerningOn;
-            window.setTimeout(function() {
-                thisScript.parentNode.insertBefore(fonts, thisScript);
-            }, 0);
-        }
+                if (storedFontFormat) {
+                    var fonts      = document.querySelectorAll('.webfont'),
+                        fontFormat = JSON.parse(storedFontFormat).value;
 
-        function loadFontsFromStorage() {
-            var showFonts        = @if(FontSwitch.isSwitchedOn) {true} else {false},
-                storedFontSwitch = localStorage['gu.prefs.switch.font-family'],
-                storedFontFormat = localStorage['gu.fonts.format'];
+                    for (var i = 0, j = fonts.length; i < j; ++i) {
+                        var font            = fonts[i],
+                            dataAttrName    = 'data-cache-file-' + (shouldUseHintedFonts ? 'hinted-' : '') + fontFormat,
+                            nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                            storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
-            if (storedFontSwitch) {
-                showFonts = JSON.parse(storedFontSwitch).value;
-            }
-
-            if (showFonts && storedFontFormat) {
-                var fonts      = document.querySelectorAll('.webfont'),
-                    fontFormat = JSON.parse(storedFontFormat).value;
-
-                for (var i = 0, j = fonts.length; i < j; ++i) {
-                    var font            = fonts[i],
-                        dataAttrName    = 'data-cache-file-' + (shouldUseHintedFonts ? 'hinted-' : '') + fontFormat,
-                        nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
-                        storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
-
-                    if (storedCachedCss) {
-                        font.innerHTML = JSON.parse(storedCachedCss).value;
-                        font.setAttribute('data-cache-full', 'data-cache-full');
+                        if (storedCachedCss) {
+                            font.innerHTML = JSON.parse(storedCachedCss).value;
+                            font.setAttribute('data-cache-full', 'data-cache-full');
+                        }
                     }
                 }
             }
-        }
 
-        try {
-            loadFontsFromStorage();
-        } catch (e) {
-            loadFontsAsynchronously();
+            @* ability to turn off fonts with `#fonts-off` *@
+            var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
+            if (window.location.hash === '#fonts-off') {
+                document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
+            } else if (window.location.hash === '#fonts-on') {
+                document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
+            }
+
+            if (document.cookie.indexOf('GU_fonts=off') === -1) {
+                try {
+                    loadFontsFromStorage();
+                } catch (e) {
+                    loadFontsAsynchronously();
+                }
+            }
+
         }
 
         @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {

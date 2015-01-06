@@ -6,6 +6,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage'
@@ -16,6 +17,7 @@ define([
     $,
     ajax,
     config,
+    cookies,
     detect,
     mediator,
     storage
@@ -28,7 +30,7 @@ define([
 
         load: function () {
 
-            if (!config.switches.webFonts || qwery('.webfonts').length) {
+            if (!config.switches.webFonts || qwery('.webfonts').length || cookies.get('GU_fonts') === 'off') {
                 return false;
             }
 

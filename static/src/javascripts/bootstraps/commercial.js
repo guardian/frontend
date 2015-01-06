@@ -5,7 +5,6 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/ad-block-test',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -14,7 +13,7 @@ define([
     'common/modules/commercial/loader',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/tags/container',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs'
 ], function (
     bonzo,
     qwery,
@@ -22,7 +21,6 @@ define([
     $,
     config,
     mediator,
-    adBlockTest,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -88,16 +86,10 @@ define([
 
             dfp: function () {
                 dfp.init();
-            },
-
-            adBlockTest: function () {
-                adBlockTest();
             }
 
         },
         ready = function () {
-            modules.adBlockTest();
-
             if (
                 !userPrefs.isOff('adverts') &&
                 !config.page.shouldHideAdverts &&
