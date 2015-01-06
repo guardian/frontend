@@ -48,7 +48,6 @@ define([
     return {
         init: function () {
             self = this;
-            console.log(config.page);
 
             this.getDefaultLocation();
         },

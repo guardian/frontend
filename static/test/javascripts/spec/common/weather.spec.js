@@ -77,6 +77,8 @@ define([
         it("should call proper url", function() {
             var data = {id: '1', city: "London"};
 
+            console.log(window.config);
+
             spyOn(sut, "getWeatherData");
 
             sut.fetchData(data);
@@ -99,23 +101,6 @@ define([
                 done();
             });
 
-            server.restore();
-        });
-
-        it("should handle failed request", function(done) {
-            var server = sinon.fakeServer.create(),
-                data   = {id: '1', city: "London"};
-
-            server.respondWith([500, {}, ""]);
-
-            spyOn(sut, "failedRequest");
-
-            sut.fetchData(data).fail(function() {
-                expect(sut.failedRequest).toHaveBeenCalled();
-                done();
-            });
-
-            server.respond();
             server.restore();
         });
 

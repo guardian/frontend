@@ -2,12 +2,16 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/modules/search-tool'
+    'common/utils/template',
+    'common/modules/search-tool',
+    'text!common/views/weather.html'
 ], function (
     bean,
     bonzo,
     $,
-    SearchTool
+    template,
+    SearchTool,
+    weatherTemplate
     ) {
 
     describe('Search tool', function () {
@@ -15,15 +19,12 @@ define([
             sut;
 
         beforeEach(function () {
-            container = bonzo.create(
-                    '<div class="search-tool js-search-tool">' +
-                    '<div class="search-tool__form u-cf">' +
-                    '<input class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-list-location" />' +
-                    '<button class="search-tool__btn"><i class="i i-search-white-36"></i></button>' +
-                    '</div>' +
-                    '<ul class="u-unstyled js-search-tool-list"></ul>' +
-                    '</div>'
-            )[0];
+            container = $.create(template(weatherTemplate, {
+                location: 'London',
+                icon: 31,
+                description: 'Cloudy',
+                tempNow: '35 C'
+            }));
 
             $('body').append(container);
 

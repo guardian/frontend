@@ -448,7 +448,6 @@ define([
 
             initWeatherComponent: function () {
                 mediator.on('page:common:ready', function () {
-                    console.log(config.switches.weather);
                     if (config.switches && config.switches.weather) {
                         weather.init();
                     }
