@@ -153,7 +153,8 @@ $header-image-size-desktop: 100px;
     border: 0;
 
     & button {
-        font-weight: normal;
+        color: colour(neutral-3);
+        font-weight: 500;
         text-align: left;
         background: #ffffff;
         margin: 0;

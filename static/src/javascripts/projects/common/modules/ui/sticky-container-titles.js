@@ -62,7 +62,7 @@ define([
             }
 
             stickyTitles.forEach(function (title, i) {
-                if (headerPositions[i] > winBottom - offsets[i] + 5) {
+                if (headerPositions[i] > winBottom - offsets[i] + 7) {
                     title.show();
                 } else {
                     title.hide();
