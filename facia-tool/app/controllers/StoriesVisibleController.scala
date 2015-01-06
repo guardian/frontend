@@ -34,6 +34,7 @@ object StoriesVisibleController extends Controller {
           Some(desktopVisible),
           container.mobileShowMore match {
             case DesktopBehaviour => Some(desktopVisible)
+            case RestrictTo(maxMobile) if maxMobile > desktopVisible => Some(desktopVisible)
             case RestrictTo(maxMobile) => Some(maxMobile min numberOfStories)
           }
         )))
