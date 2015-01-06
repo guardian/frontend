@@ -144,3 +144,16 @@
     color: colour(neutral-2);
     padding: $gs-baseline/3 0 $gs-baseline;
 }
+
+.tone-fill {
+    fill: colour(news-default);
+
+    &.tonal--tone-comment {
+        fill: colour(comment-default);
+    }
+
+    &.tonal--tone-feature {
+        fill: colour(feature-default);
+    }
+
+}
