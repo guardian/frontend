@@ -86,10 +86,6 @@ define([
 
             dfp: function () {
                 dfp.init();
-            },
-
-            adBlockTest: function () {
-                adBlockTest();
             }
 
         },
