@@ -94,9 +94,9 @@ define([
                 this.fetchData(location);
             } else {
 
-                self.getWeatherData(config.page.weatherapi_url + '.json')
+                self.getWeatherData(config.page.weatherapiurl + '.json')
                 .then(self.fetchData)
-                .fail(function(err, msg) {
+                .fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
@@ -109,16 +109,16 @@ define([
         fetchData: function (location) {
             self.saveUserLocation(location);
 
-            return self.getWeatherData(config.page.weatherapi_url + '/' + location.id + '.json')
+            return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                self.render(response[0], location.city);
-            }).fail(function(err, msg) {
-                raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
-                    tags: {
-                        feature: 'weather'
-                    }
+                    self.render(response[0], location.city);
+                }).fail(function (err, msg) {
+                    raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
+                        tags: {
+                            feature: 'weather'
+                        }
+                    });
                 });
-            });
         },
 
         bindEvents: function () {
@@ -161,7 +161,7 @@ define([
         addSearch: function () {
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
-                apiUrl: config.page.locationapi_url
+                apiUrl: config.page.locationapiurl
             });
             searchTool.init();
         },
