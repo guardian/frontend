@@ -98,7 +98,6 @@ define([
                 expect(s.prop10).toBe('Minute by minutes,News,Blogposts');
                 expect(s.prop13).toBe('The Fiver');
                 expect(s.prop25).toBe('Middle East Live');
-                expect(s.prop14).toBe('build-73');
                 expect(s.prop47).toBe('US');
                 expect(s.prop58).toBe('7');
                 expect(s.prop69).toBe('0');

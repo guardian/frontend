@@ -2,7 +2,7 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'helpers/fixtures',
     'text!fixtures/commercial/slice-adverts.html',
     'jasq'

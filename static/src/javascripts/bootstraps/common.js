@@ -48,7 +48,7 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
 
     'bootstraps/identity',
 

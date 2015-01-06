@@ -7,36 +7,6 @@ import play.api.libs.json.Reads._
 import play.api.libs.json._
 
 
-object Sponsorship {
-
-  implicit val sponsorshipWrites = new Writes[Sponsorship] {
-    def writes(sponsorship: Sponsorship): JsValue = {
-      Json.obj(
-        "tags" -> sponsorship.tags,
-        "sections" -> sponsorship.sections,
-        "sponsor" -> sponsorship.sponsor,
-        "countries" -> sponsorship.countries,
-        "lineItemId" -> sponsorship.lineItemId
-      )
-    }
-  }
-
-  implicit val jsonReads = Json.reads[Sponsorship]
-
-  val ANY_SECTION = ""
-}
-
-case class Sponsorship(tags: Seq[String],
-                       sections: Seq[String],
-                       sponsor: Option[String],
-                       countries: Seq[String],
-                       lineItemId: Long) {
-  def hasTag(tagId: String): Boolean = tagId.split('/').lastOption.exists { endPart =>
-    tags contains endPart
-  }
-}
-
-
 object InlineMerchandisingTagSet {
   implicit val jsonReads = Json.reads[InlineMerchandisingTagSet]
 
@@ -66,36 +36,6 @@ case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: 
   }
 
   def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty
-}
-
-
-object SponsorshipReport {
-
-  implicit val sponsorshipReportWrites = new Writes[SponsorshipReport] {
-    def writes(sponsorshipReport: SponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> sponsorshipReport.updatedTimeStamp,
-        "sponsorships" -> sponsorshipReport.sponsorships
-      )
-    }
-  }
-
-  implicit val jsonReads = Json.reads[SponsorshipReport]
-
-}
-
-case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship])
-
-
-object SponsorshipReportParser extends Logging {
-
-  def apply(jsonString: String) = {
-    val result: JsResult[SponsorshipReport] = Json.parse(jsonString).validate[SponsorshipReport]
-    result match {
-      case s: JsSuccess[SponsorshipReport] => Some(s.get)
-      case e: JsError => log.error("Errors: " + JsError.toFlatJson(e).toString()); None
-    }
-  }
 }
 
 
@@ -161,7 +101,8 @@ case class PaidForTag(targetedName: String,
                       tagType: TagType,
                       paidForType: PaidForType,
                       matchingCapiTagIds: Seq[String],
-                      lineItems: Seq[GuLineItem])
+                      lineItems: Seq[GuLineItem]) {
+}
 
 object PaidForTag {
 
