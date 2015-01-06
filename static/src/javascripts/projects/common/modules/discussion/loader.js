@@ -19,7 +19,7 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/identity/api',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs'
 ], function(
     bean,
     bonzo,
