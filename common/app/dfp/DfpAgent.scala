@@ -15,6 +15,7 @@ import services.S3
 
 import scala.io.Codec.UTF8
 
+// todo: refactor
 trait DfpAgent {
 
   protected def allPaidForTags: Seq[PaidForTag]
@@ -119,6 +120,18 @@ trait DfpAgent {
     isPaidFor(advertisementFeatureSponsorships, tagId, sectionId)
   }
   def isAdvertisementFeature(config: CollectionConfig): Boolean = isSponsoredContainer(config, {isAdvertisementFeature(_, None)})
+
+  // todo: use sectionId
+  def isExpiredAdvertisementFeature(tags: Seq[Tag], sectionId: Option[String]): Boolean = {
+    val contentTagNames = tags map (_.id.split("/").last)
+    val matchingAdFeature = advertisementFeatureSponsorships find { adFeature =>
+      contentTagNames contains adFeature.targetedName
+    }
+    val lineItems = matchingAdFeature map (_.lineItems) getOrElse Nil
+    lineItems forall { lineItem =>
+      lineItem.endTime exists (_.isBeforeNow)
+    }
+  }
 
   def isFoundationSupported(tags: Seq[Tag], sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tags, sectionId)
   def isFoundationSupported(tagId: String, sectionId: Option[String]): Boolean = isPaidFor(foundationSupported, tagId, sectionId)
