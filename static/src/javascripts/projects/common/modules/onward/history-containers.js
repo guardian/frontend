@@ -3,17 +3,17 @@
  Description: Inject personalised containers based on reading history
  */
 define([
+    'Promise',
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
-    'Promise',
     'common/modules/onward/history',
     'common/modules/ui/images'
 ], function (
+    Promise,
     $,
     _,
     ajax,
-    Promise,
     history,
     images
 ) {
