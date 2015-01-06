@@ -34,7 +34,7 @@ define([
         badges.add(container);
         images.upgrade(this.context);
         register.end('series-content');
-        mediator.emit('modules:onward:loaded')
+        mediator.emit('modules:onward:loaded');
     };
 
     OnwardContent.prototype.error = function () {
