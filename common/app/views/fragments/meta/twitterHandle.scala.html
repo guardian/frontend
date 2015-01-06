@@ -1,0 +1,9 @@
+@(tags: Tags)
+
+@import views.support.Profile
+
+@tags.contributors.headOption.map { profile =>
+    @profile.twitterHandle.map{ twitter =>
+        <a href="http://twitter.com/@@@twitter"><button class="button button--large button--secondary" style="margin-top: 6px;">@@@twitter</button></a>
+    }
+}
