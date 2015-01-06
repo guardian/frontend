@@ -1,9 +1,11 @@
 define([
+    'bean',
     'common/utils/$',
     'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
+    bean,
     $,
     _,
     detect,
@@ -60,14 +62,7 @@ define([
             }
 
             stickyTitles.forEach(function (title, i) {
-                var headerPosition = headerPositions[i] - 5,
-                    offset = offsets[i];
-
-                if (headerPosition > winBottom - offset / 3) {
-                    title.removeClass('onscreen');
-                    title.show();
-                } else if (headerPosition > winBottom - offset) {
-                    title.addClass('onscreen');
+                if (headerPositions[i] > winBottom - offsets[i] + 5) {
                     title.show();
                 } else {
                     title.hide();
@@ -82,7 +77,9 @@ define([
     }
 
     function init() {
-        if (['leftCol', 'wide'].indexOf(detect.getBreakpoint(true)) > -1) {
+        var breakpoint = detect.getBreakpoint(true);
+
+        if (breakpoint === 'leftCol' || breakpoint === 'wide') {
             headers = _.chain($('section:not(.fc-container--thrasher) .js-container__header'))
                 .filter(function (section) { return $('.fc-container__header__title', section).text(); })
                 .value();
@@ -95,7 +92,7 @@ define([
 
             $(headerOne).append(
                 '<div class="fc-container__header__title--stickies" data-link-name="LHC titles">' +
-                    headers.map(function (header, i) {
+                    _.map(headers, function (header, i) {
                         var title = $('.fc-container__header__title > *', header).text();
 
                         return '<div class="fc-container__header__title--sticky"><button data-link-name="' + i + ' | ' + title + '">' + title + '</button></div>';
@@ -110,12 +107,12 @@ define([
             _.reduceRight(stickyTitles, function (m, title, i) {
                 var height = title.offsetHeight + m;
 
-                title.addEventListener('click', function () { window.scrollTo(0, headerPositions[i] - 15); });
+                bean.add(title, 'click', function () { window.scrollTo(0, headerPositions[i] - 15); });
                 offsets[i] = height;
                 return height;
             }, 0);
 
-            stickyTitles = stickyTitles.map(function (el) { return $(el); });
+            stickyTitles = _.map(stickyTitles, function (el) { return $(el); });
 
             setInterval(getMetrics, 1000);
 
@@ -131,6 +128,6 @@ define([
     }
 
     return {
-        init: _.once(init)
+        init: init
     };
 });
