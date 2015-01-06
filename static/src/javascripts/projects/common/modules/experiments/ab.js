@@ -288,7 +288,12 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariant: getTestVariant
+        getTestVariant: getTestVariant,
+
+        // testing
+        reset: function () {
+            TESTS = [];
+        }
     };
 
     return ab;

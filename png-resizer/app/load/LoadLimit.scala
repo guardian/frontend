@@ -38,6 +38,7 @@ object LoadLimit extends ExecutionContexts with Logging {
         currentNumberOfRequests.decrementAndGet()
         throw t
     } else {
+      log.info(s"too many requests - redirecting to $fallbackUri")
       PngResizerMetrics.redirectCount.increment
       currentNumberOfRequests.decrementAndGet()
       Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))

@@ -12,12 +12,11 @@ define([
     return function (hash) {
 
         var rawLastModified = hash || document.location.search,
-            page = config.page,
             lastModifiedMatch;
 
         function call(lastModified, block) {
             ajax({
-                url: '/last-modified/' + page.pageId + '.json?last-modified=' + lastModified,
+                url: '/last-modified/' + config.page.pageId + '.json?last-modified=' + lastModified,
                 type: 'json',
                 crossOrigin: true
             }).then(function (json) {
@@ -76,7 +75,7 @@ define([
 
         return {
             check: function () {
-                if (page.isContent  && config.switches.pollPreviewForFreshContent) {
+                if (config.page.isContent  && config.switches.pollPreviewForFreshContent) {
                     lastModifiedMatch = /last-modified=([^&]+)/.exec(rawLastModified);
                     if (lastModifiedMatch) {
                         initialFreshnessCheck(lastModifiedMatch[1]);

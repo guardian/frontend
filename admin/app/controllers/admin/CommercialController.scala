@@ -4,12 +4,13 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{GuLineItem, DfpDataHydrator, LineItemReport}
+import dfp.{DfpDataHydrator, LineItemReport}
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.Controller
 import tools.Store
+import LiveContentApi.getResponse
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
@@ -23,14 +24,6 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
     val specialAdUnits = DfpDataHydrator().loadSpecialAdunits(Configuration.commercial.dfpAdUnitRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
-  }
-
-  def renderSponsorships = AuthActions.AuthActionTest { implicit request =>
-    val sponsoredTags = Store.getDfpSponsoredTags()
-    val advertisementTags = Store.getDfpAdFeatureTags()
-    val foundationSupportedTags = Store.getDfpFoundationSupportedTags()
-
-    NoCache(Ok(views.html.commercial.sponsorships(environment.stage, sponsoredTags, advertisementTags, foundationSupportedTags)))
   }
 
   def renderPaidForTags = AuthActions.AuthActionTest { implicit request =>
@@ -56,9 +49,10 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   def renderCreativeTemplates = AuthActions.AuthActionTest.async { implicit request =>
     val templates = DfpDataHydrator().loadActiveUserDefinedCreativeTemplates()
     // get some example trails
-    lazy val trailsFuture = LiveContentApi.search(Edition(request))
-      .pageSize(2)
-      .response.map { response  =>
+    lazy val trailsFuture = getResponse(
+      LiveContentApi.search(Edition(request))
+        .pageSize(2)
+    ).map { response  =>
         response.results.map {
           Content(_)
         }
@@ -70,9 +64,10 @@ object CommercialController extends Controller with Logging with AuthLogging wit
 
   def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
     // get some example trails
-    lazy val trailsFuture = LiveContentApi.search(Edition(request))
-      .pageSize(2)
-      .response.map { response  =>
+    lazy val trailsFuture = getResponse(
+      LiveContentApi.search(Edition(request))
+        .pageSize(2)
+    ).map { response  =>
       response.results.map {
         Content(_)
       }
@@ -92,7 +87,6 @@ object CommercialController extends Controller with Logging with AuthLogging wit
   }
 
   def renderAdTests = AuthActions.AuthActionTest { implicit request =>
-
     val report = Store.getDfpLineItemsReport() flatMap (Json.parse(_).asOpt[LineItemReport])
 
     val lineItemsByAdTest =
@@ -115,5 +109,4 @@ object CommercialController extends Controller with Logging with AuthLogging wit
       environment.stage, report.map(_.timestamp), sortedGroups
     )))
   }
-
 }

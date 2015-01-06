@@ -7,6 +7,7 @@ import implicits.{Dates, Requests}
 import model.NoCache
 import play.api.libs.json.Json._
 import play.api.mvc.{Action, Controller, RequestHeader, Results}
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -25,10 +26,9 @@ object LastModifiedController extends Controller with ExecutionContexts with Req
     }.getOrElse(successful(NoCache(BadRequest("No last-modified parameter"))))
   }
 
-  private def lastModified(path: String)(implicit request: RequestHeader): Future[Option[DateTime]] = LiveContentApi
+  private def lastModified(path: String)(implicit request: RequestHeader): Future[Option[DateTime]] = getResponse(LiveContentApi
     .item(path, Edition(request))
     .showFields("lastModified")
-    .response
-    .map(_.content.map(_.safeFields("lastModified").parseISODateTime))
+  ).map(_.content.map(_.safeFields("lastModified").parseISODateTime))
 
 }

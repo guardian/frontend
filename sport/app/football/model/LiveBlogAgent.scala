@@ -2,10 +2,9 @@ package model
 
 import common._
 import conf.LiveContentApi
-
+import LiveContentApi.getResponse
 
 trait LiveBlogAgent extends ExecutionContexts with Logging {
-
   import Edition.{all => editions}
 
   private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
@@ -20,10 +19,12 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   private def findBlogFor(edition: Edition) = {
     val tag = "football/series/saturday-clockwatch|tone/minutebyminute"
     log.info(s"Fetching football blogs with tag: $tag")
-    LiveContentApi.item("/football", edition)
-      .tag(tag)
-      .showEditorsPicks(true)
-      .response.map {response =>
+
+    getResponse(
+      LiveContentApi.item("/football", edition)
+        .tag(tag)
+        .showEditorsPicks(true)
+    ).map {response =>
 
       val editorsPicks = response.editorsPicks map { Content(_) }
 

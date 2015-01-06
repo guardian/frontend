@@ -1,7 +1,7 @@
 package dfp
 
 import common.{ExecutionContexts, Logging}
-import conf.Switches.{DfpCachingSwitch, DfpMemoryLeakSwitch}
+import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
@@ -17,9 +17,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       val data = loadLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
-
-      if (DfpMemoryLeakSwitch.isSwitchedOn) MemoryLeakPlug()
-
       if (data.isValid) write(data)
     }
     else log.info("DFP caching switched off")
@@ -52,24 +49,13 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   private def write(data: DfpDataExtractor): Unit = {
     val now = printLondonTime(DateTime.now())
 
-    val sponsorships = data.sponsorships
-    Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
-
     val paidForTags = PaidForTag.fromLineItems(data.lineItems)
     CapiLookupAgent.refresh(paidForTags)
     Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
-    val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
-    Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now,
-      advertisementFeatureSponsorships))))
-
     val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
     Store.putInlineMerchandisingSponsorships(stringify(toJson(
       InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
-
-    val foundationSupported = data.foundationSupported
-    Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now,
-      foundationSupported))))
 
     val pageSkinSponsorships = data.pageSkinSponsorships
     Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
