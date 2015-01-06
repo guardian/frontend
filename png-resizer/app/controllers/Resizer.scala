@@ -1,8 +1,8 @@
 package controllers
 
+import common.Logging
 import conf.PngResizerMetrics
 import data.Backends
-import grizzled.slf4j.Logging
 import lib.FutureEither._
 import lib.HeadersImplicits._
 import lib.Streams._
@@ -21,7 +21,7 @@ import scala.concurrent.duration._
 import scalaz.EitherT._
 import scalaz._
 
-object Resizer extends Controller with Logging {
+object Resizer extends Controller with Logging with implicits.Requests {
 
   case class CacheableContent(cacheHeaders: CacheHeaderList, content: Array[Byte])
 
@@ -33,14 +33,14 @@ object Resizer extends Controller with Logging {
         enumerator.toByteArray.map(bytes => \/-(CacheableContent(cacheHeaders, bytes)))
 
       case NOT_MODIFIED =>
-        PngResizerMetrics.notModifiedCount.increment
+        PngResizerMetrics.notModifiedCount.increment()
         Future.successful(-\/(NotModified.withHeaders(cacheHeaders: _*)))
 
       case OK if contentType == "image/png" =>
         Future.successful(-\/(BadRequest(s"Original image $uri did not send exactly one last-modified header (${cacheHeaders.toMap.get("Last-Modified")}}). This prevents caching.")))
 
       case OK =>
-        Future.successful(-\/(BadRequest(s"Original image $uri content type (${contentType}) is not " +
+        Future.successful(-\/(BadRequest(s"Original image $uri content type ($contentType) is not " +
           "supported. Only PNG supported.")))
 
       case NOT_FOUND => Future.successful(-\/(NotFound(s"Unable to find source image at $uri")))
@@ -52,8 +52,8 @@ object Resizer extends Controller with Logging {
   case class PngResponse(status: Int, contentType: String, cacheHeaders: CacheHeaderList, body: Enumerator[Array[Byte]])
   type CacheHeaderList = Seq[(String, String)]
 
-  def getUpstreamResponse(uri: String, headers: Headers): FutureEither[PngResponse] = eitherTRight {
-    val unrolledHeaders = headers.getHeaders(Seq("Cache-Control", "If-Modified-Since", "If-None-Match"))
+  def getUpstreamResponse(uri: String, requestHeaders: Headers): FutureEither[PngResponse] = eitherTRight {
+    val unrolledHeaders = requestHeaders.getHeaders(Seq("Cache-Control", "If-Modified-Since", "If-None-Match"))
     WS.url(uri).withHeaders(unrolledHeaders: _*).getStream().map {
       case (headers, enumerator) =>
         PngResponse(headers.status, headers.contentType, headers.getHeaders(Seq("Cache-Control", "Expires", "Last-Modified", "Etag")), enumerator)
@@ -62,7 +62,7 @@ object Resizer extends Controller with Logging {
 
   def redirectScaleUpAttempts(originalWidth: Int, width: Int, fallbackUri: String) = eitherT (Future.successful {
     if (originalWidth <= width) {
-      logger.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
+      log.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
       -\/(Cached(1.day)(TemporaryRedirect(fallbackUri)))
     } else {
       \/-()
@@ -74,7 +74,13 @@ object Resizer extends Controller with Logging {
 
       (Backends.uri(backend, path), widthString, qualityString) match {
         case (Some(uri), IntString(width), IntString(quality)) =>
-          LoadLimit(uri) {
+          LoadLimit {
+            log.info(s"too many requests - redirecting to $uri")
+            if (!request.isHealthcheck) {
+              PngResizerMetrics.redirectCount.increment()
+            }
+            Future.successful(Cached(60)(TemporaryRedirect(uri)))
+          } {
 
             // Left here is the http result, right is the data that still needs computation
             (for {
@@ -86,7 +92,7 @@ object Resizer extends Controller with Logging {
               resized <- Time(eitherTRight(Im4Java.resizeBufferedImage(width)(bytesPreResize)), "resize image", PngResizerMetrics.resizeTime)
               quanted <- Time(eitherTRight(PngQuant(resized, quality)), "quantize image", PngResizerMetrics.quantizeTime)
               result = Ok(quanted).as("image/png").withHeaders(cacheHeaders: _*)
-            } yield (result)).run.map(_.fold(identity,identity))
+            } yield result).run.map(_.fold(identity,identity))
 
           }
 

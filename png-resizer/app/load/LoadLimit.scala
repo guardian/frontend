@@ -3,9 +3,6 @@ package load
 import java.util.concurrent.atomic.AtomicInteger
 
 import common.{ExecutionContexts, Logging}
-import conf.PngResizerMetrics
-import model.Cached
-import play.api.mvc.Results._
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -23,7 +20,7 @@ object LoadLimit extends ExecutionContexts with Logging {
     limit
   }
 
-  def apply(fallbackUri: String)(available: =>  Future[Result]): Future[Result] = try {
+  def apply(onFailure: => Future[Result])(available: =>  Future[Result]): Future[Result] = try {
     val concurrentRequests = currentNumberOfRequests.incrementAndGet
     if (concurrentRequests <= requestLimit) try {
       log.info(s"Resize ${currentNumberOfResizes.incrementAndGet()}/$requestLimit")
@@ -38,10 +35,8 @@ object LoadLimit extends ExecutionContexts with Logging {
         currentNumberOfRequests.decrementAndGet()
         throw t
     } else {
-      log.info(s"too many requests - redirecting to $fallbackUri")
-      PngResizerMetrics.redirectCount.increment
       currentNumberOfRequests.decrementAndGet()
-      Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))
+      onFailure
     }
   }
 }
