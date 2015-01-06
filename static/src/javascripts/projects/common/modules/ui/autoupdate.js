@@ -54,7 +54,7 @@ define([
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
             '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="live-toggle__value">On</span>' +
+            '    <span class="rounded-icon live-toggle__value">On</span>' +
             '    <span class="u-h">(turn off)</span>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--off js-auto-update js-auto-update--off"' +
