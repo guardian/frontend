@@ -1,53 +1,18 @@
 @(sublink: layout.Sublink)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.{BreakingNewsKicker, LiveKicker, AnalysisKicker, PodcastKicker, ReviewKicker}
-@import views.support.{CartoonKicker, TagKicker, SectionKicker, FreeHtmlKicker, RemoveOuterParaHtml}
+@import views.support.RemoveOuterParaHtml
+
+@headline() = {@RemoveOuterParaHtml(sublink.headline)}
+
+@articleLink(html: Html) = {<a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">@html</a>}
 
 <h3 class="fc-sublink__title">
-  @sublink.kicker.map {
-    case BreakingNewsKicker => {
-      <span class="fc-sublink__kicker fc-sublink__live-indicator">Breaking News</span>
-    }
+    @(sublink.kicker, sublink.kicker.flatMap(_.link)) match {
+        case (Some(kicker), Some(link)) => {<a href="@LinkTo(link)" data-link-name="kicker" class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.kickerHtml)</a> @articleLink{@headline()}}
 
-    case LiveKicker => {
-      <span class="fc-sublink__kicker fc-sublink__live-indicator">Live</span>
-    }
+        case (Some(kicker), None) => {@articleLink{<span class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.sublinkKickerHtml)</span> @RemoveOuterParaHtml(sublink.headline)}}
 
-    case AnalysisKicker => {
-      <span class="fc-sublink__kicker">Analysis</span>
+        case _ => {@articleLink{@headline()}}
     }
-
-    case CartoonKicker => {
-      <span class="fc-sublink__kicker">Cartoon</span>
-    }
-
-    case PodcastKicker(Some(series)) => {
-      <a href="@LinkTo(series.url)" data-link-name="kicker" class="fc-sublink__kicker">@Html(series.name)</a>
-    }
-
-    case PodcastKicker(None) => {
-      <span class="fc-sublink__kicker">Podcast</span>
-    }
-
-    case ReviewKicker => {
-      <span class="fc-sublink__kicker">Review</span>
-    }
-
-    case TagKicker(tagName, tagLink, _) => {
-      <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-sublink__kicker">@Html(tagName)</a>
-    }
-
-    case SectionKicker(sectionName, sectionLink) => {
-      <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-sublink__kicker">@Html(sectionName)</a>
-    }
-
-    case FreeHtmlKicker(html) => {
-      <span class="fc-sublink__kicker">@Html(html)</span>
-    }
-  }
-
-    <a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">
-        @RemoveOuterParaHtml(sublink.headline)
-    </a>
 </h3>
