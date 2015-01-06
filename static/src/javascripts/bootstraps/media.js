@@ -182,7 +182,7 @@ define([
             raven.captureException(new Error(err.message), {
                 tags: {
                     feature: 'player',
-                    code: err.code
+                    vjsCode: err.code
                 }
             });
         }
