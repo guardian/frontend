@@ -2,7 +2,7 @@ package lib
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
-import org.im4java.core.{ConvertCmd, IMOperation}
+import org.im4java.core.{Info, ConvertCmd, IMOperation}
 import org.im4java.process.Pipe
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,4 +36,10 @@ object Im4Java {
 
     apply(operation)(imageBytes)
   }
+
+  def getWidth(imageBytes: Array[Byte]) = Future {
+    val imageInfo = new Info("png:-", new ByteArrayInputStream(imageBytes),true);
+    imageInfo.getImageWidth()
+  }
+
 }
