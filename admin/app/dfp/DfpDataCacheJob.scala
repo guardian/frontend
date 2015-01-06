@@ -1,7 +1,7 @@
 package dfp
 
 import common.{ExecutionContexts, Logging}
-import conf.Switches.{DfpCachingSwitch, DfpMemoryLeakSwitch}
+import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
@@ -17,9 +17,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       val data = loadLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
-
-      if (DfpMemoryLeakSwitch.isSwitchedOn) MemoryLeakPlug()
-
       if (data.isValid) write(data)
     }
     else log.info("DFP caching switched off")
