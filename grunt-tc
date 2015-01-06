@@ -20,6 +20,6 @@ export PATH=dev/gems/bin:$PATH
 # `without` is a remembered option - this can be removed once it's been deleted from all boxes
 bundle config --delete without
 bundle install --binstubs dev/gems/bin --path dev/gems
-npm install
+npm -verbose install
 
-grunt "$@"
+#grunt "$@"

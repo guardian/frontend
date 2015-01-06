@@ -5,6 +5,6 @@ set -o errexit
 
 
 ./grunt-tc clean validate test:unit compile
-./sbt-tc "project root" test
+#./sbt-tc "project root" test
 
-echo "Tested everything."
+echo "Not Tested everything."
