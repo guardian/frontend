@@ -89,7 +89,6 @@
             display: none;
         }
 
-        // .weather__get-location,
         .weather__close-location {
             display: initial;
         }
@@ -104,20 +103,18 @@
     padding-top: 1px;
     margin-bottom: -1px;
 }
-// .weather__gps-icon,
+
 .weather__search-icon,
 .weather__close-icon {
     background-size: 85% !important;
     background-position: center top !important;
 }
 
-// .weather__get-location,
 .weather__close-location {
     display: none;
     z-index: 5;
 }
 
-// .weather__get-location,
 .weather__close-location,
 .weather__edit-location {
     position: absolute;
