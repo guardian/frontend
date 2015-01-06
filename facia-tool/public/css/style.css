@@ -700,11 +700,6 @@ collection-widget:first-child .collection {
             transition: border-color 150ms;
 }
 
-.live-mode .article {
-    border-color: #EEFFEE;
-    background: #EEFFEE;
-}
-
 .article:hover,
 .live-mode .article:hover {
     background-color: #eeeeee !important;
@@ -1764,14 +1759,14 @@ collection-widget {
     right: 0;
 }
 .desktop-indicator .indicator {
-    background-color: #FF7043;
+    background-color: #A5D6A7;
 }
 .desktop-indicator i {
     position: relative;
     left: -6px;
 }
 .mobile-indicator .indicator {
-    background-color: #FF9800;
+    background-color: #C8E6C9;
 }
 
 /*****************************************/
