@@ -4,6 +4,7 @@ define([
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
+    'utils/fetch-visible-stories',
     'utils/human-time',
     'utils/mediator',
     'utils/populate-observables',
@@ -16,6 +17,7 @@ define([
     ko,
     vars,
     asObservableProps,
+    fetchVisibleStories,
     humanTime,
     mediator,
     populateObservables,
@@ -40,8 +42,15 @@ define([
 
         this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
 
+        this.dom = undefined;
+
+        this.visibleStories = null;
+
+        this.listeners = mediator.scope();
+
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
+            'type',
             'displayName',
             'uneditable']);
         populateObservables(this.configMeta, opts);
@@ -63,7 +72,8 @@ define([
             'editingConfig',
             'count',
             'timeAgo',
-            'alsoOnVisible']);
+            'alsoOnVisible',
+            'showIndicators']);
 
         this.itemDefaults = _.reduce({
             showTags: 'showKickerTag',
@@ -78,6 +88,16 @@ define([
 
         this.setPending(true);
         this.load();
+
+        var that = this;
+        this.listeners.on('ui:open', function () {
+            setTimeout(function () {
+                that.refreshVisibleStories(true);
+            }, 50);
+        });
+        this.listeners.on('ui:close', function () {
+            that.refreshVisibleStories(true);
+        });
     }
 
     Collection.prototype.setPending = function(asPending) {
@@ -112,8 +132,12 @@ define([
     };
 
     Collection.prototype.toggleCollapsed = function() {
-        this.state.collapsed(!this.state.collapsed());
+        var collapsed = !this.state.collapsed();
+        this.state.collapsed(collapsed);
         this.closeAllArticles();
+        if (!collapsed) {
+            this.refreshVisibleStories(true);
+        }
     };
 
     Collection.prototype.toggleEditingConfig = function() {
@@ -159,6 +183,7 @@ define([
         var front = this.front;
         this.setPending(true);
 
+        this.state.showIndicators(false);
         authedAjax.updateCollections({
             remove: {
                 collection: this,
@@ -200,6 +225,10 @@ define([
         .always(function() {
             self.setPending(false);
         });
+    };
+
+    Collection.prototype.registerElement = function (element) {
+        this.dom = element;
     };
 
     Collection.prototype.hasOpenArticles = function() {
@@ -245,6 +274,7 @@ define([
             }
         }
 
+        this.refreshVisibleStories();
         this.setPending(false);
     };
 
@@ -286,12 +316,50 @@ define([
         });
     };
 
+    Collection.prototype.refreshVisibleStories = function (stale) {
+        if (!stale || !this.visibleStories) {
+            this.visibleStories = fetchVisibleStories(
+                this.configMeta.type(),
+                this.groups
+            );
+        }
+        this.visibleStories.then(
+            this.updateVisibleStories.bind(this),
+            this.updateVisibleStories.bind(this, false)
+        );
+    };
+
     Collection.prototype.getTimeAgo = function(date) {
         return date ? humanTime(date) : '';
     };
 
     Collection.prototype.alsoOnToggle = function () {
         this.state.alsoOnVisible(!this.state.alsoOnVisible());
+    };
+
+    Collection.prototype.updateVisibleStories = function (numbers) {
+        var container = this.dom;
+        if (!container || !numbers || this.state.collapsed()) {
+            this.state.showIndicators(false);
+            return;
+        }
+
+        this.state.showIndicators(true);
+        var top = container.querySelector('.article-group').getBoundingClientRect().top;
+
+        _.each(['desktop', 'mobile'], function (target) {
+            var bottomElementPosition = numbers[target] - 1,
+                bottomElement = bottomElementPosition >= 0 ? container.querySelectorAll('.article')[bottomElementPosition] : null,
+                bottom = bottomElement ? bottomElement.getBoundingClientRect().bottom : NaN,
+                height = bottom - top - 15,
+                indicator = container.querySelector('.' + target + '-indicator .indicator');
+
+            indicator.style.height = (height || 0) + 'px';
+        });
+    };
+
+    Collection.prototype.dispose = function () {
+        this.listeners.dispose();
     };
 
     return Collection;

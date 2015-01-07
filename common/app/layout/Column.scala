@@ -25,7 +25,9 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
 
   def showCutOut = allTypes.exists(_.showCutOut)
 }
-case class SliceLayout(cssClassName: String, columns: Seq[Column])
+case class SliceLayout(cssClassName: String, columns: Seq[Column]) {
+  def numItems = columns.map(_.numItems).sum
+}
 
 object Column {
   def cardStyle(column: Column, index: Int) = column match {

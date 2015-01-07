@@ -73,6 +73,11 @@ POST          /config/fronts/*path       controllers.FrontController.update(path
 POST          /config/collections        controllers.CollectionController.create()
 POST          /config/collections/*id    controllers.CollectionController.update(id)
 
+
+# Stories visible
+POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
+
+
 # FACIA
 # Editionalised redirects
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
