@@ -32,6 +32,10 @@ define([
             'breaking-news'
         ],
 
+        askForConfirmation: [
+            'breaking-news'
+        ],
+
         detectPressFailureMs: 10000,
 
         maxFronts: 500,

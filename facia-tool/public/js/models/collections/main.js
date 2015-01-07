@@ -103,6 +103,7 @@ define([
                     })
                     .without(undefined)
                     .without('testcard')
+                    .difference(vars.CONST.askForConfirmation)
                     .sortBy(function(path) { return path; })
                     .value();
 

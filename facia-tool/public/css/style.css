@@ -625,6 +625,10 @@ h1 {
     background: #FFF8E1;
 }
 
+.front-container.attention {
+    background: #b51800;
+}
+
 .col__inner {
     padding: 10px 10px 15px 15px;
 }
@@ -1739,6 +1743,10 @@ collection-widget {
     padding: 5px 10px;
     border: 1px solid #ddd;
     background-color: #fff;
+}
+
+.attention collection-widget {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.32), 0 1px 6px rgba(0, 0, 0, 0.32);
 }
 
 .article-group {

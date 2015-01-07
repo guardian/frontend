@@ -317,6 +317,9 @@ define([
     };
 
     Collection.prototype.refreshVisibleStories = function (stale) {
+        if (this.front.requiresConfirmation()) {
+            return this.state.showIndicators(false);
+        }
         if (!stale || !this.visibleStories) {
             this.visibleStories = fetchVisibleStories(
                 this.configMeta.type(),
