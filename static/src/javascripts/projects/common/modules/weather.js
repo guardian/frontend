@@ -38,7 +38,7 @@ define([
     weatherTemplate
     ) {
 
-    var Weather = (function() {
+    var Weather = (function () {
 
         var self = null,
             $weather = null,
