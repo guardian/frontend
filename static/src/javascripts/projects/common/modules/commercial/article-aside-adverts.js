@@ -21,7 +21,7 @@ define([
             opts        = defaults(
                 options || {},
                 {
-                    columnSelector: '.content__secondary-column',
+                    columnSelector: '.js-secondary-column',
                     adSlotContainerSelector: '.js-mpu-ad-slot'
                 }
             ),
@@ -34,7 +34,13 @@ define([
         }
 
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        adType   = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
+        if (!$mainCol.length || $mainCol.dim().height >= 1800) {
+            adType = 'right-sticky';
+        } else if ($mainCol.dim().height >= 600) {
+            adType = 'right';
+        } else {
+            adType = 'right-small';
+        }
 
         return $(opts.adSlotContainerSelector)
             .append(createAdSlot(adType, 'mpu-banner-ad'));
