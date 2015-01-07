@@ -52,8 +52,8 @@ object StoriesVisibleController extends Controller {
 
       case MostPopular =>
         Ok(Json.toJson(StoriesVisibleResponse(
-          Some(10),
-          Some(10)
+          Some(10 min numberOfStories),
+          Some(10 min numberOfStories)
         )))
 
       case NavList | NavMediaList =>
