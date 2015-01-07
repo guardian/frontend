@@ -21,7 +21,10 @@ define([
     viewTags,
     viewMegaNav
 ) {
-    var editions = [
+    var popularWhitelist = [
+            'politics', 'travel', 'sport', 'world', 'media', 'football', 'culture', 'artanddesign/photography'
+        ],
+        editions = [
             'uk',
             'us',
             'au'
@@ -46,7 +49,6 @@ define([
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
-        minDisplayedTags = 3,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -54,7 +56,7 @@ define([
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
-        popularCache,
+        topNavItemsCache,
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -133,12 +135,20 @@ define([
         return summary;
     }
 
-    function getPopular(flush) {
-        popularCache = (flush ? undefined : popularCache) || _.chain(getSummary().tags)
-            .map(function (nameAndFreqs, tid) {
-                var freqs = nameAndFreqs[1];
+    function getPopular(opts) {
+        var tags = getSummary().tags,
+            whitelist = opts && _.isArray(opts.whitelist) ? opts.whitelist : false,
+            blacklist = opts && _.isArray(opts.blacklist) ? opts.blacklist : false;
 
-                if (freqs.length > 1) {
+        return _.chain(getSummary().tags)
+            .keys()
+            .filter(function (tid) { return !whitelist || whitelist.indexOf(tid) > -1; })
+            .filter(function (tid) { return !blacklist || blacklist.indexOf(tid) === -1; })
+            .map(function (tid) {
+                var nameAndFreqs = tags[tid],
+                    freqs = nameAndFreqs[1];
+
+                if (freqs.length) {
                     return {
                         keep: [tid, nameAndFreqs[0]],
                         rank: tally(freqs)
@@ -151,8 +161,13 @@ define([
             .reverse()
             .pluck('keep')
             .value();
+    }
 
-        return popularCache;
+    function getPopularFiltered() {
+        return getPopular({
+            whitelist: popularWhitelist,
+            blacklist: getTopNavItems()
+        });
     }
 
     function tally(freqs) {
@@ -178,7 +193,6 @@ define([
     function reset() {
         historyCache = undefined;
         summaryCache = undefined;
-        popularCache = undefined;
         storage.local.remove(storageKeyHistory);
         storage.local.remove(storageKeySummary);
     }
@@ -237,31 +251,23 @@ define([
         saveSummary(summary);
     }
 
-    function renderTags(opts) {
-        var topNavItems = {},
-            tagsHtml;
+    function getTopNavItems() {
+        topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
+            return collapseTag(urlPath($(item).attr('href')));
+        });
 
-        if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
+        return topNavItemsCache;
+    }
 
-            $('.js-navigation-header .js-top-navigation a').each(function (item) {
-                topNavItems[collapseTag(urlPath($(item).attr('href')))] = true;
-            });
+    function renderInMegaNav() {
+        var tags = getPopularFiltered();
 
-            tagsHtml = _.chain(getPopular())
-                .filter(function (tag) { return !topNavItems[tag[0]]; })
-                .first(20)
-                .map(tagHtml)
-                .value();
-
-            if (tagsHtml.length < minDisplayedTags) { return; }
-
-            if (opts.inMegaNav) {
-                $('.js-global-navigation').prepend(template(viewMegaNav, {tags: tagsHtml.join('')}));
-            }
-
-            if (opts.inPage) {
-                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
-            }
+        if (tags.length) {
+            $('.js-global-navigation').prepend(
+                template(viewMegaNav, {
+                    tags: tags.slice(0, 20).map(tagHtml).join('')
+                })
+            );
         }
     }
 
@@ -278,8 +284,9 @@ define([
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        renderTags: renderTags,
+        renderInMegaNav: renderInMegaNav,
         getPopular: getPopular,
+        getPopularFiltered: getPopularFiltered,
         deleteFromSummary: deleteFromSummary,
         isRevisit: isRevisit,
         reset: reset,

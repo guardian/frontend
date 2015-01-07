@@ -1,9 +1,7 @@
 define([
-    'common/modules/onward/history',
-    'common/utils/config'
+    'common/modules/onward/history'
 ], function (
-    history,
-    config
+    history
     ) {
     return function () {
         this.id = 'HistoryTags';
@@ -30,10 +28,7 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    history.renderTags({
-                        inMegaNav: true,
-                        inPage: config.page.contentType === 'Network Front'
-                    });
+                    history.renderInMegaNav();
                 }
             }
         ];

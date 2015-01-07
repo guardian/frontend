@@ -10,11 +10,11 @@ define([
     return function () {
         var SummaryTags = React.createClass({
             getInitialState: function () {
-                return { popular: history.getPopular() };
+                return { popular: history.getPopularFiltered() };
             },
             handleRemove: function (tag) {
                 history.deleteFromSummary(tag);
-                this.setState({ popular: history.getPopular(true) });
+                this.setState({ popular: history.getPopularFiltered() });
             },
             render: function () {
                 var self = this;
