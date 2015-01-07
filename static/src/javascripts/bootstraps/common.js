@@ -444,14 +444,6 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
-            },
-
-            initWeatherComponent: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches && config.switches.weather) {
-                        weather.init();
-                    }
-                });
             }
 
         },
@@ -492,7 +484,6 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
-            modules.initWeatherComponent();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
