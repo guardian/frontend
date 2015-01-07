@@ -52,7 +52,7 @@ case class ContainerLayoutContext(
           (content.copy(displayElement = vp.fallBack), context)
         }
 
-      case None => (content, context)
+      case _ => (content, context)
     }
   }
 
