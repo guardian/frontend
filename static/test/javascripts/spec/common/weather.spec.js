@@ -99,7 +99,7 @@ define([
                         }
                     });
 
-                    mocks.store['common/utils/config'].page.weatherapi_url = '/weather/city';
+                    mocks.store['common/utils/config'].page.weatherapiurl = '/weather/city';
 
                     sut.fetchData(data);
                     expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json");
