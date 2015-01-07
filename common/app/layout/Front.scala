@@ -12,14 +12,54 @@ import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty, false)
+  val MaximumVideoPlayersPerFront = 4
+
+  val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)
 }
 
 case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
-  hideCutOuts: Boolean
+  hideCutOuts: Boolean,
+  videoPlayersRemaining: Int
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
+
+  type CardAndContext = (ContentCard, ContainerLayoutContext)
+
+  private def dedupCutOut(cardAndContext: CardAndContext): CardAndContext = {
+    val (content, context) = cardAndContext
+
+    if (content.snapStuff.snapType == LatestSnap) {
+      (content, context)
+    } else {
+      val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
+        content.copy(cutOut = None)
+      } else {
+        content
+      }
+      (newCard, context.addCutOuts(content.cutOut.filter(const(content.cardTypes.showCutOut)).toSet))
+    }
+  }
+
+  private def limitVideoPlayers(cardAndContext: CardAndContext): CardAndContext = {
+    val (content, context) = cardAndContext
+
+    content.displayElement match {
+      case Some(vp: InlineVideo) =>
+        if (videoPlayersRemaining > 0) {
+          (content, context.copy(videoPlayersRemaining = videoPlayersRemaining - 1))
+        } else {
+          (content.copy(displayElement = vp.fallBack), context)
+        }
+
+      case None => (content, context)
+    }
+  }
+
+  private val transforms = Seq(
+    dedupCutOut _,
+    limitVideoPlayers _
+  ).reduce(_ compose _)
 
   def transform(card: FaciaCardAndIndex) = {
     if (hideCutOuts) {
@@ -28,16 +68,8 @@ case class ContainerLayoutContext(
       // Latest snaps are sometimes used to promote journalists, and the cut out should always show on these snaps.
       card.item match {
         case content: ContentCard =>
-          if (content.snapStuff.snapType == LatestSnap) {
-            (card, this)
-          } else {
-            val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
-              card.copy(item = content.copy(cutOut = None))
-            } else {
-              card
-            }
-            (newCard, addCutOuts(content.cutOut.filter(const(content.cardTypes.showCutOut)).toSet))
-          }
+          val (newCard, newContext) = transforms((content, this))
+          (card.copy(item = newCard), newContext)
 
         case _ => (card, this)
       }
