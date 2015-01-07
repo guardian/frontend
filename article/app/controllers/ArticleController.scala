@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
 import common._
+import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import org.jsoup.nodes.Document
@@ -74,7 +75,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      if (content exists (_.article.isExpiredAdvertisementFeature)) {
+      if (AdFeatureExpirySwitch.isSwitchedOn && content.exists (_.article.isExpiredAdvertisementFeature)) {
         Right(Gone)
       } else {
         ModelOrResult(content, response)
