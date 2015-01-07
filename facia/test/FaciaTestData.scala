@@ -1,6 +1,6 @@
 package test
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import common.{AkkaAgent, Edition}
 import common.editions.{Au, Us, Uk}
 import controllers.front.Front
@@ -47,7 +47,7 @@ class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
 }
 
 trait ModelHelper {
-  val emptyConfig = CollectionConfig.emptyConfig
+  val emptyConfig = CollectionConfigJson.emptyConfig
 
   def trailWithUrl(url: String): Content = TestTrail(url)
   def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl

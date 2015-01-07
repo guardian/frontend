@@ -93,7 +93,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    blogsAndSeries.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
+    series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
     ) getOrElse Nil
   }
@@ -156,6 +156,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     super.metaData ++ Map(
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
       ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
+      ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
       ("publication", JsString(publication)),
       ("headline", JsString(headline)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),
@@ -164,7 +165,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-      ("blogIds", JsString(blogs.map { _.id.split("/").last }.mkString(","))),
+      ("blogIds", JsString(blogs.map { _.id.last }.mkString(","))),
       ("commentable", JsBoolean(isCommentable)),
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
@@ -492,17 +493,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
     leftColElements.isDefined
   }
 
-  override lazy val lightboxImages = mainPicture.toSeq ++ bodyImages
-
-  lazy val bodyLightboxImages = bodyImages.zip(bodyImages.map(_.largestEditorialCrop)).filter({
-    case (_, Some(crop)) => crop.width > 620
-    case _ => false
-  })
-
-  lazy val isMainImageLightboxable: Boolean = {
-    val isBigPicture = mainPicture.filter(_.largestEditorialCrop.nonEmpty).find(_.largestEditorialCrop.map(_.width).filter(_ > 620).size > 0)
-    isBigPicture.isDefined
-  }
+  lazy val zippedBodyImages = bodyFiltered.zip(bodyFiltered.map(_.largestEditorialCrop))
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
@@ -555,7 +546,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
-  override lazy val lightboxImages = mainPicture.toSeq
+  override lazy val lightboxImages = mainFiltered
 
   lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
     case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
@@ -686,7 +677,6 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) with Lightbo
 
   lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   override lazy val lightboxImages = galleryImages
-  override lazy val minLightboxWidth = 0
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
@@ -708,14 +698,14 @@ object Gallery {
 }
 
 trait Lightboxable extends Content {
+  lazy val mainFiltered = mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > 620).toSeq
+  lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > 620).toSeq
+  lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
-  lazy val lightboxImages: Seq[ImageContainer] = List()
-  lazy val minLightboxWidth = 620
   lazy val lightbox: JsObject = {
-    val allImages: Seq[ImageContainer] = lightboxImages
-    val imageContainers = allImages.filter(_.largestEditorialCrop.nonEmpty)
+    val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.filter(_.width > minLightboxWidth).map { img =>
+      imgContainer.largestEditorialCrop.map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
@@ -762,7 +752,6 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) with Li
     "contentType" -> JsString(contentType),
     "lightboxImages" -> lightbox
   )
-  override lazy val lightboxImages = mainPicture.toSeq
 }
 
 case class ApiContentWithMeta(

@@ -50,7 +50,7 @@ object OmnitureAnalyticsData {
       ("c14", data("buildNumber")),
       ("c19", platform),
       ("v19", platform),
-      ("v67", "nextgenServed"),
+      ("c67", "nextgenServed"),
       ("c30", if (isContent) "content" else "non-content"),
       ("c56", jsSupport),
       ("event", omnitureEvent),

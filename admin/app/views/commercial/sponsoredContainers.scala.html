@@ -1,7 +1,7 @@
 @(env: String, page: model.MetaData, trails: Seq[model.Content])(implicit request: RequestHeader)
 
 @import layout.CollectionEssentials
-@import com.gu.facia.client.models.CollectionConfig
+@import com.gu.facia.client.models.CollectionConfigJson
 @import layout.FaciaContainer
 @import services.CollectionConfigWithId
 @import slices.Fixed
@@ -15,7 +15,7 @@
             @fragments.containers.facia_cards.container(FaciaContainer(
                 0,
                 Fixed(fixedMediumSlowVI),
-                CollectionConfigWithId("front", CollectionConfig.withDefaults(displayName = Some("Front"))),
+                CollectionConfigWithId("front", CollectionConfigJson.withDefaults(displayName = Some("Front"))),
                 CollectionEssentials.fromTrails(trails)
             ))(request)
 
@@ -39,7 +39,7 @@
                 @fragments.containers.facia_cards.container(FaciaContainer(
                     1,
                     Fixed(fixedMediumSlowVI),
-                    CollectionConfigWithId("type", CollectionConfig.withDefaults(
+                    CollectionConfigWithId("type", CollectionConfigJson.withDefaults(
                         displayName = Some(c("title")),
                         apiQuery = Some(c("keyword"))
                     )),

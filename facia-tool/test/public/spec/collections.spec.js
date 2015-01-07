@@ -2,6 +2,7 @@ define([
     'test/utils/async-test',
     'test/utils/drag',
     'mock-collection',
+    'mock-stories-visible',
     'test/utils/edit-actions',
     'test/utils/publish-actions',
     'test/utils/dom-nodes'
@@ -9,6 +10,7 @@ define([
     test,
     drag,
     mockCollection,
+    mockVisible,
     editAction,
     publishAction,
     dom
@@ -351,6 +353,33 @@ define([
                     dom.click(launchButton);
                 });
             }
+        });
+
+        test('collections', 'stories visible', function (done) {
+            mockVisible.set({
+                'slow/slower/slowest': {
+                    desktop: 1,
+                    mobile: 1
+                }
+            });
+            editAction(function () {
+                var lastGroup = dom.droppableGroup(2, 4);
+                drag.droppable(lastGroup).drop(lastGroup, new drag.Article(dom.latestArticle(5)));
+
+                return {
+                    sport: {
+                        draft: [{
+                            id: 'internal-code/content/5',
+                            meta: {
+                                group: 0
+                            }
+                        }]
+                    }
+                };
+            }).then(function () {
+                expect($('.desktop-indicator .indicator')[1].clientHeight > 100).toBe(true);
+            });
+            done();
         });
     });
 });

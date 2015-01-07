@@ -3,7 +3,7 @@
 @import common.{LinkTo, Localisation}
 @import conf.Switches._
 @import views.support.TrailCssClasses.articleToneClass
-@import com.gu.facia.client.models.CollectionConfig
+@import com.gu.facia.client.models.CollectionConfigJson
 @import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
@@ -29,7 +29,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live"><span class="live-pulse-icon"></span>LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live live-pulse-icon">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
 
                         @fragments.standfirst(article)

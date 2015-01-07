@@ -4,13 +4,14 @@ define([
     'lodash/collections/every',
     'lodash/collections/map',
     'common/modules/crosswords/helpers',
-    'jasq'
+    'common/modules/crosswords/thumbnails'
 ], function (
     bonzo,
     contains,
     every,
     map,
-    helpers
+    helpers,
+    thumbs
 ) {
     var fixture = [
         ["", "", "", "H", ""],
@@ -24,13 +25,13 @@ define([
         });
     }
 
-    describe('Thumbnails', 'common/modules/crosswords/thumbnails', function () {
+    describe('Thumbnails', function () {
         describe('makeTextCells', function () {
-            it('should only create as many cells as there are filled in', function (thumbs) {
+            it('should only create as many cells as there are filled in', function () {
                 expect(thumbs.makeTextCells(fixture).length).toBe(3);
             });
 
-            it('should create a cell for every letter that is filled in', function (thumbs) {
+            it('should create a cell for every letter that is filled in', function () {
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
@@ -39,7 +40,7 @@ define([
                 expect(contains(letters, "R")).toBe(true);
             });
 
-            it('should not create any empty text nodes', function (thumbs) {
+            it('should not create any empty text nodes', function () {
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
@@ -47,7 +48,7 @@ define([
                 expect(contains(letters, null)).toBe(false);
             });
 
-            it('should not create any nodes outside of the thumbnail borders', function (thumbs) {
+            it('should not create any nodes outside of the thumbnail borders', function () {
                 var gridWidth = helpers.gridSize(fixture.length),
                     gridHeight = helpers.gridSize(fixture[0].length),
                     cells = thumbs.makeTextCells(fixture);

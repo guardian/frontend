@@ -7,6 +7,7 @@ define([
     'utils/layout-from-url',
     'text!views/collections.scala.html',
     'text!views/templates/vertical_layout.scala.html',
+    'text!widgets/collection.html',
     'utils/mediator'
 ], function(
     CollectionsEditor,
@@ -17,6 +18,7 @@ define([
     layoutFromURL,
     templateCollections,
     verticalLayout,
+    collectionView,
     mediator
 ){
     return function () {

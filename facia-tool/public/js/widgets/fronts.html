@@ -1,5 +1,6 @@
 <div class="front-container" data-bind="css: {
-    'live-mode': liveMode
+    'live-mode': liveMode,
+    'draft-mode': !liveMode()
 }">
     <div class="modes" data-bind="
         css: {
@@ -40,7 +41,7 @@
         <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
     </div>
 
-    <div class="col__inner scrollable" data-bind="foreach: collections">
-        <collection-widget params="context: $context"></collection-widget>
+    <div class="col__inner scrollable collection-container" data-bind="foreach: collections">
+        <collection-widget params="context: $context" data-bind="ownerClass: $data"></collection-widget>
     </div>
 </div>
