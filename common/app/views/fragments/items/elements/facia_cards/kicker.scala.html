@@ -1,0 +1,51 @@
+@(header: layout.FaciaCardHeader)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import views.support._
+
+@header.kicker.map {
+    case BreakingNewsKicker => {
+        <span class="fc-item__breaking-indicator">Breaking news</span>
+    }
+
+    case LiveKicker => {
+        <span class="fc-item__kicker fc-item__live-indicator"><span class="live-pulse-icon"></span>Live</span>
+    }
+
+    case CartoonKicker => {
+        <span class="fc-item__kicker">Cartoon</span>
+    }
+
+    case AnalysisKicker => {
+        <span class="fc-item__kicker">Analysis</span>
+    }
+
+    case PodcastKicker(Some(series)) => {
+        <a href="@LinkTo(series.url)" data-link-name="kicker" class="fc-item__kicker">@Html(series.name)</a>
+    }
+
+    case PodcastKicker(None) => {
+        <span class="fc-item__kicker">Podcast</span>
+    }
+
+    case ReviewKicker => {
+        <span class="fc-item__kicker">Review</span>
+    }
+
+    case TagKicker(tagName, tagLink, _) => {
+        <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-item__kicker">@Html(tagName)</a>
+    }
+
+    case SectionKicker(sectionName, sectionLink) => {
+        <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-item__kicker">@Html(sectionName)</a>
+    }
+
+    case FreeHtmlKickerWithLink(html, link) => {
+        <a href="@LinkTo(link)" data-link-name="kicker" class="fc-item__kicker">@Html(html)</a>
+    }
+
+    case FreeHtmlKicker(html) => {
+        <span class="fc-item__kicker">@Html(html)</span>
+    }
+}
+

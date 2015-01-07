@@ -4,7 +4,7 @@
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
 
-@headline() = {<span class="@labelCssClasses">@RemoveOuterParaHtml(header.headline)</span>}
+@headline() = {<span class="@labelCssClasses fc-item__headline">@RemoveOuterParaHtml(header.headline)</span>}
 
 @articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
 

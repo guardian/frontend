@@ -107,16 +107,17 @@ $block-padding-right: $gs-gutter;
     font-weight: bold;
 }
 
-.live-pulse-icon {
+.live-pulse-icon:before {
+    @extend %rounded-icon;
+
     $size: 12px;
-    display: inline-block;
-    content: '';
     background-color: #ffffff;
     width: $size;
     height: $size;
+    content: '';
     margin-bottom: -1px;
     margin-right: 3px;
-    @include border-radius(50%);
+    vertical-align: initial;
     @include animation(live-pulse 1s infinite);
 }
 
