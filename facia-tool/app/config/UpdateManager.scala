@@ -1,6 +1,6 @@
 package config
 
-import com.gu.facia.client.models.{CollectionConfig, Config, Front}
+import com.gu.facia.client.models.{CollectionConfigJson, ConfigJson, FrontJson}
 import controllers.CreateFront
 import frontsapi.model.UpdateActions
 import services.{IdGeneration, ConfigAgent, S3FrontsApi}
@@ -21,14 +21,14 @@ object UpdateManager {
    *
    * @param transform The transformation to apply
    */
-  private def transformConfig(transform: Config => Config, identity: UserIdentity): Unit = {
+  private def transformConfig(transform: ConfigJson => ConfigJson, identity: UserIdentity): Unit = {
     S3FrontsApi.getMasterConfig map { configString =>
       val configJson = Json.parse(configString)
-      val config = configJson.asOpt[Config] getOrElse {
+      val config = configJson.asOpt[ConfigJson] getOrElse {
         throw new RuntimeException(s"Unable to de-serialize config from S3: $configJson")
       }
 
-      val transformedConfig: Config = transform(config)
+      val transformedConfig: ConfigJson = transform(config)
       val newConfig = SanitizeInput.fromConfigSeo(Transformations.prune(transformedConfig))
       UpdateActions.putMasterConfig(newConfig, identity)
       ConfigAgent.refreshWith(transformedConfig)
@@ -41,17 +41,17 @@ object UpdateManager {
     newCollectionId
   }
 
-  def updateFront(id: String, newVersion: Front, identity: UserIdentity): Unit = {
+  def updateFront(id: String, newVersion: FrontJson, identity: UserIdentity): Unit = {
     transformConfig(Transformations.updateFront(id, newVersion), identity)
   }
 
-  def addCollection(frontIds: List[String], collection: CollectionConfig, identity: UserIdentity): String = {
+  def addCollection(frontIds: List[String], collection: CollectionConfigJson, identity: UserIdentity): String = {
     val newCollectionId = IdGeneration.nextId
     transformConfig(Transformations.updateCollection(frontIds, newCollectionId, collection), identity)
     newCollectionId
   }
 
-  def updateCollection(id: String, frontIds: List[String], collection: CollectionConfig, identity: UserIdentity): Unit = {
+  def updateCollection(id: String, frontIds: List[String], collection: CollectionConfigJson, identity: UserIdentity): Unit = {
     transformConfig(Transformations.updateCollection(frontIds, id, collection), identity)
   }
 }

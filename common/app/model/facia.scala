@@ -1,8 +1,6 @@
 package model
 
-import com.gu.facia.client.models.CollectionConfig
 import common.{Edition, ExecutionContexts, Logging}
-import layout.FaciaContainer
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 

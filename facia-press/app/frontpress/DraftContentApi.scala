@@ -10,7 +10,7 @@ object DraftContentApi extends ElasticSearchLiveContentApiClient {
 }
 
 object DraftCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail] =
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.CollectionJson): Seq[Trail] =
     collection.draft.getOrElse(collection.live)
 
   override val client: ContentApiClient = DraftContentApi

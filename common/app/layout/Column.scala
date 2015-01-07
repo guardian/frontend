@@ -1,7 +1,7 @@
 package layout
 
 import cards.{Standard, MediaList, ListItem, CardType}
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import play.twirl.api.Html
 import slices.{MobileShowMore, RestrictTo}
 import scalaz.syntax.traverse._

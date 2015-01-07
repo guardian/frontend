@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import model.{Trail, Tag}
 
 object ItemKicker {
