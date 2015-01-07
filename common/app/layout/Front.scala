@@ -45,7 +45,7 @@ case class ContainerLayoutContext(
     val (content, context) = cardAndContext
 
     content.displayElement match {
-      case Some(vp: InlineVideo) =>
+      case Some(vp: InlineVideo) if content.cardTypes.showVideoPlayer =>
         if (videoPlayersRemaining > 0) {
           (content, context.copy(videoPlayersRemaining = videoPlayersRemaining - 1))
         } else {
