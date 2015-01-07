@@ -226,7 +226,7 @@ define([
         });
 
         page.isCompetition(function (competition) {
-            var $rightHandCol = $('.js-secondary-column')
+            var $rightHandCol = $('.js-secondary-column');
             if ($rightHandCol.dim().height > 1800 ) {
                 renderTable(competition, extras, dropdownTemplate);
             }
