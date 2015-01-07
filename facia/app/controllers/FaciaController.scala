@@ -119,7 +119,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             Ok(TrailsToRss(
               faciaPage,
               faciaPage.collections
-                .filter(_._1.config.excludeFromRss.exists(identity))
+                .filterNot(_._1.config.excludeFromRss.exists(identity))
                 .map(_._2)
                 .flatMap(_.items)
                 .toSeq
