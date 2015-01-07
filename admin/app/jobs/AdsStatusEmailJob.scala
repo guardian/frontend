@@ -2,7 +2,7 @@ package jobs
 
 import common.Logging
 import conf.Configuration.commercial._
-import dfp.{PageSkinSponsorship, Sponsorship}
+import dfp.{GuLineItem, PageSkinSponsorship}
 import services.EmailService
 import tools.Store
 
@@ -32,23 +32,23 @@ object AdsStatusEmailJob extends Logging {
 
   private def htmlBody: String = {
     val pageSkinsReport = Store.getDfpPageSkinnedAdUnits()
-    val sponsorshipsReport = Store.getDfpSponsoredTags()
-    val adFeaturesReport = Store.getDfpAdFeatureTags()
-    val foundationsReport = Store.getDfpFoundationSupportedTags()
+    val paidForTagsReport = Store.getDfpPaidForTags()
 
     val pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
       pageSkinsReport.deliverableSponsorships.filter(_.editions.isEmpty)
     }
 
-    val geotargetedAdFeatures: Seq[Sponsorship] = {
-      adFeaturesReport.sponsorships.filter(_.countries.nonEmpty)
+    val geotargetedAdFeatures: Seq[GuLineItem] = {
+      val adFeatureTags =
+        paidForTagsReport.advertisementFeatureSeries ++
+          paidForTagsReport.advertisementFeatureKeywords
+      val allAdFeatures = adFeatureTags flatMap (_.lineItems)
+      allAdFeatures filter (_.targeting.geoTargetsIncluded.nonEmpty) sortBy (_.id)
     }
 
-    val sponsorshipsWithoutSponsors: Seq[Sponsorship] = {
-      val sponsorships = sponsorshipsReport.sponsorships ++
-        adFeaturesReport.sponsorships ++
-        foundationsReport.sponsorships
-      sponsorships.filter(_.sponsor.isEmpty) sortBy (_.lineItemId)
+    val sponsorshipsWithoutSponsors: Seq[GuLineItem] = {
+      val lineItems = paidForTagsReport.paidForTags flatMap (_.lineItems)
+      lineItems filter (_.sponsor.isEmpty) sortBy (_.id)
     }
 
     views.html.commercial.email.adsStatus(

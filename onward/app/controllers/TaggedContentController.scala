@@ -8,6 +8,7 @@ import play.api.libs.json.{Json, JsArray}
 import scala.concurrent.Future
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
+import LiveContentApi.getResponse
 
 object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
 
@@ -43,16 +44,14 @@ object TaggedContentController extends Controller with Related with Logging with
 
   private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[Content]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
-    LiveContentApi.search(edition)
+    getResponse(LiveContentApi.search(edition)
       .tag(tag)
       .pageSize(3)
-      .response
-      .map { response =>
+    ).map { response =>
         response.results map { Content(_) }
     } recover { case GuardianContentApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil
     }
   }
-
 }

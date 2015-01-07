@@ -1,9 +1,8 @@
 package test
 
-import com.gu.facia.client.models.{Front, Config}
+import com.gu.facia.client.models.{FrontJson, ConfigJson}
 import common.editions.{Us, Uk}
 import implicits.FakeRequests
-import play.api.libs.json.{JsNull, Json}
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, FlatSpec}
@@ -20,8 +19,8 @@ import services.ConfigAgent
 
   override def beforeAll() {
     ConfigAgent.refreshWith(
-      Config(
-        fronts = Map("music" -> Front(Nil, None, None, None, None, None, None, None, None, None, None, None)),
+      ConfigJson(
+        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
   }

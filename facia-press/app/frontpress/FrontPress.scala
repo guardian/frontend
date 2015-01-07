@@ -11,6 +11,7 @@ import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import services._
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -110,11 +111,11 @@ trait FrontPress extends Logging {
   }
 
   private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse:Future[ItemResponse] = LiveContentApi
+    val contentApiResponse:Future[ItemResponse] = getResponse(LiveContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
-      .response
+    )
 
     contentApiResponse.onSuccess { case _ =>
       ContentApiSeoRequestSuccess.increment()

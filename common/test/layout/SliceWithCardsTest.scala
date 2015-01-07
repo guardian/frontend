@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import model.{Content, FaciaImageElement, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
@@ -45,7 +45,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfig.emptyConfig,
+        CollectionConfigJson.emptyConfig,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )._2.length shouldEqual
@@ -59,7 +59,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfig.emptyConfig,
+        CollectionConfigJson.emptyConfig,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )
@@ -79,7 +79,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfig.emptyConfig,
+        CollectionConfigJson.emptyConfig,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )._1

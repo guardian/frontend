@@ -29,13 +29,10 @@
 }
 
 %icon-holder-circle {
-    position: relative;
-    display: block;
     width: 30px;
     height: 30px;
     border: 1px solid colour(neutral-1);
     padding: 0;
-    @include border-radius(50%);
     @include box-sizing(content-box); // Force proper sizing on button elements
     background-color: transparent;
 

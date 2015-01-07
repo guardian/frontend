@@ -48,7 +48,7 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
 
     'bootstraps/identity',
 
@@ -178,7 +178,7 @@ define([
             },
 
             transcludeOnwardContent: function () {
-                if ('seriesId' in config.page && 'showRelatedContent' in config.page && config.page.showRelatedContent) {
+                if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
                     new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {

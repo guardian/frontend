@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs'
 ], function (
     bean,
     bonzo,

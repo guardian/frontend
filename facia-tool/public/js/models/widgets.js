@@ -30,6 +30,14 @@ define([
             },
             template: { require: 'text!widgets/collection.html' }
         });
+        ko.bindingHandlers.ownerClass = {
+            init: function (element, valueAccessor) {
+                var owner = valueAccessor();
+                if (owner.registerElement) {
+                    owner.registerElement(element);
+                }
+            }
+        };
     }
 
     return {

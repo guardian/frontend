@@ -14,11 +14,13 @@ define([
         },
         collections: {
             'latest': {
-                displayName: 'Latest News'
+                displayName: 'Latest News',
+                type: 'fast/slow'
             },
             'sport': {
                 displayName: 'Sport',
-                groups: ['short', 'tall', 'grande', 'venti']
+                groups: ['short', 'tall', 'grande', 'venti'],
+                type: 'slow/slower/slowest'
             }
         }
     });

@@ -8,6 +8,7 @@ import scala.concurrent.Future
 import conf.LiveContentApi
 import com.gu.contentapi.client.model.ItemResponse
 import play.twirl.api.HtmlFormat
+import LiveContentApi.getResponse
 
 object FlyerController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
@@ -23,11 +24,12 @@ object FlyerController extends Controller with Paging with Logging with Executio
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
-      .showTags("all")
-      .showElements("all")
-      .response
+    val response: Future[ItemResponse] = getResponse(
+      LiveContentApi.item(path, edition)
+        .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
+        .showTags("all")
+        .showElements("all")
+    )
 
     response.map { response => response.content.map(Content(_))  }
   }
