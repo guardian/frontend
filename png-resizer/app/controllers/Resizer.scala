@@ -9,6 +9,7 @@ import lib.Streams._
 import lib.WS._
 import lib.{Im4Java, IntString, PngQuant, Time}
 import load.LoadLimit
+import model.Cached
 import play.api.Play.current
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.ws.WS
@@ -16,6 +17,7 @@ import play.api.mvc.{Action, Controller, Headers}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scalaz.EitherT._
 import scalaz._
 
@@ -58,6 +60,15 @@ object Resizer extends Controller with Logging {
     }
   }
 
+  def redirectScaleUpAttempts(originalWidth: Int, width: Int, fallbackUri: String) = eitherT (Future.successful {
+    if (originalWidth <= width) {
+      logger.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
+      -\/(Cached(1.day)(TemporaryRedirect(fallbackUri)))
+    } else {
+      \/-()
+    }
+  })
+
   def resize(backend: String, path: String, widthString: String, qualityString: String) =
     Action.async { request =>
 
@@ -70,6 +81,8 @@ object Resizer extends Controller with Logging {
               response <- Time(getUpstreamResponse(uri, request.headers), "download image", PngResizerMetrics.downloadTime)
               cacheableContent <- getPngBytesToResize(uri, response)
               CacheableContent(cacheHeaders, bytesPreResize) = cacheableContent
+              originalWidth <- eitherTRight(Im4Java.getWidth(bytesPreResize))
+              _ <- redirectScaleUpAttempts(originalWidth, width, uri)
               resized <- Time(eitherTRight(Im4Java.resizeBufferedImage(width)(bytesPreResize)), "resize image", PngResizerMetrics.resizeTime)
               quanted <- Time(eitherTRight(PngQuant(resized, quality)), "quantize image", PngResizerMetrics.quantizeTime)
               result = Ok(quanted).as("image/png").withHeaders(cacheHeaders: _*)

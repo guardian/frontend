@@ -86,7 +86,7 @@ define([
 
     return {
 
-        init: once(init)
+        init: init
 
     };
 

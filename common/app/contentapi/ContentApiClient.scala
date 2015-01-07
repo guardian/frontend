@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import com.gu.contentapi.client.ContentApiClientLogic
 import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.Switches
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import common._
 import model.{Content, Trail}
 import org.joda.time.DateTime
@@ -12,9 +12,9 @@ import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, ItemResponse}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
-import ExecutionContexts.{executionContext => implicitExecutionContext}
 
 trait QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
@@ -43,9 +43,8 @@ trait QueryDefaults extends implicits.Collections {
   val leadContentMaxAge = 1.day
 
   object EditorsPicsOrLeadContentAndLatest {
-
     def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
-      result.map{ r =>
+      result.map { r =>
         val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
 
         val results = r.results.map(Content(_))
@@ -80,7 +79,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
-  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+  def item(id: String, edition: String): ItemQuery = item(id)
     .edition(edition)
     .showTags("all")
     .showFields(trailFields)
@@ -127,9 +126,9 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
     log.info("Content API Client looks healthy again, circuit breaker is closed.")
   })
 
-  override def fetch(url: String) = {
+  override def fetch(url: String)(implicit executionContext: ExecutionContext) = {
     if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
-      val future = circuitBreaker.withCircuitBreaker(super.fetch(url))
+      val future = circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
 
       future onFailure {
         case e: CircuitBreakerOpenException =>

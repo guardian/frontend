@@ -74,7 +74,7 @@ define([
 
     return {
 
-        init: once(init),
+        init: init,
 
         // rules exposed for spacefinder debugging
         getRules: getRules,
@@ -84,6 +84,10 @@ define([
             ads.forEach(function ($ad) {
                 $ad.remove();
             });
+        },
+
+        reset: function () {
+            ads = [];
         }
 
     };
