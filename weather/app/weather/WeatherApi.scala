@@ -1,34 +1,43 @@
 package weather
 
-import common.ExecutionContexts
+import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
-import models.{LocationResponse, CityId, City}
+import models.{LocationResponse, CityId}
+import play.api.Play
 import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WS
 import play.api.Play.current
-import java.net.URLEncoder
+import java.net.{URI, URLEncoder}
 
 import scala.concurrent.Future
 
-object WeatherApi extends ExecutionContexts {
+object WeatherApi extends ExecutionContexts with ResourcesHelper {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
 
-  val weatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
-  val weatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
+  private val WeatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
+  private val WeatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
 
   private def autocompleteUrl(query: String): String =
-    s"$weatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
+    s"$WeatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
   private def cityLookUp(cityId: CityId): String =
-    s"$weatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
+    s"$WeatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
+
+  private def getJson(url: String): Future[JsValue] = {
+    if (Play.isTest) {
+      Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
+    } else {
+      WS.url(url).get().filter(_.status == 200).map(_.json)
+    }
+  }
 
   def searchForLocations(query: String) =
-    WS.url(autocompleteUrl(query)).get().map({ r =>
-      Json.fromJson[Seq[LocationResponse]](r.json).get
+    getJson(autocompleteUrl(query)).map({ r =>
+      Json.fromJson[Seq[LocationResponse]](r).get
     })
 
   def getWeatherForCityId(cityId: CityId): Future[JsValue] =
-    WS.url(cityLookUp(cityId)).get().filter(_.status == 200).map(_.json)
+    getJson(cityLookUp(cityId))
 }
