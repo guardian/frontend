@@ -20,7 +20,8 @@ define([
     'common/modules/video/tech-order',
     'common/modules/analytics/beacon',
     'text!common/views/ui/loading.html',
-    'text!common/views/ui/video-ads-overlay.html'
+    'text!common/views/ui/video-ads-overlay.html',
+    'text!common/views/ui/video-ads-skip-overlay.html'
 ], function (
     bean,
     bonzo,
@@ -42,7 +43,8 @@ define([
     techOrder,
     beacon,
     loadingTmpl,
-    adsOverlayTmpl
+    adsOverlayTmpl,
+    adsSkipOverlayTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -236,6 +238,34 @@ define([
         this.one(constructEventName('preroll:play', player), events.init.bind(player));
     }
 
+    function adSkipCountdown() {
+        var player = this,
+            events =  {
+                destroy: function () {
+                    $('.js-ads-overlay', this.el()).remove();
+                    this.off('timeupdate', events.update);
+                },
+                update: function () {
+                    if (this.currentTime() > 0.1) {
+                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
+                    }
+                    $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                },
+                skip: function () {
+                    console.log('skip');
+                },
+                init: function () {
+                    $(this.el()).append($.create(adsSkipOverlayTmpl));
+                    $('.vjs-ads-overlay--skip-button').on('click', events.skip.bind(this));
+                    //this.on('timeupdate', events.update.bind(this));
+                    this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
+                    this.one(constructEventName('content:play', player), events.destroy.bind(player));
+                    this.one('adtimeout', events.destroy.bind(player));
+                }
+            };
+        this.one(constructEventName('preroll:play', player), events.init.bind(player));
+    }
+
     function fullscreener() {
         var player = this,
             clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
@@ -325,6 +355,7 @@ define([
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         videojs.plugin('adCountdown', adCountdown);
+        videojs.plugin('adSkipCountdown', adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
         $('.js-gu-media').each(function (el) {
@@ -403,6 +434,7 @@ define([
                         if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                             bindPrerollEvents(player);
                             player.adCountdown();
+                            player.adSkipCountdown();
 
                             // Video analytics event.
                             player.trigger(constructEventName('preroll:request', player));

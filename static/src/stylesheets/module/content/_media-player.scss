@@ -703,6 +703,25 @@ $vjs-progress-inset-bottom: 4px;
     right: $gs-gutter/2;
 }
 
+/* VJS: SKIP AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay--skip-button {
+    position: absolute;
+    z-index: 2;
+    top: 300px;
+    right: 8px;
+    width: 18%;
+    padding: $gs-baseline/3 0 0 $gs-gutter/4;
+    background-color: rgba(colour(neutral-1), .8);
+    color: #ffffff;
+    text-align: left;
+    @include fs-textSans(1);
+
+    @include mq(tablet) {
+        @include fs-textSans(2, true);
+    }
+}
+
 /* End slate
    ========================================================================== */
 .end-slate-container {
