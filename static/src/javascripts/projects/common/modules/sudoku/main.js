@@ -4,7 +4,6 @@ define([
     'react',
     'common/utils/$',
     'common/utils/_',
-    'react',
     'common/modules/sudoku/flatMap',
     'common/modules/sudoku/grid'
 ], function (
