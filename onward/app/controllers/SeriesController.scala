@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import play.api.mvc.{Controller, Action, RequestHeader}
 import common._
 import model._

@@ -3,7 +3,7 @@ package dfp
 import java.net.URLDecoder
 
 import akka.agent.Agent
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment

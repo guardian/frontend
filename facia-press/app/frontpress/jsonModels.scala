@@ -1,8 +1,7 @@
 package frontpress
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import com.gu.contentapi.client.model.Asset
-import conf.Switches
 import model._
 import org.joda.time.DateTime
 import play.api.libs.json._

@@ -1,7 +1,7 @@
 package dfp
 
 import com.gu.contentapi.client.model.{Tag => ApiTag}
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
 import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
@@ -141,7 +141,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   def apiQuery(apiQuery: String) = {
-    CollectionConfig.withDefaults(apiQuery = Some(apiQuery))
+    CollectionConfigJson.withDefaults(apiQuery = Some(apiQuery))
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {

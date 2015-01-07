@@ -3,7 +3,7 @@ package services
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import com.gu.facia.client.models.{CollectionConfig, TrailMetaData, Trail}
+import com.gu.facia.client.models.{CollectionConfigJson, TrailMetaData, Trail}
 import model.Snap
 import org.joda.time.DateTime
 import play.Play
@@ -45,7 +45,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/$id")
 
-  def writeToContentapi(id: String, config: CollectionConfig): Future[WSResponse] = {
+  def writeToContentapi(id: String, config: CollectionConfigJson): Future[WSResponse] = {
     import play.api.Play.current
     (for {
       username      <- Configuration.contentApi.write.username
@@ -74,7 +74,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
+  def generateContentApiPut(id: String, config: CollectionConfigJson): ContentApiPut = {
     val maybeBlock = FaciaApiIO.getBlock(id)
 
     ContentApiPut(

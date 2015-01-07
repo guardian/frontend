@@ -1,6 +1,6 @@
 package controllers.front
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import model._
 import scala.concurrent.Future
 import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
@@ -140,7 +140,8 @@ trait FrontJson extends ExecutionContexts with Logging {
       uneditable      = (json \ "uneditable").asOpt[Boolean],
       hideKickers     = (json \ "hideKickers").asOpt[Boolean],
       showDateHeader =  (json \ "showDateHeader").asOpt[Boolean],
-      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean]
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean],
+      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean]
     )
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {

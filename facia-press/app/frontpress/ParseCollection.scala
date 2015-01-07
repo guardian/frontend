@@ -32,11 +32,11 @@ object Seg {
 
 //Curated and editorsPicks are the same, we will get rid of either
 case class Result(
-                   curated: List[ApiContent],
-                   editorsPicks: List[ApiContent],
-                   mostViewed: List[ApiContent],
-                   contentApiResults: List[ApiContent]
-                   )
+  curated: List[ApiContent],
+  editorsPicks: List[ApiContent],
+  mostViewed: List[ApiContent],
+  contentApiResults: List[ApiContent]
+)
 
 object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
@@ -52,7 +52,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   val cacheDuration: FiniteDuration = 5.minutes
 
   val client: ContentApiClient
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail]
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.CollectionJson): Seq[Trail]
 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
@@ -68,10 +68,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
-    val collection: Future[Option[com.gu.facia.client.models.Collection]] =
+  def getCollection(id: String, config: CollectionConfigJson, edition: Edition): Future[Collection] = {
+    val collection: Future[Option[com.gu.facia.client.models.CollectionJson]] =
       FrontsApi.amazonClient.collection(id)
-        .map(Option.apply)
         .recover { case t: Throwable =>
           log.warn(s"Could not get Collection ID $id: $t")
           None
@@ -335,7 +334,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 }
 
 object LiveCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail] =
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.CollectionJson): Seq[Trail] =
     collection.live
 
   override val client: ContentApiClient = LiveContentApi

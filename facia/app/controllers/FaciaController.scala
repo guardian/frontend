@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common._
 import common.editions.EditionalisedSections
 import conf.Switches
@@ -116,8 +116,15 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case Some(faciaPage) =>
         Cached(faciaPage) {
           if (request.isRss)
-            Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
-              .as("text/xml; charset=utf-8")
+            Ok(TrailsToRss(
+              faciaPage,
+              faciaPage.collections
+                .filter(_._1.config.excludeFromRss.exists(identity))
+                .map(_._2)
+                .flatMap(_.items)
+                .toSeq
+                .distinctBy(_.id))
+            ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
           else
