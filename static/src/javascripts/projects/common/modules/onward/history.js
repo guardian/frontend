@@ -141,7 +141,7 @@ define([
 
         tids = opts && opts.whitelist ? tids.filter(function (tid) { return opts.whitelist.indexOf(tid) > -1; }) : tids;
         tids = opts && opts.blacklist ? tids.filter(function (tid) { return opts.blacklist.indexOf(tid) === -1; }) : tids;
-        
+
         return _.chain(tids)
             .map(function (tid) {
                 var nameAndFreqs = tags[tid],
