@@ -201,7 +201,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
               img.after(html.toString())
               fig.addClass("fig--has-shares")
               img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-              img.after("<span class='article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
+              img.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
             }
           }
       }
