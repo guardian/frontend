@@ -12,6 +12,7 @@ import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
+  val MaximumVideoPlayersPerTagPage = 1
   val MaximumVideoPlayersPerFront = 4
 
   val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)

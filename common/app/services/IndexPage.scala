@@ -94,7 +94,7 @@ object IndexPage {
       ContainerLayoutContext(
         Set.empty,
         hideCutOuts = indexPage.page.isContributorPage,
-        ContainerLayoutContext.MaximumVideoPlayersPerFront
+        ContainerLayoutContext.MaximumVideoPlayersPerTagPage
       )
     )
 
