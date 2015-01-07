@@ -137,13 +137,12 @@ define([
 
     function getPopular(opts) {
         var tags = getSummary().tags,
-            whitelist = opts && _.isArray(opts.whitelist) ? opts.whitelist : false,
-            blacklist = opts && _.isArray(opts.blacklist) ? opts.blacklist : false;
+            tids = _.keys(tags);
 
-        return _.chain(getSummary().tags)
-            .keys()
-            .filter(function (tid) { return !whitelist || whitelist.indexOf(tid) > -1; })
-            .filter(function (tid) { return !blacklist || blacklist.indexOf(tid) === -1; })
+        tids = opts && opts.whitelist ? tids.filter(function (tid) { return opts.whitelist.indexOf(tid) > -1; }) : tids;
+        tids = opts && opts.blacklist ? tids.filter(function (tid) { return opts.blacklist.indexOf(tid) === -1; }) : tids;
+        
+        return _.chain(tids)
             .map(function (tid) {
                 var nameAndFreqs = tags[tid],
                     freqs = nameAndFreqs[1];
