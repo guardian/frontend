@@ -177,7 +177,8 @@ object CollectionJson {
       showSections   = config.showSections.getOrElse(false),
       hideKickers    = config.hideKickers.getOrElse(false),
       showDateHeader = config.showDateHeader.getOrElse(false),
-      showLatestUpdate = config.showLatestUpdate.getOrElse(false)
+      showLatestUpdate = config.showLatestUpdate.getOrElse(false),
+      excludeFromRss = config.excludeFromRss.getOrElse(false)
     )
 }
 
@@ -198,5 +199,6 @@ case class CollectionJson(
   showSections: Boolean,
   hideKickers:  Boolean,
   showDateHeader: Boolean,
-  showLatestUpdate: Boolean
+  showLatestUpdate: Boolean,
+  excludeFromRss: Boolean
 )
