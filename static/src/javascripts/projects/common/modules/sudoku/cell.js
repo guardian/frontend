@@ -1,12 +1,12 @@
 /* jshint newcap: false */
 define([
-    'common/utils/_',
     'react',
+    'common/utils/_',
     'common/modules/sudoku/constants',
     'common/modules/sudoku/utils'
 ], function (
-    _,
     React,
+    _,
     constants,
     utils
 ) {
