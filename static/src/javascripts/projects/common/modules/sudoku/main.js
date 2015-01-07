@@ -1,21 +1,26 @@
 /* jshint newcap: false */
 define([
+    'bonzo',
+    'react',
     'common/utils/$',
     'common/utils/_',
     'react',
     'common/modules/sudoku/flatMap',
     'common/modules/sudoku/grid'
 ], function (
+    bonzo,
+    React,
     $,
     _,
-    React,
     flatMap,
     Grid
 ) {
     return function () {
         $('.js-sudoku').each(function (element) {
-            if (element.hasAttribute('data-sudoku-data')) {
-                var sudokuData = JSON.parse(element.getAttribute('data-sudoku-data')),
+            var $element = bonzo(element);
+
+            if ($element.attr('data-sudoku-data')) {
+                var sudokuData = JSON.parse($element.attr('data-sudoku-data')),
                     cells = flatMap(_.range(9), function (y) {
                         return _.map(_.range(9), function (x) {
                             return {
