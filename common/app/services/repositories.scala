@@ -131,7 +131,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       if (AdFeatureExpirySwitch.isSwitchedOn && page.exists (_.page.isExpiredAdvertisementFeature)) {
         Right(Gone)
       } else {
-        ModelOrResult(page, response)
+        ModelOrResult(page, response, maybeSection)
       }
     }
 
