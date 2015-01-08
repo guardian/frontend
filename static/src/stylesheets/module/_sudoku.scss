@@ -45,10 +45,10 @@
 
 .sudoku__button-background {
     cursor: pointer;
-    fill: colour(button-mute);
+    fill: guss-colour(neutral-7, $pasteup-palette);
 
     .sudoku__button:hover & {
-        fill: colour(button-accent);
+        fill: darken(guss-colour(neutral-7, $pasteup-palette), 10%);
     }
 }
 

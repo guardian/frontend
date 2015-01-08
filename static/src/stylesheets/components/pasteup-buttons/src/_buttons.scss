@@ -148,9 +148,9 @@ $border-color: $fill-colour
 }
 .button--secondary {
     @include button-colour(
-        colour(button-mute),
+        guss-colour(neutral-7, $pasteup-palette),
         guss-colour(neutral-1, $pasteup-palette),
-        colour(button-accent)
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
 }
 .button--tertiary {
