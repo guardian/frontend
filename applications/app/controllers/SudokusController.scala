@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 object SudokusController extends Controller with ExecutionContexts {
   def render(id: String) = Action.async { implicit request =>
-    if (Switches.SudokuSwitch.isSwitchedOn || true) {
+    if (Switches.SudokuSwitch.isSwitchedOn) {
       SudokuApi.getData(id) map {
         case Some(sudokuData) =>
           Ok(sudoku(new SudokuPage(sudokuData)))
