@@ -17,9 +17,9 @@ define([
         };
 
     StickyMpu.prototype.create = function () {
-        var articleBodyOffset = qwery('.content__article-body')[0].offsetTop,
-            $mpuContainer     = this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
+        var articleBodyOffset = qwery('.content__article-body')[0].offsetTop;
 
+        this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
         new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
     };
 
