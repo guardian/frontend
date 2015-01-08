@@ -195,6 +195,8 @@ case class GuLineItem(id: Long,
                       targeting: GuTargeting) {
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  val isExpired = endTime.exists(_.isBeforeNow)
+  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
 
   val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
     targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
