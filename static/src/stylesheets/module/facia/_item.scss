@@ -367,10 +367,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__link,
 .fc-sublink__link {
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
     &:visited {
         color: mix(colour(neutral-1), #ffffff, 80%);
     }
@@ -379,6 +375,8 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__link {
     &:hover,
     &:focus {
+        text-decoration: none;
+
         .fc-item__headline {
             text-decoration: underline;
         }
