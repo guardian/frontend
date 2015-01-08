@@ -34,7 +34,11 @@ define([
         }
 
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        if (!$mainCol.length || $mainCol.dim().height >= 1800) {
+        if (
+            !$mainCol.length ||
+            (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
+            (config.page.section === 'football' && $mainCol.dim().height >= 2200)
+        ) {
             adType = 'right-sticky';
         } else if ($mainCol.dim().height >= 600) {
             adType = 'right';
