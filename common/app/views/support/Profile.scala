@@ -1,6 +1,5 @@
 package views.support
 
-import common.AkkaAgent
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
@@ -81,7 +80,8 @@ object SeoOptimisedContentImage extends Profile(width = Some(460))
 object Naked extends Profile(None, None)
 
 object Profile {
-  val all: Seq[Profile] = Seq(
+  // Do NOT make this strict. The compiler gets confused and stuff.
+  lazy val all: Seq[Profile] = Seq(
     Contributor,
     GalleryInitialImage,
     GalleryUpgradedImage,
