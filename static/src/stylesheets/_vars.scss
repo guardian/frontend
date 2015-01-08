@@ -118,7 +118,7 @@ $frontend-palette: (
     sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
 
     button-mute:            guss-colour(neutral-7, $pasteup-palette),
-    button-accent:          #d7d7d7,
+    button-accent:          darken(guss-colour(neutral-7, $pasteup-palette), 10%),
 
     // Football
     // =============================================================================
