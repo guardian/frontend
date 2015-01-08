@@ -1,6 +1,6 @@
 package tools
 
-import com.gu.facia.client.models.Config
+import com.gu.facia.client.models.ConfigJson
 import com.gu.googleauth.UserIdentity
 import frontsapi.model.Block
 import org.joda.time.DateTime
@@ -49,10 +49,10 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite {
     S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newBlock)), identity)
   }
 
-  def putMasterConfig(config: Config): Option[Config] = {
+  def putMasterConfig(config: ConfigJson): Option[ConfigJson] = {
     Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
   }
-  def archiveMasterConfig(config: Config, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
+  def archiveMasterConfig(config: ConfigJson, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
 
 }
 

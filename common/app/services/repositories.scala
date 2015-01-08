@@ -11,6 +11,7 @@ import contentapi.{SectionTagLookUp, SectionsLookUp, QueryDefaults}
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.contentapi.client.GuardianContentApiError
+import LiveContentApi.getResponse
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -58,12 +59,12 @@ trait Index extends ConciergeRepository with QueryDefaults {
       }
     )
 
-    val promiseOfResponse = LiveContentApi.search(edition)
+    val promiseOfResponse = getResponse(LiveContentApi.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
       .showFields(if (isRss) rssFields else trailFields)
-      .response.map {response =>
+    ).map {response =>
       val trails = response.results map { Content(_) }
       trails match {
         case Nil => Right(NotFound)
@@ -119,10 +120,10 @@ trait Index extends ConciergeRepository with QueryDefaults {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
-    val promiseOfResponse = LiveContentApi.item(queryPath, edition).page(pageNum)
+    val promiseOfResponse = getResponse(LiveContentApi.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
-      .response map { response =>
+    ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))

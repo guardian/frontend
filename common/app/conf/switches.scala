@@ -175,11 +175,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val DfpMemoryLeakSwitch = Switch("Commercial", "dfp-leak-plug",
-    "If this switch is on, memory leak on Admin server should be plugged.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 7)
-  )
-
   val CommercialSwitch = Switch("Commercial", "commercial",
     "Kill switch for all commercial JS.",
     safeState = On, sellByDate = never
@@ -238,7 +233,7 @@ object Switches {
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
 
-  val targetMediaMathShutdownDate = new LocalDate(2015, 1, 6)
+  val targetMediaMathShutdownDate = new LocalDate(2015, 2, 1)
 
   val MediaMathSwitch = Switch("Commercial", "media-math",
     "Enable Media Math audience segment tracking",
@@ -246,7 +241,7 @@ object Switches {
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
+    safeState = Off, sellByDate = never)
 
   val RemarketingSwitch = Switch("Commercial", "remarketing",
     "Enable Remarketing tracking",
@@ -279,6 +274,10 @@ object Switches {
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
+
+  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+    "If this switch is on, ad features with expired line items will return 410s.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
 
   // Monitoring
 
@@ -402,6 +401,11 @@ object Switches {
 
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
+    "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 

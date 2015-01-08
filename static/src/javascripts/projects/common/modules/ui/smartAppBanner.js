@@ -3,7 +3,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/userPrefs',
+    'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
     cookies,

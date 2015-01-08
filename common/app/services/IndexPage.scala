@@ -1,6 +1,6 @@
 package services
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
 import conf.Switches
 import contentapi.Paths

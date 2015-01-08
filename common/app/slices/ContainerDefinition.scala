@@ -55,5 +55,7 @@ case class ContainerDefinition(
   mobileShowMore: MobileShowMore,
   customCssClasses: Set[String]
 ) {
-  def isSingleton = slices.length == 1 && slices.headOption.exists(_.layout.columns.map(_.numItems).sum == 1)
+  def numItems = slices.map(_.layout.numItems).sum
+
+  def isSingleton = slices.length == 1 && numItems == 1
 }

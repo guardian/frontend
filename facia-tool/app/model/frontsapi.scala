@@ -1,6 +1,6 @@
 package frontsapi.model
 
-import com.gu.facia.client.models.{Config, Trail, TrailMetaData}
+import com.gu.facia.client.models.{ConfigJson, Trail, TrailMetaData}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
@@ -156,7 +156,7 @@ trait UpdateActions extends Logging {
       case Success(_) => block
     }
 
-  def putMasterConfig(config: Config, identity: UserIdentity): Option[Config] = {
+  def putMasterConfig(config: ConfigJson, identity: UserIdentity): Option[ConfigJson] = {
     FaciaApiIO.archiveMasterConfig(config, identity)
     FaciaApiIO.putMasterConfig(config)
   }

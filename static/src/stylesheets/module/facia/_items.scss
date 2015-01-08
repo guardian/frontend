@@ -28,6 +28,9 @@
     + .fc-slice__item {
         @include vertical-item-separator;
     }
+    + .fc-slice__item--no-mpu:before {
+        border-left: 0 !important;
+    }
 
     .has-flex & {
         @include flex-display;
@@ -49,6 +52,10 @@
     }
 }
 .fc-slice__item--no-mpu {
+    -webkit-box-flex: 0 !important;
+    -moz-box-flex: 0 !important;
+    -webkit-flex: 0 !important;
+    -ms-flex: 0 !important;
     flex: 0 !important;
 }
 

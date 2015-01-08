@@ -48,6 +48,7 @@ define([
             'hideKickers',
             'showDateHeader',
             'showLatestUpdate',
+            'excludeFromRss',
             'apiQuery']);
 
         populateObservables(this.meta, opts);

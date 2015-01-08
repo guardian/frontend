@@ -1,7 +1,7 @@
 package layout
 
 import cards.{Standard, MediaList, ListItem, CardType}
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import play.twirl.api.Html
 import slices.{MobileShowMore, RestrictTo}
 import scalaz.syntax.traverse._
@@ -25,7 +25,9 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
 
   def showCutOut = allTypes.exists(_.showCutOut)
 }
-case class SliceLayout(cssClassName: String, columns: Seq[Column])
+case class SliceLayout(cssClassName: String, columns: Seq[Column]) {
+  def numItems = columns.map(_.numItems).sum
+}
 
 object Column {
   def cardStyle(column: Column, index: Int) = column match {

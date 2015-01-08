@@ -11,7 +11,8 @@ import conf.Configuration.contentApi.previewAuth
 import metrics.{CountMetric, FrontendTimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Success, Failure, Try}
 
 case class Response(body: String, status: Int, statusText: String)
@@ -74,7 +75,7 @@ trait DelegateHttp { self: ContentApiClientLogic =>
 
   var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
-  override def get(url: String, headers: Map[String, String]) =
+  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext) =
     _http.GET(url, headers) map { response: Response =>
       self.HttpResponse(response.body, response.status, response.statusText)
   }

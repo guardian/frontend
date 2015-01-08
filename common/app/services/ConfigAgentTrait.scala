@@ -1,7 +1,7 @@
 package services
 
 import akka.util.Timeout
-import com.gu.facia.client.models.{CollectionConfig, Config, Front}
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig, ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
 import fronts.FrontsApi

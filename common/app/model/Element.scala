@@ -52,7 +52,7 @@ trait ImageContainer extends Element {
     }
   }
 
-  lazy val isLightboxable: Boolean = largestEditorialCrop.map(_.width).getOrElse(0) > 620
+  lazy val isLightboxable: Boolean = largestEditorialCrop.map(_.width).getOrElse(0) > 620 && (largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7)
 }
 
 object ImageContainer {

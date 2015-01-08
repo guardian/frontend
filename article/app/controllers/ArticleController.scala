@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
 import common._
+import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import org.jsoup.nodes.Document
@@ -9,6 +10,7 @@ import performance.MemcachedAction
 import play.api.mvc.{Content => _, _}
 import views.BodyCleaner
 import views.support._
+import LiveContentApi.getResponse
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -55,12 +57,12 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
+    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-      .response
+    )
 
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }
@@ -68,12 +70,16 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
 
       val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
-      val content = supportedContent map { Content(_) } map {
+      val content: Option[ArticleWithStoryPackage] = supportedContent map { Content(_) } map {
         case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      ModelOrResult(content, response)
+      if (AdFeatureExpirySwitch.isSwitchedOn && content.exists (_.article.isExpiredAdvertisementFeature)) {
+        Right(Gone)
+      } else {
+        ModelOrResult(content, response)
+      }
     }
 
     result recover convertApiExceptions

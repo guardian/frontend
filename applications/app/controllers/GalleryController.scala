@@ -5,6 +5,7 @@ import conf._
 import model._
 import play.api.mvc.{RequestHeader, Controller, Action}
 import views.support.RenderOtherStatus
+import LiveContentApi.getResponse
 
 case class GalleryPage(
   gallery: Gallery,
@@ -37,10 +38,10 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
-    LiveContentApi.item(path, edition)
+    getResponse(LiveContentApi.item(path, edition)
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
-      .response.map{response =>
+    ).map{response =>
         val gallery = response.content.filter { _.isGallery } map { Gallery(_) }
         val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
         ModelOrResult(model, response)

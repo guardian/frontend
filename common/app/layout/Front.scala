@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime

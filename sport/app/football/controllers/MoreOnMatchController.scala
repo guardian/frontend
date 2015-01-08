@@ -11,6 +11,7 @@ import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 
@@ -84,13 +85,13 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toLocalDate
 
-    LiveContentApi.search(Edition(request))
+    getResponse(LiveContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
-      .response.map{ response =>
+    ).map{ response =>
         response.results.map(Content(_))
     }
   }
