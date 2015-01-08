@@ -578,6 +578,11 @@ h1 {
     position: absolute;
     right: 0;
     top: 8px;
+    color: #999;
+    font-size: 12px;
+}
+.list-header__collapser:hover {
+    color: #999;
 }
 
 .list-header__timings {
@@ -680,10 +685,6 @@ h1 {
 
 .preview {
     float: right;
-}
-
-collection-widget .collection {
-    padding: 0 0 5px 0;
 }
 
 collection-widget:first-child .collection {
@@ -1740,9 +1741,12 @@ collection-widget {
     display: block;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.12);
     margin: 5px 8px 16px 8px;
-    padding: 5px 10px;
     border: 1px solid #ddd;
     background-color: #fff;
+}
+
+collection-widget > div {
+    padding: 5px 10px;
 }
 
 .attention collection-widget {
@@ -1776,6 +1780,54 @@ collection-widget {
 .mobile-indicator .indicator {
     background-color: #C8E6C9;
 }
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 0;
+    color: #ddd;
+    background-color: #ddd;
+}
+
+collection-widget .buttons button {
+    height: 26px;
+    margin: 0 4px;
+    background: none;
+    border: 0;
+    padding: 0 8px;
+    font-size: 12px;
+    line-height: 26px;
+    min-width: 64px;
+    color: #666;
+    outline: none;
+}
+collection-widget .buttons button:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+collection-widget .buttons button i {
+    margin-left: 3px;
+    color: #999;
+}
+
+.history,
+.history .article {
+    background-color: #d9d9d9;
+}
+.history .article {
+    border-top: 10px solid #d9d9d9;
+}
+.history .article__tools {
+    width: 120px;
+}
+.history .tool--small--copy {
+    width: 83px;
+}
+.history .tool--small--remove,
+.history .tool--small--paste {
+    display: none;
+}
+
 
 /*****************************************/
 /* MEDIA QUERIES */

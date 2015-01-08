@@ -1,6 +1,7 @@
 <div class="collection">
     <div class="list-header" data-bind="
-        css: {collapsed: state.collapsed() || configMeta.uneditable()}">
+        css: {collapsed: state.collapsed() || configMeta.uneditable()}
+    ">
 
         <span class="tools" data-bind="visible: state.hasDraft">
             <a class="draft-warning" data-bind="
@@ -46,15 +47,15 @@
         </span>
 
         <a class="list-header__collapser" data-bind="click: toggleCollapsed">
-            <i data-bind="css: {
-                'icon-chevron-down': !state.collapsed(),
-                'icon-chevron-up'  :  state.collapsed }"></i></a>
+            <i class="fa" data-bind="css: {
+                'fa-chevron-down': !state.collapsed(),
+                'fa-chevron-up'  :  state.collapsed }"></i></a>
     </div>
 
     <div class="dropdown"data-bind="
         if: alsoOn.length,
         css: {'dropdown-open': state.alsoOnVisible},
-        visible: state.alsoOnVisible
+        slideVisible: state.alsoOnVisible() && !state.collapsed()
     ">
         <ul data-bind="foreach: alsoOn">
             <li><a class="list-header__also-on" data-bind="
@@ -64,21 +65,42 @@
         </ul>
     </div>
 
+    <div class="article-group" data-bind="slideVisible: !state.collapsed()">
+        <!-- ko if: state.showIndicators -->
+            <div class="desktop-indicator">
+                <i class="fa fa-laptop" title="Visible on desktop"></i>
+                <div class="indicator" data-bind="indicatorHeight: 'desktop'"></div>
+            </div>
+            <div class="mobile-indicator">
+                <i class="fa fa-mobile" title="Visible on mobile"></i>
+                <div class="indicator" data-bind="indicatorHeight: 'mobile'"></div>
+            </div>
+        <!-- /ko -->
+        <div data-bind="
+            css: {'pending': isPending()},
+            template: {name: 'template_groups', foreach: groups}"></div>
+
+    </div>
+</div>
+
+<!-- ko if: state.hasExtraActions() && history().length -->
     <!-- ko if: !state.collapsed() -->
-        <div class="article-group">
-            <!-- ko if: state.showIndicators -->
-                <div class="desktop-indicator">
-                    <i class="fa fa-laptop" title="Visible on desktop"></i>
-                    <div class="indicator" data-bind="indicatorHeight: 'desktop'"></div>
-                </div>
-                <div class="mobile-indicator">
-                    <i class="fa fa-mobile" title="Visible on mobile"></i>
-                    <div class="indicator" data-bind="indicatorHeight: 'mobile'"></div>
-                </div>
-            <!-- /ko -->
-            <div data-bind="
-                css: {'pending': isPending()},
-                template: {name: 'template_groups', foreach: groups}"></div>
+        <hr>
+
+        <div class="buttons">
+            <button data-bind="toggleClick: state.isHistoryOpen">
+                <span data-bind="text: front.confirmSendingAlert() ? 'Previously' : 'Recently removed'"></span>
+                <!-- ko if: state.isHistoryOpen -->
+                    <i class="fa fa-chevron-down"></i>
+                <!-- /ko -->
+                <!-- ko ifnot: state.isHistoryOpen -->
+                    <i class="fa fa-chevron-up"></i>
+                <!-- /ko -->
+            </button>
         </div>
     <!-- /ko -->
-</div>
+
+    <div class="history" data-bind="slideVisible: state.isHistoryOpen() && !state.collapsed()">
+        <div data-bind="template: {name: 'template_article', foreach: history}"></div>
+    </div>
+<!-- /ko -->

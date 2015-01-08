@@ -16,7 +16,8 @@ define([
     'modules/copied-article',
     'models/collections/new-items',
     'models/layout',
-    'models/widgets'
+    'models/widgets',
+    'models/common-handlers'
 ], function(
     pageConfig,
     ko,
@@ -34,7 +35,8 @@ define([
     copiedArticle,
     newItems,
     Layout,
-    widgets
+    widgets,
+    commonHandlers
 ) {
     return function() {
 

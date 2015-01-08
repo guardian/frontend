@@ -66,6 +66,7 @@ object FaciaApi {
     Some(block)
       .filter(_.draft.isDefined)
       .map(updatePublicationDateForNew)
+      .map(_.updatePreviouslyForPublish)
       .map(block => block.copy(live = block.draft.get, draft = None))
       .map(updateIdentity(_, identity))
 
