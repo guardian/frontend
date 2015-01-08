@@ -29,26 +29,26 @@ define([
                 'creative__label--hidden' : ''
         };
         
-        var leftMargin = (this.params.videoPositionH == 'center' ?
+        var leftMargin = (this.params.videoPositionH === 'center' ?
             -(this.params.videoWidth/2) : 0
         )
         
-        var leftPosition = (this.params.videoPositionH == 'left' ?
+        var leftPosition = (this.params.videoPositionH === 'left' ?
             this.params.videoHorizSpace + 'px' : 'auto'
         )
         
-        var rightPosition = (this.params.videoPositionH == 'right' ?
+        var rightPosition = (this.params.videoPositionH === 'right' ?
             this.params.videoHorizSpace + 'px' : 'auto'
         )
         
-        var topMargin = (this.params.videoPositionV == 'center' ?
+        var topMargin = (this.params.videoPositionV === 'center' ?
             -(this.params.videoHeight/2) : 0
         )
         
         var videoDesktop = {
-            videoD: (this.params.videoURL != '') ?
+            videoD: (this.params.videoURL !== '') ?
                 '<iframe width="' + this.params.videoWidth + '" height="' + this.params.videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px; margin-top: ' + topMargin + 'px; left: ' + leftPosition + '; right: ' + rightPosition + ';"></iframe>' : ''
-        }
+        };
         
         $.create(template(fluid250Tpl, merge(this.params, templateOptions, videoDesktop))).appendTo(this.$adSlot);
 
