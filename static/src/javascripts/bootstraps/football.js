@@ -227,7 +227,7 @@ define([
 
         page.isCompetition(function (competition) {
             var $rightHandCol = $('.js-secondary-column').dim().height;
-            if ($rightHandCol == 0 || $rightHandCol > 1800) {
+            if ($rightHandCol === 0 || $rightHandCol > 1800) {
                 renderTable(competition, extras, dropdownTemplate);
             }
         });
