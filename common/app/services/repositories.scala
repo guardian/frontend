@@ -1,6 +1,5 @@
 package services
 
-import conf.Switches._
 import model._
 import conf.LiveContentApi
 import model.Section
@@ -128,11 +127,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (AdFeatureExpirySwitch.isSwitchedOn && page.exists (_.page.isExpiredAdvertisementFeature)) {
-        Right(Gone)
-      } else {
-        ModelOrResult(page, response)
-      }
+      ModelOrResult(page, response, maybeSection)
     }
 
     promiseOfResponse.recover({
