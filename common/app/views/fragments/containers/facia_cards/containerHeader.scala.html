@@ -29,9 +29,9 @@
                         "tone-comment" -> isContributor,
                         "tone-colour" -> isContributor))">
                         @href.map { href =>
-                        <a data-link-name="section heading" href="@LinkTo {/@href}">
-                        @Html(Localisation(title))
-                        </a>
+                            <a data-link-name="section heading" href="@LinkTo {/@href}">
+                                @Html(Localisation(title))
+                            </a>
                         }.getOrElse {
                             <span tabindex="0">@Html(Localisation(title))</span>
                         }

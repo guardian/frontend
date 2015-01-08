@@ -99,8 +99,6 @@ object DfpAgent
     val advertisementFeatures: Seq[PaidForTag] = paidForTags filter(_.paidForType == AdvertisementFeature)
     updateMap(tagToAdvertisementFeatureSponsorsMapAgent, generateTagToSponsorsMap(advertisementFeatures))
 
-    val foundationSupportedTags: Seq[PaidForTag] = paidForTags filter(_.paidForType == FoundationFunded)
-
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
   }

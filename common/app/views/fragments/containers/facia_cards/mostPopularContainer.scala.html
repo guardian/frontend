@@ -5,13 +5,15 @@
 
 <div class="fc-container__header js-container__header">
     @containerDefinition.displayName.map { title =>
-        <h2 class="fc-container__header__title">
-            @containerDefinition.href.map { href =>
-            <a data-link-name="section heading" href="@LinkTo{/@href}">popular</a>
-            }.getOrElse{
-                popular
-            }
-        </h2>
+        <div class="fc-container__header__title">
+            <span tabindex="0">
+                @containerDefinition.href.map { href =>
+                    <a data-link-name="section heading" href="@LinkTo{/@href}">popular</a>
+                }.getOrElse{
+                    popular
+                }
+            </span>
+        </div>
     }
 </div>
 
