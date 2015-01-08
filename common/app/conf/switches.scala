@@ -438,6 +438,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val SudokuSwitch = Switch("Sudoku", "sudoku",
+    "If switched on, sudokus will be available",
+    safeState = Off, sellByDate = never
+  )
+
   val CricketScoresSwitch = Switch("Feature", "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off, sellByDate = never
