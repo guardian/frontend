@@ -114,9 +114,11 @@ $frontend-palette: (
     crosswordAccent1:       guss-colour(multimedia-support-1, $pasteup-palette),
     crosswordAccent2:       guss-colour(news-main-2, $pasteup-palette),
 
-    sudoku-accent-1:        guss-colour(multimedia-support-1, $pasteup-palette),
-    sudoku-accent-2:        guss-colour(news-main-2, $pasteup-palette),
-    sudoku-accent-3:        guss-colour(multimedia-support-3, $pasteup-palette),
+    sudoku-mute:            lighten(guss-colour(news-main-2, $pasteup-palette), 30%),
+    sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
+
+    button-mute:            guss-colour(neutral-7, $pasteup-palette),
+    button-accent:          #d7d7d7,
 
     // Football
     // =============================================================================

@@ -17,11 +17,11 @@
 }
 
 .sudoku__cell--highlighted rect {
-    fill: lighten(colour(crosswordAccent2), 30%);
+    fill: colour(sudoku-mute);
 }
 
 .sudoku__cell--focussed rect {
-    fill: lighten(colour(crosswordAccent2), 10%);
+    fill: colour(sudoku-accent);
 }
 
 .sudoku__cell--error .sudoku__cell-text {
@@ -45,10 +45,10 @@
 
 .sudoku__button-background {
     cursor: pointer;
-    fill: #d7d7d7;
+    fill: colour(button-mute);
 
     .sudoku__button:hover & {
-        fill: lighten(colour(crosswordAccent2), 30%);
+        fill: colour(button-accent);
     }
 }
 
