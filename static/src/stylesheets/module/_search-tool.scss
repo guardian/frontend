@@ -1,15 +1,11 @@
 .search-tool__input {
+    display: block;
     background-color: transparent;
     border: 0;
-    border-bottom: 1px solid colour(neutral-4);
-    height: 16px;
-
-    @include mq(leftCol) {
-        height: 22px;
-    }
+    border-bottom: 1px solid transparent; // To allow for focus state
 
     &:focus {
-        border-bottom-color: colour(neutral-2);
+        outline: 0;
     }
 }
 
