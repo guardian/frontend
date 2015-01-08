@@ -1,6 +1,5 @@
 package views.support
 
-import common.AkkaAgent
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
@@ -39,11 +38,7 @@ sealed trait ElementProfile {
 sealed case class Profile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
-  override val compression: Int = 95) extends ElementProfile {
-
-  Profile.add(this)
-
-}
+  override val compression: Int = 95) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -85,9 +80,27 @@ object SeoOptimisedContentImage extends Profile(width = Some(460))
 object Naked extends Profile(None, None)
 
 object Profile {
-  private lazy val profiles = AkkaAgent(Seq.empty[Profile])
-  private[Profile] def add(newProfile: Profile) = profiles.send(currentProfiles => currentProfiles :+ newProfile)
-  def all: Seq[Profile] = profiles.get()
+  // Do NOT make this strict. The compiler gets confused and stuff.
+  lazy val all: Seq[Profile] = Seq(
+    Contributor,
+    GalleryInitialImage,
+    GalleryUpgradedImage,
+    GalleryLargeImage,
+    GalleryLargeTrail,
+    GallerySmallTrail,
+    Showcase,
+    Item120,
+    Item140,
+    Item220,
+    Item300,
+    Item360,
+    Item460,
+    Item620,
+    Item640,
+    Item700,
+    Item940,
+    SeoOptimisedContentImage
+  )
 }
 
 object ImgSrc {
