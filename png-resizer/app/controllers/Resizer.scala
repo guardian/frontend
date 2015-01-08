@@ -18,7 +18,6 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scalaz.EitherT._
 import scalaz._
 
 object Resizer extends Controller with Logging with implicits.Requests {
@@ -78,11 +77,11 @@ object Resizer extends Controller with Logging with implicits.Requests {
           // Left here is the http result, right is the data that still needs computation
           val resultEitherT = for {
             response <- EitherT.right(Time(getUpstreamResponse(uri, request.headers), "download image", PngResizerMetrics.downloadTime))
-            cacheableContent <- eitherT(getPngBytesToResize(uri, response))
+            cacheableContent <- EitherT(getPngBytesToResize(uri, response))
             CacheableContent(cacheHeaders, bytesPreResize) = cacheableContent
             originalWidth <- EitherT.right(Im4Java.getWidth(bytesPreResize))
-            _ <- eitherT(future.point(redirectScaleUpAttempts(originalWidth, width, uri)))
-            processed <- eitherT(resizeWithLoadLimit(request, uri, width, quality, bytesPreResize))
+            _ <- EitherT(future.point(redirectScaleUpAttempts(originalWidth, width, uri)))
+            processed <- EitherT(resizeWithLoadLimit(request, uri, width, quality, bytesPreResize))
             result = Ok(processed).as("image/png").withHeaders(cacheHeaders: _*)
           } yield result
 
