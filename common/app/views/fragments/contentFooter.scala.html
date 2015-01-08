@@ -16,7 +16,9 @@
         @fragments.storyPackagePlaceholder(content, related)
         @fragments.onwardPlaceholder(content.visualTone)
 
-        <div class="js-repositioned-comments content__repositioned-comments"></div>
+        @if(content.isCommentable) {
+            <div class="js-repositioned-comments content__repositioned-comments"></div>
+        }
 
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
 
