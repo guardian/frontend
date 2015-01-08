@@ -21,7 +21,7 @@
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
 
         @content match {
-            case article: Article if !article.isLiveBlog => {
+            case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
                 <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                     @fragments.outbrainPlaceholder()
                 </div>

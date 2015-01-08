@@ -29,8 +29,10 @@ define([
     };
 
     MostPopular.prototype.prerender = function () {
-        this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-            .append(createAdSlot('inline3', 'container-inline'));
+        if (!config.page.shouldHideAdverts) {
+            this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
+                .append(createAdSlot('inline3', 'container-inline'));
+        }
     };
 
     MostPopular.prototype.ready = function () {
