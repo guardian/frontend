@@ -26,6 +26,10 @@
         fill: colour(comment-default);
     }
 
+    .fc-item__kicker--dreamsnap:before {
+        color: colour(neutral-1);
+    }
+
     .fc-item__meta {
         background-color: fade-out(colour(comment-background), .5);
     }
