@@ -31,19 +31,19 @@ define([
         
         var leftMargin = (this.params.videoPositionH === 'center' ?
             -(this.params.videoWidth/2) : 0
-        )
+        );
         
         var leftPosition = (this.params.videoPositionH === 'left' ?
             this.params.videoHorizSpace + 'px' : 'auto'
-        )
+        );
         
         var rightPosition = (this.params.videoPositionH === 'right' ?
             this.params.videoHorizSpace + 'px' : 'auto'
-        )
+        );
         
         var topMargin = (this.params.videoPositionV === 'center' ?
             -(this.params.videoHeight/2) : 0
-        )
+        );
         
         var videoDesktop = {
             videoD: (this.params.videoURL !== '') ?
