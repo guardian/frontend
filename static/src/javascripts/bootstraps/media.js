@@ -238,7 +238,7 @@ define([
         this.one(constructEventName('preroll:play', player), events.init.bind(player));
     }
 
-    function adSkipCountdown() {
+    function adSkipCountdown(skipTimeout) {
         var player = this,
             events =  {
                 destroy: function () {
@@ -246,21 +246,33 @@ define([
                     this.off('timeupdate', events.update);
                 },
                 update: function () {
-                    if (this.currentTime() > 0.1) {
-                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
+                    var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
+                    console.log(skipTime, this.currentTime());
+                    if (skipTime > 0) {
+                        $('.js-skip-remaining-time', this.el()).text(skipTime);
+                    } else if (!skipTime) {
+                        $('.vjs-ads-overlay-skip-countdown', this.el()).text("Skip advert");
+                        $('.vjs-ads-overlay-skip-button').addClass('vjs-ads-overlay-skip-button--enabled');
                     }
-                    $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                 },
                 skip: function () {
-                    console.log('skip');
+                    if ($('.vjs-ads-overlay-skip-button').hasClass('vjs-ads-overlay-skip-button--enabled')) {
+                        events.hide.bind(player);
+                        this.ads.endLinearAdMode();
+                    }
+                },
+                hide: function () {
+                    $('.js-ads-skip-overlay', this.el()).hide();
                 },
                 init: function () {
                     $(this.el()).append($.create(adsSkipOverlayTmpl));
-                    $('.vjs-ads-overlay--skip-button').on('click', events.skip.bind(this));
-                    //this.on('timeupdate', events.update.bind(this));
-                    this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
-                    this.one(constructEventName('content:play', player), events.destroy.bind(player));
+                    bean.on($('.vjs-ads-overlay-skip-button')[0], 'click', events.skip.bind(player));
+                    this.on('timeupdate', events.update.bind(player));
+                    //TODO skip event
+                    //this.one(constructEventName('preroll:skip', player), events.destroy.bind(player));
+                    this.one(constructEventName('content:play', player), events.hide.bind(player));
                     this.one('adtimeout', events.destroy.bind(player));
+                    $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
                 }
             };
         this.one(constructEventName('preroll:play', player), events.init.bind(player));
@@ -434,7 +446,7 @@ define([
                         if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                             bindPrerollEvents(player);
                             player.adCountdown();
-                            player.adSkipCountdown();
+                            player.adSkipCountdown(15);
 
                             // Video analytics event.
                             player.trigger(constructEventName('preroll:request', player));

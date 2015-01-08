@@ -705,9 +705,9 @@ $vjs-progress-inset-bottom: 4px;
 
 /* VJS: SKIP AD OVERLAY
    ========================================================================== */
-.vjs-ads-overlay--skip-button {
+.vjs-ads-overlay-skip-button {
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     top: 300px;
     right: 8px;
     width: 18%;
@@ -719,6 +719,12 @@ $vjs-progress-inset-bottom: 4px;
 
     @include mq(tablet) {
         @include fs-textSans(2, true);
+    }
+}
+
+.vjs-ads-overlay-skip-button--enabled {
+    &:hover {
+        color: colour(comment-main-2);
     }
 }
 
