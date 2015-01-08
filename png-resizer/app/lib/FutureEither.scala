@@ -2,18 +2,17 @@ package lib
 
 import common.StopWatch
 import grizzled.slf4j.Logging
-import lib.FutureEither._
 import metrics.FrontendTimingMetric
 import play.api.mvc.Result
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scalaz.EitherT._
-import scalaz.{EitherT, Monad, \/-}
+import scala.util.{Failure, Success}
+import scalaz.{EitherT, Monad}
 
 object FutureEither {
 
-  implicit val futureMonad = new Monad[Future] {
+  implicit val future = new Monad[Future] {
     def point[A](a: => A): Future[A] = Future.successful(a)
 
     def bind[A, B](fa: Future[A])(f: A => Future[B]): Future[B] = fa flatMap f
@@ -21,26 +20,21 @@ object FutureEither {
 
   type FutureEither[T] = EitherT[Future, Result, T]
 
-  def eitherTRight[T](future: Future[T]): FutureEither[T] =
-    eitherT(future.map(\/-.apply))
-
 }
 
 object Time extends Logging {
 
-  def apply[T](result: => FutureEither[T], action: String, metric: FrontendTimingMetric) = {
+  def apply[T](result: => Future[T], action: String, metric: FrontendTimingMetric): Future[T] = {
     val stopWatch = new StopWatch
-    result.bimap({
-      contents =>
-        logger.info(s"took: $stopWatch for: $action result: Left($contents)")
-        contents
-    },
-    {
-      contents =>
-        logger.info(s"took: $stopWatch for: $action result: Right($contents)")
-        contents
+    result.onComplete({ result =>
+      metric.recordDuration(stopWatch.elapsed)
+      result match {
+        case Success(contents) =>
+          logger.info(s"took: $stopWatch for: $action result: $contents")
+        case Failure(exception) =>
+          logger.info(s"took: $stopWatch for: $action failure: $exception")
+      }
     })
-    metric.recordDuration(stopWatch.elapsed)
     result
   }
 
