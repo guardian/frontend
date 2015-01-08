@@ -8,8 +8,8 @@
 }
 
 .sudoku__cell rect {
-    fill: #ffffff;
     cursor: pointer;
+    fill: #ffffff;
 }
 
 .sudoku__cell--not-editable .sudoku__cell-text {
@@ -30,17 +30,17 @@
 
 .sudoku__cell-text {
     cursor: pointer;
+    font-family: $f-sans-serif-text;
     font-size: 38px;
     text-anchor: middle;
-    font-family: $f-sans-serif-text;
 }
 
 .sudoku__cell-jotting {
-    font-weight: 600;
     cursor: pointer;
-    font-size: 10px;
-    text-anchor: middle;
     font-family: $f-sans-serif-text;
+    font-size: 10px;
+    font-weight: 600;
+    text-anchor: middle;
 }
 
 .sudoku__button-background {
@@ -54,7 +54,7 @@
 
 .sudoku__button-text {
     cursor: pointer;
-    text-anchor: middle;
     font-family: $f-sans-serif-text;
     font-size: 42px;
+    text-anchor: middle;
 }
