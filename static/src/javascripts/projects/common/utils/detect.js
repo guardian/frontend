@@ -7,11 +7,9 @@
 /*global DocumentTouch: true */
 
 define([
-    'lodash/collections/map',
     'common/utils/_',
     'common/utils/mediator'
 ], function (
-    map,
     _,
     mediator
 ) {
@@ -326,18 +324,6 @@ define([
         }
     }
 
-    function testCssSupport(property, value) {
-        var prefixes = ['', '-webkit-', '-moz-', '-o-', '-ms-'],
-            el       = document.createElement('div'),
-            style    = el.style;
-
-        style.cssText = map(prefixes, function (prefix) {
-            return property + ':' + prefix + value;
-        }).join(';');
-
-        return style[property].indexOf(value) !== -1;
-    }
-
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -356,8 +342,7 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        shouldUseHintedFonts: shouldUseHintedFonts(),
-        testCssSupport: testCssSupport
+        shouldUseHintedFonts: shouldUseHintedFonts()
     };
 
 });
