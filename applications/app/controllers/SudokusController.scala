@@ -18,7 +18,7 @@ object SudokusController extends Controller with ExecutionContexts {
         case None => NotFound(s"No Sudoku with id $id")
       }
     } else {
-      Future.successful(NotFound())
+      Future.successful(NotFound("Sudokus off"))
     }
   }
 }
