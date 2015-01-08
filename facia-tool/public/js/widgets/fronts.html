@@ -1,6 +1,7 @@
 <div class="front-container" data-bind="css: {
     'live-mode': liveMode,
-    'draft-mode': !liveMode()
+    'draft-mode': !liveMode(),
+    'attention': requiresConfirmation()
 }">
     <div class="modes" data-bind="
         css: {
@@ -37,9 +38,11 @@
         </span>
     </div>
 
-    <div class="col__inner front-selector">
-        <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
-    </div>
+    <!-- ko ifnot: requiresConfirmation() -->
+        <div class="col__inner front-selector">
+            <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
+        </div>
+    <!-- /ko -->
 
     <div class="col__inner scrollable collection-container" data-bind="foreach: collections">
         <collection-widget params="context: $context" data-bind="ownerClass: $data"></collection-widget>

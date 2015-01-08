@@ -232,6 +232,10 @@ define([
         return meta === this.uiOpenElement();
     };
 
+    Front.prototype.requiresConfirmation = function () {
+        return _.contains(vars.CONST.askForConfirmation, this.front());
+    };
+
     Front.prototype.dispose = function () {
         this.listeners.dispose();
         _.each(this.setIntervals, function (timeout) {
