@@ -1,5 +1,5 @@
 @(env: String, report: dfp.PaidForTagsReport)
-@import dfp.{PaidForTag, PaidForType, TagType}
+@import dfp.{PaidForTag, PaidForType, TagType, GuLineItem}
 @import tools.{DfpLink, SiteLink}
 
 @buildRef(s: String) = {@{s.toLowerCase.replaceAll("\\s+", "-")}}
@@ -10,6 +10,46 @@
 
 @tagLink(tagId: String) = {
     <div><a href="@SiteLink.page(tagId)">@tagId</a></div>
+}
+
+@lineItemTemplate(lineItem: GuLineItem) = {
+    <div class="large">@{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>)</div>
+    @if(lineItem.sponsor.isEmpty) {
+        <div class="alert alert-danger">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            No sponsor
+        </div>
+    } else {
+        <div>Sponsor: <strong>@{lineItem.sponsor}</strong></div>
+    }
+    @if(lineItem.targeting.adUnits.nonEmpty) {
+        @if(lineItem.targeting.adUnits.size == 1) {
+            <div>Ad Unit: @{lineItem.targeting.adUnits.map(_.path.mkString("/"))}</div>
+        } else {
+            <div>Ad Units: @{lineItem.targeting.adUnits.map(_.path.mkString("/")).mkString(", ")}</div>
+        }
+    }
+    @if(lineItem.targeting.geoTargetsIncluded.nonEmpty) {
+        @if(lineItem.targeting.geoTargetsIncluded.size == 1) {
+            <div>Geotarget: @{lineItem.targeting.geoTargetsIncluded.map(_.name)}</div>
+        } else {
+            <div>Geotargets: @{lineItem.targeting.geoTargetsIncluded.map(_.name).mkString(", ")}</div>
+        }
+    }
+    @if(lineItem.targeting.geoTargetsExcluded.nonEmpty) {
+        @if(lineItem.targeting.geoTargetsExcluded.size == 1) {
+            <div>Excluded geotarget: @{lineItem.targeting.geoTargetsExcluded.map(_.name)}</div>
+        } else {
+            <div>Excluded geotargets: @{lineItem.targeting.geoTargetsExcluded.map(_.name).mkString(", ")}</div>
+        }
+    }
+    <div>
+        Expiry date: @if(lineItem.endTime.isEmpty) {
+            Never
+        } else {
+            @dfp.printDate(lineItem.endTime.get)
+        }
+    </div>
 }
 
 @list(title: String, tags: Seq[PaidForTag]) = {
@@ -34,42 +74,15 @@
             <ul>
             @for(lineItem <- tag.lineItems) {
                 <li>
-                    <div class="sub-line-item">
-                        <div class="large">@{lineItem.name}
-                            (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a> )</div>
-                        @if(lineItem.sponsor.isEmpty){
-                            <div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> No sponsor</div>
+                    @if(lineItem.isExpired) {
+                        <div class="sub-line-item bg-danger">@lineItemTemplate(lineItem)</div>
+                    } else {
+                        @if(lineItem.isExpiringSoon) {
+                            <div class="sub-line-item bg-warning">@lineItemTemplate(lineItem)</div>
                         } else {
-                            <div>Sponsor: <strong>@{lineItem.sponsor}</strong></div>
+                            <div class="sub-line-item">@lineItemTemplate(lineItem)</div>
                         }
-                        @if(lineItem.targeting.adUnits.nonEmpty) {
-                            @if(lineItem.targeting.adUnits.size == 1) {
-                                <div>
-                                    Ad Unit: @{lineItem.targeting.adUnits.map(_.path.mkString("/"))}</div>
-                            } else {
-                                <div>
-                                    Ad Units: @{lineItem.targeting.adUnits.map(_.path.mkString("/")).mkString(", ")}</div>
-                            }
-                        }
-                        @if(lineItem.targeting.geoTargetsIncluded.nonEmpty) {
-                            @if(lineItem.targeting.geoTargetsIncluded.size == 1){
-                                <div>
-                                    Geotarget: @{lineItem.targeting.geoTargetsIncluded.map(_.name)}</div>
-                            }else{
-                                <div>
-                                    Geotargets: @{lineItem.targeting.geoTargetsIncluded.map(_.name).mkString(", ")}</div>
-                            }
-                        }
-                        @if(lineItem.targeting.geoTargetsExcluded.nonEmpty) {
-                            @if(lineItem.targeting.geoTargetsExcluded.size == 1){
-                                <div>
-                                    Excluded geotarget: @{lineItem.targeting.geoTargetsExcluded.map(_.name)}</div>
-                            }else{
-                                <div>
-                                    Excluded geotargets: @{lineItem.targeting.geoTargetsExcluded.map(_.name).mkString(", ")}</div>
-                            }
-                        }
-                    </div>
+                    }
                 </li>
             }
             </ul>
