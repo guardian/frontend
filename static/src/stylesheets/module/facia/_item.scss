@@ -1,5 +1,4 @@
 $fc-item-gutter: $gs-gutter / 4;
-$fc-hover-transition: .25s ease;
 
 /* Items
    ==========================================================================
@@ -85,7 +84,6 @@ $fc-hover-transition: .25s ease;
 .flyer__container,
 .item__container {
     position: relative;
-    @include transition(background-color $fc-hover-transition);
 
     &:before {
         content: '';
@@ -139,26 +137,19 @@ $fc-hover-transition: .25s ease;
     }
 
     .u-faux-block-link--hover {
-        background-color: colour(neutral-6);
+        background-color: colour(neutral-7);
 
         .fc-item__image-container {
             background-color: #000000;
 
             // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
             .responsive-img {
-                opacity: .8;
+                opacity: .9;
             }
         }
 
         .u-faux-block-link__cta {
             text-decoration: none;
-        }
-    }
-
-    .fc-item__link,
-    .fc-sublink__link {
-        &:visited {
-            color: mix(colour(neutral-1), #ffffff, 80%);
         }
     }
 
@@ -212,13 +203,7 @@ $fc-hover-transition: .25s ease;
 }
 
 .fc-item__image-container {
-    @include transition(background-color $fc-hover-transition);
     background-color: rgba(0, 0, 0, .1);
-
-    // This should be changed to fc-item__image when Imager allows class names to be adapted from inline elements
-    .responsive-img {
-        @include transition(opacity $fc-hover-transition);
-    }
 }
 
 .fc-item__image-container,
@@ -376,6 +361,24 @@ $fc-hover-transition: .25s ease;
             height: auto;
             width: 100%;
             bottom: auto;
+        }
+    }
+}
+
+.fc-item__link,
+.fc-sublink__link {
+    &:visited {
+        color: mix(colour(neutral-1), #ffffff, 80%);
+    }
+}
+
+.fc-item__link {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .fc-item__headline {
+            text-decoration: underline;
         }
     }
 }

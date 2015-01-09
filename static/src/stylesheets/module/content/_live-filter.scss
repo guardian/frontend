@@ -36,7 +36,7 @@
     &.is-active {
         display: block;
     }
-    
+
     i {
         position: absolute;
         top: 14px;
@@ -72,20 +72,13 @@
     padding-right: 0;
 
     .live-toggle__value {
-        display: inline-block;
-        text-align: center;
-        padding: $gs-baseline/1.5 0 0;
         width: 32px;
-        height: 24px;
-        line-height: 13px;
+        height: 32px;
+        text-align: center;
+        line-height: 2.6;
         background-color: colour(neutral-2);
         color: #ffffff;
         font-weight: bold;
-        @include border-radius(50%);
-
-        @include mq(tablet) {
-            line-height: 17px;
-        }
     }
 }
 

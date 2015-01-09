@@ -1,10 +1,12 @@
 define([
     'bean',
     'qwery',
+    'common/utils/mediator',
     'common/utils/$'
 ], function (
     bean,
     qwery,
+    mediator,
     $
 ) {
     var Navigation = {
@@ -26,8 +28,11 @@ define([
 
         enableMegaNavToggle: function () {
             bean.on(document, 'click', '.js-navigation-toggle', function (e) {
+                var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
+
                 e.preventDefault();
-                $('.' + e.currentTarget.getAttribute('data-target-nav')).toggleClass('navigation--expanded navigation--collapsed');
+                target.toggleClass('navigation--expanded navigation--collapsed');
+                mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
             });
         }
     };

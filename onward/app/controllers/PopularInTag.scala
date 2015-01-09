@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import common._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -9,7 +9,6 @@ import services._
 import slices.{Fixed, FixedContainers}
 
 object PopularInTag extends Controller with Related with Logging with ExecutionContexts {
-
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
@@ -23,7 +22,7 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
     val dataId: String = "related content"
     val displayName = Some(dataId)
     val properties = FrontProperties.empty
-    val config = CollectionConfig.withDefaults(displayName = displayName)
+    val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(
       FaciaContainer(

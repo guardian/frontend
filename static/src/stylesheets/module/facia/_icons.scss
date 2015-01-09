@@ -45,7 +45,7 @@
 }
 
 .fc-item__title--quoted {
-    .fc-item__link {
+    .fc-item__headline {
         @include icon(quote-grey, false);
         display: inline !important;
         background-size: 1.2em .75em !important;
@@ -53,27 +53,27 @@
         padding-left: 1.4em;
     }
 
-    .tone-podcast--item & .fc-item__link {
+    .tone-podcast--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
 
-    .tone-feature--item & .fc-item__link {
+    .tone-feature--item & .fc-item__headline {
         @include icon(quote-light-pink, false);
     }
 
-    .tone-live--item & .fc-item__link {
+    .tone-live--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
 
-    .tone-media--item & .fc-item__link {
+    .tone-media--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
 
-    .tone-editorial--item & .fc-item__link {
+    .tone-editorial--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
 
-    .tone-review--item & .fc-item__link {
+    .tone-review--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
 }

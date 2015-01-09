@@ -94,7 +94,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
-    blogsAndSeries.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
+    series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
       Seq(("series", JsString(series.name)), ("seriesId", JsString(series.id)))
     ) getOrElse Nil
   }
@@ -157,6 +157,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     super.metaData ++ Map(
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
       ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
+      ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
       ("publication", JsString(publication)),
       ("headline", JsString(headline)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),
@@ -165,7 +166,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-      ("blogIds", JsString(blogs.map { _.id.split("/").last }.mkString(","))),
+      ("blogIds", JsString(blogs.map { _.id.last }.mkString(","))),
       ("commentable", JsBoolean(isCommentable)),
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
