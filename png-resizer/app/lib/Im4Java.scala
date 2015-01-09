@@ -38,8 +38,8 @@ object Im4Java {
   }
 
   def getWidth(imageBytes: Array[Byte]) = Future {
-    val imageInfo = new Info("png:-", new ByteArrayInputStream(imageBytes),true);
-    imageInfo.getImageWidth()
+    val imageInfo = new Info("png:-", new ByteArrayInputStream(imageBytes),true)
+    (imageInfo.getImageWidth, imageInfo.getImageHeight)
   }
 
 }
