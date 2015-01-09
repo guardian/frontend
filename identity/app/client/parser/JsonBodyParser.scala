@@ -27,7 +27,7 @@ trait JsonBodyParser extends Logging {
           case HttpResponse(body, status, message) if status > 299 =>
             Left(extractErrorFromResponse(parse(body), httpResponse.statusCode))
           case HttpResponse(body, status, message) if successType == manifest[Unit] =>
-            Right().asInstanceOf[Right[List[client.Error], T]]
+            Right(()).asInstanceOf[Right[List[client.Error], T]]
           case HttpResponse(body, status, message) =>
             Right(extractJsonObj(parse(body)).extract[T])
         }

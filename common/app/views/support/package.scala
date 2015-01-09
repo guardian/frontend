@@ -4,7 +4,6 @@ import common._
 import model._
 
 import org.apache.commons.lang.StringEscapeUtils
-import org.jboss.dna.common.text.Inflector
 import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
@@ -82,8 +81,6 @@ object ContributorLinks {
 
 object `package` extends Formats {
 
-  private object inflector extends Inflector
-
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
@@ -103,11 +100,6 @@ object `package` extends Formats {
 
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
-  }
-
-  implicit class Tags2inflector(t: Tag) {
-    lazy val singularName: String = inflector.singularize(t.name)
-    lazy val pluralName: String = inflector.pluralize(t.name)
   }
 
   implicit class Seq2zipWithRowInfo[A](seq: Seq[A]) {

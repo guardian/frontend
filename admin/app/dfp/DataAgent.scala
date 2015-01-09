@@ -3,10 +3,11 @@ package dfp
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Switches._
 
+import org.apache.commons.lang.exception.ExceptionUtils
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
-trait DataAgent[K, V] extends ExecutionContexts with Logging {
+trait DataAgent[K, V] extends ExecutionContexts with Logging with implicits.Strings {
 
   private val initialCache: DataCache[K, V] = DataCache(Map.empty[K, V])
   private lazy val cache = AkkaAgent(initialCache)
@@ -29,7 +30,7 @@ trait DataAgent[K, V] extends ExecutionContexts with Logging {
               oldCache
             }
           case Failure(e) =>
-            log.error(e.getStackTraceString)
+            log.error(ExceptionUtils.getStackTrace(e))
             oldCache
         }
       } else {
