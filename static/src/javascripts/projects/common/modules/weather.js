@@ -47,7 +47,7 @@ define([
 
     return {
         init: function () {
-            if (!config.switches && !config.switches.weather) {
+            if (!config.switches || !config.switches.weather) {
                 return false;
             }
 
