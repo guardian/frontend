@@ -48,6 +48,10 @@
         margin-top: $gs-baseline * 3;
     }
 
+    &:first-child {
+        margin-top: 0;
+    }
+
     &:last-child {
         margin-bottom: $gs-baseline * 3;
     }
