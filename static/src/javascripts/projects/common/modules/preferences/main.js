@@ -15,6 +15,7 @@ define([
             handleRemove: function (tag) {
                 history.deleteFromSummary(tag);
                 this.setState({ popular: history.getPopularFiltered() });
+                history.renderInMegaNav();
             },
             render: function () {
                 var self = this;
@@ -22,8 +23,8 @@ define([
                 return React.DOM.div({},
                     _.reduce(this.state.popular, function (obj, tag) {
                         obj[tag[0]] = React.DOM.span({className: 'button button--small button--tag button--secondary'},
-                            React.DOM.a({href: '/' + tag[0]}, tag[1]),
-                            React.DOM.button({onClick: self.handleRemove.bind(self, tag[0])}, 'X')
+                            React.DOM.button({onClick: self.handleRemove.bind(self, tag[0])}, 'X'),
+                            React.DOM.a({href: '/' + tag[0]}, tag[1])
                         );
                         return obj;
                     }, {})

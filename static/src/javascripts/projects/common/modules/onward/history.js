@@ -21,8 +21,35 @@ define([
     viewTags,
     viewMegaNav
 ) {
-    var popularWhitelist = [
-            'politics', 'travel', 'sport', 'world', 'media', 'football', 'culture', 'artanddesign/photography'
+    var whitelistRx = new RegExp(/^football\/[^\/]+/),
+        whitelist = [
+            'audioslideshows', 'business/economics', 'business/interest-rates', 'business/markets', 'business/series/andrewclarkonamerica',
+            'business/series/davidgowoneurope', 'business/series/viewpointcolumn', 'business/useconomy', 'careers', 'cartoons', 'community',
+            'crosswords', 'crosswords/series/cryptic', 'crosswords/series/everyman', 'crosswords/series/prize', 'crosswords/series/quick',
+            'data', 'environment/climate-change', 'environment/conservation', 'environment/energy', 'environment/ethical-living',
+            'environment/food', 'environment/georgemonbiot', 'environment/list/allenvironmentkeywords', 'environment/travelandtransport',
+            'environment/waste', 'football/championsleague', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
+            'lifeandstyle/series/timdowlingsweekendcolumn', 'lifeandstyle/women', 'media/advertising', 'media/digital-media', 'media/list/allmediakeywords',
+            'media/marketingandpr', 'media/mediabusiness', 'media/pressandpublishing', 'media/radio', 'media/television', 'money/consumer-affairs',
+            'money/insurance', 'money/isas', 'money/moneyinvestments', 'money/property', 'money/savings', 'money/work-and-careers', 'multimedia',
+            'news/guardianfilms', 'profile/charliebrooker', 'profile/davidmitchell', 'profile/georgemonbiot', 'profile/hadleyfreeman', 'profile/johnharris',
+            'profile/marinahyde', 'profile/marklawson', 'profile/martinkettle', 'profile/owen-jones', 'profile/pollytoynbee', 'profile/seumasmilne', 'profile/stevebell',
+            'profile/suzannemoore', 'profile/zoewilliams', 'science', 'science/science+tone/comment', 'science/sciencenews', 'science/series/badscience',
+            'society', 'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
+            'society/social-care', 'society/voluntarysector', 'technology', 'technology/askjack', 'technology/comment', 'technology/gadgets',
+            'technology/games', 'technology/internet', 'technology/it', 'technology/news', 'technology/telecoms', 'theguardian/mainsection/obituaries',
+            'theguardian/series/otherlives', 'travel', 'travel/bookatrip', 'travel/hotels', 'travel/lateoffers', 'travel/places', 'travel/restaurants',
+            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly'
+        ],
+        subNav = [
+            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'crosswords', 'education',
+            'education/students', 'fashion', 'film', 'football/competitions', 'football/fixtures', 'football/live', 'football/results',
+            'football/tables', 'football/teams', 'global-development', 'lifeandstyle', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
+            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'lifeandstyle/women', 'money/debt',
+            'money/property', 'money/savings', 'money/work-and-careers', 'music', 'music/classicalmusicandopera', 'observer', 'science',
+            'society', 'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/tennis', 'sport/us-sport', 'stage', 'technology/games', 'theguardian', 'travel', 'travel/europe', 'travel/uk', 'travel/usa',
+            'tv-and-radio', 'video', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
         ],
         editions = [
             'uk',
@@ -57,6 +84,7 @@ define([
         historyCache,
         summaryCache,
         topNavItemsCache,
+
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -135,12 +163,18 @@ define([
         return summary;
     }
 
-    function getPopular(opts) {
+    function getPopular(number, filtered) {
         var tags = getSummary().tags,
-            tids = _.keys(tags);
+            tids = _.keys(tags),
+            wList,
+            bList;
 
-        tids = opts && opts.whitelist ? tids.filter(function (tid) { return opts.whitelist.indexOf(tid) > -1; }) : tids;
-        tids = opts && opts.blacklist ? tids.filter(function (tid) { return opts.blacklist.indexOf(tid) === -1; }) : tids;
+        if (filtered) {
+            wList = whitelist.concat(subNav);
+            bList = getTopNavItems();
+            tids = tids.filter(function (tid) { return tid.match(whitelistRx) || wList.indexOf(tid) > -1; });
+            tids = tids.filter(function (tid) { return bList.indexOf(tid) === -1; });
+        }
 
         return _.chain(tids)
             .map(function (tid) {
@@ -156,17 +190,14 @@ define([
             })
             .compact()
             .sortBy('rank')
-            .last(100)
+            .last(number || 100)
             .reverse()
             .pluck('keep')
             .value();
     }
 
     function getPopularFiltered() {
-        return getPopular({
-            whitelist: popularWhitelist,
-            blacklist: getTopNavItems()
-        });
+        return getPopular(20, true);
     }
 
     function tally(freqs) {
@@ -259,10 +290,15 @@ define([
     }
 
     function renderInMegaNav() {
-        var tags = getPopularFiltered();
+        var tags = getPopularFiltered(),
+            globalNav = $('.js-global-navigation');
+
+        $(globalNav).each(function() {
+            $('.js-global-navigation__section--history', this).remove();
+        });
 
         if (tags.length) {
-            $('.js-global-navigation').prepend(
+            globalNav.prepend(
                 template(viewMegaNav, {
                     tags: tags.slice(0, 20).map(tagHtml).join('')
                 })
