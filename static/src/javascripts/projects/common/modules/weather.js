@@ -47,7 +47,7 @@ define([
 
     return {
         init: function () {
-            if (!config.switches && !config.switches.weather) {
+            if (!config.switches || !config.switches.weather) {
                 return false;
             }
 
@@ -98,14 +98,14 @@ define([
             } else {
 
                 self.getWeatherData(config.page.weatherapiurl + '.json')
-                .then(self.fetchData)
-                .fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
-                        tags: {
-                            feature: 'weather'
-                        }
+                    .then(self.fetchData)
+                    .fail(function (err, msg) {
+                        raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
+                            tags: {
+                                feature: 'weather'
+                            }
+                        });
                     });
-                });
             }
         },
 

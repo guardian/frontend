@@ -17,7 +17,7 @@ define([
     return  new Injector()
         .store('common/utils/config')
         .require(['common/modules/weather', 'mocks'], function (sut, mocks) {
-            describe('Weather component', function () {
+            ddescribe('Weather component', function () {
                 var container,
                     $weather;
 
@@ -28,6 +28,8 @@ define([
 
                     $('body').append(container);
                     localStorage.clear();
+                    mocks.store['common/utils/config'].switches = {};
+                    mocks.store['common/utils/config'].switches.weather = true;
                 });
 
                 afterEach(function () {
@@ -40,6 +42,25 @@ define([
 
                     expect(typeof sut).toEqual('object');
 
+                    sut.init();
+                    expect(sut.getDefaultLocation).toHaveBeenCalled();
+                });
+
+                it("should be behind switches", function() {
+                    mocks.store['common/utils/config'].switches.weather = false;
+
+                    spyOn(sut, "getDefaultLocation");
+
+                    expect(sut.init()).toEqual(false);
+                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
+
+                    mocks.store['common/utils/config'].switches = null;
+                    expect(sut.init()).toEqual(false);
+                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
+
+                    mocks.store['common/utils/config'].switches = {
+                        weather: true
+                    };
                     sut.init();
                     expect(sut.getDefaultLocation).toHaveBeenCalled();
                 });
