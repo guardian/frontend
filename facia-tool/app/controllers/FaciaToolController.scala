@@ -1,6 +1,7 @@
 package controllers
 
 import auth.ExpiringActions
+import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.{ExecutionContexts, FaciaToolMetrics, Logging}
 import conf.Configuration
 import frontsapi.model._
@@ -10,6 +11,13 @@ import play.api.mvc._
 import services._
 import tools.FaciaApiIO
 
+import scala.concurrent.Future
+
+
+object FaciaJsonClient {
+  import scala.concurrent.ExecutionContext.Implicits.global
+  val client = ApiClient(Configuration.aws.bucket, Configuration.facia.stage, AmazonSdkS3Client.default)
+}
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
@@ -37,14 +45,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
-  def getConfig = ExpiringActions.ExpiringAuthAction { request =>
+  def getConfig = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    NoCache {
-      S3FrontsApi.getMasterConfig map { json =>
-        Ok(json).as("application/json")
-      } getOrElse NotFound
-    }
-  }
+    FaciaJsonClient.client.config.map { configJson =>
+      NoCache {
+        Ok(Json.toJson(configJson)).as("application/json")}}}
 
   def readBlock(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
@@ -77,6 +82,23 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft())
     }
     NoCache(Ok)
+  }
+
+  def treatEdits(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+    request.body.asJson.flatMap(_.asOpt[FaciaToolUpdate]).map {
+      case update: Update =>
+        val identity = request.user
+
+        FaciaJsonClient.client.collection(collectionId).map(_.map{ collectionJson =>
+          val updatedCollectionJson = UpdateActions.updateTreats(update.update, collectionJson)
+          S3FrontsApi.putBlock(collectionId, Json.prettyPrint(Json.toJson(collectionJson)))
+          Ok(Json.toJson(updatedCollectionJson)).as("application/json")
+        }.getOrElse(NotFound))
+
+      case remove: Remove => Future.successful(NotImplemented)
+      case updateAndRemove: UpdateAndRemove => Future.successful(NotImplemented)
+      case _ => Future.successful(NotAcceptable)
+    }.getOrElse(Future.successful(NotAcceptable))
   }
 
   def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>

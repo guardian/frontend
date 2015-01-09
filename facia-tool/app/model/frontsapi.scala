@@ -1,6 +1,6 @@
 package frontsapi.model
 
-import com.gu.facia.client.models.{ConfigJson, Trail, TrailMetaData}
+import com.gu.facia.client.models.{CollectionJson, ConfigJson, Trail, TrailMetaData}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
@@ -260,6 +260,11 @@ trait UpdateActions extends Logging {
 
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
+
+  def updateTreats(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = updateList(update, collectionJson.treats.getOrElse(Nil))
+    collectionJson.copy(treats = Option(updatedTreats))
+  }
 }
 
 object UpdateActions extends UpdateActions
