@@ -6,11 +6,11 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.{Future, future}
+import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
-  def run(): Future[Unit] = future {
+  def run(): Future[Unit] = Future {
     if (DfpCachingSwitch.isSwitchedOn) {
       log.info("Refreshing data cache")
       val start = System.currentTimeMillis

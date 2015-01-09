@@ -64,7 +64,7 @@ object Resizer extends Controller with Logging with implicits.Requests {
       log.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
       -\/(Cached(1.day)(Found(fallbackUri)))
     } else {
-      \/-()
+      \/-(())
     }
   }
 

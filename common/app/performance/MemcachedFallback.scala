@@ -28,7 +28,7 @@ object MemcacheTypeclass {
 object MemcachedFallback extends ExecutionContexts with Dates with Logging {
   private def connectToMemcached(host: String) = {
     val tryConnect = Try {
-      Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
+      Memcached(MemcachedConf(host), memcachedExecutionContext)
     }
 
     tryConnect.failed foreach { error =>
