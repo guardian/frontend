@@ -62,7 +62,7 @@ object Resizer extends Controller with Logging with implicits.Requests {
   def redirectScaleUpAttempts(originalWidth: Int, width: Int, fallbackUri: String) = {
     if (originalWidth <= width) {
       log.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
-      -\/(Cached(1.day)(TemporaryRedirect(fallbackUri)))
+      -\/(Cached(1.day)(Found(fallbackUri)))
     } else {
       \/-()
     }
@@ -106,7 +106,7 @@ object Resizer extends Controller with Logging with implicits.Requests {
     if (!request.isHealthcheck) {
       PngResizerMetrics.redirectCount.increment()
     }
-    future.point(-\/(Cached(60)(TemporaryRedirect(uri))))
+    future.point(-\/(Cached(60)(Found(uri))))
   }
 
   def resizePngBytes(width: Int, quality: Int, bytesPreResize: Array[Byte]): Future[Array[Byte]] = {
