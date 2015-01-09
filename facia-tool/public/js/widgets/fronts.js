@@ -30,6 +30,8 @@ define([
         this.position = params.position;
         this.collections = ko.observableArray();
         this.listeners = listeners;
+        this.mode = params.mode || 'front';
+        this.flattenGroups = ko.observable(this.mode === 'treats');
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.liveMode.subscribe(this.onModeChange.bind(this));
@@ -45,6 +47,15 @@ define([
         this.setModeDraft = function() {
             model.liveMode(false);
         };
+
+        this.frontMode = ko.pureComputed(function () {
+            if (params.mode === 'treats') {
+                return 'treats-mode';
+            } else {
+                return this.liveMode() ? 'live-mode' : 'draft-mode';
+            }
+        }, this);
+
         this.previewUrl = ko.pureComputed(function () {
             var path = this.liveMode() ? 'http://' + vars.CONST.mainDomain : vars.CONST.previewBase;
 
@@ -230,6 +241,18 @@ define([
 
     Front.prototype.elementHasFocus = function (meta) {
         return meta === this.uiOpenElement();
+    };
+
+    Front.prototype.getCollectionList = function (list) {
+        var sublist;
+        if (this.mode === 'treats') {
+            sublist = list.treats;
+        } else if (this.liveMode()) {
+            sublist = list.live;
+        } else {
+            sublist = list.draft || list.live;
+        }
+        return sublist || [];
     };
 
     Front.prototype.dispose = function () {

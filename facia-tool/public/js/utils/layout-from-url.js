@@ -13,7 +13,17 @@ define([
             queryParams = parseQueryParams(window.location.search),
             configFromURL = queryParams.layout;
 
-        if (configFromURL) {
+        if (queryParams.treats === 'please') {
+            columns = [{
+                type: 'treats',
+                config: queryParams.front
+            }
+            // TODO remove me
+            ,{
+                type: 'latest'
+            }
+            ];
+        } else if (configFromURL) {
             columns = _.map(configFromURL.split(','), function (column) {
                 if (!column) {
                     return {

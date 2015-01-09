@@ -250,7 +250,7 @@ define([
                 this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
-                list = this.front.liveMode() ? this.raw.live : this.raw.draft || this.raw.live || [];
+                list = this.front.getCollectionList(this.raw);
 
                 _.each(this.groups, function(group) {
                     group.items.removeAll();

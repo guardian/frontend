@@ -104,6 +104,7 @@ define([
                 after:    isAfter,
                 live:     targetContext.liveMode(),
                 draft:   !targetContext.liveMode(),
+                mode:     targetContext.mode,
                 itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
             };
 
@@ -153,7 +154,8 @@ define([
                 id:     sourceGroup.parent.id,
                 item:   id,
                 live:   sourceContext.liveMode(),
-                draft: !sourceContext.liveMode()
+                draft: !sourceContext.liveMode(),
+                mode:   sourceContext.mode
             };
         }
     }

@@ -31,7 +31,7 @@ define(['modules/vars'], function(vars) {
         ].filter(function(s) { return s; }).join('And');
 
         return request({
-            url: vars.CONST.apiBase + '/edits',
+            url: collectionEndPoint(edits),
             type: 'POST',
             data: JSON.stringify(edits)
         }).fail(function() {
@@ -39,6 +39,14 @@ define(['modules/vars'], function(vars) {
         }).done(function(resp) {
             _.each(collections, function(collection) { collection.populate(resp[collection.id]); });
         });
+    }
+
+    function collectionEndPoint (edits) {
+        if ((edits.update || edits.remove).mode === 'treats') {
+            return vars.CONST.apiBase + '/treats/' + (edits.update || edits.remove).id;
+        } else {
+            return vars.CONST.apiBase + '/edits';
+        }
     }
 
     return {

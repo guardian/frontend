@@ -70,7 +70,7 @@
     </script>
 
     <script type="text/html" id="template_groups">
-        <!-- ko if: name -->
+        <!-- ko if: name && !front.flattenGroups() -->
             <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="

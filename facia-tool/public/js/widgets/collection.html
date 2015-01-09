@@ -76,9 +76,17 @@
                     <div class="indicator"></div>
                 </div>
             <!-- /ko -->
-            <div data-bind="
-                css: {'pending': isPending()},
-                template: {name: 'template_groups', foreach: groups}"></div>
+
+            <!-- ko ifnot: front.flattenGroups -->
+                <div data-bind="
+                    css: {'pending': isPending()},
+                    template: {name: 'template_groups', foreach: groups}"></div>
+            <!-- /ko -->
+            <!-- ko if: front.flattenGroups() -->
+                <div data-bind="
+                    css: {'pending': isPending()},
+                    template: {name: 'template_groups', data: groups[groups.length - 1]}"></div>
+            <!-- /ko -->
         </div>
     <!-- /ko -->
 </div>
