@@ -3,6 +3,7 @@
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state
+    padding: 0;
 
     &:focus {
         outline: 0;
@@ -39,7 +40,6 @@
     width: 100%;
     display: block;
     @include fs-headline(2);
-    font-weight: 500;
 
     @include mq($until: leftCol) {
         padding-left: $gs-gutter / 4;

@@ -50,12 +50,14 @@ $weather-large-size: 60px;
     .search-tool__input {
         display: none;
         width: 100%;
-        border-bottom: 0;
-        padding: 0;
         @include fs-headline(2);
 
         @include mq(tablet) {
             display: inherit;
+        }
+
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline / 4;
         }
     }
 
@@ -92,7 +94,7 @@ $weather-large-size: 60px;
     line-height: inherit;
 
     @include mq(leftCol) {
-        top: $gs-baseline / 3;
+        top: $gs-baseline / 2.4;
     }
 
     .weather__search-icon,
@@ -170,7 +172,7 @@ $weather-large-size: 60px;
         width: $weather-large-size !important;
         height: $weather-large-size !important;
         display: block;
-        margin: 0 auto 1px ($gs-gutter * 2);
+        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
     }
 
     .has-page-skin & {
