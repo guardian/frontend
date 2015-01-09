@@ -45,7 +45,7 @@
     @if(content.byline.isEmpty){ content__meta-container--no-byline}
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
     @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
-    @if(!content.contributorBio.isEmpty){ content__meta-container--bio}
+    @content.contributorBio.map { bio => content__meta-container--bio}
     @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
