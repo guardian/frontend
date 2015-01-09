@@ -9,17 +9,12 @@
 }
 
 @metaBody() = {
-    @*@if(((content.hasTonalHeaderByline && content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None)) || content.byline.isEmpty) && !content.isVideo) { u-h }*@
-    @*@if(content.showBylinePic) { meta__author--has-byline-image }*@
-    @*@if(content.hasTonalHeaderByline) { meta__author--comment }*@
-    @*@if(content.contributors.headOption.map(_.twitterHandle) != Some(None)) { has-twitter }">*@
-
     @if(!content.hasTonalHeaderByline) {
         @byline(content)
     }
 
     @if(content.contributors.length < 2) {
-        @if(!content.contributorBio.isEmpty) { <p class="meta__bio">@content.contributorBio</p> }
+        @if(!content.contributorBio.isEmpty) { <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@content.contributorBio</p> }
         @if(content.hasTonalHeaderByline && content.contributors.headOption.map(_.twitterHandle) != Some(None)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
         @fragments.meta.twitterHandle(content)
     }
