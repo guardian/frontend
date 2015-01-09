@@ -13,9 +13,10 @@
         @byline(content)
     }
 
-    @if(content.contributors.length < 2) {
-        @if(!content.contributorBio.isEmpty) { <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@content.contributorBio</p> }
-        @if(content.hasTonalHeaderByline && content.contributors.headOption.map(_.twitterHandle) != Some(None)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+    @content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
+
+    @if(content.contributors.length == 1) {
+        @if(content.hasTonalHeaderByline && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
         @fragments.meta.twitterHandle(content)
     }
 
@@ -24,7 +25,7 @@
     }
 
     @if(content.contributors.length == 1) {
-        @fragments.meta.twitterHandle(content, secondary = true)
+        @fragments.meta.twitterHandle(content, mobile = true)
     }
 
     <div class="meta__extras">
