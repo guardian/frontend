@@ -9,22 +9,21 @@
 }
 
 @metaBody() = {
-    <div class="meta__author
-    @if(((content.hasTonalHeaderByline && content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None)) || content.byline.isEmpty) && !content.isVideo) { u-h }
-    @if(content.showBylinePic) { meta__author--has-byline-image }
-    @if(content.hasTonalHeaderByline) { meta__author--comment }
-    @if(content.contributors.headOption.map(_.twitterHandle) != Some(None)) { has-twitter }">
+    @*@if(((content.hasTonalHeaderByline && content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None)) || content.byline.isEmpty) && !content.isVideo) { u-h }*@
+    @*@if(content.showBylinePic) { meta__author--has-byline-image }*@
+    @*@if(content.hasTonalHeaderByline) { meta__author--comment }*@
+    @*@if(content.contributors.headOption.map(_.twitterHandle) != Some(None)) { has-twitter }">*@
 
-        @if(!content.hasTonalHeaderByline) {
-            @byline(content)
-        }
+    @if(!content.hasTonalHeaderByline) {
+        @byline(content)
+    }
 
-        @if(content.contributors.length < 2) {
-            @if(!content.contributorBio.isEmpty) { <p class="meta__bio">@content.contributorBio</p> }
-            @if(content.hasTonalHeaderByline && content.contributors.headOption.map(_.twitterHandle) != Some(None)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-            @fragments.meta.twitterHandle(content)
-        }
-    </div>
+    @if(content.contributors.length < 2) {
+        @if(!content.contributorBio.isEmpty) { <p class="meta__bio">@content.contributorBio</p> }
+        @if(content.hasTonalHeaderByline && content.contributors.headOption.map(_.twitterHandle) != Some(None)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+        @fragments.meta.twitterHandle(content)
+    }
+
     @if(!content.shouldHidePublicationDate) {
         @fragments.meta.dateline(content.webPublicationDate, secondary = true)
     }
@@ -49,6 +48,9 @@
 <div class="content__meta-container js-football-meta u-cf
     @if(content.byline.isEmpty){ content__meta-container--no-byline}
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
+    @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
+    @if(!content.contributorBio.isEmpty){ content__meta-container--bio}
+    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
     @if(showBadge) {
