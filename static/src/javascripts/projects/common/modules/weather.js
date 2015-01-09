@@ -98,14 +98,14 @@ define([
             } else {
 
                 self.getWeatherData(config.page.weatherapiurl + '.json')
-                .then(self.fetchData)
-                .fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
-                        tags: {
-                            feature: 'weather'
-                        }
+                    .then(self.fetchData)
+                    .fail(function (err, msg) {
+                        raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
+                            tags: {
+                                feature: 'weather'
+                            }
+                        });
                     });
-                });
             }
         },
 
