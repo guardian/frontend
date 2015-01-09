@@ -18,6 +18,7 @@ $weather-large-size: 60px;
 
     @include mq(leftCol) {
         width: $left-column;
+        margin-top: $gs-baseline * 1.5;
     }
 
     @include mq(wide) {
