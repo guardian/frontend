@@ -27,7 +27,7 @@ data-test-id="facia-card"
 
     <div class="fc-item__container">
         @if(item.snapStuff.snapType == LatestSnap) {
-            @kicker(item.header, "fc-item__kicker--dreamsnap fc-item__kicker--dreamsnap-list")
+            @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
         @item.displayElement match {
@@ -80,7 +80,7 @@ data-test-id="facia-card"
 
     <div class="fc-item__content">
         @if(item.snapStuff.snapType == LatestSnap) {
-            @kicker(item.header, "fc-item__kicker--dreamsnap")
+            @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
             ("fc-item__header", true),
