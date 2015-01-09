@@ -29,7 +29,7 @@ object ExpiringAdFeaturesEmailJob extends Logging {
           views.html.commercial.email.expiringAdFeatures(
             expiredAdFeatures,
             expiringAdFeatures
-          ).body
+          ).body.trim()
         }
 
         EmailService.send(
