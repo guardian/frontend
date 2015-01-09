@@ -245,10 +245,6 @@ define([
     function adSkipCountdown(skipTimeout) {
         var player = this,
             events =  {
-                destroy: function () {
-                    $('.js-ads-overlay', this.el()).remove();
-                    this.off('timeupdate', events.update);
-                },
                 update: function () {
                     var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
                     if (skipTime > 0) {
@@ -268,13 +264,13 @@ define([
                 },
                 hide: function () {
                     $('.js-ads-skip-overlay', this.el()).hide();
+                    this.off('timeupdate', events.update);
                 },
                 init: function () {
                     $(this.el()).append($.create(adsSkipOverlayTmpl));
                     bean.on($('.vjs-ads-overlay-skip-button')[0], 'click', events.skip.bind(player));
                     this.on('timeupdate', events.update.bind(player));
                     this.one(constructEventName('content:play', player), events.hide.bind(player));
-                    this.one('adtimeout', events.destroy.bind(player));
                     $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
                 }
             };
