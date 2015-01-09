@@ -126,7 +126,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
   val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
-  private def competitions = competitionAgents.map(_.competition)
+  protected def competitions = competitionAgents.map(_.competition)
 
   def refreshCompetitionAgent(id: String) {
     competitionAgents find { _.competition.id == id } map { _.refresh() }
