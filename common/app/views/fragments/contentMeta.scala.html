@@ -10,20 +10,18 @@
 
 @metaBody() = {
     <div class="meta__author
-    @if((content.hasTonalHeaderByline && content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None)) || content.contributors.length == 0) { u-h }
+    @if(((content.hasTonalHeaderByline && content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None)) || content.byline.isEmpty) && !content.isVideo) { u-h }
     @if(content.showBylinePic) { meta__author--has-byline-image }
-    @if((content.hasTonalHeaderByline && !content.contributorBio.isEmpty && content.contributors.headOption.map(_.twitterHandle) == Some(None))) { meta__author--comment }">
+    @if(content.hasTonalHeaderByline) { meta__author--comment }
+    @if(content.contributors.headOption.map(_.twitterHandle) != Some(None)) { has-twitter }">
 
         @if(!content.hasTonalHeaderByline) {
             @byline(content)
-        } else {
-            @if(content.contributors.headOption.map(_.twitterHandle) != Some(None)) {
-                <p class="meta__contact-header hide-until-leftcol">Contact author</p>
-            }
         }
 
-        @if(content.contributors.length == 1) {
+        @if(content.contributors.length < 2) {
             @if(!content.contributorBio.isEmpty) { <p class="meta__bio">@content.contributorBio</p> }
+            @if(content.hasTonalHeaderByline && content.contributors.headOption.map(_.twitterHandle) != Some(None)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
             @fragments.meta.twitterHandle(content)
         }
     </div>
