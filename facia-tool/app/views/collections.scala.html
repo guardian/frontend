@@ -17,6 +17,14 @@
         afterAdd: layout.addNewColumn
     }"></div>
 
+    <div class="modalDialog" data-bind="fadeVisible: modalDialog.isOpen">
+        <!-- ko if: modalDialog.templateName() && modalDialog.isOpen() -->
+            <div class="modalDialog-content" data-bind="template: {
+                name: modalDialog.templateName,
+                data: modalDialog.templateData
+            }"></div>
+        <!-- /ko -->
+    </div>
 
     @templates.vertical_layout()
 
@@ -174,7 +182,7 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: state.enableContentOverrides() ? meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...') : '{ ' + meta.customKicker() + ' }',
+                            html: headline,
                             css: {'is-empty': meta.snapType() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
@@ -225,6 +233,24 @@
             </div>
         </div>
 
+    </script>
+
+    <script type="text/html" id="confirm_breaking_changes">
+        <div class="modalDialog-message">
+            <h3>Confirm alert before sending</h3>
+            <ul data-bind="foreach: articles">
+                <li data-bind="html: headline"></li>
+            </ul>
+            <h4>Edition</h4>
+            <span class="edition" data-bind="text: edition"></span>
+        </div>
+        <hr>
+        <div class="buttons modalDialog-confirm">
+            <button class="secondary-action" data-bind="click: cancel">Cancel</button>
+            <button class="primary-action" data-bind="click: ok">
+                <i class="fa fa-rss"></i>Send alert
+            </button>
+        </div>
     </script>
 
 </div>

@@ -14,6 +14,7 @@ define([
     'modules/list-manager',
     'modules/droppable',
     'modules/copied-article',
+    'modules/modal-dialog',
     'models/collections/new-items',
     'models/layout',
     'models/widgets',
@@ -33,6 +34,7 @@ define([
     listManager,
     droppable,
     copiedArticle,
+    modalDialog,
     newItems,
     Layout,
     widgets,
@@ -43,6 +45,7 @@ define([
         var model = vars.model = {
             layout: new Layout(),
             alert: ko.observable(),
+            modalDialog: modalDialog,
             switches: ko.observable(),
             fronts: ko.observableArray(),
             loadedFronts: ko.observableArray()

@@ -234,8 +234,12 @@ define([
         return meta === this.uiOpenElement();
     };
 
-    Front.prototype.requiresConfirmation = function () {
+    Front.prototype.confirmSendingAlert = function () {
         return _.contains(vars.CONST.askForConfirmation, this.front());
+    };
+
+    Front.prototype.showIndicatorsEnabled = function () {
+        return !this.confirmSendingAlert();
     };
 
     Front.prototype.dispose = function () {

@@ -1789,7 +1789,7 @@ hr {
     background-color: #ddd;
 }
 
-collection-widget .buttons button {
+.buttons button {
     height: 26px;
     margin: 0 4px;
     background: none;
@@ -1800,14 +1800,22 @@ collection-widget .buttons button {
     min-width: 64px;
     color: #666;
     outline: none;
+    border-radius: 2px;
 }
-collection-widget .buttons button:hover {
+.buttons button:hover {
     background-color: #eee;
     cursor: pointer;
 }
-collection-widget .buttons button i {
+.buttons button i {
     margin-left: 3px;
     color: #999;
+}
+.buttons button.primary-action {
+    background-color: #b51800;
+    color: #fff;
+}
+.buttons button.primary-action:hover {
+    background-color: #9c1500;
 }
 
 .history,
@@ -1828,6 +1836,49 @@ collection-widget .buttons button i {
     display: none;
 }
 
+.modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+}
+.modalDialog-content {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.82);
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+.modalDialog-message {
+    padding: 10px 20px;
+}
+
+.modalDialog-confirm {
+    height: 42px;
+    padding: 0 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modalDialog-confirm .primary-action i {
+    margin-right: 8px;
+    color: #fff;
+}
+.modalDialog-message ul {
+    list-style: none;
+    padding-left: 1em;
+}
+.modalDialog-message li {
+    margin-bottom: 1.2em;
+}
+.modalDialog-message .edition {
+    padding-left: 1em;
+}
 
 /*****************************************/
 /* MEDIA QUERIES */

@@ -300,6 +300,15 @@ define([
 
             this.editorsDisplay = ko.observableArray();
 
+            this.headline = ko.pureComputed(function () {
+                var meta = this.meta, fields = this.fields;
+                if (this.state.enableContentOverrides()) {
+                    return meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...');
+                } else {
+                    return '{ ' + meta.customKicker() + ' }';
+                }
+            }, this);
+
             this.headlineLength = ko.pureComputed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
             }, this);

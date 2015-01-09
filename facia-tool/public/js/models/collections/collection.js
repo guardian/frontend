@@ -9,6 +9,7 @@ define([
     'utils/mediator',
     'utils/populate-observables',
     'modules/authed-ajax',
+    'modules/modal-dialog',
     'models/group',
     'models/collections/article',
     'modules/content-api'
@@ -22,6 +23,7 @@ define([
     mediator,
     populateObservables,
     authedAjax,
+    modalDialog,
     Group,
     Article,
     contentApi
@@ -90,7 +92,7 @@ define([
         }, undefined);
 
         this.history = ko.observableArray();
-        this.state.isHistoryOpen(this.front.requiresConfirmation());
+        this.state.isHistoryOpen(this.front.confirmSendingAlert());
 
         this.setPending(true);
         this.load();
@@ -156,8 +158,40 @@ define([
         this.load();
     };
 
+    Collection.prototype.addedInDraft = function () {
+        var live = (this.raw || {}).live || [];
+
+        return _.chain(this.groups)
+            .map(function (group) {
+                return group.items();
+            })
+            .flatten()
+            .filter(function (draftArticle) {
+                return !_.find(live, function (liveArticle) {
+                    return liveArticle.id === draftArticle.id();
+                });
+            })
+            .value();
+    };
+
     Collection.prototype.publishDraft = function() {
-        this.processDraft(true);
+        var that = this,
+            addedInDraft = this.front.confirmSendingAlert() ? this.addedInDraft() : [];
+
+        if (addedInDraft.length) {
+            modalDialog.confirm({
+                name: 'confirm_breaking_changes',
+                data: {
+                    articles: this.addedInDraft(),
+                    edition: this.configMeta.displayName()
+                }
+            })
+            .done(function () {
+                that.processDraft(true);
+            });
+        } else {
+            this.processDraft(true);
+        }
     };
 
     Collection.prototype.discardDraft = function() {
@@ -339,7 +373,7 @@ define([
     };
 
     Collection.prototype.refreshVisibleStories = function (stale) {
-        if (this.front.requiresConfirmation()) {
+        if (this.front.showIndicatorsEnabled()) {
             return this.state.showIndicators(false);
         }
         if (!stale || !this.visibleStories) {

@@ -1,7 +1,7 @@
 <div class="front-container" data-bind="css: {
     'live-mode': liveMode,
     'draft-mode': !liveMode(),
-    'attention': requiresConfirmation()
+    'attention': confirmSendingAlert()
 }">
     <div class="modes" data-bind="
         css: {
@@ -38,7 +38,7 @@
         </span>
     </div>
 
-    <!-- ko ifnot: requiresConfirmation() -->
+    <!-- ko ifnot: confirmSendingAlert() -->
         <div class="col__inner front-selector">
             <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
         </div>
