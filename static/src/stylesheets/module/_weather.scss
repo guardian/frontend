@@ -6,6 +6,10 @@ $weather-large-size: 60px;
     float: right;
     text-align: right;
 
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 4;
+    }
+
     @include mq(tablet) {
         width: gs-span(3);
         text-align: left;
