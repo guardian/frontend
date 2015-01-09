@@ -28,6 +28,8 @@ define([
 
                     $('body').append(container);
                     localStorage.clear();
+                    mocks.store['common/utils/config'].switches = {};
+                    mocks.store['common/utils/config'].switches.weather = true;
                 });
 
                 afterEach(function () {
@@ -52,7 +54,14 @@ define([
                     expect(sut.init()).toEqual(false);
                     expect(sut.getDefaultLocation).not.toHaveBeenCalled();
 
-                    mocks.store['common/utils/config'].switches.weather = true;
+                    mocks.store['common/utils/config'].switches = null;
+                    expect(sut.init()).toEqual(false);
+                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
+
+                    mocks.store['common/utils/config'].switches = {
+                        weather: true
+                    };
+                    sut.init();
                     expect(sut.getDefaultLocation).toHaveBeenCalled();
                 });
 
