@@ -67,3 +67,4 @@ with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
 with SectionsLookUpLifecycle
+with CorsErrorHandler
