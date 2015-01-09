@@ -225,7 +225,11 @@ define([
                     if (this.currentTime() > 0.1) {
                         $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
                     }
-                    $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                    if (parseInt(this.currentTime().toFixed(),10) === 5) {
+                        $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
+                    }
+                    //this is temporary commented out because of the ad skip countdown button, we don't need two countdowns
+                    //$('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                 },
                 init: function () {
                     $(this.el()).append($.create(adsOverlayTmpl));
@@ -247,11 +251,12 @@ define([
                 },
                 update: function () {
                     var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
-                    console.log(skipTime, this.currentTime());
                     if (skipTime > 0) {
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
                     } else if (!skipTime) {
-                        $('.vjs-ads-overlay-skip-countdown', this.el()).text("Skip advert");
+                        $('.vjs-ads-overlay-skip-countdown', this.el())
+                            .html('<i class="i i-play-icon-grey skip-icon"></i>' +
+                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert');
                         $('.vjs-ads-overlay-skip-button').addClass('vjs-ads-overlay-skip-button--enabled');
                     }
                 },
@@ -268,8 +273,6 @@ define([
                     $(this.el()).append($.create(adsSkipOverlayTmpl));
                     bean.on($('.vjs-ads-overlay-skip-button')[0], 'click', events.skip.bind(player));
                     this.on('timeupdate', events.update.bind(player));
-                    //TODO skip event
-                    //this.one(constructEventName('preroll:skip', player), events.destroy.bind(player));
                     this.one(constructEventName('content:play', player), events.hide.bind(player));
                     this.one('adtimeout', events.destroy.bind(player));
                     $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());

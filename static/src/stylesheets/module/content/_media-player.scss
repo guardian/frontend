@@ -660,13 +660,19 @@ $vjs-progress-inset-bottom: 4px;
     top: 0;
     left: 0;
     width: 100%;
-    height: $gs-baseline*2;
+    height: $gs-baseline*(7/3);
     padding: $gs-baseline/3 0 0 $gs-gutter/4;
     background-color: rgba(colour(neutral-1), .8);
     border-top: 1px solid colour(neutral-2);
     color: #ffffff;
     text-align: left;
+    -webkit-transition: top 1s;
+    -moz-transition: top 1s;
+    -ms-transition: top 1s;
+    -o-transition: top 1s;
+    transition: top 1s;
     @include fs-textSans(1);
+    @include box-sizing(border-box);
 
     @include mq(tablet) {
         @include fs-textSans(2, true);
@@ -693,6 +699,10 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 
+.vjs-ads-overlay-top--animate-hide {
+    top: -$gs-baseline*(7/3);
+}
+
 .vjs-ads-overlay-loading {
     display: none;
 }
@@ -708,10 +718,10 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-ads-overlay-skip-button {
     position: absolute;
     z-index: 4;
-    top: 300px;
+    bottom: 54px;
     right: 8px;
-    width: 18%;
-    padding: $gs-baseline/3 0 0 $gs-gutter/4;
+    width: $gs-column-width*2;
+    padding: $gs-baseline/2 0 $gs-baseline/4 $gs-baseline/2;
     background-color: rgba(colour(neutral-1), .8);
     color: #ffffff;
     text-align: left;
@@ -723,8 +733,23 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-ads-overlay-skip-button--enabled {
+    .i-play-icon-grey {
+        display: inline-block;
+    }
+    .i-play-icon-gold {
+        display: none;
+    }
     &:hover {
         color: colour(comment-main-2);
+        .i-play-icon-grey {
+            display: none;
+        }
+        .i-play-icon-gold {
+            display: inline-block;
+        }
+    }
+    .skip-icon {
+        margin-right: $gs-gutter/4;
     }
 }
 
