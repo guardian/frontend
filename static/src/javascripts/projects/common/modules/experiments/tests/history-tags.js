@@ -28,7 +28,7 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    history.renderInMegaNav();
+                    history.showInMegaNav();
                 }
             }
         ];

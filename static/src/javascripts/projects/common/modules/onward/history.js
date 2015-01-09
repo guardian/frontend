@@ -113,7 +113,8 @@ define([
         if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
             summaryCache = {
                 periodEnd: today,
-                tags: {}
+                tags: {},
+                showInMegaNav: true
             };
         }
         return summaryCache;
@@ -289,21 +290,50 @@ define([
         return topNavItemsCache;
     }
 
-    function renderInMegaNav() {
-        var tags = getPopularFiltered(),
-            globalNav = $('.js-global-navigation');
+    function getMegaNav() {
+        return $('.js-global-navigation');
+    }
 
-        $(globalNav).each(function () {
-            $('.js-global-navigation__section--history', this).remove();
-        });
+    function showInMegaNav(flush) {
+        var tags;
+
+        if (getSummary().showInMegaNav === false) { return; }
+
+        if (flush) { removeFromMegaNav(); }
+
+        tags = getPopularFiltered();
 
         if (tags.length) {
-            globalNav.prepend(
+            getMegaNav().prepend(
                 template(viewMegaNav, {
                     tags: tags.slice(0, 20).map(tagHtml).join('')
                 })
             );
         }
+    }
+
+    function removeFromMegaNav() {
+        getMegaNav().each(function () {
+            $('.js-global-navigation__section--history', this).remove();
+        });
+    }
+
+    function showInMegaNavEnabled() {
+        return getSummary().showInMegaNav;
+    }
+
+    function showInMegaNavToggle() {
+        var summary = getSummary();
+
+        summary.showInMegaNav = !summary.showInMegaNav;
+
+        if (summary.showInMegaNav) {
+            showInMegaNav();
+        } else {
+            removeFromMegaNav();
+        }
+
+        saveSummary(summary);
     }
 
     function tagHtml(tag, index) {
@@ -319,7 +349,9 @@ define([
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        renderInMegaNav: renderInMegaNav,
+        showInMegaNav: showInMegaNav,
+        showInMegaNavEnabled: showInMegaNavEnabled,
+        showInMegaNavToggle: showInMegaNavToggle,
         getPopular: getPopular,
         getPopularFiltered: getPopularFiltered,
         deleteFromSummary: deleteFromSummary,
