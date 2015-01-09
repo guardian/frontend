@@ -191,23 +191,6 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/video-embed',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
-                paths: {
-                    qwery:        'components/qwery/qwery',
-                    common:       'projects/common',
-                    bean:         'components/bean/bean',
-                    bonzo:        'components/bonzo/bonzo',
-                    lodash:       'components/lodash-amd',
-                    videojs:      'components/videojs/video',
-                    videojsembed: 'components/videojs-embed/videojs.embed',
-                    text:         'components/requirejs-text/text',
-                    omniture:     '../../public/javascripts/vendor/omniture',
-                    raven:        'components/raven-js/raven',
-                    EventEmitter: 'components/eventEmitter/EventEmitter',
-                    reqwest:      'components/reqwest/reqwest',
-                    Promise:      'components/native-promise-only/npo.src',
-                    imager:       'components/imager.js/container'
-
-                },
                 shim: {
                     videojs: {
                         exports: 'videojs'

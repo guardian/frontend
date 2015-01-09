@@ -46,12 +46,21 @@ define([
 ) {
 
     function getVastUrl() {
-        var adUnit = config.page.adUnit,
-            custParams = urlUtils.constructQuery(buildPageTargeting()),
-            encodedCustParams = encodeURIComponent(custParams),
-            timestamp = new Date().getTime();
-        return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
-                'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
+        var queryParams = {
+            ad_rule:                 1,
+            correlator:              new Date().getTime(),
+            //cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
+            env:                     'vp',
+            gdfp_req:                1,
+            impl:                    's',
+            iu:                      config.page.adUnit,
+            output:                  'xml_vast2',
+            scp:                     encodeURIComponent('slot=video'),
+            sz:                      '400x300',
+            unviewed_position_start: 1
+        };
+
+        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function fullscreener() {
