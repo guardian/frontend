@@ -126,6 +126,10 @@ Media list item. Looks a bit like this:
     }
 
     &.fc-item--has-cutout {
+        .fc-item__kicker--dreamsnap-list {
+            margin-left: 0;
+        }
+
         .fc-item__content {
             min-height: gs-height(2) + $gs-baseline;
             padding-right: gs-span(1);
