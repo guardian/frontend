@@ -225,7 +225,7 @@ define([
                     if (this.currentTime() > 0.1) {
                         $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
                     }
-                    if (parseInt(this.currentTime().toFixed(),10) === 5) {
+                    if (parseInt(this.currentTime().toFixed(), 10) === 5) {
                         $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
                     }
                     //this is temporary commented out because of the ad skip countdown button, we don't need two countdowns
