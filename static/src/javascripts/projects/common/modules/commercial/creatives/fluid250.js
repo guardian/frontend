@@ -32,7 +32,11 @@ define([
         };
 
         leftMargin = (this.params.videoPositionH === 'center' ?
-            -(this.params.videoWidth / 2) : 0
+            -205 : 0
+        );
+
+        topMargin = (this.params.videoPositionV === 'center' ?
+            -115 : 0
         );
 
         leftPosition = (this.params.videoPositionH === 'left' ?
@@ -43,13 +47,9 @@ define([
             this.params.videoHorizSpace + 'px' : 'auto'
         );
 
-        topMargin = (this.params.videoPositionV === 'center' ?
-            -(this.params.videoHeight / 2) : 0
-        );
-
         videoDesktop = {
-            videoD: (this.params.videoURL !== '') ?
-                '<iframe width="' + this.params.videoWidth + '" height="' + this.params.videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px; margin-top: ' + topMargin + 'px; left: ' + leftPosition + '; right: ' + rightPosition + ';"></iframe>' : ''
+            video: (this.params.videoURL !== '') ?
+                '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px; margin-top: ' + topMargin + 'px; left: ' + leftPosition + '; right: ' + rightPosition + ';"></iframe>' : ''
         };
 
         $.create(template(fluid250Tpl, merge(this.params, templateOptions, videoDesktop))).appendTo(this.$adSlot);
