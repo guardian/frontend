@@ -16,7 +16,7 @@ object LoadLimit extends ExecutionContexts with Logging {
     limit
   }
 
-  def tryOperation[T](operation: => Future[T])(outOfCapacity: => Future[T]): Future[T] = try {
+  def tryOperation[T](operation: => Future[T])(outOfCapacity: => Future[T]): Future[T] = {
     val concurrentRequests = currentNumberOfRequests.incrementAndGet
     if (concurrentRequests <= requestLimit) try {
       log.info(s"Resize $concurrentRequests/$requestLimit")
