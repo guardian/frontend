@@ -1,0 +1,194 @@
+$weather-small-size: 26px;
+$weather-large-size: 60px;
+
+.weather {
+    color: colour(neutral-1);
+    float: right;
+    text-align: right;
+
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 4;
+    }
+
+    @include mq(tablet) {
+        width: gs-span(3);
+        text-align: left;
+        margin-top: $gs-baseline * 2.333;
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        margin-top: $gs-baseline * 1.5;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            width: gs-span(3);
+            text-align: left;
+            margin-top: $gs-baseline * 2.333;
+        }
+    }
+}
+
+.weather__location {
+    display: none;
+
+    @include mq(tablet) {
+        position: relative;
+        display: block;
+    }
+
+    @include mq(tablet, leftCol) {
+        width: gs-span(2);
+        float: right;
+    }
+
+    @include mq(leftCol) {
+        border-top: 1px dotted colour(neutral-3);
+        padding-top: $gs-baseline / 3;
+    }
+
+    .search-tool__input {
+        display: none;
+        width: 100%;
+        @include fs-headline(2);
+
+        @include mq(tablet) {
+            display: inherit;
+        }
+
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline / 4;
+        }
+    }
+
+    .search-tool__btn {
+        display: none;
+    }
+
+    &.is-editing {
+        .search-tool__input {
+            border-bottom: 1px solid colour(neutral-3);
+        }
+
+        .weather__edit-location {
+            display: none;
+        }
+
+        .weather__close-location {
+            display: initial;
+        }
+
+        & ~ .weather__forecasts {
+            opacity: .5; // This needs fixing
+        }
+    }
+}
+
+.weather__close-location,
+.weather__edit-location {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    display: block;
+    z-index: 5;
+    line-height: inherit;
+
+    @include mq(leftCol) {
+        top: $gs-baseline / 2.4;
+    }
+
+    .weather__search-icon,
+    .weather__close-icon {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+.weather__close-location {
+    display: none;
+}
+
+.weather__forecasts {
+    position: relative;
+    @include transition(opacity .2s ease-in); // Needs Fixing
+
+    @include mq($until: leftCol) {
+        @include box-sizing(border-box);
+        width: gs-span(1) + $gs-gutter;
+        float: left;
+        padding-right: $weather-small-size;
+        text-align: right;
+
+        .weather__icon {
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(tablet, leftCol) {
+        padding-right: $weather-small-size + $gs-gutter / 2;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: $gs-gutter / 4;
+            height: $gs-baseline + 1px;
+            border-right: 1px dotted colour(neutral-3);
+        }
+
+        .weather__icon {
+            right: $gs-gutter / 2;
+        }
+    }
+}
+
+.weather__desc {
+    @include fs-headline(2);
+    margin-right: 5px;
+
+    @include mq(leftCol) {
+        position: absolute;
+        bottom: 2px;
+    }
+}
+
+.weather__time {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
+    }
+}
+
+.i.weather__icon {
+    width: $weather-small-size !important;
+    height: $weather-small-size !important;
+    margin: 0;
+    margin-top: -($gs-baseline / 3);
+
+    @include mq(leftCol) {
+        //Till we will have new icons
+        width: $weather-large-size !important;
+        height: $weather-large-size !important;
+        display: block;
+        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            width: $weather-small-size !important;
+            height: $weather-small-size !important;
+            position: absolute;
+            top: 4px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+    }
+}

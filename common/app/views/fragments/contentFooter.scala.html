@@ -16,12 +16,14 @@
         @fragments.storyPackagePlaceholder(content, related)
         @fragments.onwardPlaceholder(content.visualTone)
 
-        <div class="js-repositioned-comments content__repositioned-comments"></div>
+        @if(content.isCommentable) {
+            <div class="js-repositioned-comments content__repositioned-comments"></div>
+        }
 
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
 
         @content match {
-            case article: Article if !article.isLiveBlog => {
+            case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
                 <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                     @fragments.outbrainPlaceholder()
                 </div>
