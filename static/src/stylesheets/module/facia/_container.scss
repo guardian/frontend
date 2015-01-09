@@ -134,6 +134,18 @@ $header-image-size-desktop: 100px;
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
     word-wrap: break-word;
 
+    @include mq(tablet, leftCol) {
+        float: left;
+        width: gs-span(6) + $gs-gutter;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            float: left;
+            width: gs-span(6) + $gs-gutter;
+        }
+    }
+
     a {
         color: inherit;
 
