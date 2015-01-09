@@ -293,7 +293,7 @@ define([
         var tags = getPopularFiltered(),
             globalNav = $('.js-global-navigation');
 
-        $(globalNav).each(function() {
+        $(globalNav).each(function () {
             $('.js-global-navigation__section--history', this).remove();
         });
 
