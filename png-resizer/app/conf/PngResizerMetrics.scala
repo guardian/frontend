@@ -39,4 +39,14 @@ object PngResizerMetrics {
     "Number of 302 responses sent because we thought it would be too slow to resize the image"
   )
 
+  lazy val all = List(
+    downloadTime,
+    resizeTime,
+    quantizeTime,
+    notModifiedCount,
+    redirectCount,
+    wontMakeBiggerCount,
+    tooHardCount
+  )
+
 }
