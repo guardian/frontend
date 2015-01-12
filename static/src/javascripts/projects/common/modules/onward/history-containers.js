@@ -86,7 +86,7 @@ define([
                 return frontsTopContainers[tag];
             }).
             compact().
-            slice(limitContainers).
+            take(limitContainers).
             value();
     }
 
