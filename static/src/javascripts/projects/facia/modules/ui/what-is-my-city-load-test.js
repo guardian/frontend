@@ -10,7 +10,7 @@ define([
     return function () {
         if (_.contains(['uk', 'us', 'au'], config.page.pageId) && config.switches.whatIsMyCityLoad) {
             ajax({
-                url: '/weather/fake-what-is-my-city',
+                url: '/weather/city.json',
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
