@@ -18,12 +18,16 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
 
   private val WeatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
   private val WeatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
+  private val WeatherForecastUrl = "http://api.accuweather.com/forecasts/v1/hourly/12hour/"
 
   private def autocompleteUrl(query: String): String =
     s"$WeatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
   private def cityLookUp(cityId: CityId): String =
     s"$WeatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
+
+  private def forecatsLookUp(cityId: CityId): String =
+    s"$WeatherForecastUrl${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
   private def getJson(url: String): Future[JsValue] = {
     if (Play.isTest) {
@@ -40,4 +44,7 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
 
   def getWeatherForCityId(cityId: CityId): Future[JsValue] =
     getJson(cityLookUp(cityId))
+
+  def getForecastForCityId(cityId: CityId): Future[JsValue] =
+    getJson(forecatsLookUp(cityId))
 }

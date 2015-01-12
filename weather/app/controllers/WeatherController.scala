@@ -9,4 +9,8 @@ object WeatherController extends Controller with ExecutionContexts {
   def forCityId(cityId: String) = Action.async {
     WeatherApi.getWeatherForCityId(CityId(cityId)).map(Ok(_))
   }
+
+  def forCityIdForecast(cityId: String) = Action.async {
+    WeatherApi.getForecastForCityId(CityId(cityId)).map(Ok(_))
+  }
 }
