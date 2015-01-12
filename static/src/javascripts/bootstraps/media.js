@@ -249,7 +249,8 @@ define([
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
                     } else if (!skipTime) {
                         $('.vjs-ads-overlay-skip-countdown', this.el())
-                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="vjs-skip-ads-button"><i class="i i-play-icon-grey skip-icon"></i>' +
+                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
+                            '<i class="i i-play-icon-grey skip-icon"></i>' +
                             '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>');
                         $('.vjs-ads-overlay-skip').addClass('vjs-ads-overlay-skip--enabled');
                     }
@@ -257,6 +258,7 @@ define([
                 skip: function () {
                     if ($('.vjs-ads-overlay-skip').hasClass('vjs-ads-overlay-skip--enabled')) {
                         events.hide.bind(player);
+                        player.trigger(constructEventName('preroll:skip', player));
                         this.ads.endLinearAdMode();
                     }
                 },
