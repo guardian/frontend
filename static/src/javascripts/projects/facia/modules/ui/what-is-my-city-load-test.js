@@ -7,12 +7,14 @@ define([
     ajax,
     config
 ) {
-    if (_.contains(['uk', 'us', 'au'], config.page.pageId) && config.switches.whatIsMyCityLoad) {
-        ajax({
-            url: '/weather/fake-what-is-my-city',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        });
-    }
+    return function () {
+        if (_.contains(['uk', 'us', 'au'], config.page.pageId) && config.switches.whatIsMyCityLoad) {
+            ajax({
+                url: '/weather/fake-what-is-my-city',
+                type: 'json',
+                method: 'get',
+                crossOrigin: true
+            });
+        }
+    };
 });
