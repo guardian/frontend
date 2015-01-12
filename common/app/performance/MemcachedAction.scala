@@ -30,7 +30,7 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
 
   lazy val isConfigured = Configuration.memcached.host.isDefined
   lazy val host = Configuration.memcached.host.head
-  lazy val memcached = Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
+  lazy val memcached = Memcached(MemcachedConf(host), memcachedExecutionContext)
 
   implicit object ResultCodec extends Codec[CachedResponse] {
 

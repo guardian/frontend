@@ -61,10 +61,25 @@ object Resizer extends Controller with Logging with implicits.Requests {
 
   def redirectScaleUpAttempts(originalWidth: Int, width: Int, fallbackUri: String) = {
     if (originalWidth <= width) {
+      PngResizerMetrics.wontMakeBiggerCount.increment()
       log.info(s"won't resize image to be bigger - $originalWidth to $width - redirecting to original")
       -\/(Cached(1.day)(Found(fallbackUri)))
     } else {
-      \/-()
+      \/-(())
+    }
+  }
+
+  // if we have too many pixels, it takes too long to resize.  This could be tweaked.
+  val MAX_PIXELS = 620 * 620
+
+  def redirectTooBigAttempts(originalWidth: Int, originalHeight: Int, requestedWidth: Int, fallbackUri: String) = {
+    val requestedPixels = (originalHeight * requestedWidth * requestedWidth) / originalWidth
+    if (requestedPixels > MAX_PIXELS) {
+      PngResizerMetrics.tooHardCount.increment()
+      log.info(s"won't resize if final image will be too big afterwards - total size $requestedPixels - redirecting to original")
+      -\/(Cached(1.day)(Found(fallbackUri)))
+    } else {
+      \/-(())
     }
   }
 
@@ -79,8 +94,10 @@ object Resizer extends Controller with Logging with implicits.Requests {
             response <- EitherT.right(Time(getUpstreamResponse(uri, request.headers), "download image", PngResizerMetrics.downloadTime))
             cacheableContent <- EitherT(getPngBytesToResize(uri, response))
             CacheableContent(cacheHeaders, bytesPreResize) = cacheableContent
-            originalWidth <- EitherT.right(Im4Java.getWidth(bytesPreResize))
+            originalSize <- EitherT.right(Im4Java.getWidth(bytesPreResize))
+            (originalWidth, originalHeight) = originalSize
             _ <- EitherT(future.point(redirectScaleUpAttempts(originalWidth, width, uri)))
+            _ <- EitherT(future.point(redirectTooBigAttempts(originalWidth, originalHeight, width, uri)))
             processed <- EitherT(resizeWithLoadLimit(request, uri, width, quality, bytesPreResize))
             result = Ok(processed).as("image/png").withHeaders(cacheHeaders: _*)
           } yield result
@@ -94,7 +111,7 @@ object Resizer extends Controller with Logging with implicits.Requests {
     }
 
   def resizeWithLoadLimit(request: Request[AnyContent], uri: String, width: Int, quality: Int, bytesPreResize: Array[Byte]): Future[Result \/ Array[Byte]] = {
-    LoadLimit.tryOperation[Result \/ Array[Byte]] {
+    LoadLimit.tryOperation[Result \/ Array[Byte]](request.isHealthcheck) {
       resizePngBytes(width, quality, bytesPreResize).map(\/-.apply)
     } {
       noCapacity(request, uri)

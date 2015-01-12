@@ -23,7 +23,9 @@ trait Prototypes {
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
       "-Xfatal-warnings"
     ),
-    doc in Compile <<= target.map(_ / "none")
+    doc in Compile <<= target.map(_ / "none"),
+    incOptions := incOptions.value.withNameHashing(true),
+    scalaVersion := "2.11.4"
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -34,14 +36,9 @@ trait Prototypes {
         <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
       </dependencies>,
 
-    resolvers := Seq(
-      Resolver.typesafeRepo("releases"),
-      Classpaths.typesafeReleases,
-      "Akka" at "http://repo.akka.io/releases",
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-      "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
-      "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
@@ -89,6 +86,7 @@ trait Prototypes {
   )
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
+    .settings(frontendCompilationSettings:_*)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)

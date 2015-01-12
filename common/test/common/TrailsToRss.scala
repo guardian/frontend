@@ -30,7 +30,7 @@ class TrailsToRssTest extends FlatSpec with Matchers {
 
   it should "strip invalid Unicode characters from XML" in {
     isWellFormedXML(TrailsToRss(Option("foo"), Seq(
-      TestTrail("h", customTitle = Some("\0LOL"))
+      TestTrail("h", customTitle = Some("\u0000LOL"))
     ))(request)) shouldBe true
   }
 

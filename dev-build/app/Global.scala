@@ -1,4 +1,4 @@
-import common.{DiagnosticsLifecycle, ExecutionContexts}
+import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
@@ -66,4 +66,7 @@ with DfpDataCacheLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
-with SectionsLookUpLifecycle
+with SectionsLookUpLifecycle {
+  override val allowedParams: Seq[String] =
+    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
+}

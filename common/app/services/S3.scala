@@ -60,25 +60,20 @@ trait S3 extends Logging {
     }
   }
 
-  def get(key: String)(implicit codec: Codec): Option[String] = try {
-    withS3Result(key) {
-      result => Source.fromInputStream(result.getObjectContent).mkString
-    }
+  def get(key: String)(implicit codec: Codec): Option[String] = withS3Result(key) {
+    result => Source.fromInputStream(result.getObjectContent).mkString
   }
 
-  def getWithLastModified(key: String): Option[(String, DateTime)] = try {
-    withS3Result(key) {
-      result =>
-        val content = Source.fromInputStream(result.getObjectContent).mkString
-        val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
-        (content, lastModified)
-    }
+
+  def getWithLastModified(key: String): Option[(String, DateTime)] = withS3Result(key) {
+    result =>
+      val content = Source.fromInputStream(result.getObjectContent).mkString
+      val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
+      (content, lastModified)
   }
 
-  def getLastModified(key: String): Option[DateTime] = try {
-    withS3Result(key) {
-      result => new DateTime(result.getObjectMetadata.getLastModified)
-    }
+  def getLastModified(key: String): Option[DateTime] = withS3Result(key) {
+    result => new DateTime(result.getObjectMetadata.getLastModified)
   }
 
   def putPublic(key: String, value: String, contentType: String) {

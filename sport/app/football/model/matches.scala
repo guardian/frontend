@@ -10,7 +10,7 @@ import football.collections.RichList
 import conf.Switches
 
 
-trait MatchesList extends Football with RichList {
+trait MatchesList extends Football with RichList with implicits.Collections {
   // container for all competitions
   val competitions: CompetitionSupport
 
@@ -43,7 +43,7 @@ trait MatchesList extends Football with RichList {
   lazy val relevantMatches: List[(FootballMatch, Competition)] = {
     val startDate = date
     val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
-    val eligibleDates = matchDates.dropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
+    val eligibleDates = matchDates.safeDropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
     allRelevantMatches.filter { case (fMatch, _) =>
       eligibleDates.contains(fMatch.date.toLocalDate)
     }
@@ -60,7 +60,7 @@ trait MatchesList extends Football with RichList {
   }
 
   lazy val nextPage: Option[String] = {
-    val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
+    val nextMatchDate = matchDates.safeDropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
     nextMatchDate.map(s"$baseUrl/more/" + _.toString("yyyy/MMM/dd"))
   }
   lazy val previousPage: Option[String] = {
