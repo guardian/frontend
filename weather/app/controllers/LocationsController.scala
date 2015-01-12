@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 
 object LocationsController extends Controller with ExecutionContexts {
-  def findCity(query: String) = Action.async {
+  def findCity(query: String) = Action.async { implicit request =>
     WeatherApi.searchForLocations(query) map { locations =>
       Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
     }
