@@ -15,20 +15,23 @@ define([
                     return { enabled: history.showInMegaNavEnabled() };
                 },
                 handleToggle: function () {
+                    var isEnabled;
+
                     history.showInMegaNavToggle();
-                    this.setState({ enabled: history.showInMegaNavEnabled() });
-                    if (this.state.enabled) {
-                        ab.addParticipation({id: 'HistoryTags'}, 'show');
-                    } else {
-                        ab.removeParticipation({id: 'HistoryTags'});
-                    }
+
+                    isEnabled = history.showInMegaNavEnabled();
+
+                    this.setState({ enabled: isEnabled });
+
+                    ab.addParticipation({id: 'HistoryTags'}, isEnabled ? 'show' : 'notintest');
                 },
                 render: function () {
                     var self = this,
                         toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                     return React.DOM.div({'data-link-name': 'suggested links'}, [
-                        React.DOM.p(null, 'Suggested links are shown under \'All Sections\', and are based on your recent browsing history. Remove links that don\'t interest you by clicking the \'X\' next to them.'),
+                        React.DOM.p(null, 'Suggested links are shown under \'browse all sections\', and are based on your recent browsing history.'),
+                        this.state.enabled ? React.DOM.p(null, 'Remove links that don\'t interest you by clicking the \'X\' next to them.') : null,
                         this.state.enabled ? React.createElement(SummaryTagsList) : null,
                         React.DOM.button({
                             onClick: self.handleToggle,
