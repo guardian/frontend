@@ -228,8 +228,6 @@ define([
                     if (parseInt(this.currentTime().toFixed(), 10) === 5) {
                         $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
                     }
-                    //this is temporary commented out because of the ad skip countdown button, we don't need two countdowns
-                    //$('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                 },
                 init: function () {
                     $(this.el()).append($.create(adsOverlayTmpl));
@@ -251,13 +249,13 @@ define([
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
                     } else if (!skipTime) {
                         $('.vjs-ads-overlay-skip-countdown', this.el())
-                            .html('<i class="i i-play-icon-grey skip-icon"></i>' +
-                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert');
-                        $('.vjs-ads-overlay-skip-button').addClass('vjs-ads-overlay-skip-button--enabled');
+                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="vjs-skip-ads-button"><i class="i i-play-icon-grey skip-icon"></i>' +
+                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>');
+                        $('.vjs-ads-overlay-skip').addClass('vjs-ads-overlay-skip--enabled');
                     }
                 },
                 skip: function () {
-                    if ($('.vjs-ads-overlay-skip-button').hasClass('vjs-ads-overlay-skip-button--enabled')) {
+                    if ($('.vjs-ads-overlay-skip').hasClass('vjs-ads-overlay-skip--enabled')) {
                         events.hide.bind(player);
                         this.ads.endLinearAdMode();
                     }
@@ -268,7 +266,7 @@ define([
                 },
                 init: function () {
                     $(this.el()).append($.create(adsSkipOverlayTmpl));
-                    bean.on($('.vjs-ads-overlay-skip-button')[0], 'click', events.skip.bind(player));
+                    bean.on($('.vjs-ads-overlay-skip')[0], 'click', events.skip.bind(player));
                     this.on('timeupdate', events.update.bind(player));
                     this.one(constructEventName('content:play', player), events.hide.bind(player));
                     $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
