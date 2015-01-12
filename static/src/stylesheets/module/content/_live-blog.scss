@@ -27,13 +27,20 @@ $block-padding-right: $gs-gutter;
         width: $right-column;
         min-height: gs-height(1)*1.5;
         position: initial;
+
+        .meta__numbers {
+            position: initial;
+            border-top: 1px dotted colour(neutral-5);
+            border-bottom: 0;
+        }
     }
 
     .byline {
         padding-right: 0;
 
         @include mq(desktop) {
-            padding-top: 0;
+            padding-top: $gs-baseline/6;
+            border-top: 1px dotted colour(neutral-5);
         }
     }
 }
@@ -61,7 +68,7 @@ $block-padding-right: $gs-gutter;
 
 .content__updated-container--liveblog {
     @include fs-textSans(1);
-    padding: $gs-baseline/3 0;
+    padding: $gs-baseline/6 0;
     margin-left: -($right-column + $gs-gutter);
     position: absolute;
     top: 0;
@@ -612,7 +619,7 @@ $timeline-width: 15px;
             width: $timeline-width;
             height: $timeline-width;
             @include border-radius(50%);
-            background-color: colour(neutral-5);
+            background-color: colour(neutral-3);
         }
 
         &:hover:before {
