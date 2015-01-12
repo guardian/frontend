@@ -20,6 +20,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val webTitle: String = delegate.webTitle
   lazy val sectionName: String = delegate.sectionName.getOrElse("global")
   override lazy val description = delegate.description
+  lazy val twitterHandle: Option[String] = delegate.twitterHandle
 
   override lazy val url: String = SupportedUrl(delegate)
 
