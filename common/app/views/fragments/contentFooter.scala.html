@@ -1,12 +1,11 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
-@import model.Article
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
-    @if(!content.isAdvertisementFeature()) {
+    @if(!content.isAdvertisementFeature) {
 
         @if(!content.shouldHideAdverts) {
             <div class="fc-container fc-container--commercial-high">

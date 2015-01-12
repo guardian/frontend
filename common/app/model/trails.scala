@@ -31,14 +31,14 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   def showByline: Boolean = isComment
 
   lazy val shouldHidePublicationDate: Boolean = {
-    isAdvertisementFeature() && webPublicationDate.isOlderThan(2.weeks)
+    isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
   }
 
   override def isSponsored(maybeEdition: Option[Edition]): Boolean =
     DfpAgent.isSponsored(tags, Some(section))
-  override def isAdvertisementFeature(maybeEdition: Option[Edition]): Boolean =
+  override lazy val isAdvertisementFeature: Boolean =
     DfpAgent.isAdvertisementFeature(tags, Some(section))
-  override def isFoundationSupported(maybeEdition: Option[Edition]): Boolean =
+  override lazy val isFoundationSupported: Boolean =
     DfpAgent.isFoundationSupported(tags, Some(section))
 
   def faciaUrl: Option[String] = this match {

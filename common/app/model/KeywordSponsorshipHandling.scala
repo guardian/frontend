@@ -13,16 +13,16 @@ trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
     DfpAgent.hasMultipleSponsors
   }
 
-  override def isAdvertisementFeature(maybeEdition: Option[Edition]): Boolean = keywordIds exists {
-    DfpAgent.isAdvertisementFeature(_, Some(id), maybeEdition)
+  override lazy val isAdvertisementFeature: Boolean = keywordIds exists {
+    DfpAgent.isAdvertisementFeature(_, Some(id))
   }
 
   override lazy val hasMultipleFeatureAdvertisers: Boolean = keywordIds exists {
     DfpAgent.hasMultipleFeatureAdvertisers
   }
 
-  override def isFoundationSupported(maybeEdition: Option[Edition]): Boolean = keywordIds exists {
-    DfpAgent.isFoundationSupported(_, Some(id), maybeEdition)
+  override lazy val isFoundationSupported: Boolean = keywordIds exists {
+    DfpAgent.isFoundationSupported(_, Some(id))
   }
 
   override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption

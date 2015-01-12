@@ -4,6 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
+import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -48,7 +49,7 @@ trait PaidForTagAgent {
     allPaidForTags find { dfpTag =>
       tagMatches(capiTagId, dfpTag) &&
         sectionMatches(maybeSectionId, dfpTag) &&
-        editionMatches(maybeEdition, dfpTag)
+        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
     }
   }
 
@@ -72,9 +73,9 @@ trait PaidForTagAgent {
                         maybeSectionId: Option[String],
                         maybeEdition: Option[Edition],
                         paidForType: PaidForType): Boolean = {
-    findWinningTagPair(capiTags,
-      maybeSectionId,
-      maybeEdition) exists (_.dfpTag.paidForType == paidForType)
+    findWinningTagPair(capiTags, maybeSectionId, maybeEdition) exists {
+      _.dfpTag.paidForType == paidForType
+    }
   }
 
   def isSponsored(capiTags: Seq[Tag],
@@ -84,15 +85,13 @@ trait PaidForTagAgent {
   }
 
   def isAdvertisementFeature(capiTags: Seq[Tag],
-                             maybeSectionId: Option[String],
-                             maybeEdition: Option[Edition] = None): Boolean = {
-    isPaidFor(capiTags, maybeSectionId, maybeEdition, AdvertisementFeature)
+                             maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTags, maybeSectionId, maybeEdition = None, AdvertisementFeature)
   }
 
   def isFoundationSupported(capiTags: Seq[Tag],
-                            maybeSectionId: Option[String],
-                            maybeEdition: Option[Edition] = None): Boolean = {
-    isPaidFor(capiTags, maybeSectionId, maybeEdition, FoundationFunded)
+                            maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTags, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
   private def isPaidFor(capiTagId: String,
@@ -109,15 +108,13 @@ trait PaidForTagAgent {
   }
 
   def isAdvertisementFeature(capiTagId: String,
-                             maybeSectionId: Option[String],
-                             maybeEdition: Option[Edition]): Boolean = {
-    isPaidFor(capiTagId, maybeSectionId, maybeEdition, AdvertisementFeature)
+                             maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, AdvertisementFeature)
   }
 
   def isFoundationSupported(capiTagId: String,
-                            maybeSectionId: Option[String],
-                            maybeEdition: Option[Edition]): Boolean = {
-    isPaidFor(capiTagId, maybeSectionId, maybeEdition, FoundationFunded)
+                            maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
   private def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):

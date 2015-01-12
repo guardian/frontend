@@ -113,9 +113,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {
     TestPaidForTagAgent.isAdvertisementFeature("advert/best-awards/best-awards",
-      maybeSectionId = None,
-      maybeEdition = None) should be(
-      true)
+      maybeSectionId = None
+    ) should be(true)
   }
 
   it should "be true if keyword tag exists" in {
@@ -128,8 +127,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   it should "be false for a non advertisement feature" in {
     TestPaidForTagAgent.isAdvertisementFeature("culture/article",
-      maybeSectionId = None,
-      maybeEdition = None) should be(false)
+      maybeSectionId = None
+    ) should be(false)
   }
 
   it should "be true if series tag exists" in {
@@ -239,24 +238,22 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     TestPaidForTagAgent.isAdvertisementFeature(
       capiTagId = "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner" +
         "-zone",
-      maybeSectionId = Some("sustainable-business/grundfos-partner-zone"),
-      maybeEdition = None
+      maybeSectionId = Some("sustainable-business/grundfos-partner-zone")
     ) should be(true)
   }
 
   it should "be true for an article in an ad feature section with a multi-part section name" in {
     TestPaidForTagAgent.isAdvertisementFeature(
       "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
-      maybeSectionId = Some("sustainable-business/grundfos-partner-zone"),
-      maybeEdition = None) should be(true)
+      maybeSectionId = Some("sustainable-business/grundfos-partner-zone")
+    ) should be(true)
   }
 
   it should "be true for an article where the corresponding logo targets the entire site and some" +
     " special ad units" in {
     TestPaidForTagAgent.isAdvertisementFeature(
       capiTagId = "wsscc-partner-zone/wsscc-partner-zone",
-      maybeSectionId = Some("arbitrary section"),
-      maybeEdition = None
+      maybeSectionId = Some("arbitrary section")
     ) should be(true)
   }
 
@@ -264,8 +261,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     "units" in {
     TestPaidForTagAgent.isAdvertisementFeature(
       capiTagId = "some-partner-zone/some-partner-zone",
-      maybeSectionId = Some("arbitrary section"),
-      maybeEdition = None
+      maybeSectionId = Some("arbitrary section")
     ) should be(false)
   }
 
@@ -292,8 +288,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   "isSponsored" should "be true for a sponsored article" in {
     TestPaidForTagAgent.isSponsored("small-business-network/business-essentials",
       maybeSectionId = None,
-      maybeEdition = None) should be(
-      true)
+      maybeEdition = Some(defaultEdition)
+    ) should be(true)
   }
 
   it should "be true if section tag exists" in {
@@ -426,14 +422,14 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   "isFoundationSupported" should "be true for a foundation-supported page" in {
     TestPaidForTagAgent.isFoundationSupported("global-development/global-development",
-      maybeSectionId = None,
-      maybeEdition = Some(defaultEdition)) should be(true)
+      maybeSectionId = None
+    ) should be(true)
   }
 
   it should "be false for a non foundation-supported page" in {
     TestPaidForTagAgent.isFoundationSupported("guffaw",
-      maybeSectionId = None,
-      maybeEdition = None) should be(false)
+      maybeSectionId = None
+    ) should be(false)
   }
 
   it should "be true for a container with multiple foundation-targeted keywords" in {

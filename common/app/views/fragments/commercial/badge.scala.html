@@ -3,65 +3,63 @@
 @import conf.Switches.SponsoredSwitch
 @import model.{Gallery, Interactive, LiveBlog, Media}
 
-@defining(Some(Edition(request))) { edition =>
-    @defining(content.isSponsored(edition),
-        content.isAdvertisementFeature(edition),
-        content.isFoundationSupported(edition)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
-        @if(
-            SponsoredSwitch.isSwitchedOn &&
-                (isSponsored || isAdFeature || isFoundationFunded) &&
-                !content.isInappropriateForSponsorship
-        ) {
-            @defining((
-                content match {
-                    case _ if isSponsored => "spbadge"
-                    case _ if isAdFeature => "adbadge"
-                    case _ => "fobadge"
-                },
-                content match {
-                    case _: LiveBlog => "live-blog"
-                    case _: Interactive => "interactive"
-                    case _ => "article"
-                },
-                content match {
-                    case _: Media | _: Gallery => "141"
-                    case _ => "140"
-                }
-                )) { case (name, badgeType, adSlotWidth) =>
-                @fragments.commercial.adSlot(
-                    name,
-                    Seq("paid-for-badge", s"paid-for-badge--$badgeType"),
-                    Map("mobile" -> Seq("1,1", s"$adSlotWidth,90")),
-                    showLabel = false,
-                    refresh = false,
-                    forceDisplay = content.sponsor.nonEmpty
-                ) {
-                    @content.sponsor.map { sponsor =>
-                        <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
-                            <h3 class="ad-slot--paid-for-badge__header">
-                                @if(isSponsored) {
-                                    @if(content.hasMultipleSponsors) {
-                                        This content is sponsored.
-                                    } else {
-                                        Sponsored by:
-                                    }
+@defining(content.isSponsored(Some(Edition(request))),
+    content.isAdvertisementFeature,
+    content.isFoundationSupported) { case (isSponsored, isAdFeature, isFoundationFunded) =>
+    @if(
+        SponsoredSwitch.isSwitchedOn &&
+            (isSponsored || isAdFeature || isFoundationFunded) &&
+            !content.isInappropriateForSponsorship
+    ) {
+        @defining((
+            content match {
+                case _ if isSponsored => "spbadge"
+                case _ if isAdFeature => "adbadge"
+                case _ => "fobadge"
+            },
+            content match {
+                case _: LiveBlog => "live-blog"
+                case _: Interactive => "interactive"
+                case _ => "article"
+            },
+            content match {
+                case _: Media | _: Gallery => "141"
+                case _ => "140"
+            }
+            )) { case (name, badgeType, adSlotWidth) =>
+            @fragments.commercial.adSlot(
+                name,
+                Seq("paid-for-badge", s"paid-for-badge--$badgeType"),
+                Map("mobile" -> Seq("1,1", s"$adSlotWidth,90")),
+                showLabel = false,
+                refresh = false,
+                forceDisplay = content.sponsor.nonEmpty
+            ) {
+                @content.sponsor.map { sponsor =>
+                    <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
+                        <h3 class="ad-slot--paid-for-badge__header">
+                            @if(isSponsored) {
+                                @if(content.hasMultipleSponsors) {
+                                    This content is sponsored.
                                 } else {
-                                    @if(isAdFeature) {
-                                        Brought to you by:
-                                    } else {
-                                        @content.sponsorshipTag.map { tag =>
-                                        Guardian @tag.name is supported by:
-                                        }.getOrElse {
-                                            Supported by:
-                                        }
+                                    Sponsored by:
+                                }
+                            } else {
+                                @if(isAdFeature) {
+                                    Brought to you by:
+                                } else {
+                                    @content.sponsorshipTag.map { tag =>
+                                    Guardian @tag.name is supported by:
+                                    }.getOrElse {
+                                        Supported by:
                                     }
                                 }
-                            </h3>
-                            @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
-                                <p class="ad-slot--paid-for-badge__header">@sponsor</p>
                             }
-                        </div>
-                    }
+                        </h3>
+                        @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
+                            <p class="ad-slot--paid-for-badge__header">@sponsor</p>
+                        }
+                    </div>
                 }
             }
         }

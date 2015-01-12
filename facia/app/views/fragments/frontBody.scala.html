@@ -1,37 +1,41 @@
 @(faciaPage: model.FaciaPage)(implicit request: RequestHeader)
-
+@import common.Edition
 @import views.support.RenderClasses
 
-@if(faciaPage.collections.nonEmpty) {
-    <div class="l-side-margins">
-        <div class="history-tags js-history-tags"></div>
-        <div class="@RenderClasses(Map(
-                "fc-container--sponsored" -> faciaPage.isSponsored(),
-                "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature(),
-                "js-sponsored-front" -> (faciaPage.isSponsored() || faciaPage.isAdvertisementFeature() || faciaPage.isFoundationSupported())
+@defining((faciaPage.isSponsored(Some(Edition(request))),
+        faciaPage.isAdvertisementFeature,
+        faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
+    @if(faciaPage.collections.nonEmpty) {
+        <div class="l-side-margins">
+            <div class="history-tags js-history-tags"></div>
+            <div class="@RenderClasses(Map(
+                "fc-container--sponsored" -> isSponsored,
+                "fc-container--advertisement-feature" -> isAdFeature,
+                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
             ), "facia-page")"
             data-link-name="Front | @request.path"
-            @faciaPage.sponsor.map { sponsor =>
+                @faciaPage.sponsor.map { sponsor =>
                 data-sponsor="@sponsor"
-            }
-            @faciaPage.sponsorshipType.map { sponsorshipType =>
+                }
+                @faciaPage.sponsorshipType.map { sponsorshipType =>
                 data-sponsorship="@sponsorshipType"
-            }
+                }
             role="main">
 
-            @defining(faciaPage.front.containers) { collections =>
-                @collections.map{ containerDefinition =>
-                    @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
+                @defining(faciaPage.front.containers) { collections =>
+                    @collections.map { containerDefinition =>
+                        @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
+                    }
                 }
-            }
 
-            @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
+                @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
-        @if(!faciaPage.isAdvertisementFeature()) {
-            <div class="fc-container fc-container--commercial">
-                @fragments.commercial.commercialComponent()
+                @if(!isAdFeature) {
+                    <div class="fc-container fc-container--commercial">
+                    @fragments.commercial.commercialComponent()
+                    </div>
+                }
             </div>
-        }
         </div>
-    </div>
+    }
 }

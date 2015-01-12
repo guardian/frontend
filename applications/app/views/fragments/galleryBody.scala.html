@@ -1,11 +1,10 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
-@import views.support.RenderClasses
 @import views.support.TrailCssClasses.articleToneClass
 
 <div class="l-side-margins l-side-margins--media">
 
     <article class="@RenderClasses(
-            Map("content--advertisement-feature" -> gallery.isAdvertisementFeature()),
+            Map("content--advertisement-feature" -> gallery.isAdvertisementFeature),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${articleToneClass(gallery)}"
         )"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">

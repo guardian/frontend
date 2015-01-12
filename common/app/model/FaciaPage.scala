@@ -66,11 +66,11 @@ case class FaciaPage(id: String,
   override def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(section), maybeEdition))
   override def hasMultipleSponsors = false // Todo: need to think about this
-  override def isAdvertisementFeature(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isAdvertisementFeature(_, Some(section), maybeEdition))
+  override lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
+      Some(section)))
   override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  override def isFoundationSupported(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isFoundationSupported(_, Some(section), maybeEdition))
+  override lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
+      Some(section)))
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 

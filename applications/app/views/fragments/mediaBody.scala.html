@@ -10,7 +10,7 @@
     <article class="@RenderClasses(
             Map(
                 "content--has-body" -> media.body.nonEmpty,
-                "content--advertisement-feature" -> page.media.isAdvertisementFeature()
+                "content--advertisement-feature" -> page.media.isAdvertisementFeature
             ),
             "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${articleToneClass(media)}"
         )"
