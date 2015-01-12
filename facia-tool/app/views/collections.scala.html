@@ -8,7 +8,7 @@
         <span data-bind="text: alert"></span>.
         <a data-bind="click: pressLiveFront">Retry it?</a>
         If this persists beyond a few minutes, <a href="https://sites.google.com/a/guardian.co.uk/digital-incident-management/">contact support</a>.
-        <i class="icon-remove" data-bind="click: clearAlerts"></i>
+        <i class="fa fa-remove remove" data-bind="click: clearAlerts"></i>
     </div>
 
     <div data-bind="template: {
@@ -51,7 +51,7 @@
                             text: length"></span>
                         <a class="editor__revert" data-bind="
                             visible: meta() && field(),
-                            click: revert"><i class="icon-fast-backward"></i></a>
+                            click: revert"><i class="fa fa-fast-backward"></i></a>
                     <!-- /ko -->
                 </div>
             <!-- /ko -->
@@ -112,7 +112,7 @@
             <!-- /ko -->
 
             <!-- ko if: state.hasMainVideo -->
-                <div class="has-playable"><i class="icon-play"></i></div>
+                <div class="has-playable"><i class="fa fa-play"></i></div>
             <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
@@ -157,19 +157,19 @@
                     <a class="tool tool--small tool--small--remove" data-bind="
                         clickBubble: false,
                         click: $parent.omitItem">
-                        <i class="icon-trash"></i></a>
+                        <i class="fa fa-trash"></i></a>
 
                     <a class="tool tool--small tool--small--ophan" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
                         attr: {href: state.ophanUrl}">
-                        <i class="icon-signal"></i></a>
+                        <i class="fa fa-signal"></i></a>
 
                     <a class="tool tool--small tool--small--href" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
                         attr: {href: viewUrl}">
-                        <i class="icon-share-alt"></i></a>
+                        <i class="fa fa-share"></i></a>
                 </div>
 
                 <a class="article__content" data-bind="attr: {href: id}">

@@ -71,8 +71,9 @@ header {
 .config-pane i {
     position: relative;
     float: right;
-    zoom: 1.5;
+    font-size: 1.6em;
     margin-right: 0.7em;
+    color: #999;
 }
 
 .config-pane ul {
@@ -391,7 +392,7 @@ header {
     background: #ffff00;
 }
 
-.alert .icon-remove {
+.alert .remove {
     position: absolute;
     right: 10px;
     top: 15px;
@@ -768,11 +769,6 @@ collection-widget:first-child .collection {
     min-height: 50px;
 }
 
-.article__content .icon-pencil {
-    cursor: pointer;
-    opacity: 0.5;
-}
-
 .article .copy-paste {
     display: none;
 }
@@ -984,6 +980,7 @@ select {
     top: 3px;
     width: 0px;
     font-size: 12px;
+    color: inherit;
 }
 
 .editor__length {
@@ -1090,9 +1087,10 @@ button {
 
 .search-tools {
     float: right;
+    color: #999;
 }
 
-.search-tools a {
+.search-tools i {
     margin-left: 5px;
 }
 
@@ -1284,6 +1282,10 @@ button {
     z-index: 10;
 }
 
+.article__tools i {
+    font-size: 14px;
+}
+
 .article:hover > .closed > .article__tools {
     display: block;
 }
@@ -1356,10 +1358,6 @@ button {
 
 .selected {
     color: #DD4B39;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-    margin-top: 0;
 }
 
 .performances {
@@ -1592,6 +1590,10 @@ button {
     right: 8px;
     z-index: 2;
     cursor: pointer;
+    color: #999;
+}
+.cnf-form .type-picker-closer:hover {
+    color: #000;
 }
 
 .cnf-form .type-option {
@@ -1625,50 +1627,13 @@ button {
     right: 10px;
 }
 
-/*****************************************/
-/* ICONS */
-/*****************************************/
-
-[class^="icon-"],
-[class*=" icon-"] {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background-image: url("./glyphicons-halflings.png");
-    background-position: 14px 14px;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-}
-
-[class^="icon-"]:hover,
-[class*=" icon-"]:hover {
-    opacity: 0.9;
-}
-
-.icon-chevron-down { background-position: -313px -119px; }
-.icon-chevron-up { background-position: -288px -120px; }
-.icon-refresh { background-position: -240px -24px; }
-.icon-remove { background-position: -312px 0; }
-.icon-share-alt { background-position: -336px -96px; }
-.icon-trash { background-position: -456px 0; }
-.icon-signal { background-position: -408px 0; }
-.icon-play { background-position: -264px -72px; }
-.icon-fast-backward {
-    margin-top: -1px;
-    background-position: -216px -72px;
-}
-.icon-circle-plus { background-position: 0 -96px;  }
-.icon-circle-minus { background-position: -24px -96px;  }
-
 .has-playable {
     position: absolute;
     top: 0;
     left: 62px;
     background: rgba(254,254,254,.6);
-    padding: 1px 3px 1px 4px;
+    padding: 2px 4px 2px 6px;
+    color: #555;
 }
 
 .also {
