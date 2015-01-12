@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Edition, ExecutionContexts}
+import common.{JsonComponent, Edition, ExecutionContexts}
 import model.Cached
 import models.CityResponse
 import play.api.libs.json.Json
@@ -13,7 +13,7 @@ import scala.concurrent.Future
 object LocationsController extends Controller with ExecutionContexts {
   def findCity(query: String) = Action.async {
     WeatherApi.searchForLocations(query) map { locations =>
-      Cached(7.days)(Ok(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
+      Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
     }
   }
 
@@ -26,10 +26,10 @@ object LocationsController extends Controller with ExecutionContexts {
       case Some(city) =>
         WeatherApi.searchForLocations(city) map { locations =>
           val cities = CityResponse.fromLocationResponses(locations.toList)
-          Cached(7.days)(Ok(Json.toJson(cities.headOption.getOrElse(cityFromRequestEdition))))
+          Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cities.headOption.getOrElse(cityFromRequestEdition))))
         }
 
-      case None => Future.successful(Ok(Json.toJson(cityFromRequestEdition)))
+      case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
     }
   }
 }
