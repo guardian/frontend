@@ -38,6 +38,6 @@ object LocationsController extends Controller with ExecutionContexts {
   def fakeWhatIsMyCity() = Action { implicit request =>
     /** This to gather data for reporting to AccuWeather on predicted usage */
     WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(7.days)(Ok("Recorded"))
+    Cached(10.minutes)(Ok("Recorded"))
   }
 }
