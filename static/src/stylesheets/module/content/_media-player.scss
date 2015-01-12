@@ -733,7 +733,7 @@ $vjs-height-ratio: 7/3;
 .vjs-ads-overlay-skip--enabled {
     .vjs-ads-overlay-skip-button {
         background-color: inherit;
-        border: none;
+        border: 0;
 
         .i-play-icon-grey {
             display: inline-block;
