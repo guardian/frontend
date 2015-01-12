@@ -59,6 +59,7 @@ define([
                 {
                     key: 'headline',
                     editable: true,
+                    slimEditable: true,
                     ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
@@ -273,6 +274,8 @@ define([
 
             this.uneditable = opts.uneditable;
 
+            this.slimEditor = opts.slimEditor;
+
             this.state = asObservableProps([
                 'enableContentOverrides',
                 'underDrag',
@@ -419,7 +422,8 @@ define([
                 meta,
                 field;
 
-            if(!opts.editable) { return; }
+            if (!opts.editable) { return; }
+            if (this.slimEditor && opts.slimEditable !== true) { return; }
 
             key = opts.key;
             meta = self.meta[key] || function() {};

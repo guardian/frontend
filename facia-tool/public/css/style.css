@@ -911,6 +911,15 @@ collection-widget:first-child .collection {
     display: none !important;
 }
 
+.slimEditor .label,
+.slimEditor .supporting,
+.slimEditor .supporting-message,
+.slimEditor .has-sublinks,
+.slimEditor .editorsDisplay,
+.slimEditor .trailText {
+    display: none;
+ }
+
 input[type="text"],
 textarea,
 select{

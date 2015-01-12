@@ -99,7 +99,8 @@
                 open: state.isOpen,
                 underDrag: state.underDrag() && !state.underControlDrag(),
                 underControlDrag: state.underDrag() && state.underControlDrag(),
-                imageHidden: meta.imageHide
+                imageHidden: meta.imageHide,
+                slimEditor: slimEditor
             }">
 
             <a class="thumb" data-bind="
@@ -218,7 +219,7 @@
                                 </span>
                             <!-- /ko -->
 
-                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+                            <span class="editorsDisplay" data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
                             <!-- ko if: state.tone -->
                                 <span class="label" data-bind="text: state.tone"></span>

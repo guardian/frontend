@@ -242,6 +242,10 @@ define([
         return !this.confirmSendingAlert();
     };
 
+    Front.prototype.slimEditor = function () {
+        return _.contains(vars.CONST.restrictedEditor, this.front());
+    };
+
     Front.prototype.dispose = function () {
         this.listeners.dispose();
         _.each(this.setIntervals, function (timeout) {

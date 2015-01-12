@@ -36,6 +36,10 @@ define([
             'breaking-news'
         ],
 
+        restrictedEditor: [
+            'breaking-news'
+        ],
+
         detectPressFailureMs: 10000,
 
         maxFronts: 500,
