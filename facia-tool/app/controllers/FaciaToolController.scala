@@ -88,7 +88,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
         FaciaJsonClient.client.collection(collectionId).map(_.map{ collectionJson =>
           val updatedCollectionJson = UpdateActions.updateTreats(update.update, collectionJson)
-          S3FrontsApi.putBlock(collectionId, Json.prettyPrint(Json.toJson(collectionJson)))
+          S3FrontsApi.putBlock(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
           Ok(Json.toJson(updatedCollectionJson)).as("application/json")
         }.getOrElse(NotFound))
 
