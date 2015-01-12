@@ -43,7 +43,7 @@ case class Switch( group: String,
 
 object Switch {
   private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get
+  def allSwitches: Seq[Switch] = switches.get()
 }
 
 object Switches {
@@ -275,7 +275,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
     "If this switch is on, ad features with expired line items will return 410s.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
 
