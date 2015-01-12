@@ -3,7 +3,7 @@ package controllers
 import common.{WeatherMetrics, JsonComponent, Edition, ExecutionContexts}
 import model.Cached
 import models.CityResponse
-import play.api.libs.json.Json
+import play.api.libs.json.{JsNull, Json}
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
@@ -38,6 +38,6 @@ object LocationsController extends Controller with ExecutionContexts {
   def fakeWhatIsMyCity() = Action { implicit request =>
     /** This to gather data for reporting to AccuWeather on predicted usage */
     WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(10.minutes)(Ok("Recorded"))
+    Cached(10.minutes)(JsonComponent.forJsValue(JsNull))
   }
 }
