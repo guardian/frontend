@@ -18,9 +18,9 @@ define([
                     history.showInMegaNavToggle();
                     this.setState({ enabled: history.showInMegaNavEnabled() });
                     if (this.state.enabled) {
-                        ab.addParticipation({id: 'HistoryTags'}, 'show')
+                        ab.addParticipation({id: 'HistoryTags'}, 'show');
                     } else {
-                        ab.removeParticipation({id: 'HistoryTags'})
+                        ab.removeParticipation({id: 'HistoryTags'});
                     }
                 },
                 render: function () {
