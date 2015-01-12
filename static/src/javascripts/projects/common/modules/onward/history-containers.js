@@ -68,8 +68,11 @@ define([
             'travel':'86c5-ca98-e61d-96f5',
             'science':'e9c7-cf23-23b1-363b',
             'education':'12a5-b602-5785-0550',
-            'education/students':'396b3c63-edbd-4d3d-b936-5dcdf4ab937a',
-            'media':'14ce0f66-4596-4a9e-a327-db71d25b8d1a'
+            'education/students':'396b3c63-edbd-4d3d-b936-5dcdf4ab937a'
+            // We don't want to compete with the 'pictures & video'
+            // container, and also the media container seems broken
+            // (return 503) for some reason
+            // 'media':'14ce0f66-4596-4a9e-a327-db71d25b8d1a'
         };
 
     function getFavouriteContainerIds(opts) {
