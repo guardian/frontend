@@ -9,6 +9,7 @@ import weather.WeatherApi
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
+import scalaz.std.option.optionInstance.tuple2
 
 object LocationsController extends Controller with ExecutionContexts {
   def findCity(query: String) = Action.async { implicit request =>
@@ -17,17 +18,21 @@ object LocationsController extends Controller with ExecutionContexts {
     }
   }
 
-  val LocationHeader: String = "X-GU-GeoCity"
+  val CityHeader: String = "X-GU-GeoCity"
+  val CountryHeader: String = "X-GU-GeoCountry"
 
   def whatIsMyCity() = Action.async { implicit request =>
     WeatherMetrics.whatIsMyCityRequests.increment()
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
-    request.headers.get(LocationHeader) match {
-      case Some(city) =>
+    tuple2(
+      request.headers.get(CityHeader),
+      request.headers.get(CountryHeader)
+    ) match {
+      case Some((city, country)) =>
         WeatherApi.searchForLocations(city) map { locations =>
-          val cities = CityResponse.fromLocationResponses(locations.toList)
+          val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
           Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cities.headOption.getOrElse(cityFromRequestEdition))))
         }
 
