@@ -141,7 +141,7 @@ trait PaidForTagAgent {
                                     maybeSectionId: Option[String]): Boolean = {
     val lineItems = findWinningTagPair(capiTags,
       maybeSectionId) map (_.dfpTag.lineItems) getOrElse Nil
-    lineItems forall (_.endTime exists (_.isBeforeNow))
+    lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],

@@ -16,7 +16,7 @@ import scala.language.postfixOps
     val discussionApi = new DiscussionApi {
       override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
         assert(expectedUrl === url)
-        future {null} // Don't care what is returned for this test
+        Future {null} // Don't care what is returned for this test
       }
       protected val clientHeaderValue: String = ""
       protected val apiRoot: String = ""
@@ -39,7 +39,7 @@ import scala.language.postfixOps
     val discussionApi = new DiscussionApi {
       override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
         assert(expectedUrl === url)
-        future {null}
+        Future {null}
       }
       protected val clientHeaderValue: String = ""
       protected val apiRoot: String = ""

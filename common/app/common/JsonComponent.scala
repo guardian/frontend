@@ -10,8 +10,6 @@ import play.api.http.ContentTypes._
 
 object JsonComponent extends Results with implicits.Requests {
 
-  type ListOfString = List[String]
-
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
   def apply(html: Html)(implicit request: RequestHeader): Result = {
@@ -54,7 +52,7 @@ object JsonComponent extends Results with implicits.Requests {
         case (name, value: Int) => name -> toJson(value)
         case (name, value: Double) => name -> toJson(value)
         case (name, value: Float) => name -> toJson(value)
-        case (name, value: ListOfString) => name -> toJson(value)
+        case (name, value: List[_]) if value.forall(_.isInstanceOf[String]) => name -> toJson(value.asInstanceOf[List[String]])
         case (name, value: JsValue) => name -> value
       }
     ))

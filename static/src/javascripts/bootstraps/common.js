@@ -49,6 +49,7 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
+    'common/modules/weather',
 
     'bootstraps/identity',
 
@@ -104,6 +105,7 @@ define([
     Tabs,
     Toggles,
     userPrefs,
+    weather,
 
     identity,
 
@@ -442,6 +444,12 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
+
+            initWeatherComponent: function () {
+                mediator.on('page:common:ready', function () {
+                    weather.init();
+                });
             }
 
         },
@@ -482,6 +490,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.initWeatherComponent();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
