@@ -49,6 +49,7 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
+    'common/modules/weather',
 
     'bootstraps/identity',
 
@@ -104,6 +105,7 @@ define([
     Tabs,
     Toggles,
     userPrefs,
+    weather,
 
     identity,
 
@@ -178,7 +180,7 @@ define([
             },
 
             transcludeOnwardContent: function () {
-                if ('seriesId' in config.page && 'showRelatedContent' in config.page && config.page.showRelatedContent) {
+                if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
                     new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {
@@ -442,6 +444,12 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
+
+            initWeatherComponent: function () {
+                mediator.on('page:common:ready', function () {
+                    weather.init();
+                });
             }
 
         },
@@ -482,6 +490,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.initWeatherComponent();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');

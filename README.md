@@ -10,7 +10,7 @@ SBT for the Play Framework backend.
 Core Development Principles (lines in the sand)
 ===============================================
 
-This applies to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
+These principles apply to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
 
 On the server
 -------------
@@ -54,7 +54,7 @@ STAGE=DEV
 
 * `~/.aws/credentials`
 
-	Ask your team mate to create you an account and securely send you the access key.  For security you must enable MFA - ask if you're not sure what this means.
+	Ask your team mate to create an account for you and securely send you the access key.  For security, you must enable MFA - ask if you're not sure what this means.
 ```
 [nextgen]
 aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
@@ -113,7 +113,7 @@ sudo gem install bundler
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
 
-Xcode installs an old version of git `1.9.3`, if you need a newer version you can run
+Xcode installs an old version of git `1.9.3`. If you need a newer version, you can run
 ```
 brew install git
 echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
@@ -169,9 +169,9 @@ Then compile and run the project locally by typing
 ```
 run
 ```
-This also can take a while first time.
+This also can take a while the first time.
 
-Now test you are up and running by hitting the following URLs:
+Now check that you are up and running by hitting the following URLs:
 
 * [http://localhost:9000/books](http://localhost:9000/books)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
@@ -180,7 +180,7 @@ Now test you are up and running by hitting the following URLs:
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
 ##IDE setup
-You need a copy of the source code from above, if not run this command:
+You need a copy of the source code from above. If not, run this command:
 ```
 git clone git@github.com:guardian/frontend.git
 ```
@@ -199,8 +199,7 @@ gen-idea
 ```
 See https://github.com/mpeltonen/sbt-idea for more info.
 
-Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other
-things to do.
+Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
 ## Troubleshooting
 
@@ -211,12 +210,12 @@ If you get errors like this on `npm install`
 npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirejs-4becac899d6c8f35.lock'
 ```
 
-Sometimes when you install npm it ends up owned by root (but in your home
+Sometimes when you install npm, it ends up owned by root (but in your home
 directory).
 
 Check that you own your own .npm directory `ls -ld ~/.npm`
 
-If it is owned by root then take ownership of it
+If it is owned by root, then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
 

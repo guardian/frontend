@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
+    'common/modules/experiments/tests/sticky-container-titles',
     'common/modules/experiments/tests/breaking-news-alert-style'
 ], function (
     raven,
@@ -31,6 +32,7 @@ define([
     HighCommercialComponent,
     HistoryTags,
     HistoryContainers,
+    StickyContainerTitles,
     BreakingNewsAlertStyle
 ) {
 
@@ -39,6 +41,7 @@ define([
             new HighCommercialComponent(),
             new HistoryTags(),
             new HistoryContainers(),
+            new StickyContainerTitles(),
             new BreakingNewsAlertStyle()
         ],
         participationsKey = 'gu.ab.participations';
@@ -288,7 +291,12 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariant: getTestVariant
+        getTestVariant: getTestVariant,
+
+        // testing
+        reset: function () {
+            TESTS = [];
+        }
     };
 
     return ab;

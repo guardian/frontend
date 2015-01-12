@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
 import common._
+import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import org.jsoup.nodes.Document
@@ -69,12 +70,16 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
 
       val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
-      val content = supportedContent map { Content(_) } map {
+      val content: Option[ArticleWithStoryPackage] = supportedContent map { Content(_) } map {
         case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      ModelOrResult(content, response)
+      if (AdFeatureExpirySwitch.isSwitchedOn && content.exists (_.article.isExpiredAdvertisementFeature)) {
+        Right(Gone)
+      } else {
+        ModelOrResult(content, response)
+      }
     }
 
     result recover convertApiExceptions

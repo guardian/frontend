@@ -21,7 +21,7 @@
     </div>
 }.getOrElse {
     @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-        <div class="fc-container__header js-container__header">
+        <div class="fc-container__header js-container__header @if(containerDefinition.showDateHeader) { js-weather }">
             @title.map { title =>
                 @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
                     <div class="@RenderClasses(Map(
@@ -29,9 +29,9 @@
                         "tone-comment" -> isContributor,
                         "tone-colour" -> isContributor))">
                         @href.map { href =>
-                        <a data-link-name="section heading" href="@LinkTo {/@href}">
-                        @Html(Localisation(title))
-                        </a>
+                            <a data-link-name="section heading" href="@LinkTo {/@href}">
+                                @Html(Localisation(title))
+                            </a>
                         }.getOrElse {
                             <span tabindex="0">@Html(Localisation(title))</span>
                         }

@@ -1,16 +1,11 @@
 // Default
 
-.block-share__link {
+.block-share__item {
     display: block;
     float: left;
     cursor: pointer;
-}
-
-.block-share__item {
-    display: block;
     border: 1px solid colour(neutral-3);
     margin-right: $gs-gutter / 4;
-    @include border-radius(50%);
     width: $gs-baseline * 2;
     height: $gs-baseline * 2;
     @include box-sizing(border-box);

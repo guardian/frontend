@@ -275,6 +275,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+    "If this switch is on, ad features with expired line items will return 410s.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -390,6 +394,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val WeatherSwitch = Switch("Feature", "weather",
+    "If this is switched on then the weather component is displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
     "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -402,6 +411,11 @@ object Switches {
 
   val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
     "If this is switched on then personalised containers based on history are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
+    "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 

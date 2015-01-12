@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import model.Trail
 
 sealed trait Breakpoint

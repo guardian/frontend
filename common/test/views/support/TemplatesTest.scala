@@ -47,15 +47,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
-  "Inflector" should "singularize tag name" in {
-    Tag(tag("Minute by minutes")).singularName should be("Minute by minute")
-    Tag(tag("News")).singularName should be("News")
-  }
-
-  it should "pluralize tag name" in {
-    Tag(tag("Article")).pluralName should be("Articles")
-  }
-
   "PictureCleaner" should "correctly format inline pictures" in {
 
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
