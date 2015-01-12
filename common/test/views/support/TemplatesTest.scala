@@ -1,14 +1,14 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset, Content => ApiContent}
-import model._
-import org.joda.time.DateTime
-import org.scalatest.{ Matchers, FlatSpec }
-import xml.XML
+import com.gu.contentapi.client.model.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import common.Edition
 import common.editions.Uk
 import conf.Configuration
-import org.jsoup.Jsoup
+import model._
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
+
+import scala.xml.XML
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -27,9 +27,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "tone/foo", tagType = "tone")),
         Tag(tag(id = "type/video", tagType = "type"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override def isFoundationSupported(maybeEdition:Option[Edition]): Boolean = false
+      override def isAdvertisementFeature(maybeEdition:Option[Edition]): Boolean = false
     }
     tags.typeOrTone.get.id should be("type/video")
   }
@@ -40,9 +40,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "type/article", tagType = "type")),
         Tag(tag(id = "tone/foo", tagType = "tone"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override def isFoundationSupported(maybeEdition:Option[Edition]): Boolean = false
+      override def isAdvertisementFeature(maybeEdition:Option[Edition]): Boolean = false
     }
     tags.typeOrTone.get.id should be("tone/foo")
   }
@@ -86,7 +86,7 @@ class TemplatesTest extends FlatSpec with Matchers {
 
     (body \\ "figcaption").foreach { fig =>
       (fig \ "@itemprop").text should be("description")
-      (fig).text should include("Image caption")
+      fig.text should include("Image caption")
     }
   }
 
@@ -121,22 +121,22 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   it should "not add the dropcap span when the paragraph is does not begin with a letter" in {
     val body = withJsoup(bodyWithMarkup)(DropCaps(true)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when the paragraph is which begins with a word of less than two letters" in {
     val body = withJsoup(bodyStartsWithTwoLetters)(DropCaps(true)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when first body element is not a paragraph" in {
     val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when when the article is not a feature" in {
     val body = withJsoup(bodyWithoutInlines)(DropCaps(false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   "RowInfo" should "add row info to a sequence" in {

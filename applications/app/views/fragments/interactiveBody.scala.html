@@ -6,9 +6,9 @@
 <div class="l-side-margins">
     <article class="@RenderClasses(
             Map(
-                "content--advertisement-feature" -> interactive.isAdvertisementFeature,
-                "content--sponsored" -> interactive.isSponsored,
-                "content--foundation-supported" -> interactive.isFoundationSupported
+                "content--advertisement-feature" -> interactive.isAdvertisementFeature(),
+                "content--sponsored" -> interactive.isSponsored(),
+                "content--foundation-supported" -> interactive.isFoundationSupported()
             ),
             "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
         )"

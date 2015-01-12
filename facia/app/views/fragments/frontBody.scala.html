@@ -6,9 +6,9 @@
     <div class="l-side-margins">
         <div class="history-tags js-history-tags"></div>
         <div class="@RenderClasses(Map(
-                "fc-container--sponsored" -> faciaPage.isSponsored,
-                "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature,
-                "js-sponsored-front" -> (faciaPage.isSponsored || faciaPage.isAdvertisementFeature || faciaPage.isFoundationSupported)
+                "fc-container--sponsored" -> faciaPage.isSponsored(),
+                "fc-container--advertisement-feature" -> faciaPage.isAdvertisementFeature(),
+                "js-sponsored-front" -> (faciaPage.isSponsored() || faciaPage.isAdvertisementFeature() || faciaPage.isFoundationSupported())
             ), "facia-page")"
             data-link-name="Front | @request.path"
             @faciaPage.sponsor.map { sponsor =>
@@ -27,7 +27,7 @@
 
             @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
-        @if(!faciaPage.isAdvertisementFeature) {
+        @if(!faciaPage.isAdvertisementFeature()) {
             <div class="fc-container fc-container--commercial">
                 @fragments.commercial.commercialComponent()
             </div>

@@ -11,9 +11,9 @@
     <div class="@RenderClasses(Map(
         "u-cf" -> true,
         "index-page" -> true,
-        "js-sponsored-front" -> (index.page.isSponsored ||
-            index.page.isAdvertisementFeature ||
-            index.page.isFoundationSupported))
+        "js-sponsored-front" -> (index.page.isSponsored() ||
+            index.page.isAdvertisementFeature() ||
+            index.page.isFoundationSupported()))
         )"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>

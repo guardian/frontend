@@ -55,7 +55,7 @@ trait MetaData extends Tags {
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
     ("hasClassicVersion", JsBoolean(hasClassicVersion)),
-    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature())),
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
     ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
   )
@@ -81,9 +81,12 @@ trait MetaData extends Tags {
 
   def customSignPosting: Option[NavItem] = None
 
-  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
-  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
-  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
+  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isSponsored(tags, Some(section), maybeEdition)
+  override def isFoundationSupported(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isFoundationSupported(tags, Some(section), maybeEdition)
+  override def isAdvertisementFeature(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isAdvertisementFeature(tags, Some(section), maybeEdition)
   lazy val isExpiredAdvertisementFeature: Boolean = DfpAgent.isExpiredAdvertisementFeature(tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 }
@@ -246,19 +249,19 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored: Boolean
+  def isSponsored(maybeEdition: Option[Edition] = None): Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
-  def isAdvertisementFeature: Boolean
+  def isAdvertisementFeature(maybeEdition: Option[Edition] = None): Boolean
   def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
-  def isFoundationSupported: Boolean
+  def isFoundationSupported(maybeEdition: Option[Edition] = None): Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
   def sponsorshipType: Option[String] = {
-    if (isSponsored) {
+    if (isSponsored()) {
       Option("sponsoredfeatures")
-    } else if (isAdvertisementFeature) {
+    } else if (isAdvertisementFeature()) {
       Option("advertisement-features")
-    } else if (isFoundationSupported) {
+    } else if (isFoundationSupported()) {
       Option("foundation-features")
     } else {
       None
