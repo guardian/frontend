@@ -91,7 +91,11 @@ object IndexPage {
 
     val front = Front.fromConfigsAndContainers(
       containerDefinitions,
-      ContainerLayoutContext(Set.empty, hideCutOuts = indexPage.page.isContributorPage)
+      ContainerLayoutContext(
+        Set.empty,
+        hideCutOuts = indexPage.page.isContributorPage,
+        ContainerLayoutContext.MaximumVideoPlayersPerTagPage
+      )
     )
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>

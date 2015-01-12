@@ -13,17 +13,13 @@ trait Prototypes {
 
   val frontendCompilationSettings = Seq(
     organization := "com.gu",
-
     maxErrors := 20,
-    javacOptions := Seq(
-      "-g",
-      "-encoding", "utf8"
-    ),
+    javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
-      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
-      "-Xfatal-warnings"
-    ),
-    doc in Compile <<= target.map(_ / "none")
+      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
+    doc in Compile <<= target.map(_ / "none"),
+    incOptions := incOptions.value.withNameHashing(true),
+    scalaVersion := "2.11.4"
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -34,14 +30,9 @@ trait Prototypes {
         <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
       </dependencies>,
 
-    resolvers := Seq(
-      Resolver.typesafeRepo("releases"),
-      Classpaths.typesafeReleases,
-      "Akka" at "http://repo.akka.io/releases",
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-      "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
-      "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
@@ -72,7 +63,7 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 2),
+    concurrentRestrictions in Global += Tags.limit(Tags.Test, 4),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
@@ -84,11 +75,14 @@ trait Prototypes {
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
-    javaOptions in Test += "-XX:MaxPermSize=680m",
+    javaOptions in Test += "-Xmx2048M",
+    javaOptions in Test += "-XX:+UseConcMarkSweepGC",
+    javaOptions in Test += "-XX:ReservedCodeCacheSize=128m",
     baseDirectory in Test := file(".")
   )
 
   def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
+    .settings(frontendCompilationSettings:_*)
 
   def application(applicationName: String) = {
     Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)

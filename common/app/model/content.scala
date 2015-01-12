@@ -40,6 +40,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
   lazy val standfirst: Option[String] = fields.get("standfirst")
+  lazy val contributorBio: Option[String] = fields.get("contributorBio")
   lazy val starRating: Option[Int] = fields.get("starRating").flatMap(s => Try(s.toInt).toOption)
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)

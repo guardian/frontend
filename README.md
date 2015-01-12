@@ -10,7 +10,7 @@ SBT for the Play Framework backend.
 Core Development Principles (lines in the sand)
 ===============================================
 
-This applies to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
+These principles apply to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
 
 On the server
 -------------
@@ -34,10 +34,24 @@ Contents:
 * [Useful information and hints](#useful-information-and-hints)
 * [Additional Documentation](#additional-documentation)
 
-##Local Test Server setup
-You need A Mac or Linux PC (ubuntu), then each of the things listed...
+## Local Test Server setup
+You need A Mac or Linux PC (ubuntu).
 
-###Configuration files
+### Automatic
+1. Check out the repository:
+
+    ```
+    git clone git@github.com:guardian/frontend.git
+    cd frontend
+    ```
+
+2. Run ```./setup.sh``` to install dependencies and compile assets
+3. All being well, you should be able to [run the app](#run-the-app)
+
+### Manual
+Install each of the things listed:
+
+#### Configuration files
 
 You need 3 files on your machine.
 
@@ -54,7 +68,7 @@ STAGE=DEV
 
 * `~/.aws/credentials`
 
-	Ask your team mate to create you an account and securely send you the access key.  For security you must enable MFA - ask if you're not sure what this means.
+	Ask your team mate to create an account for you and securely send you the access key.  For security, you must enable MFA - ask if you're not sure what this means.
 ```
 [nextgen]
 aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
@@ -62,13 +76,13 @@ aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
 region=eu-west-1
 ```
 
-### [Homebrew](http://brew.sh/)
+#### [Homebrew](http://brew.sh/)
 
 This is needed on Mac only:
 ```bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-###A JDK
+#### A JDK
 
 Ubuntu:
 ```bash
@@ -77,7 +91,7 @@ sudo apt-get install openjdk-7-jdk
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-###[Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+#### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 Ubuntu:
 ```bash
@@ -89,38 +103,38 @@ Mac:
 brew install node
 ```
 
-###Grunt (build tool)
+#### Grunt (build tool)
 
 Ubuntu/Mac:
 ```
 sudo npm -g install grunt-cli
 ```
-###Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
+#### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
 ```
 sudo apt-get install ruby ruby-dev
 ```
-###[bundler](http://gembundler.com/)
+#### [bundler](http://gembundler.com/)
 
 Ubuntu/Mac:
 ```
 sudo gem install bundler
 ```
 
-###Xcode (if on a Mac, one of the Node modules requires it)
+#### Xcode (if on a Mac, one of the Node modules requires it)
 
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
 
-Xcode installs an old version of git `1.9.3`, if you need a newer version you can run
+Xcode installs an old version of git `1.9.3`. If you need a newer version, you can run
 ```
 brew install git
 echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 ```
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
-###[libpng](http://libpng.org/pub/png/libpng.html)
+#### [libpng](http://libpng.org/pub/png/libpng.html)
 
 Ubuntu:
 ```
@@ -131,7 +145,7 @@ Mac:
 brew install libpng
 ```
 
-###The frontend code
+#### The frontend code
 Note: Remember to see [Troubleshooting](#troubleshooting) below if you have any issues.
 
 ```
@@ -155,6 +169,7 @@ After this, you can compile the assets:
 grunt compile
 ```
 
+### Run the app
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
 ```
 ./sbt
@@ -169,9 +184,9 @@ Then compile and run the project locally by typing
 ```
 run
 ```
-This also can take a while first time.
+This also can take a while the first time.
 
-Now test you are up and running by hitting the following URLs:
+Now check that you are up and running by hitting the following URLs:
 
 * [http://localhost:9000/books](http://localhost:9000/books)
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
@@ -180,7 +195,7 @@ Now test you are up and running by hitting the following URLs:
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
 ##IDE setup
-You need a copy of the source code from above, if not run this command:
+You need a copy of the source code from above. If not, run this command:
 ```
 git clone git@github.com:guardian/frontend.git
 ```
@@ -199,8 +214,7 @@ gen-idea
 ```
 See https://github.com/mpeltonen/sbt-idea for more info.
 
-Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other
-things to do.
+Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
 ## Troubleshooting
 
@@ -211,12 +225,12 @@ If you get errors like this on `npm install`
 npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirejs-4becac899d6c8f35.lock'
 ```
 
-Sometimes when you install npm it ends up owned by root (but in your home
+Sometimes when you install npm, it ends up owned by root (but in your home
 directory).
 
 Check that you own your own .npm directory `ls -ld ~/.npm`
 
-If it is owned by root then take ownership of it
+If it is owned by root, then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
 

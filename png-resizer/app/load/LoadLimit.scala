@@ -3,10 +3,6 @@ package load
 import java.util.concurrent.atomic.AtomicInteger
 
 import common.{ExecutionContexts, Logging}
-import conf.PngResizerMetrics
-import model.Cached
-import play.api.mvc.Results._
-import play.api.mvc._
 
 import scala.concurrent.Future
 
@@ -14,8 +10,7 @@ object LoadLimit extends ExecutionContexts with Logging {
 
   private lazy val currentNumberOfRequests = new AtomicInteger(0)
 
-  // temporary count just to check things are working as expected
-  private lazy val currentNumberOfResizes = new AtomicInteger(0)
+  private lazy val currentNumberOfAlternativeRequests = new AtomicInteger(0)
 
   private lazy val requestLimit = {
     val limit = Runtime.getRuntime.availableProcessors()
@@ -23,25 +18,23 @@ object LoadLimit extends ExecutionContexts with Logging {
     limit
   }
 
-  def apply(fallbackUri: String)(available: =>  Future[Result]): Future[Result] = try {
-    val concurrentRequests = currentNumberOfRequests.incrementAndGet
+  def tryOperation[T](alternativePool: Boolean)(operation: => Future[T])(outOfCapacity: => Future[T]): Future[T] = {
+    val reqCounter = if (alternativePool) currentNumberOfAlternativeRequests else currentNumberOfRequests
+    val concurrentRequests = reqCounter.incrementAndGet
     if (concurrentRequests <= requestLimit) try {
-      log.info(s"Resize ${currentNumberOfResizes.incrementAndGet()}/$requestLimit")
-      val result = available
+      log.info(s"AltPool: $alternativePool: Resize $concurrentRequests/$requestLimit")
+      val result = operation
       result.onComplete{_ =>
-        currentNumberOfRequests.decrementAndGet()
-        currentNumberOfResizes.decrementAndGet()
+        reqCounter.decrementAndGet()
       }
       result
     } catch {
       case t: Throwable =>
-        currentNumberOfRequests.decrementAndGet()
+        reqCounter.decrementAndGet()
         throw t
     } else {
-      log.info(s"too many requests - redirecting to $fallbackUri")
-      PngResizerMetrics.redirectCount.increment
-      currentNumberOfRequests.decrementAndGet()
-      Future.successful(Cached(60)(TemporaryRedirect(fallbackUri)))
+      reqCounter.decrementAndGet()
+      outOfCapacity
     }
   }
 }

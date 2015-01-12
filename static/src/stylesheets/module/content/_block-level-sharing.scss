@@ -1,12 +1,9 @@
 // Default
 
-.block-share__link {
+.block-share__item {
     display: block;
     float: left;
     cursor: pointer;
-}
-
-.block-share__item {
     border: 1px solid colour(neutral-3);
     margin-right: $gs-gutter / 4;
     width: $gs-baseline * 2;

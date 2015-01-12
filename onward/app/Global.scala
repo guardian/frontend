@@ -11,7 +11,8 @@ object Global extends WithFilters(Filters.common: _*)
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
   with DfpAgentLifecycle
-  with MostReadLifecycle {
+  with MostReadLifecycle
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ Seq(

@@ -68,7 +68,7 @@ import org.joda.time.LocalDate
       override val competitionAgents = Seq(
         CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
       )
-      def competitions = competitionAgents.map(_.competition)
+      override def competitions = competitionAgents.map(_.competition)
     }
 
     TestCompetitions.competitionAgents.foreach(_.refresh())

@@ -43,7 +43,7 @@ case class Switch( group: String,
 
 object Switch {
   private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get
+  def allSwitches: Seq[Switch] = switches.get()
 }
 
 object Switches {
@@ -275,6 +275,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
+    "If this switch is on, ad features with expired line items will return 410s.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -390,6 +394,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val WeatherSwitch = Switch("Feature", "weather",
+    "If this is switched on then the weather component is displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
     "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -397,6 +406,11 @@ object Switches {
 
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
+    "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
