@@ -21,7 +21,7 @@ object LocationsController extends Controller with ExecutionContexts {
 
   def whatIsMyCity() = Action.async { implicit request =>
     WeatherMetrics.whatIsMyCityRequests.increment()
-    
+
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
     request.headers.get(LocationHeader) match {
