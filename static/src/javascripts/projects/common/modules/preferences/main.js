@@ -1,10 +1,12 @@
 define([
     'react',
     'common/utils/_',
+    'common/modules/experiments/ab',
     'common/modules/onward/history'
 ], function (
     React,
     _,
+    ab,
     history
 ) {
     return function () {
@@ -15,6 +17,11 @@ define([
                 handleToggle: function () {
                     history.showInMegaNavToggle();
                     this.setState({ enabled: history.showInMegaNavEnabled() });
+                    if (this.state.enabled) {
+                        ab.addParticipation({id: 'HistoryTags'}, 'show')
+                    } else {
+                        ab.removeParticipation({id: 'HistoryTags'})
+                    }
                 },
                 render: function () {
                     var self = this,
