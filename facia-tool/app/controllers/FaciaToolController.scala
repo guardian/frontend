@@ -51,14 +51,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def readBlock(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def readBlock(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    NoCache {
-      S3FrontsApi.getBlock(id) map { json =>
-        Ok(json).as("application/json")
-      } getOrElse NotFound
-    }
-  }
+    FaciaJsonClient.client.collection(collectionId).map { configJson =>
+      NoCache {
+        Ok(Json.toJson(configJson)).as("application/json")}}}
 
   def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
