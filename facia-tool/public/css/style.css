@@ -642,15 +642,15 @@ h1 {
     overflow: hidden;
 }
 
-.modes.live-mode {
+.live-mode .modes {
     border-bottom-color: #46c430;
 }
 
-.modes.draft-mode {
+.draft-mode .modes {
     border-bottom-color: #ffc107;
 }
 
-.modes.treats-mode {
+.treats-mode .modes {
     border-bottom-color: #830DB3;
 }
 
@@ -689,13 +689,16 @@ h1 {
     display: none;
 }
 
-.front-container.treats-mode .modes a.live-mode,
-.front-container.treats-mode .modes a.draft-mode,
-.front-container.treats-mode .tools {
+.treats-mode .modes a.live-mode,
+.treats-mode .modes a.draft-mode,
+.treats-mode .tools {
     display: none;
 }
-.front-container.treats-mode .modes a.treats-mode {
+.treats-mode .modes a.treats-mode {
     display: inline-block;
+}
+.treats-mode .article-tools {
+    display: block;
 }
 
 .preview {
@@ -1705,6 +1708,7 @@ button {
 }
 .dropdown-open > ul {
     transform: scale(1);
+    margin-bottom: 5px;
 }
 .dropdown > ul {
     transform-origin: top left;

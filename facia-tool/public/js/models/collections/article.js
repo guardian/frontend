@@ -639,7 +639,8 @@ define([
                         position:   this.id(),
                         itemMeta:   this.getMeta(),
                         live:       this.front.liveMode(),
-                        draft:     !this.front.liveMode()
+                        draft:     !this.front.liveMode(),
+                        mode:       this.front.mode
                     }
                 });
             }

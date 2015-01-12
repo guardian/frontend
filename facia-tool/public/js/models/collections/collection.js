@@ -189,7 +189,8 @@ define([
                 collection: this,
                 item:       item.id(),
                 live:       front.liveMode(),
-                draft:     !front.liveMode()
+                draft:     !front.liveMode(),
+                mode:       front.mode
             }
         })
         .then(function() {

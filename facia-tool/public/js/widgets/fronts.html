@@ -1,9 +1,5 @@
 <div class="front-container" data-bind="css: frontMode">
-    <div class="modes" data-bind="
-        css: {
-            'live-mode': liveMode(),
-            'draft-mode': !liveMode()
-        }">
+    <div class="modes">
         <a class="draft-mode" data-bind="
             click: setModeDraft,
             css: {active: !liveMode()}">Draft front</a
