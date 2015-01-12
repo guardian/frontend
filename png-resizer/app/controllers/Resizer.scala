@@ -94,7 +94,7 @@ object Resizer extends Controller with Logging with implicits.Requests {
     }
 
   def resizeWithLoadLimit(request: Request[AnyContent], uri: String, width: Int, quality: Int, bytesPreResize: Array[Byte]): Future[Result \/ Array[Byte]] = {
-    LoadLimit.tryOperation[Result \/ Array[Byte]] {
+    LoadLimit.tryOperation[Result \/ Array[Byte]](request.isHealthcheck) {
       resizePngBytes(width, quality, bytesPreResize).map(\/-.apply)
     } {
       noCapacity(request, uri)
