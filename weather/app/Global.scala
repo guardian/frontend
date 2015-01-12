@@ -5,7 +5,8 @@ import play.api.mvc.WithFilters
 
 object Global extends WithFilters(Filters.common: _*)
   with DevParametersLifecycle
-  with CloudWatchApplicationMetrics {
+  with CloudWatchApplicationMetrics
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-weather"
 
   override val allowedParams: Seq[String] =

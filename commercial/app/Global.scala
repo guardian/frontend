@@ -70,8 +70,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   }
 }
 
-object Global extends WithFilters(Filters.common: _*) with CommercialLifecycle with DevParametersLifecycle
-                                                                                    with CloudWatchApplicationMetrics {
+object Global extends WithFilters(Filters.common: _*)
+  with CommercialLifecycle
+  with DevParametersLifecycle
+  with CloudWatchApplicationMetrics
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-commercial"
 }
 
