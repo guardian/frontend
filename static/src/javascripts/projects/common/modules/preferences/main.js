@@ -21,7 +21,7 @@ define([
                         toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                     return React.DOM.div({'data-link-name': 'suggested links'}, [
-                        React.DOM.p(null, 'Suggested links are shown under \'All Sections\', and are based by your recent browsing history. Remove links that don\'t interest you by clicking \'X\' next to them.'),
+                        React.DOM.p(null, 'Suggested links are shown under \'All Sections\', and are based on your recent browsing history. Remove links that don\'t interest you by clicking the \'X\' next to them.'),
                         this.state.enabled ? React.createElement(SummaryTagsList) : null,
                         React.DOM.button({
                             onClick: self.handleToggle,

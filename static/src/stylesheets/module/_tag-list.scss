@@ -22,14 +22,17 @@ $c-history-tags-background-side-bar: mix($c-history-tags-background, #ffffff, 40
     }
 
     button {
-        background: #eeeeee;
-        color: #666666;
+        @include button-colour(
+            transparent,
+            guss-colour(neutral-1, $pasteup-palette),
+            transparent,
+            darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+            guss-colour(neutral-4, $pasteup-palette)
+        );
         border: 0;
-        padding: 0 6px;
-        line-height: 18px;
-        margin-left: -5px;
-        margin-right: 5px;
-        border-radius: 8px;
+        padding: 0 $gs-baseline / 2;
+        margin-left: $gs-gutter / -4;
+        border-radius: $gs-gutter * 2 / 5;
     }
 }
 
