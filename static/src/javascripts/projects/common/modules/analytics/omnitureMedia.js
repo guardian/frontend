@@ -24,6 +24,7 @@ define([
                 'video:request': 'event98',
                 'preroll:request': 'event97',
                 'preroll:play': 'event59',
+                'preroll:skip': 'event99',
                 'preroll:end': 'event64',
                 'video:play': 'event17',
                 'audio:play': 'event19',
