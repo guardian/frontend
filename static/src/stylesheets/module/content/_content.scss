@@ -652,7 +652,8 @@
         fill: colour(analysis-accent);
     }
 
-    .tonal--tone-live & {
+    .tonal--tone-live &,
+    .tonal--tone-dead & {
         fill: colour(live-default);
     }
 

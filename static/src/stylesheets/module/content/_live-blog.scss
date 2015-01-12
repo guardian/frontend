@@ -18,35 +18,15 @@ $block-padding-right: $gs-gutter;
 /* Header
    ========================================================================== */
 .content__meta-container--liveblog {
-    border-top: 1px dotted;
     border-bottom: 0;
-    padding-top: $gs-baseline/2;
 
     @include mq(desktop) {
         border-top: 0;
         padding-top: 0;
-        margin-left: -($right-column + $gs-gutter);
+        margin-left: 0;
         width: $right-column;
         min-height: gs-height(1)*1.5;
-        position: absolute;
-        top: 0;
-    }
-
-    .byline,
-    .content__dateline,
-    .content__head__comment-count,
-    .commentcount {
-        color: inherit;
-        margin: 0;
-        border: 0;
-        padding-top: $gs-baseline/6;
-        padding-bottom: $gs-baseline/3;
-        height: auto;
-        min-height: 0;
-
-        .tone-colour {
-            color: inherit;
-        }
+        position: initial;
     }
 
     .byline {
@@ -56,23 +36,11 @@ $block-padding-right: $gs-gutter;
             padding-top: 0;
         }
     }
+}
 
-    .byline-img {
-        width: 60px;
-        height: 60px;
-        margin: 0;
-    }
-
-    .byline-img__img {
-        bottom: -$gs-baseline/2;
-    }
-
-    .meta__image {
-        margin-right: $gs-gutter/2;
-    }
-
-    .meta__body {
-        clear: none;
+.blog__timeline {
+    @include mq(desktop) {
+        padding-top: $gs-baseline;
     }
 }
 
@@ -94,6 +62,9 @@ $block-padding-right: $gs-gutter;
 .content__updated-container--liveblog {
     @include fs-textSans(1);
     padding: $gs-baseline/3 0;
+    margin-left: -($right-column + $gs-gutter);
+    position: absolute;
+    top: 0;
 }
 
 @include keyframes(live-pulse) {
@@ -586,6 +557,8 @@ $timeline-width: 15px;
         @include transform(translateZ(0)); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
+        padding-top: $gs-baseline;
+        border-top: 1px solid colour(live-default);
     }
 }
 
