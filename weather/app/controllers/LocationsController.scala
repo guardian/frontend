@@ -1,6 +1,6 @@
 package controllers
 
-import common.{JsonComponent, Edition, ExecutionContexts}
+import common.{WeatherMetrics, JsonComponent, Edition, ExecutionContexts}
 import model.Cached
 import models.CityResponse
 import play.api.libs.json.Json
@@ -20,6 +20,8 @@ object LocationsController extends Controller with ExecutionContexts {
   val LocationHeader: String = "X-GU-GeoCity"
 
   def whatIsMyCity() = Action.async { implicit request =>
+    WeatherMetrics.whatIsMyCityRequests.increment()
+    
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
     request.headers.get(LocationHeader) match {
@@ -31,5 +33,11 @@ object LocationsController extends Controller with ExecutionContexts {
 
       case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
     }
+  }
+
+  def fakeWhatIsMyCity() = Action { implicit request =>
+    /** This to gather data for reporting to AccuWeather on predicted usage */
+    WeatherMetrics.whatIsMyCityRequests.increment()
+    Cached(7.days)(Ok("Recorded"))
   }
 }

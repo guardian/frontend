@@ -349,6 +349,13 @@ object PerformanceMetrics {
   )
 }
 
+object WeatherMetrics {
+  val whatIsMyCityRequests = CountMetric(
+    "what-is-my-city-requests",
+    "Count of requests for user's location"
+  )
+}
+
 trait CloudWatchApplicationMetrics extends GlobalSettings {
   import common.MemcachedMetrics._
   val applicationMetricsNamespace: String = "Application"
