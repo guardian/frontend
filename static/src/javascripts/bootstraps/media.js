@@ -125,7 +125,6 @@ define([
                 player.one('Vpaid::AdStarted', events.vpaidStarted);
 
                 if (shouldAutoPlay(player)) {
-                    console.log('PLAYING');
                     player.play();
                 }
             }
@@ -273,6 +272,9 @@ define([
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
+        // need to explicitly set the height, as the ima plugin uses it
+        player.height(bonzo(player.el()).parent().dim().height);
+
         if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
@@ -397,20 +399,15 @@ define([
                         player.adCountdown();
                         player.adSkipCountdown(15);
 
-//                            player.ads({
-//                                timeout: 3000
-//                            });
-//                            player.vast({
-//                                url: getVastUrl()
-//                            });
-
+                            player.ads({
+                                timeout: 3000
+                            });
 
                             require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
                                 .then(function () {
                                     player.ima({
                                         id: mediaId,
-                                        adTagUrl: getVastUrl(),
-                                        nonLinearHeight: 394
+                                        adTagUrl: getVastUrl()
                                     });
                                     // Video analytics event.
                                     player.trigger(events.constructEventName('preroll:request', player));
