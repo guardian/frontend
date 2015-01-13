@@ -185,6 +185,15 @@ define([
         return participation && participation.variant;
     }
 
+    function setTestVariant(testId, variant) {
+        var participations = getParticipations();
+
+        if (participations[testId]) {
+            participations[testId].variant = variant;
+            store.local.set(participationsKey, participations);
+        }
+    }
+
     ab = {
 
         addTest: function (test) {
@@ -288,11 +297,11 @@ define([
         },
 
         getParticipations: getParticipations,
-        addParticipation: addParticipation,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
+        setTestVariant: setTestVariant,
 
         // testing
         reset: function () {
