@@ -169,6 +169,7 @@ define([
          * Public functions
          */
         init = function (options) {
+
             var opts = defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -192,6 +193,7 @@ define([
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
@@ -200,7 +202,6 @@ define([
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
-
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
                 if (rendered) {
@@ -211,7 +212,6 @@ define([
                     });
                 }
             }
-
         },
         refreshSlot = function ($adSlot) {
             var slot = slots[$adSlot.attr('id')];
