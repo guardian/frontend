@@ -13,6 +13,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
+    'common/modules/experiments/tests/history-containers',
     'common/modules/experiments/tests/sticky-container-titles',
     'common/modules/experiments/tests/breaking-news-alert-style'
 ], function (
@@ -30,6 +31,7 @@ define([
     mvtCookie,
     HighCommercialComponent,
     HistoryTags,
+    HistoryContainers,
     StickyContainerTitles,
     BreakingNewsAlertStyle
 ) {
@@ -38,6 +40,7 @@ define([
         TESTS = [
             new HighCommercialComponent(),
             new HistoryTags(),
+            new HistoryContainers(),
             new StickyContainerTitles(),
             new BreakingNewsAlertStyle()
         ],
@@ -285,6 +288,7 @@ define([
         },
 
         getParticipations: getParticipations,
+        addParticipation: addParticipation,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,

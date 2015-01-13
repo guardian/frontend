@@ -10,27 +10,30 @@ object LoadLimit extends ExecutionContexts with Logging {
 
   private lazy val currentNumberOfRequests = new AtomicInteger(0)
 
+  private lazy val currentNumberOfAlternativeRequests = new AtomicInteger(0)
+
   private lazy val requestLimit = {
     val limit = Runtime.getRuntime.availableProcessors()
     log.info(s"request limit set to $limit")
     limit
   }
 
-  def tryOperation[T](operation: => Future[T])(outOfCapacity: => Future[T]): Future[T] = {
-    val concurrentRequests = currentNumberOfRequests.incrementAndGet
+  def tryOperation[T](alternativePool: Boolean)(operation: => Future[T])(outOfCapacity: => Future[T]): Future[T] = {
+    val reqCounter = if (alternativePool) currentNumberOfAlternativeRequests else currentNumberOfRequests
+    val concurrentRequests = reqCounter.incrementAndGet
     if (concurrentRequests <= requestLimit) try {
-      log.info(s"Resize $concurrentRequests/$requestLimit")
+      log.info(s"AltPool: $alternativePool: Resize $concurrentRequests/$requestLimit")
       val result = operation
       result.onComplete{_ =>
-        currentNumberOfRequests.decrementAndGet()
+        reqCounter.decrementAndGet()
       }
       result
     } catch {
       case t: Throwable =>
-        currentNumberOfRequests.decrementAndGet()
+        reqCounter.decrementAndGet()
         throw t
     } else {
-      currentNumberOfRequests.decrementAndGet()
+      reqCounter.decrementAndGet()
       outOfCapacity
     }
   }

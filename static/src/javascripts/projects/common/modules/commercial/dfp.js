@@ -20,9 +20,9 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/ui/sticky'
+    'common/modules/onward/geo-most-popular'
 ], function (
     bean,
     bonzo,
@@ -44,9 +44,9 @@ define([
     detect,
     mediator,
     urlUtils,
+    StickyMpu,
     buildPageTargeting,
-    geoMostPopular,
-    Sticky
+    geoMostPopular
 ) {
 
     /**
@@ -86,10 +86,7 @@ define([
         ],
         callbacks = {
             '300,251': function (event, $adSlot) {
-                var $mpuContainer = $adSlot.parent();
-
-                $mpuContainer.next().remove();
-                new Sticky($mpuContainer[0], { top: 12 }).init();
+                new StickyMpu($adSlot).create();
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {

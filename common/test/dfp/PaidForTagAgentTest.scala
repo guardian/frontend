@@ -497,4 +497,9 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     val keyword = toKeyword("section/tagNameMatchingMoreMultipleLineItems")
     TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
   }
+
+  it should "be false for an un-paid-for page" in {
+    val keyword = toKeyword("anotherSection/someOtherUnrelatedTagName")
+    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
+  }
 }

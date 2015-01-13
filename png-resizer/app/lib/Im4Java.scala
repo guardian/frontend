@@ -7,6 +7,7 @@ import org.im4java.process.Pipe
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.blocking
 
 object Im4Java {
   def apply(operation: IMOperation, format: String = "png")(imageBytes: Array[Byte]): Array[Byte] = {
@@ -19,7 +20,9 @@ object Im4Java {
     val s2b = new Pipe(null, baos)
     cmd.setOutputConsumer(s2b)
 
-    cmd.run(operation)
+    blocking {
+      cmd.run(operation)
+    }
 
     baos.flush()
     baos.toByteArray
@@ -38,8 +41,8 @@ object Im4Java {
   }
 
   def getWidth(imageBytes: Array[Byte]) = Future {
-    val imageInfo = new Info("png:-", new ByteArrayInputStream(imageBytes),true);
-    imageInfo.getImageWidth()
+    val imageInfo = new Info("png:-", new ByteArrayInputStream(imageBytes),true)
+    (imageInfo.getImageWidth, imageInfo.getImageHeight)
   }
 
 }

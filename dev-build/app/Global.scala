@@ -66,7 +66,8 @@ with DfpDataCacheLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
-with SectionsLookUpLifecycle {
+with SectionsLookUpLifecycle
+with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

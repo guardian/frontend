@@ -26,7 +26,27 @@ object PngResizerMetrics {
 
   val redirectCount = CountMetric(
     "png-resizer-redirect-count",
-    "Number of 307 responses sent because we were at capacity"
+    "Number of 302 responses sent because we were at capacity"
+  )
+
+  val wontMakeBiggerCount = CountMetric(
+    "png-resizer-wont-make-bigger-count",
+    "Number of 302 responses sent because there's no point scaling an image to be bigger"
+  )
+
+  val tooHardCount = CountMetric(
+    "png-resizer-too-hard-count",
+    "Number of 302 responses sent because we thought it would be too slow to resize the image"
+  )
+
+  lazy val all = List(
+    downloadTime,
+    resizeTime,
+    quantizeTime,
+    notModifiedCount,
+    redirectCount,
+    wontMakeBiggerCount,
+    tooHardCount
   )
 
 }
