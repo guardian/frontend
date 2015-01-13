@@ -10,7 +10,7 @@ define([
 
     var browsers = {
             'Firefox': '25',
-            'Chrome': '60',
+            'Chrome': '28',
             'IE': '9',
             'Opera': '14',
             'Safari': '7'
