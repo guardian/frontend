@@ -28,7 +28,7 @@ define([
                 test: function () { }
             },
             {
-                id: 'weather',
+                id: 'show',
                 test: function () {
                     if (config.switches.weather) {
                         weather.init();
