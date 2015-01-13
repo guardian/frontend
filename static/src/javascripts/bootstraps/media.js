@@ -41,7 +41,7 @@ define([
     history,
     images,
     techOrder,
-    checkBrowserSupport,
+    supportedBrowsers,
     beacon,
     loadingTmpl,
     adsOverlayTmpl
@@ -374,7 +374,7 @@ define([
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
                 upgradeVideoPlayerAccessibility(player);
-                checkBrowserSupport(player);
+                supportedBrowsers(player);
 
                 player.one('playing', function (e) {
                     if (isFlash(e)) {
