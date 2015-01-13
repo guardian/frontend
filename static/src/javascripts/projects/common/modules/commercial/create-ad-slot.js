@@ -23,6 +23,7 @@ define([
             }
         },
         'right-sticky': {
+            name: 'right',
             sizeMappings: {
                 mobile:  '1,1|300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
             }

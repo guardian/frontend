@@ -654,19 +654,23 @@ $vjs-progress-inset-bottom: 4px;
 
 /* VJS: AD OVERLAY
    ========================================================================== */
+$vjs-height-ratio: 7/3;
+
 .vjs-ads-overlay-top {
     position: absolute;
     z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
-    height: $gs-baseline*2;
+    height: $gs-baseline*($vjs-height-ratio);
     padding: $gs-baseline/3 0 0 $gs-gutter/4;
     background-color: rgba(colour(neutral-1), .8);
     border-top: 1px solid colour(neutral-2);
     color: #ffffff;
     text-align: left;
+    @include transition(top 1s linear);
     @include fs-textSans(1);
+    @include box-sizing(border-box);
 
     @include mq(tablet) {
         @include fs-textSans(2, true);
@@ -693,6 +697,10 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 
+.vjs-ads-overlay-top--animate-hide {
+    top: -$gs-baseline*($vjs-height-ratio);
+}
+
 .vjs-ads-overlay-loading {
     display: none;
 }
@@ -703,12 +711,57 @@ $vjs-progress-inset-bottom: 4px;
     right: $gs-gutter/2;
 }
 
+/* VJS: SKIP AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay-skip {
+    position: absolute;
+    z-index: 4;
+    bottom: 54px;
+    right: 8px;
+    width: $gs-column-width*2;
+    padding: $gs-baseline/2 0 $gs-baseline/4 $gs-gutter/4;
+    background-color: rgba(colour(neutral-1), .8);
+    color: #ffffff;
+    text-align: left;
+    @include fs-textSans(1);
+
+    @include mq(tablet) {
+        @include fs-textSans(2, true);
+    }
+}
+
+.vjs-ads-overlay-skip--enabled {
+    .vjs-ads-overlay-skip-button {
+        background-color: inherit;
+        border: 0;
+
+        .i-play-icon-grey {
+            display: inline-block;
+        }
+        .i-play-icon-gold {
+            display: none;
+        }
+        &:hover {
+            color: colour(comment-main-2);
+            .i-play-icon-grey {
+                display: none;
+            }
+            .i-play-icon-gold {
+                display: inline-block;
+            }
+        }
+        .skip-icon {
+            margin-right: $gs-gutter/4;
+        }
+    }
+}
+
 /* End slate
    ========================================================================== */
 .end-slate-container {
     display: none;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
     left: 0;
     right: 0;

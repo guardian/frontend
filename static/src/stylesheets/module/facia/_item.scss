@@ -213,14 +213,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__live-indicator {
     color: colour(live-default);
-
-    .live-pulse-icon {
-        display: inline-block;
-        margin: 0;
-        margin-right: .2em;
-        height: .7em;
-        width: .7em;
-    }
 }
 
 .fc-item__breaking-indicator {

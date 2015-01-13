@@ -389,6 +389,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val MediaPlayerSupportedBrowsers = Switch("Feature", "media-player-supported-browsers",
+    "If this is switched on then a message will be displayed to UAs not supported by our media player",
+    safeState = On, sellByDate = never
+  )
+
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -406,6 +411,11 @@ object Switches {
 
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
+    "If this is switched on then personalised containers based on history are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
@@ -489,6 +499,10 @@ object Switches {
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
+
+  val WeatherLoadTest = Switch("Weather", "what-is-my-city-load",
+    "If this switch is on the load test for what is my city will run",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 10))
 
   def all: Seq[Switch] = Switch.allSwitches
 
