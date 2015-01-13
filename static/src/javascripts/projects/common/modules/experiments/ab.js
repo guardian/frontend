@@ -297,7 +297,6 @@ define([
         },
 
         getParticipations: getParticipations,
-        isParticipating: isParticipating,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
