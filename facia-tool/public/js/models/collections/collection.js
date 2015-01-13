@@ -375,7 +375,7 @@ define([
     };
 
     Collection.prototype.refreshVisibleStories = function (stale) {
-        if (this.front.showIndicatorsEnabled()) {
+        if (!this.front.showIndicatorsEnabled()) {
             return this.state.showIndicators(false);
         }
         if (!stale || !this.visibleStories) {

@@ -1726,6 +1726,12 @@ collection-widget > div {
 .attention collection-widget {
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.32), 0 1px 6px rgba(0, 0, 0, 0.32);
 }
+.attention .performances,
+.attention .modes .live-mode,
+.attention .preview {
+    display: none;
+}
+
 
 .article-group {
     position: relative;
