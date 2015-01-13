@@ -74,7 +74,7 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
-                it("should fetch the data and save location", function () {
+                it("should fetch the weather data and save location", function () {
                     var result = {id: '2', city: "Sydney"};
 
                     spyOn(sut, "getWeatherData").and.returnValue({
@@ -86,12 +86,12 @@ define([
                         }
                     });
 
-                    sut.fetchData(result);
+                    sut.fetchWeatherData(result);
                     expect(sut.getUserLocation()).toEqual(result);
                     expect(sut.getWeatherData).toHaveBeenCalled();
                 });
 
-                it("should fetch data", function (done) {
+                it("should fetch weather data", function (done) {
                     var server = sinon.fakeServer.create();
                     server.autoRespond = true;
 
@@ -108,7 +108,7 @@ define([
                     server.restore();
                 });
 
-                it("should call proper url", function () {
+                it("should call proper weather url", function () {
                     var data = {id: '1', city: "London"};
 
                     spyOn(sut, "getWeatherData").and.returnValue({
@@ -122,11 +122,11 @@ define([
 
                     mocks.store['common/utils/config'].page.weatherapiurl = '/weather/city';
 
-                    sut.fetchData(data);
+                    sut.fetchWeatherData(data);
                     expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json");
                 });
 
-                it("should call render function after fetching the data", function (done) {
+                it("should call render function after fetching the weather data", function (done) {
                     var server = sinon.fakeServer.create(),
                         data = {id: '1', city: "London"};
 
@@ -137,7 +137,7 @@ define([
 
                     spyOn(sut, "render");
 
-                    sut.fetchData(data).then(function () {
+                    sut.fetchWeatherData(data).then(function () {
                         expect(sut.render).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
                         done();
                     });
@@ -164,6 +164,113 @@ define([
                     expect($(".js-weather-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('9°C');
                     expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
+                });
+
+                it("should fetch the forecast data", function () {
+                    var result = {id: '2', city: "Sydney"};
+
+                    spyOn(sut, "getWeatherData").and.returnValue({
+                        then: function () {
+                            return {
+                                fail: function (err, msg) {
+                                }
+                            }
+                        }
+                    });
+                    spyOn(sut, "renderForecast");
+
+                    sut.fetchForecastData(result);
+                    expect(sut.getWeatherData).toHaveBeenCalled();
+                });
+
+                it("should call render function after fetching the forecast data", function (done) {
+                    var server = sinon.fakeServer.create(),
+                        data = {id: '1', city: "London"};
+
+                    server.autoRespond = true;
+
+                    server.respondWith([200, { "Content-Type": "application/json" },
+                        '[{"WeatherIcon": 3}]']);
+
+                    spyOn(sut, "renderForecast");
+                    spyOn(sut, "parseForecast");
+
+                    sut.fetchForecastData(data).then(function () {
+                        expect(sut.renderForecast).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
+                        expect(sut.parseForecast).toHaveBeenCalled();
+                        done();
+                    });
+
+                    server.restore();
+                });
+
+                it("should parse the forecast data and return array of three", function() {
+                    var mockData = [
+                            {
+                                "DateTime": "2015-01-13T16:00:00+00:00",
+                                "EpochDateTime": 1421161200,
+                                "WeatherIcon": 4,
+                                "IconPhrase": "Intermittent clouds",
+                                "IsDaylight": true,
+                                "Temperature": {
+                                    "Value": 45,
+                                    "Unit": "F",
+                                    "UnitType": 18
+                                }
+                            },
+                            {
+                                "DateTime": "2015-01-13T18:00:00+00:00",
+                                "EpochDateTime": 1421161200,
+                                "WeatherIcon": 4,
+                                "IconPhrase": "Intermittent clouds",
+                                "IsDaylight": true,
+                                "Temperature": {
+                                    "Value": 47,
+                                    "Unit": "F",
+                                    "UnitType": 18
+                                }
+                            },
+                            {
+                                "DateTime": "2015-01-13T21:00:00+00:00",
+                                "EpochDateTime": 1421161200,
+                                "WeatherIcon": 4,
+                                "IconPhrase": "Intermittent clouds",
+                                "IsDaylight": true,
+                                "Temperature": {
+                                    "Value": 48,
+                                    "Unit": "F",
+                                    "UnitType": 18
+                                }
+                            },
+                            {
+                                "DateTime": "2015-01-13T00:00:00+00:00",
+                                "EpochDateTime": 1421161200,
+                                "WeatherIcon": 4,
+                                "IconPhrase": "Intermittent clouds",
+                                "IsDaylight": true,
+                                "Temperature": {
+                                    "Value": 49,
+                                    "Unit": "F",
+                                    "UnitType": 18
+                                }
+                            }
+                        ],
+                        result   = [
+                            {
+                                time: '18',
+                                temp: 47
+                            },
+                            {
+                                time: '21',
+                                temp: 48
+                            },
+                            {
+                                time: '00',
+                                temp: 49
+                            }
+                        ];
+
+                    expect(sut.parseForecast(mockData)).toEqual(result);
                 });
             });
     });

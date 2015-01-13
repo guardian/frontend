@@ -94,11 +94,11 @@ define([
             var location = this.getUserLocation();
 
             if (location) {
-                this.fetchData(location);
+                this.fetchWeatherData(location);
             } else {
 
                 self.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(self.fetchData)
+                    .then(self.fetchWeatherData)
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                             tags: {
@@ -109,14 +109,29 @@ define([
             }
         },
 
-        fetchData: function (location) {
+        fetchWeatherData: function (location) {
             self.saveUserLocation(location);
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
                     self.render(response[0], location.city);
+                    self.fetchForecastData(location);
                 }).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
+                        tags: {
+                            feature: 'weather'
+                        }
+                    });
+                });
+        },
+
+        fetchForecastData: function (location) {
+            return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+                .then(function (response) {
+                    //self.renderForecast(self.parseForecast(response[0]));
+                    console.log(self.parseForecast(response));
+                }).fail(function (err, msg) {
+                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
                         }
@@ -169,6 +184,10 @@ define([
             searchTool.init();
         },
 
+        parseForecast: function(forecastData) {
+            return _.chain(forecastData).filter(function(item, index) { return index % 3 === 0}).rest().value();
+        },
+
         render: function (weatherData, city) {
             $weather = $('.weather');
             $holder = $('.js-weather');
@@ -197,6 +216,9 @@ define([
                 // Close editing
                 self.toggleControls(false);
             };
+        },
+
+        renderForecast: function(forecastData) {
         }
     };
 });
