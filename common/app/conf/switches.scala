@@ -409,6 +409,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
+    "If this is switched on then personalised containers based on history are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
     "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
