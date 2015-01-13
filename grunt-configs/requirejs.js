@@ -158,6 +158,7 @@ module.exports = function(grunt, options) {
                     vast: 'components/vast-client-js/vast-client',
                     videojs: 'components/videojs/video',
                     videojsads: 'components/videojs-contrib-ads/videojs.ads',
+                    videojsima: 'components/videojs-ima/videojs.ima',
                     videojsvast: 'components/videojs-vast/videojs.vast',
                     videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
                     videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist',
@@ -169,6 +170,9 @@ module.exports = function(grunt, options) {
                         exports: 'videojs'
                     },
                     videojsads: {
+                        deps: ['videojs']
+                    },
+                    videojsima: {
                         deps: ['videojs']
                     },
                     videojsvast: {

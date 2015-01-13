@@ -44,12 +44,172 @@ define([
     beacon,
     loadingTmpl
 ) {
+    var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
+        QUARTILES = [25, 50, 75],
+        // Advert and content events used by analytics. The expected order of bean events is:
+        EVENTS = [
+            'preroll:request',
+            'preroll:ready',
+            'preroll:play',
+            'preroll:end',
+            'content:ready',
+            'content:play',
+            'content:end'
+        ];
+
+    function getMediaType(player) {
+        return player.guMediaType;
+    }
+
+    function shouldAutoPlay(player) {
+        return isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
+    }
+
+    function constructEventName(eventName, player) {
+        return getMediaType(player) + ':' + eventName;
+    }
+
+    function ophanRecord(id, event, player) {
+        if (id) {
+            require('ophan/ng', function (ophan) {
+                var eventObject = {};
+                eventObject[getMediaType(player)] = {
+                    id: id,
+                    eventType: event.type
+                };
+                ophan.record(eventObject);
+            });
+        }
+    }
+
+    function initOphanTracking(player, mediaId) {
+        EVENTS.concat(QUARTILES.map(function (q) {
+            return 'play:' + q;
+        })).forEach(function (event) {
+            player.one(constructEventName(event, player), function (event) {
+                ophanRecord(mediaId, event, player);
+            });
+        });
+    }
+
+    function initOmnitureTracking(player) {
+        new OmnitureMedia(player).init();
+    }
+
+    function bindPrerollEvents(player) {
+        var events = {
+            end: function () {
+                player.trigger(constructEventName('preroll:end', player));
+                player.removeClass('vjs-ad-playing--vpaid');
+                bindContentEvents(player, true);
+            },
+            start: function () {
+                var duration = player.duration();
+                if (duration) {
+                    player.trigger(constructEventName('preroll:play', player));
+                } else {
+                    player.one('durationchange', events.start);
+                }
+            },
+            vpaidStarted: function () {
+                player.addClass('vjs-ad-playing--vpaid');
+            },
+            ready: function () {
+                player.trigger(constructEventName('preroll:ready', player));
+
+                player.one('adstart', events.start);
+                player.one('adend', events.end);
+
+                // Handle custom event to understand when vpaid is playing;
+                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
+                player.one('Vpaid::AdStarted', events.vpaidStarted);
+
+                if (shouldAutoPlay(player)) {
+                    console.log('PLAYING');
+                    player.play();
+                }
+            }
+        };
+        player.one('adsready', events.ready);
+
+        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
+        player.one('adtimeout', function () {
+            player.trigger('adscanceled');
+            bindContentEvents(player);
+        });
+    }
+
+    function bindContentEvents(player) {
+        var events = {
+            end: function () {
+                player.trigger(constructEventName('content:end', player));
+            },
+            play: function () {
+                var duration = player.duration();
+                if (duration) {
+                    player.trigger(constructEventName('content:play', player));
+                } else {
+                    player.one('durationchange', events.play);
+                }
+            },
+            timeupdate: function () {
+                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
+                QUARTILES.reverse().some(function (quart) {
+                    if (progress >= quart) {
+                        player.trigger(constructEventName('play:' + quart, player));
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            ready: function () {
+                player.trigger(constructEventName('content:ready', player));
+
+                player.one('play', events.play);
+                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
+                player.one('ended', events.end);
+
+                if (shouldAutoPlay(player)) {
+                    player.play();
+                }
+            }
+        };
+        events.ready();
+    }
+
+    function beaconError(err) {
+        if (err && 'message' in err && 'code' in err) {
+            raven.captureException(new Error(err.message), {
+                tags: {
+                    feature: 'player',
+                    vjsCode: err.code
+                }
+            });
+        }
+    }
+
+    function handleInitialMediaError(player) {
+        var err = player.error();
+        if (err !== null) {
+            beaconError(err);
+            return err.code === 4;
+        }
+        return false;
+    }
+
+    function bindErrorHandler(player) {
+        player.on('error', function () {
+            beaconError(player.error());
+            $('.vjs-big-play-button').hide();
+        });
+    }
 
     function getVastUrl() {
         var queryParams = {
             ad_rule:                 1,
             correlator:              new Date().getTime(),
-            //cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
+            cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
             env:                     'vp',
             gdfp_req:                1,
             impl:                    's',
@@ -237,8 +397,28 @@ define([
                         player.adCountdown();
                         player.adSkipCountdown(15);
 
-                        // Video analytics event.
-                        player.trigger(events.constructEventName('preroll:request', player));
+//                            player.ads({
+//                                timeout: 3000
+//                            });
+//                            player.vast({
+//                                url: getVastUrl()
+//                            });
+
+
+                            require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                                .then(function () {
+                                    player.ima({
+                                        id: mediaId,
+                                        adTagUrl: getVastUrl(),
+                                        nonLinearHeight: 394
+                                    });
+                                    // Video analytics event.
+                                    player.trigger(events.constructEventName('preroll:request', player));
+                                    player.ima.requestAds();
+                                });
+                        } else {
+                            events.bindContentEvents(player);
+                        }
 
                         player.ads({
                             timeout: 3000

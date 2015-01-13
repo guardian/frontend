@@ -95,7 +95,7 @@ define([
                 ms:      formatTarget(page.source),
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
-                vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
+                vl:      page.contentType === 'Video' ? 300 /*(Math.ceil(page.videoDuration / 30.0) * 30).toString()*/ : undefined
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
 
         // filter out empty values
