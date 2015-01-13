@@ -1,16 +1,19 @@
 define([
     'common/utils/_',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/config'
 ], function (
     _,
-    detect
+    detect,
+    config
 ) {
 
     var browsers = {
-        'Firefox': '25',
-        'Chrome': '30',
-        'IE': '9',
-        'Opera': '14'
+            'Firefox': '25',
+            'Chrome': '60',
+            'IE': '9',
+            'Opera': '14',
+            'Safari': '7'
         },
         ua = detect.getUserAgent,
         message = 'Please <a href="http://whatbrowser.org" target="_blank">update</a> your browser to watch this video.'
@@ -20,7 +23,7 @@ define([
             return (ua.browser === browser && ua.version < version);
         });
 
-        if(notSupported) {
+        if(notSupported && config.switches.mediaPlayerSupportedBrowsers) {
             player.error(message);
         }
     }
