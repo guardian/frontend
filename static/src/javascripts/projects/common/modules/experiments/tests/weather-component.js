@@ -11,7 +11,7 @@ define([
         this.expiry = '2015-02-01';
         this.author = 'Steve Vadocz';
         this.description = 'Test the accuracy of weather location';
-        this.audience = 1;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'The accuracy of the weather component is 100%';
         this.audienceCriteria = 'All users';
