@@ -399,10 +399,6 @@ define([
                         player.adCountdown();
                         player.adSkipCountdown(15);
 
-                            player.ads({
-                                timeout: 3000
-                            });
-
                             require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
                                 .then(function () {
                                     player.ima({

@@ -183,7 +183,8 @@ $vjs-progress-inset-bottom: 4px;
 /* VJS: CONTROL BAR
    ========================================================================== */
 
-.vjs-control-bar {
+.vjs-control-bar,
+#ima-controls-div {
     cursor: default;
     width: 100%;
     z-index: 4;
@@ -195,7 +196,9 @@ $vjs-progress-inset-bottom: 4px;
     height: $vjs-control-height;
     @include transition(bottom .8s);
     transition-delay: 1s;
+}
 
+.vjs-control-bar {
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
@@ -245,11 +248,14 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 
-.vjs-play-control {
+.vjs-play-control,
+#ima-play-pause-div {
     float: left;
     cursor: pointer;
     margin: 7px;
+}
 
+.vjs-play-control {
     .vjs-paused & {
         @include icon(play-32--tone-media);
     }
@@ -264,6 +270,14 @@ $vjs-progress-inset-bottom: 4px;
 
     .gu-media-wrapper--podcast .vjs-playing & {
         @include icon(pause-32--tone-podcast);
+    }
+}
+#ima-play-pause-div {
+    &.ima-paused {
+        @include icon(play-32--tone-media);
+    }
+    &.ima-playing {
+        @include icon(pause-32--tone-media);
     }
 }
 
@@ -289,8 +303,10 @@ $vjs-progress-inset-bottom: 4px;
     height: $vjs-control-height;
     width: $vjs-control-height;
     position: relative;
+}
 
-    & .vjs-control-content {
+.vjs-fullscreen-control {
+    .vjs-control-content {
         width: 20px !important;
         height: 20px !important;
         position: absolute;
@@ -300,9 +316,10 @@ $vjs-progress-inset-bottom: 4px;
         bottom: 0;
         margin: auto;
         @include icon(expand-white);
-    }
-    &:hover .vjs-control-content {
-        @include icon(expand-yellow);
+
+        &:hover {
+            @include icon(expand-yellow);
+        }
     }
 
     .gu-media--audio & {
@@ -410,7 +427,8 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 
-.vjs-mute-control {
+.vjs-mute-control,
+#ima-mute-div {
     cursor: pointer;
     float: right;
     box-sizing: border-box;
@@ -418,7 +436,9 @@ $vjs-progress-inset-bottom: 4px;
     margin-right: $gs-gutter/4;
     margin-top: $gs-baseline * (4/3);
     text-align: left;
+}
 
+.vjs-mute-control {
     > div {
         @include icon(volume-low-white);
     }
@@ -451,6 +471,22 @@ $vjs-progress-inset-bottom: 4px;
 
         &.vjs-vol-3:hover > div {
             @include icon(volume-high--tone-podcast);
+        }
+    }
+}
+#ima-mute-div {
+    &.ima-non-muted {
+        @include icon(volume-high-white);
+
+        &:hover {
+            @include icon(volume-high--tone-media);
+        }
+    }
+    &.ima-muted {
+        @include icon(volume-mute-white);
+
+        &:hover {
+            @include icon(volume-mute--tone-media);
         }
     }
 }
@@ -897,124 +933,46 @@ $vjs-height-ratio: 7/3;
 /* IMA Adverts
    ========================================================================== */
 #ima-ad-container {
-    top: 0px;
     position: absolute;
-    display: block;
+    top: 0;
 }
-
 #ima-controls-div {
-    bottom:0px;
-    height: 37px;
-    position: absolute;
     display: none;
-    opacity: 1;
-    background-color: rgba(7, 20, 30, .7);
-    background: -moz-linear-gradient(
-                    bottom,
-                    rgba(7, 20, 30, .7) 0%,
-                    rgba(7, 20, 30, 0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(
-                    linear,
-                    left bottom,
-                    left top,
-                    color-stop(0%,rgba(7, 20, 30, .7)),
-                    color-stop(100%,rgba(7, 20, 30, 0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(
-                    bottom,
-                    rgba(7, 20, 30, .7) 0%,
-                    rgba(7, 20, 30, 0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(bottom,
-            rgba(7, 20, 30, .7) 0%,
-            rgba(7, 20, 30, 0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(bottom,
-            rgba(7, 20, 30, .7) 0%,
-            rgba(7, 20, 30, 0) 100%); /* IE10+ */
-    background: linear-gradient(to top,
-            rgba(7, 20, 30, .7) 0%,
-            rgba(7, 20, 30, 0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(
-                    startColorstr='#0007141E',
-                    endColorstr='#07141E',GradientType=0 ); /* IE6-9 */
-}
+    position: absolute;
+    height: 68px !important;
+    bottom: -52px;
 
-#ima-countdown-div {
-    height: 11px;
-    color: #FFFFFF;
-    text-shadow: 0 0 0.2em #000;
+    .vjs-mousemoved &,
+    &:hover {
+        bottom: 0;
+        @include transition(bottom 0s);
+        transition-delay: 0s;
+    }
 }
-
 #ima-seek-bar-div {
-    top: 12px;
-    height: 3px;
-    position: absolute;
-    background: rgba(255, 255, 255, .4);
+    height: 6px;
+    background-color: #000000;
 }
-
 #ima-progress-div {
-    width: 0px;
-    height: 3px;
-    background-color: #ECC546;
+    height: 100%;
+    background-color: colour(media-default);
 }
-
-#ima-countdown-div {
-    height: 10px;
-}
-
-#ima-play-pause-div, #ima-mute-div, #ima-fullscreen-div {
-    width: 35px;
-    height: 20px;
-    top: 11px;
-    left: 0px;
-    position: absolute;
-    color: #CCCCCC;
-    font-family: VideoJS;
-    font-size: 1.5em;
-    line-height: 2;
-    text-align: center;
-}
-
-#ima-mute-div {
-    left: auto;
-    right: 35px;
-}
-
+#ima-play-pause-div,
+#ima-mute-div,
 #ima-fullscreen-div {
-    left: auto;
-    right: 0px;
+    display: block !important;
 }
-
-.ima-playing:before {
-    content: "\e002";
+#ima-mute-div {
+    position: absolute;
+    left: 75%;
 }
+#ima-fullscreen-div {
+    cursor: pointer;
+    float: right;
+    margin: 12px;
+    @include icon(expand-white);
 
-.ima-paused:before {
-    content: "\e001";
-}
-
-.ima-playing:hover:before, .ima-paused:hover:before {
-    text-shadow: 0 0 1em #fff;
-}
-
-.ima-non-muted:before {
-    content: "\e006";
-}
-
-.ima-muted:before {
-    content: "\e003";
-}
-
-.ima-non-muted:hover:before, .ima-muted:hover:before {
-    text-shadow: 0 0 1em #fff;
-}
-
-.ima-non-fullscreen:before {
-    content: "\e000";
-}
-
-.ima-fullscreen:before {
-    content: "\e00b";
-}
-
-.ima-non-fullscreen:hover:before, .ima-fullscreen:hover:before {
-    text-shadow: 0 0 1em #fff;
+    &:hover {
+        @include icon(expand-yellow);
+    }
 }
