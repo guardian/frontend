@@ -18,6 +18,7 @@ define([
     'common/modules/onward/history',
     'common/modules/ui/images',
     'common/modules/video/tech-order',
+    'common/modules/video/supportedBrowsers',
     'common/modules/analytics/beacon',
     'text!common/views/ui/loading.html',
     'text!common/views/ui/video-ads-overlay.html'
@@ -40,6 +41,7 @@ define([
     history,
     images,
     techOrder,
+    checkBrowserSupport,
     beacon,
     loadingTmpl,
     adsOverlayTmpl
@@ -200,6 +202,7 @@ define([
     function bindErrorHandler(player) {
         player.on('error', function () {
             beaconError(player.error());
+            $('.vjs-big-play-button').hide();
         });
     }
 
@@ -371,6 +374,7 @@ define([
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
                 upgradeVideoPlayerAccessibility(player);
+                checkBrowserSupport(player);
 
                 player.one('playing', function (e) {
                     if (isFlash(e)) {
