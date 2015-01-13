@@ -201,7 +201,6 @@ define([
                     refreshSlot($adSlot);
                 };
 
-            console.log('addSlot: ',slots);
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
                 if (rendered) {
@@ -275,7 +274,6 @@ define([
 
             allAdsRendered(slot);
 
-            //console.log(event, slots, 'parseAd');
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
