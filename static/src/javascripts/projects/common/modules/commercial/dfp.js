@@ -287,7 +287,7 @@ define([
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
             }
-        }
+        },
         allAdsRendered = function (slot) {
             forEach(slots, function (value, key) {
                 if (key === slot) {
