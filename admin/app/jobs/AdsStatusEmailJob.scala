@@ -33,6 +33,7 @@ object AdsStatusEmailJob extends Logging {
   private def htmlBody: String = {
     val pageSkinsReport = Store.getDfpPageSkinnedAdUnits()
     val paidForTagsReport = Store.getDfpPaidForTags()
+    val paidForTags = paidForTagsReport.paidForTags
 
     val pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
       pageSkinsReport.deliverableSponsorships.filter(_.editions.isEmpty)
@@ -47,15 +48,32 @@ object AdsStatusEmailJob extends Logging {
     }
 
     val sponsorshipsWithoutSponsors: Seq[GuLineItem] = {
-      val lineItems = paidForTagsReport.paidForTags flatMap (_.lineItems)
+      val lineItems = paidForTags flatMap (_.lineItems)
       lineItems filter (_.sponsor.isEmpty) sortBy (_.id)
     }
 
-    views.html.commercial.email.adsStatus(
+    val noSuchTargetedTags: Seq[GuLineItem] = {
+      paidForTags.filter(_.matchingCapiTagIds.isEmpty).flatMap(_.lineItems).sortBy(_.id).distinct
+    }
+
+    views.html.commercial.email.adsStatus(AdStatusReport(
       pageskinsWithoutEdition,
       geotargetedAdFeatures,
-      sponsorshipsWithoutSponsors
-    ).body
+      sponsorshipsWithoutSponsors,
+      noSuchTargetedTags
+    )).body.trim()
   }
 
+}
+
+case class AdStatusReport(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship],
+                          geotargetedAdFeatures: Seq[dfp.GuLineItem],
+                          sponsorshipsWithoutSponsors: Seq[dfp.GuLineItem],
+                          noSuchTargetedTags: Seq[dfp.GuLineItem]) {
+
+  val isEmpty =
+    pageskinsWithoutEditions.isEmpty &&
+      geotargetedAdFeatures.isEmpty &&
+      sponsorshipsWithoutSponsors.isEmpty &&
+      noSuchTargetedTags.isEmpty
 }

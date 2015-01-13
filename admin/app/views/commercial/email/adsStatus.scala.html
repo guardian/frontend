@@ -1,6 +1,19 @@
-@(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship], geotargetedAdFeatures: Seq[dfp.GuLineItem], sponsorshipsWithoutSponsors: Seq[dfp.GuLineItem])
+@(report: jobs.AdStatusReport)
+@import dfp.GuLineItem
 
-@if(pageskinsWithoutEditions.isEmpty && geotargetedAdFeatures.isEmpty && sponsorshipsWithoutSponsors.isEmpty) {
+@reportLogoLineItems(lineItems: Seq[GuLineItem], description: String) = {
+@if(lineItems.nonEmpty) {
+    <div>
+        <p>@description:</p>
+        <ul>@for(lineItem <- lineItems) {
+            <li>@{lineItem.id}: @{lineItem.name}</li>
+        }</ul>
+        <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
+    </div>
+}
+}
+
+@if(report.isEmpty) {
 
     <p>No known targeting problems.</p>
 
@@ -8,34 +21,20 @@
 
     <p>There are some targeting problems:</p>
 
-    @if(pageskinsWithoutEditions.nonEmpty) {
+    @if(report.pageskinsWithoutEditions.nonEmpty) {
         <div>
             <p>These pageskins have no edition set:</p>
-            <ul>@for(pageskin <- pageskinsWithoutEditions) {
+            <ul>@for(pageskin <- report.pageskinsWithoutEditions) {
                 <li>@{pageskin.lineItemId}: @{pageskin.lineItemName}</li>
             }</ul>
             <p>See https://frontend.gutools.co.uk/analytics/commercial/pageskins</p>
         </div>
     }
 
-    @if(geotargetedAdFeatures.nonEmpty) {
-        <div>
-            <p>These ad feature logos are geotargeted:</p>
-            <ul>@for(lineItem <- geotargetedAdFeatures) {
-                <li>@{lineItem.id}: @{lineItem.name}</li>
-            }</ul>
-            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
-        </div>
-    }
+    @reportLogoLineItems(report.geotargetedAdFeatures, "These ad feature logos are geotargeted")
 
-    @if(sponsorshipsWithoutSponsors.nonEmpty) {
-        <div>
-            <p>These paid-for logos have no sponsor set up:</p>
-            <ul>@for(lineItem <- sponsorshipsWithoutSponsors) {
-                <li>@{lineItem.id}: @{lineItem.name}</li>
-            }</ul>
-            <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
-        </div>
-    }
+    @reportLogoLineItems(report.sponsorshipsWithoutSponsors, "These logos have no sponsor set up")
+
+    @reportLogoLineItems(report.noSuchTargetedTags, "These logos are targeting a tag that doesn't exist")
 
 }
