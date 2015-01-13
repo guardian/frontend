@@ -2,7 +2,7 @@
 
 @import common.{LinkTo, Localisation}
 
-<div class="content__labels @if(content.isSectionLabelLong) { content__labels--long}">
+<div class="content__labels @if(content.areLabelsLong) { content__labels--long}">
     <div class="content__section-label">
         <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
     </div>

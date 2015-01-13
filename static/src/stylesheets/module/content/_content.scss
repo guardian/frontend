@@ -154,9 +154,19 @@
     }
 }
 
+// Styling for long section/series labels at the leftCol breakpoint
 .content__labels--long {
-    .content__section-label__link {
-        @include fs-header(2);
+    @include mq(leftCol, wide) {
+        .content__section-label__link {
+            @include fs-header(2);
+            line-height: 22px;
+            display: block;
+            padding: $gs-baseline/6 0;
+        }
+        .content__series-label__link {
+            @include fs-headline(2);
+            display: block;
+        }
     }
 }
 
