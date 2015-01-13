@@ -3,7 +3,7 @@ package controllers
 import common._
 import model.Cached
 import models.CityResponse
-import play.api.libs.json.{JsNull, Json}
+import play.api.libs.json.{JsObject, JsNull, Json}
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
@@ -56,6 +56,8 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     }
 
     WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(10.minutes)(JsonComponent.forJsValue(JsNull))
+    Cached(10.minutes)(JsonComponent.forJsValue(JsObject(Seq(
+      "headers" -> Json.toJson(request.headers.toMap)
+    ))))
   }
 }
