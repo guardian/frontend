@@ -9,6 +9,7 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/ab',
+    'common/modules/onward/history',
     'common/modules/identity/api'
 ], function (
     s,
@@ -21,6 +22,7 @@ define([
     beacon,
     mvtCookie,
     ab,
+    history,
     id
 ) {
 
@@ -185,6 +187,8 @@ define([
 
             s.prop51  = mvt;
             s.eVar51  = mvt;
+
+            s.eVar52 = history.getPopularFiltered().map(function(tagTuple) { return tagTuple[1]; }).join(',');
 
             if (guShift) {
                 shiftValue = 'gu_shift,' + guShift + ',';
