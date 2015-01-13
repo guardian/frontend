@@ -2,7 +2,7 @@ package jobs
 
 import common.Logging
 import conf.Configuration.commercial._
-import dfp.{GuLineItem, PageSkinSponsorship}
+import dfp.{AdvertisementFeature, GuLineItem, PageSkinSponsorship}
 import services.EmailService
 import tools.Store
 
@@ -31,18 +31,16 @@ object AdsStatusEmailJob extends Logging {
   }
 
   private def htmlBody: String = {
-    val pageSkinsReport = Store.getDfpPageSkinnedAdUnits()
-    val paidForTagsReport = Store.getDfpPaidForTags()
-    val paidForTags = paidForTagsReport.paidForTags
+    val paidForTags = Store.getDfpPaidForTags().paidForTags filterNot {
+      _.lineItems.forall(_.targeting.hasAdTestTargetting)
+    }
 
     val pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
-      pageSkinsReport.deliverableSponsorships.filter(_.editions.isEmpty)
+      Store.getDfpPageSkinnedAdUnits().deliverableSponsorships.filter(_.editions.isEmpty)
     }
 
     val geotargetedAdFeatures: Seq[GuLineItem] = {
-      val adFeatureTags =
-        paidForTagsReport.advertisementFeatureSeries ++
-          paidForTagsReport.advertisementFeatureKeywords
+      val adFeatureTags = paidForTags filter (_.paidForType == AdvertisementFeature)
       val allAdFeatures = adFeatureTags flatMap (_.lineItems)
       allAdFeatures filter (_.targeting.geoTargetsIncluded.nonEmpty) sortBy (_.id)
     }
