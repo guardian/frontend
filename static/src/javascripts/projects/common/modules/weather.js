@@ -128,8 +128,7 @@ define([
         fetchForecastData: function (location) {
             return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    //self.renderForecast(self.parseForecast(response[0]));
-                    console.log(self.parseForecast(response));
+                    self.renderForecast(self.parseForecast(response[0]));
                 }).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
                         tags: {
@@ -184,8 +183,8 @@ define([
             searchTool.init();
         },
 
-        parseForecast: function(forecastData) {
-            return _.chain(forecastData).filter(function(item, index) { return index % 3 === 0}).rest().value();
+        parseForecast: function (forecastData) {
+            return _.chain(forecastData).filter(function (item, index) { return index % 3 === 0; }).rest().value();
         },
 
         render: function (weatherData, city) {
@@ -218,7 +217,6 @@ define([
             };
         },
 
-        renderForecast: function(forecastData) {
-        }
+        renderForecast: function () {}
     };
 });
