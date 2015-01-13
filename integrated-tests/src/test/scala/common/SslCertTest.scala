@@ -33,21 +33,18 @@ import sun.security.x509.X509CertImpl
             override def verify(arg1: String, arg2: SSLSession) = true
           }
         )
-        conn.connect()
 
+        conn.connect()
         val certs = conn.getServerCertificates
         certs.headOption.map {
           cert => val x = cert.asInstanceOf[X509CertImpl]
             val expiry = x.getNotAfter.getTime
-
             val daysleft = Days.daysBetween(new DateTime(), new DateTime(expiry.toLong)).getDays
             if ( daysleft < 30) {
                fail("Cert for %s expires in %d days".format(host, daysleft))
             }
-
         }
         conn.disconnect()
-
       } catch {
         case e: MalformedURLException => {
           fail("Malformed url exception attempting to check ssl cert for %s, exception: %s".format(host, e.getMessage))
