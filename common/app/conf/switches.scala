@@ -399,6 +399,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABWeatherSwitch = Switch("A/B Tests", "ab-weather",
+    "If this is switched on then the weather component is A/B tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
     "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
