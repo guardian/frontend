@@ -20,6 +20,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/utils/user-timing',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular'
@@ -44,6 +45,7 @@ define([
     detect,
     mediator,
     urlUtils,
+    userTiming,
     StickyMpu,
     buildPageTargeting,
     geoMostPopular
@@ -167,7 +169,6 @@ define([
          * Public functions
          */
         init = function (options) {
-
             var opts = defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -191,7 +192,6 @@ define([
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
-
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
@@ -200,6 +200,8 @@ define([
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
+
+            console.log('addSlot: ',slots);
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
                 if (rendered) {
@@ -210,6 +212,7 @@ define([
                     });
                 }
             }
+
         },
         refreshSlot = function ($adSlot) {
             var slot = slots[$adSlot.attr('id')];
@@ -267,8 +270,12 @@ define([
         },
         parseAd = function (event) {
             var size,
-                $slot = $('#' + event.slot.getSlotId().getDomId());
+                slot = event.slot.getSlotId().getDomId(),
+                $slot = $('#' + slot);
 
+            allAdsRendered(slot);
+
+            //console.log(event, slots, 'parseAd');
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
@@ -279,6 +286,18 @@ define([
                 size = event.size.join(',');
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
+            }
+        }
+        allAdsRendered = function (slot) {
+            forEach(slots, function (value, key) {
+                if (key === slot) {
+                    slots[key].rendered = true;
+                    return;
+                }
+            });
+
+            if (_.every(slots, 'rendered')) {
+                userTiming.mark('Ads rendered');
             }
         },
         addLabel = function ($slot) {
