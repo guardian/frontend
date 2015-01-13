@@ -91,6 +91,17 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        preferences: {
+            options: {
+                name: 'bootstraps/preferences',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preferences.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
         identity: {
             options: {
                 name: 'bootstraps/membership',
