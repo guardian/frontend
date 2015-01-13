@@ -357,16 +357,19 @@ define([
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
             var target = ko.unwrap(valueAccessor()),
                 numbers = bindingContext.$data.visibleCount(),
-                container = bindingContext.$data.dom;
+                container = bindingContext.$data.dom,
+                top, bottomElementPosition, bottomElement, bottom, height;
 
             if (!(target in numbers) || !container) {
                 return;
             }
-            var top = $(element).parents('.article-group')[0].getBoundingClientRect().top,
-                bottomElementPosition = numbers[target] - 1,
-                bottomElement = bottomElementPosition >= 0 ? container.querySelectorAll('.article')[bottomElementPosition] : null,
-                bottom = bottomElement ? bottomElement.getBoundingClientRect().bottom : NaN,
-                height = bottom - top - 15;
+
+            top = $(element).parents('.article-group')[0].getBoundingClientRect().top;
+            bottomElementPosition = numbers[target] - 1;
+            bottomElement = bottomElementPosition >= 0 ? container.querySelectorAll('.article')[bottomElementPosition] : null;
+            bottom = bottomElement ? bottomElement.getBoundingClientRect().bottom : NaN;
+            height = bottom - top - 15;
+
             element.style.height = (height || 0) + 'px';
         }
     };
