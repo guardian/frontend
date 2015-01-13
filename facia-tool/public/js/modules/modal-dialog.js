@@ -1,10 +1,8 @@
 /* globals _ */
 define([
-    'knockout',
-    'utils/mediator'
+    'knockout'
 ], function (
-    ko,
-    mediator
+    ko
 ) {
     function ModalDialog () {
         this.isOpen = ko.observable(false);

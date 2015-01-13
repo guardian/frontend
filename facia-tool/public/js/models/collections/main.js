@@ -15,10 +15,10 @@ define([
     'modules/droppable',
     'modules/copied-article',
     'modules/modal-dialog',
+    'models/common-handlers',
     'models/collections/new-items',
     'models/layout',
-    'models/widgets',
-    'models/common-handlers'
+    'models/widgets'
 ], function(
     pageConfig,
     ko,
@@ -35,10 +35,10 @@ define([
     droppable,
     copiedArticle,
     modalDialog,
+    commonHandlers,
     newItems,
     Layout,
-    widgets,
-    commonHandlers
+    widgets
 ) {
     return function() {
 

@@ -7,7 +7,7 @@ define([
         init: function (element, valueAccessor) {
             var value = valueAccessor();
 
-            ko.utils.registerEventHandler(element, "click", function () {
+            ko.utils.registerEventHandler(element, 'click', function () {
                 value(!value());
             });
         }
