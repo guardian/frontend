@@ -62,7 +62,7 @@ define([
                         }, {});
 
                     if (!_.isEmpty(tags)) {
-                        tags['_finally'] = React.DOM.p(null, 'Remove links that don\'t interest you by clicking the \'X\' next to them.');
+                        tags._p1 = React.DOM.p(null, '(remove links that don\'t interest you by clicking the \'X\' next to them.)');
                         return React.DOM.div(null, tags);
                     }
                 }
