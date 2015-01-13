@@ -16,15 +16,15 @@ define([
             'Safari': '7'
         },
         ua = detect.getUserAgent,
-        message = 'Please <a href="http://whatbrowser.org" target="_blank">update</a> your browser to watch this video.'
+        message = 'Please <a href="http://whatbrowser.org" target="_blank">update</a> your browser to watch this video.';
 
     return function supportedBrowser(player) {
-        var notSupported =  _.some(browsers, function(version, browser){
+        var notSupported =  _.some(browsers, function (version, browser) {
             return (ua.browser === browser && ua.version < version);
         });
 
-        if(notSupported && config.switches.mediaPlayerSupportedBrowsers) {
+        if (notSupported && config.switches.mediaPlayerSupportedBrowsers) {
             player.error(message);
         }
-    }
+    };
 });
