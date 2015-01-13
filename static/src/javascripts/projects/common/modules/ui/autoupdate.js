@@ -61,7 +61,7 @@ define([
             '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
             '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="live-toggle__value">Off</span>' +
+            '    <span class="rounded-icon live-toggle__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
             '  </button>';
 

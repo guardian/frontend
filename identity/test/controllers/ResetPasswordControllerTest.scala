@@ -46,7 +46,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email-address" -> emailAddress)
 
     "with an api response validating the user" - {
-      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right()))
+      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right(())))
 
       "should ask the api to send a reset email to the the the specified user" in Fake {
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
@@ -107,7 +107,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
     val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password-confirm" -> "newpassword", "email-address" -> "test@somewhere.com")
     "when the token provided is valid" - {
-      when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right()))
+      when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right(())))
       "should call the api the password with the provided new password and token" in Fake {
          resetPasswordController.resetPassword("1234")(fakeRequest)
          verify(api).resetPassword(Matchers.eq("1234"), Matchers.eq("newpassword"))

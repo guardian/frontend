@@ -43,7 +43,7 @@ case class Switch( group: String,
 
 object Switch {
   private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get
+  def allSwitches: Seq[Switch] = switches.get()
 }
 
 object Switches {
@@ -275,7 +275,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
     "If this switch is on, ad features with expired line items will return 410s.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
 
@@ -394,6 +394,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val WeatherSwitch = Switch("Feature", "weather",
+    "If this is switched on then the weather component is displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
     "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -489,6 +494,10 @@ object Switches {
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
+
+  val WeatherLoadTest = Switch("Weather", "what-is-my-city-load",
+    "If this switch is on the load test for what is my city will run",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 10))
 
   def all: Seq[Switch] = Switch.allSwitches
 

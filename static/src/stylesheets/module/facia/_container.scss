@@ -134,6 +134,18 @@ $header-image-size-desktop: 100px;
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
     word-wrap: break-word;
 
+    @include mq(tablet, leftCol) {
+        float: left;
+        width: gs-span(6) + $gs-gutter;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            float: left;
+            width: gs-span(6) + $gs-gutter;
+        }
+    }
+
     a {
         color: inherit;
 
@@ -469,20 +481,6 @@ $header-image-size-desktop: 100px;
         @include mq(tablet) {
             padding-left: 0 !important;
             padding-right: 0 !important;
-        }
-    }
-}
-
-
-.content-footer {
-    /**
-     *  For the occasions where we want to show timestamp and there are comments.
-     *  In some cases this will force meta content to split to two lines for tablet view
-     *  so we need to increase the content div bottom space.
-     */
-    @include mq($until: desktop) {
-        .fc-item--has-metadata .fc-item__content {
-            padding-bottom: $gs-baseline * 3;
         }
     }
 }

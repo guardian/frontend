@@ -6,6 +6,7 @@ import play.api.mvc._
 import services.Index
 import services.IndexPage
 import performance.MemcachedAction
+import views.support.RenderOtherStatus
 import scala.concurrent.Future.successful
 
 trait IndexControllerCommon extends Controller with Index with Logging with Paging with ExecutionContexts {
@@ -43,7 +44,7 @@ trait IndexControllerCommon extends Controller with Index with Logging with Pagi
           case Left(model) =>
             renderFaciaFront(model)
           case Right(other) =>
-            other
+            RenderOtherStatus(other)
         }
     }
   }
