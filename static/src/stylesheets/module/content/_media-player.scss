@@ -238,6 +238,11 @@ $vjs-progress-inset-bottom: 4px;
     background-size: cover;
     top: 0;
     left: 0;
+
+    .vjs-has-started &,
+    .vjs-controls-disabled & {
+        display: none;
+    }
 }
 
 .vjs-play-control {
