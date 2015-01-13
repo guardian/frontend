@@ -267,6 +267,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
+  lazy val isSectionLabelLong: Boolean = {
+    val labelList: Seq[String] = sectionLabelName.split(" ").toSeq
+    val filteredList: Seq[String] = labelList.filter(_.length > 10)
+    if(filteredList.length > 0) { true } else { false }
+  }
+
   lazy val blogOrSeriesTag: Option[Tag] = {
     tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
   }

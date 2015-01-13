@@ -154,6 +154,12 @@
     }
 }
 
+.content__labels--long {
+    .content__section-label__link {
+        @include fs-header(2);
+    }
+}
+
 .content__series-label {
     @include fs-headline(2);
     float: left;
