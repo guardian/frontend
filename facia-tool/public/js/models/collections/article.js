@@ -2,6 +2,7 @@
 define([
     'modules/vars',
     'knockout',
+    'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/as-observable-props',
@@ -23,6 +24,7 @@ define([
     function (
         vars,
         ko,
+        alert,
         mediator,
         urlAbsPath,
         asObservableProps,
@@ -812,7 +814,7 @@ define([
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        window.alert(err);
+                        alert(err);
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

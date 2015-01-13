@@ -1784,12 +1784,19 @@ hr {
     margin-left: 3px;
     color: #999;
 }
-.buttons button.primary-action {
+.buttons button.draw-attention {
     background-color: #b51800;
     color: #fff;
 }
-.buttons button.primary-action:hover {
+.buttons button.draw-attention:hover {
     background-color: #9c1500;
+}
+.buttons button.button-action {
+    background-color: #1976D2;
+    color: #fff;
+}
+.buttons button.button-action:hover {
+    background-color: #1565C0;
 }
 
 .history,
@@ -1829,17 +1836,24 @@ hr {
     background-color: #fff;
 }
 .modalDialog-message {
-    padding: 10px 20px;
+    padding: 10px 20px 20px;
+}
+.modalDialog-message h3 i {
+    margin-right: 8px;
 }
 
-.modalDialog-confirm {
+.modalDialog-confirm,
+.modalDialog-alert {
     height: 42px;
     padding: 0 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.modalDialog-confirm .primary-action i {
+.modalDialog-alert {
+    justify-content: flex-end;
+}
+.modalDialog-confirm .draw-attention i {
     margin-right: 8px;
     color: #fff;
 }

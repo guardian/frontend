@@ -247,10 +247,21 @@
         </div>
         <hr>
         <div class="buttons modalDialog-confirm">
-            <button class="secondary-action" data-bind="click: cancel">Cancel</button>
-            <button class="primary-action" data-bind="click: ok">
+            <button data-bind="click: cancel">Cancel</button>
+            <button class="draw-attention" data-bind="click: ok">
                 <i class="fa fa-rss"></i>Send alert
             </button>
+        </div>
+    </script>
+
+    <script type="text/html" id="text_alert">
+        <div class="modalDialog-message">
+            <h3><i class="fa fa-exclamation-circle"></i>Error:</h3>
+            <span data-bind="text: message"></span>
+        </div>
+        <hr>
+        <div class="buttons modalDialog-alert">
+            <button class="button-action" data-bind="click: ok">Ok</button>
         </div>
     </script>
 

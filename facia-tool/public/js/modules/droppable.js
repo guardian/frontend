@@ -2,10 +2,12 @@
 define([
     'knockout',
     'modules/copied-article',
+    'utils/alert',
     'utils/draggable-element'
 ], function(
     ko,
     copiedArticle,
+    alert,
     draggableElement
 ) {
     var sourceGroup;
@@ -47,7 +49,8 @@ define([
             try {
                 source = draggableElement(event.dataTransfer, sourceGroup);
             } catch (ex) {
-                window.alert(ex.message);
+                targetGroup.unsetAsTarget();
+                alert(ex.message);
                 return;
             }
 
