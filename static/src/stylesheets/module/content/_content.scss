@@ -151,15 +151,8 @@
         line-height: get-line-height(header, 2);
         float: none;
     }
-
-    @include mq(leftCol, wide) {
-        .content__section-label__link {
-            @include font-size(20, 24);
-            display: block;
-            padding: $gs-baseline/6 0;
-        }
-    }
 }
+
 
 .content__series-label {
     @include fs-headline(2);
@@ -173,12 +166,16 @@
     .content__series-label__link {
         color: colour(neutral-2);
     }
+}
 
-    @include mq(leftCol, wide) {
-        .content__series-label__link {
-            @include font-size(18, 22);
-            display: block;
-        }
+@include mq(leftCol, wide) {
+    .content__section-label__link {
+        @include font-size(20, 24);
+    }
+
+    .content__series-label__link {
+        @include font-size(18, 22);
+        display: block;
     }
 }
 

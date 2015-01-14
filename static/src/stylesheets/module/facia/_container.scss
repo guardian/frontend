@@ -139,6 +139,10 @@ $header-image-size-desktop: 100px;
         width: gs-span(6) + $gs-gutter;
     }
 
+    @include mq(leftCol, wide) {
+        @include font-size(20px, 24px);
+    }
+
     .has-page-skin & {
         @include mq(wide) {
             float: left;
