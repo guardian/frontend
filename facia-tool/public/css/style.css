@@ -1870,7 +1870,7 @@ hr {
 .modalDialog-message li {
     margin-bottom: 1.2em;
 }
-.modalDialog-message .edition {
+.modalDialog-message .target {
     padding-left: 1em;
 }
 

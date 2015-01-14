@@ -183,7 +183,7 @@ define([
                 name: 'confirm_breaking_changes',
                 data: {
                     articles: this.addedInDraft(),
-                    edition: this.configMeta.displayName()
+                    target: this.configMeta.displayName()
                 }
             })
             .done(function () {
