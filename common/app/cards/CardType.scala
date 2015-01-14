@@ -12,6 +12,16 @@ sealed trait CardType {
     case ListItem => false
     case _ => true
   }
+
+  /** To actually find out if media is shown you would also need to check whether there is an image (or video) and
+    * whether image hide setting is on.
+    *
+    * But some card sizes can never show media, regardless of those options, and this is what this represents.
+    */
+  def canShowMedia = this match {
+    case ListItem => false
+    case _ => true
+  }
 }
 
 /** This is called ListItem because List is already taken */

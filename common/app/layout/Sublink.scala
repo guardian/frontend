@@ -272,6 +272,9 @@ case class ContentCard(
   }
 
   def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
+
+  def showDisplayElement =
+    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
