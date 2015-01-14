@@ -6,7 +6,8 @@ define([
     beacon
 ) {
     function getReport() {
-        var stylesheets = _.chain(document.styleSheets)
+        var maxOut = 50,
+            stylesheets = _.chain(document.styleSheets)
                 .filter(function (sheet) {
                     return sheet &&
                         (!sheet.ownerNode || sheet.ownerNode.className !== 'webfont') &&
@@ -19,11 +20,8 @@ define([
                 .compact()
                 .value(),
             numRules = rules.length,
-            maxOut = 50,
-            selectors = _.chain(_.range(Math.min(maxOut, numRules)))
-                .map(function () {
-                    return rules[_.random(0, numRules)];
-                })
+            offset = _.random(0, Math.max(0, numRules - maxOut)),
+            selectors = _.chain(rules.slice(offset, maxOut))
                 .reduce(function (out, rule) {
                     out[rule] = !!document.querySelector(rule);
                     return out;
@@ -39,5 +37,5 @@ define([
 
     return {
         run: function () { beacon.postJson('css', getReport()); }
-    }
+    };
 });
