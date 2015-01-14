@@ -92,7 +92,7 @@ module.exports = function(grunt, options) {
                 dest: 'common/conf/assets'
             }]
         },
-        inlineSvgs: {
+        inlineSVGs: {
             files: [{
                 expand: true,
                 cwd: 'static/src/inline-svgs',
