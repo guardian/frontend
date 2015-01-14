@@ -22,6 +22,11 @@ sealed trait CardType {
     case ListItem => false
     case _ => true
   }
+
+  def showStandfirst = this match {
+    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight => true
+    case _ => false
+  }
 }
 
 /** This is called ListItem because List is already taken */

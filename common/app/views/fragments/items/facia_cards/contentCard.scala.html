@@ -98,7 +98,7 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.map { text =>
+        @item.trailText.filter(const(item.showStandfirst)).map { text =>
             <div class="fc-item__standfirst">@Html(text)</div>
         }
 
