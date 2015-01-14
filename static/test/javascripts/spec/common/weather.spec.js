@@ -193,10 +193,10 @@ define([
                         '[{"WeatherIcon": 3}]']);
 
                     spyOn(sut, "renderForecast");
-                    spyOn(sut, "parseForecast");
+                    spyOn(sut, "parseForecast").and.returnValue('parsedData');
 
                     sut.fetchForecastData(data).then(function () {
-                        expect(sut.renderForecast).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
+                        expect(sut.renderForecast).toHaveBeenCalledWith('parsedData');
                         expect(sut.parseForecast).toHaveBeenCalled();
                         done();
                     });
@@ -206,68 +206,23 @@ define([
 
                 it("should parse the forecast data and return array of three", function() {
                     var mockData = [
-                            {
-                                "DateTime": "2015-01-13T16:00:00+00:00",
-                                "EpochDateTime": 1421161200,
-                                "WeatherIcon": 4,
-                                "IconPhrase": "Intermittent clouds",
-                                "IsDaylight": true,
-                                "Temperature": {
-                                    "Value": 45,
-                                    "Unit": "F",
-                                    "UnitType": 18
-                                }
-                            },
-                            {
-                                "DateTime": "2015-01-13T18:00:00+00:00",
-                                "EpochDateTime": 1421161200,
-                                "WeatherIcon": 4,
-                                "IconPhrase": "Intermittent clouds",
-                                "IsDaylight": true,
-                                "Temperature": {
-                                    "Value": 47,
-                                    "Unit": "F",
-                                    "UnitType": 18
-                                }
-                            },
-                            {
-                                "DateTime": "2015-01-13T21:00:00+00:00",
-                                "EpochDateTime": 1421161200,
-                                "WeatherIcon": 4,
-                                "IconPhrase": "Intermittent clouds",
-                                "IsDaylight": true,
-                                "Temperature": {
-                                    "Value": 48,
-                                    "Unit": "F",
-                                    "UnitType": 18
-                                }
-                            },
-                            {
-                                "DateTime": "2015-01-13T00:00:00+00:00",
-                                "EpochDateTime": 1421161200,
-                                "WeatherIcon": 4,
-                                "IconPhrase": "Intermittent clouds",
-                                "IsDaylight": true,
-                                "Temperature": {
-                                    "Value": 49,
-                                    "Unit": "F",
-                                    "UnitType": 18
-                                }
-                            }
+                            {"DateTime": "2015-01-13T16:00:00+00:00"},
+                            {"DateTime": "2015-01-13T17:00:00+00:00"},
+                            {"DateTime": "2015-01-13T18:00:00+00:00"},
+                            {"DateTime": "2015-01-13T19:00:00+00:00"},
+                            {"DateTime": "2015-01-13T20:00:00+00:00"},
+                            {"DateTime": "2015-01-13T21:00:00+00:00"},
+                            {"DateTime": "2015-01-13T22:00:00+00:00"},
+                            {"DateTime": "2015-01-13T23:00:00+00:00"},
+                            {"DateTime": "2015-01-13T00:00:00+00:00"},
+                            {"DateTime": "2015-01-13T01:00:00+00:00"},
+                            {"DateTime": "2015-01-13T02:00:00+00:00"},
+                            {"DateTime": "2015-01-13T03:00:00+00:00"}
                         ],
                         result   = [
-                            {
-                                time: '18',
-                                temp: 47
-                            },
-                            {
-                                time: '21',
-                                temp: 48
-                            },
-                            {
-                                time: '00',
-                                temp: 49
-                            }
+                            {"DateTime": "2015-01-13T19:00:00+00:00"},
+                            {"DateTime": "2015-01-13T22:00:00+00:00"},
+                            {"DateTime": "2015-01-13T01:00:00+00:00"}
                         ];
 
                     expect(sut.parseForecast(mockData)).toEqual(result);

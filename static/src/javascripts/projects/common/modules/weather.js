@@ -217,6 +217,9 @@ define([
             };
         },
 
-        renderForecast: function () {}
+        renderForecast: function (forecastData) {
+            //TODO: render forecast
+            return forecastData;
+        }
     };
 });
