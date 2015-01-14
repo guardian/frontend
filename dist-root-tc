@@ -4,8 +4,29 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+set +o xtrace
+echo "##teamcity[progressStart 'Grunt tasks']"
+set -o xtrace
+
 ./grunt-tc clean validate:sass validate:js test:unit compile emitAbTestInfo
+
+set +o xtrace
+echo "##teamcity[progressFinish 'Grunt tasks']"
+set -o xtrace
+
+set +o xtrace
+echo "##teamcity[progressStart 'Scala test and package']"
+set -o xtrace
+
 ./sbt-tc "project root" compile test dist
+
+set +o xtrace
+echo "##teamcity[progressFinish 'Scala test and package']"
+set -o xtrace
+
+set +o xtrace
+echo "##teamcity[progressStart 'Zip packages']"
+set -o xtrace
 
 echo "Disting everything."
 rm -rf "dist"
@@ -40,3 +61,7 @@ do
 done
 
 echo "Done disting."
+
+set +o xtrace
+echo "##teamcity[progressFinish 'Zip packages']"
+set -o xtrace
