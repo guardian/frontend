@@ -96,7 +96,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: 'static/src/inline-svgs',
-                src: ['*.svg'],
+                src: ['**/*.svg'],
                 dest: 'common/conf/assets/inline-svgs'
             }]
         },
