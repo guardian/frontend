@@ -44,18 +44,4 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
       case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
     }
   }
-
-  def fakeWhatIsMyCity() = Action { implicit request =>
-    /** This to gather data for reporting to AccuWeather on predicted usage */
-    tuple2(
-      request.headers.get(CityHeader),
-      request.headers.get(CountryHeader)
-    ) foreach {
-      case (city, country) =>
-        log.info(s"Received location headers. City=$city Country=$country")
-    }
-
-    WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(10.minutes)(JsonComponent.forJsValue(JsNull))
-  }
 }
