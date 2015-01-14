@@ -6,8 +6,11 @@ This sub-project handles the Guardian profile functionality.
 
 Identity runs securely on a separate subdomain. As such it isn't part
 of the dev-build application. The project should be run alongside
-dev-build if required. The `/nginx` dir contains instructions scripts
-and configuration for getting nginx setup. After following these
+dev-build if required.
+
+The `/nginx` dir contains instructions scripts and configuration for getting nginx setup. Make sure you run `./setup.sh` to have nginx properly configured.
+
+ After following these
 instructions, you'll need to run Identity on port 9009 (it doesn't run
 on the default port, 9000 because that would clash with the rest of
 the application). You can do this by passing the port as an argument
