@@ -482,7 +482,7 @@ object Switches {
 
   val FaciaToolDraftContent = Switch("Facia", "facia-tool-draft-content",
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val FaciaToolCachedContentApiSwitch = Switch("Facia", "facia-tool-cached-capi-requests",
