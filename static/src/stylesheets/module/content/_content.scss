@@ -154,6 +154,21 @@
     }
 }
 
+// Styling for long section/series labels at the leftCol breakpoint
+.content__labels--long {
+    @include mq(leftCol, wide) {
+        .content__section-label__link {
+            @include font-size(18, 22);
+            display: block;
+            padding: $gs-baseline/6 0;
+        }
+        .content__series-label__link {
+            @include font-size(16, 20);
+            display: block;
+        }
+    }
+}
+
 .content__series-label {
     @include fs-headline(2);
     float: left;

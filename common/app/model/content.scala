@@ -267,6 +267,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
+// This is a fix for the hanging letters on long section/series labels on the leftCol breakpoint. Use case explained in PR https://github.com/guardian/frontend/pull/7766
+  lazy val areLabelsLong: Boolean = {
+    val sectionLabelList: Seq[String] = sectionLabelName.split(" ").toSeq
+    val blogLabelList: Seq[String] = blogOrSeriesTag.map(_.name.split(" ").toSeq).getOrElse(Nil)
+    val filteredList: Seq[String] = sectionLabelList.filter(_.length > 10) ++ blogLabelList.filter(_.length > 12)
+    filteredList.length > 0
+  }
+
   lazy val blogOrSeriesTag: Option[Tag] = {
     tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries )).headOption
   }
