@@ -158,13 +158,12 @@
 .content__labels--long {
     @include mq(leftCol, wide) {
         .content__section-label__link {
-            @include fs-header(2);
-            line-height: 22px;
+            @include font-size(18, 22);
             display: block;
             padding: $gs-baseline/6 0;
         }
         .content__series-label__link {
-            @include fs-headline(2);
+            @include font-size(16, 20);
             display: block;
         }
     }
