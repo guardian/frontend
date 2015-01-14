@@ -33,7 +33,9 @@ object DiagnosticsController extends Controller with Logging {
 
   def css = Action { request =>
     request.body.asJson.map { jsonBody =>
-      Css.report(jsonBody)
+      if (conf.Switches.CssLogging.isSwitchedOn) {
+        Css.report(jsonBody)
+      }
       NoCache(Ok("OK"))
     } getOrElse {
       NoCache(BadRequest)
