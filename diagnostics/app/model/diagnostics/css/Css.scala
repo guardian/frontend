@@ -1,8 +1,6 @@
 package model.diagnostics.css
 
-import common.Logging
 import play.api.libs.json._
-
 import collection.Map
 
 case class CssReport(
@@ -22,7 +20,7 @@ object CssReport {
   implicit val reads = Json.reads[CssReport]
 }
 
-object Css extends Logging {
+object Css extends common.Logging {
 
   def report(requestBody: JsValue): Unit = {
     requestBody.validate[CssReport] match {
