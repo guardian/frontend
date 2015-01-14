@@ -125,6 +125,7 @@
     border-bottom: 1px dotted colour(neutral-5);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
+    overflow: hidden;
 
     @include mq(leftCol) {
         border: 0;
