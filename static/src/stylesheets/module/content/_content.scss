@@ -169,8 +169,10 @@
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label__link {
-        @include font-size(20, 24);
+    .content__section-label__link,
+    .container__meta__title {
+        font-size: 20px !important;
+        line-height: 24px !important;
     }
 
     .content__series-label__link {

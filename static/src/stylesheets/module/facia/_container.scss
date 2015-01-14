@@ -559,6 +559,10 @@ $header-image-size-desktop: 100px;
             float: none;
         }
     }
+
+    @include mq(leftCol, wide) {
+        @include font-size(20px, 24px);
+    }
 }
 
 .index-page-header__description {
