@@ -6,7 +6,7 @@ define([
     config
     ) {
     return function () {
-        this.id = 'WeatherSwitch';
+        this.id = 'Weather';
         this.start = '2015-01-13';
         this.expiry = '2015-02-01';
         this.author = 'Steve Vadocz';
