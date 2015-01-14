@@ -56,8 +56,6 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     }
 
     WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(10.minutes)(JsonComponent.forJsValue(JsObject(Seq(
-      "headers" -> Json.toJson(request.headers.toMap)
-    ))))
+    Cached(10.minutes)(JsonComponent.forJsValue(JsNull))
   }
 }
