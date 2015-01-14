@@ -8,6 +8,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
+    'common/utils/url',
     'text!common/views/history/tag.html',
     'text!common/views/history/tags.html',
     'text!common/views/history/mega-nav.html'
@@ -17,6 +18,7 @@ define([
     config,
     template,
     storage,
+    url,
     viewTag,
     viewTags,
     viewMegaNav
@@ -284,7 +286,7 @@ define([
 
     function getTopNavItems() {
         topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
-            return collapseTag(urlPath($(item).attr('href')));
+            return collapseTag(url.getPath($(item).attr('href')));
         });
 
         return topNavItemsCache;
@@ -338,12 +340,6 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
-    }
-
-    function urlPath(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        return a.pathname;
     }
 
     return {

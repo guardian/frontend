@@ -1,8 +1,10 @@
 define([
     'common/utils/_',
+    'common/utils/url',
     'common/modules/analytics/beacon'
 ], function (
     _,
+    url,
     beacon
 ) {
     function getReport() {
@@ -29,7 +31,7 @@ define([
                 .value();
 
         return {
-            href: stylesheet.href,
+            href: url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, ''),
             className: stylesheet.ownerNode && stylesheet.ownerNode.className,
             selectors: selectors
         };
