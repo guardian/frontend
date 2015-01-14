@@ -1,10 +1,12 @@
 package controllers
 
 import common._
+import model.NoCache
 import play.api.mvc.{ Content => _, _ }
 import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
+import model.diagnostics.css.Css
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -27,6 +29,15 @@ object DiagnosticsController extends Controller with Logging {
   def analyticsCounts() = Action { request =>
     request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
     OnePix()
+  }
+
+  def css = Action { request =>
+    request.body.asJson.map { jsonBody =>
+      Css.report(jsonBody)
+      NoCache(Ok("OK"))
+    } getOrElse {
+      NoCache(BadRequest)
+    }
   }
 
 }
