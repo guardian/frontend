@@ -1,7 +1,7 @@
 package jobs
 
 import common.Logging
-import conf.Configuration.commercial._
+import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
 import dfp.{AdvertisementFeature, GuLineItem}
 import services.EmailService
 import tools.Store
@@ -18,6 +18,8 @@ object ExpiringAdFeaturesEmailJob extends Logging {
 
     for {
       adTech <- adTechTeam
+      adOps <- adOpsTeam
+      gLabs <- gLabsTeam
     } {
 
       val expiredAdFeatures = adFeatures(_.isExpired)
@@ -34,7 +36,8 @@ object ExpiringAdFeaturesEmailJob extends Logging {
 
         EmailService.send(
           from = adTech,
-          to = Seq(adTech),
+          to = Seq(gLabs, adOps),
+          cc = Seq(adTech),
           subject = "Expiring Advertisement Features",
           htmlBody = Some(htmlBody))
       }
