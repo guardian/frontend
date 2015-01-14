@@ -8,7 +8,6 @@ define([
     'qwery',
 
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -22,6 +21,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/bo-selector',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -64,7 +64,6 @@ define([
     qwery,
 
     $,
-    ajax,
     config,
     cookies,
     detect,
@@ -78,6 +77,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    boSelector,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -450,6 +450,14 @@ define([
                 mediator.on('page:common:ready', function () {
                     weather.init();
                 });
+            },
+
+            runBoSelector : function () {
+                mediator.on('page:common:ready', function () {
+                    if (true || config.switches.boSelector) {
+                        boSelector.run();
+                    }
+                });
             }
 
         },
@@ -491,6 +499,7 @@ define([
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
             modules.initWeatherComponent();
+            modules.runBoSelector();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
