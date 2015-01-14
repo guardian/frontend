@@ -37,7 +37,6 @@ define([
 
         switch (config.page.edition.toLowerCase()) {
             case 'au':
-                amaa.load();
                 effectiveMeasure.load();
                 break;
 
