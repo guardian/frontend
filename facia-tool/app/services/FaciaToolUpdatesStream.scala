@@ -33,8 +33,8 @@ object FaciaToolUpdatesStream extends Logging {
 
   def putStreamUpdate(streamUpdate: StreamUpdate): Unit =
     Json.toJson(streamUpdate.update).transform[JsObject](Reads.JsObjectReads) match {
-      case JsSuccess(jsonObject)  => putString(Json.stringify(jsonObject + ("email", JsString(streamUpdate.email))))
-      case JsError(errors)        => log.warn(s"Error converting StreamUpdate: $errors")}
+      case JsSuccess(jsonObject, _)  => putString(Json.stringify(jsonObject + ("email", JsString(streamUpdate.email))))
+      case JsError(errors)           => log.warn(s"Error converting StreamUpdate: $errors")}
 
   private def putString(s: String): Unit =
     Configuration.faciatool.faciaToolUpdatesStream.map { streamName =>
