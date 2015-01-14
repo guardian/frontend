@@ -504,10 +504,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val WeatherLoadTest = Switch("Weather", "what-is-my-city-load",
-    "If this switch is on the load test for what is my city will run",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 10))
-
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
