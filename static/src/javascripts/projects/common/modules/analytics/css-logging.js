@@ -1,12 +1,14 @@
 define([
     'common/utils/_',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/url',
     'common/utils/scan',
     'common/modules/analytics/beacon'
 ], function (
     _,
     config,
+    detect,
     url,
     scan,
     beacon
@@ -33,7 +35,7 @@ define([
 
             randomRule = _.random(0, totalRules),
 
-            stylesheet = stylesheets[_.reduce(stylesheetLengths, function(acc, len, i) { return randomRule > len ? i : acc; }, 0)],
+            stylesheet = stylesheets[_.reduce(stylesheetLengths, function (acc, len, i) { return randomRule > len ? i : acc; }, 0)],
 
             rules = _.chain(stylesheet.rules || stylesheet.cssRules)
                 .map(function (r) { return r && r.selectorText; })
@@ -52,10 +54,11 @@ define([
                 .value();
 
         return {
-            selectors: selectors,
             contentType: config.page.contentType,
+            breakpoint: detect.getBreakpoint(),
             className: stylesheet.ownerNode && stylesheet.ownerNode.className || '',
-            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : ''
+            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : '',
+            selectors: selectors
         };
     }
 

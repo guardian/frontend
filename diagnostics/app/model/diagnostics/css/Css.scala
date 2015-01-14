@@ -5,6 +5,7 @@ import collection.Map
 
 case class CssReport(
   href: String,
+  breakpoint: String,
   className: String,
   contentType: String,
   selectors: JsObject ) {
@@ -12,7 +13,7 @@ case class CssReport(
   override def toString(): String = {
     val selectorMap = selectors.value.asInstanceOf[Map[String, JsBoolean]]
     selectorMap.map {
-      case (key: String, exists:JsBoolean) => s"css ; $key ; $exists ; $contentType ; $href"
+      case (key: String, exists:JsBoolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint ; $href"
     }.mkString("\n")
   }
 }
