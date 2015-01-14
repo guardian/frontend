@@ -145,12 +145,19 @@
 .content__section-label {
     @include fs-header(1);
     float: left;
-    padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
         @include fs-header(4);
         line-height: get-line-height(header, 2);
         float: none;
+    }
+
+    @include mq(leftCol, wide) {
+        .content__section-label__link {
+            @include font-size(20, 24);
+            display: block;
+            padding: $gs-baseline/6 0;
+        }
     }
 }
 
@@ -165,6 +172,13 @@
 
     .content__series-label__link {
         color: colour(neutral-2);
+    }
+
+    @include mq(leftCol, wide) {
+        .content__series-label__link {
+            @include font-size(18, 22);
+            display: block;
+        }
     }
 }
 
