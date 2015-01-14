@@ -61,24 +61,18 @@ define([
                 }
                 $node.removeClass('u-h');
 
-                if ($node.attr('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count', node).html(formatters.integerCommas(c.count));
-                    $('.js-item__comment-or-comments', node).html(commentOrComments);
-                    $('.js-item__inline-comment-template', node).show('inline');
-                } else {
-                    // put in trail__meta, if exists
-                    meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node);
-                    $container = meta.length ? bonzo(meta) : $node;
-                    format = $node.data('commentcount-format');
+                // put in trail__meta, if exists
+                meta = qwery('.js-item__meta', node);
+                $container = meta.length ? bonzo(meta) : $node;
+                format = $node.data('commentcount-format');
 
-                    $container.append(template(templates[format] || defaultTemplate, {
-                        url: getContentUrl(node),
-                        count: formatters.integerCommas(c.count),
-                        label: commentOrComments
-                    }));
+                $container.append(template(templates[format] || defaultTemplate, {
+                    url: getContentUrl(node),
+                    count: formatters.integerCommas(c.count),
+                    label: commentOrComments
+                }));
 
-                    $node.removeAttr(attributeName);
-                }
+                $node.removeAttr(attributeName);
             });
         });
     }
