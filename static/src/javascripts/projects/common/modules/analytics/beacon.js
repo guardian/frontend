@@ -17,13 +17,13 @@ define([
 
             return img;
         },
-        postJson: function (path, obj) {
+        postJson: function (path, jsonString) {
             return ajax({
                 url: config.page.beaconUrl + path,
                 type: 'json',
                 method: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify(obj),
+                data: jsonString,
                 crossOrigin: true
             });
         },
