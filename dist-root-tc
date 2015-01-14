@@ -4,7 +4,16 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+set +o xtrace
+##teamcity[progressStart 'Starting grunt tasks']
+set -o xtrace
+
 ./grunt-tc clean validate:sass validate:js test:unit compile emitAbTestInfo
+
+set +o xtrace
+##teamcity[progressFinish 'Finished grunt tasks']
+set -o xtrace
+
 ./sbt-tc "project root" compile test dist
 
 echo "Disting everything."
