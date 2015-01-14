@@ -43,7 +43,7 @@ case class Switch( group: String,
 
 object Switch {
   private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get
+  def allSwitches: Seq[Switch] = switches.get()
 }
 
 object Switches {
@@ -275,9 +275,13 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
     "If this switch is on, ad features with expired line items will return 410s.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+
+  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
+    "If this switch is on, logo slots will honour visitor's edition.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
 
   // Monitoring
 
@@ -389,8 +393,18 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val MediaPlayerSupportedBrowsers = Switch("Feature", "media-player-supported-browsers",
+    "If this is switched on then a message will be displayed to UAs not supported by our media player",
+    safeState = On, sellByDate = never
+  )
+
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val WeatherSwitch = Switch("Feature", "weather",
+    "If this is switched on then the weather component is displayed",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
@@ -401,6 +415,11 @@ object Switches {
 
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
+    "If this is switched on then personalised containers based on history are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
@@ -484,6 +503,10 @@ object Switches {
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
+
+  val WeatherLoadTest = Switch("Weather", "what-is-my-city-load",
+    "If this switch is on the load test for what is my city will run",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 10))
 
   def all: Seq[Switch] = Switch.allSwitches
 

@@ -116,7 +116,7 @@ object ContainerCommercialOptions {
   )
 
   def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored,
+    metaData.isSponsored(),
     metaData.isAdvertisementFeature,
     metaData.isFoundationSupported,
     metaData.sponsor,

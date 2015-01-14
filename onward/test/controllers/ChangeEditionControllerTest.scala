@@ -18,7 +18,7 @@ import test.{ConfiguredTestSuite, TestRequest}
     val result = controllers.ChangeEditionController.render("au")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
-    GU_EDITION.maxAge should be (Some(5184000))  // 60 days, this is seconds
+    GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
     GU_EDITION.value should be ("AU")
   }
 

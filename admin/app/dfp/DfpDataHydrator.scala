@@ -5,6 +5,7 @@ import com.google.api.ads.dfp.axis.v201411._
 import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import dfp.DfpApiWrapper.DfpSessionException
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
 
 import scala.util.{Failure, Try}
@@ -108,7 +109,7 @@ class DfpDataHydrator extends Logging {
 
     } catch {
       case e: Exception =>
-        log.error(e.getStackTraceString)
+        log.error(ExceptionUtils.getStackTrace(e))
         Nil
     }
   }

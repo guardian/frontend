@@ -105,6 +105,10 @@ $block-padding-right: $gs-gutter;
 
 .blog__live {
     font-weight: bold;
+
+    &.live-pulse-icon:before {
+        margin-bottom: -1px;
+    }
 }
 
 .live-pulse-icon:before {
@@ -115,7 +119,6 @@ $block-padding-right: $gs-gutter;
     width: $size;
     height: $size;
     content: '';
-    margin-bottom: -1px;
     margin-right: 3px;
     vertical-align: initial;
     @include animation(live-pulse 1s infinite);
@@ -326,9 +329,6 @@ $block-padding-right: $gs-gutter;
             margin-left: 0;
             margin-right: 0;
         }
-        > .element-image + .element {
-            margin-top: $gs-baseline*-1;
-        }
 
         > .element-table {
             margin: 0;
@@ -387,6 +387,8 @@ $block-padding-right: $gs-gutter;
         > .element-video {
             clear: left;
             border-bottom: 2px solid colour(neutral-8);
+            margin-bottom: $gs-baseline;
+            padding-bottom: $gs-baseline/2;
 
             &:last-child {
                 border-bottom: 0;
@@ -397,6 +399,7 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             margin-left: $gs-gutter/2;
             margin-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
 
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;
