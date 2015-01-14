@@ -2,10 +2,8 @@
  * A regionalised container for all the commercial tags.
  */
 define([
-    'lodash/objects/defaults',
     'common/utils/config',
     'common/modules/commercial/outbrain',
-    'common/modules/commercial/tags/amaa',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
@@ -15,10 +13,8 @@ define([
     'common/modules/commercial/tags/remarketing',
     'common/modules/commercial/tags/krux'
 ], function (
-    defaults,
     config,
     outbrain,
-    amaa,
     audienceScience,
     audienceScienceGateway,
     criteo,
