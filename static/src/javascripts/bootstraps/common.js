@@ -21,7 +21,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
-    'common/modules/analytics/bo-selector',
+    'common/modules/analytics/css-logging',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -77,7 +77,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
-    boSelector,
+    cssLogging,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -452,10 +452,10 @@ define([
                 });
             },
 
-            runBoSelector: function () {
+            runCssLogging: function () {
                 mediator.on('page:common:ready', function () {
-                    if (true || config.switches.boSelector) {
-                        boSelector.run();
+                    if (true || config.switches.cssLogging) {
+                        cssLogging.run();
                     }
                 });
             }
@@ -499,7 +499,7 @@ define([
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
             modules.initWeatherComponent();
-            modules.runBoSelector();
+            modules.runCssLogging();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
