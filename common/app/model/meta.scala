@@ -81,7 +81,8 @@ trait MetaData extends Tags {
 
   def customSignPosting: Option[NavItem] = None
 
-  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
   lazy val isExpiredAdvertisementFeature: Boolean = DfpAgent.isExpiredAdvertisementFeature(tags, Some(section))
@@ -246,7 +247,7 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored: Boolean
+  def isSponsored(maybeEdition: Option[Edition] = None): Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature: Boolean
   def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
@@ -254,7 +255,7 @@ trait Tags {
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
   def sponsorshipType: Option[String] = {
-    if (isSponsored) {
+    if (isSponsored()) {
       Option("sponsoredfeatures")
     } else if (isAdvertisementFeature) {
       Option("advertisement-features")

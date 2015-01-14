@@ -1,14 +1,14 @@
 package views.support
 
-import com.gu.contentapi.client.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset, Content => ApiContent}
-import model._
-import org.joda.time.DateTime
-import org.scalatest.{ Matchers, FlatSpec }
-import xml.XML
+import com.gu.contentapi.client.model.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import common.Edition
 import common.editions.Uk
 import conf.Configuration
-import org.jsoup.Jsoup
+import model._
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
+
+import scala.xml.XML
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -27,9 +27,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "tone/foo", tagType = "tone")),
         Tag(tag(id = "type/video", tagType = "type"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("type/video")
   }
@@ -40,9 +40,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "type/article", tagType = "type")),
         Tag(tag(id = "tone/foo", tagType = "tone"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("tone/foo")
   }

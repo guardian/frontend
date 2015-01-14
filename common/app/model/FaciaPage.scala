@@ -63,7 +63,8 @@ case class FaciaPage(id: String,
 
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
-  override lazy val isSponsored = keywordIds exists (DfpAgent.isSponsored(_, Some(section)))
+  override def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
+    keywordIds exists (DfpAgent.isSponsored(_, Some(section), maybeEdition))
   override def hasMultipleSponsors = false // Todo: need to think about this
   override lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
       Some(section)))
