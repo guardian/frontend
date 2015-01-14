@@ -125,8 +125,6 @@
     border-bottom: 1px dotted colour(neutral-5);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    overflow: hidden;
-    word-wrap: break-word;
 
     @include mq(leftCol) {
         border: 0;
@@ -151,6 +149,7 @@
         @include fs-header(4);
         line-height: get-line-height(header, 2);
         float: none;
+        padding-right: 0;
     }
 }
 
@@ -165,6 +164,19 @@
 
     .content__series-label__link {
         color: colour(neutral-2);
+    }
+}
+
+@include mq(leftCol, wide) {
+    .content__section-label__link,
+    .container__meta__title {
+        font-size: 20px !important;
+        line-height: 24px !important;
+    }
+
+    .content__series-label__link {
+        @include font-size(18, 22);
+        display: block;
     }
 }
 
