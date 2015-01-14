@@ -4,13 +4,13 @@ set -o nounset
 set -o errexit
 
 set +o xtrace
-##teamcity[progressStart 'Starting grunt tasks']
+echo ##teamcity[progressStart 'Starting grunt tasks']
 set -o xtrace
 
 ./grunt-tc clean validate test:unit compile
 
 set +o xtrace
-##teamcity[progressFinish 'Finished grunt tasks']
+echo ##teamcity[progressFinish 'Finished grunt tasks']
 set -o xtrace
 
 ./sbt-tc "project root" test
