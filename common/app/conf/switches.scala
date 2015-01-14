@@ -428,6 +428,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
+    "Switch for the Join Us navigation component A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
+  )
+
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
