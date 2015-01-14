@@ -452,7 +452,7 @@ define([
                 });
             },
 
-            runBoSelector : function () {
+            runBoSelector: function () {
                 mediator.on('page:common:ready', function () {
                     if (true || config.switches.boSelector) {
                         boSelector.run();
