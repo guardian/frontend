@@ -24,7 +24,7 @@ sealed trait CardType {
   }
 
   def showStandfirst = this match {
-    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight => true
+    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
     case _ => false
   }
 }
