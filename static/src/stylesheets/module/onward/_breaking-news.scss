@@ -68,7 +68,7 @@ $breaking-news-icon-width: 36px;
 
 .breaking-news__item-content {
     @include box-sizing(border-box);
-    padding: $gs-baseline * .5 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
+    padding: ($gs-baseline * .5) 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
     @include gs-container;
 
     @include mq(wide) {
