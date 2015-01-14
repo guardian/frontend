@@ -355,7 +355,7 @@ object Switches {
 
   val SearchSwitch = Switch("Feature", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val IdentityProfileNavigationSwitch = Switch("Feature", "id-profile-navigation",
