@@ -305,6 +305,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val CssLogging = Switch("Monitoring", "css-logging",
+    "If this is on, then a subset of clients will post css selector information for diagnostics.",
+    safeState = Off, new LocalDate(2015, 2, 28)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
