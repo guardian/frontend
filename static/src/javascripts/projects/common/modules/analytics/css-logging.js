@@ -1,9 +1,11 @@
 define([
     'common/utils/_',
+    'common/utils/config',
     'common/utils/url',
     'common/modules/analytics/beacon'
 ], function (
     _,
+    config,
     url,
     beacon
 ) {
@@ -31,13 +33,14 @@ define([
                 .value();
 
         return {
-            href: url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, ''),
-            className: stylesheet.ownerNode && stylesheet.ownerNode.className,
+            contentType: config.page.contentType,
+            className: stylesheet.ownerNode && stylesheet.ownerNode.className || '',
+            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : '',
             selectors: selectors
         };
     }
 
     return {
-        run: function () { beacon.postJson('css', getReport()); }
+        run: function () { beacon.postJson('/css', getReport()); }
     };
 });

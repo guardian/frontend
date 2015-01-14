@@ -454,7 +454,7 @@ define([
 
             runCssLogging: function () {
                 mediator.on('page:common:ready', function () {
-                    if (true || config.switches.cssLogging) {
+                    if (config.switches.cssLogging) {
                         cssLogging.run();
                     }
                 });
