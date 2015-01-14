@@ -125,8 +125,6 @@
     border-bottom: 1px dotted colour(neutral-5);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    overflow: hidden;
-    word-wrap: break-word;
 
     @include mq(leftCol) {
         border: 0;
@@ -145,11 +143,13 @@
 .content__section-label {
     @include fs-header(1);
     float: left;
+    padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
         @include fs-header(4);
         line-height: get-line-height(header, 2);
         float: none;
+        padding-right: 0;
     }
 }
 
