@@ -3,12 +3,16 @@
 set -o nounset
 set -o errexit
 
-echo "##teamcity[progressStart 'Starting grunt tasks']"
+echo "##teamcity[progressStart 'Grunt tasks']"
 
 ./grunt-tc clean validate test:unit compile
 
-echo "##teamcity[progressFinish 'Finished grunt tasks']"
+echo "##teamcity[progressFinish 'Grunt tasks']"
+
+echo "##teamcity[progressStart 'Scala test']"
 
 ./sbt-tc "project root" test
+
+echo "##teamcity[progressFinish 'Scala test']"
 
 echo "Tested everything."
