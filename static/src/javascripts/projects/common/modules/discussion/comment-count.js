@@ -3,6 +3,7 @@ define([
     'qwery',
     'lodash/collections/forEach',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
@@ -14,6 +15,7 @@ define([
     qwery,
     forEach,
     $,
+    _,
     ajax,
     formatters,
     mediator,
@@ -21,7 +23,6 @@ define([
     commentCountTemplate,
     commentCountContentTemplate
 ) {
-
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
@@ -30,16 +31,9 @@ define([
         defaultTemplate = commentCountTemplate;
 
     function getContentIds() {
-        var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
-            l = nodes.length - 1,
-            data = '';
-
-        Array.prototype.forEach.call(nodes, function (el, i) {
-            data += el.getAttribute(attributeName);
-            if (i < l) { data += ','; }
-        });
-
-        return data;
+        return _.map(qwery('[' + attributeName + ']'), function (el) {
+            return bonzo(el).attr(attributeName);
+        }).join(',');
     }
 
     function getContentUrl(node) {
@@ -54,7 +48,8 @@ define([
                     $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                     $container,
-                    meta;
+                    meta,
+                    html;
 
                 if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
@@ -63,15 +58,15 @@ define([
 
                 // put in trail__meta, if exists
                 meta = qwery('.js-item__meta', node);
-                $container = meta.length ? bonzo(meta) : $node;
-                format = $node.data('commentcount-format');
 
-                $container.append(template(templates[format] || defaultTemplate, {
+                format = $node.data('commentcount-format');
+                html = template(templates[format] || defaultTemplate, {
                     url: getContentUrl(node),
                     count: formatters.integerCommas(c.count),
                     label: commentOrComments
-                }));
-
+                });
+                $container = meta.length ? bonzo(meta) : $node;
+                $container.append(html);
                 $node.removeAttr(attributeName);
             });
         });
