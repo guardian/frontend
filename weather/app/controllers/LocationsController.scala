@@ -3,7 +3,7 @@ package controllers
 import common._
 import model.Cached
 import models.CityResponse
-import play.api.libs.json.{JsObject, JsNull, Json}
+import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
