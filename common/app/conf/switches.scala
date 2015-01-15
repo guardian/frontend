@@ -434,7 +434,7 @@ object Switches {
   )
 
   val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
-    "Switch for the Join Us navigation component A/B test.",
+    "Switch for the UK Join Us navigation component A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
   )
 
