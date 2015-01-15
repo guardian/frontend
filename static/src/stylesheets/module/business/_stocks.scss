@@ -6,6 +6,20 @@
     margin-bottom: $gs-baseline;
 }
 
+.stocks__divider {
+    width: 50%;
+
+    @include mq(leftCol) {
+        border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            border-top: 0;
+        }
+    }
+}
+
 .stocks__change {
     .stocks__stock-value--negative & {
         color: colour(status-negative);
@@ -27,18 +41,21 @@
     @include mq(leftCol) {
         float: none;
         margin-bottom: $gs-baseline;
-        border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
     }
 
     @include mq(wide) {
         .has-page-skin & {
             float: left;
             margin-bottom: 0;
-            border-top: 0;
         }
     }
 }
 
 .stocks__name {
     font-weight: 600;
+}
+
+.stocks__name,
+.stocks__change {
+    margin-bottom: -4px;
 }
