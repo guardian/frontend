@@ -31,7 +31,7 @@ object DiagnosticsController extends Controller with Logging {
     OnePix()
   }
 
-  def css = Action(parse.tolerantJson) { request =>
+  def css = Action(parse.maxLength(1024 * 1024, parser = parse.tolerantJson)) { request =>
     if (conf.Switches.CssLogging.isSwitchedOn) {
         Css.report(request.body)
     }
