@@ -1,9 +1,11 @@
 .stocks__stocks-container {
+    @include clearfix;
+
     clear: left;
     margin-bottom: 4px;
 }
 
-.stocks__price {
+.stocks__change {
     .stocks__stock-value--negative & {
         color: colour(status-negative);
     }
@@ -28,4 +30,8 @@
             float: left;
         }
     }
+}
+
+.stocks__name {
+    font-weight: 600;
 }
