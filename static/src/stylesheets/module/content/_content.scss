@@ -676,7 +676,14 @@
 }
 
 .meta__twitter {
-    margin-top: -($gs-baseline/2);
+    margin-top: -($gs-baseline*2/3);
+    margin-bottom: -($gs-baseline/6);
+
+    .content__meta-container--tonal-header & {
+        @include mq($until: leftCol) {
+            margin-top: -($gs-baseline/3);
+        }
+    }
 
     .icon {
         margin-top: $gs-baseline/3;
