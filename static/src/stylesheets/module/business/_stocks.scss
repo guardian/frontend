@@ -27,7 +27,7 @@ $stocks-icon-height: 10px;
     content: '';
     width: $stocks-icon-width;
     height: $stocks-icon-height;
-    margin-right: $gs-gutter / 5;
+    margin-right: 3px;
 }
 
 .stocks__stock-value--negative {
@@ -62,21 +62,30 @@ $stocks-icon-height: 10px;
 
 .stocks__stock-value {
     float: left;
-    margin-right: $gs-gutter;
+    padding-right: $gs-gutter;
+    margin-right: 6px;
     border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     @include mq(leftCol) {
         float: none;
         margin-bottom: $gs-baseline;
+        padding-right: 0;
         margin-right: 0;
+        border-right: 0;
     }
 
     @include mq(wide) {
         .has-page-skin & {
             float: left;
+            padding-right: $gs-gutter;
             margin-bottom: 0;
-            margin-right: $gs-gutter;
+            margin-right: 6px;
+            border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
         }
+    }
+
+    &:last-of-type {
+        border-right: 0;
     }
 }
 
