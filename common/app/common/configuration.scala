@@ -274,6 +274,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeam.au")
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
+    lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
   }
 
   object open {

@@ -16,7 +16,8 @@ define([
     'common/modules/experiments/tests/history-containers',
     'common/modules/experiments/tests/join-us-navigation',
     'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/breaking-news-alert-style'
+    'common/modules/experiments/tests/breaking-news-alert-style',
+    'common/modules/experiments/tests/weather-component'
 ], function (
     raven,
     filter,
@@ -35,7 +36,8 @@ define([
     HistoryContainers,
     JoinUsNavigation,
     StickyContainerTitles,
-    BreakingNewsAlertStyle
+    BreakingNewsAlertStyle,
+    Weather
 ) {
 
     var ab,
@@ -45,7 +47,8 @@ define([
             new HistoryContainers(),
             new JoinUsNavigation(),
             new StickyContainerTitles(),
-            new BreakingNewsAlertStyle()
+            new BreakingNewsAlertStyle(),
+            new Weather()
         ],
         participationsKey = 'gu.ab.participations';
 

@@ -41,7 +41,7 @@ trait PaidForTagAgent {
               _.isEditionTag
             } flatMap (_.values.map(_.toLowerCase))
           }.distinct
-          editionIds contains edition.id.toLowerCase
+          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
         }
       }
     }
