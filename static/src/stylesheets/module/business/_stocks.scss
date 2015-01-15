@@ -20,17 +20,27 @@
     }
 }
 
-.stocks__change {
-    .stocks__stock-value--negative & {
-        color: colour(status-negative);
-    }
+.stocks__stock-value--negative .stocks__change {
+    color: colour(status-negative);
 
-    .stocks__stock-value--positive & {
-        color: colour(status-positive);
+    &:before {
+        @include icon(market-down, false);
     }
+}
 
-    .stocks__stock-value--level & {
-        color: colour(status-neutral);
+.stocks__stock-value--positive .stocks__change {
+    color: colour(status-positive);
+
+    &:before {
+        @include icon(market-up, false);
+    }
+}
+
+.stocks__stock-value--level .stocks__change {
+    color: colour(status-neutral);
+
+    &:before {
+        @include icon(market-same, false);
     }
 }
 
