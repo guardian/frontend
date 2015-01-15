@@ -131,6 +131,9 @@ define([
             bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
+            bean.on($('.js-weather-input')[0], 'blur', function() {
+                self.toggleControls(false);
+            });
             mediator.on('autocomplete:fetch', this.fetchData);
         },
 
