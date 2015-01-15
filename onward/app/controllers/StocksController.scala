@@ -8,7 +8,7 @@ import business.{Data => BusinessData, Stocks}
 import scala.concurrent.duration._
 
 object StocksController extends Controller {
-  def stocks = Action {
+  def stocks = Action { implicit request =>
     BusinessData.agent.get() match {
       case None => InternalServerError("Business data not loaded")
       case Some(data) =>
