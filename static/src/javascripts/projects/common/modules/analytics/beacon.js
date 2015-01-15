@@ -19,7 +19,7 @@ define([
         },
         postJson: function (path, jsonString, forceAjax) {
             if ('sendBeacon' in navigator && !forceAjax) {
-                window.addEventListener('unload', function() {
+                window.addEventListener('unload', function () {
                     navigator.sendBeacon(path, jsonString);
                 }, false);
             } else {
