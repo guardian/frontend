@@ -1,4 +1,5 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
+@import common.StringEncodings
 
 @import common.Edition
 @import views.support.{JavaScriptPage, CamelCase}
@@ -6,7 +7,7 @@
 
 @defining(Edition(request)) { edition =>
     {
-        "page": @Html(Json.stringify(JavaScriptPage(item).get)),
+        "page": @Html(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage(item).get))),
         "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },

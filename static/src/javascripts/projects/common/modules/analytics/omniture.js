@@ -153,8 +153,6 @@ define([
             s.prop3     = config.page.publication || '';
 
             s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
-            s.prop9     = config.page.contentType || '';  //contentType
-
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
