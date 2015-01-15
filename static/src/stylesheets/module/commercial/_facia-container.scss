@@ -4,6 +4,7 @@
 .commercial {
     background-color: colour(neutral-6);
 
+    .commercial__inner,
     .facia-container__inner--commercial {
         position: relative;
         overflow: hidden;
@@ -22,7 +23,7 @@
         }
     }
 
-    .container__header__inner,
+    .commercial__body,
     .container__body {
         position: relative;
         overflow: hidden;
@@ -45,6 +46,7 @@
         }
     }
 
+    .commercial__header__inner,
     .container__header__inner {
         padding: $gs-baseline/2 $gs-gutter/2;
 
@@ -59,6 +61,7 @@
         }
     }
 
+    .commercial__header,
     .container__header {
         height: 100%;
         padding-top: 0;
@@ -101,6 +104,7 @@
         }
     }
 
+    .commercial__body,
     .container__body {
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
