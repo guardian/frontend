@@ -1,5 +1,6 @@
 $stocks-icon-width: 14px;
 $stocks-icon-height: 10px;
+$closed-colour: #767676;
 
 .stocks__stocks-container {
     @include clearfix;
@@ -107,6 +108,41 @@ $stocks-icon-height: 10px;
 
 .stocks__price {
     margin-right: .25em;
+}
+
+.stocks__closed,
+.stocks__closed--inline {
+    color: $closed-colour;
+}
+
+.stocks__closed {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
+    }
+}
+
+.stocks__closed--inline {
+    font-weight: 400;
+    margin-left: 0.5em;
+    display: inline;
+
+    @include mq(leftCol) {
+        display: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
+    }
 }
 
 .stocks__price,

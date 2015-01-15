@@ -38,7 +38,8 @@ define([
                 deltaClass: 'stocks__stock-value--' + stockValue.trend,
                 price: stockValue.price,
                 change: deltaString(stockValue.change),
-                closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : ''
+                closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : '',
+                closedInline: stockValue.closed ? '<div class="stocks__closed--inline">closed</div>' : ''
             });
         }).join("");
 
