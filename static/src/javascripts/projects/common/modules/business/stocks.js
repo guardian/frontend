@@ -1,16 +1,22 @@
 define([
     'common/utils/_',
     'common/utils/ajax',
+    'common/utils/config',
     'common/utils/template',
     'text!common/views/business/stock-value.html',
     'text!common/views/business/stocks.html'
 ], function (
     _,
     ajax,
+    config,
     template,
     stockValue,
     stocks
 ) {
+    function isBusinessFront() {
+        return config.page.pageId == config.page.edition.toLowerCase() + "/business";
+    }
+
     function getStocksData(onComplete) {
         return ajax({
             url: '/business-data/stocks.json',
@@ -39,10 +45,12 @@ define([
     }
 
     return function () {
-        var $container = $('.js-stocks-data-container');
+        if (isBusinessFront()) {
+            var $container = $('.js-container--first .js-container__header');
 
-        getStocksData(function (data) {
-            $container.html(renderData(data))
-        });
+            getStocksData(function (data) {
+                $container.append(renderData(data))
+            });
+        }
     };
 });
