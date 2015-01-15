@@ -57,7 +57,7 @@ import test.ConfiguredTestSuite
     val identity = UserIdentity("", "email@email.com", "John", "Duffell", 0, None)
     val live = List(Trail("existingId", 0, None))
     val draft = Trail("newId", 0, None) :: live
-    val block = Block(None, live, Some(draft), "oldLastUpdated", "oldUpdatedBy", "oldUpdatedEmail", None, None, None, None)
+    val block = Block(live, Some(draft), "oldLastUpdated", "oldUpdatedBy", "oldUpdatedEmail", None, None, None, None)
     (identity, block)
   }
 }
