@@ -1,5 +1,6 @@
 package model
 
+import common.Edition
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -55,9 +56,9 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
     val tags = new Tags {
       override val tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition: Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
 
     tags.keywords should be(theKeywords)

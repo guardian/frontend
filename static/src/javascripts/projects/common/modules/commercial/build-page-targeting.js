@@ -7,7 +7,6 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/modules/commercial/keywords',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
@@ -22,7 +21,6 @@ define([
     config,
     cookies,
     detect,
-    keywords,
     audienceScience,
     audienceScienceGateway,
     criteo,
@@ -30,8 +28,11 @@ define([
     ab
 ) {
 
-    var formatTarget = function (target) {
-            return target ? keywords.format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
+    var format = function (keyword) {
+            return keyword.replace(/[+\s]+/g, '-').toLowerCase();
+        },
+        formatTarget = function (target) {
+            return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
         },
         getSeries = function (page) {
             if (page.seriesId) {
@@ -45,7 +46,7 @@ define([
             if (!id) {
                 return null;
             }
-            return keywords.format(id.split('/').pop());
+            return format(id.split('/').pop());
         },
         parseIds = function (ids) {
             if (!ids) {

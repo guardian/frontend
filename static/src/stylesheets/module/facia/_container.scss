@@ -132,15 +132,18 @@ $header-image-size-desktop: 100px;
     @include fs-header(4);
     line-height: get-line-height(header, 2);
     color: guss-colour(guardian-brand-dark, $pasteup-palette);
-    word-wrap: break-word;
 
     @include mq(tablet, leftCol) {
         float: left;
         width: gs-span(6) + $gs-gutter;
     }
 
+    @include mq(leftCol, wide) {
+        @include font-size(20px, 24px);
+    }
+
     .has-page-skin & {
-        @include mq(leftCol) {
+        @include mq(wide) {
             float: left;
             width: gs-span(6) + $gs-gutter;
         }
@@ -554,6 +557,10 @@ $header-image-size-desktop: 100px;
         .has-page-skin & {
             float: none;
         }
+    }
+
+    @include mq(leftCol, wide) {
+        @include font-size(20px, 24px);
     }
 }
 

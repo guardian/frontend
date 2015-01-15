@@ -319,13 +319,13 @@ define([
     }
 
     function showInMegaNavEnabled() {
-        return getSummary().showInMegaNav;
+        return getSummary().showInMegaNav !== false;
     }
 
-    function showInMegaNavToggle() {
+    function showInMegaNavEnable(bool) {
         var summary = getSummary();
 
-        summary.showInMegaNav = !summary.showInMegaNav;
+        summary.showInMegaNav = !!bool;
 
         if (summary.showInMegaNav) {
             showInMegaNav();
@@ -350,8 +350,8 @@ define([
         logHistory: logHistory,
         logSummary: logSummary,
         showInMegaNav: showInMegaNav,
+        showInMegaNavEnable: showInMegaNavEnable,
         showInMegaNavEnabled: showInMegaNavEnabled,
-        showInMegaNavToggle: showInMegaNavToggle,
         getPopular: getPopular,
         getPopularFiltered: getPopularFiltered,
         deleteFromSummary: deleteFromSummary,
