@@ -141,10 +141,14 @@ define([
                     }
                 })
                 .map(function ($adSlot) {
-                    return [$adSlot.attr('id'), defineSlot($adSlot)];
+                    return [$adSlot.attr('id'), {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    }];
                 })
                 .zipObject()
                 .valueOf();
+            console.log(slots);
         },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
@@ -198,7 +202,8 @@ define([
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
-                    slots[slotId] = defineSlot($adSlot);
+                    slots[slotId].isRendered = false;
+                    slots[slotId].slot = defineSlot($adSlot);
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
@@ -214,7 +219,7 @@ define([
             }
         },
         refreshSlot = function ($adSlot) {
-            var slot = slots[$adSlot.attr('id')];
+            var slot = slots[$adSlot.attr('id')].slot;
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
@@ -269,10 +274,10 @@ define([
         },
         parseAd = function (event) {
             var size,
-                slot = event.slot.getSlotId().getDomId(),
-                $slot = $('#' + slot);
+                slotId = event.slot.getSlotId().getDomId(),
+                $slot = $('#' + slotId);
 
-            allAdsRendered(slot);
+            allAdsRendered(slotId);
 
             if (event.isEmpty) {
                 removeLabel($slot);
@@ -286,16 +291,16 @@ define([
                 callbacks[size] && callbacks[size](event, $slot);
             }
         },
-        allAdsRendered = function (slot) {
+        allAdsRendered = function (slotId) {
             forEach(slots, function (value, key) {
-                if (key === slot) {
-                    slots[key].rendered = true;
+                if (key === slotId) {
+                    slots[slotId].isRendered = true;
                     return;
                 }
             });
 
-            if (_.every(slots, 'rendered')) {
-                userTiming.mark('Ads rendered');
+            if (_.every(slots, 'isRendered')) {
+                userTiming.mark('All ads are rendered');
             }
         },
         addLabel = function ($slot) {
