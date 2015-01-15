@@ -101,7 +101,10 @@
         </div>
     <!-- /ko -->
 
-    <div class="history" data-bind="slideVisible: state.isHistoryOpen() && !state.collapsed()">
+    <div class="history" data-bind="
+        slideVisible: state.isHistoryOpen() && !state.collapsed(),
+        makeDraggable: true
+    ">
         <div data-bind="template: {name: 'template_article', foreach: history}"></div>
     </div>
 <!-- /ko -->

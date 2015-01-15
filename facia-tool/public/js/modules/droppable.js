@@ -96,6 +96,11 @@ define([
                 }
             }
         };
+        ko.bindingHandlers.makeDraggable = {
+            init: function(element) {
+                element.addEventListener('dragstart', getListener('dragstart', element), false);
+            }
+        };
     }
 
     return {
