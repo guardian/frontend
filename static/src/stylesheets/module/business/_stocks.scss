@@ -7,6 +7,13 @@ $stocks-icon-height: 10px;
     clear: left;
     margin-top: $gs-baseline * 1.5;
     margin-bottom: $gs-baseline;
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .stocks__divider {
@@ -61,27 +68,32 @@ $stocks-icon-height: 10px;
 }
 
 .stocks__stock-value {
-    float: left;
+    display: table-cell;
+    padding-left: 6px;
     padding-right: $gs-gutter;
-    margin-right: 6px;
+    min-width: 150px;
     border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     @include mq(leftCol) {
-        float: none;
+        display: block;
         margin-bottom: $gs-baseline;
+        padding-left: 0;
         padding-right: 0;
-        margin-right: 0;
         border-right: 0;
     }
 
     @include mq(wide) {
         .has-page-skin & {
-            float: left;
+            display: table-cell;
+            padding-left: 6px;
             padding-right: $gs-gutter;
-            margin-bottom: 0;
-            margin-right: 6px;
+            min-width: 150px;
             border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
         }
+    }
+
+    &:first-of-type {
+        padding-left: 0;
     }
 
     &:last-of-type {
