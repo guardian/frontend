@@ -288,3 +288,15 @@
     &::-moz-placeholder { @content; }
     &:-ms-input-placeholder { @content; }
 }
+
+@function round-image-width($width) {
+    $tolerance: 10px;
+
+    @each $candidate in $available-image-widths {
+        @if (abs($candidate - $width) <= $tolerance) {
+            @return $candidate;
+        }
+    }
+
+    @return $width;
+}
