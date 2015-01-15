@@ -9,6 +9,7 @@
     @include mq(tablet) {
         padding-top: $gs-baseline/2;
     }
+
     @include mq(leftCol) {
         .fc-container__header__title {
             border-top: 1px solid colour(news-accent);
@@ -19,9 +20,19 @@
             padding-top: 0;
         }
     }
+
     @include mq(leftCol, wide) {
         .fc-slice-wrapper:first-child {
             padding-top: 0;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            .fc-container__header__title {
+                border-top: 0;
+                padding-top: 0;
+            }
         }
     }
 }

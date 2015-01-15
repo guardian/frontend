@@ -21,7 +21,37 @@ define([
     viewTags,
     viewMegaNav
 ) {
-    var editions = [
+    var whitelistRx = new RegExp(/^football\/[^\/]+/),
+        whitelist = [
+            'audioslideshows', 'business/economics', 'business/interest-rates', 'business/markets', 'business/series/andrewclarkonamerica',
+            'business/series/davidgowoneurope', 'business/series/viewpointcolumn', 'business/useconomy', 'careers', 'cartoons', 'community',
+            'crosswords', 'crosswords/series/cryptic', 'crosswords/series/everyman', 'crosswords/series/prize', 'crosswords/series/quick',
+            'data', 'environment/climate-change', 'environment/conservation', 'environment/energy', 'environment/ethical-living',
+            'environment/food', 'environment/georgemonbiot', 'environment/list/allenvironmentkeywords', 'environment/travelandtransport',
+            'environment/waste', 'football/championsleague', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
+            'lifeandstyle/series/timdowlingsweekendcolumn', 'lifeandstyle/women', 'media/advertising', 'media/digital-media', 'media/list/allmediakeywords',
+            'media/marketingandpr', 'media/mediabusiness', 'media/pressandpublishing', 'media/radio', 'media/television', 'money/consumer-affairs',
+            'money/insurance', 'money/isas', 'money/moneyinvestments', 'money/property', 'money/savings', 'money/work-and-careers', 'multimedia',
+            'news/guardianfilms', 'profile/charliebrooker', 'profile/davidmitchell', 'profile/georgemonbiot', 'profile/hadleyfreeman', 'profile/johnharris',
+            'profile/marinahyde', 'profile/marklawson', 'profile/martinkettle', 'profile/owen-jones', 'profile/pollytoynbee', 'profile/seumasmilne', 'profile/stevebell',
+            'profile/suzannemoore', 'profile/zoewilliams', 'science', 'science/science+tone/comment', 'science/sciencenews', 'science/series/badscience',
+            'society', 'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
+            'society/social-care', 'society/voluntarysector', 'technology', 'technology/askjack', 'technology/comment', 'technology/gadgets',
+            'technology/games', 'technology/internet', 'technology/it', 'technology/news', 'technology/telecoms', 'theguardian/mainsection/obituaries',
+            'theguardian/series/otherlives', 'travel', 'travel/bookatrip', 'travel/hotels', 'travel/lateoffers', 'travel/places', 'travel/restaurants',
+            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly'
+        ],
+        subNav = [
+            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'crosswords', 'education',
+            'education/students', 'fashion', 'film', 'football/competitions', 'football/fixtures', 'football/live', 'football/results',
+            'football/tables', 'football/teams', 'global-development', 'lifeandstyle', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
+            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'lifeandstyle/women', 'money/debt',
+            'money/property', 'money/savings', 'money/work-and-careers', 'music', 'music/classicalmusicandopera', 'observer', 'science',
+            'society', 'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/tennis', 'sport/us-sport', 'stage', 'technology/games', 'theguardian', 'travel', 'travel/europe', 'travel/uk', 'travel/usa',
+            'tv-and-radio', 'video', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
+        ],
+        editions = [
             'uk',
             'us',
             'au'
@@ -46,7 +76,6 @@ define([
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
-        minDisplayedTags = 3,
 
         storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
@@ -54,7 +83,8 @@ define([
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
-        popularCache,
+        topNavItemsCache,
+
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -83,10 +113,18 @@ define([
         if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
             summaryCache = {
                 periodEnd: today,
-                tags: {}
+                tags: {},
+                showInMegaNav: true
             };
         }
         return summaryCache;
+    }
+
+    function deleteFromSummary(tag) {
+        var summary = getSummary();
+
+        delete summary.tags[tag];
+        saveSummary(summary);
     }
 
     function isRevisit(pageId) {
@@ -126,12 +164,25 @@ define([
         return summary;
     }
 
-    function getPopular() {
-        popularCache = popularCache || _.chain(getSummary().tags)
-            .map(function (nameAndFreqs, tid) {
-                var freqs = nameAndFreqs[1];
+    function getPopular(number, filtered) {
+        var tags = getSummary().tags,
+            tids = _.keys(tags),
+            wList,
+            bList;
 
-                if (freqs.length > 1) {
+        if (filtered) {
+            wList = whitelist.concat(subNav);
+            bList = getTopNavItems();
+            tids = tids.filter(function (tid) { return tid.match(whitelistRx) || wList.indexOf(tid) > -1; });
+            tids = tids.filter(function (tid) { return bList.indexOf(tid) === -1; });
+        }
+
+        return _.chain(tids)
+            .map(function (tid) {
+                var nameAndFreqs = tags[tid],
+                    freqs = nameAndFreqs[1];
+
+                if (freqs.length) {
                     return {
                         keep: [tid, nameAndFreqs[0]],
                         rank: tally(freqs)
@@ -140,12 +191,14 @@ define([
             })
             .compact()
             .sortBy('rank')
-            .last(100)
+            .last(number || 100)
             .reverse()
             .pluck('keep')
             .value();
+    }
 
-        return popularCache;
+    function getPopularFiltered() {
+        return getPopular(20, true);
     }
 
     function tally(freqs) {
@@ -171,7 +224,6 @@ define([
     function reset() {
         historyCache = undefined;
         summaryCache = undefined;
-        popularCache = undefined;
         storage.local.remove(storageKeyHistory);
         storage.local.remove(storageKeySummary);
     }
@@ -230,32 +282,58 @@ define([
         saveSummary(summary);
     }
 
-    function renderTags(opts) {
-        var topNavItems = {},
-            tagsHtml;
+    function getTopNavItems() {
+        topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
+            return collapseTag(urlPath($(item).attr('href')));
+        });
 
-        if (getPopular().length && (opts.inPage || opts.inMegaNav)) {
+        return topNavItemsCache;
+    }
 
-            $('.js-navigation-header .js-top-navigation a').each(function (item) {
-                topNavItems[collapseTag(urlPath($(item).attr('href')))] = true;
-            });
+    function getMegaNav() {
+        return $('.js-global-navigation');
+    }
 
-            tagsHtml = _.chain(getPopular())
-                .filter(function (tag) { return !topNavItems[tag[0]]; })
-                .first(20)
-                .map(tagHtml)
-                .value();
+    function showInMegaNav(flush) {
+        var tags;
 
-            if (tagsHtml.length < minDisplayedTags) { return; }
+        if (getSummary().showInMegaNav === false) { return; }
 
-            if (opts.inMegaNav) {
-                $('.js-global-navigation').prepend(template(viewMegaNav, {tags: tagsHtml.join('')}));
-            }
+        if (flush) { removeFromMegaNav(); }
 
-            if (opts.inPage) {
-                $('.js-history-tags').append(template(viewTags, {tags: tagsHtml.slice(0, 10).join('')}));
-            }
+        tags = getPopularFiltered();
+
+        if (tags.length) {
+            getMegaNav().prepend(
+                template(viewMegaNav, {
+                    tags: tags.slice(0, 20).map(tagHtml).join('')
+                })
+            );
         }
+    }
+
+    function removeFromMegaNav() {
+        getMegaNav().each(function () {
+            $('.js-global-navigation__section--history', this).remove();
+        });
+    }
+
+    function showInMegaNavEnabled() {
+        return getSummary().showInMegaNav !== false;
+    }
+
+    function showInMegaNavEnable(bool) {
+        var summary = getSummary();
+
+        summary.showInMegaNav = !!bool;
+
+        if (summary.showInMegaNav) {
+            showInMegaNav();
+        } else {
+            removeFromMegaNav();
+        }
+
+        saveSummary(summary);
     }
 
     function tagHtml(tag, index) {
@@ -271,8 +349,12 @@ define([
     return {
         logHistory: logHistory,
         logSummary: logSummary,
-        renderTags: renderTags,
+        showInMegaNav: showInMegaNav,
+        showInMegaNavEnable: showInMegaNavEnable,
+        showInMegaNavEnabled: showInMegaNavEnabled,
         getPopular: getPopular,
+        getPopularFiltered: getPopularFiltered,
+        deleteFromSummary: deleteFromSummary,
         isRevisit: isRevisit,
         reset: reset,
 

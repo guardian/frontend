@@ -1,0 +1,7 @@
+@(metaData: model.PreferencesMetaData)(implicit request: RequestHeader)
+
+@import fragments.preferencesBody
+
+@main(metaData, projectName = Some("index")) { } {
+    @preferencesBody(metaData)
+}

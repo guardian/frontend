@@ -5,7 +5,7 @@ import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
 import conf.Configuration
-import collection.mutable.{ Map => MutableMap }
+import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
 
 case class Asset(path: String) {
   val asModulePath = path.replace(".js", "")
@@ -49,14 +49,29 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   val lookup = new AssetMap(base, assetMap)
   def apply(path: String): Asset = lookup(path)
 
+  object inlineSvg {
+
+    private val memoizedSvg: ConcurrentMap[String, String] = TrieMap()
+
+    def apply(path: String): String = {
+
+      def loadFromDisk = {
+        val url = Play.classloader(Play.current).getResource(s"assets/inline-svgs/$path")
+        IOUtils.toString(url)
+      }
+
+      memoizedSvg.getOrElseUpdate(path, loadFromDisk)
+    }
+  }
+
   object css {
+
+    private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
     def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
     def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
     def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
-    // A mutable map of 'project url' keys to 'css content' values
-    private val memoizedCss: MutableMap[java.net.URL, String] = MutableMap()
 
     private def css(project: String): String = {
 

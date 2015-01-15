@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/functions/once',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
@@ -11,7 +10,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    once,
     $,
     config,
     template,

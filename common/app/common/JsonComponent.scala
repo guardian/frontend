@@ -35,7 +35,10 @@ object JsonComponent extends Results with implicits.Requests {
   def apply(obj: JsObject)(implicit request: RequestHeader): Result = resultFor(request,
     Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
 
-
+  def forJsValue(json: JsValue)(implicit request: RequestHeader): Result = resultFor(
+    request,
+    Json.stringify(json)
+  )
 
   private def jsonFor(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): String = {
     jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData).body)) +: items: _*)
