@@ -16,7 +16,7 @@ define([
     stocksTemplate
 ) {
     function isBusinessFront() {
-        return config.page.pageId == config.page.edition.toLowerCase() + '/business';
+        return config.page.pageId === config.page.edition.toLowerCase() + '/business';
     }
 
     function getStocksData(onSuccess) {
@@ -53,7 +53,7 @@ define([
             var $container = $('.js-container--first .js-container__header');
 
             getStocksData(function (data) {
-                $container.append(renderData(data))
+                $container.append(renderData(data));
             });
         }
     };
