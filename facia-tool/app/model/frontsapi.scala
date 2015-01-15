@@ -17,7 +17,6 @@ object Block {
 }
 
 case class Block(
-                  name: Option[String],
                   live: List[Trail],
                   draft: Option[List[Trail]],
                   lastUpdated: String,
@@ -221,9 +220,9 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApiIO.putBlock(id, Block(None, List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None)))
+      Option(FaciaApiIO.putBlock(id, Block(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None)))
     else
-      Option(FaciaApiIO.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None)))
+      Option(FaciaApiIO.putBlock(id, Block(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None)))
   }
 
   def capCollection(block: Block): Block =
