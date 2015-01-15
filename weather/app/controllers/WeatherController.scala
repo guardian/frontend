@@ -13,7 +13,7 @@ object WeatherController extends Controller with ExecutionContexts {
     WeatherApi.getWeatherForCityId(CityId(cityId)).map(json => Cached(10.minutes)(JsonComponent.forJsValue(json)))
   }
 
-  def forCityIdForecast(cityId: String) = Action.async {
-    WeatherApi.getForecastForCityId(CityId(cityId)).map(Ok(_))
+  def forCityIdForecast(cityId: String) = Action.async { implicit request =>
+    WeatherApi.getForecastForCityId(CityId(cityId)).map(json => Cached(10.minutes)(JsonComponent.forJsValue(json)))
   }
 }
