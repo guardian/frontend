@@ -183,7 +183,8 @@ object Frontend extends Build with Prototypes {
       libraryDependencies ++= Seq(
         scalaTest,
         seleniumJava % Test,
-        jodaTime % Test
+        jodaTime % Test,
+        jodaConvert % Test
       )
     )
 
