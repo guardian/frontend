@@ -65,7 +65,7 @@ define([
                     ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
-                    maxLength: 90
+                    maxLength: 120
                 },
                 {
                     key: 'trailText',
@@ -482,7 +482,7 @@ define([
                 },
 
                 length: ko.pureComputed(function() {
-                    return opts.maxLength ? (meta() || field() || '').length : undefined;
+                    return opts.maxLength ? opts.maxLength - (meta() || field() || '').length : undefined;
                 }, self),
 
                 lengthAlert: ko.pureComputed(function() {

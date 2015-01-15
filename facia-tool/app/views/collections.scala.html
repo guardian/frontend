@@ -31,7 +31,7 @@
     <script type="text/html" id="template_editor">
         <!-- ko if: displayEditor -->
             <!-- ko if: type === 'text' -->
-                <div class="editor">
+                <div class="editor" data-bind="css: {'length--alert': lengthAlert}">
                     <textarea data-bind="
                         click: open,
                         clickBubble: false,
@@ -46,9 +46,7 @@
                         textInput: overrideOrVal"></textarea>
 
                     <!-- ko if: hasFocus -->
-                        <span class="editor__length" data-bind="
-                            css: {'editor__length--alert': lengthAlert},
-                            text: length"></span>
+                        <span class="editor__length" data-bind="text: length"></span>
                         <a class="editor__revert" data-bind="
                             visible: meta() && field(),
                             click: revert"><i class="fa fa-fast-backward"></i></a>

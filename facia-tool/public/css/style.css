@@ -1000,9 +1000,21 @@ select {
     right: -25px;
 }
 
-.editor__length--alert {
+.length--alert .editor__length {
     font-weight: bold;
     color: #DD4B39;
+}
+
+.length--alert textarea.active {
+    background-color: #FFCDD2;
+}
+
+.editor__length {
+    display: none;
+}
+
+.attention .editor__length {
+    display: block;
 }
 
 .editor--boolean {
