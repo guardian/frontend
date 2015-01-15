@@ -462,7 +462,7 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-error-display {
     position: absolute;
     width: 100%;
-    top: 40%;
+    top: 0;
     display: none;
 
     .gu-media--video.vjs-error &,
