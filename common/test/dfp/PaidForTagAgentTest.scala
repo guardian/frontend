@@ -3,6 +3,8 @@ package dfp
 import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
+import common.editions.Us
+import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
@@ -32,10 +34,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
                          tagType: TagType,
                          adUnitPaths: Seq[String] = Nil,
                          sponsor: Option[String] = None,
-                         expiryDates: Seq[Option[DateTime]] = Seq(None)): PaidForTag = {
+                         expiryDates: Seq[Option[DateTime]] = Seq(None),
+                         editionId: Option[String] = None): PaidForTag = {
     val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/")))
-    val customTargetSets = Seq(CustomTargetSet("AND",
-      Seq(CustomTarget("edition", "IS", Seq("uk")))))
+    val customTargetSets = editionId map { edition =>
+      Seq(CustomTargetSet("AND", Seq(CustomTarget("edition", "IS", Seq(edition)))))
+    } getOrElse Nil
     val targeting = GuTargeting(adUnits, Nil, Nil, customTargetSets)
     val lineItems = expiryDates map { expiryDate =>
       GuLineItem(Random.nextInt(),
@@ -53,7 +57,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
-      paidForTag("media", Sponsored, Keyword),
+      paidForTag("media", Sponsored, Keyword, editionId = Some("uk")),
       paidForTag("healthyliving",
         Sponsored, Keyword,
         adUnitPaths = Seq("theguardian.com/spinach"),
@@ -332,6 +336,24 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     val tags = Seq(toKeyword("global-development/global-development"),
       toKeyword("culture/healthyliving"))
     TestPaidForTagAgent.isSponsored(tags, maybeSectionId = Some("culture")) should be(false)
+  }
+
+  it should "be true if sponsorship is not for a particular edition" in {
+    val tags = Seq(toKeyword("culture/healthyliving"))
+    EditionAwareLogoSlots.switchOn()
+    TestPaidForTagAgent.isSponsored(tags,
+      maybeSectionId = Some("spinach"),
+      maybeEdition = Some(defaultEdition)
+    ) should be(true)
+  }
+
+  it should "be false if sponsorship is for another edition" in {
+    val tags = Seq(toKeyword("culture/media"))
+    EditionAwareLogoSlots.switchOn()
+    TestPaidForTagAgent.isSponsored(tags,
+      maybeSectionId = None,
+      maybeEdition = Some(Us)
+    ) should be(false)
   }
 
   it should "be true for a sponsored container" in {

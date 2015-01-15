@@ -446,12 +446,6 @@ define([
                 shareCount.init();
             },
 
-            initWeatherComponent: function () {
-                mediator.on('page:common:ready', function () {
-                    weather.init();
-                });
-            },
-
             runCssLogging: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.switches.cssLogging && Math.random() < 0.0001) {
@@ -498,7 +492,6 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
-            modules.initWeatherComponent();
             modules.runCssLogging();
             crosswordThumbnails.init();
 

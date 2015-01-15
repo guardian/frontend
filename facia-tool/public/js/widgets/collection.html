@@ -69,11 +69,11 @@
             <!-- ko if: state.showIndicators -->
                 <div class="desktop-indicator">
                     <i class="fa fa-laptop" title="Visible on desktop"></i>
-                    <div class="indicator"></div>
+                    <div class="indicator" data-bind="indicatorHeight: 'desktop'"></div>
                 </div>
                 <div class="mobile-indicator">
                     <i class="fa fa-mobile" title="Visible on mobile"></i>
-                    <div class="indicator"></div>
+                    <div class="indicator" data-bind="indicatorHeight: 'mobile'"></div>
                 </div>
             <!-- /ko -->
             <div data-bind="

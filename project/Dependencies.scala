@@ -29,7 +29,8 @@ object Dependencies {
   val im4java = "org.im4java" % "im4java" % "1.4.0"
   val jacksonCore = "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6"
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
-  val jodaTime = "joda-time" % "joda-time" % "2.2"
+  val jodaTime = "joda-time" % "joda-time" % "2.3"
+  val jodaConvert = "org.joda" % "joda-convert" % "1.7"
   val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test

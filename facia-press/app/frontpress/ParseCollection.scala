@@ -12,8 +12,6 @@ import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
 import services.ParseCollectionJsonImplicits._
-import LiveContentApi.getResponse
-
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
@@ -108,7 +106,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .flatMap(c => c.meta.flatMap(_.snapUri))
 
     val lastestSnaps = Future.traverse(latestSnapSearches) { id =>
-      getResponse(LiveContentApi.item(id, Edition.defaultEdition)
+      client.getResponse(LiveContentApi.item(id, Edition.defaultEdition)
         .showFields(showFieldsWithBodyQuery)
         .pageSize(1)
       ).map(_.results.headOption.map(id -> _))
@@ -203,7 +201,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
                                                   edition: Edition): Future[Seq[ApiContent]] = {
     lazy val itemIds: Seq[String] = collectionItems.map(_.get)
     lazy val collectionIdsQuery: String = itemIds.mkString(",")
-    lazy val response = getResponse(client.search(edition)
+    lazy val response = client.getResponse(client.search(edition)
       .ids(collectionIdsQuery)
       .showFields(showFieldsWithBodyQuery)
       .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
@@ -270,7 +268,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          getResponse(newSearch) map { searchResponse =>
+          client.getResponse(newSearch) map { searchResponse =>
             Result(
               curated = Nil,
               editorsPicks = Nil,
@@ -286,7 +284,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          getResponse(newSearch) map { itemResponse =>
+          client.getResponse(newSearch) map { itemResponse =>
             Result(
               curated = Nil,
               editorsPicks = itemResponse.editorsPicks,
