@@ -40,6 +40,16 @@ object CollectionJsonFunctions {
     else
       collectionJson
   }
+
+  def updatePreviouslyForPublish(): Block = {
+    val removed: List[Trail] = live.filterNot(t => draft.getOrElse(Nil).exists(_.id == t.id))
+    val updatedPreviously = previously
+      .map(_.filterNot(t => removed.exists(_.id == t.id)))
+      .map(removed ++ _)
+      .orElse(Option(removed))
+      .map(_.take(20))
+    this.copy(previously=updatedPreviously)
+  }
 }
 
 sealed trait FaciaToolUpdate

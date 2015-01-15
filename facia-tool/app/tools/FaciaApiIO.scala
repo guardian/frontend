@@ -3,6 +3,7 @@ package tools
 import com.gu.facia.client.models.{CollectionJson, ConfigJson}
 import com.gu.googleauth.UserIdentity
 import common.ExecutionContexts
+import frontsapi.model.CollectionJsonFunctions
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.{FaciaJsonClient, S3FrontsApi}
@@ -68,6 +69,7 @@ object FaciaApi {
     Some(collectionJson)
       .filter(_.draft.isDefined)
       .map(updatePublicationDateForNew)
+      .map(CollectionJsonFunctions.updatePreviouslyForPublish)
       .map(collectionJson => collectionJson.copy(live = collectionJson.draft.get, draft = None))
       .map(updateIdentity(_, identity))
 
