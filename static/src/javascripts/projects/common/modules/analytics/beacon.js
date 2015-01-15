@@ -17,15 +17,21 @@ define([
 
             return img;
         },
-        postJson: function (path, jsonString) {
-            return ajax({
-                url: config.page.beaconUrl + path,
-                type: 'json',
-                method: 'post',
-                contentType: 'application/json',
-                data: jsonString,
-                crossOrigin: true
-            });
+        postJson: function (path, jsonString, forceAjax) {
+            if ('sendBeacon' in navigator && !forceAjax) {
+                window.addEventListener('unload', function () {
+                    navigator.sendBeacon(path, jsonString);
+                }, false);
+            } else {
+                ajax({
+                    url: config.page.beaconUrl + path,
+                    type: 'json',
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: jsonString,
+                    crossOrigin: true
+                });
+            }
         },
         counts: function (keys) {
             var query = map(isArray(keys) ? keys : [keys], function (key) {

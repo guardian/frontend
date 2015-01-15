@@ -5,7 +5,6 @@ import play.api.libs.json._
 case class CssReport(
   href: String,
   breakpoint: String,
-  className: String,
   contentType: String,
   selectors: JsObject ) {
 

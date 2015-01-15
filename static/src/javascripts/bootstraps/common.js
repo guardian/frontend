@@ -448,8 +448,10 @@ define([
 
             runCssLogging: function () {
                 mediator.on('page:common:ready', function () {
-                    if (config.switches.cssLogging && Math.random() < 0.0001) {
-                        cssLogging.run();
+                    var returnAll = window.location.hash === '#csslogging';
+
+                    if (config.switches.cssLogging && (returnAll || Math.random() < 0.0001)) {
+                        cssLogging.run(returnAll);
                     }
                 });
             }
