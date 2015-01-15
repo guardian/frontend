@@ -41,7 +41,7 @@ define([
                 closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : '',
                 closedInline: stockValue.closed ? '<div class="stocks__closed--inline">closed</div>' : ''
             });
-        }).join("");
+        }).join('');
 
         return template(stocksTemplate, {
             stocks: stockValues
