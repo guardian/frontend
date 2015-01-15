@@ -2,7 +2,8 @@
     @include clearfix;
 
     clear: left;
-    margin-bottom: 4px;
+    margin-top: $gs-baseline * 1.5;
+    margin-bottom: $gs-baseline;
 }
 
 .stocks__change {
@@ -23,11 +24,17 @@
     float: left;
     width: 150px;
 
-    @include mq(wide) {
+    @include mq(leftCol) {
         float: none;
+        margin-bottom: $gs-baseline;
+        border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    }
 
+    @include mq(wide) {
         .has-page-skin & {
             float: left;
+            margin-bottom: 0;
+            border-top: 0;
         }
     }
 }
