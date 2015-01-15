@@ -37,7 +37,7 @@ object Stocks extends Logging {
   implicit val jsonWrites = Json.writes[Stocks]
 
   def fromFingerpost(indices: Indices) = {
-    val stocks = indices.indices map { index =>
+    Stocks(indices.indices flatMap { index =>
       val maybePrice = Try { index.value.price.toDouble }.toOption
 
       if (maybePrice.isEmpty) {
@@ -77,7 +77,7 @@ object Stocks extends Logging {
         trend <- maybeTrend
         closed <- maybeClosed
       } yield StockValue(index.name, price, change, trend, closed)
-    }
+    })
   }
 }
 
