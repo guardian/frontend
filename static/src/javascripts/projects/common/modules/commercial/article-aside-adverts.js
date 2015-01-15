@@ -1,15 +1,11 @@
 define([
-    'qwery',
     'lodash/objects/defaults',
-    'lodash/functions/once',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot'
 ], function (
-    qwery,
     defaults,
-    once,
     $,
     $css,
     config,
