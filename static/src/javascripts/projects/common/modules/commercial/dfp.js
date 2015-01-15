@@ -148,7 +148,6 @@ define([
                 })
                 .zipObject()
                 .valueOf();
-            console.log(slots);
         },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
