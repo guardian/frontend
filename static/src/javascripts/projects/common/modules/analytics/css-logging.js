@@ -13,8 +13,10 @@ define([
     scan,
     beacon
 ) {
-    function getReport() {
+    function getReport(returnAll) {
         var maxOut = 50,
+            contentType = config.page.contentType,
+            breakpoint = detect.getBreakpoint(),
 
             stylesheets = _.chain(document.styleSheets)
                 .filter(function (sheet) {
@@ -54,8 +56,8 @@ define([
                 .value();
 
         return {
-            contentType: config.page.contentType,
-            breakpoint: detect.getBreakpoint(),
+            contentType: contentType,
+            breakpoint: breakpoint,
             className: stylesheet.ownerNode && stylesheet.ownerNode.className || '',
             href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : '',
             selectors: selectors
