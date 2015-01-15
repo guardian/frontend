@@ -106,8 +106,8 @@ define([
         // and the UI is generally fiddly on touch.
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
-            $twitterAction = $('.social__item--twitter .social__action');
-            $emailAction = $('.social__item--email .social__action');
+            $twitterAction = $('.js-selection-twitter');
+            $emailAction = $('.js-selection-email');
             // Set timeout ensures that any existing selection has been cleared.
             bean.on(document.body, 'keypress keydown keyup', _.debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', _.debounce(updateSelection, 200));

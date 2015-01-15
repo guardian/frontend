@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
+    'common/modules/experiments/tests/join-us-navigation',
     'common/modules/experiments/tests/sticky-container-titles',
     'common/modules/experiments/tests/breaking-news-alert-style',
     'common/modules/experiments/tests/weather-component'
@@ -33,6 +34,7 @@ define([
     HighCommercialComponent,
     HistoryTags,
     HistoryContainers,
+    JoinUsNavigation,
     StickyContainerTitles,
     BreakingNewsAlertStyle,
     Weather
@@ -43,6 +45,7 @@ define([
             new HighCommercialComponent(),
             new HistoryTags(),
             new HistoryContainers(),
+            new JoinUsNavigation(),
             new StickyContainerTitles(),
             new BreakingNewsAlertStyle(),
             new Weather()
@@ -188,6 +191,15 @@ define([
         return participation && participation.variant;
     }
 
+    function setTestVariant(testId, variant) {
+        var participations = getParticipations();
+
+        if (participations[testId]) {
+            participations[testId].variant = variant;
+            store.local.set(participationsKey, participations);
+        }
+    }
+
     ab = {
 
         addTest: function (test) {
@@ -291,11 +303,11 @@ define([
         },
 
         getParticipations: getParticipations,
-        addParticipation: addParticipation,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
+        setTestVariant: setTestVariant,
 
         // testing
         reset: function () {
