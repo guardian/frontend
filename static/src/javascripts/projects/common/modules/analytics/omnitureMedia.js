@@ -63,7 +63,7 @@ define([
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
+            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9';
             s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
