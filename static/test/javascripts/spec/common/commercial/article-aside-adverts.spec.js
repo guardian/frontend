@@ -30,7 +30,7 @@ define([
                 var fixturesConfig = {
                         id: 'article-aside-adverts',
                         fixtures: [
-                            '<div class="content__secondary-column">' +
+                            '<div class="content__secondary-column js-secondary-column">' +
                             '<div class="js-mpu-ad-slot"></div>' +
                             '</div>'
                         ]
