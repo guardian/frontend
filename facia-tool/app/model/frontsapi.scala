@@ -41,14 +41,14 @@ object CollectionJsonFunctions {
       collectionJson
   }
 
-  def updatePreviouslyForPublish(): Block = {
-    val removed: List[Trail] = live.filterNot(t => draft.getOrElse(Nil).exists(_.id == t.id))
-    val updatedPreviously = previously
+  def updatePreviouslyForPublish(collectionJson: CollectionJson): CollectionJson = {
+    val removed: List[Trail] = collectionJson.live.filterNot(t => collectionJson.draft.getOrElse(Nil).exists(_.id == t.id))
+    val updatedPreviously = collectionJson.previously
       .map(_.filterNot(t => removed.exists(_.id == t.id)))
       .map(removed ++ _)
       .orElse(Option(removed))
       .map(_.take(20))
-    this.copy(previously=updatedPreviously)
+    collectionJson.copy(previously=updatedPreviously)
   }
 }
 
