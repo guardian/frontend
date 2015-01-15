@@ -16,7 +16,7 @@ define([
     stocksTemplate
 ) {
     function isBusinessFront() {
-        return config.page.pageId == config.page.edition.toLowerCase() + "/business";
+        return config.page.pageId == config.page.edition.toLowerCase() + '/business';
     }
 
     function getStocksData(onSuccess) {
@@ -29,15 +29,16 @@ define([
         });
     }
 
-    function deltaString(n) { return n > 0 ? "+" + n : "" + n; }
+    function deltaString(n) { return n > 0 ? '+' + n : '' + n; }
 
     function renderData(data) {
         var stockValues = _.map(data.stocks, function (stockValue) {
             return template(stockValueTemplate, {
                 name: stockValue.name,
-                deltaClass: "stocks__stock-value--" + stockValue.trend,
+                deltaClass: 'stocks__stock-value--' + stockValue.trend,
                 price: stockValue.price,
-                change: deltaString(stockValue.change)
+                change: deltaString(stockValue.change),
+                closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : ''
             });
         }).join("");
 

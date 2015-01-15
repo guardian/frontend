@@ -71,7 +71,7 @@ $stocks-icon-height: 10px;
     display: table-cell;
     padding-left: 6px;
     padding-right: $gs-gutter;
-    min-width: 150px;
+    min-width: 160px;
     border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     @include mq(leftCol) {
