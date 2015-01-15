@@ -15,7 +15,7 @@ object R2StocksParser {
       val indexName = index.select(".indexname a").text()
       val change = index.select(".netchange span").text().toDouble
       val price = index.select("td[title=Price]").text().toDouble
-      val closed = index.select("td.timetillclose").text().contains("closed")
+      val closed = index.select("td.timetillclose").text().contains("Closed")
 
       StockValue(
         indexName,
