@@ -188,7 +188,7 @@ define([
             s.prop51  = mvt;
             s.eVar51  = mvt;
 
-            s.eVar52 = history.getPopularFiltered().map(function(tagTuple) { return tagTuple[1]; }).join(',');
+            s.list3 = history.getPopularFiltered().map(function(tagTuple) { return tagTuple[1]; }).join(',');
 
             if (guShift) {
                 shiftValue = 'gu_shift,' + guShift + ',';
