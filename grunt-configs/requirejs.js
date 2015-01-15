@@ -155,15 +155,12 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
                 paths: {
-                    vast: 'components/vast-client-js/vast-client',
                     videojs: 'components/videojs/video',
                     videojsads: 'components/videojs-contrib-ads/videojs.ads',
                     videojsima: 'components/videojs-ima/videojs.ima',
-                    videojsvast: 'components/videojs-vast/videojs.vast',
                     videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
                     videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist',
-                    videojsembed: 'components/videojs-embed/videojs.embed',
-                    videoinit: 'projects/video/modules/video-init'
+                    videojsembed: 'components/videojs-embed/videojs.embed'
                 },
                 shim: {
                     videojs: {
@@ -174,9 +171,6 @@ module.exports = function(grunt, options) {
                     },
                     videojsima: {
                         deps: ['videojs']
-                    },
-                    videojsvast: {
-                        deps: ['vast', 'videojs', 'videoinit']
                     },
                     videojsplaylist: {
                         deps: ['videojs']
