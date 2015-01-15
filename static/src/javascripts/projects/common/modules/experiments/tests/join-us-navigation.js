@@ -16,7 +16,7 @@ define([
         this.audience = 0.4;
         this.audienceOffset = 0;
         this.successMeasure = 'Click-through to Subscriptions.';
-        this.audienceCriteria = 'All desktop users';
+        this.audienceCriteria = 'All UK desktop users';
         this.dataLinkNames = 'join us';
         this.idealOutcome = 'Increased click through volume to Subscriptions.';
 
