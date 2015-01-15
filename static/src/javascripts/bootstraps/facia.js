@@ -12,8 +12,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
-    'facia/modules/ui/snaps',
-    'facia/modules/ui/what-is-my-city-load-test'
+    'facia/modules/ui/snaps'
 ], function (
     bonzo,
     qwery,
@@ -26,8 +25,7 @@ define([
     GeoMostPopularFront,
     ContainerToggle,
     ContainerShowMore,
-    snaps,
-    whatIsMyCityLoadTest
+    snaps
 ) {
 
     var modules = {
@@ -84,7 +82,6 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
-                whatIsMyCityLoadTest();
             }
             mediator.emit('page:front:ready');
         };

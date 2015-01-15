@@ -1,20 +1,23 @@
 define([
     'common/utils/storage',
-    'common/modules/identity/api',
-    'common/utils/time'
+    'common/utils/time',
+    'common/modules/identity/api'
 ], function (
     storage,
-    id,
-    time
+    time,
+    id
 ) {
+
     var userSegmentsKey = 'gu.ads.userSegmentsData';
 
     function getUserSegments() {
         if (storage.local.isAvailable()) {
-            var userSegmentsData = storage.local.get(userSegmentsKey),
-                userCookieData = id.getUserFromCookie();
+            var userCookieData,
+                userSegmentsData = storage.local.get(userSegmentsKey);
 
             if (userSegmentsData) {
+                userCookieData = id.getUserFromCookie();
+
                 if (userCookieData && (userSegmentsData.userHash === (userCookieData.id % 9999))) {
                     return userSegmentsData.segments;
                 } else {
@@ -27,30 +30,28 @@ define([
     }
 
     function requestUserSegmentsFromId() {
-        if (storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null)) {
-            if (id.getUserFromCookie()) {
-                id.getUserFromApi(
-                    function (user) {
-                        if (user && user.adData) {
-                            var userSegments = [],
-                                key;
-                            for (key in user.adData) {
-                                userSegments.push(key + user.adData[key]);
-                            }
-                            storage.local.set(
-                                userSegmentsKey,
-                                {
-                                    segments: userSegments,
-                                    userHash: user.id % 9999
-                                },
-                                {
-                                    expires: time.currentDate().getTime() + (24 * 60 * 60 * 1000)
-                                }
-                            );
+        if (storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null) && id.getUserFromCookie()) {
+            id.getUserFromApi(
+                function (user) {
+                    if (user && user.adData) {
+                        var key,
+                            userSegments = [];
+                        for (key in user.adData) {
+                            userSegments.push(key + user.adData[key]);
                         }
+                        storage.local.set(
+                            userSegmentsKey,
+                            {
+                                segments: userSegments,
+                                userHash: user.id % 9999
+                            },
+                            {
+                                expires: time.currentDate().getTime() + (24 * 60 * 60 * 1000)
+                            }
+                        );
                     }
-                );
-            }
+                }
+            );
         }
     }
 
@@ -58,4 +59,5 @@ define([
         getUserSegments: getUserSegments,
         requestUserSegmentsFromId: requestUserSegmentsFromId
     };
+
 });

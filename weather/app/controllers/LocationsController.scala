@@ -3,7 +3,7 @@ package controllers
 import common._
 import model.Cached
 import models.CityResponse
-import play.api.libs.json.{JsObject, JsNull, Json}
+import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
@@ -43,21 +43,5 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
       case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
     }
-  }
-
-  def fakeWhatIsMyCity() = Action { implicit request =>
-    /** This to gather data for reporting to AccuWeather on predicted usage */
-    tuple2(
-      request.headers.get(CityHeader),
-      request.headers.get(CountryHeader)
-    ) foreach {
-      case (city, country) =>
-        log.info(s"Received location headers. City=$city Country=$country")
-    }
-
-    WeatherMetrics.whatIsMyCityRequests.increment()
-    Cached(10.minutes)(JsonComponent.forJsValue(JsObject(Seq(
-      "headers" -> Json.toJson(request.headers.toMap)
-    ))))
   }
 }

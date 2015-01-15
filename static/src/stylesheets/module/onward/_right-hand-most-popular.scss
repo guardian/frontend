@@ -64,28 +64,3 @@
         }
     }
 }
-
-.right-most-popular--list {
-    .right-most-popular-item {
-        border-top: 0;
-    }
-
-    .right-most-popular-item__headline {
-        height: $gs-row-height*2;
-        padding-left: $gs-gutter*2;
-    }
-
-    .right-most-popular-item__count-container {
-        width: $gs-column-width - $gs-gutter/2;
-        height: $gs-row-height*2;
-        margin-top: 3px;
-        margin-right: 0;
-        border-right: 1px solid colour(neutral-4);
-
-        .right-most-popular-item__count {
-            display: block;
-            margin-top: -5px;
-            @include font($f-serif-headline, 200, 43px);
-        }
-    }
-}
