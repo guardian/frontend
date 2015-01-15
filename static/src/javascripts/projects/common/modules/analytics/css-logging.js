@@ -38,7 +38,7 @@ define([
     }
 
     function sendReport(stylesheet, allRules) {
-        var maxOut = 50,
+        var sampleSize = 50,
             offset,
             rules = _.chain(stylesheet.rules || stylesheet.cssRules)
                 .map(function (r) { return r && r.selectorText; })
@@ -46,8 +46,8 @@ define([
                 .value();
 
         if (!allRules) {
-            offset = _.random(0, Math.max(0, rules.length - maxOut));
-            rules = rules.slice(offset, offset + maxOut);
+            offset = _.random(0, Math.max(0, rules.length - sampleSize));
+            rules = rules.slice(offset, offset + sampleSize);
         }
 
         beacon.postJson('/css', JSON.stringify({
@@ -57,15 +57,12 @@ define([
             }, {}),
             contentType: config.page.contentType,
             breakpoint: detect.getBreakpoint(),
-            className: stylesheet.ownerNode && stylesheet.ownerNode.className || '',
             href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : ''
         }), allRules);
     }
 
     function sendReports(sendAll) {
-        var stylesheets = sendAll ? getStylesheets() : [randomStylesheet()];
-
-        _.each(stylesheets, function (stylesheet) {
+        _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
             sendReport(stylesheet, sendAll);
         });
     }
