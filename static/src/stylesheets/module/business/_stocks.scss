@@ -1,0 +1,31 @@
+.stocks__stocks-container {
+    clear: left;
+    margin-bottom: 4px;
+}
+
+.stocks__price {
+    .stocks__stock-value--negative & {
+        color: colour(status-negative);
+    }
+
+    .stocks__stock-value--positive & {
+        color: colour(status-positive);
+    }
+
+    .stocks__stock-value--level & {
+        color: colour(status-neutral);
+    }
+}
+
+.stocks__stock-value {
+    float: left;
+    width: 150px;
+
+    @include mq(wide) {
+        float: none;
+
+        .has-page-skin & {
+            float: left;
+        }
+    }
+}
