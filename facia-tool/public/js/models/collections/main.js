@@ -14,6 +14,8 @@ define([
     'modules/list-manager',
     'modules/droppable',
     'modules/copied-article',
+    'modules/modal-dialog',
+    'models/common-handlers',
     'models/collections/new-items',
     'models/layout',
     'models/widgets'
@@ -32,6 +34,8 @@ define([
     listManager,
     droppable,
     copiedArticle,
+    modalDialog,
+    commonHandlers,
     newItems,
     Layout,
     widgets
@@ -41,6 +45,7 @@ define([
         var model = vars.model = {
             layout: new Layout(),
             alert: ko.observable(),
+            modalDialog: modalDialog,
             switches: ko.observable(),
             fronts: ko.observableArray(),
             loadedFronts: ko.observableArray()
@@ -103,6 +108,7 @@ define([
                     })
                     .without(undefined)
                     .without('testcard')
+                    .difference(vars.CONST.askForConfirmation)
                     .sortBy(function(path) { return path; })
                     .value();
 
