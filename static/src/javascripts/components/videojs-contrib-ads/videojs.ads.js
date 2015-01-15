@@ -140,6 +140,10 @@ var
   getPlayerSnapshot = function(player) {
     var
       tech = player.el().querySelector('.vjs-tech'),
+      tracks = player.remoteTextTracks(),
+      track,
+      i,
+      suppressedTracks = [],
       snapshot = {
         src: player.currentSrc(),
         currentTime: player.currentTime(),
@@ -150,6 +154,17 @@ var
       snapshot.nativePoster = tech.poster;
       snapshot.style = tech.getAttribute('style');
     }
+
+    i = tracks.length;
+    while (i--) {
+      track = tracks[i];
+      suppressedTracks.push({
+        track: track,
+        mode: track.mode
+      });
+      track.mode = 'disabled';
+    }
+    snapshot.suppressedTracks = suppressedTracks;
 
     return snapshot;
   },
@@ -179,6 +194,16 @@ var
 
       // the number of remaining attempts to restore the snapshot
       attempts = 20,
+
+      suppressedTracks = snapshot.suppressedTracks,
+      trackSnapshot,
+      restoreTracks =  function() {
+        var i = suppressedTracks.length;
+        while (i--) {
+          trackSnapshot = suppressedTracks[i];
+          trackSnapshot.track.mode = trackSnapshot.mode;
+        }
+      },
 
       // finish restoring the playback state
       resume = function() {
@@ -241,6 +266,9 @@ var
     }
 
     if (srcChanged) {
+      // on ios7, fiddling with textTracks too early will cause it safari to crash
+      player.one('loadedmetadata', restoreTracks);
+
       // if the src changed for ad playback, reset it
       player.src({ src: snapshot.src, type: snapshot.type });
       // safari requires a call to `load` to pick up a changed source
@@ -248,6 +276,9 @@ var
       // and then resume from the snapshots time once the original src has loaded
       player.one('loadedmetadata', tryToResume);
     } else if (!player.ended()) {
+      // if we didn't change the src, just restore the tracks
+      restoreTracks();
+
       // the src didn't change and this wasn't a postroll
       // just resume playback at the current time.
       player.play();
@@ -497,13 +528,13 @@ var
       'adstart',  // startLinearAdMode()
       'adend'     // endLinearAdMode()
     ]), fsmHandler);
-    
+
     // keep track of the current content source
     // if you want to change the src of the video without triggering
     // the ad workflow to restart, you can update this variable before
     // modifying the player's source
     player.ads.contentSrc = player.currentSrc();
-    
+
     // implement 'contentupdate' event.
     (function(){
       var

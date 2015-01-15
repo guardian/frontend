@@ -1,0 +1,21 @@
+@(expired: Seq[dfp.GuLineItem], expiring: Seq[dfp.GuLineItem])
+
+@if(expired.nonEmpty) {
+    <div>
+        <p>These ad feature logos have expired:</p>
+        <ul>@for(lineItem <- expired) {
+            <li>@{lineItem.id}: @{lineItem.name}</li>
+        }</ul>
+        <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships#advertisement-feature-series</p>
+    </div>
+}
+
+@if(expiring.nonEmpty) {
+    <div>
+        <p>These ad feature logos will be expiring soon:</p>
+        <ul>@for(lineItem <- expiring) {
+            <li>@{lineItem.id}: @{lineItem.name}</li>
+        }</ul>
+        <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships#advertisement-feature-series</p>
+    </div>
+}
