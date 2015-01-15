@@ -676,8 +676,7 @@
 }
 
 .meta__twitter {
-    margin-top: -($gs-baseline*2/3);
-    margin-bottom: -($gs-baseline/6);
+    margin: -($gs-baseline*2/3) 0 -($gs-baseline/6) 0;
 
     .content__meta-container--tonal-header & {
         @include mq($until: leftCol) {
@@ -704,15 +703,9 @@
 
         @include mq($until: leftCol) {
             padding: 0;
-            margin: 0;
-            margin-top: $gs-baseline/2;
+            margin: $gs-baseline/2 0 0 0;
             border: 0;
-            border-radius: 0;
             background-color: transparent !important;
-
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
 
@@ -720,7 +713,7 @@
         height: 21px;
         display: inline-block;
         vertical-align: top;
-
+        
         @include mq(leftCol) {
             margin-top: -1px;
         }
