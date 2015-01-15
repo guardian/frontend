@@ -2,7 +2,6 @@ package business
 
 import common.ResourcesHelper
 import org.scalatest.{ShouldMatchers, FlatSpec}
-import play.api.libs.json.{JsError, Json}
 
 class ModelsTest extends FlatSpec with ShouldMatchers with ResourcesHelper {
   "models" should "correctly deserialize" in {

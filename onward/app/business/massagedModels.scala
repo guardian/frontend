@@ -13,6 +13,12 @@ object Trend {
       case Level => JsString("level")
     }
   }
+
+  def fromDouble(n: Double) = n match {
+    case 0 => Level
+    case x if x > 0 => Positive
+    case _ => Negative
+  }
 }
 
 sealed trait Trend

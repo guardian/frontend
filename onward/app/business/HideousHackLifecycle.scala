@@ -1,0 +1,5 @@
+package business
+
+trait HideousHackLifecycle {
+
+}
