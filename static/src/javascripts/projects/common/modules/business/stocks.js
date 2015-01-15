@@ -1,4 +1,5 @@
 define([
+    'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
@@ -6,24 +7,25 @@ define([
     'text!common/views/business/stock-value.html',
     'text!common/views/business/stocks.html'
 ], function (
+    $,
     _,
     ajax,
     config,
     template,
-    stockValue,
-    stocks
+    stockValueTemplate,
+    stocksTemplate
 ) {
     function isBusinessFront() {
         return config.page.pageId == config.page.edition.toLowerCase() + "/business";
     }
 
-    function getStocksData(onComplete) {
-        return ajax({
+    function getStocksData(onSuccess) {
+        ajax({
             url: '/business-data/stocks.json',
             type: 'json',
             method: 'get',
             crossOrigin: true,
-            onComplete: onComplete
+            success: onSuccess
         });
     }
 
@@ -31,7 +33,7 @@ define([
 
     function renderData(data) {
         var stockValues = _.map(data.stocks, function (stockValue) {
-            return template(stockValue, {
+            return template(stockValueTemplate, {
                 name: stockValue.name,
                 deltaClass: "stocks__stock-value--" + stockValue.trend,
                 price: stockValue.price,
@@ -39,9 +41,9 @@ define([
             });
         }).join("");
 
-        return template(stocks, {
+        return template(stocksTemplate, {
             stocks: stockValues
-        })
+        });
     }
 
     return function () {
