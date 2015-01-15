@@ -703,7 +703,7 @@
 
         @include mq($until: leftCol) {
             padding: 0;
-            margin: $gs-baseline/2 0 0 0;
+            margin: $gs-baseline/2 0 0;
             border: 0;
             background-color: transparent !important;
         }
@@ -713,7 +713,7 @@
         height: 21px;
         display: inline-block;
         vertical-align: top;
-        
+
         @include mq(leftCol) {
             margin-top: -1px;
         }
