@@ -57,7 +57,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     val identity = request.user
     FaciaToolMetrics.DraftPublishCount.increment()
     val futureCollectionJson = FaciaApiIO.publishCollectionJson(id, identity)
@@ -65,21 +65,19 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       maybeCollectionJson.foreach { b =>
         UpdateActions.archivePublishBlock(id, b, identity)
         FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
-        FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(id), identity.email))}}
+        FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(id), identity.email))}
     ContentApiPush.notifyContentApi(Set(id))
-    NoCache(Ok)
-  }
+    NoCache(Ok)}}
 
-  def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     val identity = request.user
     val futureCollectionJson = FaciaApiIO.discardCollectionJson(id, identity)
     futureCollectionJson.map { maybeCollectionJson =>
       maybeCollectionJson.foreach { b =>
       FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
       UpdateActions.archiveDiscardBlock(id, b, identity)
-      FaciaPress.press(PressCommand.forOneId(id).withPressDraft())}}
-    NoCache(Ok)
-  }
+      FaciaPress.press(PressCommand.forOneId(id).withPressDraft())}
+    NoCache(Ok)}}
 
   def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
