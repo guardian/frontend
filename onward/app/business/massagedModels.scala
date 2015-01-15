@@ -1,6 +1,9 @@
 package business
 
+import common.Logging
 import play.api.libs.json.{Json, JsString, JsValue, Writes}
+
+import scala.util.Try
 
 object Trend {
   implicit val jsonWrites = new Writes[Trend] {
@@ -24,14 +27,58 @@ object StockValue {
 
 case class StockValue(
   name: String,
-  value: Double,
+  price: Double,
   change: Double,
   trend: Trend,
   closed: Boolean
 )
 
-object Stocks {
+object Stocks extends Logging {
   implicit val jsonWrites = Json.writes[Stocks]
+
+  def fromFingerpost(indices: Indices) = {
+    val stocks = indices.indices map { index =>
+      val maybePrice = Try { index.value.price.toDouble }.toOption
+
+      if (maybePrice.isEmpty) {
+        log.error(s"Could not read price value from Fingerpost data ${index.value.price}")
+      }
+
+      val maybeChange = Try { index.value.change.day.toDouble }.toOption
+
+      if (maybeChange.isEmpty) {
+        log.error(s"Could not read change value from Fingerpost data ${index.value.change.day}")
+      }
+
+      val maybeTrend = index.value.change.trendday match {
+        case "+" => Some(Positive)
+        case "-" => Some(Negative)
+        case "" => Some(Level)
+        case _ => None
+      }
+
+      if (maybeTrend.isEmpty) {
+        log.error(s"Could not read trend from Fingerpost data ${index.value.change.trendday}")
+      }
+
+      val maybeClosed = index.marketclosed match {
+        case "closed" => Some(true)
+        case "" => Some(false)
+        case _ => None
+      }
+
+      if (maybeClosed.isEmpty) {
+        log.error(s"Could not read closed from Fingerpost data ${index.marketclosed}")
+      }
+
+      for {
+        price <- maybePrice
+        change <- maybeChange
+        trend <- maybeTrend
+        closed <- maybeClosed
+      } yield StockValue(index.name, price, change, trend, closed)
+    }
+  }
 }
 
 case class Stocks(stocks: Seq[StockValue])
