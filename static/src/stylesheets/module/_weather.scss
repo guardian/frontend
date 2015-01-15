@@ -65,9 +65,11 @@ $weather-large-size: 60px;
         display: none;
         width: 100%;
         @include fs-headline(2);
+        @include box-sizing(border-box);
 
         @include mq(tablet) {
             display: inherit;
+            padding-right: $gs-gutter;
         }
 
         @include mq(leftCol) {
@@ -75,7 +77,10 @@ $weather-large-size: 60px;
         }
 
         .has-page-skin & {
-            padding-bottom: 0;
+            @include mq(wide) {
+                padding-right: $gs-gutter;
+                padding-bottom: 0;
+            }
         }
     }
 
