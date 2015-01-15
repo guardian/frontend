@@ -1,7 +1,6 @@
 package model.diagnostics.css
 
 import play.api.libs.json._
-import collection.Map
 
 case class CssReport(
   href: String,
@@ -11,8 +10,7 @@ case class CssReport(
   selectors: JsObject ) {
 
   override def toString(): String = {
-    val selectorMap = selectors.value.asInstanceOf[Map[String, JsBoolean]]
-    selectorMap.map {
+    selectors.value.toList.collect {
       case (key: String, exists:JsBoolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint ; $href"
     }.mkString("\n")
   }
