@@ -34,10 +34,24 @@ Contents:
 * [Useful information and hints](#useful-information-and-hints)
 * [Additional Documentation](#additional-documentation)
 
-##Local Test Server setup
-You need A Mac or Linux PC (ubuntu), then each of the things listed...
+## Local Test Server setup
+You need A Mac or Linux PC (ubuntu).
 
-###Configuration files
+### Automatic
+1. Check out the repository:
+
+    ```
+    git clone git@github.com:guardian/frontend.git
+    cd frontend
+    ```
+
+2. Run ```./setup.sh``` to install dependencies and compile assets
+3. All being well, you should be able to [run the app](#run-the-app)
+
+### Manual
+Install each of the things listed:
+
+#### Configuration files
 
 You need 3 files on your machine.
 
@@ -62,13 +76,13 @@ aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
 region=eu-west-1
 ```
 
-### [Homebrew](http://brew.sh/)
+#### [Homebrew](http://brew.sh/)
 
 This is needed on Mac only:
 ```bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-###A JDK
+#### A JDK
 
 Ubuntu:
 ```bash
@@ -77,7 +91,7 @@ sudo apt-get install openjdk-7-jdk
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-###[Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+#### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 Ubuntu:
 ```bash
@@ -89,26 +103,26 @@ Mac:
 brew install node
 ```
 
-###Grunt (build tool)
+#### Grunt (build tool)
 
 Ubuntu/Mac:
 ```
 sudo npm -g install grunt-cli
 ```
-###Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
+#### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
 ```
 sudo apt-get install ruby ruby-dev
 ```
-###[bundler](http://gembundler.com/)
+#### [bundler](http://gembundler.com/)
 
 Ubuntu/Mac:
 ```
 sudo gem install bundler
 ```
 
-###Xcode (if on a Mac, one of the Node modules requires it)
+#### Xcode (if on a Mac, one of the Node modules requires it)
 
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
@@ -120,7 +134,7 @@ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 ```
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
-###[libpng](http://libpng.org/pub/png/libpng.html)
+#### [libpng](http://libpng.org/pub/png/libpng.html)
 
 Ubuntu:
 ```
@@ -131,7 +145,7 @@ Mac:
 brew install libpng
 ```
 
-###The frontend code
+#### The frontend code
 Note: Remember to see [Troubleshooting](#troubleshooting) below if you have any issues.
 
 ```
@@ -155,6 +169,7 @@ After this, you can compile the assets:
 grunt compile
 ```
 
+### Run the app
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
 ```
 ./sbt

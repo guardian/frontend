@@ -6,7 +6,8 @@ import dfp.DfpAgent
 trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   val keywordIds: Seq[String]
 
-  override lazy val isSponsored: Boolean = keywordIds exists (DfpAgent.isSponsored(_, Some(id)))
+  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    keywordIds exists (DfpAgent.isSponsored(_, Some(id), maybeEdition))
 
   override lazy val hasMultipleSponsors: Boolean = keywordIds exists {
     DfpAgent.hasMultipleSponsors

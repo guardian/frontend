@@ -90,7 +90,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile', [
         'concurrent:compile',
         'compile:fonts',

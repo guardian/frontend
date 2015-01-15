@@ -25,15 +25,15 @@ object LoadLimit extends ExecutionContexts with Logging {
       log.info(s"AltPool: $alternativePool: Resize $concurrentRequests/$requestLimit")
       val result = operation
       result.onComplete{_ =>
-        currentNumberOfRequests.decrementAndGet()
+        reqCounter.decrementAndGet()
       }
       result
     } catch {
       case t: Throwable =>
-        currentNumberOfRequests.decrementAndGet()
+        reqCounter.decrementAndGet()
         throw t
     } else {
-      currentNumberOfRequests.decrementAndGet()
+      reqCounter.decrementAndGet()
       outOfCapacity
     }
   }

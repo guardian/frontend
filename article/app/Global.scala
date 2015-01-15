@@ -11,7 +11,8 @@ object Global
   with DevParametersLifecycle
   with DfpAgentLifecycle
   with CloudWatchApplicationMetrics
-  with SurgingContentAgentLifecycle {
+  with SurgingContentAgentLifecycle
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(

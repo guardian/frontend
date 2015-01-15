@@ -695,8 +695,10 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: wide) {
             display: none;
         }
+    }
 
-        .has-page-skin & {
+    .has-page-skin & {
+        @include mq(wide) {
             display: none;
         }
     }

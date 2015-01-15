@@ -171,8 +171,8 @@ Hence why a greater depth of selector specificity is needed.
         display: none;
     }
 
-    .fc-item__live-indicator .live-pulse-icon {
-        display: none;
+    .live-pulse-icon:before {
+        content: none;
     }
 
     @include mq(tablet) {

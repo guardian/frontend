@@ -18,9 +18,11 @@ define([
     'common/modules/onward/history',
     'common/modules/ui/images',
     'common/modules/video/tech-order',
+    'common/modules/video/supportedBrowsers',
     'common/modules/analytics/beacon',
     'text!common/views/ui/loading.html',
-    'text!common/views/ui/video-ads-overlay.html'
+    'text!common/views/ui/video-ads-overlay.html',
+    'text!common/views/ui/video-ads-skip-overlay.html'
 ], function (
     bean,
     bonzo,
@@ -40,9 +42,11 @@ define([
     history,
     images,
     techOrder,
+    supportedBrowsers,
     beacon,
     loadingTmpl,
-    adsOverlayTmpl
+    adsOverlayTmpl,
+    adsSkipOverlayTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -200,6 +204,7 @@ define([
     function bindErrorHandler(player) {
         player.on('error', function () {
             beaconError(player.error());
+            $('.vjs-big-play-button').hide();
         });
     }
 
@@ -223,7 +228,9 @@ define([
                     if (this.currentTime() > 0.1) {
                         $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
                     }
-                    $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                    if (parseInt(this.currentTime().toFixed(), 10) === 5) {
+                        $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
+                    }
                 },
                 init: function () {
                     $(this.el()).append($.create(adsOverlayTmpl));
@@ -231,6 +238,43 @@ define([
                     this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
                     this.one(constructEventName('content:play', player), events.destroy.bind(player));
                     this.one('adtimeout', events.destroy.bind(player));
+                }
+            };
+        this.one(constructEventName('preroll:play', player), events.init.bind(player));
+    }
+
+    function adSkipCountdown(skipTimeout) {
+        var player = this,
+            events =  {
+                update: function () {
+                    var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
+                    if (skipTime > 0) {
+                        $('.js-skip-remaining-time', this.el()).text(skipTime);
+                    } else if (!skipTime) {
+                        $('.vjs-ads-overlay-skip-countdown', this.el())
+                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
+                            '<i class="i i-play-icon-grey skip-icon"></i>' +
+                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>');
+                        $('.vjs-ads-overlay-skip').addClass('vjs-ads-overlay-skip--enabled');
+                    }
+                },
+                skip: function () {
+                    if ($('.vjs-ads-overlay-skip').hasClass('vjs-ads-overlay-skip--enabled')) {
+                        events.hide.bind(player);
+                        player.trigger(constructEventName('preroll:skip', player));
+                        this.ads.endLinearAdMode();
+                    }
+                },
+                hide: function () {
+                    $('.js-ads-skip-overlay', this.el()).hide();
+                    this.off('timeupdate', events.update);
+                },
+                init: function () {
+                    $(this.el()).append($.create(adsSkipOverlayTmpl));
+                    bean.on($('.vjs-ads-overlay-skip')[0], 'click', events.skip.bind(player));
+                    this.on('timeupdate', events.update.bind(player));
+                    this.one(constructEventName('content:play', player), events.hide.bind(player));
+                    $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
                 }
             };
         this.one(constructEventName('preroll:play', player), events.init.bind(player));
@@ -325,6 +369,7 @@ define([
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
         videojs.plugin('adCountdown', adCountdown);
+        videojs.plugin('adSkipCountdown', adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
         $('.js-gu-media').each(function (el) {
@@ -371,6 +416,7 @@ define([
                 initLoadingSpinner(player);
                 bindGlobalEvents(player);
                 upgradeVideoPlayerAccessibility(player);
+                supportedBrowsers(player);
 
                 player.one('playing', function (e) {
                     if (isFlash(e)) {
@@ -403,6 +449,7 @@ define([
                         if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                             bindPrerollEvents(player);
                             player.adCountdown();
+                            player.adSkipCountdown(15);
 
                             // Video analytics event.
                             player.trigger(constructEventName('preroll:request', player));

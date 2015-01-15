@@ -19,8 +19,13 @@ define([
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
-                mobile:  '1,1|300,250|300,251|300,600' +
-                    (config.page.edition === 'US' ? '|300,1050' : '')
+                mobile:  '1,1|300,250|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
+            }
+        },
+        'right-sticky': {
+            name: 'right',
+            sizeMappings: {
+                mobile:  '1,1|300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
             }
         },
         'right-small': {

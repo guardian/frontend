@@ -70,10 +70,10 @@ object Resizer extends Controller with Logging with implicits.Requests {
   }
 
   // if we have too many pixels, it takes too long to resize.  This could be tweaked.
-  val MAX_PIXELS = 620 * 620
+  val MAX_PIXELS = 620 * 480
 
   def redirectTooBigAttempts(originalWidth: Int, originalHeight: Int, requestedWidth: Int, fallbackUri: String) = {
-    val requestedPixels = (originalHeight * requestedWidth * requestedWidth) / originalWidth
+    val requestedPixels = (originalHeight.toLong * requestedWidth * requestedWidth) / originalWidth
     if (requestedPixels > MAX_PIXELS) {
       PngResizerMetrics.tooHardCount.increment()
       log.info(s"won't resize if final image will be too big afterwards - total size $requestedPixels - redirecting to original")

@@ -120,6 +120,10 @@
         }
     }
 }
+/* horrible, but to centre align new doubleclick studio ads */
+.ad-slot--top > div > div {
+    margin: 0 auto;
+}
 
 /**
  * Inline ads

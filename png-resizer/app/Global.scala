@@ -6,11 +6,5 @@ import play.api.mvc.WithFilters
 object Global extends WithFilters(Filters.common: _*) with CloudWatchApplicationMetrics{
   override def applicationName: String = "png-resizer"
 
-  override def applicationMetrics: List[FrontendMetric] = List(
-    PngResizerMetrics.downloadTime,
-    PngResizerMetrics.resizeTime,
-    PngResizerMetrics.quantizeTime,
-    PngResizerMetrics.redirectCount,
-    PngResizerMetrics.notModifiedCount
-  )
+  override def applicationMetrics: List[FrontendMetric] = PngResizerMetrics.all
 }

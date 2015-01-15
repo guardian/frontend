@@ -2,24 +2,20 @@ define([
     'bonzo',
     'qwery',
     'lodash/collections/contains',
-    'lodash/functions/once',
     'lodash/objects/defaults',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/template',
     'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs'
 ], function (
     bonzo,
     qwery,
     contains,
-    once,
     defaults,
     $,
     _,
     config,
-    template,
     createAdSlot,
     userPrefs
 ) {

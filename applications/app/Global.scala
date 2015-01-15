@@ -15,7 +15,8 @@ object Global extends WithFilters(Filters.common: _*)
   with DfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
-  with SectionsLookUpLifecycle {
+  with SectionsLookUpLifecycle
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-applications"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
