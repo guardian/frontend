@@ -36,17 +36,42 @@
 
 .stocks__stock-value {
     float: left;
-    width: 150px;
+    margin-right: $gs-gutter;
 
     @include mq(leftCol) {
         float: none;
         margin-bottom: $gs-baseline;
+        margin-right: 0;
     }
 
     @include mq(wide) {
         .has-page-skin & {
             float: left;
             margin-bottom: 0;
+            margin-right: $gs-gutter;
+        }
+    }
+}
+
+.stocks__value {
+    @include clearfix;
+}
+
+.stocks__price {
+    margin-right: 0.25em;
+}
+
+.stocks__price,
+.stocks__change {
+    float: left;
+
+    @include mq(leftCol) {
+        float: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: left;
         }
     }
 }
@@ -56,6 +81,6 @@
 }
 
 .stocks__name,
-.stocks__change {
+.stocks__price {
     margin-bottom: -4px;
 }
