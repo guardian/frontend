@@ -50,4 +50,4 @@ GET        /tagged.json                               controllers.TaggedContentC
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
 
 # Business data
-GET        /business-data/stocks                      controllers.StocksController.stocks
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
