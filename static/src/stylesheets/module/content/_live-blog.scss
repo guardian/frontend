@@ -188,8 +188,10 @@ $block-padding-right: $gs-gutter;
     position: relative;
 }
 
-.block.is-key-event {
-    border-top: 2px solid colour(live-accent);
+.block.is-key-event,
+.block.is-summary {
+    border-top: ($gs-baseline - 1) solid colour(neutral-8);
+    @include box-shadow(inset 0px 1px 0px 0px colour(live-accent));
 }
 
 .truncated-block {
