@@ -83,6 +83,7 @@ define([
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
+        popularFilteredCache,
         topNavItemsCache,
 
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
@@ -197,8 +198,14 @@ define([
             .value();
     }
 
-    function getPopularFiltered() {
-        return getPopular(20, true);
+    function getPopularFiltered(opts) {
+        if (opts && opts.flush) {
+            popularFilteredCache = getPopular(20, true);
+        } else {
+            popularFilteredCache = popularFilteredCache || getPopular(20, true);
+        }
+
+        return popularFilteredCache;
     }
 
     function tally(freqs) {
