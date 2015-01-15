@@ -131,7 +131,7 @@ $closed-colour: #767676;
 
 .stocks__closed--inline {
     font-weight: 400;
-    margin-left: 0.5em;
+    margin-left: .5em;
     display: inline;
 
     @include mq(leftCol) {
