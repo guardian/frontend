@@ -1,3 +1,6 @@
+$stocks-icon-width: 14px;
+$stocks-icon-height: 10px;
+
 .stocks__stocks-container {
     @include clearfix;
 
@@ -20,33 +23,47 @@
     }
 }
 
-.stocks__stock-value--negative .stocks__change {
-    color: colour(status-negative);
+.stocks__change:before {
+    content: '';
+    width: $stocks-icon-width;
+    height: $stocks-icon-height;
+    margin-right: $gs-gutter / 5;
+}
 
-    &:before {
-        @include icon(market-down, false);
+.stocks__stock-value--negative {
+    .stocks__change {
+        color: colour(status-negative);
+
+        &:before {
+            @include icon(market-down, false);
+        }
     }
 }
 
-.stocks__stock-value--positive .stocks__change {
-    color: colour(status-positive);
+.stocks__stock-value--positive {
+    .stocks__change {
+        color: colour(status-positive);
 
-    &:before {
-        @include icon(market-up, false);
+        &:before {
+            @include icon(market-up, false);
+        }
     }
 }
 
-.stocks__stock-value--level .stocks__change {
-    color: colour(status-neutral);
+.stocks__stock-value--level {
+    .stocks__change {
+        color: colour(status-neutral);
 
-    &:before {
-        @include icon(market-same, false);
+        &:before {
+            @include icon(market-same, false);
+        }
     }
 }
 
 .stocks__stock-value {
     float: left;
     margin-right: $gs-gutter;
+    border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     @include mq(leftCol) {
         float: none;
