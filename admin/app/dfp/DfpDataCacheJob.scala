@@ -34,10 +34,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- CustomTargetingValueAgent.refresh()
       _ <- PlacementAgent.refresh()
     } {
-      val data = DfpDataCacheJob.loadLineItems()
+      DfpAdFeatureCacheJob.run()
+      val data = loadLineItems()
       val paidForTags = PaidForTag.fromLineItems(data.lineItems)
       CapiLookupAgent.refresh(paidForTags) map {
-        _ => DfpDataCacheJob.write(data)
+        _ => write(data)
       }
     }
   }
