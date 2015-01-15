@@ -57,7 +57,8 @@ define([
             }, {}),
             contentType: config.page.contentType,
             breakpoint: detect.getBreakpoint(),
-            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : ''
+            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : '',
+            className: stylesheet.ownerNode ? stylesheet.ownerNode.className : ''
         }), allRules);
     }
 

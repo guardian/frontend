@@ -5,12 +5,13 @@ import play.api.libs.json._
 case class CssReport(
   href: String,
   breakpoint: String,
+  className: String,
   contentType: String,
   selectors: JsObject ) {
 
   override def toString(): String = {
     selectors.value.toList.collect {
-      case (key: String, exists:JsBoolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint ; $href"
+      case (key: String, exists:JsBoolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint ; $className $href"
     }.mkString("\n")
   }
 }
