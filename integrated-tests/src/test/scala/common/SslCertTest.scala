@@ -20,13 +20,15 @@ import sun.security.x509.X509CertImpl
   val hosts = List(
     "https://beacon.guim.co.uk",
     "https://profile.theguardian.com",
-    "https://fronts.gutools.co.uk"
+    "https://fronts.gutools.co.uk",
+    "https://frontend.code.dev-gutools.co.uk"
   )
 
   "SSL Certs" should "Be more than 30 days outside of their expiry time"  in {
 
     for ( host <- hosts ) {
       try {
+        println("+++ %s".format(host) )
         val url = new URL(host)
         val conn = url.openConnection().asInstanceOf[HttpsURLConnection]
         conn.setHostnameVerifier(new HostnameVerifier {
