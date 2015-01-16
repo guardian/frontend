@@ -30,7 +30,7 @@ define([
             'crosswords', 'crosswords/series/cryptic', 'crosswords/series/everyman', 'crosswords/series/prize', 'crosswords/series/quick',
             'data', 'environment/climate-change', 'environment/conservation', 'environment/energy', 'environment/ethical-living',
             'environment/food', 'environment/georgemonbiot', 'environment/list/allenvironmentkeywords', 'environment/travelandtransport',
-            'environment/waste', 'football', 'football/championsleague', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
+            'environment/waste', 'football', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
             'lifeandstyle/series/timdowlingsweekendcolumn', 'lifeandstyle/women', 'media/advertising', 'media', 'media/digital-media', 'media/list/allmediakeywords',
             'media/marketingandpr', 'media/mediabusiness', 'media/pressandpublishing', 'media/radio', 'media/television', 'money/consumer-affairs',
             'money/insurance', 'money/isas', 'money/moneyinvestments', 'money/property', 'money/savings', 'money/work-and-careers', 'multimedia',
@@ -52,12 +52,12 @@ define([
             'football/huddersfield', 'football/ipswichtown', 'football/leedsunited', 'football/middlesbrough', 'football/millwall', 'football/norwichcity',
             'football/nottinghamforest', 'football/reading', 'football/rotherham', 'football/sheffieldwednesday', 'football/watford', 'football/wiganathletic',
             'football/wolves', 'football/aberdeen', 'football/celtic', 'football/dundee', 'football/dundeeunited', 'football/hamilton', 'football/invernesscaledonianthistle',
-            'football/kilmarnock', 'football/motherwell', 'football/partick', 'football/rosscounty', 'football/stjohnstone', 'football/stmirren', 'football/laligafootball',
+            'football/kilmarnock', 'football/motherwell', 'football/partick', 'football/rosscounty', 'football/stjohnstone', 'football/stmirren',
             'football/almeria', 'football/athleticbilbao', 'football/atleticomadrid', 'football/barcelona', 'football/celtavigo', 'football/deportivo-la-coruna', 'football/eibar',
             'football/elche-cf', 'football/espanyol', 'football/getafe', 'football/granada74', 'football/levante', 'football/malaga', 'football/rayo-vallecano', 'football/realmadrid',
             'football/realsociedad', 'football/sevilla', 'football/valencia', 'football/villarreal',
 
-            // cometitions
+            // competitions
             'football/premierleague', 'football/fa-cup', 'football/championship', 'football/leagueonefootball', 'football/leaguetwofootball', 'football/capital-one-cup',
             'football/championsleague', 'football/uefa-europa-league', 'football/laligafootball', 'football/ligue1football', 'football/bundesligafootball', 'football/serieafootball',
             'football/mls', 'football/a-league', 'football/scottish-premiership', 'football/scottishcup', 'football/cis-insurance-cup', 'football/scottish-championship',
@@ -69,14 +69,13 @@ define([
             'football/series/rumourmill', 'football/transfer-window',
 
             // NG subnav
-            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'crosswords', 'education',
-            'education/students', 'fashion', 'film', 'football/competitions', 'football/fixtures', 'football/live', 'football/results',
-            'football/tables', 'football/teams', 'global-development', 'lifeandstyle', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
-            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'lifeandstyle/women', 'money/debt',
-            'money/property', 'money/savings', 'money/work-and-careers', 'music', 'music/classicalmusicandopera', 'observer', 'science',
-            'society', 'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
-            'sport/tennis', 'sport/us-sport', 'stage', 'technology/games', 'theguardian', 'travel', 'travel/europe', 'travel/uk', 'travel/usa',
-            'tv-and-radio', 'video', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
+            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'education',
+            'education/students', 'fashion', 'film', 'global-development', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
+            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'money/debt',
+            'music', 'music/classicalmusicandopera', 'observer',
+            'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/tennis', 'sport/us-sport', 'stage', 'theguardian', 'travel/europe', 'travel/uk', 'travel/usa',
+            'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
         ],
         editions = [
             'uk',
