@@ -192,6 +192,7 @@ $block-padding-right: $gs-gutter;
 .block.is-summary {
     border-top: $gs-baseline solid colour(neutral-8);
     @include box-shadow(inset 0px 1px 0px 0px colour(live-accent));
+    margin-top: -$gs-baseline;
 }
 
 .truncated-block {
