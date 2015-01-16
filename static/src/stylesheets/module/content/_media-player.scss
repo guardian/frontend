@@ -461,9 +461,10 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-error-display {
     position: absolute;
-    width: 100%;
-    top: 40%;
     display: none;
+    width: 100%;
+    top: 0;
+    z-index: 3; // Ensures that it is above fullscreen clickbox.
 
     .gu-media--video.vjs-error &,
     .gu-media__flash-fallback & {
@@ -473,29 +474,50 @@ $vjs-progress-inset-bottom: 4px;
         background-color: #000000;
     }
     > div {
-        color: #ffffff;
-        @include fs-headline(3);
-        text-align: left;
-        @include box-sizing(border-box);
-        padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2);
-        min-height: $gs-baseline*5;
-        background-color: $vjs-control-colour;
+        position: absolute;
+        display: table-cell;
         width: 100%;
         margin: auto;
+        padding: $gs-baseline*1.5 $gs-gutter*3;
+        @include box-sizing(border-box);
+        @include fs-headline(2);
+        line-height: 1em;
+        text-align: left;
+        color: #ffffff;
+        background-color: $vjs-control-colour;
+
         &:before {
             @include icon(error-exclamation);
             content: ' ';
             display: block;
             position: absolute;
             top: 50%;
-            left: $gs-gutter;
-            margin-top: -22px // half icon height for centering;
+            left: $gs-gutter/2;
+            margin-top: -18px // half icon height for centering;
         }
     }
 
     a {
         color: #ffffff;
         text-decoration: underline;
+    }
+}
+
+.vjs-error-display__close {
+    @include icon(close-icon-white-small);
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px; // half icon height for centering;
+    right: $gs-gutter/2;
+    text-indent: -9999px;
+    background: transparent;
+    border: 1px solid rgba(#ffffff, .3);
+    @include border-radius(50%);
+
+    &:hover {
+        border-color: #ffffff;
     }
 }
 
