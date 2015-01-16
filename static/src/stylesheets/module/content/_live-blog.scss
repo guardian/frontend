@@ -188,8 +188,11 @@ $block-padding-right: $gs-gutter;
     position: relative;
 }
 
-.block.is-key-event {
-    border-top: 2px solid colour(live-accent);
+.block.is-key-event,
+.block.is-summary {
+    border-top: $gs-baseline solid colour(neutral-8);
+    @include box-shadow(inset 0px 1px 0px 0px colour(live-accent));
+    margin-top: -$gs-baseline;
 }
 
 .truncated-block {
@@ -568,7 +571,7 @@ $timeline-width: 15px;
         width: $right-column;
         top: $gs-baseline;
         padding-top: $gs-baseline;
-        border-top: 1px solid colour(live-default);
+        border-top: 1px solid colour(live-accent);
     }
 }
 
