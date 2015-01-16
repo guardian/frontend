@@ -4,9 +4,16 @@
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state
     padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:focus {
         outline: 0;
+    }
+
+    .is-editing & {
+        text-overflow: clip;
     }
 }
 

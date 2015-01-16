@@ -131,6 +131,9 @@ define([
             bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
+            bean.on($('.js-weather-input')[0], 'blur', function () {
+                self.toggleControls(false);
+            });
             mediator.on('autocomplete:fetch', this.fetchData);
         },
 
@@ -192,7 +195,8 @@ define([
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.WeatherIcon));
+                    weatherData.WeatherIcon))
+                    .attr('title', weatherData.WeatherText);
 
                 // Close editing
                 self.toggleControls(false);

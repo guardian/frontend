@@ -1,5 +1,6 @@
 define([
     'omniture',
+    'lodash/collections/map',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -9,9 +10,11 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/ab',
+    'common/modules/onward/history',
     'common/modules/identity/api'
 ], function (
     s,
+    map,
     config,
     cookies,
     detect,
@@ -21,6 +24,7 @@ define([
     beacon,
     mvtCookie,
     ab,
+    history,
     id
 ) {
 
@@ -151,8 +155,6 @@ define([
             s.prop3     = config.page.publication || '';
 
             s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
-            s.prop9     = config.page.contentType || '';  //contentType
-
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -185,6 +187,8 @@ define([
 
             s.prop51  = mvt;
             s.eVar51  = mvt;
+
+            s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
             if (guShift) {
                 shiftValue = 'gu_shift,' + guShift + ',';

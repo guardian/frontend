@@ -1,7 +1,9 @@
 define([
-    'common/modules/onward/history'
+    'common/modules/onward/history',
+    'common/utils/mediator'
 ], function (
-    history
+    history,
+    mediator
     ) {
     return function () {
         this.id = 'HistoryTags';
@@ -28,7 +30,9 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    history.showInMegaNav();
+                    mediator.once('modules:nav:open', function () {
+                        history.showInMegaNav();
+                    });
                 }
             }
         ];
