@@ -364,7 +364,7 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
-Here is a list of [libraries we use](docs/libraries.md) in frontned.
+If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontned.
 
 Further documentation notes and useful items can be found in [docs](docs).
 
