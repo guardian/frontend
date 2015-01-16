@@ -25,7 +25,7 @@
             }
 
             @player.video.encodings.find(_.format == "video/mp4").map { encoding =>
-                <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement.swf")" width="@player.width" height="@player.height">
+                <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
                     <param name="allowFullScreen" value="true" />
                     <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
                     <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
