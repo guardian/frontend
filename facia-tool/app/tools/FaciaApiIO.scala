@@ -51,7 +51,7 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
     Json.toJson(collectionJson).transform[JsObject](Reads.JsObjectReads) match {
       case JsSuccess(result, _) =>
         S3FrontsApi.archive(id, Json.prettyPrint(result + ("diff", update)), identity)
-      case JsError(errors)  => log.warn(s"Could not archive $id: 4errors")}}
+      case JsError(errors)  => log.warn(s"Could not archive $id: $errors")}}
 
   def putMasterConfig(config: ConfigJson): Option[ConfigJson] = {
     Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
