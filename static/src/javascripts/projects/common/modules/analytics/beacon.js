@@ -18,7 +18,7 @@ define([
             return img;
         },
         postJson: function (path, jsonString, forceAjax) {
-            var url = (config.page.beaconUrl || '').replace(/^\/\//, 'http://') + path;
+            var url = (config.page.beaconUrl || '').replace(/^\/\//, window.location.protocol + '//') + path;
 
             if ('sendBeacon' in navigator && !forceAjax) {
                 window.addEventListener('unload', function () {
