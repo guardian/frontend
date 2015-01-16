@@ -53,7 +53,9 @@ define([
             var $container = $('.js-container--first .js-container__header');
 
             getStocksData(function (data) {
-                $container.append(renderData(data));
+                if (data.stocks.length > 0) {
+                    $container.append(renderData(data));
+                }
             });
         }
     };

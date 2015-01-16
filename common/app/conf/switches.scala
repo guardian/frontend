@@ -467,6 +467,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
+    "If switched on, a stocks widget will be displayed on the business front",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
