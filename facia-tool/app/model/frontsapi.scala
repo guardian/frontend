@@ -4,6 +4,7 @@ import com.gu.facia.client.models.{CollectionJson, ConfigJson, Trail, TrailMetaD
 import com.gu.googleauth.UserIdentity
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
+import fronts.FrontsApi
 import julienrf.variants.Variants
 import org.joda.time.DateTime
 import play.api.libs.json.{JsString, Format, JsValue, Json}
@@ -91,13 +92,18 @@ trait UpdateActions extends Logging with ExecutionContexts {
   val collectionCap: Int = Configuration.facia.collectionCap
   implicit val updateListWrite = Json.writes[UpdateList]
 
-  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
-    if (update.live) {
+  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val result = if (update.live) {
       val live = updateList(update, collectionJson.live)
-      collectionJson.copy(live=live, draft=collectionJson.draft.filter(_ != live))
+      collectionJson.copy(live = live, draft = collectionJson.draft.filter(_ != live))
     }
     else
       collectionJson
+
+    log.info(s"Inserted into LIVE: $update $collectionJson $result")
+
+    result
+  }
 
   def insertIntoDraft(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
     if (update.draft)
@@ -156,7 +162,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def updateCollectionList(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
-    FaciaJsonClient.client.collection(id).map { maybeCollectionJson =>
+    FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
         .map(insertIntoLive(update, _))
         .map(insertIntoDraft(update, _))
@@ -171,7 +177,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
-    FaciaJsonClient.client.collection(id).map { maybeCollectionJson =>
+    FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
         .map(CollectionJsonFunctions.updatePreviously(_, update))
         .map(deleteFromLive(update, _))
