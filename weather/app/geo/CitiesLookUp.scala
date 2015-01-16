@@ -24,8 +24,6 @@ object CitiesCsvLine {
         metroCode,
         areaCode
       ) =>
-        println("hi")
-
         Try {
           CitiesCsvLine(
             locationId.toInt,
@@ -59,7 +57,7 @@ case class CitiesCsvLine(
 
 object CitiesLookUp extends ResourcesHelper {
   def loadCache() = {
-    val cache = Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "UTF-8")
+    val cache = Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "iso-8859-1")
 
     // first two lines are Copyright info and field names
     (cache.getLines().drop(2) collect {
