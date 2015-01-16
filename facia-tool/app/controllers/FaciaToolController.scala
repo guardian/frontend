@@ -3,6 +3,7 @@ package controllers
 import auth.ExpiringActions
 import common.{ExecutionContexts, FaciaToolMetrics, Logging}
 import conf.Configuration
+import fronts.FrontsApi
 import frontsapi.model._
 import model.{Cached, NoCache}
 import play.api.libs.json._
@@ -41,13 +42,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def getConfig = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    FaciaJsonClient.client.config.map { configJson =>
+    FrontsApi.amazonClient.config.map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
   def readBlock(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    FaciaJsonClient.client.collection(collectionId).map { configJson =>
+    FrontsApi.amazonClient.collection(collectionId).map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
