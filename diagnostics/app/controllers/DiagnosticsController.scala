@@ -31,18 +31,13 @@ object DiagnosticsController extends Controller with Logging {
     OnePix()
   }
 
-  private lazy val jsonParser = parse.maxLength(1024 * 1024, parser = parse.tolerantJson)
+  private lazy val jsonParser = parse.tolerantJson(1024 *1024)
 
   def css = Action(jsonParser) { request =>
-    request.body match {
-      case Right(body) => {
-        if (conf.Switches.CssLogging.isSwitchedOn) {
-            Css.report(body)
-        }
-        NoCache(Ok("OK"))
-      }
-      case _ => NoCache(BadRequest)
+    if (conf.Switches.CssLogging.isSwitchedOn) {
+      Css.report(request.body)
     }
+    NoCache(Ok("OK"))
   }
 
 }
