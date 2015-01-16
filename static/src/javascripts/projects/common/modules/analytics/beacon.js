@@ -18,13 +18,15 @@ define([
             return img;
         },
         postJson: function (path, jsonString, forceAjax) {
+            var url = (config.page.beaconUrl || '').replace(/^\/\//, 'http://') + path;
+
             if ('sendBeacon' in navigator && !forceAjax) {
                 window.addEventListener('unload', function () {
-                    navigator.sendBeacon(path, jsonString);
+                    navigator.sendBeacon(url, jsonString);
                 }, false);
             } else {
                 ajax({
-                    url: config.page.beaconUrl + path,
+                    url: url,
                     type: 'json',
                     method: 'post',
                     contentType: 'application/json',
