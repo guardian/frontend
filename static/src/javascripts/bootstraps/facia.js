@@ -3,7 +3,6 @@ define([
     'qwery',
     // Common libraries
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -19,7 +18,6 @@ define([
     bonzo,
     qwery,
     $,
-    ajax,
     config,
     detect,
     mediator,
