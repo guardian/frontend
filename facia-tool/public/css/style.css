@@ -1215,7 +1215,9 @@ button {
 .autocompleter .suggestions {
     position: absolute;
     top: 27px;
-    z-index: 1;
+    z-index: 20;
+    right: 0;
+    left: 36%;
 }
 
 .autocompleter .suggestion {
@@ -1719,9 +1721,8 @@ button {
 .dropdown > ul {
     padding: 0;
     margin: 0;
-    min-width: 200px;
     transform: scale(0);
-    z-index: 10000;
+    z-index: 1000;
 }
 .dropdown-open > ul {
     transform: scale(1);
@@ -1732,7 +1733,7 @@ button {
     top: 1.5em;
     left: 0;
 }
-.dropdown > ul  > li {
+.dropdown > ul > li {
     list-style: none;
     padding: 10px 15px;
 }
@@ -1746,6 +1747,12 @@ button {
 }
 .dropdown > ul > li {
     cursor: pointer;
+}
+.dropdown > ul > li:nth-child(even) {
+    background-color: #FCFCFC;
+}
+.dropdown > ul > li:hover {
+    background-color: #F0F0F0;
 }
 
 .narrow .preview,
