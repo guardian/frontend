@@ -8,7 +8,9 @@
         </p>
         <i class="i i-weather-{{icon}} weather__icon js-weather-icon" title="{{description}}"><span class="u-h">{{description}}</span></i>
     </div>
-    <ul class="js-weather-forecast"></ul>
+    <a class="weather__toggle-forecast js-toggle-forecast" data-link-name="weather-toggle-forecast"
+        href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="i i-arrow-grey-large weather__toggle-icon"></i>
+    </a>
     <div class="weather__location">
         <div class="search-tool js-search-tool">
             <div class="search-tool__form u-cf">
@@ -24,4 +26,5 @@
             href="#close-change-location"><span class="u-h">Close change location</span><i class="i i-close-icon-grey weather__close-icon"></i>
         </a>
     </div>
+    <ul class="js-weather-forecast"></ul>
 </div>

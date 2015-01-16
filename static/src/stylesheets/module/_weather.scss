@@ -11,7 +11,7 @@ $weather-large-size: 60px;
     }
 
     @include mq(tablet) {
-        width: gs-span(3);
+        width: gs-span(4);
         text-align: left;
         margin-top: $gs-baseline * 2; 
     }
@@ -27,10 +27,149 @@ $weather-large-size: 60px;
 
     .has-page-skin & {
         @include mq(wide) {
-            width: gs-span(3);
+            width: gs-span(4);
             text-align: left;
             margin-top: $gs-baseline * 2;
         }
+    }
+}
+
+.weather__current {
+    position: relative;
+    @include transition(opacity .2s ease-in); // Needs Fixing
+
+    @include mq($until: leftCol) {
+        @include box-sizing(border-box);
+        width: gs-span(1) + $gs-gutter;
+        float: left;
+        padding-right: $weather-small-size;
+        text-align: right;
+
+        .weather__icon {
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(tablet, leftCol) {
+        padding-right: $weather-small-size + $gs-gutter / 4;
+        margin-right: $gs-gutter / 4;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: 0;
+            height: $gs-baseline + 1px;
+            border-right: 1px dotted colour(neutral-3);
+        }
+
+        .weather__icon {
+            right: $gs-gutter / 4;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            @include box-sizing(border-box);
+            padding-right: $weather-small-size + $gs-gutter / 4;
+            width: gs-span(1) + $gs-gutter;
+            float: left;
+            text-align: right;
+
+            .weather__icon {
+                position: absolute;
+                top: 0;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 3px;
+                right: 0;
+                height: $gs-baseline + 1px;
+                border-right: 1px dotted colour(neutral-3);
+            }
+
+            .weather__icon {
+                right: $gs-gutter / 4;
+            }
+        }
+    }
+}
+
+.weather__desc {
+    @include fs-headline(2);
+    margin-right: 5px;
+
+    @include mq(leftCol) {
+        position: absolute;
+        bottom: 2px;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            position: inherit;
+        }
+    }
+}
+
+.weather__time {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            display: none;
+        }
+    }
+}
+
+.i.weather__icon {
+    width: $weather-small-size !important;
+    height: $weather-small-size !important;
+    margin: 0;
+    margin-top: -($gs-baseline / 3);
+
+    @include mq(leftCol) {
+        width: $weather-large-size !important;
+        height: $weather-large-size !important;
+        display: block;
+        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: $weather-small-size !important;
+            height: $weather-small-size !important;
+            margin: 0;
+            margin-top: -($gs-baseline / 3);
+            display: inline-block;
+        }
+    }
+}
+
+.weather__toggle-forecast {
+    position: relative;
+    padding-right: $gs-gutter / 4;
+    margin-right: $gs-gutter / 4;
+    float: left;
+
+    &:after {
+        content: '';
+        top: 3px;
+        right: 0;
+        position: absolute;
+        height: $gs-baseline + 1px;
+        border-right: 1px dotted colour(neutral-3);
+    }
+
+    .weather__toggle-icon {
+        width: 18px;
+        height: 12px;
     }
 }
 
@@ -44,7 +183,7 @@ $weather-large-size: 60px;
 
     @include mq(tablet, leftCol) {
         width: gs-span(2);
-        float: right;
+        float: left;
     }
 
     @include mq(leftCol) {
@@ -55,7 +194,7 @@ $weather-large-size: 60px;
     .has-page-skin & {
         @include mq(wide) {
             width: gs-span(2);
-            float: right;
+            float: left;
             border-top: 0;
             padding-top: 0;
         }
@@ -132,119 +271,6 @@ $weather-large-size: 60px;
     display: none;
 }
 
-.weather__current {
-    position: relative;
-    @include transition(opacity .2s ease-in); // Needs Fixing
-
-    @include mq($until: leftCol) {
-        @include box-sizing(border-box);
-        width: gs-span(1) + $gs-gutter;
-        float: left;
-        padding-right: $weather-small-size;
-        text-align: right;
-
-        .weather__icon {
-            position: absolute;
-            top: 0;
-        }
-    }
-
-    @include mq(tablet, leftCol) {
-        padding-right: $weather-small-size + $gs-gutter / 2;
-
-        &:after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            right: $gs-gutter / 4;
-            height: $gs-baseline + 1px;
-            border-right: 1px dotted colour(neutral-3);
-        }
-
-        .weather__icon {
-            right: $gs-gutter / 2;
-        }
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            @include box-sizing(border-box);
-            padding-right: $weather-small-size + $gs-gutter / 2;
-            width: gs-span(1) + $gs-gutter;
-            float: left;
-            text-align: right;
-
-            .weather__icon {
-                position: absolute;
-                top: 0;
-            }
-
-            &:after {
-                content: '';
-                position: absolute;
-                top: 3px;
-                right: $gs-gutter / 4;
-                height: $gs-baseline + 1px;
-                border-right: 1px dotted colour(neutral-3);
-            }
-
-            .weather__icon {
-                right: $gs-gutter / 2;
-            }
-        }
-    }
-}
-
-.weather__desc {
-    @include fs-headline(2);
-    margin-right: 5px;
-
-    @include mq(leftCol) {
-        position: absolute;
-        bottom: 2px;
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            position: inherit;
-        }
-    }
-}
-
-.weather__time {
+.weather__forecasts {
     display: none;
-
-    @include mq(leftCol) {
-        display: block;
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            display: none;
-        }
-    }
-}
-
-.i.weather__icon {
-    width: $weather-small-size !important;
-    height: $weather-small-size !important;
-    margin: 0;
-    margin-top: -($gs-baseline / 3);
-
-    @include mq(leftCol) {
-        width: $weather-large-size !important;
-        height: $weather-large-size !important;
-        display: block;
-        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            width: $weather-small-size !important;
-            height: $weather-small-size !important;
-            margin: 0;
-            margin-top: -($gs-baseline / 3);
-            display: inline-block;
-        }
-    }
 }
