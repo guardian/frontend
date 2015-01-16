@@ -42,13 +42,11 @@ data-test-id="facia-card"
                     Some(false),
                     None
                 )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                        <div class="fc-item__video-container">
-                            @video(player)
-                        </div>
+                    <div data-id="@videoElement.id" class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote fc-item__video-container js-video-player">
+                        @video(player)
                     </div>
                 @fallback.map { fallbackImage =>
-                    <div class="fc-item__video-fallback">
+                    <div data-id="@videoElement.id" class="fc-item__video-fallback u-faux-block-link__promote js-video-placeholder">
                         @image(
                             fallbackImage.imageContainer,
                             inlineImage = containerIndex == 0 && index < 4

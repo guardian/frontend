@@ -5,7 +5,7 @@ sealed trait CardType {
 
   def showVideoPlayer = this match {
     case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 => true
-    case _ => false
+    case _ => canShowMedia
   }
 
   def showCutOut = this match {

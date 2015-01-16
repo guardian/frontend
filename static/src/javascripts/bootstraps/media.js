@@ -372,119 +372,135 @@ define([
         videojs.plugin('adSkipCountdown', adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
-        $('.js-gu-media').each(function (el) {
-            var mediaType = el.tagName.toLowerCase(),
-                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
-                mediaId = $el.attr('data-media-id'),
-                blockVideoAds = $el.attr('data-block-video-ads') === 'true',
-                showEndSlate = $el.attr('data-show-end-slate') === 'true',
-                endSlateUri = $el.attr('data-end-slate'),
-                embedPath = $el.attr('data-embed-path'),
-                techPriority = techOrder(el),
-                player,
-                mouseMoveIdle;
+        $('.js-video-placeholder').each(function (el) { //js-gu-media
+            // TODO add the play button with hover
+            console.log("found a placeholder", el);
+            bean.on(el, "click", function (e) {
+                // show the container with the same data-id as us
+                console.log("woo");
+                bonzo(el).addClass('fc-item__video-fallback-hidden');
+                bonzo(el).removeClass('fc-item__video-fallback');
+                var dataId = bonzo(el).attr('data-id');
+                var player = $('.js-video-player[data-id="' + dataId + '"]');
+                player.addClass('fc-item__video-container-active');
+                player.removeClass('fc-item__video-container');
+                enhanceVideo($('video[data-media-id="' + dataId + '"]', player).get(0));
+            });
+        });
+    }
 
-            if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
+    function enhanceVideo(el) {
+        var mediaType = el.tagName.toLowerCase(),
+            $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+            mediaId = $el.attr('data-media-id'),
+            blockVideoAds = $el.attr('data-block-video-ads') === 'true',
+            showEndSlate = $el.attr('data-show-end-slate') === 'true',
+            endSlateUri = $el.attr('data-end-slate'),
+            embedPath = $el.attr('data-embed-path'),
+            techPriority = techOrder(el),
+            player,
+            mouseMoveIdle;
 
-                // clone the video options and add 'vpaid' to them.
-                techPriority = ['vpaid'].concat(techPriority);
+        if (config.page.videoJsVpaidSwf && config.switches.vpaidAdverts) {
 
-                videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
+            // clone the video options and add 'vpaid' to them.
+            techPriority = ['vpaid'].concat(techPriority);
+
+            videojs.options.vpaid = {swf: config.page.videoJsVpaidSwf};
+        }
+
+        player = createVideoPlayer(el, {
+            techOrder: techPriority,
+            controls: true,
+            autoplay: true,
+            preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
+            plugins: {
+                embed: {
+                    embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
+                    location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                }
+            }
+        });
+
+        // Location of this is important.
+        bindErrorHandler(player);
+
+        player.guMediaType = mediaType;
+
+        player.ready(function () {
+            var vol;
+
+            initLoadingSpinner(player);
+            bindGlobalEvents(player);
+            upgradeVideoPlayerAccessibility(player);
+            supportedBrowsers(player);
+
+            player.one('playing', function (e) {
+                if (isFlash(e)) {
+                    beacon.counts('video-tech-flash');
+                } else {
+                    beacon.counts('video-tech-html5');
+                }
+            });
+
+            // unglitching the volume on first load
+            vol = player.volume();
+            if (vol) {
+                player.volume(0);
+                player.volume(vol);
             }
 
-            player = createVideoPlayer(el, {
-                techOrder: techPriority,
-                controls: true,
-                autoplay: false,
-                preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
-                plugins: {
-                    embed: {
-                        embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
-                        location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
-                    }
-                }
-            });
+            player.persistvolume({namespace: 'gu.vjs'});
 
-            // Location of this is important.
-            bindErrorHandler(player);
+            deferToAnalytics(function () {
 
-            player.guMediaType = mediaType;
+                initOmnitureTracking(player);
+                initOphanTracking(player, mediaId);
 
-            player.ready(function () {
-                var vol;
+                // preroll for videos only
+                if (mediaType === 'video') {
 
-                initLoadingSpinner(player);
-                bindGlobalEvents(player);
-                upgradeVideoPlayerAccessibility(player);
-                supportedBrowsers(player);
+                    player.fullscreener();
 
-                player.one('playing', function (e) {
-                    if (isFlash(e)) {
-                        beacon.counts('video-tech-flash');
-                    } else {
-                        beacon.counts('video-tech-html5');
-                    }
-                });
+                    // Init plugins
+                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+                        bindPrerollEvents(player);
+                        player.adCountdown();
+                        player.adSkipCountdown(15);
 
-                // unglitching the volume on first load
-                vol = player.volume();
-                if (vol) {
-                    player.volume(0);
-                    player.volume(vol);
-                }
+                        // Video analytics event.
+                        player.trigger(constructEventName('preroll:request', player));
 
-                player.persistvolume({namespace: 'gu.vjs'});
-
-                deferToAnalytics(function () {
-
-                    initOmnitureTracking(player);
-                    initOphanTracking(player, mediaId);
-
-                    // preroll for videos only
-                    if (mediaType === 'video') {
-
-                        player.fullscreener();
-
-                        // Init plugins
-                        if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
-                            bindPrerollEvents(player);
-                            player.adCountdown();
-                            player.adSkipCountdown(15);
-
-                            // Video analytics event.
-                            player.trigger(constructEventName('preroll:request', player));
-
-                            player.ads({
-                                timeout: 3000
-                            });
-                            player.vast({
-                                url: getVastUrl()
-                            });
-                        } else {
-                            bindContentEvents(player);
-                        }
-
-                        if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                            initEndSlate(player, endSlateUri);
-                        }
-                    } else {
-                        player.playlist({
-                            mediaType: 'audio',
-                            continuous: false
+                        player.ads({
+                            timeout: 3000
                         });
-
+                        player.vast({
+                            url: getVastUrl()
+                        });
+                    } else {
                         bindContentEvents(player);
                     }
-                });
-            });
 
-            mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
+                    }
+                } else {
+                    player.playlist({
+                        mediaType: 'audio',
+                        continuous: false
+                    });
 
-            // built in vjs-user-active is buggy so using custom implementation
-            player.on('mousemove', function () {
-                player.addClass('vjs-mousemoved');
-                mouseMoveIdle();
+                    bindContentEvents(player);
+                }
             });
+        });
+
+        mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+
+        // built in vjs-user-active is buggy so using custom implementation
+        player.on('mousemove', function () {
+            player.addClass('vjs-mousemoved');
+            mouseMoveIdle();
         });
     }
 

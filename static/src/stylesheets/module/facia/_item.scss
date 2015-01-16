@@ -206,10 +206,15 @@ $fc-item-gutter: $gs-gutter / 4;
     background-color: rgba(0, 0, 0, .1);
 }
 
-.fc-item__image-container,
-.fc-item__video-fallback {
+.fc-item__image-container {
     display: none;
 }
+
+.fc-item__video-container { display: none; }
+.fc-item__video-fallback { display: block; }
+
+.fc-item__video-container-active { display: block; }
+.fc-item__video-fallback-hidden { display: none; }
 
 .fc-item__live-indicator {
     color: colour(live-default);
