@@ -23,8 +23,8 @@ define([
     viewTags,
     viewMegaNav
 ) {
-    var whitelistRx = new RegExp(/^football\/[^\/]+/),
-        whitelist = [
+    var whitelist = [
+            // R2 etc
             'audioslideshows', 'business/economics', 'business/interest-rates', 'business/markets', 'business/series/andrewclarkonamerica',
             'business/series/davidgowoneurope', 'business/series/viewpointcolumn', 'business/useconomy', 'careers', 'cartoons', 'community',
             'crosswords', 'crosswords/series/cryptic', 'crosswords/series/everyman', 'crosswords/series/prize', 'crosswords/series/quick',
@@ -41,9 +41,34 @@ define([
             'society/social-care', 'society/voluntarysector', 'technology', 'technology/askjack', 'technology/comment', 'technology/gadgets',
             'technology/games', 'technology/internet', 'technology/it', 'technology/news', 'technology/telecoms', 'theguardian/mainsection/obituaries',
             'theguardian/series/otherlives', 'travel', 'travel/bookatrip', 'travel/hotels', 'travel/lateoffers', 'travel/places', 'travel/restaurants',
-            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly'
-        ],
-        subNav = [
+            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly', 'lifeandstyle/series/sudoku', 'news/series/the-daily-quiz',
+
+            // teams
+            'football/arsenal', 'football/aston-villa', 'football/burnley', 'football/crystalpalace', 'football/chelsea', 'football/everton', 'football/hullcity',
+            'football/leicestercity', 'football/liverpool', 'football/manchestercity', 'football/manchester-united', 'football/newcastleunited', 'football/qpr',
+            'football/southampton', 'football/stokecity', 'football/sunderland', 'football/swansea', 'football/tottenham-hotspur', 'football/westbrom',
+            'football/westhamunited', 'football/birminghamcityfc', 'football/blackburn', 'football/blackpool', 'football/boltonwanderers', 'football/bournemouth',
+            'football/brentford', 'football/brightonfootball', 'football/cardiffcity', 'football/charltonathletic', 'football/derbycounty', 'football/fulham',
+            'football/huddersfield', 'football/ipswichtown', 'football/leedsunited', 'football/middlesbrough', 'football/millwall', 'football/norwichcity',
+            'football/nottinghamforest', 'football/reading', 'football/rotherham', 'football/sheffieldwednesday', 'football/watford', 'football/wiganathletic',
+            'football/wolves', 'football/aberdeen', 'football/celtic', 'football/dundee', 'football/dundeeunited', 'football/hamilton', 'football/invernesscaledonianthistle',
+            'football/kilmarnock', 'football/motherwell', 'football/partick', 'football/rosscounty', 'football/stjohnstone', 'football/stmirren', 'football/laligafootball',
+            'football/almeria', 'football/athleticbilbao', 'football/atleticomadrid', 'football/barcelona', 'football/celtavigo', 'football/deportivo-la-coruna', 'football/eibar',
+            'football/elche-cf', 'football/espanyol', 'football/getafe', 'football/granada74', 'football/levante', 'football/malaga', 'football/rayo-vallecano', 'football/realmadrid',
+            'football/realsociedad', 'football/sevilla', 'football/valencia', 'football/villarreal',
+
+            // cometitions
+            'football/premierleague', 'football/fa-cup', 'football/championship', 'football/leagueonefootball', 'football/leaguetwofootball', 'football/capital-one-cup',
+            'football/championsleague', 'football/uefa-europa-league', 'football/laligafootball', 'football/ligue1football', 'football/bundesligafootball', 'football/serieafootball',
+            'football/mls', 'football/a-league', 'football/scottish-premiership', 'football/scottishcup', 'football/cis-insurance-cup', 'football/scottish-championship',
+            'football/scottish-league-one', 'football/scottish-league-two', 'football/euro-2016-qualifiers', 'football/friendlies', 'football/copa-america', 'football/africannationscup',
+            'football/world-cup-2018', 'football/world-cup-2014',
+
+            // football links
+            'football/competitions', 'football/fixtures', 'football/live', 'football/results', 'football/tables', 'football/teams', 'football/series/thefiver',
+            'football/series/rumourmill', 'football/transfer-window',
+
+            // NG subnav
             'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'crosswords', 'education',
             'education/students', 'fashion', 'film', 'football/competitions', 'football/fixtures', 'football/live', 'football/results',
             'football/tables', 'football/teams', 'global-development', 'lifeandstyle', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
@@ -170,14 +195,12 @@ define([
     function getPopular(number, filtered) {
         var tags = getSummary().tags,
             tids = _.keys(tags),
-            wList,
-            bList;
+            blacklist;
 
         if (filtered) {
-            wList = whitelist.concat(subNav);
-            bList = getTopNavItems();
-            tids = tids.filter(function (tid) { return tid.match(whitelistRx) || wList.indexOf(tid) > -1; });
-            tids = tids.filter(function (tid) { return bList.indexOf(tid) === -1; });
+            blacklist = getTopNavItems();
+            tids = tids.filter(function (tid) { return whitelist.indexOf(tid) > -1; });
+            tids = tids.filter(function (tid) { return blacklist.indexOf(tid) === -1; });
         }
 
         return _.chain(tids)
