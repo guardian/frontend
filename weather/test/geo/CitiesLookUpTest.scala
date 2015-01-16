@@ -12,4 +12,8 @@ class CitiesLookUpTest extends FlatSpec with Matchers {
       -0.1167
     ))
   }
+
+  "cache" should "parse all of the lines in the CSV" in {
+    CitiesLookUp.getCsvLines.count(_.country != "") shouldEqual CitiesLookUp.getGeoIPCityInputStream.getLines().length - 2
+  }
 }

@@ -56,19 +56,27 @@ case class CitiesCsvLine(
 )
 
 object CitiesLookUp extends ResourcesHelper {
-  def loadCache() = {
-    val cache = Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "iso-8859-1")
+  private [geo] def getGeoIPCityInputStream = {
+    Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "iso-8859-1")
+  }
 
+  private[geo] def getCsvLines = {
+    val csv = getGeoIPCityInputStream
+    csv.getLines().drop(2) collect { case CitiesCsvLine(csvLine) => csvLine }
+  }
+
+  def loadCache() = {
     // first two lines are Copyright info and field names
-    (cache.getLines().drop(2) collect {
-      case CitiesCsvLine(csvLine) if !csvLine.country.isEmpty && !csvLine.city.isEmpty =>
-        CityRef(csvLine.city, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
+    getCsvLines.filter({ csvLine =>
+      !csvLine.country.isEmpty && !csvLine.city.isEmpty
+    }).map({ csvLine =>
+      CityRef(csvLine.city, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
     }).foldLeft(Map.empty[CityRef, LatitudeLongitude]) {
       case (acc, kv) => acc + kv
     }
   }
 
-  private val cache = loadCache()
+  private[geo] val cache = loadCache()
 
   def getLatitudeLongitude(reference: CityRef): Option[LatitudeLongitude] = cache.get(reference)
 }
