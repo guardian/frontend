@@ -14,7 +14,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
-    'facia/modules/ui/snaps',
+    'facia/modules/ui/snaps'
 ], function (
     bonzo,
     qwery,
@@ -81,6 +81,8 @@ define([
             // temporary to check an 'older' iphone perf problem
             iPhoneConfidenceCheck: function () {
                 if (config.switches.iphoneConfidence) {
+                    /* jshint undef: true */
+                    /* global guardian */
                     mediator.on('page:front:ready', function () {
                         if (guardian.isIphone6) {
                             beacon.counts('iphone-6-end');
