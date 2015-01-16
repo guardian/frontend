@@ -24,8 +24,7 @@ define([
             url: '/business-data/stocks.json',
             type: 'json',
             method: 'get',
-            crossOrigin: true,
-            success: onSuccess
+            crossOrigin: true
         });
     }
 
