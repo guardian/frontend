@@ -218,7 +218,7 @@ define([
         },
 
         renderForecast: function (forecastData) {
-            var $forecastHolder = $('.js-weather-forecast'),
+            var $forecastHolder = $('.js-weather-forecasts'),
                 $forecast = null;
 
             $forecastHolder.empty();
