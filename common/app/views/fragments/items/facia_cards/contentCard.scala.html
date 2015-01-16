@@ -8,6 +8,7 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import layout.LatestSnap
+@import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -15,7 +16,6 @@
         data-discussion-id="@id"
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
-        data-discussion-inline-upgrade="true"
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
@@ -30,7 +30,7 @@ data-test-id="facia-card"
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
-        @item.displayElement match {
+        @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
                     videoElement,
@@ -97,7 +97,7 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.map { text =>
+        @item.trailText.filter(const(item.showStandfirst)).map { text =>
             <div class="fc-item__standfirst">@Html(text)</div>
         }
 

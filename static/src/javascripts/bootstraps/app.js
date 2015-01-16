@@ -115,6 +115,12 @@ define([
                 });
             }
 
+            if (config.page.pageId === 'preferences') {
+                require(['bootstraps/preferences'], function (preferences) {
+                    bootstrapContext('preferences', preferences);
+                });
+            }
+
             // Mark the end of synchronous execution.
             userTiming.mark('App End');
         };

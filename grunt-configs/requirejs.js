@@ -102,6 +102,17 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        preferences: {
+            options: {
+                name: 'bootstraps/preferences',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preferences.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
         identity: {
             options: {
                 name: 'bootstraps/membership',
@@ -126,7 +137,7 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
                     imager: {
-                        deps: ['common/components/imager.js/imager'],
+                        deps: ['components/imager.js/imager'],
                         exports: 'Imager'
                     },
                     omniture: {

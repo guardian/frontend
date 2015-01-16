@@ -1,7 +1,7 @@
 package model
 
 import commercial.TravelOffersCacheJob
-import common.{AkkaAsync, Jobs}
+import common.{Logging, AkkaAsync, Jobs}
 import conf.Configuration
 import conf.Configuration.environment
 import football.feed.MatchDayRecorder
@@ -10,7 +10,7 @@ import play.api.GlobalSettings
 import services.EmailService
 import tools.{CloudWatch, LoadBalancer}
 
-trait AdminLifecycle extends GlobalSettings {
+trait AdminLifecycle extends GlobalSettings with Logging {
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
@@ -71,6 +71,10 @@ trait AdminLifecycle extends GlobalSettings {
       Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
         AdsStatusEmailJob.run()
       }
+      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI") {
+        log.info(s"Starting ExpiringAdFeaturesEmailJob")
+        ExpiringAdFeaturesEmailJob.run()
+      }
     }
 
   }
@@ -90,6 +94,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
     Jobs.deschedule("AdsStatusEmailJob")
+    Jobs.deschedule("ExpiringAdFeaturesEmailJob")
   }
 
   override def onStart(app: play.api.Application) {

@@ -27,6 +27,7 @@
     "grunt-px-to-rem": "0.3.1",
     "grunt-scss-lint": "0.3.3",
     "grunt-shell": "1.1.1",
+    "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
     "handlebars": "2.0.0",

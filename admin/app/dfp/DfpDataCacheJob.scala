@@ -17,7 +17,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       val data = loadLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
-      if (data.isValid) write(data)
+      write(data)
     }
     else log.info("DFP caching switched off")
   }
@@ -47,21 +47,23 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   }
 
   private def write(data: DfpDataExtractor): Unit = {
-    val now = printLondonTime(DateTime.now())
+    if (data.isValid) {
+      val now = printLondonTime(DateTime.now())
 
-    val paidForTags = PaidForTag.fromLineItems(data.lineItems)
-    CapiLookupAgent.refresh(paidForTags)
-    Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
+      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
+      CapiLookupAgent.refresh(paidForTags)
+      Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
-    val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-    Store.putInlineMerchandisingSponsorships(stringify(toJson(
-      InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
+      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+      Store.putInlineMerchandisingSponsorships(stringify(toJson(
+        InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
-    val pageSkinSponsorships = data.pageSkinSponsorships
-    Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
-      pageSkinSponsorships))))
+      val pageSkinSponsorships = data.pageSkinSponsorships
+      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
+        pageSkinSponsorships))))
 
-    Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
+    }
   }
 
 }

@@ -1,12 +1,10 @@
 define([
     'bonzo',
-    'lodash/functions/once',
     'common/utils/$',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
-    once,
     $,
     config,
     createAdSlot

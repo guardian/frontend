@@ -57,7 +57,7 @@ define([
 
         it("should append comment counts to DOM", function (done) {
             mediator.once('modules:commentcount:loaded', function () {
-                expect(qwery('.trail__count--commentcount').length).toBe(3);
+                expect(qwery('.fc-trail__count--commentcount').length).toBe(3);
                 done();
             });
 
