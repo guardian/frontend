@@ -3,13 +3,13 @@ define([
     'qwery',
     // Common libraries
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
+    'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
@@ -18,12 +18,12 @@ define([
     bonzo,
     qwery,
     $,
-    ajax,
     config,
     detect,
     mediator,
     storage,
     toArray,
+    stocks,
     GeoMostPopularFront,
     ContainerToggle,
     ContainerShowMore,
@@ -84,6 +84,7 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
+                stocks();
             }
             mediator.emit('page:front:ready');
         };

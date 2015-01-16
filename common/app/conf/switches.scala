@@ -305,6 +305,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val CssLogging = Switch("Monitoring", "css-logging",
+    "If this is on, then a subset of clients will post css selector information for diagnostics.",
+    safeState = On, new LocalDate(2015, 2, 28)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -470,6 +475,11 @@ object Switches {
   val CricketScoresSwitch = Switch("Feature", "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off, sellByDate = never
+  )
+
+  val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
+    "If switched on, a stocks widget will be displayed on the business front",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
   // Facia
