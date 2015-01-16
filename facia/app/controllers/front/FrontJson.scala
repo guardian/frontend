@@ -112,6 +112,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       editorsPicks=editorsPicks,
       mostViewed=mostViewed,
       results=results,
+      treats=Nil,
       displayName=displayName,
       href=href,
       lastUpdated=lastUpdated,

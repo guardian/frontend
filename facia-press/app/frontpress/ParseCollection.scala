@@ -80,6 +80,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getArticles(items, edition)
     }
 
+    val treatsFuture: Future[Seq[Content]] = collection.flatMap { collectionOption =>
+      val items: Seq[Trail] =
+        collectionOption.flatMap(_.treats).getOrElse(Nil)
+      getArticles(items, edition)
+    }
+
     val executeDraftContentApiQuery: Future[Result] =
       config.apiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
 
@@ -87,11 +93,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       executeRequest <- executeDraftContentApiQuery
       curatedRequest <- curatedItems
       collectionOption <- collection
+      treats <- treatsFuture
     } yield Collection(
       curated = curatedRequest,
       editorsPicks = executeRequest.editorsPicks.map(makeContent),
       mostViewed = executeRequest.mostViewed.map(makeContent),
       results = executeRequest.contentApiResults.map(makeContent),
+      treats = treats,
       displayName = collectionOption.flatMap(_.displayName),
       href = collectionOption.flatMap(_.href),
       lastUpdated = collectionOption.map(_.lastUpdated.toString()),
