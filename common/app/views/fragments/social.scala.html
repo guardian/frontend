@@ -10,7 +10,7 @@
                 title="@item.text">
                 <span class="u-h">@item.userMessage</span>
                 <span class="rounded-icon social-icon social-icon--@item.css">
-                    <i class="i-share-@item.css--white i"></i>
+                    @fragments.inlineSvg("share-" + item.css, "icon")
                 </span>
             </a>
         </li>
