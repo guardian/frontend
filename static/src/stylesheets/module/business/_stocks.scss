@@ -1,6 +1,5 @@
 $stocks-icon-width: 14px;
 $stocks-icon-height: 10px;
-$closed-colour: #767676;
 
 .stocks__stocks-container {
     @include clearfix;
@@ -112,7 +111,7 @@ $closed-colour: #767676;
 
 .stocks__closed,
 .stocks__closed--inline {
-    color: $closed-colour;
+    color: guss-colour(neutral-2, $pasteup-palette);
 }
 
 .stocks__closed {
