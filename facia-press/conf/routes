@@ -2,5 +2,4 @@ GET        /_healthcheck        conf.HealthCheck.healthcheck()
 GET        /                    controllers.Application.index
 GET        /debug/config        controllers.Application.showCurrentConfig
 
-GET        /pressed/draft/*id      controllers.Application.generateDraftPressedFor(id)
 GET        /pressed/live/*id      controllers.Application.generateLivePressedFor(id)
