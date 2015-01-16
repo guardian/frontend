@@ -19,8 +19,8 @@ define([
         return config.page.pageId === config.page.edition.toLowerCase() + '/business';
     }
 
-    function getStocksData(onSuccess) {
-        ajax({
+    function getStocksData() {
+        return ajax({
             url: '/business-data/stocks.json',
             type: 'json',
             method: 'get',
@@ -52,7 +52,7 @@ define([
         if (isBusinessFront()) {
             var $container = $('.js-container--first .js-container__header');
 
-            getStocksData(function (data) {
+            getStocksData().then(function (data) {
                 if (data.stocks.length > 0) {
                     $container.append(renderData(data));
                 }
