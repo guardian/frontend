@@ -1005,8 +1005,18 @@ select {
     color: #DD4B39;
 }
 
-.length--alert textarea.active {
+.attention .length--alert textarea.active {
     background-color: #FFCDD2;
+}
+
+.editor__alert__message {
+    margin-left: 4px;
+    color: #DD4B39;
+    display: none;
+}
+
+.attention .length--alert .editor__alert__message {
+    display: inline;
 }
 
 .editor__length {
@@ -1740,7 +1750,9 @@ collection-widget > div {
 }
 .attention .performances,
 .attention .modes .live-mode,
-.attention .preview {
+.attention .preview,
+.attention .tool--small--ophan,
+.attention .time__publication {
     display: none;
 }
 
