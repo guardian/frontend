@@ -1,5 +1,6 @@
 define([
     'omniture',
+    'lodash/collections/map',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -13,6 +14,7 @@ define([
     'common/modules/identity/api'
 ], function (
     s,
+    map,
     config,
     cookies,
     detect,
@@ -186,7 +188,7 @@ define([
             s.prop51  = mvt;
             s.eVar51  = mvt;
 
-            s.list3 = history.getPopularFiltered().map(function (tagTuple) { return tagTuple[1]; }).join(',');
+            s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
             if (guShift) {
                 shiftValue = 'gu_shift,' + guShift + ',';
