@@ -130,7 +130,7 @@ define([
         fetchForecastData: function (location) {
             return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    self.renderForecast(self.parseForecast(response));
+                    self.renderForecast(response);
                 }).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
                         tags: {
@@ -187,10 +187,6 @@ define([
             searchTool.init();
         },
 
-        parseForecast: function (forecastData) {
-            return _.chain(forecastData).filter(function (item, index) { return index % 3 === 0; }).rest().value();
-        },
-
         render: function (weatherData, city) {
             $weather = $('.weather');
             $holder = $('.js-weather');
@@ -224,6 +220,8 @@ define([
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecast'),
                 $forecast = null;
+
+            $forecastHolder.empty();
 
             for (i in forecastData) {
                 $forecast = $.create(template(forecastTemplate, {
