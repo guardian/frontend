@@ -127,65 +127,17 @@ define([
                 });
         },
 
-        fetchForecastData: function (/*location*/) {
-            /*return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+        fetchForecastData: function (location) {
+            return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    self.renderForecast(self.parseForecast(response[0]));
+                    self.renderForecast(self.parseForecast(response));
                 }).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                });*/
-
-            var response = [
-                {
-                    'DateTime': '2015-01-15T03:00:00+00:00',
-                    'EpochDateTime': 1421420400,
-                    'WeatherIcon': 36,
-                    'IconPhrase': 'Intermittent clouds',
-                    'IsDaylight': false,
-                    'Temperature': {
-                        'Value': 48,
-                        'Unit': 'C',
-                        'UnitType': 18
-                    },
-                    'PrecipitationProbability': 20,
-                    'MobileLink': 'http://m.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=17&lang=en-us',
-                    'Link': 'http://www.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=17&lang=en-us'
-                },
-                {
-                'DateTime': '2015-01-15T06:00:00+00:00',
-                'EpochDateTime': 1421344800,
-                'WeatherIcon': 36,
-                'IconPhrase': 'Intermittent clouds',
-                'IsDaylight': false,
-                'Temperature': {
-                    'Value': 47,
-                    'Unit': 'C',
-                    'UnitType': 18
-                    },
-                'PrecipitationProbability': 13,
-                'MobileLink': 'http://m.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=18&lang=en-us',
-                'Link': 'http://www.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=18&lang=en-us'
-                },
-                {
-                'DateTime': '2015-01-15T09:00:00+00:00',
-                'EpochDateTime': 1421355600,
-                'WeatherIcon': 36,
-                'IconPhrase': 'Intermittent clouds',
-                'IsDaylight': false,
-                'Temperature': {
-                    'Value': 45,
-                    'Unit': 'C',
-                    'UnitType': 18
-                    },
-                'PrecipitationProbability': 0,
-                'MobileLink': 'http://m.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=19&lang=en-us',
-                'Link': 'http://www.accuweather.com/en/gb/london/ec4a-2/hourly-weather-forecast/328328?day=1&hbhhour=19&lang=en-us'
-                }
-            ];
+                });
 
             self.renderForecast(response);
         },
@@ -197,7 +149,7 @@ define([
             bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
-            mediator.on('autocomplete:fetch', this.fetchData);
+            mediator.on('autocomplete:fetch', this.fetchWeatherData);
         },
 
         toggleControls: function (value) {
@@ -273,22 +225,16 @@ define([
             var $forecastHolder = $('.js-weather-forecast'),
                 $forecast = null;
 
-            $forecast = $.create(template(forecastTemplate, {
-                'forecast-time-3': new Date(forecastData[0].EpochDateTime * 1000).getHours(),
-                'forecast-temp-3': forecastData[0].Temperature.Value + '°' + forecastData[0].Temperature.Unit,
-                'forecast-icon-3': forecastData[0].WeatherIcon,
-                'forecast-desc-3': forecastData[0].IconPhrase,
-                'forecast-time-6': new Date(forecastData[1].EpochDateTime * 1000).getHours(),
-                'forecast-temp-6': forecastData[1].Temperature.Value + '°' + forecastData[0].Temperature.Unit,
-                'forecast-icon-6': forecastData[1].WeatherIcon,
-                'forecast-desc-6': forecastData[1].IconPhrase,
-                'forecast-time-9': new Date(forecastData[2].EpochDateTime * 1000).getHours(),
-                'forecast-temp-9': forecastData[2].Temperature.Value + '°' + forecastData[0].Temperature.Unit,
-                'forecast-icon-9': forecastData[2].WeatherIcon,
-                'forecast-desc-9': forecastData[2].IconPhrase
-            }));
+            for (i in forecastData) {
+                $forecast = $.create(template(forecastTemplate, {
+                        'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
+                        'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
+                        'forecast-icon': forecastData[i].WeatherIcon,
+                        'forecast-desc': forecastData[i].IconPhrase,
+                    }));
 
-            $forecast.appendTo($forecastHolder);
+               $forecast.appendTo($forecastHolder);
+            }
         }
     };
 });
