@@ -81,6 +81,7 @@ object GetClasses {
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
       ("fc-container--first", isFirst),
+      ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
