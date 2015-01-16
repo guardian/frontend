@@ -16,7 +16,7 @@ define([
     stocksTemplate
 ) {
     function isBusinessFront() {
-        return config.page.pageId === config.page.edition.toLowerCase() + '/business';
+        return _.contains(['uk/business', 'us/business', 'au/business'], config.page.pageId);
     }
 
     function getStocksData() {
