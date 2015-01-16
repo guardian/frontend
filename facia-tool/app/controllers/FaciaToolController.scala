@@ -78,14 +78,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     request.body.asJson.flatMap(_.asOpt[FaciaToolUpdate]).map {
       case update: Update =>
         val identity = request.user
-
-        FaciaJsonClient.client.collection(collectionId).map(_.map{ collectionJson =>
-          val updatedCollectionJson = UpdateActions.updateTreats(update.update, collectionJson)
+        UpdateActions.updateTreats(collectionId, update.update, identity).map(_.map{ updatedCollectionJson =>
           S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
           Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
         }.getOrElse(NotFound))
 
-      case remove: Remove => Future.successful(NotImplemented)
+      case remove: Remove =>
+        val identity = request.user
+        UpdateActions.removeTreats(collectionId, remove.remove, identity).map(_.map{ updatedCollectionJson =>
+        S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
+        Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
+      }.getOrElse(NotFound))
       case updateAndRemove: UpdateAndRemove => Future.successful(NotImplemented)
       case _ => Future.successful(NotAcceptable)
     }.getOrElse(Future.successful(NotAcceptable))

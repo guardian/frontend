@@ -255,10 +255,32 @@ trait UpdateActions extends Logging with ExecutionContexts {
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 
-  def updateTreats(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
-    val updatedTreats = updateList(update, collectionJson.treats.getOrElse(Nil))
-    collectionJson.copy(treats = Option(updatedTreats))
-  }
+  def updateTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(updateTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putBlock(collectionId, _))}}
+
+  def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(removeFromTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putBlock(collectionId, _))}}
+
+  private def updateTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = updateList(update,collectionJson.treats.getOrElse(Nil))
+    collectionJson.copy(treats = Option(updatedTreats))}
+
+  private def removeFromTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = collectionJson.treats.map(_.filterNot(_.id == update.item))
+    collectionJson.copy(treats = updatedTreats)}
+
 }
 
 object UpdateActions extends UpdateActions
