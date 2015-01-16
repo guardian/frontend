@@ -2,7 +2,7 @@ package weather
 
 import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
-import models.{LocationResponse, CityId}
+import models.{ForecastResponse, LocationResponse, CityId}
 import play.api.Play
 import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WS
@@ -45,6 +45,8 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   def getWeatherForCityId(cityId: CityId): Future[JsValue] =
     getJson(cityLookUp(cityId))
 
-  def getForecastForCityId(cityId: CityId): Future[JsValue] =
-    getJson(forecastLookUp(cityId))
+  def getForecastForCityId(cityId: CityId): Future[Seq[ForecastResponse]] =
+    getJson(forecastLookUp(cityId)).map({ r =>
+      Json.fromJson[Seq[ForecastResponse]](r).get
+    })
 }
