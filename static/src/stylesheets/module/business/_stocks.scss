@@ -37,41 +37,27 @@ $stocks-icon-height: 10px;
     margin-right: 3px;
 }
 
-.stocks__stock-value--negative {
-    .stocks__change {
-        color: colour(status-negative);
+@mixin stock($change, $colour, $icon) {
+    .stocks__stock-value--#{change} {
+        .stocks__change {
+            color: colour($colour);
 
-        &:before {
-            @include icon(market-down, false);
+            &:before {
+                @include icon($icon, false);
+            }
         }
     }
 }
 
-.stocks__stock-value--positive {
-    .stocks__change {
-        color: colour(status-positive);
-
-        &:before {
-            @include icon(market-up, false);
-        }
-    }
-}
-
-.stocks__stock-value--level {
-    .stocks__change {
-        color: colour(status-neutral);
-
-        &:before {
-            @include icon(market-same, false);
-        }
-    }
-}
+@include stock('positive', status-positive, market-up);
+@include stock('negative', status-negative, market-down);
+@include stock('level', status-neutral, market-same);
 
 .stocks__stock-value {
     display: table-cell;
     padding-left: 6px;
     padding-right: $gs-gutter;
-    min-width: 160px;
+    min-width: gs-span(2) + $gs-gutter;
     border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
 
     @include mq(leftCol) {

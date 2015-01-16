@@ -48,9 +48,9 @@ define([
     }
 
     return function () {
-        if (isBusinessFront()) {
-            var $container = $('.js-container--first .js-container__header');
+        var $container = $('.js-container--first .js-container__header');
 
+        if (isBusinessFront() && $container) {
             getStocksData().then(function (data) {
                 if (data.stocks.length > 0) {
                     $container.append(renderData(data));
