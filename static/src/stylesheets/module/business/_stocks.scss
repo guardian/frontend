@@ -149,7 +149,16 @@ $stocks-icon-height: 10px;
     font-weight: 600;
 }
 
-.stocks__name,
-.stocks__price {
-    margin-bottom: -4px;
+.stocks__price,
+.stocks__change,
+.stocks__closed {
+    @include mq(leftCol) {
+        margin-top: -4px;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-top: 0;
+        }
+    }
 }
