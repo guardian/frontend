@@ -2,11 +2,11 @@ package tools
 
 import com.gu.facia.client.models.{CollectionJson, ConfigJson}
 import com.gu.googleauth.UserIdentity
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import fronts.FrontsApi
 import frontsapi.model.CollectionJsonFunctions
 import org.joda.time.DateTime
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json._
 import services.{FaciaJsonClient, S3FrontsApi}
 
 import scala.concurrent.Future
@@ -24,7 +24,7 @@ trait FaciaApiWrite {
   def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: UserIdentity): Unit
 }
 
-object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts {
+object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts with Logging {
 
   def getSchema = S3FrontsApi.getSchema
 
@@ -48,10 +48,10 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
   def discardCollectionJson(id: String, identity: UserIdentity) = mutateCollectionJson(FaciaApi.prepareDiscardCollectionJson)(id, identity)
 
   def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: UserIdentity): Unit = {
-    //TODO: Mix in diff
-    val newCollectionJson: CollectionJson = collectionJson //.copy(diff = Some(update))
-    S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newCollectionJson)), identity)
-  }
+    Json.toJson(collectionJson).transform[JsObject](Reads.JsObjectReads) match {
+      case JsSuccess(result, _) =>
+        S3FrontsApi.archive(id, Json.prettyPrint(result + ("diff", update)), identity)
+      case JsError(errors)  => log.warn(s"Could not archive $id: 4errors")}}
 
   def putMasterConfig(config: ConfigJson): Option[ConfigJson] = {
     Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
