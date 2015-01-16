@@ -179,3 +179,24 @@
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
+
+@* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+@* also delete iPhoneConfidenceCheck inside of facia.js *@
+@if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+    @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
+    <script>
+        if (navigator.platform === 'iPhone' || navigator.platform === 'MacIntel') {
+
+            guardian.isIphone6 = (screen.width === 375 && screen.height === 667) || (screen.width === 375 && screen.height === 667);
+            guardian.isIphone4 = screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1;
+
+            if (guardian.isIphone6) {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-6-start.gif';
+            }
+
+            if (guardian.isIphone4) {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start.gif';
+            }
+        }
+    </script>
+}

@@ -8,12 +8,13 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/to-array',
+    'common/modules/analytics/beacon',
     // Modules
     'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
-    'facia/modules/ui/snaps'
+    'facia/modules/ui/snaps',
 ], function (
     bonzo,
     qwery,
@@ -23,6 +24,7 @@ define([
     mediator,
     storage,
     toArray,
+    beacon,
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
@@ -74,6 +76,20 @@ define([
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
+            },
+
+            // temporary to check an 'older' iphone perf problem
+            iPhoneConfidenceCheck: function () {
+                if (config.switches.iphoneConfidence) {
+                    mediator.on('page:front:ready', function () {
+                        if (guardian.isIphone6) {
+                            beacon.counts('iphone-6-end');
+                        }
+                        if (guardian.isIphone4) {
+                            beacon.counts('iphone-4-end');
+                        }
+                    });
+                }
             }
         },
 
@@ -85,6 +101,7 @@ define([
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
                 stocks();
+                modules.iPhoneConfidenceCheck();
             }
             mediator.emit('page:front:ready');
         };
