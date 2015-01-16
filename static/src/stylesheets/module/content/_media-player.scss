@@ -966,14 +966,15 @@ $vjs-height-ratio: 7/3;
 }
 #ima-mute-div {
     position: absolute;
-    left: 74%;
+    right: 159px;
+    width: 17px !important;
 }
 #ima-fullscreen-div {
     cursor: pointer;
     float: right;
     margin: 14px;
-    width: 22px !important;
-    height: 22px !important;
+    width: 20px !important;
+    height: 20px !important;
     @include icon(expand-white);
 
     &:hover {
