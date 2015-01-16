@@ -228,13 +228,11 @@ define([
             remove: {
                 collection: this,
                 item:       item.id(),
-                live:       front.liveMode(),
-                draft:     !front.liveMode(),
-                mode:       front.mode
+                mode:       front.mode()
             }
         })
         .then(function() {
-            if (front.liveMode()) {
+            if (front.mode() === 'live') {
                 mediator.emit('presser:detectfailures', front.front());
             }
         });
@@ -277,6 +275,11 @@ define([
             return _.some(group.items(), function(article) { return article.state.isOpen(); });
         });
     };
+
+    Collection.prototype.isHistoryEnabled = function () {
+        return this.front.mode() !== 'treats' && this.history().length;
+    };
+
 
     Collection.prototype.populate = function(rawCollection) {
         var self = this,

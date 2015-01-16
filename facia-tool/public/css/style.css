@@ -655,11 +655,9 @@ h1 {
 .live-mode .modes {
     border-bottom-color: #46c430;
 }
-
 .draft-mode .modes {
     border-bottom-color: #ffc107;
 }
-
 .treats-mode .modes {
     border-bottom-color: #830DB3;
 }
@@ -681,7 +679,9 @@ h1 {
 }
 
 .modes a.draft-mode.active,
-.modes a.draft-mode.active:hover {
+.modes a.draft-mode.active:hover,
+.modes a.breaking-mode.active,
+.modes a.breaking-mode.active:hover {
     color: #ffffff;
     background: #ffc107;
 }
@@ -696,12 +696,12 @@ h1 {
 .modes a.treats-mode.active:hover {
     color: #ffffff;
     background: #830DB3;
-    display: none;
 }
 
 .treats-mode .modes a.live-mode,
 .treats-mode .modes a.draft-mode,
-.treats-mode .tools {
+.treats-mode .tools,
+.treats-mode .performances {
     display: none;
 }
 .treats-mode .modes a.treats-mode {
@@ -1768,6 +1768,7 @@ collection-widget > div {
 }
 .attention .performances,
 .attention .modes .live-mode,
+.attention .modes .draft-mode,
 .attention .preview {
     display: none;
 }
