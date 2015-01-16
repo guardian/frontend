@@ -21,7 +21,7 @@ define([
         },
         closeCls = 'vjs-error-display__close',
         ua = detect.getUserAgent,
-        message = 'Please <a href="http://whatbrowser.org" target="_blank">update</a> your browser to watch this video. <button class="' + closeCls + '">close</button>';
+        message = 'Your browser is no longer supported. <a href="http://whatbrowser.org" target="_blank">Update your browser?</a> <button class="' + closeCls + '">close</button>';
 
     function bindClose(player) {
         bean.on($('.' + closeCls)[0], 'click', function () {
