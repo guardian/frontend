@@ -19,4 +19,6 @@ object LatitudeLongitude {
 
 }
 
-case class LatitudeLongitude(latitude: Double, longitude: Double)
+case class LatitudeLongitude(latitude: Double, longitude: Double) {
+  override def toString = s"$latitude,$longitude"
+}
