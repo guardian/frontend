@@ -26,7 +26,7 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   private def cityLookUp(cityId: CityId): String =
     s"$WeatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
 
-  private def forecatsLookUp(cityId: CityId): String =
+  private def forecastLookUp(cityId: CityId): String =
     s"$WeatherForecastUrl${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
   private def getJson(url: String): Future[JsValue] = {
@@ -46,5 +46,5 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
     getJson(cityLookUp(cityId))
 
   def getForecastForCityId(cityId: CityId): Future[JsValue] =
-    getJson(forecatsLookUp(cityId))
+    getJson(forecastLookUp(cityId))
 }
