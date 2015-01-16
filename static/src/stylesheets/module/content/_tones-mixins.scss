@@ -129,16 +129,8 @@
                 }
             }
 
-            .drop-cap,
-            .element-pullquote cite {
+            .drop-cap {
                 color: $tonal__article-link;
-            }
-
-            .element-pullquote {
-                &:before,
-                &:after {
-                    background-color: $tonal__article-link;
-                }
             }
         }
     }
