@@ -418,11 +418,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
-    "If this is switched on then different Breaking News alert styles are A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
