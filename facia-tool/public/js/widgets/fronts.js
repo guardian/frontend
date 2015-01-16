@@ -5,6 +5,7 @@ define([
     'models/collections/collection',
     'modules/vars',
     'utils/fetch-lastmodified',
+    'utils/human-time',
     'utils/mediator',
     'utils/presser',
     'utils/update-scrollables'
@@ -14,6 +15,7 @@ define([
     Collection,
     vars,
     lastModified,
+    humanTime,
     mediator,
     presser,
     updateScrollables
@@ -83,7 +85,7 @@ define([
 
         listeners.on('presser:lastupdate', function (front, date) {
             if (front === model.front()) {
-                model.frontAge(date);
+                model.frontAge(humanTime(date));
                 if (pageConfig.env !== 'dev') {
                     var stale = _.some(model.collections(), function (collection) {
                         var l = new Date(collection.state.lastUpdated());
@@ -253,6 +255,18 @@ define([
             sublist = list.draft || list.live;
         }
         return sublist || [];
+    };
+
+    Front.prototype.confirmSendingAlert = function () {
+        return _.contains(vars.CONST.askForConfirmation, this.front());
+    };
+
+    Front.prototype.showIndicatorsEnabled = function () {
+        return !this.confirmSendingAlert();
+    };
+
+    Front.prototype.slimEditor = function () {
+        return _.contains(vars.CONST.restrictedEditor, this.front());
     };
 
     Front.prototype.dispose = function () {

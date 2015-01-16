@@ -4,10 +4,10 @@ import com.gu.facia.client.models.{CollectionJson, ConfigJson, Trail, TrailMetaD
 import com.gu.googleauth.UserIdentity
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import controllers.FaciaJsonClient
+import fronts.FrontsApi
 import julienrf.variants.Variants
 import org.joda.time.DateTime
-import play.api.libs.json.{JsString, Format, JsValue, Json}
+import play.api.libs.json.{Format, JsString, JsValue, Json}
 import services.ConfigAgent
 import tools.{FaciaApi, FaciaApiIO}
 
@@ -18,8 +18,7 @@ object CollectionJsonFunctions {
 
   def sortByGroup(collectionJson: CollectionJson) = collectionJson.copy(
     live = sortTrailsByGroup(collectionJson.live),
-    draft = collectionJson.draft.map(sortTrailsByGroup)
-  )
+    draft = collectionJson.draft.map(sortTrailsByGroup))
 
   private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
     val trailGroups = trails.groupBy(_.meta.flatMap(_.group).map(_.toInt).getOrElse(0))
@@ -41,6 +40,16 @@ object CollectionJsonFunctions {
     }
     else
       collectionJson
+  }
+
+  def updatePreviouslyForPublish(collectionJson: CollectionJson): CollectionJson = {
+    val removed: List[Trail] = collectionJson.live.filterNot(t => collectionJson.draft.getOrElse(Nil).exists(_.id == t.id))
+    val updatedPreviously = collectionJson.previously
+      .map(_.filterNot(t => removed.exists(_.id == t.id)))
+      .map(removed ++ _)
+      .orElse(Option(removed))
+      .map(_.take(20))
+    collectionJson.copy(previously=updatedPreviously)
   }
 }
 
@@ -148,7 +157,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def updateCollectionList(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
-    FaciaJsonClient.client.collection(id).map { maybeCollectionJson =>
+    FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
         .map(insertIntoLive(update, _))
         .map(insertIntoDraft(update, _))
@@ -163,7 +172,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
-    FaciaJsonClient.client.collection(id).map { maybeCollectionJson =>
+    FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
         .map(CollectionJsonFunctions.updatePreviously(_, update))
         .map(deleteFromLive(update, _))

@@ -8,7 +8,6 @@ define([
     'qwery',
 
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -22,6 +21,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/css-logging',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -64,7 +64,6 @@ define([
     qwery,
 
     $,
-    ajax,
     config,
     cookies,
     detect,
@@ -78,6 +77,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    cssLogging,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -444,6 +444,16 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
+
+            runCssLogging: function () {
+                mediator.on('page:common:ready', function () {
+                    var returnAll = window.location.hash === '#csslogging';
+
+                    if (config.switches.cssLogging && (returnAll || Math.random() < 0.0001)) {
+                        cssLogging.run(returnAll);
+                    }
+                });
             }
 
         },
@@ -484,6 +494,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.runCssLogging();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');

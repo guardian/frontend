@@ -3,7 +3,8 @@ package tools
 import com.gu.facia.client.models.{CollectionJson, ConfigJson}
 import com.gu.googleauth.UserIdentity
 import common.ExecutionContexts
-import controllers.FaciaJsonClient
+import fronts.FrontsApi
+import frontsapi.model.CollectionJsonFunctions
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi
@@ -27,7 +28,7 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
 
   def getSchema = S3FrontsApi.getSchema
 
-  def getCollectionJson(id: String): Future[Option[CollectionJson]] = FaciaJsonClient.client.collection(id)
+  def getCollectionJson(id: String): Future[Option[CollectionJson]] = FrontsApi.amazonClient.collection(id)
 
   def putCollectionJson(id: String, collectionJson: CollectionJson): CollectionJson = {
     Try(S3FrontsApi.putCollectionJson(id, Json.prettyPrint(Json.toJson(collectionJson))))
@@ -69,6 +70,7 @@ object FaciaApi {
     Some(collectionJson)
       .filter(_.draft.isDefined)
       .map(updatePublicationDateForNew)
+      .map(CollectionJsonFunctions.updatePreviouslyForPublish)
       .map(collectionJson => collectionJson.copy(live = collectionJson.draft.get, draft = None))
       .map(updateIdentity(_, identity))
 

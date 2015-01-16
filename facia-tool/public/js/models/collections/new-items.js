@@ -4,6 +4,7 @@ define([
     'modules/authed-ajax',
     'modules/content-api',
     'models/collections/article',
+    'utils/alert',
     'utils/clean-clone',
     'utils/deep-get',
     'utils/mediator',
@@ -13,6 +14,7 @@ define([
     authedAjax,
     contentApi,
     Article,
+    alert,
     cleanClone,
     deepGet,
     mediator,
@@ -140,7 +142,7 @@ define([
             article.meta.imageReplace(true);
             article.meta.imageSrc(opts.mediaItem.file);
         } else {
-            window.alert('You can only drop media into an opened article');
+            alert('You can only drop media into an opened article');
         }
     }
 

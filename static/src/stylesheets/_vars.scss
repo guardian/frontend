@@ -114,6 +114,9 @@ $frontend-palette: (
     crosswordAccent1:       guss-colour(multimedia-support-1, $pasteup-palette),
     crosswordAccent2:       guss-colour(news-main-2, $pasteup-palette),
 
+    sudoku-mute:            lighten(guss-colour(news-main-2, $pasteup-palette), 30%),
+    sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
+
     // Football
     // =============================================================================
 

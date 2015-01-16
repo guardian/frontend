@@ -2,6 +2,7 @@
 define([
     'modules/vars',
     'knockout',
+    'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/as-observable-props',
@@ -23,6 +24,7 @@ define([
     function (
         vars,
         ko,
+        alert,
         mediator,
         urlAbsPath,
         asObservableProps,
@@ -59,10 +61,11 @@ define([
                 {
                     key: 'headline',
                     editable: true,
+                    slimEditable: true,
                     ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
-                    maxLength: 90
+                    maxLength: 120
                 },
                 {
                     key: 'trailText',
@@ -273,6 +276,8 @@ define([
 
             this.uneditable = opts.uneditable;
 
+            this.slimEditor = opts.slimEditor;
+
             this.state = asObservableProps([
                 'enableContentOverrides',
                 'underDrag',
@@ -299,6 +304,15 @@ define([
             this.editors = ko.observableArray();
 
             this.editorsDisplay = ko.observableArray();
+
+            this.headline = ko.pureComputed(function () {
+                var meta = this.meta, fields = this.fields;
+                if (this.state.enableContentOverrides()) {
+                    return meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...');
+                } else {
+                    return '{ ' + meta.customKicker() + ' }';
+                }
+            }, this);
 
             this.headlineLength = ko.pureComputed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
@@ -410,7 +424,8 @@ define([
                 meta,
                 field;
 
-            if(!opts.editable) { return; }
+            if (!opts.editable) { return; }
+            if (this.slimEditor && opts.slimEditable !== true) { return; }
 
             key = opts.key;
             meta = self.meta[key] || function() {};
@@ -467,7 +482,7 @@ define([
                 },
 
                 length: ko.pureComputed(function() {
-                    return opts.maxLength ? (meta() || field() || '').length : undefined;
+                    return opts.maxLength ? opts.maxLength - (meta() || field() || '').length : undefined;
                 }, self),
 
                 lengthAlert: ko.pureComputed(function() {
@@ -800,7 +815,7 @@ define([
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        window.alert(err);
+                        alert(err);
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

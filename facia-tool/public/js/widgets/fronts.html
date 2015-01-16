@@ -2,7 +2,8 @@
     <div class="modes">
         <a class="draft-mode" data-bind="
             click: setModeDraft,
-            css: {active: !liveMode()}">Draft front</a
+            css: {active: !liveMode()},
+            text: confirmSendingAlert() ? 'Breaking News' : 'Draft front'"></a
        ><a class="live-mode" data-bind="
             click: setModeLive,
             css: {active: liveMode}">Live front</a
@@ -17,12 +18,13 @@
             click: function() { return true; },
             clickBubble: false
         ">
-            <i class="icon-signal"></i>
+            <i class="fa fa-signal"></i>
         </a>
         <!-- /ko -->
 
         <span class="front-age" data-bind="visible: frontAge">
-           refreshed <span data-bind="text: frontAge"></span>
+            <span data-bind="text: confirmSendingAlert() ? 'alert sent' : 'refreshed'"></span>
+            <span data-bind="text: frontAge"></span>
             <!-- ko if: alertFrontIsStale -->
                 <span class="tools">
                     <a data-bind="click: pressLiveFront">Refresh it</a>
@@ -31,9 +33,11 @@
         </span>
     </div>
 
-    <div class="col__inner front-selector">
-        <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
-    </div>
+    <!-- ko ifnot: confirmSendingAlert() -->
+        <div class="col__inner front-selector">
+            <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
+        </div>
+    <!-- /ko -->
 
     <div class="col__inner scrollable collection-container" data-bind="foreach: collections">
         <collection-widget params="context: $context" data-bind="ownerClass: $data"></collection-widget>

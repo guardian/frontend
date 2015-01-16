@@ -8,6 +8,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
+    'common/utils/url',
     'text!common/views/history/tag.html',
     'text!common/views/history/tags.html',
     'text!common/views/history/mega-nav.html'
@@ -17,6 +18,7 @@ define([
     config,
     template,
     storage,
+    url,
     viewTag,
     viewTags,
     viewMegaNav
@@ -83,6 +85,7 @@ define([
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
+        popularFilteredCache,
         topNavItemsCache,
 
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
@@ -197,8 +200,14 @@ define([
             .value();
     }
 
-    function getPopularFiltered() {
-        return getPopular(20, true);
+    function getPopularFiltered(opts) {
+        if (opts && opts.flush) {
+            popularFilteredCache = getPopular(20, true);
+        } else {
+            popularFilteredCache = popularFilteredCache || getPopular(20, true);
+        }
+
+        return popularFilteredCache;
     }
 
     function tally(freqs) {
@@ -284,7 +293,7 @@ define([
 
     function getTopNavItems() {
         topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
-            return collapseTag(urlPath($(item).attr('href')));
+            return collapseTag(url.getPath($(item).attr('href')));
         });
 
         return topNavItemsCache;
@@ -338,12 +347,6 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
-    }
-
-    function urlPath(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        return a.pathname;
     }
 
     return {
