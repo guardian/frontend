@@ -13,6 +13,8 @@ define([
     scan,
     beacon
 ) {
+    var stripRx = new RegExp(/\:(active|hover|visited)/g);
+
     function getStylesheets() {
         return _.chain(document.styleSheets)
             .filter(function (sheet) {
@@ -38,7 +40,7 @@ define([
     }
 
     function sendReport(stylesheet, allRules) {
-        var sampleSize = 50,
+        var sampleSize = 200,
             offset,
             rules = _.chain(stylesheet.rules || stylesheet.cssRules)
                 .map(function (r) { return r && r.selectorText; })
@@ -52,7 +54,7 @@ define([
 
         beacon.postJson('/css', JSON.stringify({
             selectors: rules.reduce(function (isUsed, rule) {
-                isUsed[rule] = !!document.querySelector(rule);
+                isUsed[rule] = !!document.querySelector(rule.replace(stripRx, ''));
                 return isUsed;
             }, {}),
             contentType: config.page.contentType,
@@ -63,9 +65,11 @@ define([
     }
 
     function sendReports(sendAll) {
-        _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
-            sendReport(stylesheet, sendAll);
-        });
+        setTimeout(function () {
+            _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
+                sendReport(stylesheet, sendAll);
+            });
+        }, 3000);
     }
 
     return {
