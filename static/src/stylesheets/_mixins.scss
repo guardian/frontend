@@ -289,7 +289,8 @@
     &:-ms-input-placeholder { @content; }
 }
 
-@function round-image-width($width) {
+// convert a given width to one available in _vars.scss if it's within the tolerance
+@function normalize-width($width) {
     $tolerance: 10px;
 
     @each $candidate in $available-image-widths {

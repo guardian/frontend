@@ -10,7 +10,7 @@ trait ResourcesHelper {
     slurp(path) getOrElse {
       throw new RuntimeException(s"Required resource $path does not exist")
     }
-  
+
   def slurpJsonOrDie[A: Reads](path: String) =
     Json.fromJson[A](Json.parse(slurpOrDie(path))) getOrElse {
       throw new RuntimeException(s"Could not deserialize JSON at $path")
