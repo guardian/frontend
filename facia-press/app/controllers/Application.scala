@@ -9,11 +9,11 @@ import services.ConfigAgent
 
 object Application extends Controller with ExecutionContexts {
   def index = Action {
-    Ok("Hello, I am the Facia Press.")
+    NoCache(Ok("Hello, I am the Facia Press."))
   }
 
   def showCurrentConfig = Action {
-    Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json")
+    NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
   def generateLivePressedFor(path: String) = Action.async { request =>
