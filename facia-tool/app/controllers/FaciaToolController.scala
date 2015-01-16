@@ -80,16 +80,32 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         val identity = request.user
         UpdateActions.updateTreats(collectionId, update.update, identity).map(_.map{ updatedCollectionJson =>
           S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(update, identity.email))
           Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
         }.getOrElse(NotFound))
 
       case remove: Remove =>
         val identity = request.user
         UpdateActions.removeTreats(collectionId, remove.remove, identity).map(_.map{ updatedCollectionJson =>
-        S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
-        Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
+          S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(remove, identity.email))
+          Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
       }.getOrElse(NotFound))
-      case updateAndRemove: UpdateAndRemove => Future.successful(NotImplemented)
+      case updateAndRemove: UpdateAndRemove =>
+        val identity = request.user
+        val futureUpdatedCollections =
+          Future.sequence(
+            List(UpdateActions.updateTreats(updateAndRemove.update.id, updateAndRemove.update, identity).map(_.map(updateAndRemove.update.id -> _)),
+              UpdateActions.removeTreats(updateAndRemove.remove.id, updateAndRemove.remove, identity).map(_.map(updateAndRemove.remove.id -> _))
+            )).map(_.flatten.toMap)
+
+        futureUpdatedCollections.map { updatedCollections =>
+          val collectionIds = updatedCollections.keySet
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(updateAndRemove, identity.email))
+          FaciaPress.press(PressCommand(collectionIds).withPressLive())
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(collectionId), identity.email))
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        }
       case _ => Future.successful(NotAcceptable)
     }.getOrElse(Future.successful(NotAcceptable))
   }
