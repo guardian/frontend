@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
-    <title>error-exclamation</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="error-exclamation" sketch:type="MSLayerGroup">
-            <circle id="Oval" fill="#FFFFFF" sketch:type="MSShapeGroup" cx="18" cy="18" r="18"></circle>
-            <path d="M14.7272727,5.72727273 L16.3636364,4.09090909 L19.6363636,4.09090909 L21.2727273,5.72727273 L19.6363636,21.2727273 L16.3636364,21.2727273 L14.7272727,5.72727273 M21.2727273,27.8181818 C21.2727273,26.0181818 19.8,24.5454545 18,24.5454545 C16.2,24.5454545 14.7272727,26.0181818 14.7272727,27.8181818 C14.7272727,29.6181818 16.2,31.0909091 18,31.0909091 C19.8,31.0909091 21.2727273,29.6181818 21.2727273,27.8181818" id="Shape" fill="#333333" sketch:type="MSShapeGroup"></path>
-        </g>
-    </g>
-</svg>
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle fill="#fff" cx="18" cy="18" r="18"/><path d="m14.727 5.727l1.636-1.636h3.273l1.636 1.636-1.636 15.545h-3.273l-1.636-15.545m6.545 22.09c0-1.8-1.473-3.273-3.273-3.273-1.8 0-3.273 1.473-3.273 3.273 0 1.8 1.473 3.273 3.273 3.273 1.8 0 3.273-1.473 3.273-3.273" fill="#333"/></g></svg>
