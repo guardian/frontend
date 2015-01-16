@@ -376,9 +376,11 @@ $header-image-size-desktop: 100px;
     @include mq(tablet) {
         padding-top: $gs-baseline / 4;
     }
+
     @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
+
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
         width: gs-span(12);
@@ -386,6 +388,10 @@ $header-image-size-desktop: 100px;
         .has-page-skin & {
             margin-left: 0;
         }
+    }
+
+    @include mq($until: leftCol) {
+        clear: left;
     }
 
     .fc-container--has-toggle & {
