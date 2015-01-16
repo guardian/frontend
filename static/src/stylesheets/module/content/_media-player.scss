@@ -478,7 +478,7 @@ $vjs-progress-inset-bottom: 4px;
         display: table-cell;
         width: 100%;
         margin: auto;
-        padding: $gs-baseline*1.5 $gs-gutter*3 $gs-baseline*1.5 $gs-gutter*3;
+        padding: $gs-baseline*1.5 $gs-gutter*3;
         @include box-sizing(border-box);
         @include fs-headline(2);
         line-height: 1em;
