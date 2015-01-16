@@ -11,6 +11,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/preferences',
+    'common/utils/template',
     'common/utils/url',
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
@@ -33,6 +34,7 @@ define([
     detect,
     mediator,
     preferences,
+    template,
     urlUtils,
     buildPageTargeting,
     Component,
@@ -222,6 +224,49 @@ define([
         return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
+    function adSkipCountdown(skipTimeout) {
+        var intervalId,
+            events     =  {
+                update: function () {
+                    var adsManager  = this.ima.getAdsManager(),
+                        currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
+                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
+
+                    if (skipTime > 0) {
+                        $('.js-skip-remaining-time', this.el()).text(skipTime);
+                    } else {
+                        window.clearInterval(intervalId);
+                        $('.vjs-ads-overlay-skip-countdown', this.el())
+                            .html(
+                                '<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
+                                '<i class="i i-play-icon-grey skip-icon"></i>' +
+                                '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>'
+                            );
+                        $('.js-ads-skip-overlay').addClass('vjs-ads-overlay-skip--enabled');
+                        bean.on($('.js-ads-skip-overlay')[0], 'click', events.skip.bind(this));
+                    }
+                },
+                skip: function () {
+                    $('.js-ads-skip-overlay', this.el()).hide();
+                    this.trigger(constructEventName('preroll:skip', this));
+                    this.ima.onAdComplete_();
+                    this.ima.onContentResumeRequested_();
+                },
+                init: function () {
+                    var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
+
+                    $(this.el()).append(skipButton);
+                    intervalId = setInterval(events.update.bind(this), 250);
+                    this.one(constructEventName('content:play', this), function () {
+                        $('.js-ads-skip-overlay', this.el()).hide();
+                        window.clearInterval(intervalId);
+                    });
+                }
+            };
+
+        this.one(constructEventName('preroll:play', this), events.init.bind(this));
+    }
+
     function fullscreener() {
         var player = this,
             clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
@@ -298,7 +343,6 @@ define([
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
-        videojs.plugin('adCountdown', events.adCountdown);
         videojs.plugin('adSkipCountdown', events.adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
@@ -392,33 +436,21 @@ define([
                 if (mediaType === 'video') {
 
                     player.fullscreener();
-
                     // Init plugins
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                         events.bindPrerollEvents(player);
-                        player.adCountdown();
-                        player.adSkipCountdown(15);
+                        player.adSkipCountdown(5);
 
-                            require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                                .then(function () {
-                                    player.ima({
-                                        id: mediaId,
-                                        adTagUrl: getVastUrl()
-                                    });
-                                    // Video analytics event.
-                                    player.trigger(events.constructEventName('preroll:request', player));
-                                    player.ima.requestAds();
+                        require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                            .then(function () {
+                                player.ima({
+                                    id: mediaId,
+                                    adTagUrl: getVastUrl()
                                 });
-                        } else {
-                            events.bindContentEvents(player);
-                        }
-
-                        player.ads({
-                            timeout: 3000
-                        });
-                        player.vast({
-                            url: getVastUrl()
-                        });
+                                // Video analytics event.
+                                player.trigger(events.constructEventName('preroll:request', player));
+                                player.ima.requestAds();
+                            });
                     } else {
                         events.bindContentEvents(player);
                     }

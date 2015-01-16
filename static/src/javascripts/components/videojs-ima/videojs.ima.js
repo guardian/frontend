@@ -217,7 +217,7 @@
       if (adsManager) {
         adsManager.destroy();
       }
-      player.play();
+      //player.play();
     };
 
     /**
@@ -820,7 +820,11 @@
 
     player.on('ended', localContentEndedListener);
 
-    player.ads({debug: settings.debug});
+    player.ads({
+        debug: settings.debug,
+        timeout: 3000,
+        prerollTimeout: 3000
+    });
 
     adsRenderingSettings = new google.ima.AdsRenderingSettings();
     adsRenderingSettings.restoreCustomPlaybackStateOnAdBreakComplete = true;

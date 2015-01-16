@@ -7,6 +7,7 @@ $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
+$ima-controls-height: 70px;
 
 .player {
     margin-bottom: $gs-row-height;
@@ -779,7 +780,7 @@ $vjs-height-ratio: 7/3;
 .vjs-ads-overlay-skip {
     position: absolute;
     z-index: 4;
-    bottom: 54px;
+    bottom: $ima-controls-height;
     right: 8px;
     width: $gs-column-width*2;
     padding: $gs-baseline/2 0 $gs-baseline/4 $gs-gutter/4;
@@ -940,8 +941,8 @@ $vjs-height-ratio: 7/3;
 #ima-controls-div {
     display: none;
     position: absolute;
-    height: 68px !important;
-    bottom: -52px;
+    height: $ima-controls-height !important;
+    bottom: -54px;
 
     .vjs-mousemoved &,
     &:hover {
@@ -965,12 +966,14 @@ $vjs-height-ratio: 7/3;
 }
 #ima-mute-div {
     position: absolute;
-    left: 75%;
+    left: 74%;
 }
 #ima-fullscreen-div {
     cursor: pointer;
     float: right;
-    margin: 12px;
+    margin: 14px;
+    width: 22px !important;
+    height: 22px !important;
     @include icon(expand-white);
 
     &:hover {
