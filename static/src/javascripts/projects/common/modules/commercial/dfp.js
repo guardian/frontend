@@ -291,12 +291,7 @@ define([
             }
         },
         allAdsRendered = function (slotId) {
-            forEach(slots, function (value, key) {
-                if (key === slotId) {
-                    slots[slotId].isRendered = true;
-                    return;
-                }
-            });
+            slots[slotId].isRendered = true;
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
