@@ -412,7 +412,7 @@
      */
     player.ima.onAdFullscreenClick_ = function() {
       if (player.isFullscreen()) {
-        player.cancelFullscreen();
+        player.exitFullscreen();
       } else {
         player.requestFullscreen();
       }
@@ -428,6 +428,7 @@
         fullscreenDiv.className = 'ima-fullscreen';
         adContainerDiv.style.width = window.screen.width + 'px';
         adContainerDiv.style.height = window.screen.height + 'px';
+        adContainerDiv.className = 'ima-ad-container--fullscreen';
         adsManager.resize(
             window.screen.width,
             window.screen.height,
@@ -436,6 +437,7 @@
         fullscreenDiv.className = 'ima-non-fullscreen';
         adContainerDiv.style.width = player.width() + 'px';
         adContainerDiv.style.height = player.height() + 'px';
+        adContainerDiv.className = ''
         adsManager.resize(
             player.width(),
             player.height(),

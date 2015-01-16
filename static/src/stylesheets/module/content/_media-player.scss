@@ -934,9 +934,18 @@ $vjs-height-ratio: 7/3;
 /* IMA Adverts
    ========================================================================== */
 #ima-ad-container {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 3;
+}
+.ima-ad-container--fullscreen {
+    &,
+    > div:first-child {
+        width: 100% !important;
+        height: 100% !important;
+    }
 }
 #ima-controls-div {
     display: none;
@@ -953,6 +962,7 @@ $vjs-height-ratio: 7/3;
 }
 #ima-seek-bar-div {
     height: 6px;
+    width: 100% !important;
     background-color: #000000;
 }
 #ima-progress-div {
