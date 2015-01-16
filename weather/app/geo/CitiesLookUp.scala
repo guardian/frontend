@@ -12,7 +12,7 @@ object CitiesCsvLine {
   }
 
   def unapply(line: String): Option[CitiesCsvLine] = {
-    line.split(',') match {
+    line.split(",", -1) match {
       case Array(
         locationId,
         country,
@@ -23,19 +23,24 @@ object CitiesCsvLine {
         longitude,
         metroCode,
         areaCode
-      ) => Try {
-        CitiesCsvLine(
-          locationId.toInt,
-          country.withoutQuotes,
-          region.withoutQuotes,
-          city.withoutQuotes,
-          postalCode.withoutQuotes,
-          latitude.toDouble,
-          longitude.toDouble,
-          metroCode.withoutQuotes,
-          areaCode.withoutQuotes
-        )
-      }.toOption
+      ) =>
+        println("hi")
+
+        Try {
+          CitiesCsvLine(
+            locationId.toInt,
+            country.withoutQuotes,
+            region.withoutQuotes,
+            city.withoutQuotes,
+            postalCode.withoutQuotes,
+            latitude.toDouble,
+            longitude.toDouble,
+            metroCode.withoutQuotes,
+            areaCode.withoutQuotes
+          )
+        }.toOption
+
+      case _ => None
     }
   }
 }
