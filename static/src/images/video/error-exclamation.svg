@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><circle fill="#fff" cx="22" cy="22" r="22"/><path fill="#333" d="M18 7l2-2h4l2 2-2 19h-4l-2-19m8 27c0-2.2-1.8-4-4-4s-4 1.8-4 4 1.8 4 4 4 4-1.8 4-4"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>error-exclamation</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="error-exclamation" sketch:type="MSLayerGroup">
+            <circle id="Oval" fill="#FFFFFF" sketch:type="MSShapeGroup" cx="18" cy="18" r="18"></circle>
+            <path d="M14.7272727,5.72727273 L16.3636364,4.09090909 L19.6363636,4.09090909 L21.2727273,5.72727273 L19.6363636,21.2727273 L16.3636364,21.2727273 L14.7272727,5.72727273 M21.2727273,27.8181818 C21.2727273,26.0181818 19.8,24.5454545 18,24.5454545 C16.2,24.5454545 14.7272727,26.0181818 14.7272727,27.8181818 C14.7272727,29.6181818 16.2,31.0909091 18,31.0909091 C19.8,31.0909091 21.2727273,29.6181818 21.2727273,27.8181818" id="Shape" fill="#333333" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
