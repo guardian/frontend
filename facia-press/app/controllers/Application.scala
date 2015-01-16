@@ -1,12 +1,12 @@
 package controllers
 
+import common.ExecutionContexts
 import frontpress.FrontPress
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import services.ConfigAgent
 
-object Application extends Controller {
-  import scala.concurrent.ExecutionContext.Implicits.global
+object Application extends Controller with ExecutionContexts {
   def index = Action {
     Ok("Hello, I am the Facia Press.")
   }
