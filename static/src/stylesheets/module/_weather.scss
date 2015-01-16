@@ -132,7 +132,7 @@ $weather-large-size: 60px;
     display: none;
 }
 
-.weather__forecasts {
+.weather__current {
     position: relative;
     @include transition(opacity .2s ease-in); // Needs Fixing
 
