@@ -10,7 +10,6 @@ define([
     'common/utils/storage',
     'common/utils/url',
     'text!common/views/history/tag.html',
-    'text!common/views/history/tags.html',
     'text!common/views/history/mega-nav.html'
 ], function (
     $,
@@ -20,7 +19,6 @@ define([
     storage,
     url,
     viewTag,
-    viewTags,
     viewMegaNav
 ) {
     var whitelist = [
