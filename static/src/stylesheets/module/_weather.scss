@@ -299,20 +299,10 @@ $weather-large-size: 60px;
         display: table-cell;
         border-right: 1px dotted colour(neutral-3);
         padding-left: $gs-gutter / 4;
-        padding-right: ($gs-gutter / 2) + $weather-small-size;
+        padding-right: $gs-gutter;
 
         &:first-of-type {
             padding-left: 0;
-        }
-
-        &:last-of-type {
-            border-right: 0;
-
-            @include mq(desktop) {
-                .i.weather__icon {
-                    right: 0;
-                }
-            }
         }
 
         .weather__time {
@@ -321,12 +311,6 @@ $weather-large-size: 60px;
     }
 
     .i.weather__icon {
-        position: absolute;
-        bottom: -3px;
-        right: $gs-gutter / 2;
-
-        @include mq(tablet, wide) {
-            right: $gs-gutter / 4;
-        }
+        vertical-align: bottom;
     }
 }
