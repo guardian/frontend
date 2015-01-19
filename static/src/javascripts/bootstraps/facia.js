@@ -86,9 +86,15 @@ define([
                     mediator.on('page:front:ready', function () {
                         if (guardian.isIphone6) {
                             beacon.counts('iphone-6-end');
+                            setTimeout(function () {
+                                beacon.counts('iphone-6-timeout');
+                            }, 5000);
                         }
                         if (guardian.isIphone4) {
                             beacon.counts('iphone-4-end');
+                            setTimeout(function () {
+                                beacon.counts('iphone-4-timeout');
+                            }, 5000);
                         }
                     });
                 }
