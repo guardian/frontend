@@ -172,7 +172,8 @@ $weather-large-size: 60px;
 
     .weather__toggle-icon {
         width: 18px;
-        height: 12px;
+        height: 8px;
+        margin-bottom: $gs-baseline / 4;
     }
 }
 
