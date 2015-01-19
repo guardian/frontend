@@ -524,6 +524,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val IphoneConfidence = Switch("Performance", "iphone-confidence",
+    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
