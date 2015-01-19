@@ -139,8 +139,6 @@ define([
                         }
                     });
                 });
-
-            self.renderForecast(response);
         },
 
         bindEvents: function () {
@@ -158,7 +156,7 @@ define([
             mediator.on('autocomplete:fetch', this.fetchWeatherData);
         },
 
-        track: function(city) {
+        track: function () {
             /*s.prop22 = city;
             s.eVar22 = city;
             s.events = 'event100';*/
@@ -179,8 +177,8 @@ define([
         },
 
         toggleForecast: function (e) {
-            $(e.currentTarget).toggleClass("is-visible");
-            $('.' + e.currentTarget.dataset.toggleClass).toggleClass("u-h");
+            $(e.currentTarget).toggleClass('is-visible');
+            $('.' + e.currentTarget.dataset.toggleClass).toggleClass('u-h');
         },
 
         getUnits: function () {
@@ -237,7 +235,8 @@ define([
 
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecasts'),
-                $forecast = null;
+                $forecast = null,
+                i;
 
             $forecastHolder.empty();
 
@@ -246,10 +245,10 @@ define([
                     'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
                     'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
                     'forecast-icon': forecastData[i].WeatherIcon,
-                    'forecast-desc': forecastData[i].IconPhrase,
+                    'forecast-desc': forecastData[i].IconPhrase
                 }));
 
-               $forecast.appendTo($forecastHolder);
+                $forecast.appendTo($forecastHolder);
             }
         }
     };

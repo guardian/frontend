@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
-    'common/utils/mediator',
+    'common/utils/mediator'
 ], function (
     bean,
     raven,
