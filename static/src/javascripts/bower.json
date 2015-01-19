@@ -14,7 +14,7 @@
     "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#158221b5d997a184972fbf038c9eebdb676d30c8",
-    "videojs-contrib-ads": "0.6.0",
+    "videojs-contrib-ads": "videojs/videojs-contrib-ads#f44387a4d2fd939f9a665762917e2fa6fc8838d7",
     "videojs-vast": "guardian/videojs-vast-plugin#f2b9fe764d90f364607ba2b7fca1694d9db8d31a",
     "vast-client-js": "guardian/vast-client-js#79a3102455eb8acc6b677424e6e556fb354131d4",
     "videojs-persistvolume": "~0.1.0",
@@ -27,7 +27,9 @@
     "videojs-embed": "~0.3.1"
   },
   "resolutions": {
-    "videojs-contrib-ads": "0.6.0"
+    "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8",
+    "videojs-contrib-ads": "f44387a4d2fd939f9a665762917e2fa6fc8838d7",
+    "vast-client-js": "79a3102455eb8acc6b677424e6e556fb354131d4"
   },
   "install": {
     "path": "components",

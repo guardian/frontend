@@ -364,13 +364,15 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
+If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontned.
+
 Further documentation notes and useful items can be found in [docs](docs).
 
-[Integration testing documentation](integrated-tests/README.md)
-[sbt]: http://www.scala-sbt.org
-[play2-console]: https://github.com/playframework/Play20/wiki/PlayConsole
-[play2-wiki]: https://github.com/playframework/Play20/wiki
-[sbteclipse]: https://github.com/typesafehub/sbteclipse
-[sbt-idea]: https://github.com/mpeltonen/sbt-idea
-[magenta]: https://github.com/guardian/deploy
-[grunt-csdevmode]: https://github.com/mattosborn/grunt-csdevmode
+- [Integration testing documentation](integrated-tests/README.md)
+- [sbt](http://www.scala-sbt.org)
+- [play2-console](https://github.com/playframework/Play20/wiki/PlayConsole)
+- [play2-wiki](https://github.com/playframework/Play20/wiki)
+- [sbteclipse](https://github.com/typesafehub/sbteclipse)
+- [sbt-idea](https://github.com/mpeltonen/sbt-idea)
+- [magenta](https://github.com/guardian/deploy)
+- [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode)

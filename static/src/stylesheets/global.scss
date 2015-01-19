@@ -57,13 +57,12 @@
 
 @import 'module/_crosswords';
 @import 'module/_weather';
+@import 'module/_sudoku';
 
 @import 'module/onward/_right-hand-most-popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
 @import 'module/_submeta';
-
-@import 'module/preview/_freshness-check';
 
 @import 'module/_flyers';
 
@@ -144,3 +143,4 @@
 @import 'module/_release-message';
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
+@import 'module/business/_stocks';

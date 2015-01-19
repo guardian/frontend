@@ -227,7 +227,8 @@ define([
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.WeatherIcon));
+                    weatherData.WeatherIcon))
+                    .attr('title', weatherData.WeatherText);
 
                 // Close editing
                 self.toggleControls(false);

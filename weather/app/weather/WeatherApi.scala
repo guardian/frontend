@@ -2,6 +2,7 @@ package weather
 
 import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
+import geo.LatitudeLongitude
 import models.{ForecastResponse, LocationResponse, CityId}
 import play.api.Play
 import play.api.libs.json.{Json, JsValue}
@@ -29,6 +30,10 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   private def forecastLookUp(cityId: CityId): String =
     s"$WeatherForecastUrl${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
+  private def latitudeLongitudeUrl(latitudeLongitude: LatitudeLongitude): String = {
+    s"http://api.accuweather.com/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
+  }
+
   private def getJson(url: String): Future[JsValue] = {
     if (Play.isTest) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
@@ -40,6 +45,11 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   def searchForLocations(query: String) =
     getJson(autocompleteUrl(query)).map({ r =>
       Json.fromJson[Seq[LocationResponse]](r).get
+    })
+
+  def getNearestCity(latitudeLongitude: LatitudeLongitude) =
+    getJson(latitudeLongitudeUrl(latitudeLongitude)).map({ r =>
+      Json.fromJson[LocationResponse](r).get
     })
 
   def getWeatherForCityId(cityId: CityId): Future[JsValue] =

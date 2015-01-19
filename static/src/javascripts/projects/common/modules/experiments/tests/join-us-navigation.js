@@ -9,19 +9,19 @@ define([
 ) {
     return function () {
         this.id = 'JoinUsNavigation';
-        this.start = '2015-01-13';
+        this.start = '2015-01-15';
         this.expiry = '2015-01-21';
         this.author = 'Marc Hibbins';
         this.description = 'Provides a single text link rather than drop down menu';
         this.audience = 0.4;
         this.audienceOffset = 0;
         this.successMeasure = 'Click-through to Subscriptions.';
-        this.audienceCriteria = 'All desktop users';
+        this.audienceCriteria = 'All UK desktop users';
         this.dataLinkNames = 'join us';
         this.idealOutcome = 'Increased click through volume to Subscriptions.';
 
         this.canRun = function () {
-            return config.page.section !== 'identity' && (detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'leftCol' || detect.getBreakpoint() === 'wide');
+            return config.page.edition.toLowerCase() === 'uk' && config.page.section !== 'identity' && (detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'leftCol' || detect.getBreakpoint() === 'wide');
         };
 
         function update(label, intcmp) {

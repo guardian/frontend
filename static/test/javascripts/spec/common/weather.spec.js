@@ -14,7 +14,7 @@ define([
     Injector
     ) {
 
-    return  new Injector()
+    return new Injector()
         .store('common/utils/config')
         .require(['common/modules/weather', 'mocks'], function (sut, mocks) {
             describe('Weather component', function () {

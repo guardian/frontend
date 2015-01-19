@@ -35,8 +35,8 @@ GET        /gallery/most-viewed.json                  controllers.MostViewedGall
 GET        /video/end-slate/series/*seriesId.json     controllers.VideoEndSlateController.renderSeries(seriesId)
 GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateController.renderSection(sectionId)
 
-GET         /embed/card/*path.json                    controllers.FlyerController.render(path)
-GET         /embed/card/*path                         controllers.FlyerController.renderHtml(path)
+GET        /embed/card/*path.json                     controllers.FlyerController.render(path)
+GET        /embed/card/*path                          controllers.FlyerController.renderHtml(path)
 
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
@@ -48,3 +48,6 @@ GET        /gallery/most-viewed                       controllers.MostViewedGall
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
+
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
