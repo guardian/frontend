@@ -27,7 +27,7 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        $('.creative--scrollable-mpu-wrap').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
     };
 
     ScrollableMpu.prototype.create = function () {
