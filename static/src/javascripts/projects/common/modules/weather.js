@@ -225,11 +225,11 @@ define([
 
             for (i in forecastData) {
                 $forecast = $.create(template(forecastTemplate, {
-                        'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
-                        'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
-                        'forecast-icon': forecastData[i].WeatherIcon,
-                        'forecast-desc': forecastData[i].IconPhrase,
-                    }));
+                    'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
+                    'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
+                    'forecast-icon': forecastData[i].WeatherIcon,
+                    'forecast-desc': forecastData[i].IconPhrase,
+                }));
 
                $forecast.appendTo($forecastHolder);
             }

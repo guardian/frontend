@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',
-    'common/utils/mediator'
+    'common/utils/mediator',
 ], function (
     bean,
     raven,
@@ -37,7 +37,7 @@ define([
 
             bindEvents: function () {
                 bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
-                bean.on(document.body, 'click', $list, this.handleClick.bind(this));
+                bean.on(document.body, 'click', '.js-search-tool-list a', this.handleClick.bind(this));
             },
 
             hasInputValueChanged: function () {
@@ -46,15 +46,14 @@ define([
 
             handleClick: function (e) {
                 e.preventDefault();
-                e.stopPropagation();
 
-                $(e.target).addClass('active');
+                $(e.currentTarget).addClass('active');
                 this.pushData();
             },
 
             pushData: function () {
                 var $active = $('.active', $list),
-                    data    = {};
+                    data = {};
 
                 if ($active.length === 0) {
                     return false;
