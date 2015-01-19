@@ -149,6 +149,9 @@ define([
             bean.on($('.js-close-location')[0], 'click', function () {
                 self.toggleControls(false);
             });
+            bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
+                self.toggleForecast(e);
+            });
             mediator.on('autocomplete:fetch', this.fetchWeatherData);
         },
 
@@ -164,6 +167,11 @@ define([
                 searchTool.clear();
                 searchTool.setInputValue(city);
             }
+        },
+        
+        toggleForecast: function (e) {
+            $(e.currentTarget).toggleClass("is-visible");
+            $('.' + e.currentTarget.dataset.toggleClass).toggleClass("u-h");
         },
 
         getUnits: function () {

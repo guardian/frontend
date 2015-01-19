@@ -166,6 +166,10 @@ $weather-large-size: 60px;
         border-right: 1px dotted colour(neutral-3);
     }
 
+    &.is-visible .weather__toggle-icon {
+        @include transform(rotate(180deg));
+    }
+
     .weather__toggle-icon {
         width: 18px;
         height: 12px;
