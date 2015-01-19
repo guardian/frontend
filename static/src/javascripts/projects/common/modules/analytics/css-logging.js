@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/url',
     'common/utils/scan',
+    'common/utils/mediator',
     'common/modules/analytics/beacon'
 ], function (
     _,
@@ -11,6 +12,7 @@ define([
     detect,
     url,
     scan,
+    mediator,
     beacon
 ) {
     var stripRx = new RegExp(/\:(active|hover|visited)/g);
@@ -26,7 +28,7 @@ define([
             .value();
     }
 
-    function randomStylesheet() {
+    function getRandomStylesheet() {
         var stylesheets = getStylesheets(),
             stylesheetLengths = scan(
                 stylesheets.map(function (sheet) { return _.values(sheet.rules || sheet.cssRules).length; }),
@@ -64,13 +66,27 @@ define([
         }), allRules);
     }
 
-    function sendReports(sendAll) {
-        _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
-            sendReport(stylesheet, sendAll);
-        });
+    function makeSender(sendAll) {
+        return _.debounce(function (clickSpec) {
+            if (!clickSpec || clickSpec.samePage) {
+                setTimeout(function () {
+                    _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
+                        sendReport(stylesheet, sendAll);
+                    });
+                }, _.random(0, 3000));
+            }
+        }, 300);
     }
 
-    return {
-        run: sendReports
+    return function () {
+        var sendAll = window.location.hash === '#csslogging',
+            sender;
+
+        if (sendAll || _.random(1, 5000) === 1) {
+            sender = makeSender(sendAll);
+            sender();
+            mediator.on('module:clickstream:interaction', sender);
+            mediator.on('module:clickstream:click', sender);
+        }
     };
 });
