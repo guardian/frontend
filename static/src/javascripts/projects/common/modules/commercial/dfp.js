@@ -204,7 +204,7 @@ define([
                     slots[slotId] = {
                         isRendered: false,
                         slot: defineSlot($adSlot)
-                    }
+                    };
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
