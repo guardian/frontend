@@ -113,6 +113,7 @@ define([
 
         fetchWeatherData: function (location) {
             self.saveUserLocation(location);
+            self.track(location.city);
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
@@ -155,6 +156,12 @@ define([
                 self.toggleForecast(e);
             });
             mediator.on('autocomplete:fetch', this.fetchWeatherData);
+        },
+
+        track: function(city) {
+            s.prop22 = city;
+            s.eVar22 = city;
+            s.events = 'event100';
         },
 
         toggleControls: function (value) {
