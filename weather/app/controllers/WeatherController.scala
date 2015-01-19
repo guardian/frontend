@@ -10,7 +10,7 @@ import weather.WeatherApi
 import scala.concurrent.duration._
 
 object WeatherController extends Controller with ExecutionContexts {
-  val MaximumForecastDays = 6
+  val MaximumForecastDays = 12
 
   def forCityId(cityId: String) = Action.async { implicit request =>
     WeatherApi.getWeatherForCityId(CityId(cityId)).map(json => Cached(10.minutes)(JsonComponent.forJsValue(json)))

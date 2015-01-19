@@ -41,18 +41,9 @@ $weather-large-size: 60px;
         @include box-sizing(border-box);
         width: gs-span(1) + $gs-gutter;
         float: left;
-        padding-right: $weather-small-size;
-        text-align: right;
-
-        .weather__icon {
-            position: absolute;
-            top: 0;
-        }
-    }
-
-    @include mq(tablet, leftCol) {
         padding-right: $weather-small-size + $gs-gutter / 4;
         margin-right: $gs-gutter / 4;
+        text-align: right;
 
         &:after {
             content: '';
@@ -64,6 +55,8 @@ $weather-large-size: 60px;
         }
 
         .weather__icon {
+            position: absolute;
+            top: 0;
             right: $gs-gutter / 4;
         }
     }
@@ -153,17 +146,20 @@ $weather-large-size: 60px;
 
 .weather__toggle-forecast {
     position: relative;
-    padding-right: $gs-gutter / 4;
-    margin-right: $gs-gutter / 4;
     float: left;
 
-    &:after {
-        content: '';
-        top: 3px;
-        right: 0;
-        position: absolute;
-        height: $gs-baseline + 1px;
-        border-right: 1px dotted colour(neutral-3);
+    @include mq(tablet) {
+        padding-right: $gs-gutter / 4;
+        margin-right: $gs-gutter / 4;
+
+        &:after {
+            content: '';
+            top: 3px;
+            right: 0;
+            position: absolute;
+            height: $gs-baseline + 1px;
+            border-right: 1px dotted colour(neutral-3);
+        }
     }
 
     &.is-visible .weather__toggle-icon {
@@ -278,8 +274,12 @@ $weather-large-size: 60px;
 .weather__forecasts {
     clear: left;
     margin: 0;
-    padding: ($gs-baseline / 6) 0 ($gs-baseline / 2) 0;
+    padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
     list-style: none;
+
+    @include mq(desktop, wide) {
+        display: table;
+    }
 
     @include mq($until: wide) {
         width: 100%;
@@ -306,12 +306,14 @@ $weather-large-size: 60px;
 
         &:last-of-type {
             border-right: 0;
+
+            @include mq(tablet) {
+                display: none;
+            }
         }
 
         .forecast__time {
-            @include mq($until: tablet) {
-                display: block;
-            }
+            display: block;
         }
     }
 
