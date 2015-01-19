@@ -143,10 +143,12 @@ define([
         },
 
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function () {
+            bean.on($('.js-weather-input')[0], 'click', function (e) {
+                e.preventDefault();
                 self.toggleControls(true);
             });
-            bean.on($('.js-close-location')[0], 'click', function () {
+            bean.on($('.js-close-location')[0], 'click', function (e) {
+                e.preventDefault();
                 self.toggleControls(false);
             });
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
@@ -168,7 +170,7 @@ define([
                 searchTool.setInputValue(city);
             }
         },
-        
+
         toggleForecast: function (e) {
             $(e.currentTarget).toggleClass("is-visible");
             $('.' + e.currentTarget.dataset.toggleClass).toggleClass("u-h");
