@@ -24,31 +24,30 @@ define([
      * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
      * background-attachment - need to make this more granular
      */
-    ScrollableMpu.hasBgAttachmentFixed = !detect.isIOS() && !detect.isAndroid();
+    ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        this.$scrollableMpu.css('background-position', this.$scrollableMpu.offset().left + 'px 100%');
-
+        $('.creative--scrollable-mpu-wrap').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
     };
 
     ScrollableMpu.prototype.create = function () {
         var templateOptions = {
             clickMacro:       this.params.clickMacro,
             destination:      this.params.destination,
-            image:            ScrollableMpu.hasBgAttachmentFixed ? this.params.image : this.params.staticImage,
+            image:            ScrollableMpu.hasScrollEnabled ? this.params.image : this.params.staticImage,
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
         };
         this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
 
-        if (ScrollableMpu.hasBgAttachmentFixed) {
-            this.$scrollableMpu.css('background-attachment', 'fixed');
+        if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();
+
+            mediator.on('window:scroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
-
     };
 
     return ScrollableMpu;
