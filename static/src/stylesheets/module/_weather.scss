@@ -12,7 +12,7 @@ $weather-large-size: 60px;
 
     @include mq(tablet) {
         text-align: left;
-        margin-top: $gs-baseline * 2; 
+        margin-top: $gs-baseline * 2;
     }
 
     @include mq(leftCol) {
@@ -206,6 +206,7 @@ $weather-large-size: 60px;
     .search-tool__input {
         display: none;
         width: 100%;
+
         @include fs-headline(2);
 
         @include mq(tablet) {
@@ -268,6 +269,10 @@ $weather-large-size: 60px;
         width: 16px !important;
         height: 16px !important;
     }
+}
+
+.weather__edit-location {
+    z-index: 0;
 }
 
 .weather__close-location {
