@@ -7,8 +7,8 @@ import conf.Configuration
 import fronts.FrontsApi
 import julienrf.variants.Variants
 import org.joda.time.DateTime
-import play.api.libs.json.{JsString, Format, JsValue, Json}
-import services.{FaciaJsonClient, ConfigAgent}
+import play.api.libs.json.{Format, JsString, JsValue, Json}
+import services.ConfigAgent
 import tools.{FaciaApi, FaciaApiIO}
 
 import scala.concurrent.Future

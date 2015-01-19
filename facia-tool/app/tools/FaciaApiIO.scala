@@ -7,7 +7,7 @@ import fronts.FrontsApi
 import frontsapi.model.CollectionJsonFunctions
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
-import services.{FaciaJsonClient, S3FrontsApi}
+import services.S3FrontsApi
 
 import scala.concurrent.Future
 import scala.util.Try
