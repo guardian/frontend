@@ -159,9 +159,9 @@ define([
         },
 
         track: function(city) {
-            s.prop22 = city;
+            /*s.prop22 = city;
             s.eVar22 = city;
-            s.events = 'event100';
+            s.events = 'event100';*/
         },
 
         toggleControls: function (value) {
