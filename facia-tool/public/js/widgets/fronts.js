@@ -72,6 +72,8 @@ define([
         this.uiOpenElement = ko.observable();
         this.uiOpenArticle = ko.observable();
 
+        this.allExpanded = ko.observable(true);
+
         listeners.on('presser:lastupdate', function (front, date) {
             if (front === model.front()) {
                 model.frontAge(humanTime(date));
@@ -115,6 +117,8 @@ define([
             }
         });
 
+        listeners.on('collection:collapse', this.onCollectionCollapse.bind(this));
+
         this.setIntervals = [];
         this.setTimeouts = [];
         this.refreshCollections(vars.CONST.collectionsPollMs || 60000);
@@ -131,6 +135,7 @@ define([
         }
         var model = this;
 
+        this.allExpanded(true);
         this.collections(
             ((vars.state.config.fronts[frontId] || {}).collections || [])
             .filter(function(id) { return vars.state.config.collections[id]; })
@@ -171,6 +176,26 @@ define([
             });
         } else {
             model.frontAge(undefined);
+        }
+    };
+
+    Front.prototype.toggleAll = function () {
+        var state = !this.allExpanded();
+        this.allExpanded(state);
+        _.each(this.collections(), function (collection) {
+            collection.state.collapsed(!state);
+        });
+    };
+
+    Front.prototype.onCollectionCollapse = function (collection, collectionState) {
+        if (collection.front !== this) {
+            return;
+        }
+        var differentState = _.find(this.collections(), function (collection) {
+            return collection.state.collapsed() !== collectionState;
+        });
+        if (!differentState) {
+            this.allExpanded(!collectionState);
         }
     };
 
