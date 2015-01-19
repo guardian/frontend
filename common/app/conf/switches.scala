@@ -327,10 +327,6 @@ object Switches {
     sellByDate = new LocalDate(2015, 1, 31)
   )
 
-  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
-    "If switched on then the preview server will poll until the latest content is indexed.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 20))
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = new LocalDate(2015, 1, 31))
@@ -415,11 +411,6 @@ object Switches {
 
   val ABWeather = Switch("A/B Tests", "ab-weather",
     "If this is switched on then the weather component is A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
-    "If this is switched on then different Breaking News alert styles are A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
@@ -527,6 +518,11 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val IphoneConfidence = Switch("Performance", "iphone-confidence",
+    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

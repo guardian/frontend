@@ -50,6 +50,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/weather',
+    'common/modules/onward/breaking-news',
 
     'bootstraps/identity',
 
@@ -106,6 +107,7 @@ define([
     Toggles,
     userPrefs,
     weather,
+    breakingNews,
 
     identity,
 
@@ -446,6 +448,12 @@ define([
                 shareCount.init();
             },
 
+            loadBreakingNews: function () {
+                if (config.switches.breakingNews) {
+                    breakingNews();
+                }
+            },
+
             runCssLogging: function () {
                 mediator.on('page:common:ready', function () {
                     var returnAll = window.location.hash === '#csslogging';
@@ -466,6 +474,7 @@ define([
             modules.testCookie();
             modules.adTestCookie();
             modules.windowEventListeners();
+            modules.loadBreakingNews();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();
