@@ -1915,6 +1915,10 @@ hr {
     padding-left: 1em;
 }
 
+.modalDialog .button-description {
+    font-weight: bold;
+}
+
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/
