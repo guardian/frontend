@@ -11,23 +11,23 @@ object DiagnosticsController extends Controller with Logging {
 
   def js = Action { implicit request =>
     JavaScript.report(request)
-    TinyResponse()
+    TinyResponse.gif
   }
 
   def ab = Action { implicit request =>
     AbTests.report(request.queryString)
-    TinyResponse()
+    TinyResponse.gif
   }
 
   def analytics(prefix: String) = Action { implicit request =>
     Analytics.report(prefix)
-    TinyResponse()
+    TinyResponse.gif
   }
 
   // e.g.  .../counts?c=pv&c=vv&c=ve
   def analyticsCounts() = Action { implicit request =>
     request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
-    TinyResponse()
+    TinyResponse.gif
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
@@ -36,10 +36,10 @@ object DiagnosticsController extends Controller with Logging {
     if (conf.Switches.CssLogging.isSwitchedOn) {
       Css.report(request.body)
     }
-    TinyResponse()
+    TinyResponse.noContent()
   }
 
   def cssOptions = Action { implicit request =>
-    TinyResponse(Some("POST, OPTIONS"))
+    TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }
