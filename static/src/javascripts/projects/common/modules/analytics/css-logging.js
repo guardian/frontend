@@ -40,7 +40,7 @@ define([
     }
 
     function sendReport(stylesheet, allRules) {
-        var sampleSize = 200,
+        var sampleSize = 1000,
             offset,
             rules = _.chain(stylesheet.rules || stylesheet.cssRules)
                 .map(function (r) { return r && r.selectorText; })
@@ -65,11 +65,9 @@ define([
     }
 
     function sendReports(sendAll) {
-        setTimeout(function () {
-            _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
-                sendReport(stylesheet, sendAll);
-            });
-        }, 3000);
+        _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
+            sendReport(stylesheet, sendAll);
+        });
     }
 
     return {
