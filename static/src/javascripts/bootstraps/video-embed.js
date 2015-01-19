@@ -32,6 +32,60 @@ define([
         return false;
     }
 
+    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
+    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
+    // needing to know about videojs
+    function bindGlobalEvents(player) {
+        player.on('playing', function () {
+            bean.fire(document.body, 'videoPlaying');
+        });
+        player.on('pause', function () {
+            bean.fire(document.body, 'videoPause');
+        });
+        player.on('ended', function () {
+            bean.fire(document.body, 'videoEnded');
+        });
+    }
+
+    function bindContentEvents(player) {
+        var events = {
+            end: function () {
+                player.trigger(constructEventName('content:end', player));
+            },
+            play: function () {
+                var duration = player.duration();
+                if (duration) {
+                    player.trigger(constructEventName('content:play', player));
+                } else {
+                    player.one('durationchange', events.play);
+                }
+            },
+            timeupdate: function () {
+                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
+                QUARTILES.reverse().some(function (quart) {
+                    if (progress >= quart) {
+                        player.trigger(constructEventName('play:' + quart, player));
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            ready: function () {
+                player.trigger(constructEventName('content:ready', player));
+
+                player.one('play', events.play);
+                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
+                player.one('ended', events.end);
+
+                if (shouldAutoPlay(player)) {
+                    player.play();
+                }
+            }
+        };
+        events.ready();
+    }
+
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
@@ -106,6 +160,7 @@ define([
                 var vol;
 
                 initLoadingSpinner(player);
+                bindGlobalEvents(player);
 
                 // unglitching the volume on first load
                 vol = player.volume();
@@ -117,8 +172,9 @@ define([
                 player.fullscreener();
                 deferToAnalytics.init();
                 deferToAnalytics.defer(function() {
-                    console.log("Wheres ya taxi fair");
                     initOmnitureTracking(player);
+                    bindContentEvents(player);
+                    console.log('foo');
                 });
             });
 

@@ -147,6 +147,7 @@ define([
         };
 
         this.onContentPlay = function () {
+            console.log('played');
             contentStarted = true;
             this.sendNamedEvent('video:play');
             this.startDurationEventTimer();
