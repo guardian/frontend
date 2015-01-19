@@ -17,8 +17,7 @@ object Cors extends Results {
       case Some(requestOrigin) => {
         val headers = controlHeaders ++ List(
           "Access-Control-Allow-Origin" -> corsOrigins.find(_ == requestOrigin).getOrElse("*"),
-          "Access-Control-Allow-Credentials" -> "true",
-          "Access-Control-Allow-Headers" -> "accept, content-type")
+          "Access-Control-Allow-Credentials" -> "true")
         result.withHeaders(headers: _*)
       }
     }
