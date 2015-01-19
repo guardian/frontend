@@ -4,7 +4,7 @@ define([
     'qwery',
     'videojs',
     'videojsembed',
-    'lodash/functions/debounce',
+    'common/utils/_',
     'common/utils/defer-to-analytics',
     'common/modules/analytics/omniture',
     'common/modules/analytics/omnitureMedia',
@@ -16,13 +16,32 @@ define([
     qwery,
     videojs,
     videojsembed,
-    debounce,
+    _,
     deferToAnalytics,
     Omniture,
     OmnitureMedia,
     techOrder,
     loadingTmpl
     ) {
+
+    var QUARTILES = [25, 50, 75],
+        EVENTS = [
+            'preroll:request',
+            'preroll:ready',
+            'preroll:play',
+            'preroll:end',
+            'content:ready',
+            'content:play',
+            'content:end'
+        ];
+
+    function getMediaType(player) {
+        return player.guMediaType;
+    }
+
+    function constructEventName(eventName, player) {
+        return getMediaType(player) + ':' + eventName;
+    }
 
     function handleInitialMediaError(player) {
         var err = player.error();
@@ -77,10 +96,6 @@ define([
                 player.one('play', events.play);
                 player.on('timeupdate', _.throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
-
-                if (shouldAutoPlay(player)) {
-                    player.play();
-                }
             }
         };
         events.ready();
@@ -126,18 +141,45 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
+    function ophanRecord(id, event, player) {
+        if (id) {
+            require('ophan/ng', function (ophan) {
+                var eventObject = {};
+                eventObject[getMediaType(player)] = {
+                    id: id,
+                    eventType: event.type
+                };
+                ophan.record(eventObject);
+            });
+        }
+    }
 
+    function initOphanTracking(player, mediaId) {
+        EVENTS.concat(QUARTILES.map(function (q) {
+            return 'play:' + q;
+        })).forEach(function (event) {
+            player.one(constructEventName(event, player), function (event) {
+                ophanRecord(mediaId, event, player);
+            });
+        });
+    }
+    
     function initOmnitureTracking(player) {
-       new OmnitureMedia(player).init();
+        new OmnitureMedia(player).init();
     }
 
     function initPlayer() {
 
         new Omniture(window.s).go();
+
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
-            var player, mouseMoveIdle;
+            var mediaType = el.tagName.toLowerCase(),
+                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+                mediaId = $el.attr('data-media-id'),
+                player,
+                mouseMoveIdle;
 
             bonzo(el).addClass('vjs');
 
@@ -170,15 +212,16 @@ define([
                 }
 
                 player.fullscreener();
+
                 deferToAnalytics.init();
                 deferToAnalytics.defer(function() {
                     initOmnitureTracking(player);
+                    initOphanTracking(player, mediaId);
                     bindContentEvents(player);
-                    console.log('foo');
                 });
             });
 
-            mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+            mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
 
             // built in vjs-user-active is buggy so using custom implementation
             player.on('mousemove', function () {

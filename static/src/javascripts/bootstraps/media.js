@@ -437,8 +437,6 @@ define([
 
                 deferToAnalytics.defer(function () {
 
-                    console.log("+++ Hiya - you hanging in there?");
-
                     initOmnitureTracking(player);
                     initOphanTracking(player, mediaId);
 

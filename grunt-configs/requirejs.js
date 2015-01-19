@@ -210,11 +210,9 @@ module.exports = function(grunt, options) {
                         exports: 's'
                     }
                 },
-
                 exclude: [
                     'text'
                 ],
-                wrapShim: true,
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false

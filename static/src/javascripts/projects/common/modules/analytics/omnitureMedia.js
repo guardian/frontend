@@ -77,7 +77,7 @@ define([
         this.omnitureInit = function () {
 
             s.loadModule('Media');
-            console.log("OmnitureInit type: " + mediaType + " : " + mediaName);
+
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
             s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61';
@@ -90,9 +90,9 @@ define([
             s.eVar44 = s.prop44 = mediaName;
             s.eVar7 = s.pageName;
 
-            console.log("++ What does it do: " + this.getDuration())
             s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
-            console.log("+++ after open");
+
+            console.log(mediaType);
 
             if (mediaType === 'video') {
                 this.sendNamedEvent('video:request');
@@ -159,8 +159,6 @@ define([
         };
 
         this.init = function () {
-
-            console.log("++ Omniture Media type: " )
 
             this.omnitureInit();
 
