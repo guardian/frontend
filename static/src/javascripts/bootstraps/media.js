@@ -435,7 +435,9 @@ define([
 
                 player.persistvolume({namespace: 'gu.vjs'});
 
-                deferToAnalytics(function () {
+                deferToAnalytics.defer(function () {
+
+                    console.log("+++ Hiya - you hanging in there?");
 
                     initOmnitureTracking(player);
                     initOphanTracking(player, mediaId);

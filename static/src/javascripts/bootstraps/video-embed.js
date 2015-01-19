@@ -1,5 +1,3 @@
-/* jshint unused: false */
-/* global guardian */
 define([
     'bean',
     'bonzo',
@@ -7,6 +5,9 @@ define([
     'videojs',
     'videojsembed',
     'lodash/functions/debounce',
+    'common/utils/defer-to-analytics',
+    'common/modules/analytics/omniture',
+    'common/modules/analytics/omnitureMedia',
     'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
@@ -16,9 +17,12 @@ define([
     videojs,
     videojsembed,
     debounce,
+    deferToAnalytics,
+    Omniture,
+    OmnitureMedia,
     techOrder,
     loadingTmpl
-) {
+    ) {
 
     function handleInitialMediaError(player) {
         var err = player.error();
@@ -68,8 +72,14 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
+
+    function initOmnitureTracking(player) {
+       new OmnitureMedia(player).init();
+    }
+
     function initPlayer() {
 
+        new Omniture(window.s).go();
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
@@ -105,7 +115,11 @@ define([
                 }
 
                 player.fullscreener();
-
+                deferToAnalytics.init();
+                deferToAnalytics.defer(function() {
+                    console.log("Wheres ya taxi fair");
+                    initOmnitureTracking(player);
+                });
             });
 
             mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
@@ -122,3 +136,5 @@ define([
         init: initPlayer
     };
 });
+/* jshint unused: false */
+/* global guardian */
