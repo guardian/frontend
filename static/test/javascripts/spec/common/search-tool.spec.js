@@ -17,7 +17,7 @@ define([
     return  new Injector()
         .store('common/utils/mediator')
         .require(['common/modules/search-tool', 'mocks'], function (SearchTool, mocks) {
-        xdescribe('Search tool', function () {
+        describe('Search tool', function () {
             var container,
                 sut;
 
