@@ -81,6 +81,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         UpdateActions.updateTreats(collectionId, update.update, identity).map(_.map{ updatedCollectionJson =>
           S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
           FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(update, identity.email))
+          FaciaPress.press(PressCommand.forOneId(collectionId).withPressLive())
           Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
         }.getOrElse(NotFound))
 
@@ -89,6 +90,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         UpdateActions.removeTreats(collectionId, remove.remove, identity).map(_.map{ updatedCollectionJson =>
           S3FrontsApi.putCollectionJson(collectionId, Json.prettyPrint(Json.toJson(updatedCollectionJson)))
           FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(remove, identity.email))
+          FaciaPress.press(PressCommand.forOneId(collectionId).withPressLive())
           Ok(Json.toJson(Map(collectionId -> updatedCollectionJson))).as("application/json")
       }.getOrElse(NotFound))
       case updateAndRemove: UpdateAndRemove =>
