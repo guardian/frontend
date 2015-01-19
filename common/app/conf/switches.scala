@@ -43,7 +43,7 @@ case class Switch( group: String,
 
 object Switch {
   private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get
+  def allSwitches: Seq[Switch] = switches.get()
 }
 
 object Switches {
@@ -275,9 +275,13 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "410-expired-ad-features",
+  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
     "If this switch is on, ad features with expired line items will return 410s.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+
+  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
+    "If this switch is on, logo slots will honour visitor's edition.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
 
   // Monitoring
 
@@ -301,6 +305,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val CssLogging = Switch("Monitoring", "css-logging",
+    "If this is on, then a subset of clients will post css selector information for diagnostics.",
+    safeState = Off, new LocalDate(2015, 2, 28)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -317,10 +326,6 @@ object Switches {
     safeState = On,
     sellByDate = new LocalDate(2015, 1, 31)
   )
-
-  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
-    "If switched on then the preview server will poll until the latest content is indexed.",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 15))
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
@@ -351,7 +356,7 @@ object Switches {
 
   val SearchSwitch = Switch("Feature", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val IdentityProfileNavigationSwitch = Switch("Feature", "id-profile-navigation",
@@ -389,13 +394,23 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val MediaPlayerSupportedBrowsers = Switch("Feature", "media-player-supported-browsers",
+    "If this is switched on then a message will be displayed to UAs not supported by our media player",
+    safeState = On, sellByDate = never
+  )
+
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
-    "If this is switched on then different Breaking News alert styles are A/B tested",
+  val WeatherSwitch = Switch("Feature", "weather",
+    "If this is switched on then the weather component is displayed",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABWeather = Switch("A/B Tests", "ab-weather",
+    "If this is switched on then the weather component is A/B tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
@@ -404,9 +419,19 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
+  val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
+    "If this is switched on then personalised containers based on history are tested",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
   val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
     "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  )
+
+  val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
+    "Switch for the UK Join Us navigation component A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
   )
 
   // actually just here to make us remove this in the future
@@ -438,9 +463,19 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val SudokuSwitch = Switch("Feature", "sudoku",
+    "If switched on, sudokus will be available",
+    safeState = Off, sellByDate = never
+  )
+
   val CricketScoresSwitch = Switch("Feature", "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off, sellByDate = never
+  )
+
+  val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
+    "If switched on, a stocks widget will be displayed on the business front",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
   // Facia
@@ -472,7 +507,7 @@ object Switches {
 
   val FaciaToolDraftContent = Switch("Facia", "facia-tool-draft-content",
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val FaciaToolCachedContentApiSwitch = Switch("Facia", "facia-tool-cached-capi-requests",
@@ -483,6 +518,11 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val IphoneConfidence = Switch("Performance", "iphone-confidence",
+    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

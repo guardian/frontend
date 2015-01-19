@@ -238,6 +238,11 @@ $vjs-progress-inset-bottom: 4px;
     background-size: cover;
     top: 0;
     left: 0;
+
+    .vjs-has-started &,
+    .vjs-controls-disabled & {
+        display: none;
+    }
 }
 
 .vjs-play-control {
@@ -456,9 +461,10 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-error-display {
     position: absolute;
-    width: 100%;
-    top: 40%;
     display: none;
+    width: 100%;
+    top: 0;
+    z-index: 3; // Ensures that it is above fullscreen clickbox.
 
     .gu-media--video.vjs-error &,
     .gu-media__flash-fallback & {
@@ -468,29 +474,50 @@ $vjs-progress-inset-bottom: 4px;
         background-color: #000000;
     }
     > div {
-        color: #ffffff;
-        @include fs-headline(3);
-        text-align: left;
-        @include box-sizing(border-box);
-        padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2);
-        min-height: $gs-baseline*5;
-        background-color: $vjs-control-colour;
+        position: absolute;
+        display: table-cell;
         width: 100%;
         margin: auto;
+        padding: $gs-baseline*1.5 $gs-gutter*3;
+        @include box-sizing(border-box);
+        @include fs-headline(2);
+        line-height: 1em;
+        text-align: left;
+        color: #ffffff;
+        background-color: $vjs-control-colour;
+
         &:before {
             @include icon(error-exclamation);
             content: ' ';
             display: block;
             position: absolute;
             top: 50%;
-            left: $gs-gutter;
-            margin-top: -22px // half icon height for centering;
+            left: $gs-gutter/2;
+            margin-top: -18px // half icon height for centering;
         }
     }
 
     a {
         color: #ffffff;
         text-decoration: underline;
+    }
+}
+
+.vjs-error-display__close {
+    @include icon(close-icon-white-small);
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px; // half icon height for centering;
+    right: $gs-gutter/2;
+    text-indent: -9999px;
+    background: transparent;
+    border: 1px solid rgba(#ffffff, .3);
+    @include border-radius(50%);
+
+    &:hover {
+        border-color: #ffffff;
     }
 }
 
@@ -654,19 +681,23 @@ $vjs-progress-inset-bottom: 4px;
 
 /* VJS: AD OVERLAY
    ========================================================================== */
+$vjs-height-ratio: 7/3;
+
 .vjs-ads-overlay-top {
     position: absolute;
     z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
-    height: $gs-baseline*2;
+    height: $gs-baseline*($vjs-height-ratio);
     padding: $gs-baseline/3 0 0 $gs-gutter/4;
     background-color: rgba(colour(neutral-1), .8);
     border-top: 1px solid colour(neutral-2);
     color: #ffffff;
     text-align: left;
+    @include transition(top 1s linear);
     @include fs-textSans(1);
+    @include box-sizing(border-box);
 
     @include mq(tablet) {
         @include fs-textSans(2, true);
@@ -693,6 +724,10 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 
+.vjs-ads-overlay-top--animate-hide {
+    top: -$gs-baseline*($vjs-height-ratio);
+}
+
 .vjs-ads-overlay-loading {
     display: none;
 }
@@ -703,12 +738,57 @@ $vjs-progress-inset-bottom: 4px;
     right: $gs-gutter/2;
 }
 
+/* VJS: SKIP AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay-skip {
+    position: absolute;
+    z-index: 4;
+    bottom: 54px;
+    right: 8px;
+    width: $gs-column-width*2;
+    padding: $gs-baseline/2 0 $gs-baseline/4 $gs-gutter/4;
+    background-color: rgba(colour(neutral-1), .8);
+    color: #ffffff;
+    text-align: left;
+    @include fs-textSans(1);
+
+    @include mq(tablet) {
+        @include fs-textSans(2, true);
+    }
+}
+
+.vjs-ads-overlay-skip--enabled {
+    .vjs-ads-overlay-skip-button {
+        background-color: inherit;
+        border: 0;
+
+        .i-play-icon-grey {
+            display: inline-block;
+        }
+        .i-play-icon-gold {
+            display: none;
+        }
+        &:hover {
+            color: colour(comment-main-2);
+            .i-play-icon-grey {
+                display: none;
+            }
+            .i-play-icon-gold {
+                display: inline-block;
+            }
+        }
+        .skip-icon {
+            margin-right: $gs-gutter/4;
+        }
+    }
+}
+
 /* End slate
    ========================================================================== */
 .end-slate-container {
     display: none;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
     left: 0;
     right: 0;

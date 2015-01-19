@@ -1,0 +1,261 @@
+$weather-small-size: 26px;
+$weather-large-size: 60px;
+
+.weather {
+    color: colour(neutral-1);
+    float: right;
+    text-align: right;
+
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 4;
+    }
+
+    @include mq(tablet) {
+        width: gs-span(3);
+        text-align: left;
+        margin-top: $gs-baseline * 2; 
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        margin-top: $gs-baseline * 1.5;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: gs-span(3);
+            text-align: left;
+            margin-top: $gs-baseline * 2;
+        }
+    }
+}
+
+.weather__location {
+    display: none;
+
+    @include mq(tablet) {
+        position: relative;
+        display: block;
+    }
+
+    @include mq(tablet, leftCol) {
+        width: gs-span(2);
+        float: right;
+    }
+
+    @include mq(leftCol) {
+        border-top: 1px dotted colour(neutral-3);
+        padding-top: $gs-baseline / 3;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: gs-span(2);
+            float: right;
+            border-top: 0;
+            padding-top: 0;
+        }
+    }
+
+    .search-tool__input {
+        display: none;
+        width: 100%;
+        position: relative;
+        z-index: 4;
+        @include fs-headline(2);
+        @include box-sizing(border-box);
+
+        @include mq(tablet) {
+            display: inherit;
+            padding-right: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline / 4;
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                padding-right: $gs-gutter;
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .search-tool__btn {
+        display: none;
+    }
+
+    &.is-editing {
+        .search-tool__input {
+            border-bottom: 1px solid colour(neutral-3);
+        }
+
+        .weather__edit-location {
+            display: none;
+        }
+
+        .weather__close-location {
+            display: initial;
+        }
+
+        & ~ .weather__forecasts {
+            opacity: .5; // This needs fixing
+        }
+    }
+}
+
+.weather__close-location,
+.weather__edit-location {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    display: block;
+    line-height: inherit;
+
+    @include mq(leftCol) {
+        top: $gs-baseline / 2.4;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            top: 1px;
+        }
+    }
+
+    .weather__search-icon,
+    .weather__close-icon {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+.weather__close-location {
+    z-index: 5;
+    display: none;
+}
+
+.weather__edit-location {
+    z-index: 3;
+}
+
+.weather__forecasts {
+    position: relative;
+    @include transition(opacity .2s ease-in); // Needs Fixing
+
+    @include mq($until: leftCol) {
+        @include box-sizing(border-box);
+        width: gs-span(1) + $gs-gutter;
+        float: left;
+        padding-right: $weather-small-size;
+        text-align: right;
+
+        .weather__icon {
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(tablet, leftCol) {
+        padding-right: $weather-small-size + $gs-gutter / 2;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            right: $gs-gutter / 4;
+            height: $gs-baseline + 1px;
+            border-right: 1px dotted colour(neutral-3);
+        }
+
+        .weather__icon {
+            right: $gs-gutter / 2;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            @include box-sizing(border-box);
+            padding-right: $weather-small-size + $gs-gutter / 2;
+            width: gs-span(1) + $gs-gutter;
+            float: left;
+            text-align: right;
+
+            .weather__icon {
+                position: absolute;
+                top: 0;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 3px;
+                right: $gs-gutter / 4;
+                height: $gs-baseline + 1px;
+                border-right: 1px dotted colour(neutral-3);
+            }
+
+            .weather__icon {
+                right: $gs-gutter / 2;
+            }
+        }
+    }
+}
+
+.weather__desc {
+    @include fs-headline(2);
+    margin-right: 5px;
+
+    @include mq(leftCol) {
+        position: absolute;
+        bottom: 2px;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            position: inherit;
+        }
+    }
+}
+
+.weather__time {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            display: none;
+        }
+    }
+}
+
+.i.weather__icon {
+    width: $weather-small-size !important;
+    height: $weather-small-size !important;
+    margin: 0;
+    margin-top: -($gs-baseline / 3);
+
+    @include mq(leftCol) {
+        width: $weather-large-size !important;
+        height: $weather-large-size !important;
+        display: block;
+        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: $weather-small-size !important;
+            height: $weather-small-size !important;
+            margin: 0;
+            margin-top: -($gs-baseline / 3);
+            display: inline-block;
+        }
+    }
+}

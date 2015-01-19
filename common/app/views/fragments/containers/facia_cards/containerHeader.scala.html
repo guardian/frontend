@@ -21,7 +21,7 @@
     </div>
 }.getOrElse {
     @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-        <div class="fc-container__header js-container__header">
+        <div class="fc-container__header js-container__header @if(containerDefinition.showDateHeader) { js-weather }">
             @title.map { title =>
                 @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
                     <div class="@RenderClasses(Map(

@@ -154,21 +154,20 @@
             var docClass = document.documentElement.className;
 
             @* http://modernizr.com/download/#-svg *@
-            function hasSvgSupport() {
-                var ns = {'svg': 'http://www.w3.org/2000/svg'};
-                return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-            }
-            if (hasSvgSupport()) {
+            if (
+                !!document.createElementNS &&
+                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
+            ) {
                 docClass += ' svg';
             }
 
-            if(testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
+            if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
                 docClass += ' has-flex';
             } else {
                 docClass += ' has-no-flex';
             }
 
-            if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+            if (testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
                 docClass += ' has-flex-wrap';
             } else {
                 docClass += ' has-no-flex-wrap';
@@ -180,3 +179,24 @@
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
+
+@* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+@* also delete iPhoneConfidenceCheck inside of facia.js *@
+@if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+    @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
+    <script>
+        if (navigator.platform === 'iPhone') {
+
+            guardian.isIphone6 = (screen.width === 375 && screen.height === 667) || (screen.width === 414 && screen.height === 736);
+            guardian.isIphone4 = screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1;
+
+            if (guardian.isIphone6) {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-6-start.gif';
+            }
+
+            if (guardian.isIphone4) {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start.gif';
+            }
+        }
+    </script>
+}

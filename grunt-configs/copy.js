@@ -92,6 +92,14 @@ module.exports = function(grunt, options) {
                 dest: 'common/conf/assets'
             }]
         },
+        inlineSVGs: {
+            files: [{
+                expand: true,
+                cwd: 'static/src/inline-svgs',
+                src: ['**/*.svg'],
+                dest: 'common/conf/assets/inline-svgs'
+            }]
+        },
         /**
          * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
          * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615

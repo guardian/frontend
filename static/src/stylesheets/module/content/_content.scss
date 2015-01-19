@@ -126,7 +126,6 @@
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
-    word-wrap: break-word;
 
     @include mq(leftCol) {
         border: 0;
@@ -151,6 +150,7 @@
         @include fs-header(4);
         line-height: get-line-height(header, 2);
         float: none;
+        padding-right: 0;
     }
 }
 
@@ -165,6 +165,19 @@
 
     .content__series-label__link {
         color: colour(neutral-2);
+    }
+}
+
+@include mq(leftCol, wide) {
+    .content__section-label__link,
+    .container__meta__title {
+        font-size: 20px !important;
+        line-height: 24px !important;
+    }
+
+    .content__series-label__link {
+        @include font-size(18, 22);
+        display: block;
     }
 }
 
@@ -484,19 +497,22 @@
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
-        padding-right: gs-span(2);
         line-height: 22px;
     }
 
     @include mq(leftCol) {
         clear: both;
-        margin-bottom: 0;
-        padding-right: 0;
+        padding-top: $gs-baseline/6;
         border-top: 1px dotted colour(neutral-5);
         @include box-sizing(border-box);
-        min-height: gs-height(1) + $gs-baseline;
-        padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
+        min-height: $gs-baseline*4;
+    }
+
+    .content__meta-container--twitter &,
+    .content__meta-container--bio & {
+        min-height: 0;
+        padding-bottom: 0;
     }
 }
 
@@ -623,4 +639,132 @@
     border-top: 1px dotted colour(neutral-5);
     padding: 0;
     @include box-sizing(border-box);
+}
+
+// if start using inline svgs across the board then this would be abstracted into its own helper file
+.svg-tone-fill {
+    fill: colour(news-default);
+
+    .tonal--tone-comment & {
+        fill: colour(comment-default);
+    }
+
+    .tonal--tone-feature & {
+        fill: colour(feature-default);
+    }
+
+    .tonal--tone-review & {
+        fill: colour(review-background);
+    }
+
+    .tonal--tone-editorial & {
+        fill: colour(editorial-default);
+    }
+
+    .tonal--tone-analysis & {
+        fill: colour(analysis-accent);
+    }
+
+    .tonal--tone-live &,
+    .tonal--tone-dead & {
+        fill: colour(live-default);
+    }
+
+    .tonal--tone-media & {
+        fill: colour(media-default);
+    }
+}
+
+.meta__twitter {
+    margin: -($gs-baseline*2/3) 0 -($gs-baseline/6) 0;
+
+    .content__meta-container--tonal-header & {
+        @include mq($until: leftCol) {
+            margin-top: -($gs-baseline/3);
+        }
+    }
+
+    .icon {
+        margin-top: $gs-baseline/3;
+        overflow: visible;
+    }
+
+    button {
+        padding-top: 1px;
+
+        .tonal--tone-media & {
+            border: 0;
+            background-color: colour(multimedia-support-4);
+
+            &:hover {
+                background-color: colour(neutral-2);
+            }
+        }
+
+        @include mq($until: leftCol) {
+            padding: 0;
+            margin: $gs-baseline/2 0 0;
+            border: 0;
+            background-color: transparent !important;
+        }
+    }
+
+    .twitter-handle {
+        height: 21px;
+        display: inline-block;
+        vertical-align: top;
+
+        @include mq(leftCol) {
+            margin-top: -1px;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline/1.2;
+        margin-bottom: $gs-baseline * 3/2;
+    }
+}
+
+
+.meta__bio {
+    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline/2;
+
+    color: colour(neutral-2);
+    @include fs-headline(1);
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+
+    .tonal--tone-media & {
+        color: colour(neutral-7);
+    }
+
+    .meta__author--comment & {
+        padding-top: $gs-baseline/6;
+        border-top: 1px dotted colour(neutral-5);
+    }
+
+    .content__meta-container--twitter & {
+        margin-bottom: 0;
+    }
+
+    .content__meta-container--tonal-header & {
+        border-top: 1px dotted colour(neutral-5);
+        padding-top: $gs-baseline/6;
+    }
+}
+
+.meta__contact-header {
+    @include fs-textSans(1);
+    line-height: 15px;
+    color: colour(neutral-2);
+    margin-bottom: 0;
+    border-top: 1px dotted colour(neutral-5);
+    padding-top: $gs-baseline/6;
+
+    .content__meta-container--bio & {
+        margin-top: $gs-baseline;
+    }
 }

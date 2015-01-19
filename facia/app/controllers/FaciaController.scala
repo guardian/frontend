@@ -4,12 +4,14 @@ import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common._
 import common.editions.EditionalisedSections
 import conf.Switches
+import conf.Switches._
 import front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import play.api.mvc._
 import play.api.libs.json.Json
 import slices.Container
+import views.support.RenderOtherStatus
 import scala.concurrent.Future
 import play.twirl.api.Html
 import performance.MemcachedAction
@@ -127,6 +129,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
+          else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
+            RenderOtherStatus(Gone)
           else
             Ok(views.html.front(faciaPage))
         }

@@ -17,7 +17,7 @@ Media list item. Looks a bit like this:
     $media-ratio: 5 / 3;
     $item-vertical-padding: $gs-baseline / 4;
     $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
-    $image-width: $item-min-height * $media-ratio;
+    $image-width: normalize-width($item-min-height * $media-ratio);
     $mobile-media-padding: ($gs-baseline / 3);
 
     min-height: $item-min-height + ($mobile-media-padding * 2);
@@ -88,6 +88,14 @@ Media list item. Looks a bit like this:
         }
     }
 
+    .fc-item__kicker--dreamsnap-list {
+        margin-left: 0 - $image-width - $mobile-media-padding;
+
+        @include mq(tablet) {
+            margin-left: 0 - $image-width;
+        }
+    }
+
     &[class*="fc-item--has-sublinks"] .fc-item__media-wrapper {
         position: relative;
         float: left;
@@ -118,6 +126,10 @@ Media list item. Looks a bit like this:
     }
 
     &.fc-item--has-cutout {
+        .fc-item__kicker--dreamsnap-list {
+            margin-left: 0;
+        }
+
         .fc-item__content {
             min-height: gs-height(2) + $gs-baseline;
             padding-right: gs-span(1);

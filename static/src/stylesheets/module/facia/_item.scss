@@ -213,14 +213,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__live-indicator {
     color: colour(live-default);
-
-    .live-pulse-icon {
-        display: inline-block;
-        margin: 0;
-        margin-right: .2em;
-        height: .7em;
-        width: .7em;
-    }
 }
 
 .fc-item__breaking-indicator {
@@ -270,6 +262,27 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+// dream snaps
+.fc-item__kicker--dreamsnap {
+    display: block;
+    @include fs-header(2);
+    background-color: fade-out(#000000, .9);
+    margin: 0 (0 - $gs-gutter * .25);
+    padding: ($gs-baseline * .25) ($gs-gutter * .25);
+
+    &:hover:before {
+        text-decoration: none;
+    }
+
+    &:after {
+        display: none;
+    }
+}
+
+.fc-item__kicker--dreamsnap-list {
+    display: none;
+}
+
 .fc-item__byline {
     margin-bottom: 0;
 }
@@ -310,6 +323,10 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-trail__count--inline-template {
+    display: none;
+}
+
+.fc-item__timestamp + .fc-trail__count .fc-trail__count__label {
     display: none;
 }
 
@@ -367,10 +384,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__link,
 .fc-sublink__link {
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
     &:visited {
         color: mix(colour(neutral-1), #ffffff, 80%);
     }
@@ -379,6 +392,8 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__link {
     &:hover,
     &:focus {
+        text-decoration: none;
+
         .fc-item__headline {
             text-decoration: underline;
         }

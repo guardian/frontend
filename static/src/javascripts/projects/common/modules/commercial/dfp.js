@@ -20,9 +20,10 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/utils/user-timing',
+    'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/ui/sticky'
+    'common/modules/onward/geo-most-popular'
 ], function (
     bean,
     bonzo,
@@ -44,9 +45,10 @@ define([
     detect,
     mediator,
     urlUtils,
+    userTiming,
+    StickyMpu,
     buildPageTargeting,
-    geoMostPopular,
-    Sticky
+    geoMostPopular
 ) {
 
     /**
@@ -86,10 +88,7 @@ define([
         ],
         callbacks = {
             '300,251': function (event, $adSlot) {
-                var $mpuContainer = $adSlot.parent();
-
-                $mpuContainer.next().remove();
-                new Sticky($mpuContainer[0], { top: 12 }).init();
+                new StickyMpu($adSlot).create();
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
@@ -142,7 +141,10 @@ define([
                     }
                 })
                 .map(function ($adSlot) {
-                    return [$adSlot.attr('id'), defineSlot($adSlot)];
+                    return [$adSlot.attr('id'), {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    }];
                 })
                 .zipObject()
                 .valueOf();
@@ -199,7 +201,10 @@ define([
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
-                    slots[slotId] = defineSlot($adSlot);
+                    slots[slotId] = {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    };
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
@@ -215,7 +220,7 @@ define([
             }
         },
         refreshSlot = function ($adSlot) {
-            var slot = slots[$adSlot.attr('id')];
+            var slot = slots[$adSlot.attr('id')].slot;
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
@@ -270,7 +275,10 @@ define([
         },
         parseAd = function (event) {
             var size,
-                $slot = $('#' + event.slot.getSlotId().getDomId());
+                slotId = event.slot.getSlotId().getDomId(),
+                $slot = $('#' + slotId);
+
+            allAdsRendered(slotId);
 
             if (event.isEmpty) {
                 removeLabel($slot);
@@ -282,6 +290,15 @@ define([
                 size = event.size.join(',');
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
+            }
+        },
+        allAdsRendered = function (slotId) {
+            if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isRendered = true;
+            }
+
+            if (_.every(slots, 'isRendered')) {
+                userTiming.mark('All ads are rendered');
             }
         },
         addLabel = function ($slot) {

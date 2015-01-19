@@ -60,25 +60,20 @@ trait S3 extends Logging {
     }
   }
 
-  def get(key: String)(implicit codec: Codec): Option[String] = try {
-    withS3Result(key) {
-      result => Source.fromInputStream(result.getObjectContent).mkString
-    }
+  def get(key: String)(implicit codec: Codec): Option[String] = withS3Result(key) {
+    result => Source.fromInputStream(result.getObjectContent).mkString
   }
 
-  def getWithLastModified(key: String): Option[(String, DateTime)] = try {
-    withS3Result(key) {
-      result =>
-        val content = Source.fromInputStream(result.getObjectContent).mkString
-        val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
-        (content, lastModified)
-    }
+
+  def getWithLastModified(key: String): Option[(String, DateTime)] = withS3Result(key) {
+    result =>
+      val content = Source.fromInputStream(result.getObjectContent).mkString
+      val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
+      (content, lastModified)
   }
 
-  def getLastModified(key: String): Option[DateTime] = try {
-    withS3Result(key) {
-      result => new DateTime(result.getObjectMetadata.getLastModified)
-    }
+  def getLastModified(key: String): Option[DateTime] = withS3Result(key) {
+    result => new DateTime(result.getObjectMetadata.getLastModified)
   }
 
   def putPublic(key: String, value: String, contentType: String) {
@@ -160,7 +155,7 @@ object S3FrontsApi extends S3 {
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putBlock(id: String, json: String) =
+  def putCollectionJson(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
   def archive(id: String, json: String, identity: UserIdentity) = {

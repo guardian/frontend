@@ -15,6 +15,8 @@ GET         /ab.gif                                                             
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
+POST        /css                                                                                                     controllers.DiagnosticsController.css
+OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -280,12 +282,14 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
+GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
 GET         /embed/video/*path                                                                                       controllers.EmbedController.render(path)
+
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)

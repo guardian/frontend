@@ -40,6 +40,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
   lazy val standfirst: Option[String] = fields.get("standfirst")
+  lazy val contributorBio: Option[String] = fields.get("contributorBio")
   lazy val starRating: Option[Int] = fields.get("starRating").flatMap(s => Try(s.toInt).toOption)
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
@@ -61,7 +62,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
-    visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
+    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
@@ -165,7 +166,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-      ("blogIds", JsString(blogs.map { _.id.last }.mkString(","))),
+      ("blogIds", JsString(blogs.map(_.id).mkString(","))),
       ("commentable", JsBoolean(isCommentable)),
       ("hasStoryPackage", JsBoolean(fields.get("hasStoryPackage").exists(_.toBoolean))),
       ("pageCode", JsString(fields("internalPageCode"))),
