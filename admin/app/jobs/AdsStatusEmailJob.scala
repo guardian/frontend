@@ -21,9 +21,7 @@ object AdsStatusEmailJob extends Logging {
     } {
       EmailService.send(
         from = adTech,
-        // todo reinstate when email addresses have been verified in SES
-        // to = Seq(adOps, adOpsUs, adOpsAu),
-        to = Seq(adOps),
+        to = Seq(adOps, adOpsUs, adOpsAu),
         cc = Seq(adTech),
         subject = subject,
         htmlBody = Some(htmlBody))
@@ -50,9 +48,8 @@ object AdsStatusEmailJob extends Logging {
       lineItems filter (_.sponsor.isEmpty) sortBy (_.id)
     }
 
-    val noSuchTargetedTags: Seq[GuLineItem] = {
-      paidForTags.filter(_.matchingCapiTagIds.isEmpty).flatMap(_.lineItems).sortBy(_.id).distinct
-    }
+    // Will revisit this when glabs have fixed their tagging
+    val noSuchTargetedTags: Seq[GuLineItem] = Nil
 
     views.html.commercial.email.adsStatus(AdStatusReport(
       pageskinsWithoutEdition,

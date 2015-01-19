@@ -288,3 +288,16 @@
     &::-moz-placeholder { @content; }
     &:-ms-input-placeholder { @content; }
 }
+
+// convert a given width to one available in _vars.scss if it's within the tolerance
+@function normalize-width($width) {
+    $tolerance: 10px;
+
+    @each $candidate in $available-image-widths {
+        @if (abs($candidate - $width) <= $tolerance) {
+            @return $candidate;
+        }
+    }
+
+    @return $width;
+}

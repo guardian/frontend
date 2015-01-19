@@ -3,13 +3,14 @@ define([
     'qwery',
     // Common libraries
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/to-array',
+    'common/modules/analytics/beacon',
     // Modules
+    'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
@@ -18,12 +19,13 @@ define([
     bonzo,
     qwery,
     $,
-    ajax,
     config,
     detect,
     mediator,
     storage,
     toArray,
+    beacon,
+    stocks,
     GeoMostPopularFront,
     ContainerToggle,
     ContainerShowMore,
@@ -74,6 +76,28 @@ define([
                 if (config.switches.geoMostPopular) {
                     new GeoMostPopularFront().go();
                 }
+            },
+
+            // temporary to check an 'older' iphone perf problem
+            iPhoneConfidenceCheck: function () {
+                if (config.switches.iphoneConfidence) {
+                    /* jshint undef: true */
+                    /* global guardian */
+                    mediator.on('page:front:ready', function () {
+                        if (guardian.isIphone6) {
+                            beacon.counts('iphone-6-end');
+                            setTimeout(function () {
+                                beacon.counts('iphone-6-timeout');
+                            }, 5000);
+                        }
+                        if (guardian.isIphone4) {
+                            beacon.counts('iphone-4-end');
+                            setTimeout(function () {
+                                beacon.counts('iphone-4-timeout');
+                            }, 5000);
+                        }
+                    });
+                }
             }
         },
 
@@ -84,6 +108,8 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
+                stocks();
+                modules.iPhoneConfidenceCheck();
             }
             mediator.emit('page:front:ready');
         };
