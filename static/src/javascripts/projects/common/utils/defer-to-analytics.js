@@ -11,7 +11,7 @@ define([
     });
 
     function init() {
-      analyticsReady = true;
+        analyticsReady = true;
     }
 
     function deferToAnalytics(afterAnalytics) {

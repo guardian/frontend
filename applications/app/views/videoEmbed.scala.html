@@ -99,7 +99,8 @@
                         paths: {
                             core: '@StaticSecure("javascripts/core.js")',
                             text: 'text', // noop
-                            'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")'
+                            'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
+                            'ophan/ng':  '@{Configuration.javascript.config("ophanJsUrl")}'
                         }
                     };
 

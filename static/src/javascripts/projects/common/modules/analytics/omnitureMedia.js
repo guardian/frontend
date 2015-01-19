@@ -92,8 +92,6 @@ define([
 
             s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
 
-            console.log(mediaType);
-
             if (mediaType === 'video') {
                 this.sendNamedEvent('video:request');
             }
@@ -147,7 +145,6 @@ define([
         };
 
         this.onContentPlay = function () {
-            console.log('played');
             contentStarted = true;
             this.sendNamedEvent('video:play');
             this.startDurationEventTimer();
@@ -180,4 +177,3 @@ define([
     }
     return OmnitureMedia;
 });
-

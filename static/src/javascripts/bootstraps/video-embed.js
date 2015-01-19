@@ -1,3 +1,4 @@
+/* global videojs, guardian */
 define([
     'bean',
     'bonzo',
@@ -35,12 +36,8 @@ define([
             'content:end'
         ];
 
-    function getMediaType(player) {
-        return player.guMediaType;
-    }
-
-    function constructEventName(eventName, player) {
-        return getMediaType(player) + ':' + eventName;
+    function constructEventName(eventName) {
+        return 'video:' + eventName;
     }
 
     function handleInitialMediaError(player) {
@@ -141,15 +138,15 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
-    function ophanRecord(id, event, player) {
+    function ophanRecord(id, event) {
         if (id) {
             require('ophan/ng', function (ophan) {
-                var eventObject = {};
-                eventObject[getMediaType(player)] = {
-                    id: id,
-                    eventType: event.type
-                };
-                ophan.record(eventObject);
+                ophan.record({
+                    video: {
+                        id: id,
+                        eventType: event.type
+                    }
+                });
             });
         }
     }
@@ -163,7 +160,7 @@ define([
             });
         });
     }
-    
+
     function initOmnitureTracking(player) {
         new OmnitureMedia(player).init();
     }
@@ -214,9 +211,9 @@ define([
                 player.fullscreener();
 
                 deferToAnalytics.init();
-                deferToAnalytics.defer(function() {
+                deferToAnalytics.defer(function () {
                     initOmnitureTracking(player);
-                    initOphanTracking(player, mediaId);
+                    //initOphanTracking(player, mediaId);
                     bindContentEvents(player);
                 });
             });

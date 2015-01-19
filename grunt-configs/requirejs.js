@@ -213,6 +213,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'text'
                 ],
+
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false

@@ -144,7 +144,8 @@ define([
 
     function bindContentEvents(player) {
         var events = {
-            end: function () { bindContentEvents(player);
+            end: function () {
+                bindContentEvents(player);
                 player.trigger(constructEventName('content:end', player));
             },
             play: function () {
