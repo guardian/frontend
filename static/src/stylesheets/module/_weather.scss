@@ -164,6 +164,10 @@ $weather-large-size: 60px;
         }
     }
 
+    @include mq(leftCol) {
+        display: none;
+    }
+
     &.is-visible .weather__toggle-icon {
         @include transform(rotate(180deg));
     }
@@ -279,6 +283,7 @@ $weather-large-size: 60px;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
     list-style: none;
     line-height: 1.2;
+    display: none;
 
     @include mq($until: wide) {
         width: 100%;
@@ -289,6 +294,14 @@ $weather-large-size: 60px;
         &::-webkit-scrollbar {
             display: none;
         }
+    }
+
+    @include mq(leftCol) {
+        display: block !important; // Important to override any toggle settings
+    }
+
+    &.is-visible {
+        display: block;
     }
 
     .weather__forecast {
