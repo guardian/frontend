@@ -40,7 +40,7 @@ define([
 
     function setCookie(ifrm, cookieValue) {
         ifrm.setAttribute('src',
-            'http://www.theguardian.com/uk?' + cookieName + '=' + cookieValue);
+            'https://www.theguardian.com/uk?' + cookieName + '=' + cookieValue);
     }
 
     function init() {

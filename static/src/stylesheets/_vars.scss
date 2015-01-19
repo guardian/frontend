@@ -114,6 +114,9 @@ $frontend-palette: (
     crosswordAccent1:       guss-colour(multimedia-support-1, $pasteup-palette),
     crosswordAccent2:       guss-colour(news-main-2, $pasteup-palette),
 
+    sudoku-mute:            lighten(guss-colour(news-main-2, $pasteup-palette), 30%),
+    sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
+
     // Football
     // =============================================================================
 
@@ -167,3 +170,9 @@ $content-top-padding: $gs-baseline / 1.5;
 $vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;
+
+// Available image widths
+// these should match the ones in common/modules/ui/images.js
+// =============================================================================
+
+$available-image-widths: 140px, 220px, 300px, 460px, 620px, 700px, 860px, 940px, 1430px, 1920px;

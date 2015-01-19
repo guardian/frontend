@@ -1,6 +1,7 @@
 package controllers
 
 import common._
+import geo.{CityRef, CitiesLookUp}
 import model.Cached
 import models.CityResponse
 import play.api.libs.json.Json
@@ -32,13 +33,24 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     ) match {
       case Some((city, country)) =>
         log.info(s"Received what is my city? request. Geo info: City=$city Country=$country")
-        WeatherApi.searchForLocations(city) map { locations =>
-          val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
-          val weatherCity = cities.headOption.getOrElse(cityFromRequestEdition)
 
-          log.info(s"Resolved geo info (City=$city Country=$country) to city $weatherCity")
+        CitiesLookUp.getLatitudeLongitude(CityRef(city, country)) match {
+          case Some(latitudeLongitude) =>
+            log.info(s"Matched $city, $country to $latitudeLongitude")
 
-          Cached(7.days)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
+            WeatherApi.getNearestCity(latitudeLongitude) map { location =>
+              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location))))
+            }
+
+          case None =>
+            WeatherApi.searchForLocations(city) map { locations =>
+              val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
+              val weatherCity = cities.headOption.getOrElse(cityFromRequestEdition)
+
+              log.info(s"Resolved geo info (City=$city Country=$country) to city $weatherCity")
+
+              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
+            }
         }
 
       case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))

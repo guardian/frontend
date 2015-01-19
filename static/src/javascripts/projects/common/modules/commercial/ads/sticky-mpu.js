@@ -12,7 +12,7 @@ define([
         StickyMpu = function ($adSlot, options) {
             this.$adSlot = $adSlot;
             this.opts    = defaults(options || {}, {
-                top: 12
+                top: 0
             });
         };
 
