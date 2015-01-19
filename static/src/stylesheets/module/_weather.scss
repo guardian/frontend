@@ -272,18 +272,51 @@ $weather-large-size: 60px;
 
 .weather__forecasts {
     clear: left;
-    list-style: none;
     margin: 0;
-    margin-bottom: $gs-baseline;
+    padding: ($gs-baseline / 6) 0 ($gs-baseline / 2) 0;
+    list-style: none;
+
+    @include mq($until: wide) {
+        width: 100%;
+        overflow-x: scroll;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        line-height: 1.2;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 
     .weather__forecast {
-        float: left;
-        margin-right: $gs-gutter / 4;
+        position: relative;
+        display: table-cell;
         border-right: 1px dotted colour(neutral-3);
-        padding-right: $gs-gutter / 4;
+        padding-left: $gs-gutter / 4;
+        padding-right: ($gs-gutter / 2) + $weather-small-size;
+
+        &:first-of-type {
+            padding-left: 0;
+        }
+
+        &:last-of-type {
+            border-right: 0;
+        }
+
+        .forecast__time {
+            @include mq($until: tablet) {
+                display: block;
+            }
+        }
     }
 
     .i.weather__icon {
-        vertical-align: sub;
+        position: absolute;
+        bottom: -3px;
+        right: $gs-gutter / 2;
+
+        @include mq(tablet, wide) {
+            right: $gs-gutter / 4;
+        }
     }
 }
