@@ -12,23 +12,23 @@ object DiagnosticsController extends Controller with Logging {
 
   def js = Action { implicit request =>
     JavaScript.report(request)
-    OnePix()
+    TinyResponse()
   }
 
   def ab = Action { implicit request =>
     AbTests.report(request.queryString)
-    OnePix()
+    TinyResponse()
   }
 
   def analytics(prefix: String) = Action {
     Analytics.report(prefix)
-    OnePix()
+    TinyResponse()
   }
 
   // e.g.  .../counts?c=pv&c=vv&c=ve
   def analyticsCounts() = Action { request =>
     request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
-    OnePix()
+    TinyResponse()
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
