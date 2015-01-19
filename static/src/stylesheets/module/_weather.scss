@@ -278,10 +278,7 @@ $weather-large-size: 60px;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
     list-style: none;
-
-    @include mq(desktop, wide) {
-        display: table;
-    }
+    line-height: 1.2;
 
     @include mq($until: wide) {
         width: 100%;
@@ -299,10 +296,16 @@ $weather-large-size: 60px;
         display: table-cell;
         border-right: 1px dotted colour(neutral-3);
         padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter;
+        padding-right: $gs-gutter / 1.333;
+        min-width: gs-span(1);
+        float: right;
 
         &:first-of-type {
             padding-left: 0;
+        }
+
+        &:nth-of-type(odd) {
+            display: none;
         }
 
         .weather__time {
@@ -311,6 +314,7 @@ $weather-large-size: 60px;
     }
 
     .i.weather__icon {
-        vertical-align: bottom;
+        display: block;
+        margin-top: $gs-baseline / 3;
     }
 }
