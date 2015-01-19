@@ -201,8 +201,10 @@ define([
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
-                    slots[slotId].isRendered = false;
-                    slots[slotId].slot = defineSlot($adSlot);
+                    slots[slotId] = {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    };
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
