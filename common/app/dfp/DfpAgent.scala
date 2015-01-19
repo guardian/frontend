@@ -18,13 +18,15 @@ object DfpAgent
 
   override protected val isProd: Boolean = environment.isProd
 
-  private lazy val allPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
+  private lazy val currentPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
+  private lazy val allAdFeatureTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
-  protected def allPaidForTags: Seq[PaidForTag] = allPaidForTagsAgent get()
+  protected def currentPaidForTags: Seq[PaidForTag] = currentPaidForTagsAgent get()
+  protected def allAdFeatureTags: Seq[PaidForTag] = allAdFeatureTagsAgent get()
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
@@ -91,7 +93,10 @@ object DfpAgent
     }
 
     val paidForTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpPaidForTagsDataKey)
-    update(allPaidForTagsAgent, paidForTags)
+    update(currentPaidForTagsAgent, paidForTags)
+
+    val allAdFeatureTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpAdFeatureReportKey)
+    update(allAdFeatureTagsAgent, allAdFeatureTags)
 
     val sponsoredTags: Seq[PaidForTag] = paidForTags filter (_.paidForType == Sponsored)
     updateMap(tagToSponsorsMapAgent, generateTagToSponsorsMap(sponsoredTags))
