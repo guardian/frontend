@@ -237,6 +237,7 @@ define([
                         'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
                         'forecast-icon': forecastData[i].WeatherIcon,
                         'forecast-desc': forecastData[i].IconPhrase,
+                        'forecast-num' : i,
                     }));
 
                $forecast.appendTo($forecastHolder);

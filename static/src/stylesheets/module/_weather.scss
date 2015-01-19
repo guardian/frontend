@@ -108,6 +108,8 @@ $weather-large-size: 60px;
 
 .weather__time {
     display: none;
+    color: colour(neutral-2);
+    @include fs-textSans(1);
 
     @include mq(leftCol) {
         display: block;
@@ -286,7 +288,6 @@ $weather-large-size: 60px;
         overflow-x: scroll;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
-        line-height: 1.2;
 
         &::-webkit-scrollbar {
             display: none;
@@ -307,12 +308,14 @@ $weather-large-size: 60px;
         &:last-of-type {
             border-right: 0;
 
-            @include mq(tablet) {
-                display: none;
+            @include mq(desktop) {
+                .i.weather__icon {
+                    right: 0;
+                }
             }
         }
 
-        .forecast__time {
+        .weather__time {
             display: block;
         }
     }
