@@ -3,13 +3,27 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/modules/ui/images'
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/template',
+
+    'common/modules/article/spacefinder',
+    'common/modules/ui/images',
+
+    'text!common/views/content/richLinkTag.html'
 ], function (
     qwery,
     _,
     $,
     ajax,
-    imagesModule
+    config,
+    detect,
+    template,
+
+    spacefinder,
+    imagesModule,
+
+    richLinkTagTmpl
 ) {
     function upgradeFlyer(el) {
         var href = $('a', el).attr('href'),
@@ -28,12 +42,38 @@ define([
         }
     }
 
+    function getSpacefinderRules() {
+        return {
+            minAbove: 200,
+            minBelow: 200,
+            selectors: {
+                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
+                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 200},
+                ' .ad-slot': {minAbove: 150, minBelow: 200},
+                ' .element-rich-link': {minAbove: 300, minBelow: 300}
+            }
+        };
+    }
+
+    function insertTagFlyer() {
+        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1) {
+            var space = spacefinder.getParaWithSpace(getSpacefinderRules());
+            if (space) {
+                $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
+                    .insertBefore(space)
+                    .each(upgradeFlyer);
+            }
+        }
+    }
+
     function init() {
         $('.js-article__body .element-rich-link').each(upgradeFlyer);
+        insertTagFlyer();
     }
 
     return {
         init: init,
-        upgradeFlyer: upgradeFlyer
+        upgradeFlyer: upgradeFlyer,
+        _getSpacefinderRules: getSpacefinderRules
     };
 });

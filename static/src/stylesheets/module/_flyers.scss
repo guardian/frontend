@@ -41,6 +41,11 @@
             padding: $gs-baseline/4 0;
         }
     }
+
+    &.element-rich-link--tag {
+        // only display tag based rich links when they are fully upgraded (as we have no link text)
+        display: none;
+    }
 }
 
 // Base flyer styles
