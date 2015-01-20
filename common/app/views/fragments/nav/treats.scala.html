@@ -1,0 +1,9 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div>
+    @containerDefinition.collectionEssentials.treats.map { treat =>
+        <h5><a href="@LinkTo(treat)">@treat.headline</a></h5>
+    }
+</div>
