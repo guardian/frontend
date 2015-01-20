@@ -675,8 +675,10 @@
     }
 }
 
-.meta__twitter {
-    margin: -($gs-baseline*2/3) 0 -($gs-baseline/6) 0;
+.meta__twitter,
+.meta__email {
+    margin: (-$gs-baseline*2/3) 0 (-$gs-baseline/6) 0;
+    display: inline-block;
 
     .content__meta-container--tonal-header & {
         @include mq($until: leftCol) {
@@ -691,6 +693,7 @@
 
     button {
         padding-top: 1px;
+        margin-right: $gs-gutter/5;
 
         .tonal--tone-media & {
             border: 0;
@@ -703,8 +706,8 @@
 
         @include mq($until: leftCol) {
             padding: 0;
-            margin: $gs-baseline/2 0 0;
             border: 0;
+            margin-right: 0;
             background-color: transparent !important;
         }
     }
@@ -725,6 +728,19 @@
     }
 }
 
+@include mq(leftCol) {
+    .meta__email {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-top: $gs-baseline/2;
+        }
+    }
+
+    .meta__twitter {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-bottom: 0;
+        }
+    }
+}
 
 .meta__bio {
     margin-bottom: $gs-baseline;
@@ -746,7 +762,8 @@
         border-top: 1px dotted colour(neutral-5);
     }
 
-    .content__meta-container--twitter & {
+    .content__meta-container--twitter &,
+    .content__meta-container--email & {
         margin-bottom: 0;
     }
 
