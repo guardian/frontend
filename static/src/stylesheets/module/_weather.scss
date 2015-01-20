@@ -315,10 +315,6 @@ $weather-large-size: 60px;
             padding-left: 0;
         }
 
-        &:nth-of-type(even) {
-            display: none;
-        }
-
         .weather__time {
             display: block;
         }
