@@ -278,14 +278,14 @@ $weather-large-size: 60px;
 }
 
 .weather__forecasts {
-    clear: left;
+    clear: both;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
     list-style: none;
     line-height: 1.2;
     display: none;
 
-    @include mq($until: wide) {
+    @include mq($until: leftCol) {
         width: 100%;
         overflow-x: scroll;
         white-space: nowrap;
@@ -297,6 +297,7 @@ $weather-large-size: 60px;
     }
 
     @include mq(leftCol) {
+        overflow: hidden;
         display: block !important; // Important to override any toggle settings
     }
 
@@ -310,14 +311,17 @@ $weather-large-size: 60px;
         border-right: 1px dotted colour(neutral-3);
         padding-left: $gs-gutter / 4;
         padding-right: $gs-gutter / 1.333;
-        min-width: gs-span(1);
-        float: right;
+
+        @include mq($until: leftCol) {
+            float: right;
+            min-width: gs-span(1);
+        }
 
         &:first-of-type {
             padding-left: 0;
         }
 
-        &:nth-of-type(odd) {
+        &:nth-of-type(even) {
             display: none;
         }
 
@@ -329,5 +333,11 @@ $weather-large-size: 60px;
     .i.weather__icon {
         display: block;
         margin-top: $gs-baseline / 3;
+
+        @include mq(leftCol) {
+            width: $weather-small-size !important;
+            height: $weather-small-size !important;
+            margin-left: 0;
+        }
     }
 }
