@@ -156,12 +156,6 @@ define([
             mediator.on('autocomplete:fetch', this.fetchWeatherData);
         },
 
-        track: function () {
-            /*s.prop22 = city;
-            s.eVar22 = city;
-            s.events = 'event100';*/
-        },
-
         toggleControls: function (value) {
             var $input    = $('.js-weather-input')[0],
                 $location = $('.weather__location');
