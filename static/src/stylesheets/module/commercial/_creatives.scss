@@ -377,6 +377,32 @@
         height: 100%;
     }
 
+    .fluid250_video {
+        position: absolute;
+        z-index: 10;
+        
+        &.fluid250_video--vert-pos-top {
+            top: 0;
+        }
+        &.fluid250_video--vert-pos-center {
+            top: 50%;
+        }
+        &.fluid250_video--vert-pos-bottom {
+            top: auto;
+            bottom: 0;
+        }
+        &.fluid250_video--horiz-pos-left {
+            left: 0;
+        }
+        &.fluid250_video--horiz-pos-center {
+            left: 50%;
+        }
+        &.fluid250_video--horiz-pos-right {
+            left: auto;
+            right: 0;
+        }
+    }
+
     .fluid250_layer {
         width: 100%;
         height: 100%;
