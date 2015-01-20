@@ -173,7 +173,7 @@ define([
 
                 player.fullscreener();
 
-                deferToAnalytics.defer(function () {
+                deferToAnalytics(function () {
                     initOmnitureTracking(player);
                     bindContentEvents(player);
                 });

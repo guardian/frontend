@@ -20,8 +20,6 @@ define([
         }
     }
 
-    return {
-        defer: deferToAnalytics
-    };
+    return deferToAnalytics;
 
 }); // define
