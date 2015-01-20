@@ -336,7 +336,7 @@ $weather-large-size: 60px;
         }
 
         @include mq(leftCol, wide) {
-            min-width: gs-span(1) - floor($gs-gutter / 1.333);
+            min-width: 33%;
 
             &--3 {
                 border-right: 0;
