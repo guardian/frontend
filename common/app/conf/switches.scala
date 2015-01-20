@@ -525,6 +525,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
+  val DoNotTrack = Switch("Analytics", "do-not-track",
+    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
