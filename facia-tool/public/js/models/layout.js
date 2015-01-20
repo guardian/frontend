@@ -115,7 +115,7 @@ define([
                 $element.hide();
             }
         },
-        update: function (element, valueAccessor) {
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
             var value = ko.unwrap(valueAccessor()),
                 $element = $(element);
             if (value) {
@@ -129,6 +129,7 @@ define([
                         $element.hide();
                     }
                     updateScrollables();
+                    bindingContext.$data.layout.onConfigVisibilityChange();
                 }
             });
         }
