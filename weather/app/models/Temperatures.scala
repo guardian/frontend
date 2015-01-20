@@ -1,15 +1,17 @@
 package models
 
+import java.text.DecimalFormat
+
 import play.api.libs.json.{JsString, JsValue, Writes, Json}
 
 object Temperatures {
   implicit val jsonWrites = new Writes[Temperatures] {
     override def writes(o: Temperatures): JsValue = {
-      def dec2(n: Double) = o.imperial.formatted("%.2f")
+      def formatN(n: Double) = new DecimalFormat("#.#").format(n)
 
       Json.obj(
-        "imperial" -> JsString(s"${dec2(o.imperial)}°F"),
-        "metric" -> JsString(s"${dec2(o.metric)}°C")
+        "imperial" -> JsString(s"${formatN(o.imperial)}°F"),
+        "metric" -> JsString(s"${formatN(o.metric)}°C")
       )
     }
   }
