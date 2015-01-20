@@ -7,6 +7,8 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
+@import layout.LatestSnap
+@import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -14,7 +16,6 @@
         data-discussion-id="@id"
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
-        data-discussion-inline-upgrade="true"
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
@@ -25,7 +26,11 @@ data-test-id="facia-card"
     @item.snapStuff.dataAttributes>
 
     <div class="fc-item__container">
-        @item.displayElement match {
+        @if(item.snapStuff.snapType == LatestSnap) {
+            @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
+        }
+
+        @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
                     videoElement,
@@ -35,7 +40,7 @@ data-test-id="facia-card"
                     showControlsAtStart = false,
                     endSlatePath,
                     Some(false),
-                    None
+                    item.id
                 )) { player =>
                     <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="fc-item__video-container">
@@ -74,6 +79,9 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
+        @if(item.snapStuff.snapType == LatestSnap) {
+            @kicker(item.header, List("fc-item__kicker--dreamsnap"))
+        }
         <div class="@RenderClasses(Map(
             ("fc-item__header", true),
             ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
@@ -89,7 +97,7 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.map { text =>
+        @item.trailText.filter(const(item.showStandfirst)).map { text =>
             <div class="fc-item__standfirst">@Html(text)</div>
         }
 

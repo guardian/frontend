@@ -9,8 +9,9 @@ $c-navigation-base: colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
-$navigation-toggler-width: 48px;
-$navigation-toggler-width-full: 128px;
+$navigation-toggler-width: 44px;
+$navigation-toggler-width-halffull: 132px;
+$navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 $c-navigation-background-side-bar: #005182;
@@ -632,15 +633,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Toggle button
    ========================================================================== */
 
-@mixin navigation__toggle--width($width: small) {
-    @if $width == small {
-        min-width: $navigation-toggler-width;
-    }
-    @if $width == wide {
-        min-width: $navigation-toggler-width-full;
-    }
-}
-
 .navigation__toggle {
     z-index: 2;
     position: absolute;
@@ -650,7 +642,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
-    @include navigation__toggle--width(small);
+    min-width: $navigation-toggler-width;
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
@@ -658,6 +650,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     text-align: left;
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
+
 
     &,
     &:hover,
@@ -673,34 +666,39 @@ $c-navigation-expandable-background: colour(neutral-1);
         border-left-color: transparent;
     }
 
-    @include mq(tablet) {
-        @include navigation__toggle--width(wide);
-        text-align: left;
-    }
     @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle--width(small);
+
+    @include mq(leftCol) {
+        min-width: $navigation-toggler-width-halffull;
     }
+
     @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle--width(small);
+        min-width: $navigation-toggler-width-full;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            min-width: $navigation-toggler-width;
         }
     }
 }
-.navigation__toggle-label {}
 .navigation__toggle-label__extra {
     display: none;
 
-    @include mq(tablet) {
+    @include mq(leftCol) {
         display: inline;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        display: none;
+
+    &.navigation__toggle-label__extra--browse {
+        @include mq($until: wide) {
+            display: none;
+        }
     }
-    @include mq(wide) {
-        .has-page-skin & {
+
+    .has-page-skin & {
+        @include mq(wide) {
             display: none;
         }
     }

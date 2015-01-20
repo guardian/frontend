@@ -3,11 +3,22 @@
 }
 
 .creative--scrollable-mpu {
-    display: block;
-    height: 250px;
-    @include box-sizing(border-box);
-    border: 1px solid colour(neutral-5);
-    background: none 0 0 repeat;
+    .creative--scrollable-mpu-inner {
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+    }
+    .creative--scrollable-mpu-image {
+        display: block;
+        height: 100%;
+        width: 300px;
+        position: absolute;
+        top: 0;
+        @include box-sizing(border-box);
+        border: 1px solid colour(neutral-5);
+        background: none 0 0 repeat;
+    }
 }
 
 .creative--branded-component {
@@ -406,6 +417,32 @@
 
     .gs-container {
         height: 100%;
+    }
+
+    .fluid250_video {
+        position: absolute;
+        z-index: 10;
+        
+        &.fluid250_video--vert-pos-top {
+            top: 0;
+        }
+        &.fluid250_video--vert-pos-center {
+            top: 50%;
+        }
+        &.fluid250_video--vert-pos-bottom {
+            top: auto;
+            bottom: 0;
+        }
+        &.fluid250_video--horiz-pos-left {
+            left: 0;
+        }
+        &.fluid250_video--horiz-pos-center {
+            left: 50%;
+        }
+        &.fluid250_video--horiz-pos-right {
+            left: auto;
+            right: 0;
+        }
     }
 
     .fluid250_layer {

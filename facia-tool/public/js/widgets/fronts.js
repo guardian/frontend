@@ -5,6 +5,7 @@ define([
     'models/collections/collection',
     'modules/vars',
     'utils/fetch-lastmodified',
+    'utils/human-time',
     'utils/mediator',
     'utils/presser',
     'utils/update-scrollables'
@@ -14,6 +15,7 @@ define([
     Collection,
     vars,
     lastModified,
+    humanTime,
     mediator,
     presser,
     updateScrollables
@@ -70,9 +72,11 @@ define([
         this.uiOpenElement = ko.observable();
         this.uiOpenArticle = ko.observable();
 
+        this.allExpanded = ko.observable(true);
+
         listeners.on('presser:lastupdate', function (front, date) {
             if (front === model.front()) {
-                model.frontAge(date);
+                model.frontAge(humanTime(date));
                 if (pageConfig.env !== 'dev') {
                     var stale = _.some(model.collections(), function (collection) {
                         var l = new Date(collection.state.lastUpdated());
@@ -113,6 +117,8 @@ define([
             }
         });
 
+        listeners.on('collection:collapse', this.onCollectionCollapse.bind(this));
+
         this.setIntervals = [];
         this.setTimeouts = [];
         this.refreshCollections(vars.CONST.collectionsPollMs || 60000);
@@ -129,6 +135,7 @@ define([
         }
         var model = this;
 
+        this.allExpanded(true);
         this.collections(
             ((vars.state.config.fronts[frontId] || {}).collections || [])
             .filter(function(id) { return vars.state.config.collections[id]; })
@@ -169,6 +176,26 @@ define([
             });
         } else {
             model.frontAge(undefined);
+        }
+    };
+
+    Front.prototype.toggleAll = function () {
+        var state = !this.allExpanded();
+        this.allExpanded(state);
+        _.each(this.collections(), function (collection) {
+            collection.state.collapsed(!state);
+        });
+    };
+
+    Front.prototype.onCollectionCollapse = function (collection, collectionState) {
+        if (collection.front !== this) {
+            return;
+        }
+        var differentState = _.find(this.collections(), function (collection) {
+            return collection.state.collapsed() !== collectionState;
+        });
+        if (!differentState) {
+            this.allExpanded(!collectionState);
         }
     };
 
@@ -230,6 +257,18 @@ define([
 
     Front.prototype.elementHasFocus = function (meta) {
         return meta === this.uiOpenElement();
+    };
+
+    Front.prototype.confirmSendingAlert = function () {
+        return _.contains(vars.CONST.askForConfirmation, this.front());
+    };
+
+    Front.prototype.showIndicatorsEnabled = function () {
+        return !this.confirmSendingAlert();
+    };
+
+    Front.prototype.slimEditor = function () {
+        return _.contains(vars.CONST.restrictedEditor, this.front());
     };
 
     Front.prototype.dispose = function () {

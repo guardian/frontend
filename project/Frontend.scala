@@ -14,30 +14,30 @@ object Frontend extends Build with Prototypes {
 
   val common = application("common").settings(
     libraryDependencies ++= Seq(
-      guardianConfiguration,
-      contentApiClient,
       akkaAgent,
-      jSoup,
-      jacksonCore,
-      jacksonMapper,
-      awsSdk,
-      quartzScheduler,
-      dnaCommon,
-      scalajTime,
       apacheCommonsMath3,
-      shadeMemcached,
-      rome,
-      romeModules,
-      snappyJava,
-      liftJson,
-      playGoogleAuth,
-      flexibleContentBlockToText,
-      flexibleContentBodyParser,
-      scalaCheck,
+      awsSdk,
+      contentApiClient,
       faciaScalaClient,
       filters,
-      ws,
-      scalaTestPlus
+      flexibleContentBlockToText,
+      flexibleContentBodyParser,
+      guardianConfiguration,
+      jacksonCore,
+      jacksonMapper,
+      jSoup,
+      liftJson,
+      playGoogleAuth,
+      quartzScheduler,
+      rome,
+      romeModules,
+      scalaCheck,
+      scalajTime,
+      scalaTestPlus,
+      scalaz,
+      shadeMemcached,
+      snappyJava,
+      ws
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -177,13 +177,16 @@ object Frontend extends Build with Prototypes {
     weather
   )
 
-  val integrationTests = Project("integrated-tests", file("integrated-tests")).settings(
-    libraryDependencies ++= Seq(
-      scalaTest,
-      seleniumJava % Test,
-      jodaTime % Test
+  val integrationTests = Project("integrated-tests", file("integrated-tests"))
+    .settings(frontendCompilationSettings:_*)
+    .settings(
+      libraryDependencies ++= Seq(
+        scalaTest,
+        seleniumJava % Test,
+        jodaTime % Test,
+        jodaConvert % Test
+      )
     )
-  )
 
   val pngResizer = application("png-resizer")
     .dependsOn(commonWithTests)

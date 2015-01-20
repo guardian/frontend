@@ -2,6 +2,9 @@ package dfp
 
 import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfigJson
+import common.Edition.defaultEdition
+import common.editions.Us
+import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
@@ -31,9 +34,13 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
                          tagType: TagType,
                          adUnitPaths: Seq[String] = Nil,
                          sponsor: Option[String] = None,
-                         expiryDates: Seq[Option[DateTime]] = Seq(None)): PaidForTag = {
+                         expiryDates: Seq[Option[DateTime]] = Seq(None),
+                         editionId: Option[String] = None): PaidForTag = {
     val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/")))
-    val targeting = GuTargeting(adUnits, Nil, Nil, Nil)
+    val customTargetSets = editionId map { edition =>
+      Seq(CustomTargetSet("AND", Seq(CustomTarget("edition", "IS", Seq(edition)))))
+    } getOrElse Nil
+    val targeting = GuTargeting(adUnits, Nil, Nil, customTargetSets)
     val lineItems = expiryDates map { expiryDate =>
       GuLineItem(Random.nextInt(),
         "liName",
@@ -41,6 +48,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         expiryDate,
         isPageSkin = false,
         sponsor,
+        "delivering",
         targeting)
     }
     PaidForTag(targetedName, Keyword, paidForType, Nil, lineItems)
@@ -50,7 +58,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
-      paidForTag("media", Sponsored, Keyword),
+      paidForTag("media", Sponsored, Keyword, editionId = Some("uk")),
       paidForTag("healthyliving",
         Sponsored, Keyword,
         adUnitPaths = Seq("theguardian.com/spinach"),
@@ -95,7 +103,22 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       paidForTag("global-modern-day-slavery-in-focus", FoundationFunded, Series)
     )
 
-    override protected val allPaidForTags: Seq[PaidForTag] =
+    val allAdFeatureTags: Seq[PaidForTag] = Seq(
+      paidForTag("tagName",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)))),
+      paidForTag("tagNameMatchingMultipleLineItems",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)), None)),
+      paidForTag("tagNameMatchingMoreMultipleLineItems",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)), Some(DateTime.now().plusHours(1))))
+    )
+
+    override protected val currentPaidForTags: Seq[PaidForTag] =
       sponsorships ++ advertisementFeatureSponsorships ++ foundationSupported
 
     override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty
@@ -109,8 +132,9 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   "isAdvertisementFeature" should "be true for an advertisement feature" in {
-    TestPaidForTagAgent.isAdvertisementFeature("advert/best-awards/best-awards", None) should be(
-      true)
+    TestPaidForTagAgent.isAdvertisementFeature("advert/best-awards/best-awards",
+      maybeSectionId = None
+    ) should be(true)
   }
 
   it should "be true if keyword tag exists" in {
@@ -122,7 +146,9 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be false for a non advertisement feature" in {
-    TestPaidForTagAgent.isAdvertisementFeature("culture/article", None) should be(false)
+    TestPaidForTagAgent.isAdvertisementFeature("culture/article",
+      maybeSectionId = None
+    ) should be(false)
   }
 
   it should "be true if series tag exists" in {
@@ -239,7 +265,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   it should "be true for an article in an ad feature section with a multi-part section name" in {
     TestPaidForTagAgent.isAdvertisementFeature(
       "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
-      Some("sustainable-business/grundfos-partner-zone")) should be(true)
+      maybeSectionId = Some("sustainable-business/grundfos-partner-zone")
+    ) should be(true)
   }
 
   it should "be true for an article where the corresponding logo targets the entire site and some" +
@@ -279,8 +306,10 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   "isSponsored" should "be true for a sponsored article" in {
-    TestPaidForTagAgent.isSponsored("small-business-network/business-essentials", None) should be(
-      true)
+    TestPaidForTagAgent.isSponsored("small-business-network/business-essentials",
+      maybeSectionId = None,
+      maybeEdition = Some(defaultEdition)
+    ) should be(true)
   }
 
   it should "be true if section tag exists" in {
@@ -294,7 +323,9 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be false for an unsponsored article" in {
-    TestPaidForTagAgent.isSponsored("article", None) should be(false)
+    TestPaidForTagAgent.isSponsored("article",
+      maybeSectionId = None,
+      maybeEdition = None) should be(false)
   }
 
   it should "be false for unsponsored tags" in {
@@ -321,6 +352,24 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     val tags = Seq(toKeyword("global-development/global-development"),
       toKeyword("culture/healthyliving"))
     TestPaidForTagAgent.isSponsored(tags, maybeSectionId = Some("culture")) should be(false)
+  }
+
+  it should "be true if sponsorship is not for a particular edition" in {
+    val tags = Seq(toKeyword("culture/healthyliving"))
+    EditionAwareLogoSlots.switchOn()
+    TestPaidForTagAgent.isSponsored(tags,
+      maybeSectionId = Some("spinach"),
+      maybeEdition = Some(defaultEdition)
+    ) should be(true)
+  }
+
+  it should "be false if sponsorship is for another edition" in {
+    val tags = Seq(toKeyword("culture/media"))
+    EditionAwareLogoSlots.switchOn()
+    TestPaidForTagAgent.isSponsored(tags,
+      maybeSectionId = None,
+      maybeEdition = Some(Us)
+    ) should be(false)
   }
 
   it should "be true for a sponsored container" in {
@@ -411,11 +460,14 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   "isFoundationSupported" should "be true for a foundation-supported page" in {
     TestPaidForTagAgent.isFoundationSupported("global-development/global-development",
-      None) should be(true)
+      maybeSectionId = None
+    ) should be(true)
   }
 
   it should "be false for a non foundation-supported page" in {
-    TestPaidForTagAgent.isFoundationSupported("guffaw", None) should be(false)
+    TestPaidForTagAgent.isFoundationSupported("guffaw",
+      maybeSectionId = None
+    ) should be(false)
   }
 
   it should "be true for a container with multiple foundation-targeted keywords" in {
@@ -495,6 +547,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   it should "be false for an ad feature with multiple line items where one has not expired" in {
     val keyword = toKeyword("section/tagNameMatchingMoreMultipleLineItems")
+    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
+  }
+
+  it should "be false for an un-paid-for page" in {
+    val keyword = toKeyword("anotherSection/someOtherUnrelatedTagName")
     TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
   }
 }

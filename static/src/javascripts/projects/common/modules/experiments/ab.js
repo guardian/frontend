@@ -13,8 +13,10 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
+    'common/modules/experiments/tests/history-containers',
+    'common/modules/experiments/tests/join-us-navigation',
     'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/breaking-news-alert-style'
+    'common/modules/experiments/tests/weather-component'
 ], function (
     raven,
     filter,
@@ -30,16 +32,20 @@ define([
     mvtCookie,
     HighCommercialComponent,
     HistoryTags,
+    HistoryContainers,
+    JoinUsNavigation,
     StickyContainerTitles,
-    BreakingNewsAlertStyle
+    Weather
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
             new HistoryTags(),
+            new HistoryContainers(),
+            new JoinUsNavigation(),
             new StickyContainerTitles(),
-            new BreakingNewsAlertStyle()
+            new Weather()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -182,6 +188,15 @@ define([
         return participation && participation.variant;
     }
 
+    function setTestVariant(testId, variant) {
+        var participations = getParticipations();
+
+        if (participations[testId]) {
+            participations[testId].variant = variant;
+            store.local.set(participationsKey, participations);
+        }
+    }
+
     ab = {
 
         addTest: function (test) {
@@ -289,6 +304,7 @@ define([
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
+        setTestVariant: setTestVariant,
 
         // testing
         reset: function () {

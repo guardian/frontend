@@ -80,10 +80,32 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        sudoku: {
+            options: {
+                name: 'bootstraps/sudoku',
+                out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
+        preferences: {
+            options: {
+                name: 'bootstraps/preferences',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preferences.js',
                 exclude: [
                     'core',
                     'bootstraps/app',
@@ -115,7 +137,7 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
                     imager: {
-                        deps: ['common/components/imager.js/imager'],
+                        deps: ['components/imager.js/imager'],
                         exports: 'Imager'
                     },
                     omniture: {
@@ -190,17 +212,6 @@ module.exports = function(grunt, options) {
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
-            }
-        },
-        preview: {
-            options: {
-                name: 'bootstraps/preview',
-                out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text'
-                ]
             }
         },
         dev: {

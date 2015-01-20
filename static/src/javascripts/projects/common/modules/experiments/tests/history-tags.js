@@ -1,9 +1,9 @@
 define([
     'common/modules/onward/history',
-    'common/utils/config'
+    'common/utils/mediator'
 ], function (
     history,
-    config
+    mediator
     ) {
     return function () {
         this.id = 'HistoryTags';
@@ -30,9 +30,8 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    history.renderTags({
-                        inMegaNav: true,
-                        inPage: config.page.contentType === 'Network Front'
+                    mediator.once('modules:nav:open', function () {
+                        history.showInMegaNav();
                     });
                 }
             }

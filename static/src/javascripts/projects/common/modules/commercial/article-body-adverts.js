@@ -1,5 +1,4 @@
 define([
-    'lodash/functions/once',
     'lodash/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
@@ -7,7 +6,6 @@ define([
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot'
 ], function (
-    once,
     cloneDeep,
     $,
     config,
@@ -79,12 +77,6 @@ define([
         // rules exposed for spacefinder debugging
         getRules: getRules,
         getLenientRules: getLenientRules,
-
-        destroy: function () {
-            ads.forEach(function ($ad) {
-                $ad.remove();
-            });
-        },
 
         reset: function () {
             ads = [];

@@ -3,48 +3,69 @@ package dfp
 import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import common.Edition
+import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import model.`package`.frontKeywordIds
 
 trait PaidForTagAgent {
 
-  protected def allPaidForTags: Seq[PaidForTag]
+  protected def currentPaidForTags: Seq[PaidForTag]
+  protected def allAdFeatureTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
   protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]]
 
-  private def findWinningDfpTag(capiTagId: String,
-                                maybeSectionId: Option[String]): Option[PaidForTag] = {
+  private def findWinningDfpTag(dfpTags: Seq[PaidForTag],
+                                capiTagId: String,
+                                maybeSectionId: Option[String],
+                                maybeEdition: Option[Edition]): Option[PaidForTag] = {
 
-    def tagMatches(tagId: String, targetedTagName: String): Boolean = {
-      tagId.endsWith(s"/$targetedTagName")
+    def tagMatches(tagId: String, dfpTag: PaidForTag): Boolean = {
+      tagId.endsWith(s"/${dfpTag.targetedName}")
     }
 
-    def sectionMatches(sectionId: String, dfpTagAdUnitPaths: Seq[Seq[String]]): Boolean = {
-      dfpTagAdUnitPaths.isEmpty || dfpTagAdUnitPaths.exists { path =>
-        path.tail.isEmpty || sectionId.startsWith(path.tail.head)
+    def sectionMatches(maybeSectionId: Option[String], dfpTag: PaidForTag): Boolean = {
+      maybeSectionId.isEmpty || maybeSectionId.exists { sectionId =>
+        val tagAdUnitPaths = dfpTag.lineItems flatMap { lineItem =>
+          lineItem.targeting.adUnits map (_.path)
+        }
+        tagAdUnitPaths.isEmpty || tagAdUnitPaths.exists { path =>
+          path.tail.isEmpty || sectionId.startsWith(path.tail.head)
+        }
       }
     }
 
-    allPaidForTags find { dfpTag =>
-      tagMatches(capiTagId, dfpTag.targetedName) &&
-        (maybeSectionId.isEmpty || maybeSectionId.exists { section =>
-          val tagAdUnitPaths = dfpTag.lineItems flatMap { lineItem =>
-            lineItem.targeting.adUnits map (_.path)
-          }
-          sectionMatches(section, tagAdUnitPaths)
-        })
+    def editionMatches(maybeEdition: Option[Edition], dfpTag: PaidForTag): Boolean = {
+      maybeEdition.isEmpty || maybeEdition.exists { edition =>
+        dfpTag.lineItems exists { lineItem =>
+          val editionIds = lineItem.targeting.customTargetSets.flatMap {
+            _.targets filter {
+              _.isEditionTag
+            } flatMap (_.values.map(_.toLowerCase))
+          }.distinct
+          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
+        }
+      }
+    }
+
+    dfpTags find { dfpTag =>
+      tagMatches(capiTagId, dfpTag) &&
+        sectionMatches(maybeSectionId, dfpTag) &&
+        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
     }
   }
 
-  private def findWinningTagPair(capiTags: Seq[Tag],
-                                 maybeSectionId: Option[String]): Option[CapiTagAndDfpTag] = {
+  private def findWinningTagPair(dfpTags: Seq[PaidForTag],
+                                 capiTags: Seq[Tag],
+                                 maybeSectionId: Option[String],
+                                 maybeEdition: Option[Edition]): Option[CapiTagAndDfpTag] = {
     for (capiTag <- capiTags.filter(_.isSeries)) {
-      for (dfpTag <- findWinningDfpTag(capiTag.id, maybeSectionId)) {
+      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
     for (capiTag <- capiTags.filter(_.isKeyword)) {
-      for (dfpTag <- findWinningDfpTag(capiTag.id, maybeSectionId)) {
+      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
@@ -53,38 +74,50 @@ trait PaidForTagAgent {
 
   private def isPaidFor(capiTags: Seq[Tag],
                         maybeSectionId: Option[String],
+                        maybeEdition: Option[Edition],
                         paidForType: PaidForType): Boolean = {
-    findWinningTagPair(capiTags, maybeSectionId) exists (_.dfpTag.paidForType == paidForType)
+    findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, maybeEdition) exists {
+      _.dfpTag.paidForType == paidForType
+    }
   }
 
-  def isSponsored(capiTags: Seq[Tag], maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTags, maybeSectionId, Sponsored)
+  def isSponsored(capiTags: Seq[Tag],
+                  maybeSectionId: Option[String],
+                  maybeEdition: Option[Edition] = None): Boolean = {
+    isPaidFor(capiTags, maybeSectionId, maybeEdition, Sponsored)
   }
 
-  def isAdvertisementFeature(capiTags: Seq[Tag], maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTags, maybeSectionId, AdvertisementFeature)
+  def isAdvertisementFeature(capiTags: Seq[Tag],
+                             maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTags, maybeSectionId, maybeEdition = None, AdvertisementFeature)
   }
 
-  def isFoundationSupported(capiTags: Seq[Tag], maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTags, maybeSectionId, FoundationFunded)
+  def isFoundationSupported(capiTags: Seq[Tag],
+                            maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTags, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
   private def isPaidFor(capiTagId: String,
                         maybeSectionId: Option[String],
+                        maybeEdition: Option[Edition],
                         paidForType: PaidForType): Boolean = {
-    findWinningDfpTag(capiTagId, maybeSectionId) exists (_.paidForType == paidForType)
+    findWinningDfpTag(currentPaidForTags, capiTagId, maybeSectionId, maybeEdition) exists (_.paidForType == paidForType)
   }
 
-  def isSponsored(capiTagId: String, maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTagId, maybeSectionId, Sponsored)
+  def isSponsored(capiTagId: String,
+                  maybeSectionId: Option[String],
+                  maybeEdition: Option[Edition]): Boolean = {
+    isPaidFor(capiTagId, maybeSectionId, maybeEdition, Sponsored)
   }
 
-  def isAdvertisementFeature(capiTagId: String, maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTagId, maybeSectionId, AdvertisementFeature)
+  def isAdvertisementFeature(capiTagId: String,
+                             maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, AdvertisementFeature)
   }
 
-  def isFoundationSupported(capiTagId: String, maybeSectionId: Option[String]): Boolean = {
-    isPaidFor(capiTagId, maybeSectionId, FoundationFunded)
+  def isFoundationSupported(capiTagId: String,
+                            maybeSectionId: Option[String]): Boolean = {
+    isPaidFor(capiTagId, maybeSectionId, maybeEdition = None, FoundationFunded)
   }
 
   private def findContainerCapiTagIdAndDfpTag(config: CollectionConfig):
@@ -102,7 +135,7 @@ trait PaidForTagAgent {
 
     val candidateCapiTagIds = containerCapiTagIds(config)
     for (capiTagId <- candidateCapiTagIds) {
-      for (dfpTag <- findWinningDfpTag(capiTagId, None)) {
+      for (dfpTag <- findWinningDfpTag(currentPaidForTags, capiTagId, None, None)) {
         return Some(CapiTagIdAndDfpTag(capiTagId, dfpTag))
       }
     }
@@ -130,7 +163,7 @@ trait PaidForTagAgent {
   }
 
   def sponsorshipTag(capiTags: Seq[Tag], maybeSectionId: Option[String]): Option[Tag] = {
-    findWinningTagPair(capiTags, maybeSectionId) map (_.capiTag)
+    findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
   }
 
   def sponsorshipTag(config: CollectionConfig): Option[String] = {
@@ -139,9 +172,10 @@ trait PaidForTagAgent {
 
   def isExpiredAdvertisementFeature(capiTags: Seq[Tag],
                                     maybeSectionId: Option[String]): Boolean = {
-    val lineItems = findWinningTagPair(capiTags,
-      maybeSectionId) map (_.dfpTag.lineItems) getOrElse Nil
-    lineItems forall (_.endTime exists (_.isBeforeNow))
+    val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
+      _.dfpTag.lineItems
+    } getOrElse Nil
+    lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
@@ -173,11 +207,11 @@ trait PaidForTagAgent {
   }
 
   def getSponsor(capiTags: Seq[Tag]): Option[String] = {
-    findWinningTagPair(capiTags, None) flatMap (_.dfpTag.lineItems.head.sponsor)
+    findWinningTagPair(currentPaidForTags, capiTags, None, None) flatMap (_.dfpTag.lineItems.head.sponsor)
   }
 
   def getSponsor(capiTagId: String): Option[String] = {
-    findWinningDfpTag(capiTagId, None) flatMap (_.lineItems.head.sponsor)
+    findWinningDfpTag(currentPaidForTags, capiTagId, None, None) flatMap (_.lineItems.head.sponsor)
   }
 }
 

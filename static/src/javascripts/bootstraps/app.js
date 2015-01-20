@@ -62,6 +62,12 @@ define([
                 });
             }
 
+            if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
+                require(['bootstraps/sudoku'], function (sudoku) {
+                    bootstrapContext('sudoku', sudoku);
+                });
+            }
+
             if (config.page.contentType === 'Article') {
                 bootstrapContext('article', article);
             }
@@ -106,6 +112,12 @@ define([
                 // lazy load this only if on the preview server
                 require('bootstraps/preview', function (preview) {
                     bootstrapContext('preview', preview);
+                });
+            }
+
+            if (config.page.pageId === 'preferences') {
+                require(['bootstraps/preferences'], function (preferences) {
+                    bootstrapContext('preferences', preferences);
                 });
             }
 

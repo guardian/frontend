@@ -14,7 +14,7 @@ define([
         }
 
         var lastDurationEvent, durationEventTimer,
-            mediaName = getAttribute('data-title') || config.page.webTitle,
+            mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
@@ -24,6 +24,7 @@ define([
                 'video:request': 'event98',
                 'preroll:request': 'event97',
                 'preroll:play': 'event59',
+                'preroll:skip': 'event99',
                 'preroll:end': 'event64',
                 'video:play': 'event17',
                 'audio:play': 'event19',
@@ -58,15 +59,19 @@ define([
 
         this.sendEvent = function (event, eventName, ad) {
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
+
+            // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
+            s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
+            s.eVar44 = s.prop44 = mediaId;
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
             }
-            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
+            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9';
             s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
-            s.prop41 = undefined;
+            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -83,11 +88,9 @@ define([
             s.Media.trackUsingContextData = false;
 
             s.eVar11 = s.prop11 = config.page.sectionName || '';
-            s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
-            s.eVar44 = s.prop44 = mediaName;
             s.eVar7 = s.pageName;
 
-            s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+            s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 
             if (mediaType === 'video') {
                 this.sendNamedEvent('video:request');

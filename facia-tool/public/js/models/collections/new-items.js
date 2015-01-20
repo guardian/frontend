@@ -4,6 +4,7 @@ define([
     'modules/authed-ajax',
     'modules/content-api',
     'models/collections/article',
+    'utils/alert',
     'utils/clean-clone',
     'utils/deep-get',
     'utils/mediator',
@@ -13,6 +14,7 @@ define([
     authedAjax,
     contentApi,
     Article,
+    alert,
     cleanClone,
     deepGet,
     mediator,
@@ -127,7 +129,7 @@ define([
             });
         }
 
-        if (remove && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+        if (sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
             removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }
@@ -139,7 +141,7 @@ define([
             article.meta.imageReplace(true);
             article.meta.imageSrc(opts.mediaItem.file);
         } else {
-            window.alert('You can only drop media into an opened article');
+            alert('You can only drop media into an opened article');
         }
     }
 

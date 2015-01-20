@@ -1,5 +1,5 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
-@import conf.Switches.DiscussionSwitch
+@import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.interactive) { interactive =>
@@ -7,7 +7,7 @@
     <article class="@RenderClasses(
             Map(
                 "content--advertisement-feature" -> interactive.isAdvertisementFeature,
-                "content--sponsored" -> interactive.isSponsored,
+                "content--sponsored" -> interactive.isSponsored(Some(Edition(request))),
                 "content--foundation-supported" -> interactive.isFoundationSupported
             ),
             "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
