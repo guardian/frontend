@@ -6,10 +6,11 @@ class CitiesLookUpTest extends FlatSpec with Matchers {
   "getLatitudeLongitude" should "return the latitude and longitude of a given city" in {
     CitiesLookUp.getLatitudeLongitude(CityRef(
       "London",
+      "H9",
       "GB"
     )) shouldEqual Some(LatitudeLongitude(
-      51.5,
-      -0.1167
+      51.5142,
+      -0.0931
     ))
   }
 
