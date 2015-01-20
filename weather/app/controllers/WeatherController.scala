@@ -6,6 +6,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import models.CityId
 import weather.WeatherApi
+import common.Seqs._
 
 import scala.concurrent.duration._
 
@@ -20,7 +21,7 @@ object WeatherController extends Controller with ExecutionContexts {
 
   def forecastForCityId(cityId: String) = Action.async { implicit request =>
     WeatherApi.getForecastForCityId(CityId(cityId)).map({ forecastDays =>
-      val response = forecastDays.map(models.ForecastResponse.fromAccuweather).take(MaximumForecastDays)
+      val response = forecastDays.map(models.ForecastResponse.fromAccuweather).filterByIndex(_ % 3 == 0)
 
       Cached(10.minutes)(JsonComponent.forJsValue(Json.toJson(response)))
     })
