@@ -97,7 +97,7 @@ define([
                 this.fetchData(location);
             } else {
 
-                self.getWeatherData(config.page.weatherapiurl + '.json')
+                return self.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         self.fetchData(response);
                         self.track(response.city);
@@ -126,7 +126,7 @@ define([
                 });
         },
 
-        track: function(city) {
+        track: function (city) {
             s.prop26 = city;
             s.eVar26 = city;
             s.linkTrackVars = 'prop26,eVar26';

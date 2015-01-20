@@ -74,7 +74,7 @@ define([
                 setTimeout(this.destroy.bind(this), 50);
             },
 
-            track: function(city) {
+            track: function (city) {
                 s.events = 'event100';
                 s.prop22 = city;
                 s.eVar22 = city;
