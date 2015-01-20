@@ -53,7 +53,6 @@ define([
                 return false;
             }
 
-            self = this;
             this.getDefaultLocation();
         },
 
@@ -99,8 +98,8 @@ define([
                 this.fetchWeatherData(location);
             } else {
 
-                self.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(self.fetchWeatherData)
+                this.getWeatherData(config.page.weatherapiurl + '.json')
+                    .then(this.fetchWeatherData)
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                             tags: {
@@ -112,13 +111,13 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            self.saveUserLocation(location);
+            this.saveUserLocation(location);
 
-            return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    self.render(response, location.city);
-                    self.fetchForecastData(location);
-                }).fail(function (err, msg) {
+                    this.render(response, location.city);
+                    this.fetchForecastData(location);
+                }.bind(this)).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
@@ -128,10 +127,11 @@ define([
         },
 
         fetchForecastData: function (location) {
-            return self.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
-                .then(function (response) {
-                    self.renderForecast(response);
-                }).fail(function (err, msg) {
+            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+                .then(function(response) {
+                    this.renderForecast(response);
+                }.bind(this))
+                .fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
@@ -143,16 +143,16 @@ define([
         bindEvents: function () {
             bean.on($('.js-weather-input')[0], 'click', function (e) {
                 e.preventDefault();
-                self.toggleControls(true);
-            });
+                this.toggleControls(true);
+            }.bind(this));
             bean.on($('.js-close-location')[0], 'click', function (e) {
                 e.preventDefault();
-                self.toggleControls(false);
-            });
+                this.toggleControls(false);
+            }.bind(this));
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
-                self.toggleForecast(e);
-            });
-            mediator.on('autocomplete:fetch', this.fetchWeatherData);
+                this.toggleForecast(e);
+            }.bind(this));
+            mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
         },
 
         toggleControls: function (value) {
@@ -202,18 +202,18 @@ define([
                 location: city,
                 icon: weatherData.weatherIcon,
                 description: weatherData.weatherText,
-                tempNow: self.getTemperature(weatherData)
+                tempNow: this.getTemperature(weatherData)
             }));
 
             $weather.appendTo($holder);
-            self.bindEvents();
-            self.addSearch();
+            this.bindEvents();
+            this.addSearch();
 
             // After first run override function to just update data
-            self.render = function (weatherData) {
+            this.render = function (weatherData) {
                 var $weatherIcon = $('.js-weather-icon', $weather);
 
-                $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
+                $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
@@ -221,7 +221,7 @@ define([
                     .attr('title', weatherData.weatherText);
 
                 // Close editing
-                self.toggleControls(false);
+                this.toggleControls(false);
             };
         },
 
