@@ -17,6 +17,7 @@ object DfpAgent
   with ExecutionContexts {
 
   override protected val isProd: Boolean = environment.isProd
+  override protected val isPreview: Boolean = environment.isPreview
 
   private lazy val currentPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val allAdFeatureTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
