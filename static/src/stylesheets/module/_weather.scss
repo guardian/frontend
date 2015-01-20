@@ -311,7 +311,7 @@ $weather-large-size: 60px;
     .weather__forecast {
         position: relative;
         display: table-cell;
-        border-right: 1px dotted colour(neutral-3);
+        border-left: 1px dotted colour(neutral-3);
         padding-left: $gs-gutter / 4;
         padding-right: floor($gs-gutter / 1.333);
 
@@ -320,7 +320,15 @@ $weather-large-size: 60px;
         }
 
         &:first-of-type {
-            padding-left: 0;
+            @include mq($until: mobileLandscape) {
+                padding-left: 0;
+                border-left: 0;
+            }
+
+            @include mq(leftCol) {
+                padding-left: 0;
+                border-left: 0;
+            }
         }
 
         @include mq(leftCol, wide) {
