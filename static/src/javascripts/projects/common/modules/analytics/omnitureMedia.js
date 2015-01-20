@@ -83,7 +83,7 @@ define([
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = config.page.sectionName || '';
+            s.eVar11 = s.prop11 = (window.location.host === 'embed.theguardian.com') ? 'Embedded' : config.page.sectionName || '';
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
             s.eVar44 = s.prop44 = mediaName;
             s.eVar7 = s.pageName;
