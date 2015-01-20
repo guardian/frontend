@@ -96,11 +96,11 @@ define([
                     server.autoRespond = true;
 
                     server.respondWith([200, { "Content-Type": "application/json" },
-                        '[{"WeatherIcon": 3}]']);
+                        '[{"weatherIcon": 3}]']);
 
                     sut.getWeatherData("/testurl/").then(function (response) {
                         expect(response).toEqual([
-                            {WeatherIcon: 3}
+                            {weatherIcon: 3}
                         ]);
                         done();
                     });
@@ -133,12 +133,12 @@ define([
                     server.autoRespond = true;
 
                     server.respondWith([200, { "Content-Type": "application/json" },
-                        '[{"WeatherIcon": 3}]']);
+                        '{"weatherIcon": 3}']);
 
                     spyOn(sut, "render");
 
                     sut.fetchWeatherData(data).then(function () {
-                        expect(sut.render).toHaveBeenCalledWith({"WeatherIcon": 3}, "London");
+                        expect(sut.render).toHaveBeenCalledWith({"weatherIcon": 3}, "London");
                         done();
                     });
 
@@ -147,12 +147,10 @@ define([
 
                 it("should add weather component to the DOM", function () {
                     var mockWeatherData = {
-                            WeatherIcon: 3,
-                            Temperature: {
-                                Metric: {
-                                    Value: 9.1,
-                                    Unit: "C"
-                                }
+                            weatherIcon: 3,
+                            temperature: {
+                                imperial: "39°F",
+                                metric: "4°C"
                             }
                         },
                         mockCity = 'London';
@@ -162,8 +160,8 @@ define([
                     $weather = $('.weather');
 
                     expect($(".js-weather-input", $weather).val()).toEqual('London');
-                    expect($(".js-weather-temp", $weather).text()).toEqual('9°C');
-                    expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["WeatherIcon"])).toBeTruthy();
+                    expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
+                    expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["weatherIcon"])).toBeTruthy();
                 });
 
                 it("should fetch the forecast data", function () {
@@ -190,7 +188,7 @@ define([
                     server.autoRespond = true;
 
                     server.respondWith([200, { "Content-Type": "application/json" },
-                        '[{"WeatherIcon": 3}]']);
+                        '[{"weatherIcon": 3}]']);
 
                     spyOn(sut, "renderForecast");
 
