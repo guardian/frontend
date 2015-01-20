@@ -3,7 +3,8 @@ package weather
 import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
 import geo.LatitudeLongitude
-import models.{ForecastResponse, LocationResponse, CityId}
+import models.accuweather.{WeatherResponse, LocationResponse, ForecastResponse}
+import models.CityId
 import play.api.Play
 import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WS
@@ -52,8 +53,12 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
       Json.fromJson[LocationResponse](r).get
     })
 
-  def getWeatherForCityId(cityId: CityId): Future[JsValue] =
-    getJson(cityLookUp(cityId))
+  def getWeatherForCityId(cityId: CityId): Future[WeatherResponse] =
+    getJson(cityLookUp(cityId)).map({ r =>
+      Json.fromJson[Seq[WeatherResponse]](r).get.headOption getOrElse {
+        throw new RuntimeException(s"Empty weather response for $cityId")
+      }
+    })
 
   def getForecastForCityId(cityId: CityId): Future[Seq[ForecastResponse]] =
     getJson(forecastLookUp(cityId)).map({ r =>

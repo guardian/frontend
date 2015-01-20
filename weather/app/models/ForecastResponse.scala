@@ -2,24 +2,28 @@ package models
 
 import play.api.libs.json.Json
 
-/** Not all the fields AccuWeather provides, but the ones we want */
-
-object Temperature {
-  implicit val jsonFormat = Json.format[Temperature]
-}
-
-case class Temperature(
-  Value: Int,
-  Unit: String
-)
-
 object ForecastResponse {
-  implicit val jsonFormat = Json.format[ForecastResponse]
+  implicit val jsonWrites = Json.writes[ForecastResponse]
+
+  def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
+    ForecastResponse(
+      forecastResponse.EpochDateTime,
+      forecastResponse.WeatherIcon,
+      forecastResponse.IconPhrase,
+      forecastResponse.Temperature.Unit match {
+        case "C" => Temperatures.fromCelsius(forecastResponse.Temperature.Value)
+        case "F" => Temperatures.fromFahrenheit(forecastResponse.Temperature.Value)
+        case _ =>
+          throw new RuntimeException("Temperature of neither celsius nor fahrenheit from " +
+            s"Accuweather! $forecastResponse")
+      }
+    )
+  }
 }
 
 case class ForecastResponse(
-  EpochDateTime: Int,
-  WeatherIcon: Int,
-  IconPhrase: String,
-  Temperature: Temperature
+  epochDateTime: Int,
+  weatherIcon: Int,
+  weatherText: String,
+  temperature: Temperatures
 )
