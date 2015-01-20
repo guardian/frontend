@@ -24,7 +24,7 @@ object DiagnosticsController extends Controller with Logging {
 
     if (Switches.DoNotTrack.isSwitchedOn && prefix == "pv") {
       // http://en.wikipedia.org/wiki/Do_Not_Track
-      request.headers.get("DNT").filter(_.nonEmpty).foreach( - => Analytics.report("dnt"))
+      request.headers.get("DNT").filter(_.nonEmpty).foreach( _ => Analytics.report("dnt"))
     }
 
     Analytics.report(prefix)
