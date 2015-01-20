@@ -7,21 +7,10 @@ import play.api.test.Helpers._
 @DoNotDiscover class FlyerControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite  {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
-  val callbackName = "aCallback"
 
   "Content Card Controller" should "200 when the content is found" in {
       val result = controllers.FlyerController.render(article)(TestRequest())
       status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied" in {
-      val fakeRequest = FakeRequest(GET, s"/embed/card/${article}?callback=${callbackName}")
-          .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.FlyerController.render(article)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be ("application/javascript")
-    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""") // the callback
   }
 
   it should "return JSON when .json format is supplied" in {

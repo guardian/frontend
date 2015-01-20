@@ -10,8 +10,6 @@ import play.api.http.ContentTypes._
 
 object JsonComponent extends Results with implicits.Requests {
 
-  private val ValidCallback = """([a-zA-Z0-9_]+)""".r
-
   def apply(html: Html)(implicit request: RequestHeader): Result = {
     val json = jsonFor("html" -> html)
     resultFor(request, json)
@@ -63,37 +61,14 @@ object JsonComponent extends Results with implicits.Requests {
 
   // Note we are not setting Vary headers here as they get set in CorsVaryHeadersFilter
   // otherwise they get overwritten by the Gzip Filter
-  private def resultFor(request: RequestHeader, json: String): Result = jsonp(request, json)
-    .orElse(cors(request, json))
-    .getOrElse(Ok(json).as(JSON))
-
-  private def cors(request: RequestHeader, json: String) = request.headers.get("Origin").map { origin =>
-     Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
-  }
-
-  // TODO we probably want to kill off JsonP - I do not think we intend to use it again
-  private def jsonp(request: RequestHeader, json: String): Option[Result] = request.getQueryString("callback").map{
-    case ValidCallback(callback) => Ok(s"$callback($json);").as(withCharset("application/javascript"))
-    case badCallback => Forbidden("bad callback name")
+  private def resultFor(request: RequestHeader, json: String): Result = {
+    Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "X-Requested-With"))(request)
   }
 }
 
-// you cannot simply return a 404 for JsonP see
-// http://stackoverflow.com/questions/2493974/how-to-callback-a-function-on-404-in-json-ajax-request-with-jquery#answer-2537559
 object JsonNotFound {
 
-  private val ValidCallback = """([a-zA-Z0-9_]+)""".r
-
-
-  private def cors(request: RequestHeader) = request.headers.get("Origin").map { origin =>
-     Cors(NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
-  }
-
-  def apply()(implicit request: RequestHeader): Result = jsonp(request).orElse(cors(request)).getOrElse(NotFound)
-
-  // TODO we probably want to kill off JsonP - I do not think we intend to use it again
-  private def jsonp(request: RequestHeader) = request.getQueryString("callback").map {
-    case ValidCallback(callback) => Ok( s"""$callback({"status":404});""").as(withCharset("application/javascript"))
-    case badCallback => Forbidden("bad callback name")
+  def apply()(implicit request: RequestHeader): Result = {
+    Cors(NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "X-Requested-With"))(request)
   }
 }
