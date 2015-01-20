@@ -170,8 +170,8 @@ define([
         },
 
         toggleForecast: function (e) {
-            $(e.currentTarget).toggleClass("is-visible");
-            $('.' + e.currentTarget.dataset.toggleClass).toggleClass("u-h");
+            $(e.currentTarget).toggleClass('is-visible');
+            $('.' + e.currentTarget.dataset.toggleClass).toggleClass('u-h');
         },
 
         getUnits: function () {
@@ -238,7 +238,7 @@ define([
                     'forecast-temp': forecastData[i].temperature[this.getUnits()],
                     'forecast-icon': forecastData[i].weatherIcon,
                     'forecast-desc': forecastData[i].weatherText,
-                    'forecast-num' : parseInt(i) + 1,
+                    'forecast-num': parseInt(i, 10) + 1
                 }));
 
                 $forecast.appendTo($forecastHolder);

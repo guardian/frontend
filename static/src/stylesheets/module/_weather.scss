@@ -17,7 +17,7 @@ $weather-large-size: 60px;
 
     @include mq(leftCol) {
         width: $left-column;
-        margin-top: $gs-baseline * 1.5;
+        margin-top: $gs-baseline;
     }
 
     @include mq(wide) {
@@ -285,7 +285,7 @@ $weather-large-size: 60px;
 .weather__forecasts {
     clear: both;
     margin: 0;
-    padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
+    padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
     list-style: none;
     line-height: 1.2;
     display: inline-block;
