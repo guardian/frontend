@@ -289,16 +289,23 @@ $weather-large-size: 60px;
     list-style: none;
     line-height: 1.2;
     display: inline-block;
-    float: right;
-    
+
     @include mq($until: mobileLandscape) {
         display: table;
         width: 100%;
-        float: none;
+    }
+
+    @include mq(mobileLandscape, leftCol) {
+        float: right;
     }
 
     @include mq(leftCol) {
-        display: none;
+        display: table;
+        width: 100%;
+
+        &.weather__forecasts--mobile {
+            display: none;
+        }
     }
 
     .weather__forecast {
@@ -316,8 +323,14 @@ $weather-large-size: 60px;
             padding-left: 0;
         }
 
-        &:last-of-type {
-            border-right: 0;
+        @include mq(leftCol, wide) {
+            &--3 {
+                border-right: 0;
+            }
+
+            &--4 {
+                display: none;
+            }
         }
 
         .weather__time {

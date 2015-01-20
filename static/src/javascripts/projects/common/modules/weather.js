@@ -245,7 +245,7 @@ define([
                     'forecast-temp': forecastData[i].temperature[this.getUnits()],
                     'forecast-icon': forecastData[i].weatherIcon,
                     'forecast-desc': forecastData[i].weatherText,
-                    'forecast-num' : i,
+                    'forecast-num' : parseInt(i) + 1,
                 }));
 
                 $forecast.appendTo($forecastHolder);
