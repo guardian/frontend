@@ -11,6 +11,7 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
+    'utils/logger',
     'utils/terminate',
     'models/group',
     'models/config/front',
@@ -29,6 +30,7 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
+    logger,
     terminate,
     Group,
     Front,
@@ -133,9 +135,9 @@ define([
                        .value()
                     );
 
-                    window.console.log('CONTAINER USAGE\n');
+                    logger.log('CONTAINER USAGE\n');
                     _.each(containerUsage(), function(fronts, type) {
-                        window.console.log(type + ': ' + fronts.join(',') + '\n');
+                        logger.log(type + ': ' + fronts.join(',') + '\n');
                     });
                 }
             }, opts.pollingMs, opts.terminateOnFail);

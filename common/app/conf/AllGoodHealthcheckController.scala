@@ -25,12 +25,13 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 
   def healthcheck(): Action[AnyContent]
 
-  protected def fetchResults(paths: String*): Seq[Future[(String, Int)]] = {
-    paths.map(path => WS.url(s"$baseUrl$path")
-      .withHeaders("X-Gu-Management-Healthcheck" -> "true")
-      .withRequestTimeout(10000).get()
-      .map(result => (s"$baseUrl$path", result.status)))
-  }
+  protected def fetchResult(path: String): Future[(String, Int)] = WS.url(s"$baseUrl$path")
+    .withHeaders("X-Gu-Management-Healthcheck" -> "true")
+    .withRequestTimeout(10000).get()
+    .map(result => (s"$baseUrl$path", result.status))
+
+  protected def fetchResults(paths: String*): Seq[Future[(String, Int)]] = paths.map(fetchResult)
+
 }
 
 // expects ALL of the paths to return 200. If one fails the entire healthcheck fails

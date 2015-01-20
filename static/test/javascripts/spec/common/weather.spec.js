@@ -14,10 +14,10 @@ define([
     Injector
     ) {
 
-    return  new Injector()
+    return new Injector()
         .store('common/utils/config')
         .require(['common/modules/weather', 'mocks'], function (sut, mocks) {
-            ddescribe('Weather component', function () {
+            describe('Weather component', function () {
                 var container,
                     $weather;
 
@@ -193,39 +193,13 @@ define([
                         '[{"WeatherIcon": 3}]']);
 
                     spyOn(sut, "renderForecast");
-                    spyOn(sut, "parseForecast").and.returnValue('parsedData');
 
                     sut.fetchForecastData(data).then(function () {
-                        expect(sut.renderForecast).toHaveBeenCalledWith('parsedData');
-                        expect(sut.parseForecast).toHaveBeenCalled();
+                        expect(sut.renderForecast).toHaveBeenCalled();
                         done();
                     });
 
                     server.restore();
-                });
-
-                it("should parse the forecast data and return array of three", function() {
-                    var mockData = [
-                            {"DateTime": "2015-01-13T16:00:00+00:00"},
-                            {"DateTime": "2015-01-13T17:00:00+00:00"},
-                            {"DateTime": "2015-01-13T18:00:00+00:00"},
-                            {"DateTime": "2015-01-13T19:00:00+00:00"},
-                            {"DateTime": "2015-01-13T20:00:00+00:00"},
-                            {"DateTime": "2015-01-13T21:00:00+00:00"},
-                            {"DateTime": "2015-01-13T22:00:00+00:00"},
-                            {"DateTime": "2015-01-13T23:00:00+00:00"},
-                            {"DateTime": "2015-01-13T00:00:00+00:00"},
-                            {"DateTime": "2015-01-13T01:00:00+00:00"},
-                            {"DateTime": "2015-01-13T02:00:00+00:00"},
-                            {"DateTime": "2015-01-13T03:00:00+00:00"}
-                        ],
-                        result   = [
-                            {"DateTime": "2015-01-13T19:00:00+00:00"},
-                            {"DateTime": "2015-01-13T22:00:00+00:00"},
-                            {"DateTime": "2015-01-13T01:00:00+00:00"}
-                        ];
-
-                    expect(sut.parseForecast(mockData)).toEqual(result);
                 });
             });
     });

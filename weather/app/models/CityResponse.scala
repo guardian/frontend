@@ -32,6 +32,14 @@ object CityResponse {
     }
   }
 
+  def fromLocationResponse(location: LocationResponse) = {
+    CityResponse(
+      location.Key,
+      location.LocalizedName,
+      location.Country.LocalizedName
+    )
+  }
+
   val London = CityResponse(
     id = "328328",
     city = "London",

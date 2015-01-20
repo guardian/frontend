@@ -113,6 +113,7 @@ define([
 
         fetchWeatherData: function (location) {
             self.saveUserLocation(location);
+            self.track(location.city);
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
@@ -138,21 +139,27 @@ define([
                         }
                     });
                 });
-
-            self.renderForecast(response);
         },
 
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function () {
+            bean.on($('.js-weather-input')[0], 'click', function (e) {
+                e.preventDefault();
                 self.toggleControls(true);
             });
-            bean.on($('.js-close-location')[0], 'click', function () {
+            bean.on($('.js-close-location')[0], 'click', function (e) {
+                e.preventDefault();
                 self.toggleControls(false);
             });
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
                 self.toggleForecast(e);
             });
             mediator.on('autocomplete:fetch', this.fetchWeatherData);
+        },
+
+        track: function () {
+            /*s.prop22 = city;
+            s.eVar22 = city;
+            s.events = 'event100';*/
         },
 
         toggleControls: function (value) {
@@ -168,7 +175,7 @@ define([
                 searchTool.setInputValue(city);
             }
         },
-        
+
         toggleForecast: function (e) {
             $(e.currentTarget).toggleClass("is-visible");
             $('.' + e.currentTarget.dataset.toggleClass).toggleClass("is-visible");
@@ -218,7 +225,8 @@ define([
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.WeatherIcon));
+                    weatherData.WeatherIcon))
+                    .attr('title', weatherData.WeatherText);
 
                 // Close editing
                 self.toggleControls(false);
@@ -227,20 +235,21 @@ define([
 
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecasts'),
-                $forecast = null;
+                $forecast = null,
+                i;
 
             $forecastHolder.empty();
 
             for (i in forecastData) {
                 $forecast = $.create(template(forecastTemplate, {
-                        'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
-                        'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
-                        'forecast-icon': forecastData[i].WeatherIcon,
-                        'forecast-desc': forecastData[i].IconPhrase,
-                        'forecast-num' : i,
-                    }));
+                    'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
+                    'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
+                    'forecast-icon': forecastData[i].WeatherIcon,
+                    'forecast-desc': forecastData[i].IconPhrase,
+                    'forecast-num' : i,
+                }));
 
-               $forecast.appendTo($forecastHolder);
+                $forecast.appendTo($forecastHolder);
             }
         }
     };

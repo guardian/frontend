@@ -24,10 +24,6 @@
         @fragments.meta.dateline(content.webPublicationDate, secondary = true)
     }
 
-    @if(content.contributors.length == 1) {
-        @fragments.meta.twitterHandle(content, mobile = true)
-    }
-
     <div class="meta__extras">
         <div class="meta__social" data-component="share">
             @fragments.social(content, "top")

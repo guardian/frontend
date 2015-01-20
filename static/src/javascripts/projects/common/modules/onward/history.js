@@ -8,8 +8,8 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
+    'common/utils/url',
     'text!common/views/history/tag.html',
-    'text!common/views/history/tags.html',
     'text!common/views/history/mega-nav.html'
 ], function (
     $,
@@ -17,39 +17,64 @@ define([
     config,
     template,
     storage,
+    url,
     viewTag,
-    viewTags,
     viewMegaNav
 ) {
-    var whitelistRx = new RegExp(/^football\/[^\/]+/),
-        whitelist = [
+    var whitelist = [
+            // R2 etc
             'audioslideshows', 'business/economics', 'business/interest-rates', 'business/markets', 'business/series/andrewclarkonamerica',
             'business/series/davidgowoneurope', 'business/series/viewpointcolumn', 'business/useconomy', 'careers', 'cartoons', 'community',
             'crosswords', 'crosswords/series/cryptic', 'crosswords/series/everyman', 'crosswords/series/prize', 'crosswords/series/quick',
             'data', 'environment/climate-change', 'environment/conservation', 'environment/energy', 'environment/ethical-living',
             'environment/food', 'environment/georgemonbiot', 'environment/list/allenvironmentkeywords', 'environment/travelandtransport',
-            'environment/waste', 'football/championsleague', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
-            'lifeandstyle/series/timdowlingsweekendcolumn', 'lifeandstyle/women', 'media/advertising', 'media/digital-media', 'media/list/allmediakeywords',
+            'environment/waste', 'football', 'guardian-professional', 'inpictures', 'interactive', 'law', 'lifeandstyle',
+            'lifeandstyle/series/timdowlingsweekendcolumn', 'lifeandstyle/women', 'media/advertising', 'media', 'media/digital-media', 'media/list/allmediakeywords',
             'media/marketingandpr', 'media/mediabusiness', 'media/pressandpublishing', 'media/radio', 'media/television', 'money/consumer-affairs',
             'money/insurance', 'money/isas', 'money/moneyinvestments', 'money/property', 'money/savings', 'money/work-and-careers', 'multimedia',
-            'news/guardianfilms', 'profile/charliebrooker', 'profile/davidmitchell', 'profile/georgemonbiot', 'profile/hadleyfreeman', 'profile/johnharris',
+            'profile/first-dog-on-the-moon', 'profile/martinrowson', 'artanddesign/photography', 'world/series/eyewitness', 'membership', 'theguardian/series/guardianwitness-assignments',
+            'news/guardianfilms', 'politics', 'profile/charliebrooker', 'profile/davidmitchell', 'profile/georgemonbiot', 'profile/hadleyfreeman', 'profile/johnharris',
             'profile/marinahyde', 'profile/marklawson', 'profile/martinkettle', 'profile/owen-jones', 'profile/pollytoynbee', 'profile/seumasmilne', 'profile/stevebell',
             'profile/suzannemoore', 'profile/zoewilliams', 'science', 'science/science+tone/comment', 'science/sciencenews', 'science/series/badscience',
             'society', 'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
             'society/social-care', 'society/voluntarysector', 'technology', 'technology/askjack', 'technology/comment', 'technology/gadgets',
             'technology/games', 'technology/internet', 'technology/it', 'technology/news', 'technology/telecoms', 'theguardian/mainsection/obituaries',
             'theguardian/series/otherlives', 'travel', 'travel/bookatrip', 'travel/hotels', 'travel/lateoffers', 'travel/places', 'travel/restaurants',
-            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly'
-        ],
-        subNav = [
-            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'crosswords', 'education',
-            'education/students', 'fashion', 'film', 'football/competitions', 'football/fixtures', 'football/live', 'football/results',
-            'football/tables', 'football/teams', 'global-development', 'lifeandstyle', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
-            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'lifeandstyle/women', 'money/debt',
-            'money/property', 'money/savings', 'money/work-and-careers', 'music', 'music/classicalmusicandopera', 'observer', 'science',
-            'society', 'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
-            'sport/tennis', 'sport/us-sport', 'stage', 'technology/games', 'theguardian', 'travel', 'travel/europe', 'travel/uk', 'travel/usa',
-            'tv-and-radio', 'video', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
+            'travel/shortbreaks', 'travel/typesoftrip', 'tv-and-radio', 'uk/technology', 'video', 'weekly', 'lifeandstyle/series/sudoku', 'news/series/the-daily-quiz',
+
+            // teams
+            'football/arsenal', 'football/aston-villa', 'football/burnley', 'football/crystalpalace', 'football/chelsea', 'football/everton', 'football/hullcity',
+            'football/leicestercity', 'football/liverpool', 'football/manchestercity', 'football/manchester-united', 'football/newcastleunited', 'football/qpr',
+            'football/southampton', 'football/stokecity', 'football/sunderland', 'football/swansea', 'football/tottenham-hotspur', 'football/westbrom',
+            'football/westhamunited', 'football/birminghamcityfc', 'football/blackburn', 'football/blackpool', 'football/boltonwanderers', 'football/bournemouth',
+            'football/brentford', 'football/brightonfootball', 'football/cardiffcity', 'football/charltonathletic', 'football/derbycounty', 'football/fulham',
+            'football/huddersfield', 'football/ipswichtown', 'football/leedsunited', 'football/middlesbrough', 'football/millwall', 'football/norwichcity',
+            'football/nottinghamforest', 'football/reading', 'football/rotherham', 'football/sheffieldwednesday', 'football/watford', 'football/wiganathletic',
+            'football/wolves', 'football/aberdeen', 'football/celtic', 'football/dundee', 'football/dundeeunited', 'football/hamilton', 'football/invernesscaledonianthistle',
+            'football/kilmarnock', 'football/motherwell', 'football/partick', 'football/rosscounty', 'football/stjohnstone', 'football/stmirren',
+            'football/almeria', 'football/athleticbilbao', 'football/atleticomadrid', 'football/barcelona', 'football/celtavigo', 'football/deportivo-la-coruna', 'football/eibar',
+            'football/elche-cf', 'football/espanyol', 'football/getafe', 'football/granada74', 'football/levante', 'football/malaga', 'football/rayo-vallecano', 'football/realmadrid',
+            'football/realsociedad', 'football/sevilla', 'football/valencia', 'football/villarreal',
+
+            // competitions
+            'football/premierleague', 'football/fa-cup', 'football/championship', 'football/leagueonefootball', 'football/leaguetwofootball', 'football/capital-one-cup',
+            'football/championsleague', 'football/uefa-europa-league', 'football/laligafootball', 'football/ligue1football', 'football/bundesligafootball', 'football/serieafootball',
+            'football/mls', 'football/a-league', 'football/scottish-premiership', 'football/scottishcup', 'football/cis-insurance-cup', 'football/scottish-championship',
+            'football/scottish-league-one', 'football/scottish-league-two', 'football/euro-2016-qualifiers', 'football/friendlies', 'football/copa-america', 'football/africannationscup',
+            'football/world-cup-2018', 'football/world-cup-2014',
+
+            // football links
+            'football/competitions', 'football/fixtures', 'football/live', 'football/results', 'football/tables', 'football/teams', 'football/series/thefiver',
+            'football/series/rumourmill', 'football/transfer-window',
+
+            // NG subnav
+            'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'education',
+            'education/students', 'fashion', 'film', 'global-development', 'lifeandstyle/family', 'lifeandstyle/food-and-drink',
+            'lifeandstyle/health-and-wellbeing', 'lifeandstyle/home-and-garden', 'lifeandstyle/love-and-sex', 'money/debt',
+            'music', 'music/classicalmusicandopera', 'observer',
+            'sport/boxing', 'sport/cricket', 'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/tennis', 'sport/us-sport', 'stage', 'theguardian', 'travel/europe', 'travel/uk', 'travel/usa',
+            'world/africa', 'world/americas', 'world/asia', 'world/europe-news', 'world/middleeast'
         ],
         editions = [
             'uk',
@@ -83,6 +108,7 @@ define([
         today =  Math.floor(Date.now() / 86400000), // 1 day in ms
         historyCache,
         summaryCache,
+        popularFilteredCache,
         topNavItemsCache,
 
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
@@ -167,14 +193,12 @@ define([
     function getPopular(number, filtered) {
         var tags = getSummary().tags,
             tids = _.keys(tags),
-            wList,
-            bList;
+            blacklist;
 
         if (filtered) {
-            wList = whitelist.concat(subNav);
-            bList = getTopNavItems();
-            tids = tids.filter(function (tid) { return tid.match(whitelistRx) || wList.indexOf(tid) > -1; });
-            tids = tids.filter(function (tid) { return bList.indexOf(tid) === -1; });
+            blacklist = getTopNavItems();
+            tids = tids.filter(function (tid) { return whitelist.indexOf(tid) > -1; });
+            tids = tids.filter(function (tid) { return blacklist.indexOf(tid) === -1; });
         }
 
         return _.chain(tids)
@@ -197,8 +221,14 @@ define([
             .value();
     }
 
-    function getPopularFiltered() {
-        return getPopular(20, true);
+    function getPopularFiltered(opts) {
+        if (opts && opts.flush) {
+            popularFilteredCache = getPopular(20, true);
+        } else {
+            popularFilteredCache = popularFilteredCache || getPopular(20, true);
+        }
+
+        return popularFilteredCache;
     }
 
     function tally(freqs) {
@@ -284,7 +314,7 @@ define([
 
     function getTopNavItems() {
         topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
-            return collapseTag(urlPath($(item).attr('href')));
+            return collapseTag(url.getPath($(item).attr('href')));
         });
 
         return topNavItemsCache;
@@ -338,12 +368,6 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
-    }
-
-    function urlPath(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        return a.pathname;
     }
 
     return {

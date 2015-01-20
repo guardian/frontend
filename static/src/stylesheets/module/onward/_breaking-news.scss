@@ -97,10 +97,6 @@ $breaking-news-icon-width: 36px;
 .breaking-news__item-kicker {
     color: colour(live-mute);
     font-style: normal;
-
-    &:after {
-        content: ': ';
-    }
 }
 
 .breaking-news__item-headline {

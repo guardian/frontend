@@ -80,6 +80,17 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        sudoku: {
+            options: {
+                name: 'bootstraps/sudoku',
+                out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',
@@ -201,17 +212,6 @@ module.exports = function(grunt, options) {
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
-            }
-        },
-        preview: {
-            options: {
-                name: 'bootstraps/preview',
-                out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text'
-                ]
             }
         },
         dev: {

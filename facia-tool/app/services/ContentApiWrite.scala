@@ -53,11 +53,11 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
       url           <- getCollectionUrlForWrite(id)
     } yield
     {
-      val contentApiPut = generateContentApiPut(id, config)
+      val futureContentApiPut = generateContentApiPut(id, config)
 
-      val response = WS
-        .url(url).withAuth(username, password, WSAuthScheme.NONE)
-        .put(Json.toJson(contentApiPut))
+      val response = futureContentApiPut.flatMap { contentApiPut =>
+        WS.url(url).withAuth(username, password, WSAuthScheme.NONE)
+          .put(Json.toJson(contentApiPut))}
 
       response.onSuccess{case r =>
         r.status match {
@@ -74,20 +74,19 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  def generateContentApiPut(id: String, config: CollectionConfigJson): ContentApiPut = {
-    val maybeBlock = FaciaApiIO.getBlock(id)
+  def generateContentApiPut(id: String, config: CollectionConfigJson): Future[ContentApiPut] = {
+    FaciaApiIO.getCollectionJson(id) map { maybeCollectionJson =>
 
     ContentApiPut(
       config.`type`.getOrElse(defaultCollectionType),
-      config.displayName.orElse(maybeBlock.flatMap(_.displayName)).getOrElse(defaultTitle),
+      config.displayName.orElse(maybeCollectionJson.flatMap(_.displayName)).getOrElse(defaultTitle),
       config.groups.getOrElse(Nil),
       ConfigAgent.editorsPicksForCollection(id),
-      maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
+      maybeCollectionJson map { collectionJson => generateItems(collectionJson.live) } getOrElse Nil,
       config.apiQuery,
-      maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
-      maybeBlock map { _.updatedEmail } getOrElse { defaultEmail }
-    )
-  }
+      maybeCollectionJson map { _.lastUpdated.toString } getOrElse { DateTime.now.toString },
+      maybeCollectionJson map { _.updatedEmail } getOrElse { defaultEmail }
+    )}}
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.filterNot(t => Snap.isSnap(t.id)).map { trail =>

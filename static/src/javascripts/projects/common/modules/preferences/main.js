@@ -43,7 +43,7 @@ define([
                 },
                 handleRemove: function (tag) {
                     history.deleteFromSummary(tag);
-                    this.setState({ popular: history.getPopularFiltered() });
+                    this.setState({ popular: history.getPopularFiltered({flush: true}) });
                     history.showInMegaNav(true);
                 },
                 render: function () {
@@ -59,12 +59,16 @@ define([
                                 }, tag[1])
                             );
                             return obj;
-                        }, {});
+                        }, {}),
+                        helperText;
 
-                    if (!_.isEmpty(tags)) {
-                        tags.andFinally = React.DOM.p(null, '(remove links that don\'t interest you by clicking the \'X\' next to them.)');
-                        return React.DOM.div(null, tags);
+                    if (_.isEmpty(tags)) {
+                        helperText = '(You don\'t have any suggested links.)';
+                    } else {
+                        helperText = '(Remove links that don\'t interest you by clicking the \'X\' next to them.)';
                     }
+                    tags.helperText = React.DOM.p(null, helperText);
+                    return React.DOM.div(null, tags);
                 }
             });
 
