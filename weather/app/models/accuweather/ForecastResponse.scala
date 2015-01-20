@@ -9,7 +9,7 @@ object Temperature {
 }
 
 case class Temperature(
-  Value: Int,
+  Value: Double,
   Unit: String
 )
 

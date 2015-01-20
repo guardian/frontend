@@ -55,7 +55,9 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
 
   def getWeatherForCityId(cityId: CityId): Future[WeatherResponse] =
     getJson(cityLookUp(cityId)).map({ r =>
-      Json.fromJson[WeatherResponse](r).get
+      Json.fromJson[Seq[WeatherResponse]](r).get.headOption getOrElse {
+        throw new RuntimeException(s"Empty weather response for $cityId")
+      }
     })
 
   def getForecastForCityId(cityId: CityId): Future[Seq[ForecastResponse]] =

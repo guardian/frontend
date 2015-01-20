@@ -8,7 +8,7 @@ object WeatherResponse {
   def fromAccuweather(weatherResponse: accuweather.WeatherResponse): WeatherResponse = WeatherResponse(
     weatherResponse.WeatherText,
     weatherResponse.WeatherIcon,
-    Temperatures.fromFahrenheit(weatherResponse.Temperature("F").Value)
+    Temperatures.fromCelsius(weatherResponse.Temperature("Metric").Value)
   )
 }
 
