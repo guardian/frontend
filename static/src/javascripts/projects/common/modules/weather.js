@@ -178,7 +178,7 @@ define([
 
         toggleForecast: function (e) {
             $(e.currentTarget).toggleClass("is-visible");
-            $('.' + e.currentTarget.dataset.toggleClass).toggleClass("is-visible");
+            $('.' + e.currentTarget.dataset.toggleClass).toggleClass("u-h");
         },
 
         getUnits: function () {

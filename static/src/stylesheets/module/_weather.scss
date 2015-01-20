@@ -288,24 +288,16 @@ $weather-large-size: 60px;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2) 0;
     list-style: none;
     line-height: 1.2;
-    display: none;
-
-    @include mq($until: leftCol) {
-        float: right;
+    display: inline-block;
+    float: right;
+    
+    @include mq($until: mobileLandscape) {
+        display: table;
+        width: 100%;
     }
 
     @include mq(leftCol) {
-        overflow: hidden;
-        display: inline-block !important; // Important to override any toggle settings
-    }
-
-    &.is-visible {
-        display: inline-block;
-
-        @include mq($until: mobileLandscape) {
-            display: table;
-            width: 100%;
-        }
+        display: none;
     }
 
     .weather__forecast {
