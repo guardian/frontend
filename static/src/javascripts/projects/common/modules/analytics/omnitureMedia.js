@@ -87,7 +87,7 @@ define([
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = config.page.sectionName || '';
+            s.eVar11 = s.prop11 = (window.location.host === 'embed.theguardian.com') ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
