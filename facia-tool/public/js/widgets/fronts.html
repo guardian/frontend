@@ -43,6 +43,12 @@
     <!-- ko ifnot: confirmSendingAlert() -->
         <div class="col__inner front-selector">
             <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
+            <span class="collapse-expand-all" data-bind="css: {
+                expanded: allExpanded
+            }, click: toggleAll">
+                <span class="expand">expand all <i class="fa fa-chevron-up"></i></span>
+                <span class="collapse">collapse all <i class="fa fa-chevron-down"></i></span>
+            </span>
         </div>
     <!-- /ko -->
 

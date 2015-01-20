@@ -146,6 +146,7 @@ define([
         if (!collapsed) {
             this.refreshVisibleStories(true);
         }
+        mediator.emit('collection:collapse', this, collapsed);
     };
 
     Collection.prototype.toggleEditingConfig = function() {

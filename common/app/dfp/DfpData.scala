@@ -192,6 +192,7 @@ case class GuLineItem(id: Long,
                       endTime: Option[DateTime],
                       isPageSkin: Boolean,
                       sponsor: Option[String],
+                      status: String,
                       targeting: GuTargeting) {
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
@@ -226,6 +227,7 @@ object GuLineItem {
         "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
+        "status" -> lineItem.status,
         "targeting" -> lineItem.targeting
       )
     }
@@ -238,6 +240,7 @@ object GuLineItem {
       (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
       (JsPath \ "isPageSkin").read[Boolean] and
       (JsPath \ "sponsor").readNullable[String] and
+      (JsPath \ "status").read[String] and
       (JsPath \ "targeting").read[GuTargeting]
     )(GuLineItem.apply _)
 
