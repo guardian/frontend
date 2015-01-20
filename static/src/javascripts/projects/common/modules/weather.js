@@ -117,7 +117,7 @@ define([
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    self.render(response[0], location.city);
+                    self.render(response, location.city);
                     self.fetchForecastData(location);
                 }).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
@@ -183,15 +183,14 @@ define([
 
         getUnits: function () {
             if (config.page.edition === 'US') {
-                return 'Imperial';
+                return 'imperial';
             }
 
-            return 'Metric';
+            return 'metric';
         },
 
         getTemperature: function (weatherData) {
-            return Math.round(weatherData.Temperature[this.getUnits()].Value) + '°'
-                + weatherData.Temperature[this.getUnits()].Unit;
+            return weatherData.temperature[this.getUnits()];
         },
 
         addSearch: function () {
@@ -208,8 +207,8 @@ define([
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,
-                icon: weatherData.WeatherIcon,
-                description: weatherData.WeatherText,
+                icon: weatherData.weatherIcon,
+                description: weatherData.weatherText,
                 tempNow: self.getTemperature(weatherData)
             }));
 
@@ -225,8 +224,8 @@ define([
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.WeatherIcon))
-                    .attr('title', weatherData.WeatherText);
+                    weatherData.weatherIcon))
+                    .attr('title', weatherData.weatherText);
 
                 // Close editing
                 self.toggleControls(false);
@@ -242,10 +241,10 @@ define([
 
             for (i in forecastData) {
                 $forecast = $.create(template(forecastTemplate, {
-                    'forecast-time': new Date(forecastData[i].EpochDateTime * 1000).getHours(),
-                    'forecast-temp': forecastData[i].Temperature.Value + '°' + forecastData[i].Temperature.Unit,
-                    'forecast-icon': forecastData[i].WeatherIcon,
-                    'forecast-desc': forecastData[i].IconPhrase,
+                    'forecast-time': new Date(forecastData[i].epochDateTime * 1000).getHours(),
+                    'forecast-temp': forecastData[i].temperature[this.getUnits()],
+                    'forecast-icon': forecastData[i].weatherIcon,
+                    'forecast-desc': forecastData[i].weatherText,
                     'forecast-num' : i,
                 }));
 
