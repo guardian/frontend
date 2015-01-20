@@ -3,7 +3,8 @@ package weather
 import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
 import geo.LatitudeLongitude
-import models.{ForecastResponse, LocationResponse, CityId}
+import models.accuweather.{LocationResponse, ForecastResponse}
+import models.CityId
 import play.api.Play
 import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WS

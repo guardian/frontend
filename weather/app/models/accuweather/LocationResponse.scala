@@ -1,4 +1,4 @@
-package models
+package models.accuweather
 
 import play.api.libs.json.Json
 
