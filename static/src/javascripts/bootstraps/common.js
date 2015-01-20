@@ -455,13 +455,9 @@ define([
             },
 
             runCssLogging: function () {
-                mediator.on('page:common:ready', function () {
-                    var returnAll = window.location.hash === '#csslogging';
-
-                    if (config.switches.cssLogging && (returnAll || Math.random() < 0.0001)) {
-                        cssLogging.run(returnAll);
-                    }
-                });
+                if (config.switches.cssLogging) {
+                    mediator.on('page:common:ready', cssLogging);
+                }
             }
 
         },
