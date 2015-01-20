@@ -291,23 +291,21 @@ $weather-large-size: 60px;
     display: none;
 
     @include mq($until: leftCol) {
-        width: 100%;
-        overflow-x: scroll;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
+        float: right;
     }
 
     @include mq(leftCol) {
         overflow: hidden;
-        display: block !important; // Important to override any toggle settings
+        display: inline-block !important; // Important to override any toggle settings
     }
 
     &.is-visible {
-        display: block;
+        display: inline-block;
+
+        @include mq($until: mobileLandscape) {
+            display: table;
+            width: 100%;
+        }
     }
 
     .weather__forecast {
@@ -317,8 +315,7 @@ $weather-large-size: 60px;
         padding-left: $gs-gutter / 4;
         padding-right: $gs-gutter / 1.333;
 
-        @include mq($until: leftCol) {
-            float: right;
+        @include mq(mobileLandscape, leftCol) {
             min-width: gs-span(1);
         }
 
