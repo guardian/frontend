@@ -5,27 +5,16 @@ import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
 @DoNotDiscover class RelatedControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
-  
+
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
   val articleWithoutRelated = "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme"
-  val callback = "aFunction"
-
-  it should "serve the correct headers when given a callback parameter" in {
-    val fakeRequest = FakeRequest(GET, s"/related/${article}.json?callback=$callback")
-      .withHeaders("host" -> "http://localhost:9000")
-        
-    val Some(result) = route(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(s"""${callback}({\"html\"""") // the callback
-  }
 
   it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/${article}.json")
       .withHeaders("host" -> "http://localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-        
+
     val Some(result) = route(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
