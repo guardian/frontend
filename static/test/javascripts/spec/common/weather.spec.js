@@ -102,9 +102,10 @@ define([
                             }
                         }
                     });
+                    spyOn(sut, "saveUserLocation");
 
                     sut.fetchData(result);
-                    expect(sut.getUserLocation()).toEqual(undefined);
+                    expect(sut.saveUserLocation).not.toHaveBeenCalled();
                     expect(sut.getWeatherData).toHaveBeenCalled();
                 });
 
