@@ -3,6 +3,7 @@
 @import slices.{FixedContainers, DynamicContainers, IdsJson}
 @import IdsJson.{fixed, dynamic}
 @import conf.Configuration
+@import conf.Switches.FaciaTreats
 
 <!DOCTYPE html>
 
@@ -65,7 +66,8 @@
                     avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")',
                     lowFrequency: @Configuration.faciatool.adminPressJobLowPushRateInMinutes,
                     highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
-                    standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes
+                    standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes,
+                    treats: @FaciaTreats.isSwitchedOn
                 }
             });
 
