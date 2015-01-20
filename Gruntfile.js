@@ -78,7 +78,7 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['requirejs', 'copy:javascript']);
+        grunt.task.run(['copy:inlineSVGs', 'svgmin:inlineSVGs', 'requirejs', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'copy:inlineSVGs', 'svgmin:inlineSVGs']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
         'concurrent:compile',
         'compile:fonts',
