@@ -45,12 +45,12 @@ define([
     function getSpacefinderRules() {
         return {
             minAbove: 200,
-            minBelow: 200,
+            minBelow: 250,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
-                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 200},
+                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 300},
                 ' .ad-slot': {minAbove: 150, minBelow: 200},
-                ' .element-rich-link': {minAbove: 300, minBelow: 300}
+                ' .element-rich-link': {minAbove: 500, minBelow: 500}
             }
         };
     }
