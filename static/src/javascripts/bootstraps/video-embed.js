@@ -25,16 +25,7 @@ define([
     loadingTmpl
     ) {
 
-    var QUARTILES = [25, 50, 75],
-        EVENTS = [
-            'preroll:request',
-            'preroll:ready',
-            'preroll:play',
-            'preroll:end',
-            'content:ready',
-            'content:play',
-            'content:end'
-        ];
+    var QUARTILES = [25, 50, 75];
 
     function constructEventName(eventName) {
         return 'video:' + eventName;
@@ -138,29 +129,6 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
-    function ophanRecord(id, event) {
-        if (id) {
-            require('ophan/ng', function (ophan) {
-                ophan.record({
-                    video: {
-                        id: id,
-                        eventType: event.type
-                    }
-                });
-            });
-        }
-    }
-
-    function initOphanTracking(player, mediaId) {
-        EVENTS.concat(QUARTILES.map(function (q) {
-            return 'play:' + q;
-        })).forEach(function (event) {
-            player.one(constructEventName(event, player), function (event) {
-                ophanRecord(mediaId, event, player);
-            });
-        });
-    }
-
     function initOmnitureTracking(player) {
         new OmnitureMedia(player).init();
     }
@@ -172,10 +140,7 @@ define([
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
-            var mediaType = el.tagName.toLowerCase(),
-                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
-                mediaId = $el.attr('data-media-id'),
-                player,
+            var player,
                 mouseMoveIdle;
 
             bonzo(el).addClass('vjs');
@@ -213,7 +178,6 @@ define([
                 deferToAnalytics.init();
                 deferToAnalytics.defer(function () {
                     initOmnitureTracking(player);
-                    //initOphanTracking(player, mediaId);
                     bindContentEvents(player);
                 });
             });
