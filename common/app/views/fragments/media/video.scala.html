@@ -1,4 +1,4 @@
-@(player: model.VideoPlayer)
+@(player: model.VideoPlayer, enhance: Boolean)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -12,7 +12,7 @@
             ("gu-media", true),
             ("gu-media--video", true),
             ("gu-media--show-controls-at-start", player.showControlsAtStart),
-            ("js-gu-media", true)
+            ("js-gu-media--enhance", enhance)
         ))" data-title="@player.title" data-auto-play="@player.autoPlay" data-show-end-slate="@player.showEndSlate"
             poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id"
             data-end-slate="@player.endSlatePath" data-block-video-ads="@player.blockVideoAds" data-embeddable="@player.video.embeddable"

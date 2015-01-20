@@ -36,3 +36,9 @@ Nicole Sullivan's OOCSS CSS markup extraction pattern.
 .media__img img {
     display: block;
 }
+
+.media__container--hidden { display: none; }
+.media__placeholder--active { display: block; }
+
+.media__container--active { display: block; }
+.media__placeholder--hidden { display: none; }

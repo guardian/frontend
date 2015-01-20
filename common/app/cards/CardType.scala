@@ -4,8 +4,10 @@ sealed trait CardType {
   val cssClassName: String
 
   def showVideoPlayer = this match {
+      // TODO check this is really correct - only should be playable if they're big enough - Third could be playable on desktop, but at mobile it renders them wide, narrow, narrow above each other
+      // so only the top one makes sense to be playable
     case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 => true
-    case _ => canShowMedia
+    case _ => false
   }
 
   def showCutOut = this match {

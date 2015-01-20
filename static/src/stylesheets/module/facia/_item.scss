@@ -210,12 +210,6 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none;
 }
 
-.fc-item__video-container { display: none; }
-.fc-item__video-fallback { display: block; }
-
-.fc-item__video-container-active { display: block; }
-.fc-item__video-fallback-hidden { display: none; }
-
 .fc-item__live-indicator {
     color: colour(live-default);
 }

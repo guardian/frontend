@@ -372,19 +372,18 @@ define([
         videojs.plugin('adSkipCountdown', adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
-        $('.js-video-placeholder').each(function (el) { //js-gu-media
-            // TODO add the play button with hover
-            console.log("found a placeholder", el);
-            bean.on(el, "click", function (e) {
+        $('.js-gu-media--enhance').each(function (el) {
+            enhanceVideo(el);
+        });
+
+        $('.js-video-wrapper').each(function (el) {
+            bean.on($('.js-video-play-button', el).get(0), "click", function (e) {
                 // show the container with the same data-id as us
-                console.log("woo");
-                bonzo(el).addClass('fc-item__video-fallback-hidden');
-                bonzo(el).removeClass('fc-item__video-fallback');
-                var dataId = bonzo(el).attr('data-id');
-                var player = $('.js-video-player[data-id="' + dataId + '"]');
-                player.addClass('fc-item__video-container-active');
-                player.removeClass('fc-item__video-container');
-                enhanceVideo($('video[data-media-id="' + dataId + '"]', player).get(0));
+                var placeholder = $('.js-video-placeholder', el);
+                placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                var player = $('.js-video-player', el);
+                player.removeClass('media__container--hidden').addClass('media__container--active');
+                enhanceVideo($('video', player).get(0));
             });
         });
     }
