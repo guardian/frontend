@@ -135,8 +135,6 @@ define([
 
     function initPlayer() {
 
-        new Omniture(window.s).go();
-
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
@@ -175,11 +173,12 @@ define([
 
                 player.fullscreener();
 
-                deferToAnalytics.init();
                 deferToAnalytics.defer(function () {
                     initOmnitureTracking(player);
                     bindContentEvents(player);
                 });
+
+                new Omniture(window.s).go();
             });
 
             mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

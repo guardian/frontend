@@ -10,10 +10,6 @@ define([
         analyticsReady = true;
     });
 
-    function init() {
-        analyticsReady = true;
-    }
-
     function deferToAnalytics(afterAnalytics) {
         if (analyticsReady) {
             afterAnalytics();
@@ -25,7 +21,6 @@ define([
     }
 
     return {
-        init: init,
         defer: deferToAnalytics
     };
 
