@@ -61,6 +61,9 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
+  lazy val richLinkId: Option[String] =
+    delegate.references.find(_.`type` == "rich-link").map(_.id.stripPrefix("rich-link/"))
+
   override lazy val analyticsName = s"GFE:$section:$name"
 
   override lazy val rssPath = Some(s"/$id/rss")
