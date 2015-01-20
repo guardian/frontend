@@ -41,7 +41,11 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
             WeatherApi.getNearestCity(latitudeLongitude) map { location =>
-              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location))))
+              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
+                // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
+                // given how fuzzy geolocation by IP is.
+                city = city
+              ))))
             }
 
           case None =>
