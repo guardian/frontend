@@ -9,7 +9,7 @@ import org.joda.time.{Days, DateTime}
 import java.io.IOException
 import sun.security.x509.X509CertImpl
 
-@Retryable class SslCertTest extends FlatSpec     {
+class SslCertTest extends FlatSpec     {
 
   val trustManager = Array[TrustManager](new NativeTrustMananger())
 
@@ -17,35 +17,43 @@ import sun.security.x509.X509CertImpl
   ctx.init(new Array[KeyManager](0), trustManager, new SecureRandom())
   SSLContext.setDefault(ctx)
 
-  val hosts = List(
-    "https://beacon.guim.co.uk",
-    "https://profile.theguardian.com",
-    "https://fronts.gutools.co.uk",
-    "https://frontend.code.dev-gutools.co.uk",
-    "https://beacon.www.code.dev-theguardian.com",
-    "https://fronts.code.dev-gutools.co.uk"
+  // NOTE - do not include self signed certificates. they do not cut the mustard
+  // Also do not include hosts that are unreachable (e.g. inside the firewall)
+  private val webTeamHosts = Seq(
+    "api.nextgen.guardianapps.co.uk",
+    "i.guim.co.uk",
+    "beacon.guim.co.uk",
+    "profile.theguardian.com",
+    "fronts.gutools.co.uk",
+    "fronts.code.dev-gutools.co.uk"
   )
+
+  private val ophanHosts = Seq(
+    "ophan.theguardian.com"
+  )
+
+  private val hosts = webTeamHosts ++ ophanHosts
 
   "SSL Certs" should "Be more than 30 days outside of their expiry time"  in {
 
     for ( host <- hosts ) {
       try {
-        val url = new URL(host)
+        val url = new URL(s"https://$host")
         val conn = url.openConnection().asInstanceOf[HttpsURLConnection]
         conn.setHostnameVerifier(new HostnameVerifier {
-            override def verify(arg1: String, arg2: SSLSession) = true
+            override def verify(hostnameVerifier: String, sslSession: SSLSession) = true
           }
         )
 
         conn.connect()
         val certs = conn.getServerCertificates
-        certs.headOption.map {
-          cert => val x = cert.asInstanceOf[X509CertImpl]
-            val expiry = x.getNotAfter.getTime
-            val daysleft = Days.daysBetween(new DateTime(), new DateTime(expiry.toLong)).getDays
-            if ( daysleft < 30) {
-               fail("Cert for %s expires in %d days".format(host, daysleft))
-            }
+        certs.headOption.map { cert =>
+          val x = cert.asInstanceOf[X509CertImpl]
+          val expiry = x.getNotAfter.getTime
+          val daysleft = Days.daysBetween(new DateTime(), new DateTime(expiry.toLong)).getDays
+          if ( daysleft < 30) {
+             fail("Cert for %s expires in %d days".format(host, daysleft))
+          }
         }
         conn.disconnect()
       } catch {
