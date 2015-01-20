@@ -377,11 +377,12 @@ define([
         });
 
         $('.js-video-wrapper').each(function (el) {
-            bean.on($('.js-video-play-button', el).get(0), "click", function (e) {
+            bean.on($('.js-video-play-button', el).get(0), 'click', function () {
+                var placeholder, player;
                 // show the container with the same data-id as us
-                var placeholder = $('.js-video-placeholder', el);
+                placeholder = $('.js-video-placeholder', el);
                 placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                var player = $('.js-video-player', el);
+                player = $('.js-video-player', el);
                 player.removeClass('media__container--hidden').addClass('media__container--active');
                 enhanceVideo($('video', player).get(0));
             });
