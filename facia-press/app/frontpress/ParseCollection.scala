@@ -3,7 +3,7 @@ package services
 import com.gu.facia.client.models.{Trail, _}
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import common._
-import conf.Switches.FaciaToolCachedContentApiSwitch
+import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaTreats}
 import conf.{Configuration, LiveContentApi}
 import contentapi.{ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
@@ -80,11 +80,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getArticles(items, edition)
     }
 
-    val treatsFuture: Future[Seq[Content]] = collection.flatMap { collectionOption =>
-      val items: Seq[Trail] =
-        collectionOption.flatMap(_.treats).getOrElse(Nil)
-      getArticles(items, edition)
-    }
+    val treatsFuture: Future[Seq[Content]] =
+      if (FaciaTreats.isSwitchedOn)
+          collection.flatMap { collectionOption =>
+        val items: Seq[Trail] =
+          collectionOption.flatMap(_.treats).getOrElse(Nil)
+        getArticles(items, edition)}
+      else
+        Future.successful(Nil)
 
     val executeDraftContentApiQuery: Future[Result] =
       config.apiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
