@@ -98,7 +98,7 @@ define([
             } else {
 
                 self.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(function (respone) {
+                    .then(function (response) {
                         self.fetchData(response);
                         self.track(response.city);
                     }).fail(function (err, msg) {
@@ -127,9 +127,9 @@ define([
         },
 
         track: function(city) {
-            s.events = 'event100';
             s.prop26 = city;
             s.eVar26 = city;
+            s.linkTrackVars = 'prop26,eVar26';
             s.tl(this, 'o', 'weather location set by fastly');
         },
 
