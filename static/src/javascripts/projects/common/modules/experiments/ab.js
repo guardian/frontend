@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/join-us-navigation',
     'common/modules/experiments/tests/sticky-container-titles',
     'common/modules/experiments/tests/weather-component'
 ], function (
@@ -33,7 +32,6 @@ define([
     HighCommercialComponent,
     HistoryTags,
     HistoryContainers,
-    JoinUsNavigation,
     StickyContainerTitles,
     Weather
 ) {
@@ -43,7 +41,6 @@ define([
             new HighCommercialComponent(),
             new HistoryTags(),
             new HistoryContainers(),
-            new JoinUsNavigation(),
             new StickyContainerTitles(),
             new Weather()
         ],
