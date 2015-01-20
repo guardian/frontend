@@ -25,7 +25,8 @@ trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
     DfpAgent.isFoundationSupported(_, Some(id))
   }
 
-  override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
+  override def sponsor(edition: Edition): Option[String] =
+    keywordIds.flatMap(keywordId => DfpAgent.getSponsor(keywordId, edition)).headOption
 
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

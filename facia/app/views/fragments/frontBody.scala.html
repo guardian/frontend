@@ -2,40 +2,43 @@
 @import common.Edition
 @import views.support.RenderClasses
 
-@defining((faciaPage.isSponsored(Some(Edition(request))),
+@defining(Edition(request)) { edition =>
+    @defining((faciaPage.isSponsored(Some(edition)),
         faciaPage.isAdvertisementFeature,
-        faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
-    @if(faciaPage.collections.nonEmpty) {
-        <div class="l-side-margins">
-            <div class="history-tags js-history-tags"></div>
-            <div class="@RenderClasses(Map(
-                "fc-container--sponsored" -> isSponsored,
-                "fc-container--advertisement-feature" -> isAdFeature,
-                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
-            ), "facia-page")"
-            data-link-name="Front | @request.path"
-                @faciaPage.sponsor.map { sponsor =>
-                data-sponsor="@sponsor"
-                }
-                @faciaPage.sponsorshipType.map { sponsorshipType =>
-                data-sponsorship="@sponsorshipType"
-                }
-            role="main">
-
-                @defining(faciaPage.front.containers) { collections =>
-                    @collections.map { containerDefinition =>
-                        @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
+        faciaPage.isFoundationSupported,
+        faciaPage.sponsor(edition))) { case (isSponsored, isAdFeature, isFoundationFunded, maybeSponsor) =>
+        @if(faciaPage.collections.nonEmpty) {
+            <div class="l-side-margins">
+                <div class="history-tags js-history-tags"></div>
+                <div class="@RenderClasses(Map(
+                    "fc-container--sponsored" -> isSponsored,
+                    "fc-container--advertisement-feature" -> isAdFeature,
+                    "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
+                ), "facia-page")"
+                data-link-name="Front | @request.path"
+                    @maybeSponsor.map { sponsor =>
+                    data-sponsor="@sponsor"
                     }
-                }
+                    @faciaPage.sponsorshipType.map { sponsorshipType =>
+                    data-sponsorship="@sponsorshipType"
+                    }
+                role="main">
 
-                @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
+                    @defining(faciaPage.front.containers) { collections =>
+                        @collections.map { containerDefinition =>
+                            @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
+                        }
+                    }
 
-                @if(!isAdFeature) {
-                    <div class="fc-container fc-container--commercial">
-                    @fragments.commercial.commercialComponent()
-                    </div>
-                }
+                    @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
+
+                    @if(!isAdFeature) {
+                        <div class="fc-container fc-container--commercial">
+                        @fragments.commercial.commercialComponent()
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
+        }
     }
 }
