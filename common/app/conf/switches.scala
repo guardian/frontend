@@ -529,6 +529,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
+    safeState = Off, sellByDate = never
+  )
+
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
