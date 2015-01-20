@@ -75,9 +75,7 @@ define([
         };
 
         this.omnitureInit = function () {
-
             s.loadModule('Media');
-
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
             s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61';
