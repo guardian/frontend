@@ -305,14 +305,18 @@ $weather-large-size: 60px;
         display: table-cell;
         border-right: 1px dotted colour(neutral-3);
         padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter / 1.333;
+        padding-right: floor($gs-gutter / 1.333);
 
         @include mq(mobileLandscape, leftCol) {
-            min-width: gs-span(1);
+            min-width: gs-span(1) - ($gs-gutter / 4);
         }
 
         &:first-of-type {
             padding-left: 0;
+        }
+
+        &:last-of-type {
+            border-right: 0;
         }
 
         .weather__time {
