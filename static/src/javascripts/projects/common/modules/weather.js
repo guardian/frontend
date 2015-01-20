@@ -113,7 +113,6 @@ define([
 
         fetchWeatherData: function (location) {
             self.saveUserLocation(location);
-            self.track(location.city);
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {

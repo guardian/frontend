@@ -315,8 +315,12 @@ $weather-large-size: 60px;
         padding-left: $gs-gutter / 4;
         padding-right: floor($gs-gutter / 1.333);
 
-        @include mq(mobileLandscape, leftCol) {
+        @include mq(mobileLandscape) {
             min-width: gs-span(1) - ($gs-gutter / 4);
+        }
+
+        @include mq(leftCol) {
+            padding-right: 0;
         }
 
         &:first-of-type {
@@ -332,6 +336,8 @@ $weather-large-size: 60px;
         }
 
         @include mq(leftCol, wide) {
+            min-width: gs-span(1) - floor($gs-gutter / 1.333);
+
             &--3 {
                 border-right: 0;
             }
