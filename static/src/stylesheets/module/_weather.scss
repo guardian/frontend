@@ -294,6 +294,7 @@ $weather-large-size: 60px;
     @include mq($until: mobileLandscape) {
         display: table;
         width: 100%;
+        float: none;
     }
 
     @include mq(leftCol) {
