@@ -86,7 +86,7 @@ define([
             s.Media.trackEvents = 'event17,event18,event19,event20,event21,event22,event23,event57,event59,event64,event97,event98';
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
-            
+
             s.eVar11 = s.prop11 = (window.location.host === 'embed.theguardian.com') ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
