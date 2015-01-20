@@ -62,7 +62,8 @@ define([
 
                 data = {
                     'id': $active.attr('data-weather-id'),
-                    'city': $active.attr('data-weather-city')
+                    'city': $active.attr('data-weather-city'),
+                    'store': true
                 };
 
                 // Send data to whoever is listening

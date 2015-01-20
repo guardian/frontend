@@ -110,7 +110,9 @@ define([
         },
 
         fetchData: function (location) {
-            self.saveUserLocation(location);
+            if (location.store) {
+                self.saveUserLocation(location);
+            }
 
             return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
