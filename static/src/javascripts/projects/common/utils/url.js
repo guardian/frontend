@@ -63,6 +63,12 @@ define([
                     }).join('&');
             },
 
+            getPath: function (url) {
+                var a = document.createElement('a');
+                a.href = url;
+                return a.pathname;
+            },
+
             pushUrl: function (state, title, url, replace) {
                 if (supportsPushState) {
                     window.history[replace ? 'replaceState' : 'pushState'](state, title, url);
@@ -82,6 +88,7 @@ define([
     // not exposing all the methods here
     return {
         getUrlVars: model.getUrlVars,
+        getPath: model.getPath,
         pushUrl: model.pushUrl,
         constructQuery: model.constructQuery,
         back: model.back,

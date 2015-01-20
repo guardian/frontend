@@ -305,6 +305,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val CssLogging = Switch("Monitoring", "css-logging",
+    "If this is on, then a subset of clients will post css selector information for diagnostics.",
+    safeState = Off, new LocalDate(2015, 2, 28)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -321,10 +326,6 @@ object Switches {
     safeState = On,
     sellByDate = new LocalDate(2015, 1, 31)
   )
-
-  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
-    "If switched on then the preview server will poll until the latest content is indexed.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 20))
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
@@ -413,11 +414,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
-    "If this is switched on then different Breaking News alert styles are A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -467,9 +463,19 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val SudokuSwitch = Switch("Feature", "sudoku",
+    "If switched on, sudokus will be available",
+    safeState = Off, sellByDate = never
+  )
+
   val CricketScoresSwitch = Switch("Feature", "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off, sellByDate = never
+  )
+
+  val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
+    "If switched on, a stocks widget will be displayed on the business front",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
   // Facia
@@ -512,6 +518,11 @@ object Switches {
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val IphoneConfidence = Switch("Performance", "iphone-confidence",
+    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

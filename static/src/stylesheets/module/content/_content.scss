@@ -676,12 +676,17 @@
 }
 
 .meta__twitter {
-    margin-top: -($gs-baseline/2);
+    margin: -($gs-baseline*2/3) 0 -($gs-baseline/6) 0;
+
+    .content__meta-container--tonal-header & {
+        @include mq($until: leftCol) {
+            margin-top: -($gs-baseline/3);
+        }
+    }
 
     .icon {
         margin-top: $gs-baseline/3;
         overflow: visible;
-        padding-right: $gs-gutter/10;
     }
 
     button {
@@ -698,14 +703,9 @@
 
         @include mq($until: leftCol) {
             padding: 0;
-            margin: 0;
+            margin: $gs-baseline/2 0 0;
             border: 0;
-            border-radius: 0;
             background-color: transparent !important;
-
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
 

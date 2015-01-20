@@ -1,18 +1,20 @@
 /* global _: true */
 define([
     'modules/vars',
+    'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/remove-by-id'
 ], function(
     vars,
+    alert,
     mediator,
     urlAbsPath,
     removeById
 ) {
 
     function alertBadContent(msg) {
-        window.alert(msg ? msg : 'Sorry, but you can\'t add that item');
+        alert(msg ? msg : 'Sorry, but you can\'t add that item');
     }
 
     /* opts:
@@ -39,7 +41,7 @@ define([
             if (_.isFunction(opts.mediaHandler)) {
                 opts.mediaHandler(opts);
             } else {
-                window.alert('Unhandled media item');
+                alertBadContent('Unhandled media item');
             }
             return;
         }

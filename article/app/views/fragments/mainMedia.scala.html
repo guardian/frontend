@@ -34,21 +34,7 @@
                 </figure>
             }
         } else {
-            @if(article.hasMainAudio) {
-                <figure itemprop="associatedMedia audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
-                    class="media-primary media-content">
-                    @article.mainAudio.map { audioElement =>
-                        @fragments.media.audio(AudioPlayer(
-                            article,
-                            audioElement,
-                            article.headline,
-                            autoPlay = false
-                        ))
-                    }
-                </figure>
-            } else {
-                @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature, Some(article.url))
-            }
+            @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature, Some(article.url))
         }
     }
 }

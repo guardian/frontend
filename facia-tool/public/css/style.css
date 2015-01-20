@@ -71,8 +71,9 @@ header {
 .config-pane i {
     position: relative;
     float: right;
-    zoom: 1.5;
+    font-size: 1.6em;
     margin-right: 0.7em;
+    color: #999;
 }
 
 .config-pane ul {
@@ -391,7 +392,7 @@ header {
     background: #ffff00;
 }
 
-.alert .icon-remove {
+.alert .remove {
     position: absolute;
     right: 10px;
     top: 15px;
@@ -578,6 +579,26 @@ h1 {
     position: absolute;
     right: 0;
     top: 8px;
+    color: #999;
+    font-size: 12px;
+}
+.list-header__collapser:hover {
+    color: #999;
+}
+
+.collapse-expand-all {
+    position: absolute;
+    right: 34px;
+    bottom: -2px;
+    font-size: 12px;
+    color: #999;
+}
+.collapse-expand-all.expanded .expand,
+.collapse-expand-all .collapse {
+    display: none;
+}
+.collapse-expand-all.expanded .collapse {
+    display: inline;
 }
 
 .list-header__timings {
@@ -623,6 +644,10 @@ h1 {
 
 .front-container.draft-mode {
     background: #FFF8E1;
+}
+
+.front-container.attention {
+    background: #b51800;
 }
 
 .col__inner {
@@ -676,10 +701,6 @@ h1 {
 
 .preview {
     float: right;
-}
-
-collection-widget .collection {
-    padding: 0 0 5px 0;
 }
 
 collection-widget:first-child .collection {
@@ -761,11 +782,6 @@ collection-widget:first-child .collection {
     display: block;
     margin: 0 125px 0 92px;
     min-height: 50px;
-}
-
-.article__content .icon-pencil {
-    cursor: pointer;
-    opacity: 0.5;
 }
 
 .article .copy-paste {
@@ -910,6 +926,15 @@ collection-widget:first-child .collection {
     display: none !important;
 }
 
+.slimEditor .label,
+.slimEditor .supporting,
+.slimEditor .supporting-message,
+.slimEditor .has-sublinks,
+.slimEditor .editorsDisplay,
+.slimEditor .trailText {
+    display: none;
+ }
+
 input[type="text"],
 textarea,
 select{
@@ -979,6 +1004,7 @@ select {
     top: 3px;
     width: 0px;
     font-size: 12px;
+    color: inherit;
 }
 
 .editor__length {
@@ -989,9 +1015,31 @@ select {
     right: -25px;
 }
 
-.editor__length--alert {
+.length--alert .editor__length {
     font-weight: bold;
     color: #DD4B39;
+}
+
+.attention .length--alert textarea.active {
+    background-color: #FFCDD2;
+}
+
+.editor__alert__message {
+    margin-left: 4px;
+    color: #DD4B39;
+    display: none;
+}
+
+.attention .length--alert .editor__alert__message {
+    display: inline;
+}
+
+.editor__length {
+    display: none;
+}
+
+.attention .editor__length {
+    display: block;
 }
 
 .editor--boolean {
@@ -1085,9 +1133,10 @@ button {
 
 .search-tools {
     float: right;
+    color: #999;
 }
 
-.search-tools a {
+.search-tools i {
     margin-left: 5px;
 }
 
@@ -1163,6 +1212,7 @@ button {
     margin: 0;
     z-index: 2;
     overflow: hidden;
+    position: relative;
 }
 
 .front-selector select {
@@ -1279,6 +1329,10 @@ button {
     z-index: 10;
 }
 
+.article__tools i {
+    font-size: 14px;
+}
+
 .article:hover > .closed > .article__tools {
     display: block;
 }
@@ -1351,10 +1405,6 @@ button {
 
 .selected {
     color: #DD4B39;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-    margin-top: 0;
 }
 
 .performances {
@@ -1587,6 +1637,10 @@ button {
     right: 8px;
     z-index: 2;
     cursor: pointer;
+    color: #999;
+}
+.cnf-form .type-picker-closer:hover {
+    color: #000;
 }
 
 .cnf-form .type-option {
@@ -1620,50 +1674,13 @@ button {
     right: 10px;
 }
 
-/*****************************************/
-/* ICONS */
-/*****************************************/
-
-[class^="icon-"],
-[class*=" icon-"] {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background-image: url("./glyphicons-halflings.png");
-    background-position: 14px 14px;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-}
-
-[class^="icon-"]:hover,
-[class*=" icon-"]:hover {
-    opacity: 0.9;
-}
-
-.icon-chevron-down { background-position: -313px -119px; }
-.icon-chevron-up { background-position: -288px -120px; }
-.icon-refresh { background-position: -240px -24px; }
-.icon-remove { background-position: -312px 0; }
-.icon-share-alt { background-position: -336px -96px; }
-.icon-trash { background-position: -456px 0; }
-.icon-signal { background-position: -408px 0; }
-.icon-play { background-position: -264px -72px; }
-.icon-fast-backward {
-    margin-top: -1px;
-    background-position: -216px -72px;
-}
-.icon-circle-plus { background-position: 0 -96px;  }
-.icon-circle-minus { background-position: -24px -96px;  }
-
 .has-playable {
     position: absolute;
     top: 0;
     left: 62px;
     background: rgba(254,254,254,.6);
-    padding: 1px 3px 1px 4px;
+    padding: 2px 4px 2px 6px;
+    color: #555;
 }
 
 .also {
@@ -1736,10 +1753,25 @@ collection-widget {
     display: block;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.12);
     margin: 5px 8px 16px 8px;
-    padding: 5px 10px;
     border: 1px solid #ddd;
     background-color: #fff;
 }
+
+collection-widget > div {
+    padding: 5px 10px;
+}
+
+.attention collection-widget {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.32), 0 1px 6px rgba(0, 0, 0, 0.32);
+}
+.attention .performances,
+.attention .modes .live-mode,
+.attention .preview,
+.attention .tool--small--ophan,
+.attention .time__publication {
+    display: none;
+}
+
 
 .article-group {
     position: relative;
@@ -1767,6 +1799,119 @@ collection-widget {
 }
 .mobile-indicator .indicator {
     background-color: #C8E6C9;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 0;
+    color: #ddd;
+    background-color: #ddd;
+}
+
+.buttons button {
+    height: 26px;
+    margin: 0 4px;
+    background: none;
+    border: 0;
+    padding: 0 8px;
+    font-size: 12px;
+    line-height: 26px;
+    min-width: 64px;
+    color: #666;
+    outline: none;
+    border-radius: 2px;
+}
+.buttons button:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+.buttons button i {
+    margin-left: 3px;
+    color: #999;
+}
+.buttons button.draw-attention {
+    background-color: #b51800;
+    color: #fff;
+}
+.buttons button.draw-attention:hover {
+    background-color: #9c1500;
+}
+.buttons button.button-action {
+    background-color: #1976D2;
+    color: #fff;
+}
+.buttons button.button-action:hover {
+    background-color: #1565C0;
+}
+
+.history,
+.history .article {
+    background-color: #d9d9d9;
+}
+.history .article {
+    border-top: 10px solid #d9d9d9;
+}
+.history .article__tools {
+    width: 120px;
+}
+.history .tool--small--copy {
+    width: 83px;
+}
+.history .tool--small--remove,
+.history .tool--small--paste {
+    display: none;
+}
+
+.modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+}
+.modalDialog-content {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    border-radius: 2px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.82);
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+.modalDialog-message {
+    padding: 10px 20px 20px;
+}
+.modalDialog-message h3 i {
+    margin-right: 8px;
+}
+
+.modalDialog-confirm,
+.modalDialog-alert {
+    height: 42px;
+    padding: 0 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modalDialog-alert {
+    justify-content: flex-end;
+}
+.modalDialog-confirm .draw-attention i {
+    margin-right: 8px;
+    color: #fff;
+}
+.modalDialog-message ul {
+    list-style: none;
+    padding-left: 1em;
+}
+.modalDialog-message li {
+    margin-bottom: 1.2em;
+}
+.modalDialog-message .target {
+    padding-left: 1em;
 }
 
 /*****************************************/

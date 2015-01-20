@@ -2,44 +2,48 @@
 define([
     'modules/vars',
     'knockout',
-    'utils/mediator',
-    'utils/url-abs-path',
+    'utils/alert',
     'utils/as-observable-props',
-    'utils/populate-observables',
-    'utils/full-trim',
-    'utils/sanitize-html',
     'utils/deep-get',
-    'utils/snap',
+    'utils/full-trim',
     'utils/human-time',
-    'utils/validate-image-src',
     'utils/identity',
     'utils/is-guardian-url',
+    'utils/logger',
+    'utils/mediator',
+    'utils/populate-observables',
+    'utils/sanitize-html',
+    'utils/snap',
+    'utils/url-abs-path',
+    'utils/url-host',
+    'utils/validate-image-src',
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
-    'models/group',
-    'utils/url-host'
+    'models/group'
 ],
     function (
         vars,
         ko,
-        mediator,
-        urlAbsPath,
+        alert,
         asObservableProps,
-        populateObservables,
-        fullTrim,
-        sanitizeHtml,
         deepGet,
-        snap,
+        fullTrim,
         humanTime,
-        validateImageSrc,
         identity,
         isGuardianUrl,
+        logger,
+        mediator,
+        populateObservables,
+        sanitizeHtml,
+        snap,
+        urlAbsPath,
+        urlHost,
+        validateImageSrc,
         copiedArticle,
         authedAjax,
         contentApi,
-        Group,
-        urlHost
+        Group
     ) {
         var capiProps = [
                 'webUrl',
@@ -59,10 +63,11 @@ define([
                 {
                     key: 'headline',
                     editable: true,
+                    slimEditable: true,
                     ifState: 'enableContentOverrides',
                     label: 'headline',
                     type: 'text',
-                    maxLength: 90
+                    maxLength: 120
                 },
                 {
                     key: 'trailText',
@@ -273,6 +278,8 @@ define([
 
             this.uneditable = opts.uneditable;
 
+            this.slimEditor = opts.slimEditor;
+
             this.state = asObservableProps([
                 'enableContentOverrides',
                 'underDrag',
@@ -299,6 +306,15 @@ define([
             this.editors = ko.observableArray();
 
             this.editorsDisplay = ko.observableArray();
+
+            this.headline = ko.pureComputed(function () {
+                var meta = this.meta, fields = this.fields;
+                if (this.state.enableContentOverrides()) {
+                    return meta.headline() || fields.headline() || (meta.snapType() ? 'No headline!' : 'Loading...');
+                } else {
+                    return '{ ' + meta.customKicker() + ' }';
+                }
+            }, this);
 
             this.headlineLength = ko.pureComputed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
@@ -410,7 +426,8 @@ define([
                 meta,
                 field;
 
-            if(!opts.editable) { return; }
+            if (!opts.editable) { return; }
+            if (this.slimEditor && opts.slimEditable !== true) { return; }
 
             key = opts.key;
             meta = self.meta[key] || function() {};
@@ -467,7 +484,7 @@ define([
                 },
 
                 length: ko.pureComputed(function() {
-                    return opts.maxLength ? (meta() || field() || '').length : undefined;
+                    return opts.maxLength ? opts.maxLength - (meta() || field() || '').length : undefined;
                 }, self),
 
                 lengthAlert: ko.pureComputed(function() {
@@ -528,7 +545,7 @@ define([
 
             if (missingProps.length) {
                 vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
-                window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
+                logger.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
             } else {
                 this.state.isLoaded(true);
                 this.state.sectionName(this.props.sectionName());
@@ -799,7 +816,7 @@ define([
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        window.alert(err);
+                        alert(err);
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
