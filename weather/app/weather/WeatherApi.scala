@@ -18,18 +18,14 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
     throw new RuntimeException("Weather API Key not set")
   )
 
-  private val WeatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
-  private val WeatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
-  private val WeatherForecastUrl = "http://api.accuweather.com/forecasts/v1/hourly/12hour/"
-
   private def autocompleteUrl(query: String): String =
-    s"$WeatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
+    s"http://api.accuweather.com/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
   private def cityLookUp(cityId: CityId): String =
-    s"$WeatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
+    s"http://api.accuweather.com/currentconditions/v1/${cityId.id}.json?apikey=$weatherApiKey"
 
   private def forecastLookUp(cityId: CityId): String =
-    s"$WeatherForecastUrl${cityId.id}.json?details=true&apikey=$weatherApiKey"
+    s"http://api.accuweather.com/forecasts/v1/hourly/24hour/${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
   private def latitudeLongitudeUrl(latitudeLongitude: LatitudeLongitude): String = {
     s"http://api.accuweather.com/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
