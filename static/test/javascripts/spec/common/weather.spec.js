@@ -75,6 +75,23 @@ define([
                 });
 
                 it("should fetch the data and save location", function () {
+                    var result = {id: '2', city: "Sydney", store: true};
+
+                    spyOn(sut, "getWeatherData").and.returnValue({
+                        then: function () {
+                            return {
+                                fail: function (err, msg) {
+                                }
+                            }
+                        }
+                    });
+
+                    sut.fetchData(result);
+                    expect(sut.getUserLocation()).toEqual({id: '2', city: "Sydney"});
+                    expect(sut.getWeatherData).toHaveBeenCalled();
+                });
+
+                it("should fetch the data and not to save location if using fastly geoip", function () {
                     var result = {id: '2', city: "Sydney"};
 
                     spyOn(sut, "getWeatherData").and.returnValue({
@@ -87,7 +104,7 @@ define([
                     });
 
                     sut.fetchData(result);
-                    expect(sut.getUserLocation()).toEqual(result);
+                    expect(sut.getUserLocation()).toEqual(undefined);
                     expect(sut.getWeatherData).toHaveBeenCalled();
                 });
 
