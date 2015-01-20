@@ -18,7 +18,9 @@ object WeatherController extends Controller with ExecutionContexts {
 
   def forecastForCityId(cityId: String) = Action.async { implicit request =>
     WeatherApi.getForecastForCityId(CityId(cityId)).map({ forecastDays =>
-      Cached(10.minutes)(JsonComponent.forJsValue(Json.toJson(forecastDays.take(MaximumForecastDays))))
+      val response = forecastDays.map(models.ForecastResponse.fromAccuweather).take(MaximumForecastDays)
+
+      Cached(10.minutes)(JsonComponent.forJsValue(Json.toJson(response)))
     })
   }
 }
