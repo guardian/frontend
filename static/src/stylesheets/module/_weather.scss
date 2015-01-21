@@ -122,22 +122,22 @@ $weather-large-size: 60px;
 }
 
 .i.weather__icon {
-    width: $weather-small-size !important;
-    height: $weather-small-size !important;
+    width: $weather-small-size;
+    height: $weather-small-size;
     margin: 0;
     margin-top: -($gs-baseline / 3);
 
     @include mq(leftCol) {
-        width: $weather-large-size !important;
-        height: $weather-large-size !important;
+        width: $weather-large-size;
+        height: $weather-large-size;
         display: block;
         margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            width: $weather-small-size !important;
-            height: $weather-small-size !important;
+            width: $weather-small-size;
+            height: $weather-small-size;
             margin: 0;
             margin-top: -($gs-baseline / 3);
             display: inline-block;
@@ -263,8 +263,8 @@ $weather-large-size: 60px;
 
     .weather__search-icon,
     .weather__close-icon {
-        width: 16px !important;
-        height: 16px !important;
+        width: 16px;
+        height: 16px;
     }
 }
 
@@ -351,8 +351,8 @@ $weather-large-size: 60px;
         margin-top: $gs-baseline / 3;
 
         @include mq(leftCol) {
-            width: $weather-small-size !important;
-            height: $weather-small-size !important;
+            width: $weather-small-size;
+            height: $weather-small-size;
             margin-left: 0;
         }
     }
