@@ -64,6 +64,9 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val richLinkId: Option[String] =
     delegate.references.find(_.`type` == "rich-link").map(_.id.stripPrefix("rich-link/"))
 
+  lazy val openModuleId: Option[String] =
+    delegate.references.find(_.`type` == "open-module").map(_.id.stripPrefix("open-module/"))
+
   override lazy val analyticsName = s"GFE:$section:$name"
 
   override lazy val rssPath = Some(s"/$id/rss")

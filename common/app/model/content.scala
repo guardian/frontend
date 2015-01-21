@@ -159,6 +159,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
       ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
       ("richLink", JsString(richLink.getOrElse(""))),
+      ("openModule", JsString(openModule.getOrElse(""))),
       ("publication", JsString(publication)),
       ("headline", JsString(headline)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),

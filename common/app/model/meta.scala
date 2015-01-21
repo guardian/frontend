@@ -254,6 +254,7 @@ trait Tags {
   def isFoundationSupported: Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
+  lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
   def sponsorshipType: Option[String] = {
     if (isSponsored()) {
