@@ -10,6 +10,11 @@ define([
 ) {
 
     function OmnitureMedia(player) {
+
+        function getAttribute(attributeName) {
+            return player.el().getAttribute(attributeName);
+        }
+
         var lastDurationEvent, durationEventTimer,
             mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
@@ -34,10 +39,6 @@ define([
                 // extra events with no set ordering
                 duration: 'event57'
             };
-
-        function getAttribute(attributeName) {
-            return player.el().getAttribute(attributeName);
-        }
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;

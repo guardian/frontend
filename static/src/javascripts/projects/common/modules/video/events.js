@@ -1,5 +1,6 @@
 /* global guardian */
 define([
+    'bean',
     'raven',
     'common/utils/_',
     'common/utils/config',
@@ -7,7 +8,8 @@ define([
     'common/modules/analytics/omnitureMedia',
     'text!common/views/ui/video-ads-overlay.html',
     'text!common/views/ui/video-ads-skip-overlay.html'
-], function(
+], function (
+    bean,
     raven,
     _,
     config,
@@ -15,7 +17,7 @@ define([
     OmnitureMedia,
     adsOverlayTmpl,
     adsSkipOverlayTmpl
-){
+) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],
@@ -267,5 +269,5 @@ define([
         adSkipCountdown: adSkipCountdown,
         handleInitialMediaError: handleInitialMediaError,
         bindErrorHandler: bindErrorHandler
-    }
+    };
 });
