@@ -4,13 +4,13 @@ object BrowserWidth {
   implicit class RichInt(n: Int) {
     def px = PixelWidth(n)
 
-    def % = PercentageWidth(n)
+    def perc = PercentageWidth(n)
   }
 }
 
 sealed trait BrowserWidth
 
-case class PercentageWidth(get: Double) extends BrowserWidth {
+case class PercentageWidth(get: Int) extends BrowserWidth {
   override def toString = s"$get%"
 }
 
