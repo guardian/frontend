@@ -62,7 +62,7 @@ define([
                             fontHash = fontInfo[1],
                             fontName = fontInfo[2];
 
-                        storage.local.clearByPrefix(storagePrefix + fontName.replace(/Hinted$/, ''));
+                        storage.local.clearByPrefix(storagePrefix + fontName.replace(/(Hinted|AutoHinted)$/, ''));
                         storage.local.set(storagePrefix + fontName + '.' + fontHash, resp.css);
 
                         $webFont.text(resp.css)
