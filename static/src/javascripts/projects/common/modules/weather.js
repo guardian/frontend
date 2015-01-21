@@ -226,7 +226,8 @@ define([
 
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecasts'),
-                $forecast = null,
+                $forecast       = null,
+                docFragment     = document.createDocumentFragment(),
                 i;
 
             $forecastHolder.empty();
@@ -240,8 +241,12 @@ define([
                     'forecast-num': parseInt(i, 10) + 1
                 }));
 
-                $forecast.appendTo($forecastHolder);
+                docFragment.appendChild($forecast[0]);
             }
+
+            $forecastHolder.each(function(item) {
+                $(item).append(docFragment.cloneNode(true));
+            });
         }
     };
 });
