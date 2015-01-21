@@ -24,7 +24,7 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
 #Weather
-GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
+GET        /weather/city/:id.json                                                                                    controllers.WeatherController.forCity(id)
 GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
 GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
 
