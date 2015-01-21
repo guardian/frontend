@@ -272,7 +272,7 @@ $weather-large-size: 60px;
     z-index: 0;
 }
 
-.weather__forecasts {
+.forecast {
     clear: both;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
@@ -293,53 +293,53 @@ $weather-large-size: 60px;
         display: table;
         width: 100%;
 
-        &.weather__forecasts--mobile {
+        &.forecast--mobile {
+            display: none;
+        }
+    }
+}
+
+.forecast__item {
+    position: relative;
+    display: table-cell;
+    border-left: 1px dotted colour(neutral-3);
+    padding-left: $gs-gutter / 4;
+    padding-right: floor($gs-gutter / 1.333);
+
+    @include mq(mobileLandscape) {
+        min-width: gs-span(1) - ($gs-gutter / 4);
+    }
+
+    @include mq(leftCol) {
+        padding-right: 0;
+    }
+
+    &:first-of-type {
+        @include mq($until: mobileLandscape) {
+            padding-left: 0;
+            border-left: 0;
+        }
+
+        @include mq(leftCol) {
+            padding-left: 0;
+            border-left: 0;
+        }
+    }
+
+    @include mq(leftCol, wide) {
+        min-width: 33%;
+
+        &.forecast__item--3 {
+            border-right: 0;
+        }
+
+        &.forecast__item--4 {
             display: none;
         }
     }
 
-    .weather__forecast {
-        position: relative;
-        display: table-cell;
-        border-left: 1px dotted colour(neutral-3);
-        padding-left: $gs-gutter / 4;
-        padding-right: floor($gs-gutter / 1.333);
-
-        @include mq(mobileLandscape) {
-            min-width: gs-span(1) - ($gs-gutter / 4);
-        }
-
-        @include mq(leftCol) {
-            padding-right: 0;
-        }
-
-        &:first-of-type {
-            @include mq($until: mobileLandscape) {
-                padding-left: 0;
-                border-left: 0;
-            }
-
-            @include mq(leftCol) {
-                padding-left: 0;
-                border-left: 0;
-            }
-        }
-
-        @include mq(leftCol, wide) {
-            min-width: 33%;
-
-            &.weather__forecast--3 {
-                border-right: 0;
-            }
-
-            &.weather__forecast--4 {
-                display: none;
-            }
-        }
-
-        .weather__time {
-            display: block;
-        }
+    .weather__time {
+        display: block;
     }
 
     .i.weather__icon {

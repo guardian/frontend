@@ -231,7 +231,7 @@ define([
         },
 
         renderForecast: function (forecastData) {
-            var $forecastHolder = $('.js-weather-forecasts'),
+            var $forecastHolder = $('.js-weather-forecast'),
                 $forecast       = null,
                 docFragment     = document.createDocumentFragment(),
                 i;
