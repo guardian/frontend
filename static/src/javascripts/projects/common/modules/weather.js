@@ -156,15 +156,21 @@ define([
 
         toggleControls: function (value) {
             var $input    = $('.js-weather-input')[0],
-                $location = $('.weather__location');
+                $location = $('.weather__location'),
+                $close    = $('.js-close-location'),
+                $edit     = $('.js-edit-location');
 
             if (value) {
                 $location.addClass('is-editing');
                 $input.setSelectionRange(0, $input.value.length);
+                $close.removeClass('u-h');
+                $edit.addClass('u-h');
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
                 searchTool.setInputValue(city);
+                $close.addClass('u-h');
+                $edit.removeClass('u-h');
             }
         },
 

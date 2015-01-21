@@ -1,6 +1,15 @@
 $weather-small-size: 26px;
 $weather-large-size: 60px;
 
+@mixin weather-rule() {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    height: $gs-baseline + 1px;
+    border-right: 1px dotted colour(neutral-3);
+}
+
 .weather {
     color: colour(neutral-1);
     float: right;
@@ -46,12 +55,7 @@ $weather-large-size: 60px;
         text-align: right;
 
         &:after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            right: 0;
-            height: $gs-baseline + 1px;
-            border-right: 1px dotted colour(neutral-3);
+            @include weather-rule();
         }
 
         .weather__icon {
@@ -75,12 +79,7 @@ $weather-large-size: 60px;
             }
 
             &:after {
-                content: '';
-                position: absolute;
-                top: 3px;
-                right: 0;
-                height: $gs-baseline + 1px;
-                border-right: 1px dotted colour(neutral-3);
+                @include weather-rule();
             }
 
             .weather__icon {
@@ -92,7 +91,7 @@ $weather-large-size: 60px;
 
 .weather__desc {
     @include fs-headline(2);
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4;
 
     @include mq(leftCol) {
         position: absolute;
@@ -123,22 +122,22 @@ $weather-large-size: 60px;
 }
 
 .i.weather__icon {
-    width: $weather-small-size !important;
-    height: $weather-small-size !important;
+    width: $weather-small-size;
+    height: $weather-small-size;
     margin: 0;
     margin-top: -($gs-baseline / 3);
 
     @include mq(leftCol) {
-        width: $weather-large-size !important;
-        height: $weather-large-size !important;
+        width: $weather-large-size;
+        height: $weather-large-size;
         display: block;
         margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            width: $weather-small-size !important;
-            height: $weather-small-size !important;
+            width: $weather-small-size;
+            height: $weather-small-size;
             margin: 0;
             margin-top: -($gs-baseline / 3);
             display: inline-block;
@@ -155,17 +154,16 @@ $weather-large-size: 60px;
         margin-right: $gs-gutter / 4;
 
         &:after {
-            content: '';
-            top: 3px;
-            right: 0;
-            position: absolute;
-            height: $gs-baseline + 1px;
-            border-right: 1px dotted colour(neutral-3);
+            @include weather-rule();
         }
     }
 
     @include mq(leftCol) {
         display: none;
+    }
+
+    &:focus {
+        outline: 0;
     }
 
     &.is-visible .weather__toggle-icon {
@@ -234,14 +232,6 @@ $weather-large-size: 60px;
             border-bottom: 1px solid colour(neutral-3);
         }
 
-        .weather__edit-location {
-            display: none;
-        }
-
-        .weather__close-location {
-            display: initial;
-        }
-
         & ~ .weather__forecasts {
             opacity: .5; // This needs fixing
         }
@@ -261,6 +251,10 @@ $weather-large-size: 60px;
         top: $gs-baseline / 2.4;
     }
 
+    &:focus {
+        outline: 0;
+    }
+
     .has-page-skin & {
         @include mq(wide) {
             top: 1px;
@@ -269,17 +263,13 @@ $weather-large-size: 60px;
 
     .weather__search-icon,
     .weather__close-icon {
-        width: 16px !important;
-        height: 16px !important;
+        width: 16px;
+        height: 16px;
     }
 }
 
 .weather__edit-location {
     z-index: 0;
-}
-
-.weather__close-location {
-    display: none;
 }
 
 .weather__forecasts {
@@ -338,11 +328,11 @@ $weather-large-size: 60px;
         @include mq(leftCol, wide) {
             min-width: 33%;
 
-            &--3 {
+            &.weather__forecast--3 {
                 border-right: 0;
             }
 
-            &--4 {
+            &.weather__forecast--4 {
                 display: none;
             }
         }
@@ -357,8 +347,8 @@ $weather-large-size: 60px;
         margin-top: $gs-baseline / 3;
 
         @include mq(leftCol) {
-            width: $weather-small-size !important;
-            height: $weather-small-size !important;
+            width: $weather-small-size;
+            height: $weather-small-size;
             margin-left: 0;
         }
     }
