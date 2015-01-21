@@ -1,23 +1,24 @@
 package controllers
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
+import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.Switches
 import conf.Switches._
-import front._
+import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
-import play.api.mvc._
-import play.api.libs.json.Json
-import slices.Container
-import views.support.RenderOtherStatus
-import scala.concurrent.Future
-import play.twirl.api.Html
 import performance.MemcachedAction
+import play.api.libs.json.Json
+import play.api.mvc._
+import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import common.FaciaMetrics._
+import slices.Container
 import views.html.fragments.containers.facia_cards.container
+
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
@@ -130,7 +131,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           else if (request.isJson)
             JsonFront(faciaPage)
           else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
-            RenderOtherStatus(Gone)
+            MovedPermanently(expiredAdFeatureUrl)
           else
             Ok(views.html.front(faciaPage))
         }

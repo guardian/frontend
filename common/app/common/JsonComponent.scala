@@ -62,13 +62,13 @@ object JsonComponent extends Results with implicits.Requests {
   // Note we are not setting Vary headers here as they get set in CorsVaryHeadersFilter
   // otherwise they get overwritten by the Gzip Filter
   private def resultFor(request: RequestHeader, json: String): Result = {
-    Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "X-Requested-With"))(request)
+    Cors(Ok(json).as(JSON))(request)
   }
 }
 
 object JsonNotFound {
 
   def apply()(implicit request: RequestHeader): Result = {
-    Cors(NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "X-Requested-With"))(request)
+    Cors(NotFound.as(JSON))(request)
   }
 }

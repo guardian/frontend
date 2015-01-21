@@ -5,7 +5,7 @@ import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.libs.json.Json
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import services.S3
 
 import scala.io.Codec.UTF8
@@ -17,6 +17,10 @@ object DfpAgent
   with ExecutionContexts {
 
   override protected val isProd: Boolean = environment.isProd
+  override protected val isPreview: Boolean = {
+    if (Play.maybeApplication.isDefined) environment.isPreview
+    else false
+  }
 
   private lazy val currentPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val allAdFeatureTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)

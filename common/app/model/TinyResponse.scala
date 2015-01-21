@@ -1,6 +1,5 @@
-package controllers
+package model
 
-import model.{Cors, NoCache}
 import play.api.mvc.{RequestHeader, Result, Results}
 import org.apache.commons.codec.binary.Base64
 
@@ -13,6 +12,4 @@ object TinyResponse extends Results {
   def noContent(allowedMethods: Option[String] = None)(implicit request: RequestHeader): Result = {
     Cors(NoCache(NoContent), allowedMethods)
   }
-
-
 }
