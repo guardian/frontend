@@ -1,6 +1,23 @@
 package crosswords
 
+import com.gu.crosswords.api.client.models.{Down, Across, Crossword}
+import scalaz.std.list._
+import scalaz.syntax.foldable._
+
 case class Position(x: Int, y: Int)
+
+object CrosswordGrid {
+  def fromCrossword(crossword: Crossword): CrosswordGrid = {
+    crossword.entries foldMap { entry =>
+      entry.direction match {
+        case Across =>
+          entry.position.x
+
+        case Down =>
+      }
+    }
+  }
+}
 
 case class CrosswordGrid(cellsInPlay: Set[Position])
 

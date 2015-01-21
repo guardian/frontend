@@ -37,4 +37,13 @@ object CrosswordsController extends Controller with ExecutionContexts {
       Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
     }
   }
+
+  def treat() = Action.async { implicit request =>
+    maybeApi match {
+      case Some(apiClient) =>
+        apiClient.forToday map { todaysCrosswords =>
+          todaysCrosswords.crosswords.toSeq.map(_._2).head
+        }
+    }
+  }
 }
