@@ -1,9 +1,9 @@
-import conf.Configuration
+import model.Cors
 import play.api.GlobalSettings
-import play.api.mvc.{Results, RequestHeader}
+import play.api.mvc.{Results, Result, RequestHeader}
 import scala.concurrent.Future
 
-trait CorsErrorHandler extends GlobalSettings with Results {
+trait CorsErrorHandler extends GlobalSettings with Results with common.ExecutionContexts {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -12,17 +12,15 @@ trait CorsErrorHandler extends GlobalSettings with Results {
     val headers = request.headers
     val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
 
-    request.headers.get("Origin") match {
-        case None => Future.successful(InternalServerError.withHeaders("Vary" -> vary))
-        case Some(requestOrigin) => Future.successful(
-          InternalServerError.withHeaders(
-             "Vary" -> vary,
-             "Access-Control-Allow-Origin" -> Configuration.ajax.corsOrigins.find( _ == requestOrigin ).getOrElse("*"),
-             "Access-Control-Allow-Credentials" -> "true",
-             "Access-Control-Allow-Headers" -> "X-Requested-With",
-             "Access-Control-Allow-Methods" -> "GET,POST"
-          )
-        )
+    Future.successful{
+      Cors(InternalServerError.withHeaders("Vary" -> vary))(request)
     }
+  }
+
+  override def onHandlerNotFound(request : RequestHeader) : Future[Result] = {
+    super.onHandlerNotFound(request).map { Cors(_)(request) };
+  }
+  override def onBadRequest(request : RequestHeader, error : String) : Future[Result] = {
+    super.onBadRequest(request, error).map { Cors(_)(request) };
   }
 }
