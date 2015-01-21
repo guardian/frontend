@@ -32,7 +32,7 @@ define([
                             onClick: self.handleToggle,
                             className: 'button button--medium button--primary',
                             'data-link-name': toggleAction
-                        }, 'Switch suggested links ' + toggleAction)
+                        }, 'Switch recently visited links ' + toggleAction)
                     ]);
                 }
             }),
