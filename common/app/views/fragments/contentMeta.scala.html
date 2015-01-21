@@ -16,7 +16,7 @@
     @content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
     @if(content.contributors.length == 1) {
-        @if(content.hasTonalHeaderByline && content.contributors.headOption.exists(_.twitterHandle.nonEmpty) && content.contributors.headOption.exists(_.emailAddress.nonEmpty)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+        @if(content.hasTonalHeaderByline && (content.contributors.headOption.exists(_.twitterHandle.nonEmpty) || content.contributors.headOption.exists(_.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
         @fragments.meta.contactAuthor(content)
     }
 
