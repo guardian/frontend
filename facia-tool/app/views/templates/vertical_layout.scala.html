@@ -69,6 +69,9 @@
             <!-- ko if: isIframe() -->
                 <iframe-widget params="position: $index, column: $data, src: initialState.iframeURL"></iframe-widget>
             <!-- /ko -->
+            <!-- ko if: isTreats -->
+                <fronts-widget params="position: $index, column: $data, mode: 'treats'"></fronts-widget>
+            <!-- /ko -->
         </div>
     </div>
 </script>

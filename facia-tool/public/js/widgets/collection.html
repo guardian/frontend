@@ -6,10 +6,10 @@
         <span class="tools" data-bind="visible: state.hasDraft">
             <a class="draft-warning" data-bind="
                 click: front.setModeDraft,
-                visible: front.liveMode()">
+                visible: front.mode() === 'live'">
                 <span class="tool draft-warning">Show unlaunched changes</a>
 
-            <span data-bind="visible: !front.liveMode()">
+            <span data-bind="visible: front.mode() !== 'live'">
                 <a class="tool draft-publish" data-bind="
                     click: publishDraft,
                     text: front.confirmSendingAlert() && addedInDraft().length ? 'Send alert' : 'Launch'"></a
@@ -77,14 +77,22 @@
                 <div class="indicator" data-bind="indicatorHeight: 'mobile'"></div>
             </div>
         <!-- /ko -->
+
+        <!-- ko ifnot: front.flattenGroups -->
         <div data-bind="
-            css: {'pending': isPending()},
-            template: {name: 'template_groups', foreach: groups}"></div>
+                    css: {'pending': isPending()},
+                    template: {name: 'template_groups', foreach: groups}"></div>
+        <!-- /ko -->
+        <!-- ko if: front.flattenGroups() -->
+        <div data-bind="
+                    css: {'pending': isPending()},
+                    template: {name: 'template_groups', data: groups[groups.length - 1]}"></div>
+        <!-- /ko -->
 
     </div>
 </div>
 
-<!-- ko if: state.hasExtraActions() && history().length -->
+<!-- ko if: state.hasExtraActions() && isHistoryEnabled() -->
     <!-- ko if: !state.collapsed() -->
         <hr>
 

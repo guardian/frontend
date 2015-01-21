@@ -261,6 +261,10 @@
                             &middot;
                             <a class='tool--content' data-bind="attr: {href: '/@{priority}?layout=latest,front:' + id()}">edit content</a>
                             &middot;
+                            @if(Switches.FaciaToolPaneOptions.isSwitchedOn) {
+                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?treats=please&amp;front=' + id()}">edit treats</a>
+                            &middot;
+                            }
                             <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
                             &middot;
                             <a class='tool--live' data-bind="attr: {href: ophanPerformances()}" target="_blank">view performance</a>

@@ -520,6 +520,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
+    safeState = Off, sellByDate = never
+  )
+
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)

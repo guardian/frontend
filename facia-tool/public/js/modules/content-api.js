@@ -3,6 +3,7 @@ define([
     'modules/vars',
     'modules/authed-ajax',
     'modules/cache',
+    'modules/modal-dialog',
     'utils/internal-content-code',
     'utils/url-abs-path',
     'utils/identity',
@@ -13,6 +14,7 @@ function (
     vars,
     authedAjax,
     cache,
+    modalDialog,
     internalContentCode,
     urlAbsPath,
     identity,
@@ -48,8 +50,7 @@ function (
             .done(function(results, resultsTitle) {
                 var capiItem,
                     icc,
-                    err,
-                    convertSnapMsg = 'Click OK to create a { ' + vars.CONST.latestSnapPrefix + resultsTitle + ' } item, or Cancel to just create a link...';
+                    err;
 
                 // ContentApi item
                 if (results && results.length === 1) {
@@ -84,8 +85,23 @@ function (
                     item.convertToSnap();
 
                 // A snap, of type 'latest', ie.  where the target is a Guardian tag/section page.
-                } else if (results && results.length > 1 && window.confirm(convertSnapMsg)) {
-                    item.convertToLatestSnap(resultsTitle);
+                } else if (results && results.length > 1) {
+                    modalDialog.confirm({
+                        name: 'select_snap_type',
+                        data: {
+                            prefix: vars.CONST.latestSnapPrefix,
+                            resultsTitle: resultsTitle
+                        }
+                    }).then(function () {
+                        item.convertToLatestSnap(resultsTitle);
+                        defer.resolve(item);
+                    }, function () {
+                        item.convertToLinkSnap();
+                        defer.resolve(item);
+                    });
+
+                    // Waiting for the modal to be closed
+                    return;
 
                     // A snap, of default type 'link'.
                 } else {
