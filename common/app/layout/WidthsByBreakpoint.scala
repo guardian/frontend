@@ -2,6 +2,7 @@ package layout
 
 import cards._
 import BrowserWidth._
+import scalaz.syntax.std.option._
 
 object WidthsByBreakpoint {
   val Mobile = Map[CardType, BrowserWidth](
@@ -53,5 +54,13 @@ case class WidthsByBreakpoint(
   desktop: Option[BrowserWidth],
   wide: Option[BrowserWidth]
 ) {
+  // as used by the 'sizes' attribute of img
+  def sizesString =
+    Seq(wide, desktop, tablet, mobile) zip Seq(1300.some, 980.some, 740.some, None) collect {
+      case (Some(imageWidth), Some(breakpoint)) =>
+        s"(min-width ${breakpoint}px) $imageWidth"
 
+      case (Some(imageWidth), None) =>
+        imageWidth.toString
+    } mkString ", "
 }
