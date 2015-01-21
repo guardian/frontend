@@ -15,7 +15,7 @@ object ContainerLayoutContext {
   val MaximumVideoPlayersPerTagPage = 1
   val MaximumVideoPlayersPerFront = 4
 
-  val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)
+  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false, MaximumVideoPlayersPerFront)
 }
 
 case class ContainerLayoutContext(
@@ -115,18 +115,10 @@ object ContainerCommercialOptions {
     DfpAgent.sponsorshipType(config)
   )
 
-  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored(),
-    metaData.isAdvertisementFeature,
-    metaData.isFoundationSupported,
-    metaData.sponsor,
-    metaData.sponsorshipType
-  )
-
   val empty = ContainerCommercialOptions(
-    false,
-    false,
-    false,
+    isSponsored = false,
+    isAdvertisementFeature = false,
+    isFoundationSupported = false,
     None,
     None
   )
@@ -204,8 +196,8 @@ object FaciaContainer {
     },
     None,
     None,
-    false,
-    false,
+    hideToggle = false,
+    showTimestamps = false,
     None
   )
 

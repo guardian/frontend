@@ -253,7 +253,7 @@ trait Tags {
   def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
   def isFoundationSupported: Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
-  def sponsor: Option[String] = DfpAgent.getSponsor(tags)
+  def sponsor(edition: Edition): Option[String] = DfpAgent.getSponsor(tags, edition)
   def sponsorshipType: Option[String] = {
     if (isSponsored()) {
       Option("sponsoredfeatures")

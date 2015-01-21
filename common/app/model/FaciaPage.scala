@@ -71,7 +71,8 @@ case class FaciaPage(id: String,
   override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
   override lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
       Some(section)))
-  override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
+  override def sponsor(edition: Edition) =
+    keywordIds.flatMap(keywordId => DfpAgent.getSponsor(keywordId, edition)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct

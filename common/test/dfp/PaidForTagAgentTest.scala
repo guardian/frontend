@@ -60,7 +60,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
-      paidForTag("media", Sponsored, Keyword, editionId = Some("uk")),
+      paidForTag("media",
+        Sponsored,
+        Keyword,
+        editionId = Some("uk"),
+        sponsor = Some("mediaSponsor")),
       paidForTag("healthyliving",
         Sponsored, Keyword,
         adUnitPaths = Seq("theguardian.com/spinach"),
@@ -493,20 +497,29 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   "getSponsor" should "have some value for a sponsored tag with a specified sponsor" in {
-    TestPaidForTagAgent.getSponsor("small-business-network/business-essentials") should be(Some(
-      "spon"))
+    TestPaidForTagAgent.getSponsor("small-business-network/business-essentials", defaultEdition).
+      should(be(Some("spon")))
   }
 
   it should "have some value for an advertisement feature tag with a specified sponsor" in {
-    TestPaidForTagAgent.getSponsor("best-awards/best-awards") should be(Some("spon2"))
+    TestPaidForTagAgent.getSponsor("best-awards/best-awards",
+      defaultEdition) should be(Some("spon2"))
   }
 
   it should "have no value for an advertisement feature tag without a specified sponsor" in {
-    TestPaidForTagAgent.getSponsor("film") should be(None)
+    TestPaidForTagAgent.getSponsor("film/film", defaultEdition) should be(None)
   }
 
   it should "have no value for an unsponsored tag" in {
-    TestPaidForTagAgent.getSponsor("culture") should be(None)
+    TestPaidForTagAgent.getSponsor("culture/culture", defaultEdition) should be(None)
+  }
+
+  it should "have some value for a tag that is sponsored in visitor's edition" in {
+    TestPaidForTagAgent.getSponsor("media/media", defaultEdition) should be(Some("mediaSponsor"))
+  }
+
+  it should "have no value for a tag that is sponsored in another edition" in {
+    TestPaidForTagAgent.getSponsor("media/media", Us) should be(None)
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {

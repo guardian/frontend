@@ -211,12 +211,16 @@ trait PaidForTagAgent {
     hasMultiplesOfAPaidForType(capiTagId, tagToAdvertisementFeatureSponsorsMap)
   }
 
-  def getSponsor(capiTags: Seq[Tag]): Option[String] = {
-    findWinningTagPair(currentPaidForTags, capiTags, None, None) flatMap (_.dfpTag.lineItems.head.sponsor)
+  def getSponsor(capiTags: Seq[Tag], edition: Edition): Option[String] = {
+    findWinningTagPair(currentPaidForTags, capiTags, None, Some(edition)) flatMap {
+      _.dfpTag.lineItems.head.sponsor
+    }
   }
 
-  def getSponsor(capiTagId: String): Option[String] = {
-    findWinningDfpTag(currentPaidForTags, capiTagId, None, None) flatMap (_.lineItems.head.sponsor)
+  def getSponsor(capiTagId: String, edition: Edition): Option[String] = {
+    findWinningDfpTag(currentPaidForTags, capiTagId, None, Some(edition)) flatMap {
+      _.lineItems.head.sponsor
+    }
   }
 }
 

@@ -6,38 +6,40 @@
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
 
-<div class="l-side-margins">
-    <div class="@RenderClasses(Map(
-        "u-cf" -> true,
-        "index-page" -> true,
-        "js-sponsored-front" -> (index.page.isSponsored(Some(Edition(request))) ||
-            index.page.isAdvertisementFeature ||
-            index.page.isFoundationSupported))
+@defining(Edition(request)) { edition =>
+    <div class="l-side-margins">
+        <div class="@RenderClasses(Map(
+            "u-cf" -> true,
+            "index-page" -> true,
+            "js-sponsored-front" -> (index.page.isSponsored(Some(edition)) ||
+                index.page.isAdvertisementFeature ||
+                index.page.isFoundationSupported))
         )"
         data-link-name="Front | @request.path"
-        @index.page.sponsor.map { sponsor =>
+            @index.page.sponsor(edition).map { sponsor =>
             data-sponsor="@sponsor"
-        }
-        @index.page.sponsorshipType.map { sponsorshipType =>
+            }
+            @index.page.sponsorshipType.map { sponsorshipType =>
             data-sponsorship="@sponsorshipType"
-        }
+            }
         role="main">
 
-        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-            @containers.map { containerDefinition =>
-                @container(containerDefinition, empty)
+            @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                @containers.map { containerDefinition =>
+                    @container(containerDefinition, empty)
+                }
             }
-        }
 
-        @index.page.pagination.map { paginationInstance =>
-            <div class="fc-container__pagination">
-                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
-            </div>
-        }
+            @index.page.pagination.map { paginationInstance =>
+                <div class="fc-container__pagination">
+                    @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                </div>
+            }
 
-        @fragments.trendingTopics(index.trails, index.page.id, None)
-        <div class="fc-container fc-container--commercial">
+            @fragments.trendingTopics(index.trails, index.page.id, None)
+            <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
+            </div>
         </div>
     </div>
-</div>
+}
