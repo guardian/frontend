@@ -270,7 +270,9 @@ define([
 
     Front.prototype.newItemValidator = function (item) {
         if (this.mode() === 'treats' && item.meta.snapType() !== 'link') {
+            // TODO uncomment when we want to restrict to snap link
             // return 'Sorry, you can only add links to treats.';
+            return false;
         }
     };
 
