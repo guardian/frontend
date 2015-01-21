@@ -80,7 +80,7 @@ define([
                 s.eVar22 = city;
                 s.linkTrackVars = 'prop22,eVar22';
                 s.linkTrackEvents = 'event100';
-                s.tl(this, 'o', 'weather location set by user');
+                s.tl(true, 'o', 'weather location set by user');
             },
 
             getListOfResults: function (e) {
