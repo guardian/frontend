@@ -29,10 +29,19 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
+    def getEncodedHeader(key: String) =
+      request.headers.get(key).map(java.net.URLDecoder.decode(_, "latin1"))
+
+    val maybeCity = getEncodedHeader(CityHeader)
+    val maybeRegion = getEncodedHeader(RegionHeader)
+    val maybeCountry = getEncodedHeader(CountryHeader)
+
+    log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
+
     (tuple3(
-      request.headers.get(CityHeader),
-      request.headers.get(RegionHeader),
-      request.headers.get(CountryHeader)
+      maybeCity,
+      maybeRegion,
+      maybeCountry
     ) match {
       case Some((city, region, country)) =>
         log.info(s"Received what is my city? request. Geo info: City=$city Region=$region Country=$country")

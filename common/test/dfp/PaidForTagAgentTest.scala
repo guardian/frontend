@@ -56,6 +56,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   private object TestPaidForTagAgent extends PaidForTagAgent {
 
+    override protected def isPreview: Boolean = false
+
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
       paidForTag("media", Sponsored, Keyword, editionId = Some("uk")),

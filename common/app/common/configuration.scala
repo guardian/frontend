@@ -276,6 +276,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+
+    lazy val expiredAdFeatureUrl = "http://www.theguardian.com/info/2014/sep/23/paid-for-content"
   }
 
   object open {
