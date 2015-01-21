@@ -33,11 +33,13 @@ define([
             ajax({
                 url: '/embed/card' + matches[1] + '.json',
                 crossOrigin: true
-            }).then(function (response) {
-                $(el).html(response.html)
-                    .removeClass('element-rich-link--not-upgraded')
-                    .addClass('element-rich-link--upgraded');
-                imagesModule.upgrade(el);
+            }).then(function (resp) {
+                if (resp.html) {
+                    $(el).html(resp.html)
+                        .removeClass('element-rich-link--not-upgraded')
+                        .addClass('element-rich-link--upgraded');
+                    imagesModule.upgrade(el);
+                }
             });
         }
     }

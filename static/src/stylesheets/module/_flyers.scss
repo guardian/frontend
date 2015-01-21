@@ -47,6 +47,8 @@
         // not using `display: none` here so spacefinder still sees it
         height: 0;
         width: 0;
+        margin: 0;
+        border: 0;
         overflow: hidden;
     }
 }

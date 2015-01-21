@@ -35,9 +35,11 @@ define([
                         crossOrigin: true,
                         method: 'get'
                     }).then(function (resp) {
-                        $.create(resp.html)
-                            .addClass('element--supporting')
-                            .insertBefore(space);
+                        if (resp.html) {
+                            $.create(resp.html)
+                                .addClass('element--supporting')
+                                .insertBefore(space);
+                        }
                     });
                 }
             }
