@@ -102,7 +102,6 @@ figure.element-video {
     }
     @include mq(leftCol) {
         figcaption {
-            background: #ffffff;
             padding-left: 0;
             top: 100%;
         }
@@ -112,7 +111,6 @@ figure.element-video {
 figure.element.element--showcase {
     @include mq(leftCol) {
         figcaption {
-            background: #ffffff;
             padding-left: 0;
             top: 100%;
         }
