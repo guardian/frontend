@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
+import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scalaz.std.option.optionInstance.tuple3
@@ -27,14 +28,14 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     WeatherMetrics.whatIsMyCityRequests.increment()
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
-    
+
     val maybeCity = request.headers.get(CityHeader)
     val maybeRegion = request.headers.get(RegionHeader)
     val maybeCountry = request.headers.get(CountryHeader)
 
     log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
 
-    tuple3(
+    (tuple3(
       maybeCity,
       maybeRegion,
       maybeCountry
@@ -47,7 +48,7 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
             WeatherApi.getNearestCity(latitudeLongitude) map { location =>
-              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
+              Cached(1 minute)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
                 // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
                 // given how fuzzy geolocation by IP is.
                 city = city
@@ -62,11 +63,17 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
               log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
 
-              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
+              Cached(1 minute)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
             }
         }
 
       case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
+    }) map { response =>
+      response.withHeaders(
+        CityHeader -> request.headers.get(CityHeader).toString,
+        RegionHeader -> request.headers.get(RegionHeader).toString,
+        CountryHeader -> request.headers.get(CountryHeader).toString
+      )
     }
   }
 }
