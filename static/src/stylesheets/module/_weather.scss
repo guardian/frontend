@@ -91,7 +91,7 @@ $weather-large-size: 60px;
 
 .weather__desc {
     @include fs-headline(2);
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4;
 
     @include mq(leftCol) {
         position: absolute;
@@ -332,11 +332,11 @@ $weather-large-size: 60px;
         @include mq(leftCol, wide) {
             min-width: 33%;
 
-            &--3 {
+            &.weather__forecast--3 {
                 border-right: 0;
             }
 
-            &--4 {
+            &.weather__forecast--4 {
                 display: none;
             }
         }
