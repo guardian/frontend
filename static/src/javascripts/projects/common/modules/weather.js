@@ -127,7 +127,7 @@ define([
 
         fetchForecastData: function (location) {
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
-                .then(function(response) {
+                .then(function (response) {
                     this.renderForecast(response);
                 }.bind(this))
                 .fail(function (err, msg) {
