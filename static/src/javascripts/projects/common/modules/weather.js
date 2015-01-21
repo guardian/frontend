@@ -244,7 +244,7 @@ define([
                 docFragment.appendChild($forecast[0]);
             }
 
-            $forecastHolder.each(function(item) {
+            $forecastHolder.each(function (item) {
                 $(item).append(docFragment.cloneNode(true));
             });
         }
