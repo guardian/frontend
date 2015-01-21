@@ -1,3 +1,4 @@
+/* global guardian */
 define([
     'lodash/objects/values',
     'common/utils/config',
@@ -9,16 +10,13 @@ define([
 ) {
 
     function OmnitureMedia(player) {
-        function getAttribute(attributeName) {
-            return player.el().getAttribute(attributeName);
-        }
-
         var lastDurationEvent, durationEventTimer,
             mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
             prerollPlayed = false,
+            isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
                 'video:request': 'event98',
@@ -36,6 +34,10 @@ define([
                 // extra events with no set ordering
                 duration: 'event57'
             };
+
+        function getAttribute(attributeName) {
+            return player.el().getAttribute(attributeName);
+        }
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -87,7 +89,7 @@ define([
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = (window.location.host === 'embed.theguardian.com') ? 'Embedded' : config.page.sectionName || '';
+            s.eVar11 = s.prop11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');

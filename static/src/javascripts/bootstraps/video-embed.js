@@ -8,8 +8,8 @@ define([
     'common/utils/_',
     'common/utils/defer-to-analytics',
     'common/modules/analytics/omniture',
-    'common/modules/analytics/omnitureMedia',
     'common/modules/video/tech-order',
+    'common/modules/video/events',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -20,74 +20,10 @@ define([
     _,
     deferToAnalytics,
     Omniture,
-    OmnitureMedia,
     techOrder,
+    events,
     loadingTmpl
     ) {
-
-    var QUARTILES = [25, 50, 75];
-
-    function constructEventName(eventName) {
-        return 'video:' + eventName;
-    }
-
-    function handleInitialMediaError(player) {
-        var err = player.error();
-        if (err !== null) {
-            return err.code === 4;
-        }
-        return false;
-    }
-
-    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
-    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
-    // needing to know about videojs
-    function bindGlobalEvents(player) {
-        player.on('playing', function () {
-            bean.fire(document.body, 'videoPlaying');
-        });
-        player.on('pause', function () {
-            bean.fire(document.body, 'videoPause');
-        });
-        player.on('ended', function () {
-            bean.fire(document.body, 'videoEnded');
-        });
-    }
-
-    function bindContentEvents(player) {
-        var events = {
-            end: function () {
-                player.trigger(constructEventName('content:end', player));
-            },
-            play: function () {
-                var duration = player.duration();
-                if (duration) {
-                    player.trigger(constructEventName('content:play', player));
-                } else {
-                    player.one('durationchange', events.play);
-                }
-            },
-            timeupdate: function () {
-                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
-                QUARTILES.reverse().some(function (quart) {
-                    if (progress >= quart) {
-                        player.trigger(constructEventName('play:' + quart, player));
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            },
-            ready: function () {
-                player.trigger(constructEventName('content:ready', player));
-
-                player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
-                player.one('ended', events.end);
-            }
-        };
-        events.ready();
-    }
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -99,7 +35,7 @@ define([
         options.techOrder = techOrder(el);
         player = videojs(el, options);
 
-        if (handleInitialMediaError(player)) {
+        if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
@@ -129,17 +65,15 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
-    function initOmnitureTracking(player) {
-        new OmnitureMedia(player).init();
-    }
-
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media')).each(function (el) {
             var player,
-                mouseMoveIdle;
+                mouseMoveIdle,
+                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+                mediaId = $el.attr('data-media-id');
 
             bonzo(el).addClass('vjs');
 
@@ -156,13 +90,14 @@ define([
             });
 
             //Location of this is important
-            handleInitialMediaError(player);
+            events.handleInitialMediaError(player);
 
             player.ready(function () {
                 var vol;
 
                 initLoadingSpinner(player);
-                bindGlobalEvents(player);
+                events.bindGlobalEvents(player);
+                events.initOphanTracking(player, mediaId);
 
                 // unglitching the volume on first load
                 vol = player.volume();
@@ -174,8 +109,8 @@ define([
                 player.fullscreener();
 
                 deferToAnalytics(function () {
-                    initOmnitureTracking(player);
-                    bindContentEvents(player);
+                    events.initOmnitureTracking(player);
+                    events.bindContentEvents(player);
                 });
 
                 new Omniture(window.s).go();
