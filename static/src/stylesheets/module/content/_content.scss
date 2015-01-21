@@ -644,7 +644,7 @@
 .meta__twitter,
 .meta__email {
     margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
-    display: inline-block;
+    display: inline;
 
     .content__meta-container--tonal-header & {
         @include mq($until: leftCol) {
@@ -696,6 +696,7 @@
     @include mq(leftCol) {
         margin-top: $gs-baseline/1.2;
         margin-bottom: $gs-baseline * 3/2;
+        display: block;
     }
 }
 
