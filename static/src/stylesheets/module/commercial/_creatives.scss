@@ -259,6 +259,7 @@
         border: 1px solid #ffffff;
         border-width: 1px 1px 0;
         background: #000000;
+        color: #ffffff;
         opacity: .75;
         padding: 0 $gs-gutter / 2;
         @include border-radius($gs-gutter);
@@ -272,9 +273,7 @@
 
         &.chevron-down {
             @include transform(translate(0, 100px));
-            @include transition(all .4s ease);
         }
-
         .i {
             display: block;
             margin: 0 auto;
