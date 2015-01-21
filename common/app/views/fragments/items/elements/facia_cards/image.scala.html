@@ -1,9 +1,10 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, maxWidth: Int = 620, widthsByBreakpoint: Option[layout.WidthsByBreakpoint])(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 
 <div class="fc-item__media-wrapper">
     <div class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
-        <img sizes="@ImgSrc.sizes(imageContainer)" srcset="@ImgSrc.srcset(imageContainer, maxWidth)">
+        <img sizes="@widthsByBreakpoint.map(_.sizesString).getOrElse(ImgSrc.sizes(imageContainer))"
+             srcset="@ImgSrc.srcset(imageContainer, maxWidth)">
     </div>
 </div>
