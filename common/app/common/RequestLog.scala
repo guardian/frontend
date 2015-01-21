@@ -13,7 +13,7 @@ object RequestLog {
     r.headers.safe("X-Forwarded-For"),
     r.host,
     r.headers.safe("X-Gu-Edition"),
-    r.headers.safe("X-GU-GeoLocation"),
+    r.headers.safe("X-GU-GeoCountry"),
     r.headers.safe("X-Gu-Xid"), // a unique id for this request,
     r.path,
     r.headers.safe("Referer"),
