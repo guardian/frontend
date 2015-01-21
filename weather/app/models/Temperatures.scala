@@ -9,8 +9,8 @@ object Temperatures {
     override def writes(o: Temperatures): JsValue = {
 
       Json.obj(
-        "imperial" -> JsString(s"${o.imperial.round}°F"),
-        "metric" -> JsString(s"${o.metric.round}°C")
+        "metric" -> JsString(s"${o.metric.round}°C"),
+        "imperial" -> JsString(s"${o.imperial.round}°F")
       )
     }
   }
@@ -21,12 +21,12 @@ object Temperatures {
   )
 
   def fromFahrenheit(fahrenheit: Double): Temperatures = Temperatures(
-    imperial = fahrenheit,
-    metric = (fahrenheit - 32) * 5d / 9
+    metric = (fahrenheit - 32) * 5d / 9,
+    imperial = fahrenheit
   )
 }
 
 case class Temperatures(
-  imperial: Double,
-  metric: Double
+  metric: Double,
+  imperial: Double
 )

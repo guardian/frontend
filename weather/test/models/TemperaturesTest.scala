@@ -30,7 +30,7 @@ class TemperaturesTest extends FlatSpec with Matchers {
 
   it should "trim past the first decimal place" in {
     Json.toJson(Temperatures.fromFahrenheit(34)) shouldEqual Json.obj(
-      "metric" -> "1.1°C",
+      "metric" -> "1°C",
       "imperial" -> "34°F"
     )
   }
