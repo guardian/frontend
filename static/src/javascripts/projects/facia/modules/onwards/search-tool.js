@@ -61,15 +61,28 @@ define([
 
                 data = {
                     'id': $active.attr('data-weather-id'),
-                    'city': $active.attr('data-weather-city')
+                    'city': $active.attr('data-weather-city'),
+                    'store': true
                 };
 
                 // Send data to whoever is listening
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
+                this.track(data.city);
+
+                $input.blur();
 
                 // Clear all after timeout because of the tracking we can't remove everything straight away
                 setTimeout(this.destroy.bind(this), 50);
+            },
+
+            track: function (city) {
+                s.events = 'event100';
+                s.prop22 = city;
+                s.eVar22 = city;
+                s.linkTrackVars = 'prop22,eVar22';
+                s.linkTrackEvents = 'event100';
+                s.tl(true, 'o', 'weather location set by user');
             },
 
             getListOfResults: function (e) {

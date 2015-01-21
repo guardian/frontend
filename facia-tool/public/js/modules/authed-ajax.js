@@ -16,12 +16,17 @@ define(['modules/vars'], function(vars) {
     function updateCollections(edits) {
         var collections = [];
 
+        var isTreats = false;
         _.each(edits, function(edit) {
             if(_.isObject(edit)) {
                 edit.collection.setPending(true);
                 edit.id = edit.collection.id;
                 collections.push(edit.collection);
                 delete edit.collection;
+                edit.live = edit.mode === 'live';
+                edit.draft = edit.mode === 'draft';
+                isTreats = edit.mode === 'treats';
+                delete edit.mode;
             }
         });
 
@@ -31,7 +36,7 @@ define(['modules/vars'], function(vars) {
         ].filter(function(s) { return s; }).join('And');
 
         return request({
-            url: vars.CONST.apiBase + '/edits',
+            url: collectionEndPoint(isTreats, edits),
             type: 'POST',
             data: JSON.stringify(edits)
         }).fail(function() {
@@ -39,6 +44,14 @@ define(['modules/vars'], function(vars) {
         }).done(function(resp) {
             _.each(collections, function(collection) { collection.populate(resp[collection.id]); });
         });
+    }
+
+    function collectionEndPoint (isTreats, edits) {
+        if (isTreats) {
+            return vars.CONST.apiBase + '/treats/' + (edits.update || edits.remove).id;
+        } else {
+            return vars.CONST.apiBase + '/edits';
+        }
     }
 
     return {

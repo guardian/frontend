@@ -125,6 +125,12 @@ define([
                 });
         },
 
+        track: function (city) {
+            s.prop26 = city;
+            s.linkTrackVars = 'prop26';
+            s.tl(true, 'o', 'weather location set by fastly');
+        },
+
         fetchForecastData: function (location) {
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
                 .then(function (response) {

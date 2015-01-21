@@ -7,8 +7,8 @@ import conf.Configuration
 import fronts.FrontsApi
 import julienrf.variants.Variants
 import org.joda.time.DateTime
-import play.api.libs.json.{JsString, Format, JsValue, Json}
-import services.{FaciaJsonClient, ConfigAgent}
+import play.api.libs.json.{Format, JsString, JsValue, Json}
+import services.ConfigAgent
 import tools.{FaciaApi, FaciaApiIO}
 
 import scala.concurrent.Future
@@ -92,18 +92,13 @@ trait UpdateActions extends Logging with ExecutionContexts {
   val collectionCap: Int = Configuration.facia.collectionCap
   implicit val updateListWrite = Json.writes[UpdateList]
 
-  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
-    val result = if (update.live) {
+  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
+    if (update.live) {
       val live = updateList(update, collectionJson.live)
-      collectionJson.copy(live = live, draft = collectionJson.draft.filter(_ != live))
+      collectionJson.copy(live=live, draft=collectionJson.draft.filter(_ != live))
     }
     else
       collectionJson
-
-    log.info(s"Inserted into LIVE: $update $collectionJson $result")
-
-    result
-  }
 
   def insertIntoDraft(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
     if (update.draft)
@@ -259,6 +254,33 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
+
+  def updateTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(updateTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putBlock(collectionId, _))}}
+
+  def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(removeFromTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putBlock(collectionId, _))}}
+
+  private def updateTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = updateList(update,collectionJson.treats.getOrElse(Nil))
+    collectionJson.copy(treats = Option(updatedTreats))}
+
+  private def removeFromTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = collectionJson.treats.map(_.filterNot(_.id == update.item))
+    collectionJson.copy(treats = updatedTreats)}
+
 }
 
 object UpdateActions extends UpdateActions

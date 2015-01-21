@@ -87,6 +87,7 @@ define([
 
             it("should push data after click on list item", function() {
                 spyOn(sut, "pushData").and.callThrough();
+                spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
                 $(".js-search-tool-list").html("<li><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
@@ -99,9 +100,11 @@ define([
                 expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:fetch',
                     {
                         'id': '292177',
-                        'city': 'Ufa'
+                        'city': 'Ufa',
+                        store: true
                     }
                 );
+                expect(sut.track).toHaveBeenCalledWith('Ufa');
             });
 
             it("should not push data after enter without selecting from the list", function() {

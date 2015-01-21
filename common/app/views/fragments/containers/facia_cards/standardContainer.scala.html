@@ -2,8 +2,11 @@
 
 @import common.Localisation
 @import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore}
+@import views.html.fragments.nav.treats
 
 @containerHeader(containerDefinition, frontProperties)
+
+@treats(containerDefinition, frontProperties)
 
 @for(containerLayout <- containerDefinition.containerLayout) {
     <div class="fc-container__body fc-container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"

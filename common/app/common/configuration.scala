@@ -253,10 +253,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v1.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v2.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
@@ -275,6 +276,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+
+    lazy val expiredAdFeatureUrl = "http://www.theguardian.com/info/2014/sep/23/paid-for-content"
   }
 
   object open {

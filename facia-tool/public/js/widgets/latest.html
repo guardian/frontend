@@ -1,14 +1,16 @@
-<div class="modes" data-bind="
+<div data-bind="
     css: {
         'live-mode': !latestArticles.showingDrafts(),
         'draft-mode': latestArticles.showingDrafts
     }">
+    <div class="modes">
     <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
         click: latestArticles.showDrafts,
         css: {active: latestArticles.showingDrafts}">Draft content</a
    ><!-- /ko --><a class="live-mode" data-bind="
         click: latestArticles.showLive,
         css: {active: !latestArticles.showingDrafts()}">Live content</a>
+    </div>
 </div>
 
 <div class="col__inner cilpboard-container">

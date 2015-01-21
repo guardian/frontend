@@ -16,6 +16,7 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
+OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -54,7 +55,9 @@ GET         /discussion/comment-counts.json                                     
 GET         /discussion/comment/*id.json                                                                             controllers.CommentsController.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.CommentsController.comment(id: Int)
 GET         /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJson(commentId: Int)
+OPTIONS     /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJsonOptions(commentId: Int)
 GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
+OPTIONS     /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJsonOptions(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
@@ -137,6 +140,7 @@ GET         /football/:competition/table                                        
 GET         /football/:competition/table.json                                                                        football.controllers.LeagueTableController.renderCompetitionJson(competition)
 GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
+GET         /football/:team/fixtures-and-results-container                                                           football.controllers.FixturesAndResultsContainerController.renderContainer(team)
 
 GET         /football/:competitionTag/overview/embed                                                                 football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET         /football/:competitionTag/overview                                                                       football.controllers.WallchartController.renderWallchart(competitionTag)

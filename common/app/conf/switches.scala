@@ -327,10 +327,6 @@ object Switches {
     sellByDate = new LocalDate(2015, 1, 31)
   )
 
-  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
-    "If switched on then the preview server will poll until the latest content is indexed.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 20))
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = new LocalDate(2015, 1, 31))
@@ -428,11 +424,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
-    "Switch for the UK Join Us navigation component A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
-  )
-
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -477,6 +468,11 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
+  val DefaultOriginSwitch = Switch("Feature", "default-origin",
+    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
+    safeState = On, sellByDate = new LocalDate(2015, 1, 28)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -519,8 +515,18 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
+    safeState = Off, sellByDate = never
+  )
+
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
+  val DoNotTrack = Switch("Analytics", "do-not-track",
+    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 

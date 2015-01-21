@@ -111,6 +111,8 @@ define([
         popularFilteredCache,
         topNavItemsCache,
 
+        inMegaNav = false,
+
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -324,12 +326,12 @@ define([
         return $('.js-global-navigation');
     }
 
-    function showInMegaNav(flush) {
+    function showInMegaNav() {
         var tags;
 
         if (getSummary().showInMegaNav === false) { return; }
 
-        if (flush) { removeFromMegaNav(); }
+        if (inMegaNav) { removeFromMegaNav(); }
 
         tags = getPopularFiltered();
 
@@ -339,6 +341,7 @@ define([
                     tags: tags.slice(0, 20).map(tagHtml).join('')
                 })
             );
+            inMegaNav = true;
         }
     }
 
@@ -346,6 +349,7 @@ define([
         getMegaNav().each(function () {
             $('.js-global-navigation__section--history', this).remove();
         });
+        inMegaNav = false;
     }
 
     function showInMegaNavEnabled() {
