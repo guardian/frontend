@@ -64,12 +64,12 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val richLinkId: Option[String] =
     delegate.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
-      .filter(_.matches(raw"https?://www\.theguardian\.com/.*"))
+      .filter(_.matches("""https?://www\.theguardian\.com/.*"""))
 
   lazy val openModuleId: Option[String] =
     delegate.references.find(_.`type` == "open-module")
       .map(_.id.stripPrefix("open-module/"))
-      .filter(_.matches(raw"https?://open-module\.appspot\.com/view\?id=\d+"))
+      .filter(_.matches("""https?://open-module\.appspot\.com/view\?id=\d+"""))
 
   override lazy val analyticsName = s"GFE:$section:$name"
 
