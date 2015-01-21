@@ -41,21 +41,3 @@
 .more-tags { //fix for IE8/9 bug
     display: inline;
 }
-
-.global-navigation__children---tags {
-    padding-top: 0;
-
-    .button--tag {
-        margin-top: $gs-baseline / 2;
-        margin-bottom: 0;
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-    @include mq($until: mobileLandscape) {
-        & {
-            margin-left: 0;
-        }
-    }
-}
