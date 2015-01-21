@@ -14,3 +14,4 @@ GET        /counts.gif                      controllers.DiagnosticsController.an
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
 
 POST       /css                             controllers.DiagnosticsController.css
+OPTIONS    /css                             controllers.DiagnosticsController.cssOptions

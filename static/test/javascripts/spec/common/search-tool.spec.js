@@ -94,6 +94,18 @@ define([
             expect(sut.pushData).toHaveBeenCalled();
         });
 
+        it("should track data after click on list item", function() {
+            spyOn(sut, "track");
+
+            $(".js-search-tool-list").html("<li><a data-weather-city='London'></a></li>");
+
+            sut.init();
+
+            bean.fire($(".js-search-tool-list a")[0], "click");
+
+            expect(sut.track).toHaveBeenCalledWith('London');
+        });
+
         it("should not push data after enter without selecting from the list", function() {
             expect(sut.pushData()).toEqual(false);
         });

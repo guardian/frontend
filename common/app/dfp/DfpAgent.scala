@@ -5,7 +5,7 @@ import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.libs.json.Json
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import services.S3
 
 import scala.io.Codec.UTF8
@@ -17,14 +17,20 @@ object DfpAgent
   with ExecutionContexts {
 
   override protected val isProd: Boolean = environment.isProd
+  override protected val isPreview: Boolean = {
+    if (Play.maybeApplication.isDefined) environment.isPreview
+    else false
+  }
 
-  private lazy val allPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
+  private lazy val currentPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
+  private lazy val allAdFeatureTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
-  protected def allPaidForTags: Seq[PaidForTag] = allPaidForTagsAgent get()
+  protected def currentPaidForTags: Seq[PaidForTag] = currentPaidForTagsAgent get()
+  protected def allAdFeatureTags: Seq[PaidForTag] = allAdFeatureTagsAgent get()
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
@@ -91,7 +97,10 @@ object DfpAgent
     }
 
     val paidForTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpPaidForTagsDataKey)
-    update(allPaidForTagsAgent, paidForTags)
+    update(currentPaidForTagsAgent, paidForTags)
+
+    val allAdFeatureTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpAdFeatureReportKey)
+    update(allAdFeatureTagsAgent, allAdFeatureTags)
 
     val sponsoredTags: Seq[PaidForTag] = paidForTags filter (_.paidForType == Sponsored)
     updateMap(tagToSponsorsMapAgent, generateTagToSponsorsMap(sponsoredTags))

@@ -1,9 +1,11 @@
 define([
     'common/modules/weather',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/mediator'
 ], function (
     weather,
-    config
+    config,
+    mediator
     ) {
     return function () {
         this.id = 'Weather';
@@ -31,7 +33,9 @@ define([
                 id: 'show',
                 test: function () {
                     if (config.switches.weather) {
-                        weather.init();
+                        mediator.on('page:common:ready', function () {
+                            weather.init();
+                        });
                     }
                 }
             }

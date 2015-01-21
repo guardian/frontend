@@ -34,7 +34,9 @@ object Metric extends Logging {
     ("iphone-6-timeout", CountMetric("iphone-6-timeout")),
     ("iphone-4-start", CountMetric("iphone-4-start")),
     ("iphone-4-end", CountMetric("iphone-4-end")),
-    ("iphone-4-timeout", CountMetric("iphone-4-timeout"))
+    ("iphone-4-timeout", CountMetric("iphone-4-timeout")),
+
+    ("dnt", CountMetric("do-not-track"))
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above
