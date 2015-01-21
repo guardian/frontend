@@ -46,7 +46,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def readBlock(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+  def getCollection(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     FrontsApi.amazonClient.collection(collectionId).map { configJson =>
       NoCache {
