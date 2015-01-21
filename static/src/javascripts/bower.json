@@ -24,7 +24,8 @@
     "fastclick": "guardian/fastclick#master",
     "requirejs-text": "~2.0.12",
     "native-promise-only": "guardian/native-promise-only#master",
-    "videojs-embed": "~0.3.1"
+    "videojs-embed": "~0.3.1",
+    "picturefill": "~2.2.0"
   },
   "resolutions": {
     "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8",

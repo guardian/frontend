@@ -145,6 +145,20 @@ object ImgSrc {
       imager(imageContainer, profile)
     }
   }
+
+  def srcset(imageContainer: ImageContainer, maxWidth: Int): String = {
+    val sortedProfiles = Profile.all.filter(_.height == None).sortBy(_.width).distinct
+    val sources = sortedProfiles.filter(_.width.getOrElse(0) <= maxWidth).flatMap { profile =>
+      profile.elementFor(imageContainer).flatMap(_.url).map { largestImage =>
+        s"${ImgSrc(largestImage, profile)} ${profile.width.get}w"
+      }
+    }
+    sources.mkString(", ")
+  }
+
+  def sizes(imageContainer: ImageContainer): String = {
+    s"(min-width: 1300px) 460px, (min-width: 980px) 460px, (min-width 740px) 340px, 95vw"
+  }
 }
 
 object SeoThumbnail {
