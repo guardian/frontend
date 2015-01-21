@@ -331,13 +331,14 @@ define([
         return 'WebSocket' in window;
     }
 
-    function fontHinting () {
+    function fontHinting() {
         var ua = navigator.userAgent,
             windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-            hinting = 'Off';
+            hinting = 'Off',
+            version;
 
         if (windowsNT) {
-            var version = parseFloat(windowsNT[1], 10);
+            version = parseFloat(windowsNT[1], 10);
             // windows XP and newer && windows 7 and older
             if (version >= 5.1 && version <= 6.1) {
                 if (/Chrome/.exec(ua)) {
@@ -345,10 +346,10 @@ define([
                 } else {
                     hinting = 'On'; // All other use cleartype
                 }
-            };
+            }
         }
         return hinting;
-    };
+    }
 
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
