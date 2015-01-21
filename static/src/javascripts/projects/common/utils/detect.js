@@ -340,7 +340,7 @@ define([
         if (windowsNT) {
             version = parseFloat(windowsNT[1], 10);
             // windows XP and newer && windows 7 and older
-            if (version >= 5.1 && version <= 6.1) {
+            if (version >= 5.1 && version < 6.0) {
                 if (/Chrome/.exec(ua)) {
                     hinting = 'Auto'; // Chrome on windows XP/7 want auto-hinting
                 } else {
