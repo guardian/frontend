@@ -586,6 +586,21 @@ h1 {
     color: #999;
 }
 
+.collapse-expand-all {
+    position: absolute;
+    right: 34px;
+    bottom: -2px;
+    font-size: 12px;
+    color: #999;
+}
+.collapse-expand-all.expanded .expand,
+.collapse-expand-all .collapse {
+    display: none;
+}
+.collapse-expand-all.expanded .collapse {
+    display: inline;
+}
+
 .list-header__timings {
     font-weight: normal;
     font-size: 10px;
@@ -1197,6 +1212,7 @@ button {
     margin: 0;
     z-index: 2;
     overflow: hidden;
+    position: relative;
 }
 
 .front-selector select {

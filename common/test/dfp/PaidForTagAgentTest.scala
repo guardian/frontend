@@ -48,12 +48,15 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         expiryDate,
         isPageSkin = false,
         sponsor,
+        "delivering",
         targeting)
     }
     PaidForTag(targetedName, Keyword, paidForType, Nil, lineItems)
   }
 
   private object TestPaidForTagAgent extends PaidForTagAgent {
+
+    override protected def isPreview: Boolean = false
 
     val sponsorships: Seq[PaidForTag] = Seq(
       paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
@@ -102,7 +105,22 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       paidForTag("global-modern-day-slavery-in-focus", FoundationFunded, Series)
     )
 
-    override protected val allPaidForTags: Seq[PaidForTag] =
+    val allAdFeatureTags: Seq[PaidForTag] = Seq(
+      paidForTag("tagName",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)))),
+      paidForTag("tagNameMatchingMultipleLineItems",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)), None)),
+      paidForTag("tagNameMatchingMoreMultipleLineItems",
+        AdvertisementFeature,
+        Keyword,
+        expiryDates = Seq(Some(DateTime.now().minusHours(1)), Some(DateTime.now().plusHours(1))))
+    )
+
+    override protected val currentPaidForTags: Seq[PaidForTag] =
       sponsorships ++ advertisementFeatureSponsorships ++ foundationSupported
 
     override protected def tagToSponsorsMap: Map[String, Set[String]] = Map.empty

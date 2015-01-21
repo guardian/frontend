@@ -44,7 +44,7 @@ define([
                 handleRemove: function (tag) {
                     history.deleteFromSummary(tag);
                     this.setState({ popular: history.getPopularFiltered({flush: true}) });
-                    history.showInMegaNav(true);
+                    history.showInMegaNav();
                 },
                 render: function () {
                     var self = this,

@@ -17,7 +17,7 @@ Media list item. Looks a bit like this:
     $media-ratio: 5 / 3;
     $item-vertical-padding: $gs-baseline / 4;
     $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
-    $image-width: $item-min-height * $media-ratio;
+    $image-width: normalize-width($item-min-height * $media-ratio);
     $mobile-media-padding: ($gs-baseline / 3);
 
     min-height: $item-min-height + ($mobile-media-padding * 2);
