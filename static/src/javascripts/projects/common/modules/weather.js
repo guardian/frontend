@@ -40,8 +40,7 @@ define([
     forecastTemplate
     ) {
 
-    var self           = null,
-        $weather       = null,
+    var $weather       = null,
         $holder        = null,
         searchTool     = null,
         city           = '',
