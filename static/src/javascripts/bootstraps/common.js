@@ -49,7 +49,6 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
-    'common/modules/weather',
     'common/modules/onward/breaking-news',
 
     'bootstraps/identity',
@@ -106,7 +105,6 @@ define([
     Tabs,
     Toggles,
     userPrefs,
-    weather,
     breakingNews,
 
     identity,

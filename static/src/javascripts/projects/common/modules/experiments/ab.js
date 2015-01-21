@@ -15,8 +15,7 @@ define([
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
     'common/modules/experiments/tests/join-us-navigation',
-    'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/sticky-container-titles'
 ], function (
     raven,
     filter,
@@ -34,8 +33,7 @@ define([
     HistoryTags,
     HistoryContainers,
     JoinUsNavigation,
-    StickyContainerTitles,
-    Weather
+    StickyContainerTitles
 ) {
 
     var ab,
@@ -44,8 +42,7 @@ define([
             new HistoryTags(),
             new HistoryContainers(),
             new JoinUsNavigation(),
-            new StickyContainerTitles(),
-            new Weather()
+            new StickyContainerTitles()
         ],
         participationsKey = 'gu.ab.participations';
 

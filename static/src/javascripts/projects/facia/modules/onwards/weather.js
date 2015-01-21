@@ -21,8 +21,8 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/search-tool',
     'common/modules/user-prefs',
+    'facia/modules/onwards/search-tool',
     'text!common/views/weather.html',
     'text!common/views/weather-forecast.html'
 ], function (
@@ -34,8 +34,8 @@ define([
     config,
     mediator,
     template,
-    SearchTool,
     userPrefs,
+    SearchTool,
     weatherTemplate,
     forecastTemplate
     ) {
@@ -66,7 +66,7 @@ define([
 
             if (prefs && prefs.id) {
                 return prefs;
-            }
+            }comm
         },
 
         getWeatherData: function (url) {
