@@ -97,9 +97,11 @@ define([
                 this.fetchData(location);
             } else {
 
-                self.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(self.fetchData)
-                    .fail(function (err, msg) {
+                return self.getWeatherData(config.page.weatherapiurl + '.json')
+                    .then(function (response) {
+                        self.fetchData(response);
+                        self.track(response.city);
+                    }).fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                             tags: {
                                 feature: 'weather'
@@ -124,6 +126,12 @@ define([
                         }
                     });
                 });
+        },
+
+        track: function (city) {
+            s.prop26 = city;
+            s.linkTrackVars = 'prop26';
+            s.tl(true, 'o', 'weather location set by fastly');
         },
 
         bindEvents: function () {

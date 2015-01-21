@@ -74,6 +74,27 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
+                it("should get the default location", function(done) {
+                    var server = sinon.fakeServer.create(),
+                        data = {id: '1', city: "London"};
+
+                    spyOn(sut, "track");
+                    spyOn(sut, "fetchData");
+
+                    server.autoRespond = true;
+
+                    server.respondWith([200, { "Content-Type": "application/json" },
+                        '[{"WeatherIcon": 3}]']);
+
+                    sut.getDefaultLocation().then(function () {
+                        expect(sut.fetchData).toHaveBeenCalled();
+                        expect(sut.track).toHaveBeenCalled();
+                        done();
+                    });
+
+                    server.restore();
+                });
+
                 it("should fetch the data and save location", function () {
                     var result = {id: '2', city: "Sydney", store: true};
 
