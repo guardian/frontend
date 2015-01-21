@@ -152,6 +152,10 @@
         float: none;
         padding-right: 0;
     }
+
+    .content--interactive & {
+        padding-right: $gs-gutter/3 !important;
+    }
 }
 
 .content__series-label {
@@ -178,6 +182,11 @@
     .content__series-label__link {
         @include font-size(18, 22);
         display: block;
+
+        .content--interactive & {
+            font-size: 20px !important;
+            line-height: 24px !important;
+        }
     }
 }
 
