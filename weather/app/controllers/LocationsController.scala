@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
+import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scalaz.std.option.optionInstance.tuple3
