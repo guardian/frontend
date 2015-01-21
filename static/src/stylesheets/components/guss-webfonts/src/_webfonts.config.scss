@@ -22,6 +22,7 @@ $guss-webfonts-version: '0.1.0' !default;
  *
  * - on: larger file, better rendering in Windows
  * - off: smaller files, render well on HiDPI displays
+ * - auto: larger files, render well on non-cleartype windows
  *
  *  @type String
  *
