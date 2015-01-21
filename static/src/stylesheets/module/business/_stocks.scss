@@ -6,13 +6,17 @@ $stocks-icon-height: 10px;
 
     clear: left;
     margin-top: $gs-baseline * 1.5;
-    margin-bottom: $gs-baseline;
+    margin-bottom: 0;
     overflow-x: scroll;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 
     &::-webkit-scrollbar {
         display: none;
+    }
+
+    @include mq(tablet) {
+        margin-bottom: $gs-baseline / 2;
     }
 }
 

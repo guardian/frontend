@@ -201,8 +201,10 @@ define([
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
-                    slots[slotId].isRendered = false;
-                    slots[slotId].slot = defineSlot($adSlot);
+                    slots[slotId] = {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    };
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
@@ -291,7 +293,9 @@ define([
             }
         },
         allAdsRendered = function (slotId) {
-            slots[slotId].isRendered = true;
+            if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isRendered = true;
+            }
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');

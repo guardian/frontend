@@ -19,7 +19,8 @@ trait CorsErrorHandler extends GlobalSettings with Results {
              "Vary" -> vary,
              "Access-Control-Allow-Origin" -> Configuration.ajax.corsOrigins.find( _ == requestOrigin ).getOrElse("*"),
              "Access-Control-Allow-Credentials" -> "true",
-             "Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"
+             "Access-Control-Allow-Headers" -> "X-Requested-With",
+             "Access-Control-Allow-Methods" -> "GET,POST"
           )
         )
     }

@@ -2,9 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# For dev machines
-GET        /                                controllers.Application.front
-
 GET        /_healthcheck                    conf.HealthCheck.healthcheck()
 
 GET        /js.gif                          controllers.DiagnosticsController.js
@@ -17,3 +14,4 @@ GET        /counts.gif                      controllers.DiagnosticsController.an
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
 
 POST       /css                             controllers.DiagnosticsController.css
+OPTIONS    /css                             controllers.DiagnosticsController.cssOptions

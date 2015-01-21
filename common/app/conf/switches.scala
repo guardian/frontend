@@ -307,7 +307,7 @@ object Switches {
 
   val CssLogging = Switch("Monitoring", "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    safeState = On, new LocalDate(2015, 2, 28)
+    safeState = Off, new LocalDate(2015, 2, 28)
   )
 
   // Features
@@ -326,10 +326,6 @@ object Switches {
     safeState = On,
     sellByDate = new LocalDate(2015, 1, 31)
   )
-
-  val PollPreviewForFreshContentSwitch = Switch("Feature", "poll-preview-for-fresh-content",
-    "If switched on then the preview server will poll until the latest content is indexed.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 20))
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
@@ -418,11 +414,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABBreakingNewsAlertStyleSwitch = Switch("A/B Tests", "ab-breaking-news-alert-style",
-    "If this is switched on then different Breaking News alert styles are A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -436,11 +427,6 @@ object Switches {
   val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
     "If this is switched on container titles stick to the bottom of the page",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
-    "Switch for the UK Join Us navigation component A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
   )
 
   // actually just here to make us remove this in the future
@@ -532,6 +518,16 @@ object Switches {
   val FaciaTreats = Switch("Facia", "facia-treats",
     "If this switch is on then treats will be available to edit in the tool and will be pressed",
     safeState = Off, sellByDate = never
+  )
+
+  val IphoneConfidence = Switch("Performance", "iphone-confidence",
+    "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
+  val DoNotTrack = Switch("Analytics", "do-not-track",
+    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   def all: Seq[Switch] = Switch.allSwitches

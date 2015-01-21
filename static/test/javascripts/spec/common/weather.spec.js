@@ -74,8 +74,29 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
+                it("should get the default location", function(done) {
+                    var server = sinon.fakeServer.create(),
+                        data = {id: '1', city: "London"};
+
+                    spyOn(sut, "track");
+                    spyOn(sut, "fetchData");
+
+                    server.autoRespond = true;
+
+                    server.respondWith([200, { "Content-Type": "application/json" },
+                        '[{"WeatherIcon": 3}]']);
+
+                    sut.getDefaultLocation().then(function () {
+                        expect(sut.fetchData).toHaveBeenCalled();
+                        expect(sut.track).toHaveBeenCalled();
+                        done();
+                    });
+
+                    server.restore();
+                });
+
                 it("should fetch the data and save location", function () {
-                    var result = {id: '2', city: "Sydney"};
+                    var result = {id: '2', city: "Sydney", store: true};
 
                     spyOn(sut, "getWeatherData").and.returnValue({
                         then: function () {
@@ -87,7 +108,25 @@ define([
                     });
 
                     sut.fetchData(result);
-                    expect(sut.getUserLocation()).toEqual(result);
+                    expect(sut.getUserLocation()).toEqual({id: '2', city: "Sydney"});
+                    expect(sut.getWeatherData).toHaveBeenCalled();
+                });
+
+                it("should fetch the data and not to save location if using fastly geoip", function () {
+                    var result = {id: '2', city: "Sydney"};
+
+                    spyOn(sut, "getWeatherData").and.returnValue({
+                        then: function () {
+                            return {
+                                fail: function (err, msg) {
+                                }
+                            }
+                        }
+                    });
+                    spyOn(sut, "saveUserLocation");
+
+                    sut.fetchData(result);
+                    expect(sut.saveUserLocation).not.toHaveBeenCalled();
                     expect(sut.getWeatherData).toHaveBeenCalled();
                 });
 

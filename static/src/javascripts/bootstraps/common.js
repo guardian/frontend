@@ -49,7 +49,7 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
-    'common/modules/weather',
+    'common/modules/onward/breaking-news',
 
     'bootstraps/identity',
 
@@ -105,7 +105,7 @@ define([
     Tabs,
     Toggles,
     userPrefs,
-    weather,
+    breakingNews,
 
     identity,
 
@@ -446,14 +446,16 @@ define([
                 shareCount.init();
             },
 
-            runCssLogging: function () {
-                mediator.on('page:common:ready', function () {
-                    var returnAll = window.location.hash === '#csslogging';
+            loadBreakingNews: function () {
+                if (config.switches.breakingNews) {
+                    breakingNews();
+                }
+            },
 
-                    if (config.switches.cssLogging && (returnAll || Math.random() < 0.0001)) {
-                        cssLogging.run(returnAll);
-                    }
-                });
+            runCssLogging: function () {
+                if (config.switches.cssLogging) {
+                    mediator.on('page:common:ready', cssLogging);
+                }
             }
 
         },
@@ -466,6 +468,7 @@ define([
             modules.testCookie();
             modules.adTestCookie();
             modules.windowEventListeners();
+            modules.loadBreakingNews();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();

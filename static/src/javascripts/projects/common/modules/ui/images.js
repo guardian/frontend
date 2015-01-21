@@ -18,7 +18,7 @@ function (
 ) {
 
     var images = {
-
+        // these should match the widths in _vars.scss
         availableWidths: [140, 220, 300, 460, 620, 700, 860, 940, 1430, 1920],
 
         upgrade: function (context) {

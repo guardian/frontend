@@ -586,6 +586,21 @@ h1 {
     color: #999;
 }
 
+.collapse-expand-all {
+    position: absolute;
+    right: 34px;
+    bottom: -2px;
+    font-size: 12px;
+    color: #999;
+}
+.collapse-expand-all.expanded .expand,
+.collapse-expand-all .collapse {
+    display: none;
+}
+.collapse-expand-all.expanded .collapse {
+    display: inline;
+}
+
 .list-header__timings {
     font-weight: normal;
     font-size: 10px;
@@ -1032,8 +1047,18 @@ select {
     color: #DD4B39;
 }
 
-.length--alert textarea.active {
+.attention .length--alert textarea.active {
     background-color: #FFCDD2;
+}
+
+.editor__alert__message {
+    margin-left: 4px;
+    color: #DD4B39;
+    display: none;
+}
+
+.attention .length--alert .editor__alert__message {
+    display: inline;
 }
 
 .editor__length {
@@ -1214,6 +1239,7 @@ button {
     margin: 0;
     z-index: 2;
     overflow: hidden;
+    position: relative;
 }
 
 .front-selector select {
@@ -1769,7 +1795,9 @@ collection-widget > div {
 .attention .performances,
 .attention .modes .live-mode,
 .attention .modes .draft-mode,
-.attention .preview {
+.attention .preview,
+.attention .tool--small--ophan,
+.attention .time__publication {
     display: none;
 }
 

@@ -6,7 +6,7 @@ import common.Logging
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import dfp.DfpApiWrapper.DfpSessionException
 import org.apache.commons.lang.exception.ExceptionUtils
-import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
+import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
 import scala.util.{Failure, Try}
 
@@ -18,99 +18,125 @@ class DfpDataHydrator extends Logging {
 
   private lazy val dfpServiceRegistry = DfpServiceRegistry()
 
-  def loadCurrentLineItems(): Seq[GuLineItem] =
+  private def loadLineItems(statementBuilder: StatementBuilder): Seq[GuLineItem] = {
     dfpServiceRegistry.fold(Seq[GuLineItem]()) { serviceRegistry =>
+      try {
+        val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, statementBuilder)
 
-    try {
+        val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
+        val allAdUnits = AdUnitAgent.get.data
+        val placementAdUnits = PlacementAgent.get.data
+        val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
+        val allCustomTargetingValues = CustomTargetingValueAgent.get.data
 
-      val currentLineItems = new StatementBuilder()
-        .where("status = :readyStatus OR status = :deliveringStatus")
-        .orderBy("id ASC")
-        .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-        .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+        dfpLineItems map { dfpLineItem =>
 
-      val dfpLineItems = DfpApiWrapper.fetchLineItems(serviceRegistry, currentLineItems)
+          val sponsor = for {
+            sponsorFieldId <- optSponsorFieldId
+            customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
+            sponsor <- customFieldValues.collect {
+              case fieldValue: CustomFieldValue
+                if fieldValue.getCustomFieldId == sponsorFieldId =>
+                fieldValue.getValue.asInstanceOf[TextValue].getValue
+            }.headOption
+          } yield sponsor
 
-      val optSponsorFieldId = CustomFieldAgent.get.data.get("Sponsor")
+          val dfpTargeting = dfpLineItem.getTargeting
 
-      val allAdUnits = AdUnitAgent.get.data
-      val placementAdUnits = PlacementAgent.get.data
+          val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map {
+            adUnits =>
+              adUnits.flatMap { adUnit =>
+                allAdUnits get adUnit.getAdUnitId
+              }.toSeq
+          } getOrElse Nil
 
-      val allCustomTargetingKeys = CustomTargetingKeyAgent.get.data
-      val allCustomTargetingValues = CustomTargetingValueAgent.get.data
+          val adUnitsDerivedFromPlacements = {
+            Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map {
+              placementIds =>
 
-      dfpLineItems map { dfpLineItem =>
+                def adUnitsInPlacement(id: Long) = {
+                  placementAdUnits get id map {
+                    _ flatMap allAdUnits.get
+                  } getOrElse Nil
+                }
 
-        val sponsor = for {
-          sponsorFieldId <- optSponsorFieldId
-          customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
-          sponsor <- customFieldValues.collect {
-            case fieldValue: CustomFieldValue
-              if fieldValue.getCustomFieldId == sponsorFieldId =>
-              fieldValue.getValue.asInstanceOf[TextValue].getValue
-          }.headOption
-        } yield sponsor
+                placementIds.flatMap(adUnitsInPlacement).toSeq
 
-        val dfpTargeting = dfpLineItem.getTargeting
+            } getOrElse Nil
+          }
 
-        val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
-          adUnits.flatMap { adUnit =>
-            allAdUnits get adUnit.getAdUnitId
-          }.toSeq
-        } getOrElse Nil
+          val adUnits =
+            (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
 
-        val adUnitsDerivedFromPlacements = {
-          Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map { placementIds =>
-
-            def adUnitsInPlacement(id: Long) = {
-              placementAdUnits get id map {
-                _ flatMap allAdUnits.get
+          def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+            Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+              Option(locations(geoTargeting)) map { locations =>
+                locations.map { location =>
+                  GeoTarget(
+                    location.getId,
+                    optJavaInt(location.getCanonicalParentId),
+                    location.getType,
+                    location.getDisplayName
+                  )
+                }.toSeq
+              }
               } getOrElse Nil
             }
+          val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+          val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
-            placementIds.flatMap(adUnitsInPlacement).toSeq
-
+          val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
+            buildCustomTargetSets(customTargeting,
+              allCustomTargetingKeys,
+              allCustomTargetingValues)
           } getOrElse Nil
+
+          GuLineItem(
+            id = dfpLineItem.getId,
+            name = dfpLineItem.getName,
+            startTime = toJodaTime(dfpLineItem.getStartDateTime),
+            endTime = if (dfpLineItem.getUnlimitedEndDateTime) None
+            else Some(toJodaTime(dfpLineItem
+              .getEndDateTime)),
+            isPageSkin = isPageSkin(dfpLineItem),
+            sponsor = sponsor,
+            targeting = GuTargeting(adUnits,
+              geoTargetsIncluded,
+              geoTargetsExcluded,
+              customTargetSets),
+            status = dfpLineItem.getStatus.toString
+          )
+
         }
 
-        val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
-
-        def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
-          Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-            Option(locations(geoTargeting)) map { locations =>
-              locations.map { location =>
-                GeoTarget(
-                  location.getId,
-                  optJavaInt(location.getCanonicalParentId),
-                  location.getType,
-                  location.getDisplayName
-                )
-              }.toSeq
-            }
-          } getOrElse Nil
-        }
-        val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
-        val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
-
-        val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
-          buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
-        } getOrElse Nil
-
-        GuLineItem(
-          id = dfpLineItem.getId,
-          name = dfpLineItem.getName,
-          startTime = toJodaTime(dfpLineItem.getStartDateTime),
-          endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
-          isPageSkin = isPageSkin(dfpLineItem),
-          sponsor = sponsor,
-          targeting = GuTargeting(adUnits, geoTargetsIncluded, geoTargetsExcluded, customTargetSets)
-        )
+      } catch {
+        case e: Exception =>
+          log.error(ExceptionUtils.getStackTrace(e))
+          Nil
       }
+    }
+  }
 
-    } catch {
-      case e: Exception =>
-        log.error(ExceptionUtils.getStackTrace(e))
-        Nil
+  def loadCurrentLineItems(): Seq[GuLineItem] = {
+    val currentLineItems = new StatementBuilder()
+      .where("status = :readyStatus OR status = :deliveringStatus")
+      .orderBy("id ASC")
+      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
+      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+
+    loadLineItems(currentLineItems)
+  }
+
+  def loadAllAdFeatures(): Seq[GuLineItem] = {
+    val allSponsored = new StatementBuilder()
+      .where("lineItemType = :sponsoredType")
+      .orderBy("id ASC")
+      .withBindVariableValue("sponsoredType", LineItemType.SPONSORSHIP.toString)
+
+    loadLineItems(allSponsored) filter { lineItem =>
+      lineItem.targeting.customTargetSets exists { targetSet =>
+        targetSet.targets exists (_.isAdvertisementFeatureSlot)
+      }
     }
   }
 
