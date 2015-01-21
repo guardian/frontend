@@ -228,14 +228,6 @@ $weather-large-size: 60px;
             border-bottom: 1px solid colour(neutral-3);
         }
 
-        .weather__edit-location {
-            display: none;
-        }
-
-        .weather__close-location {
-            display: initial;
-        }
-
         & ~ .weather__forecasts {
             opacity: .5; // This needs fixing
         }
@@ -270,10 +262,6 @@ $weather-large-size: 60px;
 
 .weather__edit-location {
     z-index: 0;
-}
-
-.weather__close-location {
-    display: none;
 }
 
 .weather__forecasts {
