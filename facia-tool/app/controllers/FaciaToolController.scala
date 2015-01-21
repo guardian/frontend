@@ -105,7 +105,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           val collectionIds = updatedCollections.keySet
           FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(updateAndRemove, identity.email))
           FaciaPress.press(PressCommand(collectionIds).withPressLive())
-          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(collectionId), identity.email))
           Ok(Json.toJson(updatedCollections)).as("application/json")
         }
       case _ => Future.successful(NotAcceptable)
