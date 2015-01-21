@@ -83,9 +83,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val treatsFuture: Future[Seq[Content]] =
       if (FaciaTreats.isSwitchedOn)
           collection.flatMap { collectionOption =>
-        val items: Seq[Trail] =
-          collectionOption.flatMap(_.treats).getOrElse(Nil)
-        getArticles(items, edition)}
+            val items: Seq[Trail] =
+              collectionOption.flatMap(_.treats).getOrElse(Nil)
+            getArticles(items, edition)}
       else
         Future.successful(Nil)
 
