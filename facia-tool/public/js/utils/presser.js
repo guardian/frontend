@@ -1,9 +1,10 @@
-/* globals _ */
 define([
+    'underscore',
     'modules/authed-ajax',
     'modules/vars',
     'utils/mediator'
 ], function (
+    _,
     authedAjax,
     vars,
     mediator

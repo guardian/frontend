@@ -1,9 +1,12 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'utils/terminate'
-], function(
+], function (
+    _,
+    $,
     vars,
     authedAjax,
     terminate

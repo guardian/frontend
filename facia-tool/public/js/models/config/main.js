@@ -1,7 +1,7 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
     'modules/vars',
     'modules/authed-ajax',
     'modules/list-manager',
@@ -21,6 +21,7 @@ define([
 ], function(
     pageConfig,
     ko,
+    _,
     vars,
     authedAjax,
     listManager,
