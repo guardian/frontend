@@ -144,7 +144,6 @@ $header-image-size-desktop: 100px;
 
     .has-page-skin & {
         @include mq(wide) {
-            float: left;
             width: gs-span(6) + $gs-gutter;
         }
     }
