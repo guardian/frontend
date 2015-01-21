@@ -37,15 +37,6 @@ define([
                     container = null;
                 });
 
-                it("should initalize", function () {
-                    spyOn(sut, 'getDefaultLocation');
-
-                    expect(typeof sut).toEqual('object');
-
-                    sut.init();
-                    expect(sut.getDefaultLocation).toHaveBeenCalled();
-                });
-
                 it("should be behind switches", function() {
                     mocks.store['common/utils/config'].switches.weather = false;
 
@@ -62,7 +53,7 @@ define([
                         weather: true
                     };
                     sut.init();
-                    expect(sut.getDefaultLocation).toHaveBeenCalled();
+                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
                 });
 
                 it("should get location from local storage", function () {
