@@ -73,7 +73,6 @@ define([
 
     return {
         init: init,
-        upgradeFlyer: upgradeFlyer,
-        _getSpacefinderRules: getSpacefinderRules
+        upgradeFlyer: upgradeFlyer
     };
 });

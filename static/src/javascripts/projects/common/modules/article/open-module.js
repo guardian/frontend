@@ -3,7 +3,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/article/spacefinder',
+    'common/modules/article/spacefinder'
 ], function (
     $,
     ajax,
@@ -26,7 +26,7 @@ define([
     }
 
     return {
-        init: function() {
+        init: function () {
             if (config.page.openModule) {
                 var space = spacefinder.getParaWithSpace(getSpacefinderRules());
                 if (space) {
@@ -34,7 +34,7 @@ define([
                         url: config.page.openModule,
                         crossOrigin: true,
                         method: 'get'
-                    }).then(function(resp) {
+                    }).then(function (resp) {
                         $.create(resp.html)
                             .addClass('element--supporting')
                             .insertBefore(space);
@@ -42,5 +42,5 @@ define([
                 }
             }
         }
-    }
+    };
 });
