@@ -641,43 +641,9 @@
     @include box-sizing(border-box);
 }
 
-// if start using inline svgs across the board then this would be abstracted into its own helper file
-.svg-tone-fill {
-    fill: colour(news-default);
-
-    .tonal--tone-comment & {
-        fill: colour(comment-default);
-    }
-
-    .tonal--tone-feature & {
-        fill: colour(feature-default);
-    }
-
-    .tonal--tone-review & {
-        fill: colour(review-background);
-    }
-
-    .tonal--tone-editorial & {
-        fill: colour(editorial-default);
-    }
-
-    .tonal--tone-analysis & {
-        fill: colour(analysis-accent);
-    }
-
-    .tonal--tone-live &,
-    .tonal--tone-dead & {
-        fill: colour(live-default);
-    }
-
-    .tonal--tone-media & {
-        fill: colour(media-default);
-    }
-}
-
 .meta__twitter,
 .meta__email {
-    margin: (-$gs-baseline*2/3) 0 (-$gs-baseline/6) 0;
+    margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
     display: inline-block;
 
     .content__meta-container--tonal-header & {
@@ -707,12 +673,17 @@
         @include mq($until: leftCol) {
             padding: 0;
             border: 0;
+            border-radius: 0;
             margin-right: 0;
             background-color: transparent !important;
+
+            .inline-mail svg {
+                margin-top: $gs-baseline/4;
+            }
         }
     }
 
-    .twitter-handle {
+    .contact-text {
         height: 21px;
         display: inline-block;
         vertical-align: top;
