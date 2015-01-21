@@ -162,6 +162,10 @@ $weather-large-size: 60px;
         display: none;
     }
 
+    &:focus {
+        outline: 0;
+    }
+
     &.is-visible .weather__toggle-icon {
         @include transform(rotate(180deg));
     }
@@ -245,6 +249,10 @@ $weather-large-size: 60px;
 
     @include mq(leftCol) {
         top: $gs-baseline / 2.4;
+    }
+
+    &:focus {
+        outline: 0;
     }
 
     .has-page-skin & {
