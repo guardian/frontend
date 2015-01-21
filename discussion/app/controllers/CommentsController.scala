@@ -56,15 +56,10 @@ object CommentsController extends DiscussionController {
       }
       Cached(60) {
         if (request.isJson) {
-          val result = JsonComponent(
+          JsonComponent(
             "html" -> views.html.discussionComments.commentsList(page, BlankComment(), params.topComments).toString,
             "currentCommentCount" -> page.comments.length
           )
-          if (conf.Switches.DiscussionOriginSwitch.isSwitchedOn && request.headers.get("Origin").isEmpty) {
-            result.withHeaders("Access-Control-Allow-Origin" -> "*")
-          } else {
-            result
-          }
         } else {
           Ok(views.html.discussionComments.discussionPage(page))
         }

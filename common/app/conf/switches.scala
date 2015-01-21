@@ -473,8 +473,8 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
-  val DiscussionOriginSwitch = Switch("Feature", "discussion-origin",
-    "If switched on, an experimental default header to allow origins will be added to discussion",
+  val DefaultOriginSwitch = Switch("Feature", "default-origin",
+    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
     safeState = On, sellByDate = new LocalDate(2015, 1, 28)
   )
 
