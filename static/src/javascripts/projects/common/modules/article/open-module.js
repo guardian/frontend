@@ -39,6 +39,7 @@ define([
                             $.create(resp.html)
                                 .addClass('element--supporting')
                                 .insertBefore(space);
+                            $('.submeta-container--break').removeClass('submeta-container--break')
                         }
                     });
                 }
