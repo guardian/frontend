@@ -13,6 +13,7 @@ class CorsTest extends FlatSpec with Matchers {
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
     Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Origin" -> "*")
     Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Credentials" -> "true")
+    Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Headers" -> "X-Requested-With")
   }
 
   it should "provide the appropriate standard Cors response headers with an accepted Origin" in {
@@ -37,6 +38,6 @@ class CorsTest extends FlatSpec with Matchers {
     val fakeHeaders = FakeHeaders(List("Origin" -> List("http://www.random.com"),
                                        "Access-Control-Request-Headers" -> List("X-GU-test")))
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Headers" -> "X-GU-test")
+    Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Headers" -> "X-GU-test,X-Requested-With")
   }
 }

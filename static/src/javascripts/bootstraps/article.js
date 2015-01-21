@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/flyers',
+    'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
     'common/modules/gallery/lightbox',
@@ -19,6 +20,7 @@ define([
     detect,
     mediator,
     flyers,
+    openModule,
     truncate,
     twitter,
     Lightbox,
@@ -30,7 +32,7 @@ define([
 
     var modules = {
 
-            initOpen: function () {
+            initOpenCta: function () {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(mediator, {
                         discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
@@ -60,29 +62,18 @@ define([
                 if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
                     geoMostPopular.render();
                 }
-            },
-
-            initSelectionSharing: function () {
-                selectionSharing.init();
-            },
-
-            initLightbox: function () {
-                Lightbox.init();
-            },
-
-            initFlyers: function () {
-                flyers.init();
             }
         },
 
         ready = function () {
-            modules.initOpen();
+            modules.initOpenCta();
             modules.initFence();
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
-            modules.initSelectionSharing();
-            modules.initLightbox();
-            modules.initFlyers();
+            selectionSharing.init();
+            Lightbox.init();
+            flyers.init();
+            openModule.init();
 
             mediator.emit('page:article:ready');
         };

@@ -1,11 +1,13 @@
 package controllers
 
 import common._
+import conf.Switches
 import play.api.mvc.{ Content => _, _ }
 import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
+import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -20,6 +22,12 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def analytics(prefix: String) = Action { implicit request =>
+
+    if (Switches.DoNotTrack.isSwitchedOn && prefix == "pv") {
+      // http://en.wikipedia.org/wiki/Do_Not_Track
+      request.headers.get("DNT").filter(_.nonEmpty).foreach( _ => Analytics.report("dnt"))
+    }
+
     Analytics.report(prefix)
     TinyResponse.gif
   }

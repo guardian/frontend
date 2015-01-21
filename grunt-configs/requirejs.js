@@ -24,10 +24,12 @@ module.exports = function(grunt, options) {
                 omniture:     '../../public/javascripts/vendor/omniture',
                 socketio:     'components/socket.io-client/socket.io',
                 stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
+                svgs:         '../../../common/conf/assets/inline-svgs',
                 videojs:      'components/videojs/video',
                 videojsembed: 'components/videojs-embed/videojs.embed',
                 // plugins
-                text:         'components/requirejs-text/text'
+                text:         'components/requirejs-text/text',
+                inlineSvg:    'components/requirejs-inline-svg/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,

@@ -10,6 +10,8 @@ import model.`package`.frontKeywordIds
 
 trait PaidForTagAgent {
 
+  protected def isPreview: Boolean
+
   protected def currentPaidForTags: Seq[PaidForTag]
   protected def allAdFeatureTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
@@ -172,10 +174,13 @@ trait PaidForTagAgent {
 
   def isExpiredAdvertisementFeature(capiTags: Seq[Tag],
                                     maybeSectionId: Option[String]): Boolean = {
-    val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
-      _.dfpTag.lineItems
-    } getOrElse Nil
-    lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
+    if (isPreview) false
+    else {
+      val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
+        _.dfpTag.lineItems
+      } getOrElse Nil
+      lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
+    }
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],

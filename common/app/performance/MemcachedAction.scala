@@ -102,6 +102,7 @@ private object CacheKey extends implicits.Requests {
   def apply(r: RequestHeader): String = {
     val build = if (IncludeBuildNumberInMemcachedKey.isSwitchedOn) ManifestData.build else ""
     val upstreamCacheKey = r.headers.get("X-Gu-Cache-Key").getOrElse("")
+    // The origin is already included in X-Gu-Cache-Key, but this header doesn't appear in CODE.
     val originKey = r.headers.get("Origin").getOrElse("")
     val edition = Edition(r).id
     sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version $originKey")
