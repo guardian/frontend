@@ -3,7 +3,7 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/template',
-    'text!common/views/weather.html',
+    'text!facia/views/weather.html',
     'helpers/injector'
 ], function (
     bean,
@@ -16,7 +16,7 @@ define([
 
     return  new Injector()
         .store('common/utils/mediator')
-        .require(['common/modules/search-tool', 'mocks'], function (SearchTool, mocks) {
+        .require(['facia/modules/onwards/search-tool', 'mocks'], function (SearchTool, mocks) {
         describe('Search tool', function () {
             var container,
                 sut;

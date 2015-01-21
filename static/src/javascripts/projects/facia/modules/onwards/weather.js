@@ -23,8 +23,8 @@ define([
     'common/utils/template',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool',
-    'text!common/views/weather.html',
-    'text!common/views/weather-forecast.html'
+    'text!facia/views/weather.html',
+    'text!facia/views/weather-forecast.html'
 ], function (
     bean,
     raven,
@@ -66,7 +66,7 @@ define([
 
             if (prefs && prefs.id) {
                 return prefs;
-            }comm
+            }
         },
 
         getWeatherData: function (url) {
