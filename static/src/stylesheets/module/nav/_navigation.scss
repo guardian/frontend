@@ -384,6 +384,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.global-navigation__title--history {
+        color: guss-colour(neutral-1, $pasteup-palette);
         background: guss-colour(neutral-3, $pasteup-palette);
         border: 0;
         padding-bottom: 0;
@@ -422,14 +423,12 @@ $c-navigation-expandable-background: colour(neutral-1);
             margin-right: 0;
             margin-bottom: 0;
 
-          &:hover {
-             text-decoration: none;
-          }
+            &:hover {
+                text-decoration: none;
+            }
         }
         @include mq($until: mobileLandscape) {
-            & {
-                margin-left: 0;
-            }
+            margin-left: 0;
         }
     }
 }

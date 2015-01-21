@@ -26,7 +26,7 @@ define([
                         toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                     return React.DOM.div({'data-link-name': 'suggested links'}, [
-                        React.DOM.p(null, 'These links are based on your recent browsing history on this device. They are available under \'browse all sections\'.'),
+                        React.DOM.p(null, 'These are based on the topics you visit most. You can access them by opening the "all sections” menu.'),
                         this.state.enabled ? React.createElement(SummaryTagsList) : null,
                         React.DOM.button({
                             onClick: self.handleToggle,
@@ -63,9 +63,9 @@ define([
                         helperText;
 
                     if (_.isEmpty(tags)) {
-                        helperText = '(You don\'t have any recently visited links.)';
+                        helperText = '(You don\'t have any recently visited topics.)';
                     } else {
-                        helperText = 'Remove links that don\'t interest you by clicking the \'X\' next to them.';
+                        helperText = 'Easily remove items by clicking \'X\' or turn the functionality off below. We respect your privacy; these will never be made public. ';
                     }
                     tags.helperText = React.DOM.p(null, helperText);
                     return React.DOM.div(null, tags);
