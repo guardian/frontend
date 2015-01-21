@@ -1,6 +1,15 @@
 $weather-small-size: 26px;
 $weather-large-size: 60px;
 
+@mixin weather-rule() {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    height: $gs-baseline + 1px;
+    border-right: 1px dotted colour(neutral-3);
+}
+
 .weather {
     color: colour(neutral-1);
     float: right;
@@ -46,12 +55,7 @@ $weather-large-size: 60px;
         text-align: right;
 
         &:after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            right: 0;
-            height: $gs-baseline + 1px;
-            border-right: 1px dotted colour(neutral-3);
+            @include weather-rule();
         }
 
         .weather__icon {
@@ -75,12 +79,7 @@ $weather-large-size: 60px;
             }
 
             &:after {
-                content: '';
-                position: absolute;
-                top: 3px;
-                right: 0;
-                height: $gs-baseline + 1px;
-                border-right: 1px dotted colour(neutral-3);
+                @include weather-rule();
             }
 
             .weather__icon {
@@ -155,12 +154,7 @@ $weather-large-size: 60px;
         margin-right: $gs-gutter / 4;
 
         &:after {
-            content: '';
-            top: 3px;
-            right: 0;
-            position: absolute;
-            height: $gs-baseline + 1px;
-            border-right: 1px dotted colour(neutral-3);
+            @include weather-rule();
         }
     }
 
