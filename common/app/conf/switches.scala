@@ -429,11 +429,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABJoinUsNavigation = Switch("A/B Tests", "ab-join-us-navigation",
-    "Switch for the UK Join Us navigation component A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 21)
-  )
-
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
@@ -522,6 +517,11 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
+  val DoNotTrack = Switch("Analytics", "do-not-track",
+    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 

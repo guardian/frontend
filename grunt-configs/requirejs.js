@@ -24,8 +24,12 @@ module.exports = function(grunt, options) {
                 omniture:     '../../public/javascripts/vendor/omniture',
                 socketio:     'components/socket.io-client/socket.io',
                 stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
+                svgs:         '../../../common/conf/assets/inline-svgs',
+                videojs:      'components/videojs/video',
+                videojsembed: 'components/videojs-embed/videojs.embed',
                 // plugins
-                text:         'components/requirejs-text/text'
+                text:         'components/requirejs-text/text',
+                inlineSvg:    'components/requirejs-inline-svg/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -195,7 +199,14 @@ module.exports = function(grunt, options) {
                     lodash:       'components/lodash-amd',
                     videojs:      'components/videojs/video',
                     videojsembed: 'components/videojs-embed/videojs.embed',
-                    text:         'components/requirejs-text/text'
+                    text:         'components/requirejs-text/text',
+                    omniture:     '../../public/javascripts/vendor/omniture',
+                    raven:        'components/raven-js/raven',
+                    EventEmitter: 'components/eventEmitter/EventEmitter',
+                    reqwest:      'components/reqwest/reqwest',
+                    Promise:      'components/native-promise-only/npo.src',
+                    imager:       'components/imager.js/container'
+
                 },
                 shim: {
                     videojs: {
@@ -203,12 +214,18 @@ module.exports = function(grunt, options) {
                     },
                     videojsembed: {
                         deps: ['videojs']
+                    },
+                    imager: {
+                        deps: ['components/imager.js/imager'],
+                        exports: 'Imager'
+                    },
+                    omniture: {
+                        exports: 's'
                     }
                 },
                 exclude: [
                     'text'
                 ],
-                wrapShim: true,
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false

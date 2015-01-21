@@ -10,7 +10,6 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
-  val callbackName = "aFunction"
 
   "Article Controller" should "200 when content type is article" in {
     val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
@@ -44,15 +43,6 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
-  }
-
-  it should "return JSONP when callback is supplied" in {
-    val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
-
-    val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
   }
 
   it should "return JSON when .json format is supplied" in {
