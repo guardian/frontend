@@ -1,41 +1,15 @@
-@(page: discussion.CommentPage, blankComment: discussion.model.Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
+@(page: discussion.CommentPage, renderPagination: Boolean)(implicit request: RequestHeader)
 
-@** TODO: WTF? NULL? SERIOUSLY? ARGH! *@
+<div class="d-discussion @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
+    @page.switches.map{ switch => data-@switch.name="@switch.state" }>
 
-@import common.SimplePagePaths
+    <ul class="d-thread d-thread--top-level">
+        @page.comments.map { comment =>
+            @fragments.comment(comment, page.isClosedForRecommendation, false)
+        }
+    </ul>
 
-<div
-    class="d-discussion @if(isTopComments){d-discussion--top-comments} @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
-    @page.switches.map{ switch =>
-        data-@switch.name="@switch.state"
-    }>
+    @if(renderPagination) {fragments.commentPagination(page)}
 
-    @if(isTopComments) {
-        <ul class="d-top-comment-container d-top-comment-container--left">
-            @page.comments.zipWithIndex.filter(_._2 % 2 == 0).map { case (comment, i) =>
-                @fragments.topComment(comment, page.isClosedForRecommendation, false)
-            }
-        </ul>
-        <ul class="d-top-comment-container d-top-comment-container--right">
-            @page.comments.zipWithIndex.filter(_._2 % 2 == 1).map { case (comment, i) =>
-                @fragments.topComment(comment, page.isClosedForRecommendation, false)
-            }
-        </ul>
-        } else {
-        <ul class="d-thread d-thread--top-level">
-            @page.comments.map { comment =>
-                @fragments.comment(comment, page.isClosedForRecommendation, false)
-            }
-        </ul>
-    }
-
-    @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
-
-    @if(!isTopComments) {
-    <div class="discussion__pagination discussion__pagination--bottom js-discussion-pagination">
-        @page.pagination.map{ paginate => @fragments.pagination(page.webTitle, paginate, SimplePagePaths(page.url), Some("js-discussion-change-page"), false, Some("Comments")) }
-    </div>
     @fragments.reportComment()
-    }
-
 </div>

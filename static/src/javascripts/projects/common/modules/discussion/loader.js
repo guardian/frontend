@@ -65,11 +65,10 @@ Loader.prototype.initTopComments = function() {
     });
 
     return ajax({
-        url: '/discussion/' + this.getDiscussionId() + '.json',
+        url: '/discussion/top-comments/' + this.getDiscussionId() + '.json',
         type: 'json',
         method: 'get',
-        crossOrigin: true,
-        data: { topComments: true }
+        crossOrigin: true
     }).then(
         function render(resp) {
             this.$topCommentsContainer.html(resp.html);
@@ -107,9 +106,10 @@ Loader.prototype.initMainComments = function() {
         this.removeState('truncated');
     }.bind(this));
 
-    this.comments.on('rendered', function() {
-        var newPagination = $('.js-discussion-pagination', this.comments.elem).html();
-        $('.js-discussion-pagination', this.toolbarEl).empty().html(newPagination);
+    this.comments.on('rendered', function(paginationHtml) {
+        var newPagination = bonzo.create(paginationHtml),
+            toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
+        $('.js-discussion-pagination', toolbarEl).empty().html(newPagination);
     }.bind(this));
 
     this.setState('loading');
@@ -229,7 +229,6 @@ Loader.prototype.initRecommend = function() {
 Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
-    this.toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
 
     this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function() {
         this.removeState('truncated');
