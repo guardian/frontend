@@ -63,7 +63,6 @@ define([
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
-
             return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
         },
         /**
