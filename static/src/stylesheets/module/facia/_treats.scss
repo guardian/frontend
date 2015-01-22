@@ -19,7 +19,7 @@
 .treats__treat {
     @include fs-textSans(1);
     @include button-height($base-size * 4);
-    @include border-radius(1000px);
+    @include border-radius(50%);
     @include box-sizing(border-box);
     display: inline-block;
     vertical-align: top;
