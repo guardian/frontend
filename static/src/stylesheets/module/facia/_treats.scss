@@ -46,14 +46,14 @@
         #ffffff,
         colour(news-default),
         #ffffff,
-        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+        darken(colour(neutral-3), 10%),
         colour(news-accent)
     );
 
     &:hover,
     &:focus,
     &:active {
-        color: guss-colour(neutral-1, $pasteup-palette);
+        color: colour(neutral-1);
         text-decoration: none;
     }
 }
