@@ -53,20 +53,26 @@ define([
 
             pushData: function () {
                 var $active = $('.active', $list),
-                    data = {};
+                    data    = {},
+                    store   = 'set';
 
                 if ($active.length === 0) {
-                    return false;
+                    if ($input.val() === '') {
+                        store = 'remove';
+                    } else {
+                        return false;
+                    }
                 }
 
                 data = {
                     'id': $active.attr('data-weather-id'),
                     'city': $active.attr('data-weather-city'),
-                    'store': true
+                    'store': store
                 };
 
                 // Send data to whoever is listening
                 mediator.emit('autocomplete:fetch', data);
+                console.log('emit');
                 this.setInputValue();
                 this.track(data.city);
 

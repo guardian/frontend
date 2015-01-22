@@ -96,7 +96,6 @@ define([
             if (location) {
                 this.fetchWeatherData(location);
             } else {
-
                 this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
@@ -112,8 +111,16 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            if (location.store) {
+            // After user interaction we want to store the location in localStorage
+            if (location.store === 'set') {
                 this.saveUserLocation(location);
+
+            // After user sent empty data we want to remove location and get the default location
+            } else if (location.store === 'remove') {
+                this.clearLocation();
+                this.getDefaultLocation();
+
+                return false;
             }
 
             return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
@@ -127,6 +134,12 @@ define([
                         }
                     });
                 });
+        },
+
+        clearLocation: function () {
+            userPrefs.remove(prefName);
+            city = '';
+            searchTool.setInputValue();
         },
 
         track: function (city) {
@@ -224,11 +237,11 @@ define([
             this.bindEvents();
             this.addSearch();
 
-            // After first run override function to just update data
-            this.render = function (weatherData) {
+            this.render = function (weatherData, city) {
                 var $weatherIcon = $('.js-weather-icon', $weather);
 
                 $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
+                searchTool.setInputValue(city);
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
@@ -236,7 +249,7 @@ define([
                     .attr('title', weatherData.weatherText);
 
                 // Close editing
-                this.toggleControls(false);
+                this.toggleControls();
             };
         },
 
