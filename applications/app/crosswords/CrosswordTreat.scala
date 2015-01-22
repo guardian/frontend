@@ -5,6 +5,45 @@ import scalaz.std.set._
 import scalaz.syntax.foldable._
 
 object CrosswordGrid {
+  val DefaultTreat = CrosswordGrid(Set(
+    (2, 0),
+    (3, 0),
+    (4, 0),
+    (5, 0),
+    (6, 0),
+    (0, 1),
+    (2, 1),
+    (4, 1),
+    (6, 1),
+    (0, 2),
+    (1, 2),
+    (2, 2),
+    (3, 2),
+    (4, 2),
+    (6, 2),
+    (0, 3),
+    (2, 3),
+    (4, 3),
+    (6, 3),
+    (0, 4),
+    (1, 4),
+    (2, 4),
+    (3, 4),
+    (4, 4),
+    (5, 4),
+    (6, 4),
+    (0, 5),
+    (4, 5),
+    (6, 5),
+    (0, 6),
+    (1, 6),
+    (2, 6),
+    (3, 6),
+    (4, 6),
+    (5, 6),
+    (6, 6)
+  ).map(Position.apply _.tupled))
+
   def fromCrossword(crossword: Crossword): CrosswordGrid = {
     CrosswordGrid(crossword.entries.foldMap[Set[Position]] { entry =>
       entry.direction match {
