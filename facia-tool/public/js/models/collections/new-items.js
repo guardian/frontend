@@ -116,7 +116,7 @@ define([
         }
 
         if (sourceContext !== targetContext) {
-            remove = undefined;
+            remove = false;
         }
 
         if (update || remove) {
@@ -131,7 +131,7 @@ define([
             });
         }
 
-        if (sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
             removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }
