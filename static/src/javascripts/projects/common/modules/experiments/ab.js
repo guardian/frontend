@@ -14,8 +14,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/sticky-container-titles'
 ], function (
     raven,
     filter,
@@ -32,8 +31,7 @@ define([
     HighCommercialComponent,
     HistoryTags,
     HistoryContainers,
-    StickyContainerTitles,
-    Weather
+    StickyContainerTitles
 ) {
 
     var ab,
@@ -41,8 +39,7 @@ define([
             new HighCommercialComponent(),
             new HistoryTags(),
             new HistoryContainers(),
-            new StickyContainerTitles(),
-            new Weather()
+            new StickyContainerTitles()
         ],
         participationsKey = 'gu.ab.participations';
 

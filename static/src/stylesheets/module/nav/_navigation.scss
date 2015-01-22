@@ -429,6 +429,8 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
         @include mq($until: mobileLandscape) {
             margin-left: 0;
+            padding-top: 0;
+            padding-left: $gs-gutter/3;
         }
     }
 }
