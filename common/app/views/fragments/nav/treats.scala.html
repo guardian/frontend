@@ -4,6 +4,6 @@
 
 <ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.map { treat =>
-        <li><a href="@LinkTo(treat)" class="treats__treat">@treat.headline</a></li>
+        <li class="treats__list-item"><a href="@LinkTo(treat)" class="treats__treat">@treat.headline</a></li>
     }
 </ul>

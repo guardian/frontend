@@ -20,14 +20,13 @@
     display: inline-block;
     vertical-align: top;
     width: auto;
-    font-weight: bold;
+    font-weight: 700;
     border-width: 1px;
     border-style: solid;
 
     @include border-radius(1000px);
     @include border-box;
 
-    margin-top: $gs-baseline * 2 / 3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,7 +50,7 @@
         #ffffff,
         guss-colour(news-main-1, $pasteup-palette),
         #ffffff,
-        guss-colour(news-main-1, $pasteup-palette),
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(news-main-2, $pasteup-palette)
     );
 
@@ -60,5 +59,19 @@
     &:focus,
     &:active {
         text-decoration: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: guss-colour(neutral-1, $pasteup-palette);
+    }
+}
+
+.treats__list-item {
+    margin-top: $gs-baseline * 2 / 3;
+
+    &:first-child {
+        margin-top: 0;
     }
 }
