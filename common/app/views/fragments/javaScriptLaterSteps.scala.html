@@ -40,16 +40,23 @@
         if (!isModern) { return false; }
 
         // duplicated in detect.js
-        var shouldUseHintedFonts = function shouldUseHintedFonts() {
-            var windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+        var fontHinting = function () {
+            var ua = navigator.userAgent,
+                windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+                hinting = 'Off';
 
             if (windowsNT) {
                 var version = parseFloat(windowsNT[1], 10);
-                // windows XP and newer && windows 7 and older
-                return version >= 5.1 && version <= 6.1;
-            } else {
-                return false;
+                // windows XP
+                if (version >= 5.1 && version < 6.0) {
+                    if (/Chrome/.exec(ua)) {
+                        hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                    } else {
+                        hinting = 'On'; // All other use cleartype
+                    }
+                };
             }
+            return hinting;
         }();
 
         @if(FontSwitch.isSwitchedOn) {
@@ -61,8 +68,8 @@
 
                 fonts.rel       = 'stylesheet';
                 fonts.className = 'webfonts';
-                // show hinted for Windows XP
-                fonts.href      = guardian.config.stylesheets.fonts['hinting' + (shouldUseHintedFonts ? 'On' : 'Off') ].kerningOn;
+                // show hinted for Windows XP-7 IE, autohinted for non-IE
+                fonts.href      = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
                 window.setTimeout(function() {
                     thisScript.parentNode.insertBefore(fonts, thisScript);
                 }, 0);
@@ -77,7 +84,7 @@
 
                     for (var i = 0, j = fonts.length; i < j; ++i) {
                         var font            = fonts[i],
-                            dataAttrName    = 'data-cache-file-' + (shouldUseHintedFonts ? 'hinted-' : '') + fontFormat,
+                            dataAttrName    = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
                             nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
                             storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
