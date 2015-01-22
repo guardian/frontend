@@ -19,14 +19,12 @@
                 @dateHeadline(dateHeader.get, containerDefinition.dateLink)
             }
         }
-
-        @treats(containerDefinition, frontProperties)
     </div>
 }.getOrElse {
     @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
         <div class="fc-container__header js-container__header @if(containerDefinition.showDateHeader) { js-weather }">
             @title.map { title =>
-                @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                @defining(frontProperties.editorialType.contains("contributor")) { isContributor =>
                     <div class="@RenderClasses(Map(
                         "fc-container__header__title" -> true,
                         "tone-comment" -> isContributor,
@@ -65,8 +63,8 @@
                     </div>
                 }
             }
-
-            @treats(containerDefinition, frontProperties)
         </div>
     }
 }
+
+@treats(containerDefinition, frontProperties)
