@@ -5,7 +5,7 @@ $weather-large-size: 60px;
     content: '';
     position: absolute;
     right: 0;
-    bottom: $gs-baseline;
+    bottom: ($gs-baseline / 3) * 2;
     height: $gs-baseline + 1px;
     border-right: 1px dotted colour(neutral-3);
 }
@@ -100,9 +100,10 @@ $weather-large-size: 60px;
 }
 
 .weather__desc {
-    @include fs-headline(2);
-    margin-right: $gs-gutter / 4;
     display: inline-block;
+    margin-right: $gs-gutter / 4;
+    margin-bottom: 0;
+    @include fs-headline(2);
 
     .has-page-skin & {
         @include mq(wide) {
