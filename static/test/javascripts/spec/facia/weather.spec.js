@@ -53,7 +53,7 @@ define([
                         weather: true
                     };
                     sut.init();
-                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
+                    expect(sut.getDefaultLocation).toHaveBeenCalled();
                 });
 
                 it("should get location from local storage", function () {

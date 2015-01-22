@@ -40,16 +40,23 @@
         if (!isModern) { return false; }
 
         // duplicated in detect.js
-        var shouldUseHintedFonts = function shouldUseHintedFonts() {
-            var windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+        var fontHinting = function () {
+            var ua = navigator.userAgent,
+                windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+                hinting = 'Off';
 
             if (windowsNT) {
                 var version = parseFloat(windowsNT[1], 10);
-                // windows XP and newer && windows 7 and older
-                return version >= 5.1 && version <= 6.1;
-            } else {
-                return false;
+                // windows XP - 7
+                if (version >= 5.1 && version <= 6.1) {
+                    if (/Chrome/.exec(ua) && version < 6.0) {
+                        hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                    } else {
+                        hinting = 'Cleartype'; // All other use cleartype
+                    }
+                };
             }
+            return hinting;
         }();
 
         @if(FontSwitch.isSwitchedOn) {
@@ -61,13 +68,16 @@
 
                 fonts.rel       = 'stylesheet';
                 fonts.className = 'webfonts';
-                // show hinted for Windows XP
-                fonts.href      = guardian.config.stylesheets.fonts['hinting' + (shouldUseHintedFonts ? 'On' : 'Off') ].kerningOn;
+                // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
+                fonts.href      = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
                 window.setTimeout(function() {
                     thisScript.parentNode.insertBefore(fonts, thisScript);
                 }, 0);
             }
 
+            // Try and load fonts from local storage.
+            // If there's nothing there, it will just fail silently and projects/common/modules/ui/fonts.js
+            // will try and load from the server.
             function loadFontsFromStorage() {
                 var storedFontFormat = localStorage['gu.fonts.format'];
 
@@ -77,7 +87,7 @@
 
                     for (var i = 0, j = fonts.length; i < j; ++i) {
                         var font            = fonts[i],
-                            dataAttrName    = 'data-cache-file-' + (shouldUseHintedFonts ? 'hinted-' : '') + fontFormat,
+                            dataAttrName    = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
                             nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
                             storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
