@@ -203,6 +203,12 @@ $weather-large-size: 60px;
         width: 100%;
         @include fs-headline(2);
 
+        @include mq($until: tablet) {
+            border-bottom: 1px dotted colour(neutral-3);
+            padding-bottom: $gs-baseline / 4;
+            margin-bottom: $gs-baseline;
+        }
+
         @include mq(tablet) {
             display: inherit;
         }
@@ -279,7 +285,7 @@ $weather-large-size: 60px;
     list-style: none;
     // line-height: 1.2;
 
-    @include mq($until: mobileLandscape) {
+    @include mq($until: tablet) {
         display: table;
         width: 100%;
     }
@@ -328,7 +334,7 @@ $weather-large-size: 60px;
     }
 
     &:first-of-type {
-        @include mq($until: mobileLandscape) {
+        @include mq($until: tablet) {
             padding-left: 0;
             border-left: 0;
         }
@@ -356,7 +362,9 @@ $weather-large-size: 60px;
     }
 
     .i.weather__icon {
-        @include mq(tablet, leftCol) {
+        display: block;
+
+        @include mq(mobileLandscape, leftCol) {
             display: inline-block;
         }
 
