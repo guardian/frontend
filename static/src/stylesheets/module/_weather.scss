@@ -56,24 +56,18 @@ $weather-large-size: 60px;
     @include mq($until: leftCol) {
         @include box-sizing(border-box);
         width: gs-span(1) + $gs-gutter;
-        padding-right: $weather-small-size + $gs-gutter / 4;
+        padding-right: $gs-gutter / 4;
         text-align: right;
 
         &:after {
             @include weather-rule();
-        }
-
-        .weather__icon {
-            position: absolute;
-            top: 0;
-            right: $gs-gutter / 4;
         }
     }
 
     .has-page-skin & {
         @include mq(wide) {
             @include box-sizing(border-box);
-            padding-right: $weather-small-size + $gs-gutter / 4;
+            padding-right: $gs-gutter / 4;
             width: gs-span(1) + $gs-gutter;
             text-align: right;
 
@@ -96,6 +90,7 @@ $weather-large-size: 60px;
 .weather__desc {
     @include fs-headline(2);
     margin-right: $gs-gutter / 4;
+    display: inline-block;
 
     @include mq(leftCol) {
         position: absolute;
@@ -130,6 +125,7 @@ $weather-large-size: 60px;
     height: $weather-small-size;
     margin: 0;
     margin-top: -($gs-baseline / 3);
+    vertical-align: middle;
 
     @include mq(leftCol) {
         width: $weather-large-size;
@@ -158,7 +154,7 @@ $weather-large-size: 60px;
         }
     }
 
-    @include mq(leftCol) {
+    @include mq(tablet) {
         display: none;
     }
 
@@ -283,6 +279,10 @@ $weather-large-size: 60px;
         width: 100%;
     }
 
+    @include mq(tablet, leftCol) {
+        padding-bottom: 0;
+    }
+
     @include mq(leftCol) {
         display: table;
         width: 100%;
@@ -298,6 +298,14 @@ $weather-large-size: 60px;
 
     @include mq(mobileLandscape) {
         min-width: gs-span(1) - ($gs-gutter / 4);
+    }
+
+    @include mq(tablet, leftCol) {
+        border-left: none;
+
+        &:after {
+            @include weather-rule();
+        }
     }
 
     @include mq(leftCol) {
@@ -316,7 +324,7 @@ $weather-large-size: 60px;
         }
     }
 
-    @include mq(leftCol, wide) {
+    @include mq(tablet, wide) {
         min-width: 33%;
 
         &.forecast__item--3 {
@@ -333,8 +341,9 @@ $weather-large-size: 60px;
     }
 
     .i.weather__icon {
-        display: block;
-        margin-top: $gs-baseline / 3;
+        @include mq(tablet, leftCol) {
+            display: inline-block;
+        }
 
         @include mq(leftCol) {
             width: $weather-small-size;
