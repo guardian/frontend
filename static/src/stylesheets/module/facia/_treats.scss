@@ -5,7 +5,11 @@
     margin: $gs-baseline 0;
     display: none;
     position: absolute;
-    bottom: 0;
+    bottom: 11px;
+
+    .fc-container--has-show-more & {
+        bottom: 41px;
+    }
 
     @include mq(leftCol) {
         display: block;
