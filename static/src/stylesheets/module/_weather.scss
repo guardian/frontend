@@ -90,17 +90,19 @@ $weather-large-size: 60px;
             }
         }
     }
+    
+    .weather__desc {
+        @include mq(leftCol) {
+            position: absolute;
+            bottom: 2px;
+        }
+    }
 }
 
 .weather__desc {
     @include fs-headline(2);
     margin-right: $gs-gutter / 4;
     display: inline-block;
-
-    @include mq(leftCol) {
-        position: absolute;
-        bottom: 2px;
-    }
 
     .has-page-skin & {
         @include mq(wide) {
