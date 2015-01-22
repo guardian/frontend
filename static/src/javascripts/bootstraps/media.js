@@ -12,17 +12,15 @@ define([
     'common/utils/mediator',
     'common/utils/preferences',
     'common/utils/url',
-    'common/modules/analytics/omnitureMedia',
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images',
     'common/modules/video/tech-order',
     'common/modules/video/supportedBrowsers',
+    'common/modules/video/events',
     'common/modules/analytics/beacon',
-    'text!common/views/ui/loading.html',
-    'text!common/views/ui/video-ads-overlay.html',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -36,177 +34,16 @@ define([
     mediator,
     preferences,
     urlUtils,
-    OmnitureMedia,
     buildPageTargeting,
     Component,
     history,
     images,
     techOrder,
     supportedBrowsers,
+    events,
     beacon,
-    loadingTmpl,
-    adsOverlayTmpl,
-    adsSkipOverlayTmpl
+    loadingTmpl
 ) {
-    var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
-        QUARTILES = [25, 50, 75],
-        // Advert and content events used by analytics. The expected order of bean events is:
-        EVENTS = [
-            'preroll:request',
-            'preroll:ready',
-            'preroll:play',
-            'preroll:end',
-            'content:ready',
-            'content:play',
-            'content:end'
-        ];
-
-    function getMediaType(player) {
-        return player.guMediaType;
-    }
-
-    function shouldAutoPlay(player) {
-        return isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
-    }
-
-    function constructEventName(eventName, player) {
-        return getMediaType(player) + ':' + eventName;
-    }
-
-    function ophanRecord(id, event, player) {
-        if (id) {
-            require('ophan/ng', function (ophan) {
-                var eventObject = {};
-                eventObject[getMediaType(player)] = {
-                    id: id,
-                    eventType: event.type
-                };
-                ophan.record(eventObject);
-            });
-        }
-    }
-
-    function initOphanTracking(player, mediaId) {
-        EVENTS.concat(QUARTILES.map(function (q) {
-            return 'play:' + q;
-        })).forEach(function (event) {
-            player.one(constructEventName(event, player), function (event) {
-                ophanRecord(mediaId, event, player);
-            });
-        });
-    }
-
-    function initOmnitureTracking(player) {
-        new OmnitureMedia(player).init();
-    }
-
-    function bindPrerollEvents(player) {
-        var events = {
-            end: function () {
-                player.trigger(constructEventName('preroll:end', player));
-                player.removeClass('vjs-ad-playing--vpaid');
-                bindContentEvents(player, true);
-            },
-            start: function () {
-                var duration = player.duration();
-                if (duration) {
-                    player.trigger(constructEventName('preroll:play', player));
-                } else {
-                    player.one('durationchange', events.start);
-                }
-            },
-            vpaidStarted: function () {
-                player.addClass('vjs-ad-playing--vpaid');
-            },
-            ready: function () {
-                player.trigger(constructEventName('preroll:ready', player));
-
-                player.one('adstart', events.start);
-                player.one('adend', events.end);
-
-                // Handle custom event to understand when vpaid is playing;
-                // there is a lag between 'adstart' and 'Vpaid::AdStarted'.
-                player.one('Vpaid::AdStarted', events.vpaidStarted);
-
-                if (shouldAutoPlay(player)) {
-                    player.play();
-                }
-            }
-        };
-        player.one('adsready', events.ready);
-
-        //If no preroll avaliable or preroll fails, cancel ad framework and init content tracking
-        player.one('adtimeout', function () {
-            player.trigger('adscanceled');
-            bindContentEvents(player);
-        });
-    }
-
-    function bindContentEvents(player) {
-        var events = {
-            end: function () {
-                player.trigger(constructEventName('content:end', player));
-            },
-            play: function () {
-                var duration = player.duration();
-                if (duration) {
-                    player.trigger(constructEventName('content:play', player));
-                } else {
-                    player.one('durationchange', events.play);
-                }
-            },
-            timeupdate: function () {
-                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
-                QUARTILES.reverse().some(function (quart) {
-                    if (progress >= quart) {
-                        player.trigger(constructEventName('play:' + quart, player));
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            },
-            ready: function () {
-                player.trigger(constructEventName('content:ready', player));
-
-                player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
-                player.one('ended', events.end);
-
-                if (shouldAutoPlay(player)) {
-                    player.play();
-                }
-            }
-        };
-        events.ready();
-    }
-
-    function beaconError(err) {
-        if (err && 'message' in err && 'code' in err) {
-            raven.captureException(new Error(err.message), {
-                tags: {
-                    feature: 'player',
-                    vjsCode: err.code
-                }
-            });
-        }
-    }
-
-    function handleInitialMediaError(player) {
-        var err = player.error();
-        if (err !== null) {
-            beaconError(err);
-            return err.code === 4;
-        }
-        return false;
-    }
-
-    function bindErrorHandler(player) {
-        player.on('error', function () {
-            beaconError(player.error());
-            $('.vjs-big-play-button').hide();
-        });
-    }
 
     function getVastUrl() {
         var adUnit = config.page.adUnit,
@@ -215,69 +52,6 @@ define([
             timestamp = new Date().getTime();
         return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
                 'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
-    }
-
-    function adCountdown() {
-        var player = this,
-            events =  {
-                destroy: function () {
-                    $('.js-ads-overlay', this.el()).remove();
-                    this.off('timeupdate', events.update);
-                },
-                update: function () {
-                    if (this.currentTime() > 0.1) {
-                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
-                    }
-                    if (parseInt(this.currentTime().toFixed(), 10) === 5) {
-                        $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
-                    }
-                },
-                init: function () {
-                    $(this.el()).append($.create(adsOverlayTmpl));
-                    this.on('timeupdate', events.update.bind(this));
-                    this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
-                    this.one(constructEventName('content:play', player), events.destroy.bind(player));
-                    this.one('adtimeout', events.destroy.bind(player));
-                }
-            };
-        this.one(constructEventName('preroll:play', player), events.init.bind(player));
-    }
-
-    function adSkipCountdown(skipTimeout) {
-        var player = this,
-            events =  {
-                update: function () {
-                    var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
-                    if (skipTime > 0) {
-                        $('.js-skip-remaining-time', this.el()).text(skipTime);
-                    } else if (!skipTime) {
-                        $('.vjs-ads-overlay-skip-countdown', this.el())
-                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
-                            '<i class="i i-play-icon-grey skip-icon"></i>' +
-                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>');
-                        $('.vjs-ads-overlay-skip').addClass('vjs-ads-overlay-skip--enabled');
-                    }
-                },
-                skip: function () {
-                    if ($('.vjs-ads-overlay-skip').hasClass('vjs-ads-overlay-skip--enabled')) {
-                        events.hide.bind(player);
-                        player.trigger(constructEventName('preroll:skip', player));
-                        this.ads.endLinearAdMode();
-                    }
-                },
-                hide: function () {
-                    $('.js-ads-skip-overlay', this.el()).hide();
-                    this.off('timeupdate', events.update);
-                },
-                init: function () {
-                    $(this.el()).append($.create(adsSkipOverlayTmpl));
-                    bean.on($('.vjs-ads-overlay-skip')[0], 'click', events.skip.bind(player));
-                    this.on('timeupdate', events.update.bind(player));
-                    this.one(constructEventName('content:play', player), events.hide.bind(player));
-                    $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
-                }
-            };
-        this.one(constructEventName('preroll:play', player), events.init.bind(player));
     }
 
     function fullscreener() {
@@ -305,21 +79,6 @@ define([
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
 
-    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
-    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
-    // needing to know about videojs
-    function bindGlobalEvents(player) {
-        player.on('playing', function () {
-            bean.fire(document.body, 'videoPlaying');
-        });
-        player.on('pause', function () {
-            bean.fire(document.body, 'videoPause');
-        });
-        player.on('ended', function () {
-            bean.fire(document.body, 'videoEnded');
-        });
-    }
-
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
         // It doesn't matter what kind of tech this is, flash or html5.
@@ -345,7 +104,7 @@ define([
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
-        if (handleInitialMediaError(player)) {
+        if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
@@ -368,8 +127,8 @@ define([
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
-        videojs.plugin('adCountdown', adCountdown);
-        videojs.plugin('adSkipCountdown', adSkipCountdown);
+        videojs.plugin('adCountdown', events.adCountdown);
+        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
         $('.js-gu-media').each(function (el) {
@@ -406,7 +165,7 @@ define([
             });
 
             // Location of this is important.
-            bindErrorHandler(player);
+            events.bindErrorHandler(player);
 
             player.guMediaType = mediaType;
 
@@ -414,7 +173,7 @@ define([
                 var vol;
 
                 initLoadingSpinner(player);
-                bindGlobalEvents(player);
+                events.bindGlobalEvents(player);
                 upgradeVideoPlayerAccessibility(player);
                 supportedBrowsers(player);
 
@@ -437,8 +196,8 @@ define([
 
                 deferToAnalytics(function () {
 
-                    initOmnitureTracking(player);
-                    initOphanTracking(player, mediaId);
+                    events.initOmnitureTracking(player);
+                    events.initOphanTracking(player, mediaId);
 
                     // preroll for videos only
                     if (mediaType === 'video') {
@@ -447,12 +206,12 @@ define([
 
                         // Init plugins
                         if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
-                            bindPrerollEvents(player);
+                            events.bindPrerollEvents(player);
                             player.adCountdown();
                             player.adSkipCountdown(15);
 
                             // Video analytics event.
-                            player.trigger(constructEventName('preroll:request', player));
+                            player.trigger(events.constructEventName('preroll:request', player));
 
                             player.ads({
                                 timeout: 3000
@@ -461,7 +220,7 @@ define([
                                 url: getVastUrl()
                             });
                         } else {
-                            bindContentEvents(player);
+                            events.bindContentEvents(player);
                         }
 
                         if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
@@ -473,7 +232,7 @@ define([
                             continuous: false
                         });
 
-                        bindContentEvents(player);
+                        events.bindContentEvents(player);
                     }
                 });
             });
@@ -495,7 +254,7 @@ define([
         endSlate.endpoint = endSlatePath;
         endSlate.fetch(player.el(), 'html');
 
-        player.one(constructEventName('content:play', player), function () {
+        player.one(events.constructEventName('content:play', player), function () {
             player.on('ended', function () {
                 bonzo(player.el()).addClass(endState);
             });
