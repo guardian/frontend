@@ -27,7 +27,7 @@
     @include border-radius(1000px);
     @include border-box;
 
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline * 2 / 3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
