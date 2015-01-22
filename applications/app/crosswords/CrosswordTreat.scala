@@ -1,6 +1,7 @@
 package crosswords
 
 import com.gu.crosswords.api.client.models.{Position, Down, Across, Crossword}
+import scalaz.std.list._
 import scalaz.std.set._
 import scalaz.syntax.foldable._
 
@@ -42,7 +43,7 @@ object CrosswordGrid {
     (4, 6),
     (5, 6),
     (6, 6)
-  ).map(Position.apply _.tupled))
+  ).map((Position.apply _).tupled))
 
   def fromCrossword(crossword: Crossword): CrosswordGrid = {
     CrosswordGrid(crossword.entries.foldMap[Set[Position]] { entry =>
@@ -69,8 +70,8 @@ object CrosswordTreat {
 
   private def position(n: Int) = BorderSize + n * (CellSize + BorderSize)
 
-  val Width = position(Columns) + BorderSize
-  val Height = position(Rows) + BorderSize
+  val Width = position(Columns)
+  val Height = position(Rows)
 
   def fromCrosswordGrid(crosswordGrid: CrosswordGrid) =
     <svg xmlns="http://www.w3.org/2000/svg"
@@ -78,9 +79,9 @@ object CrosswordTreat {
          viewBox={s"0, 0, $Width, $Height"}
          width={s"${Width}px"}
          height={s"${Height}px"}>
-      <rect x="0" y="0" fill="#000000" width={Width} height={Height} />
+      <rect x="0" y="0" fill="#000000" width={Width.toString} height={Height.toString} />
       {crosswordGrid.cellsInPlay map { case Position(x, y) =>
-        <rect x={position(x)} y={position(y)} width={CellSize} height={CellSize} fill="#ffffff" />
+        <rect x={position(x).toString} y={position(y).toString} width={CellSize.toString} height={CellSize.toString} fill="#ffffff" />
       }}
     </svg>
 }
