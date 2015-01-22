@@ -55,7 +55,8 @@ define([
 
     'text!common/views/release-message.html',
     'text!common/views/release-message-compulsory.html',
-    'text!common/views/release-message-launched.html'
+    'text!common/views/release-message-launched.html',
+    'text!common/views/donot-use-adblock.html'
 ], function (
     bean,
     bonzo,
@@ -111,7 +112,8 @@ define([
 
     releaseMessageTpl,
     releaseMessageCompulsoryTpl,
-    releaseMessageLaunchedTpl
+    releaseMessageLaunchedTpl,
+    doNotUseAdblockTemplae
 ) {
 
     var modules = {
@@ -255,7 +257,6 @@ define([
 
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
-
                 var exitLink, shift,
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     releaseMessage = new Message('alpha', {pinOnHide: true}),
@@ -456,6 +457,21 @@ define([
                 if (config.switches.cssLogging) {
                     mediator.on('page:common:ready', cssLogging);
                 }
+            },
+
+            displayAdBlockMessage: function () {
+                var adblockLink = 'https://www.theguardian.com/';
+
+                console.log(detect.adblockInUse());
+
+                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
+                    releaseMessage.show(template(
+                        doNotUseAdblockTemplae,
+                        {
+                            adblockLink: adblockLink
+                        }
+                    ));
+                }
             }
 
         },
@@ -498,6 +514,7 @@ define([
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
             modules.runCssLogging();
+            modules.displayAdBlockMessage();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');

@@ -8,10 +8,12 @@
 
 define([
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/$',
 ], function (
     _,
-    mediator
+    mediator,
+    $
 ) {
 
     var supportsPushState,
@@ -344,6 +346,10 @@ define([
         }
     }
 
+    function adblockInUse() {
+        return $('.js-ad-slot') === null;
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -363,7 +369,8 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        shouldUseHintedFonts: shouldUseHintedFonts()
+        shouldUseHintedFonts: shouldUseHintedFonts(),
+        adblockInUse: adblockInUse
     };
 
 });
