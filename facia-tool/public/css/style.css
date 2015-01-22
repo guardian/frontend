@@ -1131,12 +1131,12 @@ button {
     font-weight: bold;
 }
 
-.cilpboard-container {
+.clipboard-container {
     overflow-y: auto;
     max-height: 75%;
 }
 
-.clipboard-only .cilpboard-container {
+.clipboard-only .clipboard-container {
     max-height: 100%;
 }
 
