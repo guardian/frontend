@@ -108,7 +108,7 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
-            toolbarEl = qwery('.js-discussion-toolbar', this.el)[0];
+            toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
         $('.js-discussion-pagination', toolbarEl).empty().html(newPagination);
     }.bind(this));
 
