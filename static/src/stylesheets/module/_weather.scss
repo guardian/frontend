@@ -4,8 +4,8 @@ $weather-large-size: 60px;
 @mixin weather-rule() {
     content: '';
     position: absolute;
-    top: 3px;
     right: 0;
+    bottom: $gs-baseline;
     height: $gs-baseline + 1px;
     border-right: 1px dotted colour(neutral-3);
 }
@@ -19,7 +19,7 @@ $weather-large-size: 60px;
     }
 
     @include mq(tablet) {
-        padding-top: $gs-baseline * 2;
+        padding-top: ($gs-baseline / 3) * 2;
     }
 
     @include mq(leftCol) {
@@ -62,6 +62,11 @@ $weather-large-size: 60px;
         &:after {
             @include weather-rule();
         }
+    }
+
+    @include mq(tablet, leftCol) {
+        width: auto;
+        text-align: left;
     }
 
     .has-page-skin & {
@@ -109,7 +114,7 @@ $weather-large-size: 60px;
     color: colour(neutral-2);
     @include fs-textSans(1);
 
-    @include mq(leftCol) {
+    @include mq(tablet) {
         display: block;
     }
 
@@ -272,7 +277,7 @@ $weather-large-size: 60px;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
     list-style: none;
-    line-height: 1.2;
+    // line-height: 1.2;
 
     @include mq($until: mobileLandscape) {
         display: table;
@@ -280,7 +285,7 @@ $weather-large-size: 60px;
     }
 
     @include mq(tablet, leftCol) {
-        padding-bottom: 0;
+        padding: 0;
     }
 
     @include mq(leftCol) {
@@ -293,8 +298,7 @@ $weather-large-size: 60px;
     position: relative;
     display: table-cell;
     border-left: 1px dotted colour(neutral-3);
-    padding-left: $gs-gutter / 4;
-    padding-right: floor($gs-gutter / 1.333);
+    padding: 0 $gs-gutter / 4;
 
     @include mq(mobileLandscape) {
         min-width: gs-span(1) - ($gs-gutter / 4);
@@ -302,9 +306,14 @@ $weather-large-size: 60px;
 
     @include mq(tablet, leftCol) {
         border-left: none;
+        display: inline-block;
 
         &:after {
             @include weather-rule();
+        }
+
+        &.forecast__item--4 {
+            display: none;
         }
     }
 
@@ -324,7 +333,7 @@ $weather-large-size: 60px;
         }
     }
 
-    @include mq(tablet, wide) {
+    @include mq(leftCol, wide) {
         min-width: 33%;
 
         &.forecast__item--3 {
