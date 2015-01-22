@@ -9,7 +9,11 @@
         }
     </ul>
 
-    @if(renderPagination) {fragments.commentPagination(page)}
+    @if(renderPagination) {
+        <div class="discussion__pagination discussion__pagination--bottom">
+            @fragments.commentPagination(page)
+        </div>
+    }
 
     @fragments.reportComment()
 </div>
