@@ -9,7 +9,7 @@
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
-    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
+    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty, containerLayout.hasShowMore)"
         data-link-name="all index"
         @DfpAgent.sponsorshipTag(config).map { keyword =>
             data-keywords="@keyword"

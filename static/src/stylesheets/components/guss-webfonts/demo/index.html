@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Guardian Web Fonts</title>
     <link rel="stylesheet" href="demo.css" />
-    <link id="font-css" rel="stylesheet" href="hinting-on-kerning-on-original.css" />
+    <link id="font-css" rel="stylesheet" href="hinting-off-kerning-on-original.css" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
@@ -13,7 +13,11 @@
     <form id="font-type">
         <label>
             Hinting
-            <input name="hinting" type="checkbox" checked>
+            <select id="hinting">
+                <option value="off" selected>off</option>
+                <option value="cleartype">cleartype</option>
+                <option value="auto">auto</option>
+            </select>
         </label>
         <label>
             Kerning
@@ -21,7 +25,7 @@
         </label>
         <label>
             Charset
-            <select>
+            <select id="charset">
                 <option value="original" selected>Original</option>
                 <option value="latin1">Latin 1</option>
                 <option value="ascii">ASCII</option>
@@ -42,7 +46,11 @@
             fontTypeStates[input.name] = input.checked ? 'on' : 'off';
             updateCss();
         });
-        $('#font-type').on('change', 'select', function (e) {
+        $('#hinting').on('change', function (e) {
+            fontTypeStates.hinting = $(e.target).val();
+            updateCss();
+        });
+        $('#charset').on('change', function (e) {
             fontTypeStates.charset = $(e.target).val();
             updateCss();
         });

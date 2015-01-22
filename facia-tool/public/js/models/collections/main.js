@@ -98,7 +98,6 @@ define([
                 }
                 model.switches(switches);
 
-                model.layout = new Layout();
 
                 vars.state.config = config;
 
@@ -119,6 +118,8 @@ define([
                 }
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
+                model.layout = new Layout();
+
                 var wasPopstate = false;
                 window.onpopstate = function() {
                     wasPopstate = true;

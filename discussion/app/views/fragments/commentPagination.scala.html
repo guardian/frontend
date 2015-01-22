@@ -1,0 +1,7 @@
+@(page: discussion.CommentPage)(implicit request: RequestHeader)
+
+@import common.SimplePagePaths
+
+<div class="discussion__pagination discussion__pagination--bottom">
+    @page.pagination.map{ paginate => @fragments.pagination(page.webTitle, paginate, SimplePagePaths(page.url), Some("js-discussion-change-page"), false, Some("Comments")) }
+</div>
