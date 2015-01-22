@@ -2,7 +2,7 @@
 
 .treats__container {
     list-style-type: none;
-    margin-left: 0;
+    margin: $gs-baseline * 2/3 0;
     display: none;
 
     @include mq(leftCol) {
@@ -59,7 +59,7 @@
 }
 
 .treats__list-item {
-    margin-top: $gs-baseline * 2 / 3;
+    margin-top: $gs-baseline * 2/3;
 
     &:first-child {
         margin-top: 0;
