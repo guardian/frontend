@@ -304,6 +304,12 @@ $weather-large-size: 60px;
         min-width: gs-span(1) - ($gs-gutter / 4);
     }
 
+    @include mq(tablet, desktop) {
+        &.forecast__item--3 {
+            display: none;
+        }
+    }
+
     @include mq(tablet, leftCol) {
         border-left: none;
         display: inline-block;
