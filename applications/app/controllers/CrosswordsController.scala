@@ -40,7 +40,16 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
-  def treat() = Action { implicit request =>
-    Cached(1.minute)(Ok(CrosswordTreat.fromCrosswordGrid(CrosswordGrid.DefaultTreat)).as("image/svg+xml"))
+  def treat() = Action.async { implicit request =>
+    val crosswordGridFuture = maybeApi map { api =>
+      api.forToday map { dayResponse =>
+        dayResponse.crosswords.values.toSeq.headOption.map(CrosswordGrid.fromCrossword) getOrElse CrosswordGrid.DefaultTreat
+      }
+    } getOrElse Future.successful(CrosswordGrid.DefaultTreat)
+
+
+    for {
+      grid <- crosswordGridFuture
+    } yield Cached(1.minute)(Ok(CrosswordTreat.fromCrosswordGrid(grid)).as("image/svg+xml"))
   }
 }
