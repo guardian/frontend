@@ -54,7 +54,7 @@ case class WidthsByBreakpoint(
   def sizesString =
     Seq(desktop, tablet, mobile) zip Seq(980.some, 740.some, None) collect {
       case (Some(imageWidth), Some(breakpoint)) =>
-        s"(min-width ${breakpoint}px) $imageWidth"
+        s"(min-width: ${breakpoint}px) $imageWidth"
 
       case (Some(imageWidth), None) =>
         imageWidth.toString

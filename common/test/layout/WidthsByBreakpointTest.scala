@@ -10,6 +10,6 @@ class WidthsByBreakpointTest extends FlatSpec with Matchers {
       100.perc.some,
       340.px.some,
       460.px.some
-    ).sizesString shouldEqual "(min-width 980px) 460px, (min-width 740px) 340px, 100%"
+    ).sizesString shouldEqual "(min-width: 980px) 460px, (min-width: 740px) 340px, 100%"
   }
 }

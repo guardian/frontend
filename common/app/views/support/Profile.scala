@@ -157,7 +157,7 @@ object ImgSrc {
   }
 
   def sizes(imageContainer: ImageContainer): String = {
-    s"(min-width: 1300px) 460px, (min-width: 980px) 460px, (min-width 740px) 340px, 95vw"
+    s"(min-width: 1300px) 460px, (min-width: 980px) 460px, (min-width: 740px) 340px, 95vw"
   }
 }
 
