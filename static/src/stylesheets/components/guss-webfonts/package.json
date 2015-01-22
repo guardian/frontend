@@ -7,6 +7,6 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-sassdoc": "^1.0.3",
     "grunt-gh-pages": "^0.9.1",
-    "grunt-release": "^0.7.0"
+    "grunt-release": "^0.10.0"
   }
 }
