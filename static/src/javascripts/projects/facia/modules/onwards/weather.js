@@ -98,7 +98,9 @@ define([
             } else {
 
                 this.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(this.fetchWeatherData)
+                    .then(function (response) {
+                        this.fetchWeatherData(response);
+                    }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                             tags: {
@@ -110,7 +112,9 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            this.saveUserLocation(location);
+            if (location.store) {
+                this.saveUserLocation(location);
+            }
 
             return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
