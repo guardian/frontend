@@ -286,10 +286,6 @@ $weather-large-size: 60px;
     @include mq(leftCol) {
         display: table;
         width: 100%;
-
-        &.forecast--mobile {
-            display: none;
-        }
     }
 }
 
