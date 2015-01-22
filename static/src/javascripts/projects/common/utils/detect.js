@@ -344,7 +344,7 @@ define([
                 if (/Chrome/.exec(ua)) {
                     hinting = 'Auto'; // Chrome on windows XP want auto-hinting
                 } else {
-                    hinting = 'On'; // All other use cleartype
+                    hinting = 'Cleartype'; // All other use cleartype
                 }
             }
         }
