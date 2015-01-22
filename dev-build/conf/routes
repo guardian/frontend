@@ -27,6 +27,7 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
 GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
 GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
+GET         /weather/forecast/:id.json                                                                               controllers.WeatherController.forecastForCityId(id)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -54,7 +55,9 @@ GET         /discussion/comment-counts.json                                     
 GET         /discussion/comment/*id.json                                                                             controllers.CommentsController.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.CommentsController.comment(id: Int)
 GET         /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJson(commentId: Int)
+OPTIONS     /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJsonOptions(commentId: Int)
 GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
+OPTIONS     /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJsonOptions(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)

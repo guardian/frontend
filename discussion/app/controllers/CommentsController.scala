@@ -1,6 +1,6 @@
 package controllers
 
-import model.Cached
+import model.{Cached, TinyResponse}
 import scala.concurrent.Future
 import common.JsonComponent
 import play.api.mvc.{ Action, RequestHeader, Result }
@@ -14,6 +14,10 @@ object CommentsController extends DiscussionController {
     discussionApi.commentContext(id, params) flatMap { context =>
       getComments(context._1, Some(params.copy(page = context._2)))
     }
+  }
+
+  def commentContextJsonOptions(id: Int) = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, OPTIONS"))
   }
 
   def commentJson(id: Int) = comment(id)
@@ -34,6 +38,10 @@ object CommentsController extends DiscussionController {
   }
 
   def commentsJson(key: DiscussionKey) = comments(key)
+  def commentsJsonOptions(key: DiscussionKey) = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, OPTIONS"))
+  }
+
   def comments(key: DiscussionKey) = Action.async { implicit request =>
     getComments(key)
   }
@@ -47,13 +55,14 @@ object CommentsController extends DiscussionController {
         UnthreadedCommentPage(comments)
       }
       Cached(60) {
-        if (request.isJson)
+        if (request.isJson) {
           JsonComponent(
             "html" -> views.html.discussionComments.commentsList(page, BlankComment(), params.topComments).toString,
             "currentCommentCount" -> page.comments.length
           )
-        else
+        } else {
           Ok(views.html.discussionComments.discussionPage(page))
+        }
       }
     }
   }

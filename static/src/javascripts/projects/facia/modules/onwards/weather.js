@@ -21,9 +21,10 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/search-tool',
     'common/modules/user-prefs',
-    'text!common/views/weather.html'
+    'facia/modules/onwards/search-tool',
+    'text!facia/views/weather.html',
+    'text!facia/views/weather-forecast.html'
 ], function (
     bean,
     raven,
@@ -33,13 +34,13 @@ define([
     config,
     mediator,
     template,
-    SearchTool,
     userPrefs,
-    weatherTemplate
+    SearchTool,
+    weatherTemplate,
+    forecastTemplate
     ) {
 
-    var self           = null,
-        $weather       = null,
+    var $weather       = null,
         $holder        = null,
         searchTool     = null,
         city           = '',
@@ -47,11 +48,10 @@ define([
 
     return {
         init: function () {
-            if (!config.switches || !config.switches.weather) {
+            if (!config.switches || !config.switches.weather || !userPrefs.isOn('weather')) {
                 return false;
             }
 
-            self = this;
             this.getDefaultLocation();
         },
 
@@ -94,14 +94,14 @@ define([
             var location = this.getUserLocation();
 
             if (location) {
-                this.fetchData(location);
+                this.fetchWeatherData(location);
             } else {
 
-                return self.getWeatherData(config.page.weatherapiurl + '.json')
+                this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
-                        self.fetchData(response);
-                        self.track(response.city);
-                    }).fail(function (err, msg) {
+                        this.fetchWeatherData(response);
+                    }.bind(this))
+                    .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
                             tags: {
                                 feature: 'weather'
@@ -111,15 +111,16 @@ define([
             }
         },
 
-        fetchData: function (location) {
+        fetchWeatherData: function (location) {
             if (location.store) {
-                self.saveUserLocation(location);
+                this.saveUserLocation(location);
             }
 
-            return self.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
-                    self.render(response[0], location.city);
-                }).fail(function (err, msg) {
+                    this.render(response, location.city);
+                    this.fetchForecastData(location);
+                }.bind(this)).fail(function (err, msg) {
                     raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
                         tags: {
                             feature: 'weather'
@@ -134,44 +135,70 @@ define([
             s.tl(true, 'o', 'weather location set by fastly');
         },
 
+        fetchForecastData: function (location) {
+            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+                .then(function (response) {
+                    this.renderForecast(response);
+                }.bind(this))
+                .fail(function (err, msg) {
+                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
+                        tags: {
+                            feature: 'weather'
+                        }
+                    });
+                });
+        },
+
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function () {
-                self.toggleControls(true);
-            });
-            bean.on($('.js-close-location')[0], 'click', function () {
-                self.toggleControls(false);
-            });
-            bean.on($('.js-weather-input')[0], 'blur', function () {
-                self.toggleControls(false);
-            });
-            mediator.on('autocomplete:fetch', this.fetchData);
+            bean.on($('.js-weather-input')[0], 'click', function (e) {
+                e.preventDefault();
+                this.toggleControls(true);
+            }.bind(this));
+            bean.on($('.js-close-location')[0], 'click', function (e) {
+                e.preventDefault();
+                this.toggleControls(false);
+            }.bind(this));
+            bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
+                this.toggleForecast(e);
+            }.bind(this));
+            mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
         },
 
         toggleControls: function (value) {
             var $input    = $('.js-weather-input')[0],
-                $location = $('.weather__location');
+                $location = $('.weather__location'),
+                $close    = $('.js-close-location'),
+                $edit     = $('.js-edit-location');
 
             if (value) {
                 $location.addClass('is-editing');
                 $input.setSelectionRange(0, $input.value.length);
+                $close.removeClass('u-h');
+                $edit.addClass('u-h');
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
                 searchTool.setInputValue(city);
+                $close.addClass('u-h');
+                $edit.removeClass('u-h');
             }
+        },
+
+        toggleForecast: function (e) {
+            $(e.currentTarget).toggleClass('is-visible');
+            $('.' + e.currentTarget.dataset.toggleClass).toggleClass('u-h');
         },
 
         getUnits: function () {
             if (config.page.edition === 'US') {
-                return 'Imperial';
+                return 'imperial';
             }
 
-            return 'Metric';
+            return 'metric';
         },
 
         getTemperature: function (weatherData) {
-            return Math.round(weatherData.Temperature[this.getUnits()].Value) + '°'
-                + weatherData.Temperature[this.getUnits()].Unit;
+            return weatherData.temperature[this.getUnits()];
         },
 
         addSearch: function () {
@@ -188,29 +215,54 @@ define([
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,
-                icon: weatherData.WeatherIcon,
-                description: weatherData.WeatherText,
-                tempNow: self.getTemperature(weatherData)
+                icon: weatherData.weatherIcon,
+                description: weatherData.weatherText,
+                tempNow: this.getTemperature(weatherData)
             }));
 
             $weather.appendTo($holder);
-            self.bindEvents();
-            self.addSearch();
+            this.bindEvents();
+            this.addSearch();
 
             // After first run override function to just update data
-            self.render = function (weatherData) {
+            this.render = function (weatherData) {
                 var $weatherIcon = $('.js-weather-icon', $weather);
 
-                $('.js-weather-temp', $weather).text(self.getTemperature(weatherData));
+                $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.WeatherIcon))
-                    .attr('title', weatherData.WeatherText);
+                    weatherData.weatherIcon))
+                    .attr('title', weatherData.weatherText);
 
                 // Close editing
-                self.toggleControls(false);
+                this.toggleControls(false);
             };
+        },
+
+        renderForecast: function (forecastData) {
+            var $forecastHolder = $('.js-weather-forecast'),
+                $forecast       = null,
+                docFragment     = document.createDocumentFragment(),
+                i;
+
+            $forecastHolder.empty();
+
+            for (i in forecastData) {
+                $forecast = $.create(template(forecastTemplate, {
+                    'forecast-time': new Date(forecastData[i].epochDateTime * 1000).getHours(),
+                    'forecast-temp': forecastData[i].temperature[this.getUnits()],
+                    'forecast-icon': forecastData[i].weatherIcon,
+                    'forecast-desc': forecastData[i].weatherText,
+                    'forecast-num': parseInt(i, 10) + 1
+                }));
+
+                docFragment.appendChild($forecast[0]);
+            }
+
+            $forecastHolder.each(function (item) {
+                $(item).append(docFragment.cloneNode(true));
+            });
         }
     };
 });

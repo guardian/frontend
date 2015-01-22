@@ -59,7 +59,7 @@ case class FaciaPage(id: String,
     "contentType" -> JsString(contentType)
   )
 
-  val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
+  val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
 
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 

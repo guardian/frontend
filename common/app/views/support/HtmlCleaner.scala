@@ -285,6 +285,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
+        link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
       }
     }
@@ -300,15 +301,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    body
-  }
-}
-
-object InBodyLinkDataComponentCleaner extends HtmlCleaner {
-  def clean(body: Document): Document = {
-    body.getElementsByTag("a").foreach { link =>
-      link.attr("data-component", "in-body-link")
-    }
     body
   }
 }

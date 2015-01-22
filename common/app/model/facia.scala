@@ -12,6 +12,7 @@ case class Collection(curated: Seq[Content],
                       editorsPicks: Seq[Content],
                       mostViewed: Seq[Content],
                       results: Seq[Content],
+                      treats: Seq[Content],
                       displayName: Option[String],
                       href: Option[String],
                       lastUpdated: Option[String],
@@ -26,8 +27,8 @@ case class Collection(curated: Seq[Content],
 }
 
 object Collection {
-  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, None, None, Option(DateTime.now.toString), None, None)
-  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, Nil, None, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, Nil, displayName, None, Option(DateTime.now.toString), None, None)
 }
 case class SeoDataJson(
   id: String,

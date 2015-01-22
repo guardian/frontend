@@ -65,6 +65,7 @@
 
                 <script>
                     var guardian = {
+                        isEmbed: true,
                         isModernBrowser: (
                             'querySelector' in document
                             && 'addEventListener' in window
@@ -100,7 +101,7 @@
                             core: '@StaticSecure("javascripts/core.js")',
                             text: 'text', // noop
                             'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
-                            'ophan/ng':  '@{Configuration.javascript.config("ophanJsUrl")}'
+                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
                         }
                     };
 

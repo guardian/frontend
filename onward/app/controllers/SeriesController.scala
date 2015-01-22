@@ -61,7 +61,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
         1,
         Fixed(FixedContainers.fixedMediumSlowVII),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails take 7, displayName, None, None, None),
+        CollectionEssentials(series.trails take 7, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       properties

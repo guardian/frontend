@@ -1,0 +1,12 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+@if(containerDefinition.collectionEssentials.treats.nonEmpty) {
+    <ul class="treats__container">
+    @containerDefinition.collectionEssentials.treats.map { treat =>
+        <li class="treats__list-item"><a href="@LinkTo(treat)" class="treats__treat">@treat.headline</a></li>
+    }
+    </ul>
+
+}

@@ -61,6 +61,7 @@ case class ContainerLayoutContext(
 object CollectionEssentials {
   def fromCollection(collection: Collection) = CollectionEssentials(
     collection.items,
+    collection.treats,
     collection.displayName,
     collection.href,
     collection.lastUpdated,
@@ -69,17 +70,19 @@ object CollectionEssentials {
 
   def fromTrails(trails: Seq[Trail]) = CollectionEssentials(
     trails,
+    Nil,
     None,
     None,
     None,
     None
   )
 
-  val empty = CollectionEssentials(Nil, None, None, None, None)
+  val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
 }
 
 case class CollectionEssentials(
   items: Seq[Trail],
+  treats: Seq[Trail],
   displayName: Option[String],
   href: Option[String],
   lastUpdated: Option[String],
@@ -194,7 +197,7 @@ object FaciaContainer {
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
-      collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
       componentId = None
     ).withTimeStamps
   }

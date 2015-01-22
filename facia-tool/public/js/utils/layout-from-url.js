@@ -1,7 +1,9 @@
 /* globals _ */
 define([
+    'modules/vars',
     'utils/parse-query-params'
 ], function (
+    vars,
     parseQueryParams
 ) {
     function get () {
@@ -13,7 +15,12 @@ define([
             queryParams = parseQueryParams(window.location.search),
             configFromURL = queryParams.layout;
 
-        if (configFromURL) {
+        if (queryParams.treats === 'please' && vars.model.switches()['facia-treats']) {
+            columns = [{
+                type: 'treats',
+                config: queryParams.front
+            }];
+        } else if (configFromURL) {
             columns = _.map(configFromURL.split(','), function (column) {
                 if (!column) {
                     return {
