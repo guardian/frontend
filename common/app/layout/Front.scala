@@ -272,6 +272,8 @@ case class FaciaContainer(
       urlFragment <- dateHeadline.urlFragment
     } yield s"$path/$urlFragment/all"
   }
+
+  def hasShowMore = containerLayout.exists(_.hasShowMore)
 }
 
 object Front extends implicits.Collections {
