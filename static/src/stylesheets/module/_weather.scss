@@ -40,9 +40,17 @@ $weather-large-size: 60px;
     }
 }
 
-.weather__current {
+.weather__current,
+.weather__toggle-forecast,
+.forecast,
+.weather__location {
     position: relative;
     display: inline-block;
+    text-align: left;
+}
+
+
+.weather__current {
     @include transition(opacity .2s ease-in); // Needs Fixing
 
     @include mq($until: leftCol) {
@@ -142,9 +150,6 @@ $weather-large-size: 60px;
 }
 
 .weather__toggle-forecast {
-    position: relative;
-    display: inline-block;
-
     @include mq(tablet) {
         padding-right: $gs-gutter / 4;
 
@@ -173,13 +178,7 @@ $weather-large-size: 60px;
 }
 
 .weather__location {
-    position: relative;
-    display: inline-block;
     width: 100%;
-
-    @include mq(tablet) {
-        position: relative;
-    }
 
     @include mq(tablet, leftCol) {
         width: gs-span(2);
@@ -274,20 +273,14 @@ $weather-large-size: 60px;
 }
 
 .forecast {
-    clear: both;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
     list-style: none;
     line-height: 1.2;
-    display: inline-block;
 
     @include mq($until: mobileLandscape) {
         display: table;
         width: 100%;
-    }
-
-    @include mq(mobileLandscape, leftCol) {
-        float: right;
     }
 
     @include mq(leftCol) {
