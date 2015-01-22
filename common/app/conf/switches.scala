@@ -310,6 +310,11 @@ object Switches {
     safeState = Off, new LocalDate(2015, 2, 28)
   )
 
+  val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
+    "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
+    safeState = Off, never
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",

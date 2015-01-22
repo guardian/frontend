@@ -6,6 +6,7 @@ define([
     'videojs',
     'videojsembed',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/modules/analytics/omniture',
     'common/modules/video/tech-order',
@@ -18,6 +19,7 @@ define([
     videojs,
     videojsembed,
     _,
+    config,
     deferToAnalytics,
     Omniture,
     techOrder,
@@ -97,7 +99,6 @@ define([
 
                 initLoadingSpinner(player);
                 events.bindGlobalEvents(player);
-                events.initOphanTracking(player, mediaId);
 
                 // unglitching the volume on first load
                 vol = player.volume();
@@ -108,12 +109,15 @@ define([
 
                 player.fullscreener();
 
-                deferToAnalytics(function () {
-                    events.initOmnitureTracking(player);
-                    events.bindContentEvents(player);
-                });
+                if (config.switches.thirdPartyEmbedTracking) {
+                        deferToAnalytics(function () {
+                            events.initOphanTracking(player, mediaId);
+                            events.initOmnitureTracking(player);
+                            events.bindContentEvents(player);
+                        });
 
-                new Omniture(window.s).go();
+                    new Omniture(window.s).go();
+                }
             });
 
             mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
