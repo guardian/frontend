@@ -12,7 +12,6 @@ $weather-large-size: 60px;
 
 .weather {
     color: colour(neutral-1);
-    float: right;
     text-align: right;
 
     @include mq($until: tablet) {
@@ -20,13 +19,13 @@ $weather-large-size: 60px;
     }
 
     @include mq(tablet) {
-        text-align: left;
-        margin-top: $gs-baseline * 2;
+        padding-top: $gs-baseline * 2;
     }
 
     @include mq(leftCol) {
         width: $left-column;
         margin-top: $gs-baseline;
+        text-align: left;
     }
 
     @include mq(wide) {
@@ -36,7 +35,6 @@ $weather-large-size: 60px;
     .has-page-skin & {
         @include mq(wide) {
             width: auto;
-            text-align: left;
             margin-top: $gs-baseline * 2;
         }
     }
@@ -44,14 +42,13 @@ $weather-large-size: 60px;
 
 .weather__current {
     position: relative;
+    display: inline-block;
     @include transition(opacity .2s ease-in); // Needs Fixing
 
     @include mq($until: leftCol) {
         @include box-sizing(border-box);
         width: gs-span(1) + $gs-gutter;
-        float: left;
         padding-right: $weather-small-size + $gs-gutter / 4;
-        margin-right: $gs-gutter / 4;
         text-align: right;
 
         &:after {
@@ -70,7 +67,6 @@ $weather-large-size: 60px;
             @include box-sizing(border-box);
             padding-right: $weather-small-size + $gs-gutter / 4;
             width: gs-span(1) + $gs-gutter;
-            float: left;
             text-align: right;
 
             .weather__icon {
@@ -147,11 +143,10 @@ $weather-large-size: 60px;
 
 .weather__toggle-forecast {
     position: relative;
-    float: left;
+    display: inline-block;
 
     @include mq(tablet) {
         padding-right: $gs-gutter / 4;
-        margin-right: $gs-gutter / 4;
 
         &:after {
             @include weather-rule();
@@ -178,16 +173,16 @@ $weather-large-size: 60px;
 }
 
 .weather__location {
-    display: none;
+    position: relative;
+    display: inline-block;
+    width: 100%;
 
     @include mq(tablet) {
         position: relative;
-        display: block;
     }
 
     @include mq(tablet, leftCol) {
         width: gs-span(2);
-        float: left;
     }
 
     @include mq(leftCol) {
@@ -205,7 +200,6 @@ $weather-large-size: 60px;
     }
 
     .search-tool__input {
-        display: none;
         width: 100%;
 
         @include fs-headline(2);
