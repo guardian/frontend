@@ -253,6 +253,7 @@ define([
                     this.trigger(constructEventName('preroll:skip', this));
                     this.ima.onAdComplete_();
                     this.ima.onContentResumeRequested_();
+                    this.ima.getAdsManager().stop();
                 },
                 init: function () {
                     var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
