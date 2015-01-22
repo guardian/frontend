@@ -64,7 +64,7 @@ define([
                 }
             },
 
-            initSelectionSharing: function() {
+            initSelectionSharing: function () {
                 selectionSharing.init();
             }
         },
