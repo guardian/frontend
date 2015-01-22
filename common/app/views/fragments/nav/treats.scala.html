@@ -2,8 +2,8 @@
 
 @import common.LinkTo
 
-<div>
+<ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.map { treat =>
-        <h5><a href="@LinkTo(treat)">@treat.headline</a></h5>
+        <li><a href="@LinkTo(treat)" class="treats__treat">@treat.headline</a></li>
     }
-</div>
+</ul>
