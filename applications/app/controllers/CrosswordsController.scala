@@ -5,8 +5,10 @@ import common.ExecutionContexts
 import conf.Static
 import model.Cached
 import play.api.mvc.{Result, Action, Controller}
-import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
+import crosswords._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordType: CrosswordType, id: Int)(f: Crossword => Result): Future[Result] = {
@@ -38,12 +40,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
-  def treat() = Action.async { implicit request =>
-    maybeApi match {
-      case Some(apiClient) =>
-        apiClient.forToday map { todaysCrosswords =>
-          todaysCrosswords.crosswords.toSeq.map(_._2).head
-        }
-    }
+  def treat() = Action { implicit request =>
+    Cached(1.minute)(Ok(CrosswordTreat.fromCrosswordGrid(CrosswordGrid.DefaultTreat)).as("image/svg+xml"))
   }
 }
