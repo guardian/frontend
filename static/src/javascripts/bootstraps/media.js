@@ -132,7 +132,7 @@ define([
         videojs.plugin('fullscreener', fullscreener);
 
         $('.js-gu-media--enhance').each(function (el) {
-            enhanceVideo(el);
+            enhanceVideo(el, false);
         });
 
         $('.js-video-play-button').each(function (el) {
@@ -144,12 +144,12 @@ define([
                 player = $('.js-video-player', container);
                 player.removeClass('media__container--hidden').addClass('media__container--active');
                 bonzo(el).removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                enhanceVideo($('video', player).get(0));
+                enhanceVideo($('video', player).get(0), true);
             });
         });
     }
 
-    function enhanceVideo(el) {
+    function enhanceVideo(el, autoplay) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
@@ -172,7 +172,7 @@ define([
         player = createVideoPlayer(el, {
             techOrder: techPriority,
             controls: true,
-            autoplay: false,
+            autoplay: autoplay,
             preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
             plugins: {
                 embed: {
