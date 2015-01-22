@@ -48,9 +48,9 @@ define([
 
     return {
         init: function () {
-            if (!config.switches || !config.switches.weather || !userPrefs.isOn('weather')) {
+            /*if (!config.switches || !config.switches.weather || !userPrefs.isOn('weather')) {
                 return false;
-            }
+            }*/
 
             this.getDefaultLocation();
         },
@@ -111,18 +111,6 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            // After user interaction we want to store the location in localStorage
-            if (location.store === 'set') {
-                this.saveUserLocation(location);
-
-            // After user sent empty data we want to remove location and get the default location
-            } else if (location.store === 'remove') {
-                this.clearLocation();
-                this.getDefaultLocation();
-
-                return false;
-            }
-
             return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
                     this.render(response, location.city);
@@ -162,6 +150,19 @@ define([
                 });
         },
 
+        saveDeleteLocalStorage: function (response) {
+            // After user interaction we want to store the location in localStorage
+            if (response.store === 'set') {
+                this.saveUserLocation(response);
+                this.fetchWeatherData(response);
+
+                // After user sent empty data we want to remove location and get the default location
+            } else if (response.store === 'remove') {
+                this.clearLocation();
+                this.getDefaultLocation();
+            }
+        },
+
         bindEvents: function () {
             bean.on($('.js-weather-input')[0], 'click', function (e) {
                 e.preventDefault();
@@ -174,7 +175,8 @@ define([
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
                 this.toggleForecast(e);
             }.bind(this));
-            mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
+
+            mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
         },
 
         toggleControls: function (value) {
