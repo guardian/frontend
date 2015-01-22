@@ -275,7 +275,7 @@ define([
         modules.handleUpdates();
 
         // re-use modules from article bootstrap
-        article.modules.initOpen();
+        article.modules.initOpenCta();
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
         article.modules.initSelectionSharing();
