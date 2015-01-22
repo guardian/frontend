@@ -44,10 +44,10 @@
 
     @include button-colour(
         #ffffff,
-        guss-colour(news-main-1, $pasteup-palette),
+        colour(news-default),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-        guss-colour(news-main-2, $pasteup-palette)
+        colour(news-accent)
     );
 
     &:hover,
