@@ -380,7 +380,6 @@ define([
             bean.on(el, 'click', function () {
                 var placeholder, player, container;
                 container = bonzo(el).parent().parent();
-                console.log("parent:", container);
                 placeholder = $('.js-video-placeholder', container);
                 placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                 player = $('.js-video-player', container);
