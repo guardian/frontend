@@ -340,8 +340,8 @@ define([
         if (windowsNT) {
             version = parseFloat(windowsNT[1], 10);
             // windows XP
-            if (version >= 5.1 && version < 6.0) {
-                if (/Chrome/.exec(ua)) {
+            if (version >= 5.1 && version <= 6.1) {
+                if (/Chrome/.exec(ua) && version < 6.0) {
                     hinting = 'Auto'; // Chrome on windows XP want auto-hinting
                 } else {
                     hinting = 'Cleartype'; // All other use cleartype

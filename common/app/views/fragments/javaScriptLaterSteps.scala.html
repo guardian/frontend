@@ -47,9 +47,9 @@
 
             if (windowsNT) {
                 var version = parseFloat(windowsNT[1], 10);
-                // windows XP
-                if (version >= 5.1 && version < 6.0) {
-                    if (/Chrome/.exec(ua)) {
+                // windows XP - 7
+                if (version >= 5.1 && version <= 6.1) {
+                    if (/Chrome/.exec(ua) && version < 6.0) {
                         hinting = 'Auto'; // Chrome on windows XP want auto-hinting
                     } else {
                         hinting = 'Cleartype'; // All other use cleartype
@@ -68,7 +68,7 @@
 
                 fonts.rel       = 'stylesheet';
                 fonts.className = 'webfonts';
-                // show hinted for Windows XP-7 IE, autohinted for non-IE
+                // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
                 fonts.href      = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
                 window.setTimeout(function() {
                     thisScript.parentNode.insertBefore(fonts, thisScript);
