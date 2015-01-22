@@ -255,6 +255,19 @@ trait UpdateActions extends Logging with ExecutionContexts {
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 
+  def createCollectionForTreat(collectionId: String, identity: UserIdentity, update: UpdateList): CollectionJson = {
+    val trail = Trail(update.item, DateTime.now.getMillis, update.itemMeta)
+    CollectionJson(
+      live          = Nil,
+      draft         = None,
+      treats        = Option(List(trail)),
+      lastUpdated   = DateTime.now,
+      updatedBy     = identity.fullName,
+      updatedEmail  = identity.email,
+      displayName   = None,
+      href          = None,
+      previously    = None)}
+
   def updateTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
     FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
@@ -262,7 +275,8 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .map(updateTreatsList(update, _))
         .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
         .map(FaciaApi.updateIdentity(_, identity))
-        .map(putBlock(collectionId, _))}}
+        .map(putBlock(collectionId, _))
+        .orElse(Option(createCollectionForTreat(collectionId, identity, update)))}}
 
   def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
