@@ -201,7 +201,6 @@ $weather-large-size: 60px;
 
     .search-tool__input {
         width: 100%;
-
         @include fs-headline(2);
 
         @include mq(tablet) {
@@ -219,6 +218,14 @@ $weather-large-size: 60px;
 
     .search-tool__btn {
         display: none;
+    }
+
+    .search-tool__list {
+        text-align: left;
+
+        @include mq($until: tablet) {
+            position: static;
+        }
     }
 
     &.is-editing {
