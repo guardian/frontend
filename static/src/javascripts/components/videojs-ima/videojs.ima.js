@@ -217,7 +217,6 @@
       if (adsManager) {
         adsManager.destroy();
       }
-      //player.play();
     };
 
     /**

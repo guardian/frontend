@@ -23,7 +23,7 @@
     "requirejs-text": "~2.0.12",
     "native-promise-only": "guardian/native-promise-only#master",
     "videojs-embed": "~0.3.1",
-    "videojs-ima": "googleads/videojs-ima"
+    "videojs-ima": "guardian/videojs-ima#e0fa524afb91ebf8bf539096e6bedd1a02800db4"
   },
   "resolutions": {
     "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8"
