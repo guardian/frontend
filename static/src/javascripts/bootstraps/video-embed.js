@@ -110,11 +110,11 @@ define([
                 player.fullscreener();
 
                 if (config.switches.thirdPartyEmbedTracking) {
-                        deferToAnalytics(function () {
-                            events.initOphanTracking(player, mediaId);
-                            events.initOmnitureTracking(player);
-                            events.bindContentEvents(player);
-                        });
+                    deferToAnalytics(function () {
+                        events.initOphanTracking(player, mediaId);
+                        events.initOmnitureTracking(player);
+                        events.bindContentEvents(player);
+                    });
 
                     new Omniture(window.s).go();
                 }
