@@ -71,6 +71,7 @@ object Item460 extends Profile(width = Some(460))
 object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
+object Item860 extends Profile(width = Some(860))
 object Item940 extends Profile(width = Some(940))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5:3
@@ -100,6 +101,18 @@ object Profile {
     Item700,
     Item940,
     SeoOptimisedContentImage
+  )
+
+  // used to build the list of urls for srcset
+  lazy val images: Seq[Profile]  = Seq(
+    Item140,
+    Item220,
+    Item300,
+    Item460,
+    Item620,
+    Item700,
+    Item860,
+    Item940
   )
 }
 
@@ -147,8 +160,7 @@ object ImgSrc {
   }
 
   def srcset(imageContainer: ImageContainer, maxWidth: Int): String = {
-    val sortedProfiles = Profile.all.filter(_.height == None).sortBy(_.width).distinct
-    val sources = sortedProfiles.filter(_.width.getOrElse(0) <= maxWidth).flatMap { profile =>
+    val sources = Profile.images.filter(_.width.getOrElse(0) <= maxWidth).flatMap { profile =>
       profile.elementFor(imageContainer).flatMap(_.url).map { largestImage =>
         s"${ImgSrc(largestImage, profile)} ${profile.width.get}w"
       }
