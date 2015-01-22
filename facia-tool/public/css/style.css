@@ -1136,6 +1136,10 @@ button {
     max-height: 75%;
 }
 
+.clipboard-only .cilpboard-container {
+    max-height: 100%;
+}
+
 .clipboard {
     width: 100%;
     margin: 5px 0 15px 0;;
