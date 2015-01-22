@@ -32,8 +32,6 @@ data-test-id="facia-card"
 
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
-                <!-- TODO put this in another file? -->
-                <div class="@RenderClasses("js-video-wrapper")">
                     @defining(VideoPlayer(
                         videoElement,
                         Video640,
@@ -44,13 +42,14 @@ data-test-id="facia-card"
                         Some(false),
                         item.id
                     )) { player =>
-                        <div data-id="@videoElement.id" class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote fc-item__video-container media__container--hidden js-video-player">
-                            @video(player, false)
+                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                            <div class="fc-item__video-container">
+                                @video(player, false)
+                            </div>
                         </div>
-                        @fallback.map { fallbackImage => <!-- FIXME what if no fallback image? could it happen? -->
-                            <div data-id="@videoElement.id" class="fc-item__video-fallback u-faux-block-link__promote media__placeholder--active js-video-placeholder">
-                                <!-- we can cheat and use the video-js play button, TODO in phase 2 make the hover work -->
-                                <div class="@RenderClasses("vjs-big-play-button", "js-video-play-button")"><span></span></div>
+                        @fallback.map { fallbackImage =>
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder">
+                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--active", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
                                 @image(
                                     fallbackImage.imageContainer,
                                     inlineImage = containerIndex == 0 && index < 4
@@ -58,7 +57,6 @@ data-test-id="facia-card"
                             </div>
                         }
                     }
-                </div>
             }
 
             case Some(svg @ CrosswordSvg(_)) => {

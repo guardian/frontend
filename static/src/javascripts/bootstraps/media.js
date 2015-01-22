@@ -376,14 +376,16 @@ define([
             enhanceVideo(el);
         });
 
-        $('.js-video-wrapper').each(function (el) {
-            bean.on($('.js-video-play-button', el).get(0), 'click', function () {
-                var placeholder, player;
-                // show the container with the same data-id as us
-                placeholder = $('.js-video-placeholder', el);
+        $('.js-video-play-button').each(function (el) {
+            bean.on(el, 'click', function () {
+                var placeholder, player, container;
+                container = bonzo(el).parent().parent();
+                console.log("parent:", container);
+                placeholder = $('.js-video-placeholder', container);
                 placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                player = $('.js-video-player', el);
+                player = $('.js-video-player', container);
                 player.removeClass('media__container--hidden').addClass('media__container--active');
+                bonzo(el).removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                 enhanceVideo($('video', player).get(0));
             });
         });
