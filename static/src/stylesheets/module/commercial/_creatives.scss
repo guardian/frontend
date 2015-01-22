@@ -250,7 +250,24 @@
             @include transform(rotate(360deg));
         }
     }
-    
+
+    .expandable_video {
+        position: absolute;
+        z-index: 10;
+        margin-top: $gs-baseline/2;
+
+        &.expandable_video--horiz-pos-left {
+            left: 0;
+        }
+        &.expandable_video--horiz-pos-center {
+            left: 50%;
+        }
+        &.expandable_video--horiz-pos-right {
+            left: auto;
+            right: 0;
+        }
+    }
+
     .slide-1 {
         z-index: 1;
     }
