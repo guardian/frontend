@@ -13,17 +13,4 @@ import play.api.test.Helpers._
     status(result) should be (200)
   }
 
-
-  it should "return JSON when " in {
-
-    val fakeRequest = FakeRequest(GET, s"/most-read/${series}.json")
-      .withHeaders("host" -> "localhost:9000")
-      .withHeaders("Origin" -> "http://www.theorigin.com")
-
-    val result = controllers.MostPopularController.render(series)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/json")
-    contentAsString(result) should startWith("{\"html\"")
-  }
-
 }
