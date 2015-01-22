@@ -6,46 +6,46 @@
     &.commercial--dfp-single {
         .lineitems {
             overflow: hidden;
+        }
 
-            .lineitem--dfp-single {
+        .lineitem--dfp-single {
+            width: 100%;
+            overflow: hidden;
+
+            .lineitem__image {
+                margin-right: $gs-gutter/2;
+                max-width: $gs-gutter*11;
+
+                @include mq(mobileLandscape) {
+                    float: left;
+                }
+            }
+
+            .lineitem--dfp-single__offer {
+                float: left;
+                max-width: gs-span(9);
                 width: 100%;
-                overflow: hidden;
+            }
 
-                .lineitem__image {
-                    margin-right: $gs-gutter/2;
-                    max-width: $gs-gutter*11;
+            .lineitem--dfp-single__cta {
+                @include box-sizing(border-box);
+                margin-left: $gs-gutter/2;
+                border-left: 1px solid colour(neutral-4);
+                padding-left: $gs-gutter/2;
+                float: left;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: gs-span(9) + $gs-gutter/2;
 
-                    @include mq(mobileLandscape) {
-                        float: left;
-                    }
-                }
-
-                .lineitem--dfp-single__offer {
-                    float: left;
-                    max-width: gs-span(9);
-                    width: 100%;
-                }
-
-                .lineitem--dfp-single__cta {
-                    @include box-sizing(border-box);
-                    margin-left: $gs-gutter/2;
-                    border-left: 1px solid colour(neutral-4);
-                    padding-left: $gs-gutter/2;
-                    float: left;
-                    position: absolute;
+                .commercial__cta {
+                    left: $gs-gutter/2;
                     top: 0;
-                    right: 0;
-                    bottom: 0;
-                    left: gs-span(9) + $gs-gutter/2;
+                }
 
-                    .commercial__cta {
-                        left: $gs-gutter/2;
-                        top: 0;
-                    }
-
-                    &.hide-cta-link {
-                        display: none !important;
-                    }
+                &.hide-cta-link {
+                    display: none !important;
                 }
             }
         }
