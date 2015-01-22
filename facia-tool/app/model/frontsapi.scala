@@ -276,7 +276,8 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
         .map(FaciaApi.updateIdentity(_, identity))
         .map(putBlock(collectionId, _))
-        .orElse(Option(createCollectionForTreat(collectionId, identity, update)))}}
+        .orElse(Option(createCollectionForTreat(collectionId, identity, update)))
+        .map(putBlock(collectionId, _))}}
 
   def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
