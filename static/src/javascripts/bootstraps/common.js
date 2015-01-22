@@ -319,12 +319,20 @@ define([
                 });
             },
 
+            showHistoryInMegaNav: function () {
+                if (config.switches.historyTags) {
+                    mediator.once('modules:nav:open', function () {
+                        history.showInMegaNav();
+                    });
+                }
+            },
+
             initAutoSignin: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                    mediator.on('page:common:ready', function () {
                         new AutoSignin().init();
-                    }
-                });
+                    });
+                }
             },
 
             windowEventListeners: function () {
@@ -384,8 +392,8 @@ define([
             },
 
             initDiscussion: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches.discussion) {
+                if (config.switches.discussion) {
+                    mediator.on('page:common:ready', function () {
                         CommentCount.init();
                         if (config.page.commentable) {
                             var el = qwery('.discussion')[0];
@@ -393,8 +401,8 @@ define([
                                 new DiscussionLoader().attachTo(el);
                             }
                         }
-                    }
-                });
+                    });
+                }
             },
 
             testCookie: function () {
@@ -448,7 +456,7 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews) {
-                    breakingNews();
+                    mediator.on('page:common:ready', breakingNews);
                 }
             },
 
@@ -484,6 +492,7 @@ define([
             modules.unshackleParagraphs();
             modules.initAutoSignin();
             modules.augmentInteractive();
+            modules.showHistoryInMegaNav();
             modules.runForseeSurvey();
             modules.startRegister();
             modules.repositionComments();
