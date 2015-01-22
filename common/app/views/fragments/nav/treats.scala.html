@@ -1,11 +1,24 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.LinkTo
+@import common.ExternalLinks.internalPath
+@import crosswords.{CrosswordGrid, CrosswordTreat}
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.map { treat =>
-        <li class="treats__list-item"><a href="@LinkTo(treat)" class="treats__treat">@treat.headline</a></li>
+        @defining(LinkTo(treat).getOrElse("")) { link =>
+            <li class="treats__list-item">
+                @if(internalPath(link).contains("/crosswords")) {
+                    <a class="treats__crossword-link" href="@link">
+                        @CrosswordTreat.fromCrosswordGrid(CrosswordGrid.DefaultTreat)
+                        <span class="treats__treat">@treat.headline</span>
+                    </a>
+                } else {
+                    <a href="@link" class="treats__treat">@treat.headline</a>
+                }
+            </li>
+        }
     }
     </ul>
 
