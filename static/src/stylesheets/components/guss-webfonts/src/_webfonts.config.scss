@@ -15,20 +15,21 @@ $guss-webfonts-base-url: './' !default;
  *
  * @group webfonts
  */
-$guss-webfonts-version: '0.1.0' !default;
+$guss-webfonts-version: '1.0.0' !default;
 
 /**
  * Hinting
  *
- * - on: larger file, better rendering in Windows
+ * - cleartype: larger file, better rendering in Windows
+ * - auto: even larger file, better rendering in Windows in Chrome with
+ *   font-smoothing disabled (the default in XP pre-servicepack 1)
  * - off: smaller files, render well on HiDPI displays
- * - auto: larger files, render well on non-cleartype windows
  *
  *  @type String
  *
  * @group webfonts
  */
-$guss-webfonts-hinting: 'on' !default;
+$guss-webfonts-hinting: 'cleartype' !default;
 
 /**
  * Kerning
