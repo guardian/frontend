@@ -72,7 +72,6 @@ define([
 
                 // Send data to whoever is listening
                 mediator.emit('autocomplete:fetch', data);
-                console.log('emit');
                 this.setInputValue();
                 this.track(data.city);
 
