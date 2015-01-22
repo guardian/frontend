@@ -186,7 +186,8 @@ define([
 
         toggleForecast: function (e) {
             $(e.currentTarget).toggleClass('is-visible');
-            $('.' + e.currentTarget.dataset.toggleClass).toggleClass('u-h');
+            $('.js-weather-forecast').toggleClass('hide-on-mobile');
+            $('.js-weather-location').toggleClass('hide-on-mobile');
         },
 
         getUnits: function () {
