@@ -98,7 +98,7 @@ define([
             } else {
 
                 this.getWeatherData(config.page.weatherapiurl + '.json')
-                    .then(function(response) {
+                    .then(function (response) {
                         this.fetchWeatherData(response);
                     }.bind(this))
                     .fail(function (err, msg) {
