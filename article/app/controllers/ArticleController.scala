@@ -2,15 +2,16 @@ package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
 import common._
+import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.LiveContentApi.getResponse
 import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import org.jsoup.nodes.Document
 import performance.MemcachedAction
-import play.api.mvc.{Content => _, _}
+import play.api.mvc._
 import views.BodyCleaner
 import views.support._
-import LiveContentApi.getResponse
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -75,8 +76,9 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      if (AdFeatureExpirySwitch.isSwitchedOn && content.exists (_.article.isExpiredAdvertisementFeature)) {
-        Right(Gone)
+      if (AdFeatureExpirySwitch.isSwitchedOn &&
+        content.exists(_.article.isExpiredAdvertisementFeature)) {
+        Right(MovedPermanently(expiredAdFeatureUrl))
       } else {
         ModelOrResult(content, response)
       }

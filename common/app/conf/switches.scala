@@ -409,11 +409,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABWeather = Switch("A/B Tests", "ab-weather",
-    "If this is switched on then the weather component is A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
   val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
     "If this is switched on then personalised history tags are tested",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
@@ -473,8 +468,8 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
-  val DiscussionOriginSwitch = Switch("Feature", "discussion-origin",
-    "If switched on, an experimental default header to allow origins will be added to discussion",
+  val DefaultOriginSwitch = Switch("Feature", "default-origin",
+    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
     safeState = On, sellByDate = new LocalDate(2015, 1, 28)
   )
 
@@ -517,6 +512,11 @@ object Switches {
 
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
     safeState = Off, sellByDate = never
   )
 
