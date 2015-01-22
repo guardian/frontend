@@ -6,6 +6,7 @@
 @import common.Localisation
 @import layout.{MetaDataHeader, LoneDateHeadline}
 @import fragments.containers.facia_cards.dateHeadline
+@import fragments.nav.treats
 
 @containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
@@ -18,6 +19,8 @@
                 @dateHeadline(dateHeader.get, containerDefinition.dateLink)
             }
         }
+
+        @treats(containerDefinition, frontProperties)
     </div>
 }.getOrElse {
     @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
@@ -62,6 +65,8 @@
                     </div>
                 }
             }
+
+            @treats(containerDefinition, frontProperties)
         </div>
     }
 }

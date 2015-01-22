@@ -14,6 +14,17 @@ class CitiesLookUpTest extends FlatSpec with Matchers {
     ))
   }
 
+  it should "not fail because of weird encoding issues" in {
+    CitiesLookUp.getLatitudeLongitude(CityRef(
+      "Medellín",
+      "02",
+      "CO"
+    )) shouldEqual Some(LatitudeLongitude(
+      6.2518,
+      -75.5636
+    ))
+  }
+
   "cache" should "parse all of the lines in the CSV" in {
     CitiesLookUp.getCsvLines.length shouldEqual CitiesLookUp.getGeoIPCityInputStream.getLines().length - 2
   }

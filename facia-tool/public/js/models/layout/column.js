@@ -46,6 +46,7 @@ define([
         this.isLatest = ko.computed(isType.bind(this, 'latest'), this);
         this.isOphan = ko.computed(isType.bind(this, 'ophan'), this);
         this.isIframe = ko.computed(isType.bind(this, 'iframe'), this);
+        this.isTreats = ko.computed(isType.bind(this, 'treats'), this);
 
         globalListeners.on('resize', _.debounce(function () {
             column.recomputeWidth();

@@ -43,7 +43,7 @@ define([
     return function() {
 
         var model = vars.model = {
-            layout: new Layout(),
+            layout: null,
             alert: ko.observable(),
             modalDialog: modalDialog,
             switches: ko.observable(),
@@ -97,6 +97,8 @@ define([
                     return;
                 }
                 model.switches(switches);
+
+                model.layout = new Layout();
 
                 vars.state.config = config;
 

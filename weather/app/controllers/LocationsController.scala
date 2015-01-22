@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
+import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scalaz.std.option.optionInstance.tuple3
@@ -28,10 +29,19 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 
+    def getEncodedHeader(key: String) =
+      request.headers.get(key).map(java.net.URLDecoder.decode(_, "latin1"))
+
+    val maybeCity = getEncodedHeader(CityHeader)
+    val maybeRegion = getEncodedHeader(RegionHeader)
+    val maybeCountry = getEncodedHeader(CountryHeader)
+
+    log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
+
     tuple3(
-      request.headers.get(CityHeader),
-      request.headers.get(RegionHeader),
-      request.headers.get(CountryHeader)
+      maybeCity,
+      maybeRegion,
+      maybeCountry
     ) match {
       case Some((city, region, country)) =>
         log.info(s"Received what is my city? request. Geo info: City=$city Region=$region Country=$country")
@@ -41,7 +51,7 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
             WeatherApi.getNearestCity(latitudeLongitude) map { location =>
-              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
+              Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
                 // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
                 // given how fuzzy geolocation by IP is.
                 city = city
@@ -56,11 +66,11 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
               log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
 
-              Cached(7.days)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
+              Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
             }
         }
 
-      case None => Future.successful(Cached(7.days)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
+      case None => Future.successful(Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
     }
   }
 }

@@ -92,18 +92,13 @@ trait UpdateActions extends Logging with ExecutionContexts {
   val collectionCap: Int = Configuration.facia.collectionCap
   implicit val updateListWrite = Json.writes[UpdateList]
 
-  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
-    val result = if (update.live) {
+  def insertIntoLive(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
+    if (update.live) {
       val live = updateList(update, collectionJson.live)
-      collectionJson.copy(live = live, draft = collectionJson.draft.filter(_ != live))
+      collectionJson.copy(live=live, draft=collectionJson.draft.filter(_ != live))
     }
     else
       collectionJson
-
-    log.info(s"Inserted into LIVE: $update $collectionJson $result")
-
-    result
-  }
 
   def insertIntoDraft(update: UpdateList, collectionJson: CollectionJson): CollectionJson =
     if (update.draft)
@@ -128,7 +123,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
     else
       collectionJson
 
-  def putBlock(id: String, collectionJson: CollectionJson): CollectionJson =
+  def putCollectionJson(id: String, collectionJson: CollectionJson): CollectionJson =
     FaciaApiIO.putCollectionJson(id, collectionJson)
 
   //Archiving
@@ -171,9 +166,10 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .map(CollectionJsonFunctions.sortByGroup)
         .map(capCollection)
         .map(FaciaApi.updateIdentity(_, identity))
-        .map(putBlock(id, _))
+        .map(putCollectionJson(id, _))
         .map(archiveUpdateBlock(id, _, updateJson, identity))
-        .orElse(createBlock(id, identity, update))}}
+        .orElse(Option(createCollectionJson(identity, update)))
+        .map(putCollectionJson(id, _))}}
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
@@ -187,7 +183,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .map(CollectionJsonFunctions.sortByGroup)
         .map(archiveDeleteBlock(id, _, updateJson, identity))
         .map(FaciaApi.updateIdentity(_, identity))
-        .map(putBlock(id, _))}}
+        .map(putCollectionJson(id, _))}}
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val trail: Trail = blocks
@@ -218,12 +214,11 @@ trait UpdateActions extends Logging with ExecutionContexts {
     splitList._1 ::: (trail +: splitList._2)
   }
 
-  def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[CollectionJson] = {
+  def createCollectionJson(identity: UserIdentity, update: UpdateList): CollectionJson =
     if (update.live)
-      Option(FaciaApiIO.putCollectionJson(id, CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, identity.fullName, identity.email, None, None, None)))
+      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, identity.fullName, identity.email, None, None, None)
     else
-      Option(FaciaApiIO.putCollectionJson(id, CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, identity.fullName, identity.email, None, None, None)))
-  }
+      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, identity.fullName, identity.email, None, None, None)
 
   def capCollection(collectionJson: CollectionJson): CollectionJson =
     collectionJson.copy(live = collectionJson.live.take(collectionCap), draft = collectionJson.draft.map(_.take(collectionCap)))
@@ -259,6 +254,48 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
+
+  def createCollectionForTreat(collectionId: String, identity: UserIdentity, update: UpdateList): CollectionJson = {
+    val trail = Trail(update.item, DateTime.now.getMillis, update.itemMeta)
+    CollectionJson(
+      live          = Nil,
+      draft         = None,
+      treats        = Option(List(trail)),
+      lastUpdated   = DateTime.now,
+      updatedBy     = identity.fullName,
+      updatedEmail  = identity.email,
+      displayName   = None,
+      href          = None,
+      previously    = None)}
+
+  def updateTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(updateTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putCollectionJson(collectionId, _))
+        .orElse(Option(createCollectionForTreat(collectionId, identity, update)))
+        .map(putCollectionJson(collectionId, _))}}
+
+  def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+    lazy val updateJson = Json.toJson(update)
+    FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
+      maybeCollectionJson
+        .map(removeFromTreatsList(update, _))
+        .map(archiveUpdateBlock(collectionId, _, updateJson, identity))
+        .map(FaciaApi.updateIdentity(_, identity))
+        .map(putCollectionJson(collectionId, _))}}
+
+  private def updateTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = updateList(update,collectionJson.treats.getOrElse(Nil))
+    collectionJson.copy(treats = Option(updatedTreats))}
+
+  private def removeFromTreatsList(update: UpdateList, collectionJson: CollectionJson): CollectionJson = {
+    val updatedTreats = collectionJson.treats.map(_.filterNot(_.id == update.item))
+    collectionJson.copy(treats = updatedTreats)}
+
 }
 
 object UpdateActions extends UpdateActions
