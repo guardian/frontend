@@ -75,6 +75,9 @@
                 }, 0);
             }
 
+            // Try and load fonts from local storage.
+            // If there's nothing there, it will just fail silently and projects/common/modules/ui/fonts.js
+            // will try and load from the server.
             function loadFontsFromStorage() {
                 var storedFontFormat = localStorage['gu.fonts.format'];
 
