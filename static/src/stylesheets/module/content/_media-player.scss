@@ -7,7 +7,6 @@ $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
-$ima-controls-height: 70px;
 
 .player {
     margin-bottom: $gs-row-height;
@@ -184,8 +183,7 @@ $ima-controls-height: 70px;
 /* VJS: CONTROL BAR
    ========================================================================== */
 
-.vjs-control-bar,
-#ima-controls-div {
+.vjs-control-bar {
     cursor: default;
     width: 100%;
     z-index: 4;
@@ -197,9 +195,7 @@ $ima-controls-height: 70px;
     height: $vjs-control-height;
     @include transition(bottom .8s);
     transition-delay: 1s;
-}
 
-.vjs-control-bar {
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
@@ -249,14 +245,11 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-play-control,
-#ima-play-pause-div {
+.vjs-play-control {
     float: left;
     cursor: pointer;
     margin: 7px;
-}
 
-.vjs-play-control {
     .vjs-paused & {
         @include icon(play-32--tone-media);
     }
@@ -271,14 +264,6 @@ $ima-controls-height: 70px;
 
     .gu-media-wrapper--podcast .vjs-playing & {
         @include icon(pause-32--tone-podcast);
-    }
-}
-#ima-play-pause-div {
-    &.ima-paused {
-        @include icon(play-32--tone-media);
-    }
-    &.ima-playing {
-        @include icon(pause-32--tone-media);
     }
 }
 
@@ -304,10 +289,8 @@ $ima-controls-height: 70px;
     height: $vjs-control-height;
     width: $vjs-control-height;
     position: relative;
-}
 
-.vjs-fullscreen-control {
-    .vjs-control-content {
+    & .vjs-control-content {
         width: 20px !important;
         height: 20px !important;
         position: absolute;
@@ -317,10 +300,9 @@ $ima-controls-height: 70px;
         bottom: 0;
         margin: auto;
         @include icon(expand-white);
-
-        &:hover {
-            @include icon(expand-yellow);
-        }
+    }
+    &:hover .vjs-control-content {
+        @include icon(expand-yellow);
     }
 
     .gu-media--audio & {
@@ -428,8 +410,7 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-mute-control,
-#ima-mute-div {
+.vjs-mute-control {
     cursor: pointer;
     float: right;
     box-sizing: border-box;
@@ -437,9 +418,7 @@ $ima-controls-height: 70px;
     margin-right: $gs-gutter/4;
     margin-top: $gs-baseline * (4/3);
     text-align: left;
-}
 
-.vjs-mute-control {
     > div {
         @include icon(volume-low-white);
     }
@@ -472,22 +451,6 @@ $ima-controls-height: 70px;
 
         &.vjs-vol-3:hover > div {
             @include icon(volume-high--tone-podcast);
-        }
-    }
-}
-#ima-mute-div {
-    &.ima-non-muted {
-        @include icon(volume-high-white);
-
-        &:hover {
-            @include icon(volume-high--tone-media);
-        }
-    }
-    &.ima-muted {
-        @include icon(volume-mute-white);
-
-        &:hover {
-            @include icon(volume-mute--tone-media);
         }
     }
 }
@@ -780,7 +743,7 @@ $vjs-height-ratio: 7/3;
 .vjs-ads-overlay-skip {
     position: absolute;
     z-index: 4;
-    bottom: $ima-controls-height;
+    bottom: 54px;
     right: 8px;
     width: $gs-column-width*2;
     padding: $gs-baseline/2 0 $gs-baseline/4 $gs-gutter/4;
@@ -928,66 +891,5 @@ $vjs-height-ratio: 7/3;
     .vjs-fullscreen-clickbox,
     .vast-blocker {
         display: none !important;
-    }
-}
-
-/* IMA Adverts
-   ========================================================================== */
-#ima-ad-container {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-}
-.ima-ad-container--fullscreen {
-    &,
-    > div:first-child {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
-#ima-controls-div {
-    display: none;
-    position: absolute;
-    height: $ima-controls-height !important;
-    bottom: -54px;
-
-    .vjs-mousemoved &,
-    &:hover {
-        bottom: 0;
-        @include transition(bottom 0s);
-        transition-delay: 0s;
-    }
-}
-#ima-seek-bar-div {
-    height: $vjs-progress-visual-height-resting;
-    width: 100% !important;
-    background-color: #000000;
-}
-#ima-progress-div {
-    height: 100%;
-    background-color: colour(media-default);
-}
-#ima-play-pause-div,
-#ima-mute-div,
-#ima-fullscreen-div {
-    display: block !important;
-}
-#ima-mute-div {
-    position: absolute;
-    right: 159px;
-    width: 17px !important;
-}
-#ima-fullscreen-div {
-    cursor: pointer;
-    float: right;
-    margin: 14px;
-    width: 20px !important;
-    height: 20px !important;
-    @include icon(expand-white);
-
-    &:hover {
-        @include icon(expand-yellow);
     }
 }

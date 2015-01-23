@@ -3,59 +3,55 @@ define([
     'bean',
     'bonzo',
     'raven',
-    'common/utils/$',
     'common/utils/_',
+    'common/utils/$',
+    'common/utils/ajax',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/preferences',
     'common/utils/url',
-    'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
+    'common/modules/onward/history',
     'common/modules/ui/images',
-    'common/modules/video/events',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
+    'common/modules/video/supportedBrowsers',
+    'common/modules/video/events',
+    'common/modules/analytics/beacon',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
     raven,
-    $,
     _,
+    $,
+    ajax,
     config,
     deferToAnalytics,
     detect,
     mediator,
+    preferences,
     urlUtils,
-    beacon,
     buildPageTargeting,
     Component,
+    history,
     images,
-    events,
-    supportedBrowsers,
     techOrder,
+    supportedBrowsers,
+    events,
+    beacon,
     loadingTmpl
 ) {
 
-    function getAdUrl() {
-        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
-        var queryParams = {
-            ad_rule:                 1,
-            correlator:              new Date().getTime(),
-            cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
-            env:                     'vp',
-            gdfp_req:                1,
-            impl:                    's',
-            iu:                      config.page.adUnit,
-            output:                  'xml_vast2',
-            scp:                     encodeURIComponent('slot=video'),
-            sz:                      '400x300',
-            unviewed_position_start: 1
-        };
-
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+    function getVastUrl() {
+        var adUnit = config.page.adUnit,
+            custParams = urlUtils.constructQuery(buildPageTargeting()),
+            encodedCustParams = encodeURIComponent(custParams),
+            timestamp = new Date().getTime();
+        return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
+                'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
     }
 
     function fullscreener() {
@@ -108,9 +104,6 @@ define([
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
-        // need to explicitly set the height, as the ima plugin uses it
-        player.height(bonzo(player.el()).parent().dim().height);
-
         if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
@@ -134,6 +127,7 @@ define([
         if (config.page.videoJsFlashSwf) {
             videojs.options.flash.swf = config.page.videoJsFlashSwf;
         }
+        videojs.plugin('adCountdown', events.adCountdown);
         videojs.plugin('adSkipCountdown', events.adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
@@ -227,21 +221,22 @@ define([
                 if (mediaType === 'video') {
 
                     player.fullscreener();
+
                     // Init plugins
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                         events.bindPrerollEvents(player);
+                        player.adCountdown();
                         player.adSkipCountdown(15);
 
-                        require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                            .then(function () {
-                                player.ima({
-                                    id: mediaId,
-                                    adTagUrl: getAdUrl()
-                                });
-                                // Video analytics event.
-                                player.trigger(events.constructEventName('preroll:request', player));
-                                player.ima.requestAds();
-                            });
+                        // Video analytics event.
+                        player.trigger(events.constructEventName('preroll:request', player));
+
+                        player.ads({
+                            timeout: 3000
+                        });
+                        player.vast({
+                            url: getVastUrl()
+                        });
                     } else {
                         events.bindContentEvents(player);
                     }
