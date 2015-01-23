@@ -82,6 +82,12 @@ $weather-large-size: 60px;
             position: absolute;
             bottom: $gs-baseline;
         }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                position: inherit;
+            }
+        }
     }
 }
 
@@ -90,12 +96,6 @@ $weather-large-size: 60px;
     margin-right: $gs-gutter / 4;
     margin-bottom: 0;
     @include fs-headline(2);
-
-    .has-page-skin & {
-        @include mq(wide) {
-            position: inherit;
-        }
-    }
 }
 
 .weather__time {
@@ -106,19 +106,12 @@ $weather-large-size: 60px;
     @include mq(tablet) {
         display: block;
     }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            display: none;
-        }
-    }
 }
 
 .i.weather__icon {
     width: $weather-small-size;
     height: $weather-small-size;
-    margin: 0;
-    margin-top: -($gs-baseline / 3);
+    margin: -($gs-baseline / 3) 0 0;
     vertical-align: middle;
 
     @include mq(leftCol) {
@@ -132,22 +125,13 @@ $weather-large-size: 60px;
         @include mq(wide) {
             width: $weather-small-size;
             height: $weather-small-size;
-            margin: 0;
-            margin-top: -($gs-baseline / 3);
             display: inline-block;
+            margin: -($gs-baseline / 3) 0 0;
         }
     }
 }
 
 .weather__toggle-forecast {
-    @include mq(tablet) {
-        padding-right: $gs-gutter / 4;
-
-        &:after {
-            @include weather-rule;
-        }
-    }
-
     @include mq(tablet) {
         display: none;
     }
@@ -169,6 +153,7 @@ $weather-large-size: 60px;
 
 .weather__location {
     width: 100%;
+    border-top: 1px dotted colour(neutral-3);
 
     @include mq($until: tablet) {
         display: none;
@@ -180,39 +165,25 @@ $weather-large-size: 60px;
 
     @include mq(tablet, leftCol) {
         width: gs-span(2);
+        border-top-color: transparent;
     }
 
     @include mq(leftCol) {
-        border-top: 1px dotted colour(neutral-3);
-        padding-top: $gs-baseline / 3;
+        padding-top: $gs-baseline / 6;
     }
 
     .has-page-skin & {
         @include mq(wide) {
             width: gs-span(2);
-            float: left;
-            border-top: 0;
+            border-top-color: transparent;
             padding-top: 0;
         }
     }
 
     .search-tool__input {
         width: 100%;
-        @include fs-headline(2);
         display: inline-block;
-
-        @include mq($until: tablet) {
-            border-bottom: 1px dotted colour(neutral-3);
-            padding-bottom: $gs-baseline / 4;
-        }
-
-        @include mq(leftCol) {
-            padding-bottom: $gs-baseline / 4;
-        }
-
-        .has-page-skin & {
-            padding-bottom: 0;
-        }
+        @include fs-headline(2);
     }
 
     .search-tool__btn {
@@ -228,9 +199,7 @@ $weather-large-size: 60px;
     }
 
     &.is-editing {
-        .search-tool__input {
-            border-bottom: 1px solid colour(neutral-3);
-        }
+        border-bottom: 1px solid colour(neutral-3);
 
         & ~ .weather__forecasts {
             opacity: .5; // This needs fixing
