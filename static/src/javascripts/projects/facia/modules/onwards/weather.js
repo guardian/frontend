@@ -231,7 +231,7 @@ define([
 
         render: function (weatherData, city) {
             $weather = $('.weather');
-            $holder = $('.js-weather');
+            $holder = $('.js-container--first .js-container__header');
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,
