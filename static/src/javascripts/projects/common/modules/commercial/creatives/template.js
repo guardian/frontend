@@ -28,8 +28,8 @@ define([
         this.params  = params;
     };
 
-    params.marque_36_icon = svgs.marque_36_icon;
-    params.marque_36_icon_creative__marque = svgs.marque_36_icon_creative__marque;
+    params.marque_36_icon = svgs('marque_36_icon');
+    params.marque_36_icon_creative__marque = svgs('marque_36_icon', ['creative__marque']);
 
     Template.prototype.create = function () {
         require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {

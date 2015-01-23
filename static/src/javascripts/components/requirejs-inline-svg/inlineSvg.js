@@ -14,14 +14,13 @@ define([
 
                 path = data[0],
                 imageType = data[1] || '',
-                cssClasses = (data[2] && data[2].split(",") || []),
 
                 dirs = path.split('/'),
                 fileName = dirs.pop();
 
             text.get(req.toUrl(dirs.join('/') + '/' + imageType + '/' + fileName + '.svg'), function(svg) {
 
-                svg = '<span class="' + prefix + fileName + ' ' + (imageType !== '' ? prefix + imageType : '') + ' ' + cssClasses.join(' ') + '">' + svg + '</span>';
+                svg = '<span class="' + prefix + fileName + ' ' + (imageType !== '' ? prefix + imageType : '') + '">' + svg + '</span>';
 
                 if (config.isBuild) {
                     buildText[name] = text.jsEscape(svg);

@@ -1,8 +1,15 @@
 // Include any images needed in templates here
 
-define(function (require, exports, module) {
-    return {
+define(function (require) {
+    var svgs = {
         marque_36_icon: require('inlineSvg!svgs/marque-36!icon'),
-        marque_36_icon_creative__marque: require('inlineSvg!svgs/marque-36!icon!creative__marque')
+    }
+
+    return function (name, classes) {
+        var svg = svgs[name];
+        if(classes) {
+            svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
+        }
+        return svg;
     }
 })
