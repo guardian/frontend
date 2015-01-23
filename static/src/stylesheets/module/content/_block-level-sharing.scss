@@ -10,7 +10,7 @@
     height: $gs-baseline * 2;
     @include box-sizing(border-box);
 
-    .i {
+    .inline-icon svg {
         width: 100% !important;
         height: 100% !important;
     }
@@ -91,7 +91,6 @@
 .share-modal__item--facebook {
     background-color: colour(social-facebook);
     color: #ffffff;
-    .i { @include icon(share-facebook--white); }
 
     &:hover {
         background-color: darken(colour(social-facebook), 15%);
@@ -101,7 +100,6 @@
 .share-modal__item--twitter {
     background-color: colour(social-twitter);
     color: #ffffff;
-    .i { @include icon(share-twitter--white); }
 
     &:hover {
         background-color: darken(colour(social-twitter), 15%);
@@ -111,7 +109,6 @@
 .share-modal__item--gplus {
     background-color: colour(social-gplus);
     color: #ffffff;
-    .i { @include icon(share-gplus--white); }
 
     &:hover {
         background-color: darken(colour(social-gplus), 15%);
@@ -121,8 +118,8 @@
 .share-modal__item--pinterest {
     background-color: colour(social-pinterest);
     color: #ffffff;
-    .i {
-        @include icon(share-pinterest--white);
+
+    .inline-icon {
         margin-left: 6px !important;
     }
 
@@ -269,10 +266,6 @@
 
         &:hover {
             background-color: colour-hover(social-twitter);
-        }
-
-        .i {
-            @include icon(share-twitter--white);
         }
     }
 

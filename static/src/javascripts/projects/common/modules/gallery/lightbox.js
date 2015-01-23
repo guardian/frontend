@@ -14,6 +14,7 @@ define([
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
+    'common/views/svgs',
     'text!common/views/content/block-sharing.html',
     'text!common/views/content/button.html',
     'text!common/views/content/endslate.html',
@@ -36,6 +37,7 @@ define([
     Component,
     blockSharing,
     imagesModule,
+    svgs,
     blockSharingTpl,
     buttonTpl,
     endslateTpl,
@@ -132,15 +134,18 @@ define([
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
+                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i),
+                'shareIcon': svgs('share_facebook_icon')
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
+                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i),
+                'shareIcon': svgs('share_twitter_icon')
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
-                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700')),
+                'shareIcon': svgs('share_pinterest_icon')
             }];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {

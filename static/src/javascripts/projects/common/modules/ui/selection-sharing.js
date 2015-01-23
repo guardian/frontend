@@ -8,6 +8,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/ui/selection-sharing.html'
 ], function (
     bean,
@@ -19,11 +20,14 @@ define([
     detect,
     mediator,
     template,
+    svgs,
     sharingTemplate
     ) {
 
     var $body = bonzo(document.body),
-        $selectionSharing = $.create(sharingTemplate),
+        $selectionSharing = $.create(template(sharingTemplate, {
+            share_twitter_icon: svgs('share_twitter_icon')
+        })),
         $twitterAction,
         $emailAction,
         twitterShortUrl = config.page.shortUrl + '/stw',
