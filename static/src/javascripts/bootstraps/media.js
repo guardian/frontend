@@ -230,13 +230,13 @@ define([
                     // Init plugins
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                         events.bindPrerollEvents(player);
-                        player.adSkipCountdown(5);
+                        player.adSkipCountdown(15);
 
                         require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
                             .then(function () {
                                 player.ima({
                                     id: mediaId,
-                                    adTagUrl: getVastUrl()
+                                    adTagUrl: getAdUrl()
                                 });
                                 // Video analytics event.
                                 player.trigger(events.constructEventName('preroll:request', player));
