@@ -14,11 +14,15 @@ case class SectionLink(zone: String, title: String, breadcrumbTitle: String, hre
 }
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
-  def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
-    links.exists(_.currentFor(page)) || exactFor(page)
+  def currentFor(page: MetaData): Boolean = {
+    name.currentFor(page) ||
+      links.exists(_.currentFor(page)) || exactFor(page)
+  }
 
-  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
-    links.exists(_.currentForIncludingAllTags(page))
+  def currentForIncludingAllTags(page: MetaData): Boolean = {
+    name.currentForIncludingAllTags(page) ||
+      links.exists(_.currentForIncludingAllTags(page))
+  }
 
   def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
     val localHrefs = links.map(_.href)
@@ -212,7 +216,24 @@ object Breadcrumbs {
 // helper for the views
 object Navigation {
 
+  /** I have no idea how all of this works - it's really nasty, but I don't want to try to fix it all before launch
+    * (or before lunch, for that matter).
+    *
+    * I'm providing a manual override for games here, which actually belongs to the technology section, but in the nav
+    * is supposed to appear below culture.
+    */
+  val BafflingNavigationLookUpOverrides = Map(
+    "technology/games" -> "/culture"
+  )
+
+  def navFromOverride(navigation: Seq[NavItem], page: MetaData) = {
+    BafflingNavigationLookUpOverrides.get(page.id) flatMap { navHref =>
+      navigation.find(_.name.href == navHref)
+    }
+  }
+
   def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = page.customSignPosting orElse
+    navFromOverride(navigation, page) orElse
     navigation.find(_.exactFor(page)) orElse
     navigation.find(_.currentFor(page)) orElse                /* This searches the top level nav for tags in the page */
     navigation.find(_.currentForIncludingAllTags(page))       /* This searches the whole nav for tags in the page */
