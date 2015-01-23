@@ -1,4 +1,5 @@
-// Include any images needed in templates here
+// Include any images needed in templates here.
+// This file is only required by core, and so has a long cache time.
 
 define(function (require) {
     var svgs = {
@@ -10,9 +11,12 @@ define(function (require) {
 
     return function (name, classes) {
         var svg = svgs[name];
+
+        // Only mess with classes if we actually need to.
         if(classes) {
             svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
         }
+
         return svg;
     }
 })
