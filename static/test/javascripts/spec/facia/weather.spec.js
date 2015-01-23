@@ -65,6 +65,27 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
+                it("should get the default location and track it", function(done) {
+                    var server = sinon.fakeServer.create(),
+                        data = {id: '1', city: "London"};
+
+                    spyOn(sut, "track");
+                    spyOn(sut, "fetchWeatherData");
+
+                    server.autoRespond = true;
+
+                    server.respondWith([200, { "Content-Type": "application/json" },
+                        '[{"WeatherIcon": 3}]']);
+
+                    sut.getDefaultLocation().then(function () {
+                        expect(sut.fetchWeatherData).toHaveBeenCalled();
+                        expect(sut.track).toHaveBeenCalled();
+                        done();
+                    });
+
+                    server.restore();
+                });
+
                 it("should remove data from localStorage and fetchWeatherData if user searches", function() {
                     spyOn(sut, "saveUserLocation");
                     spyOn(sut, "fetchWeatherData");
