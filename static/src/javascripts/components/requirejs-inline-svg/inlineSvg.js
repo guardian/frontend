@@ -21,9 +21,7 @@ define([
 
             text.get(req.toUrl(dirs.join('/') + '/' + imageType + '/' + fileName + '.svg'), function(svg) {
 
-                svg = '<span class="' + prefix + fileName + ' ' + (imageType !== '' ? prefix + imageType : '') + ' ' + cssClasses.map(function (cssClass) {
-                    return prefix + cssClass;
-                }).join(' ') + '">' + svg + '</span>';
+                svg = '<span class="' + prefix + fileName + ' ' + (imageType !== '' ? prefix + imageType : '') + ' ' + cssClasses.join(' ') + '">' + svg + '</span>';
 
                 if (config.isBuild) {
                     buildText[name] = text.jsEscape(svg);
