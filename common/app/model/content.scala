@@ -743,7 +743,7 @@ object Interactive {
 }
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
-
+  override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
