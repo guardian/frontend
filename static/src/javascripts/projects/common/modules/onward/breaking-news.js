@@ -106,7 +106,7 @@ define([
                     _.forEach(alerts, function (article) {
                         var el = bonzo.create(template(alertHtml, article));
 
-                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function (e) {
+                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
                             $(el).hide();
                             hiddenIds[article.id] = true;
                             storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
