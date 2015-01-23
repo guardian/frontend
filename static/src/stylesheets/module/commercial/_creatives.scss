@@ -40,6 +40,7 @@
     }
     .creative__marque {
         display: block;
+        fill: #333;
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -250,7 +251,7 @@
             @include transform(rotate(360deg));
         }
     }
-    
+
     .slide-1 {
         z-index: 1;
     }
@@ -373,7 +374,7 @@
             display: none;
         }
     }
-    
+
     .top-banner-ad-container--mobile & {
         height: auto;
         padding-top: 0;
@@ -391,7 +392,7 @@
     .fluid250_video {
         position: absolute;
         z-index: 10;
-        
+
         &.fluid250_video--vert-pos-top {
             top: 0;
         }
