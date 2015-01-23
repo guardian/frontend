@@ -1,19 +1,19 @@
 .open {
     margin-bottom: $gs-baseline;
-    border-top: 2px solid;
+    border-top: 1px solid;
     border-bottom: 1px solid colour(neutral-4) !important;
 }
 
 h2.open__head { // element selector here in order to override .from-content-api style
+    @include fs-headline(3);
+    font-weight: 500;
     color: colour(neutral-2);
-    @include fs-header(2);
     margin-top: 2px;
     margin-bottom: $gs-baseline !important;
-    line-height: 22px;
 
-    @include mq(tablet) {
-        @include fs-header(3);
-        line-height: 24px;
+    @include mq($until: tablet) {
+          @include font-size(18, 22);
+          font-weight: 500;
     }
 }
 
@@ -28,14 +28,15 @@ h2.open__head { // element selector here in order to override .from-content-api 
 .open__body {
     margin-bottom: $gs-baseline*1.5;
     @include fs-bodyCopy(1);
+    color: colour(neutral-2);
+    
 }
 
 .open__cta {
     @include fs-bodyHeading(1);
+    display: block;
+    margin-bottom: $gs-baseline / 2;
 
-    @include mq(tablet) {
-        @include fs-bodyHeading(2);
-    }
 }
 
 .open__cta-icon {
