@@ -71,7 +71,7 @@ define([
 
         videojs.plugin('fullscreener', fullscreener);
 
-        bonzo(qwery('.js-gu-media')).each(function (el) {
+        bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
             var player,
                 mouseMoveIdle,
                 $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
