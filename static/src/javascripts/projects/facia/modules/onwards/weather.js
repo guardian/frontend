@@ -48,11 +48,15 @@ define([
 
     return {
         init: function () {
-            if (!config.switches || !config.switches.weather) {
+            if (!config.switches || !config.switches.weather || !this.isFront()) {
                 return false;
             }
 
             this.getDefaultLocation();
+        },
+
+        isFront: function () {
+            return _.contains(['uk', 'us', 'au'], config.page.pageId);
         },
 
         /**
