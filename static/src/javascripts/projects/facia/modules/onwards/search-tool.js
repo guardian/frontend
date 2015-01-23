@@ -79,6 +79,8 @@ define([
 
                 // Clear all after timeout because of the tracking we can't remove everything straight away
                 setTimeout(this.destroy.bind(this), 50);
+
+                return data;
             },
 
             track: function (city) {

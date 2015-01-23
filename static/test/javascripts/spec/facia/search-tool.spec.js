@@ -101,14 +101,25 @@ define([
                     {
                         'id': '292177',
                         'city': 'Ufa',
-                        store: 'set'
+                        'store': 'set'
                     }
                 );
                 expect(sut.track).toHaveBeenCalledWith('Ufa');
             });
 
             it("should not push data after enter without selecting from the list", function() {
+                spyOn(sut, "track");
+
+                sut.init();
                 $('.js-search-tool-input').val('');
+
+                expect(sut.pushData()).toEqual({'id': null, 'city': null, 'store': 'remove'})
+            });
+
+            it("should not push data after enter with uncomplete city name ", function() {
+                sut.init();
+                $('.js-search-tool-input').val('Syd');
+
                 expect(sut.pushData()).toEqual(false);
             });
 
