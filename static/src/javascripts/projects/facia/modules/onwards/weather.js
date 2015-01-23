@@ -96,9 +96,10 @@ define([
             if (location) {
                 this.fetchWeatherData(location);
             } else {
-                this.getWeatherData(config.page.weatherapiurl + '.json')
+                return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
+                        this.track(response.city);
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
