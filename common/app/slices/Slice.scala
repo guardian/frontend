@@ -469,7 +469,7 @@ case object QuarterThreeQuarter extends Slice {
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = ListItem,
+          mobile = MediaList,
           tablet = Standard
         )
       ),
