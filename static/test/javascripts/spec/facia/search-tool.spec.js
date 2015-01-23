@@ -85,7 +85,7 @@ define([
                 expect(sut.getListOfResults).toHaveBeenCalledWith(stubEvent);
             });
 
-            xit("should push data after click on list item", function() {
+            it("should push data after click on list item", function() {
                 spyOn(sut, "pushData").and.callThrough();
                 spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
@@ -101,14 +101,14 @@ define([
                     {
                         'id': '292177',
                         'city': 'Ufa',
-                        store: true
+                        store: 'set'
                     }
                 );
                 expect(sut.track).toHaveBeenCalledWith('Ufa');
             });
 
-            xit("should not push data after enter without selecting from the list", function() {
-                sut.setInputValue("Sy");
+            it("should not push data after enter without selecting from the list", function() {
+                $('.js-search-tool-input').val('');
                 expect(sut.pushData()).toEqual(false);
             });
 
