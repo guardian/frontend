@@ -136,6 +136,8 @@ define([
         });
 
         $('.js-video-play-button').each(function (el) {
+            var $el = bonzo(el);
+            $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
             bean.on(el, 'click', function () {
                 var placeholder, player, container;
                 container = bonzo(el).parent().parent();
@@ -143,7 +145,7 @@ define([
                 placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                 player = $('.js-video-player', container);
                 player.removeClass('media__container--hidden').addClass('media__container--active');
-                bonzo(el).removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                 enhanceVideo($('video', player).get(0), true);
             });
         });
