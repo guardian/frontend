@@ -255,10 +255,6 @@
         &:hover {
             background-color: colour-hover(social-facebook);
         }
-
-        .i {
-            @include icon(share-facebook--white);
-        }
     }
 
     .block-share__item--twitter {
@@ -275,10 +271,6 @@
         &:hover {
             background-color: colour-hover(social-gplus);
         }
-
-        .i {
-            @include icon(share-gplus--white);
-        }
     }
 
     .block-share__item--linkedin {
@@ -287,10 +279,6 @@
         &:hover {
             background-color: colour-hover(social-linkedin);
         }
-
-        .i {
-            @include icon(share-linkedin--white);
-        }
     }
 
     .block-share__item--pinterest {
@@ -298,10 +286,6 @@
 
         &:hover {
             background-color: colour-hover(social-pinterest);
-        }
-
-        .i {
-            @include icon(share-pinterest--white);
         }
     }
 
