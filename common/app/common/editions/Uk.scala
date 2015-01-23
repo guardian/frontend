@@ -52,7 +52,7 @@ object Uk extends Edition(
       NavItem(money, Seq(property, savings, borrowing, careers)),
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(science),
-      NavItem(education, Seq(students)),
+      NavItem(education, Seq(students, teachersNetwork)),
       NavItem(media),
       NavItem(observer),
       NavItem(todaysPaper),
