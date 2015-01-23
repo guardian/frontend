@@ -15,6 +15,8 @@
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#158221b5d997a184972fbf038c9eebdb676d30c8",
     "videojs-contrib-ads": "videojs/videojs-contrib-ads#f44387a4d2fd939f9a665762917e2fa6fc8838d7",
+    "videojs-vast": "guardian/videojs-vast-plugin#f2b9fe764d90f364607ba2b7fca1694d9db8d31a",
+    "vast-client-js": "guardian/vast-client-js#79a3102455eb8acc6b677424e6e556fb354131d4",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
@@ -22,11 +24,12 @@
     "fastclick": "guardian/fastclick#master",
     "requirejs-text": "~2.0.12",
     "native-promise-only": "guardian/native-promise-only#master",
-    "videojs-embed": "~0.3.1",
-    "videojs-ima": "guardian/videojs-ima#e0fa524afb91ebf8bf539096e6bedd1a02800db4"
+    "videojs-embed": "~0.3.1"
   },
   "resolutions": {
-    "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8"
+    "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8",
+    "videojs-contrib-ads": "f44387a4d2fd939f9a665762917e2fa6fc8838d7",
+    "vast-client-js": "79a3102455eb8acc6b677424e6e556fb354131d4"
   },
   "install": {
     "path": "components",
@@ -45,8 +48,9 @@
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
-      "videojs-ima": "bower_components/videojs-ima/src/videojs.ima.js",
       "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
+      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js",
+      "vast-client-js": "bower_components/vast-client-js/vast-client.js",
       "native-promise-only": "bower_components/native-promise-only/lib/npo.src.js"
     }
   }
