@@ -21,7 +21,7 @@ define([
         var isNetworkFront = config.page.contentType === 'Network Front';
 
         this.canRun = function () {
-            return isNetworkFront && historyContainers.hasContainers();
+            return guardian.isModernBrowser && isNetworkFront && historyContainers.hasContainers();
         };
 
         this.variants = [
