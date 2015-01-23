@@ -110,7 +110,6 @@ define([
                             $(el).hide();
                             hiddenIds[article.id] = true;
                             storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                            return e;
                         });
 
                         $breakingNews.append(el);
