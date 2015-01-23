@@ -157,7 +157,7 @@ trait Navigation {
   val lostinshowbiz = SectionLink("lifeandstyle", "lost in showbiz", "Lost in showbiz", "/lifeandstyle/lostinshowbiz")
   val women = SectionLink("lifeandstyle", "women", "Women", "/lifeandstyle/women")
   val relationships = SectionLink("lifeandstyle", "relationships", "Relationships", "/lifeandstyle/relationships")
-  val healthandwellbeing = SectionLink("lifeandstyle", "health", "Health", "/lifeandstyle/health-and-wellbeing")
+  val healthandwellbeing = SectionLink("lifeandstyle", "health", "Health & fitness", "/lifeandstyle/health-and-wellbeing")
   val loveAndSex = SectionLink("lifeandstyle", "love & sex", "Love & sex", "/lifeandstyle/love-and-sex")
   val homeAndGarden = SectionLink("lifeandstyle", "home & garden", "Home & garden", "/lifeandstyle/home-and-garden")
 
