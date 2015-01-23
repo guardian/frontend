@@ -37,7 +37,7 @@
         }
 
         <div class="flyer__header">
-            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
+            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
             @if(!content.isMedia && CardStyle(content) == Comment) {
                 <div class="flyer__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
