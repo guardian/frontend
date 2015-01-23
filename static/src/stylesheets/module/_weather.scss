@@ -13,10 +13,7 @@ $weather-large-size: 60px;
 .weather {
     color: colour(neutral-1);
     text-align: right;
-
-    @include mq($until: tablet) {
-        padding-top: $gs-baseline / 4;
-    }
+    padding-top: $gs-baseline / 6;
 
     @include mq(tablet) {
         padding-top: ($gs-baseline / 3) * 2;
@@ -24,7 +21,7 @@ $weather-large-size: 60px;
 
     @include mq(leftCol) {
         width: $left-column;
-        margin-top: $gs-baseline;
+        padding-top: $gs-baseline;
         text-align: left;
     }
 
@@ -35,7 +32,8 @@ $weather-large-size: 60px;
     .has-page-skin & {
         @include mq(wide) {
             width: auto;
-            margin-top: $gs-baseline * 2;
+            padding-top: ($gs-baseline / 3) * 2;
+            text-align: right;
         }
     }
 }
