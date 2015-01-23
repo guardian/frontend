@@ -43,7 +43,7 @@ $weather-large-size: 60px;
 
 .weather__current {
     @include mq($until: leftCol) {
-        padding-right: $gs-gutter / 4;
+        padding-right: $gs-gutter / 2;
         text-align: right;
 
         &:after {
@@ -57,13 +57,8 @@ $weather-large-size: 60px;
 
     .has-page-skin & {
         @include mq(wide) {
-            padding-right: $gs-gutter / 4;
-            text-align: right;
-
-            .weather__icon {
-                position: absolute;
-                top: 0;
-            }
+            padding-right: $gs-gutter / 2;
+            text-align: left;
 
             &:after {
                 @include weather-rule;
@@ -83,7 +78,7 @@ $weather-large-size: 60px;
 
         .has-page-skin & {
             @include mq(wide) {
-                position: inherit;
+                position: static;
             }
         }
     }
@@ -91,8 +86,7 @@ $weather-large-size: 60px;
 
 .weather__desc {
     display: inline-block;
-    margin-right: $gs-gutter / 4;
-    margin-bottom: 0;
+    margin: 0;
     @include fs-headline(2);
 }
 
@@ -261,6 +255,7 @@ i.weather__close-icon {
     .has-page-skin & {
         @include mq(wide) {
             width: auto;
+            display: inline-block;
         }
     }
 }
@@ -269,7 +264,7 @@ i.weather__close-icon {
     position: relative;
     display: table-cell;
     border-left: 1px dotted colour(neutral-3);
-    padding: 0 $gs-gutter / 4;
+    padding: 0 ($gs-gutter / 2) 0 ($gs-gutter / 4);
 
     @include mq(tablet, leftCol) {
         border-left: none;
@@ -286,6 +281,18 @@ i.weather__close-icon {
 
     @include mq(leftCol, wide) {
         width: 33%;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            display: inline-block;
+            border-left: 0;
+            padding-right: $gs-gutter / 2;
+
+            &:after {
+                @include weather-rule;
+            }
+        }
     }
 
     &.forecast__item--1 {
@@ -324,6 +331,12 @@ i.weather__close-icon {
             width: $weather-small-size;
             height: $weather-small-size;
             margin-left: 0;
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                display: inline-block;
+            }
         }
     }
 }
