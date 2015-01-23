@@ -41,13 +41,10 @@ $weather-large-size: 60px;
     text-align: left;
 }
 
-
 .weather__current {
     @include transition(opacity .2s ease-in); // Needs Fixing
 
     @include mq($until: leftCol) {
-        @include box-sizing(border-box);
-        width: gs-span(1) + $gs-gutter;
         padding-right: $gs-gutter / 4;
         text-align: right;
 
@@ -57,15 +54,12 @@ $weather-large-size: 60px;
     }
 
     @include mq(tablet, leftCol) {
-        width: auto;
         text-align: left;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            @include box-sizing(border-box);
             padding-right: $gs-gutter / 4;
-            width: gs-span(1) + $gs-gutter;
             text-align: right;
 
             .weather__icon {
@@ -82,11 +76,11 @@ $weather-large-size: 60px;
             }
         }
     }
-    
+
     .weather__desc {
         @include mq(leftCol) {
             position: absolute;
-            bottom: 2px;
+            bottom: $gs-baseline;
         }
     }
 }
@@ -336,13 +330,13 @@ $weather-large-size: 60px;
     }
 
     &:first-of-type {
+        padding-left: 0;
+
         @include mq($until: tablet) {
-            padding-left: 0;
             border-left: 0;
         }
 
         @include mq(leftCol) {
-            padding-left: 0;
             border-left: 0;
         }
     }
