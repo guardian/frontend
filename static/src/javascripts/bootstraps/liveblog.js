@@ -20,7 +20,9 @@ define([
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
-    'bootstraps/article'
+    'bootstraps/article',
+    'common/modules/analytics/live-blog-metrics',
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -43,7 +45,9 @@ define([
     Message,
     NotificationCounter,
     RelativeDates,
-    article
+    article,
+    LiveBlogMetrics,
+    robust
 ) {
     'use strict';
 
@@ -266,22 +270,23 @@ define([
     };
 
     function ready() {
-        modules.initAdverts();
-        modules.createFilter();
-        modules.createTimeline();
-        modules.createAutoUpdate();
-        modules.showFootballLiveBlogMessage();
-        modules.keepTimestampsCurrent();
-        modules.handleUpdates();
+        robust('lb-adverts',    function () { modules.initAdverts(); });
+        robust('lb-filter',     function () { modules.createFilter(); });
+        robust('lb-timeline',   function () { modules.createTimeline(); });
+        robust('lb-autoupdate', function () { modules.createAutoUpdate(); });
+        robust('lb-football',   function () { modules.showFootballLiveBlogMessage(); });
+        robust('lb-timestamp',  function () { modules.keepTimestampsCurrent(); });
+        robust('lb-updates',    function () { modules.handleUpdates(); });
+        robust('lb-metrics',    function () { LiveBlogMetrics.init(); });
 
         // re-use modules from article bootstrap
-        article.modules.initOpen();
-        article.modules.initFence();
-        article.modules.initTruncateAndTwitter();
-        article.modules.initSelectionSharing();
-        Lightbox.init();
+        robust('lb-article',    function () { article.modules.initOpen(); });
+        robust('lb-fence',      function () { article.modules.initFence(); });
+        robust('lb-twitter',    function () { article.modules.initTruncateAndTwitter(); });
+        robust('lb-sharing',    function () { article.modules.initSelectionSharing(); });
+        robust('lb-lightbox',   function () { Lightbox.init(); });
 
-        mediator.emit('page:liveblog:ready');
+        robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
 
     return {

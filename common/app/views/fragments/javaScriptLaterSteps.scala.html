@@ -146,6 +146,7 @@
                 'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
                 {
                     whitelistUrls: [
+                        /localhost/,
                         /assets\.guim\.co\.uk/,
                         /ophan\.co\.uk/
                     ],
@@ -162,7 +163,11 @@
                         return data;
                     },
                     shouldSendCallback: function(data) {
-                        return Math.random() < 0.2 && guardian.config.switches.enableDiagnosticsLogging;
+                        @if(play.Play.isDev()) {
+                            console.error(data);
+                        }
+                                                                            @* don't actually notify sentry in dev mode*@
+                        return @conf.Switches.DiagnosticsLogging.isSwitchedOn && Math.random() < 0.2 && @{!play.Play.isDev()};
                     }
                 }
             ).install();
