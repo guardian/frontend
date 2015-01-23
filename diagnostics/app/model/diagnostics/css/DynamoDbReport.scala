@@ -3,12 +3,12 @@ package model.diagnostics.css
 import com.amazonaws.regions.{Regions, Region}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import com.amazonaws.services.dynamodbv2.model.{AttributeAction, AttributeValueUpdate, AttributeValue, UpdateItemRequest}
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import org.joda.time.LocalDate
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
-object DynamoDbReport extends Logging {
+object DynamoDbReport extends Logging with ExecutionContexts {
   val TableName = "cssUsage"
   private val client = new AmazonDynamoDBAsyncClient()
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
