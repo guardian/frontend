@@ -460,12 +460,14 @@ define([
             },
 
             displayAdBlockMessage: function () {
-                var adblockLink = 'https://www.theguardian.com/';
+                var adblockLink = 'https://www.theguardian.com/',
+                    adblockMessage;
 
-                console.log(detect.adblockInUse());
+                $.create('<div class="ad_unit"></div>').appendTo(document.body);
 
                 if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
-                    releaseMessage.show(template(
+                    adblockMessage = new Message('adblock', {pinOnHide: false});
+                    adblockMessage.show(template(
                         doNotUseAdblockTemplae,
                         {
                             adblockLink: adblockLink

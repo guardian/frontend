@@ -347,7 +347,7 @@ define([
     }
 
     function adblockInUse() {
-        return $('.js-ad-slot') === null;
+        return $('.ad_unit').css('display') === 'none';
     }
 
     return {
