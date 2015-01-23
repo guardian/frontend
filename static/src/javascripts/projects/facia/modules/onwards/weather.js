@@ -48,11 +48,15 @@ define([
 
     return {
         init: function () {
-            if (!config.switches || !config.switches.weather) {
+            if (!config.switches || !config.switches.weather || !this.isNetworkFront()) {
                 return false;
             }
 
             this.getDefaultLocation();
+        },
+
+        isNetworkFront: function () {
+            return _.contains(['uk', 'us', 'au'], config.page.pageId);
         },
 
         /**
@@ -227,7 +231,7 @@ define([
 
         render: function (weatherData, city) {
             $weather = $('.weather');
-            $holder = $('.js-weather');
+            $holder = $('.js-container--first .js-container__header');
 
             $weather = $.create(template(weatherTemplate, {
                 location: city,
