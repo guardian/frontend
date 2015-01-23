@@ -42,8 +42,6 @@ $weather-large-size: 60px;
 }
 
 .weather__current {
-    @include transition(opacity .2s ease-in); // Needs Fixing
-
     @include mq($until: leftCol) {
         padding-right: $gs-gutter / 4;
         text-align: right;
@@ -205,10 +203,6 @@ $weather-large-size: 60px;
 
     &.is-editing {
         border-bottom: 1px solid colour(neutral-3);
-
-        & ~ .weather__forecasts {
-            opacity: .5; // This needs fixing
-        }
     }
 }
 
@@ -257,6 +251,7 @@ i.weather__close-icon {
 
     @include mq(leftCol) {
         display: table;
+        padding-top: 0;
     }
 
     @include mq(wide) {
