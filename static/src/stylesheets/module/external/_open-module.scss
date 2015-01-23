@@ -12,8 +12,8 @@ h2.open__head { // element selector here in order to override .from-content-api 
     margin-bottom: $gs-baseline !important;
 
     @include mq($until: tablet) {
-          @include font-size(18, 22);
-          font-weight: 500;
+        @include font-size(18, 22);
+        font-weight: 500;
     }
 }
 
