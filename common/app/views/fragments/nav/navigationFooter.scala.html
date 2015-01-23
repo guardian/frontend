@@ -1,5 +1,7 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
+
 @import common._
+@import views.support.RenderClasses
 
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(
