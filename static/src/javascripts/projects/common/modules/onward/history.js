@@ -65,7 +65,7 @@ define([
 
             // football links
             'football/competitions', 'football/fixtures', 'football/live', 'football/results', 'football/tables', 'football/teams', 'football/series/thefiver',
-            'football/series/rumourmill', 'football/transfer-window',
+            'football/series/rumourmill', 'football/transfer-window', 'football/series/footballweekly',
 
             // NG subnav
             'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'education',

@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/$',
     'qwery',
     'common/utils/_',
     'common/utils/ajax',
@@ -13,6 +14,7 @@ define([
 ], function (
     bean,
     bonzo,
+    $,
     qwery,
     _,
     ajax,
@@ -84,8 +86,8 @@ define([
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; }),
-                    showAlert = false,
-                    alertDelay = 3000;
+                    alertDelay = 3000,
+                    alerts;
 
                 // if we're on the page that an alert is for, hide alerts for it
                 if (articleIds.indexOf(page.pageId) > -1) {
@@ -95,45 +97,47 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                _.chain(articles)
+                alerts = _.chain(articles)
                 .filter(function (article) { return hiddenIds[article.id] !== true; })
                 .first(maxSimultaneousAlerts)
-                .forEach(function (article) {
-                    article.marque_36_icon = svgs('marque_36_icon');
-                    var $el = bonzo.create(template(alertHtml, article));
+                    .value();
 
+                if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
-                    $breakingNews.append($el);
 
-                    bean.on($breakingNews[0], 'click', '.js-breaking-news__item__close', function (e) {
-                        var id;
-                        e.preventDefault();
-                        id = e.currentTarget.getAttribute('data-article-id');
-                        hiddenIds[id] = true;
+                    _.forEach(alerts, function (article) {
+                        article.marque_36_icon = svgs('marque_36_icon');
+                        var el = bonzo.create(template(alertHtml, article));
+
+                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
+                            $(el).hide();
+                            hiddenIds[article.id] = true;
                         storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                        bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
                     });
 
-                    showAlert = true;
+                        $breakingNews.append(el);
 
                     if (hiddenIds[article.id] === false) {
                         alertDelay = 0;
                     }
                 });
 
-                if (showAlert) {
                     setTimeout(function () {
+                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times');
+
                         $body = $body || bonzo(document.body);
                         $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
 
-                        if (alertDelay === 0) {
+                        if (!alertDelay) {
                             $breakingNews.removeClass('breaking-news--fade-in');
-                            s.tl(this, 'o', 'breaking news alert shown 2 or more times');
-                        } else {
-                            s.tl(this, 'o', 'breaking news alert shown');
                         }
 
                         $breakingNews.removeClass('breaking-news--hidden');
+
+                        s.eVar36 = message;
+                        s.eVar72 = _.map(alerts, function (article) { return article.headline; }).join(' | ');
+                        s.linkTrackVars = 'eVar36,eVar72';
+                        s.tl(this, 'o', message);
                     }, alertDelay);
                 }
             }

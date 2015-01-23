@@ -414,9 +414,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
-    "If this is switched on then personalised history tags are tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  val HistoryTags = Switch("Feature", "history-tags",
+    "If this is switched on then personalised history tags are shown in the meganav",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
   val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",

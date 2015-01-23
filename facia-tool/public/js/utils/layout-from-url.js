@@ -17,6 +17,8 @@ define([
 
         if (queryParams.treats === 'please' && vars.model.switches()['facia-treats']) {
             columns = [{
+                type: 'clipboard'
+            }, {
                 type: 'treats',
                 config: queryParams.front
             }];

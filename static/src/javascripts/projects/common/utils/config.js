@@ -7,15 +7,22 @@ define([
     'lodash/collections/contains',
     'lodash/objects/assign',
     'common/utils/_',
-    'common/utils/pad'
+    'common/utils/pad',
+    'common/utils/url'
 ], function (
     contains,
     extend,
     _,
-    pad
+    pad,
+    urlUtils
 ) {
 
-    var config = guardian.config;
+    var config         = guardian.config,
+        adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
+
+    if (adUnitOverride) {
+        config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
+    }
 
     return extend({
         hasTone: function (name) {

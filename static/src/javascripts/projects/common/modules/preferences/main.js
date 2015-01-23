@@ -1,25 +1,24 @@
 define([
     'react',
     'common/utils/_',
-    'common/modules/experiments/ab',
     'common/modules/onward/history'
 ], function (
     React,
     _,
-    ab,
     history
 ) {
     return function () {
-        var SummaryTagsSettings = React.createClass({
+        var placeholder = document.getElementById('preferences-history-tags'),
+
+            SummaryTagsSettings = React.createClass({
                 getInitialState: function () {
-                    return { enabled: history.showInMegaNavEnabled() && ab.getTestVariant('HistoryTags') === 'show' };
+                    return { enabled: history.showInMegaNavEnabled()};
                 },
                 handleToggle: function () {
                     var isEnabled = !this.state.enabled;
 
                     this.setState({ enabled: isEnabled });
                     history.showInMegaNavEnable(isEnabled);
-                    ab.setTestVariant('HistoryTags', isEnabled ? 'show' : 'notintest');
                 },
                 render: function () {
                     var self = this,
@@ -72,9 +71,8 @@ define([
                 }
             });
 
-        React.renderComponent(
-            React.createElement(SummaryTagsSettings),
-            document.getElementById('preferences-history-tags')
-        );
+        if (placeholder) {
+            React.renderComponent(React.createElement(SummaryTagsSettings), placeholder);
+        }
     };
 });
