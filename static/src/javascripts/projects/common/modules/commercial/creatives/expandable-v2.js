@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'lodash/objects/merge',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -10,6 +11,7 @@ define([
 ], function (
     bean,
     bonzo,
+    merge,
     $,
 	detect,
     mediator,
@@ -51,7 +53,15 @@ define([
     };
 
     ExpandableV2.prototype.create = function () {
-        var $expandablev2 = $.create(template(expandableV2Tpl, this.params));
+
+        var $expandablev2, showmore;
+
+        showmore = {
+            show: (this.params.showMore === 'yes') ?
+                '<button class="ad-exp__open-chevron ad-exp__open"><i class="i i-arrow-white-down-36"></i></button>' : ''
+        };
+
+        $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);
