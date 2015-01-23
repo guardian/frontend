@@ -4,6 +4,10 @@
 .commercial--dfp {
     /* Single */
     &.commercial--dfp-single {
+        .lineitems {
+            overflow: hidden;
+        }
+
         .lineitem--dfp-single {
             width: 100%;
             overflow: hidden;

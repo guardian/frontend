@@ -6,18 +6,10 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 @DoNotDiscover class GalleryControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
-  val callbackName = "aFunction"
 
   "Gallery Controller" should "200 when content type is gallery" in {
     val result = controllers.GalleryController.render(galleryUrl)(TestRequest(s"/$galleryUrl"))
     status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied" in {
-    val result = controllers.GalleryController.render(galleryUrl)(TestRequest(s"/${galleryUrl}?callback=$callbackName"))
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
   }
 
   it should "return JSON when .json format is supplied" in {

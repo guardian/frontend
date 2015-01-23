@@ -14,10 +14,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/join-us-navigation',
-    'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/breaking-news-alert-style',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/sticky-container-titles'
 ], function (
     raven,
     filter,
@@ -34,10 +31,7 @@ define([
     HighCommercialComponent,
     HistoryTags,
     HistoryContainers,
-    JoinUsNavigation,
-    StickyContainerTitles,
-    BreakingNewsAlertStyle,
-    Weather
+    StickyContainerTitles
 ) {
 
     var ab,
@@ -45,10 +39,7 @@ define([
             new HighCommercialComponent(),
             new HistoryTags(),
             new HistoryContainers(),
-            new JoinUsNavigation(),
-            new StickyContainerTitles(),
-            new BreakingNewsAlertStyle(),
-            new Weather()
+            new StickyContainerTitles()
         ],
         participationsKey = 'gu.ab.participations';
 

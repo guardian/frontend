@@ -152,6 +152,10 @@
         float: none;
         padding-right: 0;
     }
+
+    .content--interactive & {
+        padding-right: $gs-gutter/3 !important;
+    }
 }
 
 .content__series-label {
@@ -178,6 +182,11 @@
     .content__series-label__link {
         @include font-size(18, 22);
         display: block;
+
+        .content--interactive & {
+            font-size: 20px !important;
+            line-height: 24px !important;
+        }
     }
 }
 
@@ -641,51 +650,25 @@
     @include box-sizing(border-box);
 }
 
-// if start using inline svgs across the board then this would be abstracted into its own helper file
-.svg-tone-fill {
-    fill: colour(news-default);
+.meta__twitter,
+.meta__email {
+    margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
+    display: inline;
 
-    .tonal--tone-comment & {
-        fill: colour(comment-default);
+    .content__meta-container--tonal-header & {
+        @include mq($until: leftCol) {
+            margin-top: -($gs-baseline/3);
+        }
     }
-
-    .tonal--tone-feature & {
-        fill: colour(feature-default);
-    }
-
-    .tonal--tone-review & {
-        fill: colour(review-background);
-    }
-
-    .tonal--tone-editorial & {
-        fill: colour(editorial-default);
-    }
-
-    .tonal--tone-analysis & {
-        fill: colour(analysis-accent);
-    }
-
-    .tonal--tone-live &,
-    .tonal--tone-dead & {
-        fill: colour(live-default);
-    }
-
-    .tonal--tone-media & {
-        fill: colour(media-default);
-    }
-}
-
-.meta__twitter {
-    margin-top: -($gs-baseline/2);
 
     .icon {
         margin-top: $gs-baseline/3;
         overflow: visible;
-        padding-right: $gs-gutter/10;
     }
 
     button {
         padding-top: 1px;
+        margin-right: $gs-gutter/5;
 
         .tonal--tone-media & {
             border: 0;
@@ -698,18 +681,18 @@
 
         @include mq($until: leftCol) {
             padding: 0;
-            margin: 0;
             border: 0;
             border-radius: 0;
+            margin-right: 0;
             background-color: transparent !important;
 
-            &:hover {
-                text-decoration: underline;
+            .inline-mail svg {
+                margin-top: $gs-baseline/4;
             }
         }
     }
 
-    .twitter-handle {
+    .contact {
         height: 21px;
         display: inline-block;
         vertical-align: top;
@@ -722,9 +705,23 @@
     @include mq(leftCol) {
         margin-top: $gs-baseline/1.2;
         margin-bottom: $gs-baseline * 3/2;
+        display: block;
     }
 }
 
+@include mq(leftCol) {
+    .meta__email {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-top: $gs-baseline/2;
+        }
+    }
+
+    .meta__twitter {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-bottom: 0;
+        }
+    }
+}
 
 .meta__bio {
     margin-bottom: $gs-baseline;
@@ -746,7 +743,8 @@
         border-top: 1px dotted colour(neutral-5);
     }
 
-    .content__meta-container--twitter & {
+    .content__meta-container--twitter &,
+    .content__meta-container--email & {
         margin-bottom: 0;
     }
 

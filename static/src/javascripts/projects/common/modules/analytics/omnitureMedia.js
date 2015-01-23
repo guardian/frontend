@@ -1,3 +1,4 @@
+/* global guardian */
 define([
     'lodash/objects/values',
     'common/utils/config',
@@ -9,16 +10,18 @@ define([
 ) {
 
     function OmnitureMedia(player) {
+
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
 
         var lastDurationEvent, durationEventTimer,
-            mediaName = getAttribute('data-title') || config.page.webTitle,
+            mediaId = getAttribute('data-embed-path') || config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
             prerollPlayed = false,
+            isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
                 'video:request': 'event98',
@@ -59,6 +62,10 @@ define([
 
         this.sendEvent = function (event, eventName, ad) {
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
+
+            // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
+            s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
+            s.eVar44 = s.prop44 = mediaId;
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
@@ -67,7 +74,7 @@ define([
             s.linkTrackEvents = values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
-            s.prop41 = undefined;
+            s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
         };
 
         this.sendNamedEvent = function (eventName, ad) {
@@ -83,12 +90,10 @@ define([
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = config.page.sectionName || '';
-            s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
-            s.eVar44 = s.prop44 = mediaName;
+            s.eVar11 = s.prop11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
-            s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+            s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
 
             if (mediaType === 'video') {
                 this.sendNamedEvent('video:request');

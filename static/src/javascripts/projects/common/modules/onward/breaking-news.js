@@ -2,10 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/arrays/flatten',
-    'lodash/collections/forEach',
-    'lodash/objects/assign',
-    'lodash/objects/isArray',
+    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
@@ -16,10 +13,7 @@ define([
     bean,
     bonzo,
     qwery,
-    flatten,
-    forEach,
-    assign,
-    isArray,
+    _,
     ajax,
     config,
     storage,
@@ -39,7 +33,7 @@ define([
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
-        forEach(articleIds, function (articleID) {
+        _.forEach(articleIds, function (articleID) {
             cleanedIDs[articleID] = hiddenIds[articleID] || false;
         });
         return cleanedIDs;
@@ -58,7 +52,7 @@ define([
         }).then(
             function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
+                    .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
                     .map(function (collection) {
                         collection.href = collection.href.toLowerCase();
                         return collection;
@@ -66,22 +60,23 @@ define([
 
                     keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
 
-                    pageMatchers = history.getPopular().map(function (idAndName) { return idAndName[0]; })
-                        .concat([
+                    pageMatchers = _.chain(history.getPopular())
+                        .map(function (idAndName) { return idAndName[0]; })
+                        .union([
                             page.edition,
-                            page.section,
+                            _.contains(['uk', 'us', 'au'], page.section) ? null : page.section,
                             slashDelimit(page.edition, page.section),
-                            window.location.pathname.slice(1),
                             keyword,
                             keyword.split('/')[0]
                         ])
-                        .filter(function (match) { return match; })
+                        .compact()
                         .reduce(function (matchers, term) {
                             matchers[term.toLowerCase()] = true;
                             return matchers;
-                        }, {}),
+                        }, {})
+                        .value(),
 
-                    articles = flatten([
+                    articles = _.flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; })
                     ]),
@@ -98,11 +93,9 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                articles
-                .filter(function (article) {
-                    return hiddenIds[article.id] !== true;
-                })
-                .slice(0, maxSimultaneousAlerts)
+                _.chain(articles)
+                .filter(function (article) { return hiddenIds[article.id] !== true; })
+                .first(maxSimultaneousAlerts)
                 .forEach(function (article) {
                     var $el = bonzo.create(template(alertHtml, article));
 

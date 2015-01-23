@@ -191,6 +191,13 @@ figure {
             }
         }
     }
+    &.element--showcase {
+        figcaption {
+            @include mq(tablet) {
+                max-width: gs-span(9);
+            }
+        }
+    }
     &.img--inline {
         margin: 5px $gs-gutter 6px 0;
     }

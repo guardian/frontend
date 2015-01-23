@@ -331,17 +331,24 @@ define([
         return 'WebSocket' in window;
     }
 
-    function shouldUseHintedFonts() {
-        var version,
-            windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+    function fontHinting() {
+        var ua = navigator.userAgent,
+            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+            hinting = 'Off',
+            version;
 
         if (windowsNT) {
             version = parseFloat(windowsNT[1], 10);
-            // windows XP and newer && windows 7 and older
-            return version >= 5.1 && version <= 6.1;
-        } else {
-            return false;
+            // windows XP
+            if (version >= 5.1 && version <= 6.1) {
+                if (/Chrome/.exec(ua) && version < 6.0) {
+                    hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                } else {
+                    hinting = 'Cleartype'; // All other use cleartype
+                }
+            }
         }
+        return hinting;
     }
 
     return {
@@ -363,7 +370,7 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        shouldUseHintedFonts: shouldUseHintedFonts()
+        fontHinting: fontHinting()
     };
 
 });

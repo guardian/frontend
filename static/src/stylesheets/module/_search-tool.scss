@@ -1,5 +1,7 @@
 .search-tool__input {
     display: block;
+    position: relative;
+    z-index: 4;
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state

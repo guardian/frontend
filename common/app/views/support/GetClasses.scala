@@ -51,6 +51,7 @@ object GetClasses {
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
+      containerDefinition.hasShowMore,
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
@@ -58,11 +59,12 @@ object GetClasses {
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean) = forContainer(
+  def forTagContainer(hasTitle: Boolean, hasShowMore: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
     ContainerCommercialOptions.empty,
+    hasShowMore,
     None,
     Nil,
     disableHide = true
@@ -73,6 +75,7 @@ object GetClasses {
     isFirst: Boolean,
     hasTitle: Boolean,
     commercialOptions: ContainerCommercialOptions,
+    hasShowMore: Boolean,
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
     disableHide: Boolean = false
@@ -81,6 +84,8 @@ object GetClasses {
       ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
       ("fc-container--first", isFirst),
+      ("fc-container--has-show-more", hasShowMore),
+      ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),

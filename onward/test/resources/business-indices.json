@@ -1,0 +1,45 @@
+{ "indices" : [
+	{	"description"	: "FTSE 100",
+		"name"		: "FT100",
+		"ticker"	: ".FTSE",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "20141015T112233Z",
+		"marketclosed"	: "",
+		"value" : {
+			"time"		: "20141015T110523Z",
+			"price"		: "6323.48",
+			"currency"	: "GBP",
+			"change" : {
+				"day"		: "-56.65",
+				"pctday"	: "-3.3",
+				"trendday"	: "-"
+			},
+			"yearhighvalue"	: "6904.86",
+			"yearhighdate"	: "12 JUN 2014",
+			"yearlowvalue"	: "6072.68",
+			"yearlowdate"	: "3 JAN 2014"
+		}
+	} , {
+		"description"	: "Dow Jones Industrial Average",
+		"name"		: "DJIA",
+		"ticker"	: ".DJIA",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "20141015T112244Z",
+		"marketclosed"	: "closed",
+		"value" : {
+			"time"		: "20141015T110643Z",
+			"price"		: "16380.41",
+			"currency"	: "USD",
+			"change" : {
+				"day"		: "+263.17",
+				"pctday"	: "+0.3",
+				"trendday"	: "+"
+			},
+			"yearhighvalue"	: "17350.60",
+			"yearhighdate"	: "10 JUN 2014",
+			"yearlowvalue"	: "15229.00",
+			"yearlowdate"	: "4 JAN 2014"
+		}
+	}
+	]
+}

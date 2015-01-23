@@ -50,6 +50,7 @@
                         <a class="editor__revert" data-bind="
                             visible: meta() && field(),
                             click: revert"><i class="fa fa-fast-backward"></i></a>
+                        <span class="editor__alert__message">Text is too long.</span>
                     <!-- /ko -->
                 </div>
             <!-- /ko -->
@@ -76,7 +77,7 @@
     </script>
 
     <script type="text/html" id="template_groups">
-        <!-- ko if: name -->
+        <!-- ko if: name && !front.flattenGroups() -->
             <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
@@ -132,7 +133,7 @@
                     <span class="supporting-message">Drop content above, hold Ctrl key to replace item</span>
                 </div>
 
-                <div class="tools">
+                <div class="tools article-tools">
                     <a class="tool tool--done" data-bind="
                         clickBubble: false,
                         click: closeAndSave">Save edits</a>
@@ -260,6 +261,25 @@
         <hr>
         <div class="buttons modalDialog-alert">
             <button class="button-action" data-bind="click: ok">Ok</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="select_snap_type">
+        <div class="modalDialog-message">
+            <h3>Link type</h3>
+            <p>Click on <span class="button-description" data-bind="text: prefix"></span> to create the item</p>
+            <ul>
+                <li>{
+                    <span data-bind="text: prefix"></span>
+                    <span data-bind="text: resultsTitle"></span>
+                }</li>
+            </ul>
+            <p>or click <span class="button-description">Link</span> to just create a link</p>
+        </div>
+        <hr>
+        <div class="buttons modalDialog-confirm">
+            <button class="button-action" data-bind="click: cancel">Link</button>
+            <button class="draw-attention" data-bind="click: ok, text: prefix"></button>
         </div>
     </script>
 

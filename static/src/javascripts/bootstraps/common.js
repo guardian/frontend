@@ -8,7 +8,6 @@ define([
     'qwery',
 
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -22,6 +21,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
+    'common/modules/analytics/css-logging',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -49,7 +49,7 @@ define([
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
-    'common/modules/weather',
+    'common/modules/onward/breaking-news',
 
     'bootstraps/identity',
 
@@ -64,7 +64,6 @@ define([
     qwery,
 
     $,
-    ajax,
     config,
     cookies,
     detect,
@@ -78,6 +77,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
+    cssLogging,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -105,7 +105,7 @@ define([
     Tabs,
     Toggles,
     userPrefs,
-    weather,
+    breakingNews,
 
     identity,
 
@@ -444,6 +444,18 @@ define([
 
             initShareCounts: function () {
                 shareCount.init();
+            },
+
+            loadBreakingNews: function () {
+                if (config.switches.breakingNews) {
+                    breakingNews();
+                }
+            },
+
+            runCssLogging: function () {
+                if (config.switches.cssLogging) {
+                    mediator.on('page:common:ready', cssLogging);
+                }
             }
 
         },
@@ -456,6 +468,7 @@ define([
             modules.testCookie();
             modules.adTestCookie();
             modules.windowEventListeners();
+            modules.loadBreakingNews();
             modules.initShareCounts();
             modules.initialiseFauxBlockLink();
             modules.checkIframe();
@@ -484,6 +497,7 @@ define([
             modules.transcludeOnwardContent();
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
+            modules.runCssLogging();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');

@@ -1,0 +1,176 @@
+$stocks-icon-width: 14px;
+$stocks-icon-height: 10px;
+
+.stocks__stocks-container {
+    @include clearfix;
+
+    clear: left;
+    margin-top: $gs-baseline * 1.5;
+    margin-bottom: 0;
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        margin-bottom: $gs-baseline / 2;
+    }
+}
+
+.stocks__divider {
+    width: 50%;
+
+    @include mq(leftCol) {
+        border-top: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            border-top: 0;
+        }
+    }
+}
+
+.stocks__change:before {
+    content: '';
+    width: $stocks-icon-width;
+    height: $stocks-icon-height;
+    margin-right: 3px;
+}
+
+@mixin stock($change, $colour, $icon) {
+    .stocks__stock-value--#{$change} {
+        .stocks__change {
+            color: colour($colour);
+
+            &:before {
+                @include icon($icon, false);
+            }
+        }
+    }
+}
+
+@include stock('positive', status-positive, market-up);
+@include stock('negative', status-negative, market-down);
+@include stock('level', status-neutral, market-same);
+
+.stocks__stock-value {
+    display: inline-block;
+    padding-left: 6px;
+    padding-right: $gs-gutter;
+    min-width: 60%;
+    border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+
+    @include mq(mobileLandscape) {
+        min-width: 35%;
+    }
+
+    @include mq(tablet) {
+        min-width: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        display: block;
+        margin-bottom: $gs-baseline;
+        padding-left: 0;
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: table-cell;
+            padding-left: 6px;
+            padding-right: $gs-gutter;
+            min-width: 150px;
+            border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+        }
+    }
+
+    &:first-of-type {
+        padding-left: 0;
+    }
+
+    &:last-of-type {
+        border-right: 0;
+    }
+}
+
+.stocks__value {
+    @include clearfix;
+}
+
+.stocks__price {
+    margin-right: .25em;
+}
+
+.stocks__closed,
+.stocks__closed--inline {
+    color: guss-colour(neutral-2, $pasteup-palette);
+}
+
+.stocks__closed {
+    display: none;
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
+    }
+}
+
+.stocks__closed--inline {
+    font-weight: 400;
+    margin-left: .5em;
+    display: inline;
+
+    @include mq(leftCol) {
+        display: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: inline;
+        }
+    }
+}
+
+.stocks__price,
+.stocks__change {
+    float: left;
+
+    @include mq(leftCol) {
+        float: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: left;
+        }
+    }
+}
+
+.stocks__name {
+    font-weight: 600;
+}
+
+.stocks__price,
+.stocks__change,
+.stocks__closed {
+    @include mq(leftCol) {
+        margin-top: -4px;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-top: 0;
+        }
+    }
+}

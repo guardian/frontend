@@ -16,16 +16,12 @@
     @content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
     @if(content.contributors.length == 1) {
-        @if(content.hasTonalHeaderByline && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
-        @fragments.meta.twitterHandle(content)
+        @if(content.hasTonalHeaderByline && (content.contributors.headOption.exists(_.twitterHandle.nonEmpty) || content.contributors.headOption.exists(_.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
+        @fragments.meta.contactAuthor(content)
     }
 
     @if(!content.shouldHidePublicationDate) {
         @fragments.meta.dateline(content.webPublicationDate, secondary = true)
-    }
-
-    @if(content.contributors.length == 1) {
-        @fragments.meta.twitterHandle(content, mobile = true)
     }
 
     <div class="meta__extras">
@@ -48,6 +44,7 @@
     @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @content.contributorBio.map { bio => content__meta-container--bio}
     @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
+    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
     @if(showBadge) {

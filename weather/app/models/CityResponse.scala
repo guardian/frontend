@@ -2,6 +2,7 @@ package models
 
 import common.Edition
 import common.editions.{Au, Us, Uk}
+import models.accuweather.LocationResponse
 import play.api.libs.json.Json
 
 import scalaz.std.AllInstances._
@@ -30,6 +31,14 @@ object CityResponse {
         location.Country.LocalizedName
       )
     }
+  }
+
+  def fromLocationResponse(location: LocationResponse) = {
+    CityResponse(
+      location.Key,
+      location.LocalizedName,
+      location.Country.LocalizedName
+    )
   }
 
   val London = CityResponse(

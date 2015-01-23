@@ -93,8 +93,7 @@ object IndexPage {
       containerDefinitions,
       ContainerLayoutContext(
         Set.empty,
-        hideCutOuts = indexPage.page.isContributorPage,
-        ContainerLayoutContext.MaximumVideoPlayersPerTagPage
+        hideCutOuts = indexPage.page.isContributorPage
       )
     )
 

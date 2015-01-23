@@ -1,4 +1,4 @@
-@(player: model.VideoPlayer)
+@(player: model.VideoPlayer, enhance: Boolean)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -12,12 +12,12 @@
             ("gu-media", true),
             ("gu-media--video", true),
             ("gu-media--show-controls-at-start", player.showControlsAtStart),
-            ("js-gu-media", true)
+            ("js-gu-media--enhance", enhance)
         ))" data-title="@player.title" data-auto-play="@player.autoPlay" data-show-end-slate="@player.showEndSlate"
             poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id"
             data-end-slate="@player.endSlatePath" data-block-video-ads="@player.blockVideoAds" data-embeddable="@player.video.embeddable"
             @player.embedPath.map{ p => data-embed-path="@p" }
-            preload="auto"
+            preload="none"
         >
 
             @player.video.encodings.map { encoding =>
@@ -25,10 +25,10 @@
             }
 
             @player.video.encodings.find(_.format == "video/mp4").map { encoding =>
-                <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement.swf")" width="@player.width" height="@player.height">
+                <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
                     <param name="allowFullScreen" value="true" />
                     <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
-                    <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
+                    <param name="flashvars" value="controls=true&file=@encoding.url&poster=@player.poster" />
                     <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
                     <div class="vjs-error-display">
                         <div>Sorry, your browser is unable to play this video.<br/>

@@ -135,7 +135,7 @@ $header-image-size-desktop: 100px;
 
     @include mq(tablet, leftCol) {
         float: left;
-        width: gs-span(6) + $gs-gutter;
+        width: gs-span(5) + $gs-gutter;
     }
 
     @include mq(leftCol, wide) {
@@ -145,7 +145,7 @@ $header-image-size-desktop: 100px;
     .has-page-skin & {
         @include mq(wide) {
             float: left;
-            width: gs-span(6) + $gs-gutter;
+            width: gs-span(5) + $gs-gutter;
         }
     }
 
@@ -376,16 +376,23 @@ $header-image-size-desktop: 100px;
     @include mq(tablet) {
         padding-top: $gs-baseline / 4;
     }
+
     @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
+
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
         width: gs-span(12);
 
         .has-page-skin & {
             margin-left: 0;
+            clear: left;
         }
+    }
+
+    @include mq($until: leftCol) {
+        clear: left;
     }
 
     .fc-container--has-toggle & {

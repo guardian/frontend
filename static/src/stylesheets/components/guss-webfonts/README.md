@@ -57,10 +57,12 @@ $guss-webfonts-charset: 'original';
 /**
  * Hinting
  *
- * - on: larger file, better rendering in Windows
+ * - cleartype: larger file, better rendering in Windows
+ * - auto: even larger file, better rendering in Windows in Chrome with 
+ *   font-smoothing disabled (the default in XP pre-servicepack 1)
  * - off: smaller files, render well on HiDPI displays
  */
-$guss-webfonts-hinting: 'on';
+$guss-webfonts-hinting: 'off';
 
 /**
  * Kerning

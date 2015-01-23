@@ -1,13 +1,16 @@
-/* jshint unused: false */
-/* global guardian */
+/* global videojs, guardian */
 define([
     'bean',
     'bonzo',
     'qwery',
     'videojs',
     'videojsembed',
-    'lodash/functions/debounce',
+    'common/utils/_',
+    'common/utils/config',
+    'common/utils/defer-to-analytics',
+    'common/modules/analytics/omniture',
     'common/modules/video/tech-order',
+    'common/modules/video/events',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -15,18 +18,14 @@ define([
     qwery,
     videojs,
     videojsembed,
-    debounce,
+    _,
+    config,
+    deferToAnalytics,
+    Omniture,
     techOrder,
+    events,
     loadingTmpl
-) {
-
-    function handleInitialMediaError(player) {
-        var err = player.error();
-        if (err !== null) {
-            return err.code === 4;
-        }
-        return false;
-    }
+    ) {
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -38,7 +37,7 @@ define([
         options.techOrder = techOrder(el);
         player = videojs(el, options);
 
-        if (handleInitialMediaError(player)) {
+        if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
@@ -72,8 +71,11 @@ define([
 
         videojs.plugin('fullscreener', fullscreener);
 
-        bonzo(qwery('.js-gu-media')).each(function (el) {
-            var player, mouseMoveIdle;
+        bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
+            var player,
+                mouseMoveIdle,
+                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+                mediaId = $el.attr('data-media-id');
 
             bonzo(el).addClass('vjs');
 
@@ -90,12 +92,13 @@ define([
             });
 
             //Location of this is important
-            handleInitialMediaError(player);
+            events.handleInitialMediaError(player);
 
             player.ready(function () {
                 var vol;
 
                 initLoadingSpinner(player);
+                events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load
                 vol = player.volume();
@@ -106,9 +109,18 @@ define([
 
                 player.fullscreener();
 
+                if (config.switches.thirdPartyEmbedTracking) {
+                    deferToAnalytics(function () {
+                        events.initOphanTracking(player, mediaId);
+                        events.initOmnitureTracking(player);
+                        events.bindContentEvents(player);
+                    });
+
+                    new Omniture(window.s).go();
+                }
             });
 
-            mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
+            mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
 
             // built in vjs-user-active is buggy so using custom implementation
             player.on('mousemove', function () {
@@ -122,3 +134,5 @@ define([
         init: initPlayer
     };
 });
+/* jshint unused: false */
+/* global guardian */

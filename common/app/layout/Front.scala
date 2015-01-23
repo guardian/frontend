@@ -5,23 +5,19 @@ import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
-import slices._
+import slices.{MostPopular, _}
 import views.support.CutOut
+
 import scala.Function._
-import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val MaximumVideoPlayersPerTagPage = 1
-  val MaximumVideoPlayersPerFront = 4
-
-  val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)
+  val empty = ContainerLayoutContext(Set.empty, false)
 }
 
 case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
-  hideCutOuts: Boolean,
-  videoPlayersRemaining: Int
+  hideCutOuts: Boolean
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
@@ -42,24 +38,8 @@ case class ContainerLayoutContext(
     }
   }
 
-  private def limitVideoPlayers(cardAndContext: CardAndContext): CardAndContext = {
-    val (content, context) = cardAndContext
-
-    content.displayElement match {
-      case Some(vp: InlineVideo) if content.cardTypes.showVideoPlayer =>
-        if (videoPlayersRemaining > 0) {
-          (content, context.copy(videoPlayersRemaining = videoPlayersRemaining - 1))
-        } else {
-          (content.copy(displayElement = vp.fallBack), context)
-        }
-
-      case _ => (content, context)
-    }
-  }
-
   private val transforms = Seq(
-    dedupCutOut _,
-    limitVideoPlayers _
+    dedupCutOut _
   ).reduce(_ compose _)
 
   def transform(card: FaciaCardAndIndex) = {
@@ -81,6 +61,7 @@ case class ContainerLayoutContext(
 object CollectionEssentials {
   def fromCollection(collection: Collection) = CollectionEssentials(
     collection.items,
+    collection.treats,
     collection.displayName,
     collection.href,
     collection.lastUpdated,
@@ -89,17 +70,19 @@ object CollectionEssentials {
 
   def fromTrails(trails: Seq[Trail]) = CollectionEssentials(
     trails,
+    Nil,
     None,
     None,
     None,
     None
   )
 
-  val empty = CollectionEssentials(Nil, None, None, None, None)
+  val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
 }
 
 case class CollectionEssentials(
   items: Seq[Trail],
+  treats: Seq[Trail],
   displayName: Option[String],
   href: Option[String],
   lastUpdated: Option[String],
@@ -214,7 +197,7 @@ object FaciaContainer {
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
-      collectionEssentials = CollectionEssentials(items take 8, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
       componentId = None
     ).withTimeStamps
   }
@@ -269,6 +252,8 @@ case class FaciaContainer(
       urlFragment <- dateHeadline.urlFragment
     } yield s"$path/$urlFragment/all"
   }
+
+  def hasShowMore = containerLayout.exists(_.hasShowMore)
 }
 
 object Front extends implicits.Collections {

@@ -26,13 +26,13 @@ define([
                         toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                     return React.DOM.div({'data-link-name': 'suggested links'}, [
-                        React.DOM.p(null, 'Suggested links are shown under \'browse all sections\', and are based on your recent browsing history.'),
+                        React.DOM.p(null, 'These are based on the topics you visit most. You can access them at any time by opening the "all sections” menu.'),
                         this.state.enabled ? React.createElement(SummaryTagsList) : null,
                         React.DOM.button({
                             onClick: self.handleToggle,
                             className: 'button button--medium button--primary',
                             'data-link-name': toggleAction
-                        }, 'Switch suggested links ' + toggleAction)
+                        }, 'Switch recently visited links ' + toggleAction)
                     ]);
                 }
             }),
@@ -43,8 +43,8 @@ define([
                 },
                 handleRemove: function (tag) {
                     history.deleteFromSummary(tag);
-                    this.setState({ popular: history.getPopularFiltered() });
-                    history.showInMegaNav(true);
+                    this.setState({ popular: history.getPopularFiltered({flush: true}) });
+                    history.showInMegaNav();
                 },
                 render: function () {
                     var self = this,
@@ -59,12 +59,16 @@ define([
                                 }, tag[1])
                             );
                             return obj;
-                        }, {});
+                        }, {}),
+                        helperText;
 
-                    if (!_.isEmpty(tags)) {
-                        tags.andFinally = React.DOM.p(null, '(remove links that don\'t interest you by clicking the \'X\' next to them.)');
-                        return React.DOM.div(null, tags);
+                    if (_.isEmpty(tags)) {
+                        helperText = '(You don\'t have any recently visited topics.)';
+                    } else {
+                        helperText = 'Remove individual topics by clicking \'X\' or switch off the functionality below. We respect your privacy and your shortcuts will never be made public.';
                     }
+                    tags.helperText = React.DOM.p(null, helperText);
+                    return React.DOM.div(null, tags);
                 }
             });
 

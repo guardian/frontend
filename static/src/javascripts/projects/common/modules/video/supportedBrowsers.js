@@ -1,8 +1,12 @@
 define([
+    'bean',
+    'common/utils/$',
     'common/utils/_',
     'common/utils/detect',
     'common/utils/config'
 ], function (
+    bean,
+    $,
     _,
     detect,
     config
@@ -13,10 +17,17 @@ define([
             'Chrome': '28',
             'IE': '9',
             'Opera': '14',
-            'Safari': '7'
+            'Safari': '6'
         },
+        closeCls = 'vjs-error-display__close',
         ua = detect.getUserAgent,
-        message = 'Please <a href="http://whatbrowser.org" target="_blank">update</a> your browser to watch this video.';
+        message = 'Your browser is no longer supported. <a href="http://whatbrowser.org" target="_blank">Update your browser?</a> <button class="' + closeCls + '">close</button>';
+
+    function bindClose(player) {
+        bean.on($('.' + closeCls)[0], 'click', function () {
+            player.error(null);
+        });
+    }
 
     return function supportedBrowser(player) {
         var notSupported =  _.some(browsers, function (version, browser) {
@@ -25,6 +36,7 @@ define([
 
         if (notSupported && config.switches.mediaPlayerSupportedBrowsers) {
             player.error(message);
+            bindClose(player);
         }
     };
 });
