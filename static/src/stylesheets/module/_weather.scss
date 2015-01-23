@@ -157,6 +157,7 @@ $weather-large-size: 60px;
 
     @include mq($until: tablet) {
         display: none;
+        padding: ($gs-baseline / 6) 0;
 
         .is-expanded & {
             display: inline-block;
@@ -210,31 +211,21 @@ $weather-large-size: 60px;
 .weather__close-location,
 .weather__edit-location {
     position: absolute;
-    top: 1px;
+    top: $gs-baseline / 2.4;
     right: 0;
     display: block;
     z-index: 5;
     line-height: inherit;
 
-    @include mq(leftCol) {
-        top: $gs-baseline / 2.4;
-    }
-
     &:focus {
         outline: 0;
     }
+}
 
-    .has-page-skin & {
-        @include mq(wide) {
-            top: 1px;
-        }
-    }
-
-    .weather__search-icon,
-    .weather__close-icon {
-        width: 16px;
-        height: 16px;
-    }
+i.weather__search-icon,
+i.weather__close-icon {
+    width: 16px;
+    height: 16px;
 }
 
 .weather__edit-location {
