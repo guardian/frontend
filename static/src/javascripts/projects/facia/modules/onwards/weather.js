@@ -159,7 +159,7 @@ define([
                 this.toggleControls(false);
             }.bind(this));
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
-                this.toggleForecast(e);
+                this.toggleForecast();
             }.bind(this));
             mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
         },
@@ -184,10 +184,8 @@ define([
             }
         },
 
-        toggleForecast: function (e) {
-            $(e.currentTarget).toggleClass('is-visible');
-            $('.js-weather-forecast').toggleClass('hide-on-mobile');
-            $('.js-weather-location').toggleClass('hide-on-mobile');
+        toggleForecast: function () {
+            $('.weather').toggleClass('is-expanded');
         },
 
         getUnits: function () {

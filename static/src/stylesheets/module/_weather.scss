@@ -170,19 +170,27 @@ $weather-large-size: 60px;
         outline: 0;
     }
 
-    &.is-visible .weather__toggle-icon {
-        @include transform(rotate(180deg));
-    }
-
     .weather__toggle-icon {
         width: 18px;
         height: 8px;
         margin-bottom: $gs-baseline / 4;
+
+        .is-expanded & {
+            @include transform(rotate(180deg));
+        }
     }
 }
 
 .weather__location {
     width: 100%;
+
+    @include mq($until: tablet) {
+        display: none;
+
+        .is-expanded & {
+            display: inline-block;
+        }
+    }
 
     @include mq(tablet, leftCol) {
         width: gs-span(2);
@@ -210,10 +218,6 @@ $weather-large-size: 60px;
         @include mq($until: tablet) {
             border-bottom: 1px dotted colour(neutral-3);
             padding-bottom: $gs-baseline / 4;
-        }
-
-        @include mq(tablet) {
-            display: inherit;
         }
 
         @include mq(leftCol) {
@@ -286,11 +290,14 @@ $weather-large-size: 60px;
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
     list-style: none;
-    // line-height: 1.2;
 
     @include mq($until: tablet) {
-        display: table;
+        display: none;
         width: 100%;
+
+        .is-expanded & {
+            display: table;
+        }
     }
 
     @include mq(tablet, leftCol) {
