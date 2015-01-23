@@ -215,7 +215,8 @@ object Navigation {
     navigation.find(_.currentFor(page)) orElse                /* This searches the top level nav for tags in the page */
     navigation.find(_.currentForIncludingAllTags(page))       /* This searches the whole nav for tags in the page */
 
-  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
+  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] =
+    topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
   def rotatedLocalNav(topSection: NavItem, metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
     topSection.searchForCurrentSublink(metaData) match {
@@ -228,5 +229,6 @@ object Navigation {
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] =
+    Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
 }
