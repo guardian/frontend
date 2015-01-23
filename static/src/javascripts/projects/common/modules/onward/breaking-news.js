@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/$',
     'qwery',
     'common/utils/_',
     'common/utils/ajax',
@@ -12,6 +13,7 @@ define([
 ], function (
     bean,
     bonzo,
+    $,
     qwery,
     _,
     ajax,
@@ -102,20 +104,20 @@ define([
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
 
                     _.forEach(alerts, function (article) {
-                        $breakingNews.append(bonzo.create(template(alertHtml, article)));
+                        var el = bonzo.create(template(alertHtml, article));
+
+                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function (e) {
+                            $(el).hide();
+                            hiddenIds[article.id] = true;
+                            storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
+                            return e;
+                        });
+
+                        $breakingNews.append(el);
 
                         if (hiddenIds[article.id] === false) {
                             alertDelay = 0;
                         }
-                    });
-
-                    bean.on($breakingNews[0], 'click', '.js-breaking-news__item__close', function (e) {
-                        var id = e.currentTarget.getAttribute('data-article-id');
-
-                        e.preventDefault();
-                        hiddenIds[id] = true;
-                        storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                        bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
                     });
 
                     setTimeout(function () {

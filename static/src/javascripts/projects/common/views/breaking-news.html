@@ -1,4 +1,4 @@
-<a href="/{{id}}" class="js-breaking-news__item breaking-news__item">
+<div class="js-breaking-news__item breaking-news__item">
     <div class="breaking-news__item-content">
         <div class="breaking-news__item-header">
             <em class="breaking-news__item-kicker">Breaking news</em>
@@ -7,8 +7,8 @@
         <div class="breaking-news__item-options">
             <button class="js-breaking-news__item__close button button--tertiary"
                     aria-label="Dismiss"
-                    data-article-id="{{id}}"
                     data-link-name="close button"><i class="i i-close-icon-white-small"></i></button>
         </div>
     </div>
-</a>
+    <a class="u-faux-block-link__overlay" href="/{{id}}"></a>
+</div>
