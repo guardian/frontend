@@ -8,6 +8,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/modules/onward/history',
+    'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
     bean,
@@ -19,6 +20,7 @@ define([
     storage,
     template,
     history,
+    svgs,
     alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
@@ -97,6 +99,7 @@ define([
                 .filter(function (article) { return hiddenIds[article.id] !== true; })
                 .first(maxSimultaneousAlerts)
                 .forEach(function (article) {
+                    article.marque_36_icon = svgs.marque_36_icon;
                     var $el = bonzo.create(template(alertHtml, article));
 
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));

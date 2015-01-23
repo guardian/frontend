@@ -29,7 +29,7 @@ to apply any necessary changes to non-shared code there too.
                 <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
                 data-link-name="@Edition(request) : topNav : subscribe" class="brand-bar__item--action">
                     <span class="rounded-icon control__icon-wrapper">
-                        <i class="i i-marque-36"></i>
+                        @fragments.inlineSvg("marque-36", "icon")
                     </span>
                     <span class="control__info">subscribe</span>
                 </a>
