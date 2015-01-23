@@ -60,7 +60,7 @@ $weather-large-size: 60px;
         text-align: right;
 
         &:after {
-            @include weather-rule();
+            @include weather-rule;
         }
     }
 
@@ -82,7 +82,7 @@ $weather-large-size: 60px;
             }
 
             &:after {
-                @include weather-rule();
+                @include weather-rule;
             }
 
             .weather__icon {
@@ -158,7 +158,7 @@ $weather-large-size: 60px;
         padding-right: $gs-gutter / 4;
 
         &:after {
-            @include weather-rule();
+            @include weather-rule;
         }
     }
 
@@ -331,7 +331,7 @@ $weather-large-size: 60px;
         display: inline-block;
 
         &:after {
-            @include weather-rule();
+            @include weather-rule;
         }
 
         &.forecast__item--4 {
