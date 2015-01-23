@@ -20,18 +20,12 @@ $weather-large-size: 60px;
     }
 
     @include mq(leftCol) {
-        width: $left-column;
         padding-top: $gs-baseline;
         text-align: left;
     }
 
-    @include mq(wide) {
-        width: $left-column-wide;
-    }
-
     .has-page-skin & {
         @include mq(wide) {
-            width: auto;
             padding-top: ($gs-baseline / 3) * 2;
             text-align: right;
         }
