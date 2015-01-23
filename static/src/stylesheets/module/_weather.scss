@@ -267,7 +267,7 @@ i.weather__close-icon {
     padding: 0 ($gs-gutter / 2) 0 ($gs-gutter / 4);
 
     @include mq(tablet, leftCol) {
-        border-left: none;
+        border-left: 0;
         display: inline-block;
 
         &:after {

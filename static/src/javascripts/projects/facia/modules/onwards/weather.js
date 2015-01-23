@@ -159,6 +159,7 @@ define([
                 this.toggleControls(false);
             }.bind(this));
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
+                e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
             mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
