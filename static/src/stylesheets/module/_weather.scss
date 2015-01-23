@@ -5,7 +5,7 @@ $weather-large-size: 60px;
     content: '';
     position: absolute;
     right: 0;
-    bottom: ($gs-baseline / 3) * 2;
+    bottom: $gs-baseline / 2;
     height: $gs-baseline + 1px;
     border-right: 1px dotted colour(neutral-3);
 }
@@ -135,7 +135,7 @@ $weather-large-size: 60px;
     .weather__toggle-icon {
         width: 18px;
         height: 8px;
-        margin-bottom: $gs-baseline / 4;
+        margin-bottom: $gs-baseline / 6;
 
         .is-expanded & {
             @include transform(rotate(180deg));
