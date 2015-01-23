@@ -71,3 +71,20 @@
         margin-top: 0;
     }
 }
+
+.treats__crossword {
+    display: block;
+    margin-top: $gs-baseline * 4/3;
+    margin-bottom: $gs-baseline * 2/3;
+}
+
+.treats__crossword-link {
+    &:hover,
+    &:focus,
+    &:active {
+        .treats__treat {
+            color: colour(neutral-1);
+            border-color: darken(colour(neutral-3), 10%);
+        }
+    }
+}

@@ -1,5 +1,5 @@
-import com.gu.crosswords.api.client.models.{Entry, Down, Across}
-import com.gu.crosswords.api.client.{Response, Http, ApiClient}
+import com.gu.crosswords.api.client.models.{Entry, Across, Down}
+import com.gu.crosswords.api.client.{Response, ApiClient, Http}
 import common.ExecutionContexts
 import conf.Configuration
 import play.api.Play.current
