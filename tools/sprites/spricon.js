@@ -45,7 +45,7 @@ jfDefer.promise.then(function (config) {
         phantom.create(function (ph) {
             ph.createPage(function (sprite) {
                 sprite.set('viewportSize', { width: 600, height: 1 });
-                sprite.set('content', '<html><body><div id="sprite" style="display: inline-block;"></div></body></html>');
+                sprite.set('content', '<html><body id="sprite" style="margin: 0" /></html>');
 
                 fs.readdir(config.src, function (err, files) {
                     Q.all(
@@ -73,10 +73,14 @@ jfDefer.promise.then(function (config) {
                                 var aInfo = a.svgoResult.info,
                                     bInfo = b.svgoResult.info;
 
-                                // order by height, then width
-                                return (aInfo.height !== bInfo.height)
-                                    ? aInfo.height - bInfo.height
-                                    : bInfo.width  - aInfo.width;
+                                // order by height, then width, then name
+                                if (aInfo.height !== bInfo.height) {
+                                    return aInfo.height - bInfo.height;
+                                } else if (aInfo.width !== bInfo.width) {
+                                    return bInfo.width  - aInfo.width;
+                                } else {
+                                    return a.name.localeCompare(b.name);
+                                }
                             })
                             .map(function (image) {
                                 var deferred = Q.defer(),
