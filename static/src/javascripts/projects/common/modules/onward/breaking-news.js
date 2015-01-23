@@ -99,7 +99,7 @@ define([
                 .filter(function (article) { return hiddenIds[article.id] !== true; })
                 .first(maxSimultaneousAlerts)
                 .forEach(function (article) {
-                    article.marque_36_icon = svgs.marque_36_icon;
+                    article.marque_36_icon = svgs('marque_36_icon');
                     var $el = bonzo.create(template(alertHtml, article));
 
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
