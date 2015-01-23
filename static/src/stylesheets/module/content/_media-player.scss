@@ -961,7 +961,7 @@ $vjs-height-ratio: 7/3;
     }
 }
 #ima-seek-bar-div {
-    height: 6px;
+    height: $vjs-progress-visual-height-resting;
     width: 100% !important;
     background-color: #000000;
 }
