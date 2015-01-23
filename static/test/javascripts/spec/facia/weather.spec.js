@@ -75,16 +75,16 @@ define([
 
                 it("should return false when the page is not front", function() {
                     mocks.store['common/utils/config'].page.pageId = 'uk';
-                    expect(sut.isFront()).toBeTruthy();
+                    expect(sut.isNetworkFront()).toBeTruthy();
 
                     mocks.store['common/utils/config'].page.pageId = 'us';
-                    expect(sut.isFront()).toBeTruthy();
+                    expect(sut.isNetworkFront()).toBeTruthy();
 
                     mocks.store['common/utils/config'].page.pageId = 'au';
-                    expect(sut.isFront()).toBeTruthy();
+                    expect(sut.isNetworkFront()).toBeTruthy();
 
                     mocks.store['common/utils/config'].page.pageId = 'social';
-                    expect(sut.isFront()).toBeFalsy();
+                    expect(sut.isNetworkFront()).toBeFalsy();
                 });
 
                 it("should get location from local storage", function () {

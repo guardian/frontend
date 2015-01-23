@@ -48,14 +48,14 @@ define([
 
     return {
         init: function () {
-            if (!config.switches || !config.switches.weather || !this.isFront()) {
+            if (!config.switches || !config.switches.weather || !this.isNetworkFront()) {
                 return false;
             }
 
             this.getDefaultLocation();
         },
 
-        isFront: function () {
+        isNetworkFront: function () {
             return _.contains(['uk', 'us', 'au'], config.page.pageId);
         },
 
