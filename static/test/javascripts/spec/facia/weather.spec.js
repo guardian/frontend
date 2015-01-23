@@ -65,7 +65,27 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
-                it("should fetch the data and save location", function () {
+                it("should remove data from localStorage and fetchWeatherData if user searches", function() {
+                    spyOn(sut, "saveUserLocation");
+                    spyOn(sut, "fetchWeatherData");
+
+                    sut.saveDeleteLocalStorage({store: "set"});
+
+                    expect(sut.saveUserLocation).toHaveBeenCalled();
+                    expect(sut.fetchWeatherData).toHaveBeenCalled();
+                });
+
+                it("should save data to localStorage and getDefaultLocation if user remove data", function() {
+                    spyOn(sut, "clearLocation");
+                    spyOn(sut, "getDefaultLocation");
+
+                    sut.saveDeleteLocalStorage({store: "remove"});
+
+                    expect(sut.clearLocation).toHaveBeenCalled();
+                    expect(sut.getDefaultLocation).toHaveBeenCalled();
+                });
+
+                it("should fetch the data", function () {
                     var result = {id: '2', city: "Sydney", store: true};
 
                     spyOn(sut, "getWeatherData").and.returnValue({
@@ -78,7 +98,6 @@ define([
                     });
 
                     sut.fetchWeatherData(result);
-                    expect(sut.getUserLocation()).toEqual({id: '2', city: "Sydney"});
                     expect(sut.getWeatherData).toHaveBeenCalled();
                 });
 

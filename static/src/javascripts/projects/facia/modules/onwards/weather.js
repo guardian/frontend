@@ -96,7 +96,6 @@ define([
             if (location) {
                 this.fetchWeatherData(location);
             } else {
-
                 this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
@@ -112,10 +111,6 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            if (location.store) {
-                this.saveUserLocation(location);
-            }
-
             return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
                 .then(function (response) {
                     this.render(response, location.city);
@@ -127,6 +122,12 @@ define([
                         }
                     });
                 });
+        },
+
+        clearLocation: function () {
+            userPrefs.remove(prefName);
+            city = '';
+            searchTool.setInputValue();
         },
 
         track: function (city) {
@@ -149,6 +150,19 @@ define([
                 });
         },
 
+        saveDeleteLocalStorage: function (response) {
+            // After user interaction we want to store the location in localStorage
+            if (response.store === 'set') {
+                this.saveUserLocation(response);
+                this.fetchWeatherData(response);
+
+                // After user sent empty data we want to remove location and get the default location
+            } else if (response.store === 'remove') {
+                this.clearLocation();
+                this.getDefaultLocation();
+            }
+        },
+
         bindEvents: function () {
             bean.on($('.js-weather-input')[0], 'click', function (e) {
                 e.preventDefault();
@@ -161,7 +175,8 @@ define([
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
                 this.toggleForecast(e);
             }.bind(this));
-            mediator.on('autocomplete:fetch', this.fetchWeatherData.bind(this));
+
+            mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
         },
 
         toggleControls: function (value) {
@@ -224,11 +239,11 @@ define([
             this.bindEvents();
             this.addSearch();
 
-            // After first run override function to just update data
-            this.render = function (weatherData) {
+            this.render = function (weatherData, city) {
                 var $weatherIcon = $('.js-weather-icon', $weather);
 
                 $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
+                searchTool.setInputValue(city);
 
                 // Replace number in weather icon class
                 $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
@@ -236,7 +251,7 @@ define([
                     .attr('title', weatherData.weatherText);
 
                 // Close editing
-                this.toggleControls(false);
+                this.toggleControls();
             };
         },
 
