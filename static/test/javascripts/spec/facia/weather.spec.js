@@ -23,7 +23,7 @@ define([
 
                 beforeEach(function () {
                     container = bonzo.create(
-                        '<div><div class="js-weather"></div></div>'
+                        '<div class="js-container--first"><div class="js-container__header"></div></div>'
                     )[0];
 
                     $('body').append(container);
