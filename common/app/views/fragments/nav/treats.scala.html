@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import common.ExternalLinks.internalPath
-@import crosswords.{CrosswordGrid, CrosswordTreat}
+@import crosswords.{CrosswordGrid, CrosswordTreat, TodaysCrosswordGrid}
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
@@ -11,7 +11,7 @@
             <li class="treats__list-item">
                 @if(internalPath(link).contains("/crosswords")) {
                     <a class="treats__crossword-link" href="@link">
-                        @CrosswordTreat.fromCrosswordGrid(CrosswordGrid.DefaultTreat)
+                        @CrosswordTreat.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
                         <span class="treats__treat">@treat.headline</span>
                     </a>
                 } else {
