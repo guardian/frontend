@@ -173,6 +173,10 @@ $weather-large-size: 60px;
         padding-top: $gs-baseline / 6;
     }
 
+    @include mq(wide) {
+        width: 90%;
+    }
+
     .has-page-skin & {
         @include mq(wide) {
             width: gs-span(2);
@@ -236,10 +240,10 @@ i.weather__close-icon {
     margin: 0;
     padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
     list-style: none;
+    width: 100%;
 
     @include mq($until: tablet) {
         display: none;
-        width: 100%;
 
         .is-expanded & {
             display: table;
@@ -248,11 +252,21 @@ i.weather__close-icon {
 
     @include mq(tablet, leftCol) {
         padding: 0;
+        width: auto;
     }
 
     @include mq(leftCol) {
         display: table;
-        width: 100%;
+    }
+
+    @include mq(wide) {
+        width: 90%;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: auto;
+        }
     }
 }
 
@@ -262,16 +276,6 @@ i.weather__close-icon {
     border-left: 1px dotted colour(neutral-3);
     padding: 0 $gs-gutter / 4;
 
-    @include mq(mobileLandscape) {
-        min-width: gs-span(1) - ($gs-gutter / 4);
-    }
-
-    @include mq(tablet, desktop) {
-        &.forecast__item--3 {
-            display: none;
-        }
-    }
-
     @include mq(tablet, leftCol) {
         border-left: none;
         display: inline-block;
@@ -279,36 +283,33 @@ i.weather__close-icon {
         &:after {
             @include weather-rule;
         }
-
-        &.forecast__item--4 {
-            display: none;
-        }
     }
 
     @include mq(leftCol) {
         padding-right: 0;
     }
 
-    &:first-of-type {
-        padding-left: 0;
+    @include mq(leftCol, wide) {
+        width: 33%;
+    }
 
-        @include mq($until: tablet) {
-            border-left: 0;
+    &.forecast__item--1 {
+        border-left: 0;
+        padding-left: 0;
+    }
+
+    &.forecast__item--3 {
+        @include mq(tablet, desktop) {
+            display: none;
         }
 
-        @include mq(leftCol) {
-            border-left: 0;
+        @include mq(leftCol, wide) {
+            border-right: 0;
         }
     }
 
-    @include mq(leftCol, wide) {
-        min-width: 33%;
-
-        &.forecast__item--3 {
-            border-right: 0;
-        }
-
-        &.forecast__item--4 {
+    &.forecast__item--4 {
+        @include mq(tablet, wide) {
             display: none;
         }
     }
