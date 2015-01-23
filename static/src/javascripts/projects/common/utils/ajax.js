@@ -15,7 +15,7 @@ define([
     function ajax(params) {
         var r;
 
-        if (!params.url.match('^https?://')) {
+        if (!params.url.match('^(https?:)?//')) {
             params.url = ajaxHost + params.url;
             params.crossOrigin = true;
         }
