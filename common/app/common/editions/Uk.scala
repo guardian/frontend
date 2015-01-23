@@ -54,6 +54,7 @@ object Uk extends Edition(
       NavItem(science),
       NavItem(education, Seq(students, teachersNetwork)),
       NavItem(media),
+      NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper),
       NavItem(crosswords),
