@@ -465,14 +465,24 @@ define([
 
                 $.create('<div class="ad_unit"></div>').appendTo(document.body);
 
-                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
-                    adblockMessage = new Message('adblock', {pinOnHide: false});
-                    adblockMessage.show(template(
-                        doNotUseAdblockTemplae,
-                        {
-                            adblockLink: adblockLink
-                        }
-                    ));
+                if (detect.getBreakpoint() !== 'mobile') {
+                    if (detect.adblockInUse()) {
+                        s.prop40 = 'adblocktrue';
+                        adblockMessage = new Message('adblock', {
+                            pinOnHide: false,
+                            siteMessageLinkName: 'adblock message',
+                            siteMessageCloseBtn: 'hide adblock message'
+                        });
+                        adblockMessage.show(template(
+                            doNotUseAdblockTemplae,
+                            {
+                                adblockLink: adblockLink
+                            }
+                        ));
+                    }
+                    else {
+                        s.prop40 = 'adblockfalse';
+                    }
                 }
             }
 

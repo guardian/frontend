@@ -183,6 +183,8 @@ define([
             s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
             s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
+            s.prop40    = '';
+
             s.prop47    = config.page.edition || '';
 
             s.prop51  = mvt;
