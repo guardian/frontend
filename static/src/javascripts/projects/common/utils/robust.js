@@ -1,33 +1,25 @@
 /*jshint -W024 */
-define([
-    'raven',
-    'Promise'
-], function (
-    raven,
-    Promise
-) {
 
-    /*
-    * This purposefully does not return the Promise.
-    * It is designed to swallow and report on exceptions at a high level.
-    * If you need to act on the return value you are looking for a different abstraction
-    * */
+/*
+    Swallows (and reports) exceptions. Designed to wrap around modules at the "bootstrap" level.
+    For example "comments throwing an exception should not stop auto refresh"
+ */
+define([
+    'raven'
+], function (
+    raven
+) {
     function Robust(name, block, reporter) {
 
         if (!reporter) {
             reporter = raven.captureException;
         }
 
-        new Promise(function (resolve, reject) {
-            try {
-                block();
-                resolve();
-            } catch (e) {
-                reject(e);
-            }
-        }).catch(function (e) {
+        try {
+            block();
+        } catch (e) {
             reporter(e, { tags: { module: name } });
-        });
+        }
     }
 
     return Robust;
