@@ -494,7 +494,7 @@ define([
             robust('c-paras',           function () { modules.unshackleParagraphs(); });
             robust('c-sign-in',         function () { modules.initAutoSignin(); });
             robust('c-interactive',     function () { modules.augmentInteractive(); });
-            robust('c-history-nav',     function () { modules.showHistoryInMegaNav() });
+            robust('c-history-nav',     function () { modules.showHistoryInMegaNav(); });
             robust('c-forsee',          function () { modules.runForseeSurvey(); });
             robust('c-start-register',  function () { modules.startRegister(); });
             robust('c-comments',        function () { modules.repositionComments(); });
