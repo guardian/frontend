@@ -1,20 +1,30 @@
 define([
-    'common/modules/analytics/beacon',
     'common/utils/mediator',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect',
+
+    'common/modules/analytics/beacon'
 ], function (
-    beacon,
     mediator,
-    config
+    config,
+    detect,
+
+    beacon
 ) {
 
     function LiveBlogMetrics() {
 
-        var repeat = false;
+        var repeat = false,
+            pageViews = ['live-blog-page-view'];
 
         if (config.page.isLive) {
             mediator.once('page:liveblog:ready', function () {
-                beacon.counts('live-blog-page-view');
+
+                if (detect.isReload()) {
+                    pageViews.push('live-blog-page-refresh');
+                }
+
+                beacon.counts(pageViews);
             });
 
             mediator.on('modules:autoupdate:updates', function () {
