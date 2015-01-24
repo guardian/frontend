@@ -280,7 +280,7 @@ define([
         robust('lb-metrics',    function () { LiveBlogMetrics.init(); });
 
         // re-use modules from article bootstrap
-        robust('lb-article',    function () { article.modules.initOpen(); });
+        robust('lb-article',    function () { article.modules.initOpenCta(); });
         robust('lb-fence',      function () { article.modules.initFence(); });
         robust('lb-twitter',    function () { article.modules.initTruncateAndTwitter(); });
         robust('lb-sharing',    function () { article.modules.initSelectionSharing(); });

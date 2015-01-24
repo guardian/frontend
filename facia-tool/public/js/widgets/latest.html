@@ -13,19 +13,7 @@
     </div>
 </div>
 
-<div class="col__inner cilpboard-container">
-    <div class="title title--clipboard">clipboard</div>
-    <div class="clipboard" data-bind="with: clipboard">
-        <div class="droppable" data-bind="
-            makeDropabble: true,
-            click: pasteItem,
-            css: {
-                underDrag: underDrag() && !underControlDrag(),
-                underControlDrag: underDrag() && underControlDrag()
-            },
-            template: {name: 'template_article', foreach: items}"></div>
-    </div>
-</div>
+<clipboard-widget params="column: column"></clipboard-widget>
 
 <div class="col__inner scrollable">
 

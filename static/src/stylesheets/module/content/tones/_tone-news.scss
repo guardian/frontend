@@ -10,6 +10,14 @@
         }
     }
 
+    .tone-colour {
+        color: colour(news-default);
+    }
+
+    .tone-accent-border {
+        border-color: colour(news-accent);
+    }
+
     // Interactives need help because their headers are not tonal
     &.content--interactive {
         .commentcount i {

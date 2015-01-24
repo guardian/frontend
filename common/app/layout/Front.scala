@@ -5,23 +5,19 @@ import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
-import slices._
+import slices.{MostPopular, _}
 import views.support.CutOut
+
 import scala.Function._
-import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val MaximumVideoPlayersPerTagPage = 1
-  val MaximumVideoPlayersPerFront = 4
-
-  val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)
+  val empty = ContainerLayoutContext(Set.empty, false)
 }
 
 case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
-  hideCutOuts: Boolean,
-  videoPlayersRemaining: Int
+  hideCutOuts: Boolean
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
@@ -42,24 +38,8 @@ case class ContainerLayoutContext(
     }
   }
 
-  private def limitVideoPlayers(cardAndContext: CardAndContext): CardAndContext = {
-    val (content, context) = cardAndContext
-
-    content.displayElement match {
-      case Some(vp: InlineVideo) if content.cardTypes.showVideoPlayer =>
-        if (videoPlayersRemaining > 0) {
-          (content, context.copy(videoPlayersRemaining = videoPlayersRemaining - 1))
-        } else {
-          (content.copy(displayElement = vp.fallBack), context)
-        }
-
-      case _ => (content, context)
-    }
-  }
-
   private val transforms = Seq(
-    dedupCutOut _,
-    limitVideoPlayers _
+    dedupCutOut _
   ).reduce(_ compose _)
 
   def transform(card: FaciaCardAndIndex) = {
@@ -272,6 +252,8 @@ case class FaciaContainer(
       urlFragment <- dateHeadline.urlFragment
     } yield s"$path/$urlFragment/all"
   }
+
+  def hasShowMore = containerLayout.exists(_.hasShowMore)
 }
 
 object Front extends implicits.Collections {

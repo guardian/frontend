@@ -321,12 +321,20 @@ define([
                 });
             },
 
+            showHistoryInMegaNav: function () {
+                if (config.switches.historyTags) {
+                    mediator.once('modules:nav:open', function () {
+                        history.showInMegaNav();
+                    });
+                }
+            },
+
             initAutoSignin: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                    mediator.on('page:common:ready', function () {
                         new AutoSignin().init();
-                    }
-                });
+                    });
+                }
             },
 
             windowEventListeners: function () {
@@ -386,8 +394,8 @@ define([
             },
 
             initDiscussion: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches.discussion) {
+                if (config.switches.discussion) {
+                    mediator.on('page:common:ready', function () {
                         CommentCount.init();
                         if (config.page.commentable) {
                             var el = qwery('.discussion')[0];
@@ -395,8 +403,8 @@ define([
                                 new DiscussionLoader().attachTo(el);
                             }
                         }
-                    }
-                });
+                    });
+                }
             },
 
             testCookie: function () {
@@ -450,7 +458,7 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews) {
-                    breakingNews();
+                    mediator.on('page:common:ready', breakingNews);
                 }
             },
 
@@ -462,6 +470,7 @@ define([
 
         },
         ready = function () {
+<<<<<<< HEAD
             robust('c-fonts',           function () { modules.loadFonts(); });
             robust('c-identity',        function () { modules.initId(); });
             robust('c-adverts',         function () { modules.initUserAdTargeting(); });
@@ -486,6 +495,7 @@ define([
             robust('c-paras',           function () { modules.unshackleParagraphs(); });
             robust('c-sign-in',         function () { modules.initAutoSignin(); });
             robust('c-interactive',     function () { modules.augmentInteractive(); });
+            robust('c-history-nav',     function () { modules.showHistoryInMegaNav() });
             robust('c-forsee',          function () { modules.runForseeSurvey(); });
             robust('c-start-register',  function () { modules.startRegister(); });
             robust('c-comments',        function () { modules.repositionComments(); });
@@ -503,7 +513,7 @@ define([
             robust('c-crosswords',      function () { crosswordThumbnails.init(); });
 
             robust('c-ready', function () { mediator.emit('page:common:ready'); });
-        };
+       };
 
     return {
         init: ready

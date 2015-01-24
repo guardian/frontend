@@ -32,30 +32,31 @@ data-test-id="facia-card"
 
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
-                @defining(VideoPlayer(
-                    videoElement,
-                    Video640,
-                    title,
-                    autoPlay = false,
-                    showControlsAtStart = false,
-                    endSlatePath,
-                    Some(false),
-                    item.id
-                )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                        <div class="fc-item__video-container">
-                            @video(player)
+                    @defining(VideoPlayer(
+                        videoElement,
+                        Video640,
+                        title,
+                        autoPlay = false,
+                        showControlsAtStart = false,
+                        endSlatePath,
+                        Some(false),
+                        item.id
+                    )) { player =>
+                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                            <div class="fc-item__video-container">
+                                @video(player, false)
+                            </div>
                         </div>
-                    </div>
-                @fallback.map { fallbackImage =>
-                    <div class="fc-item__video-fallback">
-                        @image(
-                            fallbackImage.imageContainer,
-                            inlineImage = containerIndex == 0 && index < 4
-                        )
-                    </div>
-                }
-                }
+                        @fallback.map { fallbackImage =>
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder">
+                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
+                                @image(
+                                    fallbackImage.imageContainer,
+                                    inlineImage = containerIndex == 0 && index < 4
+                                )
+                            </div>
+                        }
+                    }
             }
 
             case Some(svg @ CrosswordSvg(_)) => {

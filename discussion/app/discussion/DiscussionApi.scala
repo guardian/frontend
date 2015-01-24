@@ -165,12 +165,12 @@ object AuthHeaders {
 }
 
 case class DiscussionParams(
-  orderBy: String,
-  page: String,
-  pageSize: String,
-  topComments: Boolean,
-  maxResponses: Option[String],
-  displayThreaded: Boolean)
+  orderBy: String = "newest",
+  page: String = "1",
+  pageSize: String = "50",
+  topComments: Boolean = false,
+  maxResponses: Option[String] = None,
+  displayThreaded: Boolean = false)
 
 object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
@@ -179,7 +179,6 @@ object DiscussionParams extends {
       page = request.getQueryString("page").getOrElse("1"),
       pageSize = request.getQueryString("pageSize").getOrElse("50"),
       maxResponses = request.getQueryString("maxResponses"),
-      topComments = request.getQueryString("topComments").exists(_ == "true"),
       displayThreaded = request.getQueryString("displayThreaded").exists(_ == "true")
     )
   }
