@@ -470,7 +470,6 @@ define([
 
         },
         ready = function () {
-<<<<<<< HEAD
             robust('c-fonts',           function () { modules.loadFonts(); });
             robust('c-identity',        function () { modules.initId(); });
             robust('c-adverts',         function () { modules.initUserAdTargeting(); });
