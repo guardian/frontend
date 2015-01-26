@@ -177,7 +177,7 @@ define([
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on($('.js-weather-input')[0], 'blur', function(e) {
+            bean.on($('.js-weather-input')[0], 'blur', function (e) {
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
