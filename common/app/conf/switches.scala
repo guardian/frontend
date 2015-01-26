@@ -152,6 +152,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionAllPageSizeSwitch = Switch("Performance", "discussion-all-page-size",
+    "If this is switched on then users will have the option to load all comments",
+    safeState = Off, sellByDate = never
+  )
+
   val OpenCtaSwitch = Switch("Performance", "open-cta",
     "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
     safeState = Off, sellByDate = never

@@ -6,13 +6,14 @@ define([
     'lodash/collections/map',
 
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/mediator',
     'common/utils/scroller',
 
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
+    'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates'
 ], function(
     bean,
@@ -22,13 +23,14 @@ define([
     _map,
 
     $,
-    ajax,
+    ajaxPromise,
     mediator,
     scroller,
 
     Component,
     DiscussionApi,
     CommentBox,
+    WholeDiscussion,
     relativedates
 ) {
 'use strict';
@@ -164,7 +166,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var queryParams = {
         orderBy: options.order || this.options.order,
-        pageSize: options.pagesize || this.options.pagesize || 25,
+        pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
@@ -172,13 +174,24 @@ Comments.prototype.fetchComments = function(options) {
         queryParams.maxResponses = 3;
     }
 
-    return ajax({
-        url: url,
-        type: 'json',
-        method: 'get',
-        crossOrigin: true,
-        data: queryParams
-    }).then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
+    var promise;
+    if (queryParams.pageSize === "all") {
+        promise = new WholeDiscussion({
+            discussionId: this.options.discussionId,
+            orderBy: queryParams.orderBy,
+            displayThreaded: queryParams.displayThreaded,
+            maxResponses: queryParams.maxResponses
+        }).loadAllComments();
+    } else {
+        promise = ajaxPromise({
+            url: url,
+            type: 'json',
+            method: 'get',
+            crossOrigin: true,
+            data: queryParams
+        });
+    }
+    return promise.then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
 };
 
 Comments.prototype.goToPermalink = function(commentId) {
@@ -249,7 +262,7 @@ Comments.prototype.getMoreReplies = function(event) {
 
     var source = bonzo(event.target).data('source-comment');
 
-    ajax({
+    ajaxPromise({
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',

@@ -6,7 +6,7 @@ define([
 
     'common/utils/$',
     'common/utils/_',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -27,7 +27,7 @@ define([
     raven,
     $,
     _,
-    ajax,
+    ajaxPromise,
     config,
     detect,
     mediator,
@@ -64,7 +64,7 @@ Loader.prototype.initTopComments = function() {
         this.comments.fetchComments({comment: commentId}).then(this.removeState.bind(this, 'loading'));
     });
 
-    return ajax({
+    return ajaxPromise({
         url: '/discussion/top-comments/' + this.getDiscussionId() + '.json',
         type: 'json',
         method: 'get',
@@ -90,13 +90,13 @@ Loader.prototype.initMainComments = function() {
 
     var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
-    var pagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
 
+    var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         order: order,
-        pagesize: pagesize,
+        pagesize: defaultPagesize,
         threading: threading
     });
 
@@ -121,7 +121,17 @@ Loader.prototype.initMainComments = function() {
             this.comments.addUser(this.user);
 
             var userPageSize = userPrefs.get('discussion.pagesize'),
-                pageSize = !userPageSize || isNaN(userPageSize) ? 25 : parseInt(userPageSize, 10);
+                pageSize = defaultPagesize;
+            switch (userPageSize) {
+                case "50":
+                    pageSize = 50;
+                    break;
+                case "100":
+                    pageSize = 100;
+                    break;
+                case "All":
+                    pageSize = config.switches.discussionAllPageSize ? "All" : 100;
+            }
             this.initPageSizeDropdown(pageSize);
 
             if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
@@ -142,7 +152,7 @@ Loader.prototype.initMainComments = function() {
                     this.setState('truncated');
                 }
             }.bind(this))
-            .fail(function(err) {
+            .catch(function(err) {
                 var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
                 raven.captureMessage(reportMsg, {
                     tags: {
@@ -327,7 +337,7 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function() {
-    ajax({
+    ajaxPromise({
         url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
         type: 'json',
         method: 'get',
