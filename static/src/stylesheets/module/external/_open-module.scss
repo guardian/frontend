@@ -5,15 +5,15 @@
 }
 
 h2.open__head { // element selector here in order to override .from-content-api style
-    @include fs-headline(3);
+    @include f-headline;
+    @include font-size(18, 22);
     font-weight: 500;
     color: colour(neutral-2);
     margin-top: 2px;
     margin-bottom: $gs-baseline !important;
 
-    @include mq($until: tablet) {
-        @include font-size(18, 22);
-        font-weight: 500;
+    @include mq(tablet) {
+        @include fs-headline(3, true);
     }
 }
 
@@ -43,7 +43,7 @@ h2.open__head { // element selector here in order to override .from-content-api 
     width: 24px;
     height: 24px;
     background-color: colour(news-default);
-    border-radius: 30px;
+    border-radius: 50%;
 }
 
 .i-chevron-right-mask {
