@@ -211,16 +211,10 @@ category: Common
     opacity: 1;
 }
 
-@if $old-ie {
-    .fallback {
+@if not $svg-support {
+    .inline-icon__fallback {
         position: relative !important;
         margin: 0 !important;
-    }
-
-    .social-icon,
-    .social__item--gplus,
-    .social__item--linkedin {
-        display: none !important;
     }
 
     .social__item {

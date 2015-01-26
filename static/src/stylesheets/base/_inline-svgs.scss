@@ -1,40 +1,50 @@
-.inline-icon {
-    fill: #ffffff;
+@if ($svg-support) {
+    .inline-icon {
+        fill: #ffffff;
 
-    svg {
-        overflow: visible;
-    }
-}
-
-.inline-tone-fill {
-    fill: colour(news-default);
-
-    .tonal--tone-comment & {
-        fill: colour(comment-default);
+        svg {
+            overflow: visible;
+        }
     }
 
-    .tonal--tone-feature & {
-        fill: colour(feature-default);
+    .inline-icon__fallback {
+        display: none;
     }
 
-    .tonal--tone-review & {
-        fill: colour(review-background);
-    }
+    .inline-tone-fill {
+        fill: colour(news-default);
 
-    .tonal--tone-editorial & {
-        fill: colour(editorial-default);
-    }
+        .tonal--tone-comment & {
+            fill: colour(comment-default);
+        }
 
-    .tonal--tone-analysis & {
-        fill: colour(analysis-accent);
-    }
+        .tonal--tone-feature & {
+            fill: colour(feature-default);
+        }
 
-    .tonal--tone-live &,
-    .tonal--tone-dead & {
-        fill: colour(live-default);
-    }
+        .tonal--tone-review & {
+            fill: colour(review-background);
+        }
 
-    .tonal--tone-media & {
-        fill: colour(media-default);
+        .tonal--tone-editorial & {
+            fill: colour(editorial-default);
+        }
+
+        .tonal--tone-analysis & {
+            fill: colour(analysis-accent);
+        }
+
+        .tonal--tone-live &,
+        .tonal--tone-dead & {
+            fill: colour(live-default);
+        }
+
+        .tonal--tone-media & {
+            fill: colour(media-default);
+        }
+    }
+} @else {
+    .inline-icon {
+        display: none !important;
     }
 }
