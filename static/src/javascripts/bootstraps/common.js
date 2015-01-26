@@ -14,6 +14,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
+    'common/utils/storage',
 
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
@@ -71,6 +72,7 @@ define([
     mediator,
     template,
     url,
+    storage,
 
     Clickstream,
     Foresee,
@@ -461,13 +463,13 @@ define([
 
             displayAdBlockMessage: function () {
                 var adblockLink = 'https://www.theguardian.com/',
-                    adblockMessage;
-
-                $.create('<div class="ad_unit"></div>').appendTo(document.body);
+                    adblockMessage,
+                    localStorage = storage.local;
 
                 if (detect.getBreakpoint() !== 'mobile') {
                     if (detect.adblockInUse()) {
                         s.prop40 = 'adblocktrue';
+                        localStorage.set('adblockInUse', true);
                         adblockMessage = new Message('adblock', {
                             pinOnHide: false,
                             siteMessageLinkName: 'adblock message',
@@ -479,9 +481,13 @@ define([
                                 adblockLink: adblockLink
                             }
                         ));
-                    }
-                    else {
-                        s.prop40 = 'adblockfalse';
+                    } else {
+                        //if we detected adblock before, we can assume that the user disabled it for us
+                        if (localStorage.get('adblockInUse')) {
+                            s.prop40 = 'adblockdisabled';
+                        } else {
+                            s.prop40 = 'adblockfalse';
+                        }
                     }
                 }
             }

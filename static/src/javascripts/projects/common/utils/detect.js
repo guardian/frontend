@@ -347,7 +347,12 @@ define([
     }
 
     function adblockInUse() {
-        return $('.ad_unit').css('display') === 'none';
+        var displayed = '';
+
+        $.create('<div class="ad_unit"></div>').appendTo(document.body);
+        displayed = $('.ad_unit').css('display');
+        $('.ad_unit').remove();
+        return displayed === 'none' ? true: false;
     }
 
     return {
