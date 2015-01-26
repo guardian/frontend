@@ -2,6 +2,7 @@
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
+@import views.support.OmnitureAnalyticsData
 
 @* Critical scripts that should execute as soon as possible, preventing layout thrashing *@
 
@@ -158,8 +159,10 @@
             }
          }
 
+
+
         // must always be set before the Omniture file is parsed
-        window.s_account = guardian.config.page.omnitureAccount;
+        window.s_account = "@OmnitureAnalyticsAccount(item)"
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {

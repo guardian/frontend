@@ -56,6 +56,10 @@ define([
             s.tl(true, 'o', 'AutoUpdate Refresh');
         };
 
+        this.generateTrackingImageString = function() {
+            return "s_i_" + window.s_account.split(',').join('_');
+        };
+
         this.logTag = function (spec) {
             var storeObj,
                 delay;
@@ -285,10 +289,6 @@ define([
         };
 
         this.go = function () {
-            /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-            // must be set before the Omniture file is parsed
-            window.s_account = config.page.omnitureAccount;
-
             this.populatePageProperties();
             this.logView();
             mediator.emit('analytics:ready');
@@ -302,7 +302,7 @@ define([
                     // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
                     // It does not sit in the DOM tree, and seems to be the only surefire way
                     // to check if the intial beacon has been successfully sent
-                    var img = window['s_i_guardiangu-frontend_guardiangu-network'];
+                    var img = window[self.generateTrackingImageString()]
                     if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                         clearInterval(checkForPageViewInterval);
 
