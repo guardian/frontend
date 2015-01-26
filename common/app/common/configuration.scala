@@ -30,6 +30,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
   }
 
+  object business {
+    lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+  }
+
   object weather {
     lazy val apiKey = configuration.getStringProperty("weather.api.key")
   }
