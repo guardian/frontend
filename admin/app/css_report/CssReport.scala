@@ -6,14 +6,9 @@ import awswrappers.dynamodb._
 import com.amazonaws.services.dynamodbv2.model._
 import common.ExecutionContexts
 import org.joda.time.LocalDate
-import play.api.libs.json.Json
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.Try
-
-object SelectorReport {
-  implicit val jsonWrites = Json.writes[SelectorReport]
-}
 
 case class SelectorReport(selector: String, used: Int, unused: Int)
 

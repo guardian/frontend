@@ -4,7 +4,7 @@ import common.{ExecutionContexts, JsonComponent}
 import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import css_report.{SelectorReport, CssReport}
+import css_report.CssReport
 
 object CssReportsIndex {
   implicit val jsonWrites = Json.writes[CssReportsIndex]
@@ -14,12 +14,21 @@ case class CssReportsIndex(
   days: Seq[LocalDate]
 )
 
+object UsedAndUnused {
+  implicit val jsonFormat = Json.format[UsedAndUnused]
+}
+
+case class UsedAndUnused(
+  used: Int,
+  unused: Int
+)
+
 object CssReportResponse {
   implicit val jsonWrites = Json.writes[CssReportResponse]
 }
 
 case class CssReportResponse(
-  selectors: Seq[SelectorReport]
+  selectors: Map[String, UsedAndUnused]
 )
 
 object CssReportController extends Controller with ExecutionContexts {
@@ -31,7 +40,9 @@ object CssReportController extends Controller with ExecutionContexts {
 
   def report(day: LocalDate) = Action.async { implicit request =>
     CssReport.report(day) map { selectors =>
-      JsonComponent.forJsValue(Json.toJson(CssReportResponse(selectors.sortBy(_.selector))))
+      JsonComponent.forJsValue(Json.toJson(CssReportResponse(
+        selectors.map(selector => selector.selector -> UsedAndUnused(selector.used, selector.unused)).toMap
+      )))
     }
   }
 }
