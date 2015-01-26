@@ -25,6 +25,10 @@ Media list item. Looks a bit like this:
         min-height: $item-min-height + ($mobile-media-padding * 2);
     }
 
+    &.fc-item--has-metadata .fc-item__content {
+        padding-bottom: floor($gs-baseline * 1.2);
+    }
+
     @include mq(tablet) {
         .fc-item__content {
             min-height: $item-min-height;
