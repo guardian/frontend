@@ -69,7 +69,7 @@ define([
         },
         /**
          * Loads commercial components.
-         *         * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
+         * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10023207
          *
          * @constructor
          * @extends Component
@@ -84,10 +84,10 @@ define([
             this.$adSlot    = $adSlot;
             this.components = {
                 bestbuy:           buildComponentUrl('money/bestbuys', params),
-                book:              buildComponentUrl('books/book', merge(params, { t: config.page.isbn || params.isbn })),
-                books:             buildComponentUrl('books/books', merge(params, { t: params.isbns ? params.isbns.split(',') : [] })),
-                jobs:              buildComponentUrl('jobs', merge(params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
-                masterclasses:     buildComponentUrl('masterclasses', merge(params, { t: params.ids ? params.ids.split(',') : [] })),
+                book:              buildComponentUrl('books/book', merge({}, params, { t: config.page.isbn || params.isbn })),
+                books:             buildComponentUrl('books/books', merge({}, params, { t: params.isbns ? params.isbns.split(',') : [] })),
+                jobs:              buildComponentUrl('jobs', merge({}, params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
+                masterclasses:     buildComponentUrl('masterclasses', merge({}, params, { t: params.ids ? params.ids.split(',') : [] })),
                 soulmates:         buildComponentUrl('soulmates/mixed', params),
                 travel:            buildComponentUrl('travel/offers', params),
                 multi:             buildComponentUrl('multi', params),
