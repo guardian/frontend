@@ -100,7 +100,7 @@ $weather-large-size: 60px;
     }
 }
 
-.i.weather__icon {
+.weather__icon svg {
     width: $weather-small-size;
     height: $weather-small-size;
     margin: -($gs-baseline / 3) 0 0;
@@ -320,7 +320,7 @@ i.weather__close-icon {
         display: block;
     }
 
-    .i.weather__icon {
+    .weather__icon {
         display: block;
 
         @include mq(mobileLandscape, leftCol) {

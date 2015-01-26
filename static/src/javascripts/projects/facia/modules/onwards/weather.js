@@ -22,6 +22,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
+    'common/views/svgs',
     'facia/modules/onwards/search-tool',
     'text!facia/views/weather.html',
     'text!facia/views/weather-forecast.html'
@@ -35,6 +36,7 @@ define([
     mediator,
     template,
     userPrefs,
+    svgs,
     SearchTool,
     weatherTemplate,
     forecastTemplate
@@ -230,17 +232,11 @@ define([
         },
 
         render: function (weatherData, city) {
-            $weather = $('.weather');
+            var tmpl = weatherData.html;
+
             $holder = $('.js-container--first .js-container__header');
+            $holder.html(tmpl.replace(new RegExp('{{city}}', 'g'), city));
 
-            $weather = $.create(template(weatherTemplate, {
-                location: city,
-                icon: weatherData.weatherIcon,
-                description: weatherData.weatherText,
-                tempNow: this.getTemperature(weatherData)
-            }));
-
-            $weather.appendTo($holder);
             this.bindEvents();
             this.addSearch();
 
@@ -274,7 +270,8 @@ define([
                     'forecast-temp': forecastData[i].temperature[this.getUnits()],
                     'forecast-icon': forecastData[i].weatherIcon,
                     'forecast-desc': forecastData[i].weatherText,
-                    'forecast-num': parseInt(i, 10) + 1
+                    'forecast-num': parseInt(i, 10) + 1,
+                    'icon': svgs('shareTwitterIcon')
                 }));
 
                 docFragment.appendChild($forecast[0]);
