@@ -101,9 +101,15 @@ define([
     }
 
     function createVideoPlayer(el, options) {
-        var player;
+        var player = videojs(el, options),
+            $el = $(el),
+            duration;
 
-        player = videojs(el, options);
+        duration = parseInt($el.attr('data-duration'), 10);
+        if (!isNaN(duration)) {
+            player.duration(duration);
+            player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
+        }
 
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
