@@ -14,6 +14,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
+    'common/utils/robust',
 
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
@@ -70,6 +71,7 @@ define([
     mediator,
     template,
     url,
+    robust,
 
     Clickstream,
     Foresee,
@@ -468,48 +470,48 @@ define([
 
         },
         ready = function () {
-            modules.loadFonts();
-            modules.initId();
-            modules.initUserAdTargeting();
-            modules.initDiscussion();
-            modules.initFastClick();
-            modules.testCookie();
-            modules.adTestCookie();
-            modules.windowEventListeners();
-            modules.loadBreakingNews();
-            modules.initShareCounts();
-            modules.initialiseFauxBlockLink();
-            modules.checkIframe();
-            modules.showTabs();
-            modules.initialiseTopNavItems();
-            modules.initialiseNavigation();
-            modules.showToggles();
-            modules.showRelativeDates();
-            modules.initClickstream();
-            modules.optIn();
-            modules.displayReleaseMessage();
-            modules.updateHistory();
-            modules.unshackleParagraphs();
-            modules.initAutoSignin();
-            modules.augmentInteractive();
-            modules.showHistoryInMegaNav();
-            modules.runForseeSurvey();
-            modules.startRegister();
-            modules.repositionComments();
-            modules.showMoreTagsLink();
-            modules.showSmartBanner();
-            modules.logLiveStats();
-            modules.loadAnalytics();
-            modules.cleanupCookies();
-            modules.transcludePopular();
-            modules.transcludeRelated();
-            modules.transcludeOnwardContent();
-            modules.initReleaseMessage();
-            modules.initOpenOverlayOnClick();
-            modules.runCssLogging();
-            crosswordThumbnails.init();
+            robust('c-fonts',           function () { modules.loadFonts(); });
+            robust('c-identity',        function () { modules.initId(); });
+            robust('c-adverts',         function () { modules.initUserAdTargeting(); });
+            robust('c-discussion',      function () { modules.initDiscussion(); });
+            robust('c-fast-click',      function () { modules.initFastClick(); });
+            robust('c-test-cookie',     function () { modules.testCookie(); });
+            robust('c-ad-cookie',       function () { modules.adTestCookie(); });
+            robust('c-event-listeners', function () { modules.windowEventListeners(); });
+            robust('c-breaking-news',   function () { modules.loadBreakingNews(); });
+            robust('c-shares',          function () { modules.initShareCounts(); });
+            robust('c-block-link',      function () { modules.initialiseFauxBlockLink(); });
+            robust('c-iframe',          function () { modules.checkIframe(); });
+            robust('c-tabs',            function () { modules.showTabs(); });
+            robust('c-top-nav',         function () { modules.initialiseTopNavItems(); });
+            robust('c-init-nav',        function () { modules.initialiseNavigation(); });
+            robust('c-toggles',         function () { modules.showToggles(); });
+            robust('c-dates',           function () { modules.showRelativeDates(); });
+            robust('c-clickstream',     function () { modules.initClickstream(); });
+            robust('c-opt-in',          function () { modules.optIn(); });
+            robust('c-release-message', function () { modules.displayReleaseMessage(); });
+            robust('c-history',         function () { modules.updateHistory(); });
+            robust('c-paras',           function () { modules.unshackleParagraphs(); });
+            robust('c-sign-in',         function () { modules.initAutoSignin(); });
+            robust('c-interactive',     function () { modules.augmentInteractive(); });
+            robust('c-history-nav',     function () { modules.showHistoryInMegaNav(); });
+            robust('c-forsee',          function () { modules.runForseeSurvey(); });
+            robust('c-start-register',  function () { modules.startRegister(); });
+            robust('c-comments',        function () { modules.repositionComments(); });
+            robust('c-tag-links',       function () { modules.showMoreTagsLink(); });
+            robust('c-smart-banner',    function () { modules.showSmartBanner(); });
+            robust('c-log-stats',       function () { modules.logLiveStats(); });
+            robust('c-analytics',       function () { modules.loadAnalytics(); });
+            robust('c-cookies',         function () { modules.cleanupCookies(); });
+            robust('c-popular',         function () { modules.transcludePopular(); });
+            robust('c-related',         function () { modules.transcludeRelated(); });
+            robust('c-onward',          function () { modules.transcludeOnwardContent(); });
+            robust('c-init-release',    function () { modules.initReleaseMessage(); });
+            robust('c-overlay',         function () { modules.initOpenOverlayOnClick(); });
+            robust('c-css-logging',     function () { modules.runCssLogging(); });
+            robust('c-crosswords',      function () { crosswordThumbnails.init(); });
 
-            mediator.emit('page:common:ready');
+            robust('c-ready', function () { mediator.emit('page:common:ready'); });
         };
 
     return {
