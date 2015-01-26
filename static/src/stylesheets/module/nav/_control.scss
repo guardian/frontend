@@ -61,4 +61,8 @@ $control-size: 36px;
             display: none;
         }
     }
+
+    @if $old-ie {
+        display: none !important;
+    }
 }
