@@ -41,7 +41,7 @@ import services.ConfigAgent
 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/film/rss"))
   }
 
   it should "keep query params for X-Accel-Redirect" in {
