@@ -36,10 +36,15 @@ object EventbriteMasterClass {
       } yield tag
     }.toSeq
 
-    val tickets = (block \\ "ticket") map {
-      ticket =>
+    val tickets = {
+      for {
+        ticket <- block \\ "ticket"
+        visible <- (ticket \ "visible").asOpt[String]
+        if visible.toBoolean
+      } yield {
         val price = (ticket \ "display_price").as[String].replace(",", "").toDouble
         new Ticket(price)
+      }
     }
 
     val doc: Document = Jsoup.parse(description)
