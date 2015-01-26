@@ -47,6 +47,7 @@ define([
                 var format,
                     $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                    url = $node.attr('data-discussion-url') || getContentUrl(node),
                     $container,
                     meta,
                     html;
@@ -61,7 +62,7 @@ define([
 
                 format = $node.data('commentcount-format');
                 html = template(templates[format] || defaultTemplate, {
-                    url: getContentUrl(node),
+                    url: url,
                     count: formatters.integerCommas(c.count),
                     label: commentOrComments
                 });
