@@ -1,5 +1,7 @@
 package models
 
+import common.Edition
+import common.editions.Us
 import play.api.libs.json.Json
 
 object ForecastResponse {
@@ -26,4 +28,9 @@ case class ForecastResponse(
   weatherIcon: Int,
   weatherText: String,
   temperature: Temperatures
-)
+) {
+  def temperatureForEdition(edition: Edition) = edition match {
+    case Us => temperature.imperial
+    case _ => temperature.metric
+  }
+}

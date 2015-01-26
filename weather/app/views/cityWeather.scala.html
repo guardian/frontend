@@ -1,4 +1,5 @@
-@(weather: CityWeather)(implicit request: RequestHeader)
+@(weather: models.accuweather.WeatherResponse)(implicit request: RequestHeader)
+
 @import common.Edition
 
 <div class="weather">
@@ -7,11 +8,11 @@
             <span class="u-h">The temperature</span>
             <span class="weather__time">Now</span>
             <span class="u-h">is</span>
-            @defining(weather.temperatureFor(Edition(request))) { temp =>
-                <span class="weather__temp js-weather-temp">@math.round(temp.value)°@temp.unit</span>
+            @defining(weather.temperatureForEdition(Edition(request))) { temp =>
+                <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             }
         </p>
-        @fragments.inlineSvg(s"weather-${weather.weatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@weather.weatherText</span>
+        @fragments.inlineSvg(s"weather-${weather.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@weather.WeatherText</span>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
     href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="i i-arrow-grey-large weather__toggle-icon"></i>

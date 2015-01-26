@@ -1,7 +1,5 @@
 package models
 
-import java.text.DecimalFormat
-
 import play.api.libs.json.{JsString, JsValue, Writes, Json}
 
 object Temperatures {
