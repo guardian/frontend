@@ -716,74 +716,15 @@ $ima-controls-height: 70px;
     }
 }
 
-/* VJS: AD OVERLAY
-   ========================================================================== */
-$vjs-height-ratio: 7/3;
-
-.vjs-ads-overlay-top {
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: $gs-baseline*($vjs-height-ratio);
-    padding: $gs-baseline/3 0 0 $gs-gutter/4;
-    background-color: rgba(colour(neutral-1), .8);
-    border-top: 1px solid colour(neutral-2);
-    color: #ffffff;
-    text-align: left;
-    @include transition(top 1s linear);
-    @include fs-textSans(1);
-    @include box-sizing(border-box);
-
-    @include mq(tablet) {
-        @include fs-textSans(2, true);
-    }
-}
-
-.vjs-ads-overlay .pamplemousse {
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.vjs-ads-overlay--not-started {
-
-    .vjs-ads-overlay-countdown {
-        display: none;
-    }
-
-    .vjs-ads-overlay-loading {
-        display: block;
-    }
-}
-
-.vjs-ads-overlay-top--animate-hide {
-    top: -$gs-baseline*($vjs-height-ratio);
-}
-
-.vjs-ads-overlay-loading {
-    display: none;
-}
-
-.vjs-ads-overlay__label {
-    position: absolute;
-    top: $gs-baseline/3;
-    right: $gs-gutter/2;
-}
-
 /* VJS: SKIP AD OVERLAY
    ========================================================================== */
-.vjs-ads-overlay-skip {
+.vjs-ads-skip {
     position: absolute;
     z-index: 4;
     bottom: $ima-controls-height;
     right: 8px;
-    width: $gs-column-width*2;
-    padding: $gs-baseline/2 0 $gs-baseline/4 $gs-gutter/4;
+    // width so text goes over two lines
+    width: 140px;
     background-color: rgba(colour(neutral-1), .8);
     color: #ffffff;
     text-align: left;
@@ -793,30 +734,36 @@ $vjs-height-ratio: 7/3;
         @include fs-textSans(2, true);
     }
 }
+.vjs-ads-skip__countdown,
+.vjs-ads-skip__button {
+    display: block;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4;
+}
+.vjs-ads-skip__button {
+    width: 100%;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    text-align: left;
 
-.vjs-ads-overlay-skip--enabled {
-    .vjs-ads-overlay-skip-button {
-        background-color: inherit;
-        border: 0;
+    .i-play-icon-grey {
+        display: inline-block;
+    }
+    .i-play-icon-gold {
+        display: none;
+    }
+    &:hover {
+        color: colour(comment-main-2);
 
         .i-play-icon-grey {
-            display: inline-block;
-        }
-        .i-play-icon-gold {
             display: none;
         }
-        &:hover {
-            color: colour(comment-main-2);
-            .i-play-icon-grey {
-                display: none;
-            }
-            .i-play-icon-gold {
-                display: inline-block;
-            }
+        .i-play-icon-gold {
+            display: inline-block;
         }
-        .skip-icon {
-            margin-right: $gs-gutter/4;
-        }
+    }
+    .skip-icon {
+        margin-right: $gs-gutter/4;
     }
 }
 
