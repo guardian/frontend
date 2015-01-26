@@ -89,13 +89,16 @@ define([
             'sport',
             'technology'
         ],
-        pageMeta = [
+        pageMetaKeys = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
         ],
 
+        weightFront = 1,
+        weightArticle = 1,
+        weightDay = 10,
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
@@ -136,14 +139,19 @@ define([
 
         summaryCache = storage.local.get(storageKeySummary);
 
-        if (!_.isObject(summaryCache) || !_.isNumber(summaryCache.periodEnd)) {
+        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
             summaryCache = {
                 periodEnd: today,
-                showInMegaNav: true
+                tags: {},
+                showInMegaNav: true,
+                v: 2
             };
         }
 
-        summaryCache.tally = summaryCache.tally || {};
+        if ((summaryCache.v || 1) < 2) {
+            upgradeToVersion2(summaryCache);
+            saveSummary(summaryCache);
+        }
 
         return summaryCache;
     }
@@ -165,14 +173,10 @@ define([
         var newToday = mockToday || today,
             updateBy = newToday - summary.periodEnd;
 
-        if (summary.tags) {
-            upgradeToVersion2(summary);
-        }
-
         if (updateBy !== 0) {
             summary.periodEnd = newToday;
 
-            _.each(summary.tally, function (tagMeta, tid) {
+            _.each(summary.tags, function (tagMeta, tid) {
                 pruneTag(summary, tid, tagMeta, updateBy);
             });
 
@@ -200,12 +204,12 @@ define([
         });
 
         if (!keep) {
-            delete summary.tally[tid];
+            delete summary.tags[tid];
         }
     }
 
     function upgradeToVersion2(summary) {
-        summary.tally = _.reduce(summary.tags, function (tally, tagMeta, tid) {
+        summary.tags = _.reduce(summary.tags, function (tally, tagMeta, tid) {
             var freqs = _.reduce(tagMeta[1], function (freqs, pair) {
                 freqs[pair[0]] = pair[1];
                 return freqs;
@@ -216,10 +220,6 @@ define([
         }, {});
 
         summary.v = 2;
-
-        delete summary.tags;
-
-        return summary;
     }
 
     function getPopular(number, filtered) {
@@ -235,15 +235,12 @@ define([
 
         return _.chain(tids)
             .map(function (tid) {
-                var tagMeta = tags[tid],
-                    freqs = tagMeta[1];
+                var tagMeta = tags[tid];
 
-                if (freqs.length) {
-                    return {
-                        keep: [tid, tagMeta[0]],
-                        rank: tally(freqs)
-                    };
-                }
+                return {
+                    keep: [tid, tagMeta[0]],
+                    rank: tally(tagMeta[1], weightFront) + tally(tagMeta[2], weightArticle)
+                };
             })
             .compact()
             .sortBy('rank')
@@ -263,9 +260,9 @@ define([
         return popularFilteredCache;
     }
 
-    function tally(freqs) {
-        return _.reduce(freqs, function (tally, freq) {
-            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
+    function tally(freqs, weight) {
+        return _.reduce(str2ints(freqs), function (tally, freq, day) {
+            return tally + (freq > 0 ? (weightDay + freq * weight) * (summaryPeriodDays - day) : 0);
         }, 0);
     }
 
@@ -314,8 +311,7 @@ define([
         var pageId = pageConfig.pageId,
             summary = pruneSummary(getSummary(), mockToday),
             isFront = false,
-
-            meta = _.chain(pageMeta)
+            pageMeta = _.chain(pageMetaKeys)
                 .reduceRight(function (tags, tag) {
                     var tid = firstCsv(pageConfig[tag.tid]),
                         tname = tid && firstCsv(pageConfig[tag.tname]);
@@ -330,7 +326,7 @@ define([
                 }, {})
                 .value();
 
-        _.each(meta, function (tname, tid) {
+        _.each(pageMeta, function (tname, tid) {
             logTag(summary, tname, tid, isFront);
         });
 
@@ -339,14 +335,14 @@ define([
 
     function logTag(summary, tname, tid, isFront) {
         var i = isFront ? 1 : 2,
-            tagMeta = summary.tally[tid],
+            tagMeta = summary.tags[tid],
             freqs = tagMeta && str2ints(tagMeta[i]) || [];
 
         if (_.isNumber(freqs[0])) {
             freqs[0] = freqs[0] + 1;
             tagMeta[i] = ints2str(freqs);
         } else {
-            summary.tally[tid] = [tname, isFront ? '1' : '', isFront ? '' : '1'];
+            summary.tags[tid] = [tname, isFront ? '1' : '', isFront ? '' : '1'];
         }
 
         if (tagMeta) {
