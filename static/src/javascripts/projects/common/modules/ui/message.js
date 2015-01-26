@@ -26,8 +26,8 @@ define([
         this.permanent = opts.permanent || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
-        this.siteMessageLinkName = opts.siteMessageLinkName;
-        this.siteMessageCloseBtn = opts.siteMessageCloseBtn;
+        this.siteMessageLinkName = opts.siteMessageLinkName || '';
+        this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
 
         this.$footerMessage = $('.js-footer-message');
@@ -54,8 +54,6 @@ define([
         if (this.siteMessageCloseBtn) {
             $('.site-message__close-btn', '.site-message').attr('data-link-name', this.siteMessageCloseBtn);
         }
-
-        this.siteMessageCloseBtn = opts.siteMessageCloseBtn;)
 
         $('.site-message').addClass('site-message--' + this.type).addClass('site-message--' +  this.id);
         $('.site-message').removeClass('is-hidden');
