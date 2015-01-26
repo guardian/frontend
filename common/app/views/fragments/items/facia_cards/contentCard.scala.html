@@ -16,6 +16,7 @@
         data-discussion-id="@id"
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-url="@item.header.url.get(request)#comments"
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
