@@ -1,0 +1,25 @@
+@(env: String, encodingData: List[(String, String)])
+
+    @admin_main("Videos with missing encodings", env, isAuthed = true )  {
+
+    <h1>The following return 404s~</h1>
+    <br/>
+
+
+    <table class="table table-bordered table-striped table--asset">
+        <thead>
+            <tr>
+                <th class="table__head">Video webtitle</th>
+                <th class="table__head">Missing encoding asset</th>
+            </tr>
+        </thead>
+        <tbody>
+        @encodingData.map { case (title, url) =>
+        <tr>
+            <td>@{title}</td>
+            <td>@{url}</td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    }

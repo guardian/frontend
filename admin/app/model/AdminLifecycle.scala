@@ -77,6 +77,11 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       }
     }
 
+    Jobs.schedule("VideoEncodingsJob", "0 0/10 * * * ?") {
+      log.info("Starting VideoEncodingsJob")
+      VideoEncodingsJob.run()
+    }
+
   }
 
   private def descheduleJobs() {
@@ -95,6 +100,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJobLowFrequency")
     Jobs.deschedule("AdsStatusEmailJob")
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
+    Jobs.deschedule("VideoEncodingsJob")
   }
 
   override def onStart(app: play.api.Application) {
@@ -107,6 +113,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
       SentryReportJob.run()
+      VideoEncodingsJob.run()
     }
   }
 

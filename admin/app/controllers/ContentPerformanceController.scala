@@ -4,6 +4,7 @@ import common.{Logging, ExecutionContexts}
 import controllers.AuthLogging
 import model.NoCache
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc._
 import tools.FormattedChart.{Cell, Row, Column}
@@ -12,6 +13,8 @@ import jobs.OmnitureReports._
 import scala.math.pow
 
 object ContentPerformanceController extends Controller with AuthLogging with Logging with ExecutionContexts {
+
+  val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 
   implicit class ExtendedDouble(n: Double) {
     def rounded(x: Int) = {
@@ -194,4 +197,17 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         NoCache(Ok(views.html.contentLiveBlog("PROD", socialInteractionsChart, "Live Blog Performance", reportTimestamp)))
     }
   }
+
+  def renderVideoEncodingsDashboard() = AuthActions.AuthActionTest { request =>
+
+    val videoEncodingsReport = jobs.VideoEncodingsJob.getReport("missing-encodings")
+    videoEncodingsReport match {
+      case List() => NoCache(Ok("There are no reported encodings missing as of: %s".format(missingVideoEncodingDateTimeFormat.print(DateTime.now())) ))
+      case List(("Not", "Ready")) => NoCache(Ok("Missing video encoding: report has not yet generated"))
+      case _ => NoCache(Ok( views.html.missingVideoEncodings( "PROD", videoEncodingsReport) ) )
+    }
+ }
+
 }
+
+
