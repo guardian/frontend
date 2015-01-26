@@ -351,6 +351,10 @@ define([
         return hinting;
     }
 
+    function isModernBrowser() {
+        return window.guardian.isModernBrowser;
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -370,7 +374,8 @@ define([
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        fontHinting: fontHinting()
+        fontHinting: fontHinting(),
+        isModernBrowser: isModernBrowser
     };
 
 });
