@@ -35,8 +35,7 @@ trait Mappings {
     }
   )
 
-  val emailRegex = """^(?!\.)("([^"\r\\]|\\["\r\\])*"|([-a-zA-Z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-zA-Z0-9](?:[\w\.-]*[a-zA-Z0-9])*\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$""".r
-  val idEmail: Mapping[String] = text.verifying(Messages("error.email"),{ value => value.isEmpty || emailRegex.findFirstIn(value).isDefined })
+  val idEmail: Mapping[String] = text.verifying(Messages("error.email"), value => value.isEmpty || EmailPattern.findFirstIn(value).isDefined)
 
   val idFirstName: Mapping[String] = nonEmptyText(maxLength = 50)
 
