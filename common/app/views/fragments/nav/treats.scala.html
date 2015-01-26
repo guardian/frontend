@@ -6,16 +6,16 @@
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
-    @containerDefinition.collectionEssentials.treats.map { treat =>
+    @containerDefinition.collectionEssentials.treats.zipWithIndex.map { case (treat, index) =>
         @defining(LinkTo(treat).getOrElse("")) { link =>
             <li class="treats__list-item">
                 @if(internalPath(link).contains("/crosswords")) {
-                    <a class="treats__crossword-link" href="@link">
+                    <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
                         @CrosswordTreat.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
                         <span class="treats__treat">@treat.headline</span>
                     </a>
                 } else {
-                    <a href="@link" class="treats__treat">@treat.headline</a>
+                    <a href="@link" data-link-name="treat | @{index + 1}" class="treats__treat">@treat.headline</a>
                 }
             </li>
         }

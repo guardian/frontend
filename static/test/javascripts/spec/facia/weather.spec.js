@@ -23,7 +23,7 @@ define([
 
                 beforeEach(function () {
                     container = bonzo.create(
-                        '<div><div class="js-weather"></div></div>'
+                        '<div class="js-container--first"><div class="js-container__header"></div></div>'
                     )[0];
 
                     $('body').append(container);
@@ -38,6 +38,7 @@ define([
                 });
 
                 it("should be behind switches", function() {
+                    mocks.store['common/utils/config'].page.pageId = 'uk';
                     mocks.store['common/utils/config'].switches.weather = false;
 
                     spyOn(sut, "getDefaultLocation");
@@ -54,6 +55,36 @@ define([
                     };
                     sut.init();
                     expect(sut.getDefaultLocation).toHaveBeenCalled();
+                });
+
+                it("should initialize only if on front page", function() {
+                    spyOn(sut, "getDefaultLocation");
+
+                    mocks.store['common/utils/config'].switches = {
+                        weather: true
+                    };
+
+                    mocks.store['common/utils/config'].page.pageId = '/social';
+                    sut.init();
+                    expect(sut.getDefaultLocation).not.toHaveBeenCalled();
+
+                    mocks.store['common/utils/config'].page.pageId = 'uk';
+                    sut.init();
+                    expect(sut.getDefaultLocation).toHaveBeenCalled();
+                });
+
+                it("should return false when the page is not front", function() {
+                    mocks.store['common/utils/config'].page.pageId = 'uk';
+                    expect(sut.isNetworkFront()).toBeTruthy();
+
+                    mocks.store['common/utils/config'].page.pageId = 'us';
+                    expect(sut.isNetworkFront()).toBeTruthy();
+
+                    mocks.store['common/utils/config'].page.pageId = 'au';
+                    expect(sut.isNetworkFront()).toBeTruthy();
+
+                    mocks.store['common/utils/config'].page.pageId = 'social';
+                    expect(sut.isNetworkFront()).toBeFalsy();
                 });
 
                 it("should get location from local storage", function () {

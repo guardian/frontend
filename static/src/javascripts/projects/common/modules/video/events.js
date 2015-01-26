@@ -2,20 +2,24 @@
 define([
     'bean',
     'raven',
+    'common/utils/$',
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/template',
     'common/modules/analytics/omnitureMedia',
-    'text!common/views/ui/video-ads-overlay.html',
+    'common/modules/onward/history',
     'text!common/views/ui/video-ads-skip-overlay.html'
 ], function (
     bean,
     raven,
+    $,
     _,
     config,
     detect,
+    template,
     OmnitureMedia,
-    adsOverlayTmpl,
+    history,
     adsSkipOverlayTmpl
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
@@ -168,67 +172,49 @@ define([
         });
     }
 
-    function adCountdown() {
-        var player = this,
-            events =  {
-                destroy: function () {
-                    $('.js-ads-overlay', this.el()).remove();
-                    this.off('timeupdate', events.update);
-                },
-                update: function () {
-                    if (this.currentTime() > 0.1) {
-                        $('.vjs-ads-overlay').removeClass('vjs-ads-overlay--not-started');
-                    }
-                    if (parseInt(this.currentTime().toFixed(), 10) === 5) {
-                        $('.vjs-ads-overlay-top').addClass('vjs-ads-overlay-top--animate-hide');
-                    }
-                },
-                init: function () {
-                    $(this.el()).append($.create(adsOverlayTmpl));
-                    this.on('timeupdate', events.update.bind(this));
-                    this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
-                    this.one(constructEventName('content:play', player), events.destroy.bind(player));
-                    this.one('adtimeout', events.destroy.bind(player));
-                }
-            };
-        this.one(constructEventName('preroll:play', player), events.init.bind(player));
-    }
-
     function adSkipCountdown(skipTimeout) {
-        var player = this,
-            events =  {
+        var intervalId,
+            events = {
                 update: function () {
-                    var skipTime = parseInt((skipTimeout - this.currentTime()).toFixed(), 10);
+                    var adsManager  = this.ima.getAdsManager(),
+                        currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
+                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
+
                     if (skipTime > 0) {
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
-                    } else if (!skipTime) {
+                    } else {
+                        window.clearInterval(intervalId);
                         $('.vjs-ads-overlay-skip-countdown', this.el())
-                            .html('<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
+                            .html(
+                            '<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
                             '<i class="i i-play-icon-grey skip-icon"></i>' +
-                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>');
-                        $('.vjs-ads-overlay-skip').addClass('vjs-ads-overlay-skip--enabled');
+                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>'
+                        );
+                        $('.js-ads-skip-overlay').addClass('vjs-ads-overlay-skip--enabled');
+                        bean.on($('.js-ads-skip-overlay')[0], 'click', events.skip.bind(this));
                     }
                 },
                 skip: function () {
-                    if ($('.vjs-ads-overlay-skip').hasClass('vjs-ads-overlay-skip--enabled')) {
-                        events.hide.bind(player);
-                        player.trigger(constructEventName('preroll:skip', player));
-                        this.ads.endLinearAdMode();
-                    }
-                },
-                hide: function () {
+                    // jscs:disable disallowDanglingUnderscores
                     $('.js-ads-skip-overlay', this.el()).hide();
-                    this.off('timeupdate', events.update);
+                    this.trigger(constructEventName('preroll:skip', this));
+                    this.ima.onAdComplete_();
+                    this.ima.onContentResumeRequested_();
+                    this.ima.getAdsManager().stop();
                 },
                 init: function () {
-                    $(this.el()).append($.create(adsSkipOverlayTmpl));
-                    bean.on($('.vjs-ads-overlay-skip')[0], 'click', events.skip.bind(player));
-                    this.on('timeupdate', events.update.bind(player));
-                    this.one(constructEventName('content:play', player), events.hide.bind(player));
-                    $('.js-skip-remaining-time', this.el()).text(parseInt(skipTimeout, 10).toFixed());
+                    var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
+
+                    $(this.el()).append(skipButton);
+                    intervalId = setInterval(events.update.bind(this), 250);
+                    this.one(constructEventName('content:play', this), function () {
+                        $('.js-ads-skip-overlay', this.el()).hide();
+                        window.clearInterval(intervalId);
+                    });
                 }
             };
-        this.one(constructEventName('preroll:play', player), events.init.bind(player));
+
+        this.one(constructEventName('preroll:play', this), events.init.bind(this));
     }
 
     function beaconError(err) {
@@ -265,7 +251,6 @@ define([
         bindGlobalEvents: bindGlobalEvents,
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
-        adCountdown: adCountdown,
         adSkipCountdown: adSkipCountdown,
         handleInitialMediaError: handleInitialMediaError,
         bindErrorHandler: bindErrorHandler

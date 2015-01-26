@@ -2,16 +2,16 @@
     <div class="u-unstyled weather__current">
         <p class="weather__desc">
             <span class="u-h">The temperature</span>
-            <span class="weather__time">now</span>
+            <span class="weather__time">Now</span>
             <span class="u-h">is</span>
             <span class="weather__temp js-weather-temp">{{tempNow}}</span>
         </p>
         <i class="i i-weather-{{icon}} weather__icon js-weather-icon" title="{{description}}"><span class="u-h">{{description}}</span></i>
     </div>
-    <button class="weather__toggle-forecast meta-button js-toggle-forecast" data-link-name="weather-toggle-forecast" data-toggle-class="js-weather-forecast-mobile"
+    <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
         href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="i i-arrow-grey-large weather__toggle-icon"></i>
     </button>
-    <ul class="js-weather-forecast forecast forecast--desktop hide-until-leftcol"></ul>
+    <ul class="js-weather-forecast forecast"></ul>
     <div class="weather__location">
         <div class="search-tool js-search-tool">
             <div class="search-tool__form u-cf">
@@ -27,4 +27,3 @@
         </button>
     </div>
 </div>
-<ul class="js-weather-forecast js-weather-forecast-mobile forecast forecast--mobile u-h"></ul>

@@ -11,8 +11,29 @@ object Uk extends Edition(
 
   implicit val UK = Uk
 
-  val sportLocalNav: Seq[SectionLink] = Seq(football, rugbyunion, cricket, tennis, golf, cycling, boxing, usSport, formulaOne, racing)
-  val cultureLocalNav: Seq[SectionLink] = Seq(film, televisionAndRadio, music, books, artanddesign, stage, classicalMusic)
+  val sportLocalNav: Seq[SectionLink] = Seq(
+    football,
+    rugbyunion,
+    cricket,
+    tennis,
+    golf,
+    cycling,
+    boxing,
+    usSport,
+    formulaOne,
+    racing
+  )
+
+  val cultureLocalNav: Seq[SectionLink] = Seq(
+    film,
+    televisionAndRadio,
+    music,
+    games,
+    books,
+    artanddesign,
+    stage,
+    classicalMusic
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
@@ -21,18 +42,19 @@ object Uk extends Edition(
       NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
-      NavItem(cif),
+      NavItem(opinion),
       NavItem(culture, cultureLocalNav),
       NavItem(economy, Seq(markets, companies)),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
       NavItem(environment, Seq(cities, globalDevelopment)),
-      NavItem(technology, Seq(games)),
+      NavItem(technology),
       NavItem(money, Seq(property, savings, borrowing, careers)),
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(science),
-      NavItem(education, Seq(students)),
+      NavItem(education, Seq(students, teachersNetwork)),
       NavItem(media),
+      NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper),
       NavItem(crosswords),
@@ -46,13 +68,13 @@ object Uk extends Edition(
     NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),
-    NavItem(cif),
+    NavItem(opinion),
     NavItem(culture, cultureLocalNav),
     NavItem(economy, Seq(markets, companies)),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
     NavItem(fashion),
     NavItem(environment, Seq(cities, globalDevelopment)),
-    NavItem(technology, Seq(games)),
+    NavItem(technology),
     NavItem(money, Seq(property, savings, borrowing, careers)),
     NavItem(travel, Seq(uktravel, europetravel, usTravel))
   )
