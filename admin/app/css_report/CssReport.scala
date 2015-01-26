@@ -17,6 +17,7 @@ object SelectorReport {
 case class SelectorReport(selector: String, used: Int, unused: Int)
 
 object CssReport {
+  private val DateFormat = "yyyy-MM-dd"
   private val TableName = "cssUsage"
   private val dynamoDbClient = new AmazonDynamoDBAsyncClient()
   dynamoDbClient.setRegion(Region.getRegion(Regions.EU_WEST_1))
@@ -43,7 +44,7 @@ object CssReport {
       .withScanFilter(Map[String, Condition](
         "day" -> new Condition()
           .withComparisonOperator(ComparisonOperator.EQ)
-          .withAttributeValueList(new AttributeValue().withS(day.toString("yyyy-MM-dd")))
+          .withAttributeValueList(new AttributeValue().withS(day.toString(DateFormat)))
       ))
       .withAttributesToGet("selector", "used", "unused")
     ) map { result =>
