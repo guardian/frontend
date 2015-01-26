@@ -64,7 +64,7 @@ object Stocks extends Logging {
       val maybeTrend = index.value.change.trendday match {
         case "up" => Some(Positive)
         case "down" => Some(Negative)
-        case "" => Some(Level)
+        case "unchanged" => Some(Level)
         case _ => None
       }
 
