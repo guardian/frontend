@@ -123,7 +123,7 @@ module.exports = function (grunt) {
         grunt.config.set('karma.options.singleRun', (options.singleRun === false) ? false : true);
         grunt.task.run('karma' + target);
     });
-    grunt.registerTask('test', ['test:unit']);
+    grunt.registerTask('test', ['copy:inlineSVGs', 'test:unit']);
     grunt.registerTask('coverage', function() {
         var target = this.args.length ? ':' + this.args.join(':') : '';
         grunt.config.set('karma.options.reporters',
