@@ -144,7 +144,8 @@ define([
                                  'logo=http%3A%2F%2Fcats.com%2Fimage.jpeg&capiTitle=Led%20Zeppelin%20special&' +
                                  'capiLinkUrl=http%3A%2F%2Ftheguardian.com%2Fmusic%2Fledzeppelin&' +
                                  'capiAboutLinkUrl=http%3A%2F%2Ftheguardian.com%2Fabout&' +
-                                 'capiKeywords=music%2Fledzeppelin&k=music%2Fledzeppelin&af=sponsored',
+                                 'capiKeywords=music%2Fledzeppelin&t=p%2F43b2q&t=p%2F43945&' +
+                                 'k=music%2Fledzeppelin&af=sponsored',
                         options: {
                             oastoken:         '123456789',
                             capi:             ['p/43b2q', 'p/43945'],

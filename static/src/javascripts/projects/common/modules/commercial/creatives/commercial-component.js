@@ -119,14 +119,5 @@ define([
         return this;
     };
 
-    CommercialComponent.prototype.create = function () {
-        if (this.components[this.type] === undefined) {
-            raven.captureMessage('Unknown commercial component: ' + name);
-            return false;
-        }
-
-        return this.load();
-    };
-
     return CommercialComponent;
 });
