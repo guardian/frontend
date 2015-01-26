@@ -1,6 +1,6 @@
 package controllers
 
-import common.JsonComponent
+import common.{ExecutionContexts, JsonComponent}
 import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -22,16 +22,16 @@ case class CssReportResponse(
   selectors: Seq[SelectorReport]
 )
 
-object CssReportController extends Controller {
+object CssReportController extends Controller with ExecutionContexts {
   def index = Action.async { implicit request =>
     CssReport.index() map { dates =>
-      Ok(JsonComponent.forJsValue(Json.toJson(CssReportsIndex(dates))))
+      JsonComponent.forJsValue(Json.toJson(CssReportsIndex(dates)))
     }
   }
 
   def report(day: LocalDate) = Action.async { implicit request =>
     CssReport.report(day) map { selectors =>
-      Ok(JsonComponent.forJsValue(Json.toJson(CssReportResponse(selectors.sortBy(_.selector)))))
+      JsonComponent.forJsValue(Json.toJson(CssReportResponse(selectors.sortBy(_.selector))))
     }
   }
 }

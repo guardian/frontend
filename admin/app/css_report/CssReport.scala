@@ -4,6 +4,7 @@ import com.amazonaws.regions.{Regions, Region}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
 import awswrappers.dynamodb._
 import com.amazonaws.services.dynamodbv2.model._
+import common.ExecutionContexts
 import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import scala.collection.JavaConversions._
@@ -16,7 +17,7 @@ object SelectorReport {
 
 case class SelectorReport(selector: String, used: Int, unused: Int)
 
-object CssReport {
+object CssReport extends ExecutionContexts {
   private val DateFormat = "yyyy-MM-dd"
   private val TableName = "cssUsage"
   private val dynamoDbClient = new AmazonDynamoDBAsyncClient()
@@ -28,7 +29,7 @@ object CssReport {
       .withKeyConditions(Map[String, Condition](
         "selector" -> new Condition()
           .withComparisonOperator(ComparisonOperator.EQ)
-          .withAttributeValueList(new AttributeValue().withS("div"))
+          .withAttributeValueList(new AttributeValue().withS(".u-h"))
       ))
       .withAttributesToGet("day")
     ) map { response =>

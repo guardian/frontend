@@ -120,3 +120,7 @@ GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id     
 GET         /admin/football/fronts/match/:matchId                                              controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
+
+# css reports
+GET         /css-reports.json                                                                  controllers.CssReportController.index
+GET         /css-reports/:date.json                                                            controllers.CssReportController.report(date: LocalDate)
