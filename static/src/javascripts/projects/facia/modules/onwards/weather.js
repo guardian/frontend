@@ -177,6 +177,10 @@ define([
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
+            bean.on($('.js-weather-input')[0], 'blur', function(e) {
+                e.preventDefault();
+                this.toggleControls(false);
+            }.bind(this));
             bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
