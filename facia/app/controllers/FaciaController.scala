@@ -52,16 +52,12 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
-    if (Switches.RssServerSwitch.isSwitchedOn) {
-      FaciaToRssRedirectMetric.increment()
-      Future.successful(InternalRedirect.internalRedirect(
-        "rss_server",
-        path,
-        if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
-      ))
-    } else {
-      applicationsRedirect(path)
-    }
+    FaciaToRssRedirectMetric.increment()
+    Future.successful(InternalRedirect.internalRedirect(
+      "rss_server",
+      path,
+      if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
+    ))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
