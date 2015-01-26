@@ -9,7 +9,7 @@ object ForecastResponse {
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
     ForecastResponse(
-      forecastResponse.EpochDateTime,
+      forecastResponse.EpochDateTime * 1000,
       forecastResponse.WeatherIcon,
       forecastResponse.IconPhrase,
       forecastResponse.Temperature.Unit match {

@@ -22,10 +22,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
-    'common/views/svgs',
-    'facia/modules/onwards/search-tool',
-    'text!facia/views/weather.html',
-    'text!facia/views/weather-forecast.html'
+    'facia/modules/onwards/search-tool'
 ], function (
     bean,
     raven,
@@ -36,10 +33,7 @@ define([
     mediator,
     template,
     userPrefs,
-    svgs,
-    SearchTool,
-    weatherTemplate,
-    forecastTemplate
+    SearchTool
     ) {
 
     var $weather       = null,
@@ -258,28 +252,9 @@ define([
 
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecast'),
-                $forecast       = null,
-                docFragment     = document.createDocumentFragment(),
-                i;
+                tmpl            = forecastData.html;
 
-            $forecastHolder.empty();
-
-            for (i in forecastData) {
-                $forecast = $.create(template(forecastTemplate, {
-                    'forecast-time': new Date(forecastData[i].epochDateTime * 1000).getHours(),
-                    'forecast-temp': forecastData[i].temperature[this.getUnits()],
-                    'forecast-icon': forecastData[i].weatherIcon,
-                    'forecast-desc': forecastData[i].weatherText,
-                    'forecast-num': parseInt(i, 10) + 1,
-                    'icon': svgs('shareTwitterIcon')
-                }));
-
-                docFragment.appendChild($forecast[0]);
-            }
-
-            $forecastHolder.each(function (item) {
-                $(item).append(docFragment.cloneNode(true));
-            });
+            $forecastHolder.empty().html(tmpl);
         }
     };
 });

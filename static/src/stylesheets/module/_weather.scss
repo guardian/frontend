@@ -320,7 +320,7 @@ i.weather__close-icon {
         display: block;
     }
 
-    .weather__icon {
+    .weather__icon svg {
         display: block;
 
         @include mq(mobileLandscape, leftCol) {

@@ -1,15 +1,16 @@
 @(forecasts: Seq[models.ForecastResponse])(implicit request: RequestHeader)
 
 @import common.Edition
+@import views.support.Format
 
 @for((forecast, index) <- forecasts.zipWithIndex) {
     <li class="forecast__item forecast__item--@index">
         <p class="weather__desc">
             <span class="u-h">The temperature at</span>
-            <span class="weather__time">@forecast.epochDateTime:00</span>
+            <span class="weather__time">@Format(forecast.epochDateTime, "hh"):00</span>
             <span class="u-h">will be</span>
             @defining(forecast.temperatureForEdition(Edition(request))) { temp =>
-                <span class="weather__temp">@temp</span>
+                <span class="weather__temp">@math.round(temp)°C</span>
             }
         </p>
         @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@forecast.weatherText</span>
