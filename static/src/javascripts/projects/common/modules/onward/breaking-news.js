@@ -106,21 +106,21 @@ define([
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
 
                     _.forEach(alerts, function (article) {
-                        article.marque_36_icon = svgs('marque_36_icon');
+                        article.marque36icon = svgs('marque36icon');
                         var el = bonzo.create(template(alertHtml, article));
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
                             $(el).hide();
                             hiddenIds[article.id] = true;
-                        storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                    });
+                            storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
+                        });
 
                         $breakingNews.append(el);
 
-                    if (hiddenIds[article.id] === false) {
-                        alertDelay = 0;
-                    }
-                });
+                        if (hiddenIds[article.id] === false) {
+                            alertDelay = 0;
+                        }
+                    });
 
                     setTimeout(function () {
                         var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times');

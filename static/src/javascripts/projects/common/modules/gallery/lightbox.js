@@ -135,17 +135,17 @@ define([
                 'text': 'Facebook',
                 'css': 'facebook',
                 'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i),
-                'shareIcon': svgs('share_facebook_icon')
+                'shareIcon': svgs('shareFacebookIcon')
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
                 'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i),
-                'shareIcon': svgs('share_twitter_icon')
+                'shareIcon': svgs('shareTwitterIcon')
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700')),
-                'shareIcon': svgs('share_pinterest_icon')
+                'shareIcon': svgs('sharePinterestIcon')
             }];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {

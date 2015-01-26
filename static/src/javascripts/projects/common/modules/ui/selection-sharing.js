@@ -26,7 +26,7 @@ define([
 
     var $body = bonzo(document.body),
         $selectionSharing = $.create(template(sharingTemplate, {
-            share_twitter_icon: svgs('share_twitter_icon')
+            shareTwitterIcon: svgs('shareTwitterIcon')
         })),
         $twitterAction,
         $emailAction,
