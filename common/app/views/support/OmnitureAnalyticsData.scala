@@ -14,8 +14,7 @@ object OmnitureAnalyticsAccount {
       ("guardian-masterclasses", "guardiangu-masterclasses"),
       ("Guardian Masterclasses", "guardiangu-masterclasses")
     )
-    val account = Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.section)).flatten.mkString(",")
-    account
+    Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.section)).flatten.mkString(",")
   }
 }
 

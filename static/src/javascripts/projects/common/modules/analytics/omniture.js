@@ -1,3 +1,4 @@
+/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
     'lodash/collections/map',
@@ -56,8 +57,8 @@ define([
             s.tl(true, 'o', 'AutoUpdate Refresh');
         };
 
-        this.generateTrackingImageString = function() {
-            return "s_i_" + window.s_account.split(',').join('_');
+        this.generateTrackingImageString = function () {
+            return 's_i_' + window.s_account.split(',').join('_');
         };
 
         this.logTag = function (spec) {
@@ -302,7 +303,7 @@ define([
                     // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
                     // It does not sit in the DOM tree, and seems to be the only surefire way
                     // to check if the intial beacon has been successfully sent
-                    var img = window[self.generateTrackingImageString()]
+                    var img = window[self.generateTrackingImageString()];
                     if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                         clearInterval(checkForPageViewInterval);
 
