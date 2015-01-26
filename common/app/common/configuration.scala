@@ -132,6 +132,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val embedJsLocation = configuration.getStringProperty("ophan.embed.js.location").getOrElse("//j.ophan.co.uk/ophan.embed")
   }
 
+  object omniture {
+    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-frontend,guardiangu-network")
+  }
+
   object googletag {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
