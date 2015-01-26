@@ -48,6 +48,9 @@
         ul > li:before {
             background: rgba($c-headline, .4);
         }
+        @if($old-ie) {
+            color: #ffffff;
+        }
     }
 
     .fc-item__title .i {
