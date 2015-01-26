@@ -6,7 +6,7 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax-promise'
-], function(
+], function (
     bean,
     bonzo,
     qwery,
@@ -17,7 +17,7 @@ define([
 ) {
     // This size effectively determines how many calls this module needs to make.
     // Number of ajax calls = number of comments / comments per page
-    var commentsPerPage = 25;
+    var commentsPerPage = 50;
 
     function WholeDiscussion(options) {
         this.discussionId = options.discussionId;
@@ -65,7 +65,7 @@ define([
     WholeDiscussion.prototype.loadRemainingPages = function (pages) {
         var pagePromises = pages.map(this.loadPage.bind(this));
         return Promise.all(pagePromises)
-        .then( function(responses) {
+        .then(function (responses) {
             _.forEach(responses, function (response, index) {
                 // The first page has been loaded, and pages are not zero-based, so adjust the index.
                 var page = index + 2;
@@ -82,7 +82,7 @@ define([
         });
 
         return {
-            paginationHtml: "",
+            paginationHtml: '',
             postedCommentHtml: this.postedCommentHtml,
             commentsHtml: comments.html(),
             lastPage: this.lastPage
@@ -103,12 +103,14 @@ define([
             queryParams.maxResponses = this.params.maxResponses;
         }
 
-        return ajaxPromise({
+        return ajaxPromise(
+        {
             url: '/discussion/' + this.discussionId + '.json',
             type: 'json',
             method: 'get',
             crossOrigin: true,
-            data: queryParams })
+            data: queryParams
+        })
         .then(this.firstPageLoaded.bind(this))
         .then(this.loadRemainingPages.bind(this))
         .then(this.makeDiscussionResponseObject.bind(this));

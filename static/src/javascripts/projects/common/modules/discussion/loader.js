@@ -1,3 +1,4 @@
+/*jshint -W024 */
 define([
     'bean',
     'bonzo',
@@ -123,14 +124,14 @@ Loader.prototype.initMainComments = function() {
             var userPageSize = userPrefs.get('discussion.pagesize'),
                 pageSize = defaultPagesize;
             switch (userPageSize) {
-                case "50":
+                case '50':
                     pageSize = 50;
                     break;
-                case "100":
+                case '100':
                     pageSize = 100;
                     break;
-                case "All":
-                    pageSize = config.switches.discussionAllPageSize ? "All" : 100;
+                case 'All':
+                    pageSize = config.switches.discussionAllPageSize ? 'All' : 100;
             }
             this.initPageSizeDropdown(pageSize);
 

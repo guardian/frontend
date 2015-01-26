@@ -6,15 +6,15 @@ define([
     Promise
 ) {
     return function wrappedAjax(params) {
-        var promise = new Promise(function(resolve, reject) {
+        var promise = new Promise(function (resolve, reject) {
             ajax(params)
-            .then(function(value) {
+            .then(function (value) {
                 resolve(value);
             })
-            .fail(function(err) {
+            .fail(function (err) {
                 reject(err);
             });
         });
         return promise;
-    }
+    };
 });

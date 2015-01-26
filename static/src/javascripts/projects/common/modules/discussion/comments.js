@@ -175,7 +175,7 @@ Comments.prototype.fetchComments = function(options) {
     }
 
     var promise;
-    if (queryParams.pageSize === "all") {
+    if (queryParams.pageSize === 'All') {
         promise = new WholeDiscussion({
             discussionId: this.options.discussionId,
             orderBy: queryParams.orderBy,
