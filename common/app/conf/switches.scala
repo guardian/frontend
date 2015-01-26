@@ -310,6 +310,11 @@ object Switches {
     safeState = Off, new LocalDate(2015, 2, 28)
   )
 
+  val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
+    "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
+    safeState = Off, never
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -409,14 +414,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABWeather = Switch("A/B Tests", "ab-weather",
-    "If this is switched on then the weather component is A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
-    "If this is switched on then personalised history tags are tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  val HistoryTags = Switch("Feature", "history-tags",
+    "If this is switched on then personalised history tags are shown in the meganav",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
   val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
@@ -473,6 +473,11 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
+  val DefaultOriginSwitch = Switch("Feature", "default-origin",
+    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
+    safeState = On, sellByDate = new LocalDate(2015, 1, 28)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -512,6 +517,11 @@ object Switches {
 
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
     safeState = Off, sellByDate = never
   )
 

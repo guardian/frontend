@@ -2,21 +2,27 @@ package controllers
 
 import common.{JsonComponent, ExecutionContexts}
 import model.Cached
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json.{Json}
 import play.api.mvc.{Action, Controller}
 import models.CityId
 import weather.WeatherApi
-import models.CityWeather
-
+import common.Seqs._
 import scala.concurrent.duration._
 
-
 object WeatherController extends Controller with ExecutionContexts {
+  val MaximumForecastDays = 10
 
-  def forCity(id: String) = Action.async{ implicit request =>
-    WeatherApi.getWeatherForCityId(CityId(id)).map{_.map{ weather =>
-      //TODO well considered cache time
-      Cached(900)(JsonComponent(views.html.cityWeather(weather)))
+  def forCity(cityId: String) = Action.async{ implicit request =>
+    WeatherApi.getWeatherForCityId(CityId(cityId)).map{_.map{ weather =>
+      Cached(10.minutes)(JsonComponent(views.html.cityWeather(weather)))
     }.getOrElse(Cached(60)(NotFound))
   }}
+
+  def forecastForCityId(cityId: String) = Action.async { implicit request =>
+    WeatherApi.getForecastForCityId(CityId(cityId)).map({ forecastDays =>
+      val response = forecastDays.map(models.ForecastResponse.fromAccuweather).filterByIndex(_ % 3 == 1).take(4)
+
+      Cached(10.minutes)(JsonComponent.forJsValue(Json.toJson(response)))
+    })
+  }
 }

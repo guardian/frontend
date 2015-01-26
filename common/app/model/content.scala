@@ -158,6 +158,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("keywords", JsString(keywords.map { _.name }.mkString(","))),
       ("keywordIds", JsString(keywords.map { _.id }.mkString(","))),
       ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
+      ("richLink", JsString(richLink.getOrElse(""))),
+      ("openModule", JsString(openModule.getOrElse(""))),
       ("publication", JsString(publication)),
       ("headline", JsString(headline)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),
@@ -741,7 +743,7 @@ object Interactive {
 }
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
-
+  override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 

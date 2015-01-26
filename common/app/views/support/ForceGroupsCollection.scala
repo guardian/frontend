@@ -29,7 +29,7 @@ trait FirstTwoBigItems extends CollectionItems {
 
 object ForceGroupsCollection {
   def firstTwoBig(c: Collection): Collection = {
-    new Collection(c.curated, c.editorsPicks, c.mostViewed, c.results, c.displayName, c.href,
+    new Collection(c.curated, c.editorsPicks, c.mostViewed, c.results, c.treats, c.displayName, c.href,
       c.lastUpdated, c.updatedBy, c.updatedEmail) with FirstTwoBigItems
   }
 }

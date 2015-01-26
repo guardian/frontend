@@ -20,6 +20,9 @@
             <!-- ko if: isIframe -->
                 <h1>Iframe</h1>
             <!-- /ko -->
+            <!-- ko if: isClipboard -->
+                <h1>Clipboard</h1>
+            <!-- /ko -->
 
             <i class="fa fa-plus-circle" data-bind="click: layout.addColumn.bind(layout)"></i>
             <i class="fa fa-minus-circle" data-bind="click: layout.removeColumn.bind(layout)"></i>
@@ -37,6 +40,12 @@
                 context: $data
             }},
             click: setType.bind($data, 'latest')"></div>
+            <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
+                label: 'Clipboard',
+                checked: isClipboard,
+                context: $data
+            }},
+            click: setType.bind($data, 'clipboard')"></div>
             @if(Switches.FaciaToolPaneOptions.isSwitchedOn) {
                 <div class="checkbox" data-bind="template: {name: 'checkbox', data: {
                     label: 'Ophan recently published',
@@ -68,6 +77,17 @@
             <!-- /ko -->
             <!-- ko if: isIframe() -->
                 <iframe-widget params="position: $index, column: $data, src: initialState.iframeURL"></iframe-widget>
+            <!-- /ko -->
+            <!-- ko if: isTreats -->
+                <fronts-widget params="position: $index, column: $data, mode: 'treats'"></fronts-widget>
+            <!-- /ko -->
+            <!-- ko if: isClipboard -->
+                <div class="live-mode">
+                    <div class="modes">
+                        <a class="live-mode active">Clipboard</a>
+                    </div>
+                </div>
+                <clipboard-widget class="clipboard-only" params="position: $index, column: $data"></clipboard-widget>
             <!-- /ko -->
         </div>
     </div>

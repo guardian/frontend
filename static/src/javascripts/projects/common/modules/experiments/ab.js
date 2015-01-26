@@ -12,10 +12,8 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/sticky-container-titles'
 ], function (
     raven,
     filter,
@@ -30,19 +28,15 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
-    HistoryTags,
     HistoryContainers,
-    StickyContainerTitles,
-    Weather
+    StickyContainerTitles
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
-            new HistoryTags(),
             new HistoryContainers(),
-            new StickyContainerTitles(),
-            new Weather()
+            new StickyContainerTitles()
         ],
         participationsKey = 'gu.ab.participations';
 

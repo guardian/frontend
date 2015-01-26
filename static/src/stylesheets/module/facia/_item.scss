@@ -36,6 +36,10 @@ $fc-item-gutter: $gs-gutter / 4;
             @include flex-basis($media-width);
         }
 
+        .fc-item__video-fallback {
+            @include flex-basis($media-width);
+        }
+
         .fc-item__content {
             @include flex-basis(100% - $media-width);
             // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
@@ -206,9 +210,13 @@ $fc-item-gutter: $gs-gutter / 4;
     background-color: rgba(0, 0, 0, .1);
 }
 
-.fc-item__image-container,
-.fc-item__video-fallback {
+.fc-item__image-container {
     display: none;
+}
+
+.fc-item__video-play {
+    display: block;
+    z-index: 1;
 }
 
 .fc-item__live-indicator {

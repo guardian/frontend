@@ -3,7 +3,9 @@ package weather
 import common.{ResourcesHelper, ExecutionContexts}
 import conf.Configuration
 import geo.LatitudeLongitude
-import models.{CityWeather, LocationResponse, CityId}
+import models.{CityWeather}
+import models.accuweather.{WeatherResponse, LocationResponse, ForecastResponse}
+import models.CityId
 import play.api.Play
 import play.api.libs.json.{JsArray, Json, JsValue}
 import play.api.libs.ws.WS
@@ -17,14 +19,14 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
     throw new RuntimeException("Weather API Key not set")
   )
 
-  private val WeatherCityUrl = "http://api.accuweather.com/currentconditions/v1/"
-  private val WeatherAutoCompleteUrl = "http://api.accuweather.com/locations/v1/cities/autocomplete"
-
   private def autocompleteUrl(query: String): String =
-    s"$WeatherAutoCompleteUrl?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
+    s"http://api.accuweather.com/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
   private def cityLookUp(cityId: CityId): String =
-    s"$WeatherCityUrl${cityId.id}.json?apikey=$weatherApiKey"
+    s"http://api.accuweather.com/currentconditions/v1/${cityId.id}.json?apikey=$weatherApiKey"
+
+  private def forecastLookUp(cityId: CityId): String =
+    s"http://api.accuweather.com/forecasts/v1/hourly/24hour/${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
   private def latitudeLongitudeUrl(latitudeLongitude: LatitudeLongitude): String = {
     s"http://api.accuweather.com/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
@@ -50,4 +52,9 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
 
   def getWeatherForCityId(cityId: CityId): Future[Option[CityWeather]] =
     getJson(cityLookUp(cityId))map(_.asInstanceOf[JsArray].value.headOption.map{_.as[CityWeather]})
+
+  def getForecastForCityId(cityId: CityId): Future[Seq[ForecastResponse]] =
+    getJson(forecastLookUp(cityId)).map({ r =>
+      Json.fromJson[Seq[ForecastResponse]](r).get
+    })
 }

@@ -12,3 +12,4 @@ GET        /weather/city/:id.json                                               
 
 GET        /weather/city.json                                                   controllers.LocationsController.whatIsMyCity()
 GET        /weather/locations                                                   controllers.LocationsController.findCity(query: String)
+GET        /weather/forecast/:id.json                                           controllers.WeatherController.forecastForCityId(id)
