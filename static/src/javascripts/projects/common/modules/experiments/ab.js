@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/history-tags',
     'common/modules/experiments/tests/history-containers',
     'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/weather-component',
+    'common/modules/experiments/tests/adblock-message'
 ], function (
     raven,
     filter,
@@ -33,7 +34,8 @@ define([
     HistoryTags,
     HistoryContainers,
     StickyContainerTitles,
-    Weather
+    Weather,
+    AdblockMessage
 ) {
 
     var ab,
@@ -42,7 +44,8 @@ define([
             new HistoryTags(),
             new HistoryContainers(),
             new StickyContainerTitles(),
-            new Weather()
+            new Weather(),
+            new AdblockMessage()
         ],
         participationsKey = 'gu.ab.participations';
 

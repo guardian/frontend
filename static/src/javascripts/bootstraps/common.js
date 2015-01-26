@@ -14,7 +14,6 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/storage',
 
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
@@ -56,8 +55,7 @@ define([
 
     'text!common/views/release-message.html',
     'text!common/views/release-message-compulsory.html',
-    'text!common/views/release-message-launched.html',
-    'text!common/views/donot-use-adblock.html'
+    'text!common/views/release-message-launched.html'
 ], function (
     bean,
     bonzo,
@@ -72,7 +70,6 @@ define([
     mediator,
     template,
     url,
-    storage,
 
     Clickstream,
     Foresee,
@@ -114,8 +111,7 @@ define([
 
     releaseMessageTpl,
     releaseMessageCompulsoryTpl,
-    releaseMessageLaunchedTpl,
-    doNotUseAdblockTemplae
+    releaseMessageLaunchedTpl
 ) {
 
     var modules = {
@@ -459,37 +455,6 @@ define([
                 if (config.switches.cssLogging) {
                     mediator.on('page:common:ready', cssLogging);
                 }
-            },
-
-            displayAdBlockMessage: function () {
-                var adblockLink = 'https://www.theguardian.com/',
-                    adblockMessage,
-                    localStorage = storage.local;
-
-                if (detect.getBreakpoint() !== 'mobile') {
-                    if (detect.adblockInUse()) {
-                        s.prop40 = 'adblocktrue';
-                        localStorage.set('adblockInUse', true);
-                        adblockMessage = new Message('adblock', {
-                            pinOnHide: false,
-                            siteMessageLinkName: 'adblock message',
-                            siteMessageCloseBtn: 'hide adblock message'
-                        });
-                        adblockMessage.show(template(
-                            doNotUseAdblockTemplae,
-                            {
-                                adblockLink: adblockLink
-                            }
-                        ));
-                    } else {
-                        //if we detected adblock before, we can assume that the user disabled it for us
-                        if (localStorage.get('adblockInUse')) {
-                            s.prop40 = 'adblockdisabled';
-                        } else {
-                            s.prop40 = 'adblockfalse';
-                        }
-                    }
-                }
             }
 
         },
@@ -532,7 +497,6 @@ define([
             modules.initReleaseMessage();
             modules.initOpenOverlayOnClick();
             modules.runCssLogging();
-            modules.displayAdBlockMessage();
             crosswordThumbnails.init();
 
             mediator.emit('page:common:ready');
