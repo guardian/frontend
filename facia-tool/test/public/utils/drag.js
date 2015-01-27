@@ -1,4 +1,8 @@
-define(['modules/droppable'], function (
+define([
+    'underscore',
+    'modules/droppable'
+], function (
+    _,
     droppable
 ) {
     function Article (element) {
