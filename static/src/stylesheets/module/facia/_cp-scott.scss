@@ -1,0 +1,68 @@
+.fc-cp-scott__quote {
+    display: block;
+    color: colour(neutral-1);
+}
+
+.fc-cp-scott__quote-line {
+    display: inline-block;
+
+    @include mq(tablet) {
+        display: block;
+    }
+}
+
+.fc-cp-scott__citation {
+    display: block;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
+}
+
+.fc-cp-scott__portrait {
+    float: right;
+    width: 70px;
+
+    @include mq(tablet) {
+        margin-top: -$gs-baseline / 2;
+        margin-bottom: $gs-baseline / 2;
+        width: 80px;
+    }
+
+    @include mq(leftCol) {
+        margin-top: 0;
+        margin-bottom: 0;
+        float: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: right;
+        }
+    }
+}
+
+.fc-cp-scott__text {
+    clear: left;
+    float: left;
+
+    @include fs-headline(1);
+
+    @include mq(tablet) {
+        clear: none;
+        float: right;
+        margin-right: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        float: none;
+        margin-right: 0;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: right;
+            margin-right: $gs-baseline;
+        }
+    }
+}
