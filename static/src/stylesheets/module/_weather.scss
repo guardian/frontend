@@ -189,7 +189,9 @@ $weather-large-size: 60px;
     .search-tool__input {
         width: 100%;
         display: inline-block;
+        padding-right: $gs-gutter;
         @include fs-headline(2);
+        @include box-sizing(border-box);
     }
 
     .search-tool__btn {
