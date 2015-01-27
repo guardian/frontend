@@ -1,3 +1,5 @@
+/* global guardian */
+/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
     'lodash/collections/map',
@@ -37,6 +39,7 @@ define([
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+            isEmbed = !!guardian.isEmbed,
             that = this;
 
         w = w || {};
@@ -54,6 +57,10 @@ define([
             s.events = 'event90';
             s.eVar7 = config.page.analyticsName;
             s.tl(true, 'o', 'AutoUpdate Refresh');
+        };
+
+        this.generateTrackingImageString = function () {
+            return 's_i_' + window.s_account.split(',').join('_');
         };
 
         this.logTag = function (spec) {
@@ -285,10 +292,6 @@ define([
         };
 
         this.go = function () {
-            /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-            // must be set before the Omniture file is parsed
-            window.s_account = config.page.omnitureAccount;
-
             this.populatePageProperties();
             this.logView();
             mediator.emit('analytics:ready');
@@ -302,7 +305,7 @@ define([
                     // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
                     // It does not sit in the DOM tree, and seems to be the only surefire way
                     // to check if the intial beacon has been successfully sent
-                    var img = window['s_i_guardiangu-frontend_guardiangu-network'];
+                    var img = window[self.generateTrackingImageString()];
                     if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                         clearInterval(checkForPageViewInterval);
 
@@ -327,9 +330,9 @@ define([
         });
 
         mediator.on('module:analytics:omniture:pageview:sent', function () {
-            // independently log this page view
-            // used for checking we have not broken analytics
-            beacon.fire('/count/pva.gif');
+            // Independently log this page view, used for checking we have not broken analytics.
+            // We want to exclude off-site embed tracking from this data.
+            if (!isEmbed) { beacon.fire('/count/pva.gif'); }
         });
 
     }

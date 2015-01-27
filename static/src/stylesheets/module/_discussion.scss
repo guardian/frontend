@@ -185,6 +185,12 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion__pagination--bottom {
+    .pagination {
+        border-top: 1px solid colour(neutral-4);
+    }
+}
+
 .d-discussion__meta {
     @include fs-textSans(3);
     float: left;

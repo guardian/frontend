@@ -16,8 +16,8 @@
     </li>
 }
 
-@defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { shownKeywords =>
-    @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
+@defining(keywords.filterNot(_.isSectionTag).take(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { shownKeywords =>
+    @defining(keywords.filterNot(_.isSectionTag).drop(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { hiddenKeywords =>
         @if(shownKeywords.nonEmpty || allPath.nonEmpty) {
             <ul class="keyword-list inline-list">
                 @allPath.map { path =>
@@ -43,7 +43,6 @@
                         @renderItem(keyword, row, clazz = "modern-hidden modern-hidden-tag")
                     }
                 }
-
             </ul>
         }
     }

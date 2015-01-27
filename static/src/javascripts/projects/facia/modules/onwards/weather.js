@@ -249,6 +249,8 @@ define([
             this.addSearch();
 
             this.render = function (weatherData, city) {
+                $weather = $('.weather .js-weather-current');
+
                 var $weatherIcon = $('.js-weather-icon', $weather);
 
                 $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
