@@ -224,6 +224,9 @@ define([
                 });
 
                 it("should add weather component to the DOM", function () {
+                    spyOn(sut, "bindEvents");
+                    spyOn(sut, "addSearch");
+
                     var mockWeatherData = {
                             html: '<div class="weather">' +
                                 '<input class="js-weather-input" value="{{city}}"/>' +
@@ -239,7 +242,7 @@ define([
 
                     expect($(".js-weather-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
-                    expect($(".js-weather-icon", $weather)).hasClass('inline-weather-31').toBeTruthy();
+                    expect($(".inline-weather-31", $weather).length).toEqual(1);
                 });
 
                 it("should fetch the forecast data", function () {
