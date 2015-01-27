@@ -1,3 +1,4 @@
+/* global guardian */
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
@@ -38,6 +39,7 @@ define([
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+            isEmbed = !!guardian.isEmbed,
             that = this;
 
         w = w || {};
@@ -328,9 +330,9 @@ define([
         });
 
         mediator.on('module:analytics:omniture:pageview:sent', function () {
-            // independently log this page view
-            // used for checking we have not broken analytics
-            beacon.fire('/count/pva.gif');
+            // Independently log this page view, used for checking we have not broken analytics.
+            // We want to exclude off-site embed tracking from this data.
+            if (!isEmbed) { beacon.fire('/count/pva.gif'); }
         });
 
     }
