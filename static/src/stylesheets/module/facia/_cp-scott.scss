@@ -6,7 +6,7 @@
 .fc-cp-scott__quote-line {
     display: inline-block;
 
-    @include mq(tablet) {
+    @include mq(mobileLandscape) {
         display: block;
     }
 }
@@ -43,11 +43,17 @@
     float: left;
 
     @include fs-headline(1);
+    line-height: 16px;
 
-    @include mq(tablet) {
+    @include mq(mobileLandscape) {
         clear: none;
         float: right;
         margin-right: $gs-baseline;
+        margin-top: 2px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 0;
     }
 
     @include mq(leftCol) {
