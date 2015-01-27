@@ -16,7 +16,7 @@ case class ArchiveRequest(email: String, updateJson: JsValue)
 
 object FaciaToolArchive extends ExecutionContexts with Logging {
   val TableName = "FaciaToolUpdateHistory"
-  private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
+  private val client = new AmazonDynamoDBAsyncClient()
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
   def dayKey(date: DateTime) = date.toString("yyyy-MM-dd")
