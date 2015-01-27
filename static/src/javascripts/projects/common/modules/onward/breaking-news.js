@@ -9,6 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/modules/onward/history',
+    'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
     bean,
@@ -21,13 +22,15 @@ define([
     storage,
     template,
     history,
+    svgs,
     alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
-        $body;
+        $body,
+        marque36icon;
 
     function slashDelimit() {
         return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
@@ -102,9 +105,13 @@ define([
 
                 if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
+                    marque36icon = svgs('marque36icon');
 
                     _.forEach(alerts, function (article) {
-                        var el = bonzo.create(template(alertHtml, article));
+                        var el;
+
+                        article.marque36icon = marque36icon;
+                        el = bonzo.create(template(alertHtml, article));
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
                             $(el).hide();
