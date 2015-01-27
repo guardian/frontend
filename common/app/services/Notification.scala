@@ -69,3 +69,9 @@ object Notification extends Notification {
 object FrontPressNotification extends Notification {
   lazy val topic: String = Configuration.aws.frontPressSns.getOrElse("")
 }
+
+object MissingVideoEncodings extends Notification {
+  lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:nathaniels-video-encoding-test-topic"
+}
+
+

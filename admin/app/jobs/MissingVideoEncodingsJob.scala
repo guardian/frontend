@@ -16,6 +16,7 @@ import akka.util.Timeout
 import org.joda.time.Seconds
 import play.api.libs.ws.WS
 import play.api.Play.current
+import services.MissingVideoEncodings
 
 
 object VideoEncodingsJob extends ExecutionContexts with Logging  {
@@ -25,11 +26,8 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
 
   def getReport(feature: String): List[(String, String)] = videoEncodingsAgent().get(feature).getOrElse(List(("Not","Ready")))
   def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
-    log.info("++ URL: " + encodingUrl)
      val response = WS.url(encodingUrl).head()
-     response.map{ r =>
-        r.status == 404
-     }
+     response.map { r => r.status == 404 }
   }
 
 
@@ -65,7 +63,13 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
          }
        }
      ).map(_.flatten)
-     missingEncodingsData.onSuccess{case xs => videoEncodingsAgent.send( old => old+("missing-encodings" -> xs)) }
+     missingEncodingsData.onSuccess{case xs =>
+       if ( !xs.isEmpty ) {
+         log.info("++ There are missing vids")
+       }
+       MissingVideoEncodings.send("There are missing videos", "We found a missing video and its name was")
+       videoEncodingsAgent.send( old => old+("missing-encodings" -> xs))
+     }
      log.info("++ Missing video encodings loaded")
   }
 }
@@ -87,5 +91,8 @@ class Video(delegate: Content) {
     }
   }
 }
+
+
+
 
 
