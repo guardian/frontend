@@ -16,7 +16,6 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/component',
     'common/modules/lazyload',
     'common/modules/ui/tabs'
 ], function (
@@ -33,7 +32,6 @@ define([
     _,
     config,
     mediator,
-    Component,
     LazyLoad,
     Tabs
 ) {
@@ -77,22 +75,22 @@ define([
          * @param {Object=} params
          */
         CommercialComponent = function ($adSlot, params) {
-            this.params = params;
-            this.type   = params.type;
+            this.params = params || {};
+            this.type   = this.params.type;
             // remove type from params
             delete this.params.type;
             this.$adSlot    = $adSlot;
             this.components = {
-                bestbuy:           buildComponentUrl('money/bestbuys', params),
-                book:              buildComponentUrl('books/book', merge({}, params, { t: config.page.isbn || params.isbn })),
-                books:             buildComponentUrl('books/books', merge({}, params, { t: params.isbns ? params.isbns.split(',') : [] })),
-                jobs:              buildComponentUrl('jobs', merge({}, params, { t: params.jobIds ? params.jobIds.split(',') : [] })),
-                masterclasses:     buildComponentUrl('masterclasses', merge({}, params, { t: params.ids ? params.ids.split(',') : [] })),
-                soulmates:         buildComponentUrl('soulmates/mixed', params),
-                travel:            buildComponentUrl('travel/offers', params),
-                multi:             buildComponentUrl('multi', params),
-                capiSingle:        buildComponentUrl('capi-single', params),
-                capi:              buildComponentUrl('capi', params)
+                bestbuy:       buildComponentUrl('money/bestbuys', this.params),
+                book:          buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
+                books:         buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
+                jobs:          buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] })),
+                masterclasses: buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] })),
+                soulmates:     buildComponentUrl('soulmates/mixed', this.params),
+                travel:        buildComponentUrl('travel/offers', this.params),
+                multi:         buildComponentUrl('multi', this.params),
+                capiSingle:    buildComponentUrl('capi-single', this.params),
+                capi:          buildComponentUrl('capi', this.params)
             };
         };
 
@@ -119,15 +117,6 @@ define([
         }).load();
 
         return this;
-    };
-
-    CommercialComponent.prototype.create = function () {
-        if (this.components[this.type] === undefined) {
-            raven.captureMessage('Unknown commercial component: ' + name);
-            return false;
-        }
-
-        return this.load();
     };
 
     return CommercialComponent;
