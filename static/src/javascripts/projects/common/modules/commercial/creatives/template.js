@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'common/utils/template',
-    'common/views/svgs',
+    // 'common/views/svgs',
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
@@ -13,8 +13,8 @@ define([
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
-    template,
-    svgs
+    template//,
+    // svgs
 ) {
 
     /**
@@ -28,8 +28,8 @@ define([
         this.params  = params;
     };
 
-    this.params.marque36icon = svgs('marque36icon');
-    this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
+    // this.params.marque36icon = svgs('marque36icon');
+    // this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
 
     Template.prototype.create = function () {
         require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
