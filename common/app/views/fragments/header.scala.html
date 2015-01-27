@@ -28,9 +28,7 @@ to apply any necessary changes to non-shared code there too.
             <div class="brand-bar__item has-popup brand-bar__item--has-control popup-container brand-bar__item--subscribe desktop-only" data-component="subscribe">
                 <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
                 data-link-name="@Edition(request) : topNav : subscribe" class="brand-bar__item--action">
-                    <span class="rounded-icon control__icon-wrapper">
-                        <i class="i i-marque-36"></i>
-                    </span>
+                    @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                     <span class="control__info">subscribe</span>
                 </a>
             </div>
