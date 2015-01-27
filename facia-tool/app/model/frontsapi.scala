@@ -9,7 +9,7 @@ import julienrf.variants.Variants
 import org.joda.time.DateTime
 import play.api.libs.json.{Format, JsString, JsValue, Json}
 import services.ConfigAgent
-import tools.{FaciaApi, FaciaApiIO}
+import tools.{ArchiveRequest, FaciaToolArchive, FaciaApi, FaciaApiIO}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -127,19 +127,29 @@ trait UpdateActions extends Logging with ExecutionContexts {
     FaciaApiIO.putCollectionJson(id, collectionJson)
 
   //Archiving
-  def archivePublishBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson =
+  //Archiving
+  def archivePublishBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): Unit = {
+    FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "publish")))
     archiveBlock(id, collectionJson, "publish", identity)
+  }
 
-  def archiveDiscardBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson =
+  def archiveDiscardBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): Unit = {
+    FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "discard")))
     archiveBlock(id, collectionJson, "discard", identity)
+  }
+
+  def archiveUpdateBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): Unit = {
+    FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "update", "update" -> updateJson)))
+    archiveBlock(id, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
+  }
+
+  def archiveDeleteBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): Unit = {
+    FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "delete", "update" -> updateJson)))
+    archiveBlock(id, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
+  }
 
   private def archiveBlock(id: String, collectionJson: CollectionJson, action: String, identity: UserIdentity): CollectionJson =
     archiveBlock(id, collectionJson, Json.obj("action" -> action), identity)
-
-  def archiveUpdateBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson =
-    archiveBlock(id, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
-  def archiveDeleteBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson =
-    archiveBlock(id, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
 
   private def archiveBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson =
     Try(FaciaApiIO.archive(id, collectionJson, updateJson, identity)) match {
