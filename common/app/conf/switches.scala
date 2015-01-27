@@ -233,12 +233,6 @@ object Switches {
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
 
-  val targetMediaMathShutdownDate = new LocalDate(2015, 2, 1)
-
-  val MediaMathSwitch = Switch("Commercial", "media-math",
-    "Enable Media Math audience segment tracking",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
-
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
     safeState = Off, sellByDate = never)

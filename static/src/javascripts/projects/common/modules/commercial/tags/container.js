@@ -9,7 +9,6 @@ define([
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/tags/effective-measure',
     'common/modules/commercial/tags/imrworldwide',
-    'common/modules/commercial/tags/media-math',
     'common/modules/commercial/tags/remarketing',
     'common/modules/commercial/tags/krux'
 ], function (
@@ -42,7 +41,6 @@ define([
         }
 
         audienceScience.load();
-        mediaMath.load();
         criteo.load();
         imrWorldwide.load();
         remarketing.load();
