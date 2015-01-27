@@ -128,22 +128,22 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   //Archiving
   //Archiving
-  def archivePublishBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): Unit = {
+  def archivePublishBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "publish")))
     archiveBlock(id, collectionJson, "publish", identity)
   }
 
-  def archiveDiscardBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): Unit = {
+  def archiveDiscardBlock(id: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "discard")))
     archiveBlock(id, collectionJson, "discard", identity)
   }
 
-  def archiveUpdateBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): Unit = {
+  def archiveUpdateBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "update", "update" -> updateJson)))
     archiveBlock(id, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
   }
 
-  def archiveDeleteBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): Unit = {
+  def archiveDeleteBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(identity.email, Json.toJson(collectionJson), Json.obj("action" -> "delete", "update" -> updateJson)))
     archiveBlock(id, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
   }
