@@ -59,10 +59,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       case _ => false
     }
   }
-  lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
+  lazy val hasTonalHeaderByline: Boolean = {
+    visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
+  }
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
-    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
+    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live &&
+      contentType != GuardianContentTypes.ImageContent &&
+      hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
   }
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
