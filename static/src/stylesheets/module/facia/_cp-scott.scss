@@ -1,6 +1,6 @@
 .fc-cp-scott__quote {
     display: block;
-    color: colour(neutral-1);
+    color: colour(neutral-2);
 }
 
 .fc-cp-scott__quote-line {
@@ -46,8 +46,8 @@
     line-height: $gs-baseline * 4 / 3;
 
     .inline-quote svg {
-        height: $gs-baseline * 4 / 3;
-        fill: colour(neutral-1);
+        height: $gs-gutter / 2;
+        fill: colour(neutral-2);
     }
 
     @include mq(mobileLandscape) {
