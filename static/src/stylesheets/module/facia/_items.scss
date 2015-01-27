@@ -179,7 +179,6 @@
     &.fc-item--video {
         @include mq($until: desktop) {
 
-            //.fc-item__video-container,
             .fc-item__video-play {
                 display: none;
             }
