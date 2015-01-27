@@ -3,14 +3,12 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/template',
     'helpers/injector'
 ], function (
     bean,
     bonzo,
     $,
     ajax,
-    template,
     Injector
     ) {
 
@@ -227,11 +225,11 @@ define([
 
                 it("should add weather component to the DOM", function () {
                     var mockWeatherData = {
-                            weatherIcon: 3,
-                            temperature: {
-                                imperial: "39°F",
-                                metric: "4°C"
-                            }
+                            html: '<div class="weather">' +
+                                '<input class="js-weather-input" value="{{city}}"/>' +
+                                '<span class="js-weather-temp">4°C</span>' +
+                                '<span class="js-weather-icon inline-weather-31">4°C</span>'
+
                         },
                         mockCity = 'London';
 
@@ -241,7 +239,7 @@ define([
 
                     expect($(".js-weather-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
-                    expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["weatherIcon"])).toBeTruthy();
+                    expect($(".js-weather-icon", $weather)).hasClass('inline-weather-31').toBeTruthy();
                 });
 
                 it("should fetch the forecast data", function () {

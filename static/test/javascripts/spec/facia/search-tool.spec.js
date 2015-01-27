@@ -2,15 +2,11 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/template',
-    'text!facia/views/weather.html',
     'helpers/injector'
 ], function (
     bean,
     bonzo,
     $,
-    template,
-    weatherTemplate,
     Injector
     ) {
 
@@ -22,12 +18,16 @@ define([
                 sut;
 
             beforeEach(function () {
-                container = $.create(template(weatherTemplate, {
-                    location: 'London',
-                    icon: 31,
-                    description: 'Cloudy',
-                    tempNow: '35 C'
-                }));
+                container = $.create('<div class="weather"><p class="weather__desc">' +
+                    '<span class="u-h">The temperature</span>' +
+                    '<span class="weather__time">Now</span>' +
+                    '<span class="u-h">is</span>' +
+                    '<span class="weather__temp js-weather-temp">35°C</span>' +
+                    '</p>' +
+                    '<span class="inline-weather-31 inline-weather weather__icon js-weather-icon"></span>' +
+                    '<input id="editlocation" class="search-tool__input js-search-tool-input js-weather-input" type="text" value="London" />' +
+                    '<ul class="u-unstyled search-tool__list js-search-tool-list"></ul>' +
+                    '</div>');
 
                 $('body').append(container);
 
@@ -91,7 +91,6 @@ define([
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
                 $(".js-search-tool-list").html("<li><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
-
                 sut.init();
 
                 bean.fire($(".js-search-tool-list a")[0], "click");
