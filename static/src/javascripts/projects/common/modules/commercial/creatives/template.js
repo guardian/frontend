@@ -1,7 +1,6 @@
 define([
     'common/utils/$',
     'common/utils/template',
-    // 'common/views/svgs',
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/ad-feature-mpu.html',
@@ -13,8 +12,7 @@ define([
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
-    template//,
-    // svgs
+    template
 ) {
 
     /**
