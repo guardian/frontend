@@ -172,6 +172,8 @@
                 !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
             ) {
                 docClass += ' svg';
+            } else {
+                docClass += ' no-svg';
             }
 
             if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
