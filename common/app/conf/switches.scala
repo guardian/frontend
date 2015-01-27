@@ -534,6 +534,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
+  val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
+    "If this switch is on, facia-tool will directly archive to DynamoDB",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   def all: Seq[Switch] = Switch.allSwitches
 
   def grouped: List[(String, Seq[Switch])] = {
