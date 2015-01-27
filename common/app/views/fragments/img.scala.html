@@ -1,5 +1,10 @@
-@(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFeature: Boolean = false, url: Option[String] = None)
-@import views.support.{ImgSrc, Item620, Naked, Profile, SeoOptimisedContentImage, Showcase}
+@(img: Option[model.ImageContainer],
+  isShowcase: Boolean = false,
+  isFeature: Boolean = false,
+  isImageContent: Boolean = false,
+  url: Option[String] = None)
+
+@import views.support.{ImgSrc, Item620, Item940, Naked, Profile, SeoOptimisedContentImage, Showcase}
 
 @img.map{ picture =>
 
@@ -17,7 +22,11 @@
             @if(isShowcase) {
                 @lightbox(picture, Showcase)
             } else {
-                @lightbox(picture, Item620)
+                @if(isImageContent) {
+                    @lightbox(picture, Item940)
+                } else {
+                    @lightbox(picture, Item620)
+                }
             }
             @caption(picture)
         }
