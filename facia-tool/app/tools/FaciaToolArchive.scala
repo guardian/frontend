@@ -14,7 +14,7 @@ import scala.util.{Failure, Success}
 
 case class ArchiveRequest(email: String, updateJson: JsValue)
 
-object Archive extends ExecutionContexts with Logging {
+object FaciaToolArchive extends ExecutionContexts with Logging {
   val TableName = "FaciaToolUpdateHistory"
   private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
   client.setRegion(Region.getRegion(Regions.EU_WEST_1))
@@ -22,7 +22,7 @@ object Archive extends ExecutionContexts with Logging {
   def dayKey(date: DateTime) = date.toString("yyyy-MM-dd")
   def timeKey(date: DateTime) = date.toString("HH:mm:ss")
 
-  def report(archiveRequest: ArchiveRequest): Unit = {
+  def archive(archiveRequest: ArchiveRequest): Unit = {
     val now = DateTime.now().withZone(DateTimeZone.UTC)
     val putItemRequest = new PutItemRequest()
           .withTableName(TableName)
