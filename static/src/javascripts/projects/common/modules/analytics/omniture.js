@@ -63,6 +63,16 @@ define([
             return 's_i_' + window.s_account.split(',').join('_');
         };
 
+        // Certain pages have specfic channel rules
+        this.getChannel = function () {
+            if (config.page.contentType === 'Network Front') {
+                return 'Network Front';
+            } else if (isEmbed) {
+                return 'Embedded';
+            }
+            return config.page.section || '';
+        };
+
         this.logTag = function (spec) {
             var storeObj,
                 delay;
@@ -161,7 +171,7 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-            s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
+            s.channel   = this.getChannel();
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -289,6 +299,10 @@ define([
 
             s.prop75 = config.page.wordCount || 0;
             s.eVar75 = config.page.wordCount || 0;
+
+            if (isEmbed) {
+                s.eVar11 = s.prop11 = 'Embedded';
+            }
         };
 
         this.go = function () {
