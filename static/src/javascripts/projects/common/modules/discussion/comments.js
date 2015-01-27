@@ -202,7 +202,7 @@ Comments.prototype.renderComments = function(resp) {
     bonzo(this.elem).empty().append(contentEl);
     this.addMoreRepliesButtons(comments);
 
-    this.postedCommentEl = bonzo.create(resp.postedCommentHtml);
+    this.postedCommentEl = resp.postedCommentHtml;
 
     this.relativeDates();
     this.emit('rendered', resp.paginationHtml);
