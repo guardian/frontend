@@ -295,12 +295,12 @@ i.weather__close-icon {
         }
     }
 
-    &.forecast__item--1 {
+    &.forecast__item--0 {
         border-left: 0;
         padding-left: 0;
     }
 
-    &.forecast__item--3 {
+    &.forecast__item--2 {
         @include mq(tablet, desktop) {
             display: none;
         }
@@ -310,7 +310,7 @@ i.weather__close-icon {
         }
     }
 
-    &.forecast__item--4 {
+    &.forecast__item--3 {
         @include mq(tablet, wide) {
             display: none;
         }

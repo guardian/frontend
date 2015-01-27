@@ -2,6 +2,7 @@ package models
 
 import common.Edition
 import common.editions.Us
+import org.joda.time.DateTime
 import play.api.libs.json.Json
 
 object ForecastResponse {
@@ -29,8 +30,12 @@ case class ForecastResponse(
   weatherText: String,
   temperature: Temperatures
 ) {
-  def temperatureForEdition(edition: Edition) = edition match {
-    case Us => temperature.imperial
-    case _ => temperature.metric
+  def temperatureForEdition(edition: Edition) = {
+    edition match {
+      case Us => s"${temperature.imperial.round}°F"
+      case _ => s"${temperature.metric.round}°C"
+    }
   }
+
+  def hourString = new DateTime(epochDateTime).toString("HH:00")
 }
