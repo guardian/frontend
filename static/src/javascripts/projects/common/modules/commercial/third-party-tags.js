@@ -35,7 +35,7 @@ define([
                 effectiveMeasure.load();
                 break;
 
-            default:
+            case 'uk':
                 audienceScienceGateway.load();
                 break;
         }
