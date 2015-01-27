@@ -37,31 +37,33 @@
     }
 }
 
-.submeta-container--break {
-    @include mq(leftCol) {
-        margin-top: 0;
-        position: absolute;
-        bottom: 0;
+@mixin submeta-break-common {
+    margin-top: 0;
+    position: absolute;
+    bottom: 0;
 
-        .content--media & {
-            border-top: 0;
-        }
-
-        .content__main-column--media & {
-            bottom: -($gs-baseline/4);
-        }
-
-        .submeta {
-            padding-top: 0;
-            border-top: 1px dotted colour(neutral-4);
-        }
-        .submeta__head {
-            display: block;
-        }
+    .content--media & {
+        border-top-width: 0;
     }
 
+    .content__main-column--media & {
+        bottom: -($gs-baseline/4);
+    }
+
+    .submeta {
+        padding-top: 0;
+        border-top-style: dotted;
+        border-top-width: 1px;
+    }
+    .submeta__head {
+        display: block;
+    }
+}
+
+.submeta-container--break {
     &.submeta-container--break-at-leftcol {
         @include mq(leftCol) {
+            @include submeta-break-common;
             width: $left-column;
             left: -1 * ($left-column + $gs-gutter);
         }
@@ -74,6 +76,7 @@
 
     &.submeta-container--break-at-wide {
         @include mq(wide) {
+            @include submeta-break-common;
             width: $left-column-wide;
             left: -$left-column-wide - $gs-gutter;
         }

@@ -79,6 +79,14 @@
             margin-right: gs-span(1) + $gs-gutter;
         }
     }
+
+    .content--image & {
+        max-width: none;
+        margin-right: 0;
+        @include mq(wide) {
+            margin-right: gs-span(1) + $gs-gutter;
+        }
+    }
 }
 
 .content__hr {

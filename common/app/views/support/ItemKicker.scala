@@ -96,11 +96,12 @@ case object BreakingNewsKicker extends ItemKicker {
     "fc-sublink__live-indicator"
   )
 
-  override val linkClasses = Set(
-    "fc-item__breaking-indicator"
+  override val linkClasses: Set[String] = Set(
+    "fc-item__kicker",
+    "fc-item__kicker--breaking-news"
   )
 
-  override val kickerHtml = "Breaking News"
+  override val kickerHtml = "Breaking news"
 
   override val link = None
 }
