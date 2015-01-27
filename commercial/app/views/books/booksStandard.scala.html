@@ -4,10 +4,9 @@
 
 @defining(("2_0", "2014-10-15")) { case (version, date) =>
     <div class="commercial commercial--books commercial--tone-books" role="complementary" data-link-name="merchandising | books standard | @omnitureId">
-        <div class="facia-container__inner--commercial">
-
-            <div class="container__header">
-                <div class="container__header__inner">
+        <div class="commercial__inner">
+            <div class="commercial__header">
+                <div class="commercial__header__inner">
                     <h3 class="commercial__title">
                         <a href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
                             <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
@@ -22,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="container__body">
+            <div class="commercial__body">
                 <h4 class="commercial__header hide-on-mobile">This week’s bestsellers</h4>
                 <ul class="lineitems">
                 @books.map { book =>
