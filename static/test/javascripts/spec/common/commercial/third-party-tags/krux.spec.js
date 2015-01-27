@@ -8,7 +8,7 @@ define([
 
     return new Injector()
         .store('common/utils/config')
-        .require(['common/modules/commercial/tags/krux', 'mocks'], function (krux, mocks) {
+        .require(['common/modules/commercial/third-party-tags/krux', 'mocks'], function (krux, mocks) {
 
             describe('Krux', function () {
 

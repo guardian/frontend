@@ -6,7 +6,7 @@ define([
 
     return new Injector()
         .store(['common/utils/config', 'common/utils/storage'])
-        .require(['common/modules/commercial/tags/audience-science-gateway', 'mocks'], function (audienceScienceGateway, mocks) {
+        .require(['common/modules/commercial/third-party-tags/audience-science-gateway', 'mocks'], function (audienceScienceGateway, mocks) {
 
             var getParaWithSpaceStub, $fixturesContainer;
 

@@ -3,17 +3,16 @@
  */
 define([
     'common/utils/config',
-    'common/modules/commercial/outbrain',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/tags/effective-measure',
-    'common/modules/commercial/tags/imrworldwide',
-    'common/modules/commercial/tags/remarketing',
-    'common/modules/commercial/tags/krux'
+    'common/modules/commercial/third-party-tags/audience-science',
+    'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/criteo',
+    'common/modules/commercial/third-party-tags/effective-measure',
+    'common/modules/commercial/third-party-tags/imrworldwide',
+    'common/modules/commercial/third-party-tags/remarketing',
+    'common/modules/commercial/third-party-tags/krux',
+    'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     config,
-    outbrain,
     audienceScience,
     audienceScienceGateway,
     criteo,
@@ -21,7 +20,8 @@ define([
     imrWorldwide,
     mediaMath,
     remarketing,
-    krux
+    krux,
+    outbrain
 ) {
 
     function init() {
