@@ -15,7 +15,8 @@ module.exports = function(config) {
             { pattern: 'static/test/javascripts/spies/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
-            { pattern: 'static/public/javascripts/**/*.js', included: false }
+            { pattern: 'static/public/javascripts/**/*.js', included: false },
+            { pattern: 'common/conf/assets/inline-svgs/**/*.svg', included: false }
         ],
 
         exclude: [],

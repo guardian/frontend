@@ -31,8 +31,10 @@ requirejs.config({
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
+        svgs:         '/base/common/conf/assets/inline-svgs',
         // plugins
-        text:         'components/requirejs-text/text'
+        text:         'components/requirejs-text/text',
+        inlineSvg:    'components/requirejs-inline-svg/inlineSvg'
     },
     shim: {
         imager: {

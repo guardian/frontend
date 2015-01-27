@@ -10,7 +10,7 @@
     height: $gs-baseline * 2;
     @include box-sizing(border-box);
 
-    .i {
+    .inline-icon svg {
         width: 100% !important;
         height: 100% !important;
     }
@@ -19,49 +19,67 @@
 .block-share__item--facebook {
     border-color: colour(social-facebook);
     color: colour(social-facebook);
-    .i { @include icon(share-facebook--blue); }
+
+    .inline-icon {
+        fill: colour(social-facebook);
+    }
 
     &:hover {
         border-color: darken(colour(social-facebook), 15%);
-        .i { @include icon(share-facebook--blue-dark); }
+
+        .inline-icon {
+            fill: darken(colour(social-facebook), 15%);
+        }
     }
 }
 
 .block-share__item--twitter {
     border-color: colour(social-twitter);
     color: colour(social-twitter);
-    .i { @include icon(share-twitter--blue); }
+
+    .inline-icon {
+        fill: colour(social-twitter);
+    }
 
     &:hover {
         border-color: darken(colour(social-twitter), 15%);
-        .i { @include icon(share-twitter--blue-dark); }
+
+        .inline-icon {
+            fill: darken(colour(social-twitter), 15%);
+        }
     }
 }
 
 .block-share__item--gplus {
     border-color: colour(social-gplus);
     color: colour(social-gplus);
-    .i { @include icon(share-gplus--red); }
+
+    .inline-icon {
+        fill: colour(social-gplus);
+    }
 
     &:hover {
         border-color: darken(colour(social-gplus), 15%);
-        .i { @include icon(share-gplus--red-dark); }
+
+        .inline-icon {
+            fill: darken(colour(social-gplus), 15%);
+        }
     }
 }
 
 .block-share__item--linkedin {
     border-color: colour(social-linkedin);
     color: colour(social-linkedin);
-    .i {
-        @include icon(share-linkedin--blue);
-        background-size: 58% !important;
-        background-position: center center !important;
+
+    .inline-icon {
+        fill: colour(social-linkedin);
     }
 
     &:hover {
         border-color: darken(colour(social-linkedin), 15%);
-        .i {
-            @include icon(share-linkedin--blue-dark);
+
+        .inline-icon {
+            fill: darken(colour(social-linkedin), 15%);
         }
     }
 }
@@ -69,16 +87,16 @@
 .block-share__item--pinterest {
     border-color: colour(social-pinterest);
     color: colour(social-pinterest);
-    .i {
-        @include icon(share-pinterest--red);
-        background-size: 50% !important;
-        background-position: 49% center !important;
+
+    .inline-icon {
+        fill: colour(social-pinterest);
     }
 
     &:hover {
         border-color: darken(colour(social-pinterest), 15%);
-        .i {
-            @include icon(share-pinterest--red-dark);
+
+        .inline-icon {
+            fill: darken(colour(social-pinterest), 15%);
         }
     }
 }
@@ -87,7 +105,6 @@
 .share-modal__item--facebook {
     background-color: colour(social-facebook);
     color: #ffffff;
-    .i { @include icon(share-facebook--white); }
 
     &:hover {
         background-color: darken(colour(social-facebook), 15%);
@@ -97,7 +114,6 @@
 .share-modal__item--twitter {
     background-color: colour(social-twitter);
     color: #ffffff;
-    .i { @include icon(share-twitter--white); }
 
     &:hover {
         background-color: darken(colour(social-twitter), 15%);
@@ -107,7 +123,6 @@
 .share-modal__item--gplus {
     background-color: colour(social-gplus);
     color: #ffffff;
-    .i { @include icon(share-gplus--white); }
 
     &:hover {
         background-color: darken(colour(social-gplus), 15%);
@@ -117,8 +132,8 @@
 .share-modal__item--pinterest {
     background-color: colour(social-pinterest);
     color: #ffffff;
-    .i {
-        @include icon(share-pinterest--white);
+
+    .inline-icon {
         margin-left: 6px !important;
     }
 
@@ -254,10 +269,6 @@
         &:hover {
             background-color: colour-hover(social-facebook);
         }
-
-        .i {
-            @include icon(share-facebook--white);
-        }
     }
 
     .block-share__item--twitter {
@@ -265,10 +276,6 @@
 
         &:hover {
             background-color: colour-hover(social-twitter);
-        }
-
-        .i {
-            @include icon(share-twitter--white);
         }
     }
 
@@ -278,10 +285,6 @@
         &:hover {
             background-color: colour-hover(social-gplus);
         }
-
-        .i {
-            @include icon(share-gplus--white);
-        }
     }
 
     .block-share__item--linkedin {
@@ -290,10 +293,6 @@
         &:hover {
             background-color: colour-hover(social-linkedin);
         }
-
-        .i {
-            @include icon(share-linkedin--white);
-        }
     }
 
     .block-share__item--pinterest {
@@ -301,10 +300,6 @@
 
         &:hover {
             background-color: colour-hover(social-pinterest);
-        }
-
-        .i {
-            @include icon(share-pinterest--white);
         }
     }
 
