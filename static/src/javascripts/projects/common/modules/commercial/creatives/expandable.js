@@ -65,7 +65,7 @@ define([
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
         }.bind(this));
-        
+
         bean.on('.expandable_video', 'click', function () {
             $('.expandable_video').toggleClass('video-big');
         }.bind(this));

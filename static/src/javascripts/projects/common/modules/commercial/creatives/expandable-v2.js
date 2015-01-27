@@ -52,15 +52,15 @@ define([
     };
 
     ExpandableV2.prototype.create = function () {
-        var videoDesktop, expandablev2, videoHeight, videoWidth, leftMargin, leftPosition, rightPosition;
-        
+        var videoDesktop, $expandablev2, videoHeight, videoWidth, leftMargin, leftPosition, rightPosition;
+
         videoHeight = this.closedHeight - 24;
-        videoWidth = (videoHeight*16)/9;
-        
+        videoWidth = (videoHeight * 16) / 9;
+
         leftMargin = (this.params.videoPositionH === 'center' ?
-            videoWidth/-2 : 0
+            videoWidth / -2 : 0
         );
-        
+
         leftPosition = (this.params.videoPositionH === 'left' ?
             ' left: ' + this.params.videoHorizSpace + 'px;' : ''
         );
