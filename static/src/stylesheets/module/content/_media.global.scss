@@ -82,7 +82,8 @@
         width: 1.04em;
         @include icon(video-icon-white, $with-width: false);
     }
-    .content--gallery & {
+    .content--gallery &,
+    .content--image & {
         width: .9em;
         @include icon(camera-white-large, $with-width: false);
     }

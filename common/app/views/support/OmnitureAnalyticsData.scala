@@ -2,12 +2,24 @@ package views.support
 
 import java.net.URLEncoder._
 
+import conf.Configuration
 import model.{Content, MetaData}
 import play.api.libs.json.{Json, JsValue, JsString}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
+object OmnitureAnalyticsAccount {
+  def apply(page: MetaData): String = {
+    val sectionSpecficAccounts = Map(
+      ("guardian-masterclasses", "guardiangu-masterclasses"),
+      ("Guardian Masterclasses", "guardiangu-masterclasses")
+    )
+    Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.section)).flatten.mkString(",")
+  }
+}
+
 object OmnitureAnalyticsData {
+
   def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
     val data = page.metaData map {
       case (key, JsString(s)) => key -> s
