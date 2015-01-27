@@ -14,6 +14,7 @@
 
 define([
     'bean',
+    'qwery',
     'raven',
     'common/utils/_',
     'common/utils/$',
@@ -27,6 +28,7 @@ define([
     'text!facia/views/weather-forecast.html'
 ], function (
     bean,
+    qwery,
     raven,
     _,
     $,
@@ -169,19 +171,19 @@ define([
         },
 
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function (e) {
+            bean.on(qwery('.js-weather-input')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleControls(true);
             }.bind(this));
-            bean.on($('.js-close-location')[0], 'click', function (e) {
+            bean.on(qwery('.js-close-location')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on($('.js-weather-input')[0], 'blur', function (e) {
+            bean.on(qwery('.js-weather-input')[0], 'blur', function (e) {
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
+            bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
