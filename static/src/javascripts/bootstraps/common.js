@@ -255,12 +255,6 @@ define([
                 }
             },
 
-            unshackleParagraphs: function () {
-                if (userPPrefs.isOff('para-indents')) {
-                    $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
-                }
-            },
-
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
@@ -438,7 +432,6 @@ define([
             robust('c-clickstream',     function () { modules.initClickstream(); });
             robust('c-release-message', function () { modules.displayReleaseMessage(); });
             robust('c-history',         function () { modules.updateHistory(); });
-            robust('c-paras',           function () { modules.unshackleParagraphs(); });
             robust('c-sign-in',         function () { modules.initAutoSignin(); });
             robust('c-interactive',     function () { modules.augmentInteractive(); });
             robust('c-history-nav',     function () { modules.showHistoryInMegaNav(); });

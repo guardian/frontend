@@ -130,7 +130,7 @@ define([
 
         this.populatePageProperties = function () {
 
-            var d, shiftValue, guView,
+            var d,
                 now      = new Date(),
                 tpA      = s.getTimeParting('n', '+0'),
                 /* Retrieve navigation interaction data */
