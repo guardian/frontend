@@ -16,7 +16,7 @@ define([
     beacon
 ) {
     var rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
-        rxSeperator = new RegExp(/\s*,\s*/g);
+        rxSeparator = new RegExp(/\s*,\s*/g);
 
     function getStylesheets() {
         return _.chain(document.styleSheets)
@@ -57,7 +57,7 @@ define([
 
         beacon.postJson('/css', JSON.stringify({
             selectors: rules.reduce(function (isUsed, rule) {
-                _.each(rule.replace(rxPsuedoClass, '').split(rxSeperator), function (s) {
+                _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (s) {
                     if (_.isUndefined(isUsed[s])) {
                         isUsed[s] = !!document.querySelector(s);
                     }
