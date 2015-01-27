@@ -1,15 +1,15 @@
 package business
 
-import play.api.{Application, GlobalSettings}
+import play.api.{GlobalSettings, Application}
 
-trait HideousHackLifecycle extends GlobalSettings {
+trait StocksDataLifecycle extends GlobalSettings {
   override def onStart(app: Application): Unit = {
     super.onStart(app)
-    HideousHack.start()
+    StocksData.start()
   }
 
   override def onStop(app: Application): Unit = {
-    HideousHack.stop()
+    StocksData.stop()
     super.onStop(app)
   }
 }

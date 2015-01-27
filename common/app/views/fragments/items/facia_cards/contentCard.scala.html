@@ -16,6 +16,7 @@
         data-discussion-id="@id"
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-url="@item.header.url.get(request)#comments"
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
@@ -48,7 +49,7 @@ data-test-id="facia-card"
                             </div>
                         </div>
                         @fallback.map { fallbackImage =>
-                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder">
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
                                 <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
                                 @image(
                                     fallbackImage.imageContainer,

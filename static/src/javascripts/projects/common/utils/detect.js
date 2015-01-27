@@ -104,6 +104,17 @@ define([
         return totalTime;
     }
 
+    function isReload() {
+        var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (!!perf && !!perf.navigation) {
+            return perf.navigation.type === perf.navigation.TYPE_RELOAD;
+        } else {
+            // We have no way of knowing if it was a reload on unsupported browsers.
+            // I figure we could only possibly want to treat it as false in that case.
+            return false;
+        }
+    }
+
     function isIOS() {
         return /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
     }
@@ -351,6 +362,10 @@ define([
         return hinting;
     }
 
+    function isModernBrowser() {
+        return window.guardian.isModernBrowser;
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -365,12 +380,14 @@ define([
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
         isBreakpoint: isBreakpoint,
+        isReload:  isReload,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        fontHinting: fontHinting()
+        fontHinting: fontHinting(),
+        isModernBrowser: isModernBrowser
     };
 
 });

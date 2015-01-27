@@ -163,9 +163,8 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    //"If this switch is on png images will be resized via the png-resizing server",
-    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
   )
 
   // Commercial

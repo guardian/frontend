@@ -137,7 +137,11 @@
             .element-pullquote cite {
                 color: $tonal__article-link;
             }
-
+            
+            .open__cta-icon {
+                background-color: $tonal__article-link;
+            }
+            
             .element-pullquote {
                 &:before,
                 &:after {

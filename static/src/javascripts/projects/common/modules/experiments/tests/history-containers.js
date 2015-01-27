@@ -1,9 +1,11 @@
 define([
     'common/modules/onward/history-containers',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
     historyContainers,
-    config
+    config,
+    detect
     ) {
     return function () {
         this.id = 'HistoryContainers';
@@ -21,7 +23,7 @@ define([
         var isNetworkFront = config.page.contentType === 'Network Front';
 
         this.canRun = function () {
-            return isNetworkFront && historyContainers.hasContainers();
+            return detect.isModernBrowser() && isNetworkFront && historyContainers.hasContainers();
         };
 
         this.variants = [
