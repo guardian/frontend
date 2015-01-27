@@ -66,7 +66,7 @@ define([
                         [200, {}, '{ "html": "" }']
                     );
 
-                    new CommercialComponent(adSlot, { type: 'bestbuy' }).load();
+                    new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
                 });
 
                 it('should use pageId if no keywordIds', function (done) {
@@ -79,7 +79,7 @@ define([
                         [200, {}, '{ "html": "" }']
                     );
 
-                    new CommercialComponent(adSlot, { type: 'bestbuy' }).load();
+                    new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
                 });
 
                 it('should load component into the slot', function (done) {
@@ -91,7 +91,7 @@ define([
 
                     server.respondWith([200, {}, '{ "html": "<p>Commercial Component</p>" }']);
 
-                    new CommercialComponent(adSlot, { type: 'bestbuy' }).load();
+                    new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
                 });
 
                 it('should load replace oastoken token', function (done) {
@@ -103,7 +103,7 @@ define([
 
                     server.respondWith([200, {}, '{ "html": "<p>OASToken: %OASToken%</p>" }']);
 
-                    new CommercialComponent(adSlot, { type: 'bestbuy', clickMacro: '123' }).load();
+                    new CommercialComponent(adSlot, { type: 'bestbuy', clickMacro: '123' }).create();
                 });
 
                 it('should be able to run post load events', function (done) {
@@ -116,7 +116,7 @@ define([
                         delete commercialComponent.postLoadEvents.book;
                         done();
                     };
-                    commercialComponent.load();
+                    commercialComponent.create();
                 });
 
                 [
@@ -168,7 +168,7 @@ define([
                         server.respondWith(testConfig.url, [200, {}, '{ "html": "" }']);
 
                         var params = merge({ type: testConfig.type }, testConfig.options);
-                        new CommercialComponent(adSlot, params).load();
+                        new CommercialComponent(adSlot, params).create();
                     })
                 });
 
