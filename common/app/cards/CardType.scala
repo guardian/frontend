@@ -4,7 +4,7 @@ sealed trait CardType {
   val cssClassName: String
 
   def showVideoPlayer = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | Third | FullMedia50 | FullMedia75 | FullMedia100 => true
+    case Half | ThreeQuarters | ThreeQuartersRight | Third | Standard | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }
 
