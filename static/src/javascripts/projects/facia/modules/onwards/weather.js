@@ -14,6 +14,7 @@
 
 define([
     'bean',
+    'qwery',
     'raven',
     'common/utils/_',
     'common/utils/$',
@@ -25,6 +26,7 @@ define([
     'facia/modules/onwards/search-tool'
 ], function (
     bean,
+    qwery,
     raven,
     _,
     $,
@@ -195,7 +197,7 @@ define([
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
-                searchTool.setInputValue(city);
+                searchTool.setInputValue(this.getUserLocation().city);
                 $close.addClass('u-h');
                 $edit.removeClass('u-h');
             }

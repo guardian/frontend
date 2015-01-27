@@ -230,7 +230,7 @@ Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
 
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function() {
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page', function() {
         this.removeState('truncated');
     });
 

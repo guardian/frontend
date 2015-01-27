@@ -7,7 +7,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/preferences',
     'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
@@ -17,10 +16,11 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
-    'common/modules/ui/message',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
-    'bootstraps/article'
+    'bootstraps/article',
+    'common/modules/analytics/live-blog-metrics',
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
@@ -30,7 +30,6 @@ define([
     config,
     detect,
     mediator,
-    preferences,
     scroller,
     template,
     url,
@@ -40,10 +39,11 @@ define([
     LiveFilter,
     AutoUpdate,
     dropdowns,
-    Message,
     NotificationCounter,
     RelativeDates,
-    article
+    article,
+    LiveBlogMetrics,
+    robust
 ) {
     'use strict';
 
@@ -227,32 +227,6 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function () {
-            var msg, releaseMessage,
-                isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0,
-                notMobile = detect.getBreakpoint() !== 'mobile';
-
-            if (isFootballLiveBlog && notMobile && !preferences.hasOptedIntoResponsive()) {
-
-                msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We’ve redesigned our Football live blogs to make it easier to follow the match. We’d love to hear what you think.' +
-                    '</p>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/guardianliveblogs_football" target="_blank">Leave feedback</a>' +
-                    '</li>' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
-                    '</li>' +
-                    '</ul>';
-                releaseMessage = new Message('football-live-blog', {pinOnHide: true});
-
-                releaseMessage.show(msg);
-            }
-        },
-
         keepTimestampsCurrent: function () {
             var dates = RelativeDates;
             window.setInterval(
@@ -266,22 +240,22 @@ define([
     };
 
     function ready() {
-        modules.initAdverts();
-        modules.createFilter();
-        modules.createTimeline();
-        modules.createAutoUpdate();
-        modules.showFootballLiveBlogMessage();
-        modules.keepTimestampsCurrent();
-        modules.handleUpdates();
+        robust('lb-adverts',    function () { modules.initAdverts(); });
+        robust('lb-filter',     function () { modules.createFilter(); });
+        robust('lb-timeline',   function () { modules.createTimeline(); });
+        robust('lb-autoupdate', function () { modules.createAutoUpdate(); });
+        robust('lb-timestamp',  function () { modules.keepTimestampsCurrent(); });
+        robust('lb-updates',    function () { modules.handleUpdates(); });
+        robust('lb-metrics',    function () { LiveBlogMetrics.init(); });
 
         // re-use modules from article bootstrap
-        article.modules.initOpenCta();
-        article.modules.initFence();
-        article.modules.initTruncateAndTwitter();
-        article.modules.initSelectionSharing();
-        Lightbox.init();
+        robust('lb-article',    function () { article.modules.initOpenCta(); });
+        robust('lb-fence',      function () { article.modules.initFence(); });
+        robust('lb-twitter',    function () { article.modules.initTruncateAndTwitter(); });
+        robust('lb-sharing',    function () { article.modules.initSelectionSharing(); });
+        robust('lb-lightbox',   function () { Lightbox.init(); });
 
-        mediator.emit('page:liveblog:ready');
+        robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
 
     return {

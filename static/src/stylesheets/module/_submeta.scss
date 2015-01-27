@@ -23,10 +23,6 @@
         display: none;
     }
 
-    .submeta {
-        border-top: 0;
-    }
-
     .submeta__head {
         display: none;
     }
@@ -37,14 +33,18 @@
     }
 }
 
-.submeta-container--break {
-    @include mq(leftCol) {
+@mixin submeta-break-common($breakpoint) {
+    .submeta {
+        border-top-width: 0;
+    }
+
+    @include mq(#{$breakpoint}) {
         margin-top: 0;
         position: absolute;
         bottom: 0;
 
         .content--media & {
-            border-top: 0;
+            border-top-width: 0;
         }
 
         .content__main-column--media & {
@@ -53,14 +53,18 @@
 
         .submeta {
             padding-top: 0;
-            border-top: 1px dotted colour(neutral-4);
+            border-top-style: dotted;
+            border-top-width: 1px;
         }
         .submeta__head {
             display: block;
         }
     }
+}
 
+.submeta-container--break {
     &.submeta-container--break-at-leftcol {
+        @include submeta-break-common(leftCol);
         @include mq(leftCol) {
             width: $left-column;
             left: -1 * ($left-column + $gs-gutter);
@@ -73,6 +77,7 @@
     }
 
     &.submeta-container--break-at-wide {
+        @include submeta-break-common(wide);
         @include mq(wide) {
             width: $left-column-wide;
             left: -$left-column-wide - $gs-gutter;

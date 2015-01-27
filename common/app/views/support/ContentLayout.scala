@@ -37,7 +37,7 @@ object ContentLayout {
         case l: LiveBlog => Some(l.visualTone)
         case m: Media => Some("media")
         case g: Gallery => Some("media")
-        case i: ImageContent if !i.isCartoon => Some("media")
+        case i: ImageContent => Some("media")
         case _ => None
       }
     }
