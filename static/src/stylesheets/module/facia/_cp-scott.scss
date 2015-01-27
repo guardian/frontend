@@ -45,6 +45,11 @@
     @include fs-headline(1);
     line-height: 16px;
 
+    .inline-quote svg {
+        width: 16px;
+        fill: colour(neutral-1);
+    }
+
     @include mq(mobileLandscape) {
         clear: none;
         float: right;
