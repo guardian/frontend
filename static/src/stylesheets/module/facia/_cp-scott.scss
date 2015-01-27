@@ -13,10 +13,6 @@
 
 .fc-cp-scott__citation {
     display: block;
-
-    @include mq(tablet) {
-        margin-top: $gs-baseline;
-    }
 }
 
 .fc-cp-scott__portrait {
