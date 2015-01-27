@@ -496,6 +496,72 @@ h1 {
     margin-top: 5px;
 }
 
+.clipboard-indicator {
+    position: absolute;
+    display: inline-block;
+    margin-right: 22px;
+}
+.clipboard-indicator .headline {
+    font-weight: bold;
+}
+.clipboard-indicator.dropdown > ul {
+    position: relative;
+    top: 12px;
+    font-size: 12px;
+    padding: 0;
+    height: 0;
+}
+.clipboard-indicator.dropdown > ul > li {
+    padding: 16px;
+}
+.clipboard-indicator.dropdown-open > ul {
+    height: auto;
+}
+.clipboard-indicator.dropdown-open > ul > li:hover {
+    background-color: inherit;
+    cursor: default;
+}
+.clipboard-indicator.dropdown-open .buttons {
+    background-color: #fff;
+    text-align: right;
+    padding: 6px 0;
+    border-top: 1px solid #ddd;
+}
+
+
+.paper-button:before,.paper-button:after {
+    background: no-repeat 50% 50%;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.16);
+    content: "";
+    height: 30px;
+    width: 30px;
+
+    left:0;
+    position:absolute;
+    right:0;
+    top:0;
+    transform: translate3d(0,0,0);
+    transition: all .28s cubic-bezier(.4,0,.2,1);
+}
+
+.paper-button:hover:after {
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2);
+}
+
+.paper-button {
+    position: relative;
+    left: 0.5em;
+}
+
+.paper-button i {
+    font-size: 14px;
+    color: #333;
+    top: -1px;
+    position: relative;
+    left: 9px;
+}
+
 .count {
     font-weight: normal;
     margin-left: 0.4em;
@@ -512,12 +578,14 @@ h1 {
 .droppable {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    min-height: 20px;
-    padding: 0 0 20px;
     -webkit-transition: background-color 50ms;
     -moz-transition: background-color 50ms;
     transition: background-color 50ms;
     overflow: auto;
+}
+
+.group-separator {
+    height: 20px;
 }
 
 .supporting .droppable {
@@ -525,15 +593,15 @@ h1 {
     margin: 0 0 0 -4px;
 }
 
-.droppable.underDrag {
+.underDrag > .group-separator {
     background-color: #2ea3eb;
 }
 
-.open .droppable.underDrag {
+.open .underDrag > .group-separator {
     background-color: #999999;
 }
 
-.open .droppable.underControlDrag {
+.open .underControlDrag > .group-separator {
     background-color: #cdbbfb;
 }
 
@@ -1142,7 +1210,7 @@ button {
 
 .clipboard {
     width: 100%;
-    margin: 5px 0 15px 0;;
+    margin: 8px 0 15px 0;;
 }
 
 .article__spark {
@@ -1378,7 +1446,7 @@ button {
     color: #999999;
     background: transparent;
     width: 62px;
-    height: 24px;
+    height: 25px;
     padding: 1px;
     float: right;
 }
@@ -1403,7 +1471,8 @@ button {
     width: 120px;
 }
 
-.latest-articles .tool--small--copy {
+.latest-articles .tool--small--copy,
+.latest-articles .tool--small--copy.large {
     width: 83px;
 }
 
@@ -1412,7 +1481,8 @@ button {
     display: none;
 }
 
-.latest-articles .tool--small--href {
+.tool--small--copy.large {
+    width: 100%;
 }
 
 .article > .closed .tool--small:hover {
@@ -1816,6 +1886,32 @@ collection-widget > div {
     display: none;
 }
 
+.fadeElement {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+.fadeElement.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.group-separator .helptext {
+    display: none;
+    width: 100%;
+    text-align: center;
+    padding-top: 2px;
+    color: white;
+}
+.group-separator.pasteOver:hover .helptext {
+    display: inline-block;
+}
+.group-separator.pasteOver:hover {
+    background-color: #2ea3eb;
+}
+.open .group-separator.pasteOver:hover {
+    background-color: #999999;
+}
 
 .article-group {
     position: relative;

@@ -89,7 +89,7 @@ define([
             event.preventDefault();
         },false);
 
-        ko.bindingHandlers.makeDropabble = {
+        ko.bindingHandlers.makeDroppable = {
             init: function(element) {
                 for (var eventName in listeners) {
                     element.addEventListener(eventName, getListener(eventName, element), false);

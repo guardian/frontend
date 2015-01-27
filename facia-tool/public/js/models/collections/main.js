@@ -48,7 +48,8 @@ define([
             modalDialog: modalDialog,
             switches: ko.observable(),
             fronts: ko.observableArray(),
-            loadedFronts: ko.observableArray()
+            loadedFronts: ko.observableArray(),
+            isPasteActive: ko.observable(false)
         };
 
         model.chooseLayout = function () {
@@ -86,6 +87,9 @@ define([
         });
         mediator.on('front:disposed', function (front) {
             model.loadedFronts.remove(front);
+        });
+        mediator.on('copied-article:change', function (hasArticle) {
+            model.isPasteActive(hasArticle);
         });
 
         this.init = function() {

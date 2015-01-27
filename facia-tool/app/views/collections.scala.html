@@ -81,13 +81,17 @@
             <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
-            makeDropabble: true,
+            makeDroppable: true,
             click: pasteItem,
             css: {
                 underDrag: underDrag() && !underControlDrag(),
                 underControlDrag: underDrag() && underControlDrag()
-            },
-            template: {name: 'template_article', foreach: items}"></div>
+            }">
+                <div data-bind="template: {name: 'template_article', foreach: items}"></div>
+                <div class="group-separator" data-bind="css: {'pasteOver': $root.isPasteActive}">
+                    <span class="helptext">Click to paste</span>
+                </div>
+        </div>
     </script>
 
     <script type="text/html" id="template_article">
@@ -122,13 +126,17 @@
                 <div data-bind="if: state.enableContentOverrides() && group.parentType !== 'Article'">
                     <div class="supporting" data-bind="with: meta.supporting">
                         <div class="droppable" data-bind="
-                            makeDropabble: true,
+                            makeDroppable: true,
                             click: pasteItem,
                             css: {
                                 underDrag: underDrag() && !underControlDrag(),
                                 underControlDrag: underDrag() && underControlDrag()
-                            },
-                            template: {name: 'template_article', foreach: items}"></div>
+                            }">
+                                <div data-bind="template: {name: 'template_article', foreach: items}"></div>
+                                <div class="group-separator" data-bind="css: {'pasteOver': $root.isPasteActive}">
+                                    <span class="helptext">Click to paste</span>
+                                </div>
+                        </div>
                     </div>
                     <span class="supporting-message">Drop content above, hold Ctrl key to replace item</span>
                 </div>
@@ -147,10 +155,12 @@
 
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--paste" data-bind="
+                        visible: $root.isPasteActive,
                         clickBubble: false,
                         click: paste">paste</a>
 
                     <a class="tool tool--small tool--small--copy" data-bind="
+                        css: {'large': !$root.isPasteActive()},
                         clickBubble: false,
                         click: copy">copy</a>
 
