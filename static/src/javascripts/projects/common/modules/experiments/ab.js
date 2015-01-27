@@ -27,16 +27,12 @@ define([
     mediator,
     store,
     mvtCookie,
-    HighCommercialComponent,
-    HistoryContainers,
-    StickyContainerTitles
+    HighCommercialComponent
 ) {
 
     var ab,
         TESTS = [
-            new HighCommercialComponent(),
-            new HistoryContainers(),
-            new StickyContainerTitles()
+            new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
 
