@@ -1,3 +1,4 @@
+/* global guardian */
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
@@ -38,6 +39,7 @@ define([
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+            isEmbed = !!guardian.isEmbed,
             that = this;
 
         w = w || {};
@@ -59,6 +61,16 @@ define([
 
         this.generateTrackingImageString = function () {
             return 's_i_' + window.s_account.split(',').join('_');
+        };
+
+        // Certain pages have specfic channel rules
+        this.getChannel = function () {
+            if (config.page.contentType === 'Network Front') {
+                return 'Network Front';
+            } else if (isEmbed) {
+                return 'Embedded';
+            }
+            return config.page.section || '';
         };
 
         this.logTag = function (spec) {
@@ -159,7 +171,7 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-            s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
+            s.channel   = this.getChannel();
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -287,6 +299,10 @@ define([
 
             s.prop75 = config.page.wordCount || 0;
             s.eVar75 = config.page.wordCount || 0;
+
+            if (isEmbed) {
+                s.eVar11 = s.prop11 = 'Embedded';
+            }
         };
 
         this.go = function () {
@@ -328,9 +344,9 @@ define([
         });
 
         mediator.on('module:analytics:omniture:pageview:sent', function () {
-            // independently log this page view
-            // used for checking we have not broken analytics
-            beacon.fire('/count/pva.gif');
+            // Independently log this page view, used for checking we have not broken analytics.
+            // We want to exclude off-site embed tracking from this data.
+            if (!isEmbed) { beacon.fire('/count/pva.gif'); }
         });
 
     }

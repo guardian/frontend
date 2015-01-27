@@ -100,7 +100,7 @@ define([
         }
     };
 
-    CommercialComponent.prototype.load = function () {
+    CommercialComponent.prototype.create = function () {
         new LazyLoad({
             url: this.components[this.type],
             container: this.$adSlot,
