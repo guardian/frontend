@@ -114,7 +114,8 @@
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    }, baseFontSize;
+    }, baseFontSize,
+    docClass = document.documentElement.className;
 
     // rems are calculated in the CSS assuming a 16px baseline.
     // if the user has changed theirs, account for it.
@@ -123,6 +124,16 @@
         if(parseInt(baseFontSize, 10) !== 16) {
             document.documentElement.style.fontSize = baseFontSize;
         }
+    }
+
+    @* http://modernizr.com/download/#-svg *@
+    if (
+        !!document.createElementNS &&
+        !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
+    ) {
+        docClass += ' svg';
+    } else {
+        docClass += ' no-svg';
     }
 
     (function(isModern) {
@@ -163,16 +174,6 @@
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {
-            var docClass = document.documentElement.className;
-
-            @* http://modernizr.com/download/#-svg *@
-            if (
-                !!document.createElementNS &&
-                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
-            ) {
-                docClass += ' svg';
-            }
-
             if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
                 docClass += ' has-flex';
             } else {
@@ -184,11 +185,11 @@
             } else {
                 docClass += ' has-no-flex-wrap';
             }
-            document.documentElement.className = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+            docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);
 
-    document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
+    document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
 
