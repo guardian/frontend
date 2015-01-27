@@ -42,10 +42,7 @@
     }
 
     .fc-item__standfirst {
-        color: fade-out($c-headline, .2);
-        @if($old-ie) {
-            color: #ffffff;
-        }
+        color: mix($c-headline, colour(live-default), 80%);
     }
 
     .fc-item__live-indicator,
