@@ -16,9 +16,7 @@ to apply any necessary changes to non-shared code there too.
                     <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
                        class="brand-bar__item--action popup__toggle" data-test-id="sign-in-link"
                        aria-haspopup="true">
-                        <span class="rounded-icon control__icon-wrapper">
-                            <i class="i i-profile-white-36"></i>
-                        </span>
+                        @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                         <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
                     </a>
                     <div class="js-profile-popup"></div>
@@ -38,9 +36,7 @@ to apply any necessary changes to non-shared code there too.
                     <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
                        class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
                        aria-haspopup="true">
-                        <span class="rounded-icon control__icon-wrapper">
-                            @fragments.inlineSvg("search-36", "icon")
-                        </span>
+                        @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                         <span class="control__info">search</span>
                     </a>
                 </div>
