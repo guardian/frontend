@@ -34,6 +34,8 @@
     @include mq(wide) {
         .has-page-skin & {
             float: right;
+            margin-top: -$gs-baseline / 2;
+            margin-bottom: $gs-baseline / 2;
         }
     }
 }
@@ -53,7 +55,7 @@
     @include mq(mobileLandscape) {
         clear: none;
         float: right;
-        margin-right: $gs-baseline;
+        margin-right: $gs-gutter / 2;
         margin-top: 2px;
     }
 
@@ -69,7 +71,7 @@
     @include mq(wide) {
         .has-page-skin & {
             float: right;
-            margin-right: $gs-baseline;
+            margin-right: $gs-gutter / 2;
         }
     }
 }
