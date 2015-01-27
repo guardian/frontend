@@ -258,11 +258,11 @@
         left: 50%;
         border: 1px solid #ffffff;
         border-width: 1px 1px 0;
-        background: #333333;
+        background: colour(neutral-1);
         color: #ffffff;
         opacity: .5;
         padding: $gs-baseline/2 0 0;
-        width: $gs-gutter*3;
+        width: gs-span(1);
         margin-left: $gs-gutter*-1.5;
         text-align: center;
         @include fs-textSans(1);
