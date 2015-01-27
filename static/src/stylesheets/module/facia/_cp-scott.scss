@@ -43,10 +43,10 @@
     float: left;
 
     @include fs-headline(1);
-    line-height: 16px;
+    line-height: $gs-baseline * 4 / 3;
 
     .inline-quote svg {
-        width: 16px;
+        height: $gs-baseline * 4 / 3;
         fill: colour(neutral-1);
     }
 
