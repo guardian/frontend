@@ -78,7 +78,7 @@ define([
                     _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
                         sendReport(stylesheet, sendAll);
                     });
-                }, _.random(0, 1000));
+                }, _.random(0, 3000));
             }
         }, 300);
     }
