@@ -1,17 +1,17 @@
 define([
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/template',
 
-    'common/modules/analytics/omniture',
     'common/modules/ui/message',
 
     'text!common/views/donot-use-adblock.html'
 ], function (
     detect,
     storage,
+    template,
 
-    omniture,
-    message,
+    Message,
 
     doNotUseAdblockTemplate
 ) {
@@ -40,16 +40,12 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    console.log('show');
-                }
-                  /*  var adblockLink = 'https://www.theguardian.com/',//TODO, also text in template
+                    var adblockLink = 'https://www.theguardian.com/',//TODO, also text in template and switches to off
                         adblockMessage,
                         localStorage = storage.local;
 
                     if (detect.getBreakpoint() !== 'mobile') {
                         if (detect.adblockInUse()) {
-                            s.prop40 = 'adblocktrue';
-                            localStorage.set('adblockInUse', true);
                             adblockMessage = new Message('adblock', {
                                 pinOnHide: false,
                                 siteMessageLinkName: 'adblock message',
@@ -61,16 +57,9 @@ define([
                                     adblockLink: adblockLink
                                 }
                             ));
-                        } else {
-                            //if we detected adblock before, we can assume that the user disabled it for us
-                            if (localStorage.get('adblockInUse')) {
-                                s.prop40 = 'adblockdisabled';
-                            } else {
-                                s.prop40 = 'adblockfalse';
-                            }
                         }
                     }
-                } */
+                }
             }
         ];
     };

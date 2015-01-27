@@ -449,7 +449,7 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABAdblockMessage = Switch("A/B Tests", "ab-adblock-message",
+  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block-message",
     "Switch for the Adblock Message A/B test.",
     safeState = On, sellByDate = never
   )
