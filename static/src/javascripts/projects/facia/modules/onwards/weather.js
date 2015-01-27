@@ -165,15 +165,15 @@ define([
         },
 
         bindEvents: function () {
-            bean.on($('.js-weather-input')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-weather-input', function (e) {
                 e.preventDefault();
                 this.toggleControls(true);
             }.bind(this));
-            bean.on($('.js-close-location')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-close-location', function (e) {
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on($('.js-toggle-forecast')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
@@ -226,28 +226,20 @@ define([
         },
 
         render: function (weatherData, city) {
-            var tmpl = weatherData.html;
-
-            $holder = $('.js-container--first .js-container__header');
-            $holder.html(tmpl.replace(new RegExp('{{city}}', 'g'), city));
+            this.attachToDOM(weatherData.html, city);
 
             this.bindEvents();
             this.addSearch();
 
-            this.render = function (weatherData, city) {
-                var $weatherIcon = $('.js-weather-icon', $weather);
+            this.render = function(weatherData, city) {
+                this.attachToDOM(weatherData.html, city);
+            }
+        },
 
-                $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
-                searchTool.setInputValue(city);
-
-                // Replace number in weather icon class
-                $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.weatherIcon))
-                    .attr('title', weatherData.weatherText);
-
-                // Close editing
-                this.toggleControls();
-            };
+        attachToDOM: function(tmpl, city) {
+            $holder = $('.js-container--first .js-container__header');
+            $holder.empty();
+            $holder.html(tmpl.replace(new RegExp('{{city}}', 'g'), city));
         },
 
         renderForecast: function (forecastData) {
