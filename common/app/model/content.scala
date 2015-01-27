@@ -255,7 +255,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 
-  lazy val showSectionNotTag: Boolean = tags.exists{ tag => (tag.id == "commentisfree/commentisfree" || tag.id == "childrens-books-site/childrens-books-site") && tag.tagType == "blog" }
+  lazy val showSectionNotTag: Boolean = tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.tagType == "blog" }
 
   lazy val sectionLabelLink : String = {
     if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags, Some(section))) {
