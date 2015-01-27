@@ -15,7 +15,8 @@ define([
     mediator,
     beacon
 ) {
-    var stripRx = new RegExp(/\:(active|hover|visited)/g);
+    var rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
+        rxSeperator = new RegExp(/\s*,\s*/g);
 
     function getStylesheets() {
         return _.chain(document.styleSheets)
@@ -56,7 +57,11 @@ define([
 
         beacon.postJson('/css', JSON.stringify({
             selectors: rules.reduce(function (isUsed, rule) {
-                isUsed[rule] = !!document.querySelector(rule.replace(stripRx, ''));
+                _.each(rule.replace(rxPsuedoClass, '').split(rxSeperator), function (s) {
+                    if (_.isUndefined(isUsed[s])) {
+                        isUsed[s] = !!document.querySelector(s);
+                    }
+                });
                 return isUsed;
             }, {}),
             contentType: config.page.contentType,
@@ -73,7 +78,7 @@ define([
                     _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
                         sendReport(stylesheet, sendAll);
                     });
-                }, _.random(0, 3000));
+                }, _.random(0, 1000));
             }
         }, 300);
     }

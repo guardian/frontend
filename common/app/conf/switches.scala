@@ -307,7 +307,7 @@ object Switches {
 
   val CssLogging = Switch("Monitoring", "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    safeState = Off, new LocalDate(2015, 2, 28)
+    safeState = On, new LocalDate(2015, 2, 28)
   )
 
   val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
