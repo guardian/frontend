@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import conf.Switches
 import dfp.DfpAgent
 import model._
 import org.joda.time.DateTime
@@ -262,7 +263,7 @@ case class FaciaContainer(
     * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
     * can consume this data if they want to.
     */
-  def showCPScottHeader = dataId == "uk/commentisfree/regular-stories"
+  def showCPScottHeader = Switches.CPScottSwitch.isSwitchedOn && dataId == "uk/commentisfree/regular-stories"
 }
 
 object Front extends implicits.Collections {
