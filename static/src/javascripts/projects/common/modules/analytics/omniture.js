@@ -136,8 +136,6 @@ define([
                 /* Retrieve navigation interaction data */
                 ni       = storage.session.get(NG_STORAGE_KEY),
                 platform = 'frontend',
-                // cookie used for user migration
-                guShift  = cookies.get('GU_SHIFT'),
                 mvt      = ab.makeOmnitureTag(document),
                 // Tag the identity of this user, which is composed of
                 // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
@@ -206,18 +204,6 @@ define([
             s.eVar51  = mvt;
 
             s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
-
-            if (guShift) {
-                shiftValue = 'gu_shift,' + guShift + ',';
-                guView     = cookies.get('GU_VIEW');
-
-                if (guView) {
-                    shiftValue += ',' + guView;
-                }
-
-                s.prop51  = shiftValue + s.prop51;
-                s.eVar51  = shiftValue + s.eVar51;
-            }
 
             if (s.prop51) {
                 s.events = s.apl(s.events, 'event58', ',');
