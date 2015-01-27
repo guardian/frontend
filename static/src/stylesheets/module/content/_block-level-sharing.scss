@@ -14,6 +14,10 @@
         width: 100% !important;
         height: 100% !important;
     }
+
+    @if $old-ie {
+        display: none;
+    }
 }
 
 .block-share__item--facebook {
