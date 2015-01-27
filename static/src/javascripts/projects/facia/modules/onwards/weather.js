@@ -179,10 +179,6 @@ define([
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on(qwery('.js-weather-input')[0], 'blur', function (e) {
-                e.preventDefault();
-                this.toggleControls(false);
-            }.bind(this));
             bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
