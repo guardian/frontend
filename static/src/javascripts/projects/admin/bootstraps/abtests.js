@@ -1,13 +1,13 @@
 define([
-    'common/modules/experiments/ab',
-    'qwery',
     'bean',
+    'qwery',
+    'common/modules/experiments/ab',
     'admin/modules/abtests/abtest-item',
     'admin/modules/abtests/audience'
 ], function(
-    abTests,
-    qwery,
     bean,
+    qwery,
+    abTests,
     Item,
     Audience
 ) {

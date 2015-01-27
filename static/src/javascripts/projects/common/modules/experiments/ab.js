@@ -32,8 +32,7 @@ define([
     StickyContainerTitles
 ) {
 
-    var ab,
-        TESTS = [
+    var TESTS = [
             new HighCommercialComponent(),
             new HistoryContainers(),
             new StickyContainerTitles()
@@ -188,7 +187,7 @@ define([
         }
     }
 
-    ab = {
+    return {
 
         addTest: function (test) {
             TESTS.push(test);
@@ -302,7 +301,5 @@ define([
             TESTS = [];
         }
     };
-
-    return ab;
 
 });

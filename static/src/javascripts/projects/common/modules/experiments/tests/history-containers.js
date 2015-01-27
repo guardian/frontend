@@ -1,12 +1,15 @@
 define([
     'common/modules/onward/history-containers',
     'common/utils/config',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/get-property'
 ], function (
     historyContainers,
     config,
-    detect
-    ) {
+    detect,
+    getProperty
+) {
+
     return function () {
         this.id = 'HistoryContainers';
         this.start = '2014-12-23';
@@ -20,7 +23,7 @@ define([
         this.dataLinkNames = 'history containers';
         this.idealOutcome = 'Users click through to more content as it is relevant to them';
 
-        var isNetworkFront = config.page.contentType === 'Network Front';
+        var isNetworkFront = getProperty(config, 'page.contentType') === 'Network Front';
 
         this.canRun = function () {
             return detect.isModernBrowser() && isNetworkFront && historyContainers.hasContainers();
