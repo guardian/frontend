@@ -11,9 +11,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/sticky-container-titles'
+    'common/modules/experiments/tests/high-commercial-component'
 ], function (
     raven,
     filter,
