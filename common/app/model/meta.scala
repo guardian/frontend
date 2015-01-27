@@ -85,7 +85,8 @@ trait MetaData extends Tags {
     DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
-  lazy val isExpiredAdvertisementFeature: Boolean = DfpAgent.isExpiredAdvertisementFeature(tags, Some(section))
+  lazy val isExpiredAdvertisementFeature: Boolean =
+    DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 }
 

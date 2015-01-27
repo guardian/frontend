@@ -172,10 +172,13 @@ trait PaidForTagAgent {
     findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
   }
 
-  def isExpiredAdvertisementFeature(capiTags: Seq[Tag],
+  def isExpiredAdvertisementFeature(pageId: String,
+                                    capiTags: Seq[Tag],
                                     maybeSectionId: Option[String]): Boolean = {
 
     def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+
+    lazy val isAdFeatureToneTagPage = pageId == "tone/advertisement-features"
 
     lazy val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
 
@@ -184,7 +187,7 @@ trait PaidForTagAgent {
       } getOrElse Nil
 
     (!isPreview) &&
-      (lineItems.isEmpty && hasAdFeatureTone) ||
+      (lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
       lineItems.nonEmpty && (lineItems forall hasExpired)
   }
 

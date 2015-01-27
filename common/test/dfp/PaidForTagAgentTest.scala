@@ -26,7 +26,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     toTag("keyword", tagId, sectionId)
   private def toSeries(tagId: String, sectionId: Option[String] = None): Tag =
     toTag("series", tagId, sectionId)
-  private val adFeatureTone = toTag("tone", s"tone/advertisement-features", None)
+  private val adFeatureToneTagId = "tone/advertisement-features"
+  private val adFeatureTone = toTag("tone", adFeatureToneTagId, None)
 
   private def paidForTag(targetedName: String,
                          paidForType: PaidForType,
@@ -537,31 +538,39 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   "isExpiredAdvertisementFeature" should "be true for an expired ad feature" in {
-    val keyword = toKeyword("section/tagName")
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword),None) should be(true)
+    val tags = Seq(toKeyword("section/tagName"))
+    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None)
+    expired should be(true)
   }
 
   it should "be false for an ad feature with multiple line items where one has no end date" in {
-    val keyword = toKeyword("section/tagNameMatchingMultipleLineItems")
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
+    val tags = Seq(toKeyword("section/tagNameMatchingMultipleLineItems"))
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
   }
 
   it should "be false for an ad feature with multiple line items where one has not expired" in {
-    val keyword = toKeyword("section/tagNameMatchingMoreMultipleLineItems")
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
+    val tags = Seq(toKeyword("section/tagNameMatchingMoreMultipleLineItems"))
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
   }
 
   it should "be false for an un-paid-for page" in {
-    val keyword = toKeyword("anotherSection/someOtherUnrelatedTagName")
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(keyword), None) should be(false)
+    val tags = Seq(toKeyword("anotherSection/someOtherUnrelatedTagName"))
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
   }
 
   it should "be true for a page with ad-feature tone and no logo" in {
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(Seq(adFeatureTone), None) should be(true)
+    val tags = Seq(adFeatureTone)
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
   }
 
   it should "be false for a page with an unexpired logo and ad-feature tone" in {
     val tags = Seq(adFeatureTone, toKeyword("section/tagNameMatchingMoreMultipleLineItems"))
-    TestPaidForTagAgent.isExpiredAdvertisementFeature(tags, None) should be(false)
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
+  }
+
+  it should "be false for the ad feature tone tag page" in {
+    val tags = Seq(adFeatureTone)
+    val expired = TestPaidForTagAgent.isExpiredAdvertisementFeature(adFeatureToneTagId, tags, None)
+    expired should be(false)
   }
 }
