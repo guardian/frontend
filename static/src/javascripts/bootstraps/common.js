@@ -39,7 +39,6 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/release-message',
     'common/modules/social/share-count',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
@@ -54,9 +53,7 @@ define([
 
     'bootstraps/identity',
 
-    'text!common/views/release-message.html',
-    'text!common/views/release-message-compulsory.html',
-    'text!common/views/release-message-launched.html'
+    'text!common/views/release-message-compulsory.html'
 ], function (
     bean,
     bonzo,
@@ -96,7 +93,6 @@ define([
     Popular,
     Related,
     TonalComponent,
-    releaseMessage,
     shareCount,
     Dropdowns,
     fauxBlockLink,
@@ -111,9 +107,7 @@ define([
 
     identity,
 
-    releaseMessageTpl,
-    releaseMessageCompulsoryTpl,
-    releaseMessageLaunchedTpl
+    releaseMessageCompulsoryTpl
 ) {
 
     var modules = {
@@ -244,68 +238,20 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME']);
-                cookies.cleanUpDuplicates(['GU_VIEW']);
-            },
-
-            // opt-in to the responsive alpha
-            optIn: function () {
-                if (window.location.hash.substr(1).split('&').indexOf('countmein') !== -1) {
-                    cookies.add('GU_VIEW', 'responsive', 365);
-                }
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'GU_VIEW']);
             },
 
             // display a flash message to devices over 600px who don't have the mobile cookie
             displayReleaseMessage: function () {
+                var releaseMessage = new Message('alpha', {pinOnHide: true}),
+                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-beta-feedback';
 
-                var exitLink, shift,
-                    path = (document.location.pathname) ? document.location.pathname : '/',
-                    releaseMessage = new Message('alpha', {pinOnHide: true}),
-                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-' + (config.page.edition || 'uk').toLowerCase() + '-edition-feedback';
-
-                if (
-                    config.switches.releaseMessage &&
-                    (detect.getBreakpoint() !== 'mobile')
-                ) {
-                    if (config.page.showClassicVersion) {
-                        // force the visitor in to the alpha release for subsequent visits
-                        cookies.add('GU_VIEW', 'responsive', 365);
-
-                        exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
-
-                        // The shift cookie may be 'in|...', 'ignore', or 'out'.
-                        shift = cookies.get('GU_SHIFT') || '';
-
-                        if (config.page.edition === 'US' || /in\|/.test(shift)) {
-                            releaseMessage.show(template(
-                                releaseMessageCompulsoryTpl,
-                                {
-                                    feedbackLink: feedbackLink
-                                }
-                            ));
-                        } else {
-                            releaseMessage.show(template(
-                                releaseMessageTpl,
-                                {
-                                    exitLink: exitLink,
-                                    feedbackLink: feedbackLink
-                                }
-                            ));
+                if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile')) {
+                    releaseMessage.show(template(
+                        releaseMessageCompulsoryTpl, {
+                            feedbackLink: feedbackLink
                         }
-                    } else {
-                        releaseMessage.show(template(
-                            releaseMessageLaunchedTpl,
-                            {
-                                feedbackLink: feedbackLink
-                            }
-                        ));
-                    }
-                }
-            },
-
-            unshackleParagraphs: function () {
-                if (userPrefs.isOff('para-indents')) {
-                    $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
+                    ));
                 }
             },
 
@@ -423,10 +369,6 @@ define([
                 }
             },
 
-            initReleaseMessage: function () {
-                releaseMessage.init();
-            },
-
             initOpenOverlayOnClick: function () {
                 var offset;
 
@@ -488,10 +430,8 @@ define([
             robust('c-toggles',         function () { modules.showToggles(); });
             robust('c-dates',           function () { modules.showRelativeDates(); });
             robust('c-clickstream',     function () { modules.initClickstream(); });
-            robust('c-opt-in',          function () { modules.optIn(); });
             robust('c-release-message', function () { modules.displayReleaseMessage(); });
             robust('c-history',         function () { modules.updateHistory(); });
-            robust('c-paras',           function () { modules.unshackleParagraphs(); });
             robust('c-sign-in',         function () { modules.initAutoSignin(); });
             robust('c-interactive',     function () { modules.augmentInteractive(); });
             robust('c-history-nav',     function () { modules.showHistoryInMegaNav(); });
@@ -506,7 +446,6 @@ define([
             robust('c-popular',         function () { modules.transcludePopular(); });
             robust('c-related',         function () { modules.transcludeRelated(); });
             robust('c-onward',          function () { modules.transcludeOnwardContent(); });
-            robust('c-init-release',    function () { modules.initReleaseMessage(); });
             robust('c-overlay',         function () { modules.initOpenOverlayOnClick(); });
             robust('c-css-logging',     function () { modules.runCssLogging(); });
             robust('c-crosswords',      function () { crosswordThumbnails.init(); });
