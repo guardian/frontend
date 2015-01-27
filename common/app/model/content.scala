@@ -705,8 +705,9 @@ object Gallery {
 }
 
 trait Lightboxable extends Content {
-  lazy val mainFiltered = mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > 620).toSeq
-  lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > 620).toSeq
+  val lightboxableCutoffWidth = 620
+  lazy val mainFiltered = mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
   lazy val lightbox: JsObject = {
@@ -747,9 +748,12 @@ object Interactive {
 }
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) with Lightboxable {
+  override val lightboxableCutoffWidth = 940
   override lazy val lightboxImages: Seq[ImageContainer] = mainFiltered
   override lazy val contentType = GuardianContentTypes.ImageContent
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+
+
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
