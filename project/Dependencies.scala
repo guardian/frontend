@@ -18,7 +18,7 @@ object Dependencies {
   val crosswordsApiClient = "com.gu" %% "crosswords-api-client" % "0.5"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.35.1"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.17"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.18-SNAPSHOT"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.0"
