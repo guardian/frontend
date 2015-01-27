@@ -103,9 +103,8 @@ define([
     function createVideoPlayer(el, options) {
         var player = videojs(el, options),
             $el = $(el),
-            duration;
-
-        duration = parseInt($el.attr('data-duration'), 10);
+            duration = parseInt($el.attr('data-duration'), 10);
+        
         if (!isNaN(duration)) {
             player.duration(duration);
             player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
