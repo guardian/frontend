@@ -33,6 +33,7 @@ define([
         this.listeners = listeners;
         this.mode = ko.observable(params.mode || 'draft');
         this.flattenGroups = ko.observable(params.mode === 'treats');
+        this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));
