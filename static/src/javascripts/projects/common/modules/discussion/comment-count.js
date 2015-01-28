@@ -31,9 +31,9 @@ define([
         defaultTemplate = commentCountTemplate;
 
     function getContentIds() {
-        return _.map(qwery('[' + attributeName + ']'), function (el) {
+        return _.uniq(_.map(qwery('[' + attributeName + ']'), function (el) {
             return bonzo(el).attr(attributeName);
-        }).join(',');
+        }).join(','));
     }
 
     function getContentUrl(node) {
