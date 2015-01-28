@@ -106,6 +106,7 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         this.track(response.city);
+                        city = response.city;
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -201,7 +202,7 @@ define([
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
-                searchTool.setInputValue(this.getUserLocation().city);
+                searchTool.setInputValue(city ? city : this.getUserLocation().city);
                 $close.addClass('u-h');
                 $edit.removeClass('u-h');
             }
