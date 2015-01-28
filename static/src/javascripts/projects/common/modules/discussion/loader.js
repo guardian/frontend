@@ -108,8 +108,8 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
-            toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
-            container = $('.js-discussion-pagination', toolbarEl).empty()
+            toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0],
+            container = $('.js-discussion-pagination', toolbarEl).empty();
 
         // When the pagesize is 'All', do not show any pagination.
         if (this.comments.options.pagesize !== 'All') {
