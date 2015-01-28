@@ -57,7 +57,7 @@ import services.ConfigAgent
 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/rss/film/rss?page=77"))
   }
 
   it should "not serve X-Accel for a path facia serves" in {
