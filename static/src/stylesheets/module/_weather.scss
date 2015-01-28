@@ -11,6 +11,7 @@ $weather-large-size: 60px;
 }
 
 .weather {
+    position: relative;
     color: colour(neutral-1);
     text-align: right;
     padding-top: $gs-baseline / 6;
@@ -33,7 +34,6 @@ $weather-large-size: 60px;
 }
 
 .weather__current,
-.weather__toggle-forecast,
 .forecast,
 .weather__location {
     position: relative;
@@ -42,6 +42,10 @@ $weather-large-size: 60px;
 }
 
 .weather__current {
+    @include mq($until: tablet) {
+        margin-right: $gs-gutter * 1.25;
+    }
+
     @include mq($until: leftCol) {
         padding-right: $gs-gutter / 2;
         text-align: right;
@@ -124,6 +128,11 @@ $weather-large-size: 60px;
 }
 
 .weather__toggle-forecast {
+    position: absolute;
+    right: 0;
+    padding-left: gs-span(2);
+    padding-bottom: $gs-baseline;
+
     @include mq(tablet) {
         display: none;
     }
@@ -180,7 +189,9 @@ $weather-large-size: 60px;
     .search-tool__input {
         width: 100%;
         display: inline-block;
+        padding-right: $gs-gutter;
         @include fs-headline(2);
+        @include box-sizing(border-box);
     }
 
     .search-tool__btn {

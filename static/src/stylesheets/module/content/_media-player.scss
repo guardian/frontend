@@ -99,7 +99,8 @@ $ima-controls-height: 70px;
 
         background-color: rgba(51, 51, 51, .8);
 
-        .gu-media-wrapper:hover & {
+        .gu-media-wrapper:hover &,
+        .gu-media__fallback:hover & {
             background-color: colour(media-default);
         }
 
@@ -126,7 +127,8 @@ $ima-controls-height: 70px;
                 @include border-radius(.2em);
             }
 
-            .gu-media-wrapper:hover & {
+            .gu-media-wrapper:hover &,
+            .gu-media__fallback:hover & {
                 border-left-color: #333333;
             }
         }

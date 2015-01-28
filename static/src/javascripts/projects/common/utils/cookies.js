@@ -17,21 +17,6 @@ define([
         });
     }
 
-    function cleanUpDuplicates(names) {
-
-        // Do not clean if there is no difference from the target domain (the domain we want to store our cookies on).
-        if (getShortDomain() === document.domain) {
-            return;
-        }
-
-        forEach(names, function (name) {
-            if (getCookieValues(name).length > 1) {
-                // This remove is conservative; we know it is safe to remove the cookie with the document domain.
-                remove(name, true);
-            }
-        });
-    }
-
     function remove(name, currentDomainOnly) {
         // Remove cookie, implicitly using the document's domain.
         getDocument().cookie = name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -115,7 +100,6 @@ define([
 
     return {
         cleanUp: cleanUp,
-        cleanUpDuplicates: cleanUpDuplicates,
         add: add,
         addSessionCookie: addSessionCookie,
         addForMinutes: addForMinutes,

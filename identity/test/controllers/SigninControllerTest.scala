@@ -132,5 +132,13 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
         body should not include "good-password"
       }
     }
+
+    "should authenticate single letter subdomain" in Fake {
+      when(api.authBrowser(any[Auth], same(trackingData), any[Option[Boolean]])).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+      val goodRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "username@q.com", "password" -> "good-password")
+      val badRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "usernameq$.com", "password" -> "good-password")
+
+      header("Location", signinController.processForm()(goodRequest)) should not be (Some("/signin"))
+    }
   }
 }
