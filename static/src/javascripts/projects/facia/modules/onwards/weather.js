@@ -106,6 +106,7 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         this.track(response.city);
+                        city = response.city;
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -179,10 +180,6 @@ define([
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on(qwery('.js-weather-input')[0], 'blur', function (e) {
-                e.preventDefault();
-                this.toggleControls(false);
-            }.bind(this));
             bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
@@ -205,7 +202,7 @@ define([
             } else {
                 $location.removeClass('is-editing');
                 searchTool.clear();
-                searchTool.setInputValue(city);
+                searchTool.setInputValue(city ? city : this.getUserLocation().city);
                 $close.addClass('u-h');
                 $edit.removeClass('u-h');
             }

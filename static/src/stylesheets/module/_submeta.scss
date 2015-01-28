@@ -23,12 +23,12 @@
         display: none;
     }
 
-    .submeta {
-        border-top: 0;
-    }
-
     .submeta__head {
         display: none;
+    }
+
+    .submeta {
+        border-top-width: 0;
     }
 
     .container--rolled-up-hide & {
