@@ -33,7 +33,7 @@ define([
     function getContentIds() {
         return _.uniq(_.map(qwery('[' + attributeName + ']'), function (el) {
             return bonzo(el).attr(attributeName);
-        }).join(','));
+        })).join(',');
     }
 
     function getContentUrl(node) {
