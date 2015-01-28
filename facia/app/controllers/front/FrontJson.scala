@@ -189,7 +189,6 @@ trait FrontJson extends ExecutionContexts with Logging {
     isImageDisplayed = (json \ "isImageDisplayed").asOpt[Boolean].getOrElse(false),
     editorialType = (json \ "editorialType").asOpt[String].filter(_.nonEmpty)
   )
-
 }
 
 object FrontJsonLive extends FrontJson {
