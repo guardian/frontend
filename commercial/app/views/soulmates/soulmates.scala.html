@@ -45,7 +45,7 @@
                     </label>
                     <label for="match_gender" class="search__dropdown">Seeking
                         <select id="match_gender" name="match_gender" class="search__dropdown__options">
-                            @Map("Woman" -> "women", "Man" -> "men", "" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
+                            @Map("Woman" -> "women", "Man" -> "men", "../../../public" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
                                 <option value="@matchGenderValue">@matchGenderName</option>
                             }
                         </select>

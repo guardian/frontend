@@ -32,7 +32,7 @@
                             Seq("schools", "Schools"),
                             Seq("government", "Government"),
                             Seq("media", "Media"),
-                            Seq("", "All sectors »")
+                            Seq("../../../public", "All sectors »")
                         ).map { sector =>
                             <li class="commercial--jobs__sector">
                                 <a class="commercial--jobs__sector__link commercial--tone__highlight" href="@clickMacro@jobsHost/@sector(0)" data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">@sector(1)</a>
