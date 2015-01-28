@@ -1,5 +1,6 @@
 package model
 
+import com.gu.contentapi.client.model.{Tag => ApiTag}
 import common.Edition
 import dfp.DfpAgent
 
@@ -28,4 +29,7 @@ trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   override lazy val sponsor: Option[String] = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+
+  override lazy val isExpiredAdvertisementFeature: Boolean =
+    DfpAgent.isExpiredAdvertisementFeatureFront(keywordIds, Some(id))
 }
