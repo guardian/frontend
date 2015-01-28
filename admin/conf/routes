@@ -122,5 +122,6 @@ GET         /admin/football/fronts/match/:matchId                               
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
 
 # css reports
+GET         /css-reports                                                                       controllers.CssReportController.entry
 GET         /css-reports.json                                                                  controllers.CssReportController.index
 GET         /css-reports/:date.json                                                            controllers.CssReportController.report(date: LocalDate)

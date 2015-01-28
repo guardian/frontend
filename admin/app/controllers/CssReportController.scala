@@ -1,6 +1,7 @@
 package controllers
 
 import common.{ExecutionContexts, JsonComponent}
+import conf.Configuration
 import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -32,6 +33,10 @@ case class CssReportResponse(
 )
 
 object CssReportController extends Controller with ExecutionContexts {
+  def entry = Action { implicit request =>
+    Ok(views.html.cssReport(Configuration.environment.stage))
+  }
+
   def index = Action.async { implicit request =>
     CssReport.index() map { dates =>
       JsonComponent.forJsValue(Json.toJson(CssReportsIndex(dates)))
