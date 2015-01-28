@@ -65,10 +65,13 @@ Three quarter item. Looks like a wide standard, a bit like this:
         .fc-item__content {
             width: auto;
             max-width: gs-span(5);
-            @include flex-basis(initial);
 
             @include mq(desktop) {
                 max-width: gs-span(6);
+            }
+
+            .has-flex-wrap & {
+                @include flex-basis(initial);
             }
         }
     }
