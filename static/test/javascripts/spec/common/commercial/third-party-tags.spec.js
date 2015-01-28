@@ -6,7 +6,7 @@ define([
 
     return new Injector()
         .store('common/utils/config')
-        .require(['common/modules/commercial/tags/container', 'mocks'], function (tagsContainer, mocks) {
+        .require(['common/modules/commercial/third-party-tags', 'mocks'], function (tagsContainer, mocks) {
 
             function extractParam(img, paramName) {
                 var paramValue = new RegExp(paramName + '=([^&]*)').exec(img.src);
