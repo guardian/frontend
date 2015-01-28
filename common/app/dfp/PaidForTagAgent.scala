@@ -187,8 +187,8 @@ trait PaidForTagAgent {
       } getOrElse Nil
 
     (!isPreview) &&
-      (lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
-      lineItems.nonEmpty && (lineItems forall hasExpired)
+      ((lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
+        lineItems.nonEmpty && (lineItems forall hasExpired))
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
