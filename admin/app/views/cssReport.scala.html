@@ -1,7 +1,200 @@
 @(environment: String)
 
 @admin_main("CSS reports", environment) {
-    <p>Hello, CSS reports.</p>
+    <style>
+        html { overflow-y: scroll; }
+        .selectors {
+            color: #c00;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 16px;
+        }
 
-    <div class="js-css-reports"></div>
+        .alphas {margin: 5px 0;}
+        .alphas span {display: inline-block; padding: 1px 4px;}
+
+        .selectors span {cursor: pointer;}
+
+        .selectors span:hover ,
+        .selectors span.active {font-weight: bold;}
+
+        .selectors .used {color: #ada;}
+        .selectors .tally {display: inline-block; width: 40px; color: #ddd;}
+    </style>
+
+    <script src="@routes.Assets.at("javascripts/components/jquery/dist/jquery.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/components/react/react.js")"></script>
+    <script src="@routes.Assets.at("javascripts/components/lodash/lodash.js")"></script>
+
+    <p>Unused CSS selectors (red)</p>
+
+    <div class="js-selectors">Loading...</div>
+
+    <script>
+    var delimRx = new RegExp('[^a-z0-9\-\_]+', 'i'),
+
+            elSelectors = React.createClass({
+                getInitialState: function() {
+                    window.onhashchange = (function() {
+                        this.setState({
+                            filter: getHashParams().filter,
+                            starts: getHashParams().starts
+                        });
+                    }).bind(this);
+
+                    return {
+                        filter: getHashParams().filter,
+                        starts: getHashParams().starts
+                    };
+                },
+                handleClickOnSelector: function(e) {
+                    var state = {
+                            filter: undefined,
+                            starts: undefined
+                        };
+
+                        console.log(e.target);
+
+                        state[e.target.className || 'filter'] = e.target.innerText;
+
+                        this.setState(state);
+                        setHashParams(state);
+                },
+                render: function() {
+                    var filter = this.state.filter,
+                            starts = this.state.starts;
+
+                    return React.DOM.div({onClick: this.handleClickOnSelector}, [
+                        React.DOM.div({className: 'alphas'},
+                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
+                                acc[a] = React.DOM.span({className: 'starts', 'data-type': starts}, a);
+                                return acc;
+                            }, {})
+                        ),
+                        React.DOM.div({},
+                            _.chain(this.props.selectors)
+                                .filter(function(p) {
+                                    var tokens = p[0];
+
+                                    return (!filter || tokens.indexOf(filter) > -1) &&
+                                           (!starts || (tokens[0] || '').indexOf(starts) === 0 || (tokens[1] || '').indexOf(starts) === 0);
+                                })
+                                .reduce(function(acc, p, i) {
+                                    acc['_' + i] = React.createElement(elSelector, {
+                                        selector: p,
+                                        filter: filter
+                                    });
+                                    return acc;
+                                }, {})
+                                .value()
+                        )
+                    ]);
+                }
+            }),
+
+            elSelector = React.createClass({
+                render: function() {
+                    var filter = this.props.filter,
+                        usages = this.props.selector[1];
+
+                    return React.DOM.div({}, [
+                        React.DOM.span({
+                            className: 'tally'
+                        }, usages.unused + usages.used),
+                        React.DOM.span({
+                                className: usages.used > 0 ? 'used' : null
+                            },
+                            _.reduce(this.props.selector[0], function(acc, k, i) {
+                                acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
+                                    part: k,
+                                    filter: filter
+                                });
+                                return acc;
+                            }, {})
+                        )
+                    ]);
+                }
+            }),
+
+            elSelectorPart = React.createClass({
+                render: function() {
+                    return React.DOM.span({
+                        className: this.props.part === this.props.filter ? 'active' : null
+                    }, this.props.part);
+                }
+            });
+
+    function setHashParams(obj) {
+        window.location.hash = _.reduce(obj, function(acc, v, k) {
+            if (v) {
+                acc.push(k + '=' + encodeURIComponent(v));
+            }
+            return acc;
+        }, []).join('&');
+    }
+
+    function tokenise(text, regex) {
+        var token, index, result = [];
+
+        while (text !== '') {
+            regex.lastIndex = 0;
+            token = regex.exec(text);
+            if (token === null) {
+                break;
+            }
+            index = token.index;
+            if (token[0].length === 0) {
+                index = 1;
+            }
+            if (index) {
+                result.push(text.substr(0, index));
+            };
+            result.push(token[0]);
+            index = index + token[0].length;
+            text = text.slice(index);
+        }
+        result.push(text);
+        return result;
+    }
+
+    function getHashParams() {
+        var result = {};
+
+        _.chain(window.location.hash.slice(1).split('&'))
+                .filter(function(kv) {
+                    return kv;
+                })
+
+                .map(function(kv) {
+                    return kv.split('=');
+                })
+
+                .map(function(kv) {
+                    var key = kv[0],
+                            value = kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '));
+
+                    result[key] = value;
+                });
+        return result;
+    };
+
+
+    $.ajax({
+        url: '/css-reports/2015-01-28.json',
+        dataType: "json"
+    }).then(function(res) {
+        React.render(
+                React.createElement(elSelectors, {
+                    selectors: _.chain(res.selectors)
+                            .pairs()
+                            .sortBy()
+                            .map(function(s) {
+                                return [tokenise(s[0], delimRx), s[1]]
+                            })
+                            .value()
+                }),
+                document.querySelector('.js-selectors')
+        );
+    });
+    </script>
 }
