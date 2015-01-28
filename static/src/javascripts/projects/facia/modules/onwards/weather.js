@@ -235,6 +235,7 @@ define([
 
             this.render = function(weatherData, city) {
                 this.attachToDOM(weatherData.html, city);
+                searchTool.bindElements($('.js-search-tool'));
             }
         },
 

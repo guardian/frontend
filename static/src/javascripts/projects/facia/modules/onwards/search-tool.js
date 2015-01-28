@@ -29,10 +29,13 @@ define([
 
         return {
             init: function () {
-                $list  = $('.js-search-tool-list', $container);
-                $input = $('.js-search-tool-input', $container);
-
+                this.bindElements($container);
                 this.bindEvents();
+            },
+
+            bindElements: function (container) {
+                $list  = $('.js-search-tool-list', container);
+                $input = $('.js-search-tool-input', container);
             },
 
             bindEvents: function () {
