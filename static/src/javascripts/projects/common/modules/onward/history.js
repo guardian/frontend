@@ -105,7 +105,7 @@ define([
             'tv-and-radio/series/broadchurch-2-episode-by-episode', 'tv-and-radio/series/doctor-who-episode-by-episode', 'tv-and-radio/series/homeland-episode-by-episode', 'tv-and-radio/series/spiral-episode-by-episode-guide', 'tv-and-radio/series/stream-on',
             'tv-and-radio/series/the-fall-episode-by-episode', 'tv-and-radio/series/the-walking-dead-episode-by-episode', 'uk/technology', 'video', 'weekly',
             'women-in-leadership', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news',
-            'world/middleeast', 'world/series/eyewitness'
+            'world/middleeast', 'world/series/eyewitness', 'uk/scotland', 'uk/wales', 'uk/northernireland', 'uk/the-northerner', 'cartoons/archive', 'theguardian'
         ],
 
         editions = [
