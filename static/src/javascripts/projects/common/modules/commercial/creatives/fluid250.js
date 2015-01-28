@@ -24,33 +24,26 @@ define([
 
     Fluid250.prototype.create = function () {
 
-        var templateOptions, leftMargin, leftPosition, rightPosition, topMargin, videoDesktop;
-
-        templateOptions = {
+        var templateOptions = {
             showLabel: (this.params.showAdLabel === 'hide') ?
                 'creative__label--hidden' : ''
-        };
-
-        leftMargin = (this.params.videoPositionH === 'center' ?
-            -205 : 0
-        );
-
-        topMargin = (this.params.videoPositionV === 'center' ?
-            -115 : 0
-        );
-
-        leftPosition = (this.params.videoPositionH === 'left' ?
-            this.params.videoHorizSpace + 'px' : 'auto'
-        );
-
-        rightPosition = (this.params.videoPositionH === 'right' ?
-            this.params.videoHorizSpace + 'px' : 'auto'
-        );
-
-        videoDesktop = {
-            video: (this.params.videoURL !== '') ?
-                '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px; margin-top: ' + topMargin + 'px; left: ' + leftPosition + '; right: ' + rightPosition + ';"></iframe>' : ''
-        };
+            },
+            leftMargin = (this.params.videoPositionH === 'center' ?
+                -205 : 0
+            ),
+            topMargin = (this.params.videoPositionV === 'center' ?
+                -115 : 0
+            ),
+            leftPosition = (this.params.videoPositionH === 'left' ?
+                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
+            ),
+            rightPosition = (this.params.videoPositionH === 'right' ?
+                ' right: ' + this.params.videoHorizSpace + 'px;' : ''
+            ),
+            videoDesktop = {
+                video: (this.params.videoURL !== '') ?
+                    '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px; margin-top: ' + topMargin + 'px; ' + leftPosition + rightPosition + '"></iframe>' : ''
+            };
 
         $.create(template(fluid250Tpl, merge(this.params, templateOptions, videoDesktop))).appendTo(this.$adSlot);
 
