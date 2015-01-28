@@ -1,11 +1,9 @@
 define([
     'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/detect'
+    'common/utils/cookies'
 ], function (
     config,
-    Cookie,
-    detect
+    Cookie
 ) {
 
     function openForesee() {
