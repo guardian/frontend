@@ -8,7 +8,7 @@ define([
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/effective-measure',
-    'common/modules/commercial/third-party-tags/imrworldwide',
+    'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/third-party-tags/outbrain'
