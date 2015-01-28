@@ -2,69 +2,59 @@
    Books components
    ========================================================================== */
 .commercial--books {
-    .commercial--books__title {
-        @include fs-header(2);
-        margin-bottom: $gs-baseline;
-    }
-    /* Line items */
-    .lineitem {
-        width: percentage(1/2);
-
-        &:nth-child(n+3) {
-            display: none;
-        }
-
-        @include mq(mobileLandscape) {
-            width: percentage(1/3);
-
-            &:nth-child(n+3) {
-                display: block;
-            }
-            &:nth-child(n+4) {
-                display: none;
-            }
-        }
-
-        @include mq(desktop) {
-            width: percentage(1/5);
-            min-height: $gs-baseline*20;
-
-            &:nth-child(n+4) {
-                display: block;
-            }
-        }
-    }
 
     /* Line items */
     .lineitem__image {
         width: 80px;
     }
-    .lineitem__title {
-        min-height: 0;
-    }
-    .lineitem__author {
-        margin-top: $gs-baseline*-.5;
-        margin-bottom: $gs-baseline;
-    }
+    &.commercial--standard {
+        /* Line items */
+        .lineitem {
+            width: percentage(1/2);
 
-    /* Line items - high relevance */
-    .commercial__relevance--high {
-        .lineitem.lineitem--high {
-            .lineitem--high__feature {
-                float: left;
-                padding-right: $gs-gutter/2;
-                padding-left: 0;
-                width: 88px;
+            &:nth-child(n+3) {
+                display: none;
             }
-            .lineitem--high__offer {
-                float: right;
-                width: calc(100% - 98px);
+            @include mq(mobileLandscape) {
+                width: percentage(1/3);
+
+                &:nth-child(3) {
+                    display: block;
+                }
+                &:nth-child(n+4) {
+                    display: none;
+                }
             }
+            @include mq(desktop) {
+                width: percentage(1/5);
+                min-height: $gs-baseline*20;
+
+                &:nth-child(n+4) {
+                    display: block;
+                }
+            }
+        }
+        .lineitem__author {
+            margin-top: $gs-baseline*-.5;
+            margin-bottom: $gs-baseline;
+        }
+    }
+    &.commercial--prominent {
+        /* Line items - high relevance */
+        .lineitem--high__feature {
+            float: left;
+            padding-left: 0;
+            width: 88px;
+        }
+        .lineitem--high__offer {
+            float: right;
+            width: calc(100% - 98px);
+        }
+        .commercial__relevance--high {
             @include mq($until: tablet) {
                 .lineitem__title {
                     padding-right: $gs-gutter*5;
                 }
-
                 .lineitem__cta {
                     margin-right: 0;
                     position: absolute;
@@ -73,30 +63,32 @@
                 }
             }
         }
-    }
-
-    /* Line items - low relevance */
-    .commercial__relevance--low {
-        @include mq(tablet) {
-            padding-left: $gs-gutter/2;
-            width: 50%;
-            float: left;
-        }
-
-        @include mq($until: tablet) {
-            .lineitem.lineitem--low {
-                padding-left: 88px + $gs-gutter/2;
-                min-height: $gs-baseline*9;
-            }
-
-            .lineitem__image {
+        /* Line items - low relevance */
+        .commercial__relevance--low {
+            @include mq(tablet) {
+                padding-left: $gs-gutter/2;
+                width: 50%;
                 float: left;
-                position: absolute;
-                left: 0;
-                top: $gs-baseline/2;
+            }
+            @include mq($until: tablet) {
+                .lineitem {
+                    padding-left: 88px + $gs-gutter/2;
+                    min-height: $gs-baseline*9;
+                }
+                .lineitem__image {
+                    float: left;
+                    position: absolute;
+                    left: 0;
+                    top: $gs-baseline/2;
+                }
             }
         }
     }
+}
+
+.commercial--books__title {
+    @include fs-header(2);
+    margin-bottom: $gs-baseline;
 }
 
 /* High relevance only, works for DFP book items */

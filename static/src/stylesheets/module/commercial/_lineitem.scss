@@ -72,7 +72,7 @@
     }
 
     /* Line items - high relevance */
-    .lineitem.lineitem--high {
+    .lineitem--high {
         width: 100%;
         @include mq($until: tablet) {
             padding-right: 0;
@@ -93,7 +93,7 @@
     }
 
     /* Line items - low relevance */
-    .lineitem.lineitem--low {
+    .lineitem--low {
         @include mq($until: tablet) {
             width: 100%;
             border-left: 0;
@@ -139,7 +139,7 @@
                 margin-left: $gs-gutter*-.5;
             }
         }
-        .lineitem.lineitem--high {
+        .lineitem--high {
             padding-left: 0;
 
             @include mq($until: tablet) {
