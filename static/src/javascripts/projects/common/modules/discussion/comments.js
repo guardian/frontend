@@ -134,29 +134,6 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         });
 };
 
-Comments.prototype.gotoComment = function(id) {
-    var comment = $('#comment-'+ id, this.elem);
-
-    if (comment.length > 0) {
-        window.location.replace('#comment-'+ id);
-        return;
-    }
-
-    return this.fetchComments({
-        comment: id
-    }).then(function() {
-        window.location.replace('#comment-'+ id);
-    }.bind(this));
-};
-
-Comments.prototype.gotoPage = function(page) {
-    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
-    this.relativeDates();
-    return this.fetchComments({
-        page: page
-    });
-};
-
 Comments.prototype.fetchComments = function(options) {
     options = options || {};
 
@@ -172,6 +149,11 @@ Comments.prototype.fetchComments = function(options) {
 
     if (!options.comment && this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
+    }
+
+    // The initial fetch is on page load, so do not load all comments.
+    if (options.initialFetch && queryParams.pageSize === 'All') {
+        queryParams.pageSize = 10;
     }
 
     var promise;

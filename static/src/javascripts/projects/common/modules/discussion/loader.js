@@ -58,11 +58,9 @@ Loader.prototype.initTopComments = function() {
 
     this.on('click', '.js-jump-to-comment', function(e) {
         e.preventDefault();
-        this.removeState('truncated');
-        this.setState('loading');
         scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
         var commentId = bonzo(e.currentTarget).data('comment-id');
-        this.comments.fetchComments({comment: commentId}).then(this.removeState.bind(this, 'loading'));
+        this.loadComments({comment: commentId});
     });
 
     return ajaxPromise({
@@ -103,14 +101,20 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
 
-    this.comments.on('untruncate-thread', function() {
-        this.removeState('truncated');
-    }.bind(this));
+    this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
+
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page',
+        this.removeTruncation.bind(this));
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
             toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
-        $('.js-discussion-pagination', toolbarEl).empty().html(newPagination);
+            container = $('.js-discussion-pagination', toolbarEl).empty()
+
+        // When the pagesize is 'All', do not show any pagination.
+        if (this.comments.options.pagesize !== 'All') {
+            container.html(newPagination);
+        }
     }.bind(this));
 
     this.setState('loading');
@@ -145,14 +149,9 @@ Loader.prototype.initMainComments = function() {
             }
         }
 
-        this.comments.fetchComments({comment: commentId})
-            .then(function() {
-                this.removeState('loading');
-
-                if (!commentId && window.location.hash !== '#comments') {
-                    this.setState('truncated');
-                }
-            }.bind(this))
+        this.loadComments({
+            comment: commentId,
+            initialFetch: true})
             .catch(function(err) {
                 var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
                 raven.captureMessage(reportMsg, {
@@ -175,14 +174,12 @@ Loader.prototype.initPageSizeDropdown = function(pageSize) {
     var $pagesizeLabel = $('.js-comment-pagesize');
     $pagesizeLabel.text(pageSize);
     this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
         bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
         var selectedPageSize = bonzo(e.currentTarget).data('pagesize');
         this.comments.options.pagesize = selectedPageSize;
         $pagesizeLabel.text(selectedPageSize);
         userPrefs.set('discussion.pagesize', selectedPageSize);
-        this.setState('loading');
-        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
+        this.loadComments({page: 1});
     });
 
 };
@@ -192,25 +189,21 @@ Loader.prototype.initToolbar = function() {
     var $orderLabel = $('.js-comment-order');
     $orderLabel.text(this.comments.options.order);
     this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
         bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
         this.comments.options.order = bonzo(e.currentTarget).data('order');
         $orderLabel.text(this.comments.options.order);
         userPrefs.set('discussion.order', this.comments.options.order);
-        this.setState('loading');
-        this.comments.fetchComments({page: 1}).then(this.removeState.bind(this, 'loading'));
+        this.loadComments({page: 1});
     });
 
     var $threadingLabel = $('.js-comment-threading');
     $threadingLabel.text(this.comments.options.threading);
     this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
-        this.removeState('truncated');
         bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
         this.comments.options.threading = bonzo(e.currentTarget).data('threading');
         $threadingLabel.text(this.comments.options.threading);
         userPrefs.set('discussion.threading', this.comments.options.threading);
-        this.setState('loading');
-        this.comments.fetchComments().then(this.removeState.bind(this, 'loading'));
+        this.loadComments();
     });
 };
 
@@ -241,10 +234,6 @@ Loader.prototype.ready = function() {
 
     this.$topCommentsContainer = $('.js-discussion-top-comments');
 
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page', function() {
-        this.removeState('truncated');
-    });
-
     this.initTopComments();
     this.initMainComments();
     this.initToolbar();
@@ -257,7 +246,7 @@ Loader.prototype.ready = function() {
     bean.on(window, 'hashchange', function() {
         var commentId = this.getCommentIdFromHash();
         if (commentId) {
-            this.comments.gotoComment(commentId);
+            this.gotoComment(commentId);
         }
     }.bind(this));
 
@@ -376,11 +365,58 @@ Loader.prototype.initPagination = function() {
         e.preventDefault();
         var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
         this.setState('loading');
-        return this.comments.gotoPage(page).then(this.removeState.bind(this, 'loading'));
+        this.gotoPage(page);
     });
 };
 
+Loader.prototype.gotoComment = function(id) {
+    var comment = $('#comment-'+ id, this.elem);
 
+    if (comment.length > 0) {
+        window.location.replace('#comment-'+ id);
+        return;
+    }
+
+    this.loadComments({comment: id}).then(function() {
+        window.location.replace('#comment-'+ id);
+    });
+};
+
+Loader.prototype.gotoPage = function(page) {
+    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+    this.comments.relativeDates();
+    this.loadComments({page: page});
+};
+
+Loader.prototype.loadComments = function(options) {
+
+    // Only truncate the loaded comments on the initial fetch,
+    // and when no comment ID or #comments location is present.
+    var shouldTruncate = options && options.initialFetch && !options.comment && window.location.hash !== '#comments';
+
+    this.setState('loading');
+
+    return this.comments.fetchComments(options)
+    .then(function(){
+        this.removeState('loading');
+        if (shouldTruncate) {
+            this.setState('truncated');
+        } else {
+            // do not call removeTruncation because it could invoke another fetch.
+            this.removeState('truncated');
+        }
+    }.bind(this));
+};
+
+Loader.prototype.removeTruncation = function() {
+
+    // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
+    if (this.comments.options.pagesize === 'All') {
+        this.loadComments();
+    } else {
+        this.removeState('truncated');
+    }
+};
 
 return Loader;
 
