@@ -20,7 +20,6 @@ define([
     criteo,
     effectiveMeasure,
     imrWorldwide,
-    mediaMath,
     remarketing,
     krux,
     outbrain
