@@ -29,6 +29,7 @@
         max-width: none;
     }
 }
+.commercial__header__inner,
 .commercial__body {
     position: relative;
     overflow: hidden;
@@ -196,7 +197,7 @@
     position: absolute;
     top: $gs-baseline/2;
     right: $gs-gutter/2;
-    @include button-colour(transparent, #ffffff, transparent, #ffffff);
+    color: #ffffff;
     border-color: rgba(#ffffff, .3);
 
     @include mq(mobileLandscape, leftCol) {
@@ -246,69 +247,59 @@
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
    ========================================================================== */
-.commercial {
-    .has-page-skin & {
-        @include mq(wide) {
-            .container__header__inner,
-            .container__body {
-                margin-left: auto;
-                margin-right: auto;
+@include mq(wide) {
+    .has-page-skin {
+        .commercial__header__inner,
+        .commercial__body {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .commercial__header__inner {
+            @include box-sizing(content-box);
+            margin: 0;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+            height: auto;
+        }
+        .commercial__header {
+            width: 100%;
+            position: relative;
+        }
+        .commercial__search {
+            position: absolute;
+            width: gs-span(3);
+            top: 0;
+            right: gs-span(3) + $gs-gutter*2;
+            left: auto;
+        }
+        .commercial__cta {
+            top: $gs-baseline/2;
+            right: $gs-gutter;
+            bottom: auto;
+            left: auto;
+            width: gs-span(3);
+        }
+        .commercial__title {
+            .i-guardian-logo-commercial {
+                display: inline-block;
             }
-
-            .container__header__inner {
-                @include box-sizing(content-box);
-                margin: 0;
-                padding-left: $gs-gutter;
-                padding-right: $gs-gutter;
-                height: auto;
+            .i-marque-54,
+            .i-marque-36 {
+                display: none;
             }
-
-            .container__header {
-                width: 100%;
-                position: relative;
-
-                .commercial__search {
-                    position: absolute;
-                    width: gs-span(3);
-                    top: 0;
-                    right: gs-span(3) + $gs-gutter*2;
-                    left: auto;
-                }
-
-                .commercial__cta {
-                    top: $gs-baseline/2;
-                    right: $gs-gutter;
-                    bottom: auto;
-                    left: auto;
-                    width: gs-span(3);
-                }
+            .i-commercial-brand {
+                opacity: .8;
             }
-
-            .commercial__title {
-                .i-guardian-logo-commercial {
-                    display: inline-block;
-                }
-                .i-marque-54,
-                .inline-marque-36 {
-                    display: none;
-                }
-                .i-commercial-brand {
-                    opacity: .8;
-                }
-            }
-
-            .commercial__title__logo {
-                text-align: left;
-                min-width: auto;
-            }
-
-            .commercial__desc {
-                margin-top: $gs-baseline*-1.333;
-            }
-
-            .container__body {
-                margin-left: 0;
-            }
+        }
+        .commercial__title__logo {
+            text-align: left;
+            min-width: auto;
+        }
+        .commercial__desc {
+            margin-top: $gs-baseline*-1.333;
+        }
+        .commercial__body {
+            margin-left: 0;
         }
     }
 }
