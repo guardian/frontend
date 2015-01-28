@@ -77,19 +77,18 @@
         @include mq($until: tablet) {
             padding-right: 0;
         }
-
-        .lineitem--high__feature {
-            @include box-sizing(border-box);
-            width: 50%;
-            float: right;
-            padding-left: $gs-gutter/2;
-        }
-        .lineitem--high__offer {
-            @include box-sizing(border-box);
-            width: 50%;
-            float: left;
-            padding: 0 $gs-gutter/2 0 0;
-        }
+    }
+    .lineitem--high__feature {
+        @include box-sizing(border-box);
+        width: 50%;
+        float: right;
+        padding-left: $gs-gutter/2;
+    }
+    .lineitem--high__offer {
+        @include box-sizing(border-box);
+        width: 50%;
+        float: left;
+        padding: 0 $gs-gutter/2 0 0;
     }
 
     /* Line items - low relevance */
