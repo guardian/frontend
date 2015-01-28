@@ -30,35 +30,28 @@ define([
         }
     }
 
-    function createIframe() {
-        ifrm = document.createElement('iframe');
-        ifrm.style.width = '1px';
-        ifrm.style.height = '1px';
-        document.body.appendChild(ifrm);
-        return ifrm;
-    }
-
-    function setCookie(ifrm, cookieValue) {
-        ifrm.setAttribute('src',
-            'https://www.theguardian.com/uk?' + cookieName + '=' + cookieValue);
+    function setCookie(cookieValue) {
+        var url = 'http://www.theguardian.com/uk?' + cookieName + '=' + cookieValue;
+        var cookieSettingWindow = window.open(url, '_blank', 'width=100,height=100');
+        setTimeout(function () {
+            cookieSettingWindow.close();
+        }, 1000);
     }
 
     function init() {
 
         status();
 
-        var ifrm = createIframe();
-
         bean.on(document, 'click', '.cookie', function (event) {
             var cookieValue = event.srcElement.value;
-            setCookie(ifrm, cookieValue);
+            setCookie(cookieValue);
             cookies.add(trackingCookieName, cookieValue, 10);
             $('#clear-cookie').show();
             status();
         });
 
         bean.on(document, 'click', '#clear-cookie', function () {
-            setCookie(ifrm, 'clear');
+            setCookie('clear');
             cookies.remove(trackingCookieName);
             $('#clear-cookie').hide();
             status();

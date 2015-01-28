@@ -2,6 +2,7 @@
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
+@import views.support.OmnitureAnalyticsData
 
 @* Critical scripts that should execute as soon as possible, preventing layout thrashing *@
 
@@ -14,35 +15,47 @@
     data-cache-file-woff2="@Static("fonts/GuardianEgyptianWeb.woff2.json")"
     data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"
-    data-cache-file-hinted-woff2="@Static("fonts/GuardianEgyptianWebHinted.woff2.json")"
-    data-cache-file-hinted-woff="@Static("fonts/GuardianEgyptianWebHinted.woff.json")"
-    data-cache-file-hinted-ttf="@Static("fonts/GuardianEgyptianWebHinted.ttf.json")"></style>
+    data-cache-file-hinted-cleartype-woff2="@Static("fonts/GuardianEgyptianWebCleartypeHinted.woff2.json")"
+    data-cache-file-hinted-cleartype-woff="@Static("fonts/GuardianEgyptianWebCleartypeHinted.woff.json")"
+    data-cache-file-hinted-cleartype-ttf="@Static("fonts/GuardianEgyptianWebCleartypeHinted.ttf.json")"
+    data-cache-file-hinted-auto-woff2="@Static("fonts/GuardianEgyptianWebAutoHinted.woff2.json")"
+    data-cache-file-hinted-auto-woff="@Static("fonts/GuardianEgyptianWebAutoHinted.woff.json")"
+    data-cache-file-hinted-auto-ttf="@Static("fonts/GuardianEgyptianWebAutoHinted.ttf.json")"></style>
 <style class="webfont"
     data-cache-name="GuardianTextEgyptianWeb"
     data-cache-file-woff2="@Static("fonts/GuardianTextEgyptianWeb.woff2.json")"
     data-cache-file-woff="@Static("fonts/GuardianTextEgyptianWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianTextEgyptianWeb.ttf.json")"
-    data-cache-file-hinted-woff2="@Static("fonts/GuardianTextEgyptianWebHinted.woff2.json")"
-    data-cache-file-hinted-woff="@Static("fonts/GuardianTextEgyptianWebHinted.woff.json")"
-    data-cache-file-hinted-ttf="@Static("fonts/GuardianTextEgyptianWebHinted.ttf.json")"></style>
+    data-cache-file-hinted-cleartype-woff2="@Static("fonts/GuardianTextEgyptianWebCleartypeHinted.woff2.json")"
+    data-cache-file-hinted-cleartype-woff="@Static("fonts/GuardianTextEgyptianWebCleartypeHinted.woff.json")"
+    data-cache-file-hinted-cleartype-ttf="@Static("fonts/GuardianTextEgyptianWebCleartypeHinted.ttf.json")"
+    data-cache-file-hinted-auto-woff2="@Static("fonts/GuardianTextEgyptianWebAutoHinted.woff2.json")"
+    data-cache-file-hinted-auto-woff="@Static("fonts/GuardianTextEgyptianWebAutoHinted.woff.json")"
+    data-cache-file-hinted-auto-ttf="@Static("fonts/GuardianTextEgyptianWebAutoHinted.ttf.json")"></style>
 <style class="webfont"
     data-cache-name="GuardianSansWeb"
     data-min-breakpoint="desktop"
     data-cache-file-woff2="@Static("fonts/GuardianSansWeb.woff2.json")"
     data-cache-file-woff="@Static("fonts/GuardianSansWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianSansWeb.ttf.json")"
-    data-cache-file-hinted-woff2="@Static("fonts/GuardianSansWebHinted.woff2.json")"
-    data-cache-file-hinted-woff="@Static("fonts/GuardianSansWebHinted.woff.json")"
-    data-cache-file-hinted-ttf="@Static("fonts/GuardianSansWebHinted.ttf.json")"></style>
+    data-cache-file-hinted-cleartype-woff2="@Static("fonts/GuardianSansWebCleartypeHinted.woff2.json")"
+    data-cache-file-hinted-cleartype-woff="@Static("fonts/GuardianSansWebCleartypeHinted.woff.json")"
+    data-cache-file-hinted-cleartype-ttf="@Static("fonts/GuardianSansWebCleartypeHinted.ttf.json")"
+    data-cache-file-hinted-auto-woff2="@Static("fonts/GuardianSansWebAutoHinted.woff2.json")"
+    data-cache-file-hinted-auto-woff="@Static("fonts/GuardianSansWebAutoHinted.woff.json")"
+    data-cache-file-hinted-auto-ttf="@Static("fonts/GuardianSansWebAutoHinted.ttf.json")"></style>
 <style class="webfont"
     data-cache-name="GuardianTextSansWeb"
     data-min-breakpoint="desktop"
     data-cache-file-woff2="@Static("fonts/GuardianTextSansWeb.woff2.json")"
     data-cache-file-woff="@Static("fonts/GuardianTextSansWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianTextSansWeb.ttf.json")"
-    data-cache-file-hinted-woff2="@Static("fonts/GuardianTextSansWebHinted.woff2.json")"
-    data-cache-file-hinted-woff="@Static("fonts/GuardianTextSansWebHinted.woff.json")"
-    data-cache-file-hinted-ttf="@Static("fonts/GuardianTextSansWebHinted.ttf.json")"></style>
+    data-cache-file-hinted-cleartype-woff2="@Static("fonts/GuardianTextSansWebCleartypeHinted.woff2.json")"
+    data-cache-file-hinted-cleartype-woff="@Static("fonts/GuardianTextSansWebCleartypeHinted.woff.json")"
+    data-cache-file-hinted-cleartype-ttf="@Static("fonts/GuardianTextSansWebCleartypeHinted.ttf.json")"
+    data-cache-file-hinted-auto-woff2="@Static("fonts/GuardianTextSansWebAutoHinted.woff2.json")"
+    data-cache-file-hinted-auto-woff="@Static("fonts/GuardianTextSansWebAutoHinted.woff.json")"
+    data-cache-file-hinted-auto-ttf="@Static("fonts/GuardianTextSansWebAutoHinted.ttf.json")"></style>
 
 <script id="gu">
 
@@ -102,7 +115,8 @@
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    }, baseFontSize;
+    }, baseFontSize,
+    docClass = document.documentElement.className;
 
     // rems are calculated in the CSS assuming a 16px baseline.
     // if the user has changed theirs, account for it.
@@ -111,6 +125,16 @@
         if(parseInt(baseFontSize, 10) !== 16) {
             document.documentElement.style.fontSize = baseFontSize;
         }
+    }
+
+    @* http://modernizr.com/download/#-svg *@
+    if (
+        !!document.createElementNS &&
+        !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
+    ) {
+        docClass += ' svg';
+    } else {
+        docClass += ' no-svg';
     }
 
     (function(isModern) {
@@ -147,20 +171,10 @@
          }
 
         // must always be set before the Omniture file is parsed
-        window.s_account = guardian.config.page.omnitureAccount;
+        window.s_account = "@OmnitureAnalyticsAccount(item)"
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         if (isModern) {
-            var docClass = document.documentElement.className;
-
-            @* http://modernizr.com/download/#-svg *@
-            if (
-                !!document.createElementNS &&
-                !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect
-            ) {
-                docClass += ' svg';
-            }
-
             if (testCssSupport('flex') || testCssSupport('-ms-flex') || testCssSupport('-webkit-flex') || testCssSupport('-moz-box-flex') || testCssSupport('-webkit-box-flex')) {
                 docClass += ' has-flex';
             } else {
@@ -172,11 +186,11 @@
             } else {
                 docClass += ' has-no-flex-wrap';
             }
-            document.documentElement.className = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+            docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);
 
-    document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
+    document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
 

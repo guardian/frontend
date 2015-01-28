@@ -18,7 +18,7 @@
     }
 
     @defining(
-        s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+        s"${AnalyticsHost()}/b/ss/${OmnitureAnalyticsAccount(page)}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
     ){ omnitureCall =>
         <script>
             @*

@@ -64,8 +64,8 @@ import conf.Configuration
         val contact = browser.find(".l-footer li a", withText().contains("contact"))
         contact.length should be > 0
 
-        And("a link to the info and resources")
-        val info = browser.find(".l-footer li a", withText().contains("info and resources"))
+        And("a link to the about us page")
+        val info = browser.find(".l-footer li a", withText().contains("about us"))
         info.length should be > 0
 
         And("a link to the complaints and corrections")

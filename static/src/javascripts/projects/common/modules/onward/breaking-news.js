@@ -1,37 +1,36 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/$',
     'qwery',
-    'lodash/arrays/flatten',
-    'lodash/collections/forEach',
-    'lodash/objects/assign',
-    'lodash/objects/isArray',
+    'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
     'common/modules/onward/history',
+    'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
     bean,
     bonzo,
+    $,
     qwery,
-    flatten,
-    forEach,
-    assign,
-    isArray,
+    _,
     ajax,
     config,
     storage,
     template,
     history,
+    svgs,
     alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
-        $body;
+        $body,
+        marque36icon;
 
     function slashDelimit() {
         return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
@@ -39,7 +38,7 @@ define([
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
-        forEach(articleIds, function (articleID) {
+        _.forEach(articleIds, function (articleID) {
             cleanedIDs[articleID] = hiddenIds[articleID] || false;
         });
         return cleanedIDs;
@@ -58,7 +57,7 @@ define([
         }).then(
             function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function (collection) { return isArray(collection.content) && collection.content.length; })
+                    .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
                     .map(function (collection) {
                         collection.href = collection.href.toLowerCase();
                         return collection;
@@ -66,29 +65,30 @@ define([
 
                     keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
 
-                    pageMatchers = history.getPopular().map(function (idAndName) { return idAndName[0]; })
-                        .concat([
+                    pageMatchers = _.chain(history.getPopular())
+                        .map(function (idAndName) { return idAndName[0]; })
+                        .union([
                             page.edition,
-                            page.section,
+                            _.contains(['uk', 'us', 'au'], page.section) ? null : page.section,
                             slashDelimit(page.edition, page.section),
-                            window.location.pathname.slice(1),
                             keyword,
                             keyword.split('/')[0]
                         ])
-                        .filter(function (match) { return match; })
+                        .compact()
                         .reduce(function (matchers, term) {
                             matchers[term.toLowerCase()] = true;
                             return matchers;
-                        }, {}),
+                        }, {})
+                        .value(),
 
-                    articles = flatten([
+                    articles = _.flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; })
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; }),
-                    showAlert = false,
-                    alertDelay = 3000;
+                    alertDelay = 3000,
+                    alerts;
 
                 // if we're on the page that an alert is for, hide alerts for it
                 if (articleIds.indexOf(page.pageId) > -1) {
@@ -98,46 +98,50 @@ define([
                 // update stored IDs with current batch, so we know we've seen these
                 storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                articles
-                .filter(function (article) {
-                    return hiddenIds[article.id] !== true;
-                })
-                .slice(0, maxSimultaneousAlerts)
-                .forEach(function (article) {
-                    var $el = bonzo.create(template(alertHtml, article));
+                alerts = _.chain(articles)
+                    .filter(function (article) { return hiddenIds[article.id] !== true; })
+                    .first(maxSimultaneousAlerts)
+                    .value();
 
+                if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
-                    $breakingNews.append($el);
+                    marque36icon = svgs('marque36icon');
 
-                    bean.on($breakingNews[0], 'click', '.js-breaking-news__item__close', function (e) {
-                        var id;
-                        e.preventDefault();
-                        id = e.currentTarget.getAttribute('data-article-id');
-                        hiddenIds[id] = true;
-                        storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
-                        bonzo(qwery('.js-breaking-news__item[href$="' + id + '"]')).remove();
+                    _.forEach(alerts, function (article) {
+                        var el;
+
+                        article.marque36icon = marque36icon;
+                        el = bonzo.create(template(alertHtml, article));
+
+                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
+                            $(el).hide();
+                            hiddenIds[article.id] = true;
+                            storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
+                        });
+
+                        $breakingNews.append(el);
+
+                        if (hiddenIds[article.id] === false) {
+                            alertDelay = 0;
+                        }
                     });
 
-                    showAlert = true;
-
-                    if (hiddenIds[article.id] === false) {
-                        alertDelay = 0;
-                    }
-                });
-
-                if (showAlert) {
                     setTimeout(function () {
+                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times');
+
                         $body = $body || bonzo(document.body);
                         $body.append(bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden'));
 
-                        if (alertDelay === 0) {
+                        if (!alertDelay) {
                             $breakingNews.removeClass('breaking-news--fade-in');
-                            s.tl(this, 'o', 'breaking news alert shown 2 or more times');
-                        } else {
-                            s.tl(this, 'o', 'breaking news alert shown');
                         }
 
                         $breakingNews.removeClass('breaking-news--hidden');
+
+                        s.eVar36 = message;
+                        s.eVar72 = _.map(alerts, function (article) { return article.headline; }).join(' | ');
+                        s.linkTrackVars = 'eVar36,eVar72';
+                        s.tl(this, 'o', message);
                     }, alertDelay);
                 }
             }

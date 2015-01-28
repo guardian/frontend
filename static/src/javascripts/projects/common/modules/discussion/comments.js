@@ -191,14 +191,21 @@ Comments.prototype.goToPermalink = function(commentId) {
 
 Comments.prototype.renderComments = function(resp) {
 
-    var contentEl = bonzo.create(resp.html),
+    // The resp object received has a collection of rendered html fragments, ready for DOM insertion.
+    // - commentsHtml - the main comments content.
+    // - paginationHtml - the discussion's pagination based on user page size and number of comments.
+    // - postedCommentHtml - an empty comment for when the user successfully posts a comment.
+
+    var contentEl = bonzo.create(resp.commentsHtml),
         comments = qwery(this.getClass('comment'), contentEl);
 
     bonzo(this.elem).empty().append(contentEl);
     this.addMoreRepliesButtons(comments);
 
+    this.postedCommentEl = bonzo.create(resp.postedCommentHtml);
+
     this.relativeDates();
-    this.emit('rendered');
+    this.emit('rendered', resp.paginationHtml);
 };
 
 Comments.prototype.showHiddenComments = function(e) {
@@ -291,7 +298,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
                 src: this.user.avatar
             }
         },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0],
+        commentElem = bonzo.create(this.postedCommentEl)[0],
         $commentElem = bonzo(commentElem);
 
     $commentElem.addClass('d-comment--new');

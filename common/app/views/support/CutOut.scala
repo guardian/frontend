@@ -11,10 +11,14 @@ object CutOut {
         /** We're assuming here that standard contributor images from CAPI are in landscape, as unfortunately they
           * do not come with dimensions attached.
           */
-        for {
-          contributor <- trail.contributors.find(_.contributorLargeImagePath.isDefined)
-          imagePath <- contributor.contributorLargeImagePath
-        } yield CutOut(contributor.name, ImgSrc(imagePath, Item360), Landscape)
+        if (trail.contributors.length == 1) {
+          for {
+            contributor <- trail.contributors.find(_.contributorLargeImagePath.isDefined)
+            imagePath <- contributor.contributorLargeImagePath
+          } yield CutOut(contributor.name, ImgSrc(imagePath, Item360), Landscape)
+        } else {
+          None
+        }
       }
     } else {
       None

@@ -30,6 +30,10 @@ define([
             },
             template: { require: 'text!widgets/collection.html' }
         });
+        ko.components.register('clipboard-widget', {
+            viewModel: { require: 'widgets/clipboard' },
+            template: { require: 'text!widgets/clipboard.html' }
+        });
         ko.bindingHandlers.ownerClass = {
             init: function (element, valueAccessor) {
                 var owner = valueAccessor();

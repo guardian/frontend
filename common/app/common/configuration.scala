@@ -30,6 +30,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
   }
 
+  object business {
+    lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+  }
+
   object weather {
     lazy val apiKey = configuration.getStringProperty("weather.api.key")
   }
@@ -125,6 +129,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object ophan {
     lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
+    lazy val embedJsLocation = configuration.getStringProperty("ophan.embed.js.location").getOrElse("//j.ophan.co.uk/ophan.embed")
+  }
+
+  object omniture {
+    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-frontend,guardiangu-network")
   }
 
   object googletag {
@@ -276,6 +285,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+
+    lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/jan/09/1"
   }
 
   object open {
@@ -298,6 +309,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
+      ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
       ("stripePublicToken", id.stripePublicToken)

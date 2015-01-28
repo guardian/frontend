@@ -98,12 +98,14 @@ category: Common
         text-decoration: none;
     }
 
-    i {
-        width: 100%;
-        height: 100%;
-        vertical-align: middle;
-        background-size: 88% !important;
-        background-position: center !important;
+    .svg & {
+        i {
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            background-size: 88% !important;
+            background-position: center !important;
+        }
     }
 
     .social-icon__label {

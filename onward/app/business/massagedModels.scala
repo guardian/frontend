@@ -42,24 +42,29 @@ case class StockValue(
 object Stocks extends Logging {
   implicit val jsonWrites = Json.writes[Stocks]
 
+  private val Commas = """,+""".r
+
+  private def withoutCommas(s: String) =
+    Commas.replaceAllIn(s, "")
+
   def fromFingerpost(indices: Indices) = {
     Stocks(indices.indices flatMap { index =>
-      val maybePrice = Try { index.value.price.toDouble }.toOption
+      val maybePrice = Try { withoutCommas(index.value.price).toDouble }.toOption
 
       if (maybePrice.isEmpty) {
         log.error(s"Could not read price value from Fingerpost data ${index.value.price}")
       }
 
-      val maybeChange = Try { index.value.change.day.toDouble }.toOption
+      val maybeChange = Try { withoutCommas(index.value.change.day).toDouble }.toOption
 
       if (maybeChange.isEmpty) {
         log.error(s"Could not read change value from Fingerpost data ${index.value.change.day}")
       }
 
       val maybeTrend = index.value.change.trendday match {
-        case "+" => Some(Positive)
-        case "-" => Some(Negative)
-        case "" => Some(Level)
+        case "up" => Some(Positive)
+        case "down" => Some(Negative)
+        case "unchanged" => Some(Level)
         case _ => None
       }
 
@@ -67,21 +72,15 @@ object Stocks extends Logging {
         log.error(s"Could not read trend from Fingerpost data ${index.value.change.trendday}")
       }
 
-      val maybeClosed = index.marketclosed match {
-        case "closed" => Some(true)
-        case "" => Some(false)
-        case _ => None
-      }
-
-      if (maybeClosed.isEmpty) {
-        log.error(s"Could not read closed from Fingerpost data ${index.marketclosed}")
+      val closed = index.marketclosed match {
+        case "Closed" => true
+        case _ => false
       }
 
       for {
         price <- maybePrice
         change <- maybeChange
         trend <- maybeTrend
-        closed <- maybeClosed
       } yield StockValue(index.name, price, change, trend, closed)
     })
   }

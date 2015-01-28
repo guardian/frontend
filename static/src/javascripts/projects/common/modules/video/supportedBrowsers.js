@@ -17,7 +17,7 @@ define([
             'Chrome': '28',
             'IE': '9',
             'Opera': '14',
-            'Safari': '7'
+            'Safari': '6'
         },
         closeCls = 'vjs-error-display__close',
         ua = detect.getUserAgent,

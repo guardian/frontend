@@ -5,8 +5,10 @@ import common.ExecutionContexts
 import conf.Static
 import model.Cached
 import play.api.mvc.{Result, Action, Controller}
-import crosswords.{CrosswordSvg, CrosswordData, CrosswordPage, maybeApi}
+import crosswords._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordType: CrosswordType, id: Int)(f: Crossword => Result): Future[Result] = {

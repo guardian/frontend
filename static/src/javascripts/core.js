@@ -17,6 +17,7 @@ require([
 
     // shared modules
     'common/modules/analytics/beacon',
+    'common/modules/article/spacefinder',
     'common/modules/commercial/badges',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/build-page-targeting',
@@ -26,5 +27,6 @@ require([
     'common/modules/lazyload',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/views/svgs'
 ], function () {});

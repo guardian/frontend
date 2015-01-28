@@ -163,9 +163,8 @@ object Switches {
   )
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
-    //"If this switch is on png images will be resized via the png-resizing server",
-    "If on, 10% of client requests for PNGs will also GET a resized one - for load testing (JD)",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
+    "If this switch is on png images will be resized via the png-resizing server",
+    safeState = Off, sellByDate = never
   )
 
   // Commercial
@@ -310,7 +309,20 @@ object Switches {
     safeState = Off, new LocalDate(2015, 2, 28)
   )
 
+  val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
+    "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
+    safeState = Off, never
+  )
+
   // Features
+  val CPScottSwitch = Switch(
+    "Feature",
+    "cp-scott-header",
+    "CP Scott header on Comment is Free container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 3, 1)
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -401,7 +413,7 @@ object Switches {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+    safeState = Off, sellByDate = never
   )
 
   val WeatherSwitch = Switch("Feature", "weather",
@@ -409,24 +421,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
   )
 
-  val ABWeather = Switch("A/B Tests", "ab-weather",
-    "If this is switched on then the weather component is A/B tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABHistoryTags = Switch("A/B Tests", "ab-history-tags",
-    "If this is switched on then personalised history tags are tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABHistoryContainers = Switch("A/B Tests", "ab-history-containers",
-    "If this is switched on then personalised containers based on history are tested",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-  val ABStickyContainerTitles = Switch("A/B Tests", "ab-sticky-container-titles",
-    "If this is switched on container titles stick to the bottom of the page",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+  val HistoryTags = Switch("Feature", "history-tags",
+    "If this is switched on then personalised history tags are shown in the meganav",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
   )
 
   // actually just here to make us remove this in the future
@@ -473,6 +470,11 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 16)
   )
 
+  val DefaultOriginSwitch = Switch("Feature", "default-origin",
+    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -515,6 +517,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaTreats = Switch("Facia", "facia-treats",
+    "If this switch is on then treats will be available to edit in the tool and will be pressed",
+    safeState = Off, sellByDate = never
+  )
+
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
@@ -522,6 +529,11 @@ object Switches {
 
   val DoNotTrack = Switch("Analytics", "do-not-track",
     "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
+  val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
+    "If this switch is on, facia-tool will directly archive to DynamoDB",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 

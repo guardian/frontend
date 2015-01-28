@@ -22,7 +22,7 @@ object IndexValue {
 }
 
 case class IndexValue(
-  time: String,
+  localtime: String,
   price: String,
   currency: String,
   change: IndexChange,

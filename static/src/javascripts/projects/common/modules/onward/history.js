@@ -65,7 +65,7 @@ define([
 
             // football links
             'football/competitions', 'football/fixtures', 'football/live', 'football/results', 'football/tables', 'football/teams', 'football/series/thefiver',
-            'football/series/rumourmill', 'football/transfer-window',
+            'football/series/rumourmill', 'football/transfer-window', 'football/series/footballweekly',
 
             // NG subnav
             'artanddesign', 'australia-news', 'books', 'business/companies', 'business/stock-markets', 'cities', 'education',
@@ -225,9 +225,9 @@ define([
 
     function getPopularFiltered(opts) {
         if (opts && opts.flush) {
-            popularFilteredCache = getPopular(20, true);
+            popularFilteredCache = getPopular(10, true);
         } else {
-            popularFilteredCache = popularFilteredCache || getPopular(20, true);
+            popularFilteredCache = popularFilteredCache || getPopular(10, true);
         }
 
         return popularFilteredCache;
@@ -338,7 +338,7 @@ define([
         if (tags.length) {
             getMegaNav().prepend(
                 template(viewMegaNav, {
-                    tags: tags.slice(0, 20).map(tagHtml).join('')
+                    tags: tags.map(tagHtml).join('')
                 })
             );
             inMegaNav = true;

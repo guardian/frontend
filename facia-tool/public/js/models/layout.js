@@ -5,7 +5,6 @@ define([
     'modules/copied-article',
     'modules/vars',
     'utils/layout-from-url',
-    'utils/parse-query-params',
     'utils/update-scrollables'
 ],function (
     ko,
@@ -13,7 +12,6 @@ define([
     copiedArticle,
     vars,
     layoutFromURL,
-    parseQueryParams,
     updateScrollables
 ) {
     function Layout () {
@@ -115,7 +113,7 @@ define([
                 $element.hide();
             }
         },
-        update: function (element, valueAccessor) {
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
             var value = ko.unwrap(valueAccessor()),
                 $element = $(element);
             if (value) {
@@ -129,6 +127,7 @@ define([
                         $element.hide();
                     }
                     updateScrollables();
+                    bindingContext.$data.layout.onConfigVisibilityChange();
                 }
             });
         }
