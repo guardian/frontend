@@ -71,13 +71,6 @@ object Switches {
     sellByDate = never
   )
 
-  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
-    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = On,
@@ -99,7 +92,7 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
+    sellByDate = new LocalDate(2015, 2, 26)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -424,12 +417,6 @@ object Switches {
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  // actually just here to make us remove this in the future
-  val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
-    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",

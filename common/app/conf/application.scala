@@ -6,7 +6,6 @@ import filters.RequestLoggingFilter
 import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
-import Switches.ForceHttpResponseCodeSwitch
 
 import scala.concurrent.Future
 
@@ -44,28 +43,6 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
-object ForceHttpResponseFilter extends Filter with ExecutionContexts with Results {
-
-  import scala.concurrent.Future.successful
-
-  private val statuses = Map(
-    "404" -> NotFound("Not found"),
-    "500" -> InternalServerError("Internal server error"),
-    "503" -> ServiceUnavailable("Service unavailable"),
-    "504" -> GatewayTimeout("Gateway timeout")
-  )
-
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (ForceHttpResponseCodeSwitch.isSwitchedOff) {
-      nextFilter(request)
-    } else {
-      request.headers.get("X-Gu-Force-Status").flatMap(statuses.get).map(successful).getOrElse(
-        nextFilter(request)
-      )
-    }
-  }
-}
-
 // this lets the CDN log the exact part of the backend this response came from
 object BackendHeaderFilter extends Filter with ExecutionContexts {
 
@@ -80,7 +57,6 @@ object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   lazy val common: List[EssentialFilter] = List(
-    ForceHttpResponseFilter,
     JsonVaryHeadersFilter,
     Gzipper,
     BackendHeaderFilter,

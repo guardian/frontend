@@ -1,6 +1,5 @@
 package test
 
-import conf.Switches.ForceHttpResponseCodeSwitch
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
@@ -90,48 +89,9 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   }
 
-  "ForceHttpResponseFilter" should "not error if switched off" in {
-    ForceHttpResponseCodeSwitch.switchOff()
-
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders("X-Gu-Force-Status" -> "503")
-    val Some(result) = route(request)
-    status(result) should be (200)
-  }
-
-  it should "not error if there is no header" in {
-    ForceHttpResponseCodeSwitch.switchOn()
-
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-
-    val Some(result) = route(request)
-    status(result) should be (200)
-  }
-
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)
     header("X-Gu-Backend-App", result).head should be ("test-project")
   }
-
-  it should "error if there is an appropriate header and it is switched on" in {
-    ForceHttpResponseCodeSwitch.switchOn()
-
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders("X-Gu-Force-Status" -> "503")
-
-    val Some(result) = route(request)
-    status(result) should be (503)
-  }
-
-  it should "404 with an appropriate header" in {
-    ForceHttpResponseCodeSwitch.switchOn()
-
-    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
-      .withHeaders("X-Gu-Force-Status" -> "404")
-
-    val Some(result) = route(request)
-    status(result) should be (404)
-  }
-
 }
