@@ -1,9 +1,13 @@
 // Include any images needed in templates here.
 // This file is only required by core, and so has a long cache time.
 
-define(function (require) {
+define([
+    'inlineSvg!svgs/marque-36!icon'
+],function (
+    marque36icon
+) {
     var svgs = {
-        marque36icon: require('inlineSvg!svgs/marque-36!icon')
+        marque36icon: marque36icon
     };
 
     return function (name, classes) {
