@@ -3,7 +3,7 @@
 
 define([
     'inlineSvg!svgs/marque-36!icon'
-],function (
+], function (
     marque36icon
 ) {
     var svgs = {
