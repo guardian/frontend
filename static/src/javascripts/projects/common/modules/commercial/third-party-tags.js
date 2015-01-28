@@ -3,6 +3,7 @@
  */
 define([
     'common/utils/config',
+    'common/modules/commercial/third-party-tags/amaa',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/criteo',
@@ -13,6 +14,7 @@ define([
     'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     config,
+    amaa,
     audienceScience,
     audienceScienceGateway,
     criteo,
@@ -33,6 +35,7 @@ define([
         switch (config.page.edition.toLowerCase()) {
             case 'au':
                 effectiveMeasure.load();
+                amaa.load();
                 break;
 
             case 'uk':

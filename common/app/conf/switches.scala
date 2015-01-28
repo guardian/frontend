@@ -210,6 +210,10 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val AmaaSwitch = Switch("Commercial", "amaa",
+    "AMAA tracking",
+    safeState = Off, sellByDate = never)
+
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never
