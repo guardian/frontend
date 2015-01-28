@@ -2,6 +2,10 @@
    Books components
    ========================================================================== */
 .commercial--books {
+    .commercial--books__title {
+        @include fs-header(2);
+        margin-bottom: $gs-baseline;
+    }
     /* Line items */
     .lineitem {
         width: percentage(1/2);
