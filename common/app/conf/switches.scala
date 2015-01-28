@@ -473,6 +473,11 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 28)
   )
 
+  val DiscussionAllPageSizeSwitch = Switch("Feature", "discussion-all-page-size",
+    "If this is switched on then users will have the option to load all comments",
+    safeState = Off, sellByDate = never
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
