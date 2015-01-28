@@ -38,8 +38,7 @@ define([
     SearchTool
     ) {
 
-    var $weather       = null,
-        $holder        = null,
+    var $holder        = null,
         searchTool     = null,
         city           = '',
         prefName       = 'weather-location';
@@ -233,13 +232,13 @@ define([
             this.bindEvents();
             this.addSearch();
 
-            this.render = function(weatherData, city) {
+            this.render = function (weatherData, city) {
                 this.attachToDOM(weatherData.html, city);
                 searchTool.bindElements($('.js-search-tool'));
-            }
+            };
         },
 
-        attachToDOM: function(tmpl, city) {
+        attachToDOM: function (tmpl, city) {
             $holder = $('.js-container--first .js-container__header');
             $holder.empty();
             $holder.html(tmpl.replace(new RegExp('{{city}}', 'g'), city));
