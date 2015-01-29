@@ -37,7 +37,7 @@ define([
 
         return _.zipObject(_.map(elements, function (el) {
             return bonzo(el).attr(attributeName);
-        }), elements)
+        }), elements);
     }
 
     function getContentIds(indexedElements) {
