@@ -11,6 +11,7 @@ require([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/template',
     'common/utils/url',
