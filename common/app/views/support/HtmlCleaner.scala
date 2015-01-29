@@ -73,7 +73,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         element
           .removeClass("gu-video")
-          .addClass("js-gu-media gu-media gu-media--video")
+          .addClass("js-gu-media--enhance gu-media gu-media--video")
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
         val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
@@ -285,6 +285,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
+        link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
       }
     }
@@ -300,15 +301,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    body
-  }
-}
-
-object InBodyLinkDataComponentCleaner extends HtmlCleaner {
-  def clean(body: Document): Document = {
-    body.getElementsByTag("a").foreach { link =>
-      link.attr("data-component", "in-body-link")
-    }
     body
   }
 }

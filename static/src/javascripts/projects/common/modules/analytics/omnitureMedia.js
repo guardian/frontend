@@ -1,3 +1,4 @@
+/* global guardian */
 define([
     'lodash/objects/values',
     'common/utils/config',
@@ -9,6 +10,7 @@ define([
 ) {
 
     function OmnitureMedia(player) {
+
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
@@ -19,6 +21,7 @@ define([
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
             prerollPlayed = false,
+            isEmbed = !!guardian.isEmbed,
             events = {
                 // this is the expected ordering of events
                 'video:request': 'event98',
@@ -87,7 +90,7 @@ define([
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
-            s.eVar11 = s.prop11 = (window.location.host === 'embed.theguardian.com') ? 'Embedded' : config.page.sectionName || '';
+            s.eVar11 = s.prop11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
             s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');

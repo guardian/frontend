@@ -36,7 +36,12 @@ object Metric extends Logging {
     ("iphone-4-end", CountMetric("iphone-4-end")),
     ("iphone-4-timeout", CountMetric("iphone-4-timeout")),
 
-    ("dnt", CountMetric("do-not-track"))
+    ("dnt", CountMetric("do-not-track")),
+
+    ("live-blog-page-view", CountMetric("live-blog-page-view")),
+    ("live-blog-update-seen", CountMetric("live-blog-update-seen")),
+    ("live-blog-repeat-update-seen", CountMetric("live-blog-repeat-update-seen")),
+    ("live-blog-page-refresh", CountMetric("live-blog-page-refresh"))
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above

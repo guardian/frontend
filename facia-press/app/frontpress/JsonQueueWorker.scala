@@ -111,7 +111,8 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
 
   final private def next() {
     getAndProcess onComplete {
-      case _ => next()
+      case _ if started => next()
+      case _ => log.info("Stopping worker...")
     }
   }
 
@@ -126,6 +127,12 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
         started = true
         next()
       }
+    }
+  }
+
+  final def stop(): Unit = {
+    synchronized {
+      started = false
     }
   }
 }

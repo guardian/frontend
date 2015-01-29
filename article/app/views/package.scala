@@ -11,7 +11,6 @@ object BodyCleaner {
       withJsoup(BulletCleaner(html))(
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
-        InBodyLinkDataComponentCleaner,
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,

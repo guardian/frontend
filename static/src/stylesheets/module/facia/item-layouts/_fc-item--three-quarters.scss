@@ -69,6 +69,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
             @include mq(desktop) {
                 max-width: gs-span(6);
             }
+
+            .has-flex-wrap & {
+                @include flex-basis(auto);
+            }
         }
     }
 

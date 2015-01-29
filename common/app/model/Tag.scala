@@ -21,6 +21,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val sectionName: String = delegate.sectionName.getOrElse("global")
   override lazy val description = delegate.description
   lazy val twitterHandle: Option[String] = delegate.twitterHandle
+  lazy val emailAddress: Option[String] = delegate.emailAddress
 
   override lazy val url: String = SupportedUrl(delegate)
 
@@ -45,7 +46,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
     SectionTagLookUp.sectionId(id).exists(_ == section)
   }
 
-  lazy val showSeriesInMeta = id != "commentisfree/commentisfree"  &&  id != "childrens-books-site/childrens-books-site"
+  lazy val showSeriesInMeta = id != "childrens-books-site/childrens-books-site"
 
   lazy val isKeyword = tagType == "keyword"
 

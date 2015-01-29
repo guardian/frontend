@@ -62,6 +62,10 @@ define([
                 if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
                     geoMostPopular.render();
                 }
+            },
+
+            initSelectionSharing: function () {
+                selectionSharing.init();
             }
         },
 
@@ -70,7 +74,7 @@ define([
             modules.initFence();
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
-            selectionSharing.init();
+            modules.initSelectionSharing();
             Lightbox.init();
             flyers.init();
             openModule.init();

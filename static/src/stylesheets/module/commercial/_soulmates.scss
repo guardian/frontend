@@ -12,11 +12,7 @@ $c-soulmates-high: colour(neutral-1);
         background-color: $c-soulmates-high;
     }
 
-    .container__header {
-        position: static;
-    }
-
-    .container__header__inner {
+    .commercial__header__inner {
         padding: $gs-baseline/2 $gs-gutter/2 0;
         border-bottom: 1px solid $c-soulmatesBorder;
 

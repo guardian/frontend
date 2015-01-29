@@ -93,7 +93,7 @@ define([
                 $attachTo.attr('data-last-updated', date);
                 twitter.enhanceTweets();
 
-                if (this.isUpdating) {
+                if (this.isUpdating && detect.pageVisible()) {
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
                 } else if (this.unreadBlocks > 0) {

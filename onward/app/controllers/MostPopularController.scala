@@ -20,11 +20,17 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
-    val globalPopular = MostPopular("across the guardian", "", MostPopularAgent.mostPopular(edition))
+    val globalPopular: Option[MostPopular] = {
+      var globalPopularContent = MostPopularAgent.mostPopular(edition)
+      if (globalPopularContent.nonEmpty)
+        Some(MostPopular("across the guardian", "", globalPopularContent))
+      else
+        None
+    }
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
     sectionPopular.map { sectionPopular =>
-      sectionPopular :+ globalPopular match {
+      sectionPopular ++ globalPopular match {
         case Nil => NotFound
         case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {

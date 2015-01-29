@@ -3,13 +3,13 @@ package controllers
 import model.Cached
 import common.JsonComponent
 import play.api.libs.json.{JsArray, JsObject}
-import play.api.mvc.Action
+import performance.MemcachedAction
 
 object CommentCountController extends DiscussionController {
 
   def commentCountJson(shortUrls: String) = commentCount(shortUrls)
 
-  def commentCount(shortUrls: String) = Action.async {
+  def commentCount(shortUrls: String) = MemcachedAction {
     implicit request =>
       val counts = discussionApi.commentCounts(shortUrls)
       counts map {

@@ -27,7 +27,7 @@
     ))">
 
     <div class="flyer__container">
-        @if(content.isGallery || CardStyle(content) == Feature || CardStyle(content) == Default) {
+        @if(content.isGallery || content.isVideo || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
                 @ImgSrc.imager(trailPictureContainer, 300).map { imgSrc =>
                     <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
@@ -37,14 +37,14 @@
         }
 
         <div class="flyer__header">
-            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", ""))@content.headline</a></h1>
+            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
             @if(!content.isMedia && CardStyle(content) == Comment) {
                 <div class="flyer__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
 
-        @if(!content.isGallery) {
+        @if(!content.isGallery && !content.isVideo) {
             <div class="flyer__standfirst u-cf">
                 @content.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
             </div>
@@ -68,6 +68,7 @@
                 @{content.contentType match {
                         case "Audio" => "Listen"
                         case "Gallery" => "View gallery"
+                        case "Video" => "Watch"
                         case _ => "Read more"
                     }
                 }

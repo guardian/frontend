@@ -104,6 +104,17 @@ define([
         return totalTime;
     }
 
+    function isReload() {
+        var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (!!perf && !!perf.navigation) {
+            return perf.navigation.type === perf.navigation.TYPE_RELOAD;
+        } else {
+            // We have no way of knowing if it was a reload on unsupported browsers.
+            // I figure we could only possibly want to treat it as false in that case.
+            return false;
+        }
+    }
+
     function isIOS() {
         return /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
     }
@@ -331,17 +342,28 @@ define([
         return 'WebSocket' in window;
     }
 
-    function shouldUseHintedFonts() {
-        var version,
-            windowsNT = /Windows NT (\d\.\d+)/.exec(navigator.userAgent);
+    function fontHinting() {
+        var ua = navigator.userAgent,
+            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+            hinting = 'Off',
+            version;
 
         if (windowsNT) {
             version = parseFloat(windowsNT[1], 10);
-            // windows XP and newer && windows 7 and older
-            return version >= 5.1 && version <= 6.1;
-        } else {
-            return false;
+            // windows XP
+            if (version >= 5.1 && version <= 6.1) {
+                if (/Chrome/.exec(ua) && version < 6.0) {
+                    hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                } else {
+                    hinting = 'Cleartype'; // All other use cleartype
+                }
+            }
         }
+        return hinting;
+    }
+
+    function isModernBrowser() {
+        return window.guardian.isModernBrowser;
     }
 
     return {
@@ -358,12 +380,14 @@ define([
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
         isBreakpoint: isBreakpoint,
+        isReload:  isReload,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
-        shouldUseHintedFonts: shouldUseHintedFonts()
+        fontHinting: fontHinting(),
+        isModernBrowser: isModernBrowser
     };
 
 });

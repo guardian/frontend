@@ -11,4 +11,8 @@ with ConfigAgentLifecycle {
     super.onStart(app)
     ToolPressQueueWorker.start()
   }
+
+  override def onStop(app: play.api.Application): Unit = {
+    ToolPressQueueWorker.stop()
+  }
 }

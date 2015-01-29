@@ -26,7 +26,8 @@ define([
                 }
             },
             'common/utils/detect':  {
-                hasTouchScreen: function () {return false;}
+                hasTouchScreen:      function () { return false; },
+                hasPushStateSupport: function () { return true; }
             }
         })
         .require(['common/modules/ui/selection-sharing'], function (selectionSharing) {

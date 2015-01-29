@@ -1,0 +1,692 @@
+/*
+	This font software is the property of Commercial Type.
+
+	You may not modify the font software, use it on another website, or install it on a computer.
+
+	License information is available at http://commercialtype.com/eula
+	For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
+
+	Copyright (C) 2013 Schwartzco Inc.
+	
+*/
+
+
+	.GuardianTextEgyptianWeb-Regular {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-Regular {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-Semibold {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianWeekendCondWeb-Black {
+	font-family: 'GuardianWeekendCondWeb ';
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-Bold {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-RegularItalic {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-RegularItalic {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-BlackItalic {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 900;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-Regular {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-Medium {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianSansWeb-Regular {
+	font-family: 'GuardianSansWeb';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianAgateSans1Web-Regular {
+	font-family: 'GuardianAgateSans1Web';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianAgateSans1Web-Bold {
+	font-family: 'GuardianAgateSans1Web';
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-BoldItalic {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTitlepieceWeb-Regular {
+	font-family: 'GuardianTitlepieceWeb';
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianAgateSans1Web-RegularItalic {
+	font-family: 'GuardianAgateSans1Web';
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianSansWeb-Semibold {
+	font-family: 'GuardianSansWeb';
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-Medium {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-Light {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianSansWeb-Light {
+	font-family: 'GuardianSansWeb';
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-Bold {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-Black {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-Bold {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-BoldItalic {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-SemiboldItalic {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 600;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianCompactWeb-Black {
+	font-family: 'GuardianCompactWeb';
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-BlackItalic {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 900;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-BoldItalic {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextEgyptianWeb-MediumItalic {
+	font-family: 'GuardianTextEgyptianWeb';
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-Black {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-RegularItalic {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianTextSansWeb-MediumItalic {
+	font-family: 'GuardianTextSansWeb';
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianAgateSans1Web-BoldItalic {
+	font-family: 'GuardianAgateSans1Web';
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	.GuardianEgyptianWeb-Medium {
+	font-family: 'GuardianEgyptianWeb';
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-Regular.eot');
+	src: url('GuardianTextEgyptianWeb-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-Regular.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-Regular.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-Regular.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-Regular.svg#GuardianTextEgyptianWeb-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-Regular.eot');
+	src: url('GuardianEgyptianWeb-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-Regular.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-Regular.woff') format('woff'),
+		 url('GuardianEgyptianWeb-Regular.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-Regular.svg#GuardianEgyptianWeb-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-Semibold.eot');
+	src: url('GuardianEgyptianWeb-Semibold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-Semibold.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-Semibold.woff') format('woff'),
+		 url('GuardianEgyptianWeb-Semibold.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-Semibold.svg#GuardianEgyptianWeb-Semibold') format('svg');
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianWeekendCondWeb ';
+	src: url('GuardianWeekendCondWeb-Black.eot');
+	src: url('GuardianWeekendCondWeb-Black.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianWeekendCondWeb-Black.woff2') format('woff2'),
+		 url('GuardianWeekendCondWeb-Black.woff') format('woff'),
+		 url('GuardianWeekendCondWeb-Black.ttf') format('truetype'),
+		 url('GuardianWeekendCondWeb-Black.svg#GuardianWeekendCondWeb-Black') format('svg');
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-Bold.eot');
+	src: url('GuardianEgyptianWeb-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-Bold.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-Bold.woff') format('woff'),
+		 url('GuardianEgyptianWeb-Bold.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-Bold.svg#GuardianEgyptianWeb-Bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-RegularItalic.eot');
+	src: url('GuardianTextEgyptianWeb-RegularItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-RegularItalic.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-RegularItalic.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-RegularItalic.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-RegularItalic.svg#GuardianTextEgyptianWeb-RegularItalic') format('svg');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-RegularItalic.eot');
+	src: url('GuardianEgyptianWeb-RegularItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-RegularItalic.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-RegularItalic.woff') format('woff'),
+		 url('GuardianEgyptianWeb-RegularItalic.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-RegularItalic.svg#GuardianEgyptianWeb-RegularItalic') format('svg');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-BlackItalic.eot');
+	src: url('GuardianTextSansWeb-BlackItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-BlackItalic.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-BlackItalic.woff') format('woff'),
+		 url('GuardianTextSansWeb-BlackItalic.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-BlackItalic.svg#GuardianTextSansWeb-BlackItalic') format('svg');
+	font-weight: 900;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-Regular.eot');
+	src: url('GuardianTextSansWeb-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-Regular.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-Regular.woff') format('woff'),
+		 url('GuardianTextSansWeb-Regular.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-Regular.svg#GuardianTextSansWeb-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-Medium.eot');
+	src: url('GuardianTextEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-Medium.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-Medium.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-Medium.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-Medium.svg#GuardianTextEgyptianWeb-Medium') format('svg');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianSansWeb';
+	src: url('GuardianSansWeb-Regular.eot');
+	src: url('GuardianSansWeb-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianSansWeb-Regular.woff2') format('woff2'),
+		 url('GuardianSansWeb-Regular.woff') format('woff'),
+		 url('GuardianSansWeb-Regular.ttf') format('truetype'),
+		 url('GuardianSansWeb-Regular.svg#GuardianSansWeb-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianAgateSans1Web';
+	src: url('GuardianAgateSans1Web-Regular.eot');
+	src: url('GuardianAgateSans1Web-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianAgateSans1Web-Regular.woff2') format('woff2'),
+		 url('GuardianAgateSans1Web-Regular.woff') format('woff'),
+		 url('GuardianAgateSans1Web-Regular.ttf') format('truetype'),
+		 url('GuardianAgateSans1Web-Regular.svg#GuardianAgateSans1Web-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianAgateSans1Web';
+	src: url('GuardianAgateSans1Web-Bold.eot');
+	src: url('GuardianAgateSans1Web-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianAgateSans1Web-Bold.woff2') format('woff2'),
+		 url('GuardianAgateSans1Web-Bold.woff') format('woff'),
+		 url('GuardianAgateSans1Web-Bold.ttf') format('truetype'),
+		 url('GuardianAgateSans1Web-Bold.svg#GuardianAgateSans1Web-Bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-BoldItalic.eot');
+	src: url('GuardianTextSansWeb-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-BoldItalic.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-BoldItalic.woff') format('woff'),
+		 url('GuardianTextSansWeb-BoldItalic.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-BoldItalic.svg#GuardianTextSansWeb-BoldItalic') format('svg');
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTitlepieceWeb';
+	src: url('GuardianTitlepieceWeb-Regular.eot');
+	src: url('GuardianTitlepieceWeb-Regular.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTitlepieceWeb-Regular.woff2') format('woff2'),
+		 url('GuardianTitlepieceWeb-Regular.woff') format('woff'),
+		 url('GuardianTitlepieceWeb-Regular.ttf') format('truetype'),
+		 url('GuardianTitlepieceWeb-Regular.svg#GuardianTitlepieceWeb-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianAgateSans1Web';
+	src: url('GuardianAgateSans1Web-RegularItalic.eot');
+	src: url('GuardianAgateSans1Web-RegularItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianAgateSans1Web-RegularItalic.woff2') format('woff2'),
+		 url('GuardianAgateSans1Web-RegularItalic.woff') format('woff'),
+		 url('GuardianAgateSans1Web-RegularItalic.ttf') format('truetype'),
+		 url('GuardianAgateSans1Web-RegularItalic.svg#GuardianAgateSans1Web-RegularItalic') format('svg');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianSansWeb';
+	src: url('GuardianSansWeb-Semibold.eot');
+	src: url('GuardianSansWeb-Semibold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianSansWeb-Semibold.woff2') format('woff2'),
+		 url('GuardianSansWeb-Semibold.woff') format('woff'),
+		 url('GuardianSansWeb-Semibold.ttf') format('truetype'),
+		 url('GuardianSansWeb-Semibold.svg#GuardianSansWeb-Semibold') format('svg');
+	font-weight: 600;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-Medium.eot');
+	src: url('GuardianTextSansWeb-Medium.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-Medium.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-Medium.woff') format('woff'),
+		 url('GuardianTextSansWeb-Medium.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-Medium.svg#GuardianTextSansWeb-Medium') format('svg');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-Light.eot');
+	src: url('GuardianEgyptianWeb-Light.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-Light.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-Light.woff') format('woff'),
+		 url('GuardianEgyptianWeb-Light.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-Light.svg#GuardianEgyptianWeb-Light') format('svg');
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianSansWeb';
+	src: url('GuardianSansWeb-Light.eot');
+	src: url('GuardianSansWeb-Light.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianSansWeb-Light.woff2') format('woff2'),
+		 url('GuardianSansWeb-Light.woff') format('woff'),
+		 url('GuardianSansWeb-Light.ttf') format('truetype'),
+		 url('GuardianSansWeb-Light.svg#GuardianSansWeb-Light') format('svg');
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-Bold.eot');
+	src: url('GuardianTextSansWeb-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-Bold.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-Bold.woff') format('woff'),
+		 url('GuardianTextSansWeb-Bold.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-Bold.svg#GuardianTextSansWeb-Bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-Black.eot');
+	src: url('GuardianTextEgyptianWeb-Black.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-Black.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-Black.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-Black.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-Black.svg#GuardianTextEgyptianWeb-Black') format('svg');
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-Bold.eot');
+	src: url('GuardianTextEgyptianWeb-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-Bold.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-Bold.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-Bold.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-Bold.svg#GuardianTextEgyptianWeb-Bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-BoldItalic.eot');
+	src: url('GuardianEgyptianWeb-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-BoldItalic.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-BoldItalic.woff') format('woff'),
+		 url('GuardianEgyptianWeb-BoldItalic.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-BoldItalic.svg#GuardianEgyptianWeb-BoldItalic') format('svg');
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-SemiboldItalic.eot');
+	src: url('GuardianEgyptianWeb-SemiboldItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-SemiboldItalic.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-SemiboldItalic.woff') format('woff'),
+		 url('GuardianEgyptianWeb-SemiboldItalic.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-SemiboldItalic.svg#GuardianEgyptianWeb-SemiboldItalic') format('svg');
+	font-weight: 600;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianCompactWeb';
+	src: url('GuardianCompactWeb-Black.eot');
+	src: url('GuardianCompactWeb-Black.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianCompactWeb-Black.woff2') format('woff2'),
+		 url('GuardianCompactWeb-Black.woff') format('woff'),
+		 url('GuardianCompactWeb-Black.ttf') format('truetype'),
+		 url('GuardianCompactWeb-Black.svg#GuardianCompactWeb-Black') format('svg');
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-BlackItalic.eot');
+	src: url('GuardianTextEgyptianWeb-BlackItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-BlackItalic.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-BlackItalic.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-BlackItalic.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-BlackItalic.svg#GuardianTextEgyptianWeb-BlackItalic') format('svg');
+	font-weight: 900;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-BoldItalic.eot');
+	src: url('GuardianTextEgyptianWeb-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-BoldItalic.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-BoldItalic.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-BoldItalic.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-BoldItalic.svg#GuardianTextEgyptianWeb-BoldItalic') format('svg');
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextEgyptianWeb';
+	src: url('GuardianTextEgyptianWeb-MediumItalic.eot');
+	src: url('GuardianTextEgyptianWeb-MediumItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextEgyptianWeb-MediumItalic.woff2') format('woff2'),
+		 url('GuardianTextEgyptianWeb-MediumItalic.woff') format('woff'),
+		 url('GuardianTextEgyptianWeb-MediumItalic.ttf') format('truetype'),
+		 url('GuardianTextEgyptianWeb-MediumItalic.svg#GuardianTextEgyptianWeb-MediumItalic') format('svg');
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-Black.eot');
+	src: url('GuardianTextSansWeb-Black.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-Black.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-Black.woff') format('woff'),
+		 url('GuardianTextSansWeb-Black.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-Black.svg#GuardianTextSansWeb-Black') format('svg');
+	font-weight: 900;
+	font-style: normal;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-RegularItalic.eot');
+	src: url('GuardianTextSansWeb-RegularItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-RegularItalic.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-RegularItalic.woff') format('woff'),
+		 url('GuardianTextSansWeb-RegularItalic.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-RegularItalic.svg#GuardianTextSansWeb-RegularItalic') format('svg');
+	font-weight: 400;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianTextSansWeb';
+	src: url('GuardianTextSansWeb-MediumItalic.eot');
+	src: url('GuardianTextSansWeb-MediumItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianTextSansWeb-MediumItalic.woff2') format('woff2'),
+		 url('GuardianTextSansWeb-MediumItalic.woff') format('woff'),
+		 url('GuardianTextSansWeb-MediumItalic.ttf') format('truetype'),
+		 url('GuardianTextSansWeb-MediumItalic.svg#GuardianTextSansWeb-MediumItalic') format('svg');
+	font-weight: 500;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianAgateSans1Web';
+	src: url('GuardianAgateSans1Web-BoldItalic.eot');
+	src: url('GuardianAgateSans1Web-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianAgateSans1Web-BoldItalic.woff2') format('woff2'),
+		 url('GuardianAgateSans1Web-BoldItalic.woff') format('woff'),
+		 url('GuardianAgateSans1Web-BoldItalic.ttf') format('truetype'),
+		 url('GuardianAgateSans1Web-BoldItalic.svg#GuardianAgateSans1Web-BoldItalic') format('svg');
+	font-weight: 700;
+	font-style: italic;
+	font-stretch: normal;
+	}
+
+	@font-face {
+	font-family: 'GuardianEgyptianWeb';
+	src: url('GuardianEgyptianWeb-Medium.eot');
+	src: url('GuardianEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'),
+		 url('GuardianEgyptianWeb-Medium.woff2') format('woff2'),
+		 url('GuardianEgyptianWeb-Medium.woff') format('woff'),
+		 url('GuardianEgyptianWeb-Medium.ttf') format('truetype'),
+		 url('GuardianEgyptianWeb-Medium.svg#GuardianEgyptianWeb-Medium') format('svg');
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	}

@@ -13,11 +13,14 @@ define([
         },
 
         set: function(article) {
+            var group = article.group || {},
+                front = group.front;
+
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
-                groupIndex: article.group ? article.group.index : undefined,
-                frontPosition: article.group ? article.group.front.position() : undefined,
-                groupParentId: article.group && article.group.parent ? article.group.parent.id : undefined
+                groupIndex: group.index,
+                frontPosition: front ? front.position() : undefined,
+                groupParentId: group.parent ? group.parent.id : undefined
             }));
         },
 

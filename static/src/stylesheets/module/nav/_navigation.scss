@@ -382,6 +382,13 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include mq(wide) {
         width: $global-navigation-title-width-wide;
     }
+
+    &.global-navigation__title--history {
+        color: guss-colour(neutral-1, $pasteup-palette);
+        background: guss-colour(neutral-3, $pasteup-palette);
+        border: 0;
+        padding-bottom: 0;
+    }
 }
 .global-navigation__children {
     @include box-sizing(border-box);
@@ -405,6 +412,26 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include mq(tablet) {
         padding-bottom: $gs-baseline/4;
         padding-left: $gs-gutter/2;
+    }
+
+    &.global-navigation__children--history {
+        background: guss-colour(neutral-3, $pasteup-palette);
+
+        .button--tag {
+            margin-top: $gs-baseline / 2;
+            margin-left: $gs-gutter / 4;
+            margin-right: 0;
+            margin-bottom: 0;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        @include mq($until: mobileLandscape) {
+            margin-left: 0;
+            padding-top: 0;
+            padding-left: $gs-gutter/3;
+        }
     }
 }
 @include mq($until: tablet) {

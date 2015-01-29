@@ -106,4 +106,6 @@ case class ContainerLayout(
     slices = slices.map(_.transformCards(f)),
     remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
   )
+
+  def hasShowMore = remainingCards.nonEmpty
 }

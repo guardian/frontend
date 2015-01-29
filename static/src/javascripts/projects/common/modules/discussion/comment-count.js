@@ -31,9 +31,12 @@ define([
         defaultTemplate = commentCountTemplate;
 
     function getContentIds() {
-        return _.map(qwery('[' + attributeName + ']'), function (el) {
-            return bonzo(el).attr(attributeName);
-        }).join(',');
+        return _.chain(qwery('[' + attributeName + ']'))
+                    .map(function (el) { return bonzo(el).attr(attributeName); })
+                    .uniq()
+                    .sortBy()
+                    .join(',')
+                    .value();
     }
 
     function getContentUrl(node) {
@@ -47,6 +50,7 @@ define([
                 var format,
                     $node = bonzo(node),
                     commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                    url = $node.attr('data-discussion-url') || getContentUrl(node),
                     $container,
                     meta,
                     html;
@@ -61,7 +65,7 @@ define([
 
                 format = $node.data('commentcount-format');
                 html = template(templates[format] || defaultTemplate, {
-                    url: getContentUrl(node),
+                    url: url,
                     count: formatters.integerCommas(c.count),
                     label: commentOrComments
                 });

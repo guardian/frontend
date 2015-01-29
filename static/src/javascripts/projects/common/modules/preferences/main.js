@@ -1,38 +1,37 @@
 define([
     'react',
     'common/utils/_',
-    'common/modules/experiments/ab',
     'common/modules/onward/history'
 ], function (
     React,
     _,
-    ab,
     history
 ) {
     return function () {
-        var SummaryTagsSettings = React.createClass({
+        var placeholder = document.getElementById('preferences-history-tags'),
+
+            SummaryTagsSettings = React.createClass({
                 getInitialState: function () {
-                    return { enabled: history.showInMegaNavEnabled() && ab.getTestVariant('HistoryTags') === 'show' };
+                    return { enabled: history.showInMegaNavEnabled()};
                 },
                 handleToggle: function () {
                     var isEnabled = !this.state.enabled;
 
                     this.setState({ enabled: isEnabled });
                     history.showInMegaNavEnable(isEnabled);
-                    ab.setTestVariant('HistoryTags', isEnabled ? 'show' : 'notintest');
                 },
                 render: function () {
                     var self = this,
                         toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                     return React.DOM.div({'data-link-name': 'suggested links'}, [
-                        React.DOM.p(null, 'Suggested links are shown under \'browse all sections\', and are based on your recent browsing history.'),
+                        React.DOM.p(null, 'These are based on the topics you visit most. You can access them at any time by opening the "all sections” menu.'),
                         this.state.enabled ? React.createElement(SummaryTagsList) : null,
                         React.DOM.button({
                             onClick: self.handleToggle,
                             className: 'button button--medium button--primary',
                             'data-link-name': toggleAction
-                        }, 'Switch suggested links ' + toggleAction)
+                        }, 'Switch recently visited links ' + toggleAction)
                     ]);
                 }
             }),
@@ -63,18 +62,17 @@ define([
                         helperText;
 
                     if (_.isEmpty(tags)) {
-                        helperText = '(You don\'t have any suggested links.)';
+                        helperText = '(You don\'t have any recently visited topics.)';
                     } else {
-                        helperText = '(Remove links that don\'t interest you by clicking the \'X\' next to them.)';
+                        helperText = 'Remove individual topics by clicking \'X\' or switch off the functionality below. We respect your privacy and your shortcuts will never be made public.';
                     }
                     tags.helperText = React.DOM.p(null, helperText);
                     return React.DOM.div(null, tags);
                 }
             });
 
-        React.renderComponent(
-            React.createElement(SummaryTagsSettings),
-            document.getElementById('preferences-history-tags')
-        );
+        if (placeholder) {
+            React.renderComponent(React.createElement(SummaryTagsSettings), placeholder);
+        }
     };
 });

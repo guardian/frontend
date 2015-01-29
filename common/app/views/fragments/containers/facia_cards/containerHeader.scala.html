@@ -6,6 +6,7 @@
 @import common.Localisation
 @import layout.{MetaDataHeader, LoneDateHeadline}
 @import fragments.containers.facia_cards.dateHeadline
+@import fragments.nav.treats
 
 @containerDefinition.customHeader.map { customHeader =>
     <div class="fc-container__header js-container__header">
@@ -21,9 +22,9 @@
     </div>
 }.getOrElse {
     @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-        <div class="fc-container__header js-container__header @if(containerDefinition.showDateHeader) { js-weather }">
+        <div class="fc-container__header js-container__header">
             @title.map { title =>
-                @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                @defining(frontProperties.editorialType.contains("contributor")) { isContributor =>
                     <div class="@RenderClasses(Map(
                         "fc-container__header__title" -> true,
                         "tone-comment" -> isContributor,
@@ -48,20 +49,27 @@
                     </div>
                 }
             }
-            @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
-                @if(containerDefinition.index == 0 && hasDescription){
-                    <div class="@RenderClasses(Map(
-                        "fc-container__header__description" -> true,
-                        "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
-                        @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
-                            <div class="fc-container__header__image media__img">
-                                <img src="@url" alt="@title" />
-                            </div>
-                        }
-                        @frontProperties.onPageDescription.map(Html(_))
-                    </div>
+
+            @if(containerDefinition.showCPScottHeader) {
+                @fragments.containers.facia_cards.cpScottHeader()
+            } else {
+                @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
+                    @if(containerDefinition.index == 0 && hasDescription){
+                        <div class="@RenderClasses(Map(
+                            "fc-container__header__description" -> true,
+                            "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
+                            @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                                <div class="fc-container__header__image media__img">
+                                    <img src="@url" alt="@title" />
+                                </div>
+                            }
+                            @frontProperties.onPageDescription.map(Html(_))
+                        </div>
+                    }
                 }
             }
         </div>
     }
 }
+
+@treats(containerDefinition, frontProperties)

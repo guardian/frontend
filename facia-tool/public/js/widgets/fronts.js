@@ -28,27 +28,37 @@ define([
         this.front = ko.observable(frontId);
         this.previousFront = frontId;
         this.frontAge = ko.observable();
-        this.liveMode = ko.observable(false);
         this.position = params.position;
         this.collections = ko.observableArray();
         this.listeners = listeners;
+        this.mode = ko.observable(params.mode || 'draft');
+        this.flattenGroups = ko.observable(params.mode === 'treats');
 
         this.front.subscribe(this.onFrontChange.bind(this));
-        this.liveMode.subscribe(this.onModeChange.bind(this));
+        this.mode.subscribe(this.onModeChange.bind(this));
 
         var model = this;
         this.setFront = function(id) {
             model.front(id);
         };
         this.setModeLive = function() {
-            model.liveMode(true);
+            model.mode('live');
         };
 
         this.setModeDraft = function() {
-            model.liveMode(false);
+            model.mode('draft');
         };
+
+        this.frontMode = ko.pureComputed(function () {
+            var classes = [this.mode() + '-mode'];
+            if (this.confirmSendingAlert()) {
+                classes.push('attention');
+            }
+            return classes.join(' ');
+        }, this);
+
         this.previewUrl = ko.pureComputed(function () {
-            var path = this.liveMode() ? 'http://' + vars.CONST.mainDomain : vars.CONST.previewBase;
+            var path = this.mode() === 'live' ? 'http://' + vars.CONST.mainDomain : vars.CONST.previewBase;
 
             return vars.CONST.previewBase + '/responsive-viewer/' + path + '/' + this.front();
         }, this);
@@ -239,7 +249,7 @@ define([
 
         this.load(front);
 
-        if (!this.liveMode()) {
+        if (this.mode() === 'draft') {
             this.pressDraftFront();
         }
     };
@@ -250,7 +260,7 @@ define([
             collection.populate();
         });
 
-        if (!this.liveMode()) {
+        if (this.mode() === 'draft') {
             this.pressDraftFront();
         }
     };
@@ -259,16 +269,36 @@ define([
         return meta === this.uiOpenElement();
     };
 
+    Front.prototype.getCollectionList = function (list) {
+        var sublist;
+        if (this.mode() === 'treats') {
+            sublist = list.treats;
+        } else if (this.mode() === 'live') {
+            sublist = list.live;
+        } else {
+            sublist = list.draft || list.live;
+        }
+        return sublist || [];
+    };
+
     Front.prototype.confirmSendingAlert = function () {
         return _.contains(vars.CONST.askForConfirmation, this.front());
     };
 
     Front.prototype.showIndicatorsEnabled = function () {
-        return !this.confirmSendingAlert();
+        return !this.confirmSendingAlert() && this.mode() !== 'treats';
     };
 
     Front.prototype.slimEditor = function () {
         return _.contains(vars.CONST.restrictedEditor, this.front());
+    };
+
+    Front.prototype.newItemValidator = function (item) {
+        if (this.mode() === 'treats' && item.meta.snapType() !== 'link') {
+            // TODO uncomment when we want to restrict to snap link
+            // return 'Sorry, you can only add links to treats.';
+            return false;
+        }
     };
 
     Front.prototype.dispose = function () {

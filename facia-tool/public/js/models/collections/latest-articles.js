@@ -113,6 +113,11 @@ define([
 
             clearTimeout(deBounced);
             deBounced = setTimeout(function() {
+                if (self.suggestions().length) {
+                    // The auto complete is open, if we ask the API most likely we won't get any result
+                    // which will lead to displaying the alert
+                    return;
+                }
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
                 }

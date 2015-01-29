@@ -229,12 +229,11 @@ define([
             remove: {
                 collection: this,
                 item:       item.id(),
-                live:       front.liveMode(),
-                draft:     !front.liveMode()
+                mode:       front.mode()
             }
         })
         .then(function() {
-            if (front.liveMode()) {
+            if (front.mode() === 'live') {
                 mediator.emit('presser:detectfailures', front.front());
             }
         });
@@ -278,6 +277,11 @@ define([
         });
     };
 
+    Collection.prototype.isHistoryEnabled = function () {
+        return this.front.mode() !== 'treats' && this.history().length;
+    };
+
+
     Collection.prototype.populate = function(rawCollection) {
         var self = this,
             list;
@@ -291,7 +295,7 @@ define([
                 this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
-                list = this.front.liveMode() ? this.raw.live : this.raw.draft || this.raw.live || [];
+                list = this.front.getCollectionList(this.raw);
 
                 _.each(this.groups, function(group) {
                     group.items.removeAll();

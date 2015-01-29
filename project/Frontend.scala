@@ -1,6 +1,5 @@
 package com.gu
 
-import akka.remote.transport.TestAssociationHandle
 import sbt._
 import sbt.Keys._
 import play.Play.autoImport._
@@ -18,6 +17,7 @@ object Frontend extends Build with Prototypes {
       apacheCommonsMath3,
       awsSdk,
       contentApiClient,
+      crosswordsApiClient,
       faciaScalaClient,
       filters,
       flexibleContentBlockToText,
@@ -66,9 +66,6 @@ object Frontend extends Build with Prototypes {
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications")
     .dependsOn(commonWithTests)
-    .settings(
-      libraryDependencies += crosswordsApiClient
-    )
     .settings(crosswordsRouting: _*)
     .aggregate(common)
 

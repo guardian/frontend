@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
 
-<div class="submeta-container @content.submetaBreakpoint.map{ bp => submeta-container--break-at-@bp }">
+<div class="submeta-container @content.submetaBreakpoint.map{ bp => submeta-container--break submeta-container--break-at-@bp }">
     @if(content.keywords.filterNot(_.isSectionTag).nonEmpty) {
         <div class="submeta" data-link-name="keywords">
             <h2 class="submeta__head">Topics</h2>

@@ -83,7 +83,7 @@ object MediaInSectionController extends Controller with Logging with Paging with
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails take 7, displayName, None, None, None),
+        CollectionEssentials(trails take 7, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       FrontProperties.empty

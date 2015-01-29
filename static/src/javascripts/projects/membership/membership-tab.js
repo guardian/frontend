@@ -86,37 +86,39 @@ define([
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
-            var intervalText = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
-                notificationType;
+            if (resp && resp.subscription) {
+                var intervalText = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+                    notificationType;
 
-            $(self.getClass('TIER')).text(resp.tier);
-            $(self.getClass('COST')).text(formatAmount(resp.subscription.plan.amount));
-            $(self.getClass('JOIN_DATE')).text(formatDate(resp.joinDate));
-            $(self.getClass('INTERVAL')).text(intervalText);
-            $(self.getClass('CURRENT_PERIOD_START')).text(formatDate(resp.subscription.start));
-            $(self.getClass('CURRENT_PERIOD_END')).text(formatDate(resp.subscription.end));
+                $(self.getClass('TIER')).text(resp.tier);
+                $(self.getClass('COST')).text(formatAmount(resp.subscription.plan.amount));
+                $(self.getClass('JOIN_DATE')).text(formatDate(resp.joinDate));
+                $(self.getClass('INTERVAL')).text(intervalText);
+                $(self.getClass('CURRENT_PERIOD_START')).text(formatDate(resp.subscription.start));
+                $(self.getClass('CURRENT_PERIOD_END')).text(formatDate(resp.subscription.end));
 
-            if (resp.regNumber) {
-                $(self.getElem('NUM_CONTAINER')).removeClass('is-hidden');
-                $(self.getElem('NUM_TEXT')).text(resp.regNumber);
+                if (resp.regNumber) {
+                    $(self.getElem('NUM_CONTAINER')).removeClass('is-hidden');
+                    $(self.getElem('NUM_TEXT')).text(resp.regNumber);
+                }
+
+                if (resp.subscription.card) {
+                    self.updateCard(resp.subscription.card);
+                }
+
+                if (resp.subscription.cancelledAt) {
+                    notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
+                    $(self.getClass('TAB_DETAILS_LIST_UPPER')).addClass('is-hidden');
+                    $(self.getClass(notificationType)).removeClass('is-hidden');
+
+                    $(self.getClass('NOTIFICATION_ICON_CURRENT')).addClass('i-g-' + resp.tier.toLowerCase());
+                    // only show lower list if user hasn't changed their subscription and has a payment method
+                } else if (resp.subscription.card) {
+                    $(self.getElem('TAB_DETAILS_LIST_LOWER')).removeClass('is-hidden');
+                }
+
+                self.reveal();
             }
-
-            if (resp.subscription.card) {
-                self.updateCard(resp.subscription.card);
-            }
-
-            if (resp.subscription.cancelledAt) {
-                notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
-                $(self.getClass('TAB_DETAILS_LIST_UPPER')).addClass('is-hidden');
-                $(self.getClass(notificationType)).removeClass('is-hidden');
-
-                $(self.getClass('NOTIFICATION_ICON_CURRENT')).addClass('i-g-' + resp.tier.toLowerCase());
-            // only show lower list if user hasn't changed their subscription and has a payment method
-            } else if (resp.subscription.card) {
-                $(self.getElem('TAB_DETAILS_LIST_LOWER')).removeClass('is-hidden');
-            }
-
-            self.reveal();
         });
     };
 
