@@ -5,15 +5,21 @@ import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
 import dfp.{AdvertisementFeature, GuLineItem}
 import services.EmailService
 import tools.Store
+import conf.Configuration.commercial.dfpAdFeatureReportKey
 
 object ExpiringAdFeaturesEmailJob extends Logging {
 
   def run(): Unit = {
-    val adFeatureTags =
-      Store.getDfpPaidForTags().paidForTags filter (_.paidForType == AdvertisementFeature)
+    val adFeatureTags = Store.getDfpPaidForTags(dfpAdFeatureReportKey).paidForTags
 
     def adFeatures(p: GuLineItem => Boolean): Seq[GuLineItem] = {
-      adFeatureTags.filter(_.lineItems.forall(p)).flatMap(_.lineItems).sortBy(_.id).distinct
+      adFeatureTags.withFilter {
+        _.lineItems.forall(p)
+      }.flatMap {
+        _.lineItems
+      }.sortBy { lineItem =>
+        (lineItem.endTime.map(_.getMillis).get, lineItem.id)
+      }.distinct
     }
 
     for {
@@ -22,7 +28,7 @@ object ExpiringAdFeaturesEmailJob extends Logging {
       gLabs <- gLabsTeam
     } {
 
-      val expiredAdFeatures = adFeatures(_.isExpired)
+      val expiredAdFeatures = adFeatures(_.isExpiredRecently)
       val expiringAdFeatures = adFeatures(_.isExpiringSoon)
 
       if (expiredAdFeatures.nonEmpty || expiringAdFeatures.nonEmpty) {
