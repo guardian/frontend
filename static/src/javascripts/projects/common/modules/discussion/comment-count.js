@@ -7,6 +7,7 @@ define([
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/template',
     'text!common/views/discussion/comment-count.html',
     'text!common/views/discussion/comment-count--content.html'
@@ -19,6 +20,7 @@ define([
     ajax,
     formatters,
     mediator,
+    requestAnimationFrame,
     template,
     commentCountTemplate,
     commentCountContentTemplate
@@ -70,8 +72,11 @@ define([
                     label: commentOrComments
                 });
                 $container = meta.length ? bonzo(meta) : $node;
-                $container.append(html);
-                $node.removeAttr(attributeName);
+
+                requestAnimationFrame(function () {
+                    $container.append(html);
+                    $node.removeAttr(attributeName);
+                });
             });
         });
     }
