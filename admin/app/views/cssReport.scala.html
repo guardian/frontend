@@ -2,28 +2,31 @@
 
 @admin_main("CSS reports", environment) {
     <style>
-        html { overflow-y: scroll; }
-
-        .navbar { display: none; }
-
+        html {
+            overflow-y: scroll;
+        }
+        .navbar {
+            display: none;
+        }
         .css-reports-navbar {
             position: fixed;
             width: 100%;
             top: 0;
             left: 0;
-            padding-left: 60px;
+            padding-left: 20px;
             background: #fff;
             box-shadow: 0px 0px 5px #999;
         }
-
         .css-reports-navbar .title {
             float: right;
-            margin: 10px 20px;
+            margin: 10px 0;
             color: #999;
-            font-weight: bold;
             font-size: 20px;
         }
-
+        .days {
+            float: right;
+            margin: 16px 20px 0 10px;
+        }
         .selectors {
             color: #c00;
             font-family: monospace;
@@ -31,7 +34,6 @@
             line-height: 16px;
             padding: 80px 0 200px 0;
         }
-
         .alphas {
             margin: 15px 0;
             float: left;
@@ -64,101 +66,120 @@
     <script>
     var delimRx = new RegExp('[^a-z0-9\-\_]+', 'i'),
 
-            elSelectors = React.createClass({
-                getInitialState: function() {
-                    window.onhashchange = (function() {
-                        this.setState({
-                            filter: getHashParams().filter,
-                            starts: getHashParams().starts
-                        });
-                    }).bind(this);
+        elSelectors = React.createClass({
+            getInitialState: function() {
+                window.onhashchange = (function() {
+                    this.setState(getHashParams());
+                }).bind(this);
 
-                    return {
-                        filter: getHashParams().filter,
-                        starts: getHashParams().starts
+                return getHashParams();
+            },
+            handleClick: function(e) {
+                var state = {
+                        filter: undefined,
+                        starts: undefined
                     };
-                },
-                handleClickOnSelector: function(e) {
-                    var state = {
-                            filter: undefined,
-                            starts: undefined
-                        };
 
-                        console.log(e.target.tagName);
+                    console.log(e.target.tagName);
 
-                        if (e.target.tagName.toLocaleLowerCase() === 'span') {
-                            state[e.target.className || 'filter'] = e.target.innerText;
-                        }
+                    if (e.target.tagName.toLocaleLowerCase() === 'span') {
+                        state[e.target.className || 'filter'] = e.target.innerText;
+                    }
 
-                        this.setState(state);
-                        setHashParams(state);
-                },
-                render: function() {
-                    var filter = this.state.filter,
-                            starts = this.state.starts;
+                    this.setState(state);
+                    setHashParams(state);
+            },
+            render: function() {
+                var filter = this.state.filter,
+                    starts = this.state.starts;
 
-                    return React.DOM.div({onClick: this.handleClickOnSelector}, [
-                        React.DOM.div({className: 'css-reports-navbar'}, [
-                            React.DOM.div({className: 'title'}, 'CSS Selector Usage'),
-                            React.DOM.div({className: 'alphas'},
-                                    _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
-                                        acc[a] = React.DOM.span({className: 'starts'}, a);
-                                        return acc;
-                                    }, {})
-                            ),
-                        ]),
-                        React.DOM.div({className: 'selectors'},
-                            _.chain(this.props.selectors)
-                                .filter(function(p) {
-                                    var tokens = p[0];
-
-                                    return (!filter || tokens.indexOf(filter) > -1) &&
-                                           (!starts || (tokens[0] || '').indexOf(starts) === 0 || (tokens[1] || '').indexOf(starts) === 0);
-                                })
-                                .reduce(function(acc, p, i) {
-                                    acc['_' + i] = React.createElement(elSelector, {
-                                        selector: p,
-                                        filter: filter
-                                    });
-                                    return acc;
-                                }, {})
-                                .value()
-                        )
-                    ]);
-                }
-            }),
-
-            elSelector = React.createClass({
-                render: function() {
-                    var filter = this.props.filter,
-                        usages = this.props.selector[1];
-
-                    return React.DOM.div({}, [
-                        React.DOM.span({
-                            className: 'tally'
-                        }, usages.unused + usages.used),
-                        React.DOM.span({
-                                className: usages.used > 0 ? 'used' : null
-                            },
-                            _.reduce(this.props.selector[0], function(acc, k, i) {
-                                acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
-                                    part: k,
-                                    filter: filter
-                                });
+                return React.DOM.div({onClick: this.handleClick}, [
+                    React.DOM.div({className: 'css-reports-navbar'}, [
+                        React.createElement(dayPicker, this.props),
+                        React.DOM.div({className: 'title'}, 'CSS selector usage :'),
+                        React.DOM.div({className: 'alphas'},
+                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
+                                acc[a] = React.DOM.span({className: 'starts'}, a);
                                 return acc;
                             }, {})
                         )
-                    ]);
-                }
-            }),
+                    ]),
+                    React.DOM.div({className: 'selectors'},
+                        _.chain(this.props.selectors)
+                        .filter(function(p) {
+                            var tokens = p[0];
 
-            elSelectorPart = React.createClass({
-                render: function() {
-                    return React.DOM.span({
-                        className: this.props.part === this.props.filter ? 'active' : null
-                    }, this.props.part);
-                }
-            });
+                            return (!filter || tokens.indexOf(filter) > -1) &&
+                                   (!starts || (tokens[0] || '').toLowerCase().indexOf(starts) === 0 ||
+                                               (tokens[1] || '').toLowerCase().indexOf(starts) === 0);
+                        })
+                        .reduce(function(acc, p, i) {
+                            acc['_' + i] = React.createElement(elSelector, {
+                                selector: p,
+                                filter: filter
+                            });
+                            return acc;
+                        }, {})
+                        .value()
+                    )
+                ]);
+            }
+        }),
+
+        elSelector = React.createClass({
+            render: function() {
+                var filter = this.props.filter,
+                    usages = this.props.selector[1];
+
+                return React.DOM.div({}, [
+                    React.DOM.span({
+                        className: 'tally'
+                    }, usages.unused + usages.used),
+                    React.DOM.span({
+                            className: usages.used > 0 ? 'used' : null
+                        },
+                        _.reduce(this.props.selector[0], function(acc, k, i) {
+                            acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
+                                part: k,
+                                filter: filter
+                            });
+                            return acc;
+                        }, {})
+                    )
+                ]);
+            }
+        }),
+
+        elSelectorPart = React.createClass({
+            render: function() {
+                return React.DOM.span({
+                    className: this.props.part === this.props.filter ? 'active' : null
+                }, this.props.part);
+            }
+        }),
+
+        dayPicker = React.createClass({
+            getInitialState: function() {
+                return {value: this.props.day};
+            },
+            handleChange: function () {
+                //this.setState({value: event.target.value});
+                setHashParams({day: event.target.value});
+                location.reload();
+            },
+            render: function() {
+                return React.DOM.select({
+                        className: 'days',
+                        value: this.state.value,
+                        onChange: this.handleChange
+                    },
+                    _.reduce(this.props.days, function(acc, d) {
+                        acc[d] = React.DOM.option({}, d);
+                        return acc;
+                    }, {})
+                );
+            }
+        });
 
     function setHashParams(obj) {
         window.location.hash = _.reduce(obj, function(acc, v, k) {
@@ -194,51 +215,55 @@
     }
 
     function getHashParams() {
-        var result = {};
-
-        _.chain(window.location.hash.slice(1).split('&'))
-                .filter(function(kv) {
-                    return kv;
-                })
-
-                .map(function(kv) {
-                    return kv.split('=');
-                })
-
-                .map(function(kv) {
-                    var key = kv[0],
-                        value = kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '));
-
-                    result[key] = value;
-                });
-        return result;
+        return _.chain(window.location.hash.slice(1).split('&'))
+            .filter(function(kv) { return kv; })
+            .map(function(kv) { return kv.split('='); })
+            .filter(function(kv) { return kv[1]; })
+            .reduce(function(acc, kv) {
+                acc[kv[0]] = decodeURIComponent(kv[1].replace(/\+/g, ' '));
+                return acc;
+            }, {})
+            .value();
     };
 
-    function getToday() {
-        var D = new Date(),
-            y = D.getFullYear().toString(),
-            m = (D.getMonth() + 1).toString(),
-            d  = D.getDate().toString();
+    function fetchSelectors(days) {
+        var day = getHashParams().day || _.last(days);
 
-        return [y, m[1] ? m : "0" + m[0], d[1] ? d: "0" + d[0]].join('-');
-    };
+        $.ajax({
+            url: '/css-reports/' + day + '.json',
+            dataType: "json"
+        }).then(function(res) {
+            React.render(
+                React.createElement(elSelectors, {
+                    selectors: _.chain(res.selectors)
+                        .pairs()
+                        .sortBy()
+                        .map(function(s) {
+                            return [tokenise(s[0], delimRx), s[1]]
+                        })
+                        .value(),
+                    days: days,
+                    day: day
+                }),
+                document.querySelector('.js-selectors')
+            );
+        });
+    }
 
-    $.ajax({
-        url: '/css-reports/' + getToday() + '.json',
-        dataType: "json"
-    }).then(function(res) {
-        React.render(
-            React.createElement(elSelectors, {
-                selectors: _.chain(res.selectors)
-                    .pairs()
-                    .sortBy()
-                    .map(function(s) {
-                        return [tokenise(s[0], delimRx), s[1]]
-                    })
-                    .value()
-            }),
-            document.querySelector('.js-selectors')
-        );
-    });
+    function fetch() {
+        $.ajax({
+            url: '/css-reports.json',
+            dataType: "json"
+        }).done(function(res) {
+            if (res.days && res.days.length) {
+                fetchSelectors(res.days);
+            } else {
+                console.log("No day data available.")
+            }
+        });
+    }
+
+    fetch();
+
     </script>
 }
