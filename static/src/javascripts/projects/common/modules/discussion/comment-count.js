@@ -35,7 +35,8 @@ define([
                     .map(function (el) { return bonzo(el).attr(attributeName); })
                     .uniq()
                     .sortBy()
-                    .join(',');
+                    .join(',')
+                    .value();
     }
 
     function getContentUrl(node) {
