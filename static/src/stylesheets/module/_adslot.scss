@@ -333,10 +333,12 @@
 }
 .ad-slot--im {
     @include box-sizing(border-box);
-    padding-right: $gs-gutter;
-    width: 50%;
-    max-width: $left-column-wide + $gs-gutter;
+    max-width: 50%;
     float: left;
+
+    @include mq(mobileLandscape) {
+        max-width: $left-column-wide + $gs-gutter;
+    }
 }
 .ad-slot--fobadge.ad-slot--im {
     min-width: gs-span(2) + $gs-gutter;
@@ -396,7 +398,7 @@
         padding-left: $gs-gutter / 2;
     }
 
-    .container--has-toggle & {
+    .fc-container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
         }
@@ -471,7 +473,7 @@
                 float: right;
             }
         }
-        .has-page-skin .container--has-toggle & {
+        .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }
     }

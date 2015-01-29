@@ -8,9 +8,9 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/third-party-tags/audience-science',
+    'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (

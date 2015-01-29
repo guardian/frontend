@@ -10,7 +10,7 @@ define([
 
     return new Injector()
         .store('common/utils/config')
-        .require(['common/modules/commercial/tags/criteo', 'mocks'], function (criteo, mocks) {
+        .require(['common/modules/commercial/third-party-tags/criteo', 'mocks'], function (criteo, mocks) {
 
             function retrieveParams(url) {
                 return zipObject(url.split('?').pop().split('!').shift().split('&').map(function(param) {

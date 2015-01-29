@@ -93,7 +93,7 @@ define([
             'science/sifting-the-evidence', 'science/the-lay-scientist', 'small-business-network', 'social-care-network', 'society',
             'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
             'society/social-care', 'society/voluntarysector', 'sport/blog', 'sport/boxing', 'sport/cricket',
-            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union', 'sport/rugbyleague',
             'sport/series/sports-quiz-of-the-week', 'sport/series/the-gifs-that-keep-giving', 'sport/tennis', 'sport/us-sport', 'stage',
             'stage/dance-blog', 'stage/theatreblog', 'teacher-network/teacher-network', 'technology', 'technology/askjack',
             'technology/comment', 'technology/gadgets', 'technology/games', 'technology/internet', 'technology/it',
@@ -105,7 +105,7 @@ define([
             'tv-and-radio/series/broadchurch-2-episode-by-episode', 'tv-and-radio/series/doctor-who-episode-by-episode', 'tv-and-radio/series/homeland-episode-by-episode', 'tv-and-radio/series/spiral-episode-by-episode-guide', 'tv-and-radio/series/stream-on',
             'tv-and-radio/series/the-fall-episode-by-episode', 'tv-and-radio/series/the-walking-dead-episode-by-episode', 'uk/technology', 'video', 'weekly',
             'women-in-leadership', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news',
-            'world/middleeast', 'world/series/eyewitness'
+            'world/middleeast', 'world/series/eyewitness', 'uk/scotland', 'uk/wales', 'uk/northernireland', 'uk/the-northerner', 'cartoons/archive', 'theguardian'
         ],
 
         editions = [

@@ -252,8 +252,36 @@
         }
     }
 
+    .ad-exp__open-chevron {
+        position: absolute;
+        z-index: 4;
+        bottom: 0;
+        left: 50%;
+        border: 1px solid #ffffff;
+        border-width: 1px 1px 0;
+        background: colour(neutral-1);
+        color: #ffffff;
+        opacity: .5;
+        padding: $gs-baseline/2 0 0;
+        width: gs-span(1);
+        margin-left: $gs-gutter*-1.5;
+        text-align: center;
+        @include fs-textSans(1);
+        @include border-radius($gs-gutter $gs-gutter 0 0);
+        @include transition(all 1s ease);
+
+        &.chevron-down {
+            @include transform(translate(0, 100px));
+        }
+        .i {
+            display: block;
+            margin: 2px auto 0;
+        }
+    }
+
     .slide-1 {
         z-index: 1;
+        overflow: hidden;
     }
 
     .ad-exp-collapse__slide {

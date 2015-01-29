@@ -7,7 +7,7 @@ define([
     'common/modules/commercial/dfp',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/slice-adverts',
-    'common/modules/commercial/tags/container',
+    'common/modules/commercial/third-party-tags',
     'common/modules/user-prefs'
 ], function (
     config,
@@ -18,7 +18,7 @@ define([
     dfp,
     frontCommercialComponents,
     sliceAdverts,
-    tagsContainer,
+    thirdPartyTags,
     userPrefs
 ) {
 
@@ -31,7 +31,7 @@ define([
                 !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 // load tags
-                tagsContainer.init();
+                thirdPartyTags.init();
                 articleAsideAdverts.init();
                 articleBodyAdverts.init();
                 sliceAdverts.init();
