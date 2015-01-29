@@ -42,7 +42,7 @@ define([
                 queue = items,
                 workers = 0;
 
-            _.forEach(initialItems, function (item) { start(item); });
+            _.forEach(initialItems, start);
         });
     }
 
