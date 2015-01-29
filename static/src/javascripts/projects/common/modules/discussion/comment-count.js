@@ -31,9 +31,11 @@ define([
         defaultTemplate = commentCountTemplate;
 
     function getContentIds() {
-        return _.uniq(_.map(qwery('[' + attributeName + ']'), function (el) {
-            return bonzo(el).attr(attributeName);
-        })).join(',');
+        return _.chain(qwery('[' + attributeName + ']'))
+                    .map(function (el) { return bonzo(el).attr(attributeName); })
+                    .uniq()
+                    .sortBy()
+                    .join(',');
     }
 
     function getContentUrl(node) {
