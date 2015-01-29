@@ -25,7 +25,7 @@ define([
     Fluid250.prototype.create = function () {
 
         var templateOptions = {
-            showLabel: (this.params.showAdLabel === 'hide') ?
+                showLabel: (this.params.showAdLabel === 'hide') ?
                 'creative__label--hidden' : ''
             },
             leftMargin = (this.params.videoPositionH === 'center' ?
