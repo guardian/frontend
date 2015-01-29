@@ -71,6 +71,9 @@ Developer: John Duffell
 
 /* ALUMNI and COLLEAGUES */
 
+Editor-in-chief: C.P.Scott
+From: Bath, Somerset
+
 Developer Manager: Matt Chadburn
 Twitter: @commuterjoy
 From: Cardiff, Wales
