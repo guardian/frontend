@@ -409,7 +409,7 @@ object Switches {
 
   val WeatherSwitch = Switch("Feature", "weather",
     "If this is switched on then the weather component is displayed",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+    safeState = Off, sellByDate = never
   )
 
   val HistoryTags = Switch("Feature", "history-tags",
