@@ -1,6 +1,5 @@
 define([
     'common/utils/detect',
-    'common/utils/storage',
     'common/utils/template',
 
     'common/modules/ui/message',
@@ -8,7 +7,6 @@ define([
     'text!common/views/donot-use-adblock.html'
 ], function (
     detect,
-    storage,
     template,
 
     Message,
@@ -41,23 +39,19 @@ define([
                 id: 'show',
                 test: function () {
                     var adblockLink = 'https://www.theguardian.com/',//TODO, also text in template and switches to off
-                        adblockMessage,
-                        localStorage = storage.local;
+                        adblockMessage;
 
-                    if (detect.getBreakpoint() !== 'mobile') {
-                        if (detect.adblockInUse()) {
-                            adblockMessage = new Message('adblock', {
-                                pinOnHide: false,
-                                siteMessageLinkName: 'adblock message',
-                                siteMessageCloseBtn: 'hide'
-                            });
-                            adblockMessage.show(template(
-                                doNotUseAdblockTemplate,
-                                {
-                                    adblockLink: adblockLink
-                                }
-                            ));
-                        }
+                    if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
+                        new Message('adblock', {
+                            pinOnHide: false,
+                            siteMessageLinkName: 'adblock message',
+                            siteMessageCloseBtn: 'hide'
+                        }).show(template(
+                            doNotUseAdblockTemplate,
+                            {
+                                adblockLink: adblockLink
+                            }
+                        ));
                     }
                 }
             }
