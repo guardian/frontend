@@ -14,6 +14,7 @@ require([
     'common/utils/storage',
     'common/utils/template',
     'common/utils/url',
+    'common/utils/robust',
 
     // shared modules
     'common/modules/analytics/beacon',
