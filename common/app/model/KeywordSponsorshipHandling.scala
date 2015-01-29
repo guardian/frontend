@@ -31,5 +31,5 @@ trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   override def hasPageSkin(edition: Edition): Boolean = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   override lazy val isExpiredAdvertisementFeature: Boolean =
-    DfpAgent.isExpiredAdvertisementFeatureFront(keywordIds, Some(id))
+    DfpAgent.isExpiredAdvertisementFeatureFront(id, keywordIds, Some(id))
 }
