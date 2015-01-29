@@ -13,5 +13,8 @@ object dynamodb {
 
     def scanFuture(scanRequest: ScanRequest) =
       asFuture[ScanRequest, ScanResult](dynamoDbClient.scanAsync(scanRequest, _))
+
+    def putItemFuture(putItemRequest: PutItemRequest) =
+      asFuture[PutItemRequest, PutItemResult](dynamoDbClient.putItemAsync(putItemRequest, _))
   }
 }

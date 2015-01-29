@@ -121,6 +121,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test:unit', function(app) {
         var target = app ? ':' + app : '';
         grunt.config.set('karma.options.singleRun', (options.singleRun === false) ? false : true);
+
+        grunt.task.run(['copy:inlineSVGs']);
         grunt.task.run('karma' + target);
     });
     grunt.registerTask('test', ['test:unit']);

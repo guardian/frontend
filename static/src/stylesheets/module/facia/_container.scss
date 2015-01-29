@@ -57,6 +57,10 @@ $header-image-size-desktop: 100px;
     .show-more--hidden & {
         display: none;
     }
+
+    @if($old-ie) {
+        clear: left;
+    }
 }
 
 .fc-container__header,

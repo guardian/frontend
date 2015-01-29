@@ -38,7 +38,7 @@
 
                 @comment.responseTo.map{ r =>
                     <span class="i i-reply-grey"></span>
-                    <a href="#comment-@r.commentId">
+                    <a href="#comment-@r.commentId" class="js-discussion-author-link">
                         <span class="d-comment__reply-to-author">@r.displayName</span>
                     </a>
                 }

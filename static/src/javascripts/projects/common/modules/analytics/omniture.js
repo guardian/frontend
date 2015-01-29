@@ -1,3 +1,5 @@
+/* global guardian */
+/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
     'lodash/collections/map',
@@ -37,6 +39,7 @@ define([
 
         var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
             NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+            isEmbed = !!guardian.isEmbed,
             that = this;
 
         w = w || {};
@@ -54,6 +57,20 @@ define([
             s.events = 'event90';
             s.eVar7 = config.page.analyticsName;
             s.tl(true, 'o', 'AutoUpdate Refresh');
+        };
+
+        this.generateTrackingImageString = function () {
+            return 's_i_' + window.s_account.split(',').join('_');
+        };
+
+        // Certain pages have specfic channel rules
+        this.getChannel = function () {
+            if (config.page.contentType === 'Network Front') {
+                return 'Network Front';
+            } else if (isEmbed) {
+                return 'Embedded';
+            }
+            return config.page.section || '';
         };
 
         this.logTag = function (spec) {
@@ -113,14 +130,12 @@ define([
 
         this.populatePageProperties = function () {
 
-            var d, shiftValue, guView,
+            var d,
                 now      = new Date(),
                 tpA      = s.getTimeParting('n', '+0'),
                 /* Retrieve navigation interaction data */
                 ni       = storage.session.get(NG_STORAGE_KEY),
                 platform = 'frontend',
-                // cookie used for user migration
-                guShift  = cookies.get('GU_SHIFT'),
                 mvt      = ab.makeOmnitureTag(document),
                 // Tag the identity of this user, which is composed of
                 // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
@@ -154,7 +169,7 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-            s.channel   = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
+            s.channel   = this.getChannel();
             s.prop4     = config.page.keywords || '';
             s.prop6     = config.page.author || '';
             s.prop7     = config.page.webPublicationDate || '';
@@ -189,18 +204,6 @@ define([
             s.eVar51  = mvt;
 
             s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
-
-            if (guShift) {
-                shiftValue = 'gu_shift,' + guShift + ',';
-                guView     = cookies.get('GU_VIEW');
-
-                if (guView) {
-                    shiftValue += ',' + guView;
-                }
-
-                s.prop51  = shiftValue + s.prop51;
-                s.eVar51  = shiftValue + s.eVar51;
-            }
 
             if (s.prop51) {
                 s.events = s.apl(s.events, 'event58', ',');
@@ -282,13 +285,13 @@ define([
 
             s.prop75 = config.page.wordCount || 0;
             s.eVar75 = config.page.wordCount || 0;
+
+            if (isEmbed) {
+                s.eVar11 = s.prop11 = 'Embedded';
+            }
         };
 
         this.go = function () {
-            /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-            // must be set before the Omniture file is parsed
-            window.s_account = config.page.omnitureAccount;
-
             this.populatePageProperties();
             this.logView();
             mediator.emit('analytics:ready');
@@ -302,7 +305,7 @@ define([
                     // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
                     // It does not sit in the DOM tree, and seems to be the only surefire way
                     // to check if the intial beacon has been successfully sent
-                    var img = window['s_i_guardiangu-frontend_guardiangu-network'];
+                    var img = window[self.generateTrackingImageString()];
                     if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                         clearInterval(checkForPageViewInterval);
 
@@ -327,9 +330,9 @@ define([
         });
 
         mediator.on('module:analytics:omniture:pageview:sent', function () {
-            // independently log this page view
-            // used for checking we have not broken analytics
-            beacon.fire('/count/pva.gif');
+            // Independently log this page view, used for checking we have not broken analytics.
+            // We want to exclude off-site embed tracking from this data.
+            if (!isEmbed) { beacon.fire('/count/pva.gif'); }
         });
 
     }

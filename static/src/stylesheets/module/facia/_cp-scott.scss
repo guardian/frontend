@@ -1,0 +1,84 @@
+$cp-scott-width-mobile: 70px;
+$cp-scott-width-tablet: 80px;
+
+.fc-cp-scott__quote {
+    display: block;
+    color: colour(neutral-2);
+}
+
+.fc-cp-scott__quote-line {
+    @include mq(mobileLandscape) {
+        display: block;
+    }
+}
+
+.fc-cp-scott__citation {
+    display: block;
+}
+
+.fc-cp-scott__portrait {
+    float: right;
+    width: $cp-scott-width-mobile;
+
+    @include mq($until: mobileLandscape) {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    @include mq(tablet) {
+        margin-top: -$gs-baseline / 2;
+        margin-bottom: $gs-baseline / 2;
+        width: $cp-scott-width-tablet;
+    }
+
+    @include mq(leftCol) {
+        margin-top: 0;
+        margin-bottom: 0;
+        float: none;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: right;
+            margin-top: -$gs-baseline / 2;
+            margin-bottom: $gs-baseline / 2;
+        }
+    }
+}
+
+.fc-cp-scott__text {
+    clear: left;
+    margin-right: $cp-scott-width-mobile + $gs-gutter / 2;
+
+    @include fs-headline(1);
+    line-height: $gs-baseline * 4 / 3;
+
+    .inline-quote svg {
+        height: $gs-gutter / 2;
+        fill: colour(neutral-2);
+    }
+
+    @include mq(mobileLandscape) {
+        clear: none;
+        float: right;
+        margin-right: $gs-gutter / 2;
+        margin-top: 2px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 0;
+    }
+
+    @include mq(leftCol) {
+        float: none;
+        margin-right: 0;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            float: right;
+            margin-right: $gs-gutter / 2;
+        }
+    }
+}

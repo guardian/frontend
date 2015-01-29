@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'lodash/objects/merge',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -10,6 +11,7 @@ define([
 ], function (
     bean,
     bonzo,
+    merge,
     $,
 	detect,
     mediator,
@@ -42,6 +44,7 @@ define([
 
             storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
             this.$button.toggleClass('button-spin');
+            $('.ad-exp__open-chevron').toggleClass('chevron-down');
             this.$ad.css('height', this.openedHeight);
             this.isClosed = false;
 
@@ -50,10 +53,15 @@ define([
     };
 
     ExpandableV2.prototype.create = function () {
-        var $expandablev2 = $.create(template(expandableV2Tpl, this.params));
+
+        var showmore = {
+                show: (this.params.showMore === 'yes') ?
+                    '<button class="ad-exp__open-chevron ad-exp__open"><i class="i i-arrow-white-down-36"></i></button>' : ''
+            },
+            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-        this.$button = $('.ad-exp__close-button', $expandablev2);
+        this.$button = $('.ad-exp__open', $expandablev2);
 
         $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
@@ -67,8 +75,9 @@ define([
             mediator.on('window:scroll', this.listener.bind(this));
         }
 
-        bean.on(this.$adSlot[0], 'click', '.ad-exp__close-button', function () {
-            this.$button.toggleClass('button-spin');
+        bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
+            $('.ad-exp__close-button').toggleClass('button-spin');
+            $('.ad-exp__open-chevron').toggleClass('chevron-down');
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
         }.bind(this));

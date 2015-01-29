@@ -1,4 +1,4 @@
-import business.HideousHackLifecycle
+import business.StocksDataLifecycle
 import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
 import dev.DevParametersLifecycle
@@ -13,7 +13,7 @@ object Global extends WithFilters(Filters.common: _*)
   with CloudWatchApplicationMetrics
   with DfpAgentLifecycle
   with MostReadLifecycle
-  with HideousHackLifecycle
+  with StocksDataLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 

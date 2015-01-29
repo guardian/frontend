@@ -56,7 +56,7 @@ define([
         } else {
             sourceItem = {
                 id: id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
-                    return key + (val ? '=' + val : '');
+                    return key + (val ? '=' + encodeURIComponent(val) : '');
                 }).join('&')),
                 meta: knownQueryParams
             };

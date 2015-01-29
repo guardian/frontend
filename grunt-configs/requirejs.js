@@ -57,21 +57,24 @@ module.exports = function(grunt, options) {
                     {
                         name: 'core',
                         exclude: [
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     },
                     {
                         name: 'bootstraps/app',
                         exclude: [
                             'core',
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     },
                     {
                         name: 'bootstraps/commercial',
                         exclude: [
                             'core',
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     }
                 ]
@@ -84,7 +87,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -95,7 +99,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -106,7 +111,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -117,7 +123,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -129,7 +136,8 @@ module.exports = function(grunt, options) {
                     'core',
                     'bootstraps/app',
                     '../../public/javascripts/vendor/stripe/stripe.min',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -201,7 +209,8 @@ module.exports = function(grunt, options) {
                     }
                 },
                 exclude: [
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ],
                 optimize: 'none',
                 generateSourceMaps: true,
@@ -215,7 +224,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -227,7 +237,8 @@ module.exports = function(grunt, options) {
                     'core',
                     'bootstraps/app',
                     'bootstraps/commercial',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         }

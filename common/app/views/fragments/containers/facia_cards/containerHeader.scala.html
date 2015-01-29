@@ -49,18 +49,23 @@
                     </div>
                 }
             }
-            @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
-                @if(containerDefinition.index == 0 && hasDescription){
-                    <div class="@RenderClasses(Map(
-                        "fc-container__header__description" -> true,
-                        "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
-                        @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
-                            <div class="fc-container__header__image media__img">
-                                <img src="@url" alt="@title" />
-                            </div>
-                        }
-                        @frontProperties.onPageDescription.map(Html(_))
-                    </div>
+
+            @if(containerDefinition.showCPScottHeader) {
+                @fragments.containers.facia_cards.cpScottHeader()
+            } else {
+                @defining(frontProperties.isImageDisplayed || frontProperties.onPageDescription.isDefined){ hasDescription =>
+                    @if(containerDefinition.index == 0 && hasDescription){
+                        <div class="@RenderClasses(Map(
+                            "fc-container__header__description" -> true,
+                            "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">
+                            @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                                <div class="fc-container__header__image media__img">
+                                    <img src="@url" alt="@title" />
+                                </div>
+                            }
+                            @frontProperties.onPageDescription.map(Html(_))
+                        </div>
+                    }
                 }
             }
         </div>

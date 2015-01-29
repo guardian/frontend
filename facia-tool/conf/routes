@@ -69,3 +69,6 @@ POST          /config/collections/*collectionId    controllers.CollectionControl
 
 # Stories visible
 POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
+
+#Vanity URL
+GET           /breaking-news                    controllers.VanityRedirects.breakingnews

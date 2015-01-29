@@ -5,7 +5,6 @@ define([
     'modules/copied-article',
     'modules/vars',
     'utils/layout-from-url',
-    'utils/parse-query-params',
     'utils/update-scrollables'
 ],function (
     ko,
@@ -13,7 +12,6 @@ define([
     copiedArticle,
     vars,
     layoutFromURL,
-    parseQueryParams,
     updateScrollables
 ) {
     function Layout () {
