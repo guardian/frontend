@@ -257,7 +257,7 @@ Loader.prototype.ready = function() {
 
     mediator.on('module:clickstream:click', function(clickspec) {
         if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-            this.removeState('truncated');
+            this.removeTruncation.bind(this)
         }
     }.bind(this));
 
