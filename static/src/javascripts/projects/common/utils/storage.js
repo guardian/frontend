@@ -34,23 +34,29 @@ define(function () {
      *     {Date} expires - When should the storage expire
      */
     Storage.prototype.set = function (key, data, options) {
-        if (!w[this.type]) { return; }
-        var opts = options || {},
-            value = JSON.stringify({
-                value: data,
-                expires: opts.expires
-            });
-        if (!this.isAvailable(value)) {
-            return false;
-        }
-        return w[this.type].setItem(key, value);
+        try {
+            if (!w[this.type]) { return; }
+            var opts = options || {},
+                value = JSON.stringify({
+                    value: data,
+                    expires: opts.expires
+                });
+            if (!this.isAvailable(value)) {
+                return false;
+            }
+            return w[this.type].setItem(key, value);
+        } catch(e) { }
     };
 
     Storage.prototype.get = function (key) {
         var data,
             dataParsed;
-        if (!w[this.type]) { return; }
-        data = w[this.type].getItem(key);
+        try {
+            if (!w[this.type]) {
+                return;
+            }
+            data = w[this.type].getItem(key);
+        } catch (e) { }
         if (data === null) {
             return null;
         }
@@ -66,27 +72,37 @@ define(function () {
 
         // has it expired?
         if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
-            this.remove(key);
-            return null;
+            try {
+                this.remove(key);
+                return null;
+            } catch(e) { }
         }
 
         return dataParsed.value;
     };
 
     Storage.prototype.remove = function (key) {
-        return w[this.type].removeItem(key);
+        try {
+            return w[this.type].removeItem(key);
+        } catch(e) { }
     };
 
     Storage.prototype.removeAll = function () {
-        return w[this.type].clear();
+        try {
+            return w[this.type].clear();
+        } catch(e) { }
     };
 
     Storage.prototype.length = function () {
-        return w[this.type].length;
+        try {
+            return w[this.type].length;
+        } catch(e) { }
     };
 
     Storage.prototype.getKey = function (i) {
-        return w[this.type].key(i);
+        try {
+            return w[this.type].key(i);
+        } catch(e) { }
     };
 
     Storage.prototype.clearByPrefix = function (prefix) {
@@ -96,7 +112,9 @@ define(function () {
         for (i = this.length() - 1; i > -1; --i) {
             name = this.getKey(i);
             if (name.indexOf(prefix) === 0) {
-                this.remove(name);
+                try {
+                    this.remove(name);
+                } catch(e) { }
             }
         }
     };
