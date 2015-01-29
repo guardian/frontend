@@ -137,3 +137,6 @@ From: London, UK
 
 Director of Digital Strategy: Wolfgang Blau
 Twitter: @wblau
+
+Software Architect: Andy Hume
+Twitter: @andyhume
