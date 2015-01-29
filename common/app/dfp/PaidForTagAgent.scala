@@ -172,15 +172,23 @@ trait PaidForTagAgent {
     findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
   }
 
-  def isExpiredAdvertisementFeature(capiTags: Seq[Tag],
+  def isExpiredAdvertisementFeature(pageId: String,
+                                    capiTags: Seq[Tag],
                                     maybeSectionId: Option[String]): Boolean = {
-    if (isPreview) false
-    else {
-      val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
+
+    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+
+    lazy val isAdFeatureToneTagPage = pageId == "tone/advertisement-features"
+
+    lazy val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
+
+    lazy val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
         _.dfpTag.lineItems
       } getOrElse Nil
-      lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
-    }
+
+    (!isPreview) &&
+      ((lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
+        lineItems.nonEmpty && (lineItems forall hasExpired))
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
