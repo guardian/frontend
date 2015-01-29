@@ -33,16 +33,16 @@ define([
                 !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 // load tags
-                robust('cm-thirdPartyTags',                function () { thirdPartyTags.init(); });
-                robust('cm-articleAsideAdverts',           function () { articleAsideAdverts.init(); });
-                robust('cm-articleBodyAdverts',            function () { articleBodyAdverts.init(); });
-                robust('cm-sliceAdverts',                  function () { sliceAdverts.init(); });
-                robust('cm-frontCommercialComponents',     function () { frontCommercialComponents.init(); });
-                robust('cm-badges',                        function () { badges.init(); });
-                robust('cm-dfp',                           function () { dfp.init(); });
+                robust('cm-thirdPartyTags',            function () { thirdPartyTags.init(); });
+                robust('cm-articleAsideAdverts',       function () { articleAsideAdverts.init(); });
+                robust('cm-articleBodyAdverts',        function () { articleBodyAdverts.init(); });
+                robust('cm-sliceAdverts',              function () { sliceAdverts.init(); });
+                robust('cm-frontCommercialComponents', function () { frontCommercialComponents.init(); });
+                robust('cm-badges',                    function () { badges.init(); });
+                robust('cm-dfp',                       function () { dfp.init(); });
             }
 
-            robust('cm-ready',      function () { mediator.emit('page:commercial:ready'); });
+            robust('cm-ready', function () { mediator.emit('page:commercial:ready'); });
         }
     };
 
