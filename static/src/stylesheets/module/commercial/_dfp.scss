@@ -54,11 +54,11 @@
 
 /* Multiple */
 .commercial--dfp-multiple {
-    .container__header__inner {
+    .commercial__header__inner {
         min-height: 36px;
     }
 
-    .container__body {
+    .commercial__body {
         @include mq(leftCol) {
             min-height: gs-height(4);
         }
@@ -120,13 +120,5 @@
                 }
             }
         }
-    }
-}
-
-.container--commercial-capi .l-row__item {
-    flex: none !important;
-
-    @include mq($until: tablet) {
-        width: 50% !important;
     }
 }

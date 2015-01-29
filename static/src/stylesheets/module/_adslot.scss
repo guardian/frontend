@@ -398,7 +398,7 @@
         padding-left: $gs-gutter / 2;
     }
 
-    .container--has-toggle & {
+    .fc-container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
         }
@@ -473,7 +473,7 @@
                 float: right;
             }
         }
-        .has-page-skin .container--has-toggle & {
+        .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }
     }
