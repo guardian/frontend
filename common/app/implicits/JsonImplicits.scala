@@ -31,7 +31,7 @@ object JsonImplicits {
     private def jsArray(seq: Seq[JsValue]): AttributeValue = new AttributeValue().withL(seq.map(_.fold(jsNull, jsBool, jsNumber, jsString, jsArray, jsObject, jsUndefined)): _*)
     private def jsObject(obj: Seq[(String, JsValue)]): AttributeValue = new AttributeValue().withM(
       obj.map { case (s, json) => s -> json.fold(jsNull, jsBool, jsNumber, jsString, jsArray, jsObject, jsUndefined)}.toMap.asJava)
-    private def jsUndefined: AttributeValue = new AttributeValue()
+    private def jsUndefined: AttributeValue = new AttributeValue().withNULL(true)
 
     def toAttributeValue: AttributeValue = {
       jsValue.fold(jsNull, jsBool, jsNumber, jsString, jsArray, jsObject, jsUndefined)
