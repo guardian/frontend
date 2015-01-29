@@ -3,15 +3,48 @@
 @admin_main("CSS reports", environment) {
     <style>
         html { overflow-y: scroll; }
+
+        .navbar { display: none; }
+
+        .css-reports-navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            padding-left: 60px;
+            background: #fff;
+            box-shadow: 0px 0px 5px #999;
+        }
+
+        .css-reports-navbar .title {
+            float: right;
+            margin: 10px 20px;
+            color: #999;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
         .selectors {
             color: #c00;
             font-family: monospace;
             font-size: 14px;
             line-height: 16px;
+            padding: 80px 0 200px 0;
         }
 
-        .alphas {margin: 5px 0;}
-        .alphas span {display: inline-block; padding: 1px 4px;}
+        .alphas {
+            margin: 15px 0;
+            float: left;
+        }
+        .alphas span {
+            display: inline-block;
+            padding: 0 4px;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-right: 3px;
+            color: #999;
+            border-radius: 3px;
+        }
 
         .selectors span {cursor: pointer;}
 
@@ -25,8 +58,6 @@
     <script src="@routes.Assets.at("javascripts/components/jquery/dist/jquery.min.js")"></script>
     <script src="@routes.Assets.at("javascripts/components/react/react.js")"></script>
     <script src="@routes.Assets.at("javascripts/components/lodash/lodash.js")"></script>
-
-    <p>Unused CSS selectors (red)</p>
 
     <div class="js-selectors">Loading...</div>
 
@@ -53,9 +84,11 @@
                             starts: undefined
                         };
 
-                        console.log(e.target);
+                        console.log(e.target.tagName);
 
-                        state[e.target.className || 'filter'] = e.target.innerText;
+                        if (e.target.tagName.toLocaleLowerCase() === 'span') {
+                            state[e.target.className || 'filter'] = e.target.innerText;
+                        }
 
                         this.setState(state);
                         setHashParams(state);
@@ -65,13 +98,16 @@
                             starts = this.state.starts;
 
                     return React.DOM.div({onClick: this.handleClickOnSelector}, [
-                        React.DOM.div({className: 'alphas'},
-                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
-                                acc[a] = React.DOM.span({className: 'starts', 'data-type': starts}, a);
-                                return acc;
-                            }, {})
-                        ),
-                        React.DOM.div({},
+                        React.DOM.div({className: 'css-reports-navbar'}, [
+                            React.DOM.div({className: 'title'}, 'CSS Selector Usage'),
+                            React.DOM.div({className: 'alphas'},
+                                    _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
+                                        acc[a] = React.DOM.span({className: 'starts'}, a);
+                                        return acc;
+                                    }, {})
+                            ),
+                        ]),
+                        React.DOM.div({className: 'selectors'},
                             _.chain(this.props.selectors)
                                 .filter(function(p) {
                                     var tokens = p[0];
