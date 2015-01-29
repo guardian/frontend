@@ -207,29 +207,37 @@
 
                 .map(function(kv) {
                     var key = kv[0],
-                            value = kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '));
+                        value = kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '));
 
                     result[key] = value;
                 });
         return result;
     };
 
+    function getToday() {
+        var D = new Date(),
+            y = D.getFullYear().toString(),
+            m = (D.getMonth() + 1).toString(),
+            d  = D.getDate().toString();
+
+        return [y, m[1] ? m : "0" + m[0], d[1] ? d: "0" + d[0]].join('-');
+    };
 
     $.ajax({
-        url: '/css-reports/2015-01-28.json',
+        url: '/css-reports/' + getToday() + '.json',
         dataType: "json"
     }).then(function(res) {
         React.render(
-                React.createElement(elSelectors, {
-                    selectors: _.chain(res.selectors)
-                            .pairs()
-                            .sortBy()
-                            .map(function(s) {
-                                return [tokenise(s[0], delimRx), s[1]]
-                            })
-                            .value()
-                }),
-                document.querySelector('.js-selectors')
+            React.createElement(elSelectors, {
+                selectors: _.chain(res.selectors)
+                    .pairs()
+                    .sortBy()
+                    .map(function(s) {
+                        return [tokenise(s[0], delimRx), s[1]]
+                    })
+                    .value()
+            }),
+            document.querySelector('.js-selectors')
         );
     });
     </script>
