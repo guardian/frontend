@@ -332,7 +332,7 @@ object Switches {
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31))
+    safeState = On, sellByDate = never)
 
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
@@ -344,7 +344,7 @@ object Switches {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
