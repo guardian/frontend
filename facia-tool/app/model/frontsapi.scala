@@ -145,7 +145,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def archiveDeleteBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "delete", "update" -> updateJson)))
-    archiveBlock(id, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
+    archiveBlock(collectionId, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
   }
 
   private def archiveBlock(id: String, collectionJson: CollectionJson, action: String, identity: UserIdentity): CollectionJson =
