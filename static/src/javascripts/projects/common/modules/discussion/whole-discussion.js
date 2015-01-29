@@ -25,7 +25,7 @@ define([
         return new Promise(function (resolve) {
 
             function onComplete() {
-                workers --;
+                workers--;
                 if (queue.length) {
                     start(queue.shift());
                 } else if (!workers) {
@@ -34,7 +34,7 @@ define([
             }
 
             function start(item) {
-                workers ++;
+                workers++;
                 workFunction.call(null, item).then(onComplete, onComplete);
             }
 
@@ -104,13 +104,13 @@ define([
     };
 
     WholeDiscussion.prototype.loadPageAndStore = function (pageNumber) {
-        return this.loadPage(pageNumber).then( function (response) {
+        return this.loadPage(pageNumber).then(function (response) {
             this.storeCommentPage(response, pageNumber);
         }.bind(this));
     };
 
     WholeDiscussion.prototype.loadRemainingPages = function (pages) {
-        return runConcurrently(this.loadPageAndStore.bind(this), pages)
+        return runConcurrently(this.loadPageAndStore.bind(this), pages);
     };
 
     WholeDiscussion.prototype.makeDiscussionResponseObject = function () {
