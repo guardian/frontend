@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 import scala.util.{Failure, Success}
 
-case class ArchiveRequest(email: String, updateJson: JsValue, diff: JsValue)
+case class ArchiveRequest(collectionId: String, email: String, updateJson: JsValue, diff: JsValue)
 
 object FaciaToolArchive extends ExecutionContexts with Logging {
   val TableName = "FaciaToolUpdateHistory"
@@ -36,8 +36,10 @@ object FaciaToolArchive extends ExecutionContexts with Logging {
           .withItem(Map[String, AttributeValue](
           ("date", new AttributeValue().withS(dayKey(now))),
           ("time", new AttributeValue().withS(timeKey(now))),
+          ("datetime", new AttributeValue().withS(now.toString)),
+          ("collectionid", new AttributeValue().withS(archiveRequest.collectionId)),
           ("email", new AttributeValue().withS(archiveRequest.email)),
-          ("collectionJson", archiveRequest.updateJson.toAttributeValue),
+          ("collectionjson", archiveRequest.updateJson.toAttributeValue),
           ("diff", archiveRequest.diff.toAttributeValue)).asJava)
 
         dynamoAsyncClient.putItemFuture(putItemRequest).onComplete {
