@@ -25,19 +25,22 @@ define([
         return new Promise(function (resolve) {
 
             function onComplete() {
+                workers --;
                 if (queue.length) {
                     start(queue.shift());
-                } else {
+                } else if (!workers) {
                     resolve();
                 }
             }
 
             function start(item) {
+                workers ++;
                 workFunction.call(null, item).then(onComplete, onComplete);
             }
 
             var initialItems = items.splice(0, concurrentLimit),
-                queue = items;
+                queue = items,
+                workers = 0;
 
             _.forEach(initialItems, function (item) { start(item); });
         });
@@ -100,14 +103,14 @@ define([
         });
     };
 
-    WholeDiscussion.prototype.loadRemainingPages = function (pages) {
-        return runConcurrently(this.loadPage.bind(this), pages)
-        .then(function (responses) {
-            _.forEach(responses, function (response, index) {
-                // The first page has been loaded, and pages are not zero-based, so adjust the index.
-                this.storeCommentPage(response, index + 2);
-            }.bind(this));
+    WholeDiscussion.prototype.loadPageAndStore = function (pageNumber) {
+        return this.loadPage(pageNumber).then( function (response) {
+            this.storeCommentPage(response, pageNumber);
         }.bind(this));
+    };
+
+    WholeDiscussion.prototype.loadRemainingPages = function (pages) {
+        return runConcurrently(this.loadPageAndStore.bind(this), pages)
     };
 
     WholeDiscussion.prototype.makeDiscussionResponseObject = function () {
