@@ -1,6 +1,7 @@
 /* global guardian */
 define([
     'bean',
+    'qwery',
     'raven',
     'common/utils/$',
     'common/utils/_',
@@ -12,6 +13,7 @@ define([
     'text!common/views/ui/video-ads-skip-overlay.html'
 ], function (
     bean,
+    qwery,
     raven,
     $,
     _,
@@ -184,20 +186,21 @@ define([
                         $('.js-skip-remaining-time', this.el()).text(skipTime);
                     } else {
                         window.clearInterval(intervalId);
-                        $('.vjs-ads-overlay-skip-countdown', this.el())
+                        $('.js-ads-skip', this.el())
                             .html(
-                            '<button class="vjs-ads-overlay-skip-button" data-link-name="Skip video advert">' +
-                            '<i class="i i-play-icon-grey skip-icon"></i>' +
-                            '<i class="i i-play-icon-gold skip-icon"></i>Skip advert</button>'
-                        );
-                        $('.js-ads-skip-overlay').addClass('vjs-ads-overlay-skip--enabled');
-                        bean.on($('.js-ads-skip-overlay')[0], 'click', events.skip.bind(this));
+                                '<button class="js-ads-skip-button vjs-ads-skip__button" data-link-name="Skip video advert">' +
+                                    '<i class="i i-play-icon-grey skip-icon"></i>' +
+                                    '<i class="i i-play-icon-gold skip-icon"></i>Skip advert' +
+                                '</button>'
+                            );
+                        bean.on(qwery('.js-ads-skip-button')[0], 'click', events.skip.bind(this));
                     }
                 },
                 skip: function () {
                     // jscs:disable disallowDanglingUnderscores
-                    $('.js-ads-skip-overlay', this.el()).hide();
+                    $('.js-ads-skip', this.el()).hide();
                     this.trigger(constructEventName('preroll:skip', this));
+                    // in lieu of a 'skip' api, rather hacky way of achieving it
                     this.ima.onAdComplete_();
                     this.ima.onContentResumeRequested_();
                     this.ima.getAdsManager().stop();
@@ -208,7 +211,7 @@ define([
                     $(this.el()).append(skipButton);
                     intervalId = setInterval(events.update.bind(this), 250);
                     this.one(constructEventName('content:play', this), function () {
-                        $('.js-ads-skip-overlay', this.el()).hide();
+                        $('.js-ads-skip', this.el()).hide();
                         window.clearInterval(intervalId);
                     });
                 }

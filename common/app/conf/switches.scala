@@ -71,13 +71,6 @@ object Switches {
     sellByDate = never
   )
 
-  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
-    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 2, 1)
-  )
-
-
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = On,
@@ -99,7 +92,7 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
+    sellByDate = new LocalDate(2015, 2, 26)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -209,6 +202,10 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val AmaaSwitch = Switch("Commercial", "amaa",
+    "AMAA tracking",
+    safeState = Off, sellByDate = never)
+
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never
@@ -231,12 +228,6 @@ object Switches {
   val ImrWorldwideSwitch = Switch("Commercial", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
-
-  val targetMediaMathShutdownDate = new LocalDate(2015, 2, 1)
-
-  val MediaMathSwitch = Switch("Commercial", "media-math",
-    "Enable Media Math audience segment tracking",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
@@ -341,7 +332,7 @@ object Switches {
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31))
+    safeState = On, sellByDate = never)
 
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
@@ -353,7 +344,7 @@ object Switches {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -418,18 +409,12 @@ object Switches {
 
   val WeatherSwitch = Switch("Feature", "weather",
     "If this is switched on then the weather component is displayed",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+    safeState = Off, sellByDate = never
   )
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  // actually just here to make us remove this in the future
-  val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
-    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -473,6 +458,11 @@ object Switches {
   val DefaultOriginSwitch = Switch("Feature", "default-origin",
     "If switched on, an experimental default header to allow origins will be added to Json endpoints",
     safeState = On, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
+  val DiscussionAllPageSizeSwitch = Switch("Feature", "discussion-all-page-size",
+    "If this is switched on then users will have the option to load all comments",
+    safeState = Off, sellByDate = never
   )
 
   // Facia
