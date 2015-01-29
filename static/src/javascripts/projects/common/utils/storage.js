@@ -1,8 +1,12 @@
 /*
-    Module: storage.js
-    Description: Wrapper around localStorage functionality
-*/
-define(function () {
+ Module: storage.js
+ Description: Wrapper around localStorage functionality
+ */
+define([
+    'lodash/functions/once'
+], function (
+    once
+    ) {
 
     var w = window,
         Storage = function (type) {
@@ -13,7 +17,7 @@ define(function () {
         w = window;
     };
 
-    Storage.prototype.isAvailable = function (data) {
+    Storage.prototype.isAvailable = once(function (data) {
         var testKey = 'local-storage-module-test',
             d = data || 'test';
         try {
@@ -25,7 +29,7 @@ define(function () {
         } catch (e) {
             return false;
         }
-    };
+    });
 
     /**
      * @param {String}  key
@@ -34,8 +38,10 @@ define(function () {
      *     {Date} expires - When should the storage expire
      */
     Storage.prototype.set = function (key, data, options) {
-        try {
-            if (!w[this.type]) { return; }
+        if (this.isAvailable()) {
+            if (!w[this.type]) {
+                return;
+            }
             var opts = options || {},
                 value = JSON.stringify({
                     value: data,
@@ -45,76 +51,74 @@ define(function () {
                 return false;
             }
             return w[this.type].setItem(key, value);
-        } catch(e) { }
+        }
     };
 
     Storage.prototype.get = function (key) {
-        var data,
-            dataParsed;
-        try {
+        if (this.isAvailable()) {
+            var data,
+                dataParsed;
             if (!w[this.type]) {
                 return;
             }
             data = w[this.type].getItem(key);
-        } catch (e) { }
-        if (data === null) {
-            return null;
-        }
+            if (data === null) {
+                return null;
+            }
 
-        // try and parse the data
-        try {
-            dataParsed = JSON.parse(data);
-        } catch (e) {
-            // remove the key
-            this.remove(key);
-            return null;
-        }
-
-        // has it expired?
-        if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
+            // try and parse the data
             try {
+                dataParsed = JSON.parse(data);
+            } catch (e) {
+                // remove the key
                 this.remove(key);
                 return null;
-            } catch(e) { }
-        }
+            }
 
-        return dataParsed.value;
+            // has it expired?
+            if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
+                this.remove(key);
+                return null;
+            }
+
+            return dataParsed.value;
+        }
     };
 
     Storage.prototype.remove = function (key) {
-        try {
+        if (this.isAvailable()) {
             return w[this.type].removeItem(key);
-        } catch(e) { }
+        }
     };
 
     Storage.prototype.removeAll = function () {
-        try {
+        if (this.isAvailable()) {
             return w[this.type].clear();
-        } catch(e) { }
+        }
     };
 
     Storage.prototype.length = function () {
-        try {
+        if (this.isAvailable()) {
             return w[this.type].length;
-        } catch(e) { }
+        }
     };
 
     Storage.prototype.getKey = function (i) {
-        try {
+        if (this.isAvailable()) {
             return w[this.type].key(i);
-        } catch(e) { }
+        }
     };
 
     Storage.prototype.clearByPrefix = function (prefix) {
-        // Loop in reverse because storage indexes will change as you delete items.
-        var i,
-            name;
-        for (i = this.length() - 1; i > -1; --i) {
-            name = this.getKey(i);
-            if (name.indexOf(prefix) === 0) {
-                try {
+        if (this.isAvailable()) {
+            // Loop in reverse because storage indexes will change as you delete items.
+            var i,
+                name;
+            for (i = this.length() - 1; i > -1; --i) {
+                name = this.getKey(i);
+                if (name.indexOf(prefix) === 0) {
                     this.remove(name);
-                } catch(e) { }
+                }
             }
         }
     };
