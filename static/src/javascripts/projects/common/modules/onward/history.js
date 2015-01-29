@@ -93,7 +93,7 @@ define([
             'science/sifting-the-evidence', 'science/the-lay-scientist', 'small-business-network', 'social-care-network', 'society',
             'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
             'society/social-care', 'society/voluntarysector', 'sport/blog', 'sport/boxing', 'sport/cricket',
-            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union', 'sport/rugbyleague',
             'sport/series/sports-quiz-of-the-week', 'sport/series/the-gifs-that-keep-giving', 'sport/tennis', 'sport/us-sport', 'stage',
             'stage/dance-blog', 'stage/theatreblog', 'teacher-network/teacher-network', 'technology', 'technology/askjack',
             'technology/comment', 'technology/gadgets', 'technology/games', 'technology/internet', 'technology/it',
