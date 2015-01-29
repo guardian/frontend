@@ -61,6 +61,12 @@ $fc-item-gutter: $gs-gutter / 4;
             width: 100% - $media-width;
         }
     }
+
+    &.fc-item--has-no-image .fc-item__content {
+        flex-basis: 100%;
+        max-width: 100%;
+        padding-right: gs-span(3);
+    }
 }
 
 .has-flex-wrap {

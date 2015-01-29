@@ -176,6 +176,19 @@
         }
     }
 
+    &.fc-item--video {
+        @include mq($until: desktop) {
+
+            .fc-item__video-play {
+                display: none;
+            }
+            .fc-item__video-fallback {
+                display: block;
+            }
+
+        }
+    }
+
     @include mq(desktop) {
         &.fc-item--has-cutout .fc-item__container {
             padding-bottom: gs-height(3) + $gs-baseline  * 2;

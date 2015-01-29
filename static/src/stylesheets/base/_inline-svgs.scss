@@ -6,6 +6,10 @@
     }
 }
 
+.inline-icon__fallback {
+    display: none;
+}
+
 .inline-tone-fill {
     fill: colour(news-default);
 
@@ -36,5 +40,15 @@
 
     .tonal--tone-media & {
         fill: colour(media-default);
+    }
+}
+
+.no-svg {
+    .inline-icon {
+        display: none !important;
+    }
+
+    .inline-icon__fallback {
+        display: initial;
     }
 }
