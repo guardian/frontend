@@ -6,7 +6,7 @@ From: London, England
 
 Product Manager: Chris Mulholland
 LinkedIn: chrismulholland
-Twitter: @kungpochicken
+Twitter: @crifmulholland
 From: Glasgow, Scotland
 
 Design and art direction: Katrina Stubbings
@@ -62,6 +62,7 @@ Twitter: @wblau
 
 Guardian CTO: Shannon Maher
 
+Developer: John Duffell
 
 
 /* ALUMNI and COLLEAGUES */
