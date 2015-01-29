@@ -4,10 +4,9 @@
 
 @defining(("1_0", "2014-05-23", "low")) { case (version, date, relevance) =>
     <div class="commercial commercial--masterclasses commercial--tone-masterclasses commercial--low" data-link-name="commercial-low | masterclasses | @omnitureId">
-        <div class="facia-container__inner--commercial">
-
-            <div class="container__header">
-                <div class="container__header__inner">
+        <div class="commercial__inner">
+            <div class="commercial__header">
+                <div class="commercial__header__inner">
                     <h3 class="commercial__title">
                         <a href="@clickMacro@Configuration.commercial.masterclasses_url" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-browse-all-masterclasses">
                             <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-masterclasses-logo i-commercial-brand"></i>
@@ -21,8 +20,7 @@
                     </a>
                 </div>
             </div>
-
-            <div class="container__body">
+            <div class="commercial__body">
                 <ul class="lineitems">
                     @events.take(4).map { event =>
                         <li class="lineitem">
