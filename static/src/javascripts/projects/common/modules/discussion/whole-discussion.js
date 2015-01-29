@@ -20,33 +20,28 @@ define([
     var commentsPerPage = 50, concurrentLimit = 3;
 
     // A basic Promise queue based on: http://talks.joneisen.me/presentation-javascript-concurrency-patterns/refactoru-9-23-2014.slide#25
-    function runConcurrently (workFunction, items) {
+    function runConcurrently(workFunction, items) {
 
         return new Promise(function (resolve) {
-            var queue = [];
 
-            function onComplete () {
+            function onComplete() {
                 if (queue.length) {
                     start(queue.shift());
                 } else {
                     resolve();
                 }
-            };
+            }
 
-            function start (item) {
-                workFunction.call(null, item)
-                    .then(onComplete, onComplete);
-            };
+            function start(item) {
+                workFunction.call(null, item).then(onComplete, onComplete);
+            }
 
-            var initialItems = items.splice(0, concurrentLimit);
-            queue = items;
+            var initialItems = items.splice(0, concurrentLimit),
+                queue = items;
 
-            _.forEach(initialItems, function (item) {
-                start(item);
-            });
-
+            _.forEach(initialItems, function (item) { start(item); });
         });
-    };
+    }
 
     function WholeDiscussion(options) {
         this.discussionId = options.discussionId;
