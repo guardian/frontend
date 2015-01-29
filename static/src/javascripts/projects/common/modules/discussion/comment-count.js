@@ -85,6 +85,12 @@ define([
                 $node.removeAttr(attributeName);
             });
         });
+
+        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+        // the DOM.
+        requestAnimationFrame(function () {
+            mediator.emit('modules:commentcount:loaded', counts);
+        });
     }
 
     function getCommentCounts() {
@@ -99,7 +105,6 @@ define([
             success: function (response) {
                 if (response && response.counts) {
                     renderCounts(response.counts, indexedElements);
-                    mediator.emit('modules:commentcount:loaded', response.counts);
                 }
             }
         });
@@ -118,6 +123,7 @@ define([
     return {
         init: init,
         getCommentCounts: getCommentCounts,
-        getContentIds: getContentIds
+        getContentIds: getContentIds,
+        getElementsIndexedById: getElementsIndexedById
     };
 });
