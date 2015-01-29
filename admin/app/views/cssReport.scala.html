@@ -47,14 +47,19 @@
             color: #999;
             border-radius: 3px;
         }
-
-        .selectors span {cursor: pointer;}
-
+        .selectors span {
+            cursor: pointer;
+        }
         .selectors span:hover ,
-        .selectors span.active {font-weight: bold;}
-
-        .selectors .used {color: #ada;}
-        .selectors .tally {display: inline-block; width: 40px; color: #ddd;}
+        .selectors span.active {
+            font-weight: bold;
+        }
+        .selectors .used {
+            color: #ada;
+        }
+        .selectors .tally {
+            display: inline-block; width: 40px; color: #ddd;
+        }
     </style>
 
     <script src="@routes.Assets.at("javascripts/components/jquery/dist/jquery.min.js")"></script>
@@ -64,7 +69,7 @@
     <div class="js-selectors">Loading...</div>
 
     <script>
-    var delimRx = new RegExp('[^a-z0-9\-\_]+', 'i'),
+    var delimRx = new RegExp('[a-z0-9\-\_]+', 'i'),
 
         elSelectors = React.createClass({
             getInitialState: function() {
@@ -80,14 +85,12 @@
                         starts: undefined
                     };
 
-                    console.log(e.target.tagName);
+                if (e.target.tagName.toLocaleLowerCase() === 'span') {
+                    state[e.target.className || 'filter'] = e.target.innerText;
+                }
 
-                    if (e.target.tagName.toLocaleLowerCase() === 'span') {
-                        state[e.target.className || 'filter'] = e.target.innerText;
-                    }
-
-                    this.setState(state);
-                    setHashParams(state);
+                this.setState(state);
+                setHashParams(state);
             },
             render: function() {
                 var filter = this.state.filter,
@@ -98,8 +101,8 @@
                         React.createElement(dayPicker, this.props),
                         React.DOM.div({className: 'title'}, 'CSS selector usage :'),
                         React.DOM.div({className: 'alphas'},
-                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
-                                acc[a] = React.DOM.span({className: 'starts'}, a);
+                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a, i) {
+                                acc['_' + i] = React.DOM.span({className: 'starts'}, a);
                                 return acc;
                             }, {})
                         )
@@ -132,12 +135,8 @@
                     usages = this.props.selector[1];
 
                 return React.DOM.div({}, [
-                    React.DOM.span({
-                        className: 'tally'
-                    }, usages.unused + usages.used),
-                    React.DOM.span({
-                            className: usages.used > 0 ? 'used' : null
-                        },
+                    React.DOM.span({className: 'tally'}, usages.unused + usages.used),
+                    React.DOM.span({className: usages.used > 0 ? 'used' : null},
                         _.reduce(this.props.selector[0], function(acc, k, i) {
                             acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
                                 part: k,
@@ -163,7 +162,6 @@
                 return {value: this.props.day};
             },
             handleChange: function () {
-                //this.setState({value: event.target.value});
                 setHashParams({day: event.target.value});
                 location.reload();
             },
@@ -181,17 +179,10 @@
             }
         });
 
-    function setHashParams(obj) {
-        window.location.hash = _.reduce(obj, function(acc, v, k) {
-            if (v) {
-                acc.push(k + '=' + encodeURIComponent(v));
-            }
-            return acc;
-        }, []).join('&');
-    }
-
     function tokenise(text, regex) {
-        var token, index, result = [];
+        var token,
+            index,
+            result = [];
 
         while (text !== '') {
             regex.lastIndex = 0;
@@ -216,7 +207,6 @@
 
     function getHashParams() {
         return _.chain(window.location.hash.slice(1).split('&'))
-            .filter(function(kv) { return kv; })
             .map(function(kv) { return kv.split('='); })
             .filter(function(kv) { return kv[1]; })
             .reduce(function(acc, kv) {
@@ -225,6 +215,15 @@
             }, {})
             .value();
     };
+
+    function setHashParams(obj) {
+        window.location.hash = _.reduce(obj, function(acc, v, k) {
+            if (v) {
+                acc.push(k + '=' + encodeURIComponent(v));
+            }
+            return acc;
+        }, []).join('&');
+    }
 
     function fetchSelectors(days) {
         var day = getHashParams().day || _.last(days);
