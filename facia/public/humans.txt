@@ -88,8 +88,9 @@ Twitter: no
 Favourite John Carpenter film: The Thing
 From: London, England
 
-Product Manager: Cantlin Ashrowan
+Product Manager (Aging hipster): Cantlin Ashrowan
 Twitter: @cantlin
+Website: http://www.whereiscantlin.com
 Location: London, UK
 
 Developer: Matt Osborn
@@ -137,3 +138,6 @@ From: London, UK
 
 Director of Digital Strategy: Wolfgang Blau
 Twitter: @wblau
+
+Software Architect: Andy Hume
+Twitter: @andyhume

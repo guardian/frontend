@@ -1,4 +1,4 @@
 @(file: String, path: String = "", classes: Seq[String] = List())
-<span class="inline-@file @if(path){inline-@path} @classes.map("inline-" + _).mkString(" ")">
+<span class="inline-@file @if(path){inline-@path} @classes.mkString(" ")">
     @Html(conf.Static.inlineSvg(path + "/" + file + ".svg"))
 </span>

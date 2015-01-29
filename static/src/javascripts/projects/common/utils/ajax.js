@@ -9,7 +9,7 @@ define([
     config,
     getProperty
 ) {
-
+    // This should no longer be used. Prefer the new 'ajax-promise' library instead, which is es6 compliant.
     var ajaxHost = getProperty(config, 'page.ajaxUrl', '');
 
     function ajax(params) {

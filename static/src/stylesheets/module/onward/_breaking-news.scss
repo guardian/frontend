@@ -1,18 +1,5 @@
 $breaking-news-icon-width: 36px;
 
-@mixin batwing-bg {
-    &:before {
-        position: absolute;
-        left: 0 - $breaking-news-icon-width - $gs-gutter / 2;
-        top: 0;
-        width: $breaking-news-icon-width;
-        height: $breaking-news-icon-width;
-        @include icon(marque-36, false);
-        background-position: left top !important;
-        content: '';
-    }
-}
-
 .breaking-news {
     z-index: 16777271;
     position: fixed;
@@ -52,7 +39,6 @@ $breaking-news-icon-width: 36px;
 }
 
 .breaking-news__item {
-    position: relative;
     display: block;
     padding: 0 0 $gs-baseline;
     background: fade-out(colour(live-default), 1 - .95);
@@ -81,8 +67,13 @@ $breaking-news-icon-width: 36px;
 
 .breaking-news__item-header {
     position: relative;
-    @include batwing-bg;
     padding-right: gs-span(1) + $gs-gutter * .5;
+
+    .inline-marque-36 {
+        position: absolute;
+        left: 0 - $breaking-news-icon-width - $gs-gutter / 2;
+        top: 0;
+    }
 }
 
 .breaking-news__item-kicker,
@@ -115,7 +106,6 @@ $breaking-news-icon-width: 36px;
     position: absolute;
     top: $gs-baseline;
     right: 0;
-    z-index: 1;
 }
 
 // copy of breaking news element used inline in the body
