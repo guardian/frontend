@@ -226,7 +226,7 @@
     }
 
     function fetchSelectors(days) {
-        var day = getHashParams().day || _.last(days);
+        var day = getHashParams().day || _.first(days);
 
         $.ajax({
             url: '/css-reports/' + day + '.json',
@@ -255,7 +255,7 @@
             dataType: "json"
         }).done(function(res) {
             if (res.days && res.days.length) {
-                fetchSelectors(res.days);
+                fetchSelectors(_.chain(res.days).sortBy().reverse().value());
             } else {
                 console.log("No day data available.")
             }
