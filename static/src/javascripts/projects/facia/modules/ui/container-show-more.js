@@ -96,16 +96,18 @@ define([
         };
 
         function showMore() {
-            /**
-             * Do not remove: it should retain context for the click stream module, which recurses upwards through
-             * DOM nodes.
-             */
-            $container.toggleClass(className, state === 'displayed');
-            state = (state === 'hidden') ? 'displayed' : 'hidden';
-            self.changeButtonText();
-            self.changeButtonState();
+            requestAnimationFrame(function () {
+                /**
+                 * Do not remove: it should retain context for the click stream module, which recurses upwards through
+                 * DOM nodes.
+                 */
+                $container.toggleClass(className, state === 'displayed');
+                state = (state === 'hidden') ? 'displayed' : 'hidden';
+                self.changeButtonText();
+                self.changeButtonState();
 
-            self.updatePref($container, state);
+                self.updatePref($container, state);
+            });
         }
     };
 });

@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/analytics/beacon',
@@ -23,6 +24,7 @@ define([
     config,
     detect,
     mediator,
+    requestAnimationFrame,
     storage,
     toArray,
     beacon,
@@ -46,7 +48,9 @@ define([
                     var c = document;
 
                     $('.js-container--fc-show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMoreButton();
+                        requestAnimationFrame(function () {
+                            new ContainerShowMore(container).addShowMoreButton();
+                        });
                     });
                 };
                 mediator.addListeners({
