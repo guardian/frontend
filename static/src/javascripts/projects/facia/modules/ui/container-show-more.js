@@ -3,6 +3,7 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
+    'common/utils/request-animation-frame',
     'common/utils/template',
     'common/modules/user-prefs',
     'text!facia/views/button-show-more.html'
@@ -11,6 +12,7 @@ define([
     bonzo,
     qwery,
     $,
+    requestAnimationFrame,
     template,
     userPrefs,
     showMoreBtn
