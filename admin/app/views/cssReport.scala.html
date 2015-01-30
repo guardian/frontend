@@ -117,6 +117,7 @@
                     React.DOM.div({className: 'css-reports-navbar'}, [
                         React.createElement(dayPicker, this.props),
                         React.DOM.div({className: 'title'}, 'CSS selector usage :'),
+                        React.DOM.a({href: "javascript:(function()%7Bif(window.guardian)%7Bwindow.guardian.api.logCss(true)%7Delse%7Bconsole.log('Not a guardian page%3F')%7D%7D)()"}, 'Log CSS'),
                         React.DOM.div({className: 'alphas'},
                             _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a, i) {
                                 acc['_' + i] = React.DOM.span({className: 'starts'}, a);

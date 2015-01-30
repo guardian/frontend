@@ -72,19 +72,19 @@ define([
     }
 
     function makeSender(sendAll) {
-        return _.debounce(function (clickSpec) {
+        return function (clickSpec) {
             if (!clickSpec || clickSpec.samePage) {
                 setTimeout(function () {
                     _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
                         sendReport(stylesheet, sendAll);
                     });
-                }, _.random(0, 3000));
+                }, sendAll ? 0 : _.random(0, 3000));
             }
-        }, 300);
+        };
     }
 
-    return function () {
-        var sendAll = window.location.hash === '#csslogging',
+    return function (sendAll) {
+        var sendAll = sendAll || window.location.hash === '#csslogging',
             sender;
 
         if (sendAll || _.random(1, 5000) === 1) {
@@ -92,6 +92,7 @@ define([
             sender();
             mediator.on('module:clickstream:interaction', sender);
             mediator.on('module:clickstream:click', sender);
+            return true;
         }
     };
 });
