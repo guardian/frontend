@@ -84,8 +84,9 @@ define([
     }
 
     return function (sendAll) {
-        var sendAll = sendAll || window.location.hash === '#csslogging',
-            sender;
+        var sender;
+
+        sendAll = sendAll || window.location.hash === '#csslogging';
 
         if (sendAll || _.random(1, 5000) === 1) {
             sender = makeSender(sendAll);
