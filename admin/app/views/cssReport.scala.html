@@ -139,8 +139,8 @@
                     React.DOM.div({className: 'css-reports-navbar__inner'}, [
                         React.createElement(dayPicker, this.props),
                         React.DOM.div({className: 'alphas'},
-                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a, i) {
-                                acc['_' + i] = React.DOM.span({className: 'starts'}, a);
+                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
+                                acc[a] = React.DOM.span({className: 'starts'}, a);
                                 return acc;
                             }, {})
                         )
@@ -154,8 +154,8 @@
                                    (!starts || (tokens[0] || '').toLowerCase().indexOf(starts) === 0 ||
                                                (tokens[1] || '').toLowerCase().indexOf(starts) === 0);
                         })
-                        .reduce(function(acc, p, i) {
-                            acc['_' + i] = React.createElement(elSelector, {
+                        .reduce(function(acc, p) {
+                            acc[p[2]] = React.createElement(elSelector, {
                                 selector: p,
                                 filter: filter
                             });
@@ -276,7 +276,7 @@
                         .pairs()
                         .sortBy()
                         .map(function(s) {
-                            return [tokenise(s[0], delimRx), s[1]]
+                            return [tokenise(s[0], delimRx), s[1], s[0]]
                         })
                         .value(),
                     days: days,
