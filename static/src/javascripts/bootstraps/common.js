@@ -414,7 +414,7 @@ define([
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
                     logCss: logCss
-                }
+                };
             }
 
         },
