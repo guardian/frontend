@@ -82,20 +82,16 @@ define([
         videojs.ViewOnGuardianButton = videojs.Button.extend({
             init: function (player, options) {
                 videojs.Button.call(this, player, options);
-                this.on('click', this.onClick);
             }
         });
 
-        videojs.ViewOnGuardianButton.prototype.onClick = function () {
-            window.parent.location.href = "http://theguardian.com/" + $('meta[itemprop=url]').attr("content");
-        };
 
         videojs.ViewOnGuardian = function (player) {
             var button = new videojs.ViewOnGuardianButton(player, {
                 location: options.location,
                 el: videojs.Component.prototype.createEl(null, {
                     className: 'vjs-view-on-guardian vjs-control',
-                    innerHTML: '<div class="vjs-control-content">' + svgs('marque36icon') +'<span class="vjs-control-text">View on theguardian.com</span></div>',
+                    innerHTML: '<a href="http://www.theguardian.com/' + $('meta[itemprop=url]').attr("content") + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'<span class="vjs-control-text">View on theguardian.com</span></a>',
                     role: 'button'
                 })
             });

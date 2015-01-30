@@ -733,12 +733,12 @@ $ima-controls-height: 70px;
     @include border-radius(100px);
 
     .vjs-control-text {
+        color: #ffffff;
         display: block;
         padding-left: $gs-baseline*2;
     }
 
-    .gu-video-embed .gu-media-wrapper:hover &,
-    .gu-video-embed .gu-media__fallback:hover & {
+    .gu-video-embed:hover & {
         display: block;
     }
 
@@ -753,6 +753,9 @@ $ima-controls-height: 70px;
     &:hover {
         .vjs-control-text {
             color: colour(media-default);
+        }
+        .vjs-control-content {
+            text-decoration: none;
         }
         svg {
             fill: colour(media-default);
