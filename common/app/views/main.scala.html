@@ -36,6 +36,10 @@
         @fragments.header(metaData)
 
         @if(showAdverts) {
+            @fragments.commercial.topBannerBelowNav()
+        }
+
+        @if(showAdverts) {
             @fragments.commercial.topBannerMobile()
         }
 
