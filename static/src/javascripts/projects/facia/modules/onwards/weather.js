@@ -182,9 +182,6 @@ define([
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on(document.body, 'click', function (e) {
-                console.log(hasParent('js-close-location', qwery(e.target)));
-            }.bind(this));
             bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
