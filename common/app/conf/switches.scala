@@ -1,8 +1,9 @@
 package conf
 
 import common._
+import conf.Configuration.environment
 import org.joda.time.DateTime._
-import org.joda.time.{DateTimeZone, DateTime, Days, LocalDate}
+import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
@@ -64,7 +65,7 @@ case class TimedSwitch(group: String,
         rightNow.isAfter(start) && rightNow.isBefore(end)
     }
     log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
-    isSwitchedOn && active
+    isSwitchedOn && (environment.isNonProd || active)
   }
 }
 
