@@ -18,7 +18,7 @@ define([
     };
 
     Storage.prototype.isStorageAvailable = once(function () {
-         return this.isAvailable();
+        return this.isAvailable();
     });
 
     Storage.prototype.isAvailable = function (data) {
