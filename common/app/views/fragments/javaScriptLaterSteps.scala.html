@@ -39,20 +39,24 @@
 
         if (!isModern) { return false; }
 
-        // duplicated in detect.js
+        @* Determine if what type of font-hinting we want. *@
+        @* Duplicated in /static/src/javascripts/projects/common/utils/detect.js *@
         var fontHinting = function () {
             var ua = navigator.userAgent,
                 windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-                hinting = 'Off';
+                hinting = 'Off',
+                version;
 
             if (windowsNT) {
                 var version = parseFloat(windowsNT[1], 10);
-                // windows XP - 7
+                @* For Windows XP-7 *@
                 if (version >= 5.1 && version <= 6.1) {
                     if (/Chrome/.exec(ua) && version < 6.0) {
-                        hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                        @* Chrome on windows XP wants auto-hinting *@
+                        hinting = 'Auto';
                     } else {
-                        hinting = 'Cleartype'; // All other use cleartype
+                        @* All others use cleartype *@
+                        hinting = 'Cleartype';
                     }
                 };
             }
@@ -61,6 +65,7 @@
 
         @if(FontSwitch.isSwitchedOn) {
 
+            @* Loads webfonts by inserting standard stylesheet `link` element into the DOM *@
             function loadFontsAsynchronously() {
                 var scripts    = document.getElementsByTagName('script'),
                     thisScript = scripts[scripts.length - 1],
@@ -68,16 +73,14 @@
 
                 fonts.rel       = 'stylesheet';
                 fonts.className = 'webfonts';
-                // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
+                @* show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE *@
                 fonts.href      = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
                 window.setTimeout(function() {
                     thisScript.parentNode.insertBefore(fonts, thisScript);
                 }, 0);
             }
 
-            // Try and load fonts from local storage.
-            // If there's nothing there, it will just fail silently and projects/common/modules/ui/fonts.js
-            // will try and load from the server.
+            @* Load fonts from local storage. *@
             function loadFontsFromStorage() {
                 var storedFontFormat = localStorage['gu.fonts.format'];
 
@@ -107,6 +110,7 @@
                 document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
             }
 
+            @* If fonts are not disabled in the cookie *@
             if (document.cookie.indexOf('GU_fonts=off') === -1) {
                 try {
                     loadFontsFromStorage();
