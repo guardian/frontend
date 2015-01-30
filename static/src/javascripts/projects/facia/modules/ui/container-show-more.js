@@ -96,12 +96,13 @@ define([
             itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
             state = readPrefs(id),
             $button = $.create(template(showMoreBtn, {
-            type: buttonText[state],
-            dataLink: buttonText.displayed
-        }));
+                type: buttonText[state],
+                dataLink: buttonText.displayed
+            })),
+            button;
 
         if (itemsHiddenOnDesktop || itemsHiddenOnMobile) {
-            var button = {
+            button = {
                 $el: $button,
                 id: id,
                 text: buttonText,
