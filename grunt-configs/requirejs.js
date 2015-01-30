@@ -184,6 +184,10 @@ module.exports = function(grunt, options) {
                     }
                 },
                 wrapShim: true,
+                exclude: [
+                    'text',
+                    'inlineSvg'
+                ],
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
