@@ -94,10 +94,11 @@ define([
             buttonText = getButtonTextByState($container),
             itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
             itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
+            state = readPrefs(id),
             $button = $.create(template(showMoreBtn, {
             type: buttonText[state],
             dataLink: buttonText.displayed
-        })), state = readPrefs(id);
+        }));
 
         if (itemsHiddenOnDesktop || itemsHiddenOnMobile) {
             var button = {
@@ -127,8 +128,9 @@ define([
             var pair = _.find(containersWithButtons, function (pair) {
                 return pair[1].$el[0] === event.currentTarget;
             });
-            if (pair)
+            if (pair) {
                 showMore(pair[0], pair[1]);
+            }
         });
     };
 });
