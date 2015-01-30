@@ -1,31 +1,23 @@
 define([
-    'bonzo',
     'qwery',
-    'common/utils/_'
+    'lodash/collections/contains'
 ], function (
-    bonzo,
     qwery,
-    _
+    contains
 ) {
 
     function findParent(selector, context) {
         context = qwery(context.target);
 
-        while (makeArray(context[0].classList).indexOf(selector) == -1) {
+        while (!context[0].classList.contains(selector)) {
             if (context[0].tagName === "HTML") {
-                 console.log("No Match found");
                 return false;
             } else {
                 context = qwery(context[0].parentElement);
             }
         }
 
-        console.log("Match Parent");
         return true;
-    }
-
-    function makeArray(obj) {
-        return Object.keys(obj).map(function (key) {return obj[key]});
     }
 
     return findParent;
