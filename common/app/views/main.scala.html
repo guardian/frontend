@@ -18,7 +18,10 @@
         case _ => { true }
     },
     Edition(request),
-    AppleAdSwitch.isSwitchedOn && Edition(request).id == "UK" && Seq("/uk", "uk/culture").contains(metaData.id)
+    Edition(request).id == "UK" && (
+        (AppleAdNetworkFrontSwitch.isSwitchedOnAndActive && metaData.id == "/uk") ||
+        (AppleAdCultureFrontSwitch.isSwitchedOnAndActive && metaData.id == "/uk/culture")
+    )
 )) { case (showAdverts, edition, adBelowNav) =>
     <body
         id="top"
