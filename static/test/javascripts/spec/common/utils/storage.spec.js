@@ -131,8 +131,6 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                     value = 'bar',
                     removeItemSpy = sinon.spy();
 
-                console.log(storage.local.set);
-
                 setWindowLocalStorage({
                     getItem: sinon.stub().returns('{"value":"' + value + '","expires":"' + expires.toISOString() + '"}'),
                     removeItem: removeItemSpy
