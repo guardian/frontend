@@ -367,14 +367,6 @@ object Switches {
     sellByDate = never
   )
 
-  val HardcodedSectionTagLookUp = Switch(
-    "Feature",
-    "hardcoded-section-tag-lookup",
-    "Hardcoded section tag id lookup (uk-news palaver)",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)
