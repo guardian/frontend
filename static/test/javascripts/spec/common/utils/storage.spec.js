@@ -11,7 +11,8 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
 
         beforeEach(function() {
             sinon.spy(mediator, 'emit');
-           date = new Date;
+            date = new Date;
+            storage.isAvailable = function
         });
 
         afterEach(function() {
@@ -163,8 +164,8 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
             it('String data', function() {
                 testSetAndGet('foo', 'bar', '{"value": "bar"}');
             });
-            
+
         });
-       
+
     });
 });
