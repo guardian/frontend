@@ -142,8 +142,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                 expect(storage.local.get(key)).toBe(value);
                 expect(removeItemSpy).not.toHaveBeenCalledWith(key);
             });
-
-        })
+        });
 
         describe('Saving and retriving different data types', function() {
 
@@ -166,8 +165,6 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
             it('String data', function() {
                 testSetAndGet('foo', 'bar', '{"value": "bar"}');
             });
-
         });
-
     });
 });
