@@ -32,8 +32,8 @@ define([
         },
         defaultTemplate = commentCountTemplate;
 
-    function getElementsIndexedById() {
-        var elements = qwery('[' + attributeName + ']');
+    function getElementsIndexedById(context) {
+        var elements = qwery('[' + attributeName + ']', context);
 
         return _.zipObject(_.map(elements, function (el) {
             return bonzo(el).attr(attributeName);
@@ -93,10 +93,9 @@ define([
         });
     }
 
-    function getCommentCounts() {
-        var indexedElements = getElementsIndexedById(),
+    function getCommentCounts(context) {
+        var indexedElements = getElementsIndexedById(context || document.body),
             ids = getContentIds(indexedElements);
-
         ajax({
             url: countUrl + ids,
             type: 'json',
@@ -112,12 +111,11 @@ define([
 
     function init() {
         if (document.body.querySelector('[data-discussion-id]')) {
-            getCommentCounts();
+            getCommentCounts(document.body);
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function () { getCommentCounts(); });
-        mediator.on('modules:related:loaded', function () { getCommentCounts(); });
+        mediator.on('modules:related:loaded', getCommentCounts.bind(null, qwery('.js-related')[0]));
     }
 
     return {
