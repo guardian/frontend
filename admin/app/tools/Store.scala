@@ -48,8 +48,8 @@ trait Store extends Logging with Dates {
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpPaidForTags(): PaidForTagsReport =
-    S3.get(dfpPaidForTagsDataKey).map {
+  def getDfpPaidForTags(key: String = dfpPaidForTagsDataKey): PaidForTagsReport =
+    S3.get(key).map {
     Json.parse(_).as[PaidForTagsReport]
   }.getOrElse(PaidForTagsReport(now, Nil))
 
