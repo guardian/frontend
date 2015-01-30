@@ -1,7 +1,8 @@
 package conf
 
 import common._
-import org.joda.time.{DateTime, Days, LocalDate}
+import org.joda.time.DateTime._
+import org.joda.time.{DateTimeZone, DateTime, Days, LocalDate}
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
@@ -10,12 +11,12 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch( group: String,
-                   name: String,
-                   description: String,
-                   safeState: SwitchState,
-                   sellByDate: LocalDate
-                   ) extends Switchable with Initializable[Switch] {
+trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
+  val group: String
+  val name: String
+  val description: String
+  val safeState: SwitchState
+  val sellByDate: LocalDate
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -41,9 +42,35 @@ case class Switch( group: String,
   Switch.switches.send(this :: _)
 }
 
+case class Switch(group: String,
+                  name: String,
+                  description: String,
+                  safeState: SwitchState,
+                  sellByDate: LocalDate
+                   ) extends SwitchTrait
+
+case class TimedSwitch(group: String,
+                       name: String,
+                       description: String,
+                       safeState: SwitchState,
+                       sellByDate: LocalDate,
+                       activeTimes: Seq[(DateTime, DateTime)]
+                        ) extends SwitchTrait with Logging {
+
+  def isSwitchedOnAndActive: Boolean = {
+    val active = activeTimes.exists {
+      case (start, end) =>
+        val rightNow = now()
+        rightNow.isAfter(start) && rightNow.isBefore(end)
+    }
+    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
+    isSwitchedOn && active
+  }
+}
+
 object Switch {
-  private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get()
+  val switches = AkkaAgent[List[SwitchTrait]](Nil)
+  def allSwitches: Seq[SwitchTrait] = switches.get()
 }
 
 object Switches {
@@ -272,6 +299,15 @@ object Switches {
   val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
     "If this switch is on, logo slots will honour visitor's edition.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+
+  val AppleAdSwitch = TimedSwitch("Commercial", "apple-ads",
+    "If this switch is on, Apple ads will appear during active periods.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
+    activeTimes = Seq(
+      (new DateTime(2015, 1, 1, 0, 1, DateTimeZone.UTC),
+        new DateTime(2015, 3, 1, 0, 1, DateTimeZone.UTC))
+    )
+  )
 
   // Monitoring
 
@@ -527,9 +563,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
-  def all: Seq[Switch] = Switch.allSwitches
+  def all: Seq[SwitchTrait] = Switch.allSwitches
 
-  def grouped: List[(String, Seq[Switch])] = {
+  def grouped: List[(String, Seq[SwitchTrait])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
   }
