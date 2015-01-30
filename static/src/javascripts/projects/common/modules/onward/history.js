@@ -5,7 +5,6 @@
 define([
     'common/utils/$',
     'common/utils/_',
-    'common/utils/config',
     'common/utils/template',
     'common/utils/storage',
     'common/utils/url',
@@ -14,7 +13,6 @@ define([
 ], function (
     $,
     _,
-    config,
     template,
     storage,
     url,
@@ -123,13 +121,16 @@ define([
             'sport',
             'technology'
         ],
-        pageMeta = [
+        pageMetaKeys = [
             {tid: 'section',    tname: 'sectionName'},
             {tid: 'keywordIds', tname: 'keywords'},
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
         ],
 
+        weightFront = 1,
+        weightArticle = 1,
+        weightDay = 10,
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
@@ -174,9 +175,16 @@ define([
             summaryCache = {
                 periodEnd: today,
                 tags: {},
-                showInMegaNav: true
+                showInMegaNav: true,
+                v: 2
             };
         }
+
+        if ((summaryCache.v || 1) < 2) {
+            upgradeToVersion2(summaryCache);
+            saveSummary(summaryCache);
+        }
+
         return summaryCache;
     }
 
@@ -200,20 +208,8 @@ define([
         if (updateBy !== 0) {
             summary.periodEnd = newToday;
 
-            _.each(summary.tags, function (nameAndFreqs, tid) {
-                var freqs = _.chain(nameAndFreqs[1])
-                    .map(function (freq) {
-                        var newAge = freq[0] + updateBy;
-                        return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, freq[1]] : false;
-                    })
-                    .compact()
-                    .value();
-
-                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniquesAfter)) {
-                    summary.tags[tid] = [nameAndFreqs[0], freqs];
-                } else {
-                    delete summary.tags[tid];
-                }
+            _.each(summary.tags, function (tagMeta, tid) {
+                pruneTag(summary, tid, tagMeta, updateBy);
             });
 
             if (_.isEmpty(summary.tags)) {
@@ -222,6 +218,40 @@ define([
         }
 
         return summary;
+    }
+
+    function pruneTag(summary, tid, tagMeta, updateBy) {
+        var keep = false;
+
+        _.map([1, 2], function (i) {
+            var freqs = (new Array(updateBy)).concat(str2ints(tagMeta[i])).slice(0, summaryPeriodDays);
+
+            if (_.filter(freqs.slice(0, forgetUniquesAfter), _.identity).length === 0 &&
+                _.filter(freqs.slice(forgetUniquesAfter), _.identity).length < 2) {
+                tagMeta[i] = '';
+            } else {
+                tagMeta[i] = ints2str(freqs).replace(/\.+$/, '');
+                keep = keep || true;
+            }
+        });
+
+        if (!keep) {
+            delete summary.tags[tid];
+        }
+    }
+
+    function upgradeToVersion2(summary) {
+        summary.tags = _.reduce(summary.tags, function (tally, tagMeta, tid) {
+            var freqs = _.reduce(tagMeta[1], function (freqs, pair) {
+                freqs[pair[0]] = pair[1];
+                return freqs;
+            }, []);
+
+            tally[tid] = [tagMeta[0], '', ints2str(freqs)];
+            return tally;
+        }, {});
+
+        summary.v = 2;
     }
 
     function getPopular(number, filtered) {
@@ -237,15 +267,12 @@ define([
 
         return _.chain(tids)
             .map(function (tid) {
-                var nameAndFreqs = tags[tid],
-                    freqs = nameAndFreqs[1];
+                var tagMeta = tags[tid];
 
-                if (freqs.length) {
-                    return {
-                        keep: [tid, nameAndFreqs[0]],
-                        rank: tally(freqs)
-                    };
-                }
+                return {
+                    keep: [tid, tagMeta[0]],
+                    rank: tally(tagMeta[1], weightFront) + tally(tagMeta[2], weightArticle)
+                };
             })
             .compact()
             .sortBy('rank')
@@ -265,9 +292,9 @@ define([
         return popularFilteredCache;
     }
 
-    function tally(freqs) {
-        return _.reduce(freqs, function (tally, freq) {
-            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
+    function tally(freqs, weight) {
+        return _.reduce(str2ints(freqs), function (tally, freq, day) {
+            return tally + (freq > 0 ? (weightDay + freq * weight) * (summaryPeriodDays - day) : 0);
         }, 0);
     }
 
@@ -313,37 +340,46 @@ define([
     }
 
     function logSummary(pageConfig, mockToday) {
-        var summary = pruneSummary(getSummary(), mockToday);
+        var pageId = pageConfig.pageId,
+            summary = pruneSummary(getSummary(), mockToday),
+            isFront = false,
+            pageMeta = _.chain(pageMetaKeys)
+                .reduceRight(function (tags, tag) {
+                    var tid = firstCsv(pageConfig[tag.tid]),
+                        tname = tid && firstCsv(pageConfig[tag.tname]);
 
-        _.chain(pageMeta)
-            .reduceRight(function (tags, tag) {
-                var tid = firstCsv(pageConfig[tag.tid]),
-                    tname = tid && firstCsv(pageConfig[tag.tname]);
+                    if (tid && tname) {
+                        tags[collapseTag(tid)] = tname;
+                    }
 
-                if (tid && tname) {
-                    tags[collapseTag(tid)] = tname;
-                }
-                return tags;
-            }, {})
-            .each(function (tname, tid) {
-                var nameAndFreqs = summary.tags[tid],
-                    freqs = nameAndFreqs && nameAndFreqs[1],
-                    freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
+                    isFront = isFront || tid === pageId;
 
-                if (freq) {
-                    freq[1] = freq[1] + 1;
-                } else if (freqs) {
-                    freqs.unshift([0, 1]);
-                } else {
-                    summary.tags[tid] = [tname, [[0, 1]]];
-                }
+                    return tags;
+                }, {})
+                .value();
 
-                if (nameAndFreqs) {
-                    nameAndFreqs[0] = tname;
-                }
-            });
+        _.each(pageMeta, function (tname, tid) {
+            logTag(summary, tname, tid, isFront);
+        });
 
         saveSummary(summary);
+    }
+
+    function logTag(summary, tname, tid, isFront) {
+        var i = isFront ? 1 : 2,
+            tagMeta = summary.tags[tid],
+            freqs = tagMeta && str2ints(tagMeta[i]) || [];
+
+        if (_.isNumber(freqs[0])) {
+            freqs[0] = freqs[0] + 1;
+            tagMeta[i] = ints2str(freqs);
+        } else {
+            summary.tags[tid] = [tname, isFront ? '1' : '', isFront ? '' : '1'];
+        }
+
+        if (tagMeta) {
+            tagMeta[0] = tname;
+        }
     }
 
     function getTopNavItems() {
@@ -404,6 +440,14 @@ define([
 
     function tagHtml(tag, index) {
         return template(viewTag, {id: tag[0], name: tag[1], index: index + 1});
+    }
+
+    function str2ints(str) {
+        return _.isString(str) ? _.map(str.split('.'), function (s) {return s ? parseInt(s, 10) : 0;}) : [];
+    }
+
+    function ints2str(arr) {
+        return _.map(arr, function (n) {return n || null;}).join('.');
     }
 
     return {
