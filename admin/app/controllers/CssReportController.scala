@@ -1,4 +1,4 @@
-package controllers
+package controllers.admin
 
 import common.{ExecutionContexts, JsonComponent}
 import conf.Configuration

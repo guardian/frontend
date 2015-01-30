@@ -13,7 +13,7 @@
             width: 100%;
             top: 0;
             left: 0;
-            padding-left: 20px;
+            padding-left: 15px;
             background: #fff;
             box-shadow: 0px 0px 5px #999;
         }
@@ -28,11 +28,10 @@
             margin: 16px 20px 0 10px;
         }
         .selectors {
-            color: #c00;
             font-family: monospace;
             font-size: 14px;
             line-height: 16px;
-            padding: 80px 0 200px 0;
+            padding: 65px 0 200px 0;
         }
         .alphas {
             margin: 15px 0;
@@ -50,18 +49,26 @@
         .alphas span:hover {
             background: #ccc;
         }
+        .selector {
+            color: #c00;
+            background: rgb(255, 236, 236);
+        }
+        .selector.used {
+            color: #ada;
+            background: rgb(234, 255, 234);;
+        }
         .selectors span {
             cursor: pointer;
         }
-        .selectors span:hover ,
+        .selectors span span:hover,
         .selectors span.active {
             font-weight: bold;
         }
-        .selectors .used {
-            color: #ada;
-        }
         .selectors .tally {
-            display: inline-block; width: 40px; color: #ddd;
+            display: inline-block;
+            width: 40px;
+            padding-left: 3px;
+            color: #ccc;
         }
     </style>
 
@@ -137,9 +144,9 @@
                 var filter = this.props.filter,
                     usages = this.props.selector[1];
 
-                return React.DOM.div({}, [
+                return React.DOM.div({className: 'selector' + (usages.used > 0 ? ' used' : '')}, [
                     React.DOM.span({className: 'tally'}, usages.unused + usages.used),
-                    React.DOM.span({className: usages.used > 0 ? 'used' : null},
+                    React.DOM.span({},
                         _.reduce(this.props.selector[0], function(acc, k, i) {
                             acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
                                 part: k,
