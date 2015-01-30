@@ -125,7 +125,9 @@ define([
             renderToDom(pair[0], pair[1]);
         });
 
-        bean.on(document.body, 'click', '.button--show-more', function (event) {
+        bean.on(document.body, 'click', _.map(_.filter(buttons), function (button) {
+            return button.$el[0];
+        }), function (event) {
             var pair = _.find(containersWithButtons, function (pair) {
                 return pair[1].$el[0] === event.currentTarget;
             });
