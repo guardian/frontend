@@ -3,7 +3,7 @@ package conf
 import common._
 import conf.Configuration.environment
 import org.joda.time.DateTime._
-import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
+import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
@@ -55,15 +55,11 @@ case class TimedSwitch(group: String,
                        description: String,
                        safeState: SwitchState,
                        sellByDate: LocalDate,
-                       activeTimes: Seq[(DateTime, DateTime)]
+                       activeTimes: Seq[Interval]
                         ) extends SwitchTrait with Logging {
 
   def isSwitchedOnAndActive: Boolean = {
-    val active = activeTimes.exists {
-      case (start, end) =>
-        val rightNow = now()
-        rightNow.isAfter(start) && rightNow.isBefore(end)
-    }
+    val active = activeTimes.exists(_.containsNow())
     log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
@@ -301,10 +297,8 @@ object Switches {
     "If this switch is on, logo slots will honour visitor's edition.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
 
-  private def dateInFebruary(day: Int): (DateTime, DateTime) = {
-    (new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC),
-      new DateTime(2015, 2, day, 23, 59, DateTimeZone.UTC))
-  }
+  private def dateInFebruary(day: Int): Interval =
+    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
   val AppleAdNetworkFrontSwitch = TimedSwitch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
