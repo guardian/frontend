@@ -17,7 +17,11 @@ define([
         w = window;
     };
 
-    Storage.prototype.isAvailable = once(function (data) {
+    Storage.prototype.isStorageAvailable = once(function () {
+         return this.isAvailable();
+    });
+
+    Storage.prototype.isAvailable = function (data) {
         var testKey = 'local-storage-module-test',
             d = data || 'test';
         try {
@@ -29,7 +33,7 @@ define([
         } catch (e) {
             return false;
         }
-    });
+    };
 
     /**
      * @param {String}  key
@@ -38,7 +42,7 @@ define([
      *     {Date} expires - When should the storage expire
      */
     Storage.prototype.set = function (key, data, options) {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             if (!w[this.type]) {
                 return;
             }
@@ -55,7 +59,7 @@ define([
     };
 
     Storage.prototype.get = function (key) {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             var data,
                 dataParsed;
             if (!w[this.type]) {
@@ -86,31 +90,31 @@ define([
     };
 
     Storage.prototype.remove = function (key) {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             return w[this.type].removeItem(key);
         }
     };
 
     Storage.prototype.removeAll = function () {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             return w[this.type].clear();
         }
     };
 
     Storage.prototype.length = function () {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             return w[this.type].length;
         }
     };
 
     Storage.prototype.getKey = function (i) {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             return w[this.type].key(i);
         }
     };
 
     Storage.prototype.clearByPrefix = function (prefix) {
-        if (this.isAvailable()) {
+        if (this.isStorageAvailable()) {
             // Loop in reverse because storage indexes will change as you delete items.
             var i,
                 name;
