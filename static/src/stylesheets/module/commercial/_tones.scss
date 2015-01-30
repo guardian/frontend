@@ -11,7 +11,6 @@
             color: $accentColour;
         }
         .commercial__header,
-        .commercial--multi__header,
         .commercial--v-high__header {
             background-color: $colour;
 
@@ -26,6 +25,13 @@
                     &:hover {
                         border-color: rgba($titleColor, 1);
                     }
+                }
+            }
+        }
+        .commercial--multi__header {
+            .commercial__title {
+                a {
+                    color: $colour;
                 }
             }
         }

@@ -4,6 +4,7 @@ Multi component (AKA Frankenponent)
 
 .fc-container--commercial-multi {
     background-color: colour(neutral-8);
+    padding-bottom: $gs-baseline/2;
 
     .fc-container__inner {
         border-top: 1px solid colour(neutral-4);
@@ -57,28 +58,25 @@ Multi component (AKA Frankenponent)
 
         .i-guardian-logo-commercial,
         .i-commercial-brand {
-            height: 16px;
+            height: 26px;
             width: 86px;
         }
 
         .i-holidayoffers-logo {
             width: 96px;
-            opacity: .8;
         }
 
-        .i-masterclasses-logo {
-            width: 102px;
+        .i-masterclasses-logo-colour {
+            width: 162px;
         }
 
-        .i-bookshop-logo {
-            width: 92px;
-            opacity: .8;
+        .i-bookshop-logo-colour {
+            width: 122px;
         }
 
-        .i-jobs-logo {
+        .i-jobs-logo-colour {
             margin-left: 0;
-            width: 32px;
-            opacity: .8;
+            width: 62px;
         }
 
         &.i-soulmates-title-background {
