@@ -301,12 +301,33 @@ object Switches {
     "If this switch is on, logo slots will honour visitor's edition.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
 
-  val AppleAdSwitch = TimedSwitch("Commercial", "apple-ads",
-    "If this switch is on, Apple ads will appear during active periods.",
+  private def dateInFebruary(day: Int): (DateTime, DateTime) = {
+    (new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC),
+      new DateTime(2015, 2, day, 23, 59, DateTimeZone.UTC))
+  }
+
+  val AppleAdNetworkFrontSwitch = TimedSwitch("Commercial", "apple-ads-on-network-front",
+    "If this switch is on, Apple ads will appear on the network front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
     activeTimes = Seq(
-      (new DateTime(2015, 1, 1, 0, 1, DateTimeZone.UTC),
-        new DateTime(2015, 3, 1, 0, 1, DateTimeZone.UTC))
+      dateInFebruary(5),
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(10),
+      dateInFebruary(11),
+      dateInFebruary(12)
+    )
+  )
+
+  val AppleAdCultureFrontSwitch = TimedSwitch("Commercial", "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
+    activeTimes = Seq(
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(9),
+      dateInFebruary(11),
+      dateInFebruary(12)
     )
   )
 
