@@ -1,13 +1,16 @@
 package controllers
 
+import com.gu.contentapi.client.model.ItemResponse
 import common._
+import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.LiveContentApi.getResponse
+import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import play.api.mvc._
-import scala.concurrent.Future
-import com.gu.contentapi.client.model.ItemResponse
 import views.support.RenderOtherStatus
-import LiveContentApi.getResponse
+
+import scala.concurrent.Future
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent)
 
@@ -35,7 +38,12 @@ object InteractiveController extends Controller with Logging with ExecutionConte
       val interactive = response.content map { Interactive(_) }
       val page = interactive.map(i => InteractivePage(i, RelatedContent(i, response)))
 
-      ModelOrResult(page, response)
+      if (AdFeatureExpirySwitch.isSwitchedOn &&
+        interactive.exists(_.isExpiredAdvertisementFeature)) {
+        Right(MovedPermanently(expiredAdFeatureUrl))
+      } else {
+        ModelOrResult(page, response)
+      }
     }
 
     result recover convertApiExceptions

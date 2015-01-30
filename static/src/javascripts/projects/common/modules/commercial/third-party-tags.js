@@ -3,26 +3,26 @@
  */
 define([
     'common/utils/config',
-    'common/modules/commercial/outbrain',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/tags/effective-measure',
-    'common/modules/commercial/tags/imrworldwide',
-    'common/modules/commercial/tags/media-math',
-    'common/modules/commercial/tags/remarketing',
-    'common/modules/commercial/tags/krux'
+    'common/modules/commercial/third-party-tags/amaa',
+    'common/modules/commercial/third-party-tags/audience-science',
+    'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/criteo',
+    'common/modules/commercial/third-party-tags/effective-measure',
+    'common/modules/commercial/third-party-tags/imr-worldwide',
+    'common/modules/commercial/third-party-tags/remarketing',
+    'common/modules/commercial/third-party-tags/krux',
+    'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     config,
-    outbrain,
+    amaa,
     audienceScience,
     audienceScienceGateway,
     criteo,
     effectiveMeasure,
     imrWorldwide,
-    mediaMath,
     remarketing,
-    krux
+    krux,
+    outbrain
 ) {
 
     function init() {
@@ -34,15 +34,15 @@ define([
         switch (config.page.edition.toLowerCase()) {
             case 'au':
                 effectiveMeasure.load();
+                amaa.load();
                 break;
 
-            default:
+            case 'uk':
                 audienceScienceGateway.load();
                 break;
         }
 
         audienceScience.load();
-        mediaMath.load();
         criteo.load();
         imrWorldwide.load();
         remarketing.load();

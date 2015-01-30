@@ -43,7 +43,7 @@ define([
         });
 
         it("should get discussion id's from the DOM", function(){
-            var data = '/p/3ghv5,/p/3ghx3,/p/3gh4n';
+            var data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
             expect(commentCount.getContentIds()).toEqual(data);
         });
 

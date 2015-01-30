@@ -3,7 +3,6 @@ module.exports = function(grunt, options) {
         options: {
             baseUrl: 'static/src/javascripts',
             paths: {
-                bootsraps:            'bootstraps',
                 admin:                'projects/admin',
                 common:               'projects/common',
                 facia:                'projects/facia',

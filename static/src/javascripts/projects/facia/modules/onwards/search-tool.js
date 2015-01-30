@@ -47,6 +47,7 @@ define([
             handleClick: function (e) {
                 e.preventDefault();
 
+                $('.active').removeClass('active');
                 $(e.currentTarget).addClass('active');
                 this.pushData();
             },
