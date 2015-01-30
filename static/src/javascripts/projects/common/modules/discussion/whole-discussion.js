@@ -38,6 +38,11 @@ define([
                 workFunction.call(null, item).then(onComplete, onComplete);
             }
 
+            if (!items || !items.length) {
+                resolve();
+                return;
+            }
+
             var initialItems = items.splice(0, concurrentLimit),
                 queue = items,
                 workers = 0;
