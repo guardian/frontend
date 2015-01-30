@@ -2,7 +2,6 @@ package conf
 
 import common._
 import conf.Configuration.environment
-import org.joda.time.DateTime._
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -50,16 +49,16 @@ case class Switch(group: String,
                   sellByDate: LocalDate
                    ) extends SwitchTrait
 
-case class TimedSwitch(group: String,
+case class TimerSwitch(group: String,
                        name: String,
                        description: String,
                        safeState: SwitchState,
                        sellByDate: LocalDate,
-                       activeTimes: Seq[Interval]
+                       activePeriods: Seq[Interval]
                         ) extends SwitchTrait with Logging {
 
   def isSwitchedOnAndActive: Boolean = {
-    val active = activeTimes.exists(_.containsNow())
+    val active = activePeriods.exists(_.containsNow())
     log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
@@ -300,10 +299,10 @@ object Switches {
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
-  val AppleAdNetworkFrontSwitch = TimedSwitch("Commercial", "apple-ads-on-network-front",
+  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activeTimes = Seq(
+    activePeriods = Seq(
       dateInFebruary(5),
       dateInFebruary(7),
       dateInFebruary(8),
@@ -313,10 +312,10 @@ object Switches {
     )
   )
 
-  val AppleAdCultureFrontSwitch = TimedSwitch("Commercial", "apple-ads-on-culture-front",
+  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activeTimes = Seq(
+    activePeriods = Seq(
       dateInFebruary(7),
       dateInFebruary(8),
       dateInFebruary(9),
