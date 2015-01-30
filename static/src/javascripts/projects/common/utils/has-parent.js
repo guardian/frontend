@@ -1,14 +1,12 @@
 define([
-    'qwery',
-    'lodash/collections/contains'
+    'qwery'
 ], function (
-    qwery,
-    contains
+    qwery
 ) {
 
-    function findParent(selector, context) {
+    function hasParent(selector, context) {
         while (!context[0].classList.contains(selector)) {
-            if (context[0].tagName === "HTML") {
+            if (context[0].tagName === 'HTML') {
                 return false;
             } else {
                 context = qwery(context[0].parentElement);
@@ -18,6 +16,6 @@ define([
         return true;
     }
 
-    return findParent;
+    return hasParent;
 
 }); // define
