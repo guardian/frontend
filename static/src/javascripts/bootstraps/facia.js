@@ -31,7 +31,7 @@ define([
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
-    ContainerShowMore,
+    containerShowMore,
     snaps,
     weather
 ) {
@@ -44,18 +44,9 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function () {
-                    var c = document;
-
-                    $('.js-container--fc-show-more', c).each(function (container) {
-                        requestAnimationFrame(function () {
-                            new ContainerShowMore(container).addShowMoreButton();
-                        });
-                    });
-                };
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMoreAdd,
-                    'page:front:ready': containerShowMoreAdd
+                    'modules:container:rendered': containerShowMore,
+                    'page:front:ready': containerShowMore
                 });
             },
 
