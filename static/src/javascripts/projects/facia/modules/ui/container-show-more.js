@@ -84,7 +84,8 @@ define([
 
             $container.addClass(className)
                 .append(button.$el)
-                .removeClass('js-container--fc-show-more');
+                .removeClass('js-container--fc-show-more')
+                .toggleClass(className, button.state === 'hidden');
         });
     }
 
@@ -123,7 +124,6 @@ define([
         });
 
         bean.on(document.body, 'click', '.button--show-more', function (event) {
-            console.log("HI");
             var pair = _.find(containersWithButtons, function (pair) {
                 return pair[1].$el[0] === event.currentTarget;
             });
