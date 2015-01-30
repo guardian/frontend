@@ -12,17 +12,21 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining(metaData match {
-    case c: model.Content if c.shouldHideAdverts => { false }
-    case _ => { true }
-}) { showAdverts =>
-@defining(Edition(request)) { edition =>
+@defining((
+    metaData match {
+        case c: model.Content if c.shouldHideAdverts => { false }
+        case _ => { true }
+    },
+    Edition(request),
+    AppleAdSwitch.isSwitchedOn && Edition(request).id == "UK" && Seq("/uk", "uk/culture").contains(metaData.id)
+)) { case (showAdverts, edition, adBelowNav) =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
-            ("childrens-books-site", metaData.section == "childrens-books-site")))"
+            ("childrens-books-site", metaData.section == "childrens-books-site"),
+            ("ad-below-nav", adBelowNav)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
@@ -35,7 +39,7 @@
 
         @fragments.header(metaData)
 
-        @if(showAdverts) {
+        @if(showAdverts && adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
         }
 
@@ -65,5 +69,4 @@
 
     </body>
     </html>
-}
 }
