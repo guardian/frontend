@@ -283,7 +283,11 @@ object Switches {
     safeState = Off, sellByDate = never)
 
   val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, ad features with expired line items will return 410s.",
+    "If this switch is on, expired ad features will be redirected.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
+
+  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
+    "If this switch is on, expired legacy ad features will be redirected.",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
 
   val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
