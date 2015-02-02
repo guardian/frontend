@@ -203,7 +203,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     val videoEncodingsReport = jobs.VideoEncodingsJob.getReport("missing-encodings")
     videoEncodingsReport match {
       case List() => NoCache(Ok("There are no reported encodings missing as of: %s".format(missingVideoEncodingDateTimeFormat.print(DateTime.now())) ))
-      case List(("Not", "Ready")) => NoCache(Ok("Missing video encoding: report has not yet generated"))
+      case List(("Not", "Yet", "Ready")) => NoCache(Ok("Missing video encoding: report has not yet generated"))
       case _ => NoCache(Ok( views.html.missingVideoEncodings( "PROD", videoEncodingsReport) ) )
     }
  }

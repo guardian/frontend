@@ -17,23 +17,23 @@ import org.joda.time.Seconds
 import play.api.libs.ws.WS
 import play.api.Play.current
 import services.MissingVideoEncodings
+import model.diagnostics.video.DynamoDbStore
 
 
 object VideoEncodingsJob extends ExecutionContexts with Logging  {
 
-  private val videoEncodingsAgent = AkkaAgent[Map[String, List[(String, String)]]](Map.empty)
+  private val videoEncodingsAgent = AkkaAgent[Map[String, List[(String, String, String)]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
 
-  def getReport(feature: String): List[(String, String)] = videoEncodingsAgent().get(feature).getOrElse(List(("Not","Ready")))
+  def getReport(report: String): List[(String, String, String)] = videoEncodingsAgent().get(report).getOrElse(List(("Not","Yet","Ready")))
   def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
      val response = WS.url(encodingUrl).head()
      response.map { r => r.status == 404 }
   }
 
-
   def run () {
 
-     log.info("Looking for missing video encodings")
+     log.info("Checking for missing video encodings")
 
      val apiVideoResponse = getResponse(LiveContentApi.search(Edition.defaultEdition)
           .tag("type/video")
@@ -46,9 +46,9 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
          }
      }
 
-     val videos = Await.result(apiVideoResponse.map{  actualVideo =>
+     val videos = Await.result(apiVideoResponse.map{ actualVideo =>
        actualVideo map ( video => video )
-     }, 5.seconds )
+     }, 10.seconds )
 
      val missingEncodingsData = Future.sequence(videos.map { video =>
          val missingEncodingsForVideo = Future.sequence(video.encodings map { encoding =>
@@ -58,19 +58,23 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
            }
          }).map(_.flatten)
          missingEncodingsForVideo.map {
-           missingEncodings => missingEncodings.map{ missing => (video.webTitle, missing) }
-
+           missingEncodings => missingEncodings.map{ missingEncoding => (video.webTitle, video.webUrl, missingEncoding) }
          }
        }
      ).map(_.flatten)
-     missingEncodingsData.onSuccess{case xs =>
-       if ( !xs.isEmpty ) {
-         log.info("++ There are missing vids")
+
+     missingEncodingsData.onSuccess{case missingEncodings =>
+       missingEncodings.foreach { case (title, url, encoding) =>
+         DynamoDbStore.haveSeenMissingEncoding(encoding, url) map {
+           case true => log.info(s"Already seen missing encoding: $encoding for url: $url")
+           case false =>
+             log.info(s"Send notification for missing encoding: $encoding for url: $url")
+             MissingVideoEncodings.sendMessage(encoding, url, title)
+             DynamoDbStore.storeMissingEncoding(encoding, url)
+         }
        }
-       MissingVideoEncodings.send("There are missing videos", "We found a missing video and its name was")
-       videoEncodingsAgent.send( old => old+("missing-encodings" -> xs))
+       videoEncodingsAgent.send( old => old+("missing-encodings" -> missingEncodings))
      }
-     log.info("++ Missing video encodings loaded")
   }
 }
 
@@ -82,6 +86,8 @@ object Video extends Logging {
 class Video(delegate: Content) {
   lazy val body = delegate.safeFields("body")
   lazy val webTitle: String = delegate.webTitle
+  lazy val webUrl: String = delegate.webUrl
+
   def encodings(): Seq[String] = {
     val doc = XML.loadString(body)
 
