@@ -163,7 +163,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20:30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -174,32 +174,32 @@ import collection.JavaConversions._
       And("I am on the 'UK' edition")
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
-        Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        Then("the date should be 'Thursday 8 November 2012 00:01 GMT'")
+        findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00:01 GMT")
       }
 
       Given("I am on an article published on '2012-11-10'")
       And("I am on the 'US' edition")
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
-        Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        Then("the date should be 'Wednesday 7 November 2012 19:01 GMT'")
+        findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19:01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
       And("I am on the 'UK' edition")
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
-        Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        Then("the date should be 'Sunday 19 August 2012 18:38 BST'")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18:38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
       And("I am on the 'US' edition")
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
-        Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        Then("the date should be 'Sunday 19 August 2012 13:38 BST'")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13:38 EDT")
       }
 
     }
