@@ -1,6 +1,7 @@
 define([
     'common/utils/config',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -12,6 +13,7 @@ define([
 ], function (
     config,
     mediator,
+    robust,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -31,16 +33,16 @@ define([
                 !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 // load tags
-                thirdPartyTags.init();
-                articleAsideAdverts.init();
-                articleBodyAdverts.init();
-                sliceAdverts.init();
-                frontCommercialComponents.init();
-                badges.init();
-                dfp.init();
+                robust('cm-thirdPartyTags',            function () { thirdPartyTags.init(); });
+                robust('cm-articleAsideAdverts',       function () { articleAsideAdverts.init(); });
+                robust('cm-articleBodyAdverts',        function () { articleBodyAdverts.init(); });
+                robust('cm-sliceAdverts',              function () { sliceAdverts.init(); });
+                robust('cm-frontCommercialComponents', function () { frontCommercialComponents.init(); });
+                robust('cm-badges',                    function () { badges.init(); });
+                robust('cm-dfp',                       function () { dfp.init(); });
             }
 
-            mediator.emit('page:commercial:ready');
+            robust('cm-ready', function () { mediator.emit('page:commercial:ready'); });
         }
     };
 

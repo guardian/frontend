@@ -420,12 +420,16 @@
     .fluid250_video {
         position: absolute;
         z-index: 10;
+        margin-left: 0;
+        margin-top: 0;
 
         &.fluid250_video--vert-pos-top {
             top: 0;
         }
         &.fluid250_video--vert-pos-center {
             top: 50%;
+            /* Magic number of video height/2 */
+            margin-top: -115px;
         }
         &.fluid250_video--vert-pos-bottom {
             top: auto;
@@ -435,6 +439,8 @@
             left: 0;
         }
         &.fluid250_video--horiz-pos-center {
+            /* Magic number of video width/2 */
+            margin-left: -205px;
             left: 50%;
         }
         &.fluid250_video--horiz-pos-right {

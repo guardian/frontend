@@ -7,6 +7,7 @@ define([
     'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/template',
     'text!common/views/discussion/comment-count.html',
     'text!common/views/discussion/comment-count--content.html'
@@ -19,6 +20,7 @@ define([
     ajax,
     formatters,
     mediator,
+    requestAnimationFrame,
     template,
     commentCountTemplate,
     commentCountContentTemplate
@@ -30,10 +32,21 @@ define([
         },
         defaultTemplate = commentCountTemplate;
 
-    function getContentIds() {
-        return _.uniq(_.map(qwery('[' + attributeName + ']'), function (el) {
+    function getElementsIndexedById(context) {
+        var elements = qwery('[' + attributeName + ']', context);
+
+        return _.zipObject(_.map(elements, function (el) {
             return bonzo(el).attr(attributeName);
-        })).join(',');
+        }), elements);
+    }
+
+    function getContentIds(indexedElements) {
+        return _.chain(indexedElements)
+                    .keys()
+                    .uniq()
+                    .sortBy()
+                    .join(',')
+                    .value();
     }
 
     function getContentUrl(node) {
@@ -41,40 +54,48 @@ define([
         return (a ? a.pathname : '') + '#comments';
     }
 
-    function renderCounts(counts) {
+    function renderCounts(counts, indexedElements) {
         counts.forEach(function (c) {
-            forEach(qwery('[data-discussion-id="' + c.id + '"]'), function (node) {
-                var format,
-                    $node = bonzo(node),
-                    commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
-                    url = $node.attr('data-discussion-url') || getContentUrl(node),
-                    $container,
-                    meta,
-                    html;
+            var node = indexedElements[c.id],
+                format,
+                $node = bonzo(node),
+                commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                url = $node.attr('data-discussion-url') || getContentUrl(node),
+                $container,
+                meta,
+                html;
 
-                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
-                    return; // Discussion is closed and had no comments, we don't want to show a comment count
-                }
-                $node.removeClass('u-h');
+            if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+                return; // Discussion is closed and had no comments, we don't want to show a comment count
+            }
+            $node.removeClass('u-h');
 
-                // put in trail__meta, if exists
-                meta = qwery('.js-item__meta', node);
+            format = $node.data('commentcount-format');
+            html = template(templates[format] || defaultTemplate, {
+                url: url,
+                count: formatters.integerCommas(c.count),
+                label: commentOrComments
+            });
 
-                format = $node.data('commentcount-format');
-                html = template(templates[format] || defaultTemplate, {
-                    url: url,
-                    count: formatters.integerCommas(c.count),
-                    label: commentOrComments
-                });
-                $container = meta.length ? bonzo(meta) : $node;
+            meta = qwery('.js-item__meta', node);
+            $container = meta.length ? bonzo(meta) : $node;
+
+            requestAnimationFrame(function () {
                 $container.append(html);
                 $node.removeAttr(attributeName);
             });
         });
+
+        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+        // the DOM.
+        requestAnimationFrame(function () {
+            mediator.emit('modules:commentcount:loaded', counts);
+        });
     }
 
-    function getCommentCounts() {
-        var ids = getContentIds();
+    function getCommentCounts(context) {
+        var indexedElements = getElementsIndexedById(context || document.body),
+            ids = getContentIds(indexedElements);
         ajax({
             url: countUrl + ids,
             type: 'json',
@@ -82,8 +103,7 @@ define([
             crossOrigin: true,
             success: function (response) {
                 if (response && response.counts) {
-                    renderCounts(response.counts);
-                    mediator.emit('modules:commentcount:loaded', response.counts);
+                    renderCounts(response.counts, indexedElements);
                 }
             }
         });
@@ -91,17 +111,17 @@ define([
 
     function init() {
         if (document.body.querySelector('[data-discussion-id]')) {
-            getCommentCounts();
+            getCommentCounts(document.body);
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function () { getCommentCounts(); });
-        mediator.on('modules:related:loaded', function () { getCommentCounts(); });
+        mediator.on('modules:related:loaded', getCommentCounts.bind(null, qwery('.js-related')[0]));
     }
 
     return {
         init: init,
         getCommentCounts: getCommentCounts,
-        getContentIds: getContentIds
+        getContentIds: getContentIds,
+        getElementsIndexedById: getElementsIndexedById
     };
 });

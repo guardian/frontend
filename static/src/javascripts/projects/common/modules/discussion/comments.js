@@ -151,8 +151,8 @@ Comments.prototype.fetchComments = function(options) {
         queryParams.maxResponses = 3;
     }
 
-    // The initial fetch is on page load, so do not load all comments.
-    if (options.initialFetch && queryParams.pageSize === 'All') {
+    // If the caller specified truncation, do not load all comments.
+    if (options.shouldTruncate && queryParams.pageSize === 'All') {
         queryParams.pageSize = 10;
     }
 

@@ -319,3 +319,15 @@
         margin-right: 0;
     }
 }
+
+// Temporary hack, as MPU candidate is broken on tablet
+.fc-slice--t-t-mpu .fc-slice__item--mpu-candidate {
+    @include mq(tablet, desktop) {
+        display: none;
+
+        // have to do this here, too, or DFP still makes the call
+        .ad-slot {
+            display: none;
+        }
+    }
+}

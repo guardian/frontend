@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.EditionAwareLogoSlots
+import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -177,15 +177,16 @@ trait PaidForTagAgent {
                                             maybeDfpTag: => Option[PaidForTag],
                                     maybeSectionId: Option[String]): Boolean = {
 
-    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
-
-    lazy val isAdFeatureToneTagPage = pageId == "tone/advertisement-features"
-
     val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
 
+    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+
+    lazy val isExpiredLegacyAdFeature =
+      LegacyAdFeatureExpirySwitch.isSwitchedOn &&
+        lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
+
     (!isPreview) &&
-      ((lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
-        lineItems.nonEmpty && (lineItems forall hasExpired))
+      (isExpiredLegacyAdFeature || (lineItems.nonEmpty && (lineItems forall hasExpired)))
   }
 
   def isExpiredAdvertisementFeature(pageId: String,

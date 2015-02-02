@@ -147,9 +147,13 @@ Loader.prototype.initMainComments = function() {
             }
         }
 
+        // Only truncate the loaded comments on this initial fetch,
+        // and when no comment ID or #comments location is present.
+        var shouldTruncate = !commentId && window.location.hash !== '#comments';
+
         this.loadComments({
             comment: commentId,
-            initialFetch: true})
+            shouldTruncate: shouldTruncate})
             .catch(function(err) {
                 var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
                 raven.captureMessage(reportMsg, {
@@ -257,7 +261,7 @@ Loader.prototype.ready = function() {
 
     mediator.on('module:clickstream:click', function(clickspec) {
         if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
-            this.removeState('truncated');
+            this.removeTruncation();
         }
     }.bind(this));
 
@@ -388,16 +392,12 @@ Loader.prototype.gotoPage = function(page) {
 
 Loader.prototype.loadComments = function(options) {
 
-    // Only truncate the loaded comments on the initial fetch,
-    // and when no comment ID or #comments location is present.
-    var shouldTruncate = options && options.initialFetch && !options.comment && window.location.hash !== '#comments';
-
     this.setState('loading');
 
     return this.comments.fetchComments(options)
     .then(function(){
         this.removeState('loading');
-        if (shouldTruncate) {
+        if (options && options.shouldTruncate) {
             this.setState('truncated');
         } else {
             // do not call removeTruncation because it could invoke another fetch.

@@ -99,7 +99,7 @@ define([
             'technology/comment', 'technology/gadgets', 'technology/games', 'technology/internet', 'technology/it',
             'technology/news', 'technology/series/techweekly', 'technology/telecoms', 'theguardian', 'theguardian/mainsection/obituaries',
             'theguardian/series/guardiancommentcartoon', 'theguardian/series/guardianwitness-assignments', 'theguardian/series/otherlives', 'tone/albumreview', 'tone/comment',
-            'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
+            'tone/obituaries', 'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
             'travel/lateoffers', 'travel/places', 'travel/restaurants', 'travel/series/lets-go-to', 'travel/series/readers-travel-tips',
             'travel/shortbreaks', 'travel/typesoftrip', 'travel/uk', 'travel/usa', 'tv-and-radio',
             'tv-and-radio/series/broadchurch-2-episode-by-episode', 'tv-and-radio/series/doctor-who-episode-by-episode', 'tv-and-radio/series/homeland-episode-by-episode', 'tv-and-radio/series/spiral-episode-by-episode-guide', 'tv-and-radio/series/stream-on',
